@@ -1,6 +1,5 @@
 from __future__ import annotations
 import math
-import numpy as np
 from alphaevolve.llm.base import LLMBackend
 
 
@@ -29,6 +28,8 @@ class LLMEnsemble:
 
     def _ucb1_select(self) -> int:
         self.total += 1
+        # Note: log(1)=0 on first call — initial exploration is guaranteed by the
+        # (score, -count) tiebreaker which prefers unexplored arms when scores tie.
         scores = [
             (self.wins[i] / max(self.counts[i], 1))
             + self.c * math.sqrt(math.log(self.total) / max(self.counts[i], 1))
@@ -52,6 +53,10 @@ def build_llm(config) -> LLMEnsemble:
     from alphaevolve.llm.openai    import OpenAIBackend
     from alphaevolve.llm.ollama    import OllamaBackend
     _REG = {"anthropic": AnthropicBackend, "openai": OpenAIBackend, "ollama": OllamaBackend}
-    backends = [_REG[s["type"]](**{k: v for k, v in s.items() if k != "type"})
-                for s in config.backends]
+    backends = []
+    for s in config.backends:
+        t = s["type"]
+        if t not in _REG:
+            raise ValueError(f"Unknown backend type {t!r}. Valid: {list(_REG)}")
+        backends.append(_REG[t](**{k: v for k, v in s.items() if k != "type"}))
     return LLMEnsemble(backends, explore_coeff=config.ensemble_explore_coeff)

@@ -39,3 +39,16 @@ def test_high_reward_preferred_at_zero_explore():
     ens.record_reward(0, 10.0); ens.record_reward(1, 0.0)
     _, idx = ens.generate("p")
     assert idx == 0
+
+def test_ucb1_converges_on_superior_arm():
+    """After many rounds with arm 0 winning, arm 0 should be selected next."""
+    b1, b2 = _b("b1"), _b("b2")
+    ens = LLMEnsemble([b1, b2])
+    # Warm up: explore both arms first
+    ens.generate("p"); ens.generate("p")
+    # Give arm 0 consistently high reward, arm 1 zero
+    for _ in range(20):
+        ens.record_reward(0, 1.0)
+        ens.record_reward(1, 0.0)
+    _, idx = ens.generate("p")
+    assert idx == 0

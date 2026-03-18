@@ -27,6 +27,8 @@ def run(problem_dir, max_generations, plugins, backends, seed):
     active_plugins = _load_plugins(config.plugins)
     click.echo(f"Running {config.max_generations} generations on '{problem.name}'...")
     best = evolve(problem, config, active_plugins)
+    if best is None:
+        raise click.ClickException("Evolution produced no valid programs.")
     click.echo(f"\nBest fitness: {best.fitness:.6f}")
     out = Path(config.log_dir) / problem.name / "best.py"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -79,6 +81,6 @@ def _load_plugins(names: list[str]) -> list:
     result = []
     for n in names:
         if n not in reg:
-            raise ValueError(f"Unknown plugin: {n!r}. Available: {list(reg)}")
+            raise click.ClickException(f"Unknown plugin: {n!r}. Available: {list(reg)}")
         result.append(reg[n]())
     return result

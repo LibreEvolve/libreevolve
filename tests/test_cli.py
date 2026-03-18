@@ -26,3 +26,13 @@ def test_show_prints_best(tmp_path):
          "parent_id":None,"lineage":[],"metadata":{}}))
     r = CliRunner().invoke(cli, ["show", str(tmp_path)])
     assert r.exit_code == 0 and "0.9" in r.output and "x=2" in r.output
+
+def test_run_none_best(tmp_path):
+    (tmp_path/"task_description.txt").write_text("t")
+    (tmp_path/"metrics.yaml").write_text(yaml.dump({"metrics": [
+        {"name":"score","primary":True,"direction":"maximize","bounds":[0.0,1.0]}]}))
+    (tmp_path/"validate.py").write_text("def evaluate(c): return {'score':1.0,'is_valid':True}")
+    s = tmp_path/"initial_programs"; s.mkdir(); (s/"seed.py").write_text("x=1")
+    with patch("alphaevolve.cli.evolve", return_value=None):
+        r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
+    assert r.exit_code != 0

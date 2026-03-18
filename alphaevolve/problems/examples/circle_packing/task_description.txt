@@ -1,0 +1,4 @@
+Pack as many unit circles as possible inside a 10x10 square without overlap.
+Write a function `solve() -> list[tuple[float, float]]` returning center (x, y) coordinates.
+Constraints: all centers in [1.0, 9.0]x[1.0, 9.0]; distance between any two centers >= 2.0.
+Score = number of valid non-overlapping circles.

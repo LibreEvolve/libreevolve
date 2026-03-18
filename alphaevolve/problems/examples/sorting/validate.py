@@ -1,0 +1,28 @@
+import random
+
+def evaluate(code: str) -> dict:
+    """Evaluates sorting solution. Runs in isolated subprocess."""
+    ns = {}
+    _load_code(ns, code)
+    sort_list = ns.get("sort_list")
+    if not callable(sort_list):
+        return {"accuracy": 0.0, "is_valid": False}
+    random.seed(42)
+    cases = [[], [1], [3,1,2], [5,3,1,4,2], [-3,0,5,-1,2], [1,1,1,2,1],
+             list(range(10,0,-1)), [random.randint(-100,100) for _ in range(20)]]
+    passed = sum(1 for tc in cases if _safe(sort_list, list(tc)) == sorted(tc))
+    acc = passed / len(cases)
+    return {"accuracy": acc, "is_valid": acc == 1.0}
+
+def _safe(fn, arg):
+    try: return fn(arg)
+    except Exception: return None
+
+def _load_code(ns: dict, code: str) -> None:
+    """Load candidate code into namespace. Uses compile + eval for dynamic code."""
+    try:
+        compiled = compile(code, "<candidate>", "exec")
+        # Note: eval is intentional — candidate code runs in isolated subprocess
+        eval(compiled, ns)  # noqa: S307
+    except Exception:
+        pass

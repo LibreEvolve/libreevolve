@@ -1,0 +1,8 @@
+metrics:
+  - name: accuracy
+    direction: maximize
+    primary: true
+    bounds: [0.0, 1.0]
+  - name: is_valid
+    direction: maximize
+    primary: false

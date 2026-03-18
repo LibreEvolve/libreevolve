@@ -1,5 +1,6 @@
 from __future__ import annotations
 import random
+import math
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -46,6 +47,8 @@ class MAPElites:
                 c(self._diversity(p.code)))
 
     def add(self, program: Program) -> None:
+        if not math.isfinite(program.fitness):
+            return
         cell = self._cell(program)
         occ = self._grid.get(cell)
         if occ is None or program.fitness > occ.fitness:

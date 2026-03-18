@@ -11,16 +11,16 @@ def test_add_and_best():
     assert a.best().fitness == 0.7
 
 def test_replacement_only_when_higher():
-    a = MAPElites()
+    a = MAPElites(bins=1)
     a.add(_p(code="x=1", fitness=0.3))
     a.add(_p(code="x=1", fitness=0.8))
-    assert a.best().fitness == 0.8
+    assert a._grid[(0, 0, 0)].fitness == 0.8
 
 def test_lower_does_not_replace():
-    a = MAPElites()
+    a = MAPElites(bins=1)
     a.add(_p(code="x=1", fitness=0.8))
     a.add(_p(code="x=1", fitness=0.3))
-    assert a.best().fitness == 0.8
+    assert a._grid[(0, 0, 0)].fitness == 0.8
 
 def test_occupied_cells_nonempty():
     a = MAPElites(); a.add(_p())

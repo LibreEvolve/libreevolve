@@ -26,7 +26,7 @@ def build_prompt(parent: Program, inspirations: list[Program],
 
 
 def evolve(problem: Problem, config: Config,
-           plugins: list[PluginBase] | None = None) -> Program:
+           plugins: list[PluginBase] | None = None) -> "Program | None":
     if plugins is None:
         plugins = []
     db        = ProgramDatabase(config)
@@ -62,7 +62,7 @@ def evolve(problem: Problem, config: Config,
 
         for plugin in plugins:
             score = plugin.on_evaluated(program, score)
-        program.fitness = score
+            program.fitness = score  # keep in sync for next plugin
 
         db.log(program)
         if score >= VALID_THRESHOLD:
@@ -71,7 +71,8 @@ def evolve(problem: Problem, config: Config,
         llm.record_reward(backend_idx, max(0.0, score - parent.fitness))
         db.maybe_migrate(gen)
 
+        best = db.best()
         for plugin in plugins:
-            plugin.on_generation_end(gen, db.best())
+            plugin.on_generation_end(gen, best)
 
     return db.best()

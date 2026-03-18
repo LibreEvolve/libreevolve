@@ -52,8 +52,8 @@ class CascadeEvaluator:
                 return -0.2
             try:
                 m = json.loads(res.stdout.strip())
-            except (json.JSONDecodeError, ValueError):
+                if not m.get("is_valid", False):
+                    return -0.1
+                return float(m[self._problem.primary_metric])
+            except (json.JSONDecodeError, ValueError, KeyError, TypeError):
                 return -0.2
-            if not m.get("is_valid", False):
-                return -0.1
-            return float(m[self._problem.primary_metric])

@@ -53,3 +53,22 @@ def test_t2_success():
     p, d = _problem("def evaluate(c): return {'score':0.42,'is_valid':True}")
     try: assert abs(CascadeEvaluator(p).evaluate("x=1", None) - 0.42) < 1e-9
     finally: shutil.rmtree(d)
+
+def test_t2_timeout():
+    p, d = _problem("import time\ndef evaluate(c): time.sleep(30); return {'score':1.0,'is_valid':True}")
+    try:
+        ev = CascadeEvaluator(p, timeout_sec=0.5)
+        assert ev.evaluate("x=1", None) == -0.2
+    finally:
+        shutil.rmtree(d)
+
+def test_t2_bad_json():
+    # validate.py prints non-JSON stdout but exits 0
+    p, d = _problem(
+        "def evaluate(c):\n"
+        "    import sys; sys.stdout.write('not-json\\n'); raise SystemExit(0)"
+    )
+    try:
+        assert CascadeEvaluator(p).evaluate("x=1", None) == -0.2
+    finally:
+        shutil.rmtree(d)

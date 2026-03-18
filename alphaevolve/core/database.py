@@ -39,7 +39,7 @@ class ProgramDatabase:
         return self._islands.best()
 
     def maybe_migrate(self, gen: int) -> None:
-        if gen > 0 and gen % self._interval == 0:
+        if self._interval > 0 and gen > 0 and gen % self._interval == 0:
             self._islands.migrate()
 
     def all_programs(self) -> list[Program]:

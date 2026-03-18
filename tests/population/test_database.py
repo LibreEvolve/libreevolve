@@ -32,8 +32,13 @@ def test_log_writes_jsonl():
     records = [json.loads(l) for l in (Path(tmpdir)/"t"/"history.jsonl").read_text().splitlines()]
     assert records[0]["fitness"] == 0.5
 
-def test_maybe_migrate_no_crash():
+def test_maybe_migrate_triggers_on_interval():
     db = ProgramDatabase(Config(migration_interval=5, n_islands=2,
                                 log_dir=tempfile.mkdtemp(), problem_name="t"))
     p = _p(); db.log(p); db.add(p)
-    db.maybe_migrate(4); db.maybe_migrate(5)
+    # Before interval: island 1 has nothing
+    assert db._islands.islands[1].best() is None
+    db.maybe_migrate(4)  # not a multiple of 5 — no migration
+    assert db._islands.islands[1].best() is None
+    db.maybe_migrate(5)  # multiple of 5 — migration fires
+    assert db._islands.islands[1].best() is not None

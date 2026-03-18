@@ -33,3 +33,13 @@ def test_ring_topology():
     m.migrate()
     assert m.islands[1].best() is not None
     assert m.islands[2].best() is None  # 0 does not reach 2 directly
+
+def test_migration_snapshot_prevents_cascade():
+    """With pre-populated islands, island 0 should not reach island 2 in one migrate()."""
+    m = IslandModel(Config(n_islands=3, migration_ratio=1.0, elite_archive_size=10))
+    m.islands[0].add(_p(code="i0", fitness=1.0))
+    m.islands[1].add(_p(code="i1", fitness=0.5))
+    m.migrate()
+    # Island 2 should get island 1's original program (fitness 0.5), not island 0's (fitness 1.0)
+    best2 = m.islands[2].best()
+    assert best2 is not None and best2.fitness == 0.5

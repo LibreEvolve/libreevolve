@@ -34,3 +34,10 @@ def test_original_unchanged_on_error():
     original = "def foo():\n    pass"
     code, _ = apply_diff(original, "no blocks")
     assert code == original
+
+def test_partial_apply_is_atomic():
+    """If the second block fails, the first block's changes must be rolled back."""
+    code = "a = 1\nb = 2"
+    diff = "<<<SEARCH\na = 1\n===\na = 10\n>>>REPLACE\n<<<SEARCH\nZZZZ\n===\nno\n>>>REPLACE"
+    result, err = apply_diff(code, diff)
+    assert result == code and err == "search_not_found"

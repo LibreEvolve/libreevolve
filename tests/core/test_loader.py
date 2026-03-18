@@ -42,7 +42,24 @@ def test_raises_on_no_seeds():
             load_problem(d)
 
 def test_hello_world_example_loads():
-    examples = Path(__file__).parent.parent / "alphaevolve/problems/examples/hello_world"
-    if examples.exists():
-        p = load_problem(examples)
-        assert p.name == "hello_world" and len(p.initial_programs) >= 1
+    examples = Path(__file__).parent.parent.parent / "alphaevolve/problems/examples/hello_world"
+    if not examples.exists():
+        pytest.skip("hello_world example not present")
+    p = load_problem(examples)
+    assert p.name == "hello_world" and len(p.initial_programs) >= 1
+
+def test_primary_bounds_default_when_missing():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "metrics.yaml").write_text(yaml.dump({"metrics": [
+            {"name": "score", "direction": "maximize", "primary": True}
+        ]}))
+        p = load_problem(d)
+        assert p.primary_bounds == (0.0, 1.0)
+
+def test_raises_on_malformed_metrics_yaml():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "metrics.yaml").write_text("not_metrics: true")
+        with pytest.raises(ValueError, match="metrics"):
+            load_problem(d)

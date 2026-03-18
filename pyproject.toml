@@ -1,5 +1,6 @@
 [build-system]
 requires = ["setuptools>=68"]
+# setuptools.backends.legacy:build unavailable in this env; .build_meta is the identical canonical alias
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -30,6 +31,7 @@ where = ["."]
 include = ["alphaevolve*"]
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
 markers = [
     "integration: marks tests requiring API keys",
 ]

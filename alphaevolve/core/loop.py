@@ -21,9 +21,10 @@ def build_prompt(parent: Program, inspirations: list[Program],
             f"```python\n{parent.code}\n```\n"
             f"\n[INSPIRATION PROGRAMS]{insp}\n"
             f"[EXTRA CONTEXT]\n{extra_context}\n\n"
-            f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs only.\n"
-            f"Do NOT add comments to the code. Output only the diff block, nothing else.\n\n"
-            f"<<<SEARCH\n<exact lines to replace>\n===\n<replacement lines>\n>>>REPLACE\n")
+            f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs.\n"
+            f"Rules: No comments. No markdown fences. No explanation. Just the raw diff block.\n\n"
+            f"Example format (do NOT copy this, use actual code from the program above):\n"
+            f"<<<SEARCH\ndef foo():\n    return 1\n===\ndef foo():\n    return 2\n>>>REPLACE\n")
 
 
 def evolve(problem: Problem, config: Config,

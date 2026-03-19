@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-mark.svg" width="80" height="80" alt="LibreEvolve logo">
+  <img src="assets/logo-mark.svg" width="100" height="100" alt="LibreEvolve logo">
 </p>
 
 <h1 align="center">LibreEvolve</h1>
@@ -9,31 +9,40 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-00FF41?style=flat-square" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/python-3.11+-00D4FF?style=flat-square" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/tests-115%20passed-00FF41?style=flat-square" alt="Tests">
-  <img src="https://img.shields.io/badge/papers-23-FFB800?style=flat-square" alt="Papers">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-00FF41?style=flat-square&labelColor=161B22" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/python-3.11+-00D4FF?style=flat-square&labelColor=161B22" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/tests-115%20passed-00FF41?style=flat-square&labelColor=161B22" alt="Tests">
+  <img src="https://img.shields.io/badge/papers-23-FFB800?style=flat-square&labelColor=161B22" alt="Papers">
+  <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-8B949E?style=flat-square&labelColor=161B22" alt="Website"></a>
 </p>
 
----
+<br>
 
-LibreEvolve is an open-source Python framework for automated algorithm discovery and code optimization using large language models (LLMs) and evolutionary computation. Inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131) (Google DeepMind, 2025), it evolves better programs through LLM-generated SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+<p align="center">
+  <em>Feed it a problem, a seed program, and any LLM — it evolves better solutions automatically.</em>
+</p>
 
-Feed it a problem, a seed program, and any LLM backend (OpenAI, Anthropic Claude, or local Ollama models) — LibreEvolve evolves better solutions automatically.
+<br>
 
-Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech). Website: [libreevolve.com](https://libreevolve.com)
+LibreEvolve is an open-source Python framework for **automated algorithm discovery** and **code optimization** using large language models and evolutionary computation. Inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131) (Google DeepMind, 2025), it evolves better programs through LLM-generated SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+
+Works with **OpenAI** (GPT-4o, GPT-5.4, o-series reasoning models), **Anthropic Claude** (Sonnet, Opus, Haiku), and **local models via Ollama** (Llama, Mistral, Qwen — any model).
+
+Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
 ## Key Features
 
-- **Multi-LLM support** — OpenAI (GPT-4o, GPT-5.4, o-series reasoning models), Anthropic (Claude Sonnet/Opus), and Ollama (Llama, Mistral, any local model)
-- **MAP-Elites quality-diversity archive** — 3D grid mapping performance, complexity, and TF-IDF diversity so evolution explores broadly, not just greedily
-- **5-island ring migration** — Parallel populations with periodic migration prevent premature convergence (70% exploit best / 30% explore random)
-- **UCB1 bandit LLM ensemble** — Automatically routes mutations to the best-performing LLM backend using multi-armed bandit selection
-- **Cascade evaluator** — Three-tier evaluation (diff penalties → syntax check → subprocess execution) filters bad mutations cheaply before expensive evaluation
-- **SEARCH/REPLACE diff engine** — LLMs propose targeted code edits, not full rewrites — enabling precise, composable mutations
-- **Failure history in prompts** — Last 5 failed mutations are shown to the LLM to prevent repetitive dead-end exploration
-- **Plugin system** — 4 lifecycle hooks for extending behavior (CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve)
-- **115 unit tests** — Comprehensive test coverage across all components
+| | Feature | Description |
+|:---:|---|---|
+| 🧠 | **Multi-LLM support** | OpenAI (GPT-4o, GPT-5.4, o-series), Anthropic (Claude Sonnet/Opus), Ollama (any local model) |
+| 🗺️ | **MAP-Elites archive** | 3D quality-diversity grid mapping performance, complexity, and TF-IDF diversity |
+| 🏝️ | **5-island migration** | Parallel populations with ring-topology migration (70% exploit / 30% explore) |
+| 🎰 | **UCB1 bandit ensemble** | Automatically routes mutations to the best-performing LLM backend |
+| ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
+| 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
+| 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
+| 🔌 | **Plugin system** | 4 lifecycle hooks (CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve) |
+| ✅ | **115 unit tests** | Comprehensive test coverage across all components |
 
 ## LibreEvolve vs AlphaEvolve
 
@@ -104,16 +113,31 @@ def solve():
 
 ## How LLM-Guided Evolution Works
 
-```
-Seed Program -> LLM generates SEARCH/REPLACE diff
-             -> Cascade Evaluator (penalty -> syntax -> subprocess)
-             -> MAP-Elites archive (performance x complexity x diversity)
-             -> 5-island ring-topology migration
-             -> UCB1 bandit selects next LLM backend
-             -> Repeat
+```mermaid
+graph LR
+    A[🌱 Seed Program] --> B[🧠 LLM Mutation]
+    B --> C[⚡ Cascade Evaluator]
+    C -->|valid| D[🗺️ MAP-Elites Archive]
+    C -->|invalid| E[📜 Failure History]
+    E --> B
+    D --> F[🏝️ Island Migration]
+    F --> G[🎰 UCB1 Backend Selection]
+    G --> B
+
+    style A fill:#161B22,stroke:#00FF41,color:#E6EDF3
+    style B fill:#161B22,stroke:#00FF41,color:#E6EDF3
+    style C fill:#161B22,stroke:#00FF41,color:#E6EDF3
+    style D fill:#161B22,stroke:#00FF41,color:#E6EDF3
+    style E fill:#161B22,stroke:#FF4444,color:#E6EDF3
+    style F fill:#161B22,stroke:#00FF41,color:#E6EDF3
+    style G fill:#161B22,stroke:#FFB800,color:#E6EDF3
 ```
 
-Each generation:
+<details>
+<summary><b>Step-by-step breakdown</b></summary>
+
+<br>
+
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
 2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent failure history
 3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff (targeted edit, not full rewrite)
@@ -122,6 +146,8 @@ Each generation:
 6. **Failure tracking** — Failed mutations are tracked and shown in subsequent prompts to avoid repeats
 7. **Backend reward** — UCB1 bandit rewards the LLM backend based on fitness improvement
 8. **Island migration** — Periodic migration spreads good solutions across islands
+
+</details>
 
 ## Example Runs
 
@@ -183,7 +209,8 @@ python -m libreevolve run my_problem/ \
     --backends ollama:llama3
 ```
 
-## Architecture
+<details>
+<summary><h2>Architecture</h2></summary>
 
 ```
 libreevolve/
@@ -212,6 +239,8 @@ libreevolve/
     ├── loader.py         # load_problem() + Problem dataclass
     └── examples/         # hello_world, circle_packing, sorting
 ```
+
+</details>
 
 ## Creating a Custom Problem
 
@@ -288,19 +317,24 @@ pytest tests/ -m "not integration"
 pytest tests/integration/ -m integration
 ```
 
-## Benchmarks and Lessons from Live Testing
+<details>
+<summary><h2>Benchmarks and Lessons from Live Testing</h2></summary>
+
+<br>
 
 **Model selection matters more than generation count:**
-- gpt-4o-mini found optimal circle packing (25 circles) in 2 generations
-- gpt-5.4-mini took a longer path (16 -> 23 -> 25) but explored creative hex packing strategies along the way
+- gpt-4o-mini found optimal circle packing (25 circles) in **2 generations**
+- gpt-5.4-mini took a longer path (16 → 23 → 25) but explored creative hex packing strategies
 
 **Reasoning effort tradeoffs (gpt-5.4-nano on circle packing):**
 
 | Effort | Reasoning tokens | Response tokens | Result |
-|--------|-----------------|-----------------|--------|
-| none   | 0               | 347             | Hex packing (invalid, floating-point boundary) |
-| high   | 608             | 119             | 5x5 grid (optimal, 25 circles) |
-| xhigh  | 74,729          | 99              | 5x5 grid (same answer, 124x more tokens) |
+|--------|:---:|:---:|--------|
+| none   | 0 | 347 | Hex packing (invalid, floating-point boundary) |
+| high   | 608 | 119 | **5x5 grid (optimal, 25 circles)** |
+| xhigh  | 74,729 | 99 | 5x5 grid (same answer, 124x more tokens) |
+
+> **Takeaway:** `high` reasoning effort hits the sweet spot — optimal result with minimal token cost.
 
 **Prompt engineering for LLM-guided evolution:**
 - Models wrap diffs in markdown fences — the diff engine strips them automatically
@@ -312,27 +346,38 @@ pytest tests/integration/ -m integration
 - Suboptimal seeds (hello_world, circle_packing) produce rich evolutionary trajectories
 - Already-optimal seeds (sorting's bubble sort) still evolve *different implementations* at the same fitness level
 
-## Research Papers
+</details>
 
-Grounded in 23 research papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization:
+<details>
+<summary><h2>Research Papers (23)</h2></summary>
+
+<br>
+
+Grounded in 23 research papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization.
 
 **Core system papers:**
 
-- **AlphaEvolve** — Novikov et al., "AlphaEvolve: A coding agent for scientific and algorithmic discovery," Google DeepMind, 2025. [arXiv:2506.13131](https://arxiv.org/abs/2506.13131)
-- **GigaEvo** — Khrulkov et al., "GigaEvo: An Open Source Optimization Framework Powered By LLMs And Evolution Algorithms," 2025. [arXiv:2511.17592](https://arxiv.org/abs/2511.17592)
-- **CodeEvolve** — Assumpção et al., "CodeEvolve: An open source evolutionary coding agent for algorithmic discovery and optimization," 2025. [arXiv:2510.14150](https://arxiv.org/abs/2510.14150)
-- **ThetaEvolve** — Wang et al., "ThetaEvolve: Test-time Learning on Open Problems," 2025. [arXiv:2511.23473](https://arxiv.org/abs/2511.23473)
-- **ImprovEvolve** — Kravatskiy, Khrulkov & Oseledets, "ImprovEvolve: Ask AlphaEvolve to Improve the Input Solution and Then Improvise," 2026. [arXiv:2602.10233](https://arxiv.org/abs/2602.10233)
-- **MadEvolve** — Li, Zang & Münchmeyer, "MadEvolve: Evolutionary Optimization of Cosmological Algorithms with Large Language Models," 2026. [arXiv:2602.15951](https://arxiv.org/abs/2602.15951)
-- **CausalEvolve** — Chen et al., "CausalEvolve: Towards Open-Ended Discovery with Causal Scratchpad," 2026. [arXiv:2603.14575](https://arxiv.org/abs/2603.14575)
-- **DeepEvolve** — Liu et al., "Scientific Algorithm Discovery by Augmenting AlphaEvolve with Deep Research," 2025. [arXiv:2510.06056](https://arxiv.org/abs/2510.06056)
+| Paper | Authors | Year | Role in LibreEvolve |
+|-------|---------|:----:|---------------------|
+| [**AlphaEvolve**](https://arxiv.org/abs/2506.13131) | Novikov et al. (Google DeepMind) | 2025 | Core architecture inspiration |
+| [**GigaEvo**](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | 2025 | Open-source framework patterns |
+| [**CodeEvolve**](https://arxiv.org/abs/2510.14150) | Assumpção et al. | 2025 | Evolutionary coding agent design |
+| [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | GRPO training data plugin |
+| [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Modular decomposition plugin |
+| [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-specific evolution |
+| [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Causal scratchpad plugin |
+| [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Web search augmentation plugin |
 
 **Foundational algorithms:**
 
-- **MAP-Elites** — Mouret & Clune, "Illuminating search spaces by mapping elites," 2015.
-- **UCB1** — Auer, Cesa-Bianchi & Fischer, "Finite-time Analysis of the Multiarmed Bandit Problem," 2002.
+| Paper | Authors | Year | Role |
+|-------|---------|:----:|------|
+| **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive |
+| **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Multi-armed bandit selection |
 
-See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for the full list of all 23 papers with roles.
+See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for all 23 papers with roles.
+
+</details>
 
 ## Contributing
 

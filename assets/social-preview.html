@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LibreEvolve Social Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@400&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px;
+    height: 640px;
+    overflow: hidden;
+    background: #0D1117;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .card {
+    width: 1280px;
+    height: 640px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Animated grid */
+  .grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.035;
+    background-image:
+      linear-gradient(#00FF41 1px, transparent 1px),
+      linear-gradient(90deg, #00FF41 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Bottom glow */
+  .glow-bottom {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 400px;
+    background: radial-gradient(ellipse at center, rgba(0,255,65,0.12) 0%, transparent 70%);
+  }
+
+  /* Top-left accent glow */
+  .glow-top {
+    position: absolute;
+    top: -120px;
+    left: -120px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0,255,65,0.04) 0%, transparent 60%);
+  }
+
+  /* Floating code snippets in background */
+  .bg-code {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    color: #00FF41;
+    white-space: nowrap;
+  }
+  .bg-code.c1 { top: 60px; left: 80px; font-size: 13px; opacity: 0.06; }
+  .bg-code.c2 { top: 120px; right: 60px; font-size: 11px; opacity: 0.05; }
+  .bg-code.c3 { bottom: 100px; left: 120px; font-size: 12px; opacity: 0.05; }
+  .bg-code.c4 { bottom: 60px; right: 100px; font-size: 13px; opacity: 0.06; }
+  .bg-code.c5 { top: 200px; left: 40px; font-size: 10px; opacity: 0.04; }
+  .bg-code.c6 { top: 180px; right: 140px; font-size: 11px; opacity: 0.04; }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  /* Logo mark */
+  .mark {
+    margin-bottom: 28px;
+  }
+  .mark svg {
+    filter: drop-shadow(0 0 30px rgba(0,255,65,0.25)) drop-shadow(0 0 60px rgba(0,255,65,0.1));
+  }
+
+  .title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    margin-bottom: 20px;
+    line-height: 1;
+  }
+  .title .libre { color: #E6EDF3; }
+  .title .evolve { color: #00FF41; }
+
+  .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: #8B949E;
+    max-width: 700px;
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+
+  .pills {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,255,65,0.2);
+    color: #00FF41;
+    background: rgba(0,255,65,0.05);
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+  }
+  .footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #8B949E;
+    letter-spacing: 0.5px;
+  }
+  .footer-text a {
+    color: #00CC33;
+    text-decoration: none;
+  }
+  .footer-dot {
+    width: 4px;
+    height: 4px;
+    background: #30363D;
+    border-radius: 50%;
+  }
+
+  /* Decorative corner brackets */
+  .corner { position: absolute; z-index: 1; }
+  .corner svg { opacity: 0.08; }
+  .corner.tl { top: 24px; left: 24px; }
+  .corner.tr { top: 24px; right: 24px; transform: scaleX(-1); }
+  .corner.bl { bottom: 24px; left: 24px; transform: scaleY(-1); }
+  .corner.br { bottom: 24px; right: 24px; transform: scale(-1); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="grid"></div>
+  <div class="glow-bottom"></div>
+  <div class="glow-top"></div>
+
+  <!-- Background code fragments -->
+  <div class="bg-code c1"><<<SEARCH def solve(): ===</div>
+  <div class="bg-code c2">>>> REPLACE return optimized_solution()</div>
+  <div class="bg-code c3">map_elites.add(program, fitness=25.0)</div>
+  <div class="bg-code c4">ucb1_score = mean + sqrt(2 * ln(N) / n)</div>
+  <div class="bg-code c5">islands[i].migrate(best, ring_topology)</div>
+  <div class="bg-code c6">cascade.evaluate(tier=0, tier=1, tier=2)</div>
+
+  <!-- Corner brackets -->
+  <div class="corner tl"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#00FF41" stroke-width="1.5"/></svg></div>
+  <div class="corner tr"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#00FF41" stroke-width="1.5"/></svg></div>
+  <div class="corner bl"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#00FF41" stroke-width="1.5"/></svg></div>
+  <div class="corner br"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#00FF41" stroke-width="1.5"/></svg></div>
+
+  <div class="content">
+    <div class="mark">
+      <svg width="88" height="88" viewBox="0 0 80 80" fill="none">
+        <g stroke="#00FF41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.15">
+          <polyline points="12,68 22,62 12,56"/>
+          <polyline points="26,68 36,62 26,56"/>
+          <polyline points="40,68 50,62 40,56"/>
+        </g>
+        <g stroke="#00FF41" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35">
+          <polyline points="16,52 28,45 16,38"/>
+          <polyline points="32,52 44,45 32,38"/>
+        </g>
+        <g stroke="#00FF41" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.65">
+          <polyline points="22,36 36,28 22,20"/>
+        </g>
+        <g stroke="#00FF41" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="40" y1="32" x2="40" y2="8"/>
+          <polyline points="32,16 40,8 48,16"/>
+        </g>
+        <circle cx="40" cy="8" r="3" fill="#00FF41" opacity="0.9"/>
+        <circle cx="40" cy="8" r="8" fill="#00FF41" opacity="0.08"/>
+      </svg>
+    </div>
+    <div class="title">
+      <span class="libre">Libre</span><span class="evolve">Evolve</span>
+    </div>
+    <div class="tagline">Open-source LLM-guided evolutionary program discovery</div>
+    <div class="pills">
+      <span class="pill">MAP-Elites</span>
+      <span class="pill">Island Migration</span>
+      <span class="pill">Multi-LLM Bandit</span>
+      <span class="pill">Cascade Evaluation</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-text">MIT</span>
+    <span class="footer-dot"></span>
+    <span class="footer-text">Inspired by AlphaEvolve (Google DeepMind)</span>
+    <span class="footer-dot"></span>
+    <span class="footer-text">built by <a>complete.tech</a></span>
+  </div>
+</div>
+</body>
+</html>

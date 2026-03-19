@@ -2,7 +2,10 @@ from __future__ import annotations
 import dataclasses, json
 from pathlib import Path
 import click
+from dotenv import load_dotenv
 from alphaevolve.core.loop import evolve
+
+load_dotenv(override=True)
 
 
 @click.group()
@@ -16,14 +19,17 @@ def cli() -> None:
 @click.option("--plugins",  "-p", multiple=True)
 @click.option("--backends", "-b", multiple=True)
 @click.option("--seed", type=int, default=None)
-def run(problem_dir, max_generations, plugins, backends, seed):
+@click.option("--reasoning-effort", "-r", type=str, default=None,
+              help="Reasoning effort for OpenAI reasoning models (e.g. low, medium, high, xhigh)")
+def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort):
     """Run evolution on a problem directory."""
     from alphaevolve.core.config import Config
     from alphaevolve.problems.loader import load_problem
     problem = load_problem(problem_dir)
     if not problem.initial_programs:
         raise click.ClickException("No seed programs found.")
-    config = _build_config(problem, max_generations, list(plugins), list(backends), seed)
+    config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
+                           reasoning_effort)
     active_plugins = _load_plugins(config.plugins)
     click.echo(f"Running {config.max_generations} generations on '{problem.name}'...")
     best = evolve(problem, config, active_plugins)
@@ -53,7 +59,8 @@ def show(run_dir):
     click.echo(best["code"])
 
 
-def _build_config(problem, max_generations, plugins, backends, seed):
+def _build_config(problem, max_generations, plugins, backends, seed,
+                  reasoning_effort=None):
     import yaml
     from alphaevolve.core.config import Config
     cfg: dict = {}
@@ -65,8 +72,11 @@ def _build_config(problem, max_generations, plugins, backends, seed):
     if max_generations is not None: config.max_generations = max_generations
     if plugins: config.plugins = list(plugins)
     if backends:
-        config.backends = [{"type": t, "model": m}
-                           for b in backends for t, _, m in [b.partition(":")]]
+        bd = [{"type": t, "model": m} for b in backends for t, _, m in [b.partition(":")]]
+        if reasoning_effort:
+            for d in bd:
+                d["reasoning_effort"] = reasoning_effort
+        config.backends = bd
     if seed is not None: config.seed = seed
     config.problem_name = problem.name
     return config

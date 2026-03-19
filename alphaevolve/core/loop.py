@@ -21,7 +21,8 @@ def build_prompt(parent: Program, inspirations: list[Program],
             f"```python\n{parent.code}\n```\n"
             f"\n[INSPIRATION PROGRAMS]{insp}\n"
             f"[EXTRA CONTEXT]\n{extra_context}\n\n"
-            f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs only:\n\n"
+            f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs only.\n"
+            f"Do NOT add comments to the code. Output only the diff block, nothing else.\n\n"
             f"<<<SEARCH\n<exact lines to replace>\n===\n<replacement lines>\n>>>REPLACE\n")
 
 

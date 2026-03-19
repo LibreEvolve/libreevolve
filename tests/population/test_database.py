@@ -1,8 +1,8 @@
 import json, tempfile
 from pathlib import Path
-from alphaevolve.core.config import Config
-from alphaevolve.core.database import ProgramDatabase
-from alphaevolve.population.program import Program
+from libreevolve.core.config import Config
+from libreevolve.core.database import ProgramDatabase
+from libreevolve.population.program import Program
 
 def _db(): return ProgramDatabase(Config(log_dir=tempfile.mkdtemp(), problem_name="t"))
 def _p(code="x=1", fitness=0.5): return Program(code=code, fitness=fitness)

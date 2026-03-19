@@ -1,4 +1,4 @@
-from alphaevolve.core.diff import apply_diff
+from libreevolve.core.diff import apply_diff
 
 def test_no_blocks():
     code, err = apply_diff("x = 1", "no diff here")

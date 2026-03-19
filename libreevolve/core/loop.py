@@ -1,13 +1,18 @@
+"""Core evolution loop: prompt construction, LLM-driven mutation, evaluation.
+
+Source: AlphaEvolve (arXiv:2506.13131) — core loop structure, explore/exploit
+sampling, and failure history in prompt from CodeEvolve (arXiv:2510.14150).
+"""
 from __future__ import annotations
 import random
-from alphaevolve.core.config import Config
-from alphaevolve.core.database import ProgramDatabase
-from alphaevolve.core.diff import apply_diff
-from alphaevolve.core.evaluator import CascadeEvaluator
-from alphaevolve.llm.ensemble import build_llm
-from alphaevolve.plugins.base import PluginBase
-from alphaevolve.population.program import Program
-from alphaevolve.problems.loader import Problem
+from libreevolve.core.config import Config
+from libreevolve.core.database import ProgramDatabase
+from libreevolve.core.diff import apply_diff
+from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.llm.ensemble import build_llm
+from libreevolve.plugins.base import PluginBase
+from libreevolve.population.program import Program
+from libreevolve.problems.loader import Problem
 
 VALID_THRESHOLD = 0.0
 
@@ -39,6 +44,7 @@ def evolve(problem: Problem, config: Config,
            plugins: list[PluginBase] | None = None) -> "Program | None":
     if plugins is None:
         plugins = []
+    random.seed(config.seed)
     db        = ProgramDatabase(config)
     evaluator = CascadeEvaluator(problem, timeout_sec=config.eval_timeout_sec)
     llm       = build_llm(config)
@@ -78,7 +84,9 @@ def evolve(problem: Problem, config: Config,
 
         # Construct Program BEFORE calling on_evaluated (plugins need full object)
         program = Program(code=child_code, fitness=score,
-                          parent_id=parent.id, generation=gen)
+                          parent_id=parent.id, generation=gen,
+                          lineage=parent.lineage + [parent.id],
+                          metadata={"prompt": prompt, "diff": diff})
 
         for plugin in plugins:
             score = plugin.on_evaluated(program, score)

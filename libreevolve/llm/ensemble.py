@@ -1,10 +1,14 @@
 from __future__ import annotations
 import math
-from alphaevolve.llm.base import LLMBackend
+from libreevolve.llm.base import LLMBackend
 
 
 class LLMEnsemble:
-    """UCB1-bandit routing layer over one or more LLMBackend instances."""
+    """UCB1-bandit routing layer over one or more LLMBackend instances.
+
+    Sources: UCB1 (Auer, Cesa-Bianchi & Fischer, 2002), applied to LLM
+    selection per MadEvolve (arXiv:2602.15951).
+    """
 
     def __init__(self, backends: list[LLMBackend], explore_coeff: float = 1.0):
         if not backends:
@@ -49,9 +53,9 @@ class LLMEnsemble:
 
 def build_llm(config) -> LLMEnsemble:
     """Instantiate LLMEnsemble from config.backends."""
-    from alphaevolve.llm.anthropic import AnthropicBackend
-    from alphaevolve.llm.openai    import OpenAIBackend
-    from alphaevolve.llm.ollama    import OllamaBackend
+    from libreevolve.llm.anthropic import AnthropicBackend
+    from libreevolve.llm.openai    import OpenAIBackend
+    from libreevolve.llm.ollama    import OllamaBackend
     _REG = {"anthropic": AnthropicBackend, "openai": OpenAIBackend, "ollama": OllamaBackend}
     backends = []
     for s in config.backends:

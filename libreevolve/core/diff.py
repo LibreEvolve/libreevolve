@@ -1,3 +1,8 @@
+"""SEARCH/REPLACE diff engine.
+
+Source: AlphaEvolve (arXiv:2506.13131) — consensus diff format across all
+8 core system papers; prevents wholesale rewrites via surgical mutations.
+"""
 from __future__ import annotations
 import re
 

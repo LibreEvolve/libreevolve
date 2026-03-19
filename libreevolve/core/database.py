@@ -1,13 +1,16 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from alphaevolve.core.config import Config
-from alphaevolve.population.islands import IslandModel
-from alphaevolve.population.program import Program
+from libreevolve.core.config import Config
+from libreevolve.population.islands import IslandModel
+from libreevolve.population.program import Program
 
 
 class ProgramDatabase:
-    """Facade: IslandModel + append-only history.jsonl."""
+    """Facade: IslandModel + append-only history.jsonl.
+
+    Source: append-only JSONL lineage log from GigaEvo (arXiv:2511.17592).
+    """
 
     def __init__(self, config: Config):
         self._islands = IslandModel(config)

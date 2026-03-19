@@ -2,11 +2,11 @@ from __future__ import annotations
 from abc import ABC
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from alphaevolve.core.database import ProgramDatabase
-    from alphaevolve.population.program import Program
+    from libreevolve.core.database import ProgramDatabase
+    from libreevolve.population.program import Program
 
 class PluginBase(ABC):
-    """Base class for AlphaEvolve plugins. Override only the hooks you need."""
+    """Base class for LibreEvolve plugins. Override only the hooks you need."""
     def on_generation_start(self, gen: int, db: "ProgramDatabase") -> None:
         pass
     def on_evaluated(self, program: "Program", score: float) -> float:

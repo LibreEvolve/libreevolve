@@ -10,7 +10,7 @@
 
 AlphaEvolve is a Python research tool for LLM-guided evolutionary algorithm and program discovery. It combines an evolutionary computation engine with pluggable LLM backends to iteratively generate, evaluate, and evolve candidate programs. The architecture is layered: a minimal runnable core with well-defined extension slots that allow advanced research techniques from the literature to be activated as plugins.
 
-**Grounded in:** 22 research papers. See Section 15 (References) for the full list.
+**Grounded in:** 23 research papers. See Section 15 (References) for the full list.
 
 ---
 
@@ -535,29 +535,42 @@ evolve(problem, config, plugins)
 
 ## 15. References
 
-All 22 papers read during design:
+All 23 papers read during design:
 
-| arXiv ID | Title (short) | Role in this design |
-|----------|---------------|---------------------|
-| 2506.13131 | AlphaEvolve (DeepMind) | Core loop, diff format, MAP-Elites + islands, LLM ensemble, cascade eval |
-| 2511.17592 | GigaEvo | Redis/JSONL persistence, bidirectional lineage, rewrite vs diff, Hydra config, problem dir convention |
-| 2510.14150 | CodeEvolve | Island ring topology ablations, depth exploitation, meta-prompting, plateau scheduler |
-| 2511.23473 | ThetaEvolve | Lazy penalty system, large database sizing, batch sampling, test-time RL |
-| 2602.10233 | ImprovEvolve | Modular decomposition plugin, basin-hopping, two-tier LLM strategy |
-| 2602.15951 | MadEvolve | UCB1 bandit LLM selection, 3D MAP-Elites dimensions, autodiff parameter opt |
-| 2603.14575 | CausalEvolve | Causal scratchpad plugin, MAB outcome-factor guidance, abductive reasoning |
-| 2510.06056 | DeepEvolve | Deep research plugin, automatic debugging, MAP-Elites 3D behavioral archive |
-| 2601.21096 | Magellan | EVOLVE-BLOCK comments, continuation strategy, cascaded eval timing |
-| 2602.22425 | ArchAgent | Rich prompt engineering, cascaded eval (fast/authoritative), constraint enforcement |
-| 2602.16928 | Multiagent Learning | Constrained search spaces, multi-game fitness, semantic mutation |
-| 2603.09172 | Ramsey Numbers | Two-graph execution pattern, prospect bonus, meta-level algorithm discovery |
-| 2509.18057 | Hardness of Approximation | Code-level evolution of verifiers, smooth scoring landscapes, GA for prompt selection |
-| 2603.06692 | Combinatorics (Bérczy) | Harness design principles, symmetry-robust aggregation, AI summaries |
-| 2601.16175 | TTT-Discover | PUCT state reuse, entropic RL objective, dynamic environments |
-| 2603.08679 | Bilateral Trade | Program synthesis over numerical opt, precision arithmetic |
-| 2601.01235 | Bruhat Intervals | Prompt engineering with mathematical hints, generalizer mode |
-| 2511.12916 | Fault2Flow | Multi-island elite exchange, structured output evolution |
-| 2601.05943 | Global NLP Optimization | Complementary solver approach; informed harness design section |
-| 2506.16750 | Autoconvolution (pure math) | AlphaEvolve used as benchmark; gradient-based complement |
-| 2505.16105 | Sums and Differences | Two-stage eval (float screen + exact verify), parametric construction |
-| 2506.01896 | Sums and Differences II | Large-deviation asymptotic analysis; injectivity constraint design |
+### Foundational algorithms
+
+- **MAP-Elites**: Mouret & Clune, "Illuminating search spaces by mapping elites," 2015.
+- **UCB1**: Auer, Cesa-Bianchi & Fischer, "Finite-time Analysis of the Multiarmed Bandit Problem," *Machine Learning* 47(2-3), 2002.
+
+### Core system papers
+
+| arXiv ID | Authors | Full title | Role in this design |
+|----------|---------|------------|---------------------|
+| [2506.13131](https://arxiv.org/abs/2506.13131) | Novikov et al. (Google DeepMind) | AlphaEvolve: A coding agent for scientific and algorithmic discovery | Core loop, diff format, MAP-Elites + islands, LLM ensemble, cascade eval |
+| [2511.17592](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | GigaEvo: An Open Source Optimization Framework Powered By LLMs And Evolution Algorithms | Redis/JSONL persistence, bidirectional lineage, rewrite vs diff, Hydra config, problem dir convention |
+| [2510.14150](https://arxiv.org/abs/2510.14150) | Assumpção et al. | CodeEvolve: An open source evolutionary coding agent for algorithmic discovery and optimization | Island ring topology ablations, depth exploitation, meta-prompting, plateau scheduler |
+| [2511.23473](https://arxiv.org/abs/2511.23473) | Wang et al. | ThetaEvolve: Test-time Learning on Open Problems | Lazy penalty system, large database sizing, batch sampling, test-time RL |
+| [2602.10233](https://arxiv.org/abs/2602.10233) | Kravatskiy, Khrulkov & Oseledets | ImprovEvolve: Ask AlphaEvolve to Improve the Input Solution and Then Improvise | Modular decomposition plugin, basin-hopping, two-tier LLM strategy |
+| [2602.15951](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | MadEvolve: Evolutionary Optimization of Cosmological Algorithms with Large Language Models | UCB1 bandit LLM selection, 3D MAP-Elites dimensions, autodiff parameter opt |
+| [2603.14575](https://arxiv.org/abs/2603.14575) | Chen et al. | CausalEvolve: Towards Open-Ended Discovery with Causal Scratchpad | Causal scratchpad plugin, MAB outcome-factor guidance, abductive reasoning |
+| [2510.06056](https://arxiv.org/abs/2510.06056) | Liu et al. | Scientific Algorithm Discovery by Augmenting AlphaEvolve with Deep Research | Deep research plugin, automatic debugging, MAP-Elites 3D behavioral archive |
+
+### Application & evaluation papers
+
+| arXiv ID | Authors | Full title | Role in this design |
+|----------|---------|------------|---------------------|
+| [2601.21096](https://arxiv.org/abs/2601.21096) | Chen et al. (Google DeepMind) | Magellan: Autonomous Discovery of Novel Compiler Optimization Heuristics with AlphaEvolve | EVOLVE-BLOCK comments, continuation strategy, cascaded eval timing |
+| [2602.22425](https://arxiv.org/abs/2602.22425) | Gupta et al. | ArchAgent: Agentic AI-driven Computer Architecture Discovery | Rich prompt engineering, cascaded eval (fast/authoritative), constraint enforcement |
+| [2602.16928](https://arxiv.org/abs/2602.16928) | Li, Schultz, Hennes & Lanctot | Discovering Multiagent Learning Algorithms with Large Language Models | Constrained search spaces, multi-game fitness, semantic mutation |
+| [2603.09172](https://arxiv.org/abs/2603.09172) | Nagda, Raghavan & Thakurta | Reinforced Generation of Combinatorial Structures: Ramsey Numbers | Two-graph execution pattern, prospect bonus, meta-level algorithm discovery |
+| [2509.18057](https://arxiv.org/abs/2509.18057) | (Google DeepMind) | Reinforced Generation of Combinatorial Structures: Hardness of Approximation | Code-level evolution of verifiers, smooth scoring landscapes, GA for prompt selection |
+| [2603.06692](https://arxiv.org/abs/2603.06692) | Bérczi | Evolving Local Corrections for Global Constructions in Combinatorics | Harness design principles, symmetry-robust aggregation, AI summaries |
+| [2601.16175](https://arxiv.org/abs/2601.16175) | Yuksekgonul et al. | Learning to Discover at Test Time | PUCT state reuse, entropic RL objective, dynamic environments |
+| [2603.08679](https://arxiv.org/abs/2603.08679) | Cai, Gupta, Li & Mehta | A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search | Program synthesis over numerical opt, precision arithmetic |
+| [2601.01235](https://arxiv.org/abs/2601.01235) | Ellenberg, Libedinsky, Plaza, Simental & Williamson | Bruhat intervals that are large hypercubes | Prompt engineering with mathematical hints, generalizer mode |
+| [2511.02864](https://arxiv.org/abs/2511.02864) | Georgiev, Gómez-Serrano, Tao & Wagner | Mathematical exploration and discovery at scale | Broad landscape of AI-assisted mathematical discovery; framing and motivation |
+| [2511.12916](https://arxiv.org/abs/2511.12916) | Wang et al. | Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation | Multi-island elite exchange, structured output evolution |
+| [2601.05943](https://arxiv.org/abs/2601.05943) | Berthold, Kamp, Mexi, Pokutta & Pólik | Global Optimization for Combinatorial Geometry Problems Revisited in the Era of LLMs | Complementary solver approach; informed harness design section |
+| [2506.16750](https://arxiv.org/abs/2506.16750) | Boyer & Li | An improved example for an autoconvolution inequality | AlphaEvolve used as benchmark; gradient-based complement |
+| [2505.16105](https://arxiv.org/abs/2505.16105) | Gerbicz | Sums and differences of sets (improvement over AlphaEvolve) | Two-stage eval (float screen + exact verify), parametric construction |
+| [2506.01896](https://arxiv.org/abs/2506.01896) | Zheng | Sums and differences of sets: a further improvement over AlphaEvolve | Large-deviation asymptotic analysis; injectivity constraint design |

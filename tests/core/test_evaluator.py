@@ -1,7 +1,7 @@
 import shutil, tempfile
 from pathlib import Path
-from alphaevolve.core.evaluator import CascadeEvaluator
-from alphaevolve.problems.loader import Problem
+from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.problems.loader import Problem
 
 def _problem(validate_src: str):
     d = Path(tempfile.mkdtemp())

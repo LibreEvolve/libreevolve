@@ -1,15 +1,15 @@
 import os, tempfile
 import pytest
 from pathlib import Path
-from alphaevolve.core.config import Config
-from alphaevolve.core.loop import evolve
-from alphaevolve.problems.loader import load_problem
+from libreevolve.core.config import Config
+from libreevolve.core.loop import evolve
+from libreevolve.problems.loader import load_problem
 
 @pytest.mark.integration
 @pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"), reason="no API key")
 def test_hello_world_completes():
     """10 generations on hello_world must complete without error."""
-    examples = Path(__file__).parent.parent.parent / "alphaevolve/problems/examples/hello_world"
+    examples = Path(__file__).parent.parent.parent / "libreevolve/problems/examples/hello_world"
     problem = load_problem(examples)
     config = Config(
         max_generations=10, num_inspirations=2,
@@ -23,7 +23,7 @@ def test_hello_world_completes():
 @pytest.mark.integration
 @pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"), reason="no API key")
 def test_hello_world_fitness_non_negative():
-    examples = Path(__file__).parent.parent.parent / "alphaevolve/problems/examples/hello_world"
+    examples = Path(__file__).parent.parent.parent / "libreevolve/problems/examples/hello_world"
     problem = load_problem(examples)
     config = Config(max_generations=10, log_dir=tempfile.mkdtemp(), problem_name="hw_fitness",
                     backends=[{"type": "anthropic", "model": "claude-haiku-4-5-20251001"}],

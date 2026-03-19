@@ -1,5 +1,5 @@
-from alphaevolve.plugins.base import PluginBase
-from alphaevolve.population.program import Program
+from libreevolve.plugins.base import PluginBase
+from libreevolve.population.program import Program
 
 class _Noop(PluginBase): pass
 

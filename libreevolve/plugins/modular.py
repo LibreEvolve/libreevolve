@@ -1,4 +1,4 @@
-from alphaevolve.plugins.base import PluginBase
+from libreevolve.plugins.base import PluginBase
 
 _GUIDANCE = (
     "[MODULAR DECOMPOSITION]\n"

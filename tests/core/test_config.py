@@ -1,4 +1,4 @@
-from alphaevolve.core.config import Config
+from libreevolve.core.config import Config
 
 def test_default_max_generations():
     assert Config().max_generations == 1000

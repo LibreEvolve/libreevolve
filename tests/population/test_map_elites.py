@@ -1,5 +1,5 @@
-from alphaevolve.population.map_elites import MAPElites
-from alphaevolve.population.program import Program
+from libreevolve.population.map_elites import MAPElites
+from libreevolve.population.program import Program
 
 def _p(code="x=1", fitness=0.5): return Program(code=code, fitness=fitness)
 

@@ -1,5 +1,5 @@
-from alphaevolve.plugins.modular import ModularPlugin
-from alphaevolve.population.program import Program
+from libreevolve.plugins.modular import ModularPlugin
+from libreevolve.population.program import Program
 
 def _p(): return Program(code="x=1", fitness=0.5)
 

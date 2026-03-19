@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from alphaevolve.llm.ensemble import LLMEnsemble
+from libreevolve.llm.ensemble import LLMEnsemble
 
 def _b(name="b", resp="<<<SEARCH\nfoo\n===\nbar\n>>>REPLACE"):
     m = MagicMock(); m.name = name; m.generate.return_value = resp; return m

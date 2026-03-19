@@ -1,7 +1,7 @@
 import tempfile
 from pathlib import Path
 import pytest, yaml
-from alphaevolve.problems.loader import load_problem, Problem
+from libreevolve.problems.loader import load_problem, Problem
 
 def _make(tmp):
     d = Path(tmp)
@@ -42,7 +42,7 @@ def test_raises_on_no_seeds():
             load_problem(d)
 
 def test_hello_world_example_loads():
-    examples = Path(__file__).parent.parent.parent / "alphaevolve/problems/examples/hello_world"
+    examples = Path(__file__).parent.parent.parent / "libreevolve/problems/examples/hello_world"
     if not examples.exists():
         pytest.skip("hello_world example not present")
     p = load_problem(examples)

@@ -4,11 +4,15 @@ import math
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from alphaevolve.population.program import Program
+from libreevolve.population.program import Program
 
 
 class MAPElites:
-    """3D MAP-Elites: performance x complexity x diversity."""
+    """3D MAP-Elites: performance x complexity x diversity.
+
+    Sources: MAP-Elites (Mouret & Clune, 2015), 3D behavioral dimensions from
+    MadEvolve (arXiv:2602.15951), TF-IDF char-4gram diversity metric.
+    """
 
     def __init__(self, bins: int = 10, elite_archive_size: int = 50,
                  perf_bounds: tuple[float, float] = (0.0, 1.0)):

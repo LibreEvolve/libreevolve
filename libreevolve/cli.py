@@ -3,14 +3,14 @@ import dataclasses, json
 from pathlib import Path
 import click
 from dotenv import load_dotenv
-from alphaevolve.core.loop import evolve
+from libreevolve.core.loop import evolve
 
 load_dotenv(override=True)
 
 
 @click.group()
 def cli() -> None:
-    """AlphaEvolve -- LLM-guided evolutionary program discovery."""
+    """LibreEvolve -- LLM-guided evolutionary program discovery."""
 
 
 @cli.command()
@@ -21,22 +21,26 @@ def cli() -> None:
 @click.option("--seed", type=int, default=None)
 @click.option("--reasoning-effort", "-r", type=str, default=None,
               help="Reasoning effort for OpenAI reasoning models (e.g. low, medium, high, xhigh)")
-def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort):
+@click.option("--run-name", type=str, default=None,
+              help="Custom name for this run (default: problem directory name)")
+def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort, run_name):
     """Run evolution on a problem directory."""
-    from alphaevolve.core.config import Config
-    from alphaevolve.problems.loader import load_problem
+    from libreevolve.core.config import Config
+    from libreevolve.problems.loader import load_problem
     problem = load_problem(problem_dir)
     if not problem.initial_programs:
         raise click.ClickException("No seed programs found.")
     config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
                            reasoning_effort)
+    if run_name:
+        config.problem_name = run_name
     active_plugins = _load_plugins(config.plugins)
-    click.echo(f"Running {config.max_generations} generations on '{problem.name}'...")
+    click.echo(f"Running {config.max_generations} generations on '{config.problem_name}'...")
     best = evolve(problem, config, active_plugins)
     if best is None:
         raise click.ClickException("Evolution produced no valid programs.")
     click.echo(f"\nBest fitness: {best.fitness:.6f}")
-    out = Path(config.log_dir) / problem.name / "best.py"
+    out = Path(config.log_dir) / config.problem_name / "best.py"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(best.code, encoding="utf-8")
     click.echo(f"Best program saved to: {out}")
@@ -62,7 +66,7 @@ def show(run_dir):
 def _build_config(problem, max_generations, plugins, backends, seed,
                   reasoning_effort=None):
     import yaml
-    from alphaevolve.core.config import Config
+    from libreevolve.core.config import Config
     cfg: dict = {}
     cp = Path(problem.problem_dir) / "config.yaml"
     if cp.exists():
@@ -85,7 +89,7 @@ def _build_config(problem, max_generations, plugins, backends, seed,
 def _load_plugins(names: list[str]) -> list:
     if not names:
         return []
-    from alphaevolve.plugins import causal, deep_research, modular, ttt_rl
+    from libreevolve.plugins import causal, deep_research, modular, ttt_rl
     reg = {"causal": causal.CausalPlugin, "deep_research": deep_research.DeepResearchPlugin,
            "modular": modular.ModularPlugin, "ttt_rl": ttt_rl.TTTRLPlugin}
     result = []

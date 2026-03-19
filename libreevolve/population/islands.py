@@ -1,12 +1,16 @@
 from __future__ import annotations
 import math, random
-from alphaevolve.core.config import Config
-from alphaevolve.population.map_elites import MAPElites
-from alphaevolve.population.program import Program
+from libreevolve.core.config import Config
+from libreevolve.population.map_elites import MAPElites
+from libreevolve.population.program import Program
 
 
 class IslandModel:
-    """5 independent MAP-Elites archives with ring-topology migration."""
+    """5 independent MAP-Elites archives with ring-topology migration.
+
+    Sources: ring topology ablations from CodeEvolve (arXiv:2510.14150),
+    multi-island elite exchange from GigaEvo (arXiv:2511.17592).
+    """
 
     def __init__(self, config: Config):
         self.n_islands = config.n_islands

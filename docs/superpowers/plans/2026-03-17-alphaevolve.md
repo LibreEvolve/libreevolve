@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build AlphaEvolve — a Python research platform for LLM-guided evolutionary program discovery, grounded in 22 papers.
+**Goal:** Build AlphaEvolve — a Python research platform for LLM-guided evolutionary program discovery, grounded in 23 papers.
 
 **Architecture:** Layered plugin architecture: a synchronous core loop (SEARCH/REPLACE diff → cascade evaluator → MAP-Elites archive) over a 5-island ring-topology population, UCB1-bandit LLM ensemble routing, and opt-in research plugins via 4 lifecycle hooks.
 

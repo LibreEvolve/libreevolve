@@ -2,7 +2,7 @@ from __future__ import annotations
 import json, sys, tempfile
 import subprocess
 from pathlib import Path
-from alphaevolve.problems.loader import Problem
+from libreevolve.problems.loader import Problem
 
 _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_found": -0.3}
 
@@ -18,7 +18,11 @@ _RUNNER = (
 
 
 class CascadeEvaluator:
-    """Tier 0 (diff penalty) -> Tier 1 (syntax) -> Tier 2 (subprocess)."""
+    """Tier 0 (diff penalty) -> Tier 1 (syntax) -> Tier 2 (subprocess).
+
+    Sources: cascade eval from ArchAgent (arXiv:2602.22425) and Magellan
+    (arXiv:2601.21096), lazy penalty system from ThetaEvolve (arXiv:2511.23473).
+    """
 
     def __init__(self, problem: Problem, timeout_sec: float = 60.0):
         self._problem = problem

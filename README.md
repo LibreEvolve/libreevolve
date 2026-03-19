@@ -1,8 +1,10 @@
-# AlphaEvolve
+# LibreEvolve
 
-LLM-guided evolutionary program discovery. Feed it a problem, a seed program, and an LLM backend — it evolves better solutions using SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+Open-source LLM-guided evolutionary program discovery, inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131) (Google DeepMind). Feed it a problem, a seed program, and an LLM backend — it evolves better solutions using SEARCH/REPLACE diffs evaluated in a cascade pipeline.
 
-Grounded in 22 research papers. Built as a research platform, not a production tool.
+Grounded in 23 research papers. Built as a research platform, not a production tool.
+
+Built by [CompleteTech](https://complete.tech).
 
 ## Quick Start
 
@@ -22,26 +24,36 @@ Run on a bundled problem:
 
 ```bash
 # OpenAI
-python -m alphaevolve run alphaevolve/problems/examples/circle_packing \
+python -m libreevolve run libreevolve/problems/examples/circle_packing \
     --max-generations 15 --backends openai:gpt-4o-mini
 
 # With reasoning (OpenAI reasoning models)
-python -m alphaevolve run alphaevolve/problems/examples/hello_world \
+python -m libreevolve run libreevolve/problems/examples/hello_world \
     --max-generations 5 --backends openai:gpt-5.4-nano --reasoning-effort high
 
 # Anthropic
-python -m alphaevolve run alphaevolve/problems/examples/sorting \
+python -m libreevolve run libreevolve/problems/examples/sorting \
     --max-generations 10 --backends anthropic:claude-sonnet-4-6
 
 # Ollama (local)
-python -m alphaevolve run alphaevolve/problems/examples/hello_world \
+python -m libreevolve run libreevolve/problems/examples/hello_world \
     --max-generations 20 --backends ollama:llama3
 ```
 
 Inspect results:
 
 ```bash
-python -m alphaevolve show runs/circle_packing
+python -m libreevolve show runs/circle_packing
+```
+
+```
+Total programs: 16
+Best fitness:   25.000000 (generation 5)
+
+--- Best program ---
+
+def solve():
+    return [(1.0 + i * 2.0, 1.0 + j * 2.0) for i in range(5) for j in range(5)]
 ```
 
 ## How It Works
@@ -111,7 +123,7 @@ gen 13  16.00  4x4 grid, offset 1.5 (exploring from non-best parent)
 ## Architecture
 
 ```
-alphaevolve/
+libreevolve/
 ├── core/
 │   ├── loop.py          # evolve() main loop + build_prompt()
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
@@ -179,20 +191,20 @@ Plugins hook into 4 lifecycle events:
 | `on_generation_end(gen, best)` | After each generation | Logging, training data export |
 
 ```bash
-python -m alphaevolve run my_problem/ --plugins causal --plugins deep_research
+python -m libreevolve run my_problem/ --plugins causal --plugins deep_research
 ```
 
 ## CLI Reference
 
 ```
-alphaevolve run PROBLEM_DIR [OPTIONS]
+libreevolve run PROBLEM_DIR [OPTIONS]
   --max-generations, -g    Number of generations (default: 1000)
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
   --reasoning-effort, -r   Reasoning effort for OpenAI models (none/low/medium/high/xhigh)
   --seed                   Random seed
 
-alphaevolve show RUN_DIR
+libreevolve show RUN_DIR
   Inspect history.jsonl from a previous run
 ```
 
@@ -232,4 +244,24 @@ pytest tests/integration/ -m integration
 
 ## References
 
-Based on 22 papers including AlphaEvolve (Google DeepMind), MAP-Elites, CausalEvolve, ImprovEvolve, ThetaEvolve, and others. See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for the full list.
+Grounded in 23 research papers. Core system papers:
+
+- **AlphaEvolve** — Novikov et al., "AlphaEvolve: A coding agent for scientific and algorithmic discovery," Google DeepMind, 2025. [arXiv:2506.13131](https://arxiv.org/abs/2506.13131)
+- **GigaEvo** — Khrulkov et al., "GigaEvo: An Open Source Optimization Framework Powered By LLMs And Evolution Algorithms," 2025. [arXiv:2511.17592](https://arxiv.org/abs/2511.17592)
+- **CodeEvolve** — Assumpção et al., "CodeEvolve: An open source evolutionary coding agent for algorithmic discovery and optimization," 2025. [arXiv:2510.14150](https://arxiv.org/abs/2510.14150)
+- **ThetaEvolve** — Wang et al., "ThetaEvolve: Test-time Learning on Open Problems," 2025. [arXiv:2511.23473](https://arxiv.org/abs/2511.23473)
+- **ImprovEvolve** — Kravatskiy, Khrulkov & Oseledets, "ImprovEvolve: Ask AlphaEvolve to Improve the Input Solution and Then Improvise," 2026. [arXiv:2602.10233](https://arxiv.org/abs/2602.10233)
+- **MadEvolve** — Li, Zang & Münchmeyer, "MadEvolve: Evolutionary Optimization of Cosmological Algorithms with Large Language Models," 2026. [arXiv:2602.15951](https://arxiv.org/abs/2602.15951)
+- **CausalEvolve** — Chen et al., "CausalEvolve: Towards Open-Ended Discovery with Causal Scratchpad," 2026. [arXiv:2603.14575](https://arxiv.org/abs/2603.14575)
+- **DeepEvolve** — Liu et al., "Scientific Algorithm Discovery by Augmenting AlphaEvolve with Deep Research," 2025. [arXiv:2510.06056](https://arxiv.org/abs/2510.06056)
+
+Foundational algorithms:
+
+- **MAP-Elites** — Mouret & Clune, "Illuminating search spaces by mapping elites," 2015.
+- **UCB1** — Auer, Cesa-Bianchi & Fischer, "Finite-time Analysis of the Multiarmed Bandit Problem," 2002.
+
+See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for the full list of all 23 papers with roles.
+
+## License
+
+[MIT](LICENSE) — Timothy Gregg / [CompleteTech](https://complete.tech)

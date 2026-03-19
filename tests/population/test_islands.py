@@ -1,6 +1,6 @@
-from alphaevolve.core.config import Config
-from alphaevolve.population.islands import IslandModel
-from alphaevolve.population.program import Program
+from libreevolve.core.config import Config
+from libreevolve.population.islands import IslandModel
+from libreevolve.population.program import Program
 
 def _m(n=3): return IslandModel(Config(n_islands=n, migration_interval=5))
 def _p(code="x=1", fitness=0.5): return Program(code=code, fitness=fitness)

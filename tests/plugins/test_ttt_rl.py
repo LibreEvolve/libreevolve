@@ -1,7 +1,7 @@
 import tempfile
 from pathlib import Path
-from alphaevolve.plugins.ttt_rl import TTTRLPlugin
-from alphaevolve.population.program import Program
+from libreevolve.plugins.ttt_rl import TTTRLPlugin
+from libreevolve.population.program import Program
 
 def _p(prompt="p", diff="d"):
     return Program(code="x=1", fitness=0.5, metadata={"prompt": prompt, "diff": diff})

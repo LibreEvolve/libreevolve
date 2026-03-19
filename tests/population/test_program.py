@@ -1,5 +1,5 @@
 from math import inf
-from alphaevolve.population.program import Program
+from libreevolve.population.program import Program
 
 def test_default_fitness_is_neg_inf():
     assert Program().fitness == -inf

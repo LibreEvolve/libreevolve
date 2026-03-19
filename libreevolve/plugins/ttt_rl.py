@@ -1,7 +1,7 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from alphaevolve.plugins.base import PluginBase
+from libreevolve.plugins.base import PluginBase
 
 
 class TTTRLPlugin(PluginBase):

@@ -25,6 +25,9 @@ class IslandModel:
         if strategy == "exploit":
             cands = [i.best() for i in self.islands if i.best()]
             return max(cands, key=lambda p: p.fitness) if cands else None
+        if strategy == "explore":
+            pool = [p for i in self.islands for p in i.occupied_cells()]
+            return random.choice(pool) if pool else None
         raise ValueError(f"Unknown strategy: {strategy!r}")
 
     def sample_diverse(self, k: int) -> list[Program]:

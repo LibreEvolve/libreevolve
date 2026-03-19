@@ -1,4 +1,5 @@
 from __future__ import annotations
+import random
 from alphaevolve.core.config import Config
 from alphaevolve.core.database import ProgramDatabase
 from alphaevolve.core.diff import apply_diff
@@ -12,15 +13,22 @@ VALID_THRESHOLD = 0.0
 
 
 def build_prompt(parent: Program, inspirations: list[Program],
-                 problem: Problem, extra_context: str) -> str:
+                 problem: Problem, extra_context: str,
+                 recent_failures: list[tuple[str, float]] | None = None) -> str:
     insp = "".join(f"\n--- Inspiration {i+1} (score {ins.fitness:.4f}) ---\n{ins.code}\n"
                    for i, ins in enumerate(inspirations))
+    failures = ""
+    if recent_failures:
+        lines = "\n".join(f"  Score {score:.2f}: {code}"
+                          for code, score in recent_failures)
+        failures = f"\n[RECENTLY FAILED - do NOT repeat these]\n{lines}\n"
     return (f"[SYSTEM]\nYou are an expert programmer evolving solutions for: "
             f"{problem.task_description}\n\n"
             f"[CURRENT BEST PROGRAM - score: {parent.fitness:.4f}]\n"
             f"```python\n{parent.code}\n```\n"
             f"\n[INSPIRATION PROGRAMS]{insp}\n"
-            f"[EXTRA CONTEXT]\n{extra_context}\n\n"
+            f"[EXTRA CONTEXT]\n{extra_context}\n"
+            f"{failures}\n"
             f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs.\n"
             f"Rules: No comments. No markdown fences. No explanation. Just the raw diff block.\n\n"
             f"Example format (do NOT copy this, use actual code from the program above):\n"
@@ -42,21 +50,31 @@ def evolve(problem: Problem, config: Config,
         db.log(program)
         db.add(program)
 
+    recent_failures: list[tuple[str, float]] = []
+    _MAX_FAILURES = 5
+
     for gen in range(config.max_generations):
         for plugin in plugins:
             plugin.on_generation_start(gen, db)
 
-        parent = db.sample(strategy="exploit")
+        strategy = "explore" if random.random() < 0.3 else "exploit"
+        parent = db.sample(strategy=strategy)
         if parent is None:
             break
 
         inspirations = db.sample_diverse(k=config.num_inspirations)
         context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
-        prompt = build_prompt(parent, inspirations, problem, context)
+        prompt = build_prompt(parent, inspirations, problem, context,
+                              recent_failures=recent_failures or None)
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
         child_code, diff_error = apply_diff(parent.code, diff)
         score = evaluator.evaluate(child_code, diff_error=diff_error)
+
+        if score < VALID_THRESHOLD and child_code != parent.code:
+            oneliner = child_code.replace("\n", " ")[:120]
+            recent_failures.append((oneliner, score))
+            recent_failures = recent_failures[-_MAX_FAILURES:]
 
         # Construct Program BEFORE calling on_evaluated (plugins need full object)
         program = Program(code=child_code, fitness=score,

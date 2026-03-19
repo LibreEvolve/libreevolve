@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-00FF41?style=for-the-badge&labelColor=30363D" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/python-3.11+-00D4FF?style=for-the-badge&labelColor=30363D" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/tests-115%20passed-00FF41?style=for-the-badge&labelColor=30363D" alt="Tests">
-  <img src="https://img.shields.io/badge/papers-23-FFB800?style=for-the-badge&labelColor=30363D" alt="Papers">
-  <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-E6EDF3?style=for-the-badge&labelColor=30363D" alt="Website"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=for-the-badge&labelColor=30363D&logo=opensourceinitiative&logoColor=white" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/python-3.11+-1F6FEB?style=for-the-badge&labelColor=30363D&logo=python&logoColor=white" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/tests-115%20passed-238636?style=for-the-badge&labelColor=30363D&logo=pytest&logoColor=white" alt="Tests">
+  <img src="https://img.shields.io/badge/papers-23-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Papers">
+  <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-6E7681?style=for-the-badge&labelColor=30363D&logo=globe&logoColor=white" alt="Website"></a>
 </p>
 
 <br>

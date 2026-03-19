@@ -47,22 +47,66 @@ python -m alphaevolve show runs/circle_packing
 ## How It Works
 
 ```
-Seed Program → LLM generates SEARCH/REPLACE diff
-             → Cascade Evaluator (penalty → syntax → subprocess)
-             → MAP-Elites archive (performance × complexity × diversity)
-             → 5-island ring-topology migration
-             → UCB1 bandit selects next LLM backend
-             → Repeat
+Seed Program -> LLM generates SEARCH/REPLACE diff
+             -> Cascade Evaluator (penalty -> syntax -> subprocess)
+             -> MAP-Elites archive (performance x complexity x diversity)
+             -> 5-island ring-topology migration
+             -> UCB1 bandit selects next LLM backend
+             -> Repeat
 ```
 
 Each generation:
-1. Sample a parent from the population (exploit strategy)
-2. Build a prompt with parent code + inspiration programs
+1. Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
+2. Build a prompt with parent code, inspiration programs, and recent failure history
 3. LLM proposes a SEARCH/REPLACE diff
-4. Cascade evaluator scores the result (Tier 0: diff penalties → Tier 1: syntax check → Tier 2: subprocess execution)
+4. Cascade evaluator scores the result (Tier 0: diff penalties, Tier 1: syntax check, Tier 2: subprocess execution)
 5. Valid programs enter the MAP-Elites archive; all programs are logged
-6. UCB1 bandit rewards the backend based on fitness improvement
-7. Periodic island migration spreads good solutions
+6. Failed mutations are tracked and shown in subsequent prompts to avoid repeats
+7. UCB1 bandit rewards the backend based on fitness improvement
+8. Periodic island migration spreads good solutions
+
+## Example Runs
+
+### hello_world — Evolving a greeting function
+
+Seed returns `"Hi {name}"` (0/3 tests). The LLM discovers `f"Hello, {name}!"` in generation 0, then explores alternative implementations:
+
+```
+gen  0  -0.10  def greet(name): return f"Hi {name}"                   <- seed (wrong format)
+gen  0   1.00  def greet(name): return f"Hello, {name}!"              <- solved
+gen  2  -0.10  def greet(name): return f"Greetings, {name}!"          <- wrong word
+gen  7   1.00  def greet(name): return "Hello, {}!".format(name)      <- .format() variant
+gen  8   1.00  def greet(name): return "Hello, " + name + "!"         <- concatenation variant
+```
+
+### sorting — Evolving a sort algorithm
+
+Seed is a bubble sort (already passes all 8 test cases). The LLM discovers `lst.sort()` and explores multiple implementations, all scoring 1.0:
+
+```
+gen  0   1.00  bubble sort (seed)                                     <- O(n^2)
+gen  0   1.00  lst.sort()                                             <- builtin in-place
+gen  1   1.00  sorted(lst)                                            <- builtin new list
+gen  2   1.00  lst.copy() + sorted()                                  <- copy variant
+gen  3   1.00  [x for x in lst] + sorted()                            <- list comp copy
+gen  4   1.00  sorted(lst, key=lambda x: (x is None, x))              <- None-safe sort
+```
+
+### circle_packing — Packing circles in a 10x10 square
+
+Seed places 16 circles in a 4x4 grid (spacing 2.5). The LLM evolves toward the optimal 25-circle 5x5 grid:
+
+```
+gen  0  16.00  4x4 grid, spacing 2.5                                 <- seed
+gen  0  16.00  4x4 grid, spacing 2.0 (tighter but same count)
+gen  5  25.00  5x5 grid, spacing 2.0                                 <- optimal (proven)
+gen  7  -0.10  6x4 grid (out of bounds)
+gen  9  -0.10  diagonal offset (overlap)
+gen 10  -0.10  hex stagger with (j%2) offset (overlap)
+gen 13  16.00  4x4 grid, offset 1.5 (exploring from non-best parent)
+```
+
+25 circles is provably optimal for this geometry ([1.0, 9.0]^2, min distance 2.0).
 
 ## Architecture
 
@@ -82,7 +126,7 @@ alphaevolve/
 ├── population/
 │   ├── program.py       # Program dataclass
 │   ├── map_elites.py    # 3D MAP-Elites (TF-IDF char-4gram diversity)
-│   └── islands.py       # 5-island ring migration
+│   └── islands.py       # 5-island ring migration (30% explore / 70% exploit)
 ├── plugins/
 │   ├── base.py          # PluginBase ABC (4 lifecycle hooks)
 │   ├── causal.py        # CausalEvolve — MAB outcome-factor guidance
@@ -121,6 +165,8 @@ metrics:
 
 **validate.py** must define `evaluate(code: str) -> dict` returning a dict with all metric names. It runs in an isolated subprocess.
 
+**Tip:** Make your seed program intentionally suboptimal. If the seed already scores perfectly, there's nothing to evolve.
+
 ## Plugins
 
 Plugins hook into 4 lifecycle events:
@@ -143,7 +189,7 @@ alphaevolve run PROBLEM_DIR [OPTIONS]
   --max-generations, -g    Number of generations (default: 1000)
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
-  --reasoning-effort, -r   Reasoning effort for OpenAI models (low/medium/high/xhigh)
+  --reasoning-effort, -r   Reasoning effort for OpenAI models (none/low/medium/high/xhigh)
   --seed                   Random seed
 
 alphaevolve show RUN_DIR
@@ -153,7 +199,7 @@ alphaevolve show RUN_DIR
 ## Tests
 
 ```bash
-# Unit tests
+# Unit tests (102 tests)
 pytest tests/ -m "not integration"
 
 # Integration test (requires API key)
@@ -162,11 +208,27 @@ pytest tests/integration/ -m integration
 
 ## Lessons from Live Testing
 
-- **gpt-4o-mini** found optimal circle packing (25 circles) in 2 generations
-- **gpt-5.4-nano with xhigh reasoning** consumed 75k tokens thinking, produced the same answer that `high` found in 608 tokens
-- **Reasoning models with no thinking** tried creative hex packing but failed on floating-point boundary conditions
-- **Token budget matters** — reasoning models need `max_output_tokens` large enough for both thinking and response
-- Seeds that are already optimal (like the bubble sort) leave nothing to evolve
+**Model selection matters more than generation count:**
+- gpt-4o-mini found optimal circle packing (25 circles) in 2 generations
+- gpt-5.4-mini took a longer path (16 -> 23 -> 25) but explored creative hex packing strategies along the way
+
+**Reasoning effort tradeoffs (gpt-5.4-nano on circle packing):**
+
+| Effort | Reasoning tokens | Response tokens | Result |
+|--------|-----------------|-----------------|--------|
+| none   | 0               | 347             | Hex packing (invalid, floating-point boundary) |
+| high   | 608             | 119             | 5x5 grid (optimal, 25 circles) |
+| xhigh  | 74,729          | 99              | 5x5 grid (same answer, 124x more tokens) |
+
+**Prompt engineering for evolution:**
+- Models wrap diffs in markdown fences — the diff engine strips them automatically
+- Models add comments that cause diff matching failures — the prompt instructs "no comments"
+- Without failure history, models repeat the same bad mutation 8+ times in a row
+- A concrete diff example in the prompt prevents models from using angle-bracket placeholders literally
+
+**Seeds determine the evolutionary landscape:**
+- Suboptimal seeds (hello_world, circle_packing) produce rich evolutionary trajectories
+- Already-optimal seeds (sorting's bubble sort) still evolve *different implementations* at the same fitness level
 
 ## References
 

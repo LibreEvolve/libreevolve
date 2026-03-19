@@ -7,3 +7,6 @@ __pycache__/
 dist/
 *.egg-info/
 .env
+runs/
+papers/
+.claude/

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Row 3 (bottom) — most faded -->
+  <g stroke="#00802A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.2">
+    <polyline points="12,68 22,62 12,56"/>
+    <polyline points="26,68 36,62 26,56"/>
+    <polyline points="40,68 50,62 40,56"/>
+  </g>
+  <!-- Row 2 (middle) -->
+  <g stroke="#00802A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4">
+    <polyline points="16,52 28,45 16,38"/>
+    <polyline points="32,52 44,45 32,38"/>
+  </g>
+  <!-- Row 1 (top) -->
+  <g stroke="#00802A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+    <polyline points="22,36 36,28 22,20"/>
+  </g>
+  <!-- Arrow emerging upward -->
+  <g stroke="#00802A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="40" y1="32" x2="40" y2="8"/>
+    <polyline points="32,16 40,8 48,16"/>
+  </g>
+  <!-- Glow tip -->
+  <circle cx="40" cy="8" r="3" fill="#00802A" opacity="0.9"/>
+</svg>

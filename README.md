@@ -114,7 +114,7 @@ def solve():
 ## How LLM-Guided Evolution Works
 
 ```mermaid
-graph LR
+graph TD
     A[🌱 Seed Program] --> B[🧠 LLM Mutation]
     B --> C[⚡ Cascade Evaluator]
     C -->|valid| D[🗺️ MAP-Elites Archive]

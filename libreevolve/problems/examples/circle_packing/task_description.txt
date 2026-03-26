@@ -1,4 +1,5 @@
-Pack as many unit circles as possible inside a 10x10 square without overlap.
-Write a function `solve() -> list[tuple[float, float]]` returning center (x, y) coordinates.
-Constraints: all centers in [1.0, 9.0]x[1.0, 9.0]; distance between any two centers >= 2.0.
-Score = number of valid non-overlapping circles.
+Pack exactly 26 disjoint circles inside the unit square to maximize the sum of radii.
+Write a function `solve() -> list[tuple[float, float, float]]` returning circle `(x, y, r)` tuples.
+Constraints: every radius must be positive; every circle must lie fully inside [0.0, 1.0]x[0.0, 1.0];
+every pair of circles must satisfy distance between centers >= r_i + r_j.
+Score = sum of radii for valid 26-circle packings.

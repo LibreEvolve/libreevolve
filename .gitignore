@@ -6,6 +6,15 @@ __pycache__/
 .venv/
 dist/
 *.egg-info/
+runs/
+!examples/
+!examples/runs/
+!examples/runs/**
+branding-preview.html
+assets/social-preview.html
+docs/superpowers/plans/
+docs/superpowers/specs/2026-03-18-libreevolve-branding.md
 .env
 papers/
 .claude/
+.arena_key

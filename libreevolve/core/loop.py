@@ -63,7 +63,7 @@ def evolve(problem: Problem, config: Config,
         for plugin in plugins:
             plugin.on_generation_start(gen, db)
 
-        strategy = "explore" if random.random() < 0.3 else "exploit"
+        strategy = "explore" if random.random() < config.explore_ratio else "exploit"
         parent = db.sample(strategy=strategy)
         if parent is None:
             break

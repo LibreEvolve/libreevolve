@@ -62,9 +62,15 @@ class CausalPlugin(PluginBase):
             return [random.choice(self.FACTORS)]
         factors: set[str] = set()
         for search, replace in blocks:
-            old_tokens = set(re.findall(r'\S+', search))
-            new_tokens = set(re.findall(r'\S+', replace))
-            changed = " ".join((new_tokens - old_tokens) | (old_tokens - new_tokens))
+            old_tokens = re.findall(r'\S+', search)
+            new_tokens = re.findall(r'\S+', replace)
+            old_token_set = set(old_tokens)
+            new_token_set = set(new_tokens)
+            # Preserve token order so multi-token patterns like "def helper"
+            # remain matchable after diff extraction.
+            changed_tokens = [tok for tok in new_tokens if tok not in old_token_set]
+            changed_tokens.extend(tok for tok in old_tokens if tok not in new_token_set)
+            changed = " ".join(changed_tokens)
             for factor, pattern in _FACTOR_PATTERNS.items():
                 if pattern.search(changed):
                     factors.add(factor)

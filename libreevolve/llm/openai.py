@@ -24,7 +24,7 @@ class OpenAIBackend:
 
     def _generate_chat(self, prompt: str) -> str:
         r = self._client.chat.completions.create(
-            model=self._model, max_tokens=self._max_tokens,
+            model=self._model, max_completion_tokens=self._max_tokens,
             messages=[{"role": "user", "content": prompt}])
         return r.choices[0].message.content
 

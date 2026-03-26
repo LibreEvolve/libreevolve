@@ -53,14 +53,20 @@ class LLMEnsemble:
 
 def build_llm(config) -> LLMEnsemble:
     """Instantiate LLMEnsemble from config.backends."""
-    from libreevolve.llm.anthropic import AnthropicBackend
-    from libreevolve.llm.openai    import OpenAIBackend
-    from libreevolve.llm.ollama    import OllamaBackend
-    _REG = {"anthropic": AnthropicBackend, "openai": OpenAIBackend, "ollama": OllamaBackend}
+    def _get_backend_cls(t: str):
+        if t == "anthropic":
+            from libreevolve.llm.anthropic import AnthropicBackend
+            return AnthropicBackend
+        if t == "openai":
+            from libreevolve.llm.openai import OpenAIBackend
+            return OpenAIBackend
+        if t == "ollama":
+            from libreevolve.llm.ollama import OllamaBackend
+            return OllamaBackend
+        raise ValueError(f"Unknown backend type {t!r}. Valid: ['anthropic', 'openai', 'ollama']")
     backends = []
     for s in config.backends:
         t = s["type"]
-        if t not in _REG:
-            raise ValueError(f"Unknown backend type {t!r}. Valid: {list(_REG)}")
-        backends.append(_REG[t](**{k: v for k, v in s.items() if k != "type"}))
+        cls = _get_backend_cls(t)
+        backends.append(cls(**{k: v for k, v in s.items() if k != "type"}))
     return LLMEnsemble(backends, explore_coeff=config.ensemble_explore_coeff)

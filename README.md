@@ -5,14 +5,14 @@
 <h1 align="center">LibreEvolve</h1>
 
 <p align="center">
-  <strong>Open-source AlphaEvolve alternative — LLM-guided evolutionary program discovery</strong>
+  <strong>Open-source framework for LLM-guided evolutionary program discovery</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=for-the-badge&labelColor=30363D&logo=opensourceinitiative&logoColor=white" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/python-3.11+-1F6FEB?style=for-the-badge&labelColor=30363D&logo=python&logoColor=white" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/tests-115%20passed-238636?style=for-the-badge&labelColor=30363D&logo=pytest&logoColor=white" alt="Tests">
-  <img src="https://img.shields.io/badge/papers-23-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Papers">
+  <a href="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml"><img src="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <img src="https://img.shields.io/badge/references-23-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Research references">
   <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-6E7681?style=for-the-badge&labelColor=30363D&logo=globe&logoColor=white" alt="Website"></a>
 </p>
 
@@ -24,7 +24,9 @@
 
 <br>
 
-LibreEvolve is an open-source Python framework for **automated algorithm discovery** and **code optimization** using large language models and evolutionary computation. Inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131) (Google DeepMind, 2025), it evolves better programs through LLM-generated SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+LibreEvolve is an open-source Python framework for **automated algorithm discovery** and **code optimization** using large language models and evolutionary computation. It is inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131), [karpathy/autoresearch](https://github.com/karpathy/autoresearch), and related research on LLM-guided evolution, and evolves better programs through LLM-generated SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+
+This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
 Works with **OpenAI** (GPT-4o, GPT-5.4, o-series reasoning models), **Anthropic Claude** (Sonnet, Opus, Haiku), and **local models via Ollama** (Llama, Mistral, Qwen — any model).
 
@@ -42,9 +44,9 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
 | 🔌 | **Plugin system** | 4 lifecycle hooks (CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve) |
-| ✅ | **115 unit tests** | Comprehensive test coverage across all components |
+| ✅ | **118 unit tests** | Comprehensive test coverage across all components |
 
-## LibreEvolve vs AlphaEvolve
+## Comparison to AlphaEvolve
 
 | Feature | AlphaEvolve (Google DeepMind) | LibreEvolve |
 |---------|-------------------------------|-------------|
@@ -55,7 +57,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | Evaluation | Internal infrastructure | **Cascade evaluator (3 tiers)** |
 | Extensibility | None | **Plugin system with 4 lifecycle hooks** |
 | Local models | No | **Yes (Ollama)** |
-| Research basis | 1 paper | **23 papers** |
+| Research grounding | Published paper | **23 cited papers** |
 
 ## Getting Started
 
@@ -98,17 +100,17 @@ python -m libreevolve run libreevolve/problems/examples/hello_world \
 ### Inspect Results
 
 ```bash
-python -m libreevolve show runs/circle_packing
+python -m libreevolve show runs/hello_world
 ```
 
 ```
-Total programs: 16
-Best fitness:   25.000000 (generation 5)
+Total programs: 11
+Best fitness:   1.000000 (generation 0)
 
 --- Best program ---
 
-def solve():
-    return [(1.0 + i * 2.0, 1.0 + j * 2.0) for i in range(5) for j in range(5)]
+def greet(name):
+    return f"Hello, {name}!"
 ```
 
 ## How LLM-Guided Evolution Works
@@ -176,21 +178,11 @@ gen  3   1.00  [x for x in lst] + sorted()                            <- list co
 gen  4   1.00  sorted(lst, key=lambda x: (x is None, x))              <- None-safe sort
 ```
 
-### Evolving Circle Packing (Optimization)
+### Circle Packing in a Unit Square
 
-Seed places 16 circles in a 4x4 grid (spacing 2.5). The LLM evolves toward the provably optimal 25-circle 5x5 grid:
+The `circle_packing` example is now closer to AlphaEvolve's circle-packing benchmark: pack exactly 26 circles in the unit square while maximizing the sum of radii.
 
-```
-gen  0  16.00  4x4 grid, spacing 2.5                                 <- seed
-gen  0  16.00  4x4 grid, spacing 2.0 (tighter but same count)
-gen  5  25.00  5x5 grid, spacing 2.0                                 <- optimal (proven)
-gen  7  -0.10  6x4 grid (out of bounds)
-gen  9  -0.10  diagonal offset (overlap)
-gen 10  -0.10  hex stagger with (j%2) offset (overlap)
-gen 13  16.00  4x4 grid, offset 1.5 (exploring from non-best parent)
-```
-
-25 circles is provably optimal for this geometry ([1.0, 9.0]^2, min distance 2.0).
+The seed is intentionally suboptimal but structured: a centered 26-circle hex-style layout with equal radii. This gives evolution room to improve radii, spacing, and row structure while staying in the same fixed-`n`, variable-radius problem family as the paper.
 
 ## Supported LLM Backends
 
@@ -300,6 +292,7 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
   --reasoning-effort, -r   Reasoning effort for OpenAI models (none/low/medium/high/xhigh)
+  --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
   --run-name               Custom name for this run (default: problem directory name)
   --seed                   Random seed
 
@@ -310,7 +303,7 @@ libreevolve show RUN_DIR
 ## Tests
 
 ```bash
-# Unit tests (115 tests)
+# Unit tests (118 tests)
 pytest tests/ -m "not integration"
 
 # Integration test (requires API key)
@@ -323,18 +316,8 @@ pytest tests/integration/ -m integration
 <br>
 
 **Model selection matters more than generation count:**
-- gpt-4o-mini found optimal circle packing (25 circles) in **2 generations**
-- gpt-5.4-mini took a longer path (16 → 23 → 25) but explored creative hex packing strategies
-
-**Reasoning effort tradeoffs (gpt-5.4-nano on circle packing):**
-
-| Effort | Reasoning tokens | Response tokens | Result |
-|--------|:---:|:---:|--------|
-| none   | 0 | 347 | Hex packing (invalid, floating-point boundary) |
-| high   | 608 | 119 | **5x5 grid (optimal, 25 circles)** |
-| xhigh  | 74,729 | 99 | 5x5 grid (same answer, 124x more tokens) |
-
-> **Takeaway:** `high` reasoning effort hits the sweet spot — optimal result with minimal token cost.
+- The same benchmark can reward very different mutation styles: conservative constant tweaks, geometric row edits, or more aggressive rewrites.
+- Fixed-`n` packing tasks are a good stress test for the evaluator because many plausible-looking layouts fail on boundary or overlap checks.
 
 **Prompt engineering for LLM-guided evolution:**
 - Models wrap diffs in markdown fences — the diff engine strips them automatically
@@ -349,11 +332,11 @@ pytest tests/integration/ -m integration
 </details>
 
 <details>
-<summary><h2>Research Papers (23)</h2></summary>
+<summary><h2>Research References (23)</h2></summary>
 
 <br>
 
-Grounded in 23 research papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization.
+LibreEvolve is informed by 23 research papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The repository cites these papers for context and inspiration; it does not bundle them as part of the project.
 
 **Core system papers:**
 
@@ -375,13 +358,23 @@ Grounded in 23 research papers on LLM-guided evolutionary computation, program s
 | **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive |
 | **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Multi-armed bandit selection |
 
-See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for all 23 papers with roles.
+See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for the full list of 23 references and their roles.
 
 </details>
 
 ## Contributing
 
-Contributions welcome. Please run `pytest tests/ -m "not integration"` before submitting PRs.
+Contributions welcome.
+
+Before committing:
+
+```bash
+py -3.12 -m pip install -e ".[dev]"
+py -3.12 -m pre_commit install
+py -3.12 -m pre_commit run --all-files
+```
+
+Please also run `pytest tests/ -m "not integration"` before submitting PRs.
 
 ## License
 

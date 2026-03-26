@@ -1,8 +1,8 @@
 metrics:
-  - name: n_circles
+  - name: sum_radii
     direction: maximize
     primary: true
-    bounds: [0.0, 30.0]
+    bounds: [0.0, 3.0]
   - name: is_valid
     direction: maximize
     primary: false

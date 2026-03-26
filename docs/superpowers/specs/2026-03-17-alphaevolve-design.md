@@ -1,4 +1,4 @@
-# AlphaEvolve — Design Specification
+# LibreEvolve — Design Specification
 **Date:** 2026-03-17
 **Language:** Python
 **LLM Backend:** Pluggable (Anthropic, OpenAI, Ollama, Ensemble)
@@ -8,7 +8,7 @@
 
 ## 1. Overview
 
-AlphaEvolve is a Python research tool for LLM-guided evolutionary algorithm and program discovery. It combines an evolutionary computation engine with pluggable LLM backends to iteratively generate, evaluate, and evolve candidate programs. The architecture is layered: a minimal runnable core with well-defined extension slots that allow advanced research techniques from the literature to be activated as plugins.
+LibreEvolve is a Python research tool for LLM-guided evolutionary algorithm and program discovery. It is an independent implementation inspired by AlphaEvolve, autoresearch, and adjacent literature. It combines an evolutionary computation engine with pluggable LLM backends to iteratively generate, evaluate, and evolve candidate programs. The architecture is layered: a minimal runnable core with well-defined extension slots that allow advanced research techniques from the literature to be activated as plugins.
 
 **Grounded in:** 23 research papers. See Section 15 (References) for the full list.
 

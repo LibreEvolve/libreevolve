@@ -7,6 +7,7 @@ class Config:
     max_generations:        int   = 1000
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
+    explore_ratio:          float = 0.3
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25

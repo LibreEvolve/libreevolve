@@ -32,6 +32,17 @@ Works with **OpenAI** (GPT-4o, GPT-5.4, o-series reasoning models), **Anthropic 
 
 Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
+## Documentation
+
+- [Docs index](docs/README.md)
+- [Architecture](docs/architecture.md)
+- [Problem format](docs/problem-format.md)
+- [Configuration](docs/configuration.md)
+- [Plugins](docs/plugins.md)
+- [Backends](docs/backends.md)
+- [Run artifacts](docs/run-artifacts.md)
+- [Development](docs/development.md)
+
 ## Key Features
 
 | | Feature | Description |
@@ -99,8 +110,17 @@ python -m libreevolve run libreevolve/problems/examples/hello_world \
 
 ### Inspect Results
 
+If you ran one of the examples above, inspect the matching run directory under `runs/`:
+
 ```bash
 python -m libreevolve show runs/hello_world
+```
+
+Or inspect one of the checked-in example histories:
+
+```bash
+python -m libreevolve show examples/runs/hello_world_ensemble
+python -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
 ```
@@ -291,7 +311,7 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --max-generations, -g    Number of generations (default: 1000)
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
-  --reasoning-effort, -r   Reasoning effort for OpenAI models (none/low/medium/high/xhigh)
+  --reasoning-effort, -r   Reasoning effort for OpenAI reasoning models (low/medium/high/xhigh; omit to disable)
   --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
   --run-name               Custom name for this run (default: problem directory name)
   --seed                   Random seed
@@ -358,7 +378,9 @@ LibreEvolve is informed by 23 research papers on LLM-guided evolutionary computa
 | **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive |
 | **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Multi-armed bandit selection |
 
-See `docs/superpowers/specs/2026-03-17-alphaevolve-design.md` Section 15 for the full list of 23 references and their roles.
+The references above are summarized for context in this README. The codebase and
+tests should be treated as the source of truth for current implementation
+behavior.
 
 </details>
 

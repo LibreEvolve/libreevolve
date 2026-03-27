@@ -35,6 +35,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 ## Documentation
 
 - [Docs index](docs/README.md)
+- [Roadmap](ROADMAP.md)
 - [Architecture](docs/architecture.md)
 - [Problem format](docs/problem-format.md)
 - [Configuration](docs/configuration.md)

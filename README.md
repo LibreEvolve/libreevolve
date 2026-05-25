@@ -482,9 +482,11 @@ for each candidate. Candidate metadata records per-plugin prompt-context text,
 hashes, and parent/inspiration ids, but plugin configs, versions, and real
 strategy-operation choices are not yet first-class provenance.
 
-The ThetaEvolve-inspired export writes `runs/grpo_data.jsonl` by default and
-stores `reward = max(0.0, score)`. That side file is not yet scoped under the
-active run directory, hashed in `manifest.json`, or a real GRPO/RL trainer.
+The ThetaEvolve-inspired export writes clipped-reward training data under the
+active run's `plugin_artifacts/ttt_rl/` directory when loaded by the CLI, stores
+both `raw_score` and `reward = max(0.0, raw_score)`, and links export counts,
+paths, hashes, and byte counts from `manifest.json`. It is still not a real
+GRPO/RL trainer.
 
 ```bash
 py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research

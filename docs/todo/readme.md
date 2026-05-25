@@ -388,12 +388,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: the plugin section says the ThetaEvolve-inspired plugin
     exports GRPO-style training data, but does not describe reward clipping,
     global output path, or missing manifest linkage.
-  - Current evidence: `TTTRLPlugin.on_evaluated()` stores
-    `reward = max(0.0, score)` and `_maybe_train()` appends to
-    `runs/grpo_data.jsonl` by default. That dataset is not nested under the
-    active run directory and is not hashed or linked from `manifest.json`.
+  - Current evidence: `TTTRLPlugin.on_evaluated()` now stores `raw_score`,
+    `reward = max(0.0, raw_score)`, and `reward_policy`. CLI-loaded `ttt_rl`
+    writes under the active run's `plugin_artifacts/ttt_rl/` directory and
+    completed manifests link export counts, path, bytes, hash, and quarantine
+    path.
   - Required result: document that the export is a simple clipped-reward JSONL
-    side file until run-scoped dataset provenance and real training exist.
+    artifact until real training/checkpoint semantics exist.
 
 - [x] Clarify DeepEvolve retrieval provenance limitations.
   - README evidence: the plugin section labels `deep_research` as

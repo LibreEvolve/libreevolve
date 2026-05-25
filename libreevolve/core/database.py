@@ -19,6 +19,7 @@ RUN_ARTIFACT_NAMES = {
     "best.py",
     "best_workspace",
     "evaluator_artifacts",
+    "plugin_artifacts",
 }
 
 

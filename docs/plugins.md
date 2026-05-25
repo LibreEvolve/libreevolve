@@ -152,21 +152,23 @@ Implemented by
 
 Purpose (ThetaEvolve-inspired, not paper-complete):
 
-- accumulate `(prompt, response, reward)` training examples for future RL or
-  GRPO-style fine-tuning
+- accumulate `(prompt, response, raw_score, reward)` training examples for
+  future RL or GRPO-style fine-tuning
 
 Mechanics:
 
 - records data in `on_evaluated()` when prompt and diff metadata are present
 - every `train_every` generations, writes the latest batch to
   `grpo_data.jsonl`
-- stores `reward = max(0.0, score)`, so negative scores are clipped to zero
-  rather than exported as penalties
+- stores `raw_score` plus `reward = max(0.0, raw_score)`, so negative scores
+  are clipped to zero rather than exported as penalties
 
 Operational note:
 
-- the default output path is `runs/grpo_data.jsonl`, not a per-run subdirectory
-- the export file is not linked or hashed from `manifest.json` yet
+- when loaded by the CLI, output is scoped under
+  `runs/<run-name>/plugin_artifacts/ttt_rl/`
+- completed manifests include export counts, path, byte count, hash, and
+  reward policy in `runtime.plugin_artifacts`
 - `_maybe_train()` is currently just a JSONL writer, not an actual trainer
 
 ## Adding a custom plugin

@@ -8,6 +8,7 @@ from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.config import Config
 from libreevolve.core.loop import evolve, VALID_THRESHOLD
 from libreevolve.plugins.deep_research import DeepResearchPlugin
+from libreevolve.plugins.ttt_rl import TTTRLPlugin
 from libreevolve.problems.loader import Problem
 
 def _problem(src="def evaluate(c): return {'score':1.0,'is_valid':True}"):
@@ -643,6 +644,28 @@ def test_manifest_summarizes_retrieval_error_types():
     assert summary["status"] == "error"
     assert summary["error_type"] == "network_error"
     assert summary["error"] == "offline"
+
+
+def test_manifest_summarizes_plugin_artifacts(tmp_path):
+    plugin = TTTRLPlugin(train_every=1, log_dir=str(tmp_path / "run" / "plugin_artifacts" / "ttt_rl"))
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=2, log_dir=str(tmp_path), problem_name="run"),
+            plugins=[plugin],
+        )
+
+    manifest = json.loads((tmp_path / "run" / "manifest.json").read_text())
+    artifact = manifest["runtime"]["plugin_artifacts"][0]
+    assert artifact["plugin"] == "TTTRLPlugin"
+    assert artifact["reward_policy"] == "max(0.0, raw_score)"
+    assert artifact["exported_examples"] >= 1
+    assert artifact["path"].endswith("plugin_artifacts\\ttt_rl\\grpo_data.jsonl") or artifact[
+        "path"
+    ].endswith("plugin_artifacts/ttt_rl/grpo_data.jsonl")
+    assert artifact["sha256"]
+    assert artifact["bytes"] > 0
 
 
 def test_loop_renders_full_mode_prompt_instructions():

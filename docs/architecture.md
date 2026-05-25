@@ -288,10 +288,11 @@ compact local SEARCH/REPLACE fences and canonical AlphaEvolve fences are both
 visible to its token-pattern factor analysis. This is still a heuristic,
 paper-limited approximation rather than CausalEvolve's causal scratchpad.
 
-The ThetaEvolve-inspired `ttt_rl` plugin emits a side dataset rather than a
-run-scoped artifact. It clips rewards with `max(0.0, score)` and appends to
-`runs/grpo_data.jsonl` by default; that file is not hashed or referenced from
-the run manifest yet.
+The ThetaEvolve-inspired `ttt_rl` plugin emits a JSONL dataset rather than
+training a model. When loaded by the CLI, it writes under the active run's
+`plugin_artifacts/ttt_rl/` directory, exports `raw_score` plus clipped
+`reward = max(0.0, raw_score)`, and reports path/hash/count metadata in
+`manifest.json`.
 
 The DeepEvolve-inspired retrieval plugin keeps only the latest synthesis string
 in memory. Candidate metadata records the rendered plugin-context text, hash,

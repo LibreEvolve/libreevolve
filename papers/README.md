@@ -13,7 +13,7 @@ paper is fully implemented.
 | auer-cesa-bianchi-fischer-2002 | UCB1 finite-time analysis | Foundational bandit policy | Implemented as a heuristic UCB-style backend router over fitness improvements; reward normalization/canonical regret assumptions are documented gaps. |
 | 2511.17592 | GigaEvo | Framework inspiration | Not implemented as described: no Redis lifecycle database, asyncio DAG engine, insight stage, or concurrent units. Diff/full mutation modes are partially present. |
 | 2510.14150 | CodeEvolve | Agentic code-evolution inspiration | Not implemented as described: no crossover, targeted refinement, modular orchestration, or adaptive meta-prompting. |
-| 2511.23473 | ThetaEvolve | Test-time training inspiration | Only clipped-reward JSONL export exists through `ttt_rl`; no run-scoped dataset provenance or online RL/GRPO training loop. |
+| 2511.23473 | ThetaEvolve | Test-time training inspiration | Only run-scoped clipped-reward JSONL export exists through `ttt_rl`; no online RL/GRPO training loop, checkpoint management, or lazy-penalty dynamics. |
 | 2602.10233 | ImprovEvolve | Modular search inspiration | Only static prompt guidance exists; no enforced or attributed generate/improve/perturb execution loop. |
 | 2602.15951 | MadEvolve | Domain evolution inspiration | Background only; no free-parameter optimization or innovation report. |
 | 2603.14575 | CausalEvolve | Causal-guidance inspiration | Only token-pattern outcome-factor guidance exists; no LLM causal scratchpad. Factor detection now uses the shared compact/canonical SEARCH/REPLACE parser, but the detected factors are still fixed local token-pattern categories rather than LLM-discovered causal variables. |

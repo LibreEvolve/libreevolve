@@ -17,3 +17,5 @@ class PluginBase(ABC):
         return ""
     def prompt_context_metadata(self) -> dict:
         return {}
+    def run_artifacts_metadata(self) -> dict:
+        return {}

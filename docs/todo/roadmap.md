@@ -754,8 +754,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     export-only datasets, or integration hooks, and document the divergence.
 
 - [x] Add reward/export provenance to the ThetaEvolve boundary.
-  - Evidence: `TTTRLPlugin` exports `reward = max(0.0, score)` and appends to
-    a default `runs/grpo_data.jsonl` file outside the active per-run directory.
+  - Evidence: `TTTRLPlugin` exports raw score plus
+    `reward = max(0.0, raw_score)`. CLI-loaded runs write under
+    `plugin_artifacts/ttt_rl/` and completed manifests include path/hash/count
+    metadata.
   - Current roadmap gap: the ThetaEvolve boundary distinguished export from
     training, but did not require explicit reward-shaping semantics, per-run
     dataset scoping, manifest linkage, or dataset hashes.

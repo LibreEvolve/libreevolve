@@ -87,13 +87,13 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         raise click.ClickException(str(exc)) from exc
     except FileExistsError as exc:
         raise click.ClickException(str(exc)) from exc
-    active_plugins = _load_plugins(config.plugins)
+    run_dir = Path(config.log_dir) / config.problem_name
+    active_plugins = _load_plugins(config.plugins, run_dir=run_dir)
     click.echo(f"Running {config.max_generations} generations on '{config.problem_name}'...")
     best = evolve(problem, config, active_plugins)
     if best is None:
         raise click.ClickException("Evolution produced no valid programs.")
     click.echo(f"\nBest fitness: {best.fitness:.6f}")
-    run_dir = Path(config.log_dir) / config.problem_name
     best_py, best_workspace = _write_best_artifacts(best, run_dir)
     click.echo(f"Best program saved to: {best_py}")
     click.echo(f"Best workspace saved to: {best_workspace}")
@@ -186,7 +186,7 @@ def _build_config(problem, max_generations, max_evaluations, max_evaluator_secon
     return config
 
 
-def _load_plugins(names: list[str]) -> list:
+def _load_plugins(names: list[str], run_dir: Path | None = None) -> list:
     if not names:
         return []
     from libreevolve.plugins import causal, deep_research, modular, ttt_rl
@@ -196,7 +196,10 @@ def _load_plugins(names: list[str]) -> list:
     for n in names:
         if n not in reg:
             raise click.ClickException(f"Unknown plugin: {n!r}. Available: {list(reg)}")
-        result.append(reg[n]())
+        if n == "ttt_rl" and run_dir is not None:
+            result.append(reg[n](log_dir=str(run_dir / "plugin_artifacts" / "ttt_rl")))
+        else:
+            result.append(reg[n]())
     return result
 
 

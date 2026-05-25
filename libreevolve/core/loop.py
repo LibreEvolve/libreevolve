@@ -257,6 +257,9 @@ def evolve(problem: Problem, config: Config,
     retrieval_summary = _retrieval_manifest_summary(db.all_programs())
     if retrieval_summary:
         runtime["retrieval"] = retrieval_summary
+    plugin_artifacts = _plugin_artifact_manifest(plugins)
+    if plugin_artifacts:
+        runtime["plugin_artifacts"] = plugin_artifacts
     db.update_manifest_runtime(runtime)
     return best
 
@@ -364,6 +367,18 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
         "by_plugin": by_plugin,
         "event_summaries": list(events.values())[-20:],
     }
+
+
+def _plugin_artifact_manifest(plugins: list[PluginBase]) -> list[dict]:
+    artifacts = []
+    for plugin in plugins:
+        metadata_fn = getattr(plugin, "run_artifacts_metadata", None)
+        if not callable(metadata_fn):
+            continue
+        metadata = metadata_fn()
+        if isinstance(metadata, dict) and metadata:
+            artifacts.append(metadata)
+    return artifacts
 
 
 def _apply_plugin_scores(

@@ -2,7 +2,8 @@ import json, tempfile
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 from click.testing import CliRunner
-from libreevolve.cli import cli
+from libreevolve.cli import cli, _load_plugins
+from libreevolve.plugins.ttt_rl import TTTRLPlugin
 from libreevolve.population.program import Program
 import yaml
 
@@ -182,6 +183,14 @@ def test_run_overwrite_clears_target_artifacts(tmp_path):
     assert not (run_dir / "history.jsonl").exists()
     assert not (run_dir / "best_workspace" / "old.py").exists()
     assert (run_dir / "best.py").read_text(encoding="utf-8") == "x=2"
+
+
+def test_load_plugins_scopes_ttt_rl_to_run_artifacts(tmp_path):
+    plugins = _load_plugins(["ttt_rl"], run_dir=tmp_path / "runs" / "demo")
+
+    assert isinstance(plugins[0], TTTRLPlugin)
+    assert plugins[0]._log_dir == tmp_path / "runs" / "demo" / "plugin_artifacts" / "ttt_rl"
+
 
 def test_show_prints_best(tmp_path):
     (tmp_path/"history.jsonl").write_text(json.dumps(

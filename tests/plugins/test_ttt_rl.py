@@ -26,6 +26,25 @@ def test_writes_jsonl(tmp_path):
     for i in range(12): p.on_evaluated(_p(f"p{i}", f"d{i}"), i*0.1)
     p.on_generation_end(5, None)
     assert (tmp_path/"grpo_data.jsonl").exists()
+    record = json.loads((tmp_path/"grpo_data.jsonl").read_text().splitlines()[0])
+    assert record["raw_score"] == 0.7000000000000001
+    assert record["reward"] == 0.7000000000000001
+    assert record["reward_policy"] == "max(0.0, raw_score)"
+    metadata = p.run_artifacts_metadata()
+    assert metadata["exported_examples"] == 5
+    assert metadata["queued_examples"] == 12
+    assert metadata["path"] == str(tmp_path / "grpo_data.jsonl")
+    assert metadata["sha256"]
+    assert metadata["bytes"] > 0
+
+
+def test_records_clipped_reward_policy():
+    p = TTTRLPlugin()
+    p.on_evaluated(_p(), -0.5)
+    record = p.get_training_data()[0]
+    assert record["raw_score"] == -0.5
+    assert record["reward"] == 0.0
+    assert record["reward_policy"] == "max(0.0, raw_score)"
 
 def test_rejects_non_finite_jsonl_export(tmp_path):
     p = TTTRLPlugin(train_every=1, log_dir=str(tmp_path))

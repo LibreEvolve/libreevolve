@@ -245,6 +245,8 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     (run_dir / "best_workspace" / "old.py").write_text("old", encoding="utf-8")
     (run_dir / "evaluator_artifacts").mkdir()
     (run_dir / "evaluator_artifacts" / "old.txt").write_text("old", encoding="utf-8")
+    (run_dir / "plugin_artifacts").mkdir()
+    (run_dir / "plugin_artifacts" / "old.jsonl").write_text("old", encoding="utf-8")
     (run_dir / "notes.txt").write_text("keep", encoding="utf-8")
 
     ProgramDatabase(Config(
@@ -257,6 +259,7 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     assert not (run_dir / "prompt_history.jsonl").exists()
     assert not (run_dir / "best_workspace").exists()
     assert not (run_dir / "evaluator_artifacts").exists()
+    assert not (run_dir / "plugin_artifacts").exists()
     assert (run_dir / "manifest.json").exists()
     assert (run_dir / "notes.txt").read_text(encoding="utf-8") == "keep"
 

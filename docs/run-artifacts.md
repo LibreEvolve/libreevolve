@@ -101,6 +101,11 @@ source payloads.
 Token, provider cost, LLM-call retry, stage-sample, and accelerator budgets are
 not first-class counters yet.
 
+When plugins expose run artifact metadata, `runtime.plugin_artifacts` records
+their summaries. The `ttt_rl` export reports the reward policy, queued/exported
+example counts, JSONL path, byte count, SHA-256 hash, and quarantine path when
+available.
+
 ## `history.jsonl`
 
 Each line is one candidate record. Current fields:
@@ -326,11 +331,12 @@ tracked as follow-up work.
 The `ttt_rl` plugin writes training examples to:
 
 ```text
-runs/grpo_data.jsonl
-runs/grpo_data_invalid.jsonl   # Only when an export record is rejected
+runs/<run-name>/plugin_artifacts/ttt_rl/grpo_data.jsonl
+runs/<run-name>/plugin_artifacts/ttt_rl/grpo_data_invalid.jsonl   # Only when an export record is rejected
 ```
 
-This file is global to the configured `log_dir`; it is not nested under the
-per-run directory by default. It exports clipped rewards
-(`reward = max(0.0, score)`) and is not currently linked or hashed from
-`manifest.json`.
+When loaded by the CLI, this file is scoped under the active run directory. It
+exports both `raw_score` and clipped rewards
+(`reward = max(0.0, raw_score)`) and is linked from `manifest.json` through
+`runtime.plugin_artifacts`. Direct in-code plugin construction can still choose
+a custom `log_dir`.

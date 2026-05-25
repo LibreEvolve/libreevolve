@@ -1,5 +1,9 @@
 from unittest.mock import MagicMock, patch
-from libreevolve.plugins.deep_research import DeepResearchPlugin, arxiv_search
+from libreevolve.plugins.deep_research import (
+    DeepResearchPlugin,
+    arxiv_search,
+    arxiv_search_result,
+)
 from libreevolve.population.program import Program
 
 def _p(): return Program(code="x=1", fitness=0.5)
@@ -53,18 +57,23 @@ def test_records_failed_retrieval_event():
     assert event["error"] == "offline"
     assert event["result_chars"] == 0
 
-def test_default_uses_arxiv_search():
-    """Default search_fn should be arxiv_search, not a no-op."""
+def test_default_uses_structured_arxiv_search():
+    """Default search_fn should preserve arXiv source metadata, not be a no-op."""
     plugin = DeepResearchPlugin()
-    assert plugin._search_fn is arxiv_search
+    assert plugin._search_fn is arxiv_search_result
 
 def test_arxiv_search_parses_xml():
     """arxiv_search should parse Atom XML into a summary string."""
     fake_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
     <feed xmlns="http://www.w3.org/2005/Atom">
       <entry>
+        <id>http://arxiv.org/abs/1234.56789v1</id>
         <title>Evolutionary Optimization of Things</title>
         <summary>We optimize things with evolution.</summary>
+        <published>2026-01-02T00:00:00Z</published>
+        <updated>2026-01-03T00:00:00Z</updated>
+        <author><name>Ada Lovelace</name></author>
+        <link href="http://arxiv.org/abs/1234.56789v1" rel="alternate" />
       </entry>
     </feed>"""
     with patch("libreevolve.plugins.deep_research.urllib.request.urlopen") as mock_open:
@@ -76,6 +85,63 @@ def test_arxiv_search_parses_xml():
         result = arxiv_search("test query")
     assert result is not None
     assert "Evolutionary Optimization" in result
+    assert "http://arxiv.org/abs/1234.56789v1" in result
+
+
+def test_arxiv_search_result_preserves_source_metadata():
+    fake_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <entry>
+        <id>http://arxiv.org/abs/1234.56789v1</id>
+        <title>Evolutionary Optimization of Things</title>
+        <summary>We optimize things with evolution.</summary>
+        <published>2026-01-02T00:00:00Z</published>
+        <updated>2026-01-03T00:00:00Z</updated>
+        <author><name>Ada Lovelace</name></author>
+        <link href="http://arxiv.org/abs/1234.56789v1" rel="alternate" />
+      </entry>
+    </feed>"""
+    with patch("libreevolve.plugins.deep_research.urllib.request.urlopen") as mock_open:
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = fake_xml
+        mock_resp.__enter__ = lambda s: s
+        mock_resp.__exit__ = MagicMock(return_value=False)
+        mock_open.return_value = mock_resp
+        result = arxiv_search_result("test query")
+    assert result["status"] == "ok"
+    assert result["query_url"].startswith("http://export.arxiv.org/api/query?")
+    assert result["sources"][0]["id"] == "http://arxiv.org/abs/1234.56789v1"
+    assert result["sources"][0]["url"] == "http://arxiv.org/abs/1234.56789v1"
+    assert result["sources"][0]["authors"] == ["Ada Lovelace"]
+    assert result["sources"][0]["published"] == "2026-01-02T00:00:00Z"
+    assert result["sources"][0]["updated"] == "2026-01-03T00:00:00Z"
+    assert result["sources"][0]["summary_sha256"]
+
+
+def test_default_plugin_records_arxiv_sources():
+    fake_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom">
+      <entry>
+        <id>http://arxiv.org/abs/1234.56789v1</id>
+        <title>Evolutionary Optimization of Things</title>
+        <summary>We optimize things with evolution.</summary>
+        <link href="http://arxiv.org/abs/1234.56789v1" rel="alternate" />
+      </entry>
+    </feed>"""
+    plugin = DeepResearchPlugin()
+    db = MagicMock(); db.best.return_value = _p()
+    with patch("libreevolve.plugins.deep_research.urllib.request.urlopen") as mock_open:
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = fake_xml
+        mock_resp.__enter__ = lambda s: s
+        mock_resp.__exit__ = MagicMock(return_value=False)
+        mock_open.return_value = mock_resp
+        plugin.on_generation_start(0, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    assert event["provider"] == "arxiv"
+    assert event["query_url"].startswith("http://export.arxiv.org/api/query?")
+    assert event["sources"][0]["id"] == "http://arxiv.org/abs/1234.56789v1"
+    assert "http://arxiv.org/abs/1234.56789v1" in plugin.build_extra_context(_p(), [])
 
 def test_arxiv_search_returns_none_on_network_error():
     with patch("libreevolve.plugins.deep_research.urllib.request.urlopen",

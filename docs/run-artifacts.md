@@ -156,10 +156,11 @@ module, parent id, inspiration ids, rendered text, character count, SHA-256
 hash, and whether non-empty context was emitted. Plugins can also attach
 plugin-specific metadata. The DeepEvolve-inspired retrieval plugin stores
 bounded retrieval events there with provider, query, generation, best id and
-fitness, timestamp, status, result length, synthesis hash, and errors. The
+fitness, timestamp, status, result length, synthesis hash, source IDs/URLs,
+source timestamps/authors, summary hashes, and available provider errors. The
 record does not yet include validated plugin constructor config, plugin
-versions, source IDs/URLs, citation/ranking provenance, full result payloads,
-or selected strategy operations.
+versions, full result payloads, ranking provenance, manifest-level retrieval
+summaries, source-content hashes, or selected strategy operations.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.

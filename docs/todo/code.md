@@ -536,12 +536,13 @@ Primary evidence:
     query from the current best fitness and records bounded retrieval events in
     `metadata.plugin_context[].metadata.retrieval_events`, including provider,
     query, generation, best id/fitness, timestamp, status, result length,
-    synthesis hash, and error text when the configured provider raises.
-    `arxiv_search()` still returns only title/summary lines or `None`,
-    discarding arXiv IDs, links, authors, update timestamps, query URL, source
-    ranking, source hashes, and network/parse failure categories. Retrieval
-    state is not written to prompt history, plugin artifacts, or
-    `manifest.json`.
+    synthesis hash, source IDs/URLs, source timestamps/authors, summary hashes,
+    and error text when the configured provider raises. `arxiv_search_result()`
+    preserves those source fields for the default arXiv provider, while
+    `arxiv_search()` remains a string-only compatibility wrapper. Retrieval
+    state still does not include full result payloads, source-content hashes,
+    ranking provenance, default arXiv network/parse failure categories, prompt
+    history entries, plugin artifacts, or `manifest.json` summaries.
   - Required result: store retrieval events with provider, query, generation,
     parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
     and hashes; render citations in prompt context; include plugin retrieval

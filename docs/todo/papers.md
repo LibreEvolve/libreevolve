@@ -474,10 +474,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     performs a generic arXiv Atom search every N generations and injects short
     summaries into the prompt. Candidate metadata records bounded retrieval
     events with provider, query, timestamp, status, result length, synthesis
-    hash, best-program context, and available provider errors. The plugin does
-    not persist arXiv IDs/URLs, citation/ranking provenance, full result
-    payloads, source hashes, or default arXiv network/parse failure categories
-    for the injected context.
+    hash, best-program context, arXiv source IDs/URLs, source
+    timestamps/authors, summary hashes, and available provider errors. The
+    plugin does not persist full result payloads, ranking provenance,
+    source-content hashes, manifest-level retrieval summaries, or default arXiv
+    network/parse failure categories for the injected context.
   - Missing: broad external retrieval, source ranking, hypothesis synthesis,
     retrieval provenance/citations, implementation/refinement loop, systematic
     debugging, cross-file editing, and benchmark-grounded result validation.

@@ -116,9 +116,10 @@ Operational note:
 
 - network failures are swallowed and only affect plugin context, not the run
 - candidate metadata records provider/query/status/timestamp/result-length,
-  synthesis-hash, best-program context, and available provider errors
-- arXiv IDs/URLs, source hashes, citation/ranking provenance, and full result
-  payloads are not persisted in run artifacts yet
+  synthesis-hash, best-program context, arXiv IDs/URLs, source
+  timestamps/authors, summary hashes, and available provider errors
+- full result payloads, ranking provenance, manifest-level retrieval summaries,
+  and source-content hashes are not persisted in run artifacts yet
 - this does not implement cross-file editing, systematic debugging, or
   hypothesis refinement loops
 

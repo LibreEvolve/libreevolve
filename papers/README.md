@@ -17,7 +17,7 @@ paper is fully implemented.
 | 2602.10233 | ImprovEvolve | Modular search inspiration | Only static prompt guidance exists; no enforced or attributed generate/improve/perturb execution loop. |
 | 2602.15951 | MadEvolve | Domain evolution inspiration | Background only; no free-parameter optimization or innovation report. |
 | 2603.14575 | CausalEvolve | Causal-guidance inspiration | Only token-pattern outcome-factor guidance exists; no LLM causal scratchpad. Factor detection now uses the shared compact/canonical SEARCH/REPLACE parser, but the detected factors are still fixed local token-pattern categories rather than LLM-discovered causal variables. |
-| 2510.06056 | DeepEvolve | Retrieval/debug loop inspiration | Only best-effort arXiv/web-search context exists; candidate history records bounded retrieval query/status/timestamp/hash events, but no source IDs/URLs, citations, cross-file editing, or systematic debugging loop. |
+| 2510.06056 | DeepEvolve | Retrieval/debug loop inspiration | Only best-effort arXiv/web-search context exists; candidate history records bounded retrieval query/status/timestamp/hash events plus arXiv source IDs/URLs and summary hashes, but no ranking provenance, full payloads, cross-file editing, or systematic debugging loop. |
 | 2601.21096 | Magellan | Agent/research workflow context | Background only. |
 | 2602.22425 | ArchAgent | Agent architecture context | Background only. |
 | 2602.16928 | Multiagent Learning | Domain-result context | Background only. |

@@ -297,9 +297,10 @@ The DeepEvolve-inspired retrieval plugin keeps only the latest synthesis string
 in memory. Candidate metadata records the rendered plugin-context text, hash,
 parent id, and inspiration ids plus bounded retrieval events with provider,
 query, generation, best id/fitness, timestamp, status, result length, synthesis
-hash, and error text when applicable. It still does not persist source IDs/URLs,
-citations, source hashes, ranking provenance, or a systematic debug/refinement
-loop.
+hash, arXiv source IDs/URLs, source timestamps/authors, summary hashes, and
+error text when applicable. It still does not persist full result payloads,
+ranking provenance, manifest-level retrieval summaries, or a systematic
+debug/refinement loop.
 
 The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
 always injects the same guidance block. Candidate metadata can attribute that

@@ -325,12 +325,18 @@ against the current capped elite list. Existing cells are not re-binned when
 those reference sets change, so current MAP-Elites coordinates are local
 heuristics rather than stable behavior-descriptor coordinates.
 
-Parent selection and inspiration sampling are also intentionally thin today.
-Exploit picks the global best, explore samples a random occupied cell, and
-inspirations are random occupied cells across islands. Inspiration sampling
-excludes the selected parent and deduplicates migrated copies by program id, but
-sampling is not yet metric-aware and does not use novelty, feedback, lineage, or
-recency signals.
+Parent selection has configurable strategies. The default `mixed` mode preserves
+the seeded exploit/explore ratio, where exploit uses the archive selection key
+and explore samples a random occupied cell. Explicit parent strategies can also
+select by individual normalized-metric leaders, novelty, or recency.
+
+Inspiration sampling is also configurable. `mixed` combines normalized-metric
+leaders, novelty, selection score, and random fill; `selection`, `metric`,
+`novelty`, `recency`, and `random` are available as explicit policies.
+Inspiration sampling excludes the selected parent and deduplicates migrated
+copies by program id. This is still an in-memory archive policy rather than a
+queryable evolutionary database, and it does not yet use feedback text, lineage
+diversity, or persisted novelty indexes.
 
 LibreEvolve stores metric vectors and now annotates each program with
 `metadata.normalized_metrics` for declared numeric metrics plus an equal-weight
@@ -338,7 +344,7 @@ LibreEvolve stores metric vectors and now annotates each program with
 elite ranking, and exploit/best sampling use that selection score with final
 composed fitness as a tie-break. Admission thresholds and backend rewards still
 use final scalar fitness, and richer Pareto/frontier sampling, configurable
-weights, metric-specific elites, and metric-aware inspirations remain open.
+weights, and metric-specific elite archives remain open.
 
 ## Backend selection
 

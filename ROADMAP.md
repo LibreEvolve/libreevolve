@@ -62,9 +62,9 @@ is not yet an AlphaEvolve reproduction.
   or another tested policy.
 - Reject degenerate or inverted metric bounds before they can affect primary
   normalization, archive placement, or future multi-objective policies.
-- Sample parents/inspirations by score, individual metric excellence, diversity,
-  novelty, feedback, lineage, and recency, while excluding the selected parent
-  and deduplicating migrated copies from inspiration sets.
+- Extend the current configurable parent/inspiration sampling beyond score,
+  individual metric excellence, novelty, recency, and random/mixed policies to
+  include persisted feedback, lineage diversity, and queryable novelty indexes.
 - Make MAP-Elites descriptors workspace-aware instead of using only the
   primary-file compatibility view for complexity/diversity.
 - Stabilize descriptor normalization with fixed bounds, evaluator-provided

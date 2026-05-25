@@ -43,6 +43,7 @@ the loaded problem directory name.
   `max_evaluator_seconds`, and `max_runtime_seconds`
 - mutation mode
 - evaluator stage config
+- parent and inspiration sampling strategies
 - prompt variants, meta-prompt settings, critique settings, and LLM feedback
   grader specs
 - backend specs

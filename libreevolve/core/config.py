@@ -23,6 +23,8 @@ class Config:
     evaluator_artifact_max_bytes: int = 1_000_000
     evaluator_artifact_redact_secrets: bool = True
     explore_ratio:          float = 0.3
+    parent_selection_strategy: str = "mixed"
+    inspiration_strategy:   str = "mixed"
     mutation_mode:          str   = "diff"
     eval_stages:            list[dict] = field(default_factory=list)
     prompt_variants:        list[str] = field(default_factory=list)
@@ -72,6 +74,16 @@ class Config:
         _require_int("evaluator_artifact_max_bytes", self.evaluator_artifact_max_bytes, minimum=0)
         _require_bool("evaluator_artifact_redact_secrets", self.evaluator_artifact_redact_secrets)
         _require_probability("explore_ratio", self.explore_ratio)
+        _require_enum(
+            "parent_selection_strategy",
+            self.parent_selection_strategy,
+            {"mixed", "exploit", "explore", "metric", "novelty", "recency"},
+        )
+        _require_enum(
+            "inspiration_strategy",
+            self.inspiration_strategy,
+            {"mixed", "random", "selection", "metric", "novelty", "recency"},
+        )
         _require_enum("mutation_mode", self.mutation_mode, {"diff", "full"})
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
         _require_enum("prompt_reward_mode", self.prompt_reward_mode, {"absolute", "improvement"})

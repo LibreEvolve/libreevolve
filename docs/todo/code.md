@@ -992,21 +992,23 @@ Primary evidence:
     nonreplacement, cell replacement, elite displacement, island assignment, and
     seed/child history records.
 
-- [ ] Review and improve parent/inspiration sampling.
+- [x] Review and improve parent/inspiration sampling.
   - Spec evidence: AlphaEvolve samples parent programs and inspirations from a
     database using an evolutionary algorithm inspired by MAP-Elites and island
     populations.
-  - Current evidence: exploit always picks global best; explore picks a random
-    occupied cell; inspirations are random occupied cells
-    (`libreevolve/population/islands.py:28-53`). Implemented improvement:
+  - Status: implemented for the first in-memory archive layer.
+    `parent_selection_strategy` supports `mixed`, `exploit`, `explore`,
+    `metric`, `novelty`, and `recency`; `inspiration_strategy` supports
+    `mixed`, `random`, `selection`, `metric`, `novelty`, and `recency`.
     `evolve()` passes the selected parent id as an inspiration exclusion,
-    `sample_diverse()` accepts `exclude_ids`, and island-level inspiration pools
-    deduplicate migrated copies by `Program.id`. Tests cover MAP-Elites
-    exclusion, database forwarding, migrated duplicate collapse, and loop-level
+    `sample_diverse()` accepts `exclude_ids` and `strategy`, and island-level
+    inspiration pools deduplicate migrated copies by `Program.id`. Tests cover
+    config validation, metric-leader sampling, novelty/recency strategies,
+    MAP-Elites exclusion, migrated duplicate collapse, and loop-level
     parent-as-inspiration avoidance.
-  - Required result: add configurable sampling strategies, metric-aware
-    inspiration choice, recency/novelty weighting, and tests for exploration
-    pressure. Parent exclusion and duplicate-id filtering are implemented.
+  - Remaining gap: this is still in-memory archive sampling, not a queryable
+    database over persisted score, metric, diversity, feedback, lineage,
+    novelty, and reproducible sampling indexes.
 
 - [ ] Improve run inspection and archive diagnostics.
   - Spec evidence: AlphaEvolve's evolutionary database attaches scores and

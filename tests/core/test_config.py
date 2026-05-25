@@ -25,6 +25,12 @@ def test_default_backend_is_anthropic():
     assert Config().backends[0]["type"] == "anthropic"
 
 
+def test_default_sampling_strategies():
+    config = Config()
+    assert config.parent_selection_strategy == "mixed"
+    assert config.inspiration_strategy == "mixed"
+
+
 @pytest.mark.parametrize(
     ("kwargs", "message"),
     [
@@ -35,6 +41,8 @@ def test_default_backend_is_anthropic():
         ({"num_inspirations": -1}, "num_inspirations"),
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),
+        ({"parent_selection_strategy": "best-ish"}, "parent_selection_strategy"),
+        ({"inspiration_strategy": "anything"}, "inspiration_strategy"),
         ({"mutation_mode": "rewrite"}, "mutation_mode"),
         ({"prompt_reward_mode": "delta"}, "prompt_reward_mode"),
         ({"prompt_reward_bounds": [1.0, 1.0]}, "prompt_reward_bounds"),

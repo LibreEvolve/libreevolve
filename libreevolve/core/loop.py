@@ -113,7 +113,10 @@ def evolve(problem: Problem, config: Config,
         for plugin in plugins:
             plugin.on_generation_start(gen, db)
 
-        strategy = "explore" if random.random() < config.explore_ratio else "exploit"
+        if config.parent_selection_strategy == "mixed":
+            strategy = "explore" if random.random() < config.explore_ratio else "exploit"
+        else:
+            strategy = config.parent_selection_strategy
         parent = db.sample(strategy=strategy)
         if parent is None:
             budget.stop_reason = "no_parent"
@@ -122,6 +125,7 @@ def evolve(problem: Problem, config: Config,
         inspirations = db.sample_diverse(
             k=config.num_inspirations,
             exclude_ids={parent.id},
+            strategy=config.inspiration_strategy,
         )
         context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
         prompt_program = prompt_db.select()

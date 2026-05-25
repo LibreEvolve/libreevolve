@@ -176,6 +176,8 @@ def test_manifest_written():
     assert manifest["config"]["max_evaluations"] == 12
     assert manifest["config"]["max_evaluator_seconds"] == 4.5
     assert manifest["config"]["max_runtime_seconds"] == 30.0
+    assert manifest["config"]["parent_selection_strategy"] == "mixed"
+    assert manifest["config"]["inspiration_strategy"] == "mixed"
     assert manifest["config"]["run_id"] == "run-123"
     assert manifest["config"]["run_collision_policy"] == "fail"
     assert manifest["config"]["validator_env_allowlist"] == ["BENCHMARK_DATA_DIR"]

@@ -161,9 +161,9 @@ class ProgramDatabase:
         return self._islands.sample(strategy=strategy)
 
     def sample_diverse(
-        self, k: int, exclude_ids: set[str] | None = None
+        self, k: int, exclude_ids: set[str] | None = None, strategy: str = "mixed"
     ) -> list[Program]:
-        return self._islands.sample_diverse(k=k, exclude_ids=exclude_ids)
+        return self._islands.sample_diverse(k=k, exclude_ids=exclude_ids, strategy=strategy)
 
     def best(self) -> Program | None:
         return self._islands.best()
@@ -198,6 +198,8 @@ class ProgramDatabase:
                     "evaluator_artifact_max_bytes": config.evaluator_artifact_max_bytes,
                     "evaluator_artifact_redact_secrets": config.evaluator_artifact_redact_secrets,
                     "explore_ratio": config.explore_ratio,
+                    "parent_selection_strategy": config.parent_selection_strategy,
+                    "inspiration_strategy": config.inspiration_strategy,
                     "mutation_mode": config.mutation_mode,
                     "eval_stages": config.eval_stages,
                     "prompt_variants": config.prompt_variants,

@@ -204,19 +204,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     an equal-weight archive `selection_score` used for MAP-Elites replacement,
     elite ordering, and exploit/best sampling. Feedback metric calibration,
     configurable weights, metric-specific elites, and Pareto/frontier
-    optimization remain open. Inspiration sampling now excludes the selected
-    parent and deduplicates migrated copies by program id, but is still not
-    metric-aware and does not intentionally surface programs that excel under
-    different secondary criteria. Metric bounds are now strictly ordered before
-    they can be used as policy inputs.
+    optimization remain open. Parent and inspiration sampling can now use
+    metric-leader, novelty, recency, selection-score, random, and mixed
+    strategies while excluding the selected parent and deduplicating migrated
+    copies by program id. Persisted/queryable feedback and lineage-aware
+    resurfacing remain open. Metric bounds are now strictly ordered before they
+    can be used as policy inputs.
 
 - [x] Evolutionary database with attached outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
   - Requirement: solutions have scores and program outputs attached, and the
     database resurfaces ideas to balance exploration/exploitation.
   - Status: JSONL records include raw metrics, structured evaluation output,
-    and per-program archive admission events. Queryable
-    score/metric/diversity/feedback sampling remains open.
+    per-program archive admission events, and configurable in-memory
+    score/metric/novelty/recency inspiration sampling. Queryable persisted
+    feedback and lineage-aware sampling remain open.
     `metadata.score_composition` stores per-plugin score adjustments, and
     archive admission is now gated by evaluator/feedback validity as well as
     final composed fitness. Full MAP-Elites cell/island snapshots plus

@@ -211,6 +211,18 @@ def _render_metrics(program: Program) -> str:
     return ", ".join(f"{k}={v}" for k, v in program.metrics.items()) or "(none)"
 
 
+def _render_proposal(program: Program) -> str:
+    proposal = program.metadata.get("proposal") if isinstance(program.metadata, dict) else None
+    if not isinstance(proposal, dict):
+        return ""
+    lines = []
+    for field_name in ("idea", "rationale", "hypothesis"):
+        value = _short(proposal.get(field_name), max_chars=240)
+        if value:
+            lines.append(f"- {field_name}: {value}")
+    return "\n".join(lines)
+
+
 def _render_program_files(program: Program) -> str:
     workspace = program.workspace()
     if len(workspace.files) == 1:
@@ -227,6 +239,9 @@ def _render_feedback(program: Program) -> str:
     stages = evaluation.get("stages", [])
     metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
     sections: list[str] = []
+    proposal = _render_proposal(program)
+    if proposal:
+        sections.append("[proposal]\n" + proposal)
     if stages:
         lines = []
         for stage in stages[-_MAX_FEEDBACK_ITEMS:]:
@@ -380,10 +395,16 @@ def _redact_sensitive_text(text: str) -> str:
 def _render_inspirations(inspirations: list[Program]) -> str:
     if not inspirations:
         return "(none)"
-    return "".join(
-        f"\n--- Inspiration {i + 1} (fitness {ins.fitness:.4f}; metrics: {_render_metrics(ins)}) ---\n{_render_program_files(ins)}\n"
-        for i, ins in enumerate(inspirations)
-    )
+    rendered = []
+    for i, inspiration in enumerate(inspirations):
+        proposal = _render_proposal(inspiration)
+        proposal_text = f"Proposal:\n{proposal}\n" if proposal else ""
+        rendered.append(
+            f"\n--- Inspiration {i + 1} "
+            f"(fitness {inspiration.fitness:.4f}; metrics: {_render_metrics(inspiration)}) ---\n"
+            f"{proposal_text}{_render_program_files(inspiration)}\n"
+        )
+    return "".join(rendered)
 
 
 def _render_failures(recent_failures: list[dict | tuple[str, float]] | None) -> str:

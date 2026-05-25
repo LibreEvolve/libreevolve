@@ -184,7 +184,8 @@ When `capture_proposal_metadata` is enabled, mutation prompts ask the LLM to
 place short `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch.
 The mutation parser extracts those bounded fields into candidate metadata while
 leaving SEARCH/REPLACE, file-section, block-section, and full-code patch
-application compatible with diff-only responses.
+application compatible with diff-only responses. Later prompts render bounded,
+redacted proposal summaries for selected parent and inspiration programs.
 
 `Config.prompt_variants` provides alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt
@@ -445,8 +446,9 @@ counters, not async queue checkpoints or provider token/cost accounting.
   from candidate history records.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
-- Proposal ideas/rationales can be parsed and stored when configured, but they
-  are not yet scored, searched, or resurfaced from historical candidates.
+- Proposal ideas/rationales can be parsed, stored, and rendered for selected
+  parent/inspiration candidates when configured, but they are not yet scored,
+  searched, or used as an indexed retrieval signal over historical candidates.
 - Prompt evolution is implemented at the template boundary with configured and
   mutated template placeholder validation plus bounded absolute/improvement
   reward normalization; richer ablation reporting remains open.

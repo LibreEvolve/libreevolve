@@ -70,7 +70,8 @@ from `validate.py` unless explicitly allowlisted.
 - `capture_proposal_metadata` (`False`): when true, mutation prompts ask for
   short `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch. Those
   sections are parsed into candidate metadata while patch extraction remains
-  compatible with diff-only responses.
+  compatible with diff-only responses. Selected parent and inspiration
+  candidates render bounded proposal summaries back into later prompts.
 
 Example LLM feedback grader config:
 

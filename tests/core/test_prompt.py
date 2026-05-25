@@ -71,6 +71,64 @@ def test_prompt_sampler_can_request_proposal_metadata():
     assert "keep them outside the patch" in prompt
 
 
+def test_prompt_sampler_renders_parent_proposal_metadata():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        code="x=1",
+        fitness=0.0,
+        metadata={
+            "proposal": {
+                "idea": "Cache the expensive branch.",
+                "rationale": "The validator repeats the same input.",
+                "hypothesis": "Score should improve on repeated cases.",
+            }
+        },
+    )
+
+    prompt = PromptSampler().build(parent, [], problem, extra_context="")
+
+    assert "[proposal]" in prompt
+    assert "- idea: Cache the expensive branch." in prompt
+    assert "- rationale: The validator repeats the same input." in prompt
+    assert "- hypothesis: Score should improve on repeated cases." in prompt
+
+
+def test_prompt_sampler_renders_inspiration_proposal_metadata():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+    inspiration = Program(
+        code="x=2",
+        fitness=0.5,
+        metrics={"score": 0.5},
+        metadata={"proposal": {"idea": "Try the doubled value."}},
+    )
+
+    prompt = PromptSampler().build(parent, [inspiration], problem, extra_context="")
+
+    assert "--- Inspiration 1" in prompt
+    assert "Proposal:" in prompt
+    assert "- idea: Try the doubled value." in prompt
+    assert "x=2" in prompt
+
+
 def test_prompt_sampler_renders_bounded_execution_and_grader_feedback():
     problem = Problem(
         name="demo",

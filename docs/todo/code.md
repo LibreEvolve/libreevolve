@@ -268,11 +268,13 @@ Primary evidence:
     `extract_proposal_metadata()` parses bounded fields from mutation responses,
     patch extraction remains compatible with rationale-plus-diff and diff-only
     responses, and candidate history stores the parsed fields under
-    `metadata.proposal`. Tests cover parser extraction, prompt instructions,
-    config validation, manifest logging, and loop history.
-  - Remaining gap: proposal metadata is not yet rendered back into future
-    prompts, scored, searched, critiqued independently, or used for parent/
-    inspiration resurfacing.
+    `metadata.proposal`. The prompt renderer surfaces bounded proposal
+    summaries for selected parent and inspiration programs. Tests cover parser
+    extraction, prompt instructions, config validation, manifest logging, loop
+    history, and parent/inspiration prompt rendering.
+  - Remaining gap: proposal metadata is not yet scored, searched, critiqued
+    independently, or used as an indexed retrieval signal for choosing parent/
+    inspiration candidates.
   - Required result: allow and parse bounded proposal rationale/idea sections
     when configured, store them in candidate metadata, render useful prior
     ideas in prompts, and keep patch extraction robust for both rationale plus

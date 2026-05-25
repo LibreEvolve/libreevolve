@@ -313,9 +313,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     keeping generated ideas, critiques, and outcomes connected.
   - Current status: `capture_proposal_metadata` can request short `IDEA`,
     `RATIONALE`, and `HYPOTHESIS` sections and stores parsed fields under
-    `metadata.proposal` while preserving diff-only compatibility. Remaining
-    gap: those proposal artifacts are not yet scored, critiqued independently,
-    searched, or resurfaced as inspirations.
+    `metadata.proposal` while preserving diff-only compatibility. Selected
+    parent and inspiration candidates now render bounded proposal summaries in
+    prompts. Remaining gap: those proposal artifacts are not yet scored,
+    critiqued independently, searched, or used as an indexed retrieval signal
+    for resurfacing.
   - Required result: support a configured response format that separates
     proposal rationale from patch blocks while preserving diff-only
     compatibility.

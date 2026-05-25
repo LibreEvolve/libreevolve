@@ -378,8 +378,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: prompt work covered templates/context but not a
     structured proposal artifact separate from raw patch text.
   - Status: partially implemented. `capture_proposal_metadata` asks for and
-    stores bounded idea/rationale/hypothesis fields; future resurfacing and
-    proposal scoring remain open.
+    stores bounded idea/rationale/hypothesis fields, and selected parent/
+    inspiration candidates render bounded proposal summaries into prompts.
+    Indexed historical resurfacing and proposal scoring remain open.
   - Required result: track response formats that can preserve proposal
     rationale for critique, logging, and future resurfacing.
 

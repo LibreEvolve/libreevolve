@@ -184,6 +184,10 @@ eval_stages:
   - name: full
     timeout_sec: 30
     min_score: 0.5
+    artifact_include: ["reports/*.json", "plots/*.png"]
+    artifact_exclude: ["reports/tmp/**"]
+    artifact_max_files: 5
+    artifact_max_bytes: 2000000
 backends:
   - type: openai
     model: gpt-4o-mini
@@ -199,10 +203,13 @@ This validation still assumes `config.yaml` parses to a top-level mapping.
 Malformed YAML or scalar/list top-level documents can fail before the CLI wraps
 the problem in a path-aware `ConfigError` diagnostic.
 
-Nested evaluator-stage numeric fields are validated before a run: `samples`
-must be positive, `timeout_sec` must be positive, `retries` must be
-non-negative, and `min_score` must be numeric. If both `samples` and `seeds`
-are provided, the counts must match so stage sampling is reproducible.
+Nested evaluator-stage fields are validated before a run: `samples` must be
+positive, `timeout_sec` must be positive, `retries` must be non-negative,
+`min_score` must be numeric, artifact include/exclude fields must be lists of
+strings, and artifact max-file/max-byte limits must be non-negative integers.
+If both `samples` and `seeds` are provided, the counts must match so stage
+sampling is reproducible. Stage `artifact_*` settings override top-level
+evaluator artifact settings for that stage.
 
 Top-level evolution and population numeric fields are validated. Use
 non-negative `max_generations`, `num_inspirations`, `migration_interval`, and

@@ -231,6 +231,39 @@ def test_validator_artifact_collection_honors_exclude_and_limits(tmp_path):
         shutil.rmtree(d)
 
 
+def test_configured_stage_overrides_artifact_policy(tmp_path):
+    artifact_dir = tmp_path / "artifacts"
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(c, workspace, stage):\n"
+        "    Path(workspace, 'global.json').write_text('global', encoding='utf-8')\n"
+        "    Path(workspace, 'stage.txt').write_text(stage['name'], encoding='utf-8')\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "hard",
+                    "artifact_include": ["*.txt"],
+                    "artifact_max_files": 1,
+                }
+            ],
+            artifact_dir=artifact_dir,
+            artifact_include=["*.json"],
+        ).evaluate("x=1", None)
+        artifacts = result.metadata["artifacts"]
+        assert [record["path"] for record in artifacts["files"]] == ["stage.txt"]
+        assert artifacts["include"] == ["*.txt"]
+        assert artifacts["max_files"] == 1
+        copied = tmp_path / artifacts["files"][0]["artifact_path"]
+        assert copied.read_text(encoding="utf-8") == "hard"
+        assert not any(artifact_dir.rglob("global.json"))
+    finally:
+        shutil.rmtree(d)
+
+
 @pytest.mark.parametrize(
     "validate_src",
     [

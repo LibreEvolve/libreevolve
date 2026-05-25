@@ -165,7 +165,9 @@ deleted when `evaluator_artifact_include` is configured. Include/exclude
 patterns are matched against files under the candidate workspace, then matching
 files are copied under `runs/<run>/evaluator_artifacts/` with SHA-256 hashes,
 byte counts, and stage/sample/attempt metadata. Files that do not match the
-configured patterns remain temporary and are deleted.
+configured patterns remain temporary and are deleted. Stage configs can
+override the top-level artifact policy with `artifact_include`,
+`artifact_exclude`, `artifact_max_files`, and `artifact_max_bytes`.
 On timeout, LibreEvolve attempts to terminate the validator process tree and
 records cleanup metadata in the evaluation result. This timeout cleanup is not
 a container, network sandbox, memory limit, or general resource policy.

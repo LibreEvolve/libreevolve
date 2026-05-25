@@ -689,16 +689,18 @@ Primary evidence:
   - Status: implemented as opt-in candidate-workspace artifact copy-out.
     `Config` now exposes `evaluator_artifact_include`,
     `evaluator_artifact_exclude`, `evaluator_artifact_max_files`, and
-    `evaluator_artifact_max_bytes`. Matching files are copied to
+    `evaluator_artifact_max_bytes`, with per-stage overrides via
+    `artifact_include`, `artifact_exclude`, `artifact_max_files`, and
+    `artifact_max_bytes`. Matching files are copied to
     `runs/<run>/evaluator_artifacts/<collection_id>/...` before the temporary
-    workspace is deleted. Evaluation metadata records include/exclude patterns,
+    workspace is deleted. Evaluation metadata records effective patterns,
     limits, skipped files, copied file paths, byte counts, SHA-256 hashes,
     stage name, sample index, and attempt. Tests prove validator-created files
-    are copied, bounded, hashed, and retained after subprocess cleanup.
-  - Remaining gap: artifact collection is not per-stage configurable yet,
-    artifact content is copied raw rather than redacted, files outside the
-    candidate workspace are not collected, and richer artifact schemas remain
-    future work.
+    are copied, bounded, hashed, retained after subprocess cleanup, and can use
+    stage-specific artifact policy.
+  - Remaining gap: artifact content is copied raw rather than redacted, files
+    outside the candidate workspace are not collected, and richer artifact
+    schemas remain future work.
 
 - [x] Validate evaluator-stage numeric fields before running cascades.
   - Spec evidence: AlphaEvolve-style cascades are explicit experiment

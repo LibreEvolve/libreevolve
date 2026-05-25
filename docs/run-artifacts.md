@@ -142,10 +142,11 @@ are copied to `evaluator_artifacts/<collection_id>/...` before the temporary
 workspace is deleted. Each copied artifact record in
 `evaluation.metadata.artifacts.files` includes the original relative path,
 stored artifact path, byte count, SHA-256 hash, stage name, sample index, and
-attempt. The collection metadata also records include/exclude patterns,
-max-file and max-byte limits, skipped files, total copied bytes, and collection
-id. Non-matching files and files written outside the candidate workspace are
-not retained.
+attempt. The collection metadata also records the effective include/exclude
+patterns, max-file and max-byte limits, skipped files, total copied bytes, and
+collection id. `eval_stages[]` can override the top-level artifact policy for
+that stage. Non-matching files and files written outside the candidate
+workspace are not retained.
 
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is stored under `metadata.score_composition` with

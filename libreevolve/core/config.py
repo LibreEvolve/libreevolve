@@ -142,7 +142,17 @@ def _validate_eval_stages(stages: object) -> None:
         if not isinstance(stage, dict):
             raise ConfigError(f"{label} must be a mapping")
         unsupported = sorted(set(stage) - {
-            "name", "validate_path", "timeout_sec", "min_score", "samples", "seeds", "retries"
+            "name",
+            "validate_path",
+            "timeout_sec",
+            "min_score",
+            "samples",
+            "seeds",
+            "retries",
+            "artifact_include",
+            "artifact_exclude",
+            "artifact_max_files",
+            "artifact_max_bytes",
         })
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
@@ -154,6 +164,14 @@ def _validate_eval_stages(stages: object) -> None:
             _require_int(f"{label}.retries", stage["retries"], minimum=0)
         if "min_score" in stage:
             _require_number(f"{label}.min_score", stage["min_score"])
+        if "artifact_include" in stage:
+            _validate_string_list(f"{label}.artifact_include", stage["artifact_include"])
+        if "artifact_exclude" in stage:
+            _validate_string_list(f"{label}.artifact_exclude", stage["artifact_exclude"])
+        if "artifact_max_files" in stage:
+            _require_int(f"{label}.artifact_max_files", stage["artifact_max_files"], minimum=0)
+        if "artifact_max_bytes" in stage:
+            _require_int(f"{label}.artifact_max_bytes", stage["artifact_max_bytes"], minimum=0)
         if "seeds" in stage:
             if not isinstance(stage["seeds"], list):
                 raise ConfigError(f"{label}.seeds must be a list")

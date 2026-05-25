@@ -160,6 +160,7 @@ class CascadeEvaluator:
         seeds = list(stage.get("seeds", []))
         samples = int(stage.get("samples", len(seeds) or 1))
         retries = int(stage.get("retries", 0))
+        artifact_policy = self._artifact_policy(stage)
         results: list[EvaluationResult] = []
         for sample_index in range(samples):
             seed = seeds[sample_index] if sample_index < len(seeds) else None
@@ -177,6 +178,7 @@ class CascadeEvaluator:
                 timeout_sec=timeout,
                 stage_context=context,
                 retries=retries,
+                artifact_policy=artifact_policy,
             )
             results.append(result)
         if len(results) == 1:
@@ -191,6 +193,7 @@ class CascadeEvaluator:
         timeout_sec: float,
         stage_context: dict,
         retries: int,
+        artifact_policy: dict,
     ) -> "EvaluationResult":
         last: EvaluationResult | None = None
         attempts: list[dict] = []
@@ -203,6 +206,7 @@ class CascadeEvaluator:
                 timeout_sec=timeout_sec,
                 validate_path=validate_path,
                 stage_context=context,
+                artifact_policy=artifact_policy,
             )
             result.metadata["attempt"] = attempt
             attempts.append(_retry_attempt_record(result, attempt, context))
@@ -223,9 +227,11 @@ class CascadeEvaluator:
         timeout_sec: float,
         validate_path: Path | None = None,
         stage_context: dict | None = None,
+        artifact_policy: dict | None = None,
     ) -> "EvaluationResult":
         validate_path = validate_path or self._problem.validate_path
         stage_context = stage_context or {"name": stage_name}
+        artifact_policy = artifact_policy or self._artifact_policy({})
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             runner = tmp_path / "_runner.py"
@@ -250,11 +256,11 @@ class CascadeEvaluator:
             stderr = _redact_secrets(res.stderr)
             artifact_metadata = _collect_evaluator_artifacts(
                 cand_root,
-                self._artifact_dir,
-                include=self._artifact_include,
-                exclude=self._artifact_exclude,
-                max_files=self._artifact_max_files,
-                max_bytes=self._artifact_max_bytes,
+                artifact_policy["dir"],
+                include=artifact_policy["include"],
+                exclude=artifact_policy["exclude"],
+                max_files=artifact_policy["max_files"],
+                max_bytes=artifact_policy["max_bytes"],
                 stage_context=stage_context,
             )
             if res.timed_out:
@@ -412,6 +418,15 @@ class CascadeEvaluator:
             if not path.is_absolute():
                 path = self._problem.problem_dir / path
         return _validate_problem_local_evaluator_path(path, self._problem.problem_dir)
+
+    def _artifact_policy(self, stage: dict) -> dict:
+        return {
+            "dir": self._artifact_dir,
+            "include": list(stage.get("artifact_include", self._artifact_include)),
+            "exclude": list(stage.get("artifact_exclude", self._artifact_exclude)),
+            "max_files": int(stage.get("artifact_max_files", self._artifact_max_files)),
+            "max_bytes": int(stage.get("artifact_max_bytes", self._artifact_max_bytes)),
+        }
 
     def _aggregate_sample_results(
         self, stage_name: str, results: list["EvaluationResult"], validate_path: Path

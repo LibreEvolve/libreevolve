@@ -660,6 +660,26 @@ Primary evidence:
     log; update scheduler/budget accounting from this telemetry; add tests with
     fake provider usage for mutation, critique, feedback, and meta-prompt calls.
 
+- [ ] Add LLM provider failure retry, fallback, and quarantine policy.
+  - Spec evidence: AlphaEvolve runs an LLM/evaluator pipeline optimized for
+    long-running throughput. Provider failures, rate limits, invalid responses,
+    and transient transport errors need deterministic accounting and retry or
+    fallback behavior so one failed call does not corrupt scheduler state or
+    crash unrelated run progress.
+  - Current evidence: `evolve()` calls `llm.generate()` for mutation, optional
+    critique, optional feedback, and meta-prompt mutation with no try/except or
+    retry policy. `LLMEnsemble.generate()` selects a backend, calls
+    `self.backends[idx].generate(prompt)`, and increments `counts[idx]` only
+    after a successful return; failed provider calls are neither counted nor
+    logged, and no alternate backend is tried. A mutation-call exception aborts
+    the run before candidate/evaluation logging, while critique, feedback, or
+    meta-prompt exceptions can abort after useful work has already completed.
+  - Required result: define per-role LLM failure policy with bounded retries,
+    timeout/rate-limit classification, optional backend fallback, scheduler
+    accounting for failed attempts, structured call/error logs, candidate-level
+    quarantine where appropriate, and tests for mutation, critique, feedback,
+    and meta-prompt provider failures.
+
 - [ ] Make OpenAI API routing explicit and validate reasoning-model options.
   - Spec evidence: AlphaEvolve's task setup includes LLM choices and
     configurations; backend behavior must be reproducible and match configured

@@ -187,6 +187,10 @@ Common variables:
 
 Provider SDKs may honor additional provider-specific variables.
 
+LLM provider failures are not retried or routed to fallback backends today.
+Mutation, critique, feedback, and meta-prompt provider exceptions can abort a
+run rather than being recorded as structured failed LLM-call attempts.
+
 ## Known caveats
 
 - The CLI does not expose every `Config` field directly; use `config.yaml` for

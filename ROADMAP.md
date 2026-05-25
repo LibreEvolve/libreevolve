@@ -129,6 +129,9 @@ is not yet an AlphaEvolve reproduction.
   grading, and meta-prompt mutation calls.
 - Persist normalized LLM call telemetry, including provider usage, latency,
   retries, request ids, finish reasons, and API mode.
+- Add deterministic provider-failure handling for mutation, critique,
+  feedback, and meta-prompt calls, including retries, fallback routing,
+  failed-attempt accounting, and structured error logs.
 - Add explicit breadth/depth/cost/latency scheduling tests.
 - Extend critique/revision beyond a synchronous self-review call toward
   configurable reviewer pools.

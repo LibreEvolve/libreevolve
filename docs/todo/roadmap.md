@@ -269,6 +269,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     size, retries, latency, API mode, request/response ids, failure metadata,
     and scheduler/budget updates from that telemetry.
 
+- [x] Add LLM provider failure policy to backend/runtime work.
+  - Evidence: `evolve()` calls `llm.generate()` for mutation, critique,
+    feedback, and meta-prompt mutation without retries or exception handling,
+    while `LLMEnsemble.generate()` only increments backend counts after a
+    successful return.
+  - Current roadmap gap: backend scheduling and telemetry work covered
+    throughput, usage, and failure metadata, but did not require deterministic
+    retry/fallback/quarantine behavior for failed provider calls.
+  - Required result: track per-role LLM retry budgets, fallback routing, failed
+    attempt accounting, structured error logs, and tests for mutation,
+    critique, feedback, and meta-prompt failures.
+
 - [x] Add reviewer-pool critique fidelity to backend/critique work.
   - Evidence: AlphaEvolve describes using LLMs to generate, critique, and
     evolve a pool of algorithms, while LibreEvolve has only a single optional

@@ -89,6 +89,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep marketing text aligned with the heuristic
     implementation unless canonical UCB1 is implemented and tested.
 
+- [x] Clarify LLM provider failure handling is not production-grade.
+  - README evidence: README described OpenAI/Anthropic/Ollama support and
+    backend routing, but did not warn that provider call failures are not
+    retried, routed to fallback models, or recorded as structured failed
+    attempts.
+  - Current evidence: `LLMEnsemble.generate()` calls the selected backend
+    directly and only increments counts on success; `evolve()` does not isolate
+    mutation, critique, feedback, or meta-prompt provider exceptions.
+  - Required result: warn readers that backend failure retry/fallback and
+    failed-call telemetry remain open.
+
 - [x] Correct the AlphaEvolve local-model comparison row.
   - README evidence: the comparison table said AlphaEvolve local models:
     "No."

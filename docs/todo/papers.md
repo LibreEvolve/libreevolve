@@ -59,7 +59,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: added experimental `throughput_depth` scheduling metadata layered
     over UCB-style scores. Remaining divergence: provider usage, latency,
     retry, response-id, finish-reason, and API-mode telemetry is not persisted
-    per LLM call.
+    per LLM call. Provider failures are not retried, routed to fallback
+    backends, or logged as structured failed LLM-call attempts.
 
 - [ ] Existing/custom LLM backend extension point.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.

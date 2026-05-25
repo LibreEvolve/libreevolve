@@ -243,7 +243,8 @@ py -3.12 -m libreevolve run my_problem/ \
 
 Per-call provider telemetry is not logged yet. Token usage, latency, retry
 counts, response IDs, finish reasons, and API mode remain backend-provenance
-work.
+work. Provider call failures are also not retried, routed to fallback backends,
+or recorded as structured failed LLM-call attempts yet.
 
 <details>
 <summary><h2>Architecture</h2></summary>

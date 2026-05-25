@@ -241,7 +241,10 @@ reasoning-model detection or API-mode validation yet.
 The backend interface returns only generated text. Provider usage, latency,
 retry count, request/response ids, finish reasons, API mode, and raw response
 metadata are not normalized or persisted, which limits cost accounting,
-debugging, and scheduler analysis.
+debugging, and scheduler analysis. Provider exceptions are not isolated by
+role today: mutation, critique, feedback, and meta-prompt calls can abort the
+run, and failed attempts are not retried, routed to fallback backends, or
+counted in scheduler state.
 
 ## Logging and artifacts
 

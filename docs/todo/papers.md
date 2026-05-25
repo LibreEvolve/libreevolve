@@ -107,8 +107,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     intervals, global NLP optimization, multiagent learning, Ramsey numbers,
     Berczy combinatorics, bilateral trade, and related AlphaEvolve-style
     mathematical results.
-  - Current evidence: `libreevolve/problems/examples/` contains only
-    `hello_world`, `sorting`, and `circle_packing`.
+  - Current evidence: `libreevolve/problems/examples/` contains
+    `hello_world`, `sorting`, `circle_packing`, and `matrix_multiplication`.
   - Required result: for each downloaded domain paper, either add a
     corresponding problem fixture/benchmark, link it to an existing benchmark,
     or mark it as background-only in a paper index.

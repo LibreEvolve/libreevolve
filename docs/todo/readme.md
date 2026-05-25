@@ -88,17 +88,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [x] Qualify "comprehensive test coverage."
   - README evidence: `README.md:59` claims comprehensive coverage across all
     components.
-  - Current evidence: there are 118 non-integration test functions by AST
-    count, but major AlphaEvolve features are absent and not testable.
+  - Current evidence: the local non-integration suite now has 133 selected
+    tests, but major AlphaEvolve features are still absent or represented only
+    as narrow prototype behavior.
   - Required result: keep the count but change the coverage claim to the
     current prototype surface.
 
 - [x] Correct test commands for this machine.
   - README evidence: `README.md:327-331` uses `pytest`.
   - Project instructions: `AGENTS.md` says to use `py -3.12 -m pytest`.
-  - Current evidence: direct `py -3.12 -m pytest ... --collect-only` failed
-    because pytest is not installed in the active interpreter until dev extras
-    are installed.
+  - Current evidence: tests run successfully after installing dev extras, and
+    documentation now uses `py -3.12 -m pytest`.
   - Required result: document installation first and use `py -3.12 -m pytest`.
 
 - [x] Qualify model names as examples, not guaranteed current model IDs.

@@ -21,10 +21,10 @@ Primary evidence:
   - Spec evidence: AlphaEvolve supports blocks marked with
     `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while the surrounding
     code acts as a skeleton.
-  - Current evidence: `load_problem()` reads whole seed files from
-    `initial_programs/*.py` and stores each as one code string
-    (`libreevolve/problems/loader.py:33-45`). There is no marker parser or
-    skeleton/evolved-region distinction.
+  - Current evidence: `libreevolve/core/candidate.py` parses evolve-block
+    markers and constrains mutations to those marked regions. `Program.code`
+    is still a single string, so this is single-file support rather than a
+    project/file-set representation.
   - Status: implemented in `libreevolve/core/candidate.py`; one or more marked
     regions are parsed and skeleton code is preserved during mutation.
   - Required result: problem loading should support one or more marked
@@ -54,9 +54,8 @@ Primary evidence:
 - [x] Add direct full-code/full-block replacement mode in addition to diffs.
   - Spec evidence: AlphaEvolve can be configured to ask for a complete code
     block when a rewrite is more appropriate than a small modification.
-  - Current evidence: `build_prompt()` always asks for SEARCH/REPLACE diffs
-    (`libreevolve/core/loop.py:37-40`), and the generation path always calls
-    `apply_diff()` (`libreevolve/core/loop.py:76-78`).
+  - Current evidence: `Config.mutation_mode` and CLI `--mutation-mode` support
+    `diff` and `full`; generation now calls `apply_candidate_mutation()`.
   - Status: implemented as `Config.mutation_mode` and CLI `--mutation-mode`,
     with `diff` and `full` modes covered by tests.
   - Required result: add a per-problem/per-run mutation mode for full block,
@@ -68,9 +67,10 @@ Primary evidence:
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts,
     previous solutions, system instructions, explicit context, stochastic
     formatting, rendered evaluation results, and meta-prompt evolution.
-  - Current evidence: `build_prompt()` is fixed string assembly with parent
-    code, random inspirations, plugin context, and recent failures only
-    (`libreevolve/core/loop.py:20-40`).
+  - Current evidence: `build_prompt()` delegates to
+    `libreevolve/core/prompt.py::PromptSampler`, which supports configurable
+    templates, explicit context files, evaluator feedback, inspirations,
+    plugin context, and recent failures.
   - Status: implemented in `libreevolve/core/prompt.py` with configurable
     templates, problem context files, inspirations, metrics, evaluator feedback,
     plugin context, and recent failures. Meta-prompt evolution remains separate.
@@ -80,9 +80,8 @@ Primary evidence:
 - [x] Include rendered evaluation results and program outputs in prompts.
   - Spec evidence: AlphaEvolve prompts can include a program, the result of
     executing that program, and scores assigned by `evaluate`.
-  - Current evidence: evaluator returns only a float and discards the metrics
-    dict, stdout/stderr, timeout cause, and any validator output
-    (`libreevolve/core/evaluator.py:57-63`).
+  - Current evidence: evaluator returns `EvaluationResult`; `Program` stores
+    `metrics` and `evaluation`; `PromptSampler` renders recent stage feedback.
   - Status: implemented through `EvaluationResult`, `Program.evaluation`,
     JSONL persistence, and `PromptSampler` feedback rendering.
   - Required result: return an evaluation result object, store it with the
@@ -92,39 +91,41 @@ Primary evidence:
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a
     separate database analogous to solution programs and ablates "No meta
     prompt evolution" as a reduced system.
-  - Current evidence: no prompt database exists; prompt text is static except
-    plugin context (`libreevolve/core/loop.py:20-40`).
+  - Current evidence: no prompt database exists; prompt text can vary through
+    `Config.prompt_variants`, but variants are configured, not evolved.
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
 - [ ] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,
     equations, code snippets, and relevant literature, including PDF files.
-  - Current evidence: only `task_description.txt` and plugin strings are
-    inserted into prompts (`libreevolve/core/loop.py:30-35`). The
-    `DeepResearchPlugin` searches arXiv by a generic query derived from fitness,
-    not by the problem's supplied literature (`libreevolve/plugins/deep_research.py`).
+  - Current evidence: `load_problem()` reads problem-local `.txt`, `.md`, and
+    `.py` files from `context/` and `PromptSampler` renders them. There is no
+    PDF extraction/summarization layer or deterministic literature selector.
+    `DeepResearchPlugin` still searches arXiv by a generic query derived from
+    fitness, not by supplied local literature.
   - Required result: allow problem-local context files, PDFs, equations, and
     code snippets to be selected, summarized, and rendered deterministically.
 
 ## Evaluation
 
-- [ ] Replace the fixed three-tier evaluator with user-configurable evaluation
+- [ ] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
   - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing
     difficulty, moving candidates to later stages only if earlier stages are
     promising.
-  - Current evidence: the cascade is hard-coded to diff penalty, Python syntax,
-    then one validator subprocess (`libreevolve/core/evaluator.py:31-63`).
+  - Current evidence: `Config.eval_stages` supports repeated local validator
+    stages with per-stage timeout and `min_score` thresholds. It does not yet
+    support distinct test ensembles, sample sizes, retry/random-seed policies,
+    stage-specific metrics, artifacts, or distributed evaluators.
   - Required result: support configured stages, per-stage thresholds, sample
     sizes, retry/random-seed policies, and separate metrics per stage.
 
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,
     scores, and program outputs attached.
-  - Current evidence: `ProgramDatabase.log()` writes only code, one `fitness`,
-    generation, lineage, and prompt/diff metadata
-    (`libreevolve/core/database.py:24-34`).
+  - Current evidence: `ProgramDatabase.log()` writes raw metrics and structured
+    evaluation results, including stage outcomes and process diagnostics.
   - Status: implemented in `EvaluationResult` and `history.jsonl` records.
   - Required result: persist raw metrics dicts, stage outcomes, stdout/stderr,
     error causes, elapsed time, and validator-provided feedback.
@@ -162,11 +163,10 @@ Primary evidence:
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and
     use diverse high-performing programs under different definitions of "good"
     in prompts.
-  - Current evidence: the loader stores all metrics, but the evaluator returns
-    only `primary_metric`; archive cells and backend reward use one float
-    (`libreevolve/problems/loader.py:26-45`,
-    `libreevolve/core/evaluator.py:57-63`,
-    `libreevolve/core/loop.py:95-99`).
+  - Current evidence: evaluator/database/program records preserve metric
+    vectors, and primary fitness honors direction/bounds. Archive comparisons,
+    backend reward, and parent selection still collapse behavior to normalized
+    primary fitness.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier or score-composition policies, and sample
     inspirations by metric-specific excellence.
@@ -175,11 +175,9 @@ Primary evidence:
   - Spec evidence: AlphaEvolve's metrics are maximized by convention; the local
     problem format adds `direction` and `bounds`, so the implementation must
     either honor them or remove the claim.
-  - Current evidence: `direction` is parsed only as unused dict data; bounds are
-    parsed but not passed to `MAPElites` because `IslandModel` constructs
-    `MAPElites(...)` without `perf_bounds`
-    (`libreevolve/problems/loader.py:36-45`,
-    `libreevolve/population/islands.py:18-20`).
+  - Current evidence: `Problem.normalize_metric()` honors direction and bounds;
+    evaluator fitness is normalized; `ProgramDatabase` and `IslandModel` pass
+    normalized performance bounds into `MAPElites`.
   - Status: implemented via `Problem.normalize_metric()` and normalized archive
     performance cells; non-[0, 1] and minimize metrics have tests.
   - Required result: normalize metrics through declared bounds and directions,
@@ -212,9 +210,10 @@ Primary evidence:
 - [x] Model AlphaEvolve's throughput/depth ensemble strategy explicitly.
   - Spec evidence: AlphaEvolve combines Gemini Flash for breadth with Gemini
     Pro for occasional deeper, higher-quality suggestions.
-  - Current evidence: `LLMEnsemble` uses only UCB1 over scalar rewards and has
-    no concept of cheap breadth model versus expensive depth model
-    (`libreevolve/llm/ensemble.py`).
+  - Current evidence: `LLMEnsemble` supports default `ucb1` and experimental
+    `throughput_depth` scheduling metadata (`cost`, `latency`, `depth`, `role`).
+    The policy is still heuristic and not a faithful reproduction of the
+    AlphaEvolve production scheduler.
   - Status: implemented as an experimental `throughput_depth` ensemble strategy
     using backend `cost`, `latency`, and `depth` metadata. This remains a
     heuristic, not a reproduction of AlphaEvolve's production scheduler.
@@ -242,8 +241,9 @@ Primary evidence:
 - [x] Add structured run metadata.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
     choices, evaluator stages, compute budgets, and configurations.
-  - Current evidence: only candidate JSONL and `best.py` are written; effective
-    config and backend roster are not persisted.
+  - Current evidence: `manifest.json` records effective local config and
+    backend roster. It does not yet include code version, problem hash, plugin
+    specs, artifact hashes, or resumable controller state.
   - Status: `manifest.json` now records effective local config and backend
     settings. Code version/problem hash/plugin specs are still future
     hardening.

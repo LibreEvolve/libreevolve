@@ -160,11 +160,12 @@ values such as data paths. Provider keys loaded through `.env` are not passed
 unless explicitly allowlisted, and persisted stdout/stderr applies basic
 secret-pattern redaction. Network access is not sandboxed yet.
 
-Validator-created files are not collected yet. The candidate workspace is a
-temporary directory that is deleted after each subprocess evaluation, so any
-plots, JSON outputs, traces, compiled files, or other generated artifacts must
-be summarized through metrics/stdout/stderr until evaluator artifact collection
-is implemented.
+Validator-created files can be collected before the temporary workspace is
+deleted when `evaluator_artifact_include` is configured. Include/exclude
+patterns are matched against files under the candidate workspace, then matching
+files are copied under `runs/<run>/evaluator_artifacts/` with SHA-256 hashes,
+byte counts, and stage/sample/attempt metadata. Files that do not match the
+configured patterns remain temporary and are deleted.
 On timeout, LibreEvolve attempts to terminate the validator process tree and
 records cleanup metadata in the evaluation result. This timeout cleanup is not
 a container, network sandbox, memory limit, or general resource policy.

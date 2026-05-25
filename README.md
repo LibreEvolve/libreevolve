@@ -354,9 +354,11 @@ metrics:
 metric names. It runs in a temporary local subprocess, and its raw metrics and
 diagnostics are stored with each candidate.
 
-Generated evaluator files are not collected yet. The candidate workspace is
-temporary, so validators should summarize important plots, traces, or JSON
-outputs through metrics/stdout/stderr until artifact collection is implemented.
+Generated evaluator files can be retained when `evaluator_artifact_include`
+patterns are configured. Matching files written under the candidate workspace
+are copied to `evaluator_artifacts/` with hashes and stage/sample/attempt
+metadata; files that do not match the configured patterns are discarded with
+the temporary workspace.
 
 That subprocess uses a minimal environment by default, so provider keys loaded
 from `.env` are not visible to validators unless their names are explicitly

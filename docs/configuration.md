@@ -23,6 +23,14 @@ from `validate.py` unless explicitly allowlisted.
   into validator subprocesses in addition to the minimal default environment.
   Values are not written to metadata; persisted validator stdout/stderr applies
   basic secret-pattern redaction.
+- `evaluator_artifact_include` (`[]`): glob patterns for validator-created
+  files to copy from the temporary candidate workspace into
+  `evaluator_artifacts/`. Empty means no artifact copy-out.
+- `evaluator_artifact_exclude` (`[]`): glob patterns to exclude from artifact
+  copy-out after include matching.
+- `evaluator_artifact_max_files` (`20`): maximum copied files per evaluation.
+- `evaluator_artifact_max_bytes` (`1000000`): maximum total copied artifact
+  bytes per evaluation.
 - `explore_ratio` (`0.3`): probability of exploration instead of exploitation.
 - `mutation_mode` (`"diff"`): `diff` or `full`. The built-in prompt template
   renders mode-specific mutation instructions; custom prompt variants can use
@@ -163,6 +171,8 @@ Example:
 max_generations: 200
 eval_timeout_sec: 15
 mutation_mode: full
+evaluator_artifact_include: ["*.json", "artifacts/**"]
+evaluator_artifact_exclude: ["artifacts/tmp/**"]
 eval_stages:
   - name: smoke
     validate_path: validate.py

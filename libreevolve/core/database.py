@@ -16,6 +16,7 @@ RUN_ARTIFACT_NAMES = {
     "manifest.json",
     "best.py",
     "best_workspace",
+    "evaluator_artifacts",
 }
 
 
@@ -175,6 +176,10 @@ class ProgramDatabase:
                     "num_inspirations": config.num_inspirations,
                     "eval_timeout_sec": config.eval_timeout_sec,
                     "validator_env_allowlist": config.validator_env_allowlist,
+                    "evaluator_artifact_include": config.evaluator_artifact_include,
+                    "evaluator_artifact_exclude": config.evaluator_artifact_exclude,
+                    "evaluator_artifact_max_files": config.evaluator_artifact_max_files,
+                    "evaluator_artifact_max_bytes": config.evaluator_artifact_max_bytes,
                     "explore_ratio": config.explore_ratio,
                     "mutation_mode": config.mutation_mode,
                     "eval_stages": config.eval_stages,

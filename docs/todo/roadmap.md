@@ -220,9 +220,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: evaluation hardening mentioned artifacts broadly but
     did not identify the temporary-workspace data-loss mechanism or require
     stage/sample/attempt artifact provenance.
-  - Required result: track artifact include/exclude configuration, size limits,
-    hashes, redaction, stage/sample/attempt provenance, and tests proving
-    validator-created files are retained after subprocess cleanup.
+  - Status: implemented as opt-in artifact copy-out from the candidate
+    workspace. Configured include/exclude patterns, size/count limits, copied
+    file hashes, skipped-file reasons, stage/sample/attempt provenance, and
+    run-directory artifact paths are recorded, with tests proving files are
+    retained after subprocess cleanup.
+  - Remaining gap: artifact content is copied raw, collection policy is
+    top-level rather than per-stage, and files outside the candidate workspace
+    are not retained.
 
 - [x] Add evaluator-stage numeric validation to config hardening.
   - Evidence: `Config.validate()` now checks evaluator-stage `samples`,

@@ -8,6 +8,9 @@ import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
+import fnmatch
+import shutil
+from uuid import uuid4
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.problems.loader import Problem
 
@@ -51,11 +54,21 @@ class CascadeEvaluator:
         timeout_sec: float = 60.0,
         stages: list[dict] | None = None,
         validator_env_allowlist: list[str] | None = None,
+        artifact_dir: Path | None = None,
+        artifact_include: list[str] | None = None,
+        artifact_exclude: list[str] | None = None,
+        artifact_max_files: int = 20,
+        artifact_max_bytes: int = 1_000_000,
     ):
         self._problem = problem
         self._timeout = timeout_sec
         self._stages = stages or []
         self._validator_env_allowlist = list(validator_env_allowlist or [])
+        self._artifact_dir = artifact_dir
+        self._artifact_include = list(artifact_include or [])
+        self._artifact_exclude = list(artifact_exclude or [])
+        self._artifact_max_files = artifact_max_files
+        self._artifact_max_bytes = artifact_max_bytes
 
     def evaluate(
         self, code: str | CandidateWorkspace, diff_error: str | None
@@ -235,12 +248,22 @@ class CascadeEvaluator:
             )
             stdout = _redact_secrets(res.stdout)
             stderr = _redact_secrets(res.stderr)
+            artifact_metadata = _collect_evaluator_artifacts(
+                cand_root,
+                self._artifact_dir,
+                include=self._artifact_include,
+                exclude=self._artifact_exclude,
+                max_files=self._artifact_max_files,
+                max_bytes=self._artifact_max_bytes,
+                stage_context=stage_context,
+            )
             if res.timed_out:
                 elapsed = time.perf_counter() - started
                 metadata = _eval_metadata(
                     workspace, validate_path, stage_context, validator_env_meta
                 )
                 metadata["timeout_cleanup"] = res.cleanup
+                metadata["artifacts"] = artifact_metadata
                 return EvaluationResult(
                     fitness=-0.2,
                     metrics={self._problem.primary_metric: -0.2, "is_valid": False},
@@ -284,7 +307,11 @@ class CascadeEvaluator:
                     error="subprocess_error",
                     elapsed_sec=elapsed,
                     metadata=_eval_metadata(
-                        workspace, validate_path, stage_context, validator_env_meta
+                        workspace,
+                        validate_path,
+                        stage_context,
+                        validator_env_meta,
+                        artifact_metadata,
                     ),
                 )
             try:
@@ -314,7 +341,11 @@ class CascadeEvaluator:
                         error="domain_invalid",
                         elapsed_sec=elapsed,
                         metadata=_eval_metadata(
-                            workspace, validate_path, stage_context, validator_env_meta
+                            workspace,
+                            validate_path,
+                            stage_context,
+                            validator_env_meta,
+                            artifact_metadata,
                         ),
                     )
                 fitness = self._problem.fitness_from_metrics(m)
@@ -337,7 +368,11 @@ class CascadeEvaluator:
                     stderr=stderr,
                     elapsed_sec=elapsed,
                     metadata=_eval_metadata(
-                        workspace, validate_path, stage_context, validator_env_meta
+                        workspace,
+                        validate_path,
+                        stage_context,
+                        validator_env_meta,
+                        artifact_metadata,
                     ),
                 )
             except (json.JSONDecodeError, ValueError, KeyError, TypeError):
@@ -361,7 +396,11 @@ class CascadeEvaluator:
                     error="malformed_metrics",
                     elapsed_sec=elapsed,
                     metadata=_eval_metadata(
-                        workspace, validate_path, stage_context, validator_env_meta
+                        workspace,
+                        validate_path,
+                        stage_context,
+                        validator_env_meta,
+                        artifact_metadata,
                     ),
                 )
 
@@ -583,6 +622,7 @@ def _eval_metadata(
     validate_path: Path,
     stage_context: dict,
     validator_env: dict | None = None,
+    artifacts: dict | None = None,
 ) -> dict:
     metadata = {
         "primary_file": workspace.primary_file,
@@ -592,6 +632,8 @@ def _eval_metadata(
     }
     if validator_env is not None:
         metadata["validator_env"] = validator_env
+    if artifacts is not None:
+        metadata["artifacts"] = artifacts
     return metadata
 
 
@@ -607,6 +649,80 @@ def _validate_problem_local_evaluator_path(path: Path, problem_dir: Path) -> Pat
     if resolved.suffix != ".py":
         raise ValueError(f"Evaluator validate_path must be a Python file: {path}")
     return resolved
+
+
+def _collect_evaluator_artifacts(
+    cand_root: Path,
+    artifact_dir: Path | None,
+    *,
+    include: list[str],
+    exclude: list[str],
+    max_files: int,
+    max_bytes: int,
+    stage_context: dict,
+) -> dict:
+    metadata = {
+        "enabled": bool(artifact_dir and include),
+        "include": include,
+        "exclude": exclude,
+        "max_files": max_files,
+        "max_bytes": max_bytes,
+        "files": [],
+        "skipped": [],
+        "total_bytes": 0,
+    }
+    if not artifact_dir or not include:
+        return metadata
+    collection_id = uuid4().hex
+    metadata["collection_id"] = collection_id
+    stage_name = str(stage_context.get("name", "stage"))
+    sample_index = stage_context.get("sample_index")
+    attempt = stage_context.get("attempt")
+    metadata["stage"] = {
+        "name": stage_name,
+        "sample_index": sample_index,
+        "attempt": attempt,
+    }
+    target_root = artifact_dir / collection_id
+    matched = _matching_artifact_paths(cand_root, include, exclude)
+    for path in matched:
+        rel = path.relative_to(cand_root).as_posix()
+        if len(metadata["files"]) >= max_files:
+            metadata["skipped"].append({"path": rel, "reason": "max_files"})
+            continue
+        size = path.stat().st_size
+        if metadata["total_bytes"] + size > max_bytes:
+            metadata["skipped"].append({"path": rel, "reason": "max_bytes", "bytes": size})
+            continue
+        raw = path.read_bytes()
+        dest = target_root / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, dest)
+        metadata["total_bytes"] += size
+        metadata["files"].append(
+            {
+                "path": rel,
+                "artifact_path": (Path(artifact_dir.name) / collection_id / rel).as_posix(),
+                "bytes": size,
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "stage_name": stage_name,
+                "sample_index": sample_index,
+                "attempt": attempt,
+            }
+        )
+    return metadata
+
+
+def _matching_artifact_paths(cand_root: Path, include: list[str], exclude: list[str]) -> list[Path]:
+    paths = []
+    for path in sorted((p for p in cand_root.rglob("*") if p.is_file()), key=lambda p: p.as_posix()):
+        rel = path.relative_to(cand_root).as_posix()
+        if not any(fnmatch.fnmatchcase(rel, pattern) for pattern in include):
+            continue
+        if any(fnmatch.fnmatchcase(rel, pattern) for pattern in exclude):
+            continue
+        paths.append(path)
+    return paths
 
 
 def _validator_env(allowlist: list[str]) -> dict[str, str]:

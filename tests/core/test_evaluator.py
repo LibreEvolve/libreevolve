@@ -173,6 +173,64 @@ def test_validator_stdout_and_stderr_redact_secret_like_values():
         shutil.rmtree(d)
 
 
+def test_validator_artifacts_are_copied_hashed_and_retained(tmp_path):
+    artifact_dir = tmp_path / "artifacts"
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(c, workspace):\n"
+        "    Path(workspace, 'report.json').write_text('{\"ok\": true}', encoding='utf-8')\n"
+        "    Path(workspace, 'logs').mkdir()\n"
+        "    Path(workspace, 'logs', 'trace.txt').write_text('trace', encoding='utf-8')\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            artifact_dir=artifact_dir,
+            artifact_include=["*.json", "logs/*.txt"],
+        ).evaluate("x=1", None)
+        artifacts = result.metadata["artifacts"]
+        assert result == 1.0
+        assert artifacts["enabled"] is True
+        assert artifacts["total_bytes"] == len('{"ok": true}') + len("trace")
+        copied = {record["path"]: record for record in artifacts["files"]}
+        assert sorted(copied) == ["logs/trace.txt", "report.json"]
+        report_path = tmp_path / copied["report.json"]["artifact_path"]
+        trace_path = tmp_path / copied["logs/trace.txt"]["artifact_path"]
+        assert report_path.read_text(encoding="utf-8") == '{"ok": true}'
+        assert trace_path.read_text(encoding="utf-8") == "trace"
+        assert copied["report.json"]["sha256"] == hashlib.sha256(b'{"ok": true}').hexdigest()
+        assert copied["report.json"]["stage_name"] == "validate"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_validator_artifact_collection_honors_exclude_and_limits(tmp_path):
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(c, workspace):\n"
+        "    Path(workspace, 'a.txt').write_text('aaa', encoding='utf-8')\n"
+        "    Path(workspace, 'b.txt').write_text('bbbb', encoding='utf-8')\n"
+        "    Path(workspace, 'secret.txt').write_text('skip', encoding='utf-8')\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            artifact_dir=tmp_path / "artifacts",
+            artifact_include=["*.txt"],
+            artifact_exclude=["secret.txt"],
+            artifact_max_files=1,
+            artifact_max_bytes=10,
+        ).evaluate("x=1", None)
+        artifacts = result.metadata["artifacts"]
+        assert [record["path"] for record in artifacts["files"]] == ["a.txt"]
+        assert artifacts["skipped"] == [{"path": "b.txt", "reason": "max_files"}]
+        assert not (tmp_path / "artifacts" / artifacts["collection_id"] / "secret.txt").exists()
+    finally:
+        shutil.rmtree(d)
+
+
 @pytest.mark.parametrize(
     "validate_src",
     [

@@ -50,6 +50,11 @@ def evolve(problem: Problem, config: Config,
         timeout_sec=config.eval_timeout_sec,
         stages=config.eval_stages,
         validator_env_allowlist=config.validator_env_allowlist,
+        artifact_dir=Path(config.log_dir) / config.problem_name / "evaluator_artifacts",
+        artifact_include=config.evaluator_artifact_include,
+        artifact_exclude=config.evaluator_artifact_exclude,
+        artifact_max_files=config.evaluator_artifact_max_files,
+        artifact_max_bytes=config.evaluator_artifact_max_bytes,
     )
     llm       = build_llm(config)
     prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))

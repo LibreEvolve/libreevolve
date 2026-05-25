@@ -162,12 +162,20 @@ def test_manifest_written():
         mutation_mode="full",
         run_id="run-123",
         validator_env_allowlist=["BENCHMARK_DATA_DIR"],
+        evaluator_artifact_include=["*.json"],
+        evaluator_artifact_exclude=["secret/*"],
+        evaluator_artifact_max_files=3,
+        evaluator_artifact_max_bytes=1234,
     ))
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
     assert manifest["config"]["run_id"] == "run-123"
     assert manifest["config"]["run_collision_policy"] == "fail"
     assert manifest["config"]["validator_env_allowlist"] == ["BENCHMARK_DATA_DIR"]
+    assert manifest["config"]["evaluator_artifact_include"] == ["*.json"]
+    assert manifest["config"]["evaluator_artifact_exclude"] == ["secret/*"]
+    assert manifest["config"]["evaluator_artifact_max_files"] == 3
+    assert manifest["config"]["evaluator_artifact_max_bytes"] == 1234
 
 
 def test_manifest_writes_context_source_provenance():
@@ -204,6 +212,8 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     (run_dir / "prompt_history.jsonl").write_text("{}\n", encoding="utf-8")
     (run_dir / "best_workspace").mkdir()
     (run_dir / "best_workspace" / "old.py").write_text("old", encoding="utf-8")
+    (run_dir / "evaluator_artifacts").mkdir()
+    (run_dir / "evaluator_artifacts" / "old.txt").write_text("old", encoding="utf-8")
     (run_dir / "notes.txt").write_text("keep", encoding="utf-8")
 
     ProgramDatabase(Config(
@@ -215,6 +225,7 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     assert not (run_dir / "history.jsonl").exists()
     assert not (run_dir / "prompt_history.jsonl").exists()
     assert not (run_dir / "best_workspace").exists()
+    assert not (run_dir / "evaluator_artifacts").exists()
     assert (run_dir / "manifest.json").exists()
     assert (run_dir / "notes.txt").read_text(encoding="utf-8") == "keep"
 

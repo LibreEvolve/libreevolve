@@ -220,9 +220,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: history records preserve stdout/stderr, retry-attempt records,
     aggregate syntax diagnostics, and LLM feedback provenance, but prompt
     construction renders only a short recent-stage summary. Validator-generated
-    files are not copied out of the temporary candidate workspace, so
-    construction artifacts, traces, plots, and other evaluator outputs are lost
-    unless a validator encodes them into metrics or stdout/stderr.
+    files matching `evaluator_artifact_include` are now copied out with hashes
+    and provenance metadata, but prompt construction does not yet render or
+    retrieve those artifacts for future attempts.
   - Required result: add bounded prompt sections for execution outputs,
     artifacts, validator feedback, sample-level diagnostics, aggregate syntax
     diagnostics, and grader feedback summaries.

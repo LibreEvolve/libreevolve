@@ -244,19 +244,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and reports all Python syntax errors across the workspace with file, line,
     offset, and message metadata.
 
-- [x] Clarify validator-generated files are not retained.
+- [x] Clarify validator-generated artifact retention.
   - README evidence: README says raw metrics and diagnostics are stored with
-    each candidate, but did not explain that files written by `validate.py`
-    inside the temporary candidate workspace are discarded.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` runs validators
-    inside `tempfile.TemporaryDirectory()` and returns only metrics, stdout,
-    stderr, errors, elapsed time, and metadata. There is no artifact copy-out
-    path before the temporary directory is deleted.
-  - Status: README now tells users that generated evaluator files are not
-    collected and should be summarized through metrics/stdout/stderr until
-    artifact collection is implemented.
-  - Required result: keep this warning until evaluator artifact collection is
-    implemented and documented in run artifacts.
+    each candidate and should explain the configured artifact copy-out path.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` can now copy files
+    matching `evaluator_artifact_include` from the temporary candidate
+    workspace into `evaluator_artifacts/` with hashes and provenance metadata.
+  - Status: README now tells users that configured matching artifacts are
+    retained, while non-matching files are discarded with the temporary
+    workspace.
+  - Required result: keep README aligned with configured artifact collection
+    and the remaining raw-content/no-outside-workspace limits.
 
 - [x] Soften the UCB1 paper-table role.
   - README evidence: the references table described UCB1 as "Multi-armed bandit

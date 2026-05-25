@@ -23,6 +23,8 @@ runs/
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
     ├── best.py
+    ├── evaluator_artifacts/
+    │   └── ...                        # Optional collected validator outputs
     └── best_workspace/
         └── ...                        # Complete best candidate file set
 ```
@@ -55,15 +57,16 @@ the loaded problem directory name.
 This is a reproducibility aid. It is not yet a full resume checkpoint.
 Evaluator provenance currently covers the Python files directly configured as
 `validate.py` or `eval_stages[].validate_path`; transitive helper imports,
-relative evaluator data files, package-style entrypoints, and generated
-evaluator artifacts are not hashed yet.
+relative evaluator data files, and package-style entrypoints are not hashed as
+evaluator sources yet. Opt-in collected evaluator artifacts carry their own
+hashes in per-evaluation metadata.
 
 Reusing an existing run directory is intentionally not treated as resume.
 Before a run starts, LibreEvolve checks the target run directory for known run
 artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
 `failure_history_invalid.jsonl`, `prompt_history.jsonl`,
 `prompt_history_invalid.jsonl`, `manifest.json`, `best.py`, and
-`best_workspace/`.
+`best_workspace/`, and `evaluator_artifacts/`.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.
@@ -133,10 +136,16 @@ pass/fail status, fitness, metrics, stdout, stderr, error, elapsed time, stage
 context, and per-stage diagnostics. The selected attempt still determines the
 sample/stage result.
 
-Validator-generated files are not collected yet. Evaluators run in a temporary
-candidate workspace, and files created there are deleted with that temporary
-directory unless the validator encodes their contents into metrics or stdout/
-stderr.
+Validator-generated files are collected only when
+`evaluator_artifact_include` is configured. Matching candidate-workspace files
+are copied to `evaluator_artifacts/<collection_id>/...` before the temporary
+workspace is deleted. Each copied artifact record in
+`evaluation.metadata.artifacts.files` includes the original relative path,
+stored artifact path, byte count, SHA-256 hash, stage name, sample index, and
+attempt. The collection metadata also records include/exclude patterns,
+max-file and max-byte limits, skipped files, total copied bytes, and collection
+id. Non-matching files and files written outside the candidate workspace are
+not retained.
 
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is stored under `metadata.score_composition` with

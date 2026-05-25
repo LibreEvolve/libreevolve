@@ -235,8 +235,8 @@ must be numeric, and explicit `seeds` must match `samples`. Stage
 execution; missing files, directories, non-Python files, outside-root paths,
 and symlinks that resolve outside the problem directory are rejected. Remaining
 cascade gaps are higher-level: transitive helper/data provenance,
-metric-specific threshold policies, stage-specific artifact schemas, and
-distributed evaluator workers are not implemented.
+metric-specific threshold policies, richer artifact schemas, and distributed
+evaluator workers are not implemented.
 
 The subprocess runs with the materialized candidate root as `cwd`, passes that
 root as `workspace_path`, and adds both the candidate root and validator

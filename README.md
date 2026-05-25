@@ -358,8 +358,19 @@ File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, empty-name, and invalid-name envelopes
 now fail before partial edits are applied.
 Workspace mutations can edit existing files and create new files in `full`
-mode, but file deletion, rename/move operations, and primary-file changes are
-not implemented yet.
+mode. They can also express file topology operations with command file
+sections:
+
+```text
+<<<FILE DELETE old_helper.py
+>>>FILE
+
+<<<FILE MOVE old_module.py -> package/new_module.py
+>>>FILE
+
+<<<FILE PRIMARY package/new_module.py
+>>>FILE
+```
 
 **Tip:** Make your seed program intentionally suboptimal. If the seed already scores perfectly, there's nothing to evolve.
 

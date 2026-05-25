@@ -83,6 +83,13 @@ For multi-file candidates, wrap each changed file as:
 <<<FILE path/to/file.py
 complete replacement file content
 >>>FILE
+Use topology commands when needed:
+<<<FILE DELETE path/to/obsolete.py
+>>>FILE
+<<<FILE MOVE old/path.py -> new/path.py
+>>>FILE
+<<<FILE PRIMARY path/to/main.py
+>>>FILE
 For a single-file candidate without evolve blocks, return only the complete
 replacement primary file. If the file has one evolve block, return only the
 replacement block body. If it has multiple evolve blocks, return one section per
@@ -95,6 +102,10 @@ Rules: No markdown fences. No explanation. No SEARCH/REPLACE blocks."""
 `<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
 Use either compact `<<<SEARCH` / `>>>REPLACE` fences or AlphaEvolve-style
 `<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences.
+For workspace topology changes, use command file sections such as
+`<<<FILE DELETE path/to/file.py ... >>>FILE`,
+`<<<FILE MOVE old/path.py -> new/path.py ... >>>FILE`, or
+`<<<FILE PRIMARY path/to/main.py ... >>>FILE`.
 Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
 
 Example format (do NOT copy this, use actual code from the program above):

@@ -14,7 +14,7 @@ _BLOCK_SECTION_PATTERN = re.compile(
     r"<<<BLOCK[ \t]*(.*?)\n(.*?)\n>>>BLOCK", re.DOTALL
 )
 _FILE_SECTION_PATTERN = re.compile(
-    r"<<<FILE[ \t]*(.*?)\n(.*?)\n>>>FILE", re.DOTALL
+    r"<<<FILE[ \t]*(.*?)\n(.*?)>>>FILE", re.DOTALL
 )
 
 
@@ -139,7 +139,17 @@ def apply_workspace_mutation(
 
     Without `<<<FILE path ... >>>FILE` sections, mutation applies to the primary
     file for backward compatibility. With file sections, each section is routed
-    to that file; unknown files can be created by `full` mode.
+    to that file; unknown files can be created by `full` mode. File-section
+    headers can also request topology operations:
+
+        <<<FILE DELETE path/to/file.py
+        >>>FILE
+
+        <<<FILE MOVE old.py -> new.py
+        >>>FILE
+
+        <<<FILE PRIMARY path/to/main.py
+        >>>FILE
     """
 
     normalized_text = _strip_fences(mutation_text.replace("\r\n", "\n"))
@@ -159,16 +169,50 @@ def apply_workspace_mutation(
         files[workspace.primary_file] = code
         return CandidateWorkspace(files, workspace.primary_file), None
 
+    parsed_sections: list[tuple[dict, str]] = []
+    for header, body in sections:
+        spec, err = _parse_file_section_header(header)
+        if err is not None:
+            return workspace, err
+        parsed_sections.append((spec, body))
+
     files = dict(workspace.files)
+    primary_file = workspace.primary_file
     changed = False
-    for rel_path, body in sections:
-        raw_path = rel_path.strip()
-        if not raw_path:
-            return workspace, "empty_path:unsafe_path"
-        try:
-            rel_path = normalize_candidate_path(raw_path)
-        except ValueError:
-            return workspace, f"{raw_path}:unsafe_path"
+    for spec, body in parsed_sections:
+        op = spec["op"]
+        rel_path = spec["path"]
+        if op == "delete":
+            if rel_path not in files:
+                return workspace, f"{rel_path}:missing_source"
+            if len(files) == 1:
+                return workspace, f"{rel_path}:cannot_delete_last_file"
+            del files[rel_path]
+            if primary_file == rel_path:
+                primary_file = sorted(files)[0]
+            changed = True
+            continue
+
+        if op == "move":
+            target_path = spec["target"]
+            if rel_path not in files:
+                return workspace, f"{rel_path}:missing_source"
+            if target_path in files:
+                return workspace, f"{target_path}:target_exists"
+            files[target_path] = files.pop(rel_path)
+            if primary_file == rel_path:
+                primary_file = target_path
+            changed = True
+            continue
+
+        if op == "primary":
+            if rel_path not in files:
+                return workspace, f"{rel_path}:missing_primary"
+            if primary_file != rel_path:
+                primary_file = rel_path
+                changed = True
+            continue
+
         current = files.get(rel_path, "")
         if mutation_mode == "full" and rel_path not in files:
             new_code, err = body.strip("\n"), None
@@ -181,12 +225,62 @@ def apply_workspace_mutation(
             changed = True
     if not changed:
         return workspace, "no_valid_changes"
-    return CandidateWorkspace(files, workspace.primary_file), None
+    return CandidateWorkspace(files, primary_file), None
 
 
 def _parse_file_sections(mutation_text: str) -> list[tuple[str, str]]:
     text = _strip_fences(mutation_text.replace("\r\n", "\n"))
     return [(name.strip(), body.rstrip("\n")) for name, body in _FILE_SECTION_PATTERN.findall(text)]
+
+
+def _parse_file_section_header(header: str) -> tuple[dict, str | None]:
+    raw = header.strip()
+    if not raw:
+        return {}, "empty_path:unsafe_path"
+
+    command, _, remainder = raw.partition(" ")
+    command_upper = command.upper()
+    if command_upper == "DELETE":
+        return _parse_single_path_op("delete", remainder)
+    if command_upper in {"MOVE", "RENAME"}:
+        return _parse_move_op(remainder)
+    if command_upper == "PRIMARY":
+        return _parse_single_path_op("primary", remainder)
+    try:
+        return {"op": "edit", "path": normalize_candidate_path(raw)}, None
+    except ValueError:
+        return {}, f"{raw}:unsafe_path"
+
+
+def _parse_single_path_op(op: str, raw_path: str) -> tuple[dict, str | None]:
+    raw_path = raw_path.strip()
+    if not raw_path:
+        return {}, f"{op}:empty_path"
+    try:
+        return {"op": op, "path": normalize_candidate_path(raw_path)}, None
+    except ValueError:
+        return {}, f"{raw_path}:unsafe_path"
+
+
+def _parse_move_op(remainder: str) -> tuple[dict, str | None]:
+    source, sep, target = remainder.partition("->")
+    if not sep:
+        return {}, "move:missing_target"
+    source = source.strip()
+    target = target.strip()
+    if not source:
+        return {}, "move:empty_source"
+    if not target:
+        return {}, "move:empty_target"
+    try:
+        source_path = normalize_candidate_path(source)
+        target_path = normalize_candidate_path(target)
+    except ValueError:
+        bad_path = source if "source_path" not in locals() else target
+        return {}, f"{bad_path}:unsafe_path"
+    if source_path == target_path:
+        return {}, f"{source_path}:no_valid_changes"
+    return {"op": "move", "path": source_path, "target": target_path}, None
 
 
 def _validate_section_envelopes(

@@ -96,6 +96,8 @@ py -3.12 -m pre_commit run --all-files
 
 - `diff` mode expects SEARCH/REPLACE edits
 - `full` mode accepts full-code, full-block, or file-section replacements
+- workspace topology commands use `<<<FILE DELETE ... >>>FILE`,
+  `<<<FILE MOVE old -> new ... >>>FILE`, or `<<<FILE PRIMARY ... >>>FILE`
 - the diff engine strips markdown fences, but exact search matching still matters
 - comments or formatting drift in the diff can break matching
 

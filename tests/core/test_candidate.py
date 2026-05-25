@@ -258,6 +258,126 @@ def test_workspace_full_mode_can_create_file():
     assert result.files["helper.py"] == "value = 2"
 
 
+def test_workspace_can_delete_non_primary_file():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE DELETE helper.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert "helper.py" not in result.files
+    assert result.primary_file == "main.py"
+
+
+def test_workspace_can_move_file_and_update_primary():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="old.py",
+    )
+    response = "<<<FILE MOVE old.py -> pkg/new.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert "old.py" not in result.files
+    assert result.files["pkg/new.py"] == "value = 1\n"
+    assert result.primary_file == "pkg/new.py"
+
+
+def test_workspace_rename_alias_moves_file():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE RENAME old.py -> renamed.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert "old.py" not in result.files
+    assert result.files["renamed.py"] == "value = 1\n"
+
+
+def test_workspace_can_change_primary_file_explicitly():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "alt.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE PRIMARY alt.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert result.primary_file == "alt.py"
+    assert result.code == "value = 1\n"
+
+
+def test_workspace_rejects_delete_missing_file_without_partial_apply():
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    response = (
+        "<<<FILE extra.py\nvalue = 2\n>>>FILE\n"
+        "<<<FILE DELETE missing.py\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "missing.py:missing_source"
+
+
+def test_workspace_rejects_move_to_existing_target_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE MOVE old.py -> main.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "main.py:target_exists"
+
+
+def test_workspace_rejects_unsafe_move_target():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE MOVE old.py -> ../new.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "../new.py:unsafe_path"
+
+
+def test_workspace_rejects_noop_move():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE MOVE old.py -> old.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "old.py:no_valid_changes"
+
+
+def test_workspace_rejects_missing_primary_target():
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    response = "<<<FILE PRIMARY missing.py\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "missing.py:missing_primary"
+
+
+def test_workspace_materializes_after_topology_changes(tmp_path):
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "old.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE MOVE old.py -> pkg/new.py\n>>>FILE\n"
+        "<<<FILE DELETE main.py\n>>>FILE\n"
+        "<<<FILE PRIMARY pkg/new.py\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+
+    primary_path = result.materialize(tmp_path)
+    assert primary_path == tmp_path / "pkg" / "new.py"
+    assert primary_path.read_text(encoding="utf-8") == "value = 1\n"
+    assert not (tmp_path / "main.py").exists()
+
+
 def test_workspace_rejects_unclosed_file_section_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},

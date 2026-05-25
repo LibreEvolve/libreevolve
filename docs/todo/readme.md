@@ -292,15 +292,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     broader mutation-operation gaps, such as delete/rename/move, tracked
     separately.
 
-- [x] Clarify multi-file mutations cannot delete or rename files yet.
+- [x] Clarify multi-file topology mutation syntax.
   - README evidence: the custom-problem section describes multi-file seed
-    workspaces and file-section edits, but did not state that workspace
-    topology changes are not expressible.
-  - Current evidence: `apply_workspace_mutation()` only updates a file's text
-    or creates an unknown file in `full` mode; no delete, rename, move, or
-    primary-file change syntax exists.
-  - Required result: warn readers that current multi-file mutation supports
-    edits and limited file creation, not full repository topology evolution.
+    workspaces and file-section edits, so it should state how topology changes
+    are expressed.
+  - Current evidence: `apply_workspace_mutation()` supports command file
+    sections for delete, move/rename, and primary-file changes alongside
+    ordinary file edits and full-mode creation.
+  - Required result: keep README aligned with current workspace topology
+    mutation behavior.
 
 - [x] Clarify full mutation mode prompt behavior.
   - README evidence: the workflow says the LLM proposes either a SEARCH/REPLACE

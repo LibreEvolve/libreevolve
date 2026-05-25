@@ -48,8 +48,6 @@ is not yet an AlphaEvolve reproduction.
 - Define validator execution semantics for materialized workspaces, including
   candidate-root `cwd`, import path, package entrypoints, and relative files.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
-- Add workspace file-topology mutations such as delete, rename, move, and
-  primary-file changes.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.
 - Add migration/resume support for workspace candidates.

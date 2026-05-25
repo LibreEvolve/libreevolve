@@ -99,8 +99,17 @@ accepted when the resulting normalized path is safe.
 Envelope parsing now rejects unmatched, orphaned, nested, empty-name, and
 invalid-name `<<<FILE` / `<<<BLOCK` sections before applying partial edits. It
 is still a local envelope parser rather than a full mutation AST.
-File deletion, rename/move operations, and primary-file changes are not
-expressible in mutation responses yet.
+Command file sections can delete files, move/rename files, and change the
+workspace primary file:
+
+```text
+<<<FILE DELETE obsolete.py
+>>>FILE
+<<<FILE MOVE old.py -> pkg/new.py
+>>>FILE
+<<<FILE PRIMARY pkg/new.py
+>>>FILE
+```
 
 ## Evolution loop
 
@@ -215,9 +224,9 @@ score and optional discard flag. Scores are added as metrics, raw responses and
 backend indexes are recorded under `evaluation.metadata.llm_feedback`, and
 weighted feedback adjusts `Program.fitness` while preserving the raw validator
 metric. Feedback score calibration against `metrics.yaml` direction/bounds is
-not implemented yet. Feedback grader prompts currently render only the
-candidate's primary file, so multi-file helper modules or other evolved files
-are not visible to the grader unless custom prompt text reconstructs them.
+not implemented yet. Feedback grader prompts render bounded full-workspace file
+sections with path headers, primary-file marking, basic redaction, and compact
+evaluator diagnostics.
 Feedback grader call and parse failures are recorded in
 `evaluation.metadata.llm_feedback` as `llm_feedback_failed` records and are
 ignored for score/validity composition. There is not yet a configurable retry,

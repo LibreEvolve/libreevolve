@@ -103,23 +103,21 @@ Primary evidence:
     surface diagnostics for unsupported names/paths, and add tests for mixed
     valid plus malformed sections so intended edits cannot disappear silently.
 
-- [ ] Support file deletion and rename/move operations in workspace mutations.
+- [x] Support file deletion and rename/move operations in workspace mutations.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, not only edit
     text inside a fixed set of files. Real codebase evolution may need removing
     obsolete files, renaming modules, or moving components while preserving
     imports and validator expectations.
-  - Current evidence: `apply_workspace_mutation()` only routes file sections to
-    `apply_candidate_mutation()` or creates an unknown file in `full` mode. The
-    candidate file map is only updated with `files[rel_path] = new_code`; there
-    is no mutation envelope, parser branch, logging, or test coverage for
-    deleting a file, renaming/moving a file, changing `primary_file`, or
-    handling import updates caused by file topology changes.
-  - Required result: define explicit mutation operations for delete, rename,
-    move, and primary-file changes; validate path safety for source and target
-    paths; preserve backward compatibility for existing `<<<FILE ... >>>FILE`
-    edits; persist topology changes in history; and add tests for deleting
-    helper files, renaming packages/modules, primary-file changes, no-op or
-    unsafe moves, and validator materialization after topology changes.
+  - Status: implemented. `apply_workspace_mutation()` supports
+    `<<<FILE DELETE path ... >>>FILE`, `<<<FILE MOVE old -> new ... >>>FILE`,
+    `<<<FILE RENAME old -> new ... >>>FILE`, and
+    `<<<FILE PRIMARY path ... >>>FILE`, while preserving existing
+    `<<<FILE path ... >>>FILE` edit/create behavior.
+  - Evidence: tests cover deleting helper files, moving/renaming modules,
+    primary-file changes, missing sources, target collisions, unsafe targets,
+    and no partial apply on topology errors. Topology changes persist through
+    existing `Program.files`, `primary_file`, `history.jsonl`, and
+    `best_workspace/` logging/export paths.
 
 - [x] Make materialized workspace execution import- and cwd-faithful.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, so evaluators

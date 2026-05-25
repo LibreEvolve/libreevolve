@@ -253,6 +253,23 @@ any partial edit is applied.
 In `full` mode, the content inside `<<<FILE ... >>>FILE` becomes the file's new
 content, unless the target file contains evolve blocks, in which case the
 existing full-block rules apply. New files can be created in `full` mode.
+Workspace topology can be changed with command file sections:
+
+```text
+<<<FILE DELETE package/old_helper.py
+>>>FILE
+
+<<<FILE MOVE old_module.py -> package/new_module.py
+>>>FILE
+
+<<<FILE PRIMARY package/new_module.py
+>>>FILE
+```
+
+`RENAME` is accepted as an alias for `MOVE`. Source and target paths use the
+same safety normalization as ordinary file-section edits. Missing sources,
+target collisions, unsafe paths, no-op moves, and last-file deletion are
+rejected before the original workspace is replaced.
 
 ## Design guidance
 

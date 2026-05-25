@@ -129,13 +129,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add workspace file-topology mutation support to candidate fidelity.
   - Evidence: `apply_workspace_mutation()` can edit existing files and create
-    unknown files in `full` mode, but there is no mutation syntax or state
-    transition for deleting, renaming, moving, or changing the primary file in
-    a candidate workspace.
+    unknown files in `full` mode; command file sections now support deleting,
+    renaming, moving, and changing the primary file in a candidate workspace.
   - Current roadmap gap: workspace fidelity covered file sets, path grammar,
     and exports, but not normal codebase topology changes.
-  - Required result: track delete/rename/move/primary-file operations with path
-    validation, history persistence, materialization tests, and backward
+  - Status: implemented with path validation, history/export persistence through
+    `Program.files` and `primary_file`, mutation tests, and backward
     compatibility for current file-section edits.
 
 - [x] Add workspace execution import/cwd fidelity to candidate fidelity.

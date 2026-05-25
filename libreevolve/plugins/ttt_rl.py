@@ -17,6 +17,7 @@ class TTTRLPlugin(PluginBase):
         self._train_every = train_every
         self._log_dir = Path(log_dir)
         self._data: list[dict] = []
+        self._export_cursor = 0
         self._export_count = 0
         self._last_export_path: Path | None = None
         self._last_quarantine_path: Path | None = None
@@ -39,16 +40,17 @@ class TTTRLPlugin(PluginBase):
             self._maybe_train()
 
     def _maybe_train(self) -> None:
-        batch = self._data[-self._train_every:]
+        batch = self._data[self._export_cursor:]
         if not batch: return
         out = self._log_dir / "grpo_data.jsonl"
         out.parent.mkdir(parents=True, exist_ok=True)
         quarantine = self._log_dir / "grpo_data_invalid.jsonl"
-        for record in batch:
-            append_strict_jsonl(out, record, quarantine_path=quarantine)
-            self._export_count += 1
         self._last_export_path = out
         self._last_quarantine_path = quarantine
+        for record in batch:
+            append_strict_jsonl(out, record, quarantine_path=quarantine)
+            self._export_cursor += 1
+            self._export_count += 1
 
     def get_training_data(self) -> list[dict]:
         return list(self._data)
@@ -58,6 +60,7 @@ class TTTRLPlugin(PluginBase):
             "plugin": self.__class__.__name__,
             "reward_policy": "max(0.0, raw_score)",
             "queued_examples": len(self._data),
+            "pending_examples": len(self._data) - self._export_cursor,
             "exported_examples": self._export_count,
             "log_dir": str(self._log_dir),
         }

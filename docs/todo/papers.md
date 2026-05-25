@@ -511,8 +511,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `plugin_artifacts/ttt_rl/` and link counts/path/hash metadata from the
     manifest.
   - Missing: batch prompt sampling, lazy/stagnation penalties, reward shaping,
-    online GRPO/RL training loop, dynamic environment integration, repeated
-    export/resume semantics, and training checkpoint management.
+    online GRPO/RL training loop, dynamic environment integration, resume
+    semantics, and training checkpoint management.
 
 - [ ] Tighten or remove GigaEvo-derived implementation claims.
   - Paper evidence: `2511.17592__GigaEvo.pdf` describes Redis-backed

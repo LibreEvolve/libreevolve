@@ -26,16 +26,38 @@ def test_writes_jsonl(tmp_path):
     for i in range(12): p.on_evaluated(_p(f"p{i}", f"d{i}"), i*0.1)
     p.on_generation_end(5, None)
     assert (tmp_path/"grpo_data.jsonl").exists()
-    record = json.loads((tmp_path/"grpo_data.jsonl").read_text().splitlines()[0])
-    assert record["raw_score"] == 0.7000000000000001
-    assert record["reward"] == 0.7000000000000001
+    lines = (tmp_path/"grpo_data.jsonl").read_text().splitlines()
+    assert len(lines) == 12
+    record = json.loads(lines[0])
+    assert record["raw_score"] == 0.0
+    assert record["reward"] == 0.0
     assert record["reward_policy"] == "max(0.0, raw_score)"
     metadata = p.run_artifacts_metadata()
-    assert metadata["exported_examples"] == 5
+    assert metadata["exported_examples"] == 12
     assert metadata["queued_examples"] == 12
+    assert metadata["pending_examples"] == 0
     assert metadata["path"] == str(tmp_path / "grpo_data.jsonl")
     assert metadata["sha256"]
     assert metadata["bytes"] > 0
+
+
+def test_repeated_flush_does_not_duplicate_exports(tmp_path):
+    p = TTTRLPlugin(train_every=1, log_dir=str(tmp_path))
+    p.on_evaluated(_p("p0", "d0"), 0.25)
+    p.on_generation_end(1, None)
+    p.on_generation_end(1, None)
+    assert len((tmp_path / "grpo_data.jsonl").read_text().splitlines()) == 1
+    metadata = p.run_artifacts_metadata()
+    assert metadata["exported_examples"] == 1
+    assert metadata["queued_examples"] == 1
+    assert metadata["pending_examples"] == 0
+
+    p.on_evaluated(_p("p1", "d1"), 0.5)
+    p.on_generation_end(2, None)
+    lines = (tmp_path / "grpo_data.jsonl").read_text().splitlines()
+    assert len(lines) == 2
+    assert json.loads(lines[1])["prompt"] == "p1"
+    assert p.run_artifacts_metadata()["pending_examples"] == 0
 
 
 def test_records_clipped_reward_policy():

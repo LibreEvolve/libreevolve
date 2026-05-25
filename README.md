@@ -484,9 +484,10 @@ strategy-operation choices are not yet first-class provenance.
 
 The ThetaEvolve-inspired export writes clipped-reward training data under the
 active run's `plugin_artifacts/ttt_rl/` directory when loaded by the CLI, stores
-both `raw_score` and `reward = max(0.0, raw_score)`, and links export counts,
-paths, hashes, and byte counts from `manifest.json`. It is still not a real
-GRPO/RL trainer.
+both `raw_score` and `reward = max(0.0, raw_score)`, appends only examples not
+already exported by that plugin instance, and links export counts, paths,
+hashes, and byte counts from `manifest.json`. It is still not a real GRPO/RL
+trainer.
 
 ```bash
 py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research

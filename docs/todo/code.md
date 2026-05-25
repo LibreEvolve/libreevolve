@@ -1409,11 +1409,12 @@ Primary evidence:
     `raw_score`, clipped `reward = max(0.0, raw_score)`, and
     `reward_policy`. CLI-loaded `ttt_rl` writes under
     `runs/<run-name>/plugin_artifacts/ttt_rl/`, and completed manifests include
-    `runtime.plugin_artifacts` entries with reward policy, queued/exported
-    counts, path, hash, bytes, and quarantine path. Direct in-code construction
-    can still pass a custom `log_dir`. Remaining gaps: no actual GRPO/RL
-    training, no checkpoint metadata, no repeated-flush deduplication policy,
-    and no resume behavior.
+    `runtime.plugin_artifacts` entries with reward policy, queued/pending/
+    exported counts, path, hash, bytes, and quarantine path. Direct in-code
+    construction can still pass a custom `log_dir`. The exporter tracks a
+    per-instance cursor so repeated flushes do not duplicate JSONL rows.
+    Remaining gaps: no actual GRPO/RL training, no checkpoint metadata, and no
+    resume behavior.
   - Required result: define raw-score vs shaped-reward export fields, document
     clipping/penalty behavior, scope plugin datasets under run artifacts or
     record global artifact provenance, include hashes/counts in manifests, and

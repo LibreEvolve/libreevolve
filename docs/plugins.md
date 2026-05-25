@@ -158,8 +158,8 @@ Purpose (ThetaEvolve-inspired, not paper-complete):
 Mechanics:
 
 - records data in `on_evaluated()` when prompt and diff metadata are present
-- every `train_every` generations, writes the latest batch to
-  `grpo_data.jsonl`
+- every `train_every` generations, writes pending examples since the previous
+  successful export to `grpo_data.jsonl`
 - stores `raw_score` plus `reward = max(0.0, raw_score)`, so negative scores
   are clipped to zero rather than exported as penalties
 
@@ -167,8 +167,8 @@ Operational note:
 
 - when loaded by the CLI, output is scoped under
   `runs/<run-name>/plugin_artifacts/ttt_rl/`
-- completed manifests include export counts, path, byte count, hash, and
-  reward policy in `runtime.plugin_artifacts`
+- completed manifests include queued, pending, and exported counts, path, byte
+  count, hash, and reward policy in `runtime.plugin_artifacts`
 - `_maybe_train()` is currently just a JSONL writer, not an actual trainer
 
 ## Adding a custom plugin

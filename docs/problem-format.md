@@ -157,8 +157,10 @@ Default failure scores:
 `validate_path`, timeout, `min_score`, `samples`, `seeds`, and `retries`.
 `min_score` is currently a threshold on normalized primary fitness, not a
 metric-specific pass/fail rule, and sample aggregation uses fixed defaults.
-Stage numeric fields are not fully prevalidated yet: keep `samples` positive,
-`retries` non-negative, `timeout_sec` positive, and `min_score` numeric.
+Stage numeric fields are prevalidated: `samples` must be positive, `retries`
+non-negative, `timeout_sec` positive, `min_score` numeric, and explicit
+`seeds` must match `samples`. Stage `validate_path` entries still need stronger
+preflight/provenance checks.
 Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
 receive stage context containing stage name, index, sample index, seed, attempt,
 and the raw stage config.

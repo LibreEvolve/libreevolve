@@ -211,9 +211,12 @@ metrics and stop the cascade when validity or threshold checks fail. This is a
 local cascade model, not AlphaEvolve's full parallel evaluator-worker
 architecture.
 
-Stage numeric fields are not fully schema-validated before execution. Invalid
-values such as zero samples or negative retries can fail during evaluation
-instead of producing an early configuration error.
+Stage numeric fields are validated at startup: `samples` must be positive,
+`timeout_sec` must be positive, `retries` must be non-negative, `min_score`
+must be numeric, and explicit `seeds` must match `samples`. Remaining cascade
+gaps are higher-level: `validate_path` provenance/preflight, metric-specific
+threshold policies, stage-specific artifact schemas, and distributed evaluator
+workers are not implemented.
 
 The subprocess runs with the materialized candidate root as `cwd`, passes that
 root as `workspace_path`, and adds both the candidate root and validator

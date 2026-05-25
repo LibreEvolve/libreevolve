@@ -81,11 +81,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README/config evidence: population docs describe `migration_ratio` as a
     fraction rounded up to at least one migrant, while validation accepts
     `0.0`.
-  - Current evidence: `IslandModel.migrate()` uses `max(1, ceil(...))`, so a
-    local proof with `migration_ratio=0.0` still copied one elite. Only
-    `migration_interval=0` disables migration.
-  - Required result: tell users to use `migration_interval=0` to disable
-    migration until zero-ratio behavior is redefined or rejected.
+  - Status: implemented and documented. `migration_ratio=0.0` now selects no
+    migrants; positive ratios still round up to at least one migrant from a
+    non-empty island. `migration_interval=0` still disables scheduled migration
+    calls entirely.
 
 - [x] Soften UCB1/backend-routing claims.
   - README evidence: README called the ensemble "UCB1" and said it

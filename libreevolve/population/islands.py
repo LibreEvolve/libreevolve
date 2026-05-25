@@ -66,6 +66,8 @@ class IslandModel:
         round are not themselves propagated in the same step (i.e. island 0
         does not indirectly reach island 2 via island 1 in a single call).
         """
+        if self._migration_ratio <= 0:
+            return
         snapshots = [src.elite_archive() for src in self.islands]
         for i, elites in enumerate(snapshots):
             if not elites:

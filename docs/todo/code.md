@@ -726,18 +726,20 @@ Primary evidence:
   - Status: implemented with top-level config range tests. Broader run-wide
     budget counters remain tracked separately.
 
-- [ ] Define zero-ratio migration semantics.
+- [x] Define zero-ratio migration semantics.
   - Spec evidence: AlphaEvolve-style population settings should have
     reproducible, unsurprising semantics; disabling or reducing migration is an
     experimental control.
-  - Current evidence: `Config.validate()` accepts `migration_ratio=0.0`, but
+  - Previous evidence: `Config.validate()` accepted `migration_ratio=0.0`, but
     `IslandModel.migrate()` computes `n = max(1, ceil(len(elites) *
     migration_ratio))`. A local proof with `migration_ratio=0.0` and migration
     enabled still copied one elite to the next island.
-  - Required result: either reject zero migration ratios, treat zero as no
-    migrants, or document the "minimum one migrant if migration runs" policy
-    everywhere; add tests for zero, tiny positive, and disabled
-    `migration_interval=0` configurations.
+  - Status: implemented. `migration_ratio=0.0` now selects no migrants, while
+    positive ratios still round up to at least one migrant when an island has
+    elites. `migration_interval=0` remains the scheduled-migration disable
+    switch.
+  - Validation: island tests cover zero-ratio no-migrant behavior; existing
+    migration tests cover positive ratios and scheduled migration intervals.
 
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,

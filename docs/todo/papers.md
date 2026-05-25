@@ -204,10 +204,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `metadata.score_composition` stores per-plugin score adjustments, and
     archive admission is now gated by evaluator/feedback validity as well as
     final composed fitness. Full MAP-Elites cell/island snapshots plus
-    migration events are not persisted. Population config semantics still need
-    tightening: `migration_ratio=0.0` is accepted but still migrates one elite
-    whenever migration is enabled because the migrant count is rounded up to a
-    minimum of one.
+    migration events are not persisted. Population config semantics now define
+    `migration_ratio=0.0` as selecting no migrants; positive migration ratios
+    still round up to at least one migrant from a non-empty island.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

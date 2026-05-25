@@ -28,6 +28,12 @@ def test_migration_copies_not_moves():
     assert len(m.islands[0].occupied_cells()) == before
     assert m.islands[1].best() is not None
 
+def test_zero_migration_ratio_selects_no_migrants():
+    m = IslandModel(Config(n_islands=2, migration_ratio=0.0, elite_archive_size=10))
+    m.islands[0].add(_p(fitness=1.0))
+    m.migrate()
+    assert m.islands[1].best() is None
+
 def test_sample_diverse_returns_list():
     m = _m()
     for i in range(5): m.add(_p(code=f"x={i}", fitness=i*0.1))

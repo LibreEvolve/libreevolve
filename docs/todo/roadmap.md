@@ -81,12 +81,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Evidence: `ProgramDatabase.log()` appends `history.jsonl` and
     `PromptDatabase` appends `prompt_history.jsonl`, while `manifest.json` is
     overwritten for the same run directory.
-  - Current roadmap gap: resumability work covered saved state, but not the
-    immediate truthfulness issue that reusing a run name can mix independent
-    runs under one latest manifest.
-  - Required result: track explicit overwrite/fail/new-run/resume semantics,
-    run ids, and artifact consistency across history, prompt history, manifest,
-    and `best.py`.
+  - Status: implemented for fresh-run collision safety. The default policy
+    fails if the target directory already contains known run artifacts;
+    explicit `overwrite` removes only known run artifacts before a new run.
+    `manifest.json` records `run_id` and the effective collision policy.
+  - Remaining roadmap gap: this is not resume; saved archive/controller state,
+    parent-run relationships, deterministic replay ids, and evaluator-code
+    provenance remain tracked under resumability/reproducibility.
 
 - [x] Add seeded replay determinism to reproducibility work.
   - Evidence: `Config.seed` seeds Python `random`, but `Program.id` and

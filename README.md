@@ -111,6 +111,11 @@ py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world \
     --max-generations 20 --backends ollama:llama3
 ```
 
+Run-directory reuse is not resume. If the target run directory already
+contains known artifacts, startup fails by default before appending history or
+rewriting the manifest. Use a fresh `--run-name`, or pass `--overwrite` when
+you intentionally want to replace the previous run artifacts.
+
 ### Inspect Results
 
 If you ran one of the examples above, inspect the matching run directory under `runs/`:

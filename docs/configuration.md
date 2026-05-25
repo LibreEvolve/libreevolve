@@ -134,6 +134,13 @@ for quotas, escalation, or role-specific routing.
 - `plugins` (`[]`): list of built-in plugin names.
 - `log_dir` (`"runs/"`): root output directory.
 - `problem_name` (`"unnamed"`): final run subdirectory name.
+- `run_id` (UUID4 hex by default): provenance identifier written to
+  `manifest.json`. It is not a resume checkpoint id.
+- `run_collision_policy` (`"fail"`): what to do when the target run directory
+  already contains known run artifacts. `fail` aborts before appending or
+  rewriting artifacts; `overwrite` deletes known run artifacts only
+  (`history*.jsonl`, `failure_history*.jsonl`, `prompt_history*.jsonl`,
+  `manifest.json`, `best.py`, and `best_workspace/`) before starting.
 - `seed` (`42`): random seed for Python's global `random` module. Prompt
   variants currently enter `PromptDatabase`, where initial untried selection is
   ordered by UUID4 prompt-program ids rather than this seed. It does not make
@@ -201,9 +208,11 @@ The `run` command exposes:
 - `--reasoning-effort`, `-r`
 - `--explore-ratio`, `-e`
 - `--run-name`
+- `--overwrite`
 
 CLI `--plugins` and `--backends` replace, rather than merge with, config-file
-lists.
+lists. CLI `--overwrite` sets the effective run collision policy to
+`overwrite` for the current invocation.
 
 ## Backend spec format
 

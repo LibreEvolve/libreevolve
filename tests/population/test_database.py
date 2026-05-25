@@ -156,9 +156,16 @@ def test_log_failure_uses_failure_history_quarantine():
 
 def test_manifest_written():
     tmpdir = tempfile.mkdtemp()
-    ProgramDatabase(Config(log_dir=tmpdir, problem_name="t", mutation_mode="full"))
+    ProgramDatabase(Config(
+        log_dir=tmpdir,
+        problem_name="t",
+        mutation_mode="full",
+        run_id="run-123",
+    ))
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
+    assert manifest["config"]["run_id"] == "run-123"
+    assert manifest["config"]["run_collision_policy"] == "fail"
 
 
 def test_manifest_writes_context_source_provenance():
@@ -171,6 +178,39 @@ def test_manifest_writes_context_source_provenance():
     assert manifest["problem"]["context_sources"] == [
         {"path": "nested/notes.md", "sha256": "abc"}
     ]
+
+
+def test_database_fails_when_run_artifacts_already_exist():
+    tmpdir = tempfile.mkdtemp()
+    run_dir = Path(tmpdir) / "t"
+    run_dir.mkdir()
+    (run_dir / "history.jsonl").write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(FileExistsError, match="already contains run artifacts"):
+        ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+
+
+def test_database_overwrite_clears_known_run_artifacts_only():
+    tmpdir = tempfile.mkdtemp()
+    run_dir = Path(tmpdir) / "t"
+    run_dir.mkdir()
+    (run_dir / "history.jsonl").write_text("{}\n", encoding="utf-8")
+    (run_dir / "prompt_history.jsonl").write_text("{}\n", encoding="utf-8")
+    (run_dir / "best_workspace").mkdir()
+    (run_dir / "best_workspace" / "old.py").write_text("old", encoding="utf-8")
+    (run_dir / "notes.txt").write_text("keep", encoding="utf-8")
+
+    ProgramDatabase(Config(
+        log_dir=tmpdir,
+        problem_name="t",
+        run_collision_policy="overwrite",
+    ))
+
+    assert not (run_dir / "history.jsonl").exists()
+    assert not (run_dir / "prompt_history.jsonl").exists()
+    assert not (run_dir / "best_workspace").exists()
+    assert (run_dir / "manifest.json").exists()
+    assert (run_dir / "notes.txt").read_text(encoding="utf-8") == "keep"
 
 def test_maybe_migrate_triggers_on_interval():
     db = ProgramDatabase(Config(migration_interval=5, n_islands=2,

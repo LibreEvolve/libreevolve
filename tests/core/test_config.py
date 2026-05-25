@@ -28,6 +28,8 @@ def test_default_backend_is_anthropic():
         ({"prompt_reward_bounds": [1.0, 1.0]}, "prompt_reward_bounds"),
         ({"prompt_reward_bounds": [1.0]}, "prompt_reward_bounds"),
         ({"prompt_explore_coeff": -1.0}, "prompt_explore_coeff"),
+        ({"run_id": ""}, "run_id"),
+        ({"run_collision_policy": "append"}, "run_collision_policy"),
         ({"n_islands": 0}, "n_islands"),
         ({"migration_interval": -1}, "migration_interval"),
         ({"migration_ratio": -0.1}, "migration_ratio"),

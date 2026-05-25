@@ -1,9 +1,22 @@
 from __future__ import annotations
 from pathlib import Path
+import shutil
 from libreevolve.core.config import Config
 from libreevolve.core.jsonl import append_strict_jsonl, strict_json_dump
 from libreevolve.population.islands import IslandModel
 from libreevolve.population.program import Program
+
+RUN_ARTIFACT_NAMES = {
+    "history.jsonl",
+    "history_invalid.jsonl",
+    "failure_history.jsonl",
+    "failure_history_invalid.jsonl",
+    "prompt_history.jsonl",
+    "prompt_history_invalid.jsonl",
+    "manifest.json",
+    "best.py",
+    "best_workspace",
+}
 
 
 class ProgramDatabase:
@@ -22,6 +35,7 @@ class ProgramDatabase:
         self._islands = IslandModel(config, perf_bounds=perf_bounds)
         self._interval = config.migration_interval
         log_dir = Path(config.log_dir) / config.problem_name
+        prepare_run_directory(log_dir, config.run_collision_policy)
         log_dir.mkdir(parents=True, exist_ok=True)
         self._jsonl = log_dir / "history.jsonl"
         self._failures = log_dir / "failure_history.jsonl"
@@ -180,6 +194,8 @@ class ProgramDatabase:
                     "plugins": config.plugins,
                     "log_dir": config.log_dir,
                     "problem_name": config.problem_name,
+                    "run_id": config.run_id,
+                    "run_collision_policy": config.run_collision_policy,
                     "seed": config.seed,
                 },
                 "problem": {
@@ -189,6 +205,24 @@ class ProgramDatabase:
             self._manifest,
             indent=2,
         )
+
+
+def prepare_run_directory(run_dir: Path, policy: str) -> None:
+    existing = sorted(name for name in RUN_ARTIFACT_NAMES if (run_dir / name).exists())
+    if not existing:
+        return
+    if policy == "overwrite":
+        for name in existing:
+            path = run_dir / name
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+        return
+    raise FileExistsError(
+        f"Run directory {run_dir} already contains run artifacts {existing}; "
+        "use --overwrite or set run_collision_policy: overwrite"
+    )
 
 
 def _changed_files(parent: Program, child: Program) -> list[str]:

@@ -28,8 +28,10 @@ def cli() -> None:
               help="Mutation response mode: SEARCH/REPLACE diffs or full code/block replacement.")
 @click.option("--run-name", type=str, default=None,
               help="Custom name for this run (default: problem directory name)")
+@click.option("--overwrite", is_flag=True,
+              help="Delete existing run artifacts in the target run directory before starting.")
 def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
-        explore_ratio, mutation_mode, run_name):
+        explore_ratio, mutation_mode, run_name, overwrite):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import ConfigError
     from libreevolve.problems.loader import load_problem
@@ -41,8 +43,13 @@ def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
                                reasoning_effort, explore_ratio, mutation_mode)
         if run_name:
             config.problem_name = run_name
+        if overwrite:
+            config.run_collision_policy = "overwrite"
         config.validate()
+        _prepare_run_dir_for_cli(config)
     except ConfigError as exc:
+        raise click.ClickException(str(exc)) from exc
+    except FileExistsError as exc:
         raise click.ClickException(str(exc)) from exc
     active_plugins = _load_plugins(config.plugins)
     click.echo(f"Running {config.max_generations} generations on '{config.problem_name}'...")
@@ -131,6 +138,12 @@ def _load_plugins(names: list[str]) -> list:
             raise click.ClickException(f"Unknown plugin: {n!r}. Available: {list(reg)}")
         result.append(reg[n]())
     return result
+
+
+def _prepare_run_dir_for_cli(config) -> None:
+    from libreevolve.core.database import prepare_run_directory
+
+    prepare_run_directory(Path(config.log_dir) / config.problem_name, config.run_collision_policy)
 
 
 def _has_archive_metadata(record: dict) -> bool:

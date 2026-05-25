@@ -47,13 +47,24 @@ the loaded problem directory name.
 - problem context-source provenance, including selected relative paths, source
   hashes, extraction status, excerpt spans, and PDF page ranges when available
 - seed and log directory
+- run id and run-directory collision policy
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.
 
-Reusing an existing run directory is not currently a defined resume operation:
-`history.jsonl` and `prompt_history.jsonl` append, while `manifest.json` is
-rewritten for the latest invocation. Until run ids or collision policies are
-implemented, prefer a fresh `--run-name` for independent runs.
+Reusing an existing run directory is intentionally not treated as resume.
+Before a run starts, LibreEvolve checks the target run directory for known run
+artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
+`failure_history_invalid.jsonl`, `prompt_history.jsonl`,
+`prompt_history_invalid.jsonl`, `manifest.json`, `best.py`, and
+`best_workspace/`.
+
+The default collision policy is `fail`: if any of those artifacts already
+exist, startup fails before appending new history or rewriting the manifest.
+Use a fresh `--run-name` for independent runs, or pass `--overwrite` / set
+`run_collision_policy: overwrite` to delete only those known artifacts before
+the new run begins. Arbitrary files in the run directory are left alone.
+`manifest.json` records `run_id` and `run_collision_policy`. `run_id` is
+provenance metadata, not a resume handle.
 
 ## `history.jsonl`
 
@@ -188,8 +199,10 @@ under `best_workspace/`.
 - it reflects the best fitness seen in the archive
 
 For workspace candidates, `best_workspace/` is the direct reusable output. It
-is overwritten on each invocation using the same run directory, matching the
-current undefined run-collision semantics described above.
+is regenerated on each successful invocation. If an earlier `best_workspace/`
+already exists, startup fails by default with the run-directory collision
+policy described above, or removes the previous workspace first when
+`overwrite` is explicitly selected.
 
 ## Example histories committed to the repo
 

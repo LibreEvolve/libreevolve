@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import math
+from uuid import uuid4
 
 
 class ConfigError(ValueError):
@@ -41,6 +42,8 @@ class Config:
     # Logging
     log_dir:                str   = "runs/"
     problem_name:           str   = "unnamed"
+    run_id:                 str   = field(default_factory=lambda: uuid4().hex)
+    run_collision_policy:   str   = "fail"
     seed:                   int   = 42
 
     def __post_init__(self) -> None:
@@ -73,6 +76,9 @@ class Config:
         _validate_llm_feedback(self.llm_feedback)
         if not isinstance(self.plugins, list) or not all(isinstance(item, str) for item in self.plugins):
             raise ConfigError("plugins must be a list of strings")
+        if not isinstance(self.run_id, str) or not self.run_id.strip():
+            raise ConfigError("run_id must be a non-empty string")
+        _require_enum("run_collision_policy", self.run_collision_policy, {"fail", "overwrite"})
 
 
 def _require_int(name: str, value: object, minimum: int) -> None:

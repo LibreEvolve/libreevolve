@@ -377,6 +377,12 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 Program records include `metadata.prompt_program_id`, which links candidates to
 prompt-program events in `prompt_history.jsonl`.
 
+Run-directory reuse is guarded before these writers append or replace files.
+The default policy fails startup if the target directory already contains known
+run artifacts; explicit overwrite removes only known run artifacts before the
+new run. The manifest records the generated `run_id` and effective collision
+policy, but this is provenance metadata rather than resumable state.
+
 ## Known gaps
 
 - Candidate workspaces are local text file sets, not arbitrary-language build
@@ -405,6 +411,8 @@ prompt-program events in `prompt_history.jsonl`.
 - Prompt evolution is implemented at the template boundary with configured and
   mutated template placeholder validation plus bounded absolute/improvement
   reward normalization; richer ablation reporting remains open.
+- Run ids and collision policy are persisted, but archive/controller reload and
+  parent-run resume relationships are not implemented.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders receive bounded full-workspace file sections, basic

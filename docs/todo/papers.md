@@ -162,14 +162,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: task setup and evaluation code define what a run means, and
     long-running experiments need reproducible accounting for the code,
     evaluators, and generated program database.
-  - Current gap: reusing a run directory appends `history.jsonl` and
-    `prompt_history.jsonl` while overwriting `manifest.json`; there is no run
-    id or explicit resume/collision policy. Configured `validate_path` entries
-    are constrained to problem-local Python files, but evaluator file hashes,
-    helper/data provenance, and manifest provenance are still missing. Seeded
-    replay is incomplete because persisted `Program` and `PromptProgram`
-    lineage ids are UUID4 values rather than deterministic seed/run-derived
-    identifiers. Validator subprocesses
+  - Partial status: run identity and collision semantics are implemented.
+    `manifest.json` records a UUID4 `run_id` and effective collision policy.
+    Existing known run artifacts now fail startup by default; explicit
+    `overwrite` removes only known run artifacts before the new run. Configured
+    `validate_path` entries are constrained to problem-local Python files, but
+    evaluator file hashes, helper/data provenance, and manifest provenance are
+    still missing. Seeded replay is incomplete because persisted `Program` and
+    `PromptProgram` lineage ids are UUID4 values rather than deterministic
+    seed/run-derived identifiers. Validator subprocesses
     also inherit `.env`-loaded provider credentials and host environment
     variables by default, so evaluator environment provenance and secret
     isolation are incomplete. Validator timeouts also do not clean up spawned

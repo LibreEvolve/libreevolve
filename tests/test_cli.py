@@ -19,6 +19,7 @@ def test_show_help(): assert CliRunner().invoke(cli, ["show", "--help"]).exit_co
 
 def test_run_calls_evolve(tmp_path):
     _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(f"log_dir: {(tmp_path / 'runs').as_posix()}\n")
     mock_best = MagicMock(); mock_best.fitness = 0.99; mock_best.code = "x=2"
     with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
         r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
@@ -47,6 +48,49 @@ def test_run_writes_complete_best_workspace(tmp_path):
         run_dir / "best_workspace" / "pkg" / "helper.py"
     ).read_text(encoding="utf-8") == "value = 2\n"
     assert "Best workspace saved to:" in r.output
+
+
+def test_run_fails_when_target_run_artifacts_exist(tmp_path):
+    _make_problem(tmp_path)
+    log_dir = tmp_path / "runs"
+    (tmp_path / "config.yaml").write_text(f"log_dir: {log_dir.as_posix()}\n")
+    run_dir = log_dir / tmp_path.name
+    run_dir.mkdir(parents=True)
+    (run_dir / "history.jsonl").write_text("{}\n", encoding="utf-8")
+    best = Program(code="x=2", fitness=0.99)
+
+    with patch("libreevolve.cli.evolve", return_value=best) as mock:
+        r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
+
+    assert r.exit_code != 0
+    assert "already contains run artifacts" in r.output
+    assert not mock.called
+
+
+def test_run_overwrite_clears_target_artifacts(tmp_path):
+    _make_problem(tmp_path)
+    log_dir = tmp_path / "runs"
+    (tmp_path / "config.yaml").write_text(f"log_dir: {log_dir.as_posix()}\n")
+    run_dir = log_dir / tmp_path.name
+    run_dir.mkdir(parents=True)
+    (run_dir / "history.jsonl").write_text("{}\n", encoding="utf-8")
+    (run_dir / "best_workspace").mkdir()
+    (run_dir / "best_workspace" / "old.py").write_text("old", encoding="utf-8")
+    best = Program(code="x=2", fitness=0.99)
+
+    with patch("libreevolve.cli.evolve", return_value=best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            ["run", str(tmp_path), "--max-generations", "1", "--overwrite"],
+        )
+
+    assert r.exit_code == 0
+    assert mock.called
+    config = mock.call_args.args[1]
+    assert config.run_collision_policy == "overwrite"
+    assert not (run_dir / "history.jsonl").exists()
+    assert not (run_dir / "best_workspace" / "old.py").exists()
+    assert (run_dir / "best.py").read_text(encoding="utf-8") == "x=2"
 
 def test_show_prints_best(tmp_path):
     (tmp_path/"history.jsonl").write_text(json.dumps(
@@ -154,6 +198,7 @@ def test_reasoning_effort_overrides_configured_openai_backend(tmp_path):
     (tmp_path / "config.yaml").write_text(
         yaml.dump(
             {
+                "log_dir": (tmp_path / "runs").as_posix(),
                 "backends": [
                     {"type": "openai", "model": "gpt-5.4-mini"},
                     {"type": "anthropic", "model": "claude-sonnet-4-6"},
@@ -173,6 +218,7 @@ def test_reasoning_effort_overrides_configured_openai_backend(tmp_path):
 
 def test_reasoning_effort_still_applies_to_cli_backends(tmp_path):
     _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(f"log_dir: {(tmp_path / 'runs').as_posix()}\n")
     best = Program(code="x=2", fitness=0.99)
     with patch("libreevolve.cli.evolve", return_value=best) as mock:
         r = CliRunner().invoke(
@@ -196,6 +242,7 @@ def test_reasoning_effort_still_applies_to_cli_backends(tmp_path):
 
 def test_reasoning_effort_does_not_attach_to_non_openai_cli_backends(tmp_path):
     _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(f"log_dir: {(tmp_path / 'runs').as_posix()}\n")
     best = Program(code="x=2", fitness=0.99)
     with patch("libreevolve.cli.evolve", return_value=best) as mock:
         r = CliRunner().invoke(

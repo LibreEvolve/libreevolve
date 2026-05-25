@@ -1222,19 +1222,24 @@ Primary evidence:
   - Required result: persist and reload population/database state, backend bandit
     state, prompt database state, and pending evaluations.
 
-- [ ] Define run-directory collision and append semantics.
+- [x] Define run-directory collision and append semantics.
   - Spec evidence: AlphaEvolve-style experiments need reproducible run identity,
     clean provenance, and intentional resume behavior for long-running runs.
-  - Current evidence: `ProgramDatabase.log()` always opens
-    `runs/<problem_name>/history.jsonl` in append mode, `PromptDatabase` appends
-    to the same `prompt_history.jsonl`, and `_write_manifest()` overwrites
-    `manifest.json`. Reusing `--run-name` or the same problem directory can mix
-    records from multiple independent runs while presenting only the latest
-    manifest, and there is no `run_id`, resume marker, or collision policy.
-  - Required result: choose and test one of explicit overwrite, fail-if-exists,
-    timestamped/new run directories, or true resume; record run ids and parent
-    run relationships in manifests; keep `history.jsonl`, `prompt_history.jsonl`,
-    and `best.py` consistent with that policy.
+  - Status: implemented. `Config` now has a UUID4 `run_id` and explicit
+    `run_collision_policy` with validated `fail` and `overwrite` modes. CLI
+    startup and `ProgramDatabase` both preflight known run artifacts; the
+    default fails before appending to `history.jsonl`/`prompt_history.jsonl` or
+    rewriting `manifest.json`, while `--overwrite` /
+    `run_collision_policy: overwrite` removes only known run artifacts
+    (`history*.jsonl`, `failure_history*.jsonl`, `prompt_history*.jsonl`,
+    `manifest.json`, `best.py`, and `best_workspace/`) before the new run.
+    `manifest.json` records `run_id` and the effective collision policy.
+  - Verified by: `tests/test_cli.py`, `tests/population/test_database.py`, and
+    `tests/core/test_config.py` cover CLI preflight, overwrite cleanup,
+    manifest metadata, and config validation.
+  - Remaining divergence: true resume, parent-run relationships, deterministic
+    lineage ids, archive/controller reload, and evaluator-code provenance are
+    tracked separately.
 
 - [ ] Make seeded replay and persisted lineage identifiers reproducible.
   - Spec evidence: AlphaEvolve compares systems over long computation budgets,

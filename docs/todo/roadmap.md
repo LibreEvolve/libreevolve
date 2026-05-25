@@ -129,6 +129,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track unified path parsing, unsafe-path diagnostics, and
     tests for common repository filename shapes.
 
+- [x] Add candidate path-collision handling to candidate fidelity.
+  - Evidence: path grammar hardening rejects unsafe paths, but current
+    `CandidateWorkspace` can still collapse distinct inputs that normalize to
+    the same path or overwrite case-only variants when materialized on Windows.
+  - Current roadmap gap: workspace fidelity covered safe path grammar but not
+    whether the candidate file set remains one-to-one after normalization and
+    host filesystem materialization.
+  - Required result: track normalized-path, case-folding, and Unicode
+    normalization collision policy with tests for loader, mutation, and
+    materialization.
+
 - [x] Add mutation-envelope diagnostics for partial parses.
   - Evidence: file and block mutation envelopes now validate unmatched,
     orphaned, nested, empty-name, invalid-name, and unsafe-path sections before

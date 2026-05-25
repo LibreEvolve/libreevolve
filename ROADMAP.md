@@ -50,6 +50,8 @@ is not yet an AlphaEvolve reproduction.
 - Add richer workspace fixtures with nested packages, package-style validator
   entrypoints, relative evaluator data, and non-Python/static artifacts.
 - Define binary/static artifact handling for candidate workspaces.
+- Detect normalized-path and host-filesystem path collisions in candidate
+  workspaces before mutation, logging, or materialization.
 - Add migration/resume support for workspace candidates.
 
 ### 2. Strengthen multi-objective search

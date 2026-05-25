@@ -369,7 +369,9 @@ Unmarked seed programs remain fully supported.
 For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested
 paths, hyphens, spaces, Unicode filename characters, and Windows-style
-backslashes.
+backslashes. Collision checks are still incomplete: distinct input names that
+normalize to the same relative path, or differ only by host-filesystem case
+folding, can overwrite each other.
 File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, empty-name, and invalid-name envelopes
 now fail before partial edits are applied.

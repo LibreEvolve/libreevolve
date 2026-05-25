@@ -95,7 +95,9 @@ new code
 escape the candidate workspace. File-section headers are parsed through the
 same relative-path normalization used by `CandidateWorkspace`, so nested paths,
 hyphens, spaces, Unicode filename characters, and Windows-style backslashes are
-accepted when the resulting normalized path is safe.
+accepted when the resulting normalized path is safe. This does not yet provide
+a canonical collision model: paths that normalize to the same relative name, or
+that collide on a case-insensitive host filesystem, can overwrite each other.
 Envelope parsing now rejects unmatched, orphaned, nested, empty-name, and
 invalid-name `<<<FILE` / `<<<BLOCK` sections before applying partial edits. It
 is still a local envelope parser rather than a full mutation AST.

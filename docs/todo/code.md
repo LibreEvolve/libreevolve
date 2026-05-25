@@ -85,6 +85,21 @@ Primary evidence:
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
 
+- [ ] Detect normalized-path and host-filesystem path collisions.
+  - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful
+    candidate file set. Two logical candidate files should not silently collapse
+    in memory or overwrite each other when validators materialize the
+    workspace.
+  - Current evidence: `CandidateWorkspace.__post_init__()` normalizes keys with
+    a dict comprehension, so inputs such as `pkg/a.py` and `pkg//a.py` collapse
+    to one `pkg/a.py` entry without a diagnostic. On this Windows filesystem,
+    `CandidateWorkspace.materialize()` writes both `Readme.md` and `README.md`
+    to the same host file, leaving only the later content.
+  - Required result: reject duplicate normalized paths, define case-folding and
+    Unicode-normalization policy for cross-platform runs, detect collisions
+    before materialization, and add loader/mutation/materialization tests that
+    no candidate file disappears silently.
+
 - [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every
     intended edit either apply or fail with a diagnostic; silently dropping an

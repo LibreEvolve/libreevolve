@@ -606,6 +606,21 @@ Primary evidence:
   - Required result: support configured stages, per-stage thresholds, sample
     sizes, retry/random-seed policies, and separate metrics per stage.
 
+- [ ] Aggregate syntax diagnostics across workspace files.
+  - Spec evidence: AlphaEvolve-style codebase evolution needs actionable
+    evaluator feedback for whole candidates, not only the first failing
+    component encountered by a cheap prefilter.
+  - Current evidence: `CascadeEvaluator.evaluate()` calls `_syntax_error()`,
+    which iterates sorted candidate files and returns immediately on the first
+    Python `SyntaxError`. A local proof with invalid `a.py` and `b.py` returned
+    only `a.py: SyntaxError: invalid syntax`, while metadata still listed both
+    files. Non-Python text files are intentionally skipped by this Python-only
+    syntax pass.
+  - Required result: collect all Python syntax errors with file path, line,
+    offset, and message; include the aggregate in `EvaluationStageResult`,
+    history, and bounded prompt feedback; add tests for multiple invalid files,
+    mixed valid/invalid files, and non-Python files.
+
 - [ ] Add metric-specific stage thresholds and explicit aggregation policies.
   - Spec evidence: AlphaEvolve evaluation cascades can use task-specific test
     ensembles of increasing difficulty, where pass/fail decisions may depend

@@ -472,6 +472,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     full-workspace artifacts and admission status, and add tests where invalid
     or non-admitted high-fitness rows do not win the displayed best.
 
+- [x] Add aggregate workspace syntax diagnostics to evaluator feedback work.
+  - Evidence: `_syntax_error()` checks candidate `.py` files in sorted order
+    and returns on the first `SyntaxError`; a local proof with invalid `a.py`
+    and `b.py` reported only the `a.py` failure while metadata listed both
+    files.
+  - Current roadmap gap: evaluator diagnostics covered structured results,
+    stdout/stderr, retries, and artifacts, but not first-error-only syntax
+    feedback in multi-file candidates.
+  - Required result: report all Python syntax failures across a candidate
+    workspace with file/line/offset/message details and carry them into
+    history and prompt feedback.
+
 - [x] Add strict JSONL serialization hardening to database work.
   - Evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`, manifests,
     and `TTTRLPlugin._maybe_train()` now use strict finite JSON writers and

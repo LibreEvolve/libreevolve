@@ -210,10 +210,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     summary. Validator-generated files are not copied out of the temporary
     candidate workspace, so construction artifacts, traces, plots, and other
     evaluator outputs are lost unless a validator encodes them into metrics or
-    stdout/stderr.
+    stdout/stderr. The pre-validator syntax pass also reports only the first
+    Python syntax error in a multi-file workspace, so prompt/history feedback
+    can hide additional broken components.
   - Required result: add bounded prompt sections for execution outputs,
-    artifacts, validator feedback, sample-level diagnostics, and grader
-    feedback summaries.
+    artifacts, validator feedback, sample-level diagnostics, aggregate syntax
+    diagnostics, and grader feedback summaries.
 
 - [x] Failed-trial and rejected-mutation memory.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figures 1-2 and Section 2.2.

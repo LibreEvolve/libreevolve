@@ -204,6 +204,10 @@ The default cascade is:
 - Python syntax check across all candidate `.py` files
 - subprocess execution of `validate.py` with the candidate workspace
 
+The syntax prefilter currently reports the first Python syntax error only.
+Additional invalid `.py` files in the same workspace are not surfaced until
+aggregate syntax diagnostics are implemented.
+
 `Config.eval_stages` can configure local validator stages with separate
 `validate_path` entrypoints, timeouts, `min_score` thresholds, sample counts,
 seed lists, and retries. Validators may keep the old `evaluate(code)` signature

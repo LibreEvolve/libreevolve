@@ -158,6 +158,10 @@ Default failure scores:
 - validator returns `is_valid: false`: `-0.1`
 - otherwise: normalized primary metric
 
+For workspace candidates, the syntax prefilter checks Python files before
+running `validate.py`, but it currently returns only the first Python syntax
+error. Non-Python files are skipped by this Python-only prefilter.
+
 `Config.eval_stages` can run configured validator stages with per-stage
 `validate_path`, timeout, `min_score`, `samples`, `seeds`, and `retries`.
 `min_score` is currently a threshold on normalized primary fitness, not a

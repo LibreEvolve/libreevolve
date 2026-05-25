@@ -350,6 +350,8 @@ environment allowlisting is implemented.
 Validator timeouts also do not yet guarantee cleanup of child processes spawned
 by evaluator code; keep validators single-process or self-cleaning until
 process-tree cleanup is implemented.
+The pre-validator syntax check covers candidate `.py` files, but currently
+reports only the first syntax error across a workspace.
 
 `validate.py` is loaded by file path from a temporary runner. The validator's
 directory is added to `sys.path`, so sibling helper modules in the problem

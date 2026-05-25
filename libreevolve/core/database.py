@@ -1,7 +1,7 @@
 from __future__ import annotations
-import json
 from pathlib import Path
 from libreevolve.core.config import Config
+from libreevolve.core.jsonl import append_strict_jsonl, strict_json_dump
 from libreevolve.population.islands import IslandModel
 from libreevolve.population.program import Program
 
@@ -19,6 +19,7 @@ class ProgramDatabase:
         log_dir = Path(config.log_dir) / config.problem_name
         log_dir.mkdir(parents=True, exist_ok=True)
         self._jsonl = log_dir / "history.jsonl"
+        self._quarantine = log_dir / "history_invalid.jsonl"
         self._manifest = log_dir / "manifest.json"
         self._all: list[Program] = []
         self._write_manifest(config)
@@ -27,15 +28,18 @@ class ProgramDatabase:
         self._islands.add(program)
 
     def log(self, program: Program) -> None:
-        self._all.append(program)
-        with open(self._jsonl, "a", encoding="utf-8") as f:
-            f.write(json.dumps({
+        append_strict_jsonl(
+            self._jsonl,
+            {
                 "id": program.id, "code": program.code, "fitness": program.fitness,
                 "files": program.files, "primary_file": program.primary_file,
                 "generation": program.generation, "parent_id": program.parent_id,
                 "lineage": program.lineage, "metadata": program.metadata,
                 "metrics": program.metrics, "evaluation": program.evaluation,
-            }) + "\n")
+            },
+            quarantine_path=self._quarantine,
+        )
+        self._all.append(program)
 
     def sample(self, strategy: str = "exploit") -> Program | None:
         return self._islands.sample(strategy=strategy)
@@ -54,36 +58,35 @@ class ProgramDatabase:
         return list(self._all)
 
     def _write_manifest(self, config: Config) -> None:
-        with open(self._manifest, "w", encoding="utf-8") as f:
-            json.dump(
-                {
-                    "config": {
-                        "max_generations": config.max_generations,
-                        "num_inspirations": config.num_inspirations,
-                        "eval_timeout_sec": config.eval_timeout_sec,
-                        "explore_ratio": config.explore_ratio,
-                        "mutation_mode": config.mutation_mode,
-                        "eval_stages": config.eval_stages,
-                        "prompt_variants": config.prompt_variants,
-                        "meta_prompt_evolution": config.meta_prompt_evolution,
-                        "meta_prompt_interval": config.meta_prompt_interval,
-                        "critique_enabled": config.critique_enabled,
-                        "critique_prompt": config.critique_prompt,
-                        "llm_feedback": config.llm_feedback,
-                        "n_islands": config.n_islands,
-                        "migration_interval": config.migration_interval,
-                        "migration_ratio": config.migration_ratio,
-                        "map_elites_bins": config.map_elites_bins,
-                        "elite_archive_size": config.elite_archive_size,
-                        "backends": config.backends,
-                        "ensemble_explore_coeff": config.ensemble_explore_coeff,
-                        "ensemble_strategy": config.ensemble_strategy,
-                        "plugins": config.plugins,
-                        "log_dir": config.log_dir,
-                        "problem_name": config.problem_name,
-                        "seed": config.seed,
-                    }
-                },
-                f,
-                indent=2,
-            )
+        strict_json_dump(
+            {
+                "config": {
+                    "max_generations": config.max_generations,
+                    "num_inspirations": config.num_inspirations,
+                    "eval_timeout_sec": config.eval_timeout_sec,
+                    "explore_ratio": config.explore_ratio,
+                    "mutation_mode": config.mutation_mode,
+                    "eval_stages": config.eval_stages,
+                    "prompt_variants": config.prompt_variants,
+                    "meta_prompt_evolution": config.meta_prompt_evolution,
+                    "meta_prompt_interval": config.meta_prompt_interval,
+                    "critique_enabled": config.critique_enabled,
+                    "critique_prompt": config.critique_prompt,
+                    "llm_feedback": config.llm_feedback,
+                    "n_islands": config.n_islands,
+                    "migration_interval": config.migration_interval,
+                    "migration_ratio": config.migration_ratio,
+                    "map_elites_bins": config.map_elites_bins,
+                    "elite_archive_size": config.elite_archive_size,
+                    "backends": config.backends,
+                    "ensemble_explore_coeff": config.ensemble_explore_coeff,
+                    "ensemble_strategy": config.ensemble_strategy,
+                    "plugins": config.plugins,
+                    "log_dir": config.log_dir,
+                    "problem_name": config.problem_name,
+                    "seed": config.seed,
+                }
+            },
+            self._manifest,
+            indent=2,
+        )

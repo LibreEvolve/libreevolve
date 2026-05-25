@@ -503,21 +503,19 @@ Primary evidence:
     undeclared metrics. Multi-objective use of those metric vectors remains
     tracked separately.
 
-- [ ] Enforce strict finite JSON serialization for run records.
+- [x] Enforce strict finite JSON serialization for run records.
   - Spec evidence: AlphaEvolve's program database is a machine-readable store
     of candidates, metrics, outputs, and feedback; downstream selection,
     replay, and analysis require valid finite scalar records.
-  - Current evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` call
-    `json.dumps(...)` with Python defaults. If evaluator, feedback, or plugin
-    paths leave `NaN`, `Infinity`, or non-JSON-compatible values in fitness,
-    metrics, evaluation metadata, prompt rewards, or plugin metadata, the log
-    can either emit non-standard JSON tokens or fail during logging after
-    evaluation.
-  - Required result: validate/sanitize records before persistence, use
-    `allow_nan=False`, quarantine invalid records with diagnostics, keep
-    `history.jsonl` and `prompt_history.jsonl` strict JSONL, and test
-    non-finite fitness, metrics, feedback scores, prompt rewards, and plugin
-    metadata.
+  - Current evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`,
+    `ProgramDatabase._write_manifest()`, and `TTTRLPlugin._maybe_train()` now
+    use strict JSON helpers with `allow_nan=False`. Invalid append records are
+    not written to the primary stream; a diagnostic entry is written to
+    `history_invalid.jsonl`, `prompt_history_invalid.jsonl`, or
+    `grpo_data_invalid.jsonl`.
+  - Status: implemented with tests for non-finite candidate fitness,
+    non-finite prompt rewards with rollback, and non-finite GRPO export
+    records. Broader queryable database/resume work remains tracked separately.
 
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.

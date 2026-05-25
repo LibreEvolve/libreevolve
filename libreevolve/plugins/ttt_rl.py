@@ -1,6 +1,6 @@
 from __future__ import annotations
-import json
 from pathlib import Path
+from libreevolve.core.jsonl import append_strict_jsonl
 from libreevolve.plugins.base import PluginBase
 
 
@@ -33,8 +33,9 @@ class TTTRLPlugin(PluginBase):
         if not batch: return
         out = self._log_dir / "grpo_data.jsonl"
         out.parent.mkdir(parents=True, exist_ok=True)
-        with open(out, "a", encoding="utf-8") as f:
-            for r in batch: f.write(json.dumps(r) + "\n")
+        quarantine = self._log_dir / "grpo_data_invalid.jsonl"
+        for record in batch:
+            append_strict_jsonl(out, record, quarantine_path=quarantine)
 
     def get_training_data(self) -> list[dict]:
         return list(self._data)

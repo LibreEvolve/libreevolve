@@ -1,10 +1,11 @@
 # Run Artifacts
 
 LibreEvolve writes machine-readable run outputs under `runs/` by default.
-Strict JSON serialization is not fully hardened yet: if a plugin, feedback
-grader, or unchecked evaluator path produces non-finite numeric values, the
-current Python JSON writer may emit permissive `NaN`/`Infinity` tokens rather
-than rejecting the record. Treat strict finite JSONL as open hardening work.
+Run JSON and JSONL writers use strict finite JSON. Candidate history, prompt
+history, manifests, and the ThetaEvolve-inspired export reject `NaN`/`Infinity`
+or non-JSON-compatible values rather than emitting permissive Python JSON
+tokens. Failed append attempts write diagnostic quarantine records next to the
+target stream.
 
 ## Directory layout
 
@@ -15,7 +16,9 @@ runs/
 └── hello_world/
     ├── manifest.json
     ├── history.jsonl
+    ├── history_invalid.jsonl          # Only when a candidate record is rejected
     ├── prompt_history.jsonl
+    ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
     └── best.py
 ```
 
@@ -151,6 +154,7 @@ The `ttt_rl` plugin writes training examples to:
 
 ```text
 runs/grpo_data.jsonl
+runs/grpo_data_invalid.jsonl   # Only when an export record is rejected
 ```
 
 This file is global to the configured `log_dir`; it is not nested under the

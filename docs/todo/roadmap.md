@@ -402,13 +402,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cell descriptors, replacement status, and previous occupant ids.
 
 - [x] Add strict JSONL serialization hardening to database work.
-  - Evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` use
-    `json.dumps(...)` defaults, which permit `NaN`/`Infinity` tokens if
-    non-finite values reach records.
+  - Evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`, manifests,
+    and `TTTRLPlugin._maybe_train()` now use strict finite JSON writers and
+    quarantine invalid append records.
   - Current roadmap gap: database work covered queryability and sampling, but
     not the validity of persisted JSONL for strict downstream analysis.
-  - Required result: make finite JSON serialization and invalid-record
-    quarantine part of runtime/database hardening.
+  - Status: roadmap updated to treat strict finite JSONL as current coverage
+    for candidate, prompt, manifest, and GRPO-export writers, while future
+    artifact writers still need the same policy.
 
 - [x] Add reproducibility hashes to run metadata work.
   - Evidence: AlphaEvolve-scale runs need exact problem, evaluator, prompt, and

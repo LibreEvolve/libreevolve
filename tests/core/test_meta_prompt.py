@@ -1,7 +1,11 @@
 import json
+import math
 import tempfile
 from pathlib import Path
 
+import pytest
+
+from libreevolve.core.jsonl import StrictJsonlError
 from libreevolve.core.meta_prompt import PromptDatabase
 
 
@@ -38,3 +42,18 @@ def test_prompt_database_logs_add_and_score_events():
         for line in (Path(tmpdir) / "prompt_history.jsonl").read_text().splitlines()
     ]
     assert events == ["add", "score"]
+
+
+def test_prompt_database_rejects_non_finite_score_with_quarantine():
+    tmpdir = tempfile.mkdtemp()
+    db = PromptDatabase(tmpdir, templates=["a {task}"])
+    program = db.select()
+
+    with pytest.raises(StrictJsonlError):
+        db.record_result(program.id, math.nan)
+
+    assert program.uses == 0
+    assert program.reward_sum == 0.0
+    quarantine = Path(tmpdir) / "prompt_history_invalid.jsonl"
+    record = json.loads(quarantine.read_text().splitlines()[0])
+    assert "nan" in record["message"]

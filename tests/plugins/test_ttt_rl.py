@@ -1,5 +1,9 @@
+import json
+import math
 import tempfile
 from pathlib import Path
+import pytest
+from libreevolve.core.jsonl import StrictJsonlError
 from libreevolve.plugins.ttt_rl import TTTRLPlugin
 from libreevolve.population.program import Program
 
@@ -22,3 +26,11 @@ def test_writes_jsonl(tmp_path):
     for i in range(12): p.on_evaluated(_p(f"p{i}", f"d{i}"), i*0.1)
     p.on_generation_end(5, None)
     assert (tmp_path/"grpo_data.jsonl").exists()
+
+def test_rejects_non_finite_jsonl_export(tmp_path):
+    p = TTTRLPlugin(train_every=1, log_dir=str(tmp_path))
+    p.on_evaluated(_p(), math.inf)
+    with pytest.raises(StrictJsonlError):
+        p.on_generation_end(1, None)
+    record = json.loads((tmp_path/"grpo_data_invalid.jsonl").read_text().splitlines()[0])
+    assert "inf" in record["message"]

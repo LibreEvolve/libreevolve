@@ -1,7 +1,9 @@
-import json, tempfile
+import json, math, tempfile
 from pathlib import Path
+import pytest
 from libreevolve.core.config import Config
 from libreevolve.core.database import ProgramDatabase
+from libreevolve.core.jsonl import StrictJsonlError
 from libreevolve.population.program import Program
 
 def _db(): return ProgramDatabase(Config(log_dir=tempfile.mkdtemp(), problem_name="t"))
@@ -43,10 +45,25 @@ def test_log_writes_metrics_and_evaluation():
 def test_log_writes_candidate_files():
     tmpdir = tempfile.mkdtemp()
     db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
-    db.log(Program(files={"main.py": "x=1", "helper.py": "y=2"}, primary_file="main.py"))
+    db.log(Program(
+        files={"main.py": "x=1", "helper.py": "y=2"},
+        primary_file="main.py",
+        fitness=0.0,
+    ))
     records = [json.loads(l) for l in (Path(tmpdir)/"t"/"history.jsonl").read_text().splitlines()]
     assert records[0]["primary_file"] == "main.py"
     assert records[0]["files"]["helper.py"] == "y=2"
+
+def test_log_rejects_non_finite_records_with_quarantine():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+    with pytest.raises(StrictJsonlError):
+        db.log(_p(fitness=math.inf))
+    assert db.all_programs() == []
+    assert not (Path(tmpdir)/"t"/"history.jsonl").exists()
+    quarantine = Path(tmpdir)/"t"/"history_invalid.jsonl"
+    record = json.loads(quarantine.read_text().splitlines()[0])
+    assert "inf" in record["message"]
 
 def test_manifest_written():
     tmpdir = tempfile.mkdtemp()

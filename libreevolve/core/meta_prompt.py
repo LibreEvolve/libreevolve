@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-import json
 import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from uuid import uuid4
 
+from libreevolve.core.jsonl import append_strict_jsonl
 from libreevolve.core.prompt import DEFAULT_TEMPLATE
 
 
@@ -48,14 +48,15 @@ class PromptDatabase:
     def __init__(self, log_dir: str | Path, templates: list[str] | None = None):
         self._programs: dict[str, PromptProgram] = {}
         self._log_path = Path(log_dir) / "prompt_history.jsonl"
+        self._quarantine_path = Path(log_dir) / "prompt_history_invalid.jsonl"
         self._log_path.parent.mkdir(parents=True, exist_ok=True)
         seed_templates = templates or [DEFAULT_TEMPLATE]
         for template in seed_templates:
             self.add(PromptProgram(template=template, metadata={"source": "seed"}))
 
     def add(self, program: PromptProgram) -> PromptProgram:
-        self._programs[program.id] = program
         self._write("add", program)
+        self._programs[program.id] = program
         return program
 
     def select(self) -> PromptProgram:
@@ -70,11 +71,20 @@ class PromptDatabase:
 
     def record_result(self, prompt_id: str, reward: float, metadata: dict | None = None) -> None:
         program = self._programs[prompt_id]
+        previous_uses = program.uses
+        previous_reward_sum = program.reward_sum
+        previous_metadata = dict(program.metadata)
         program.uses += 1
         program.reward_sum += reward
         if metadata:
             program.metadata.update(metadata)
-        self._write("score", program)
+        try:
+            self._write("score", program)
+        except Exception:
+            program.uses = previous_uses
+            program.reward_sum = previous_reward_sum
+            program.metadata = previous_metadata
+            raise
 
     def mutate(
         self,
@@ -96,5 +106,8 @@ class PromptDatabase:
         return list(self._programs.values())
 
     def _write(self, event: str, program: PromptProgram) -> None:
-        with open(self._log_path, "a", encoding="utf-8") as f:
-            f.write(json.dumps({"event": event, "program": program.to_dict()}) + "\n")
+        append_strict_jsonl(
+            self._log_path,
+            {"event": event, "program": program.to_dict()},
+            quarantine_path=self._quarantine_path,
+        )

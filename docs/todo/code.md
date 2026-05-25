@@ -548,6 +548,20 @@ Primary evidence:
   - Required result: persist and reload population/database state, backend bandit
     state, prompt database state, and pending evaluations.
 
+- [ ] Define run-directory collision and append semantics.
+  - Spec evidence: AlphaEvolve-style experiments need reproducible run identity,
+    clean provenance, and intentional resume behavior for long-running runs.
+  - Current evidence: `ProgramDatabase.log()` always opens
+    `runs/<problem_name>/history.jsonl` in append mode, `PromptDatabase` appends
+    to the same `prompt_history.jsonl`, and `_write_manifest()` overwrites
+    `manifest.json`. Reusing `--run-name` or the same problem directory can mix
+    records from multiple independent runs while presenting only the latest
+    manifest, and there is no `run_id`, resume marker, or collision policy.
+  - Required result: choose and test one of explicit overwrite, fail-if-exists,
+    timestamped/new run directories, or true resume; record run ids and parent
+    run relationships in manifests; keep `history.jsonl`, `prompt_history.jsonl`,
+    and `best.py` consistent with that policy.
+
 - [x] Add structured run metadata.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
     choices, evaluator stages, compute budgets, and configurations.
@@ -594,6 +608,19 @@ Primary evidence:
     interpreter and local filesystem access (`libreevolve/core/evaluator.py`).
   - Required result: add configurable sandbox/container/working-directory
     isolation, resource limits, and artifact collection.
+
+- [ ] Validate and constrain configured evaluator paths.
+  - Spec evidence: AlphaEvolve task setup depends on explicit evaluator
+    definitions and reproducible provenance for evaluation code.
+  - Current evidence: `_resolve_validate_path()` accepts relative paths under
+    the problem directory and arbitrary absolute paths, does not check existence
+    before subprocess execution, and records only the resolved string in
+    metadata. Absolute or outside-problem validators can affect a run without
+    manifest hashing, allowlist policy, or clear reproducibility guarantees.
+  - Required result: validate `eval_stages[].validate_path` before a run, define
+    whether outside-problem validators are forbidden or explicitly allowed,
+    record/harden evaluator path provenance and hashes in `manifest.json`, and
+    test missing, outside-root, symlink, and absolute validator paths.
 
 - [x] Remove wording that implies the validator subprocess is a security
   sandbox.

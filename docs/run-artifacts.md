@@ -36,6 +36,11 @@ the loaded problem directory name.
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.
 
+Reusing an existing run directory is not currently a defined resume operation:
+`history.jsonl` and `prompt_history.jsonl` append, while `manifest.json` is
+rewritten for the latest invocation. Until run ids or collision policies are
+implemented, prefer a fresh `--run-name` for independent runs.
+
 ## `history.jsonl`
 
 Each line is one candidate record. Current fields:

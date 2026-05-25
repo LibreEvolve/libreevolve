@@ -60,6 +60,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: keep export/resume as part of workspace fidelity, not only
     runtime hardening.
 
+- [x] Add run-directory collision policy to resumability work.
+  - Evidence: `ProgramDatabase.log()` appends `history.jsonl` and
+    `PromptDatabase` appends `prompt_history.jsonl`, while `manifest.json` is
+    overwritten for the same run directory.
+  - Current roadmap gap: resumability work covered saved state, but not the
+    immediate truthfulness issue that reusing a run name can mix independent
+    runs under one latest manifest.
+  - Required result: track explicit overwrite/fail/new-run/resume semantics,
+    run ids, and artifact consistency across history, prompt history, manifest,
+    and `best.py`.
+
 - [x] Add evolve-block and skeleton/codebase support to near-term architecture
   alignment.
   - Evidence: AlphaEvolve Section 2.1 defines an input API with marked
@@ -193,6 +204,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     parameters and emitted artifacts.
   - Required result: track plugin registry, configuration schema, constructor
     parameters, paper-inspiration scope, and artifact provenance.
+
+- [x] Add evaluator path validation/provenance to runtime hardening.
+  - Evidence: `eval_stages[].validate_path` can resolve to arbitrary absolute
+    paths and is not prevalidated or hashed before execution.
+  - Current roadmap gap: evaluator hardening covered metric contracts,
+    cascades, and artifacts but not validator-code path confinement and
+    provenance.
+  - Required result: validate evaluator paths, define outside-problem policy,
+    and include evaluator path/hash provenance in manifests.
 
 - [x] Add run-wide compute-budget accounting to runtime work.
   - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas

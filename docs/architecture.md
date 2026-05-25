@@ -277,10 +277,10 @@ threshold, ignored by cell competition, or replaced an existing cell occupant.
 
 Parent selection and inspiration sampling are also intentionally thin today.
 Exploit picks the global best, explore samples a random occupied cell, and
-inspirations are random occupied cells across islands. Inspiration sampling does
-not exclude the selected parent or deduplicate migrated copies of the same
-program id, so a prompt can include the parent or repeated migrated programs as
-"inspirations."
+inspirations are random occupied cells across islands. Inspiration sampling
+excludes the selected parent and deduplicates migrated copies by program id, but
+sampling is not yet metric-aware and does not use novelty, feedback, lineage, or
+recency signals.
 
 LibreEvolve stores metric vectors, but its multi-objective policy is still a
 first pass: archive comparison and backend rewards use normalized primary

@@ -40,9 +40,17 @@ class IslandModel:
             return random.choice(pool) if pool else None
         raise ValueError(f"Unknown strategy: {strategy!r}")
 
-    def sample_diverse(self, k: int) -> list[Program]:
-        pool = [p for i in self.islands for p in i.occupied_cells()]
-        return random.sample(pool, min(k, len(pool))) if pool else []
+    def sample_diverse(
+        self, k: int, exclude_ids: set[str] | None = None
+    ) -> list[Program]:
+        exclude_ids = exclude_ids or set()
+        pool: dict[str, Program] = {}
+        for island in self.islands:
+            for program in island.occupied_cells():
+                if program.id not in exclude_ids:
+                    pool.setdefault(program.id, program)
+        candidates = list(pool.values())
+        return random.sample(candidates, min(k, len(candidates))) if candidates else []
 
     def best(self) -> Program | None:
         cands = [i.best() for i in self.islands if i.best()]

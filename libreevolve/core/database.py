@@ -44,8 +44,10 @@ class ProgramDatabase:
     def sample(self, strategy: str = "exploit") -> Program | None:
         return self._islands.sample(strategy=strategy)
 
-    def sample_diverse(self, k: int) -> list[Program]:
-        return self._islands.sample_diverse(k=k)
+    def sample_diverse(
+        self, k: int, exclude_ids: set[str] | None = None
+    ) -> list[Program]:
+        return self._islands.sample_diverse(k=k, exclude_ids=exclude_ids)
 
     def best(self) -> Program | None:
         return self._islands.best()

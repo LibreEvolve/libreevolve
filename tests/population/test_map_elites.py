@@ -31,6 +31,12 @@ def test_sample_diverse_up_to_k():
     for i in range(5): a.add(_p(code=f"x={i}", fitness=i*0.1))
     assert 1 <= len(a.sample_diverse(k=3)) <= 3
 
+def test_sample_diverse_excludes_program_ids():
+    a = MAPElites()
+    p = _p(code="x=1", fitness=0.5)
+    a.add(p)
+    assert a.sample_diverse(k=3, exclude_ids={p.id}) == []
+
 def test_elite_archive_capped():
     a = MAPElites(elite_archive_size=3)
     for i in range(10): a.add(_p(code=f"x={i}", fitness=i*0.1))

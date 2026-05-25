@@ -27,6 +27,11 @@ def test_sample_exploit():
         p = _p(fitness=f); db.log(p); db.add(p)
     assert db.sample("exploit").fitness == 0.7
 
+def test_sample_diverse_excludes_program_ids():
+    db = _db()
+    p = _p(fitness=0.7); db.log(p); db.add(p)
+    assert db.sample_diverse(k=3, exclude_ids={p.id}) == []
+
 def test_log_writes_jsonl():
     tmpdir = tempfile.mkdtemp()
     db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))

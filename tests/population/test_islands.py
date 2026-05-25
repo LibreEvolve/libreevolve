@@ -27,6 +27,20 @@ def test_sample_diverse_returns_list():
     samples = m.sample_diverse(k=3)
     assert isinstance(samples, list) and len(samples) <= 3
 
+def test_sample_diverse_excludes_program_ids():
+    m = _m()
+    p = _p(code="x=1", fitness=0.5)
+    m.add(p)
+    assert m.sample_diverse(k=3, exclude_ids={p.id}) == []
+
+def test_sample_diverse_deduplicates_migrated_program_ids():
+    m = IslandModel(Config(n_islands=2, migration_ratio=1.0, elite_archive_size=10))
+    p = _p(code="x=1", fitness=1.0)
+    m.islands[0].add(p)
+    m.migrate()
+    samples = m.sample_diverse(k=10)
+    assert [sample.id for sample in samples] == [p.id]
+
 def test_ring_topology():
     m = IslandModel(Config(n_islands=3, migration_ratio=1.0, elite_archive_size=10))
     m.islands[0].add(_p(code="i0", fitness=1.0))

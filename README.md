@@ -164,7 +164,7 @@ graph TD
 <br>
 
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
-2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent in-memory failure hints
+2. **Prompt construction** — Build a prompt with parent code, parent-excluding/deduplicated inspiration programs, and recent in-memory failure hints
 3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff by default, or full-block/full-code replacements when configured with `mutation_mode: full`
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time

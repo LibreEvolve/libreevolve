@@ -79,7 +79,10 @@ def evolve(problem: Problem, config: Config,
         if parent is None:
             break
 
-        inspirations = db.sample_diverse(k=config.num_inspirations)
+        inspirations = db.sample_diverse(
+            k=config.num_inspirations,
+            exclude_ids={parent.id},
+        )
         context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
         prompt_program = prompt_db.select()
         prompt = prompt_sampler.build(

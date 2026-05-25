@@ -64,8 +64,11 @@ class MAPElites:
     def best(self) -> Program | None:
         return self._elite[0] if self._elite else None
 
-    def sample_diverse(self, k: int) -> list[Program]:
-        cells = list(self._grid.values())
+    def sample_diverse(
+        self, k: int, exclude_ids: set[str] | None = None
+    ) -> list[Program]:
+        exclude_ids = exclude_ids or set()
+        cells = [p for p in self._grid.values() if p.id not in exclude_ids]
         return random.sample(cells, min(k, len(cells))) if cells else []
 
     def occupied_cells(self) -> list[Program]:

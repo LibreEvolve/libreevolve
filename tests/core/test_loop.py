@@ -69,6 +69,30 @@ def test_loop_logs_mutation_backend_index():
     assert child["metadata"]["backend_idx"] == 2
 
 
+def test_loop_excludes_selected_parent_from_inspirations():
+    tmpdir = tempfile.mkdtemp()
+    seen = []
+
+    class CapturePlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def on_evaluated(self, program, score): return score
+        def build_extra_context(self, parent, inspirations):
+            seen.append((parent.id, [program.id for program in inspirations]))
+            return ""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[CapturePlugin()],
+        )
+
+    assert seen
+    parent_id, inspiration_ids = seen[0]
+    assert parent_id not in inspiration_ids
+
+
 def test_loop_renders_full_mode_prompt_instructions():
     tmpdir = tempfile.mkdtemp()
     llm = _llm("x=2")

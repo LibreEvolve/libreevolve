@@ -1000,12 +1000,14 @@ Primary evidence:
     `parent_selection_strategy` supports `mixed`, `exploit`, `explore`,
     `metric`, `novelty`, and `recency`; `inspiration_strategy` supports
     `mixed`, `random`, `selection`, `metric`, `novelty`, and `recency`.
+    Both strategy fields are accepted in `config.yaml` and exposed as CLI
+    overrides.
     `evolve()` passes the selected parent id as an inspiration exclusion,
     `sample_diverse()` accepts `exclude_ids` and `strategy`, and island-level
     inspiration pools deduplicate migrated copies by `Program.id`. Tests cover
-    config validation, metric-leader sampling, novelty/recency strategies,
-    MAP-Elites exclusion, migrated duplicate collapse, and loop-level
-    parent-as-inspiration avoidance.
+    config validation, CLI override precedence, metric-leader sampling,
+    novelty/recency strategies, MAP-Elites exclusion, migrated duplicate
+    collapse, and loop-level parent-as-inspiration avoidance.
   - Remaining gap: this is still in-memory archive sampling, not a queryable
     database over persisted score, metric, diversity, feedback, lineage,
     novelty, and reproducible sampling indexes.
@@ -1235,7 +1237,9 @@ Primary evidence:
     only `--run-name` changes the output directory.
   - Partial status: OpenAI reasoning options now override consistently for
     both config-file and CLI-specified OpenAI backends, do not attach to
-    non-OpenAI backends, and are covered by CLI tests.
+    non-OpenAI backends, and are covered by CLI tests. Parent and inspiration
+    sampling strategies are also exposed as CLI overrides with precedence
+    tests.
   - Required result: define and test remaining field-by-field precedence for
     defaults, config files, and CLI options; make ignored overrides explicit;
     and reflect effective values in `manifest.json`.

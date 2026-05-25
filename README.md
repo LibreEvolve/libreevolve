@@ -493,6 +493,9 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --reasoning-effort, -r   Reasoning effort for OpenAI reasoning models (low/medium/high/xhigh; omit to disable)
   --mutation-mode          Mutation mode: diff or full
   --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
+  --parent-selection-strategy
+                           Parent sampling: mixed, exploit, explore, metric, novelty, or recency
+  --inspiration-strategy   Inspiration sampling: mixed, random, selection, metric, novelty, or recency
   --run-name               Custom name for this run (default: problem directory name)
   --seed                   Random seed
 

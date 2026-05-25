@@ -245,12 +245,15 @@ The `run` command exposes:
 - `--seed`
 - `--reasoning-effort`, `-r`
 - `--explore-ratio`, `-e`
+- `--parent-selection-strategy`
+- `--inspiration-strategy`
 - `--run-name`
 - `--overwrite`
 
 CLI `--plugins` and `--backends` replace, rather than merge with, config-file
 lists. CLI `--overwrite` sets the effective run collision policy to
-`overwrite` for the current invocation.
+`overwrite` for the current invocation. CLI scalar strategy overrides replace
+the corresponding `config.yaml` values for the current run.
 
 ## Backend spec format
 

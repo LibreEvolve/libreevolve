@@ -55,6 +55,37 @@ def test_run_budget_cli_options_override_config(tmp_path):
     assert config.max_evaluator_seconds == 11.5
     assert config.max_runtime_seconds == 30.0
 
+def test_run_sampling_cli_options_override_config(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "parent_selection_strategy": "exploit",
+                "inspiration_strategy": "selection",
+            }
+        )
+    )
+    mock_best = MagicMock(); mock_best.fitness = 0.99; mock_best.code = "x=2"
+
+    with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--parent-selection-strategy",
+                "metric",
+                "--inspiration-strategy",
+                "novelty",
+            ],
+        )
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.parent_selection_strategy == "metric"
+    assert config.inspiration_strategy == "novelty"
+
 def test_run_writes_complete_best_workspace(tmp_path):
     _make_problem(tmp_path)
     log_dir = tmp_path / "runs"

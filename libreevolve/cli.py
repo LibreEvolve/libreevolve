@@ -30,6 +30,14 @@ def cli() -> None:
               help="Reasoning effort for OpenAI reasoning models (e.g. low, medium, high, xhigh)")
 @click.option("--explore-ratio", "-e", type=float, default=None,
               help="Probability of exploring (random parent) vs exploiting (best parent). Default: 0.3")
+@click.option("--parent-selection-strategy",
+              type=click.Choice(["mixed", "exploit", "explore", "metric", "novelty", "recency"]),
+              default=None,
+              help="Parent sampling policy. Default: mixed")
+@click.option("--inspiration-strategy",
+              type=click.Choice(["mixed", "random", "selection", "metric", "novelty", "recency"]),
+              default=None,
+              help="Inspiration sampling policy. Default: mixed")
 @click.option("--mutation-mode", type=click.Choice(["diff", "full"]), default=None,
               help="Mutation response mode: SEARCH/REPLACE diffs or full code/block replacement.")
 @click.option("--run-name", type=str, default=None,
@@ -38,7 +46,8 @@ def cli() -> None:
               help="Delete existing run artifacts in the target run directory before starting.")
 def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         max_runtime_seconds, plugins, backends, seed, reasoning_effort,
-        explore_ratio, mutation_mode, run_name, overwrite):
+        explore_ratio, parent_selection_strategy, inspiration_strategy,
+        mutation_mode, run_name, overwrite):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import ConfigError
     from libreevolve.problems.loader import load_problem
@@ -57,6 +66,8 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
             seed,
             reasoning_effort,
             explore_ratio,
+            parent_selection_strategy,
+            inspiration_strategy,
             mutation_mode,
         )
         if run_name:
@@ -115,7 +126,9 @@ def show(run_dir):
 
 def _build_config(problem, max_generations, max_evaluations, max_evaluator_seconds,
                   max_runtime_seconds, plugins, backends, seed,
-                  reasoning_effort=None, explore_ratio=None, mutation_mode=None):
+                  reasoning_effort=None, explore_ratio=None,
+                  parent_selection_strategy=None, inspiration_strategy=None,
+                  mutation_mode=None):
     import yaml
     from libreevolve.core.config import Config, ConfigError
     cfg: dict = {}
@@ -145,6 +158,10 @@ def _build_config(problem, max_generations, max_evaluations, max_evaluator_secon
                 backend["reasoning_effort"] = reasoning_effort
     if seed is not None: config.seed = seed
     if explore_ratio is not None: config.explore_ratio = explore_ratio
+    if parent_selection_strategy is not None:
+        config.parent_selection_strategy = parent_selection_strategy
+    if inspiration_strategy is not None:
+        config.inspiration_strategy = inspiration_strategy
     if mutation_mode is not None: config.mutation_mode = mutation_mode
     config.problem_name = problem.name
     config.validate()

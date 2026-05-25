@@ -96,6 +96,11 @@ and expects the returned value to be JSON-serializable. `code` is always the
 contents of the candidate's primary file. `workspace_path` points at the root of
 the materialized candidate file set.
 
+This is currently a code-file-set model. Problem authors can make validators
+interpret the code as a constructor, solver, or search procedure, but the
+framework does not yet expose first-class non-code candidate serializers or
+paired solution/search abstractions.
+
 The returned dict should include:
 
 - the primary metric name from `metrics.yaml`
@@ -208,3 +213,6 @@ existing full-block rules apply. New files can be created in `full` mode.
 - Use evolve blocks when the skeleton/API must stay fixed.
 - Treat the current problem model as Python-only. Multi-file workspaces are
   local text file sets, not arbitrary build-system or containerized projects.
+- Treat candidate abstraction as code-file evolution for now; richer
+  problem-defined candidate representations are tracked as AlphaEvolve-alignment
+  work.

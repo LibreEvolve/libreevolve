@@ -96,6 +96,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: ensure prompt/context work covers malformed evolved
     templates and large context sources, not only happy-path template selection.
 
+- [x] Add richer evaluator-output prompt rendering to prompt/context work.
+  - Evidence: AlphaEvolve prompts can include execution results and scores, but
+    the current prompt sampler only renders compact recent stage summaries.
+  - Current roadmap gap: the roadmap said evaluator feedback without calling
+    out stdout/stderr, artifacts, LLM grader summaries, or sample-level
+    diagnostics.
+  - Required result: keep bounded execution-output and feedback rendering on
+    the roadmap as a prompt fidelity item.
+
+- [x] Add flexible candidate abstraction modes to candidate fidelity.
+  - Evidence: AlphaEvolve Section 2.1 allows user-chosen solution
+    abstractions, not only code file sets.
+  - Current roadmap gap: candidate workspace work covers files, blocks, and
+    artifacts, but not problem-defined render/mutate/materialize abstractions
+    such as raw solutions, constructor functions, or paired solution/search
+    procedures.
+  - Required result: either add abstraction hooks or explicitly keep
+    code-file-set evolution as a documented divergence.
+
 - [x] Add full-code/full-block mutation mode.
   - Evidence: AlphaEvolve Section 2.3 says the system can be configured to ask
     for a complete code block rather than diffs when appropriate.

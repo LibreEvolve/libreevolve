@@ -85,6 +85,21 @@ Primary evidence:
     candidate files, preserve `best.py` only as a compatibility convenience,
     and document/export this artifact in tests and run docs.
 
+- [ ] Support problem-defined candidate abstraction modes or document the
+  narrower code-file abstraction.
+  - Spec evidence: AlphaEvolve Section 2.1 describes flexible solution
+    abstractions, including raw solution strings, constructor functions,
+    bespoke search algorithms, and co-evolved intermediate solutions plus
+    search procedures.
+  - Current evidence: `CandidateWorkspace` models candidates as local text file
+    sets with a primary Python code view; validators can interpret code however
+    they want, but the framework has no first-class representation for paired
+    solution/search artifacts, non-code solution objects, or problem-defined
+    candidate serializers.
+  - Required result: either add a problem API for candidate abstraction modes,
+    rendering, mutation, materialization, and validation, or clearly document
+    that LibreEvolve currently evolves code file sets only.
+
 ## Prompt Sampling and Context
 
 - [x] Replace the simple prompt builder with a configurable prompt sampler.
@@ -112,15 +127,31 @@ Primary evidence:
     probability validation, seeded sampling tests, and docs that distinguish it
     from whole-template variants.
 
-- [x] Include rendered evaluation results and program outputs in prompts.
+- [x] Include basic rendered evaluation stage summaries in prompts.
   - Spec evidence: AlphaEvolve prompts can include a program, the result of
     executing that program, and scores assigned by `evaluate`.
   - Current evidence: evaluator returns `EvaluationResult`; `Program` stores
-    `metrics` and `evaluation`; `PromptSampler` renders recent stage feedback.
-  - Status: implemented through `EvaluationResult`, `Program.evaluation`,
-    JSONL persistence, and `PromptSampler` feedback rendering.
+    `metrics` and `evaluation`; `PromptSampler` renders the last three stage
+    names, pass/fail states, scores, and errors.
+  - Status: implemented as compact stage-summary rendering. Full evaluator
+    output rendering remains open below.
   - Required result: return an evaluation result object, store it with the
-    program, and render relevant metrics/output in future prompts.
+    program, and render basic stage status/score/error feedback in future
+    prompts.
+
+- [ ] Render richer evaluator outputs and feedback records in prompts.
+  - Spec evidence: AlphaEvolve prompt context can include the result of
+    executing a program, program outputs, and scores so future proposals can
+    learn from prior behavior.
+  - Current evidence: `EvaluationResult` stores stdout, stderr, errors,
+    metadata, and stage outcomes, and LLM feedback graders store raw response
+    provenance, but `PromptSampler._render_feedback()` only renders a compact
+    last-three-stage summary and omits stdout/stderr, sample-level outputs,
+    artifacts, grader feedback, and validator-provided diagnostic metadata.
+  - Required result: add bounded prompt rendering for evaluator stdout/stderr,
+    validator feedback, artifacts, sample-level stage diagnostics, and LLM
+    grader summaries, with redaction/truncation rules and tests proving prompts
+    contain the intended evidence without exceeding configured budgets.
 
 - [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a
@@ -308,6 +339,17 @@ Primary evidence:
   - Required result: add configurable sampling strategies, metric-aware
     inspiration choice, recency/novelty weighting, and tests for exploration
     pressure.
+
+- [ ] Improve run inspection and archive diagnostics.
+  - Spec evidence: AlphaEvolve's evolutionary database attaches scores and
+    outputs to programs so explored ideas can be inspected and resurfaced.
+  - Current evidence: `libreevolve show` prints total records, best primary
+    fitness, and the best primary-file code only. It does not expose full file
+    sets, metric vectors, stage failures, prompt lineage, archive cells,
+    novelty/diversity signals, feedback records, or parent/child lineage.
+  - Required result: extend `show` and/or machine-readable summaries with
+    metrics, stage diagnostics, full-workspace pointers, lineage, prompt ids,
+    archive diagnostics, and failure statistics.
 
 ## LLM Ensemble
 

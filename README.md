@@ -234,7 +234,7 @@ libreevolve/
 │   ├── loop.py          # evolve() main loop + build_prompt()
 │   ├── candidate.py     # workspace candidates, evolve-block markers + mutation modes
 │   ├── feedback.py      # optional LLM critique and feedback graders
-│   ├── prompt.py        # prompt sampler + context/evaluation rendering
+│   ├── prompt.py        # prompt sampler + context/stage-feedback rendering
 │   ├── meta_prompt.py   # prompt-program DB, scoring, lineage, mutation
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
 │   ├── diff.py          # SEARCH/REPLACE diff engine

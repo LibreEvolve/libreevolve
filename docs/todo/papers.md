@@ -11,18 +11,32 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: implemented for Python single-file and local workspace candidates
     in `libreevolve/core/candidate.py`; arbitrary-language runners remain open.
 
+- [ ] Flexible candidate abstraction API.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
+  - Requirement: AlphaEvolve lets users choose the solution abstraction, from
+    raw solution strings to constructor functions, bespoke search algorithms,
+    or paired solution/search representations.
+  - Current gap: LibreEvolve represents candidates as text file sets with a
+    primary Python code view. Validators can interpret that code flexibly, but
+    candidate rendering, mutation, persistence, and materialization are not
+    problem-defined abstraction hooks.
+  - Required result: add first-class candidate abstraction modes or document
+    code-file evolution as a deliberate divergence from AlphaEvolve.
+
 - [x] Rich prompt sampler.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: prompts may include previous solutions, system instructions,
     explicit context, stochastic formatting, rendered evaluation results, and
     meta-prompt evolution.
   - Status: implemented prompt templates, deterministic local context files
-    including PDF extraction, stochastic variants, rendered evaluator output,
-    and local prompt-program selection, scoring, lineage, and optional LLM
-    mutation.
+    including PDF extraction, whole-template stochastic variants, compact stage
+    feedback summaries, and local prompt-program selection, scoring, lineage,
+    and optional LLM mutation.
   - Remaining divergence: stochastic formatting is whole-template sampling, not
     AlphaEvolve's placeholder alternatives with configured probability
-    distributions; prompt mutations are not validated before insertion.
+    distributions; prompt mutations are not validated before insertion; prompt
+    feedback rendering omits stdout/stderr, artifacts, sample-level outputs,
+    and LLM grader summaries.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
@@ -89,6 +103,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     database resurfaces ideas to balance exploration/exploitation.
   - Status: JSONL records include raw metrics and structured evaluation output.
     Queryable score/metric/diversity/feedback sampling remains open.
+
+- [ ] Rich prompt rendering of execution outputs and feedback.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
+  - Requirement: prompt context can include program execution results, outputs,
+    and scores from previous attempts.
+  - Current gap: history records preserve stdout/stderr and LLM feedback
+    provenance, but prompt construction renders only a short recent-stage
+    summary.
+  - Required result: add bounded prompt sections for execution outputs,
+    artifacts, validator feedback, sample-level diagnostics, and grader
+    feedback summaries.
 
 - [x] Full-file/full-codebase evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4 ablations.

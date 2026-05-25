@@ -38,6 +38,9 @@ bounded before prompt rendering. Fitness is the normalized primary metric:
 Candidates use `CandidateWorkspace`: a text file set with a `primary_file`.
 `Program.code` remains as a compatibility view of the primary file, so existing
 single-file seeds, validators, prompts, and `best.py` workflows still work.
+This is still a code-file abstraction. AlphaEvolve-style problem-defined
+candidate abstractions, such as raw solution objects, constructor functions, or
+paired solution/search representations, are not first-class hooks yet.
 Seed files may mark evolvable regions:
 
 ```python
@@ -109,6 +112,11 @@ For each generation it:
 - inspiration programs with metrics
 - plugin-provided context
 - recent failed mutations
+
+The feedback section is intentionally compact today: it renders recent stage
+names, pass/fail states, scores, and errors. Although full stdout, stderr,
+artifacts, and LLM grader records are persisted in run history, prompt rendering
+does not yet include those richer outputs.
 
 `Config.prompt_variants` seeds alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt
@@ -204,11 +212,15 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 
 - Candidate workspaces are local text file sets, not arbitrary-language build
   systems or external repositories.
+- Candidate abstractions are code file sets with a primary file, not
+  problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Prompt evolution is implemented at the template boundary; richer prompt
   fitness and placeholder validation remain open.
+- Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
+  artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - Evaluator output is parsed as JSON and normalized around the primary metric,
   but full `metrics.yaml` schema validation for every declared scalar metric is
   not enforced yet.

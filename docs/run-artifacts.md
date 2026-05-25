@@ -91,6 +91,9 @@ This is a convenience artifact only:
 - it is not used for resume
 - it is not necessarily the last candidate evaluated
 - it reflects the best fitness seen in the archive
+- for workspace candidates, it contains only the primary-file view; the full
+  file set is currently recoverable from `history.jsonl`, not from a dedicated
+  `best_workspace/` artifact
 
 ## Example histories committed to the repo
 
@@ -101,6 +104,10 @@ The repository includes curated examples under
 py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
 py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
+
+`show` is currently a compact compatibility view. Richer metric-vector,
+lineage, archive, prompt, feedback, and full-workspace diagnostics are tracked
+as follow-up work.
 
 ## Related plugin artifact
 

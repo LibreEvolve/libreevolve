@@ -38,6 +38,8 @@ is not yet an AlphaEvolve reproduction.
 ### 1. Finish candidate workspace fidelity
 
 - Add language/runner declarations or keep the Python-only divergence explicit.
+- Add problem-defined candidate abstraction hooks or keep code-file-set
+  evolution documented as a deliberate divergence.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
 - Add compatibility with AlphaEvolve's canonical `<<<<<<< SEARCH` /
   `>>>>>>> REPLACE` diff block spelling while preserving the compact local
@@ -71,6 +73,9 @@ is not yet an AlphaEvolve reproduction.
   placeholder alternatives.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
+- Render richer bounded evaluator outputs in prompts, including stdout/stderr,
+  artifacts, sample-level diagnostics, validator feedback, and LLM grader
+  summaries.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages.
 

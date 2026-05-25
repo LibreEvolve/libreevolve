@@ -285,3 +285,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: tell readers that seeded local choices are controlled but
     persisted candidate/prompt IDs and provider outputs are not fully
     replay-stable yet.
+
+- [x] Clarify workspace validator import/cwd limits.
+  - README evidence: the custom-problem section said validators can accept
+    `workspace_path`, but did not explain that the evaluator does not
+    automatically run with that path as `cwd` or `sys.path`.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` passes the
+    materialized candidate root as an argument only, and the `workspace_math`
+    example manually inserts it into `sys.path`.
+  - Required result: tell problem authors to use `workspace_path` explicitly for
+    local imports/files until workspace execution semantics are hardened.

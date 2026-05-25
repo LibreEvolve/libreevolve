@@ -45,6 +45,8 @@ is not yet an AlphaEvolve reproduction.
   cannot silently fall back to whole-file evolution.
 - Unify file-section path parsing with candidate path normalization so ordinary
   codebase filenames are routable in mutations.
+- Define validator execution semantics for materialized workspaces, including
+  candidate-root `cwd`, import path, package entrypoints, and relative files.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.

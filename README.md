@@ -308,6 +308,11 @@ metrics:
 metric names. It runs in a temporary local subprocess, and its raw metrics and
 diagnostics are stored with each candidate.
 
+For multi-file candidates, `workspace_path` points at the materialized file set.
+The evaluator does not yet automatically set that directory as `cwd` or
+`sys.path`, so validators that import candidate modules should use
+`workspace_path` explicitly.
+
 Seed programs may mark evolvable regions while preserving surrounding skeleton code:
 
 ```python

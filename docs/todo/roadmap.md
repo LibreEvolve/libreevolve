@@ -108,6 +108,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track unified path parsing, unsafe-path diagnostics, and
     tests for common repository filename shapes.
 
+- [x] Add workspace execution import/cwd fidelity to candidate fidelity.
+  - Evidence: `CascadeEvaluator._run_subprocess()` materializes the candidate
+    workspace and passes its path to the validator, but does not run the
+    validator with the candidate root as `cwd` or place that root on
+    `sys.path`; `workspace_math/validate.py` manually inserts the workspace
+    path before importing candidate modules.
+  - Current roadmap gap: workspace fidelity covered file sets, fixtures, and
+    exports, but not whether validators can execute evolved codebases with
+    normal local imports and relative paths.
+  - Required result: define/test evaluator workspace execution semantics for
+    `cwd`, import path, environment, package/module entrypoints, and relative
+    artifacts.
+
 - [x] Add multi-objective evaluation and metric-vector storage.
   - Evidence: AlphaEvolve Section 2.4 explicitly supports optimizing multiple
     user-provided scores.

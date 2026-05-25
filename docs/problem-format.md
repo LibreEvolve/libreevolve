@@ -104,6 +104,12 @@ and expects the returned value to be JSON-serializable. `code` is always the
 contents of the candidate's primary file. `workspace_path` points at the root of
 the materialized candidate file set.
 
+The current subprocess passes `workspace_path` but does not automatically run
+with that directory as the working directory or put it on `sys.path`.
+Workspace-aware validators should import candidate modules and read relative
+files through `workspace_path` until evaluator workspace execution semantics are
+hardened.
+
 This is currently a code-file-set model. Problem authors can make validators
 interpret the code as a constructor, solver, or search procedure, but the
 framework does not yet expose first-class non-code candidate serializers or

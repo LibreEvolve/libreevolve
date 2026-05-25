@@ -171,6 +171,11 @@ metrics and stop the cascade when validity or threshold checks fail. This is a
 local cascade model, not AlphaEvolve's full parallel evaluator-worker
 architecture.
 
+The subprocess currently passes the materialized candidate root as an argument
+but does not set that root as the subprocess working directory or import path.
+Validators that need project-local imports or relative files must opt into that
+behavior manually through `workspace_path`.
+
 After local evaluation, `Config.llm_feedback` can run optional LLM graders for
 properties that are awkward to encode in `validate.py`, such as clarity or
 style. Graders run only for locally valid candidates by default unless a grader
@@ -246,6 +251,9 @@ prompt-program events in `prompt_history.jsonl`.
 
 - Candidate workspaces are local text file sets, not arbitrary-language build
   systems or external repositories.
+- Materialized workspace execution is not project-faithful by default:
+  validators receive `workspace_path`, but the candidate root is not
+  automatically `cwd` or `sys.path`.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.

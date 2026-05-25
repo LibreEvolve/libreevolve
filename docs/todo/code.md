@@ -76,6 +76,23 @@ Primary evidence:
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
 
+- [ ] Make materialized workspace execution import- and cwd-faithful.
+  - Spec evidence: AlphaEvolve can evolve whole files/codebases, so evaluators
+    should be able to exercise a candidate as a normal project with local
+    imports and relative data paths.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` materializes the
+    candidate into a temporary `candidate/` directory and passes that path to
+    `evaluate(code, workspace_path)`, but `subprocess.run()` does not set
+    `cwd` to the candidate root and the runner does not add that root to
+    `sys.path`. The `workspace_math` example validator manually inserts
+    `workspace_path` into `sys.path`, proving this is currently a validator
+    responsibility rather than a framework execution contract.
+  - Required result: define and test the workspace execution contract
+    (`cwd`, `PYTHONPATH`/`sys.path`, environment, package entrypoints, and
+    relative artifact paths); make project-local imports and relative file
+    access work by default where appropriate, or document the deliberate
+    validator-managed divergence.
+
 - [x] Add language-agnostic candidate support or narrow the claim to Python.
   - Spec evidence: AlphaEvolve is described as being able to evolve code in any
     language.

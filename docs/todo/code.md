@@ -275,12 +275,16 @@ Primary evidence:
     `child_code != parent.code`. Malformed diffs, `search_not_found`,
     `no_diff_blocks`, and no-op mutations typically leave the child code equal
     to the parent, so the failed mutation text/error is not rendered in later
-    prompts even though the candidate is logged in `history.jsonl`.
+    prompts even though the candidate is logged in `history.jsonl`. For
+    workspace candidates, invalid helper-file-only changes can also be skipped
+    because the comparison uses the primary-file view rather than the full file
+    set.
   - Required result: store failed mutation text, diff error, parent id,
-    evaluator diagnostics, and retry/repetition counts in candidate metadata or
-    a queryable failure index; render bounded failure examples in prompts; add
-    tests for malformed diff, search miss, no-op, invalid-domain, and
-    validator-crash failures.
+    changed file paths/full-workspace deltas, evaluator diagnostics, and
+    retry/repetition counts in candidate metadata or a queryable failure index;
+    render bounded failure examples in prompts; add tests for malformed diff,
+    search miss, no-op, invalid-domain, validator-crash, and non-primary-file
+    workspace failures.
 
 - [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a

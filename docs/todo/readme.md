@@ -232,8 +232,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     tracked and shown in later prompts.
   - Current evidence: `evolve()` keeps only in-memory failure hints and skips
     malformed/no-op/search-miss diffs when no changed child code is produced.
+    For workspace candidates, invalid non-primary-file changes can also be
+    omitted because the check compares `child_workspace.code` to `parent.code`.
   - Required result: describe the current feature as recent failure hints and
-    point persistent/queryable failed-proposal memory to the code TODO.
+    point persistent/queryable full-workspace failed-proposal memory to the
+    code TODO.
 
 - [x] Fix stale example-run command style.
   - README-adjacent evidence: `examples/runs/README.md` used `python -m`

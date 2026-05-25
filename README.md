@@ -54,7 +54,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
-| 📜 | **Recent failure hints** | A small in-memory set of failed child snippets can be shown in prompts; persistent/queryable failed-proposal memory remains open |
+| 📜 | **Recent failure hints** | A small in-memory set of failed primary-file snippets can be shown in prompts; persistent/queryable full-workspace failed-proposal memory remains open |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🧐 | **Optional LLM critique and feedback** | Configurable self-review and grader passes can revise mutations, add feedback metrics, or discard candidates |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
@@ -169,7 +169,7 @@ graph TD
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
 6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
-7. **Failure hints** — A bounded in-memory subset of changed invalid children can be shown in later prompts; persistent failed-proposal memory remains open
+7. **Failure hints** — A bounded in-memory subset of changed invalid primary-file snippets can be shown in later prompts; persistent full-workspace failed-proposal memory remains open
 8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
 

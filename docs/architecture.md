@@ -134,7 +134,9 @@ does not yet include those richer outputs.
 
 Failure hints are also incomplete: malformed diffs, search misses, and no-op
 mutations can be logged to history without becoming prompt-visible negative
-examples when they do not produce changed child code.
+examples when they do not produce changed child code. Workspace failures are
+also compared through the primary-file view, so invalid helper-file-only changes
+can be missed by the recent-failure prompt hints.
 
 `Config.prompt_variants` seeds alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt

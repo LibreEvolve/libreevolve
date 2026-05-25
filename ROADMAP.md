@@ -1,6 +1,6 @@
 # Roadmap
 
-This roadmap reflects the current codebase as of 2026-05-24 after an
+This roadmap reflects the current codebase as of 2026-05-25 after an
 AlphaEvolve-alignment pass against `papers/2506.13131__AlphaEvolve.pdf`, local
 docs, and the checked-in tests. It is a practical development plan, not a
 promise.
@@ -11,7 +11,8 @@ LibreEvolve has:
 
 - Python seed programs and seed workspaces with optional
   `# EVOLVE-BLOCK-START/END` regions
-- SEARCH/REPLACE diff mutation and configurable full-block/full-code replacement
+- SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
+  configurable full-block/full-code replacement
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
 - configurable local evaluator stages with distinct validator entrypoints,
@@ -41,9 +42,6 @@ is not yet an AlphaEvolve reproduction.
 - Add problem-defined candidate abstraction hooks or keep code-file-set
   evolution documented as a deliberate divergence.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
-- Add compatibility with AlphaEvolve's canonical `<<<<<<< SEARCH` /
-  `>>>>>>> REPLACE` diff block spelling while preserving the compact local
-  format.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.
 - Add migration/resume support for workspace candidates.

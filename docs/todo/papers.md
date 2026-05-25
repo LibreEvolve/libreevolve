@@ -42,10 +42,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
   - Requirement: diff blocks are default, but AlphaEvolve can ask for a complete
     code block when appropriate.
-  - Status: implemented `diff` and `full` mutation modes.
-  - Remaining divergence: the parser does not accept the canonical
-    `<<<<<<< SEARCH` / `=======` / `>>>>>>> REPLACE` block spelling used in the
-    paper; it accepts LibreEvolve's compact `<<<SEARCH` format.
+  - Status: implemented `diff` and `full` mutation modes. Canonical
+    AlphaEvolve SEARCH/REPLACE fences and the compact local fences are both
+    accepted, including mixed-format blocks in document order.
 
 - [x] Frontier model ensemble scheduling.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
@@ -175,7 +174,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-style prompts or examples.
   - Status: implemented in `libreevolve/core/diff.py` while preserving the
     compact local format; tests cover canonical parsing for normal candidates,
-    evolve-block candidates, and multi-file file sections.
+    evolve-block candidates, mixed-format document order, and multi-file file
+    sections.
   - Required result: keep accepting both canonical and compact diff formats
     without breaking existing seeds/tests.
 
@@ -216,9 +216,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     LLM feedback, and meta-prompt evolution as open after those local
     implementations landed.
   - Status: refreshed the AlphaEvolve row to distinguish implemented local
-    behavior from remaining async, multi-objective, database, canonical-diff,
-    full-workspace export/resume, metric-validation, feedback-calibration,
-    LLM-accounting, config-validation, and benchmark gaps.
+    behavior from remaining async, multi-objective, database, full-workspace
+    export/resume, metric-validation, feedback-calibration, LLM-accounting,
+    config-validation, and benchmark gaps.
   - Required result: keep the paper index aligned with current code whenever
     todo items are completed or reopened.
 

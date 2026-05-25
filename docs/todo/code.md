@@ -71,7 +71,8 @@ Primary evidence:
   - Status: implemented in `libreevolve/core/diff.py` via
     `parse_diff_blocks()`, which accepts both canonical AlphaEvolve fences and
     compact local fences. Tests cover low-level diff application, evolve-block
-    restriction, and multi-file file-section routing for canonical blocks.
+    restriction, mixed-format document order, and multi-file file-section
+    routing for canonical blocks.
   - Required result: keep both formats backward-compatible in prompt docs,
     parser/apply logic, and mutation tests.
 

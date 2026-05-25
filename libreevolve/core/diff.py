@@ -42,7 +42,10 @@ def parse_diff_blocks(diff_text: str) -> list[tuple[str, str]]:
     """Parse compact and AlphaEvolve-style SEARCH/REPLACE blocks."""
     diff_text = diff_text.replace("\r\n", "\n")
     diff_text = _strip_fences(diff_text)
-    blocks: list[tuple[str, str]] = []
+    matches: list[tuple[int, str, str]] = []
     for pattern in (DIFF_PATTERN, CANONICAL_DIFF_PATTERN):
-        blocks.extend((s.rstrip("\n"), r.rstrip("\n")) for s, r in pattern.findall(diff_text))
-    return blocks
+        matches.extend(
+            (match.start(), match.group(1).rstrip("\n"), match.group(2).rstrip("\n"))
+            for match in pattern.finditer(diff_text)
+        )
+    return [(search, replace) for _, search, replace in sorted(matches, key=lambda item: item[0])]

@@ -45,6 +45,16 @@ def test_mixed_compact_and_canonical_blocks():
     new_code, err = apply_diff(code, diff)
     assert err is None and "a = 10" in new_code and "b = 20" in new_code
 
+def test_mixed_formats_apply_in_document_order():
+    code = "x = 1"
+    diff = (
+        "<<<<<<< SEARCH\nx = 1\n=======\nx = 2\n>>>>>>> REPLACE\n"
+        "<<<SEARCH\nx = 2\n===\nx = 3\n>>>REPLACE"
+    )
+    new_code, err = apply_diff(code, diff)
+    assert err is None
+    assert new_code == "x = 3"
+
 def test_original_unchanged_on_error():
     original = "def foo():\n    pass"
     code, _ = apply_diff(original, "no blocks")

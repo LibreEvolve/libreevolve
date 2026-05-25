@@ -76,6 +76,7 @@ Important behavior:
 - raw metrics and evaluator diagnostics are preserved for later inspection
 - optional critique metadata is stored under `metadata.critique`
 - the mutation backend index is stored under `metadata.backend_idx`
+- archive admission metadata is stored under `metadata.archive_admission`
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
 
@@ -100,12 +101,11 @@ make an evaluator-invalid candidate archive-eligible unless validity override
 semantics are hardened.
 
 Archive state is not serialized yet. `history.jsonl` contains evaluated
-candidates, but not MAP-Elites cell coordinates, island assignment, diversity
-descriptor values, elite-list snapshots, or migration events.
-Per-candidate archive admission outcomes are also not recorded: history records
-do not say whether a logged program was rejected by threshold, inserted into a
-cell, ignored because it did not replace the occupant, or displaced a previous
-occupant.
+candidates and per-candidate archive admission events, but not complete
+MAP-Elites cell snapshots, elite-list snapshots, migration events, or
+normalization state. `metadata.archive_admission` records threshold rejection,
+island id, cell coordinates, descriptor values, previous occupant id, cell
+replacement status, elite-list entry, and displaced elite ids for each program.
 
 ## `prompt_history.jsonl`
 

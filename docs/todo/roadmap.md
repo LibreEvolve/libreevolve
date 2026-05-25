@@ -390,8 +390,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: archive-state persistence covered snapshots and
     migration events, but not a per-history-record admission status that lets
     users understand which evaluated programs actually affected the archive.
-  - Required result: persist admission events with threshold reason, island id,
-    cell descriptors, replacement status, and previous occupant ids.
+  - Status: implemented. `history.jsonl` records
+    `metadata.archive_admission` with threshold reason, island id, cell
+    descriptors, replacement status, previous occupant ids, elite-list effects,
+    and displaced elite ids.
 
 - [x] Add strict JSONL serialization hardening to database work.
   - Evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`, manifests,

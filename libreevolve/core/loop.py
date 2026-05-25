@@ -63,9 +63,8 @@ def evolve(problem: Problem, config: Config,
             metrics=result.metrics,
             evaluation=result.to_dict(),
         )
+        db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
-        if result.fitness >= VALID_THRESHOLD:
-            db.add(program)
 
     recent_failures: list[tuple[str, float]] = []
     _MAX_FAILURES = 5
@@ -141,6 +140,7 @@ def evolve(problem: Problem, config: Config,
             score = plugin.on_evaluated(program, score)
             program.fitness = score  # keep in sync for next plugin
 
+        db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
         prompt_db.record_result(
             prompt_program.id,
@@ -165,9 +165,6 @@ def evolve(problem: Problem, config: Config,
                 generation=gen + 1,
                 metadata={"source": "llm", "backend_idx": prompt_backend_idx},
             )
-        if score >= VALID_THRESHOLD:
-            db.add(program)
-
         llm.record_reward(backend_idx, max(0.0, score - parent.fitness))
         db.maybe_migrate(gen)
 

@@ -191,9 +191,9 @@ calibration remain open.
 
 Run history logs candidates, but archive cell/island state and migration events
 are not persisted as replayable MAP-Elites state yet.
-History records also do not mark per-candidate archive admission outcomes such
-as rejected-by-threshold, inserted cell, ignored non-replacement, or displaced
-occupant.
+History records include per-candidate `metadata.archive_admission` events with
+threshold status, island id, MAP-Elites cell coordinates/descriptors, previous
+occupant ids, and elite-list effects.
 
 For workspace candidates, MAP-Elites complexity and TF-IDF diversity descriptors
 currently use the primary-file view, not the full candidate file set.

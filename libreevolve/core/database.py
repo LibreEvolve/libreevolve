@@ -24,8 +24,31 @@ class ProgramDatabase:
         self._all: list[Program] = []
         self._write_manifest(config)
 
-    def add(self, program: Program) -> None:
-        self._islands.add(program)
+    def add(self, program: Program) -> dict:
+        return self._islands.add(program)
+
+    def admit(self, program: Program, threshold: float = 0.0) -> dict:
+        if program.fitness < threshold:
+            event = {
+                "program_id": program.id,
+                "admitted": False,
+                "reason": "below_threshold",
+                "threshold": threshold,
+                "island_id": None,
+                "cell": None,
+                "descriptors": {},
+                "previous_occupant_id": None,
+                "cell_replaced": False,
+                "entered_cell": False,
+                "entered_elite": False,
+                "displaced_elite_ids": [],
+            }
+        else:
+            event = self.add(program)
+            event["threshold"] = threshold
+        program.metadata = dict(program.metadata)
+        program.metadata["archive_admission"] = event
+        return event
 
     def log(self, program: Program) -> None:
         append_strict_jsonl(

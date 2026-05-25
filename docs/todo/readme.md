@@ -424,16 +424,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that current run history is not a replayable
     archive checkpoint or migration event log.
 
-- [x] Clarify candidate history lacks archive admission status.
+- [x] Clarify candidate archive admission status.
   - README evidence: the flow says valid programs enter the MAP-Elites archive
-    and all programs are logged, but did not say history records do not mark
-    which logged programs were admitted, ignored, or displaced.
-  - Current evidence: `evolve()` logs a `Program` before `db.add()`, and
-    `MAPElites.add()` returns no insertion result. `history.jsonl` does not
-    include threshold reason, island id, cell coordinates, replacement status,
-    or previous occupant id.
-  - Required result: warn readers that current candidate history is not an
-    archive-admission event stream.
+    and all programs are logged, so it should say what admission status is
+    visible per row.
+  - Current evidence: `ProgramDatabase.admit()` now stores
+    `metadata.archive_admission` before `history.jsonl` rows are written.
+  - Required result: keep README aligned with per-candidate admission events
+    while distinguishing them from full archive snapshots.
 
 - [x] Clarify MAP-Elites descriptors use the primary-file view for workspaces.
   - README evidence: README advertises workspace candidates and a MAP-Elites

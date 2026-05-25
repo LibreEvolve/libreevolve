@@ -172,14 +172,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
   - Requirement: solutions have scores and program outputs attached, and the
     database resurfaces ideas to balance exploration/exploitation.
-  - Status: JSONL records include raw metrics and structured evaluation output.
-    Queryable score/metric/diversity/feedback sampling remains open. Strict
-    finite JSON serialization is also not guaranteed if unchecked non-finite
-    values enter run records, plugin score adjustments are not stored as a
-    structured score-composition trace, and MAP-Elites cell/island state plus
-    migration events are not persisted. Archive admission also gates on final
-    plugin-adjusted fitness rather than evaluator validity, so an invalid
-    candidate can be admitted if a plugin raises its score.
+  - Status: JSONL records include raw metrics, structured evaluation output,
+    and per-program archive admission events. Queryable
+    score/metric/diversity/feedback sampling remains open. Plugin score
+    adjustments are not stored as a structured score-composition trace, and
+    full MAP-Elites cell/island snapshots plus migration events are not
+    persisted. Archive admission also gates on final plugin-adjusted fitness
+    rather than evaluator validity, so an invalid candidate can be admitted if a
+    plugin raises its score.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

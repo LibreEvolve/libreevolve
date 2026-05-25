@@ -27,9 +27,12 @@ class IslandModel:
         ]
         self._current = 0
 
-    def add(self, program: Program) -> None:
-        self.islands[self._current].add(program)
+    def add(self, program: Program) -> dict:
+        island_id = self._current
+        event = self.islands[island_id].add(program)
+        event["island_id"] = island_id
         self._current = (self._current + 1) % self.n_islands
+        return event
 
     def sample(self, strategy: str = "exploit") -> Program | None:
         if strategy == "exploit":

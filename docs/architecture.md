@@ -276,13 +276,13 @@ problem's normalized `0..1` fitness scale. For workspace candidates,
 complexity and TF-IDF diversity still use `Program.code`, the primary-file
 compatibility view, rather than a canonical full-workspace representation.
 
-Archive cells, descriptor values, island assignment, elite snapshots, and
-migration events are in-memory runtime state today. `history.jsonl` logs
-candidates, but it is not a serialized archive checkpoint or MAP-Elites event
-stream.
-Candidate records also lack per-program archive admission outcomes, so the log
-does not explicitly state whether a candidate was admitted, rejected by
-threshold, ignored by cell competition, or replaced an existing cell occupant.
+Full archive snapshots, elite snapshots, migration events, and normalization
+state are still in-memory runtime state today. `history.jsonl` logs candidates,
+but it is not a serialized archive checkpoint or MAP-Elites event stream.
+Candidate records do include `metadata.archive_admission` events that state
+whether a candidate was rejected by threshold, assigned to an island and cell,
+replaced a cell occupant, entered only the capped elite list, or was ignored by
+cell competition.
 
 Parent selection and inspiration sampling are also intentionally thin today.
 Exploit picks the global best, explore samples a random occupied cell, and

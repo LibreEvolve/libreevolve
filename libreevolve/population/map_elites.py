@@ -44,22 +44,67 @@ class MAPElites:
         sims = cosine_similarity(mat[-1], mat[:-1])[0]
         return float(np.mean(1.0 - sims))
 
-    def _cell(self, p: Program) -> tuple[int, int, int]:
+    def _cell_with_descriptors(
+        self, p: Program
+    ) -> tuple[tuple[int, int, int], dict[str, float]]:
+        descriptors = {
+            "performance": self._norm_perf(p.fitness),
+            "complexity": self._norm_complexity(p.code),
+            "diversity": self._diversity(p.code),
+        }
         c = lambda x: max(0, min(self.bins - 1, int(x * self.bins)))
-        return (c(self._norm_perf(p.fitness)),
-                c(self._norm_complexity(p.code)),
-                c(self._diversity(p.code)))
+        return (
+            c(descriptors["performance"]),
+            c(descriptors["complexity"]),
+            c(descriptors["diversity"]),
+        ), descriptors
 
-    def add(self, program: Program) -> None:
+    def _cell(self, p: Program) -> tuple[int, int, int]:
+        return self._cell_with_descriptors(p)[0]
+
+    def add(self, program: Program) -> dict:
+        event = {
+            "program_id": program.id,
+            "admitted": False,
+            "reason": "non_finite_fitness",
+            "cell": None,
+            "descriptors": {},
+            "previous_occupant_id": None,
+            "cell_replaced": False,
+            "entered_cell": False,
+            "entered_elite": False,
+            "displaced_elite_ids": [],
+        }
         if not math.isfinite(program.fitness):
-            return
-        cell = self._cell(program)
+            return event
+        cell, descriptors = self._cell_with_descriptors(program)
+        event["cell"] = list(cell)
+        event["descriptors"] = descriptors
         occ = self._grid.get(cell)
+        event["previous_occupant_id"] = occ.id if occ else None
         if occ is None or program.fitness > occ.fitness:
             self._grid[cell] = program
+            event["entered_cell"] = True
+            event["cell_replaced"] = occ is not None
         self._elite.append(program)
         self._elite.sort(key=lambda p: p.fitness, reverse=True)
+        before_trim_ids = [p.id for p in self._elite]
         self._elite = self._elite[:self._elite_size]
+        elite_ids = {p.id for p in self._elite}
+        event["entered_elite"] = program.id in elite_ids
+        event["displaced_elite_ids"] = [
+            program_id for program_id in before_trim_ids[self._elite_size :]
+        ]
+        event["admitted"] = event["entered_cell"] or event["entered_elite"]
+        if event["cell_replaced"]:
+            event["reason"] = "cell_replaced"
+        elif event["entered_cell"]:
+            event["reason"] = "empty_cell"
+        elif event["entered_elite"]:
+            event["reason"] = "elite_only"
+        else:
+            event["reason"] = "not_improving_cell"
+        return event
 
     def best(self) -> Program | None:
         return self._elite[0] if self._elite else None

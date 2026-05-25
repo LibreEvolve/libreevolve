@@ -9,6 +9,13 @@ def test_best_returns_highest():
     m = _m(); m.add(_p(fitness=0.3)); m.add(_p(fitness=0.7))
     assert m.best().fitness == 0.7
 
+def test_add_reports_island_id_and_rotates():
+    m = IslandModel(Config(n_islands=2, migration_interval=5))
+    first = m.add(_p(fitness=0.3))
+    second = m.add(_p(fitness=0.7))
+    assert first["island_id"] == 0
+    assert second["island_id"] == 1
+
 def test_sample_exploit_returns_best():
     m = _m(); m.add(_p(fitness=0.3)); m.add(_p(fitness=0.9))
     assert m.sample("exploit").fitness == 0.9

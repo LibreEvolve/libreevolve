@@ -27,10 +27,15 @@ def test_threshold_is_zero():
     assert VALID_THRESHOLD == 0.0
 
 def test_invalid_diff_not_archived():
+    tmpdir = tempfile.mkdtemp()
     with patch("libreevolve.core.loop.build_llm", return_value=_llm("no diff here")):
         best = evolve(_problem(), Config(max_generations=1,
-                                        log_dir=tempfile.mkdtemp(), problem_name="t"))
+                                        log_dir=tmpdir, problem_name="t"))
     assert best.fitness == 1.0  # seed still best
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert child["metadata"]["archive_admission"]["admitted"] is False
+    assert child["metadata"]["archive_admission"]["reason"] == "below_threshold"
 
 def test_plugins_called():
     from libreevolve.plugins.base import PluginBase
@@ -67,6 +72,21 @@ def test_loop_logs_mutation_backend_index():
     records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
     child = records[-1]
     assert child["metadata"]["backend_idx"] == 2
+
+
+def test_loop_logs_archive_admission_for_seed_and_child():
+    tmpdir = tempfile.mkdtemp()
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(_problem(), Config(max_generations=1, log_dir=tmpdir, problem_name="t"))
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    seed_admission = records[0]["metadata"]["archive_admission"]
+    child_admission = records[-1]["metadata"]["archive_admission"]
+    assert seed_admission["admitted"] is True
+    assert seed_admission["island_id"] == 0
+    assert seed_admission["cell"] is not None
+    assert child_admission["admitted"] is True
+    assert child_admission["program_id"] == records[-1]["id"]
 
 
 def test_loop_excludes_selected_parent_from_inspirations():

@@ -17,6 +17,24 @@ def test_add_updates_best():
     db = _db(); p = _p(fitness=0.8); db.log(p); db.add(p)
     assert db.best().fitness == 0.8
 
+def test_admit_records_archive_event_on_program_metadata():
+    db = _db()
+    p = _p(fitness=0.8)
+    event = db.admit(p, threshold=0.0)
+    assert event["admitted"] is True
+    assert p.metadata["archive_admission"]["program_id"] == p.id
+    assert p.metadata["archive_admission"]["island_id"] == 0
+    assert p.metadata["archive_admission"]["threshold"] == 0.0
+
+def test_admit_below_threshold_does_not_archive():
+    db = _db()
+    p = _p(fitness=-0.1)
+    event = db.admit(p, threshold=0.0)
+    assert event["admitted"] is False
+    assert event["reason"] == "below_threshold"
+    assert event["island_id"] is None
+    assert db.best() is None
+
 def test_log_without_add_not_in_archive():
     db = _db(); db.log(_p(fitness=-0.3))
     assert db.best() is None

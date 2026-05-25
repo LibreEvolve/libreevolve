@@ -351,7 +351,8 @@ Primary evidence:
     support Pareto/frontier or score-composition policies, and sample
     inspirations by metric-specific excellence.
 
-- [x] Honor `metrics.yaml` direction and bounds everywhere.
+- [x] Honor `metrics.yaml` direction and bounds for primary fitness and archive
+  performance.
   - Spec evidence: AlphaEvolve's metrics are maximized by convention; the local
     problem format adds `direction` and `bounds`, so the implementation must
     either honor them or remove the claim.
@@ -359,9 +360,25 @@ Primary evidence:
     evaluator fitness is normalized; `ProgramDatabase` and `IslandModel` pass
     normalized performance bounds into `MAPElites`.
   - Status: implemented via `Problem.normalize_metric()` and normalized archive
-    performance cells; non-[0, 1] and minimize metrics have tests.
+    performance cells for the primary metric; non-[0, 1] and minimize primary
+    metrics have tests.
   - Required result: normalize metrics through declared bounds and directions,
     pass bounds into population archives, and test non-[0, 1] metrics.
+
+- [ ] Honor metric direction/bounds for secondary metrics, feedback metrics,
+  and future multi-objective policies.
+  - Spec evidence: AlphaEvolve supports optimizing multiple scalar metrics,
+    and all metrics used for selection, prompting, or feedback composition need
+    consistent semantics.
+  - Current evidence: secondary metrics are preserved raw in `Program.metrics`
+    and `history.jsonl`; `apply_llm_feedback()` adds grader scores and
+    `weight * score` directly to normalized fitness without checking declared
+    bounds/directions or normalizing the feedback metric. The current archive
+    policy ignores secondary metrics except as logged context.
+  - Required result: validate every declared metric against schema, normalize
+    metric vectors when they affect selection/prompting/archive policy,
+    define feedback metric schemas, and test minimize/out-of-range/non-finite
+    secondary and feedback metrics.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

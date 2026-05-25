@@ -207,7 +207,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 - [x] Soften the failure-history feature claim.
   - README evidence: the feature table claimed the last five failed mutations
-    are shown in prompts.
+    are shown in prompts, and the workflow section said failed mutations are
+    tracked and shown in later prompts.
   - Current evidence: `evolve()` keeps only in-memory failure hints and skips
     malformed/no-op/search-miss diffs when no changed child code is produced.
   - Required result: describe the current feature as recent failure hints and

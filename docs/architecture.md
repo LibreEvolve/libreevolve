@@ -345,11 +345,12 @@ prompt-program events in `prompt_history.jsonl`.
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders see the primary-file candidate view, not the full
   workspace file set.
-- Evaluator output is parsed as JSON and normalized around the primary metric,
-  but full `metrics.yaml` schema validation for every declared scalar metric is
-  not enforced yet.
-- Config files and CLI backend specs are permissive; unknown problem config
-  keys are ignored rather than rejected.
+- Evaluator output is parsed as JSON, validated against declared scalar
+  metrics, and normalized around the primary metric.
+- Config validation now rejects unknown problem config keys, invalid
+  mutation/ensemble enums, malformed backend specs, bad evaluator-stage
+  numeric fields, and invalid top-level population/runtime ranges. LLM
+  feedback and plugin-specific schemas remain only partially validated.
 - OpenAI API mode is selected by the presence of `reasoning_effort`, not by
   validated model capabilities.
 - `manifest.json` records configuration but not code version, problem hashes,

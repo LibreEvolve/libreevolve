@@ -175,8 +175,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 10. Operational maturity
 
-- Validate config files, backend specs, stage configs, and feedback grader
-  schemas before starting a run.
+- Extend current config validation to full feedback-grader and plugin-specific
+  schemas, plus provider/model API compatibility where feasible.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.

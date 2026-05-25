@@ -31,6 +31,7 @@ def build_prompt(parent: Program, inspirations: list[Program],
 
 def evolve(problem: Problem, config: Config,
            plugins: list[PluginBase] | None = None) -> "Program | None":
+    config.validate()
     if plugins is None:
         plugins = []
     random.seed(config.seed)

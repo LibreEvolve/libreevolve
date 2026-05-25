@@ -30,15 +30,19 @@ def cli() -> None:
 def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
         explore_ratio, mutation_mode, run_name):
     """Run evolution on a problem directory."""
-    from libreevolve.core.config import Config
+    from libreevolve.core.config import ConfigError
     from libreevolve.problems.loader import load_problem
     problem = load_problem(problem_dir)
     if not problem.initial_programs:
         raise click.ClickException("No seed programs found.")
-    config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
-                           reasoning_effort, explore_ratio, mutation_mode)
-    if run_name:
-        config.problem_name = run_name
+    try:
+        config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
+                               reasoning_effort, explore_ratio, mutation_mode)
+        if run_name:
+            config.problem_name = run_name
+        config.validate()
+    except ConfigError as exc:
+        raise click.ClickException(str(exc)) from exc
     active_plugins = _load_plugins(config.plugins)
     click.echo(f"Running {config.max_generations} generations on '{config.problem_name}'...")
     best = evolve(problem, config, active_plugins)
@@ -71,12 +75,15 @@ def show(run_dir):
 def _build_config(problem, max_generations, plugins, backends, seed,
                   reasoning_effort=None, explore_ratio=None, mutation_mode=None):
     import yaml
-    from libreevolve.core.config import Config
+    from libreevolve.core.config import Config, ConfigError
     cfg: dict = {}
     cp = Path(problem.problem_dir) / "config.yaml"
     if cp.exists():
         cfg.update(yaml.safe_load(cp.read_text(encoding="utf-8")) or {})
     valid = {f.name for f in dataclasses.fields(Config)}
+    unknown = sorted(set(cfg) - valid)
+    if unknown:
+        raise ConfigError(f"Unknown config keys in {cp}: {unknown}")
     config = Config(**{k: v for k, v in cfg.items() if k in valid})
     if max_generations is not None: config.max_generations = max_generations
     if plugins: config.plugins = list(plugins)
@@ -90,6 +97,7 @@ def _build_config(problem, max_generations, plugins, backends, seed,
     if explore_ratio is not None: config.explore_ratio = explore_ratio
     if mutation_mode is not None: config.mutation_mode = mutation_mode
     config.problem_name = problem.name
+    config.validate()
     return config
 
 

@@ -29,11 +29,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [x] Add configuration/schema validation to runtime hardening.
   - Evidence: AlphaEvolve-style task setup depends on configuration for
     prompts, evaluators, LLMs, and mutation behavior.
-  - Current roadmap gap: the roadmap covered manifests and reproducibility but
-    not early validation of unknown/malformed config keys, config-file enum
-    values such as `mutation_mode`, or backend specs.
-  - Required result: make config validation a first-class prerequisite for
-    reproducible AlphaEvolve-style runs.
+  - Current status: `Config.validate()` and `_build_config()` now reject
+    unknown problem config keys, invalid mutation/ensemble enums, malformed
+    backend specs, invalid evaluator-stage numbers, and invalid top-level
+    runtime/population ranges. Remaining runtime hardening is focused on
+    `llm_feedback` schemas, plugin-specific config schemas, and API capability
+    validation.
 
 - [x] Add CLI/config precedence semantics to runtime hardening.
   - Evidence: `_build_config()` currently overwrites `config.yaml`
@@ -172,28 +173,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     stages.
 
 - [x] Add evaluator-stage numeric validation to config hardening.
-  - Evidence: `CascadeEvaluator._run_stage()` casts `samples`, `retries`, and
-    `timeout_sec` only at runtime; `samples <= 0` can reach aggregation with no
-    results, and `retries < 0` can skip all attempts.
-  - Current roadmap gap: config validation work called out malformed nested
-    fields generally, but did not name the evaluator-stage ranges that can
-    crash or silently skip evaluation.
-  - Required result: validate stage sample/retry/timeout/threshold fields at
-    config load or CLI startup, with tests for zero/negative counts and
-    nonnumeric values.
+  - Evidence: `Config.validate()` now checks evaluator-stage `samples`,
+    `retries`, `timeout_sec`, `min_score`, `seeds`, unsupported fields, and
+    explicit sample/seed count mismatches before `CascadeEvaluator` is built.
+  - Status: implemented with config tests.
 
 - [x] Add top-level evolution/population numeric validation to config
   hardening.
-  - Evidence: `Config` accepts population and runtime fields without range
-    checks. `n_islands=0` can create an empty island model that crashes on
-    seed archival, `num_inspirations < 0` can reach negative random sampling,
-    and `map_elites_bins <= 0` can produce nonsensical archive coordinates.
-  - Current roadmap gap: config hardening covered unknown keys, backend specs,
-    enum values, and evaluator-stage numbers, but not top-level population and
-    sampling ranges.
-  - Required result: validate generation counts, inspiration counts,
-    exploration ratios, island counts, migration settings, MAP-Elites bins,
-    archive sizes, and ensemble coefficients before a run starts.
+  - Evidence: `Config.validate()` now checks generation counts, inspiration
+    counts, timeouts, exploration ratios, island counts, migration settings,
+    MAP-Elites bins, elite archive sizes, and ensemble coefficients before
+    `evolve()` starts.
+  - Status: implemented with config range tests.
 
 - [x] Add async/distributed controller and worker architecture.
   - Evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline with a

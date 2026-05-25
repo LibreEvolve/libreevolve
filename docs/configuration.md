@@ -60,7 +60,7 @@ failures.
 ### Population
 
 - `n_islands` (`5`): number of MAP-Elites islands.
-- `migration_interval` (`25`): migrate every N generations. `<= 0` disables
+- `migration_interval` (`25`): migrate every N generations. `0` disables
   migration.
 - `migration_ratio` (`0.10`): fraction of each island's elite archive copied to
   the next island, rounded up to at least one migrant.
@@ -100,8 +100,12 @@ backends:
 ensemble_strategy: throughput_depth
 ```
 
-Only constructor-supported keys are passed to backend classes; scheduling
-metadata stays in the ensemble.
+Backend specs are validated before a run starts. Supported backend types are
+`anthropic`, `openai`, and `ollama`; `model` is required; optional
+`max_tokens`, `cost`, `latency`, `depth`, and `role` are validated; and
+`reasoning_effort` is accepted only for OpenAI backends with one of `low`,
+`medium`, `high`, or `xhigh`. Constructor-supported keys are passed to backend
+classes; scheduling metadata stays in the ensemble.
 
 ### Plugins and logging
 
@@ -142,26 +146,22 @@ backends:
     model: gpt-4o-mini
 ```
 
-Unknown config keys are currently ignored rather than rejected. This is a known
-reproducibility gap for AlphaEvolve-style runs because spelling mistakes can
-silently leave defaults in effect.
+Problem-local `config.yaml` keys are checked against the `Config` dataclass and
+unknown keys fail at CLI startup. `Config.validate()` also rejects invalid enum
+values such as `mutation_mode: typo`, invalid ensemble strategies, malformed
+backend specs, and invalid top-level numeric fields before the run mutates or
+evaluates candidates.
 
-Config-file enum values are not fully validated either. The CLI constrains
-`--mutation-mode` to `diff` or `full`, but a `config.yaml` value such as
-`mutation_mode: typo` can reach the evolution loop and make generated
-mutations fail later as `unknown_mutation_mode` instead of stopping at startup.
+Nested evaluator-stage numeric fields are validated before a run: `samples`
+must be positive, `timeout_sec` must be positive, `retries` must be
+non-negative, and `min_score` must be numeric. If both `samples` and `seeds`
+are provided, the counts must match so stage sampling is reproducible.
 
-Nested evaluator-stage numeric fields are also not fully validated before a
-run. Use positive `samples` and `timeout_sec`, non-negative `retries`, and
-numeric `min_score` values; invalid values may currently fail during
-evaluation rather than at config load.
-
-Top-level evolution and population numeric fields are also permissive today.
-Keep `max_generations`, `num_inspirations`, `n_islands`, `map_elites_bins`, and
-`elite_archive_size` non-negative or positive as their names imply, and keep
-`explore_ratio` and `migration_ratio` in a sensible probability/fraction range.
-Invalid values may otherwise fail later in island/archive sampling or produce
-meaningless archive cells instead of clear startup diagnostics.
+Top-level evolution and population numeric fields are validated. Use
+non-negative `max_generations`, `num_inspirations`, `migration_interval`, and
+`ensemble_explore_coeff`; positive `eval_timeout_sec`, `n_islands`,
+`map_elites_bins`, and `elite_archive_size`; and keep `explore_ratio` and
+`migration_ratio` between 0 and 1.
 
 ## CLI overrides
 
@@ -219,8 +219,10 @@ run rather than being recorded as structured failed LLM-call attempts.
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
   migration, archive, prompt, stage, LLM feedback, critique, and ensemble
   scheduling settings.
-- Config validation is incomplete: unknown problem-local keys are ignored, and
-  nested backend/stage/feedback fields are only partially validated.
+- Config validation is still incomplete for LLM feedback and plugin-specific
+  schemas, but top-level numeric fields, mutation/ensemble enums, backend
+  specs, unknown problem-local keys, and evaluator-stage numeric fields are
+  checked before a run starts.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
   overwritten by the problem directory name, and `--reasoning-effort` only
   affects CLI-supplied backend specs rather than existing OpenAI config-file

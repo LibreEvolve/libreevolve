@@ -562,42 +562,30 @@ Primary evidence:
     records in history and bounded prompt feedback; add tests for fail-then-
     pass, pass-first, and all-fail retry paths.
 
-- [ ] Validate evaluator-stage numeric fields before running cascades.
+- [x] Validate evaluator-stage numeric fields before running cascades.
   - Spec evidence: AlphaEvolve-style cascades are explicit experiment
     configuration; invalid stage budgets, sample counts, retry counts, and
     thresholds should fail before evaluation with reproducible diagnostics.
-  - Current evidence: `_run_stage()` casts `timeout_sec`, `samples`, and
-    `retries` at runtime without range validation. `samples <= 0` produces an
-    empty result list and reaches `_aggregate_sample_results()`, where the
-    fitness fallback divides by `len(results)`. `retries < 0` makes
-    `_run_sample_with_retries()` run zero attempts and hit
-    `assert last is not None`. Invalid `min_score`/`timeout_sec` values fail
-    late through `float()` or subprocess timeout behavior instead of config
-    diagnostics.
-  - Required result: validate `eval_stages` at config load/CLI startup with
-    clear errors for non-positive `samples`, negative `retries`, non-positive
-    timeouts, nonnumeric thresholds, and seed/sample length mismatches; add
-    tests proving bad stage configs fail before candidate evaluation begins.
+  - Current evidence: `Config.validate()` now rejects non-positive
+    `eval_stages[].samples`, negative retries, non-positive timeouts,
+    nonnumeric `min_score`, unsupported stage fields, non-list `seeds`, and
+    explicit `samples`/`seeds` length mismatches. `evolve()` and the CLI call
+    `config.validate()` before building the evaluator or archiving seeds.
+  - Status: implemented with config tests proving bad stage configs fail at
+    construction/startup rather than during candidate evaluation.
 
-- [ ] Validate evolution and population numeric config ranges.
+- [x] Validate evolution and population numeric config ranges.
   - Spec evidence: AlphaEvolve-style experiments depend on explicit,
     reproducible population and budget settings; invalid archive/sampling
     parameters should fail before the run mutates or evaluates programs.
-  - Current evidence: `Config` is a dataclass with no range checks, and
-    `_build_config()` applies config-file and CLI numeric values directly.
-    `n_islands=0` creates an empty `IslandModel` and `IslandModel.add()` then
-    indexes `self.islands[0]` / takes modulo zero during seed archival.
-    `num_inspirations < 0` reaches `random.sample()` with a negative sample
-    size. `map_elites_bins <= 0` is accepted by `MAPElites._cell()` and can
-    produce negative cell coordinates rather than a meaningful archive grid.
-    `explore_ratio` outside `[0, 1]`, negative `max_generations`, negative
-    `migration_interval`, and invalid archive sizes are likewise not rejected
-    as startup configuration errors.
-  - Required result: validate run/population numeric fields at config load or
-    CLI startup, including generation counts, inspiration counts, explore
-    ratio, island count, migration interval/ratio, MAP-Elites bins, elite
-    archive size, and ensemble exploration coefficient; add tests for zero,
-    negative, nonnumeric, and out-of-range values.
+  - Current evidence: `Config.validate()` now rejects negative
+    `max_generations`, negative `num_inspirations`, non-positive
+    `eval_timeout_sec`, `explore_ratio` outside `[0, 1]`, zero islands,
+    negative migration intervals, `migration_ratio` outside `[0, 1]`,
+    non-positive MAP-Elites bins, non-positive elite archive sizes, and
+    negative ensemble exploration coefficients.
+  - Status: implemented with top-level config range tests. Broader run-wide
+    budget counters remain tracked separately.
 
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,
@@ -981,18 +969,19 @@ Primary evidence:
   - Spec evidence: AlphaEvolve task setup includes prompt templates,
     configurations, LLM choices, and evaluator settings; reproducible runs need
     configuration mistakes to fail early with clear diagnostics.
-  - Current evidence: `_build_config()` drops unknown `config.yaml` keys,
-    backend specs from CLI are parsed with `partition(":")` without requiring a
-    non-empty type/model, `config.yaml` values bypass Click choices such as
-    `--mutation-mode`, and many nested stage/feedback/backend fields are
-    unvalidated until a later runtime path fails or silently ignores them. For
-    example, a problem-local `mutation_mode: typo` is accepted into `Config`,
-    reaches `apply_candidate_mutation()`, and causes every attempted mutation
-    to receive `unknown_mutation_mode` rather than failing before the run.
-  - Required result: add config schema validation with unknown-key errors or
-    explicit warning policy, validate CLI backend specs and config-file enum
-    fields, validate nested `eval_stages`/`llm_feedback`/backend metadata, and
-    test malformed configs.
+  - Current evidence: `_build_config()` now rejects unknown `config.yaml` keys,
+    empty CLI backend models fail backend-spec validation, config-file
+    `mutation_mode` and `ensemble_strategy` are enum-validated, backend specs
+    are checked for supported keys/types/models/metadata, and evaluator-stage
+    numeric fields are validated before a run starts. Remaining gaps:
+    `llm_feedback` entries are only checked as mappings, plugin-specific
+    configuration schemas do not exist, CLI `--reasoning-effort` still affects
+    only CLI-created backend specs, and model/API capability validation is not
+    implemented.
+  - Required result: add full `llm_feedback` and plugin config schemas,
+    document or fix remaining CLI override semantics, add model/API-mode
+    compatibility validation where feasible, and test malformed nested config
+    cases beyond backend/stage metadata.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,

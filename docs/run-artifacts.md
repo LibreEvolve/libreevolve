@@ -175,7 +175,10 @@ py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
 py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
-`show` is currently a compact compatibility view. Richer metric-vector,
+`show` is currently a compact compatibility view. It selects the highest
+top-level `fitness` row from `history.jsonl`, not a reconstructed
+archive-admitted best candidate. Use `best.py`/`best_workspace/` from the
+original run as the archived best output. Richer validity-aware metric-vector,
 lineage, archive, prompt, feedback, and full-workspace diagnostics are tracked
 as follow-up work.
 

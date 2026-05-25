@@ -179,7 +179,8 @@ is not yet an AlphaEvolve reproduction.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.
-- Improve `show` for run summaries, lineage, metrics, and failure statistics.
+- Improve `show` with validity/archive-aware best selection, run summaries,
+  lineage, metrics, workspace artifacts, and failure statistics.
 - Add packaging/release hygiene beyond editable installs.
 - Broaden CI/interpreter coverage.
 

@@ -126,6 +126,11 @@ py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
 py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
+`show` is a compact history view. It selects the highest top-level fitness row
+from `history.jsonl`, not a reconstructed archive-admitted best candidate; use
+`best.py` and `best_workspace/` from the original run for the archived best
+output.
+
 ```
 Total programs: 11
 Best fitness:   1.000000 (generation 0)

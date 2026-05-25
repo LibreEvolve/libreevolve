@@ -411,6 +411,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     descriptors, replacement status, previous occupant ids, elite-list effects,
     and displaced elite ids.
 
+- [x] Add validity/archive-aware run inspection to operational work.
+  - Evidence: `cli.show()` selects the highest top-level `fitness` row from
+    `history.jsonl` and prints only its primary-file `code`; it does not
+    filter by `evaluation.is_valid`, `metadata.archive_admission.admitted`, or
+    archived best workspace artifacts.
+  - Current roadmap gap: run-inspection work mentioned summaries, lineage,
+    metrics, and failure statistics, but not the correctness problem that
+    "Best program" can mean highest logged row rather than best archived
+    candidate.
+  - Required result: make `show` validity-aware and archive-aware, report
+    full-workspace artifacts and admission status, and add tests where invalid
+    or non-admitted high-fitness rows do not win the displayed best.
+
 - [x] Add strict JSONL serialization hardening to database work.
   - Evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`, manifests,
     and `TTTRLPlugin._maybe_train()` now use strict finite JSON writers and

@@ -435,6 +435,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with per-candidate admission events
     while distinguishing them from full archive snapshots.
 
+- [x] Clarify `show` is not archive-best reconstruction.
+  - README evidence: the inspect-results section prints "Best fitness" and
+    "Best program" from `libreevolve show`, which can imply the same archived
+    best output as a completed run.
+  - Current evidence: `cli.show()` reads `history.jsonl` and selects
+    `max(records, key=lambda r: r["fitness"])` without checking
+    `evaluation.is_valid`, `metadata.archive_admission.admitted`, or full
+    workspace artifacts. The command prints only `best["code"]`.
+  - Status: README now calls `show` a compact history view and tells users to
+    use `best.py`/`best_workspace/` from the original run for the archived best
+    output.
+  - Required result: keep the README distinction until `show` is made
+    validity-aware, archive-aware, metric-aware, and workspace-aware.
+
 - [x] Clarify MAP-Elites descriptors use the primary-file view for workspaces.
   - README evidence: README advertises workspace candidates and a MAP-Elites
     archive, but did not state that archive complexity/diversity descriptors

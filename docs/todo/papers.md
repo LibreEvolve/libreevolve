@@ -102,23 +102,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluation metrics.
   - Status: implemented. Basic `metrics.yaml` schema validation rejects
     missing/duplicate names, invalid directions, multiple primaries,
-    unsupported fields, and malformed/non-finite bounds. Evaluator output must
-    include all declared metrics plus boolean `is_valid`, cannot include
-    undeclared metrics, and every non-`is_valid` metric must be finite numeric.
-    Invalid evaluator outputs are quarantined as `malformed_metrics`. Remaining
-    schema gap: finite but zero-width or inverted metric bounds are accepted,
-    so score normalization can still be ill-defined before multi-objective
-    policy is considered.
+    unsupported fields, malformed/non-finite bounds, and zero-width or inverted
+    bounds. Evaluator output must include all declared metrics plus boolean
+    `is_valid`, cannot include undeclared metrics, and every non-`is_valid`
+    metric must be finite numeric. Invalid evaluator outputs are quarantined as
+    `malformed_metrics`.
 
 - [x] Correct paper-index metric-validation wording.
   - Paper-index evidence: `papers/README.md` summarized AlphaEvolve status as
     "strict scalar metric validation."
-  - Current evidence: evaluator outputs are strictly checked against declared
-    scalar metrics, but `metrics.yaml` still accepts finite zero-width or
-    inverted bounds, so the broader metric-schema claim was too strong.
-  - Status: paper index now says strict scalar evaluator-output validation and
-    primary normalization for well-formed bounds, while listing strict
-    metric-bound ordering as an open AlphaEvolve-alignment gap.
+  - Status: metric schema validation now rejects zero-width and inverted
+    bounds, so the paper index no longer needs to list strict metric-bound
+    ordering as an open AlphaEvolve-alignment gap.
 
 - [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
@@ -197,8 +192,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     sampling now excludes the selected parent and deduplicates migrated copies
     by program id, but is still not metric-aware and does not intentionally
     surface programs that excel under different secondary criteria. Metric
-    bounds also need stricter schema validation for zero-width and inverted
-    ranges before they are used as policy inputs.
+    bounds are now strictly ordered before they can be used as policy inputs.
 
 - [x] Evolutionary database with attached outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

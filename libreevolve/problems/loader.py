@@ -126,6 +126,11 @@ def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict
             ) from exc
         if not all(math.isfinite(value) for value in bounds):
             raise ValueError(f"Metric {name!r} bounds must be finite, got {raw_bounds}")
+        if bounds[0] >= bounds[1]:
+            raise ValueError(
+                f"Metric {name!r} bounds must be strictly increasing [lo, hi], "
+                f"got {raw_bounds}"
+            )
 
         normalized_metric = dict(metric)
         normalized_metric["name"] = name

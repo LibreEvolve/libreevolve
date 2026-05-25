@@ -572,30 +572,31 @@ Primary evidence:
     database selection, prompting, and multi-score optimization.
   - Current evidence: `load_problem()` now rejects missing metric names,
     duplicate names, invalid `direction` values, multiple primaries, and
-    malformed/non-finite bounds for all declared metrics, and unsupported
-    metric schema fields. `CascadeEvaluator._run_subprocess()` validates the
-    last stdout JSON object against `metrics.yaml`: declared metrics must be
-    present, undeclared metrics are rejected, `is_valid` must be boolean, and
-    every non-`is_valid` metric must be finite numeric.
+    malformed/non-finite/non-increasing bounds for all declared metrics, and
+    unsupported metric schema fields. `CascadeEvaluator._run_subprocess()`
+    validates the last stdout JSON object against `metrics.yaml`: declared
+    metrics must be present, undeclared metrics are rejected, `is_valid` must
+    be boolean, and every non-`is_valid` metric must be finite numeric.
   - Status: implemented with loader and evaluator tests for unsupported schema
     fields, missing secondary outputs, non-scalar values, NaN/Infinity, and
     undeclared metrics. Multi-objective use of those metric vectors remains
     tracked separately.
 
-- [ ] Reject degenerate or inverted metric bounds.
+- [x] Reject degenerate or inverted metric bounds.
   - Spec evidence: AlphaEvolve-style scoring depends on meaningful scalar
     metrics and comparable score normalization; local `metrics.yaml` bounds
     become part of primary fitness, archive performance coordinates, and future
     metric-vector policy.
-  - Current evidence: `_validate_metric_schema()` checks that bounds are a
+  - Previous evidence: `_validate_metric_schema()` checked that bounds are a
     finite numeric pair, but it accepts `[1.0, 1.0]` and inverted ranges such
     as `[10.0, 0.0]`. `Problem.normalize_metric()` returns `0.5` for a
     zero-width range and otherwise computes with the negative range, producing
     plausible-looking normalized scores from an invalid schema.
-  - Required result: reject or explicitly define zero-width and inverted
-    bounds at problem-load time; update docs/tests for both maximize and
-    minimize metrics and ensure MAP-Elites performance normalization cannot
-    silently inherit invalid ranges.
+  - Status: implemented. `metrics.yaml` bounds must now be finite, strictly
+    increasing `[lo, hi]` pairs at problem-load time, so primary fitness and
+    MAP-Elites performance normalization cannot inherit zero-width or inverted
+    metric ranges.
+  - Validation: loader tests cover zero-width and inverted metric bounds.
 
 - [x] Enforce strict finite JSON serialization for run records.
   - Spec evidence: AlphaEvolve's program database is a machine-readable store

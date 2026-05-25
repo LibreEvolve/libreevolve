@@ -76,9 +76,8 @@ Behavior:
 - metric names must be non-empty and unique
 - `direction` must be `maximize` or `minimize`
 - at most one metric can be marked `primary: true`
-- bounds for all declared metrics must be finite numeric `[lo, hi]` pairs
-  (zero-width and inverted ranges are currently accepted and should be avoided
-  until stricter validation is implemented)
+- bounds for all declared metrics must be finite numeric, strictly increasing
+  `[lo, hi]` pairs
 - unsupported metric fields are rejected
 - `direction: minimize` is inverted during normalization when a metric is
   explicitly normalized

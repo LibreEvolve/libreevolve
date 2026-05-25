@@ -94,6 +94,8 @@ def test_raises_on_malformed_metrics_yaml():
             [{"name": "score", "direction": "maximize", "bounds": [0.0, "nan"]}],
             "finite",
         ),
+        ([{"name": "score", "direction": "maximize", "bounds": [1.0, 1.0]}], "strictly"),
+        ([{"name": "score", "direction": "maximize", "bounds": [2.0, 1.0]}], "strictly"),
     ],
 )
 def test_validates_metric_schema(metrics, message):

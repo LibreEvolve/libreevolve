@@ -58,14 +58,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add degenerate metric-bound validation to the backlog.
   - Evidence: `metrics.yaml` bounds drive primary fitness normalization and
-    MAP-Elites performance coordinates, but `_validate_metric_schema()` accepts
-    finite zero-width or inverted ranges.
+    MAP-Elites performance coordinates, and `_validate_metric_schema()`
+    previously accepted finite zero-width or inverted ranges.
   - Current roadmap gap: current-state bullets said strict scalar validation
     and metric direction/bounds normalization, but did not call out invalid
     bound ordering.
-  - Required result: track rejection or explicit semantics for zero-width and
-    inverted bounds before metric vectors feed archive or multi-objective
-    policy.
+  - Status: implemented. Problem loading now rejects zero-width and inverted
+    metric bounds with strict `[lo, hi]` ordering before metrics feed archive
+    or multi-objective policy.
 
 - [x] Add full-workspace export and resume coverage to candidate fidelity.
   - Evidence: AlphaEvolve evolves full files/codebases, while a primary-file

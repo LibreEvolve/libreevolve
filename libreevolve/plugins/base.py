@@ -15,3 +15,5 @@ class PluginBase(ABC):
         pass
     def build_extra_context(self, parent: "Program", inspirations: list["Program"]) -> str:
         return ""
+    def prompt_context_metadata(self) -> dict:
+        return {}

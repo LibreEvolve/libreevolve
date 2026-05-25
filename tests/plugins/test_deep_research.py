@@ -22,6 +22,36 @@ def test_context_shows_synthesis():
     plugin.on_generation_start(0, db)
     ctx = plugin.build_extra_context(_p(), [])
     assert "DEEP RESEARCH" in ctx and "test synthesis" in ctx
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    assert event["provider"] == "custom"
+    assert event["status"] == "ok"
+    assert event["query"].startswith("evolutionary algorithm optimization")
+    assert event["best_id"] == db.best.return_value.id
+    assert event["result_chars"] == len("test synthesis")
+    assert event["synthesis_sha256"]
+
+
+def test_records_empty_retrieval_event():
+    plugin = DeepResearchPlugin(search_fn=lambda q: None)
+    db = MagicMock(); db.best.return_value = _p()
+    plugin.on_generation_start(0, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    assert event["status"] == "empty"
+    assert event["result_chars"] == 0
+    assert plugin.build_extra_context(_p(), []) == ""
+
+
+def test_records_failed_retrieval_event():
+    def fail(_query):
+        raise RuntimeError("offline")
+
+    plugin = DeepResearchPlugin(search_fn=fail)
+    db = MagicMock(); db.best.return_value = _p()
+    plugin.on_generation_start(0, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    assert event["status"] == "error"
+    assert event["error"] == "offline"
+    assert event["result_chars"] == 0
 
 def test_default_uses_arxiv_search():
     """Default search_fn should be arxiv_search, not a no-op."""
@@ -68,3 +98,7 @@ def test_custom_search_fn_overrides_default():
     db = MagicMock(); db.best.return_value = _p()
     plugin.on_generation_start(0, db)
     assert "custom" in plugin.build_extra_context(_p(), [])
+
+
+def test_no_metadata_before_search():
+    assert DeepResearchPlugin().prompt_context_metadata() == {}

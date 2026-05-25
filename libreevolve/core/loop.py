@@ -281,6 +281,11 @@ def _build_plugin_context(
         if text:
             record["context"] = text
             contexts.append(text)
+        metadata_fn = getattr(plugin, "prompt_context_metadata", None)
+        if callable(metadata_fn):
+            plugin_metadata = metadata_fn()
+            if isinstance(plugin_metadata, dict) and plugin_metadata:
+                record["metadata"] = plugin_metadata
         records.append(record)
     return "\n".join(contexts), records
 

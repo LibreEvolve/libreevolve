@@ -291,7 +291,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add live retrieval provenance to prompt/plugin context work.
   - Evidence: `DeepResearchPlugin` injects live arXiv search summaries into
-    prompts but stores only the latest synthesis string in memory.
+    prompts. It now records bounded provider/query/status/timestamp/result
+    length/synthesis-hash retrieval events in candidate plugin-context metadata,
+    while source IDs/URLs, citations, ranking provenance, and manifest-level
+    retrieval summaries remain open.
   - Current roadmap gap: context-source provenance covered problem-local files,
     while plugin-provided external context also needs reproducible query,
     result, citation, failure, and manifest records.

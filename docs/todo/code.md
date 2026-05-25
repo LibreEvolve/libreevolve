@@ -533,12 +533,15 @@ Primary evidence:
     source, query, retrieval time, selected excerpts, and failures that shaped
     a prompt.
   - Current evidence: `DeepResearchPlugin.on_generation_start()` derives a live
-    query from the current best fitness, stores only `_synthesis`, and
-    `build_extra_context()` injects that text into prompts. `arxiv_search()`
-    returns only title/summary lines, discarding arXiv IDs, links, authors,
-    update timestamps, query URL, provider metadata, and parse/network failure
-    details. None of that retrieval state is written to `history.jsonl`,
-    prompt history, plugin artifacts, or `manifest.json`.
+    query from the current best fitness and records bounded retrieval events in
+    `metadata.plugin_context[].metadata.retrieval_events`, including provider,
+    query, generation, best id/fitness, timestamp, status, result length,
+    synthesis hash, and error text when the configured provider raises.
+    `arxiv_search()` still returns only title/summary lines or `None`,
+    discarding arXiv IDs, links, authors, update timestamps, query URL, source
+    ranking, source hashes, and network/parse failure categories. Retrieval
+    state is not written to prompt history, plugin artifacts, or
+    `manifest.json`.
   - Required result: store retrieval events with provider, query, generation,
     parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
     and hashes; render citations in prompt context; include plugin retrieval

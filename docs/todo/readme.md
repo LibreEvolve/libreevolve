@@ -400,11 +400,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     DeepEvolve-inspired web/retrieval context, but did not state that live
     retrieval events are not persisted.
   - Current evidence: `DeepResearchPlugin` keeps only `_synthesis` in memory
-    and `arxiv_search()` returns title/summary text without arXiv IDs, URLs,
-    timestamps, query metadata, or failure records. Prompt-injected retrieval
-    context is not linked from history or `manifest.json`.
+    for prompt rendering, and `arxiv_search()` returns title/summary text
+    without arXiv IDs, URLs, citations, or source ranking. Candidate metadata
+    now records bounded retrieval query, status, timestamp, result-length,
+    synthesis-hash, and available provider errors, but prompt-injected
+    retrieval context is still not linked from `manifest.json` and default
+    arXiv network/parse failure categories are not preserved.
   - Required result: document that live retrieval context is best-effort and
-    non-reproducible until provider/query/result provenance is persisted.
+    only partially reproducible until source/citation provenance is persisted.
 
 - [x] Clarify ImprovEvolve guidance is static and only context-attributed.
   - README evidence: the plugin section labels `modular` as

@@ -469,8 +469,11 @@ to factor guidance. The plugin is still a lightweight token-pattern heuristic,
 not CausalEvolve's causal scratchpad.
 
 The DeepEvolve-inspired retrieval plugin injects best-effort live arXiv
-summaries into prompts, but does not yet persist query/result provenance,
-citations, source hashes, timestamps, or failure diagnostics in run artifacts.
+summaries into prompts. Candidate history records retrieval query/status,
+generation, best-program context, timestamps, result length, synthesis hash,
+and available provider errors, but it does not yet persist source IDs/URLs,
+citations, source hashes, ranking provenance, or a systematic debug/refinement
+loop.
 
 The ImprovEvolve-inspired modular plugin is static prompt guidance. It does
 not select, execute, or log a `generate_config`/`improve`/`perturb` operation

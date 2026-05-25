@@ -558,6 +558,8 @@ def test_loop_records_per_plugin_prompt_context():
         def on_evaluated(self, program, score): return score
         def build_extra_context(self, parent, inspirations):
             return "[PLUGIN CONTEXT]\nPrefer the simple branch.\n"
+        def prompt_context_metadata(self):
+            return {"strategy": "static_guidance"}
 
     with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
         evolve(
@@ -580,6 +582,7 @@ def test_loop_records_per_plugin_prompt_context():
         plugin_context[0]["context"].encode("utf-8")
     ).hexdigest()
     assert plugin_context[0]["emitted"] is True
+    assert plugin_context[0]["metadata"] == {"strategy": "static_guidance"}
 
 
 def test_loop_renders_full_mode_prompt_instructions():

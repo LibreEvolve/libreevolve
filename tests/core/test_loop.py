@@ -2,6 +2,7 @@ import tempfile
 import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+import pytest
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.config import Config
 from libreevolve.core.loop import evolve, VALID_THRESHOLD
@@ -36,7 +37,7 @@ def test_invalid_diff_not_archived():
     records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
     child = records[-1]
     assert child["metadata"]["archive_admission"]["admitted"] is False
-    assert child["metadata"]["archive_admission"]["reason"] == "below_threshold"
+    assert child["metadata"]["archive_admission"]["reason"] == "invalid_evaluation"
     failure_records = [
         json.loads(line)
         for line in (Path(tmpdir) / "t" / "failure_history.jsonl").read_text().splitlines()
@@ -112,6 +113,115 @@ def test_plugins_called():
                                   log_dir=tempfile.mkdtemp(), problem_name="t"),
                plugins=[T()])
     assert ("start", 0) in calls and ("end", 0) in calls
+
+
+def test_plugin_score_composition_is_logged_for_multiple_plugins():
+    tmpdir = tempfile.mkdtemp()
+
+    class AddMetricPlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            program.metrics["plugin_metric"] = 1
+            return score + 0.1
+
+    class PenalizePlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            return score - 0.2
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[AddMetricPlugin(), PenalizePlugin()],
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    composition = records[-1]["metadata"]["score_composition"]
+    assert composition["initial_fitness"] == 1.0
+    assert composition["final_fitness"] == pytest.approx(0.9)
+    assert composition["diverged_from_evaluation"] is True
+    assert [p["plugin"] for p in composition["plugins"]] == ["AddMetricPlugin", "PenalizePlugin"]
+    assert composition["plugins"][0]["metrics_added"] == ["plugin_metric"]
+
+
+def test_invalid_plugin_score_is_rejected_and_logged():
+    tmpdir = tempfile.mkdtemp()
+
+    class BadScorePlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            return float("inf")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[BadScorePlugin()],
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    plugin_record = child["metadata"]["score_composition"]["plugins"][0]
+    assert child["fitness"] == 1.0
+    assert plugin_record["accepted"] is False
+    assert plugin_record["error"] == "non_finite_plugin_score"
+
+
+def test_plugin_boosted_invalid_candidate_is_not_archived():
+    tmpdir = tempfile.mkdtemp()
+
+    class BoostPlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            return 1.0
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm("no diff here")):
+        best = evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[BoostPlugin()],
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert best.id == records[0]["id"]
+    assert child["fitness"] == 1.0
+    assert child["evaluation"]["is_valid"] is False
+    assert child["metadata"]["archive_admission"]["admitted"] is False
+    assert child["metadata"]["archive_admission"]["reason"] == "invalid_evaluation"
+
+
+def test_plugin_penalized_valid_candidate_below_threshold_not_archived():
+    tmpdir = tempfile.mkdtemp()
+
+    class PenalizePlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            return -0.5
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[PenalizePlugin()],
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert child["evaluation"]["is_valid"] is True
+    assert child["metadata"]["archive_admission"]["admitted"] is False
+    assert child["metadata"]["archive_admission"]["reason"] == "below_threshold"
 
 
 def test_loop_logs_prompt_program_id_and_prompt_history():

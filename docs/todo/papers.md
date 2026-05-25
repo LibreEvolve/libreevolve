@@ -174,12 +174,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     database resurfaces ideas to balance exploration/exploitation.
   - Status: JSONL records include raw metrics, structured evaluation output,
     and per-program archive admission events. Queryable
-    score/metric/diversity/feedback sampling remains open. Plugin score
-    adjustments are not stored as a structured score-composition trace, and
-    full MAP-Elites cell/island snapshots plus migration events are not
-    persisted. Archive admission also gates on final plugin-adjusted fitness
-    rather than evaluator validity, so an invalid candidate can be admitted if a
-    plugin raises its score.
+    score/metric/diversity/feedback sampling remains open.
+    `metadata.score_composition` stores per-plugin score adjustments, and
+    archive admission is now gated by evaluator/feedback validity as well as
+    final composed fitness. Full MAP-Elites cell/island snapshots plus
+    migration events are not persisted.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

@@ -30,12 +30,30 @@ class ProgramDatabase:
         return self._islands.add(program)
 
     def admit(self, program: Program, threshold: float = 0.0) -> dict:
-        if program.fitness < threshold:
+        evaluation_is_valid = bool(program.evaluation.get("is_valid", True))
+        if not evaluation_is_valid:
+            event = {
+                "program_id": program.id,
+                "admitted": False,
+                "reason": "invalid_evaluation",
+                "threshold": threshold,
+                "evaluation_is_valid": evaluation_is_valid,
+                "island_id": None,
+                "cell": None,
+                "descriptors": {},
+                "previous_occupant_id": None,
+                "cell_replaced": False,
+                "entered_cell": False,
+                "entered_elite": False,
+                "displaced_elite_ids": [],
+            }
+        elif program.fitness < threshold:
             event = {
                 "program_id": program.id,
                 "admitted": False,
                 "reason": "below_threshold",
                 "threshold": threshold,
+                "evaluation_is_valid": evaluation_is_valid,
                 "island_id": None,
                 "cell": None,
                 "descriptors": {},
@@ -48,6 +66,7 @@ class ProgramDatabase:
         else:
             event = self.add(program)
             event["threshold"] = threshold
+            event["evaluation_is_valid"] = evaluation_is_valid
         program.metadata = dict(program.metadata)
         program.metadata["archive_admission"] = event
         return event

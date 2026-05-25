@@ -1097,41 +1097,31 @@ Primary evidence:
     per-plugin config schemas, record plugin specs/provenance/artifacts in
     manifests, and test configured plugin behavior without editing the CLI.
 
-- [ ] Persist plugin score-composition provenance.
+- [x] Persist plugin score-composition provenance.
   - Spec evidence: AlphaEvolve stores programs with evaluation scores and
     outputs attached; when local extension hooks change fitness, the database
     must preserve how the final selection score was produced.
-  - Current evidence: `evolve()` constructs a `Program` from evaluator/feedback
-    output, then calls each plugin's `on_evaluated(program, score)` and assigns
-    the returned value to `program.fitness`. `ProgramDatabase.log()` stores only
-    the final top-level `fitness`; it does not record per-plugin before/after
-    scores, plugin names, reasons, metrics added, or whether
-    `evaluation.fitness` and top-level fitness diverged.
-  - Required result: define a score-composition record for evaluator fitness,
-    LLM feedback composition, and each plugin adjustment; persist per-plugin
-    provenance in history and manifests; make archive admission/backend reward
-    use the documented composed score; add tests for multiple plugins,
-    rejecting invalid plugin scores, and preserving raw validator fitness.
+  - Status: implemented. `evolve()` records `metadata.score_composition` with
+    evaluator fitness, optional feedback-adjusted fitness, initial/final
+    top-level fitness, per-plugin before/after/delta values, metric additions
+    and changes, invalid plugin-score rejections, and divergence from raw
+    evaluator fitness.
+  - Evidence: tests cover multiple plugins, metric additions, non-finite plugin
+    scores being rejected, final score preservation, and raw
+    `evaluation.fitness` remaining visible.
 
-- [ ] Keep evaluator validity separate from plugin-adjusted fitness.
+- [x] Keep evaluator validity separate from plugin-adjusted fitness.
   - Spec evidence: AlphaEvolve's program database is populated by evaluated
     solutions whose quality and validity are determined by user-provided
     evaluators. Extensions may add scoring signals, but they should not
     accidentally override evaluator invalidity without an explicit policy.
-  - Current evidence: `evolve()` constructs a `Program` with
-    `evaluation.is_valid` from the evaluator/feedback result, then runs plugin
-    `on_evaluated()` hooks and assigns each returned score to
-    `program.fitness`. Archive admission then checks only
-    `if score >= VALID_THRESHOLD: db.add(program)`. A plugin can therefore
-    raise an evaluator-invalid candidate from a negative penalty to a positive
-    top-level fitness and admit it to the MAP-Elites archive, while
-    `evaluation.is_valid` remains false. Current history also does not record
-    whether this happened because archive admission status is not logged.
-  - Required result: define explicit validity/fitness composition semantics;
-    keep archive admission gated by evaluator/feedback validity unless a
-    documented plugin policy can override it; record both raw validity and
-    plugin override decisions; and add tests where a plugin boosts an invalid
-    candidate, penalizes a valid candidate, and returns non-finite scores.
+  - Status: implemented. Archive admission checks `evaluation.is_valid` before
+    threshold/cell insertion and records `reason=invalid_evaluation` with
+    `evaluation_is_valid=false` when a plugin raises an invalid candidate above
+    `VALID_THRESHOLD`.
+  - Evidence: tests cover a plugin boosting an invalid candidate, a plugin
+    penalizing a valid candidate below threshold, non-finite plugin scores, and
+    validity-aware archive admission records.
 
 - [ ] Define plugin training-data reward and artifact semantics.
   - Spec evidence: AlphaEvolve-style and ThetaEvolve-style experiments require

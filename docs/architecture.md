@@ -233,12 +233,13 @@ ignored for score/validity composition. There is not yet a configurable retry,
 penalty, or discard policy for failed feedback graders.
 
 After that, plugin `on_evaluated()` hooks may modify the effective fitness used
-for logging, archive admission, prompt reward, and backend reward. The current
-loop does not persist a structured plugin score-adjustment chain, so
-plugin-adjusted top-level fitness can diverge from `evaluation.fitness` without
-per-plugin provenance. Archive admission currently checks the plugin-adjusted
-score against `VALID_THRESHOLD`, not `evaluation.is_valid`, so invalid evaluator
-results can be admitted if a plugin raises their final score.
+for logging, prompt reward, and backend reward. The loop records
+`metadata.score_composition` with evaluator fitness, optional feedback-adjusted
+fitness, per-plugin before/after scores, metric additions/changes, invalid
+plugin-score rejections, and final composed fitness. Archive admission uses the
+composed top-level fitness threshold but remains gated by
+`evaluation.is_valid`, so a plugin cannot accidentally archive an
+evaluator-invalid candidate by raising its score.
 
 Plugins that inspect mutation text should share the core mutation parser.
 `CausalPlugin` now routes factor detection through `parse_diff_blocks()`, so

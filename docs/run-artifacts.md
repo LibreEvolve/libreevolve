@@ -94,12 +94,13 @@ all-fail retries preserve the final failed attempt, but earlier failed attempts
 are not retained as separate history records.
 
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
-That score-composition path is not currently stored as a structured trace, so
-plugin-adjusted records may have top-level `fitness` values that differ from
-`evaluation.fitness` without per-plugin before/after metadata. Archive
-admission uses the final top-level fitness threshold, so a plugin can currently
-make an evaluator-invalid candidate archive-eligible unless validity override
-semantics are hardened.
+That score-composition path is stored under `metadata.score_composition` with
+evaluator fitness, optional feedback-adjusted fitness, per-plugin before/after
+scores, metric additions/changes, invalid score rejections, final fitness, and
+whether the final score diverged from `evaluation.fitness`. Archive admission
+uses the final top-level fitness threshold but remains gated by
+`evaluation.is_valid`, so plugin score changes do not accidentally archive
+evaluator-invalid candidates.
 
 Archive state is not serialized yet. `history.jsonl` contains evaluated
 candidates and per-candidate archive admission events, but not complete

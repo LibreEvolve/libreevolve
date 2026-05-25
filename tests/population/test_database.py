@@ -29,10 +29,22 @@ def test_admit_records_archive_event_on_program_metadata():
 def test_admit_below_threshold_does_not_archive():
     db = _db()
     p = _p(fitness=-0.1)
+    p.evaluation = {"is_valid": True}
     event = db.admit(p, threshold=0.0)
     assert event["admitted"] is False
     assert event["reason"] == "below_threshold"
+    assert event["evaluation_is_valid"] is True
     assert event["island_id"] is None
+    assert db.best() is None
+
+def test_admit_invalid_evaluation_does_not_archive_even_with_high_fitness():
+    db = _db()
+    p = _p(fitness=1.0)
+    p.evaluation = {"is_valid": False}
+    event = db.admit(p, threshold=0.0)
+    assert event["admitted"] is False
+    assert event["reason"] == "invalid_evaluation"
+    assert event["evaluation_is_valid"] is False
     assert db.best() is None
 
 def test_log_without_add_not_in_archive():

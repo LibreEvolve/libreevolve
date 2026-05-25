@@ -4,6 +4,7 @@ Inspired by AlphaEvolve's evolutionary loop and adjacent code-evolution systems.
 This synchronous loop is intentionally smaller than the paper systems.
 """
 from __future__ import annotations
+import math
 import random
 from pathlib import Path
 from libreevolve.core.config import Config
@@ -129,11 +130,9 @@ def evolve(problem: Problem, config: Config,
                           metrics=result.metrics,
                           evaluation=result.to_dict())
 
-        for plugin in plugins:
-            score = plugin.on_evaluated(program, score)
-            program.fitness = score  # keep in sync for next plugin
+        score = _apply_plugin_scores(program, score, plugins)
 
-        if program.fitness < VALID_THRESHOLD:
+        if program.fitness < VALID_THRESHOLD or not _evaluation_is_valid(program):
             failure = db.log_failure(program, parent, diff, diff_error)
             recent_failures.append(failure)
             recent_failures = recent_failures[-_MAX_FAILURES:]
@@ -171,3 +170,69 @@ def evolve(problem: Problem, config: Config,
             plugin.on_generation_end(gen, best)
 
     return db.best()
+
+
+def _apply_plugin_scores(
+    program: Program, initial_score: float, plugins: list[PluginBase]
+) -> float:
+    score = initial_score
+    composition = {
+        "evaluator_fitness": program.evaluation.get("fitness") if program.evaluation else None,
+        "initial_fitness": initial_score,
+        "final_fitness": initial_score,
+        "diverged_from_evaluation": False,
+        "plugins": [],
+    }
+    feedback_adjusted = program.metrics.get("feedback_adjusted_fitness")
+    if feedback_adjusted is not None:
+        composition["feedback_adjusted_fitness"] = feedback_adjusted
+
+    for plugin in plugins:
+        before = score
+        before_metrics = dict(program.metrics)
+        name = plugin.__class__.__name__
+        record = {
+            "plugin": name,
+            "before": before,
+            "after": before,
+            "delta": 0.0,
+            "metrics_added": [],
+            "metrics_changed": [],
+            "accepted": False,
+            "error": None,
+        }
+        proposed = plugin.on_evaluated(program, score)
+        if isinstance(proposed, bool) or not isinstance(proposed, (int, float)):
+            record["error"] = "invalid_plugin_score"
+        elif not math.isfinite(float(proposed)):
+            record["error"] = "non_finite_plugin_score"
+        else:
+            score = float(proposed)
+            record["after"] = score
+            record["delta"] = score - before
+            record["accepted"] = True
+        after_metrics = dict(program.metrics)
+        record["metrics_added"] = sorted(set(after_metrics) - set(before_metrics))
+        record["metrics_changed"] = sorted(
+            key
+            for key in set(after_metrics) & set(before_metrics)
+            if after_metrics[key] != before_metrics[key]
+        )
+        composition["plugins"].append(record)
+        program.fitness = score
+
+    composition["final_fitness"] = score
+    evaluation_fitness = composition["evaluator_fitness"]
+    composition["diverged_from_evaluation"] = (
+        isinstance(evaluation_fitness, (int, float))
+        and math.isfinite(float(evaluation_fitness))
+        and score != float(evaluation_fitness)
+    )
+    program.metadata = dict(program.metadata)
+    program.metadata["score_composition"] = composition
+    program.fitness = score
+    return score
+
+
+def _evaluation_is_valid(program: Program) -> bool:
+    return bool(program.evaluation.get("is_valid", True))

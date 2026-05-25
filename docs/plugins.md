@@ -36,11 +36,15 @@ Important details:
   - `lineage`
   - `metadata["prompt"]`
   - `metadata["diff"]`
-- the return value from `on_evaluated()` becomes the program's final fitness for
-  logging, archive admission, and backend reward computation.
-- plugin score adjustments are not recorded as a structured score-composition
-  trace yet. A history record's top-level `fitness` can therefore differ from
-  `evaluation.fitness` without a machine-readable plugin adjustment chain.
+- the return value from `on_evaluated()` becomes the program's final top-level
+  fitness for logging, prompt scoring, and backend reward computation.
+- plugin score adjustments are recorded under `metadata.score_composition`,
+  including per-plugin before/after scores, metric additions/changes, invalid
+  score rejections, and whether final top-level fitness diverges from
+  `evaluation.fitness`.
+- archive admission is still gated by `evaluation.is_valid`; a plugin can lower
+  or raise fitness, but it cannot accidentally archive an evaluator-invalid
+  candidate unless an explicit future override policy is added.
 
 ## What plugins can safely do
 

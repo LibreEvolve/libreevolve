@@ -288,8 +288,9 @@ Primary evidence:
     `runs/<name>/best_workspace/`. CLI tests cover multi-file best-workspace
     export.
   - Status: implemented for text-file candidate workspaces. Remaining
-    divergence: run-directory collision semantics are still undefined, and
-    binary/static non-text artifacts are not first-class candidate members.
+    divergence: run-directory collision semantics are fail/overwrite rather
+    than resume, and binary/static non-text artifacts are not first-class
+    candidate members.
   - Required result: write a reproducible `best_workspace/` or archive with all
     candidate files, preserve `best.py` only as a compatibility convenience,
     and document/export this artifact in tests and run docs.

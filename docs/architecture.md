@@ -102,8 +102,7 @@ a canonical collision model: workspace construction rejects raw paths that
 normalize to the same relative name, and materialization preflights
 case-folded host-path collisions before writing files. Mutation-envelope
 handling rejects duplicate edit sections for the same `<<<FILE path ...>>>`
-target. Unicode-normalization collisions and more complex topology-operation
-collision policy remain incomplete.
+target. More complex topology-operation collision policy remains incomplete.
 Envelope parsing now rejects unmatched, orphaned, nested, duplicate-name,
 empty-name, and invalid-name `<<<FILE` / `<<<BLOCK` sections before applying
 partial edits. It is still a local envelope parser rather than a full mutation

@@ -105,7 +105,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `metrics.yaml` bounds/directions and can be added directly to normalized
     fitness without calibration. For multi-file candidates, feedback grader
     prompts currently include only the primary-file code, not the full candidate
-    workspace.
+    workspace. Malformed grader responses, invalid grader config, and provider
+    errors are not isolated as structured evaluation outcomes.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

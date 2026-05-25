@@ -199,6 +199,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: render bounded candidate file sets and diagnostics to
     graders with budget/redaction controls and tests for non-primary files.
 
+- [x] Add LLM feedback failure isolation to evaluation hardening.
+  - Evidence: `apply_llm_feedback()` lets provider exceptions, malformed
+    `score` values, invalid `weight`/`min_score` config, and loose
+    `discard` truthiness propagate or misclassify candidates outside the
+    structured evaluation-stage contract.
+  - Current roadmap gap: feedback calibration and config validation were
+    tracked, but the roadmap did not call out failure isolation for optional
+    feedback graders as an evaluation hardening item.
+  - Required result: validate feedback grader schemas before runs, quarantine
+    grader call/parse failures as structured metadata or stage outcomes, and
+    test backend errors, malformed responses, invalid config, and discard
+    parsing.
+
 - [x] Add proposal idea/rationale capture to prompt/context work.
   - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and
     describe changes with SEARCH/REPLACE blocks.

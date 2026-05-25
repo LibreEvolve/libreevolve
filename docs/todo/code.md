@@ -439,6 +439,24 @@ Primary evidence:
     prompt-budget controls; add tests proving graders can inspect non-primary
     files and that oversized workspaces are handled deterministically.
 
+- [ ] Isolate malformed or failing LLM feedback graders.
+  - Spec evidence: AlphaEvolve treats LLM-generated feedback as an optional
+    evaluation/scoring signal; grader failures should be diagnosable evaluation
+    outcomes, not unstructured run crashes or silent misclassifications.
+  - Current evidence: `apply_llm_feedback()` calls `llm.generate()`,
+    `float(parsed["score"])`, `float(weight)`, and `float(min_score)` without
+    failure handling. `parse_feedback_response()` has a loose text fallback,
+    but JSON such as `{"score": "bad"}`, invalid grader config, provider
+    exceptions, non-finite values, and string booleans such as `"false"` can
+    crash the run or discard candidates incorrectly. No feedback failure record
+    is stored as an evaluation stage outcome or structured metadata.
+  - Required result: define feedback-grader failure policy (ignore, penalize,
+    discard, retry, or stop), parse booleans/numbers strictly, validate grader
+    config before runs, capture grader exceptions and malformed responses as
+    structured metadata/stage outcomes, and add tests for backend errors,
+    malformed scores, invalid `weight`/`min_score`, string discard values,
+    non-finite values, and configured failure policies.
+
 - [ ] Calibrate LLM feedback scores against metric schema and fitness
   composition.
   - Spec evidence: AlphaEvolve treats evaluation outputs as scalar metrics and

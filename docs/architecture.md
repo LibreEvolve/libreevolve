@@ -187,6 +187,9 @@ metric. Feedback score calibration against `metrics.yaml` direction/bounds is
 not implemented yet. Feedback grader prompts currently render only the
 candidate's primary file, so multi-file helper modules or other evolved files
 are not visible to the grader unless custom prompt text reconstructs them.
+Feedback grader call, parse, and config failures are not yet converted into
+structured evaluation-stage outcomes, and malformed score/discard values can
+still fail or misclassify a candidate before that policy is hardened.
 
 After that, plugin `on_evaluated()` hooks may modify the effective fitness used
 for logging, archive admission, prompt reward, and backend reward. The current

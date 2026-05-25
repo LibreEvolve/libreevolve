@@ -182,6 +182,10 @@ effective context window until prompt packing/accounting is implemented.
 LLM feedback graders currently receive the primary-file candidate view rather
 than the full workspace file set.
 
+Malformed LLM feedback responses or grader config are not yet isolated as
+structured evaluation failures; hardening feedback parsing and failure policy
+remains open.
+
 Run history logs candidates, but archive cell/island state and migration events
 are not persisted as replayable MAP-Elites state yet.
 

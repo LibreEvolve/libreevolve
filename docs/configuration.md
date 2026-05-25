@@ -48,6 +48,10 @@ raw primary validator metric. Graders run only for locally valid candidates by
 default; set `include_invalid: true` on a grader to review invalid candidates.
 For workspace candidates, the built-in feedback prompt currently includes only
 the primary file content, not every file in the candidate workspace.
+`llm_feedback` schema and model responses are only partially validated today:
+malformed scores, invalid `weight`/`min_score` values, provider failures, or
+string discard flags are not yet quarantined as structured feedback-stage
+failures.
 
 ### Population
 

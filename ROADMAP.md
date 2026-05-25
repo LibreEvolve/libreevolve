@@ -69,6 +69,8 @@ is not yet an AlphaEvolve reproduction.
 - Add calibration/ablation reporting for LLM feedback graders.
 - Normalize and bound LLM feedback metrics before using them in score
   composition.
+- Isolate LLM feedback provider, parse, and config failures as structured
+  evaluation metadata or stage outcomes.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work

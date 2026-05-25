@@ -315,3 +315,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     included.
   - Required result: warn readers that multi-file feedback grading is not yet
     full-workspace aware.
+
+- [x] Clarify feedback grader failure-isolation limits.
+  - README evidence: optional feedback graders are described as able to add
+    metrics or discard candidates, but the current caveats did not explain that
+    malformed grader output or config can still fail outside structured
+    evaluation diagnostics.
+  - Current evidence: `apply_llm_feedback()` does not isolate `llm.generate()`
+    failures, malformed numeric scores, invalid `weight`/`min_score` values, or
+    string discard flags.
+  - Required result: warn readers that LLM feedback failure handling is not yet
+    AlphaEvolve-grade structured evaluation behavior.

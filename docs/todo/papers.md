@@ -273,6 +273,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     multiplication rank search, circle/kissing packing, and one scheduling or
     kernel microbenchmark, then add validators and expected run artifacts.
 
+- [ ] Harden benchmark implementations beyond smoke-example fidelity.
+  - Paper evidence: the AlphaEvolve paper's matrix task searches low-rank tensor
+    decompositions with randomized initializations and exact verification;
+    Appendix B.12 reports circle packing in the unit square for `n = 26` and
+    `n = 32`; Figure 8 compares ablations by compute-budget fraction.
+  - Current evidence: the checked-in matrix example validates only a 2x2 Python
+    `matmul2` function on three deterministic cases and counts AST
+    multiplication nodes. The circle example matches the fixed-26 unit-square
+    objective family, but there is no benchmark harness for repeated seeds,
+    SOTA thresholds, saved construction artifacts, visual/JSON outputs, or
+    equal-budget ablation curves.
+  - Required result: distinguish smoke examples from benchmark fixtures in docs,
+    add operation/rank-aware matrix validation, add artifact schemas for
+    geometric constructions, and create repeatable benchmark reports tied to
+    AlphaEvolve target families.
+
 ## Paper-Inspired Feature Claims Needing Correction
 
 - [ ] Rename the current CausalEvolve plugin or implement the paper's causal

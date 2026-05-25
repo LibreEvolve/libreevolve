@@ -395,6 +395,24 @@ Primary evidence:
     metrics, stage diagnostics, full-workspace pointers, lineage, prompt ids,
     archive diagnostics, and failure statistics.
 
+## Benchmarks and Problem Fixtures
+
+- [ ] Harden AlphaEvolve-style benchmark validators against toy shortcuts.
+  - Spec evidence: AlphaEvolve's matrix-multiplication work searches tensor
+    decompositions, measures rank over target families and randomized seeds,
+    and verifies exactness; its packing work reports concrete best
+    constructions and compares progress under ablations.
+  - Current evidence: `matrix_multiplication` is a 2x2 Python function example
+    scored by counting AST `*` nodes across three deterministic cases, not a
+    rank-decomposition search or operation-instrumented benchmark. The packing
+    validator checks fixed-26 circle feasibility and sum of radii, but there is
+    no benchmark runner that records best construction artifacts, target
+    thresholds, repeated seeds, or equal-budget comparisons.
+  - Required result: add stronger validators or clearly separate smoke examples
+    from benchmark fixtures; include anti-gaming tests, expected artifact
+    schemas, repeated-seed evaluation, target/SOTA baselines, and benchmark
+    reports suitable for comparing AlphaEvolve-alignment features.
+
 ## LLM Ensemble
 
 - [ ] Add a custom LLM backend registry or plugin interface.

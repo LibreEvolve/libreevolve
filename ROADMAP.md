@@ -130,6 +130,8 @@ is not yet an AlphaEvolve reproduction.
 - Add stronger AlphaEvolve-style fixtures beyond toy examples:
   matrix-multiplication variants, kissing/circle packing extensions,
   constructive math, and one safe scheduling/kernel microbenchmark.
+- Separate smoke examples from benchmark fixtures, with anti-gaming validators,
+  expected artifact schemas, SOTA/target baselines, and repeated-seed runs.
 - For each local domain paper, either add a benchmark, link it to an existing
   benchmark, or keep it marked background-only in `papers/README.md`.
 - Add repeatable benchmark scripts for backend, seed, prompt, and archive

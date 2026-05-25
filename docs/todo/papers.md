@@ -69,7 +69,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     early-stage pruning.
   - Status: added configurable local validator stages with distinct entrypoints,
     thresholds, seeded samples, retries, stage context, and timeouts.
-    Distributed/parallel evaluator nodes remain open.
+    Distributed/parallel evaluator nodes remain open. Metric-specific pass
+    criteria and explicit sample aggregation policies also remain open.
 
 - [ ] Strict scalar metric contract for evaluator outputs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
@@ -77,7 +78,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluation metrics.
   - Current gap: evaluator output is only partially validated; missing
     secondary metrics, non-scalar values, non-finite numbers, and undeclared
-    metrics are not consistently rejected against `metrics.yaml`.
+    metrics are not consistently rejected against `metrics.yaml`. The
+    `metrics.yaml` schema itself also lacks full validation for duplicate or
+    missing names, invalid directions, multiple primaries, and malformed
+    secondary bounds.
   - Required result: enforce the scalar metric contract and preserve clear
     diagnostics for invalid evaluator outputs.
 
@@ -172,7 +176,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     workspace materialization for validators, and JSONL file-set logging.
   - Status: implemented for local Python/text workspaces. Remaining divergence:
     no arbitrary external repository/build-system runner and `best.py` exports
-    only the primary file convenience view.
+    only the primary file convenience view. Binary/static artifacts are not
+    first-class candidate members yet.
 
 - [ ] Full-workspace output artifacts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.

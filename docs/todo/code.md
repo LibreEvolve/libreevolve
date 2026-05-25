@@ -116,6 +116,20 @@ Primary evidence:
     rendering, mutation, materialization, and validation, or clearly document
     that LibreEvolve currently evolves code file sets only.
 
+- [ ] Define non-text artifact handling for workspace/codebase candidates.
+  - Spec evidence: AlphaEvolve can operate on existing codebases and systems
+    code where supporting assets, generated artifacts, fixtures, and binary
+    inputs may be part of the runnable project.
+  - Current evidence: `_load_initial_workspaces()` reads every non-hidden,
+    non-`__pycache__` file in a seed directory with `read_text(encoding="utf-8")`.
+    `CandidateWorkspace` stores `dict[str, str]`, prompt rendering assumes text,
+    and `materialize()` writes text files. Binary or non-UTF-8 seed artifacts
+    can fail problem load or cannot be represented without lossy conversion.
+  - Required result: define text-vs-binary candidate artifact policy, support
+    copied static assets or encoded artifacts where needed, record artifact
+    hashes/provenance, and test binary fixture, large fixture, and generated
+    artifact behavior.
+
 ## Prompt Sampling and Context
 
 - [x] Replace the simple prompt builder with a configurable prompt sampler.
@@ -245,15 +259,19 @@ Primary evidence:
   - Spec evidence: AlphaEvolve task specification requires `evaluate` to
     return a dictionary of scalar evaluation metrics, and those metrics drive
     database selection, prompting, and multi-score optimization.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` parses the last
-    stdout line as JSON and requires `is_valid` plus the primary metric for
-    fitness normalization, but it does not verify that every declared
-    `metrics.yaml` metric is present, scalar, finite, or direction/bounds
-    compatible.
+  - Current evidence: `load_problem()` validates only enough of `metrics.yaml`
+    to select a primary metric and parse primary bounds. It does not reject
+    missing metric names, duplicate names, invalid `direction` values, multiple
+    primaries, malformed secondary bounds, or undeclared metric schema fields.
+    `CascadeEvaluator._run_subprocess()` parses the last stdout line as JSON
+    and requires `is_valid` plus the primary metric for fitness normalization,
+    but it does not verify that every declared `metrics.yaml` metric is present,
+    scalar, finite, or direction/bounds compatible.
   - Required result: validate evaluator outputs against `metrics.yaml`, reject
     or quarantine malformed/non-finite metrics with diagnostics, and add tests
-    for missing secondary metrics, non-scalar values, NaN/Infinity, and
-    undeclared metrics.
+    for missing/duplicate metric schema names, invalid directions, malformed
+    secondary bounds, missing secondary outputs, non-scalar values,
+    NaN/Infinity, and undeclared metrics.
 
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
@@ -269,6 +287,19 @@ Primary evidence:
     distributed/parallel evaluator workers remain a separate runtime item.
   - Required result: support configured stages, per-stage thresholds, sample
     sizes, retry/random-seed policies, and separate metrics per stage.
+
+- [ ] Add metric-specific stage thresholds and explicit aggregation policies.
+  - Spec evidence: AlphaEvolve evaluation cascades can use task-specific test
+    ensembles of increasing difficulty, where pass/fail decisions may depend
+    on different metrics, outputs, or sample distributions at each stage.
+  - Current evidence: `eval_stages[].min_score` is a single threshold on
+    normalized primary fitness. `_aggregate_metrics()` averages numeric metrics,
+    `all()`s boolean metrics, and uses the last non-numeric value; this policy
+    is hard-coded and does not let a stage require per-metric thresholds,
+    quantiles, all-samples-pass, artifact checks, or custom aggregators.
+  - Required result: add configured stage pass criteria by metric name,
+    direction, bound, sample aggregation policy, and artifact/output checks;
+    document defaults and test average/min/max/quantile/all-pass behavior.
 
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,

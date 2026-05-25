@@ -68,8 +68,11 @@ Behavior:
 - the first metric with `primary: true` is primary
 - if no metric is marked primary, the first metric is primary
 - `bounds` defaults to `[0.0, 1.0]`
-- malformed bounds raise an error
-- `direction: minimize` is inverted during normalization
+- malformed primary-metric bounds raise an error; full schema validation for
+  secondary bounds, missing or duplicate names, invalid directions, and multiple
+  primaries remains open work
+- `direction: minimize` is inverted during normalization when a metric is
+  explicitly normalized
 
 Fitness is the normalized primary metric. Raw metrics are preserved in
 `Program.metrics` and `history.jsonl`.
@@ -125,6 +128,8 @@ Default failure scores:
 
 `Config.eval_stages` can run configured validator stages with per-stage
 `validate_path`, timeout, `min_score`, `samples`, `seeds`, and `retries`.
+`min_score` is currently a threshold on normalized primary fitness, not a
+metric-specific pass/fail rule, and sample aggregation uses fixed defaults.
 Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
 receive stage context containing stage name, index, sample index, seed, attempt,
 and the raw stage config.
@@ -217,6 +222,8 @@ existing full-block rules apply. New files can be created in `full` mode.
 - Use evolve blocks when the skeleton/API must stay fixed.
 - Treat the current problem model as Python-only. Multi-file workspaces are
   local text file sets, not arbitrary build-system or containerized projects.
+- Treat seed workspaces as UTF-8 text workspaces for now; binary artifacts and
+  artifact manifests are not first-class candidate members yet.
 - Treat candidate abstraction as code-file evolution for now; richer
   problem-defined candidate representations are tracked as AlphaEvolve-alignment
   work.

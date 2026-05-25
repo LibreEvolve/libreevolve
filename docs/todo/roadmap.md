@@ -152,15 +152,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     responses.
 
 - [x] Add duplicate block-section detection to mutation-envelope work.
-  - Evidence: `_apply_full_replacement()` currently stores named block
+  - Evidence: `_apply_full_replacement()` previously stored named block
     sections in a dict, so duplicate `<<<BLOCK a ... >>>BLOCK` sections
-    silently overwrite earlier bodies. A local proof returned no error and
+    silently overwrote earlier bodies. A local proof returned no error and
     applied only the later duplicate block body.
   - Current roadmap gap: envelope diagnostics covered malformed spans but not
     ambiguous duplicate target sections inside an otherwise well-formed
     multi-block full replacement.
-  - Required result: reject or explicitly represent duplicate block-section
-    edits, and add tests for duplicate names in full-block replacements.
+  - Status: implemented. Duplicate block-section names now return
+    `malformed_block_sections:duplicate_name` before replacement, with tests
+    covering duplicate names in full-block replacements.
 
 - [x] Add workspace file-topology mutation support to candidate fidelity.
   - Evidence: `apply_workspace_mutation()` can edit existing files and create

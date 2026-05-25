@@ -383,10 +383,8 @@ backslashes. Collision checks are still incomplete: distinct input names that
 normalize to the same relative path, or differ only by host-filesystem case
 folding, can overwrite each other.
 File/block mutation envelopes are not represented as a complete mutation AST
-yet, but unmatched, orphaned, nested, empty-name, and invalid-name envelopes
-now fail before partial edits are applied. Duplicate `<<<BLOCK name ...>>>`
-sections in multi-block full replacement are still ambiguous; the current
-parser applies the later duplicate section.
+yet, but unmatched, orphaned, nested, duplicate-name, empty-name, and
+invalid-name envelopes now fail before partial edits are applied.
 Workspace mutations can edit existing files and create new files in `full`
 mode. They can also express file topology operations with command file
 sections:

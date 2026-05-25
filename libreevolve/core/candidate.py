@@ -408,6 +408,8 @@ def _apply_full_replacement(code: str, mutation_text: str) -> tuple[str, str | N
             return code, "malformed_block_sections:empty_name"
         if not _BLOCK_NAME_PATTERN.fullmatch(name):
             return code, "malformed_block_sections:invalid_name"
+        if name in sections:
+            return code, "malformed_block_sections:duplicate_name"
         sections[name] = body.rstrip("\n")
     if not sections:
         return code, "missing_block_sections"

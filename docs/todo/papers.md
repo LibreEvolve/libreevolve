@@ -286,10 +286,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-style prompts or examples.
   - Status: implemented in `libreevolve/core/diff.py` while preserving the
     compact local format; tests cover canonical parsing for normal candidates,
-    evolve-block candidates, mixed-format document order, and multi-file file
-    sections. Remaining mutation-parser gap: duplicate named `<<<BLOCK ...>>>`
-    sections in multi-block full replacement are accepted and the later body
-    silently wins.
+    evolve-block candidates, mixed-format document order, multi-file file
+    sections, and duplicate `<<<BLOCK ...>>>` rejection for multi-block full
+    replacement.
   - Required result: keep accepting both canonical and compact diff formats
     without breaking existing seeds/tests.
 

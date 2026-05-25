@@ -178,6 +178,21 @@ def test_full_mode_rejects_invalid_block_section_name():
     assert err == "malformed_block_sections:invalid_name"
 
 
+def test_full_mode_rejects_duplicate_block_section_names():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    response = (
+        "<<<BLOCK a\nx = 10\n>>>BLOCK\n"
+        "<<<BLOCK a\nx = 20\n>>>BLOCK\n"
+        "<<<BLOCK b\ny = 30\n>>>BLOCK"
+    )
+    result, err = apply_candidate_mutation(code, response, mutation_mode="full")
+    assert result == code
+    assert err == "malformed_block_sections:duplicate_name"
+
+
 def test_workspace_diff_mutates_named_file_only():
     workspace = CandidateWorkspace(
         files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},

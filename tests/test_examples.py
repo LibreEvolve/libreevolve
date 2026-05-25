@@ -16,6 +16,13 @@ MATRIX_EXAMPLE_DIR = (
     / "examples"
     / "matrix_multiplication"
 )
+WORKSPACE_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "workspace_math"
+)
 
 
 def _load_validator():
@@ -28,6 +35,14 @@ def _load_validator():
 
 def _load_matrix_validator():
     spec = spec_from_file_location("matrix_validate", MATRIX_EXAMPLE_DIR / "validate.py")
+    module = module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_workspace_validator():
+    spec = spec_from_file_location("workspace_validate", WORKSPACE_EXAMPLE_DIR / "validate.py")
     module = module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(module)
@@ -76,3 +91,15 @@ def test_matrix_multiplication_rejects_wrong_result():
     validate = _load_matrix_validator()
     result = validate.evaluate("def matmul2(a, b):\n    return [[0, 0], [0, 0]]\n")
     assert result["is_valid"] is False
+
+
+def test_workspace_math_seed_is_valid(tmp_path):
+    validate = _load_workspace_validator()
+    seed_dir = WORKSPACE_EXAMPLE_DIR / "initial_programs" / "baseline"
+    for path in seed_dir.iterdir():
+        (tmp_path / path.name).write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+    code = (tmp_path / "main.py").read_text(encoding="utf-8")
+
+    result = validate.evaluate(code, str(tmp_path))
+
+    assert result == {"score": 1.0, "is_valid": True}

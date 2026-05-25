@@ -6,7 +6,7 @@ sampling, and failure history in prompt from CodeEvolve (arXiv:2510.14150).
 from __future__ import annotations
 import random
 from libreevolve.core.config import Config
-from libreevolve.core.candidate import apply_candidate_mutation
+from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
 from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.core.prompt import PromptSampler
@@ -39,10 +39,15 @@ def evolve(problem: Problem, config: Config,
     prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))
 
     # Seed population (diff_error=None bypasses Tier 0)
-    for seed_code in problem.initial_programs:
-        result = evaluator.evaluate(seed_code, diff_error=None)
+    seed_workspaces = problem.initial_workspaces or [
+        CandidateWorkspace.from_code(code) for code in problem.initial_programs
+    ]
+    for seed_workspace in seed_workspaces:
+        result = evaluator.evaluate(seed_workspace, diff_error=None)
         program = Program(
-            code=seed_code,
+            code=seed_workspace.code,
+            files=dict(seed_workspace.files),
+            primary_file=seed_workspace.primary_file,
             fitness=result.fitness,
             metrics=result.metrics,
             evaluation=result.to_dict(),
@@ -71,12 +76,13 @@ def evolve(problem: Problem, config: Config,
         )
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
-        child_code, diff_error = apply_candidate_mutation(
-            parent.code, diff, mutation_mode=config.mutation_mode
+        child_workspace, diff_error = apply_workspace_mutation(
+            parent.workspace(), diff, mutation_mode=config.mutation_mode
         )
-        result = evaluator.evaluate(child_code, diff_error=diff_error)
+        result = evaluator.evaluate(child_workspace, diff_error=diff_error)
         score = result.fitness
 
+        child_code = child_workspace.code
         if score < VALID_THRESHOLD and child_code != parent.code:
             oneliner = (
                 f"{result.error or 'invalid'}: " + child_code.replace("\n", " ")[:120]
@@ -86,6 +92,8 @@ def evolve(problem: Problem, config: Config,
 
         # Construct Program BEFORE calling on_evaluated (plugins need full object)
         program = Program(code=child_code, fitness=score,
+                          files=dict(child_workspace.files),
+                          primary_file=child_workspace.primary_file,
                           parent_id=parent.id, generation=gen,
                           lineage=parent.lineage + [parent.id],
                           metadata={"prompt": prompt, "diff": diff,

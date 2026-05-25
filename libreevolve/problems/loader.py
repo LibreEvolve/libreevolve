@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 import yaml
+from libreevolve.core.candidate import CandidateWorkspace
 
 @dataclass
 class Problem:
@@ -14,6 +15,7 @@ class Problem:
     initial_programs: list[str]
     problem_dir:      Path
     context_files:    dict[str, str] = field(default_factory=dict)
+    initial_workspaces: list[CandidateWorkspace] = field(default_factory=list)
 
     def metric(self, name: str) -> dict:
         for metric in self.metrics:
@@ -59,9 +61,11 @@ def load_problem(problem_dir: str | Path) -> Problem:
     validate_path = d / "validate.py"
     if not validate_path.exists():
         raise FileNotFoundError(f"validate.py not found in {d}")
-    seeds = sorted(p.read_text(encoding="utf-8") for p in (d / "initial_programs").glob("*.py"))
+    seed_dir = d / "initial_programs"
+    workspaces = _load_initial_workspaces(seed_dir)
+    seeds = [workspace.code for workspace in workspaces]
     if not seeds:
-        raise ValueError(f"No seed programs (*.py) found in {d / 'initial_programs'}")
+        raise ValueError(f"No seed programs (*.py) or seed directories found in {seed_dir}")
     raw_bounds = primary.get("bounds", [0.0, 1.0])
     if len(raw_bounds) != 2:
         raise ValueError(
@@ -73,7 +77,33 @@ def load_problem(problem_dir: str | Path) -> Problem:
                    primary_metric=primary["name"],
                    primary_bounds=primary_bounds,
                    validate_path=validate_path, initial_programs=seeds,
-                   problem_dir=d, context_files=context_files)
+                   problem_dir=d, context_files=context_files,
+                   initial_workspaces=workspaces)
+
+
+def _load_initial_workspaces(seed_dir: Path) -> list[CandidateWorkspace]:
+    if not seed_dir.is_dir():
+        return []
+    workspaces: list[CandidateWorkspace] = []
+    for path in sorted(seed_dir.iterdir()):
+        if path.is_file() and path.suffix == ".py":
+            workspaces.append(CandidateWorkspace.from_code(
+                path.read_text(encoding="utf-8"), path.name
+            ))
+        elif path.is_dir():
+            files: dict[str, str] = {}
+            for child in sorted(p for p in path.rglob("*") if p.is_file()):
+                if any(part.startswith(".") or part == "__pycache__" for part in child.relative_to(path).parts):
+                    continue
+                rel = child.relative_to(path).as_posix()
+                files[rel] = child.read_text(encoding="utf-8")
+            if files:
+                preferred = next(
+                    (p for p in ("main.py", "seed.py") if p in files),
+                    next((p for p in sorted(files) if p.endswith(".py")), sorted(files)[0]),
+                )
+                workspaces.append(CandidateWorkspace(files, preferred))
+    return workspaces
 
 
 def _load_context_files(problem_dir: Path) -> dict[str, str]:

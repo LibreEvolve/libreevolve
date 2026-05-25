@@ -24,7 +24,7 @@ constructs a `Problem` from:
 - `task_description.txt`
 - `metrics.yaml`
 - `validate.py`
-- `initial_programs/*.py`
+- `initial_programs/*.py` or seed directories under `initial_programs/`
 - optional `context/*.{txt,md,py}`
 
 The loader keeps all declared metrics, picks a primary metric, and exposes
@@ -33,8 +33,10 @@ metric direction/bounds helpers. Fitness is the normalized primary metric:
 
 ## Candidate representation
 
-Candidates are still stored as one Python code string for backward
-compatibility, but seed files may now mark evolvable regions:
+Candidates use `CandidateWorkspace`: a text file set with a `primary_file`.
+`Program.code` remains as a compatibility view of the primary file, so existing
+single-file seeds, validators, prompts, and `best.py` workflows still work.
+Seed files may mark evolvable regions:
 
 ```python
 # EVOLVE-BLOCK-START main
@@ -54,7 +56,21 @@ Two mutation modes are supported:
 - `full`: complete replacement of the whole unmarked program, the single marked
   block, or named multi-block replacements with `<<<BLOCK name ... >>>BLOCK`
 
-Multi-file/codebase candidates are still a roadmap item.
+For multi-file candidates, LLM responses can wrap edits in file sections:
+
+```text
+<<<FILE package/module.py
+<<<SEARCH
+old code
+===
+new code
+>>>REPLACE
+>>>FILE
+```
+
+`full` mode can replace existing files or create new files with the same
+`<<<FILE path ... >>>FILE` envelope. Candidate paths are normalized and cannot
+escape the candidate workspace.
 
 ## Evolution loop
 
@@ -84,6 +100,7 @@ For each generation it:
 - task description
 - explicit problem context files
 - parent code, normalized fitness, metrics, and recent stage feedback
+- multi-file parent/inspiration contents when present
 - inspiration programs with metrics
 - plugin-provided context
 - recent failed mutations
@@ -108,18 +125,21 @@ numeric fitness in existing tests and callers.
 The default cascade is:
 
 - mutation/diff penalty
-- Python syntax check
-- subprocess execution of `validate.py`
+- Python syntax check across all candidate `.py` files
+- subprocess execution of `validate.py` with the candidate workspace
 
 `Config.eval_stages` can configure repeated validator stages with per-stage
-timeouts and `min_score` thresholds. This is an initial local cascade model, not
-AlphaEvolve's full parallel evaluator-worker architecture.
+timeouts and `min_score` thresholds. Validators may keep the old
+`evaluate(code)` signature or opt into `evaluate(code, workspace_path)`.
+This is an initial local cascade model, not AlphaEvolve's full parallel
+evaluator-worker architecture.
 
 ## Population model
 
 Population state is split across:
 
-- `Program`: code, fitness, lineage, metadata, metrics, and evaluation summary
+- `Program`: primary code, candidate files, fitness, lineage, metadata,
+  metrics, and evaluation summary
 - `MAPElites`: one quality-diversity archive
 - `IslandModel`: multiple archives plus ring migration
 
@@ -150,13 +170,13 @@ verified reproduction of AlphaEvolve's Gemini Flash/Pro policy.
 - `history.jsonl`: append-only candidate records
 - `best.py`: final best archived program
 
-Each history record includes code, fitness, lineage, metadata, metrics, and the
-structured evaluation summary.
+Each history record includes primary code, candidate files, primary file,
+fitness, lineage, metadata, metrics, and the structured evaluation summary.
 
 ## Known gaps
 
-- Candidate workspaces are still single Python strings, not multi-file
-  codebases.
+- Candidate workspaces are local text file sets, not arbitrary-language build
+  systems or external repositories.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
 - There is no LLM critique stage or LLM-generated feedback evaluator.
 - Prompt evolution is architected only at the template boundary.

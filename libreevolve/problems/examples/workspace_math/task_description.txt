@@ -1,0 +1,3 @@
+Improve the multi-file workspace while preserving the public API.
+
+`main.py` must expose `solve()` and may import helpers from sibling files.

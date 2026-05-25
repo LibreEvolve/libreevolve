@@ -40,6 +40,14 @@ def test_log_writes_metrics_and_evaluation():
     assert "metrics" in records[0]
     assert "evaluation" in records[0]
 
+def test_log_writes_candidate_files():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+    db.log(Program(files={"main.py": "x=1", "helper.py": "y=2"}, primary_file="main.py"))
+    records = [json.loads(l) for l in (Path(tmpdir)/"t"/"history.jsonl").read_text().splitlines()]
+    assert records[0]["primary_file"] == "main.py"
+    assert records[0]["files"]["helper.py"] == "y=2"
+
 def test_manifest_written():
     tmpdir = tempfile.mkdtemp()
     ProgramDatabase(Config(log_dir=tmpdir, problem_name="t", mutation_mode="full"))

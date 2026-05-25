@@ -56,7 +56,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
-| ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
+| ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including workspace candidates, candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
 
 ## Comparison to AlphaEvolve
 
@@ -229,7 +229,7 @@ py -3.12 -m libreevolve run my_problem/ \
 libreevolve/
 ├── core/
 │   ├── loop.py          # evolve() main loop + build_prompt()
-│   ├── candidate.py     # evolve-block markers + mutation modes
+│   ├── candidate.py     # workspace candidates, evolve-block markers + mutation modes
 │   ├── prompt.py        # prompt sampler + context/evaluation rendering
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
 │   ├── diff.py          # SEARCH/REPLACE diff engine
@@ -259,8 +259,8 @@ libreevolve/
 
 ## Creating a Custom Problem
 
-A problem is a directory with four required files/directories and optional
-prompt context:
+A problem is a directory with required files/directories and optional prompt
+context:
 
 ```
 my_problem/
@@ -268,7 +268,10 @@ my_problem/
 ├── metrics.yaml                  # Scoring metrics
 ├── validate.py                   # evaluate(code: str) -> dict
 ├── initial_programs/
-│   └── seed.py                   # Starting program
+│   ├── seed.py                   # Single-file starting program
+│   └── workspace_seed/           # Optional multi-file starting program
+│       ├── main.py
+│       └── helper.py
 └── context/
     └── optional_notes.md         # Optional explicit prompt context
 ```
@@ -285,7 +288,10 @@ metrics:
     primary: false
 ```
 
-**validate.py** must define `evaluate(code: str) -> dict` returning a dict with all metric names. It runs in an isolated subprocess, and its raw metrics and diagnostics are stored with each candidate.
+**validate.py** must define `evaluate(code: str) -> dict` or
+`evaluate(code: str, workspace_path: str) -> dict` returning a dict with all
+metric names. It runs in an isolated subprocess, and its raw metrics and
+diagnostics are stored with each candidate.
 
 Seed programs may mark evolvable regions while preserving surrounding skeleton code:
 

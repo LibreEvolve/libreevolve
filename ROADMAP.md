@@ -9,7 +9,8 @@ promise.
 
 LibreEvolve has:
 
-- Python seed programs with optional `# EVOLVE-BLOCK-START/END` regions
+- Python seed programs and seed workspaces with optional
+  `# EVOLVE-BLOCK-START/END` regions
 - SEARCH/REPLACE diff mutation and configurable full-block/full-code replacement
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
@@ -18,22 +19,23 @@ LibreEvolve has:
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and evaluator feedback
 - UCB-style backend routing plus experimental throughput/depth metadata
-- structured `manifest.json`, rich `history.jsonl`, and `best.py` artifacts
+- structured `manifest.json`, rich `history.jsonl` with candidate file sets,
+  and `best.py` artifacts
 - example problems including `hello_world`, `sorting`, `circle_packing`, and
   `matrix_multiplication`
 
-The project is still a Python-only, synchronous, single-workspace prototype. It
+The project is still a Python-only, synchronous, local-workspace prototype. It
 is not yet an AlphaEvolve reproduction.
 
 ## Near Term
 
 ### 1. Finish candidate workspace fidelity
 
-- Represent candidates as file sets, not only one Python string.
-- Apply diffs and full replacements across marked files/components.
-- Pass a candidate workspace to validators without breaking existing
-  `evaluate(code: str)` problems.
 - Add language/runner declarations or keep the Python-only divergence explicit.
+- Add richer workspace fixtures with nested packages and non-Python artifacts.
+- Preserve full workspace artifacts in `best`/export flows, not only the primary
+  file convenience output.
+- Add migration/resume support for workspace candidates.
 
 ### 2. Strengthen multi-objective search
 
@@ -116,7 +118,7 @@ is not yet an AlphaEvolve reproduction.
 
 ## Good First Follow-Ups
 
-1. Add candidate file-set representation while preserving existing string APIs.
-2. Add queryable database sampling by metric, novelty, lineage, and feedback.
-3. Add stage-specific evaluator entrypoints and sample budgets.
-4. Add one non-toy benchmark run fixture with expected artifacts.
+1. Add queryable database sampling by metric, novelty, lineage, and feedback.
+2. Add stage-specific evaluator entrypoints and sample budgets.
+3. Add one non-toy benchmark run fixture with expected artifacts.
+4. Add workspace export/resume coverage beyond primary `best.py`.

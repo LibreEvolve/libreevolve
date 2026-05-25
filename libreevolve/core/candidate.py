@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 import re
 
 from libreevolve.core.diff import apply_diff, _strip_fences
@@ -11,6 +12,72 @@ EVOLVE_BLOCK_END = "# EVOLVE-BLOCK-END"
 _BLOCK_SECTION_PATTERN = re.compile(
     r"<<<BLOCK\s+([A-Za-z0-9_.:-]+)\s*\n(.*?)\n>>>BLOCK", re.DOTALL
 )
+_FILE_SECTION_PATTERN = re.compile(
+    r"<<<FILE\s+([A-Za-z0-9_./\\:-]+)\s*\n(.*?)\n>>>FILE", re.DOTALL
+)
+
+
+@dataclass
+class CandidateWorkspace:
+    """A candidate represented as a text file set.
+
+    The `primary_file` keeps the existing single-string API meaningful: legacy
+    validators and prompts still see the primary file as `code`.
+    """
+
+    files: dict[str, str] = field(default_factory=dict)
+    primary_file: str = "main.py"
+
+    def __post_init__(self) -> None:
+        self.files = {normalize_candidate_path(k): v for k, v in self.files.items()}
+        self.primary_file = normalize_candidate_path(self.primary_file)
+        if not self.files:
+            self.files[self.primary_file] = ""
+        if self.primary_file not in self.files:
+            self.primary_file = sorted(self.files)[0]
+
+    @classmethod
+    def from_code(cls, code: str, path: str = "main.py") -> "CandidateWorkspace":
+        path = normalize_candidate_path(path)
+        return cls(files={path: code}, primary_file=path)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "CandidateWorkspace":
+        return cls(
+            files={str(k): str(v) for k, v in data.get("files", {}).items()},
+            primary_file=str(data.get("primary_file", "main.py")),
+        )
+
+    @property
+    def code(self) -> str:
+        return self.files[self.primary_file]
+
+    def to_dict(self) -> dict:
+        return {"primary_file": self.primary_file, "files": dict(self.files)}
+
+    def materialize(self, root: Path) -> Path:
+        for rel, content in self.files.items():
+            target = safe_candidate_path(root, rel)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+        return safe_candidate_path(root, self.primary_file)
+
+
+def normalize_candidate_path(path: str) -> str:
+    normalized = path.replace("\\", "/").strip().lstrip("/")
+    parts = [p for p in normalized.split("/") if p and p != "."]
+    if not parts or any(p == ".." for p in parts):
+        raise ValueError(f"Unsafe candidate path: {path!r}")
+    return "/".join(parts)
+
+
+def safe_candidate_path(root: Path, rel_path: str) -> Path:
+    rel = normalize_candidate_path(rel_path)
+    root_resolved = root.resolve()
+    target = (root_resolved / rel).resolve()
+    if root_resolved != target and root_resolved not in target.parents:
+        raise ValueError(f"Candidate path escapes workspace: {rel_path!r}")
+    return target
 
 
 @dataclass(frozen=True)
@@ -88,6 +155,51 @@ def apply_candidate_mutation(
     if mutation_mode == "full":
         return _apply_full_replacement(code, mutation_text)
     return code, "unknown_mutation_mode"
+
+
+def apply_workspace_mutation(
+    workspace: CandidateWorkspace, mutation_text: str, mutation_mode: str = "diff"
+) -> tuple[CandidateWorkspace, str | None]:
+    """Apply a mutation to one or more files in a workspace candidate.
+
+    Without `<<<FILE path ... >>>FILE` sections, mutation applies to the primary
+    file for backward compatibility. With file sections, each section is routed
+    to that file; unknown files can be created by `full` mode.
+    """
+
+    sections = _parse_file_sections(mutation_text)
+    if not sections:
+        code, err = apply_candidate_mutation(
+            workspace.code, mutation_text, mutation_mode=mutation_mode
+        )
+        if err is not None:
+            return workspace, err
+        files = dict(workspace.files)
+        files[workspace.primary_file] = code
+        return CandidateWorkspace(files, workspace.primary_file), None
+
+    files = dict(workspace.files)
+    changed = False
+    for rel_path, body in sections:
+        rel_path = normalize_candidate_path(rel_path)
+        current = files.get(rel_path, "")
+        if mutation_mode == "full" and rel_path not in files:
+            new_code, err = body.strip("\n"), None
+        else:
+            new_code, err = apply_candidate_mutation(current, body, mutation_mode)
+        if err is not None:
+            return workspace, f"{rel_path}:{err}"
+        if new_code != current:
+            files[rel_path] = new_code
+            changed = True
+    if not changed:
+        return workspace, "no_valid_changes"
+    return CandidateWorkspace(files, workspace.primary_file), None
+
+
+def _parse_file_sections(mutation_text: str) -> list[tuple[str, str]]:
+    text = _strip_fences(mutation_text.replace("\r\n", "\n"))
+    return [(name.strip(), body.rstrip("\n")) for name, body in _FILE_SECTION_PATTERN.findall(text)]
 
 
 def _apply_diff_to_candidate(code: str, diff_text: str) -> tuple[str, str | None]:

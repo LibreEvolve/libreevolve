@@ -4,6 +4,7 @@ import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
+from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.problems.loader import Problem
 
 _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_found": -0.3}
@@ -11,11 +12,14 @@ _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_foun
 # Runner script executed in isolated subprocess.
 # Uses importlib to load validate.py and calls evaluate(code) -> prints json.dumps(result)
 _RUNNER = (
-    "import sys,json,importlib.util\n"
+    "import sys,json,importlib.util,inspect\n"
     "spec=importlib.util.spec_from_file_location('v',sys.argv[1])\n"
     "mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n"
     "code=open(sys.argv[2],encoding='utf-8').read()\n"
-    "print(json.dumps(mod.evaluate(code)))\n"
+    "workspace=sys.argv[3]\n"
+    "params=inspect.signature(mod.evaluate).parameters\n"
+    "result=mod.evaluate(code, workspace) if len(params) >= 2 else mod.evaluate(code)\n"
+    "print(json.dumps(result))\n"
 )
 
 
@@ -36,7 +40,10 @@ class CascadeEvaluator:
         self._timeout = timeout_sec
         self._stages = stages or []
 
-    def evaluate(self, code: str, diff_error: str | None) -> "EvaluationResult":
+    def evaluate(
+        self, code: str | CandidateWorkspace, diff_error: str | None
+    ) -> "EvaluationResult":
+        workspace = code if isinstance(code, CandidateWorkspace) else CandidateWorkspace.from_code(code)
         if diff_error is not None:
             score = _PENALTIES.get(diff_error, -0.4)
             return EvaluationResult(
@@ -52,10 +59,10 @@ class CascadeEvaluator:
                     )
                 ],
                 error=diff_error,
+                metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
             )
-        try:
-            compile(code, "<string>", "exec")
-        except SyntaxError as exc:
+        syntax_error = _syntax_error(workspace)
+        if syntax_error is not None:
             return EvaluationResult(
                 fitness=-0.2,
                 metrics={self._problem.primary_metric: -0.2, "is_valid": False},
@@ -65,27 +72,28 @@ class CascadeEvaluator:
                         name="syntax",
                         passed=False,
                         score=-0.2,
-                        error=f"{exc.__class__.__name__}: {exc}",
+                        error=syntax_error,
                     )
                 ],
                 error="syntax_error",
+                metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
             )
         syntax_stage = EvaluationStageResult(name="syntax", passed=True)
         if self._stages:
-            return self._run_configured_stages(code, syntax_stage)
-        result = self._run_subprocess(code, stage_name="validate", timeout_sec=self._timeout)
+            return self._run_configured_stages(workspace, syntax_stage)
+        result = self._run_subprocess(workspace, stage_name="validate", timeout_sec=self._timeout)
         result.stages.insert(0, syntax_stage)
         return result
 
     def _run_configured_stages(
-        self, code: str, syntax_stage: "EvaluationStageResult"
+        self, workspace: CandidateWorkspace, syntax_stage: "EvaluationStageResult"
     ) -> "EvaluationResult":
         stages = [syntax_stage]
         last: EvaluationResult | None = None
         for index, stage in enumerate(self._stages):
             name = str(stage.get("name", f"stage_{index}"))
             timeout = float(stage.get("timeout_sec", self._timeout))
-            result = self._run_subprocess(code, stage_name=name, timeout_sec=timeout)
+            result = self._run_subprocess(workspace, stage_name=name, timeout_sec=timeout)
             stages.extend(result.stages)
             last = result
             min_score = stage.get("min_score")
@@ -107,19 +115,20 @@ class CascadeEvaluator:
         return last
 
     def _run_subprocess(
-        self, code: str, stage_name: str, timeout_sec: float
+        self, workspace: CandidateWorkspace, stage_name: str, timeout_sec: float
     ) -> "EvaluationResult":
         with tempfile.TemporaryDirectory() as tmp:
-            runner = Path(tmp) / "_runner.py"
-            cand   = Path(tmp) / "_cand.py"
+            tmp_path = Path(tmp)
+            runner = tmp_path / "_runner.py"
+            cand_root = tmp_path / "candidate"
             runner.write_text(_RUNNER, encoding="utf-8")
-            cand.write_text(code, encoding="utf-8")
+            primary = workspace.materialize(cand_root)
             started = time.perf_counter()
             try:
                 # Use list form (not shell=True) to prevent injection
                 res = subprocess.run(
                     [sys.executable, str(runner),
-                     str(self._problem.validate_path), str(cand)],
+                     str(self._problem.validate_path), str(primary), str(cand_root)],
                     capture_output=True, timeout=timeout_sec, text=True,
                 )
             except subprocess.TimeoutExpired:
@@ -139,6 +148,7 @@ class CascadeEvaluator:
                     ],
                     error="timeout",
                     elapsed_sec=elapsed,
+                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
                 )
             elapsed = time.perf_counter() - started
             if res.returncode != 0:
@@ -161,6 +171,7 @@ class CascadeEvaluator:
                     stderr=res.stderr,
                     error="subprocess_error",
                     elapsed_sec=elapsed,
+                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
                 )
             try:
                 lines = [line for line in res.stdout.splitlines() if line.strip()]
@@ -206,6 +217,7 @@ class CascadeEvaluator:
                     stdout=res.stdout,
                     stderr=res.stderr,
                     elapsed_sec=elapsed,
+                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
                 )
             except (json.JSONDecodeError, ValueError, KeyError, TypeError):
                 return EvaluationResult(
@@ -227,6 +239,7 @@ class CascadeEvaluator:
                     stderr=res.stderr,
                     error="malformed_metrics",
                     elapsed_sec=elapsed,
+                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
                 )
 
 
@@ -296,3 +309,14 @@ class EvaluationResult:
             "elapsed_sec": self.elapsed_sec,
             "metadata": self.metadata,
         }
+
+
+def _syntax_error(workspace: CandidateWorkspace) -> str | None:
+    for rel_path, content in sorted(workspace.files.items()):
+        if not rel_path.endswith(".py"):
+            continue
+        try:
+            compile(content, rel_path, "exec")
+        except SyntaxError as exc:
+            return f"{rel_path}: {exc.__class__.__name__}: {exc}"
+    return None

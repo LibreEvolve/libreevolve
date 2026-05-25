@@ -1,5 +1,6 @@
 import shutil, tempfile
 from pathlib import Path
+from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.problems.loader import Problem
 
@@ -89,5 +90,39 @@ def test_configured_stage_threshold_stops_candidate():
         assert result.is_valid is False
         assert result.error == "stage_threshold_not_met"
         assert result.metadata["stopped_at"] == "small"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_workspace_validator_receives_materialized_files():
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(code, workspace):\n"
+        "    helper = Path(workspace) / 'pkg' / 'helper.py'\n"
+        "    ok = helper.read_text().strip() == 'VALUE = 7'\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"main.py": "from pkg.helper import VALUE\n", "pkg/helper.py": "VALUE = 7\n"},
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == 1.0
+        assert result.metadata["files"] == ["main.py", "pkg/helper.py"]
+    finally:
+        shutil.rmtree(d)
+
+
+def test_workspace_syntax_checks_all_python_files():
+    p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "def bad(:\n    pass\n"},
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == -0.2
+        assert "helper.py" in result.stages[0].error
     finally:
         shutil.rmtree(d)

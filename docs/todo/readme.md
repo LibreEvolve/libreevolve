@@ -119,13 +119,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: add an "AlphaEvolve fidelity gaps" subsection or link to
     `docs/todo/code.md`.
 
-- [x] Clarify that the current problem format is Python-only and single-workspace.
-  - README evidence: `README.md:258-285` describes one `validate.py` and seed
-    files.
+- [x] Clarify that the current problem format is Python-only and local-workspace.
+  - README evidence: `README.md:258-285` describes `validate.py`, seed files,
+    and optional seed workspaces.
   - AlphaEvolve contrast: AlphaEvolve evolves marked regions inside an existing
     codebase and can evaluate complex workflows.
-  - Required result: explicitly state current scope and link to the planned
-    evolve-block/multi-file work.
+  - Required result: explicitly state current Python/local-workspace scope and
+    remaining arbitrary-language/build-system limitations.
 
 - [x] Rework the "Comparison to AlphaEvolve" section so it does not overstate
   LibreEvolve as a feature superset.

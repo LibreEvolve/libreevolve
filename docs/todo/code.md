@@ -22,21 +22,25 @@ Primary evidence:
     `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while the surrounding
     code acts as a skeleton.
   - Current evidence: `libreevolve/core/candidate.py` parses evolve-block
-    markers and constrains mutations to those marked regions. `Program.code`
-    is still a single string, so this is single-file support rather than a
-    project/file-set representation.
+    markers and constrains mutations to marked regions within single-file and
+    workspace candidates.
   - Status: implemented in `libreevolve/core/candidate.py`; one or more marked
     regions are parsed and skeleton code is preserved during mutation.
   - Required result: problem loading should support one or more marked
     evolvable regions, preserve non-evolved skeleton code, and apply mutations
     only where configured.
 
-- [ ] Support multi-component and multi-file codebase evolution.
+- [x] Support multi-component and multi-file codebase evolution.
   - Spec evidence: AlphaEvolve evolves large code pieces spanning multiple
     functions and components and can evolve an entire code file/codebase.
-  - Current evidence: `Program.code` is a single string, `apply_diff()` mutates
-    one string, and the evaluator writes one `_cand.py` file
-    (`libreevolve/core/evaluator.py:40-50`).
+  - Current evidence: `CandidateWorkspace` represents text file sets,
+    `Program.files` stores candidate files, loader accepts seed directories,
+    file-section mutations route edits across files, and the evaluator
+    materializes the whole workspace for validators.
+  - Status: basic local workspace evolution is implemented and covered by
+    tests. Remaining limitations: Python syntax validation only, no arbitrary
+    language runners/build systems, and `best.py` is still a primary-file
+    convenience artifact.
   - Required result: represent a candidate as a project/file set, apply diffs
     across marked files/components, and pass the whole candidate workspace to
     `evaluate`.

@@ -29,7 +29,7 @@ class PromptSampler:
             parent_score=parent.fitness,
             parent_metrics=_render_metrics(parent),
             parent_feedback=_render_feedback(parent),
-            parent_code=parent.code,
+            parent_code=_render_program_files(parent),
             inspirations=_render_inspirations(inspirations),
             extra_context=extra_context,
             recent_failures=_render_failures(recent_failures),
@@ -46,9 +46,7 @@ You are an expert programmer evolving solutions for: {task}
 Metrics: {parent_metrics}
 Evaluation feedback:
 {parent_feedback}
-```python
 {parent_code}
-```
 
 [INSPIRATION PROGRAMS]
 {inspirations}
@@ -57,7 +55,8 @@ Evaluation feedback:
 {extra_context}
 {recent_failures}
 [TASK]
-Propose a targeted improvement using SEARCH/REPLACE diffs.
+Propose a targeted improvement. For multi-file candidates, wrap each file edit
+in `<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
 Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
 
 Example format (do NOT copy this, use actual code from the program above):
@@ -83,6 +82,17 @@ def _render_metrics(program: Program) -> str:
     return ", ".join(f"{k}={v}" for k, v in program.metrics.items()) or "(none)"
 
 
+def _render_program_files(program: Program) -> str:
+    workspace = program.workspace()
+    if len(workspace.files) == 1:
+        return f"```python\n{workspace.code}\n```"
+    rendered = []
+    for path, content in sorted(workspace.files.items()):
+        fence = "python" if path.endswith(".py") else ""
+        rendered.append(f"--- FILE {path} ---\n```{fence}\n{content}\n```")
+    return "\n\n".join(rendered)
+
+
 def _render_feedback(program: Program) -> str:
     stages = program.evaluation.get("stages", []) if program.evaluation else []
     if not stages:
@@ -100,7 +110,7 @@ def _render_inspirations(inspirations: list[Program]) -> str:
     if not inspirations:
         return "(none)"
     return "".join(
-        f"\n--- Inspiration {i + 1} (fitness {ins.fitness:.4f}; metrics: {_render_metrics(ins)}) ---\n{ins.code}\n"
+        f"\n--- Inspiration {i + 1} (fitness {ins.fitness:.4f}; metrics: {_render_metrics(ins)}) ---\n{_render_program_files(ins)}\n"
         for i, ins in enumerate(inspirations)
     )
 

@@ -39,6 +39,8 @@ Each line is one candidate record. Current fields:
 
 - `id`
 - `code`
+- `files`
+- `primary_file`
 - `fitness`
 - `generation`
 - `parent_id`
@@ -54,8 +56,12 @@ Important behavior:
 - the archive and the log are distinct
 - raw metrics and evaluator diagnostics are preserved for later inspection
 
+`code` is the primary file content for backward compatibility. `files` contains
+the full candidate file set for workspace candidates.
+
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
-stderr, error, elapsed time, and metadata.
+stderr, error, elapsed time, and metadata such as the primary file and file
+list.
 
 ## `best.py`
 

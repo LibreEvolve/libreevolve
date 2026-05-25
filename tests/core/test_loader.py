@@ -29,6 +29,7 @@ def test_reads_seeds():
     with tempfile.TemporaryDirectory() as t:
         p = load_problem(_make(t))
         assert len(p.initial_programs) == 1 and "x = 1" in p.initial_programs[0]
+        assert p.initial_workspaces[0].primary_file == "seed.py"
 
 def test_raises_on_missing_dir():
     with pytest.raises(FileNotFoundError):
@@ -82,3 +83,17 @@ def test_normalizes_minimize_metric():
         ]}))
         p = load_problem(d)
         assert p.fitness_from_metrics({"loss": 2.0}) == 0.8
+
+
+def test_reads_seed_directory_as_workspace():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        for f in (d / "initial_programs").glob("*.py"):
+            f.unlink()
+        seed = d / "initial_programs" / "seed_a"
+        seed.mkdir()
+        (seed / "main.py").write_text("from helper import value\n")
+        (seed / "helper.py").write_text("value = 1\n")
+        p = load_problem(d)
+        assert p.initial_workspaces[0].primary_file == "main.py"
+        assert sorted(p.initial_workspaces[0].files) == ["helper.py", "main.py"]

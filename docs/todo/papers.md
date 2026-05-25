@@ -8,8 +8,8 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [x] Task specification API with evolve-block markers.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
   - Requirement: users mark code blocks to evolve inside a larger skeleton.
-  - Status: implemented for single-file Python candidates in
-    `libreevolve/core/candidate.py`; multi-file candidates remain open.
+  - Status: implemented for Python single-file and local workspace candidates
+    in `libreevolve/core/candidate.py`; arbitrary-language runners remain open.
 
 - [x] Rich prompt sampler.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
@@ -66,11 +66,16 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: JSONL records include raw metrics and structured evaluation output.
     Queryable score/metric/diversity/feedback sampling remains open.
 
-- [ ] Full-file/full-codebase evolution.
+- [x] Full-file/full-codebase evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4 ablations.
   - Requirement: AlphaEvolve evolves whole code files/codebases and ablates
     "No full-file evolution" as a weaker setting.
-  - Current gap: LibreEvolve mutates one Python string per candidate.
+  - Current evidence: `CandidateWorkspace` supports local text file sets,
+    `<<<FILE path ... >>>FILE` mutation envelopes, full-mode file creation,
+    workspace materialization for validators, and JSONL file-set logging.
+  - Status: implemented for local Python/text workspaces. Remaining divergence:
+    no arbitrary external repository/build-system runner and `best.py` exports
+    only the primary file convenience view.
 
 - [ ] Meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.

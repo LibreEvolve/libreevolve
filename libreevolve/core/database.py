@@ -30,6 +30,7 @@ class ProgramDatabase:
         with open(self._jsonl, "a", encoding="utf-8") as f:
             f.write(json.dumps({
                 "id": program.id, "code": program.code, "fitness": program.fitness,
+                "files": program.files, "primary_file": program.primary_file,
                 "generation": program.generation, "parent_id": program.parent_id,
                 "lineage": program.lineage, "metadata": program.metadata,
                 "metrics": program.metrics, "evaluation": program.evaluation,

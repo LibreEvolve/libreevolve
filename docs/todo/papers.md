@@ -311,9 +311,11 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: AlphaEvolve asks the LLM to suggest a new idea and describe
     changes with SEARCH/REPLACE blocks; the evolutionary loop benefits from
     keeping generated ideas, critiques, and outcomes connected.
-  - Current gap: LibreEvolve prompts demand raw diff only, and history stores
-    the raw diff but not a separate proposal idea, rationale, or hypothesis
-    artifact for later inspection, critique, or resurfacing.
+  - Current status: `capture_proposal_metadata` can request short `IDEA`,
+    `RATIONALE`, and `HYPOTHESIS` sections and stores parsed fields under
+    `metadata.proposal` while preserving diff-only compatibility. Remaining
+    gap: those proposal artifacts are not yet scored, critiqued independently,
+    searched, or resurfaced as inspirations.
   - Required result: support a configured response format that separates
     proposal rationale from patch blocks while preserving diff-only
     compatibility.

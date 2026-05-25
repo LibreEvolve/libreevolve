@@ -36,6 +36,7 @@ class Config:
     critique_enabled:       bool  = False
     critique_prompt:        str   = ""
     llm_feedback:           list[dict] = field(default_factory=list)
+    capture_proposal_metadata: bool = False
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25
@@ -108,6 +109,7 @@ class Config:
             raise ConfigError("prompt_variants must be a list of strings")
         _validate_prompt_variants(self.prompt_variants)
         _validate_llm_feedback(self.llm_feedback)
+        _require_bool("capture_proposal_metadata", self.capture_proposal_metadata)
         if not isinstance(self.plugins, list) or not all(isinstance(item, str) for item in self.plugins):
             raise ConfigError("plugins must be a list of strings")
         if not isinstance(self.run_id, str) or not self.run_id.strip():

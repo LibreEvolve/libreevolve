@@ -52,6 +52,7 @@ class PromptSampler:
         recent_failures: list[dict | tuple[str, float]] | None = None,
         template: str | None = None,
         mutation_mode: str = "diff",
+        capture_proposal_metadata: bool = False,
     ) -> str:
         variant = template or (self.rng.choice(self.variants) if self.variants else _DEFAULT_TEMPLATE)
         validate_prompt_template(variant)
@@ -66,7 +67,10 @@ class PromptSampler:
             extra_context=extra_context,
             recent_failures=_render_failures(recent_failures),
             mutation_mode=mutation_mode,
-            mutation_instructions=_render_mutation_instructions(mutation_mode),
+            mutation_instructions=_render_mutation_instructions(
+                mutation_mode,
+                capture_proposal_metadata=capture_proposal_metadata,
+            ),
         )
 
 
@@ -150,9 +154,19 @@ def _render_context_header(name: str, source: dict | None) -> str:
     )
 
 
-def _render_mutation_instructions(mutation_mode: str) -> str:
+def _render_mutation_instructions(
+    mutation_mode: str, capture_proposal_metadata: bool = False
+) -> str:
+    proposal = ""
+    if capture_proposal_metadata:
+        proposal = """Before the patch, include up to three short metadata sections:
+IDEA: one sentence naming the proposed improvement.
+RATIONALE: one sentence explaining why it should help.
+HYPOTHESIS: one sentence predicting the measured effect.
+Then include the patch in the required format.
+"""
     if mutation_mode == "full":
-        return """Return full replacement code, not SEARCH/REPLACE diffs.
+        return proposal + """Return full replacement code, not SEARCH/REPLACE diffs.
 For multi-file candidates, wrap each changed file as:
 <<<FILE path/to/file.py
 complete replacement file content
@@ -171,8 +185,8 @@ changed block:
 <<<BLOCK block_name
 replacement block body
 >>>BLOCK
-Rules: No markdown fences. No explanation. No SEARCH/REPLACE blocks."""
-    return """For multi-file candidates, wrap each file edit in
+Rules: No markdown fences. No extra explanation. No SEARCH/REPLACE blocks."""
+    return proposal + """For multi-file candidates, wrap each file edit in
 `<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
 Use either compact `<<<SEARCH` / `>>>REPLACE` fences or AlphaEvolve-style
 `<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences.
@@ -180,7 +194,8 @@ For workspace topology changes, use command file sections such as
 `<<<FILE DELETE path/to/file.py ... >>>FILE`,
 `<<<FILE MOVE old/path.py -> new/path.py ... >>>FILE`, or
 `<<<FILE PRIMARY path/to/main.py ... >>>FILE`.
-Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
+Rules: No comments inside the patch. No markdown fences. No extra explanation.
+If metadata sections are requested, keep them outside the patch.
 
 Example format (do NOT copy this, use actual code from the program above):
 <<<SEARCH

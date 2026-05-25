@@ -44,6 +44,33 @@ def test_prompt_sampler_renders_context_and_feedback():
     assert "- validate: passed, score=0.25" in prompt
 
 
+def test_prompt_sampler_can_request_proposal_metadata():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    prompt = PromptSampler().build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        capture_proposal_metadata=True,
+    )
+
+    assert "IDEA:" in prompt
+    assert "RATIONALE:" in prompt
+    assert "HYPOTHESIS:" in prompt
+    assert "keep them outside the patch" in prompt
+
+
 def test_prompt_sampler_renders_bounded_execution_and_grader_feedback():
     problem = Problem(
         name="demo",

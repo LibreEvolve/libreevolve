@@ -11,6 +11,7 @@ from libreevolve.core.budget import RunBudget
 from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
+from libreevolve.core.diff import extract_proposal_metadata, strip_proposal_metadata
 from libreevolve.core.evaluator import CascadeEvaluator, evaluator_entrypoint_provenance
 from libreevolve.core.feedback import apply_llm_feedback, build_critique_prompt
 from libreevolve.core.meta_prompt import PromptDatabase
@@ -134,10 +135,14 @@ def evolve(problem: Problem, config: Config,
             recent_failures=recent_failures or None,
             template=prompt_program.template,
             mutation_mode=config.mutation_mode,
+            capture_proposal_metadata=config.capture_proposal_metadata,
         )
 
         diff, backend_idx = llm.generate(prompt, role="mutation")
         mutation_llm_call = _last_llm_call(llm)
+        proposal_metadata = (
+            extract_proposal_metadata(diff) if config.capture_proposal_metadata else {}
+        )
         critique_metadata = None
         if config.critique_enabled:
             critique_prompt = build_critique_prompt(
@@ -160,8 +165,11 @@ def evolve(problem: Problem, config: Config,
                 **critique_status,
             }
             diff = selected_diff
+        mutation_payload = (
+            strip_proposal_metadata(diff) if config.capture_proposal_metadata else diff
+        )
         child_workspace, diff_error = apply_workspace_mutation(
-            parent.workspace(), diff, mutation_mode=config.mutation_mode
+            parent.workspace(), mutation_payload, mutation_mode=config.mutation_mode
         )
         result = evaluator.evaluate(child_workspace, diff_error=diff_error)
         budget.record_evaluation(result.elapsed_sec, seed=False)
@@ -178,6 +186,7 @@ def evolve(problem: Problem, config: Config,
                           parent_id=parent.id, generation=gen,
                           lineage=parent.lineage + [parent.id],
                           metadata={"prompt": prompt, "diff": diff,
+                                    "proposal": proposal_metadata,
                                     "backend_idx": backend_idx,
                                     "critique": critique_metadata,
                                     "mutation_mode": config.mutation_mode,

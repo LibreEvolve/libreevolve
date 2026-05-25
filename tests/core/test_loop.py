@@ -67,6 +67,69 @@ def test_loop_logs_llm_call_telemetry_on_candidate():
     assert child["metadata"]["llm_calls"][0]["backend_name"] == "fake/model"
 
 
+def test_loop_records_proposal_metadata_when_enabled():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Change x to the accepted value.
+RATIONALE: The validator expects x=2.
+HYPOTHESIS: The candidate should remain valid.
+<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    assert child["metadata"]["proposal"]["idea"] == "Change x to the accepted value."
+    assert child["metadata"]["proposal"]["rationale"] == "The validator expects x=2."
+    assert child["metadata"]["proposal"]["hypothesis"] == "The candidate should remain valid."
+    assert "IDEA:" in child["metadata"]["prompt"]
+
+
+def test_loop_strips_proposal_metadata_before_full_replacement():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Replace the whole primary file.
+RATIONALE: Full mode should apply code only.
+HYPOTHESIS: The stored candidate code should omit metadata.
+x=2
+"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    assert child["code"] == "x=2"
+    assert child["metadata"]["diff"] == response
+    assert child["metadata"]["proposal"]["idea"] == "Replace the whole primary file."
+
+
 def test_loop_records_normalized_metrics_and_selection_score():
     tmpdir = tempfile.mkdtemp()
     d = Path(tempfile.mkdtemp())

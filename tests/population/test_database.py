@@ -188,6 +188,7 @@ def test_manifest_written():
     assert manifest["config"]["evaluator_artifact_redact_secrets"] is False
     assert manifest["config"]["llm_max_retries"] == 0
     assert manifest["config"]["llm_fallback"] is True
+    assert manifest["config"]["capture_proposal_metadata"] is False
 
 
 def test_manifest_writes_context_source_provenance():

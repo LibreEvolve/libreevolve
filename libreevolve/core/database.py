@@ -211,6 +211,7 @@ class ProgramDatabase:
                     "critique_enabled": config.critique_enabled,
                     "critique_prompt": config.critique_prompt,
                     "llm_feedback": config.llm_feedback,
+                    "capture_proposal_metadata": config.capture_proposal_metadata,
                     "n_islands": config.n_islands,
                     "migration_interval": config.migration_interval,
                     "migration_ratio": config.migration_ratio,

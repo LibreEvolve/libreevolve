@@ -263,11 +263,16 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Figure 3 asks the LLM to "suggest a new idea"
     and describe each change with SEARCH/REPLACE blocks; its process uses LLMs
     to generate, critique, and evolve a pool of algorithms.
-  - Current evidence: `PromptSampler.DEFAULT_TEMPLATE` says "No comments. No
-    markdown fences. No explanation. Just the raw diff block." The diff parser
-    applies only patch blocks and the database stores the raw diff, but there
-    is no structured proposal idea, rationale, or hypothesis field that can be
-    inspected, critiqued, scored, or resurfaced independently.
+  - Current evidence: `capture_proposal_metadata` can ask the model for short
+    `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch.
+    `extract_proposal_metadata()` parses bounded fields from mutation responses,
+    patch extraction remains compatible with rationale-plus-diff and diff-only
+    responses, and candidate history stores the parsed fields under
+    `metadata.proposal`. Tests cover parser extraction, prompt instructions,
+    config validation, manifest logging, and loop history.
+  - Remaining gap: proposal metadata is not yet rendered back into future
+    prompts, scored, searched, critiqued independently, or used for parent/
+    inspiration resurfacing.
   - Required result: allow and parse bounded proposal rationale/idea sections
     when configured, store them in candidate metadata, render useful prior
     ideas in prompts, and keep patch extraction robust for both rationale plus

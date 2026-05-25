@@ -180,6 +180,12 @@ repetition counts. A bounded in-memory tail of those records is rendered into
 later prompts as negative examples. This is still a local recent-memory
 mechanism rather than a learned retrieval system over all historical failures.
 
+When `capture_proposal_metadata` is enabled, mutation prompts ask the LLM to
+place short `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch.
+The mutation parser extracts those bounded fields into candidate metadata while
+leaving SEARCH/REPLACE, file-section, block-section, and full-code patch
+application compatible with diff-only responses.
+
 `Config.prompt_variants` provides alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt
 programs, records prompt reward/usage, and logs prompt lineage to
@@ -439,8 +445,8 @@ counters, not async queue checkpoints or provider token/cost accounting.
   from candidate history records.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
-- Mutation responses are raw patch text; proposal ideas/rationales are not
-  parsed, scored, or resurfaced as separate artifacts.
+- Proposal ideas/rationales can be parsed and stored when configured, but they
+  are not yet scored, searched, or resurfaced from historical candidates.
 - Prompt evolution is implemented at the template boundary with configured and
   mutated template placeholder validation plus bounded absolute/improvement
   reward normalization; richer ablation reporting remains open.

@@ -126,6 +126,8 @@ Important behavior:
   policy stores its equal-weight scalar as `metadata.selection_score` and its
   policy description as `metadata.selection_policy`
 - optional critique metadata is stored under `metadata.critique`
+- optional proposal idea/rationale/hypothesis sections are stored under
+  `metadata.proposal` when `capture_proposal_metadata` is enabled
 - the mutation backend index is stored under `metadata.backend_idx`
 - normalized LLM call telemetry is stored under `metadata.llm_calls` for
   successful mutation, critique, and feedback calls associated with the

@@ -67,6 +67,10 @@ from `validate.py` unless explicitly allowlisted.
 - `critique_prompt` (`""`): optional custom instruction for the critique pass.
 - `llm_feedback` (`[]`): optional LLM grader specs that score or discard
   evaluated candidates after local validation.
+- `capture_proposal_metadata` (`False`): when true, mutation prompts ask for
+  short `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch. Those
+  sections are parsed into candidate metadata while patch extraction remains
+  compatible with diff-only responses.
 
 Example LLM feedback grader config:
 

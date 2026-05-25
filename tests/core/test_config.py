@@ -48,6 +48,7 @@ def test_default_sampling_strategies():
         ({"prompt_reward_bounds": [1.0, 1.0]}, "prompt_reward_bounds"),
         ({"prompt_reward_bounds": [1.0]}, "prompt_reward_bounds"),
         ({"prompt_explore_coeff": -1.0}, "prompt_explore_coeff"),
+        ({"capture_proposal_metadata": "yes"}, "capture_proposal_metadata"),
         ({"validator_env_allowlist": "PATH"}, "validator_env_allowlist"),
         ({"validator_env_allowlist": ["GOOD", "BAD=VALUE"]}, "validator_env_allowlist"),
         ({"evaluator_artifact_include": "*.json"}, "evaluator_artifact_include"),

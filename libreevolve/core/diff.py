@@ -11,6 +11,11 @@ DIFF_PATTERN = re.compile(r"<<<SEARCH\n(.*?)\n===\n(.*?)\n>>>REPLACE", re.DOTALL
 CANONICAL_DIFF_PATTERN = re.compile(
     r"<<<<<<< SEARCH\n(.*?)\n=======\n(.*?)\n>>>>>>> REPLACE", re.DOTALL
 )
+PROPOSAL_SECTION_PATTERN = re.compile(
+    r"(?im)^\s*(?:\[(IDEA|RATIONALE|HYPOTHESIS)\]|"
+    r"(IDEA|RATIONALE|HYPOTHESIS)\s*:)\s*(.*?)\s*$"
+)
+_MAX_PROPOSAL_FIELD_CHARS = 2000
 
 def _strip_fences(text: str) -> str:
     """Remove markdown code fences that models wrap around diffs."""
@@ -49,3 +54,29 @@ def parse_diff_blocks(diff_text: str) -> list[tuple[str, str]]:
             for match in pattern.finditer(diff_text)
         )
     return [(search, replace) for _, search, replace in sorted(matches, key=lambda item: item[0])]
+
+
+def extract_proposal_metadata(response_text: str) -> dict:
+    """Extract optional IDEA/RATIONALE/HYPOTHESIS sections from a mutation response."""
+    response_text = response_text.replace("\r\n", "\n")
+    response_text = _strip_fences(response_text)
+    metadata: dict[str, str] = {}
+    for match in PROPOSAL_SECTION_PATTERN.finditer(response_text):
+        label = (match.group(1) or match.group(2) or "").lower()
+        value = _truncate_metadata_field(match.group(3).strip())
+        if label and value and label not in metadata:
+            metadata[label] = value
+    return metadata
+
+
+def strip_proposal_metadata(response_text: str) -> str:
+    """Remove optional proposal sections, leaving only the mutation payload."""
+    response_text = response_text.replace("\r\n", "\n")
+    response_text = _strip_fences(response_text)
+    return PROPOSAL_SECTION_PATTERN.sub("", response_text).lstrip("\n")
+
+
+def _truncate_metadata_field(value: str) -> str:
+    if len(value) <= _MAX_PROPOSAL_FIELD_CHARS:
+        return value
+    return value[: _MAX_PROPOSAL_FIELD_CHARS - 14].rstrip() + "\n...[truncated]"

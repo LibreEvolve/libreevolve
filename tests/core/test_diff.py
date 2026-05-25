@@ -1,4 +1,4 @@
-from libreevolve.core.diff import apply_diff
+from libreevolve.core.diff import apply_diff, extract_proposal_metadata, strip_proposal_metadata
 
 def test_no_blocks():
     code, err = apply_diff("x = 1", "no diff here")
@@ -66,3 +66,37 @@ def test_partial_apply_is_atomic():
     diff = "<<<SEARCH\na = 1\n===\na = 10\n>>>REPLACE\n<<<SEARCH\nZZZZ\n===\nno\n>>>REPLACE"
     result, err = apply_diff(code, diff)
     assert result == code and err == "search_not_found"
+
+
+def test_extract_proposal_metadata_from_response_with_diff():
+    response = """IDEA: Replace the constant with the expected value.
+RATIONALE: The validator rewards returning two.
+HYPOTHESIS: Score should increase.
+<<<SEARCH
+x = 1
+===
+x = 2
+>>>REPLACE"""
+
+    metadata = extract_proposal_metadata(response)
+
+    assert metadata == {
+        "idea": "Replace the constant with the expected value.",
+        "rationale": "The validator rewards returning two.",
+        "hypothesis": "Score should increase.",
+    }
+
+
+def test_extract_proposal_metadata_ignores_diff_only_response():
+    assert extract_proposal_metadata("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE") == {}
+
+
+def test_strip_proposal_metadata_leaves_patch_payload():
+    response = """IDEA: Replace the full file.
+RATIONALE: It is shorter.
+HYPOTHESIS: Equivalent behavior.
+def solve():
+    return 2
+"""
+
+    assert strip_proposal_metadata(response) == "def solve():\n    return 2\n"

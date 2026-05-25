@@ -186,6 +186,7 @@ def test_manifest_writes_context_source_provenance():
         Config(log_dir=tmpdir, problem_name="t"),
         context_sources=[{"path": "nested/notes.md", "sha256": "abc"}],
         evaluator_sources=[{"relative_path": "validate.py", "sha256": "def"}],
+        run_provenance={"problem": {"tree_hash": "123"}},
     )
     manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
     assert manifest["problem"]["context_sources"] == [
@@ -194,6 +195,7 @@ def test_manifest_writes_context_source_provenance():
     assert manifest["problem"]["evaluator_sources"] == [
         {"relative_path": "validate.py", "sha256": "def"}
     ]
+    assert manifest["provenance"] == {"problem": {"tree_hash": "123"}}
 
 
 def test_database_fails_when_run_artifacts_already_exist():

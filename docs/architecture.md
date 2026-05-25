@@ -368,7 +368,8 @@ counted in scheduler state.
 
 [`libreevolve/core/database.py`](../libreevolve/core/database.py) writes:
 
-- `manifest.json`: effective run configuration and runtime metadata
+- `manifest.json`: effective run configuration, runtime metadata, and
+  provenance hashes
 - `history.jsonl`: append-only candidate records
 - `prompt_history.jsonl`: append-only prompt-program selection/scoring records
 - `best.py`: primary-file compatibility view of the final best archived program
@@ -384,6 +385,10 @@ The default policy fails startup if the target directory already contains known
 run artifacts; explicit overwrite removes only known run artifacts before the
 new run. The manifest records the generated `run_id` and effective collision
 policy, but this is provenance metadata rather than resumable state.
+It also records Git state when available, `libreevolve/` source-tree hashes,
+problem-tree hashes, direct evaluator entrypoint hashes, and plugin module file
+hashes. Plugin constructor parameters/spec schemas and aggregate hashes for
+artifacts emitted after startup remain open.
 
 ## Known gaps
 
@@ -432,8 +437,9 @@ policy, but this is provenance metadata rather than resumable state.
   startup diagnostics. Plugin-specific schemas remain only partially validated.
 - OpenAI API mode is selected by the presence of `reasoning_effort`, not by
   validated model capabilities.
-- `manifest.json` records configuration but not code version, problem hashes,
-  plugin specs, artifact hashes, or resume/controller state.
+- `manifest.json` records configuration plus Git/source/problem/plugin-module
+  provenance, but not validated plugin specs, constructor parameters,
+  aggregate emitted-artifact hashes, or resume/controller state.
 - `Config.seed` controls local Python-random choices, but prompt variant order
   is mediated by UUID4 prompt-program ids, and candidate/prompt-program ids are
   UUID4 values, so persisted lineage is not stable across repeated

@@ -169,8 +169,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `validate_path` entries are constrained to problem-local Python files, and
     direct evaluator entrypoints are recorded in `manifest.json` with resolved
     paths, problem-relative paths, SHA-256 hashes, byte counts, source type,
-    and stage usage metadata. Transitive helper/data provenance is still
-    missing. Seeded replay is incomplete because persisted `Program` and
+    and stage usage metadata. The manifest also records Git state when
+    available, `libreevolve/` source-tree hashes, problem-tree hashes, and
+    plugin module file hashes. Transitive helper/data provenance, validated
+    plugin constructor/config specs, and aggregate emitted-artifact hashes are
+    still missing. Seeded replay is incomplete because persisted `Program` and
     `PromptProgram` lineage ids are UUID4 values rather than deterministic
     seed/run-derived identifiers. Validator subprocesses now use an explicit
     minimal environment plus `validator_env_allowlist`, so `.env` provider

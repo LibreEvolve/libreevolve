@@ -151,6 +151,9 @@ for quotas, escalation, or role-specific routing.
 - `problem_name` (`"unnamed"`): final run subdirectory name.
 - `run_id` (UUID4 hex by default): provenance identifier written to
   `manifest.json`. It is not a resume checkpoint id.
+- Run provenance is generated automatically: when available, the manifest
+  includes Git state, `libreevolve/` source-tree hashes, problem-tree hashes,
+  direct evaluator entrypoint hashes, and plugin module file hashes.
 - `run_collision_policy` (`"fail"`): what to do when the target run directory
   already contains known run artifacts. `fail` aborts before appending or
   rewriting artifacts; `overwrite` deletes known run artifacts only

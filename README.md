@@ -115,6 +115,9 @@ Run-directory reuse is not resume. If the target run directory already
 contains known artifacts, startup fails by default before appending history or
 rewriting the manifest. Use a fresh `--run-name`, or pass `--overwrite` when
 you intentionally want to replace the previous run artifacts.
+Each run manifest records effective settings plus reproducibility provenance:
+Git state when available, `libreevolve/` source-tree hashes, problem-tree
+hashes, direct evaluator entrypoint hashes, and plugin module file hashes.
 
 ### Inspect Results
 

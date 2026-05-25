@@ -1270,12 +1270,15 @@ Primary evidence:
 - [x] Add structured run metadata.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
     choices, evaluator stages, compute budgets, and configurations.
-  - Current evidence: `manifest.json` records effective local config and
-    backend roster. It does not yet include code version, problem hash, plugin
-    specs, artifact hashes, or resumable controller state.
-  - Status: `manifest.json` now records effective local config and backend
-    settings. Code version/problem hash/plugin specs are still future
-    hardening.
+  - Current evidence: `manifest.json` records effective local config, backend
+    roster, Git state when available, `libreevolve/` source-tree hashes,
+    problem-tree hashes, direct evaluator entrypoint hashes, and plugin module
+    file hashes. It does not yet include validated plugin specs/constructor
+    parameters, aggregate emitted-artifact hashes, or resumable controller
+    state.
+  - Status: implemented for run-start configuration and source/problem/plugin
+    module provenance. Plugin spec schemas, emitted-artifact aggregation, and
+    resume/controller state remain separate hardening.
   - Required result: write a manifest with effective config, code version,
     problem hash, evaluator stages, backend specs, plugin specs, seed, and
     budget.
@@ -1301,9 +1304,13 @@ Primary evidence:
     choices, evaluator code, problem context, and compute budget; reproducing a
     run requires identifying the exact code/problem state.
   - Current evidence: `ProgramDatabase._write_manifest()` records effective
-    config values, but not the Git commit, dirty-worktree state, problem file
-    hashes, validator hash, context hashes, plugin implementation/spec hashes,
-    or emitted artifact hashes.
+    config values, context hashes, direct validator hashes, Git commit and
+    dirty-worktree state when available, `libreevolve/` source-tree hashes,
+    problem file hashes, and plugin module implementation hashes. Tests cover
+    problem hash changes and manifest provenance wiring. It still does not
+    record validated plugin specs/constructor parameters or aggregate hashes
+    for artifacts emitted after startup; evaluator artifact hashes are stored
+    in per-evaluation history metadata.
   - Required result: include reproducibility hashes/version metadata in
     `manifest.json`, document which files are covered, and add tests that a
     changed problem file changes the manifest hash.

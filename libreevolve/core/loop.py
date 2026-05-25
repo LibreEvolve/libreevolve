@@ -14,6 +14,12 @@ from libreevolve.core.evaluator import CascadeEvaluator, evaluator_entrypoint_pr
 from libreevolve.core.feedback import apply_llm_feedback, build_critique_prompt
 from libreevolve.core.meta_prompt import PromptDatabase
 from libreevolve.core.prompt import PromptSampler
+from libreevolve.core.provenance import (
+    git_state,
+    plugin_provenance,
+    problem_provenance,
+    source_provenance,
+)
 from libreevolve.llm.ensemble import build_llm
 from libreevolve.plugins.base import PluginBase
 from libreevolve.population.program import Program
@@ -44,6 +50,12 @@ def evolve(problem: Problem, config: Config,
         perf_bounds=(0.0, 1.0),
         context_sources=problem.context_sources,
         evaluator_sources=evaluator_entrypoint_provenance(problem, config.eval_stages),
+        run_provenance={
+            "git": git_state(Path.cwd()),
+            "source": source_provenance(),
+            "problem": problem_provenance(problem.problem_dir),
+            "plugins": plugin_provenance(plugins),
+        },
     )
     evaluator = CascadeEvaluator(
         problem,

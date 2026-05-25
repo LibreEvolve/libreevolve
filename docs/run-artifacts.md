@@ -50,16 +50,25 @@ the loaded problem directory name.
   hashes, extraction status, excerpt spans, and PDF page ranges when available
 - evaluator entrypoint provenance, including resolved problem-local validator
   paths, relative paths, SHA-256 hashes, byte counts, and stage usage metadata
+- run provenance, including Git `HEAD` and dirty status when available,
+  source-tree hashes for `libreevolve/`, problem-tree hashes, and plugin module
+  file hashes
 - seed and log directory
 - run id and run-directory collision policy
 - validator environment allowlist configuration
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.
+Source and problem tree hashes exclude `.git`, `runs/`, `__pycache__`, and
+local test/cache directories. Problem tree hashes cover problem-local files,
+including validators, seeds, context, and config. Plugin provenance currently
+hashes the Python module file for each plugin instance; constructor arguments,
+validated plugin config schemas, emitted plugin artifacts, and provider-side
+retrieval context are still separate gaps.
 Evaluator provenance currently covers the Python files directly configured as
 `validate.py` or `eval_stages[].validate_path`; transitive helper imports,
 relative evaluator data files, and package-style entrypoints are not hashed as
 evaluator sources yet. Opt-in collected evaluator artifacts carry their own
-hashes in per-evaluation metadata.
+hashes in per-evaluation metadata rather than the run-start manifest.
 
 Reusing an existing run directory is intentionally not treated as resume.
 Before a run starts, LibreEvolve checks the target run directory for known run

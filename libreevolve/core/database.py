@@ -33,6 +33,7 @@ class ProgramDatabase:
         perf_bounds: tuple[float, float] = (0.0, 1.0),
         context_sources: list[dict] | None = None,
         evaluator_sources: list[dict] | None = None,
+        run_provenance: dict | None = None,
     ):
         self._islands = IslandModel(config, perf_bounds=perf_bounds)
         self._interval = config.migration_interval
@@ -46,7 +47,12 @@ class ProgramDatabase:
         self._manifest = log_dir / "manifest.json"
         self._all: list[Program] = []
         self._failure_counts: dict[str, int] = {}
-        self._write_manifest(config, context_sources or [], evaluator_sources or [])
+        self._write_manifest(
+            config,
+            context_sources or [],
+            evaluator_sources or [],
+            run_provenance or {},
+        )
 
     def add(self, program: Program) -> dict:
         return self._islands.add(program)
@@ -167,7 +173,11 @@ class ProgramDatabase:
         return list(self._all)
 
     def _write_manifest(
-        self, config: Config, context_sources: list[dict], evaluator_sources: list[dict]
+        self,
+        config: Config,
+        context_sources: list[dict],
+        evaluator_sources: list[dict],
+        run_provenance: dict,
     ) -> None:
         strict_json_dump(
             {
@@ -212,6 +222,7 @@ class ProgramDatabase:
                     "context_sources": context_sources,
                     "evaluator_sources": evaluator_sources,
                 },
+                "provenance": run_provenance,
             },
             self._manifest,
             indent=2,

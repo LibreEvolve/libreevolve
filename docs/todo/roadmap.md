@@ -551,6 +551,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code-state provenance to support long-running comparisons.
   - Current roadmap gap: `manifest.json` existed, but the roadmap did not make
     code/problem/plugin/artifact hashes explicit.
+  - Status: implemented for Git state, `libreevolve/` source-tree hashes,
+    problem-tree hashes, direct evaluator entrypoint hashes, and plugin module
+    file hashes in `manifest.json`. Aggregate hashes for artifacts emitted
+    after startup and validated plugin constructor/config specs remain open.
   - Required result: track hashes/version metadata separately from basic config
     logging.
 

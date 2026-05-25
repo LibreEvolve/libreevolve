@@ -283,6 +283,9 @@ def test_loop_logs_normalized_prompt_reward_policy_metadata():
     assert evaluator_source["relative_path"] == "validate.py"
     expected_hash = hashlib.sha256((problem.problem_dir / "validate.py").read_bytes()).hexdigest()
     assert evaluator_source["sha256"] == expected_hash
+    assert manifest["provenance"]["problem"]["tree_hash"]
+    assert manifest["provenance"]["source"]["tree_hash"]
+    assert "git" in manifest["provenance"]
 
 
 def test_prompt_reward_uses_plugin_adjusted_score_with_multiple_metrics():

@@ -290,6 +290,11 @@ same safety normalization as ordinary file-section edits. Missing sources,
 target collisions, unsafe paths, no-op moves, and last-file deletion are
 rejected before the original workspace is replaced.
 
+Multi-block full replacement does not yet reject duplicate
+`<<<BLOCK name ... >>>BLOCK` sections. If the same block name appears twice, the
+later parsed body currently wins, so avoid duplicate block-section targets until
+duplicate detection is implemented.
+
 ## Design guidance
 
 - Make seeds intentionally improvable.

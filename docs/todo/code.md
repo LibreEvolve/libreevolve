@@ -118,6 +118,19 @@ Primary evidence:
     surface diagnostics for unsupported names/paths, and add tests for mixed
     valid plus malformed sections so intended edits cannot disappear silently.
 
+- [ ] Reject duplicate block sections in multi-block full replacement.
+  - Spec evidence: AlphaEvolve-style skeleton preservation needs every
+    evolvable block edit to be unambiguous. Multiple edits for the same named
+    block should either be rejected or represented explicitly in a typed
+    mutation record.
+  - Current evidence: `_apply_full_replacement()` stores parsed
+    `<<<BLOCK name ... >>>BLOCK` sections in a dict, so a duplicate name
+    silently overwrites the earlier body. A local proof with two `<<<BLOCK a`
+    sections returned `err=None` and applied only the later `x = 99` body.
+  - Required result: detect duplicate block-section names before applying a
+    multi-block full replacement, fail closed with a clear diagnostic, and add
+    tests proving duplicate sections do not silently change which edit wins.
+
 - [x] Support file deletion and rename/move operations in workspace mutations.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, not only edit
     text inside a fixed set of files. Real codebase evolution may need removing

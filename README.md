@@ -384,7 +384,9 @@ normalize to the same relative path, or differ only by host-filesystem case
 folding, can overwrite each other.
 File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, empty-name, and invalid-name envelopes
-now fail before partial edits are applied.
+now fail before partial edits are applied. Duplicate `<<<BLOCK name ...>>>`
+sections in multi-block full replacement are still ambiguous; the current
+parser applies the later duplicate section.
 Workspace mutations can edit existing files and create new files in `full`
 mode. They can also express file topology operations with command file
 sections:

@@ -100,7 +100,9 @@ a canonical collision model: paths that normalize to the same relative name, or
 that collide on a case-insensitive host filesystem, can overwrite each other.
 Envelope parsing now rejects unmatched, orphaned, nested, empty-name, and
 invalid-name `<<<FILE` / `<<<BLOCK` sections before applying partial edits. It
-is still a local envelope parser rather than a full mutation AST.
+does not yet reject duplicate `<<<BLOCK name ... >>>BLOCK` sections in
+multi-block full replacement; later duplicate sections currently win. It is
+still a local envelope parser rather than a full mutation AST.
 Command file sections can delete files, move/rename files, and change the
 workspace primary file:
 

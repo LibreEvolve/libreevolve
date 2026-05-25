@@ -18,8 +18,13 @@ LibreEvolve has:
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
 - configurable local evaluator stages with distinct validator entrypoints,
-  thresholds, samples, seeds, retries, and timeouts
-- strict scalar evaluator-output validation against `metrics.yaml`
+  thresholds, samples, seeds, retries, timeouts, and per-attempt history
+- strict scalar evaluator-output validation against `metrics.yaml`, including
+  finite, strictly increasing metric bounds
+- opt-in evaluator artifact copy-out from temporary candidate workspaces with
+  hashes, limits, and text redaction metadata
+- validator subprocess environment allowlisting, persisted stdout/stderr
+  redaction, and timeout process-tree cleanup
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and compact stage feedback
@@ -28,10 +33,13 @@ LibreEvolve has:
 - optional synchronous LLM critique/revision before mutation application
 - optional LLM feedback graders with provenance, discard rules, and weighted
   score composition
-- UCB-style backend routing plus experimental throughput/depth metadata
+- UCB-style backend routing plus experimental throughput/depth metadata,
+  ensemble-level call telemetry, and configurable retry/fallback attempts
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
   per-candidate archive admission events, `best.py`, and `best_workspace/`
   artifacts
+- local run-budget stop accounting for generations, evaluations,
+  evaluator-seconds, and wall-clock runtime
 - example problems including `hello_world`, `sorting`, `circle_packing`,
   `matrix_multiplication`, and `workspace_math`
 
@@ -60,8 +68,6 @@ is not yet an AlphaEvolve reproduction.
   metrics for archive ranking, into a first-class multi-objective policy:
   Pareto archive, configurable weighted composition, metric-specific elites,
   or another tested policy.
-- Reject degenerate or inverted metric bounds before they can affect primary
-  normalization, archive placement, or future multi-objective policies.
 - Extend the current configurable parent/inspiration sampling beyond score,
   individual metric excellence, novelty, recency, and random/mixed policies to
   include persisted feedback, lineage diversity, and queryable novelty indexes.
@@ -73,22 +79,22 @@ is not yet an AlphaEvolve reproduction.
 
 ### 3. Expand evaluation cascades
 
-- Add artifact collection from temporary validator workspaces and richer
-  per-stage budget accounting.
-- Add run-wide wall-clock, LLM-call, token, cost, evaluator-second, sample,
-  retry, and stop-reason accounting.
+- Extend artifact collection beyond candidate-workspace copy-out where needed:
+  outside-workspace artifacts, aggregate emitted-artifact hashes, and clearer
+  artifact schemas for benchmarks.
+- Extend budget accounting beyond current generation/evaluation/
+  evaluator-second/wall-clock stop reasons to LLM-call, token, cost,
+  stage-sample, retry, accelerator, and async queue budgets.
 - Add calibration/ablation reporting for LLM feedback graders.
 - Normalize and bound LLM feedback metrics before using them in score
   composition.
 - Add configurable retry/penalty policies for LLM feedback provider or parse
   failures beyond the current ignore-and-record behavior.
-- Preserve every evaluator retry attempt in run history, not only the
-  successful or final attempt.
-- Add validator environment allowlisting, secret redaction, and network policy
-  for subprocess evaluation.
+- Add a validator network egress policy and stronger sandbox/resource controls
+  beyond the current minimal environment and process-tree cleanup.
 - Extend problem-local evaluator import semantics from sibling helper modules
   to package-style validators and relative evaluator data files.
-- Preserve evaluator artifacts beyond stdout/stderr where useful.
+- Preserve transitive evaluator helper/data provenance in manifests.
 
 ### 4. Prompt and context work
 
@@ -138,8 +144,8 @@ is not yet an AlphaEvolve reproduction.
   RNG state, and provider nondeterminism boundaries.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, and stop-reason counters to
-  cover concurrent evaluations, retries, provider tokens/costs, stage samples,
-  async queues, and equal-budget ablation reporting.
+  cover concurrent evaluations, provider tokens/costs, stage sample/retry
+  totals, async queues, and equal-budget ablation reporting.
 
 ### 7. Backend scheduling and critique
 
@@ -149,11 +155,12 @@ is not yet an AlphaEvolve reproduction.
   current policy as a heuristic.
 - Separate backend accounting for mutation generation, critique, feedback
   grading, and meta-prompt mutation calls.
-- Persist normalized LLM call telemetry, including provider usage, latency,
-  retries, request ids, finish reasons, and API mode.
-- Add deterministic provider-failure handling for mutation, critique,
-  feedback, and meta-prompt calls, including retries, fallback routing,
-  failed-attempt accounting, and structured error logs.
+- Extend current ensemble-level call telemetry with provider usage,
+  adapter-internal retry counts, request ids, finish reasons, raw provider
+  diagnostics, and a separate run-scoped call log.
+- Add role-specific provider-failure handling for mutation, critique,
+  feedback, and meta-prompt calls, including quarantine/penalty policy and
+  structured timeout/rate-limit classification.
 - Add explicit breadth/depth/cost/latency scheduling tests.
 - Make backend role metadata operational through quotas/routing, or document
   it as descriptive manifest metadata only.
@@ -188,13 +195,13 @@ is not yet an AlphaEvolve reproduction.
 ### 10. Operational maturity
 
 - Extend current config validation to plugin-specific schemas and
-  provider/model API compatibility where feasible, and normalize malformed YAML
-  or non-mapping `config.yaml` files into clear path-aware startup errors.
+  provider/model API compatibility where feasible.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.
-- Improve `show` with validity/archive-aware best selection, run summaries,
-  lineage, metrics, workspace artifacts, and failure statistics.
+- Improve `show` beyond the current validity/archive-aware compact view with
+  run summaries, lineage, richer metrics, workspace artifacts, and failure
+  statistics.
 - Add packaging/release hygiene beyond editable installs.
 - Broaden CI/interpreter coverage.
 
@@ -209,5 +216,5 @@ is not yet an AlphaEvolve reproduction.
 
 1. Add queryable database sampling by metric, novelty, lineage, and feedback.
 2. Add one non-toy benchmark run fixture with expected artifacts.
-3. Add workspace export/resume coverage beyond primary `best.py`.
+3. Add workspace resume coverage beyond current `best_workspace/` export.
 4. Add LLM feedback calibration reports and grader ablation fixtures.

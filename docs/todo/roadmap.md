@@ -20,7 +20,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Contradiction: the AlphaEvolve paper requires evolve-block APIs,
     multi-component/full-file evolution, multi-score optimization, rich prompt
     context, configurable evaluation cascades, asynchronous throughput, and
-    meta-prompt evolution, none of which are present as first-class features.
+    meta-prompt evolution. Several local versions now exist, but they remain
+    narrower than AlphaEvolve's flexible candidate API, async controller,
+    full multi-objective search, and large-scale experiment loop.
   - Required result: add a top-level AlphaEvolve alignment milestone before or
     alongside the existing reliability milestones.
 
@@ -33,10 +35,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     unknown problem config keys, invalid mutation/ensemble enums, malformed
     backend specs, invalid evaluator-stage numbers, and invalid top-level
     runtime/population ranges. LLM feedback grader schemas are also validated.
+    Malformed YAML and non-mapping top-level `config.yaml` files are now
+    normalized into clear path-aware `ConfigError` startup diagnostics.
     Remaining runtime hardening is focused on plugin-specific config schemas
-    API capability validation, and converting malformed YAML or non-mapping
-    top-level `config.yaml` files into clear path-aware startup diagnostics
-    instead of raw parser/update exceptions.
+    and provider/model API capability validation.
 
 - [x] Add CLI/config precedence semantics to runtime hardening.
   - Evidence: `_build_config()` overwrites `config.yaml` `problem_name` with
@@ -711,6 +713,44 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluator data, and workspace migration/resume.
   - Required result: keep roadmap work items phrased around the remaining
     AlphaEvolve divergences rather than stale already-implemented behavior.
+
+- [x] Refresh stale evaluation/runtime roadmap bullets after artifact,
+  retry-attempt, environment, and budget hardening landed.
+  - Evidence: `ROADMAP.md` still listed evaluator artifact collection,
+    run-wide wall-clock/evaluator-second/stop-reason accounting, retry-attempt
+    preservation, validator environment allowlisting, and degenerate metric
+    bound rejection as near-term missing work.
+  - Current evidence: `CascadeEvaluator` now collects configured artifacts,
+    records retry attempts, uses a minimal validator environment with an
+    allowlist, redacts persisted validator output, and records timeout cleanup
+    metadata. `RunBudget` and completed manifests record generation,
+    evaluation, evaluator-second, wall-clock, and stop-reason accounting.
+    `load_problem()` rejects zero-width or inverted metric bounds.
+  - Status: roadmap current-state bullets now include these implemented local
+    behaviors. Near-term/mid-term bullets now focus on the remaining gaps:
+    outside-workspace artifacts, aggregate artifact hashes, provider
+    token/cost budgets, stage sample/retry totals, network/container
+    sandboxing, transitive evaluator provenance, and benchmark artifact
+    schemas.
+  - Required result: keep roadmap bullets scoped to missing behavior, not work
+    already proven by code and tests.
+
+- [x] Refresh operational roadmap bullets after config-error and `show`
+  hardening landed.
+  - Evidence: `ROADMAP.md` still listed malformed/non-mapping `config.yaml`
+    path-aware errors and validity/archive-aware `show` selection as missing
+    operational work.
+  - Current evidence: `_build_config()` catches YAML parse errors with the
+    config path, rejects non-mapping top-level YAML with a path-aware
+    `ConfigError`, and has CLI tests for both cases. `cli.show()` detects
+    modern archive-admission metadata, selects archive-admitted valid records,
+    prints the selection mode, and emits archive/metric summaries while keeping
+    legacy highest-fitness fallback for old histories.
+  - Status: roadmap operational work now keeps plugin/provider validation as
+    the remaining config gap and describes `show` work as richer inspection
+    beyond the current compact archive-aware view.
+  - Required result: avoid listing already implemented operational hardening as
+    future AlphaEvolve-alignment work.
 
 ## Existing Items That Need Tightening
 

@@ -52,10 +52,12 @@ raw primary validator metric. Graders run only for locally valid candidates by
 default; set `include_invalid: true` on a grader to review invalid candidates.
 For workspace candidates, the built-in feedback prompt currently includes only
 the primary file content, not every file in the candidate workspace.
-`llm_feedback` schema and model responses are only partially validated today:
-malformed scores, invalid `weight`/`min_score` values, provider failures, or
-string discard flags are not yet quarantined as structured feedback-stage
-failures.
+`llm_feedback` grader specs are validated before startup: `name`, `metric`, and
+`prompt` must be strings when present; `weight` and `min_score` must be finite
+numbers; `include_invalid` must be boolean; and unsupported keys are rejected.
+Model responses are still only partially isolated at runtime: provider
+failures, malformed scores, and string discard flags are not yet quarantined as
+structured feedback-stage failures.
 
 ### Population
 
@@ -219,10 +221,11 @@ run rather than being recorded as structured failed LLM-call attempts.
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
   migration, archive, prompt, stage, LLM feedback, critique, and ensemble
   scheduling settings.
-- Config validation is still incomplete for LLM feedback and plugin-specific
-  schemas, but top-level numeric fields, mutation/ensemble enums, backend
-  specs, unknown problem-local keys, and evaluator-stage numeric fields are
-  checked before a run starts.
+- Config validation is still incomplete for plugin-specific schemas and
+  provider/model API compatibility, but top-level numeric fields,
+  mutation/ensemble enums, backend specs, unknown problem-local keys,
+  evaluator-stage numeric fields, and LLM feedback grader specs are checked
+  before a run starts.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
   overwritten by the problem directory name, and `--reasoning-effort` only
   affects CLI-supplied backend specs rather than existing OpenAI config-file

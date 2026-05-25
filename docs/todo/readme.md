@@ -453,18 +453,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     metrics or discard candidates, but the current caveats did not explain that
     malformed grader output or config can still fail outside structured
     evaluation diagnostics.
-  - Current evidence: `apply_llm_feedback()` does not isolate `llm.generate()`
-    failures, malformed numeric scores, invalid `weight`/`min_score` values, or
+  - Current evidence: `Config.validate()` now rejects invalid feedback grader
+    config, but `apply_llm_feedback()` still does not isolate `llm.generate()`
+    failures, malformed numeric response scores, non-finite response scores, or
     string discard flags.
   - Required result: warn readers that LLM feedback failure handling is not yet
     AlphaEvolve-grade structured evaluation behavior.
 
-- [x] Clarify evaluator-stage numeric config is not fully validated.
+- [x] Clarify evaluator-stage numeric config validation.
   - README evidence: the evaluation and configuration docs show staged
-    validators with `samples`, `retries`, `timeout_sec`, and `min_score`, but
-    did not warn that bad numeric values can fail at runtime.
-  - Current evidence: `_run_stage()` casts stage numeric fields during
+    validators with `samples`, `retries`, `timeout_sec`, and `min_score`; the
+    caveat previously warned that bad numeric values could fail at runtime.
+  - Current evidence: `Config.validate()` now checks stage numeric fields before
+    evaluation. Previously, `_run_stage()` cast stage numeric fields during
     evaluation; `samples <= 0` can reach aggregation with no sample results,
     and `retries < 0` can skip all attempts before an assertion.
-  - Required result: document the current limitation and track startup schema
-    validation for evaluator stage ranges in the code TODO.
+  - Required result: keep README/config docs aligned with startup validation
+    behavior while broader cascade semantics remain separately tracked.

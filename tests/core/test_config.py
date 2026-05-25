@@ -69,3 +69,33 @@ def test_rejects_invalid_eval_stage_config(stage, message):
 def test_rejects_invalid_backend_config(backend, message):
     with pytest.raises(ConfigError, match=message):
         Config(backends=[backend])
+
+
+@pytest.mark.parametrize(
+    ("grader", "message"),
+    [
+        ("simplicity", "llm_feedback"),
+        ({"name": 7}, "name"),
+        ({"metric": 7}, "metric"),
+        ({"prompt": 7}, "prompt"),
+        ({"weight": "heavy"}, "weight"),
+        ({"min_score": "low"}, "min_score"),
+        ({"include_invalid": "yes"}, "include_invalid"),
+        ({"extra": True}, "unsupported"),
+    ],
+)
+def test_rejects_invalid_llm_feedback_config(grader, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(llm_feedback=[grader])
+
+
+def test_accepts_valid_llm_feedback_config():
+    config = Config(llm_feedback=[{
+        "name": "simplicity",
+        "metric": "llm_simplicity",
+        "weight": 0.2,
+        "min_score": 0.1,
+        "prompt": "Return JSON",
+        "include_invalid": True,
+    }])
+    assert config.llm_feedback[0]["name"] == "simplicity"

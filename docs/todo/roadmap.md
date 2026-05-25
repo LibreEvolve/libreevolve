@@ -32,9 +32,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current status: `Config.validate()` and `_build_config()` now reject
     unknown problem config keys, invalid mutation/ensemble enums, malformed
     backend specs, invalid evaluator-stage numbers, and invalid top-level
-    runtime/population ranges. Remaining runtime hardening is focused on
-    `llm_feedback` schemas, plugin-specific config schemas, and API capability
-    validation.
+    runtime/population ranges. LLM feedback grader schemas are also validated.
+    Remaining runtime hardening is focused on plugin-specific config schemas
+    and API capability validation.
 
 - [x] Add CLI/config precedence semantics to runtime hardening.
   - Evidence: `_build_config()` currently overwrites `config.yaml`
@@ -273,16 +273,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add LLM feedback failure isolation to evaluation hardening.
   - Evidence: `apply_llm_feedback()` lets provider exceptions, malformed
-    `score` values, invalid `weight`/`min_score` config, and loose
-    `discard` truthiness propagate or misclassify candidates outside the
-    structured evaluation-stage contract.
+    `score` values and loose `discard` truthiness propagate or misclassify
+    candidates outside the structured evaluation-stage contract. Invalid
+    grader config fields are now rejected by `Config.validate()`.
   - Current roadmap gap: feedback calibration and config validation were
     tracked, but the roadmap did not call out failure isolation for optional
     feedback graders as an evaluation hardening item.
-  - Required result: validate feedback grader schemas before runs, quarantine
-    grader call/parse failures as structured metadata or stage outcomes, and
-    test backend errors, malformed responses, invalid config, and discard
-    parsing.
+  - Required result: quarantine grader call/parse failures as structured
+    metadata or stage outcomes, and test backend errors, malformed responses,
+    non-finite response values, and discard parsing.
 
 - [x] Add proposal idea/rationale capture to prompt/context work.
   - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and

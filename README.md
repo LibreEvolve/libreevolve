@@ -182,13 +182,9 @@ effective context window until prompt packing/accounting is implemented.
 LLM feedback graders currently receive the primary-file candidate view rather
 than the full workspace file set.
 
-Malformed LLM feedback responses or grader config are not yet isolated as
+Malformed LLM feedback responses and provider failures are not yet isolated as
 structured evaluation failures; hardening feedback parsing and failure policy
-remains open.
-
-Evaluator-stage numeric fields such as `samples`, `retries`, `timeout_sec`,
-and `min_score` are not fully prevalidated; invalid values can fail during
-evaluation instead of at configuration load.
+remains open. Grader config is prevalidated at startup.
 
 Run history logs candidates, but archive cell/island state and migration events
 are not persisted as replayable MAP-Elites state yet.

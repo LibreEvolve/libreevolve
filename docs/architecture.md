@@ -349,8 +349,9 @@ prompt-program events in `prompt_history.jsonl`.
   metrics, and normalized around the primary metric.
 - Config validation now rejects unknown problem config keys, invalid
   mutation/ensemble enums, malformed backend specs, bad evaluator-stage
-  numeric fields, and invalid top-level population/runtime ranges. LLM
-  feedback and plugin-specific schemas remain only partially validated.
+  numeric fields, invalid top-level population/runtime ranges, and malformed
+  LLM feedback grader specs. Plugin-specific schemas remain only partially
+  validated.
 - OpenAI API mode is selected by the presence of `reasoning_effort`, not by
   validated model capabilities.
 - `manifest.json` records configuration but not code version, problem hashes,

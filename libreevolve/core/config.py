@@ -63,10 +63,7 @@ class Config:
             isinstance(item, str) for item in self.prompt_variants
         ):
             raise ConfigError("prompt_variants must be a list of strings")
-        if not isinstance(self.llm_feedback, list) or not all(
-            isinstance(item, dict) for item in self.llm_feedback
-        ):
-            raise ConfigError("llm_feedback must be a list of mappings")
+        _validate_llm_feedback(self.llm_feedback)
         if not isinstance(self.plugins, list) or not all(isinstance(item, str) for item in self.plugins):
             raise ConfigError("plugins must be a list of strings")
 
@@ -165,3 +162,25 @@ def _validate_backends(backends: object) -> None:
                 backend["reasoning_effort"],
                 {"low", "medium", "high", "xhigh"},
             )
+
+
+def _validate_llm_feedback(graders: object) -> None:
+    if not isinstance(graders, list):
+        raise ConfigError("llm_feedback must be a list of mappings")
+    allowed = {"name", "metric", "weight", "min_score", "prompt", "include_invalid"}
+    for index, grader in enumerate(graders):
+        label = f"llm_feedback[{index}]"
+        if not isinstance(grader, dict):
+            raise ConfigError(f"{label} must be a mapping")
+        unsupported = sorted(set(grader) - allowed)
+        if unsupported:
+            raise ConfigError(f"{label} has unsupported fields {unsupported}")
+        for field_name in ("name", "metric", "prompt"):
+            if field_name in grader and not isinstance(grader[field_name], str):
+                raise ConfigError(f"{label}.{field_name} must be a string")
+        if "weight" in grader:
+            _require_number(f"{label}.weight", grader["weight"])
+        if "min_score" in grader:
+            _require_number(f"{label}.min_score", grader["min_score"])
+        if "include_invalid" in grader and not isinstance(grader["include_invalid"], bool):
+            raise ConfigError(f"{label}.include_invalid must be boolean")

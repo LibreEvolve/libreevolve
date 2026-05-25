@@ -631,18 +631,19 @@ Primary evidence:
     evaluation/scoring signal; grader failures should be diagnosable evaluation
     outcomes, not unstructured run crashes or silent misclassifications.
   - Current evidence: `apply_llm_feedback()` calls `llm.generate()`,
-    `float(parsed["score"])`, `float(weight)`, and `float(min_score)` without
-    failure handling. `parse_feedback_response()` has a loose text fallback,
-    but JSON such as `{"score": "bad"}`, invalid grader config, provider
-    exceptions, non-finite values, and string booleans such as `"false"` can
-    crash the run or discard candidates incorrectly. No feedback failure record
-    is stored as an evaluation stage outcome or structured metadata.
+    `float(parsed["score"])`, and `bool(parsed["discard"])` without failure
+    handling or strict response parsing. `Config.validate()` now rejects invalid
+    grader schema fields (`weight`, `min_score`, `include_invalid`, text fields,
+    and unsupported keys) before startup, but provider exceptions, malformed
+    response scores, non-finite response values, and string booleans such as
+    `"false"` can still crash the run or discard candidates incorrectly. No
+    feedback failure record is stored as an evaluation stage outcome or
+    structured metadata.
   - Required result: define feedback-grader failure policy (ignore, penalize,
-    discard, retry, or stop), parse booleans/numbers strictly, validate grader
-    config before runs, capture grader exceptions and malformed responses as
-    structured metadata/stage outcomes, and add tests for backend errors,
-    malformed scores, invalid `weight`/`min_score`, string discard values,
-    non-finite values, and configured failure policies.
+    discard, retry, or stop), parse booleans/numbers strictly, capture grader
+    exceptions and malformed responses as structured metadata/stage outcomes,
+    and add tests for backend errors, malformed response scores, string discard
+    values, non-finite response values, and configured failure policies.
 
 - [ ] Calibrate LLM feedback scores against metric schema and fitness
   composition.
@@ -973,15 +974,14 @@ Primary evidence:
     empty CLI backend models fail backend-spec validation, config-file
     `mutation_mode` and `ensemble_strategy` are enum-validated, backend specs
     are checked for supported keys/types/models/metadata, and evaluator-stage
-    numeric fields are validated before a run starts. Remaining gaps:
-    `llm_feedback` entries are only checked as mappings, plugin-specific
-    configuration schemas do not exist, CLI `--reasoning-effort` still affects
-    only CLI-created backend specs, and model/API capability validation is not
-    implemented.
-  - Required result: add full `llm_feedback` and plugin config schemas,
-    document or fix remaining CLI override semantics, add model/API-mode
-    compatibility validation where feasible, and test malformed nested config
-    cases beyond backend/stage metadata.
+    numeric fields and LLM feedback grader specs are validated before a run
+    starts. Remaining gaps: plugin-specific configuration schemas do not exist,
+    CLI `--reasoning-effort` still affects only CLI-created backend specs, and
+    model/API capability validation is not implemented.
+  - Required result: add plugin config schemas, document or fix remaining CLI
+    override semantics, add model/API-mode compatibility validation where
+    feasible, and test malformed nested config cases beyond backend/stage/
+    feedback metadata.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,

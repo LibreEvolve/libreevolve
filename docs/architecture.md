@@ -209,6 +209,11 @@ In particular, `CausalPlugin` analyzes only the compact local SEARCH/REPLACE
 regex, so canonical AlphaEvolve fences can be ignored by causal factor
 analysis and fall back to random guidance.
 
+The ThetaEvolve-inspired `ttt_rl` plugin emits a side dataset rather than a
+run-scoped artifact. It clips rewards with `max(0.0, score)` and appends to
+`runs/grpo_data.jsonl` by default; that file is not hashed or referenced from
+the run manifest yet.
+
 ## Population model
 
 Population state is split across:

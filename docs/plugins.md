@@ -146,10 +146,13 @@ Mechanics:
 - records data in `on_evaluated()` when prompt and diff metadata are present
 - every `train_every` generations, writes the latest batch to
   `grpo_data.jsonl`
+- stores `reward = max(0.0, score)`, so negative scores are clipped to zero
+  rather than exported as penalties
 
 Operational note:
 
 - the default output path is `runs/grpo_data.jsonl`, not a per-run subdirectory
+- the export file is not linked or hashed from `manifest.json` yet
 - `_maybe_train()` is currently just a JSONL writer, not an actual trainer
 
 ## Adding a custom plugin

@@ -372,12 +372,16 @@ Built-in plugins are paper-inspired approximations, not full reproductions:
 - **CausalEvolve-inspired** — token-pattern outcome-factor guidance
 - **DeepEvolve-inspired** — pluggable arXiv/web-search context
 - **ImprovEvolve-inspired** — modular decomposition prompting
-- **ThetaEvolve-inspired** — GRPO-style training data export, not training
+- **ThetaEvolve-inspired** — clipped-reward JSONL export, not training
 
 The causal plugin's factor detector currently analyzes only the compact local
 SEARCH/REPLACE regex. Canonical AlphaEvolve fences may fall back to random
 factor guidance until plugin mutation parsing is unified with the core diff
 parser.
+
+The ThetaEvolve-inspired export writes `runs/grpo_data.jsonl` by default and
+stores `reward = max(0.0, score)`. That side file is not yet scoped under the
+active run directory, hashed in `manifest.json`, or a real GRPO/RL trainer.
 
 ```bash
 py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research

@@ -393,10 +393,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     optional reward shaping, and reinforcement learning at test time.
   - Current evidence: the CLI alias is paper-neutral (`ttt_rl`) and docs label
     it ThetaEvolve-inspired, but `libreevolve/plugins/ttt_rl.py` writes
-    `(prompt, response, reward)` JSONL and does not train.
+    `(prompt, response, reward)` JSONL and does not train. It also clips
+    exported rewards with `max(0.0, score)` and writes to a shared
+    `runs/grpo_data.jsonl` path by default, without manifest linkage or
+    dataset hashes.
   - Missing: batch prompt sampling, lazy/stagnation penalties, reward shaping,
-    online GRPO/RL training loop, dynamic environment integration, and training
-    checkpoint management.
+    run-scoped dataset/checkpoint provenance, online GRPO/RL training loop,
+    dynamic environment integration, and training checkpoint management.
 
 - [ ] Tighten or remove GigaEvo-derived implementation claims.
   - Paper evidence: `2511.17592__GigaEvo.pdf` describes Redis-backed

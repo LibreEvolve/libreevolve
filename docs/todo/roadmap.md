@@ -445,6 +445,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: define whether LibreEvolve will implement training,
     export-only datasets, or integration hooks, and document the divergence.
 
+- [x] Add reward/export provenance to the ThetaEvolve boundary.
+  - Evidence: `TTTRLPlugin` exports `reward = max(0.0, score)` and appends to
+    a default `runs/grpo_data.jsonl` file outside the active per-run directory.
+  - Current roadmap gap: the ThetaEvolve boundary distinguished export from
+    training, but did not require explicit reward-shaping semantics, per-run
+    dataset scoping, manifest linkage, or dataset hashes.
+  - Required result: track raw score and shaped reward fields, document clipping
+    or penalties, persist run-scoped dataset provenance, and add tests for
+    negative rewards and repeated flush/resume behavior.
+
 - [x] Move representative benchmarks earlier.
   - Evidence: `ROADMAP.md:92-95` keeps representative algorithmic benchmarks in
     longer term.

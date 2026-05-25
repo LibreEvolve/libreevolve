@@ -144,4 +144,6 @@ runs/grpo_data.jsonl
 ```
 
 This file is global to the configured `log_dir`; it is not nested under the
-per-run directory by default.
+per-run directory by default. It exports clipped rewards
+(`reward = max(0.0, score)`) and is not currently linked or hashed from
+`manifest.json`.

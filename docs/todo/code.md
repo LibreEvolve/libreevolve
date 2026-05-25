@@ -928,6 +928,22 @@ Primary evidence:
     use the documented composed score; add tests for multiple plugins,
     rejecting invalid plugin scores, and preserving raw validator fitness.
 
+- [ ] Define plugin training-data reward and artifact semantics.
+  - Spec evidence: AlphaEvolve-style and ThetaEvolve-style experiments require
+    reproducible training/evaluation artifacts with clear reward definitions;
+    reward shaping should be explicit, not an implicit side effect.
+  - Current evidence: `TTTRLPlugin.on_evaluated()` writes only prompt/diff
+    pairs and stores `reward = max(0.0, score)`, clipping negative scores to
+    zero without a documented reward-shaping policy. `_maybe_train()` appends
+    batches to `runs/grpo_data.jsonl` by default, outside the active
+    per-problem run directory, and `manifest.json` does not link or hash that
+    emitted dataset.
+  - Required result: define raw-score vs shaped-reward export fields, document
+    clipping/penalty behavior, scope plugin datasets under run artifacts or
+    record global artifact provenance, include hashes/counts in manifests, and
+    add tests for negative scores, repeated flushes, run scoping, and resume
+    behavior.
+
 - [ ] Improve isolation beyond a temporary Python subprocess.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,
     potentially with expensive or hardware-backed execution.

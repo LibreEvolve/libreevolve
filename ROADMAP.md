@@ -27,8 +27,8 @@ LibreEvolve has:
 - UCB-style backend routing plus experimental throughput/depth metadata
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
   and `best.py` artifacts
-- example problems including `hello_world`, `sorting`, `circle_packing`, and
-  `matrix_multiplication`
+- example problems including `hello_world`, `sorting`, `circle_packing`,
+  `matrix_multiplication`, and `workspace_math`
 
 The project is still a Python-only, synchronous, local-workspace prototype. It
 is not yet an AlphaEvolve reproduction.

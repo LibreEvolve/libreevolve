@@ -196,6 +196,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: make budget schemas, counters, stop reasons, manifest
     summaries, and budget-fraction benchmark reporting explicit runtime work.
 
+- [x] Refresh current-state example list.
+  - Evidence: `libreevolve/problems/examples/` includes `workspace_math`, but
+    `ROADMAP.md` listed only `hello_world`, `sorting`, `circle_packing`, and
+    `matrix_multiplication`.
+  - Required result: include all checked-in examples when the roadmap describes
+    current repository state.
+
 ## Existing Items That Need Tightening
 
 - [x] Expand "better diversity measures" into measurable database/sampling

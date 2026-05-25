@@ -19,7 +19,7 @@ libreevolve/
   llm/        ensemble.py (UCB-style heuristic), anthropic.py, openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
-  problems/   loader.py, examples/{hello_world,circle_packing,sorting}/
+  problems/   loader.py, examples/{hello_world,circle_packing,sorting,matrix_multiplication,workspace_math}/
   cli.py      Click CLI with run/show commands
 ```
 

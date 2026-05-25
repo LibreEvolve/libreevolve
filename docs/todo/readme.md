@@ -235,3 +235,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: align README snippets with the checked-in JSONL histories
     or explicitly mark them as illustrative rather than curated-output
     excerpts.
+
+- [x] Refresh README/AGENTS example directory lists.
+  - README evidence: the package tree listed example problems but omitted
+    `workspace_math`.
+  - Current evidence: `libreevolve/problems/examples/` contains
+    `hello_world`, `sorting`, `circle_packing`, `matrix_multiplication`, and
+    `workspace_math`.
+  - Required result: list the full current example set when documenting the
+    repository layout.

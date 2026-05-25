@@ -259,7 +259,7 @@ libreevolve/
 │   └── ttt_rl.py        # ThetaEvolve-inspired training data export
 └── problems/
     ├── loader.py         # load_problem() + Problem dataclass
-    └── examples/         # hello_world, circle_packing, sorting, matrix_multiplication
+    └── examples/         # hello_world, circle_packing, sorting, matrix_multiplication, workspace_math
 ```
 
 </details>

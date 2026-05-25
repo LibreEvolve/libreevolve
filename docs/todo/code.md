@@ -360,10 +360,13 @@ Primary evidence:
     executing a program, program outputs, and scores so future proposals can
     learn from prior behavior.
   - Current evidence: `EvaluationResult` stores stdout, stderr, errors,
-    metadata, and stage outcomes, and LLM feedback graders store raw response
-    provenance, but `PromptSampler._render_feedback()` only renders a compact
-    last-three-stage summary and omits stdout/stderr, sample-level outputs,
-    artifacts, grader feedback, and validator-provided diagnostic metadata.
+    metadata, and stage outcomes, and LLM feedback graders store response
+    provenance. `PromptSampler._render_feedback()` now renders bounded,
+    redacted parent-feedback sections for stage status, stdout/stderr,
+    retry/sample attempts, evaluator artifact paths and hash prefixes, and LLM
+    grader feedback. It still does not retrieve artifact file contents, render
+    full validator metadata, or enforce a global prompt-size budget across all
+    sections.
   - Required result: add bounded prompt rendering for evaluator stdout/stderr,
     validator feedback, artifacts, sample-level stage diagnostics, and LLM
     grader summaries, with redaction/truncation rules and tests proving prompts

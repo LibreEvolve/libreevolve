@@ -228,6 +228,13 @@ The evolution loop renders a bounded recent tail of these records into later
 prompts. The file is queryable as JSONL, but there is not yet a scored
 long-term retrieval policy over all historical failures.
 
+Prompt feedback for the selected parent also renders bounded, redacted
+summaries from the candidate's persisted evaluation record: recent stage
+status, stdout/stderr, retry/sample attempts, evaluator artifact paths and hash
+prefixes, and LLM grader feedback. Prompt rendering does not currently retrieve
+full artifact contents from `evaluator_artifacts/`, and these sections are not
+yet governed by a global prompt-size budget.
+
 LLM call telemetry is not first-class yet. Candidate records store the mutation
 backend index, and feedback/critique paths store limited backend indexes or raw
 responses, but provider usage, latency, retry counts, request ids, finish

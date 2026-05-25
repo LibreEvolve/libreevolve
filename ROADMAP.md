@@ -102,9 +102,9 @@ is not yet an AlphaEvolve reproduction.
   section-level packing and prompt-size diagnostics.
 - Add prompt/history redaction and data-retention controls for mutation,
   critique, feedback, plugin, and explicit-context prompt sections.
-- Render richer bounded evaluator outputs in prompts, including stdout/stderr,
-  artifacts, sample-level diagnostics, validator feedback, and LLM grader
-  summaries.
+- Extend current bounded evaluator-output prompt summaries with artifact
+  content retrieval, specialized aggregate syntax diagnostics, and integration
+  with global prompt-size budgeting.
 - Add a structured proposal format that can preserve an idea/rationale section
   separately from the patch blocks while keeping raw-diff compatibility.
 - Improve meta-prompt scoring beyond direct child score and add ablation

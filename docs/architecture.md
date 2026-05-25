@@ -152,7 +152,8 @@ For each generation it:
 
 - task description
 - explicit problem context files
-- parent code, normalized fitness, metrics, and recent stage feedback
+- parent code, normalized fitness, metrics, and bounded recent evaluation
+  feedback
 - multi-file parent/inspiration contents when present
 - inspiration programs with metrics
 - plugin-provided context
@@ -168,10 +169,10 @@ General prompt redaction, per-role prompt logging modes, and data-retention
 controls are not implemented; only the LLM feedback workspace-rendering path
 applies basic secret redaction.
 
-The feedback section is intentionally compact today: it renders recent stage
-names, pass/fail states, scores, and errors. Although full stdout, stderr,
-artifacts, and LLM grader records are persisted in run history, prompt rendering
-does not yet include those richer outputs.
+The feedback section renders a bounded, redacted summary of recent stage
+status, execution stdout/stderr, retry/sample diagnostics, evaluator artifact
+paths and hashes, and LLM grader feedback. It is intentionally a summary rather
+than full log or artifact-content retrieval.
 
 Failed/rejected mutations are logged to `failure_history.jsonl` with parent ids,
 mutation text, diff errors, changed file paths, evaluator summaries, and
@@ -429,8 +430,9 @@ counters, not async queue checkpoints or provider token/cost accounting.
   reward normalization; richer ablation reporting remains open.
 - Run ids and collision policy are persisted, but archive/controller reload and
   parent-run resume relationships are not implemented.
-- Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
-  artifact, sample-level diagnostic, and grader-feedback rendering remains open.
+- Prompt feedback rendering includes bounded execution output, artifact
+  metadata, sample/retry diagnostics, and grader summaries, but does not yet
+  retrieve artifact contents or participate in a global prompt-size budget.
 - LLM feedback graders receive bounded full-workspace file sections, basic
   secret redaction, and compact evaluator diagnostics.
 - Mutation/critique prompts and persisted prompt history do not yet share that

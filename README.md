@@ -207,6 +207,9 @@ effective context window until prompt packing/accounting is implemented.
 LLM feedback graders receive bounded full-workspace context with file paths,
 primary-file marking, basic secret redaction, truncation notices, and compact
 evaluation diagnostics.
+Future mutation prompts also receive bounded, redacted summaries of recent
+execution output, retry/sample diagnostics, evaluator artifact paths/hashes,
+and LLM grader feedback from the parent program.
 
 Mutation and critique prompts are different: the current run history stores
 rendered prompts and critique prompts without a general redaction or

@@ -336,10 +336,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add richer evaluator-output prompt rendering to prompt/context work.
   - Evidence: AlphaEvolve prompts can include execution results and scores, but
-    the current prompt sampler only renders compact recent stage summaries.
+    earlier prompt feedback rendering only included compact recent stage
+    summaries.
   - Current roadmap gap: the roadmap said evaluator feedback without calling
     out stdout/stderr, artifacts, LLM grader summaries, or sample-level
     diagnostics.
+  - Status: implemented as bounded, redacted parent-feedback summaries for
+    recent stage status, stdout/stderr, retry/sample attempts, artifact paths
+    and hash prefixes, and LLM grader feedback. Full artifact-content retrieval
+    and global prompt-size budgeting remain open.
   - Required result: keep bounded execution-output and feedback rendering on
     the roadmap as a prompt fidelity item.
 

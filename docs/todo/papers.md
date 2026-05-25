@@ -40,11 +40,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     with quarantine and parent penalties for invalid meta-prompt outputs.
   - Remaining divergence: stochastic formatting is whole-template sampling, not
     AlphaEvolve's placeholder alternatives with configured probability
-    distributions; prompt feedback rendering omits stdout/stderr, artifacts,
-    sample-level outputs, and LLM grader summaries; context ingestion is
-    extractive first-span selection rather than semantic ranking; prompt
-    assembly has no global context-window budget or section-level packing
-    policy.
+    distributions; prompt feedback rendering is bounded summary-only and does
+    not retrieve full artifact contents or participate in a global prompt
+    budget; context ingestion is extractive first-span selection rather than
+    semantic ranking; prompt assembly has no global context-window budget or
+    section-level packing policy.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
@@ -224,12 +224,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: prompt context can include program execution results, outputs,
     and scores from previous attempts.
-  - Current gap: history records preserve stdout/stderr, retry-attempt records,
-    aggregate syntax diagnostics, and LLM feedback provenance, but prompt
-    construction renders only a short recent-stage summary. Validator-generated
-    files matching `evaluator_artifact_include` are now copied out with hashes
-    and provenance metadata, but prompt construction does not yet render or
-    retrieve those artifacts for future attempts.
+  - Partial status: history records preserve stdout/stderr, retry-attempt
+    records, aggregate syntax diagnostics, artifact metadata, and LLM feedback
+    provenance. Prompt construction now renders bounded, redacted parent
+    summaries for recent stage status, execution output, retry/sample attempts,
+    evaluator artifact paths and hash prefixes, and LLM grader feedback.
+  - Current gap: prompt construction still does not retrieve artifact file
+    contents, render full validator metadata, include first-error aggregate
+    syntax diagnostics in a specialized format, or enforce a global prompt-size
+    budget across all feedback/context sections.
   - Required result: add bounded prompt sections for execution outputs,
     artifacts, validator feedback, sample-level diagnostics, aggregate syntax
     diagnostics, and grader feedback summaries.

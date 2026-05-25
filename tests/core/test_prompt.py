@@ -44,6 +44,82 @@ def test_prompt_sampler_renders_context_and_feedback():
     assert "- validate: passed, score=0.25" in prompt
 
 
+def test_prompt_sampler_renders_bounded_execution_and_grader_feedback():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["def solve():\n    return 1\n"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        id="p0",
+        code="def solve():\n    return 1\n",
+        fitness=0.25,
+        metrics={"score": 0.25, "is_valid": True},
+        evaluation={
+            "stdout": "top-level output",
+            "stderr": "api_key=sk-proj_abcdefghijklmnopqrstuvwxyz",
+            "stages": [
+                {
+                    "name": "validate",
+                    "passed": False,
+                    "score": 0.25,
+                    "stdout": "validator stdout",
+                    "stderr": "validator stderr",
+                    "error": "bad candidate",
+                }
+            ],
+            "metadata": {
+                "attempts": [
+                    {
+                        "stage": {"name": "validate", "sample_index": 0},
+                        "attempt": 1,
+                        "passed": False,
+                        "fitness": 0.25,
+                        "error": "sample failed",
+                    }
+                ],
+                "artifacts": {
+                    "files": [
+                        {
+                            "source_path": "report.json",
+                            "artifact_path": "evaluator_artifacts/abc/report.json",
+                            "sha256": "1234567890abcdef",
+                            "redacted": True,
+                        }
+                    ]
+                },
+                "llm_feedback": [
+                    {
+                        "name": "clarity",
+                        "score": 0.4,
+                        "discard": False,
+                        "feedback": "Needs clearer branching.",
+                    }
+                ],
+            },
+        },
+    )
+
+    prompt = PromptSampler().build(parent, [], problem, extra_context="", recent_failures=[])
+
+    assert "[execution output]" in prompt
+    assert "top-level output" in prompt
+    assert "[sample/retry diagnostics]" in prompt
+    assert "sample failed" in prompt
+    assert "[validator artifacts]" in prompt
+    assert "report.json" in prompt
+    assert "sha256=1234567890ab" in prompt
+    assert "[llm grader feedback]" in prompt
+    assert "Needs clearer branching." in prompt
+    assert "sk-proj_" not in prompt
+    assert "[REDACTED]" in prompt
+
+
 def test_prompt_sampler_renders_context_citations_when_sources_are_available():
     problem = Problem(
         name="demo",

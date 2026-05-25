@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import re
 import string
 from dataclasses import dataclass, field
 
@@ -22,6 +23,13 @@ PROMPT_TEMPLATE_FIELDS = {
     "mutation_instructions",
 }
 REQUIRED_PROMPT_TEMPLATE_FIELDS = {"task"}
+_MAX_FEEDBACK_TEXT_CHARS = 1200
+_MAX_FEEDBACK_FIELD_CHARS = 400
+_MAX_FEEDBACK_ITEMS = 3
+_SECRET_ASSIGNMENT = re.compile(
+    r"(?i)(api[_-]?key|token|secret|password)(\s*[:=]\s*)(['\"]?)[^\s,'\"]+"
+)
+_SECRET_TOKEN = re.compile(r"\b(?:sk|sk-proj|ghp|gho|github_pat)_[A-Za-z0-9_\-]{12,}\b")
 
 
 class PromptTemplateError(ValueError):
@@ -200,16 +208,158 @@ def _render_program_files(program: Program) -> str:
 
 
 def _render_feedback(program: Program) -> str:
-    stages = program.evaluation.get("stages", []) if program.evaluation else []
-    if not stages:
+    evaluation = program.evaluation or {}
+    stages = evaluation.get("stages", [])
+    metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+    sections: list[str] = []
+    if stages:
+        lines = []
+        for stage in stages[-_MAX_FEEDBACK_ITEMS:]:
+            if not isinstance(stage, dict):
+                continue
+            status = "passed" if stage.get("passed") else "failed"
+            error = stage.get("error")
+            suffix = f", error={_short(error)}" if error else ""
+            lines.append(f"- {stage.get('name')}: {status}, score={stage.get('score')}{suffix}")
+            stage_io = _render_io_summary(stage)
+            if stage_io:
+                lines.append(stage_io)
+        if lines:
+            sections.append("[stage summary]\n" + "\n".join(lines))
+    top_io = _render_io_summary(evaluation)
+    if top_io:
+        sections.append("[execution output]\n" + top_io)
+    attempts = _render_attempts(metadata.get("attempts"))
+    if attempts:
+        sections.append("[sample/retry diagnostics]\n" + attempts)
+    artifacts = _render_artifacts(metadata.get("artifacts"))
+    if artifacts:
+        sections.append("[validator artifacts]\n" + artifacts)
+    feedback = _render_llm_feedback(metadata.get("llm_feedback"))
+    if feedback:
+        sections.append("[llm grader feedback]\n" + feedback)
+    if not sections:
         return "(none)"
+    return _truncate_text("\n".join(sections), _MAX_FEEDBACK_TEXT_CHARS)
+
+
+def _render_io_summary(record: dict) -> str:
     lines = []
-    for stage in stages[-3:]:
-        status = "passed" if stage.get("passed") else "failed"
-        error = stage.get("error")
-        suffix = f", error={error}" if error else ""
-        lines.append(f"- {stage.get('name')}: {status}, score={stage.get('score')}{suffix}")
+    stdout = _short(record.get("stdout"))
+    stderr = _short(record.get("stderr"))
+    if stdout:
+        lines.append(f"  stdout: {stdout}")
+    if stderr:
+        lines.append(f"  stderr: {stderr}")
+    error = _short(record.get("error"))
+    if error and not lines:
+        lines.append(f"  error: {error}")
     return "\n".join(lines)
+
+
+def _render_attempts(attempts: object) -> str:
+    if not isinstance(attempts, list) or not attempts:
+        return ""
+    lines = []
+    for attempt in attempts[-_MAX_FEEDBACK_ITEMS:]:
+        if not isinstance(attempt, dict):
+            continue
+        status = "passed" if attempt.get("passed") else "failed"
+        stage_record = attempt.get("stage")
+        stage = stage_record.get("name") if isinstance(stage_record, dict) else attempt.get("stage_name")
+        sample = (
+            stage_record.get("sample_index")
+            if isinstance(stage_record, dict)
+            else attempt.get("sample_index")
+        )
+        attempt_index = attempt.get("attempt")
+        detail = [
+            f"stage={stage}" if stage is not None else "",
+            f"sample={sample}" if sample is not None else "",
+            f"attempt={attempt_index}" if attempt_index is not None else "",
+        ]
+        prefix = ", ".join(item for item in detail if item)
+        prefix = f" ({prefix})" if prefix else ""
+        error = _short(attempt.get("error"))
+        suffix = f", error={error}" if error else ""
+        lines.append(f"- {status}{prefix}, fitness={attempt.get('fitness')}{suffix}")
+    return "\n".join(lines)
+
+
+def _render_artifacts(artifacts: object) -> str:
+    if not isinstance(artifacts, dict):
+        return ""
+    files = artifacts.get("files")
+    if not isinstance(files, list) or not files:
+        return ""
+    lines = []
+    for artifact in files[:_MAX_FEEDBACK_ITEMS]:
+        if not isinstance(artifact, dict):
+            continue
+        source = artifact.get("source_path") or artifact.get("relative_path") or artifact.get("path")
+        stored = artifact.get("artifact_path") or artifact.get("stored_path")
+        sha = str(artifact.get("sha256", ""))[:12]
+        redacted = artifact.get("redacted")
+        parts = [f"path={source}"]
+        if stored:
+            parts.append(f"stored={stored}")
+        if sha:
+            parts.append(f"sha256={sha}")
+        if redacted is not None:
+            parts.append(f"redacted={redacted}")
+        lines.append("- " + ", ".join(parts))
+    skipped = artifacts.get("skipped") or artifacts.get("skipped_files")
+    if skipped:
+        lines.append(f"- skipped_files={skipped}")
+    return "\n".join(lines)
+
+
+def _render_llm_feedback(records: object) -> str:
+    if not isinstance(records, list) or not records:
+        return ""
+    lines = []
+    for record in records[-_MAX_FEEDBACK_ITEMS:]:
+        if not isinstance(record, dict):
+            continue
+        name = record.get("name") or record.get("metric") or "grader"
+        score = record.get("score")
+        discarded = record.get("discard")
+        error = _short(record.get("error"))
+        feedback = _short(record.get("feedback") or record.get("raw_response"))
+        parts = [f"name={name}"]
+        if score is not None:
+            parts.append(f"score={score}")
+        if discarded is not None:
+            parts.append(f"discard={discarded}")
+        if error:
+            parts.append(f"error={error}")
+        if feedback:
+            parts.append(f"feedback={feedback}")
+        lines.append("- " + ", ".join(parts))
+    return "\n".join(lines)
+
+
+def _short(value: object, max_chars: int = _MAX_FEEDBACK_FIELD_CHARS) -> str:
+    if value is None:
+        return ""
+    text = str(value).replace("\r\n", "\n").strip()
+    if not text:
+        return ""
+    text = _redact_sensitive_text(text)
+    return _truncate_text(text, max_chars).replace("\n", "\\n")
+
+
+def _truncate_text(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    notice = f"...[truncated {len(text) - max_chars} chars]"
+    keep = max(0, max_chars - len(notice))
+    return text[:keep] + notice
+
+
+def _redact_sensitive_text(text: str) -> str:
+    text = _SECRET_ASSIGNMENT.sub(r"\1\2\3[REDACTED]", text)
+    return _SECRET_TOKEN.sub("[REDACTED]", text)
 
 
 def _render_inspirations(inspirations: list[Program]) -> str:

@@ -547,6 +547,21 @@ Primary evidence:
     undeclared metrics. Multi-objective use of those metric vectors remains
     tracked separately.
 
+- [ ] Reject degenerate or inverted metric bounds.
+  - Spec evidence: AlphaEvolve-style scoring depends on meaningful scalar
+    metrics and comparable score normalization; local `metrics.yaml` bounds
+    become part of primary fitness, archive performance coordinates, and future
+    metric-vector policy.
+  - Current evidence: `_validate_metric_schema()` checks that bounds are a
+    finite numeric pair, but it accepts `[1.0, 1.0]` and inverted ranges such
+    as `[10.0, 0.0]`. `Problem.normalize_metric()` returns `0.5` for a
+    zero-width range and otherwise computes with the negative range, producing
+    plausible-looking normalized scores from an invalid schema.
+  - Required result: reject or explicitly define zero-width and inverted
+    bounds at problem-load time; update docs/tests for both maximize and
+    minimize metrics and ensure MAP-Elites performance normalization cannot
+    silently inherit invalid ranges.
+
 - [x] Enforce strict finite JSON serialization for run records.
   - Spec evidence: AlphaEvolve's program database is a machine-readable store
     of candidates, metrics, outputs, and feedback; downstream selection,

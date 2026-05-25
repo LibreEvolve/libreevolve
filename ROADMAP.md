@@ -19,7 +19,7 @@ LibreEvolve has:
   elapsed time
 - configurable local evaluator stages with distinct validator entrypoints,
   thresholds, samples, seeds, retries, and timeouts
-- strict scalar metric validation against `metrics.yaml`
+- strict scalar evaluator-output validation against `metrics.yaml`
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and compact stage feedback
@@ -56,6 +56,8 @@ is not yet an AlphaEvolve reproduction.
 
 - Define a first-class multi-objective policy: Pareto archive, weighted
   composition, metric-specific elites, or a documented hybrid.
+- Reject degenerate or inverted metric bounds before they can affect primary
+  normalization, archive placement, or future multi-objective policies.
 - Sample parents/inspirations by score, individual metric excellence, diversity,
   novelty, feedback, lineage, and recency, while excluding the selected parent
   and deduplicating migrated copies from inspiration sets.

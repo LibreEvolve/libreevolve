@@ -56,6 +56,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: keep metric schema validation on the roadmap because
     multi-objective search depends on trustworthy metric vectors.
 
+- [x] Add degenerate metric-bound validation to the backlog.
+  - Evidence: `metrics.yaml` bounds drive primary fitness normalization and
+    MAP-Elites performance coordinates, but `_validate_metric_schema()` accepts
+    finite zero-width or inverted ranges.
+  - Current roadmap gap: current-state bullets said strict scalar validation
+    and metric direction/bounds normalization, but did not call out invalid
+    bound ordering.
+  - Required result: track rejection or explicit semantics for zero-width and
+    inverted bounds before metric vectors feed archive or multi-objective
+    policy.
+
 - [x] Add full-workspace export and resume coverage to candidate fidelity.
   - Evidence: AlphaEvolve evolves full files/codebases, while a primary-file
     `best.py` artifact is insufficient for a multi-file candidate. The CLI now
@@ -542,11 +553,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   implementation passes.
   - Evidence: `ROADMAP.md` still treated unified file-section path parsing,
     workspace topology mutation, workspace execution import/cwd semantics,
-    full-workspace best export, strict scalar metric validation, and plugin
+    full-workspace best export, strict scalar evaluator-output validation, and plugin
     score-composition provenance as near-term or open work after those local
     behaviors were implemented and documented.
   - Status: roadmap current-state bullets now include topology mutation,
-    strict metric validation, archive admission events, and `best_workspace/`.
+    strict evaluator-output validation, archive admission events, and
+    `best_workspace/`.
     Near-term bullets now focus on remaining gaps: load-time seed marker
     validation, binary/static artifacts, package-style validators, relative
     evaluator data, and workspace migration/resume.

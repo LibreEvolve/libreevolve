@@ -105,7 +105,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     unsupported fields, and malformed/non-finite bounds. Evaluator output must
     include all declared metrics plus boolean `is_valid`, cannot include
     undeclared metrics, and every non-`is_valid` metric must be finite numeric.
-    Invalid evaluator outputs are quarantined as `malformed_metrics`.
+    Invalid evaluator outputs are quarantined as `malformed_metrics`. Remaining
+    schema gap: finite but zero-width or inverted metric bounds are accepted,
+    so score normalization can still be ill-defined before multi-objective
+    policy is considered.
 
 - [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
@@ -171,7 +174,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     calibration, and Pareto/frontier optimization remain open. Inspiration
     sampling now excludes the selected parent and deduplicates migrated copies
     by program id, but is still not metric-aware and does not intentionally
-    surface programs that excel under different secondary criteria.
+    surface programs that excel under different secondary criteria. Metric
+    bounds also need stricter schema validation for zero-width and inverted
+    ranges before they are used as policy inputs.
 
 - [x] Evolutionary database with attached outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

@@ -111,6 +111,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     and history, stop deterministically on exhausted budgets, and add benchmark
     scripts/reports that can compare variants at equal budget fractions.
 
+- [ ] Run identity, collision policy, and evaluator-code provenance.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1, 2.4, and 2.6.
+  - Requirement: task setup and evaluation code define what a run means, and
+    long-running experiments need reproducible accounting for the code,
+    evaluators, and generated program database.
+  - Current gap: reusing a run directory appends `history.jsonl` and
+    `prompt_history.jsonl` while overwriting `manifest.json`; there is no run
+    id or explicit resume/collision policy. Configured `validate_path` entries
+    can point at absolute or outside-problem validators without prevalidation,
+    hashes, or manifest provenance.
+  - Required result: add run ids and explicit overwrite/fail/new-run/resume
+    semantics, validate/constrain evaluator paths, and record evaluator hashes
+    plus run/collision metadata in manifests.
+
 - [ ] Multiple-score optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optimize multiple user-provided scores and use programs that
@@ -218,8 +232,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     implementations landed.
   - Status: refreshed the AlphaEvolve row to distinguish implemented local
     behavior from remaining async, multi-objective, database, full-workspace
-    export/resume, metric-validation, feedback-calibration, LLM-accounting,
-    config-validation, and benchmark gaps.
+    export/resume, run-identity/evaluator-provenance, metric-validation,
+    feedback-calibration, LLM-accounting, config-validation, and benchmark
+    gaps.
   - Required result: keep the paper index aligned with current code whenever
     todo items are completed or reopened.
 

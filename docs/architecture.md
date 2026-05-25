@@ -154,7 +154,8 @@ sets `include_invalid: true`. Graders return JSON-like feedback with a numeric
 score and optional discard flag. Scores are added as metrics, raw responses and
 backend indexes are recorded under `evaluation.metadata.llm_feedback`, and
 weighted feedback adjusts `Program.fitness` while preserving the raw validator
-metric.
+metric. Feedback score calibration against `metrics.yaml` direction/bounds is
+not implemented yet.
 
 ## Population model
 
@@ -184,6 +185,10 @@ An experimental `throughput_depth` strategy layers optional backend metadata
 cheap breadth models from deeper models. This is a scheduling concept, not a
 verified reproduction of AlphaEvolve's Gemini Flash/Pro policy.
 
+All current LLM calls share the same ensemble state. Mutation calls are rewarded
+after evaluation; critique, feedback, and meta-prompt calls are counted as
+backend pulls but do not have role-specific reward semantics yet.
+
 ## Logging and artifacts
 
 [`libreevolve/core/database.py`](../libreevolve/core/database.py) writes:
@@ -207,6 +212,8 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 - Evaluator output is parsed as JSON and normalized around the primary metric,
   but full `metrics.yaml` schema validation for every declared scalar metric is
   not enforced yet.
+- Config files and CLI backend specs are permissive; unknown problem config
+  keys are ignored rather than rejected.
 - `manifest.json` records configuration but not code version, problem hashes,
   plugin specs, artifact hashes, or resume/controller state.
 - Plugin names are paper-inspired approximations unless documented otherwise.

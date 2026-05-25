@@ -23,9 +23,13 @@ Current behavior:
 - selection counts are incremented when a backend is chosen
 - rewards are recorded only after evaluation
 - the evolution loop clamps reward to `max(0.0, score - parent.fitness)`
+- critique, feedback-grader, and meta-prompt calls currently share this same
+  selection/count state even though only candidate mutation calls receive an
+  improvement reward
 
 This means backends are rewarded for improvement over the selected parent, not
-for absolute score.
+for absolute score, and role-specific auxiliary-call accounting remains a known
+gap.
 
 ## OpenAI backend
 

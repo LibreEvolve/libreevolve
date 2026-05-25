@@ -26,6 +26,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Missing Roadmap Items
 
+- [x] Add configuration/schema validation to runtime hardening.
+  - Evidence: AlphaEvolve-style task setup depends on configuration for
+    prompts, evaluators, LLMs, and mutation behavior.
+  - Current roadmap gap: the roadmap covered manifests and reproducibility but
+    not early validation of unknown/malformed config keys or backend specs.
+  - Required result: make config validation a first-class prerequisite for
+    reproducible AlphaEvolve-style runs.
+
 - [x] Add evaluator metric-contract validation to the backlog.
   - Evidence: AlphaEvolve Section 2.1 treats `evaluate` as returning scalar
     metrics, while LibreEvolve currently validates only enough of the result to
@@ -98,6 +106,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     model for deeper suggestions.
   - Current roadmap gap: the roadmap only covers backend config validation
     (`ROADMAP.md:34-41`) and does not address scheduler strategy.
+
+- [x] Add role-specific LLM call accounting to backend scheduling work.
+  - Evidence: AlphaEvolve's ensemble scheduling should reflect candidate
+    generation quality/throughput, while LibreEvolve currently counts
+    critique/feedback/meta-prompt calls as ordinary pulls.
+  - Current roadmap gap: backend scheduling work mentioned UCB reward
+    normalization and breadth/depth tests but not separation of call roles.
+  - Required result: track and test mutation, critique, feedback, and
+    meta-prompt accounting separately.
 
 - [x] Add rich evolutionary database work.
   - Evidence: AlphaEvolve's program database stores solutions with scores and

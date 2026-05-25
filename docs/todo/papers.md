@@ -66,6 +66,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     weighted score composition, discard rules, backend provenance, raw
     responses, and `history.jsonl` visibility. Parallel reviewer workers and
     calibrated grader ensembles remain open.
+  - Remaining divergence: feedback scores are not validated against
+    `metrics.yaml` bounds/directions and can be added directly to normalized
+    fitness without calibration.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
@@ -301,3 +304,12 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Missing: reward normalization, explicit initialization/pull-once policy,
     documented coefficient choice, and tests that the implementation matches
     the intended UCB variant.
+
+- [ ] Account for non-mutation LLM calls in ensemble scheduling.
+  - Paper evidence: AlphaEvolve uses an ensemble of LLMs to balance candidate
+    generation throughput and quality.
+  - Current evidence: critique, feedback, and meta-prompt calls share the same
+    `LLMEnsemble.generate()` accounting as mutation calls, but only mutation
+    calls receive a candidate-improvement reward.
+  - Missing: role-specific routing/accounting for generation, critique,
+    grading, and meta-prompt calls, plus persisted scheduler diagnostics.

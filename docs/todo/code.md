@@ -230,6 +230,20 @@ Primary evidence:
   - Required result: add optional feedback graders with clear provenance,
     score-composition rules, and archive/log visibility.
 
+- [ ] Calibrate LLM feedback scores against metric schema and fitness
+  composition.
+  - Spec evidence: AlphaEvolve treats evaluation outputs as scalar metrics and
+    can add LLM-graded properties to the score dictionary; those scores should
+    remain comparable and usable by database/prompt selection.
+  - Current evidence: `apply_llm_feedback()` accepts undeclared grader metrics,
+    converts `score` directly to `float`, and adds `weight * score` directly to
+    normalized fitness without checking metric direction, bounds, finite range,
+    or whether the grader score should be part of primary fitness.
+  - Required result: define feedback metric schemas, normalize or bound grader
+    outputs, preserve raw grader scores separately from composed fitness, and
+    add tests for out-of-range, non-finite, minimizing, and discard-only
+    feedback signals.
+
 - [ ] Implement parallel/asynchronous evaluation.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its
@@ -297,6 +311,19 @@ Primary evidence:
 
 ## LLM Ensemble
 
+- [ ] Separate backend accounting for mutation, critique, feedback, and
+  meta-prompt calls.
+  - Spec evidence: AlphaEvolve's LLM ensemble is used to generate candidates
+    for an evolutionary loop optimized for throughput and quality; scheduler
+    feedback should correspond to the role and outcome of each LLM call.
+  - Current evidence: every `llm.generate()` increments `LLMEnsemble.counts`,
+    including critique, LLM feedback, and meta-prompt mutation calls, but only
+    the original mutation `backend_idx` receives `record_reward()`. Auxiliary
+    calls therefore affect routing state as apparent zero-reward pulls.
+  - Required result: track call role/provenance, define reward or no-reward
+    accounting per role, persist bandit state in run artifacts, and add tests
+    proving critique/feedback/meta-prompt calls do not distort mutation routing.
+
 - [x] Model AlphaEvolve's throughput/depth ensemble strategy explicitly.
   - Spec evidence: AlphaEvolve combines Gemini Flash for breadth with Gemini
     Pro for occasional deeper, higher-quality suggestions.
@@ -323,6 +350,19 @@ Primary evidence:
     passes before evaluation.
 
 ## Runtime, Reproducibility, and Safety
+
+- [ ] Validate configuration schema and backend specs instead of silently
+  ignoring mistakes.
+  - Spec evidence: AlphaEvolve task setup includes prompt templates,
+    configurations, LLM choices, and evaluator settings; reproducible runs need
+    configuration mistakes to fail early with clear diagnostics.
+  - Current evidence: `_build_config()` drops unknown `config.yaml` keys,
+    backend specs from CLI are parsed with `partition(":")` without requiring a
+    non-empty type/model, and many nested stage/feedback/backend fields are
+    unvalidated until a later runtime path fails or silently ignores them.
+  - Required result: add config schema validation with unknown-key errors or
+    explicit warning policy, validate CLI backend specs, validate nested
+    `eval_stages`/`llm_feedback`/backend metadata, and test malformed configs.
 
 - [ ] Add resumable runs.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized

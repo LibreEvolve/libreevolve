@@ -59,6 +59,8 @@ is not yet an AlphaEvolve reproduction.
 - Enforce the scalar metric contract from `metrics.yaml` for evaluator outputs.
 - Add artifact collection and richer per-stage budget accounting.
 - Add calibration/ablation reporting for LLM feedback graders.
+- Normalize and bound LLM feedback metrics before using them in score
+  composition.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work
@@ -95,6 +97,8 @@ is not yet an AlphaEvolve reproduction.
 
 - Normalize/document UCB rewards against bounded assumptions or rename the
   current policy as a heuristic.
+- Separate backend accounting for mutation generation, critique, feedback
+  grading, and meta-prompt mutation calls.
 - Add explicit breadth/depth/cost/latency scheduling tests.
 - Extend critique/revision beyond a synchronous self-review call toward
   configurable reviewer pools.
@@ -119,6 +123,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 10. Operational maturity
 
+- Validate config files, backend specs, stage configs, and feedback grader
+  schemas before starting a run.
 - Improve `show` for run summaries, lineage, metrics, and failure statistics.
 - Add packaging/release hygiene beyond editable installs.
 - Broaden CI/interpreter coverage.

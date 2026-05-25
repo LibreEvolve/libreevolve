@@ -125,7 +125,9 @@ backends:
     model: gpt-4o-mini
 ```
 
-Unknown config keys are ignored rather than rejected.
+Unknown config keys are currently ignored rather than rejected. This is a known
+reproducibility gap for AlphaEvolve-style runs because spelling mistakes can
+silently leave defaults in effect.
 
 ## CLI overrides
 
@@ -171,6 +173,8 @@ Provider SDKs may honor additional provider-specific variables.
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
   migration, archive, prompt, stage, LLM feedback, critique, and ensemble
   scheduling settings.
+- Config validation is incomplete: unknown problem-local keys are ignored, and
+  nested backend/stage/feedback fields are only partially validated.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - `prompt_variants` seed the prompt-program database; set

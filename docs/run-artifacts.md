@@ -122,6 +122,9 @@ Important behavior:
 - raw metrics and evaluator diagnostics are preserved for later inspection
 - optional critique metadata is stored under `metadata.critique`
 - the mutation backend index is stored under `metadata.backend_idx`
+- normalized LLM call telemetry is stored under `metadata.llm_calls` for
+  successful mutation, critique, and feedback calls associated with the
+  candidate
 - archive admission metadata is stored under `metadata.archive_admission`
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
@@ -235,10 +238,15 @@ prefixes, and LLM grader feedback. Prompt rendering does not currently retrieve
 full artifact contents from `evaluator_artifacts/`, and these sections are not
 yet governed by a global prompt-size budget.
 
-LLM call telemetry is not first-class yet. Candidate records store the mutation
-backend index, and feedback/critique paths store limited backend indexes or raw
-responses, but provider usage, latency, retry counts, request ids, finish
-reasons, and API mode are not persisted as a normalized call log.
+LLM call telemetry is normalized at the ensemble boundary. Records include
+role, backend index/name, backend metadata, strategy, API mode, prompt/output
+sizes and hashes, latency, success/error status, and scheduler counts
+before/after the call. Provider token usage, adapter-internal retry counts,
+request/response ids, finish reasons, and raw provider diagnostics are not
+available yet and are recorded as empty fields. There is no separate run-scoped
+call log yet; successful mutation/critique/feedback call records are embedded
+in candidate history, and meta-prompt call records are embedded in
+`prompt_history.jsonl`.
 
 ## `best.py` and `best_workspace/`
 

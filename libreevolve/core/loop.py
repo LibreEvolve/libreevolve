@@ -131,13 +131,15 @@ def evolve(problem: Problem, config: Config,
             mutation_mode=config.mutation_mode,
         )
 
-        diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
+        diff, backend_idx = llm.generate(prompt, role="mutation")
+        mutation_llm_call = _last_llm_call(llm)
         critique_metadata = None
         if config.critique_enabled:
             critique_prompt = build_critique_prompt(
                 prompt, diff, critique_prompt=config.critique_prompt or None
             )
-            revised_diff, critique_backend_idx = llm.generate(critique_prompt)
+            revised_diff, critique_backend_idx = llm.generate(critique_prompt, role="critique")
+            critique_llm_call = _last_llm_call(llm)
             selected_diff, critique_status = _select_critique_mutation(
                 parent.workspace(),
                 diff,
@@ -149,6 +151,7 @@ def evolve(problem: Problem, config: Config,
                 "original_diff": diff,
                 "revised_diff": revised_diff,
                 "backend_idx": critique_backend_idx,
+                "llm_call": critique_llm_call,
                 **critique_status,
             }
             diff = selected_diff
@@ -174,6 +177,9 @@ def evolve(problem: Problem, config: Config,
                                     "critique": critique_metadata,
                                     "mutation_mode": config.mutation_mode,
                                     "prompt_program_id": prompt_program.id,
+                                    "llm_calls": _program_llm_calls(
+                                        mutation_llm_call, critique_metadata, result
+                                    ),
                                     "budget": budget.snapshot()},
                           metrics=result.metrics,
                           evaluation=result.to_dict())
@@ -209,12 +215,16 @@ def evolve(problem: Problem, config: Config,
                 "the complete revised template.\n\n"
                 f"{prompt_program.template}"
             )
-            template, prompt_backend_idx = llm.generate(mutation_prompt)
+            template, prompt_backend_idx = llm.generate(mutation_prompt, role="meta_prompt")
             prompt_db.mutate(
                 prompt_program.id,
                 template,
                 generation=gen + 1,
-                metadata={"source": "llm", "backend_idx": prompt_backend_idx},
+                metadata={
+                    "source": "llm",
+                    "backend_idx": prompt_backend_idx,
+                    "llm_call": _last_llm_call(llm),
+                },
             )
         llm.record_reward(backend_idx, max(0.0, score - parent.fitness))
         db.maybe_migrate(gen)
@@ -289,6 +299,29 @@ def _apply_plugin_scores(
     program.metadata["score_composition"] = composition
     program.fitness = score
     return score
+
+
+def _last_llm_call(llm) -> dict | None:
+    call = getattr(llm, "last_call", None)
+    return dict(call) if isinstance(call, dict) else None
+
+
+def _program_llm_calls(
+    mutation_call: dict | None,
+    critique_metadata: dict | None,
+    result,
+) -> list[dict]:
+    calls = []
+    if mutation_call:
+        calls.append(mutation_call)
+    if critique_metadata and isinstance(critique_metadata.get("llm_call"), dict):
+        calls.append(dict(critique_metadata["llm_call"]))
+    feedback_records = result.metadata.get("llm_feedback", []) if result.metadata else []
+    if isinstance(feedback_records, list):
+        for record in feedback_records:
+            if isinstance(record, dict) and isinstance(record.get("llm_call"), dict):
+                calls.append(dict(record["llm_call"]))
+    return calls
 
 
 def _select_critique_mutation(

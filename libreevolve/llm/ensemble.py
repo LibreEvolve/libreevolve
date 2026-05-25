@@ -1,5 +1,8 @@
 from __future__ import annotations
+import hashlib
 import math
+import time
+from uuid import uuid4
 from libreevolve.llm.base import LLMBackend
 
 
@@ -28,13 +31,49 @@ class LLMEnsemble:
         self.counts: list[int]   = [0]   * len(backends)
         self.wins:   list[float] = [0.0] * len(backends)
         self.total:  int         = 0
+        self.call_history: list[dict] = []
 
-    def generate(self, prompt: str) -> tuple[str, int]:
+    def generate(self, prompt: str, role: str = "mutation") -> tuple[str, int]:
         """Returns (diff_text, backend_index)."""
         idx = self._ucb1_select()
-        response = self.backends[idx].generate(prompt)
+        backend = self.backends[idx]
+        started = time.perf_counter()
+        record = self._call_record(
+            role=role,
+            backend_idx=idx,
+            prompt=prompt,
+            counts_before=list(self.counts),
+        )
+        try:
+            response = backend.generate(prompt)
+        except Exception as exc:
+            record.update(
+                {
+                    "status": "error",
+                    "latency_sec": time.perf_counter() - started,
+                    "error_type": exc.__class__.__name__,
+                    "error": str(exc),
+                    "counts_after": list(self.counts),
+                }
+            )
+            self.call_history.append(record)
+            raise
         self.counts[idx] += 1
+        record.update(
+            {
+                "status": "ok",
+                "latency_sec": time.perf_counter() - started,
+                "output_chars": len(response),
+                "output_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
+                "counts_after": list(self.counts),
+            }
+        )
+        self.call_history.append(record)
         return response, idx
+
+    @property
+    def last_call(self) -> dict | None:
+        return self.call_history[-1] if self.call_history else None
 
     def record_reward(self, idx: int, reward: float) -> None:
         """Caller is responsible for clamping reward >= 0."""
@@ -61,6 +100,44 @@ class LLMEnsemble:
         if self.strategy == "throughput_depth":
             return self._throughput_depth_select(scores)
         return best_idx
+
+    def _call_record(
+        self,
+        *,
+        role: str,
+        backend_idx: int,
+        prompt: str,
+        counts_before: list[int],
+    ) -> dict:
+        backend = self.backends[backend_idx]
+        metadata = (
+            dict(self.backend_metadata[backend_idx])
+            if backend_idx < len(self.backend_metadata)
+            else {}
+        )
+        return {
+            "id": uuid4().hex,
+            "role": role,
+            "backend_idx": backend_idx,
+            "backend_name": getattr(backend, "name", backend.__class__.__name__),
+            "backend_metadata": metadata,
+            "strategy": self.strategy,
+            "api_mode": getattr(backend, "api_mode", None),
+            "prompt_chars": len(prompt),
+            "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "output_chars": 0,
+            "output_sha256": None,
+            "usage": None,
+            "finish_reason": None,
+            "request_id": None,
+            "response_id": None,
+            "latency_sec": 0.0,
+            "status": "pending",
+            "error_type": None,
+            "error": None,
+            "counts_before": counts_before,
+            "counts_after": None,
+        }
 
     def _throughput_depth_select(self, ucb_scores: list[float]) -> int:
         """Cost/depth-aware scheduler layered over UCB scores.

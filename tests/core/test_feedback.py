@@ -53,6 +53,7 @@ def test_apply_llm_feedback_adds_metric_and_weighted_score():
     assert updated.fitness == 0.5
     assert updated.metrics["simplicity"] == 0.5
     assert updated.metadata["llm_feedback"][0]["backend_idx"] == 2
+    assert llm.generate.call_args.kwargs["role"] == "feedback:simplicity"
 
 
 def test_apply_llm_feedback_prompt_includes_full_workspace():

@@ -421,10 +421,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: the backend section says the router tracks observed
     fitness improvements, but did not distinguish that from provider-level call
     telemetry.
-  - Current evidence: `LLMBackend.generate()` returns raw text only, and the
-    loop stores backend indexes without token usage, latency, retry counts,
-    response ids, finish reasons, or API-mode provenance.
-  - Required result: note that per-call provider telemetry remains backend
+  - Current evidence: `LLMBackend.generate()` returns raw text only.
+    `LLMEnsemble` now wraps calls with role, backend, API mode, prompt/output
+    size and hash, latency, status, and scheduler-count telemetry. Provider
+    token usage, adapter-internal retry counts, response ids, finish reasons,
+    and raw provider diagnostics remain unavailable.
+  - Status: README now distinguishes implemented ensemble-level call telemetry
+    from missing provider-level telemetry and fallback/retry policy.
+  - Required result: note that deeper provider telemetry remains backend
     provenance work.
 
 - [x] Clarify seed/replay limits.

@@ -8,6 +8,9 @@ class AnthropicBackend:
         self._model = model; self._max_tokens = max_tokens
     @property
     def name(self) -> str: return f"anthropic/{self._model}"
+    @property
+    def api_mode(self) -> str:
+        return "messages"
     def generate(self, prompt: str, **kwargs) -> str:
         for attempt in range(3):
             try:

@@ -67,10 +67,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     over UCB-style scores. Remaining divergence: the scheduler uses numeric
     `cost`, `latency`, and `depth` metadata but ignores descriptive `role`
     labels, so there are no breadth/depth quotas, escalation rules, or
-    role-specific routing semantics yet. Provider usage, latency, retry,
-    response-id, finish-reason, and API-mode telemetry is not persisted per LLM
-    call. Provider failures are not retried, routed to fallback backends, or
-    logged as structured failed LLM-call attempts.
+    role-specific routing semantics yet. Ensemble telemetry now records call
+    role, backend metadata, API mode, prompt/output sizes, latency, status, and
+    scheduler counts. Provider usage, adapter-internal retry counts,
+    response-id, finish-reason, and raw provider diagnostics remain unavailable.
+    Provider failures are not retried or routed to fallback backends.
 
 - [ ] Existing/custom LLM backend extension point.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.
@@ -363,8 +364,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     workspace-aware descriptors, custom backend registration, async workers,
     provider failure policy, validator environment isolation, run-wide budgets,
     true multi-objective search, queryable database, archive/resume state,
-    reproducible ids, feedback calibration, role-specific LLM accounting,
-    plugin provenance, and benchmark hardening.
+    reproducible ids, feedback calibration, role-specific LLM routing/reward
+    policy, plugin provenance, and benchmark hardening.
 
 - [x] Decide and document the paper corpus source of truth.
   - Evidence: `papers/download_manifest.csv` lists 24 downloaded papers, while
@@ -565,10 +566,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     generation throughput and quality.
   - Current evidence: critique, feedback, and meta-prompt calls share the same
     `LLMEnsemble.generate()` accounting as mutation calls, but only mutation
-    calls receive a candidate-improvement reward.
+    calls receive a candidate-improvement reward. Call telemetry now records
+    roles and is persisted in candidate/feedback/prompt metadata for successful
+    synchronous calls.
   - Missing: role-specific routing/accounting for generation, critique,
-    grading, and meta-prompt calls, plus persisted scheduler diagnostics and
-    normalized provider call telemetry.
+    grading, and meta-prompt calls, persisted resumable scheduler state, a
+    separate run-scoped call log, provider token/usage fields, and retry/fallback
+    policy.
 
 - [x] Tighten inline paper-source comments so they do not imply faithful
   implementations.

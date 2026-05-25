@@ -19,7 +19,8 @@ not a canonical UCB1 implementation; reward-normalization gaps are tracked in
 
 Current behavior:
 
-- `generate(prompt)` returns both the raw backend response and the backend index
+- `generate(prompt, role=...)` returns both the raw backend response and the
+  backend index
 - the scheduler's global `total` counter advances before the backend call, but
   the selected backend's `counts` entry advances only after a successful
   response
@@ -28,16 +29,22 @@ Current behavior:
 - critique, feedback-grader, and meta-prompt calls currently share this same
   selection/count state even though only candidate mutation calls receive an
   improvement reward
-- provider response metadata is not persisted. Token usage, latency, retry
-  counts, API mode, request/response ids, finish reasons, and raw provider
-  diagnostics are discarded by the backend adapters.
-- failed provider calls are not logged or retried by the ensemble; a failure
-  can advance `total` without a matching backend count or structured failure
-  record
+- `LLMEnsemble.call_history` records normalized call telemetry: role, backend,
+  backend metadata, strategy, API mode, prompt/output sizes and hashes,
+  latency, status, error fields, and counts before/after the call
+- successful mutation, critique, feedback, and meta-prompt calls are attached
+  to the relevant candidate/prompt metadata in run artifacts
+- provider usage tokens, retry counts inside adapters, request/response ids,
+  finish reasons, and raw provider diagnostics are still unavailable and stored
+  as `null`
+- failed provider calls are recorded in in-memory ensemble telemetry, but the
+  ensemble still does not retry or route to fallback backends; mutation,
+  critique, and meta-prompt failures can still abort before a run artifact is
+  flushed
 
 This means backends are rewarded for improvement over the selected parent, not
 for absolute score, and role-specific auxiliary-call accounting remains a known
-gap.
+gap even though call roles are now recorded.
 
 For `ensemble_strategy: throughput_depth`, the scheduler currently uses only
 numeric `cost`, `latency`, and `depth` metadata. The optional `role` field is

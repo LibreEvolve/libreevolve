@@ -1058,9 +1058,10 @@ Primary evidence:
   - Current evidence: every `llm.generate()` increments `LLMEnsemble.counts`,
     including critique, LLM feedback, and meta-prompt mutation calls, but only
     the original mutation `backend_idx` receives `record_reward()`. Mutation
-    candidates now log `metadata.backend_idx`, but auxiliary calls still affect
-    routing state as apparent zero-reward pulls and the scheduler state is not
-    persisted.
+    candidates now log `metadata.backend_idx`; normalized call telemetry also
+    records `role` for mutation, critique, feedback, and meta-prompt calls.
+    Auxiliary calls still affect routing state as apparent no-reward pulls, and
+    the scheduler state is not persisted as resumable bandit state.
   - Required result: track call role/provenance, define reward or no-reward
     accounting per role, persist bandit state in run artifacts, and add tests
     proving critique/feedback/meta-prompt calls do not distort mutation routing.
@@ -1071,12 +1072,16 @@ Primary evidence:
     per-call evidence for which model/API call produced which proposal or
     feedback.
   - Current evidence: `LLMBackend.generate()` returns only `str`, and
-    `LLMEnsemble.generate()` returns `(response, backend_idx)`. OpenAI,
-    Anthropic, and Ollama adapters discard provider response ids, usage/token
-    counts, finish reasons, latency, retry counts, API mode, raw error metadata,
-    and request parameters. `history.jsonl` stores `metadata.backend_idx` for
-    mutation calls and limited feedback/critique metadata, but there is no
-    normalized LLM call log or per-call telemetry attached to run artifacts.
+    `LLMEnsemble.generate()` returns `(response, backend_idx)`.
+    `LLMEnsemble.call_history` now records role, backend, backend metadata,
+    strategy, API mode, prompt/output sizes and hashes, latency, status,
+    failure metadata, and scheduler counts before/after the call. Successful
+    mutation/critique calls are attached to candidate metadata, feedback calls
+    to feedback records, and meta-prompt calls to prompt-history metadata.
+    OpenAI, Anthropic, and Ollama adapters still discard provider response ids,
+    usage/token counts, finish reasons, adapter-internal retry counts, raw
+    provider diagnostics, and request parameters. There is no separate
+    run-scoped LLM call log yet.
   - Required result: introduce a call result/telemetry object, record role,
     backend spec, model, API mode, prompt size, output size, usage tokens,
     latency, retries, finish reason, request/response ids, raw-provider

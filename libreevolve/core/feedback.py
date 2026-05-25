@@ -69,11 +69,13 @@ def apply_llm_feedback(
         backend_idx = None
         try:
             prompt = _build_feedback_prompt(grader, workspace, problem, updated)
-            response, backend_idx = llm.generate(prompt)
+            response, backend_idx = llm.generate(prompt, role=f"feedback:{name}")
+            llm_call = _last_llm_call(llm)
             parsed = parse_feedback_response(response)
             score = _feedback_score(parsed)
             discard = _feedback_discard(parsed)
         except Exception as exc:
+            llm_call = _last_llm_call(llm)
             feedback_records.append(
                 {
                     "name": name,
@@ -82,6 +84,7 @@ def apply_llm_feedback(
                     "exception": exc.__class__.__name__,
                     "message": str(exc),
                     "backend_idx": backend_idx,
+                    "llm_call": llm_call,
                     "raw_response": response,
                 }
             )
@@ -104,6 +107,7 @@ def apply_llm_feedback(
                 "discard": discard,
                 "feedback": parsed.get("feedback", ""),
                 "backend_idx": backend_idx,
+                "llm_call": llm_call,
                 "raw_response": response,
             }
         )
@@ -115,6 +119,11 @@ def apply_llm_feedback(
     if not is_valid:
         updated.error = updated.error or "llm_feedback_discard"
     return updated
+
+
+def _last_llm_call(llm) -> dict | None:
+    call = getattr(llm, "last_call", None)
+    return dict(call) if isinstance(call, dict) else None
 
 
 def parse_feedback_response(text: str) -> dict:

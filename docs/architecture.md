@@ -357,13 +357,17 @@ For OpenAI, the adapter uses Chat Completions unless `reasoning_effort` is set,
 in which case it uses the Responses API. There is no automatic
 reasoning-model detection or API-mode validation yet.
 
-The backend interface returns only generated text. Provider usage, latency,
-retry count, request/response ids, finish reasons, API mode, and raw response
-metadata are not normalized or persisted, which limits cost accounting,
-debugging, and scheduler analysis. Provider exceptions are not isolated by
-role today: mutation, critique, feedback, and meta-prompt calls can abort the
-run, and failed attempts are not retried, routed to fallback backends, or
-counted in scheduler state.
+The backend adapters still return generated text, but `LLMEnsemble` wraps calls
+with normalized telemetry containing role, backend, backend metadata, strategy,
+API mode, prompt/output sizes and hashes, latency, success/error status, and
+backend counts before/after the call. Successful mutation/critique calls are
+attached to candidate metadata, feedback calls are attached to feedback records,
+and meta-prompt calls are attached to prompt-history metadata. Provider usage
+tokens, adapter-internal retry counts, request/response ids, finish reasons,
+and raw provider diagnostics are not available yet. Provider exceptions are not
+isolated by role today: mutation, critique, feedback, and meta-prompt calls can
+abort the run, and failed attempts are not retried or routed to fallback
+backends.
 
 ## Logging and artifacts
 

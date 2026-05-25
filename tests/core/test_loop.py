@@ -20,11 +20,51 @@ def _problem(src="def evaluate(c): return {'score':1.0,'is_valid':True}"):
 def _llm(diff="<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"):
     m = MagicMock(); m.generate.return_value = (diff, 0); return m
 
+
+class _TelemetryLLM:
+    def __init__(self, diff="<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"):
+        self.diff = diff
+        self.last_call = None
+        self.calls = []
+
+    def generate(self, prompt, role="mutation"):
+        self.last_call = {
+            "id": f"call-{len(self.calls)}",
+            "role": role,
+            "backend_idx": 0,
+            "backend_name": "fake/model",
+            "prompt_chars": len(prompt),
+            "output_chars": len(self.diff),
+            "status": "ok",
+        }
+        self.calls.append(self.last_call)
+        return self.diff, 0
+
+    def record_reward(self, idx, reward):
+        pass
+
+
 def test_returns_program():
     with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
         best = evolve(_problem(), Config(max_generations=2,
                                         log_dir=tempfile.mkdtemp(), problem_name="t"))
     assert best is not None and isinstance(best.fitness, float)
+
+
+def test_loop_logs_llm_call_telemetry_on_candidate():
+    tmpdir = tempfile.mkdtemp()
+    llm = _TelemetryLLM()
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), Config(max_generations=1, log_dir=tmpdir, problem_name="t"))
+
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    assert child["metadata"]["llm_calls"][0]["role"] == "mutation"
+    assert child["metadata"]["llm_calls"][0]["backend_name"] == "fake/model"
 
 
 def test_evaluation_budget_stops_before_llm_mutation():

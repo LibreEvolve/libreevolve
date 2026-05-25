@@ -428,6 +428,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     critique/feedback/meta-prompt calls as ordinary pulls.
   - Current roadmap gap: backend scheduling work mentioned UCB reward
     normalization and breadth/depth tests but not separation of call roles.
+  - Status: implemented for normalized call telemetry and persisted call-role
+    records on successful mutation, critique, feedback, and meta-prompt calls.
+    Role-specific routing/reward policy remains open.
   - Required result: track and test mutation, critique, feedback, and
     meta-prompt accounting separately.
 
@@ -437,6 +440,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provider diagnostics.
   - Current roadmap gap: backend work covered scheduling and role accounting
     but not the per-call telemetry needed to prove cost/latency/budget claims.
+  - Status: implemented at the ensemble boundary for role, backend, backend
+    metadata, strategy, API mode, prompt/output sizes and hashes, latency,
+    status/error fields, and scheduler counts. Provider token usage,
+    request/response ids, finish reasons, adapter-internal retry counts, and a
+    separate run-scoped call log remain open.
   - Required result: track call-result objects, provider usage, prompt/output
     size, retries, latency, API mode, request/response ids, failure metadata,
     and scheduler/budget updates from that telemetry.

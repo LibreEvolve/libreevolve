@@ -11,6 +11,9 @@ class OpenAIBackend:
         self._reasoning_effort = reasoning_effort
     @property
     def name(self) -> str: return f"openai/{self._model}"
+    @property
+    def api_mode(self) -> str:
+        return "responses" if self._reasoning_effort else "chat_completions"
     def generate(self, prompt: str, **kwargs) -> str:
         for attempt in range(3):
             try:

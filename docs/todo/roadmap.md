@@ -269,8 +269,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: feedback calibration and richer prompt rendering were
     tracked, but not the distinct issue that feedback-grader prompts are
     primary-file-only despite workspace candidates.
-  - Required result: render bounded candidate file sets and diagnostics to
-    graders with budget/redaction controls and tests for non-primary files.
+  - Status: implemented. Feedback prompts now render bounded candidate file
+    sets and compact diagnostics with basic redaction and tests for non-primary
+    files, oversized workspace truncation, and evaluator-output visibility.
 
 - [x] Add LLM feedback failure isolation to evaluation hardening.
   - Evidence: `apply_llm_feedback()` lets provider exceptions, malformed

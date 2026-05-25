@@ -354,8 +354,8 @@ prompt-program events in `prompt_history.jsonl`.
   fitness and placeholder validation remain open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
-- LLM feedback graders see the primary-file candidate view, not the full
-  workspace file set.
+- LLM feedback graders receive bounded full-workspace file sections, basic
+  secret redaction, and compact evaluator diagnostics.
 - Evaluator output is parsed as JSON, validated against declared scalar
   metrics, and normalized around the primary metric.
 - Config validation now rejects unknown problem config keys, invalid

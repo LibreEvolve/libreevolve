@@ -180,8 +180,9 @@ Prompt construction is not yet globally token-budgeted. Large workspaces,
 context files, plugin context, and inspiration sets can exceed a backend's
 effective context window until prompt packing/accounting is implemented.
 
-LLM feedback graders currently receive the primary-file candidate view rather
-than the full workspace file set.
+LLM feedback graders receive bounded full-workspace context with file paths,
+primary-file marking, basic secret redaction, truncation notices, and compact
+evaluation diagnostics.
 
 Malformed LLM feedback responses and provider failures are recorded as
 feedback-failure metadata and ignored for scoring. Grader config is

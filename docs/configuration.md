@@ -53,8 +53,9 @@ Feedback scores are logged as metrics, provenance is stored in evaluation
 metadata, and weighted scores adjust candidate fitness without replacing the
 raw primary validator metric. Graders run only for locally valid candidates by
 default; set `include_invalid: true` on a grader to review invalid candidates.
-For workspace candidates, the built-in feedback prompt currently includes only
-the primary file content, not every file in the candidate workspace.
+For workspace candidates, the built-in feedback prompt includes a bounded,
+deterministically ordered file listing with path headers, primary-file marking,
+basic secret redaction, truncation notices, and compact evaluation diagnostics.
 `llm_feedback` grader specs are validated before startup: `name`, `metric`, and
 `prompt` must be strings when present; `weight` and `min_score` must be finite
 numbers; `include_invalid` must be boolean; and unsupported keys are rejected.

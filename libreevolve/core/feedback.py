@@ -9,6 +9,14 @@ from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.evaluator import EvaluationResult
 from libreevolve.problems.loader import Problem
 
+_MAX_FEEDBACK_FILE_CHARS = 4000
+_MAX_FEEDBACK_WORKSPACE_CHARS = 12000
+_MAX_FEEDBACK_DIAGNOSTIC_CHARS = 4000
+_SECRET_ASSIGNMENT = re.compile(
+    r"(?i)(api[_-]?key|token|secret|password)(\s*[:=]\s*)(['\"]?)[^\s,'\"]+"
+)
+_SECRET_TOKEN = re.compile(r"\b(?:sk|sk-proj|ghp|gho|github_pat)_[A-Za-z0-9_\-]{12,}\b")
+
 
 def build_critique_prompt(
     base_prompt: str,
@@ -162,10 +170,74 @@ def _build_feedback_prompt(
         f"{instruction}\n\n"
         "[TASK]\n"
         f"{problem.task_description}\n\n"
-        "[PRIMARY FILE]\n"
-        f"{workspace.primary_file}\n\n"
-        "[CODE]\n"
-        f"{workspace.code}\n\n"
+        "[WORKSPACE]\n"
+        f"{_render_feedback_workspace(workspace)}\n\n"
+        "[EVALUATION]\n"
+        f"{_render_feedback_diagnostics(result)}\n\n"
         "[METRICS]\n"
         f"{json.dumps(result.metrics, sort_keys=True)}"
     )
+
+
+def _render_feedback_workspace(workspace: CandidateWorkspace) -> str:
+    rendered: list[str] = [f"Primary file: {workspace.primary_file}"]
+    used = sum(len(item) for item in rendered)
+    omitted = 0
+    for path, content in sorted(workspace.files.items()):
+        redacted = _redact_sensitive_text(content)
+        body = _truncate_text(redacted, _MAX_FEEDBACK_FILE_CHARS)
+        primary = " (primary)" if path == workspace.primary_file else ""
+        fence = "python" if path.endswith(".py") else ""
+        section = f"--- FILE {path}{primary} ---\n```{fence}\n{body}\n```"
+        projected = used + len(section)
+        if projected > _MAX_FEEDBACK_WORKSPACE_CHARS:
+            remaining = max(0, _MAX_FEEDBACK_WORKSPACE_CHARS - used)
+            if remaining > 120:
+                rendered.append(_truncate_text(section, remaining))
+                used += len(rendered[-1])
+            omitted += 1
+            continue
+        rendered.append(section)
+        used = projected
+    if omitted:
+        rendered.append(f"[omitted {omitted} file section(s) due to feedback prompt budget]")
+    return "\n\n".join(rendered)
+
+
+def _render_feedback_diagnostics(result: EvaluationResult) -> str:
+    diagnostics = {
+        "fitness": result.fitness,
+        "is_valid": result.is_valid,
+        "error": result.error,
+        "elapsed_sec": result.elapsed_sec,
+        "stdout": _truncate_text(result.stdout, 1000),
+        "stderr": _truncate_text(result.stderr, 1000),
+        "stages": [
+            {
+                "name": stage.name,
+                "passed": stage.passed,
+                "score": stage.score,
+                "error": stage.error,
+                "stdout": _truncate_text(stage.stdout, 500),
+                "stderr": _truncate_text(stage.stderr, 500),
+            }
+            for stage in result.stages[-3:]
+        ],
+    }
+    return _truncate_text(
+        json.dumps(diagnostics, sort_keys=True, indent=2),
+        _MAX_FEEDBACK_DIAGNOSTIC_CHARS,
+    )
+
+
+def _truncate_text(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    notice = f"\n[truncated {len(text) - max_chars} chars]"
+    keep = max(0, max_chars - len(notice))
+    return text[:keep] + notice
+
+
+def _redact_sensitive_text(text: str) -> str:
+    text = _SECRET_ASSIGNMENT.sub(r"\1\2\3[REDACTED]", text)
+    return _SECRET_TOKEN.sub("[REDACTED]", text)

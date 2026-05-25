@@ -108,14 +108,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     discard candidates.
   - Status: implemented as optional synchronous LLM graders with metrics,
     weighted score composition, discard rules, backend provenance, raw
-    responses, and `history.jsonl` visibility. Parallel reviewer workers and
-    calibrated grader ensembles remain open.
+    responses, `history.jsonl` visibility, bounded full-workspace prompt
+    rendering, basic redaction, and compact evaluator diagnostics. Parallel
+    reviewer workers and calibrated grader ensembles remain open.
   - Remaining divergence: feedback scores are not validated against
     `metrics.yaml` bounds/directions and can be added directly to normalized
-    fitness without calibration. For multi-file candidates, feedback grader
-    prompts currently include only the primary-file code, not the full candidate
-    workspace. Malformed grader responses, invalid grader config, and provider
-    errors are not isolated as structured evaluation outcomes.
+    fitness without calibration.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

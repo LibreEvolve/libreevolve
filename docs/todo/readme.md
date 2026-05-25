@@ -445,15 +445,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that current quality-diversity descriptors
     are not yet full-workspace aware.
 
-- [x] Clarify feedback graders are primary-file-only for workspaces.
+- [x] Clarify feedback grader workspace scope.
   - README evidence: the feature list says feedback graders can add metrics or
-    discard candidates, but did not mention the current prompt only includes
-    the primary-file view.
-  - Current evidence: `_build_feedback_prompt()` renders `workspace.primary_file`
-    and `workspace.code` under `[CODE]`; non-primary workspace files are not
-    included.
-  - Required result: warn readers that multi-file feedback grading is not yet
-    full-workspace aware.
+    discard candidates, so it should describe what candidate context graders
+    see.
+  - Current evidence: `_build_feedback_prompt()` now renders bounded full
+    workspace sections with file paths, primary-file marking, truncation
+    notices, basic secret redaction, and compact evaluator diagnostics.
+  - Required result: keep README caveats aligned with current feedback-grader
+    prompt behavior.
 
 - [x] Clarify feedback grader failure-isolation limits.
   - README evidence: optional feedback graders are described as able to add

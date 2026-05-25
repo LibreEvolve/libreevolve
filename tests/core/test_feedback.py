@@ -55,6 +55,64 @@ def test_apply_llm_feedback_adds_metric_and_weighted_score():
     assert updated.metadata["llm_feedback"][0]["backend_idx"] == 2
 
 
+def test_apply_llm_feedback_prompt_includes_full_workspace():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": 0.5, "feedback": "ok"}', 2)
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": "from helper import value\nresult = value()\n",
+            "helper.py": "def value():\n    return 41\n",
+        },
+        primary_file="main.py",
+    )
+    result = EvaluationResult(
+        fitness=0.4,
+        metrics={"score": 0.4, "is_valid": True},
+        is_valid=True,
+        stdout="validator output",
+    )
+
+    apply_llm_feedback(
+        result,
+        workspace,
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity", "weight": 0.2}],
+        llm,
+    )
+
+    prompt = llm.generate.call_args.args[0]
+    assert "Primary file: main.py" in prompt
+    assert "--- FILE helper.py ---" in prompt
+    assert "def value():" in prompt
+    assert "validator output" in prompt
+
+
+def test_apply_llm_feedback_prompt_redacts_and_truncates_workspace():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": 0.5, "feedback": "ok"}', 2)
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": 'OPENAI_API_KEY = "sk-proj_abcdefghijklmnopqrstuvwxyz"\n'
+            + ("x = 1\n" * 1000),
+        },
+        primary_file="main.py",
+    )
+    result = EvaluationResult(fitness=0.4, metrics={"score": 0.4}, is_valid=True)
+
+    apply_llm_feedback(
+        result,
+        workspace,
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity"}],
+        llm,
+    )
+
+    prompt = llm.generate.call_args.args[0]
+    assert "sk-proj_abcdefghijklmnopqrstuvwxyz" not in prompt
+    assert "[REDACTED]" in prompt
+    assert "[truncated" in prompt
+
+
 def test_apply_llm_feedback_can_discard_candidate():
     llm = MagicMock()
     llm.generate.return_value = ('{"score": 0.1, "feedback": "too complex"}', 0)

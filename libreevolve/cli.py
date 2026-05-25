@@ -96,7 +96,7 @@ def show(run_dir):
         eligible = [record for record in records if _is_archive_admitted_valid(record)]
         if not eligible:
             raise click.ClickException("No archive-admitted valid programs found")
-        best = max(eligible, key=lambda r: r["fitness"])
+        best = max(eligible, key=_record_selection_key)
         selection = "archive-admitted valid"
     else:
         best = max(records, key=lambda r: r["fitness"])
@@ -104,6 +104,9 @@ def show(run_dir):
     click.echo(f"Total programs: {len(records)}")
     click.echo(f"Selection:      {selection}")
     click.echo(f"Best fitness:   {best['fitness']:.6f} (generation {best['generation']})")
+    archive_summary = _archive_summary(best)
+    if archive_summary:
+        click.echo(archive_summary)
     if best.get("metrics"):
         click.echo(f"Metrics:        {json.dumps(best['metrics'], sort_keys=True)}")
     click.echo("\n--- Best program ---\n")
@@ -179,6 +182,40 @@ def _is_archive_admitted_valid(record: dict) -> bool:
     return bool(isinstance(admission, dict) and admission.get("admitted")) and bool(
         evaluation.get("is_valid", True)
     )
+
+
+def _record_selection_key(record: dict) -> tuple[float, float]:
+    metadata = record.get("metadata") if isinstance(record.get("metadata"), dict) else {}
+    admission = metadata.get("archive_admission") if isinstance(metadata, dict) else {}
+    raw = None
+    if isinstance(admission, dict):
+        raw = admission.get("selection_score")
+    if not isinstance(raw, (int, float)) or isinstance(raw, bool):
+        raw = metadata.get("selection_score") if isinstance(metadata, dict) else None
+    selection_score = float(raw) if isinstance(raw, (int, float)) and not isinstance(raw, bool) else None
+    if selection_score is None:
+        selection_score = float(record.get("fitness", float("-inf")))
+    return (selection_score, float(record.get("fitness", float("-inf"))))
+
+
+def _archive_summary(record: dict) -> str | None:
+    metadata = record.get("metadata") if isinstance(record.get("metadata"), dict) else {}
+    admission = metadata.get("archive_admission") if isinstance(metadata, dict) else None
+    if not isinstance(admission, dict):
+        return None
+    parts = []
+    if isinstance(admission.get("selection_score"), (int, float)) and not isinstance(
+        admission.get("selection_score"), bool
+    ):
+        parts.append(f"selection_score={float(admission['selection_score']):.6f}")
+    if isinstance(admission.get("island_id"), int):
+        parts.append(f"island={admission['island_id']}")
+    if isinstance(admission.get("cell"), list):
+        parts.append(f"cell={admission['cell']}")
+    descriptors = admission.get("descriptors")
+    if isinstance(descriptors, dict) and descriptors:
+        parts.append(f"descriptors={json.dumps(descriptors, sort_keys=True)}")
+    return f"Archive:        {'; '.join(parts)}" if parts else None
 
 
 def _write_best_artifacts(program, run_dir: Path) -> tuple[Path, Path]:

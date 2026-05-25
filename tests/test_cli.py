@@ -176,6 +176,57 @@ def test_show_uses_archive_admitted_valid_best_for_modern_history(tmp_path):
     assert "x=500" not in r.output
 
 
+def test_show_uses_archive_selection_score_and_prints_cell_diagnostics(tmp_path):
+    rows = [
+        {
+            "id": "primary",
+            "code": "x=1",
+            "fitness": 0.95,
+            "generation": 1,
+            "metadata": {
+                "archive_admission": {
+                    "admitted": True,
+                    "selection_score": 0.2,
+                    "island_id": 0,
+                    "cell": [2, 0, 0],
+                    "descriptors": {"performance": 0.2},
+                }
+            },
+            "evaluation": {"is_valid": True},
+        },
+        {
+            "id": "balanced",
+            "code": "x=2",
+            "fitness": 0.8,
+            "generation": 2,
+            "metadata": {
+                "archive_admission": {
+                    "admitted": True,
+                    "selection_score": 0.9,
+                    "island_id": 1,
+                    "cell": [9, 3, 4],
+                    "descriptors": {"performance": 0.9, "diversity": 0.4},
+                }
+            },
+            "evaluation": {"is_valid": True},
+        },
+    ]
+    (tmp_path / "history.jsonl").write_text(
+        "\n".join(json.dumps(row) for row in rows),
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code == 0
+    assert "x=2" in r.output
+    assert "x=1" not in r.output
+    assert "selection_score=0.900000" in r.output
+    assert "island=1" in r.output
+    assert "cell=[9, 3, 4]" in r.output
+    assert '"diversity": 0.4' in r.output
+
+
 def test_show_errors_when_modern_history_has_no_admitted_valid_program(tmp_path):
     (tmp_path / "history.jsonl").write_text(
         json.dumps(

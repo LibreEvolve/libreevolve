@@ -293,12 +293,13 @@ complete current artifact layout shown above, including `manifest.json`,
 
 `show` is a compact compatibility view. For current histories that include
 `metadata.archive_admission`, it selects the best archive-admitted valid record
-from `history.jsonl` and prints its metrics when present. For legacy histories
-without archive metadata, including the checked-in fixtures above, it falls
-back to the highest top-level `fitness` row. Use `best.py`/`best_workspace/`
-from the original run as the exact archived output. Richer stage, lineage,
-archive, prompt, feedback, and full-workspace diagnostics are tracked as
-follow-up work.
+from `history.jsonl` by archive selection score with fitness as the tie-break,
+then prints metrics and archive cell/descriptor diagnostics when present. For
+legacy histories without archive metadata, including the checked-in fixtures
+above, it falls back to the highest top-level `fitness` row. Use
+`best.py`/`best_workspace/` from the original run as the exact archived output.
+Richer stage, lineage, prompt, feedback, and full-workspace diagnostics are
+tracked as follow-up work.
 
 ## Related plugin artifact
 

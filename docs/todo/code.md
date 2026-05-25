@@ -1015,12 +1015,14 @@ Primary evidence:
     outputs to programs so explored ideas can be inspected and resurfaced.
   - Current evidence: `libreevolve show` now detects current histories with
     `metadata.archive_admission`, selects only archive-admitted records whose
-    evaluation is valid, prints its selection mode, and prints selected metrics
-    when present. It preserves a legacy highest-fitness fallback for old
-    history fixtures that lack archive metadata. It still prints only the
-    selected primary-file code and does not expose full file sets, stage
-    failures, prompt lineage, archive cells, novelty/diversity signals,
-    feedback records, or parent/child lineage.
+    evaluation is valid, ranks them by archive selection score with final
+    fitness as a tie-break, prints its selection mode, and prints selected
+    metrics plus archive selection score, island id, cell coordinates, and
+    descriptor values when present. It preserves a legacy highest-fitness
+    fallback for old history fixtures that lack archive metadata. It still
+    prints only the selected primary-file code and does not expose full file
+    sets, stage failures, prompt lineage, feedback records, or parent/child
+    lineage.
   - Required result: extend `show` and/or machine-readable summaries with
     stage diagnostics, full-workspace pointers, lineage, prompt ids, archive
     diagnostics, and failure statistics; keep tests where an invalid or

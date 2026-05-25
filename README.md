@@ -143,7 +143,8 @@ as `manifest.json`, `prompt_history.jsonl`, `failure_history.jsonl`, or
 
 `show` is a compact history view. For current histories that include
 `metadata.archive_admission`, it selects the best archive-admitted valid record
-from `history.jsonl` and prints its metrics when present. For legacy histories
+by archive selection score with fitness as the tie-break, then prints metrics
+and archive cell/descriptor diagnostics when present. For legacy histories
 without archive-admission metadata, including the checked-in fixtures above, it
 falls back to the highest top-level fitness row. Use `best.py` and
 `best_workspace/` from the original run for the exact archived output and full

@@ -122,15 +122,18 @@ Primary evidence:
 
 ## Evaluation
 
-- [ ] Expand the local configurable cascade into AlphaEvolve-grade evaluation
+- [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
   - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing
     difficulty, moving candidates to later stages only if earlier stages are
     promising.
-  - Current evidence: `Config.eval_stages` supports repeated local validator
-    stages with per-stage timeout and `min_score` thresholds. It does not yet
-    support distinct test ensembles, sample sizes, retry/random-seed policies,
-    stage-specific metrics, artifacts, or distributed evaluators.
+  - Current evidence: `Config.eval_stages` supports local staged validators
+    with distinct `validate_path` entrypoints, per-stage timeout and
+    `min_score` thresholds, seeded samples, retries, stage context, and
+    aggregated numeric metrics. It does not yet support distributed evaluator
+    nodes or rich artifact collection beyond stdout/stderr.
+  - Status: implemented for local AlphaEvolve-style hypothesis-test cascades;
+    distributed/parallel evaluator workers remain a separate runtime item.
   - Required result: support configured stages, per-stage thresholds, sample
     sizes, retry/random-seed policies, and separate metrics per stage.
 

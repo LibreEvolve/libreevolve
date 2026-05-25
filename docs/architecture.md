@@ -134,11 +134,14 @@ The default cascade is:
 - Python syntax check across all candidate `.py` files
 - subprocess execution of `validate.py` with the candidate workspace
 
-`Config.eval_stages` can configure repeated validator stages with per-stage
-timeouts and `min_score` thresholds. Validators may keep the old
-`evaluate(code)` signature or opt into `evaluate(code, workspace_path)`.
-This is an initial local cascade model, not AlphaEvolve's full parallel
-evaluator-worker architecture.
+`Config.eval_stages` can configure local validator stages with separate
+`validate_path` entrypoints, timeouts, `min_score` thresholds, sample counts,
+seed lists, and retries. Validators may keep the old `evaluate(code)` signature
+or opt into `evaluate(code, workspace_path)` or
+`evaluate(code, workspace_path, stage)`. Multi-sample stages aggregate numeric
+metrics and stop the cascade when validity or threshold checks fail. This is a
+local cascade model, not AlphaEvolve's full parallel evaluator-worker
+architecture.
 
 ## Population model
 

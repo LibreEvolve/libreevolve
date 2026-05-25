@@ -14,7 +14,8 @@ LibreEvolve has:
 - SEARCH/REPLACE diff mutation and configurable full-block/full-code replacement
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
-- configurable local evaluator stages with thresholds/timeouts
+- configurable local evaluator stages with distinct validator entrypoints,
+  thresholds, samples, seeds, retries, and timeouts
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and evaluator feedback
@@ -49,8 +50,7 @@ is not yet an AlphaEvolve reproduction.
 
 ### 3. Expand evaluation cascades
 
-- Let stages choose different validator entrypoints, seeds, sample sizes, and
-  budgets.
+- Add artifact collection and richer per-stage budget accounting.
 - Add optional LLM-generated feedback graders with provenance and score
   composition rules.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
@@ -122,6 +122,6 @@ is not yet an AlphaEvolve reproduction.
 ## Good First Follow-Ups
 
 1. Add queryable database sampling by metric, novelty, lineage, and feedback.
-2. Add stage-specific evaluator entrypoints and sample budgets.
-3. Add one non-toy benchmark run fixture with expected artifacts.
-4. Add workspace export/resume coverage beyond primary `best.py`.
+2. Add one non-toy benchmark run fixture with expected artifacts.
+3. Add workspace export/resume coverage beyond primary `best.py`.
+4. Add LLM feedback graders with provenance and score-composition tests.

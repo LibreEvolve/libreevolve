@@ -17,7 +17,8 @@ Configuration is assembled from three sources, in this order:
 - `eval_timeout_sec` (`60.0`): default validator subprocess timeout.
 - `explore_ratio` (`0.3`): probability of exploration instead of exploitation.
 - `mutation_mode` (`"diff"`): `diff` or `full`.
-- `eval_stages` (`[]`): optional configured evaluator stages.
+- `eval_stages` (`[]`): optional configured evaluator stages with stage
+  validator entrypoints, thresholds, samples, seeds, retries, and timeouts.
 - `prompt_variants` (`[]`): optional prompt templates for stochastic sampling.
 - `meta_prompt_evolution` (`False`): when true, periodically ask the active LLM
   backend to produce a revised prompt template.
@@ -88,8 +89,12 @@ eval_timeout_sec: 15
 mutation_mode: full
 eval_stages:
   - name: smoke
+    validate_path: validate.py
     timeout_sec: 5
     min_score: 0.1
+    samples: 2
+    seeds: [1, 2]
+    retries: 1
   - name: full
     timeout_sec: 30
     min_score: 0.5
@@ -143,8 +148,8 @@ Provider SDKs may honor additional provider-specific variables.
 
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
   migration, archive, prompt, stage, and ensemble scheduling settings.
-- `eval_stages` currently repeats the same local validator with different
-  thresholds/timeouts. It is not yet a distributed test-suite scheduler.
+- `eval_stages` is still local subprocess execution. It is not yet a
+  distributed evaluator-worker scheduler.
 - `prompt_variants` seed the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Meta-prompt mutation uses the same backend ensemble and must preserve every

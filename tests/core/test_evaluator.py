@@ -94,6 +94,54 @@ def test_configured_stage_threshold_stops_candidate():
         shutil.rmtree(d)
 
 
+def test_configured_stage_uses_distinct_validator_entrypoint():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        stage_validator = d / "stage_validate.py"
+        stage_validator.write_text(
+            "def evaluate(code, workspace, stage):\n"
+            "    return {'score': 0.8, 'is_valid': True, 'stage_name': stage['name']}\n",
+            encoding="utf-8",
+        )
+        ev = CascadeEvaluator(p, stages=[{"name": "hard", "validate_path": "stage_validate.py"}])
+        result = ev.evaluate("x=1", None)
+        assert result == 0.8
+        assert result.metrics["stage_name"] == "hard"
+        assert result.metadata["validate_path"].endswith("stage_validate.py")
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_aggregates_seeded_samples():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': stage['seed'] / 10, 'is_valid': True}\n"
+    )
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "sampled", "seeds": [2, 4]}])
+        result = ev.evaluate("x=1", None)
+        assert abs(result - 0.3) < 1e-9
+        assert result.metadata["sample_count"] == 2
+        assert [stage.name for stage in result.stages[-2:]] == ["sampled[0]", "sampled[1]"]
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_retries_failed_sample():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    ok = stage['attempt'] == 1\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "retry", "retries": 1}])
+        result = ev.evaluate("x=1", None)
+        assert result == 1.0
+        assert result.metadata["attempt"] == 1
+    finally:
+        shutil.rmtree(d)
+
+
 def test_workspace_validator_receives_materialized_files():
     p, d = _problem(
         "from pathlib import Path\n"

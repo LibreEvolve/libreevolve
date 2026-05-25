@@ -118,8 +118,11 @@ Default failure scores:
 - validator returns `is_valid: false`: `-0.1`
 - otherwise: normalized primary metric
 
-`Config.eval_stages` can run configured validator stages with per-stage timeout
-and `min_score` thresholds.
+`Config.eval_stages` can run configured validator stages with per-stage
+`validate_path`, timeout, `min_score`, `samples`, `seeds`, and `retries`.
+Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
+receive stage context containing stage name, index, sample index, seed, attempt,
+and the raw stage config.
 
 ## `initial_programs`
 

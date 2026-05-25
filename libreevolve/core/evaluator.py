@@ -17,8 +17,9 @@ _RUNNER = (
     "mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n"
     "code=open(sys.argv[2],encoding='utf-8').read()\n"
     "workspace=sys.argv[3]\n"
+    "stage=json.loads(sys.argv[4])\n"
     "params=inspect.signature(mod.evaluate).parameters\n"
-    "result=mod.evaluate(code, workspace) if len(params) >= 2 else mod.evaluate(code)\n"
+    "result=mod.evaluate(code, workspace, stage) if len(params) >= 3 else (mod.evaluate(code, workspace) if len(params) >= 2 else mod.evaluate(code))\n"
     "print(json.dumps(result))\n"
 )
 
@@ -92,8 +93,7 @@ class CascadeEvaluator:
         last: EvaluationResult | None = None
         for index, stage in enumerate(self._stages):
             name = str(stage.get("name", f"stage_{index}"))
-            timeout = float(stage.get("timeout_sec", self._timeout))
-            result = self._run_subprocess(workspace, stage_name=name, timeout_sec=timeout)
+            result = self._run_stage(workspace, stage, stage_index=index, stage_name=name)
             stages.extend(result.stages)
             last = result
             min_score = stage.get("min_score")
@@ -107,16 +107,86 @@ class CascadeEvaluator:
                     stderr=result.stderr,
                     error=result.error or "stage_threshold_not_met",
                     elapsed_sec=sum(s.elapsed_sec for s in stages),
-                    metadata={"stopped_at": name},
+                    metadata={**result.metadata, "stopped_at": name},
                 )
         assert last is not None
         last.stages = stages
         last.elapsed_sec = sum(s.elapsed_sec for s in stages)
         return last
 
-    def _run_subprocess(
-        self, workspace: CandidateWorkspace, stage_name: str, timeout_sec: float
+    def _run_stage(
+        self,
+        workspace: CandidateWorkspace,
+        stage: dict,
+        stage_index: int,
+        stage_name: str,
     ) -> "EvaluationResult":
+        timeout = float(stage.get("timeout_sec", self._timeout))
+        validate_path = self._resolve_validate_path(stage.get("validate_path"))
+        seeds = list(stage.get("seeds", []))
+        samples = int(stage.get("samples", len(seeds) or 1))
+        retries = int(stage.get("retries", 0))
+        results: list[EvaluationResult] = []
+        for sample_index in range(samples):
+            seed = seeds[sample_index] if sample_index < len(seeds) else None
+            context = {
+                "name": stage_name,
+                "stage_index": stage_index,
+                "sample_index": sample_index,
+                "seed": seed,
+                "config": stage,
+            }
+            result = self._run_sample_with_retries(
+                workspace=workspace,
+                validate_path=validate_path,
+                stage_name=f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
+                timeout_sec=timeout,
+                stage_context=context,
+                retries=retries,
+            )
+            results.append(result)
+        if len(results) == 1:
+            return results[0]
+        return self._aggregate_sample_results(stage_name, results, validate_path)
+
+    def _run_sample_with_retries(
+        self,
+        workspace: CandidateWorkspace,
+        validate_path: Path,
+        stage_name: str,
+        timeout_sec: float,
+        stage_context: dict,
+        retries: int,
+    ) -> "EvaluationResult":
+        last: EvaluationResult | None = None
+        for attempt in range(retries + 1):
+            context = dict(stage_context)
+            context["attempt"] = attempt
+            result = self._run_subprocess(
+                workspace=workspace,
+                stage_name=stage_name,
+                timeout_sec=timeout_sec,
+                validate_path=validate_path,
+                stage_context=context,
+            )
+            result.metadata["attempt"] = attempt
+            last = result
+            if result.is_valid:
+                return result
+        assert last is not None
+        last.metadata["attempts"] = retries + 1
+        return last
+
+    def _run_subprocess(
+        self,
+        workspace: CandidateWorkspace,
+        stage_name: str,
+        timeout_sec: float,
+        validate_path: Path | None = None,
+        stage_context: dict | None = None,
+    ) -> "EvaluationResult":
+        validate_path = validate_path or self._problem.validate_path
+        stage_context = stage_context or {"name": stage_name}
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             runner = tmp_path / "_runner.py"
@@ -128,7 +198,8 @@ class CascadeEvaluator:
                 # Use list form (not shell=True) to prevent injection
                 res = subprocess.run(
                     [sys.executable, str(runner),
-                     str(self._problem.validate_path), str(primary), str(cand_root)],
+                     str(validate_path), str(primary), str(cand_root),
+                     json.dumps(stage_context)],
                     capture_output=True, timeout=timeout_sec, text=True,
                 )
             except subprocess.TimeoutExpired:
@@ -148,7 +219,7 @@ class CascadeEvaluator:
                     ],
                     error="timeout",
                     elapsed_sec=elapsed,
-                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
+                    metadata=_eval_metadata(workspace, validate_path, stage_context),
                 )
             elapsed = time.perf_counter() - started
             if res.returncode != 0:
@@ -171,7 +242,7 @@ class CascadeEvaluator:
                     stderr=res.stderr,
                     error="subprocess_error",
                     elapsed_sec=elapsed,
-                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
+                    metadata=_eval_metadata(workspace, validate_path, stage_context),
                 )
             try:
                 lines = [line for line in res.stdout.splitlines() if line.strip()]
@@ -197,6 +268,7 @@ class CascadeEvaluator:
                         stderr=res.stderr,
                         error="domain_invalid",
                         elapsed_sec=elapsed,
+                        metadata=_eval_metadata(workspace, validate_path, stage_context),
                     )
                 fitness = self._problem.fitness_from_metrics(m)
                 return EvaluationResult(
@@ -217,7 +289,7 @@ class CascadeEvaluator:
                     stdout=res.stdout,
                     stderr=res.stderr,
                     elapsed_sec=elapsed,
-                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
+                    metadata=_eval_metadata(workspace, validate_path, stage_context),
                 )
             except (json.JSONDecodeError, ValueError, KeyError, TypeError):
                 return EvaluationResult(
@@ -239,8 +311,47 @@ class CascadeEvaluator:
                     stderr=res.stderr,
                     error="malformed_metrics",
                     elapsed_sec=elapsed,
-                    metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
+                    metadata=_eval_metadata(workspace, validate_path, stage_context),
                 )
+
+    def _resolve_validate_path(self, raw: object) -> Path:
+        if raw is None:
+            return self._problem.validate_path
+        path = Path(str(raw))
+        if not path.is_absolute():
+            path = self._problem.problem_dir / path
+        return path
+
+    def _aggregate_sample_results(
+        self, stage_name: str, results: list["EvaluationResult"], validate_path: Path
+    ) -> "EvaluationResult":
+        valid = all(r.is_valid for r in results)
+        metrics = _aggregate_metrics([r.metrics for r in results])
+        if self._problem.primary_metric in metrics:
+            fitness = self._problem.fitness_from_metrics(metrics)
+        else:
+            fitness = sum(r.fitness for r in results) / len(results)
+        if not valid:
+            fitness = min(r.fitness for r in results)
+            metrics.setdefault(self._problem.primary_metric, fitness)
+            metrics["is_valid"] = False
+        stages = [stage for result in results for stage in result.stages]
+        return EvaluationResult(
+            fitness=fitness,
+            metrics=metrics,
+            is_valid=valid,
+            stages=stages,
+            stdout="\n".join(r.stdout for r in results if r.stdout),
+            stderr="\n".join(r.stderr for r in results if r.stderr),
+            error=None if valid else next((r.error for r in results if r.error), "sample_invalid"),
+            elapsed_sec=sum(r.elapsed_sec for r in results),
+            metadata={
+                "stage": stage_name,
+                "sample_count": len(results),
+                "validate_path": str(validate_path),
+                "samples": [r.to_dict() for r in results],
+            },
+        )
 
 
 @dataclass
@@ -320,3 +431,32 @@ def _syntax_error(workspace: CandidateWorkspace) -> str | None:
         except SyntaxError as exc:
             return f"{rel_path}: {exc.__class__.__name__}: {exc}"
     return None
+
+
+def _eval_metadata(
+    workspace: CandidateWorkspace, validate_path: Path, stage_context: dict
+) -> dict:
+    return {
+        "primary_file": workspace.primary_file,
+        "files": sorted(workspace.files),
+        "validate_path": str(validate_path),
+        "stage": stage_context,
+    }
+
+
+def _aggregate_metrics(metrics_list: list[dict]) -> dict:
+    if not metrics_list:
+        return {}
+    keys = sorted({key for metrics in metrics_list for key in metrics})
+    result: dict = {}
+    for key in keys:
+        values = [metrics[key] for metrics in metrics_list if key in metrics]
+        if values and all(isinstance(v, bool) for v in values):
+            result[key] = all(values)
+        elif values and all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in values):
+            result[key] = sum(float(v) for v in values) / len(values)
+        elif values:
+            result[key] = values[-1]
+    if "is_valid" in result:
+        result["is_valid"] = bool(result["is_valid"])
+    return result

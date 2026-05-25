@@ -38,8 +38,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: users can specify increasing-difficulty test ensembles and
     early-stage pruning.
-  - Status: added configurable local validator stages with thresholds and
-    timeouts. Distributed/parallel cascades remain open.
+  - Status: added configurable local validator stages with distinct entrypoints,
+    thresholds, seeded samples, retries, stage context, and timeouts.
+    Distributed/parallel evaluator nodes remain open.
 
 - [ ] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

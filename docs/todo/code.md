@@ -423,6 +423,22 @@ Primary evidence:
   - Required result: add optional feedback graders with clear provenance,
     score-composition rules, and archive/log visibility.
 
+- [ ] Render full workspace context to LLM feedback graders.
+  - Spec evidence: AlphaEvolve can evolve whole files/codebases and use LLM
+    graders for properties that are difficult to encode locally; those graders
+    must see the relevant candidate components to judge codebase-level
+    properties.
+  - Current evidence: `_build_feedback_prompt()` in
+    `libreevolve/core/feedback.py` renders only `workspace.primary_file` and
+    `workspace.code` under `[CODE]`. For multi-file candidates, helper modules,
+    additional evolved files, non-primary context, and file paths are omitted
+    from the grader prompt even though local validators receive the materialized
+    workspace.
+  - Required result: render bounded multi-file workspace sections, file paths,
+    and relevant evaluator diagnostics to feedback graders with redaction and
+    prompt-budget controls; add tests proving graders can inspect non-primary
+    files and that oversized workspaces are handled deterministically.
+
 - [ ] Calibrate LLM feedback scores against metric schema and fitness
   composition.
   - Spec evidence: AlphaEvolve treats evaluation outputs as scalar metrics and

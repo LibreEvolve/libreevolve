@@ -184,7 +184,9 @@ score and optional discard flag. Scores are added as metrics, raw responses and
 backend indexes are recorded under `evaluation.metadata.llm_feedback`, and
 weighted feedback adjusts `Program.fitness` while preserving the raw validator
 metric. Feedback score calibration against `metrics.yaml` direction/bounds is
-not implemented yet.
+not implemented yet. Feedback grader prompts currently render only the
+candidate's primary file, so multi-file helper modules or other evolved files
+are not visible to the grader unless custom prompt text reconstructs them.
 
 After that, plugin `on_evaluated()` hooks may modify the effective fitness used
 for logging, archive admission, prompt reward, and backend reward. The current
@@ -275,6 +277,8 @@ prompt-program events in `prompt_history.jsonl`.
   fitness and placeholder validation remain open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
+- LLM feedback graders see the primary-file candidate view, not the full
+  workspace file set.
 - Evaluator output is parsed as JSON and normalized around the primary metric,
   but full `metrics.yaml` schema validation for every declared scalar metric is
   not enforced yet.

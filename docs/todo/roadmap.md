@@ -189,6 +189,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: keep bounded execution-output and feedback rendering on
     the roadmap as a prompt fidelity item.
 
+- [x] Add full-workspace rendering for LLM feedback graders.
+  - Evidence: `_build_feedback_prompt()` passes only the primary-file content
+    (`workspace.code`) to feedback graders, so multi-file candidates can be
+    graded without helper files or other evolved components.
+  - Current roadmap gap: feedback calibration and richer prompt rendering were
+    tracked, but not the distinct issue that feedback-grader prompts are
+    primary-file-only despite workspace candidates.
+  - Required result: render bounded candidate file sets and diagnostics to
+    graders with budget/redaction controls and tests for non-primary files.
+
 - [x] Add proposal idea/rationale capture to prompt/context work.
   - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and
     describe changes with SEARCH/REPLACE blocks.

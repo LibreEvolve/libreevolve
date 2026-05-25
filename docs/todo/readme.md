@@ -305,3 +305,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `IslandModel.migrate()` events remain in memory only.
   - Required result: warn readers that current run history is not a replayable
     archive checkpoint or migration event log.
+
+- [x] Clarify feedback graders are primary-file-only for workspaces.
+  - README evidence: the feature list says feedback graders can add metrics or
+    discard candidates, but did not mention the current prompt only includes
+    the primary-file view.
+  - Current evidence: `_build_feedback_prompt()` renders `workspace.primary_file`
+    and `workspace.code` under `[CODE]`; non-primary workspace files are not
+    included.
+  - Required result: warn readers that multi-file feedback grading is not yet
+    full-workspace aware.

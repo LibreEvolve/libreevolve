@@ -180,7 +180,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: implemented for local Python/text workspaces. Remaining divergence:
     no arbitrary external repository/build-system runner and `best.py` exports
     only the primary file convenience view. Binary/static artifacts are not
-    first-class candidate members yet.
+    first-class candidate members yet, and the mutation file-section parser has
+    a narrower path grammar than ordinary repository filenames.
 
 - [ ] Full-workspace output artifacts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.

@@ -43,6 +43,8 @@ is not yet an AlphaEvolve reproduction.
   evolution documented as a deliberate divergence.
 - Validate evolve-block marker pairing at load/apply time so malformed skeletons
   cannot silently fall back to whole-file evolution.
+- Unify file-section path parsing with candidate path normalization so ordinary
+  codebase filenames are routable in mutations.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.

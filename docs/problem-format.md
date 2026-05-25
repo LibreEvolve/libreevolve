@@ -212,6 +212,10 @@ new code
 >>>FILE
 ```
 
+Current file-section parsing is conservative and does not recognize every
+valid local filename. Avoid spaces and hyphens in candidate paths until the
+file-section path grammar is unified with workspace path normalization.
+
 In `full` mode, the content inside `<<<FILE ... >>>FILE` becomes the file's new
 content, unless the target file contains evolve blocks, in which case the
 existing full-block rules apply. New files can be created in `full` mode.

@@ -244,3 +244,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `workspace_math`.
   - Required result: list the full current example set when documenting the
     repository layout.
+
+- [x] Clarify multi-file mutation path limitations.
+  - README evidence: the custom-problem section describes optional multi-file
+    seed workspaces but did not mention that `<<<FILE ... >>>FILE` parsing is
+    narrower than ordinary repository path handling.
+  - Current evidence: `_FILE_SECTION_PATTERN` recognizes only a small path
+    character set and can miss hyphenated or spaced filenames even though the
+    workspace path normalizer can handle broader safe relative paths.
+  - Required result: warn readers to keep current file-section paths simple and
+    track parser hardening in the code TODO.

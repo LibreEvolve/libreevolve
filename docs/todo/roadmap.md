@@ -88,6 +88,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: keep marker validation on the roadmap alongside
     workspace/codebase fidelity.
 
+- [x] Add file-section path grammar hardening to candidate fidelity.
+  - Evidence: `_FILE_SECTION_PATTERN` captures only
+    `[A-Za-z0-9_./\\:-]+`, while real repository filenames and
+    `normalize_candidate_path()` can require broader safe relative paths.
+  - Current roadmap gap: workspace fidelity covered file sets and artifacts but
+    not whether LLM file-section envelopes can address ordinary codebase
+    filenames.
+  - Required result: track unified path parsing, unsafe-path diagnostics, and
+    tests for common repository filename shapes.
+
 - [x] Add multi-objective evaluation and metric-vector storage.
   - Evidence: AlphaEvolve Section 2.4 explicitly supports optimizing multiple
     user-provided scores.

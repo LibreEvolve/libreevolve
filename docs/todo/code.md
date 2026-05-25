@@ -62,6 +62,20 @@ Primary evidence:
     across marked files/components, and pass the whole candidate workspace to
     `evaluate`.
 
+- [ ] Unify file-section path parsing with workspace path normalization.
+  - Spec evidence: AlphaEvolve can evolve existing code files/codebases, where
+    ordinary repository filenames may contain hyphens, spaces, generated-file
+    suffixes, or other characters not represented by the current parser.
+  - Current evidence: `_FILE_SECTION_PATTERN` only captures
+    `[A-Za-z0-9_./\\:-]+` after `<<<FILE`, while `normalize_candidate_path()`
+    can represent broader safe relative paths. A response targeting
+    `src/my-module.py` or `data/test case.py` may not be parsed as a file
+    section at all and can fall back to primary-file mutation behavior.
+  - Required result: use one validated relative-path grammar for loader,
+    prompt envelopes, mutation parsing, normalization, and diagnostics; reject
+    unsafe paths explicitly; add tests for hyphenated, spaced, nested,
+    backslash, Unicode/normalization, and malformed file-section paths.
+
 - [x] Add language-agnostic candidate support or narrow the claim to Python.
   - Spec evidence: AlphaEvolve is described as being able to evolve code in any
     language.

@@ -310,6 +310,9 @@ def solve():
 ```
 
 Unmarked seed programs remain fully supported.
+For current multi-file mutation prompts, keep candidate paths simple
+(`package/helper.py` style). The file-section parser does not yet recognize
+every ordinary filename shape, such as paths with spaces or hyphens.
 
 **Tip:** Make your seed program intentionally suboptimal. If the seed already scores perfectly, there's nothing to evolve.
 

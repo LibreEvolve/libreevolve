@@ -78,7 +78,9 @@ new code
 
 `full` mode can replace existing files or create new files with the same
 `<<<FILE path ... >>>FILE` envelope. Candidate paths are normalized and cannot
-escape the candidate workspace.
+escape the candidate workspace. The current file-section parser is stricter
+than path normalization and does not recognize some ordinary filenames, such as
+paths with spaces or hyphens; that is tracked as a codebase-fidelity gap.
 
 ## Evolution loop
 

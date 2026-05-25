@@ -46,10 +46,16 @@ the loaded problem directory name.
 - plugins
 - problem context-source provenance, including selected relative paths, source
   hashes, extraction status, excerpt spans, and PDF page ranges when available
+- evaluator entrypoint provenance, including resolved problem-local validator
+  paths, relative paths, SHA-256 hashes, byte counts, and stage usage metadata
 - seed and log directory
 - run id and run-directory collision policy
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.
+Evaluator provenance currently covers the Python files directly configured as
+`validate.py` or `eval_stages[].validate_path`; transitive helper imports,
+relative evaluator data files, package-style entrypoints, and generated
+evaluator artifacts are not hashed yet.
 
 Reusing an existing run directory is intentionally not treated as resume.
 Before a run starts, LibreEvolve checks the target run directory for known run

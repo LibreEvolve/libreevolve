@@ -370,7 +370,10 @@ metadata.
 
 `validate.py` is loaded by file path from a temporary runner. The validator's
 directory is added to `sys.path`, so sibling helper modules in the problem
-directory can be imported normally.
+directory can be imported normally. Direct evaluator entrypoint files are
+recorded in `manifest.json` with resolved paths, problem-relative paths,
+SHA-256 hashes, byte counts, and stage usage metadata; transitive helper
+imports and evaluator data files are not hashed yet.
 
 For multi-file candidates, `workspace_path` points at the materialized file set.
 The validator subprocess runs with that candidate root as `cwd` and adds it to

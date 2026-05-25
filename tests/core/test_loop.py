@@ -1,4 +1,5 @@
 import tempfile
+import hashlib
 import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -244,12 +245,13 @@ def test_loop_logs_prompt_program_id_and_prompt_history():
 
 def test_loop_logs_normalized_prompt_reward_policy_metadata():
     tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(c): return {'score': 1.0 if 'x=2' in c else 0.5,"
+        "'is_valid': True}"
+    )
     with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
         evolve(
-            _problem(
-                "def evaluate(c): return {'score': 1.0 if 'x=2' in c else 0.5,"
-                "'is_valid': True}"
-            ),
+            problem,
             Config(
                 max_generations=1,
                 log_dir=tmpdir,
@@ -277,6 +279,10 @@ def test_loop_logs_normalized_prompt_reward_policy_metadata():
     assert manifest["config"]["prompt_reward_mode"] == "improvement"
     assert manifest["config"]["prompt_reward_bounds"] == [-1.0, 1.0]
     assert manifest["config"]["prompt_explore_coeff"] == 0.0
+    evaluator_source = manifest["problem"]["evaluator_sources"][0]
+    assert evaluator_source["relative_path"] == "validate.py"
+    expected_hash = hashlib.sha256((problem.problem_dir / "validate.py").read_bytes()).hexdigest()
+    assert evaluator_source["sha256"] == expected_hash
 
 
 def test_prompt_reward_uses_plugin_adjusted_score_with_multiple_metrics():

@@ -10,7 +10,7 @@ from pathlib import Path
 from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
-from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.core.evaluator import CascadeEvaluator, evaluator_entrypoint_provenance
 from libreevolve.core.feedback import apply_llm_feedback, build_critique_prompt
 from libreevolve.core.meta_prompt import PromptDatabase
 from libreevolve.core.prompt import PromptSampler
@@ -43,6 +43,7 @@ def evolve(problem: Problem, config: Config,
         config,
         perf_bounds=(0.0, 1.0),
         context_sources=problem.context_sources,
+        evaluator_sources=evaluator_entrypoint_provenance(problem, config.eval_stages),
     )
     evaluator = CascadeEvaluator(
         problem, timeout_sec=config.eval_timeout_sec, stages=config.eval_stages

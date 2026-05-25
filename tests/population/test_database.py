@@ -173,10 +173,14 @@ def test_manifest_writes_context_source_provenance():
     ProgramDatabase(
         Config(log_dir=tmpdir, problem_name="t"),
         context_sources=[{"path": "nested/notes.md", "sha256": "abc"}],
+        evaluator_sources=[{"relative_path": "validate.py", "sha256": "def"}],
     )
     manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
     assert manifest["problem"]["context_sources"] == [
         {"path": "nested/notes.md", "sha256": "abc"}
+    ]
+    assert manifest["problem"]["evaluator_sources"] == [
+        {"relative_path": "validate.py", "sha256": "def"}
     ]
 
 

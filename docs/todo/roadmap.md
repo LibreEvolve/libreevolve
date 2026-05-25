@@ -598,11 +598,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: evaluator hardening covered metric contracts,
     cascades, and artifacts but not validator-code path confinement and
     provenance.
-  - Status: path confinement is implemented. Stage validators must resolve to
-    problem-local Python files; missing, directory, non-Python, outside-root,
-    and symlink-escape paths are rejected.
-  - Remaining gap: evaluator path/hash provenance is not yet included in
-    manifests.
+  - Status: path confinement and direct entrypoint provenance are implemented.
+    Stage validators must resolve to problem-local Python files; missing,
+    directory, non-Python, outside-root, and symlink-escape paths are rejected.
+    `manifest.json` records direct evaluator entrypoints with resolved path,
+    problem-relative path, SHA-256 hash, byte count, source type, and stage
+    usage metadata.
+  - Remaining gap: transitive helper/data provenance and package-style
+    evaluator semantics are not yet included in manifests.
 
 - [x] Add validator environment/secret isolation to runtime hardening.
   - Evidence: `.env` is loaded into the parent process, and

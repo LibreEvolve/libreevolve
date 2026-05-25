@@ -1410,11 +1410,15 @@ Primary evidence:
     directories, non-Python files, relative/absolute outside-root paths, and
     symlinks that resolve outside the problem directory are rejected. Absolute
     paths are allowed only when they resolve inside the problem directory.
-  - Remaining gap: evaluator file hashes, evaluator helper/data provenance,
-    and configured evaluator path details are not recorded in `manifest.json`.
-  - Required result: record/harden evaluator path provenance and hashes in the
-    run manifest; define evaluator helper/data provenance and add tests for
-    manifest hash stability.
+    `manifest.json` now records direct evaluator entrypoints with resolved
+    path, problem-relative path, SHA-256 hash, byte count, source type, and
+    configured stage usage metadata. Tests cover default and configured-stage
+    hash stability plus loop/database manifest wiring.
+  - Remaining gap: transitive evaluator helper/data provenance, package-style
+    validator entrypoints, and relative evaluator data policy are not defined
+    or hashed in `manifest.json`.
+  - Required result: define evaluator helper/data provenance and add tests for
+    helper/data hash stability and package-style evaluator semantics.
 
 - [x] Remove wording that implies the validator subprocess is a security
   sandbox.

@@ -166,9 +166,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `manifest.json` records a UUID4 `run_id` and effective collision policy.
     Existing known run artifacts now fail startup by default; explicit
     `overwrite` removes only known run artifacts before the new run. Configured
-    `validate_path` entries are constrained to problem-local Python files, but
-    evaluator file hashes, helper/data provenance, and manifest provenance are
-    still missing. Seeded replay is incomplete because persisted `Program` and
+    `validate_path` entries are constrained to problem-local Python files, and
+    direct evaluator entrypoints are recorded in `manifest.json` with resolved
+    paths, problem-relative paths, SHA-256 hashes, byte counts, source type,
+    and stage usage metadata. Transitive helper/data provenance is still
+    missing. Seeded replay is incomplete because persisted `Program` and
     `PromptProgram` lineage ids are UUID4 values rather than deterministic
     seed/run-derived identifiers. Validator subprocesses
     also inherit `.env`-loaded provider credentials and host environment
@@ -176,8 +178,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     isolation are incomplete. Validator timeouts also do not clean up spawned
     descendant processes. Problem-local evaluator helper modules are imported
     only as sibling modules beside a configured validator file; package-style
-    validator entrypoints, relative evaluator data policy, and evaluator
-    code/data hashes are still missing.
+    validator entrypoints, relative evaluator data policy, and transitive
+    helper/data hashes are still missing.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, define evaluator import/data provenance, and record evaluator
     hashes plus run/collision metadata in manifests; define deterministic

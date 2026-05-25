@@ -234,7 +234,7 @@ must be numeric, and explicit `seeds` must match `samples`. Stage
 `validate_path` entries are resolved to problem-local Python files before
 execution; missing files, directories, non-Python files, outside-root paths,
 and symlinks that resolve outside the problem directory are rejected. Remaining
-cascade gaps are higher-level: evaluator hash provenance in manifests,
+cascade gaps are higher-level: transitive helper/data provenance,
 metric-specific threshold policies, stage-specific artifact schemas, and
 distributed evaluator workers are not implemented.
 
@@ -243,7 +243,9 @@ root as `workspace_path`, and adds both the candidate root and validator
 directory to `sys.path`. Validators can import candidate-local modules, read
 relative candidate files, and import sibling problem-local helper modules by
 default. The problem directory is not used as `cwd`, and evaluator helper/data
-provenance is not hashed into manifests yet.
+provenance is not hashed into manifests yet. The run manifest does record the
+direct evaluator entrypoint files with resolved paths, problem-relative paths,
+SHA-256 hashes, byte counts, and stage usage metadata.
 
 After local evaluation, `Config.llm_feedback` can run optional LLM graders for
 properties that are awkward to encode in `validate.py`, such as clarity or

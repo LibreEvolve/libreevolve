@@ -1,8 +1,9 @@
+import hashlib
 import shutil, tempfile
 from pathlib import Path
 from libreevolve.core.candidate import CandidateWorkspace
 import pytest
-from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.core.evaluator import CascadeEvaluator, evaluator_entrypoint_provenance
 from libreevolve.problems.loader import Problem
 
 def _problem(validate_src: str, metrics: list[dict] | None = None):
@@ -146,6 +147,51 @@ def test_configured_stage_uses_distinct_validator_entrypoint():
         result = ev.evaluate("x=1", None)
         assert result == 0.8
         assert result.metadata["validate_path"].endswith("stage_validate.py")
+    finally:
+        shutil.rmtree(d)
+
+
+def test_evaluator_entrypoint_provenance_hashes_default_validator():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        records = evaluator_entrypoint_provenance(p)
+        assert len(records) == 1
+        record = records[0]
+        raw = (d / "validate.py").read_bytes()
+        assert record["role"] == "default"
+        assert record["relative_path"] == "validate.py"
+        assert record["sha256"] == hashlib.sha256(raw).hexdigest()
+        assert record["bytes"] == len(raw)
+        assert record["source_type"] == "python"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_evaluator_entrypoint_provenance_hashes_configured_stage_validators():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        stage_validator = d / "stage_validate.py"
+        stage_validator.write_text(
+            "def evaluate(code, workspace, stage):\n"
+            "    return {'score': 0.8, 'is_valid': True}\n",
+            encoding="utf-8",
+        )
+        records = evaluator_entrypoint_provenance(
+            p,
+            [
+                {"name": "smoke"},
+                {"name": "hard", "validate_path": "stage_validate.py"},
+            ],
+        )
+        assert [record["relative_path"] for record in records] == [
+            "validate.py",
+            "stage_validate.py",
+        ]
+        assert [record["stage_name"] for record in records] == ["smoke", "hard"]
+        assert records[0]["stage_index"] == 0
+        assert records[1]["stage_index"] == 1
+        assert records[1]["configured_validate_path"] == "stage_validate.py"
+        assert records[1]["sha256"] == hashlib.sha256(stage_validator.read_bytes()).hexdigest()
     finally:
         shutil.rmtree(d)
 

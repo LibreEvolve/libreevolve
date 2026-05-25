@@ -1,4 +1,5 @@
 from __future__ import annotations
+import hashlib
 import json, math, sys, tempfile
 import subprocess
 import time
@@ -484,6 +485,67 @@ def _validate_problem_local_evaluator_path(path: Path, problem_dir: Path) -> Pat
     if resolved.suffix != ".py":
         raise ValueError(f"Evaluator validate_path must be a Python file: {path}")
     return resolved
+
+
+def evaluator_entrypoint_provenance(problem: Problem, stages: list[dict] | None = None) -> list[dict]:
+    """Return manifest-ready hashes for evaluator Python entrypoints.
+
+    This records the explicit evaluator files LibreEvolve will call. It does
+    not claim transitive helper/data provenance.
+    """
+    stage_configs = stages or []
+    if not stage_configs:
+        path = _validate_problem_local_evaluator_path(problem.validate_path, problem.problem_dir)
+        return [_evaluator_source_record(path, problem.problem_dir, role="default")]
+
+    records: list[dict] = []
+    for index, stage in enumerate(stage_configs):
+        raw_path = stage.get("validate_path")
+        if raw_path is None:
+            path = problem.validate_path
+        else:
+            path = Path(str(raw_path))
+            if not path.is_absolute():
+                path = problem.problem_dir / path
+        resolved = _validate_problem_local_evaluator_path(path, problem.problem_dir)
+        records.append(
+            _evaluator_source_record(
+                resolved,
+                problem.problem_dir,
+                role="stage",
+                stage_name=str(stage.get("name", f"stage_{index}")),
+                stage_index=index,
+                configured_validate_path=None if raw_path is None else str(raw_path),
+            )
+        )
+    return records
+
+
+def _evaluator_source_record(
+    path: Path,
+    problem_dir: Path,
+    *,
+    role: str,
+    stage_name: str | None = None,
+    stage_index: int | None = None,
+    configured_validate_path: str | None = None,
+) -> dict:
+    raw = path.read_bytes()
+    record = {
+        "role": role,
+        "path": str(path),
+        "relative_path": path.relative_to(problem_dir.resolve()).as_posix(),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "bytes": len(raw),
+        "source_type": "python",
+    }
+    if stage_name is not None:
+        record["stage_name"] = stage_name
+    if stage_index is not None:
+        record["stage_index"] = stage_index
+    if configured_validate_path is not None:
+        record["configured_validate_path"] = configured_validate_path
+    return record
 
 
 def _retry_attempt_record(result: EvaluationResult, attempt: int, context: dict) -> dict:

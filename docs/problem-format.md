@@ -190,8 +190,10 @@ Stage numeric fields are prevalidated: `samples` must be positive, `retries`
 non-negative, `timeout_sec` positive, `min_score` numeric, and explicit
 `seeds` must match `samples`. Stage `validate_path` entries must resolve to
 problem-local Python files; absolute paths are allowed only when they remain
-inside the problem directory after symlink resolution. Evaluator code/data
-hashes are not yet recorded in the run manifest.
+inside the problem directory after symlink resolution. Direct evaluator
+entrypoint files are recorded in the run manifest with problem-relative paths,
+resolved paths, SHA-256 hashes, byte counts, and stage usage metadata.
+Transitive helper imports and evaluator data files are not hashed yet.
 Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
 receive stage context containing stage name, index, sample index, seed, attempt,
 and the raw stage config.

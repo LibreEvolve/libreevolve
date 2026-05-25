@@ -190,11 +190,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluator helper modules are imported only as sibling modules beside a
     configured validator file; package-style validator entrypoints, relative
     evaluator data policy, and transitive helper/data hashes are still missing.
-  - Required result: add run ids and explicit overwrite/fail/new-run/resume
-    semantics, define evaluator import/data provenance, and record evaluator
-    hashes plus run/collision metadata in manifests; define deterministic
-    lineage-id behavior or document UUID identity as outside the replay
-    contract.
+  - Required result: add true resume semantics, transitive evaluator import/data
+    provenance, and aggregate artifact hashes; define deterministic lineage-id
+    behavior or document UUID identity as outside the replay contract. Run ids,
+    fail/overwrite collision policy, direct evaluator hashes, source/problem
+    hashes, and plugin module hashes are already implemented locally.
 
 - [ ] Multiple-score optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
@@ -289,10 +289,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     complete best file set under `best_workspace/`; run-artifact docs and CLI
     tests cover this behavior.
   - Remaining divergence: binary/static non-text artifacts are not first-class
-    candidate members, and run-directory collision/resume semantics remain
-    unresolved. The committed example run directories are legacy history-only
-    fixtures and do not include `best_workspace/`, so they do not prove the
-    current full-workspace artifact contract.
+    candidate members, and resume semantics remain unresolved. Run-directory
+    collision policy is implemented as fail/overwrite, but it is not resume.
+    The committed example run directories are legacy history-only fixtures and
+    do not include `best_workspace/`, so they do not prove the current
+    full-workspace artifact contract.
 
 - [x] Canonical AlphaEvolve diff block compatibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Figure 3.
@@ -372,10 +373,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     unresolved gaps such as flexible candidate abstractions, binary/static
     artifacts, candidate path-collision handling, strict metric-bound ordering,
     workspace-aware descriptors, custom backend registration, async workers,
-    provider failure policy, validator environment isolation, run-wide budgets,
-    true multi-objective search, queryable database, archive/resume state,
-    reproducible ids, feedback calibration, role-specific LLM routing/reward
-    policy, plugin provenance, and benchmark hardening.
+    provider failure policy, network/container sandboxing, provider token/cost/
+    stage-sample budgets, true multi-objective search, queryable database,
+    archive/resume state, reproducible ids, feedback calibration,
+    role-specific LLM routing/reward policy, plugin provenance, and benchmark
+    hardening.
+
+- [x] Tighten paper-index wording around validator execution boundaries.
+  - Evidence: `papers/README.md` described implemented AlphaEvolve-alignment
+    behavior as "validator environment isolation."
+  - Current evidence: validators run in a local subprocess with an explicit
+    minimal environment plus `validator_env_allowlist`, persisted stdout/stderr
+    redaction, timeout process-tree cleanup, and optional artifact copy-out.
+    This is not a security sandbox or full environment isolation: network
+    egress policy, container isolation, and resource controls remain open.
+  - Status: paper index now says "validator environment allowlisting with
+    stdout/stderr redaction" and lists network/container sandboxing as an open
+    gap.
+  - Required result: avoid using "isolation" for current validator execution
+    until the implementation provides a stronger sandbox boundary.
 
 - [x] Decide and document the paper corpus source of truth.
   - Evidence: `papers/download_manifest.csv` lists 24 downloaded papers, while

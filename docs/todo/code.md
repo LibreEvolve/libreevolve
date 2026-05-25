@@ -439,6 +439,20 @@ Primary evidence:
     accounting per role, persist bandit state in run artifacts, and add tests
     proving critique/feedback/meta-prompt calls do not distort mutation routing.
 
+- [ ] Make OpenAI API routing explicit and validate reasoning-model options.
+  - Spec evidence: AlphaEvolve's task setup includes LLM choices and
+    configurations; backend behavior must be reproducible and match configured
+    model capabilities.
+  - Current evidence: `OpenAIBackend.generate()` selects Chat Completions unless
+    `reasoning_effort` is set, and selects Responses only when that field is
+    non-empty. Documentation previously implied reasoning models use Responses
+    broadly, but the adapter does not detect reasoning-capable model names,
+    validate supported reasoning values, choose `store`/statefulness policy, or
+    persist API-mode provenance per call.
+  - Required result: add an explicit `api_mode` or model-capability policy,
+    validate OpenAI model/parameter combinations before a run, record API mode
+    in call metadata/manifests, and test Chat Completions vs Responses routing.
+
 - [x] Model AlphaEvolve's throughput/depth ensemble strategy explicitly.
   - Spec evidence: AlphaEvolve combines Gemini Flash for breadth with Gemini
     Pro for occasional deeper, higher-quality suggestions.

@@ -158,6 +158,11 @@ ollama:llama3
 The code forwards model names to provider SDKs and does not verify current
 provider availability.
 
+For OpenAI, `reasoning_effort` also controls API routing: if it is omitted,
+LibreEvolve uses Chat Completions; if it is present, LibreEvolve uses the
+Responses API and forwards the configured reasoning effort. The current code
+does not detect model capabilities or validate reasoning-effort compatibility.
+
 ## Environment variables
 
 Common variables:

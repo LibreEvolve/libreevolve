@@ -28,7 +28,7 @@ LibreEvolve is an open-source Python framework for **automated algorithm discove
 
 This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
-Works with **OpenAI** (including reasoning models through the Responses API), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability.
+Works with **OpenAI** (Chat Completions by default; Responses API when `reasoning_effort` is configured), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability.
 
 Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
@@ -48,7 +48,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 
 | | Feature | Description |
 |:---:|---|---|
-| 🧠 | **Multi-LLM support** | OpenAI (GPT-4o, GPT-5.4, o-series), Anthropic (Claude Sonnet/Opus), Ollama (any local model) |
+| 🧠 | **Multi-LLM support** | OpenAI, Anthropic, and Ollama adapters with provider-specific model strings |
 | 🗺️ | **MAP-Elites archive** | 3D quality-diversity grid mapping performance, complexity, and TF-IDF diversity |
 | 🏝️ | **5-island migration** | Synchronous island archives with ring-topology migration (70% exploit / 30% explore) |
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
@@ -212,7 +212,7 @@ The seed is intentionally suboptimal but structured: a centered 26-circle hex-st
 
 | Provider | Models | Features |
 |----------|--------|----------|
-| **OpenAI** | GPT-4o, GPT-4o-mini, GPT-5.4-nano, GPT-5.4-mini, o-series | Chat Completions + Responses API for reasoning models |
+| **OpenAI** | Provider-specific model IDs | Chat Completions by default; Responses API when `reasoning_effort` is configured |
 | **Anthropic** | Claude Sonnet 4.6, Claude Opus 4.6, Claude Haiku 4.5 | Messages API |
 | **Ollama** | Llama 3, Mistral, Qwen, any local model | Local inference, no API key needed |
 
@@ -243,7 +243,7 @@ libreevolve/
 ├── llm/
 │   ├── ensemble.py      # UCB-style LLM ensemble
 │   ├── anthropic.py     # Claude backend
-│   ├── openai.py        # OpenAI backend (+ Responses API for reasoning models)
+│   ├── openai.py        # OpenAI backend (+ Responses API when reasoning_effort is set)
 │   └── ollama.py        # Ollama backend
 ├── population/
 │   ├── program.py       # Program dataclass

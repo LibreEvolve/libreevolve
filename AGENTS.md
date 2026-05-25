@@ -50,7 +50,9 @@ py -3.12 -m libreevolve show runs/hello_world
 
 ## Common Pitfalls
 
-- OpenAI reasoning models (gpt-5.x) use the Responses API, not Chat Completions
+- OpenAI uses the Responses API only when `reasoning_effort` is configured;
+  otherwise the current adapter uses Chat Completions even for model strings
+  that may support reasoning
 - xhigh reasoning effort can consume entire token budget on thinking — use high or increase max_output_tokens
 - Models add markdown fences around diffs — _strip_fences() handles this
 - Models add comments that break diff matching — prompt says "No comments"

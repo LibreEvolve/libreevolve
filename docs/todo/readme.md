@@ -142,6 +142,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: say model names are examples and add validation or docs for
     provider-specific availability.
 
+- [x] Clarify OpenAI Responses API routing.
+  - README evidence: README and architecture comments implied OpenAI reasoning
+    models use Responses API broadly.
+  - Current evidence: `OpenAIBackend.generate()` uses Responses only when
+    `reasoning_effort` is set; otherwise it uses Chat Completions for whatever
+    model string is configured.
+  - Required result: state that Responses is selected by the current
+    `reasoning_effort` configuration path and track model/API-mode validation
+    as code work.
+
 ## Architecture Description
 
 - [x] Correct prompt-evolution placeholder guarantee wording.

@@ -201,6 +201,10 @@ All current LLM calls share the same ensemble state. Mutation calls are rewarded
 after evaluation; critique, feedback, and meta-prompt calls are counted as
 backend pulls but do not have role-specific reward semantics yet.
 
+For OpenAI, the adapter uses Chat Completions unless `reasoning_effort` is set,
+in which case it uses the Responses API. There is no automatic
+reasoning-model detection or API-mode validation yet.
+
 ## Logging and artifacts
 
 [`libreevolve/core/database.py`](../libreevolve/core/database.py) writes:
@@ -235,6 +239,8 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
   not enforced yet.
 - Config files and CLI backend specs are permissive; unknown problem config
   keys are ignored rather than rejected.
+- OpenAI API mode is selected by the presence of `reasoning_effort`, not by
+  validated model capabilities.
 - `manifest.json` records configuration but not code version, problem hashes,
   plugin specs, artifact hashes, or resume/controller state.
 - Plugin names are paper-inspired approximations unless documented otherwise.

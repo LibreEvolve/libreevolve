@@ -46,6 +46,8 @@ Behavior:
 - if `reasoning_effort` is not set, the backend uses Chat Completions
 - if `reasoning_effort` is set, the backend uses the Responses API
 - both code paths retry up to 3 times with exponential backoff
+- there is no automatic model-capability detection; a reasoning-capable model
+  without `reasoning_effort` still follows the Chat Completions path
 
 API split:
 
@@ -57,7 +59,9 @@ API split:
   - uses `max_output_tokens`
   - passes `reasoning={"effort": ...}`
 
-This distinction matters for GPT-5.x and other reasoning-capable models.
+OpenAI currently recommends Responses for new projects, and its docs describe a
+richer experience for reasoning models through Responses. LibreEvolve has not
+yet made Responses the default OpenAI path or added model/parameter validation.
 
 ## Anthropic backend
 

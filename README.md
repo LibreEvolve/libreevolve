@@ -281,7 +281,7 @@ The seed is intentionally suboptimal but structured: a centered 26-circle hex-st
 | Provider | Models | Features |
 |----------|--------|----------|
 | **OpenAI** | Provider-specific model IDs | Chat Completions by default; Responses API when `reasoning_effort` is configured |
-| **Anthropic** | Claude Sonnet 4.6, Claude Opus 4.6, Claude Haiku 4.5 | Messages API |
+| **Anthropic** | Provider-specific Claude model IDs, for example Claude Sonnet 4.6 or Claude Haiku 4.5 | Messages API |
 | **Ollama** | Llama 3, Mistral, Qwen, any local model | Local inference, no API key needed |
 
 Mix backends in a single run — the UCB-style router tracks observed fitness improvements for each backend:

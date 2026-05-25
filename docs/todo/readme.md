@@ -600,3 +600,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: document that plugin-specific schemas and constructor
     parameters are not validated or configurable yet, while the separate
     plugin registry/config/provenance todo remains open.
+
+- [x] Refresh README Anthropic model-name examples.
+  - README evidence: the supported-backends table named "Claude Opus 4.6" as a
+    current Anthropic model example.
+  - Current evidence: Anthropic's model overview
+    (`https://platform.claude.com/docs/en/about-claude/models/overview`)
+    checked on 2026-05-25 lists current comparison models including Claude
+    Opus 4.7, Claude Sonnet 4.6, and Claude Haiku 4.5, while LibreEvolve only
+    forwards configured provider model IDs and does not validate provider
+    availability.
+  - Required result: avoid stale exhaustive-looking Anthropic model lists in
+    README and present examples as provider-specific model IDs.

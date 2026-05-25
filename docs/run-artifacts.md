@@ -100,6 +100,11 @@ auditable yet: fail-then-pass retries preserve the successful attempt, and
 all-fail retries preserve the final failed attempt, but earlier failed attempts
 are not retained as separate history records.
 
+Validator-generated files are not collected yet. Evaluators run in a temporary
+candidate workspace, and files created there are deleted with that temporary
+directory unless the validator encodes their contents into metrics or stdout/
+stderr.
+
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is stored under `metadata.score_composition` with
 evaluator fitness, optional feedback-adjusted fitness, per-plugin before/after

@@ -123,8 +123,8 @@ The returned dict should include:
 
 The evaluator rejects missing declared metrics, undeclared metrics,
 non-boolean `is_valid`, non-numeric metric values, and non-finite numeric
-values. Keep diagnostic strings in stdout/stderr or artifacts rather than in
-the metrics dictionary.
+values. Keep diagnostic strings in stdout/stderr rather than in the metrics
+dictionary.
 
 The evaluator parses the last non-empty stdout line as JSON, so validators may
 print diagnostics before returning.
@@ -133,6 +133,12 @@ For workspace candidates, the validator subprocess runs with the materialized
 candidate root as `cwd`, adds that root to `sys.path`, and passes the same root
 as `workspace_path`. The validator directory is also added to `sys.path`, so
 problem-local helper modules beside `validate.py` can be imported normally.
+
+Validator-created files are not collected yet. The candidate workspace is a
+temporary directory that is deleted after each subprocess evaluation, so any
+plots, JSON outputs, traces, compiled files, or other generated artifacts must
+be summarized through metrics/stdout/stderr until evaluator artifact collection
+is implemented.
 
 ## Evaluation semantics
 

@@ -172,6 +172,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     but not staged evaluator definitions, thresholds, budgets, or parallel
     stages.
 
+- [x] Add evaluator artifact copy-out to evaluation hardening.
+  - Evidence: `CascadeEvaluator._run_subprocess()` materializes the candidate
+    in a `TemporaryDirectory`, runs the validator with that directory as `cwd`,
+    and deletes the directory after returning metrics/stdout/stderr. Files
+    written by validators are not copied into run artifacts.
+  - Current roadmap gap: evaluation hardening mentioned artifacts broadly but
+    did not identify the temporary-workspace data-loss mechanism or require
+    stage/sample/attempt artifact provenance.
+  - Required result: track artifact include/exclude configuration, size limits,
+    hashes, redaction, stage/sample/attempt provenance, and tests proving
+    validator-created files are retained after subprocess cleanup.
+
 - [x] Add evaluator-stage numeric validation to config hardening.
   - Evidence: `Config.validate()` now checks evaluator-stage `samples`,
     `retries`, `timeout_sec`, `min_score`, `seeds`, unsupported fields, and

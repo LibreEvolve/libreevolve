@@ -67,7 +67,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 3. Expand evaluation cascades
 
-- Add artifact collection and richer per-stage budget accounting.
+- Add artifact collection from temporary validator workspaces and richer
+  per-stage budget accounting.
 - Add run-wide wall-clock, LLM-call, token, cost, evaluator-second, sample,
   retry, and stop-reason accounting.
 - Add calibration/ablation reporting for LLM feedback graders.

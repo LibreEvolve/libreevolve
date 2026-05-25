@@ -606,6 +606,28 @@ Primary evidence:
     records in history and bounded prompt feedback; add tests for fail-then-
     pass, pass-first, and all-fail retry paths.
 
+- [ ] Capture validator-generated artifacts before temporary workspaces are
+  deleted.
+  - Spec evidence: AlphaEvolve stores programs with evaluation outputs, and
+    benchmark-style tasks such as packing, scheduling, and kernels often need
+    construction files, plots, traces, logs, or compiled artifacts to inspect
+    and compare results.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` creates a
+    `tempfile.TemporaryDirectory()`, materializes the candidate under
+    `<tmp>/candidate`, runs the validator with that directory as `cwd`, and
+    returns only metrics, stdout, stderr, errors, elapsed time, and metadata.
+    When the `with TemporaryDirectory()` block exits, any files written by
+    `validate.py` under the candidate workspace or temporary runner directory
+    are deleted. There is no configured artifact directory, glob allowlist,
+    size limit, hash manifest, stage/sample/attempt artifact metadata, or
+    prompt/run linkage for generated evaluator artifacts.
+  - Required result: add per-stage artifact collection configuration with safe
+    include/exclude globs, size/count limits, hashes, redaction policy,
+    stage/sample/attempt provenance, and manifest/history links; preserve
+    collected artifacts under the active run directory; add tests proving
+    validator-created files are copied, bounded, hashed, and retained after
+    temporary subprocess cleanup.
+
 - [x] Validate evaluator-stage numeric fields before running cascades.
   - Spec evidence: AlphaEvolve-style cascades are explicit experiment
     configuration; invalid stage budgets, sample counts, retry counts, and

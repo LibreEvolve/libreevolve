@@ -217,6 +217,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn users that validator environment/secret isolation is
     not implemented and point the implementation gap to the TODOs.
 
+- [x] Clarify validator-generated files are not retained.
+  - README evidence: README says raw metrics and diagnostics are stored with
+    each candidate, but did not explain that files written by `validate.py`
+    inside the temporary candidate workspace are discarded.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` runs validators
+    inside `tempfile.TemporaryDirectory()` and returns only metrics, stdout,
+    stderr, errors, elapsed time, and metadata. There is no artifact copy-out
+    path before the temporary directory is deleted.
+  - Status: README now tells users that generated evaluator files are not
+    collected and should be summarized through metrics/stdout/stderr until
+    artifact collection is implemented.
+  - Required result: keep this warning until evaluator artifact collection is
+    implemented and documented in run artifacts.
+
 - [x] Soften the UCB1 paper-table role.
   - README evidence: the references table described UCB1 as "Multi-armed bandit
     selection."

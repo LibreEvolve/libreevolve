@@ -156,6 +156,13 @@ run. Use positive `samples` and `timeout_sec`, non-negative `retries`, and
 numeric `min_score` values; invalid values may currently fail during
 evaluation rather than at config load.
 
+Top-level evolution and population numeric fields are also permissive today.
+Keep `max_generations`, `num_inspirations`, `n_islands`, `map_elites_bins`, and
+`elite_archive_size` non-negative or positive as their names imply, and keep
+`explore_ratio` and `migration_ratio` in a sensible probability/fraction range.
+Invalid values may otherwise fail later in island/archive sampling or produce
+meaningless archive cells instead of clear startup diagnostics.
+
 ## CLI overrides
 
 The `run` command exposes:

@@ -583,6 +583,26 @@ Primary evidence:
     timeouts, nonnumeric thresholds, and seed/sample length mismatches; add
     tests proving bad stage configs fail before candidate evaluation begins.
 
+- [ ] Validate evolution and population numeric config ranges.
+  - Spec evidence: AlphaEvolve-style experiments depend on explicit,
+    reproducible population and budget settings; invalid archive/sampling
+    parameters should fail before the run mutates or evaluates programs.
+  - Current evidence: `Config` is a dataclass with no range checks, and
+    `_build_config()` applies config-file and CLI numeric values directly.
+    `n_islands=0` creates an empty `IslandModel` and `IslandModel.add()` then
+    indexes `self.islands[0]` / takes modulo zero during seed archival.
+    `num_inspirations < 0` reaches `random.sample()` with a negative sample
+    size. `map_elites_bins <= 0` is accepted by `MAPElites._cell()` and can
+    produce negative cell coordinates rather than a meaningful archive grid.
+    `explore_ratio` outside `[0, 1]`, negative `max_generations`, negative
+    `migration_interval`, and invalid archive sizes are likewise not rejected
+    as startup configuration errors.
+  - Required result: validate run/population numeric fields at config load or
+    CLI startup, including generation counts, inspiration counts, explore
+    ratio, island count, migration interval/ratio, MAP-Elites bins, elite
+    archive size, and ensemble exploration coefficient; add tests for zero,
+    negative, nonnumeric, and out-of-range values.
+
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,
     scores, and program outputs attached.

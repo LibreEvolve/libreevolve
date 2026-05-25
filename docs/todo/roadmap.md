@@ -182,6 +182,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     config load or CLI startup, with tests for zero/negative counts and
     nonnumeric values.
 
+- [x] Add top-level evolution/population numeric validation to config
+  hardening.
+  - Evidence: `Config` accepts population and runtime fields without range
+    checks. `n_islands=0` can create an empty island model that crashes on
+    seed archival, `num_inspirations < 0` can reach negative random sampling,
+    and `map_elites_bins <= 0` can produce nonsensical archive coordinates.
+  - Current roadmap gap: config hardening covered unknown keys, backend specs,
+    enum values, and evaluator-stage numbers, but not top-level population and
+    sampling ranges.
+  - Required result: validate generation counts, inspiration counts,
+    exploration ratios, island counts, migration settings, MAP-Elites bins,
+    archive sizes, and ensemble coefficients before a run starts.
+
 - [x] Add async/distributed controller and worker architecture.
   - Evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline with a
     controller, LLM samplers, and evaluation nodes optimized for throughput.

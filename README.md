@@ -502,6 +502,9 @@ py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research
 ```
 libreevolve run PROBLEM_DIR [OPTIONS]
   --max-generations, -g    Number of generations (default: 1000)
+  --max-evaluations        Maximum validator evaluations, including seeds
+  --max-evaluator-seconds  Maximum cumulative evaluator elapsed seconds
+  --max-runtime-seconds    Maximum wall-clock seconds checked between evaluations
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
   --reasoning-effort, -r   Reasoning effort for OpenAI reasoning models (low/medium/high/xhigh; omit to disable)
@@ -514,6 +517,7 @@ libreevolve run PROBLEM_DIR [OPTIONS]
                            Parent sampling: mixed, exploit, explore, metric, novelty, or recency
   --inspiration-strategy   Inspiration sampling: mixed, random, selection, metric, novelty, or recency
   --run-name               Custom name for this run (default: problem directory name)
+  --overwrite              Delete existing known run artifacts before starting
   --seed                   Random seed
 
 libreevolve show RUN_DIR

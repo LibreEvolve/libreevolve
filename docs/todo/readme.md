@@ -643,3 +643,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     scoped path plus manifest summaries.
   - Required result: show plugin artifact directories in the canonical run
     layout so docs match the runtime artifact surface.
+
+- [x] Refresh README CLI reference for budget and overwrite options.
+  - README evidence: the CLI reference listed core run options but omitted
+    `--max-evaluations`, `--max-evaluator-seconds`, `--max-runtime-seconds`,
+    and `--overwrite`.
+  - Current evidence: `libreevolve/cli.py` exposes all four options, and
+    `py -3.12 -m libreevolve run --help` shows them.
+  - Required result: keep README's compact CLI reference aligned with live
+    Click options that affect run budget accounting and artifact collision
+    semantics.

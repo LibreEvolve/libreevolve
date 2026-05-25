@@ -6,10 +6,16 @@ on:
       - master
       - main
     paths-ignore:
-      - "docs/todo/**"
+      - "docs/**"
+      - "papers/**"
+      - "README.md"
+      - "ROADMAP.md"
   pull_request:
     paths-ignore:
-      - "docs/todo/**"
+      - "docs/**"
+      - "papers/**"
+      - "README.md"
+      - "ROADMAP.md"
   workflow_dispatch:
 
 concurrency:

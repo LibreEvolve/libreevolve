@@ -26,19 +26,21 @@ libreevolve/
 ## Key Conventions
 
 - `.env` file at project root for API keys (loaded via python-dotenv with override=True)
-- `runs/` directory is gitignored — contains history.jsonl and best.py per problem
+- `runs/` directory is gitignored — contains manifest.json, history.jsonl,
+  optional prompt_history.jsonl, and best.py per problem
 - All validate.py files run in temporary local subprocesses, not security
   sandboxes (exec/eval is intentional)
 - SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`
 - Diff engine strips markdown fences automatically
 - VALID_THRESHOLD = 0.0: programs with score >= 0 enter the archive
 - 30% explore / 70% exploit parent sampling
-- Last 5 failed mutations shown in prompt to prevent repetition
+- Up to 5 recent in-memory failed child snippets can be shown in prompts;
+  persistent/queryable failed-proposal memory remains open work
 
 ## Running Tests
 
 ```bash
-py -3.12 -m pytest tests/ -m "not integration" --tb=short    # unit tests (102)
+py -3.12 -m pytest tests/ -m "not integration" --tb=short    # non-integration tests (159 selected)
 py -3.12 -m pytest tests/integration/ -m integration          # needs ANTHROPIC_API_KEY
 ```
 

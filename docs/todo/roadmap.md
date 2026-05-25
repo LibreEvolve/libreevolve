@@ -56,7 +56,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add full-workspace export and resume coverage to candidate fidelity.
   - Evidence: AlphaEvolve evolves full files/codebases, while a primary-file
-    `best.py` artifact is insufficient for a multi-file candidate.
+    `best.py` artifact is insufficient for a multi-file candidate. The CLI now
+    also writes `best_workspace/` with the complete best candidate file set.
   - Current roadmap gap: candidate workspace work now explicitly includes
     preserving full workspace artifacts and migration/resume coverage.
   - Required result: keep export/resume as part of workspace fidelity, not only

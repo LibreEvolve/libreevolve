@@ -14,7 +14,9 @@ command:
 - merges problem-local `config.yaml` into the default `Config`
 - instantiates built-in plugins named on the CLI
 - calls `evolve(problem, config, plugins)`
-- writes the best archived program to `runs/<problem_name>/best.py`
+- writes the best archived primary-file view to `runs/<problem_name>/best.py`
+- writes the complete best candidate file set to
+  `runs/<problem_name>/best_workspace/`
 
 ## Problem loading
 
@@ -318,7 +320,8 @@ counted in scheduler state.
 - `manifest.json`: effective run configuration and runtime metadata
 - `history.jsonl`: append-only candidate records
 - `prompt_history.jsonl`: append-only prompt-program selection/scoring records
-- `best.py`: final best archived program
+- `best.py`: primary-file compatibility view of the final best archived program
+- `best_workspace/`: complete file set for the final best archived program
 
 Each history record includes primary code, candidate files, primary file,
 fitness, lineage, metadata, metrics, and the structured evaluation summary.

@@ -1,6 +1,7 @@
 from __future__ import annotations
 import dataclasses, json
 from pathlib import Path
+import shutil
 import click
 from dotenv import load_dotenv
 from libreevolve.core.loop import evolve
@@ -49,10 +50,10 @@ def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
     if best is None:
         raise click.ClickException("Evolution produced no valid programs.")
     click.echo(f"\nBest fitness: {best.fitness:.6f}")
-    out = Path(config.log_dir) / config.problem_name / "best.py"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(best.code, encoding="utf-8")
-    click.echo(f"Best program saved to: {out}")
+    run_dir = Path(config.log_dir) / config.problem_name
+    best_py, best_workspace = _write_best_artifacts(best, run_dir)
+    click.echo(f"Best program saved to: {best_py}")
+    click.echo(f"Best workspace saved to: {best_workspace}")
 
 
 @cli.command()
@@ -113,3 +114,15 @@ def _load_plugins(names: list[str]) -> list:
             raise click.ClickException(f"Unknown plugin: {n!r}. Available: {list(reg)}")
         result.append(reg[n]())
     return result
+
+
+def _write_best_artifacts(program, run_dir: Path) -> tuple[Path, Path]:
+    run_dir.mkdir(parents=True, exist_ok=True)
+    best_py = run_dir / "best.py"
+    best_py.write_text(program.code, encoding="utf-8")
+
+    workspace_dir = run_dir / "best_workspace"
+    if workspace_dir.exists():
+        shutil.rmtree(workspace_dir)
+    program.workspace().materialize(workspace_dir)
+    return best_py, workspace_dir

@@ -3,6 +3,7 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 from click.testing import CliRunner
 from libreevolve.cli import cli
+from libreevolve.population.program import Program
 import yaml
 
 def _make_problem(tmp_path):
@@ -22,6 +23,30 @@ def test_run_calls_evolve(tmp_path):
     with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
         r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
     assert r.exit_code == 0 and mock.called
+
+def test_run_writes_complete_best_workspace(tmp_path):
+    _make_problem(tmp_path)
+    log_dir = tmp_path / "runs"
+    (tmp_path / "config.yaml").write_text(f"log_dir: {log_dir.as_posix()}\n")
+    best = Program(
+        files={
+            "main.py": "from pkg.helper import value\n",
+            "pkg/helper.py": "value = 2\n",
+        },
+        primary_file="main.py",
+        fitness=0.99,
+    )
+    with patch("libreevolve.cli.evolve", return_value=best):
+        r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
+
+    run_dir = log_dir / tmp_path.name
+    assert r.exit_code == 0
+    assert (run_dir / "best.py").read_text(encoding="utf-8") == best.code
+    assert (run_dir / "best_workspace" / "main.py").read_text(encoding="utf-8") == best.code
+    assert (
+        run_dir / "best_workspace" / "pkg" / "helper.py"
+    ).read_text(encoding="utf-8") == "value = 2\n"
+    assert "Best workspace saved to:" in r.output
 
 def test_show_prints_best(tmp_path):
     (tmp_path/"history.jsonl").write_text(json.dumps(

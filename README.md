@@ -172,6 +172,7 @@ graph TD
 7. **Failure hints** — A bounded in-memory subset of changed invalid primary-file snippets can be shown in later prompts; persistent full-workspace failed-proposal memory remains open
 8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
+10. **Artifacts** — `best.py` preserves the primary-file compatibility view, and `best_workspace/` contains the complete best candidate file set
 
 </details>
 

@@ -240,12 +240,16 @@ Primary evidence:
     ideas in prompts, and keep patch extraction robust for both rationale plus
     diff and diff-only compatibility modes.
 
-- [ ] Export complete best workspaces, not only the primary file.
+- [x] Export complete best workspaces, not only the primary file.
   - Spec evidence: AlphaEvolve can evolve entire code files/codebases, so the
     output artifact must preserve all evolved components.
-  - Current evidence: `libreevolve/cli.py` writes only `best.code` to
-    `runs/<name>/best.py`; `history.jsonl` contains `files`, but there is no
-    best-workspace directory or archive for direct reuse.
+  - Current evidence: `libreevolve/cli.py` writes `best.py` as a primary-file
+    compatibility view and materializes `best.workspace()` to
+    `runs/<name>/best_workspace/`. CLI tests cover multi-file best-workspace
+    export.
+  - Status: implemented for text-file candidate workspaces. Remaining
+    divergence: run-directory collision semantics are still undefined, and
+    binary/static non-text artifacts are not first-class candidate members.
   - Required result: write a reproducible `best_workspace/` or archive with all
     candidate files, preserve `best.py` only as a compatibility convenience,
     and document/export this artifact in tests and run docs.

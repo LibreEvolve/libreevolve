@@ -226,14 +226,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     move, and primary-file replacement are not expressible as mutation
     operations yet.
 
-- [ ] Full-workspace output artifacts.
+- [x] Full-workspace output artifacts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.
   - Requirement: if a candidate is a full file/codebase, the selected best
     candidate must be recoverable as a full codebase.
-  - Current gap: `history.jsonl` stores candidate file sets, but the CLI exports
-    only `best.py`, the primary-file compatibility view.
-  - Required result: add `best_workspace/` or equivalent archive artifacts and
-    document them in run-artifact docs and tests.
+  - Status: implemented for local text-file candidate workspaces. The CLI
+    writes `best.py` as a primary-file compatibility view and materializes the
+    complete best file set under `best_workspace/`; run-artifact docs and CLI
+    tests cover this behavior.
+  - Remaining divergence: binary/static non-text artifacts are not first-class
+    candidate members, and run-directory collision/resume semantics remain
+    unresolved.
 
 - [x] Canonical AlphaEvolve diff block compatibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Figure 3.

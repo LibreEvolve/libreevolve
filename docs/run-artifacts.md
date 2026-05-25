@@ -19,7 +19,9 @@ runs/
     ├── history_invalid.jsonl          # Only when a candidate record is rejected
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
-    └── best.py
+    ├── best.py
+    └── best_workspace/
+        └── ...                        # Complete best candidate file set
 ```
 
 The run subdirectory name comes from `--run-name`, if provided, otherwise from
@@ -120,19 +122,21 @@ backend index, and feedback/critique paths store limited backend indexes or raw
 responses, but provider usage, latency, retry counts, request ids, finish
 reasons, and API mode are not persisted as a normalized call log.
 
-## `best.py`
+## `best.py` and `best_workspace/`
 
-After a run completes, the CLI writes the best archived program's code to
-`best.py`.
+After a run completes, the CLI writes the best archived program's primary-file
+content to `best.py` and materializes the complete best candidate file set
+under `best_workspace/`.
 
-This is a convenience artifact only:
+`best.py` is a compatibility convenience artifact:
 
 - it is not used for resume
 - it is not necessarily the last candidate evaluated
 - it reflects the best fitness seen in the archive
-- for workspace candidates, it contains only the primary-file view; the full
-  file set is currently recoverable from `history.jsonl`, not from a dedicated
-  `best_workspace/` artifact
+
+For workspace candidates, `best_workspace/` is the direct reusable output. It
+is overwritten on each invocation using the same run directory, matching the
+current undefined run-collision semantics described above.
 
 ## Example histories committed to the repo
 

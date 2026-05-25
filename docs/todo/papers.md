@@ -160,7 +160,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     excel under different criteria as varied inspirations.
   - Partial status: metric vectors are stored and normalized primary fitness
     honors direction/bounds. Secondary metric normalization, feedback metric
-    calibration, and Pareto/frontier optimization remain open.
+    calibration, and Pareto/frontier optimization remain open. Inspiration
+    sampling is also not guaranteed to be varied: the selected parent can be
+    sampled again as an inspiration, and migrated copies of the same program can
+    appear multiple times because islands copy `Program` objects and sampling
+    does not deduplicate by program id.
 
 - [x] Evolutionary database with attached outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

@@ -260,6 +260,13 @@ Candidate records also lack per-program archive admission outcomes, so the log
 does not explicitly state whether a candidate was admitted, rejected by
 threshold, ignored by cell competition, or replaced an existing cell occupant.
 
+Parent selection and inspiration sampling are also intentionally thin today.
+Exploit picks the global best, explore samples a random occupied cell, and
+inspirations are random occupied cells across islands. Inspiration sampling does
+not exclude the selected parent or deduplicate migrated copies of the same
+program id, so a prompt can include the parent or repeated migrated programs as
+"inspirations."
+
 LibreEvolve stores metric vectors, but its multi-objective policy is still a
 first pass: archive comparison and backend rewards use normalized primary
 fitness. Richer Pareto/frontier sampling remains open.

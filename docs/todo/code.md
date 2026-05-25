@@ -781,10 +781,17 @@ Primary evidence:
     populations.
   - Current evidence: exploit always picks global best; explore picks a random
     occupied cell; inspirations are random occupied cells
-    (`libreevolve/population/islands.py:28-39`).
+    (`libreevolve/population/islands.py:28-39`). `evolve()` samples the parent
+    first and then calls `db.sample_diverse()` with no parent exclusion, so the
+    selected parent can be rendered again as an inspiration. `migrate()` also
+    copies the same `Program` object into neighboring islands, and
+    `sample_diverse()` samples list positions rather than unique program ids,
+    so migrated copies of the same program can appear multiple times in one
+    inspiration set.
   - Required result: add configurable sampling strategies, metric-aware
-    inspiration choice, recency/novelty weighting, and tests for exploration
-    pressure.
+    inspiration choice, parent exclusion, duplicate-id filtering,
+    recency/novelty weighting, and tests for exploration pressure, migrated
+    duplicates, and parent-as-inspiration avoidance.
 
 - [ ] Improve run inspection and archive diagnostics.
   - Spec evidence: AlphaEvolve's evolutionary database attaches scores and

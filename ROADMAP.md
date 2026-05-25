@@ -59,7 +59,8 @@ is not yet an AlphaEvolve reproduction.
 - Define a first-class multi-objective policy: Pareto archive, weighted
   composition, metric-specific elites, or a documented hybrid.
 - Sample parents/inspirations by score, individual metric excellence, diversity,
-  novelty, feedback, lineage, and recency.
+  novelty, feedback, lineage, and recency, while excluding the selected parent
+  and deduplicating migrated copies from inspiration sets.
 - Make MAP-Elites descriptors workspace-aware instead of using only the
   primary-file compatibility view for complexity/diversity.
 - Expose metric-vector archive diagnostics in run artifacts and `show`.

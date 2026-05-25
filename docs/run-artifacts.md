@@ -4,8 +4,10 @@ LibreEvolve writes machine-readable run outputs under `runs/` by default.
 Run JSON and JSONL writers use strict finite JSON. Candidate history, prompt
 history, manifests, and the ThetaEvolve-inspired export reject `NaN`/`Infinity`
 or non-JSON-compatible values rather than emitting permissive Python JSON
-tokens. Failed append attempts write diagnostic quarantine records next to the
-target stream.
+tokens. Failed candidate, prompt, and GRPO append attempts write diagnostic
+quarantine records. Failure-history append failures currently use the shared
+`history_invalid.jsonl` quarantine rather than a separate
+`failure_history_invalid.jsonl` stream.
 
 ## Directory layout
 

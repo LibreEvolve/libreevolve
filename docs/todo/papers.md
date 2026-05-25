@@ -607,8 +607,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     descriptor normalization or explicit rebinning, and diagnostics that show
     the illuminated search space rather than only best/archive cells.
 
-- [ ] Document UCB1 as a heuristic adaptation or adjust it toward canonical
-  UCB1.
+- [ ] Bound and normalize the UCB-style backend reward policy, or adjust it
+  toward canonical UCB1.
   - Paper evidence: the UCB1 paper assumes bounded reward distributions and
     analyzes regret using empirical rewards plus an upper-confidence term.
   - Current evidence: `LLMEnsemble` records non-negative fitness deltas, does
@@ -618,6 +618,17 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Missing: reward normalization, explicit initialization/pull-once policy,
     documented coefficient choice, and tests that the implementation matches
     the intended UCB variant.
+
+- [x] Document the UCB1 boundary as heuristic rather than canonical.
+  - Paper evidence: the UCB1 paper provides regret analysis under assumptions
+    that LibreEvolve's backend router does not currently satisfy.
+  - Current evidence: `LLMEnsemble`'s docstring, `docs/backends.md`,
+    `README.md`, and `papers/README.md` all describe the backend router as a
+    UCB-style heuristic or inspiration over observed fitness improvements, not
+    a canonical regret-analyzed UCB1 implementation.
+  - Required result: keep the documentation boundary explicit while the
+    remaining canonicalization work stays open under the bounded-reward policy
+    todo.
 
 - [ ] Account for non-mutation LLM calls in ensemble scheduling.
   - Paper evidence: AlphaEvolve uses an ensemble of LLMs to balance candidate

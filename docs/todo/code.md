@@ -352,6 +352,31 @@ Primary evidence:
     workspaces/context/plugins/inspirations, and clear behavior when required
     sections cannot fit.
 
+- [ ] Add prompt/history redaction and context data-retention controls.
+  - Spec evidence: AlphaEvolve-style task setup can include existing codebases,
+    evaluator outputs, explicit context files, and literature. When those
+    sources are sent to external LLMs and stored for future database sampling,
+    the experiment needs explicit data-retention, redaction, and audit
+    boundaries.
+  - Current evidence: `PromptSampler._render_context()` renders problem
+    context text directly, `_render_program_files()` renders full parent and
+    inspiration file contents, `evolve()` stores the rendered mutation prompt
+    under `Program.metadata["prompt"]`, stores critique prompts under
+    `metadata.critique.prompt`, and `ProgramDatabase.log()` writes metadata
+    verbatim to `history.jsonl`. `build_critique_prompt()` embeds the full
+    original prompt. Basic secret redaction exists only for LLM feedback
+    workspace rendering in `libreevolve/core/feedback.py`; mutation prompts,
+    critique prompts, plugin context, explicit context files, failure mutation
+    text, and persisted run history are not redacted or covered by a retention
+    policy.
+  - Required result: define per-role prompt logging modes
+    (full/redacted/hash-only/off), apply shared secret redaction to mutation,
+    critique, feedback, plugin, and context prompt sections before provider
+    calls and/or before persistence as configured, record redaction metadata
+    and hashes, document data-retention defaults, and add tests proving
+    secret-like values in seeds/context/plugin text do not appear in persisted
+    artifacts when redaction is enabled.
+
 - [x] Make failed/rejected mutation memory complete and queryable.
   - Spec evidence: AlphaEvolve prompt context and database are built around
     past trials, ideas, evaluation results, and feedback, including enough

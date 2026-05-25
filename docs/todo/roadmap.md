@@ -252,6 +252,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track prompt budgets, section priorities, token/character
     accounting, prompt-size diagnostics, and oversized-section tests.
 
+- [x] Add prompt/history redaction and data-retention policy to prompt/runtime
+  work.
+  - Evidence: mutation prompts and critique prompts can include explicit
+    context, plugin context, parent/inspiration code, and evaluator summaries,
+    and they are stored under program metadata in `history.jsonl`. Only the
+    LLM feedback workspace prompt path applies basic secret redaction today.
+  - Current roadmap gap: safety work covered validator environment secrets, and
+    prompt work covered context packing, but neither called out whether prompt
+    content sent to providers and persisted in run artifacts should be full,
+    redacted, hash-only, or omitted.
+  - Required result: track shared redaction, prompt-log modes, data-retention
+    defaults, redaction metadata/hashes, and tests for secret-like values in
+    seeds/context/plugin text.
+
 - [x] Add richer evaluator-output prompt rendering to prompt/context work.
   - Evidence: AlphaEvolve prompts can include execution results and scores, but
     the current prompt sampler only renders compact recent stage summaries.

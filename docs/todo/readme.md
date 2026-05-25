@@ -466,6 +466,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that richer retry/penalty/discard policy and
     score calibration remain open.
 
+- [x] Clarify prompt/history redaction limits.
+  - README evidence: README described basic secret redaction for LLM feedback
+    graders, but did not distinguish that from mutation prompts, critique
+    prompts, explicit context, plugin context, and persisted run history.
+  - Current evidence: feedback workspace rendering calls
+    `_redact_sensitive_text()`, while `PromptSampler` renders context and
+    program files directly, `evolve()` stores `metadata.prompt` and
+    `metadata.critique.prompt`, and `ProgramDatabase.log()` writes metadata
+    verbatim to `history.jsonl`.
+  - Status: README now warns that mutation/critique prompt history is persisted
+    without a general redaction or data-retention policy and advises keeping
+    seeds/context/plugin text free of secrets.
+  - Required result: keep user-facing docs clear about which prompt paths are
+    redacted and which are still raw until the implementation gap in
+    `docs/todo/code.md` is closed.
+
 - [x] Clarify evaluator-stage numeric config validation.
   - README evidence: the evaluation and configuration docs show staged
     validators with `samples`, `retries`, `timeout_sec`, and `min_score`; the

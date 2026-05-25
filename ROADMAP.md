@@ -93,6 +93,8 @@ is not yet an AlphaEvolve reproduction.
   source hashes, extraction diagnostics, and page/span citations.
 - Add global prompt budget/context-window accounting with deterministic
   section-level packing and prompt-size diagnostics.
+- Add prompt/history redaction and data-retention controls for mutation,
+  critique, feedback, plugin, and explicit-context prompt sections.
 - Render richer bounded evaluator outputs in prompts, including stdout/stderr,
   artifacts, sample-level diagnostics, validator feedback, and LLM grader
   summaries.

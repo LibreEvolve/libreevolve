@@ -81,6 +81,13 @@ Important behavior:
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
 
+Prompt metadata is stored for auditability, but mutation prompts and critique
+prompts are currently persisted as rendered text without a general redaction or
+data-retention policy. LLM feedback workspace prompts use basic secret
+redaction before provider calls; that redaction path is not yet shared by
+mutation prompts, critique prompts, explicit context files, plugin context, or
+prompt history.
+
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.
 

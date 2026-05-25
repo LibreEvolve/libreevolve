@@ -184,6 +184,11 @@ LLM feedback graders receive bounded full-workspace context with file paths,
 primary-file marking, basic secret redaction, truncation notices, and compact
 evaluation diagnostics.
 
+Mutation and critique prompts are different: the current run history stores
+rendered prompts and critique prompts without a general redaction or
+data-retention policy. Keep seeds, explicit context files, and plugin context
+free of secrets unless you are comfortable sending and persisting that content.
+
 Malformed LLM feedback responses and provider failures are recorded as
 feedback-failure metadata and ignored for scoring. Grader config is
 prevalidated at startup, but richer retry/penalty policies and score

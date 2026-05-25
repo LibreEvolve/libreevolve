@@ -152,6 +152,11 @@ sections. Large parent workspaces, many inspirations, plugin context, or
 already-truncated context files can still produce oversized prompts, and the
 run does not record prompt size or context-window fit diagnostics.
 
+Mutation and critique prompts are rendered and stored as raw text today.
+General prompt redaction, per-role prompt logging modes, and data-retention
+controls are not implemented; only the LLM feedback workspace-rendering path
+applies basic secret redaction.
+
 The feedback section is intentionally compact today: it renders recent stage
 names, pass/fail states, scores, and errors. Although full stdout, stderr,
 artifacts, and LLM grader records are persisted in run history, prompt rendering
@@ -366,6 +371,8 @@ prompt-program events in `prompt_history.jsonl`.
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders receive bounded full-workspace file sections, basic
   secret redaction, and compact evaluator diagnostics.
+- Mutation/critique prompts and persisted prompt history do not yet share that
+  redaction path or expose data-retention controls.
 - Evaluator output is parsed as JSON, validated against declared scalar
   metrics, and normalized around the primary metric.
 - Config validation now rejects unknown problem config keys, invalid

@@ -259,8 +259,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     first-class candidate members yet. Validator subprocesses now run with the
     candidate root as `cwd` and import path, but there is still no arbitrary
     external repository/build-system runner. Candidate path collision handling
-    is also incomplete: normalized duplicate paths and host-filesystem
-    case-folding collisions can silently drop or overwrite files.
+    is also incomplete: candidate construction rejects duplicate normalized
+    paths, but host-filesystem case-folding collisions can still overwrite
+    materialized files.
     File/block envelope diagnostics now reject malformed sections before
     partial edits are applied. File-set topology changes such as delete, rename,
     move, and primary-file replacement are implemented with command file

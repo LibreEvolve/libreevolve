@@ -320,9 +320,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: file-section headers now pass through
     `normalize_candidate_path()`, and README documents that nested paths,
     hyphens, spaces, Unicode filename characters, and Windows-style
-    backslashes are accepted when normalized safely. README now also warns that
-    normalized-path collisions and host-filesystem case folding can still
-    overwrite files.
+    backslashes are accepted when normalized safely. README now also says
+    candidate workspace construction rejects raw paths that normalize to the
+    same relative path, while warning that file-section collision policy and
+    host-filesystem case folding remain incomplete.
   - Required result: keep README aligned with current path parser behavior
     while still warning separately about path-collision handling and partial
     whole-envelope diagnostics.

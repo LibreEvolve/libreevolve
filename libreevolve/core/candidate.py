@@ -30,7 +30,16 @@ class CandidateWorkspace:
     primary_file: str = "main.py"
 
     def __post_init__(self) -> None:
-        self.files = {normalize_candidate_path(k): v for k, v in self.files.items()}
+        normalized_files: dict[str, str] = {}
+        for raw_path, content in self.files.items():
+            path = normalize_candidate_path(raw_path)
+            if path in normalized_files:
+                raise ValueError(
+                    "Duplicate candidate path after normalization: "
+                    f"{raw_path!r} -> {path!r}"
+                )
+            normalized_files[path] = content
+        self.files = normalized_files
         self.primary_file = normalize_candidate_path(self.primary_file)
         if not self.files:
             self.files[self.primary_file] = ""

@@ -452,6 +452,18 @@ def test_workspace_rejects_colon_path_component():
     assert err == "pkg:bad.py:unsafe_path"
 
 
+def test_workspace_rejects_duplicate_paths_after_normalization():
+    try:
+        CandidateWorkspace(
+            files={"pkg\\helper.py": "value = 1\n", "pkg/helper.py": "value = 2\n"},
+            primary_file="pkg/helper.py",
+        )
+    except ValueError as exc:
+        assert "Duplicate candidate path after normalization" in str(exc)
+    else:
+        raise AssertionError("expected duplicate normalized path rejection")
+
+
 def test_workspace_rejects_empty_file_section_path():
     workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
     response = "<<<FILE \nvalue = 2\n>>>FILE"

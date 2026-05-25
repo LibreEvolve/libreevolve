@@ -380,8 +380,9 @@ For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested
 paths, hyphens, spaces, Unicode filename characters, and Windows-style
 backslashes. Collision checks are still incomplete: distinct input names that
-normalize to the same relative path, or differ only by host-filesystem case
-folding, can overwrite each other.
+normalize to the same relative path are rejected during candidate workspace
+construction, but file-section collision policy and host-filesystem case
+folding collisions are still incomplete.
 File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, duplicate-name, empty-name, and
 invalid-name envelopes now fail before partial edits are applied.

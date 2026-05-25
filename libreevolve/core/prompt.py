@@ -58,6 +58,8 @@ Evaluation feedback:
 [TASK]
 Propose a targeted improvement. For multi-file candidates, wrap each file edit
 in `<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
+Use either compact `<<<SEARCH` / `>>>REPLACE` fences or AlphaEvolve-style
+`<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences.
 Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
 
 Example format (do NOT copy this, use actual code from the program above):

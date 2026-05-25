@@ -60,3 +60,23 @@ def test_prompt_sampler_renders_multi_file_candidates():
     assert "--- FILE helper.py ---" in prompt
     assert "--- FILE main.py ---" in prompt
     assert "<<<FILE path" in prompt
+
+
+def test_default_prompt_mentions_canonical_diff_fences():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["def solve():\n    return 1\n"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="def solve():\n    return 1\n", fitness=0.0)
+
+    prompt = PromptSampler().build(parent, [], problem, extra_context="", recent_failures=[])
+
+    assert "AlphaEvolve-style" in prompt
+    assert "`<<<<<<< SEARCH`" in prompt
+    assert "`>>>>>>> REPLACE`" in prompt

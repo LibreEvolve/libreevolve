@@ -146,6 +146,11 @@ Unknown config keys are currently ignored rather than rejected. This is a known
 reproducibility gap for AlphaEvolve-style runs because spelling mistakes can
 silently leave defaults in effect.
 
+Config-file enum values are not fully validated either. The CLI constrains
+`--mutation-mode` to `diff` or `full`, but a `config.yaml` value such as
+`mutation_mode: typo` can reach the evolution loop and make generated
+mutations fail later as `unknown_mutation_mode` instead of stopping at startup.
+
 Nested evaluator-stage numeric fields are also not fully validated before a
 run. Use positive `samples` and `timeout_sec`, non-negative `retries`, and
 numeric `min_score` values; invalid values may currently fail during

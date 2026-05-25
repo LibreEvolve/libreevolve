@@ -30,7 +30,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Evidence: AlphaEvolve-style task setup depends on configuration for
     prompts, evaluators, LLMs, and mutation behavior.
   - Current roadmap gap: the roadmap covered manifests and reproducibility but
-    not early validation of unknown/malformed config keys or backend specs.
+    not early validation of unknown/malformed config keys, config-file enum
+    values such as `mutation_mode`, or backend specs.
   - Required result: make config validation a first-class prerequisite for
     reproducible AlphaEvolve-style runs.
 

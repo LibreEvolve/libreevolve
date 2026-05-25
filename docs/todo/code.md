@@ -967,11 +967,16 @@ Primary evidence:
     configuration mistakes to fail early with clear diagnostics.
   - Current evidence: `_build_config()` drops unknown `config.yaml` keys,
     backend specs from CLI are parsed with `partition(":")` without requiring a
-    non-empty type/model, and many nested stage/feedback/backend fields are
-    unvalidated until a later runtime path fails or silently ignores them.
+    non-empty type/model, `config.yaml` values bypass Click choices such as
+    `--mutation-mode`, and many nested stage/feedback/backend fields are
+    unvalidated until a later runtime path fails or silently ignores them. For
+    example, a problem-local `mutation_mode: typo` is accepted into `Config`,
+    reaches `apply_candidate_mutation()`, and causes every attempted mutation
+    to receive `unknown_mutation_mode` rather than failing before the run.
   - Required result: add config schema validation with unknown-key errors or
-    explicit warning policy, validate CLI backend specs, validate nested
-    `eval_stages`/`llm_feedback`/backend metadata, and test malformed configs.
+    explicit warning policy, validate CLI backend specs and config-file enum
+    fields, validate nested `eval_stages`/`llm_feedback`/backend metadata, and
+    test malformed configs.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,

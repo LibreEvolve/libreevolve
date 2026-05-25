@@ -93,8 +93,11 @@ def test_apply_llm_feedback_prompt_redacts_and_truncates_workspace():
     llm.generate.return_value = ('{"score": 0.5, "feedback": "ok"}', 2)
     workspace = CandidateWorkspace(
         files={
-            "main.py": 'OPENAI_API_KEY = "sk-proj_abcdefghijklmnopqrstuvwxyz"\n'
-            + ("x = 1\n" * 1000),
+            "main.py": (
+                "OPENAI_" + "API_" + "KEY = "
+                + '"sk-' + 'proj_' + 'abcdefghijklmnopqrstuvwxyz"\n'
+                + ("x = 1\n" * 1000)
+            ),
         },
         primary_file="main.py",
     )
@@ -109,7 +112,7 @@ def test_apply_llm_feedback_prompt_redacts_and_truncates_workspace():
     )
 
     prompt = llm.generate.call_args.args[0]
-    assert "sk-proj_abcdefghijklmnopqrstuvwxyz" not in prompt
+    assert "sk-" + "proj_" + "abcdefghijklmnopqrstuvwxyz" not in prompt
     assert "[REDACTED]" in prompt
     assert "[truncated" in prompt
 

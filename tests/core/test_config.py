@@ -55,7 +55,7 @@ def test_default_sampling_strategies():
         ({"evaluator_artifact_exclude": [""]}, "evaluator_artifact_exclude"),
         ({"evaluator_artifact_max_files": -1}, "evaluator_artifact_max_files"),
         ({"evaluator_artifact_max_bytes": -1}, "evaluator_artifact_max_bytes"),
-        ({"evaluator_artifact_redact_secrets": "yes"}, "evaluator_artifact_redact_secrets"),
+        ({"evaluator_artifact_redact_secrets": "yes"}, "evaluator_artifact_redact_secrets"),  # pragma: allowlist secret
         ({"run_id": ""}, "run_id"),
         ({"run_collision_policy": "append"}, "run_collision_policy"),
         ({"n_islands": 0}, "n_islands"),
@@ -85,7 +85,7 @@ def test_rejects_invalid_top_level_config(kwargs, message):
         ({"artifact_exclude": [""]}, "artifact_exclude"),
         ({"artifact_max_files": -1}, "artifact_max_files"),
         ({"artifact_max_bytes": -1}, "artifact_max_bytes"),
-        ({"artifact_redact_secrets": "yes"}, "artifact_redact_secrets"),
+        ({"artifact_redact_secrets": "yes"}, "artifact_redact_secrets"),  # pragma: allowlist secret
         ({"samples": 1, "seeds": [1, 2]}, "samples"),
         ({"unknown": True}, "unsupported"),
     ],

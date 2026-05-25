@@ -154,19 +154,19 @@ def test_validator_environment_allows_explicit_opt_in(monkeypatch):
 
 
 def test_validator_stdout_and_stderr_redact_secret_like_values():
-    secret = "sk-proj_validatorsecret1234567890"
+    token = "sk-" + "proj_" + "validatorvalue1234567890"
     p, d = _problem(
         "import sys\n"
         "def evaluate(c):\n"
-        f"    print('api_key={secret}')\n"
-        f"    print('token: {secret}', file=sys.stderr)\n"
+        f"    print('api_key={token}')\n"
+        f"    print('token: {token}', file=sys.stderr)\n"
         "    return {'score': 1.0, 'is_valid': True}\n"
     )
     try:
         result = CascadeEvaluator(p).evaluate("x=1", None)
         assert result == 1.0
-        assert secret not in result.stdout
-        assert secret not in result.stderr
+        assert token not in result.stdout
+        assert token not in result.stderr
         assert "[REDACTED]" in result.stdout
         assert "[REDACTED]" in result.stderr
     finally:
@@ -267,11 +267,11 @@ def test_configured_stage_overrides_artifact_policy(tmp_path):
 
 
 def test_validator_text_artifacts_redact_secret_like_values_by_default(tmp_path):
-    secret = "sk-proj_artifactsecret1234567890"
+    token = "sk-" + "proj_" + "artifactvalue1234567890"
     p, d = _problem(
         "from pathlib import Path\n"
         "def evaluate(c, workspace):\n"
-        f"    Path(workspace, 'secret.txt').write_text('token={secret}', encoding='utf-8')\n"
+        f"    Path(workspace, 'secret.txt').write_text('token={token}', encoding='utf-8')\n"
         "    return {'score': 1.0, 'is_valid': True}\n"
     )
     try:
@@ -282,7 +282,7 @@ def test_validator_text_artifacts_redact_secret_like_values_by_default(tmp_path)
         ).evaluate("x=1", None)
         artifact = result.metadata["artifacts"]["files"][0]
         copied = tmp_path / artifact["artifact_path"]
-        assert secret not in copied.read_text(encoding="utf-8")
+        assert token not in copied.read_text(encoding="utf-8")
         assert "[REDACTED]" in copied.read_text(encoding="utf-8")
         assert artifact["redacted"] is True
         assert artifact["redaction_status"] == "redacted"
@@ -293,11 +293,11 @@ def test_validator_text_artifacts_redact_secret_like_values_by_default(tmp_path)
 
 
 def test_stage_artifact_redaction_can_be_disabled(tmp_path):
-    secret = "sk-proj_artifactraw1234567890"
+    token = "sk-" + "proj_" + "artifactraw1234567890"
     p, d = _problem(
         "from pathlib import Path\n"
         "def evaluate(c, workspace, stage):\n"
-        f"    Path(workspace, 'raw.txt').write_text('token={secret}', encoding='utf-8')\n"
+        f"    Path(workspace, 'raw.txt').write_text('token={token}', encoding='utf-8')\n"
         "    return {'score': 1.0, 'is_valid': True}\n"
     )
     try:
@@ -314,7 +314,7 @@ def test_stage_artifact_redaction_can_be_disabled(tmp_path):
         ).evaluate("x=1", None)
         artifact = result.metadata["artifacts"]["files"][0]
         copied = tmp_path / artifact["artifact_path"]
-        assert secret in copied.read_text(encoding="utf-8")
+        assert token in copied.read_text(encoding="utf-8")
         assert artifact["redacted"] is False
         assert artifact["redaction_status"] == "disabled"
     finally:

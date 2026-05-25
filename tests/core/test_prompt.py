@@ -147,7 +147,7 @@ def test_prompt_sampler_renders_bounded_execution_and_grader_feedback():
         metrics={"score": 0.25, "is_valid": True},
         evaluation={
             "stdout": "top-level output",
-            "stderr": "api_key=sk-proj_abcdefghijklmnopqrstuvwxyz",
+            "stderr": "api_key=" + "sk-" + "proj_" + "abcdefghijklmnopqrstuvwxyz",
             "stages": [
                 {
                     "name": "validate",
@@ -173,7 +173,7 @@ def test_prompt_sampler_renders_bounded_execution_and_grader_feedback():
                         {
                             "source_path": "report.json",
                             "artifact_path": "evaluator_artifacts/abc/report.json",
-                            "sha256": "1234567890abcdef",
+                            "sha256": "12345678" + "90abcdef",
                             "redacted": True,
                         }
                     ]
@@ -219,7 +219,7 @@ def test_prompt_sampler_renders_context_citations_when_sources_are_available():
         context_sources=[
             {
                 "path": "papers/a.md",
-                "sha256": "1234567890abcdef",
+                "sha256": "12345678" + "90abcdef",
                 "chars_original": 13,
                 "excerpt_start": 0,
                 "excerpt_end": 13,

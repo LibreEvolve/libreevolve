@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -34,11 +35,31 @@ def append_strict_jsonl(
 
 
 def append_quarantine_record(path: Path, record: dict, exc: Exception) -> None:
+    details = _non_finite_details(record)
+    message = str(exc)
+    if details:
+        message = f"{message}; non-finite values: {', '.join(details)}"
     diagnostic = {
         "error": exc.__class__.__name__,
-        "message": str(exc),
+        "message": message,
         "record_type": type(record).__name__,
         "record_repr": repr(record),
     }
     with open(path, "a", encoding="utf-8") as f:
         f.write(strict_json_dumps(diagnostic) + "\n")
+
+
+def _non_finite_details(value: Any, path: str = "$") -> list[str]:
+    if isinstance(value, float) and not math.isfinite(value):
+        return [f"{path}={value!r}"]
+    if isinstance(value, dict):
+        details: list[str] = []
+        for key, item in value.items():
+            details.extend(_non_finite_details(item, f"{path}.{key}"))
+        return details
+    if isinstance(value, (list, tuple)):
+        details = []
+        for index, item in enumerate(value):
+            details.extend(_non_finite_details(item, f"{path}[{index}]"))
+        return details
+    return []

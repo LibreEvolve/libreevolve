@@ -589,3 +589,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep docs clear that malformed and non-mapping config
     files now fail cleanly, while plugin-specific schemas and provider/model
     API compatibility remain open.
+
+- [x] Clarify plugin config schema validation boundary.
+  - README-adjacent evidence: architecture/configuration caveats implied
+    plugin-specific schemas were partially validated.
+  - Current evidence: `Config.validate()` only checks `plugins` is a list of
+    strings, while `_load_plugins()` resolves those names through the CLI's
+    hard-coded built-in registry and creates plugin instances with default
+    constructors except for the run-scoped `ttt_rl` artifact path.
+  - Required result: document that plugin-specific schemas and constructor
+    parameters are not validated or configurable yet, while the separate
+    plugin registry/config/provenance todo remains open.

@@ -473,7 +473,9 @@ counters, not async queue checkpoints or provider token/cost accounting.
   numeric fields, invalid top-level population/runtime ranges, and malformed
   LLM feedback grader specs. Malformed YAML and scalar/list top-level
   `config.yaml` files now fail with path-aware startup diagnostics.
-  Plugin-specific schemas remain only partially validated.
+  Plugin-specific schemas and constructor parameters are not validated yet;
+  `Config` only checks that `plugins` is a list of names before CLI alias
+  resolution.
 - OpenAI API mode is selected by the presence of `reasoning_effort`, not by
   validated model capabilities.
 - `manifest.json` records configuration plus Git/source/problem/plugin-module

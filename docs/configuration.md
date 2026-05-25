@@ -313,10 +313,12 @@ policies are separate future work.
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
   migration, archive, prompt, stage, LLM feedback, critique, and ensemble
   scheduling settings.
-- Config validation is still incomplete for plugin-specific schemas and
-  provider/model API compatibility. Malformed YAML and non-mapping top-level
-  `config.yaml` files fail with path-aware startup errors. Top-level numeric
-  fields, mutation/ensemble enums, backend specs, unknown problem-local keys,
+- Config validation does not yet support plugin-specific schemas or plugin
+  constructor parameters; `plugins` is validated only as a list of names later
+  resolved by the CLI's built-in registry. Provider/model API compatibility
+  also remains open. Malformed YAML and non-mapping top-level `config.yaml`
+  files fail with path-aware startup errors. Top-level numeric fields,
+  mutation/ensemble enums, backend specs, unknown problem-local keys,
   evaluator-stage numeric fields, and LLM feedback grader specs are checked
   before a run starts.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is

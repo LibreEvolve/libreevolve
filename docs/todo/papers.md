@@ -496,8 +496,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     retrieval summaries. The plugin does not persist full result payloads,
     ranking provenance, or source-content hashes for the injected context.
   - Missing: broad external retrieval, source ranking, hypothesis synthesis,
-    retrieval provenance/citations, implementation/refinement loop, systematic
-    debugging, cross-file editing, and benchmark-grounded result validation.
+    full retrieval payload/artifact retention, source-content hashes,
+    implementation/refinement loop, systematic debugging, cross-file editing,
+    and benchmark-grounded result validation.
 
 - [ ] Keep ImprovEvolve-inspired behavior explicitly paper-limited or implement
   the actual generate/improve/perturb parameterization and search dynamics.

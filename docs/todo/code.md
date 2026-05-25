@@ -527,7 +527,7 @@ Primary evidence:
     Remaining context scale work is tracked separately under prompt budget and
     summarization/ranking tasks.
 
-- [ ] Persist live retrieval/plugin context provenance.
+- [x] Persist live retrieval/plugin context provenance.
   - Spec evidence: AlphaEvolve-style prompt sampling can include relevant
     literature and external context, but reproducible experiments need the
     source, query, retrieval time, selected excerpts, and failures that shaped
@@ -546,11 +546,29 @@ Primary evidence:
     plugin artifacts. Completed manifests now include `runtime.retrieval` with
     deduplicated event counts, per-plugin status/source counts, and compact
     event summaries.
+  - Status: implemented for bounded retrieval-event provenance, prompt-visible
+    URL citations, error classification, candidate history records, and
+    run-manifest summaries. Full payload/ranking artifact retention remains a
+    separate hardening gap.
   - Required result: store retrieval events with provider, query, generation,
     parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
     and hashes; render citations in prompt context; include plugin retrieval
     artifacts or summaries in run manifests; and test successful, empty,
     malformed, and failed retrieval paths.
+
+- [ ] Persist full retrieval payload artifacts and ranking provenance.
+  - Spec evidence: AlphaEvolve-style prompt context can include relevant
+    literature and external context; reproducible experiments need to know not
+    only which compact snippets were injected but also how sources were ranked
+    and what source content was available at the time.
+  - Current evidence: `DeepResearchPlugin` records bounded retrieval events and
+    `runtime.retrieval` summaries, but it does not store full provider
+    payloads, source-content hashes, ranking scores/ordering policy, or
+    retrieval artifacts under the run directory.
+  - Required result: persist bounded or redacted retrieval artifacts with
+    provider payload hashes, source-content hashes, ranking/selection metadata,
+    retention limits, and manifest links; add tests for successful, empty,
+    malformed, and failed retrieval artifact paths.
 
 - [ ] Attribute plugin prompt guidance and strategy choices.
   - Spec evidence: AlphaEvolve-style prompt assembly and paper-inspired

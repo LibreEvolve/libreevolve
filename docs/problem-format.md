@@ -235,6 +235,9 @@ existing full-block rules apply. New files can be created in `full` mode.
   local text file sets, not arbitrary build-system or containerized projects.
 - Treat seed workspaces as UTF-8 text workspaces for now; binary artifacts and
   artifact manifests are not first-class candidate members yet.
+- Keep seed workspaces, context files, and plugin context compact. Prompt
+  assembly does not yet enforce a global context-window budget across parent
+  code, inspirations, context, failures, and feedback.
 - Treat candidate abstraction as code-file evolution for now; richer
   problem-defined candidate representations are tracked as AlphaEvolve-alignment
   work.

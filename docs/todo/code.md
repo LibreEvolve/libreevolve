@@ -213,6 +213,24 @@ Primary evidence:
     grader summaries, with redaction/truncation rules and tests proving prompts
     contain the intended evidence without exceeding configured budgets.
 
+- [ ] Add global prompt budget and context-window accounting.
+  - Spec evidence: AlphaEvolve prompt sampling supports long contexts and
+    configurable prompt construction; practical long-context evolution needs
+    deterministic packing so parent code, inspirations, evaluator feedback,
+    explicit context, plugin context, and failure memory fit the selected LLM.
+  - Current evidence: `PromptSampler.build()` formats the selected template
+    with full rendered context, parent files, inspirations, plugin context, and
+    recent failures. Only individual problem context files are character-bounded
+    by `_summarize_context_text()`; parent/inspiration workspaces, plugin
+    output, feedback sections, and the final rendered prompt have no global
+    token/character budget, truncation policy, priority order, or prompt-size
+    metadata in history/manifests.
+  - Required result: add configurable prompt budgets per backend/run, a
+    deterministic section-priority packing policy, token estimation or provider
+    usage accounting, prompt-size diagnostics in history, tests for oversized
+    workspaces/context/plugins/inspirations, and clear behavior when required
+    sections cannot fit.
+
 - [ ] Make failed/rejected mutation memory complete and queryable.
   - Spec evidence: AlphaEvolve prompt context and database are built around
     past trials, ideas, evaluation results, and feedback, including enough

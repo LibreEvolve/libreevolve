@@ -175,6 +175,10 @@ graph TD
 
 </details>
 
+Prompt construction is not yet globally token-budgeted. Large workspaces,
+context files, plugin context, and inspiration sets can exceed a backend's
+effective context window until prompt packing/accounting is implemented.
+
 ## Example Runs
 
 ### Evolving a Greeting Function

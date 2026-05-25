@@ -147,6 +147,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source hashes, extraction diagnostics, page/span citations, and prompt/run
     provenance.
 
+- [x] Add prompt budget/context-window accounting to prompt work.
+  - Evidence: `PromptSampler.build()` concatenates rendered sections without a
+    global budget, and only problem context files have a first-6000-character
+    local truncation.
+  - Current roadmap gap: prompt/context work covered richer sections and
+    summarization but not deterministic packing of the final prompt into a
+    backend context window.
+  - Required result: track prompt budgets, section priorities, token/character
+    accounting, prompt-size diagnostics, and oversized-section tests.
+
 - [x] Add richer evaluator-output prompt rendering to prompt/context work.
   - Evidence: AlphaEvolve prompts can include execution results and scores, but
     the current prompt sampler only renders compact recent stage summaries.

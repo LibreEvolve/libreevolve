@@ -120,6 +120,11 @@ For each generation it:
 - plugin-provided context
 - recent in-memory failure hints
 
+Prompt assembly does not yet apply a global token or character budget across
+sections. Large parent workspaces, many inspirations, plugin context, or
+already-truncated context files can still produce oversized prompts, and the
+run does not record prompt size or context-window fit diagnostics.
+
 The feedback section is intentionally compact today: it renders recent stage
 names, pass/fail states, scores, and errors. Although full stdout, stderr,
 artifacts, and LLM grader records are persisted in run history, prompt rendering

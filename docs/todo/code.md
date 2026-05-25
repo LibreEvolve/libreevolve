@@ -1086,13 +1086,16 @@ Primary evidence:
     `mutation_mode` and `ensemble_strategy` are enum-validated, backend specs
     are checked for supported keys/types/models/metadata, and evaluator-stage
     numeric fields and LLM feedback grader specs are validated before a run
-    starts. Remaining gaps: plugin-specific configuration schemas do not exist,
+    starts. Remaining gaps: malformed YAML and non-mapping top-level
+    `config.yaml` files can still raise raw `yaml`/`dict.update()` exceptions
+    before `ConfigError`, plugin-specific configuration schemas do not exist,
     CLI `--reasoning-effort` still affects only CLI-created backend specs, and
     model/API capability validation is not implemented.
   - Required result: add plugin config schemas, document or fix remaining CLI
     override semantics, add model/API-mode compatibility validation where
-    feasible, and test malformed nested config cases beyond backend/stage/
-    feedback metadata.
+    feasible, normalize config-file parse/type failures into path-aware startup
+    diagnostics, and test malformed top-level and nested config cases beyond
+    backend/stage/feedback metadata.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,

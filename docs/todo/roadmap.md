@@ -34,7 +34,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     backend specs, invalid evaluator-stage numbers, and invalid top-level
     runtime/population ranges. LLM feedback grader schemas are also validated.
     Remaining runtime hardening is focused on plugin-specific config schemas
-    and API capability validation.
+    API capability validation, and converting malformed YAML or non-mapping
+    top-level `config.yaml` files into clear path-aware startup diagnostics
+    instead of raw parser/update exceptions.
 
 - [x] Add CLI/config precedence semantics to runtime hardening.
   - Evidence: `_build_config()` currently overwrites `config.yaml`

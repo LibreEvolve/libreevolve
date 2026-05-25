@@ -163,6 +163,10 @@ values such as `mutation_mode: typo`, invalid ensemble strategies, malformed
 backend specs, and invalid top-level numeric fields before the run mutates or
 evaluates candidates.
 
+This validation still assumes `config.yaml` parses to a top-level mapping.
+Malformed YAML or scalar/list top-level documents can fail before the CLI wraps
+the problem in a path-aware `ConfigError` diagnostic.
+
 Nested evaluator-stage numeric fields are validated before a run: `samples`
 must be positive, `timeout_sec` must be positive, `retries` must be
 non-negative, and `min_score` must be numeric. If both `samples` and `seeds`
@@ -231,10 +235,11 @@ run rather than being recorded as structured failed LLM-call attempts.
   migration, archive, prompt, stage, LLM feedback, critique, and ensemble
   scheduling settings.
 - Config validation is still incomplete for plugin-specific schemas and
-  provider/model API compatibility, but top-level numeric fields,
-  mutation/ensemble enums, backend specs, unknown problem-local keys,
+  provider/model API compatibility. Malformed YAML and non-mapping top-level
+  `config.yaml` files also need normalized startup errors. Top-level numeric
+  fields, mutation/ensemble enums, backend specs, unknown problem-local keys,
   evaluator-stage numeric fields, and LLM feedback grader specs are checked
-  before a run starts.
+  before a run starts when the config file parses to a mapping.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
   overwritten by the problem directory name, and `--reasoning-effort` only
   affects CLI-supplied backend specs rather than existing OpenAI config-file

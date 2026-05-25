@@ -178,7 +178,8 @@ is not yet an AlphaEvolve reproduction.
 ### 10. Operational maturity
 
 - Extend current config validation to plugin-specific schemas and
-  provider/model API compatibility where feasible.
+  provider/model API compatibility where feasible, and normalize malformed YAML
+  or non-mapping `config.yaml` files into clear path-aware startup errors.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.

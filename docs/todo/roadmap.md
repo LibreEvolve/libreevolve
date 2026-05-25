@@ -34,6 +34,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: make config validation a first-class prerequisite for
     reproducible AlphaEvolve-style runs.
 
+- [x] Add CLI/config precedence semantics to runtime hardening.
+  - Evidence: `_build_config()` currently overwrites `config.yaml`
+    `problem_name` with the problem directory name and applies
+    `--reasoning-effort` only to CLI-created backend specs.
+  - Current roadmap gap: the roadmap mentioned config validation but did not
+    call out field-by-field precedence and effective-config override tests.
+  - Required result: track deterministic precedence, explicit ignored-override
+    behavior, and tests for config-file plus CLI combinations.
+
 - [x] Add evaluator metric-contract validation to the backlog.
   - Evidence: AlphaEvolve Section 2.1 treats `evaluate` as returning scalar
     metrics, while LibreEvolve currently validates only enough of the result to

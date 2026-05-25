@@ -505,6 +505,20 @@ Primary evidence:
     explicit warning policy, validate CLI backend specs, validate nested
     `eval_stages`/`llm_feedback`/backend metadata, and test malformed configs.
 
+- [ ] Fix CLI/config override semantics and document precedence with tests.
+  - Spec evidence: AlphaEvolve-style task setup depends on explicit,
+    reproducible configuration for LLM choices, prompt behavior, evaluator
+    settings, and run metadata.
+  - Current evidence: `_build_config()` loads `problem_name` from
+    `config.yaml`, then unconditionally overwrites it with `problem.name`;
+    only `--run-name` changes the output directory. `--reasoning-effort` is
+    applied only when `--backends` is also supplied, so it does not update
+    OpenAI backend specs loaded from `config.yaml`.
+  - Required result: define and test field-by-field precedence for defaults,
+    config files, and CLI options; make ignored overrides explicit; ensure
+    OpenAI reasoning options can be set or overridden consistently; and reflect
+    the effective values in `manifest.json`.
+
 - [ ] Add resumable runs.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
     for large computation budgets.

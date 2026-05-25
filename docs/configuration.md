@@ -101,6 +101,10 @@ metadata stays in the ensemble.
 - `seed` (`42`): random seed for Python's global `random` module and prompt
   variant sampling.
 
+Note: although `problem_name` is a `Config` field, the current CLI resets it to
+the loaded problem directory name after reading `config.yaml`. Use `--run-name`
+to choose a run directory from the CLI.
+
 ## Problem-local `config.yaml`
 
 Example:
@@ -162,6 +166,9 @@ For OpenAI, `reasoning_effort` also controls API routing: if it is omitted,
 LibreEvolve uses Chat Completions; if it is present, LibreEvolve uses the
 Responses API and forwards the configured reasoning effort. The current code
 does not detect model capabilities or validate reasoning-effort compatibility.
+The CLI `--reasoning-effort` option is currently applied only to backend specs
+created by the same `--backends` invocation; it does not patch OpenAI backend
+entries that came from `config.yaml`.
 
 ## Environment variables
 
@@ -180,6 +187,10 @@ Provider SDKs may honor additional provider-specific variables.
   scheduling settings.
 - Config validation is incomplete: unknown problem-local keys are ignored, and
   nested backend/stage/feedback fields are only partially validated.
+- CLI override semantics are incomplete: `config.yaml` `problem_name` is
+  overwritten by the problem directory name, and `--reasoning-effort` only
+  affects CLI-supplied backend specs rather than existing OpenAI config-file
+  backends.
 - Run-wide budget configuration is not implemented yet. `max_generations` and
   per-validator timeouts are the only hard stop controls; there are no
   wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or

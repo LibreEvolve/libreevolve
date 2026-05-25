@@ -41,6 +41,8 @@ is not yet an AlphaEvolve reproduction.
 - Add language/runner declarations or keep the Python-only divergence explicit.
 - Add problem-defined candidate abstraction hooks or keep code-file-set
   evolution documented as a deliberate divergence.
+- Validate evolve-block marker pairing at load/apply time so malformed skeletons
+  cannot silently fall back to whole-file evolution.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.

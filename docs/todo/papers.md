@@ -10,6 +10,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: users mark code blocks to evolve inside a larger skeleton.
   - Status: implemented for Python single-file and local workspace candidates
     in `libreevolve/core/candidate.py`; arbitrary-language runners remain open.
+  - Remaining divergence: malformed marker layouts are not rejected. A missing
+    end marker can leave no parsed blocks and make mutation fall back to
+    whole-file evolution, which weakens skeleton-preservation guarantees.
 
 - [ ] Flexible candidate abstraction API.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.

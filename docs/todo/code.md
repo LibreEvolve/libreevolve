@@ -25,10 +25,26 @@ Primary evidence:
     markers and constrains mutations to marked regions within single-file and
     workspace candidates.
   - Status: implemented in `libreevolve/core/candidate.py`; one or more marked
-    regions are parsed and skeleton code is preserved during mutation.
+    regions are parsed and skeleton code is preserved during mutation when
+    markers are well-formed.
   - Required result: problem loading should support one or more marked
     evolvable regions, preserve non-evolved skeleton code, and apply mutations
     only where configured.
+
+- [ ] Reject malformed evolve-block marker structures.
+  - Spec evidence: AlphaEvolve's task API relies on marked evolvable blocks
+    inside a skeleton; an invalid marker layout should not change which code is
+    evolvable without an explicit diagnostic.
+  - Current evidence: `extract_evolve_blocks()` stops parsing when it sees a
+    start marker without a following end marker, returns any blocks parsed so
+    far, and does not report an error. If no complete block is returned,
+    mutation falls back to whole-file behavior, so a malformed skeleton can
+    accidentally make all code evolvable.
+  - Required result: validate marker pairing, nesting, names, and duplicate
+    block identities during problem load or mutation application; reject or
+    quarantine malformed candidates with explicit errors; add tests for missing
+    end markers, orphan end markers, nested blocks, duplicate names, and mixed
+    valid/invalid files in workspaces.
 
 - [x] Support multi-component and multi-file codebase evolution.
   - Spec evidence: AlphaEvolve evolves large code pieces spanning multiple

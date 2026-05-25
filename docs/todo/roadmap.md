@@ -78,6 +78,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: near-term item 1 only mentions `primary_bounds`,
     README audit, and tests (`ROADMAP.md:25-32`).
 
+- [x] Add malformed evolve-block marker validation to candidate fidelity.
+  - Evidence: `extract_evolve_blocks()` silently stops when it cannot find a
+    matching end marker and mutation can fall back to whole-file behavior when
+    no complete blocks are parsed.
+  - Current roadmap gap: candidate fidelity listed marker support but not
+    marker-structure validation, even though skeleton preservation depends on
+    rejecting malformed task specifications.
+  - Required result: keep marker validation on the roadmap alongside
+    workspace/codebase fidelity.
+
 - [x] Add multi-objective evaluation and metric-vector storage.
   - Evidence: AlphaEvolve Section 2.4 explicitly supports optimizing multiple
     user-provided scores.

@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from libreevolve.core.jsonl import StrictJsonlError
+from libreevolve.core.prompt import PromptTemplateError
 from libreevolve.core.meta_prompt import PromptDatabase
 
 
@@ -29,6 +30,34 @@ def test_prompt_database_mutates_with_lineage():
     assert child.parent_id == parent.id
     assert child.generation == 3
     assert len(db.all()) == 2
+
+
+def test_prompt_database_rejects_invalid_configured_template():
+    with pytest.raises(PromptTemplateError, match="unknown"):
+        PromptDatabase(tempfile.mkdtemp(), templates=["Task: {unknown}"])
+
+
+def test_prompt_database_quarantines_invalid_mutated_template_and_penalizes_parent():
+    tmpdir = tempfile.mkdtemp()
+    db = PromptDatabase(tmpdir, templates=["a {task}"])
+    parent = db.select()
+
+    child = db.mutate(parent.id, "bad {unknown}", generation=3)
+
+    assert child is None
+    assert len(db.all()) == 1
+    assert parent.reward_sum == -1.0
+    invalid = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "prompt_history_invalid.jsonl").read_text().splitlines()
+    ]
+    assert invalid[0]["event"] == "reject"
+    assert invalid[0]["parent_id"] == parent.id
+    events = [
+        json.loads(line)["event"]
+        for line in (Path(tmpdir) / "prompt_history.jsonl").read_text().splitlines()
+    ]
+    assert events == ["add", "penalty"]
 
 
 def test_prompt_database_logs_add_and_score_events():

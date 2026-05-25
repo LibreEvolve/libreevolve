@@ -6,7 +6,11 @@ from pathlib import Path
 from uuid import uuid4
 
 from libreevolve.core.jsonl import append_strict_jsonl
-from libreevolve.core.prompt import DEFAULT_TEMPLATE
+from libreevolve.core.prompt import (
+    DEFAULT_TEMPLATE,
+    PromptTemplateError,
+    validate_prompt_template,
+)
 
 
 @dataclass
@@ -55,6 +59,7 @@ class PromptDatabase:
             self.add(PromptProgram(template=template, metadata={"source": "seed"}))
 
     def add(self, program: PromptProgram) -> PromptProgram:
+        validate_prompt_template(program.template)
         self._write("add", program)
         self._programs[program.id] = program
         return program
@@ -92,8 +97,13 @@ class PromptDatabase:
         template: str,
         generation: int,
         metadata: dict | None = None,
-    ) -> PromptProgram:
+    ) -> PromptProgram | None:
         parent = self._programs[parent_id]
+        try:
+            validate_prompt_template(template)
+        except PromptTemplateError as exc:
+            self._reject_mutation(parent, template, generation, str(exc), metadata)
+            return None
         child = PromptProgram(
             template=template,
             parent_id=parent.id,
@@ -111,3 +121,29 @@ class PromptDatabase:
             {"event": event, "program": program.to_dict()},
             quarantine_path=self._quarantine_path,
         )
+
+    def _reject_mutation(
+        self,
+        parent: PromptProgram,
+        template: str,
+        generation: int,
+        error: str,
+        metadata: dict | None,
+    ) -> None:
+        parent.reward_sum -= 1.0
+        rejected = list(parent.metadata.get("rejected_prompt_mutations", []))
+        rejected.append({"generation": generation, "error": error})
+        parent.metadata = dict(parent.metadata)
+        parent.metadata["rejected_prompt_mutations"] = rejected
+        append_strict_jsonl(
+            self._quarantine_path,
+            {
+                "event": "reject",
+                "parent_id": parent.id,
+                "generation": generation,
+                "template": template,
+                "error": error,
+                "metadata": metadata or {"source": "mutation"},
+            },
+        )
+        self._write("penalty", parent)

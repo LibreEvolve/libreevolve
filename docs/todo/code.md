@@ -439,8 +439,8 @@ Primary evidence:
     and can optionally ask the active LLM to mutate the prompt template at
     `meta_prompt_interval`.
   - Status: implemented as a local prompt-program database and optional
-    interval-based LLM template mutation. Remaining hardening: placeholder
-    validation, richer prompt fitness, and ablation reporting.
+    interval-based LLM template mutation. Remaining hardening: richer prompt
+    fitness and ablation reporting.
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
@@ -465,24 +465,24 @@ Primary evidence:
     scores, multiple metrics, and deterministic prompt selection under the
     chosen policy.
 
-- [ ] Validate configured and mutated prompt templates before use.
+- [x] Validate configured and mutated prompt templates before use.
   - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by
     the evolutionary loop; malformed seed or evolved instructions should not
     break future generations.
-  - Current evidence: `Config.validate()` only checks that `prompt_variants` is
-    a list of strings. `PromptDatabase.__init__()` accepts configured seed
-    templates directly, `PromptDatabase.mutate()` accepts any returned string,
-    and `PromptSampler.build()` later formats templates with Python
-    `str.format()`. Missing required placeholders, renamed placeholders, or
-    stray braces therefore fail late at prompt construction time instead of at
-    config load or prompt-mutation insertion. There is no rollback, quarantine,
-    or penalty path for malformed configured or mutated prompt templates.
-  - Required result: define the required/optional placeholder schema; validate
-    configured prompt variants at startup and mutated prompt templates before
-    insertion; reject or quarantine templates with missing required
-    placeholders, unknown placeholders, malformed braces, or invalid
-    mutation-mode fields; log and penalize rejected prompt mutations; and add
-    tests for malformed configured variants and missing/renamed placeholders.
+  - Current evidence: `validate_prompt_template()` defines the allowed
+    `PromptSampler` placeholder schema and requires `{task}` as the minimal
+    configured/evolved template anchor. `Config.validate()` rejects malformed
+    configured `prompt_variants` at startup. `PromptDatabase.__init__()`
+    validates seed prompt programs, and `PromptDatabase.mutate()` validates LLM
+    meta-prompt outputs before insertion. Rejected prompt mutations are written
+    to `prompt_history_invalid.jsonl`, the parent prompt program receives a
+    penalty event in `prompt_history.jsonl`, and the invalid template is not
+    added to the prompt population. `PromptSampler.build()` also validates the
+    selected template before formatting as a final guard.
+  - Status: implemented with tests for unknown placeholders, malformed braces,
+    empty placeholders, attribute/index placeholders, missing required fields,
+    invalid configured variants, invalid configured prompt database seeds, and
+    invalid LLM-mutated prompt templates in the evolution loop.
 
 - [x] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,

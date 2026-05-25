@@ -99,3 +99,20 @@ def test_accepts_valid_llm_feedback_config():
         "include_invalid": True,
     }])
     assert config.llm_feedback[0]["name"] == "simplicity"
+
+
+@pytest.mark.parametrize(
+    ("template", "message"),
+    [
+        ("Task: {missing_field}", "unknown"),
+        ("No task field", "missing required"),
+        ("Task: {task", "malformed"),
+    ],
+)
+def test_rejects_invalid_prompt_variant_templates(template, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(prompt_variants=[template])
+
+
+def test_accepts_minimal_prompt_variant_template():
+    assert Config(prompt_variants=["Task: {task}"]).prompt_variants == ["Task: {task}"]

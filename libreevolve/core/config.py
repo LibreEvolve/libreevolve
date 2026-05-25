@@ -63,6 +63,7 @@ class Config:
             isinstance(item, str) for item in self.prompt_variants
         ):
             raise ConfigError("prompt_variants must be a list of strings")
+        _validate_prompt_variants(self.prompt_variants)
         _validate_llm_feedback(self.llm_feedback)
         if not isinstance(self.plugins, list) or not all(isinstance(item, str) for item in self.plugins):
             raise ConfigError("plugins must be a list of strings")
@@ -184,3 +185,13 @@ def _validate_llm_feedback(graders: object) -> None:
             _require_number(f"{label}.min_score", grader["min_score"])
         if "include_invalid" in grader and not isinstance(grader["include_invalid"], bool):
             raise ConfigError(f"{label}.include_invalid must be boolean")
+
+
+def _validate_prompt_variants(variants: list[str]) -> None:
+    from libreevolve.core.prompt import PromptTemplateError, validate_prompt_template
+
+    for index, template in enumerate(variants):
+        try:
+            validate_prompt_template(template)
+        except PromptTemplateError as exc:
+            raise ConfigError(f"prompt_variants[{index}]: {exc}") from exc

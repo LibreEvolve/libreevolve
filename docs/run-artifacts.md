@@ -137,6 +137,11 @@ This file records prompt-program events:
 
 - `add`: a seed or mutated prompt template entered the prompt database
 - `score`: a prompt template was used for a candidate and received reward
+- `penalty`: an invalid meta-prompt mutation was rejected and penalized its
+  parent prompt program
+
+Rejected meta-prompt mutations are written to `prompt_history_invalid.jsonl`
+with the parent prompt id, generation, rejected template, error, and metadata.
 
 Program records in `history.jsonl` include `metadata.prompt_program_id` so a
 candidate can be traced back to the prompt program that produced it.

@@ -1,6 +1,12 @@
 from pathlib import Path
 
-from libreevolve.core.prompt import PromptSampler
+import pytest
+
+from libreevolve.core.prompt import (
+    PromptSampler,
+    PromptTemplateError,
+    validate_prompt_template,
+)
 from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
 
@@ -162,12 +168,31 @@ def test_custom_prompt_templates_can_use_or_ignore_mutation_mode_fields():
     )
     rendered = PromptSampler().build(
         parent, [], problem, extra_context="",
-        template="{mutation_mode}\n{mutation_instructions}",
+        template="{task}\n{mutation_mode}\n{mutation_instructions}",
         mutation_mode="full",
     )
 
     assert ignored == "Task: Improve solve()."
-    assert rendered.startswith("full\nReturn full replacement code")
+    assert "\nfull\nReturn full replacement code" in rendered
+
+
+def test_prompt_template_validation_accepts_minimal_task_template():
+    validate_prompt_template("Task: {task}")
+
+
+@pytest.mark.parametrize(
+    ("template", "message"),
+    [
+        ("No placeholders", "missing required"),
+        ("Task: {unknown}", "unknown"),
+        ("Task: {task", "malformed"),
+        ("Task: {}", "empty placeholder"),
+        ("Task: {task.upper}", "simple placeholder"),
+    ],
+)
+def test_prompt_template_validation_rejects_bad_templates(template, message):
+    with pytest.raises(PromptTemplateError, match=message):
+        validate_prompt_template(template)
 
 
 def test_prompt_sampler_renders_structured_failure_records():

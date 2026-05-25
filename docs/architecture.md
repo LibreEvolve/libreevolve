@@ -398,8 +398,8 @@ prompt-program events in `prompt_history.jsonl`.
   parallel reviewer/evaluator workers yet.
 - Mutation responses are raw patch text; proposal ideas/rationales are not
   parsed, scored, or resurfaced as separate artifacts.
-- Prompt evolution is implemented at the template boundary; richer prompt
-  fitness plus configured/mutated template placeholder validation remain open.
+- Prompt evolution is implemented at the template boundary with configured and
+  mutated template placeholder validation; richer prompt fitness remains open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders receive bounded full-workspace file sections, basic

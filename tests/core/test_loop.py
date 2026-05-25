@@ -337,6 +337,36 @@ def test_meta_prompt_evolution_adds_mutated_prompt_template():
     assert events.count("add") == 2
 
 
+def test_meta_prompt_evolution_rejects_invalid_mutated_prompt_template():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+        ("[SYSTEM]\n{unknown}", 0),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), Config(
+            max_generations=1,
+            log_dir=tmpdir,
+            problem_name="t",
+            meta_prompt_evolution=True,
+            meta_prompt_interval=1,
+        ))
+
+    run_dir = Path(tmpdir) / "t"
+    events = [
+        json.loads(l)["event"]
+        for l in (run_dir / "prompt_history.jsonl").read_text().splitlines()
+    ]
+    invalid = [
+        json.loads(l)
+        for l in (run_dir / "prompt_history_invalid.jsonl").read_text().splitlines()
+    ]
+    assert events == ["add", "score", "penalty"]
+    assert invalid[0]["event"] == "reject"
+    assert "unknown" in invalid[0]["error"]
+
+
 def test_critique_revises_mutation_before_evaluation():
     tmpdir = tempfile.mkdtemp()
     llm = MagicMock()

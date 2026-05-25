@@ -1,10 +1,31 @@
 from __future__ import annotations
 
 import random
+import string
 from dataclasses import dataclass, field
 
 from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
+
+
+PROMPT_TEMPLATE_FIELDS = {
+    "task",
+    "context",
+    "parent_score",
+    "parent_metrics",
+    "parent_feedback",
+    "parent_code",
+    "inspirations",
+    "extra_context",
+    "recent_failures",
+    "mutation_mode",
+    "mutation_instructions",
+}
+REQUIRED_PROMPT_TEMPLATE_FIELDS = {"task"}
+
+
+class PromptTemplateError(ValueError):
+    """Raised when a configured or evolved prompt template is not renderable."""
 
 
 @dataclass
@@ -25,6 +46,7 @@ class PromptSampler:
         mutation_mode: str = "diff",
     ) -> str:
         variant = template or (self.rng.choice(self.variants) if self.variants else _DEFAULT_TEMPLATE)
+        validate_prompt_template(variant)
         return variant.format(
             task=problem.task_description,
             context=_render_context(problem),
@@ -65,6 +87,32 @@ Mutation mode: {mutation_mode}
 """
 
 _DEFAULT_TEMPLATE = DEFAULT_TEMPLATE
+
+
+def validate_prompt_template(template: str) -> None:
+    if not isinstance(template, str) or not template.strip():
+        raise PromptTemplateError("prompt template must be a non-empty string")
+    fields: set[str] = set()
+    try:
+        parsed = list(string.Formatter().parse(template))
+    except ValueError as exc:
+        raise PromptTemplateError(f"malformed prompt template: {exc}") from exc
+    for _, field_name, _, _ in parsed:
+        if field_name is None:
+            continue
+        if not field_name:
+            raise PromptTemplateError("prompt template contains an empty placeholder")
+        root = field_name.split(".", 1)[0].split("[", 1)[0]
+        if root != field_name:
+            raise PromptTemplateError(
+                f"prompt template field {field_name!r} must be a simple placeholder"
+            )
+        if field_name not in PROMPT_TEMPLATE_FIELDS:
+            raise PromptTemplateError(f"unknown prompt template field {field_name!r}")
+        fields.add(field_name)
+    missing = sorted(REQUIRED_PROMPT_TEMPLATE_FIELDS - fields)
+    if missing:
+        raise PromptTemplateError(f"missing required prompt template fields {missing}")
 
 
 def _render_context(problem: Problem) -> str:

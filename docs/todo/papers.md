@@ -254,7 +254,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `prompt_history.jsonl`, records prompt rewards/usages, and supports
     lineage-preserving mutation. `evolve()` uses prompt programs during prompt
     construction and can optionally ask the active LLM to mutate templates.
-  - Status: implemented locally. Remaining divergence: no published
+  - Status: implemented locally. Remaining divergence: initial configured
+    prompt variants are selected through UUID4-ordered untried prompt programs
+    rather than a seeded/config-order policy, and there is no published
     AlphaEvolve-equivalent ablation harness or advanced prompt-fitness model.
 
 - [ ] AlphaEvolve-style stochastic prompt formatting.

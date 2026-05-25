@@ -367,9 +367,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: the CLI section exposed `--seed` only as "Random seed,"
     which could imply full replay stability.
   - Current evidence: `Config.seed` seeds local Python `random` choices and
-    prompt variant sampling, but `Program.id` and `PromptProgram.id` use UUID4
-    values, and provider outputs are not captured as a deterministic replay
-    boundary.
+    `PromptSampler`'s RNG, but `evolve()` selects configured prompt variants
+    through `PromptDatabase`. Untried prompt programs are sorted by UUID4 id,
+    and `Program.id`/`PromptProgram.id` also use UUID4 values. Provider outputs
+    are not captured as a deterministic replay boundary.
   - Required result: tell readers that seeded local choices are controlled but
     persisted candidate/prompt IDs and provider outputs are not fully
     replay-stable yet.

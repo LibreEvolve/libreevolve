@@ -140,10 +140,12 @@ examples when they do not produce changed child code. Workspace failures are
 also compared through the primary-file view, so invalid helper-file-only changes
 can be missed by the recent-failure prompt hints.
 
-`Config.prompt_variants` seeds alternate templates. The loop stores those
+`Config.prompt_variants` provides alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt
 programs, records prompt reward/usage, and logs prompt lineage to
-`prompt_history.jsonl`. When `meta_prompt_evolution` is enabled, the loop can
+`prompt_history.jsonl`. Initial untried prompt programs are selected by
+sorting UUID4 ids, so configured prompt-variant order is not currently
+seed-stable. When `meta_prompt_evolution` is enabled, the loop can
 periodically ask the active LLM backend to produce a revised full prompt
 template with an instruction to preserve placeholders. Placeholder validation is
 not enforced yet.
@@ -335,7 +337,8 @@ prompt-program events in `prompt_history.jsonl`.
   validated model capabilities.
 - `manifest.json` records configuration but not code version, problem hashes,
   plugin specs, artifact hashes, or resume/controller state.
-- `Config.seed` controls local Python-random choices and prompt variant
-  sampling, but candidate and prompt-program ids are UUID4 values, so persisted
-  lineage is not stable across repeated deterministic local runs yet.
+- `Config.seed` controls local Python-random choices, but prompt variant order
+  is mediated by UUID4 prompt-program ids, and candidate/prompt-program ids are
+  UUID4 values, so persisted lineage is not stable across repeated
+  deterministic local runs yet.
 - Plugin names are paper-inspired approximations unless documented otherwise.

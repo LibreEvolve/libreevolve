@@ -423,9 +423,10 @@ libreevolve show RUN_DIR
   Inspect history.jsonl from a previous run
 ```
 
-The seed controls local Python-random choices and prompt variant sampling, but
-persisted candidate/prompt IDs and provider outputs are not fully replay-stable
-yet.
+The seed controls local Python-random choices, but prompt variants currently
+enter a prompt-program database whose initial untried selection is ordered by
+UUID4 prompt-program ids rather than the seed. Persisted candidate/prompt IDs
+and provider outputs are not fully replay-stable yet.
 
 ## Tests
 

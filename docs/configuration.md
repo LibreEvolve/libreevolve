@@ -108,9 +108,11 @@ metadata stays in the ensemble.
 - `plugins` (`[]`): list of built-in plugin names.
 - `log_dir` (`"runs/"`): root output directory.
 - `problem_name` (`"unnamed"`): final run subdirectory name.
-- `seed` (`42`): random seed for Python's global `random` module and prompt
-  variant sampling. It does not make persisted candidate or prompt-program IDs
-  deterministic yet; those still use UUID4 values.
+- `seed` (`42`): random seed for Python's global `random` module. Prompt
+  variants currently enter `PromptDatabase`, where initial untried selection is
+  ordered by UUID4 prompt-program ids rather than this seed. It does not make
+  persisted candidate or prompt-program IDs deterministic yet; those still use
+  UUID4 values.
 
 Note: although `problem_name` is a `Config` field, the current CLI resets it to
 the loaded problem directory name after reading `config.yaml`. Use `--run-name`
@@ -216,15 +218,15 @@ run rather than being recorded as structured failed LLM-call attempts.
   wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or
   accelerator budget counters.
 - Seeded replay is incomplete: `Config.seed` controls local Python `random`
-  choices and prompt variant sampling, but `Program` and `PromptProgram` IDs
-  are UUID4 values, and provider/model nondeterminism is not captured as a
-  replay contract.
+  choices, but prompt variant ordering is mediated by UUID4 prompt-program ids,
+  `Program` and `PromptProgram` IDs are UUID4 values, and provider/model
+  nondeterminism is not captured as a replay contract.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - Validator entrypoints are loaded by file path from a temporary runner. The
   problem directory is not automatically used as `cwd` or `PYTHONPATH`, so
   sibling validator helper modules need manual import-path handling today.
-- `prompt_variants` seed the prompt-program database; set
+- `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Meta-prompt mutation uses the same backend ensemble and must preserve every
   placeholder required by `PromptSampler`. The current implementation instructs

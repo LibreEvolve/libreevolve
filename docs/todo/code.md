@@ -952,16 +952,23 @@ Primary evidence:
     lineage records must be reproducible enough to replay or diff experiments.
   - Current evidence: `evolve()` seeds Python's global `random` module and
     constructs `PromptSampler` with `random.Random(config.seed)`, but
-    `Program.id` and `PromptProgram.id` are generated with `uuid4()`. The
-    history and `prompt_history.jsonl` lineage ids therefore differ across
-    repeated runs even when local sampling choices and fake LLM responses are
-    otherwise deterministic. Provider/model nondeterminism is also not recorded
-    as part of a replay contract.
+    `evolve()` always passes `template=prompt_program.template`, so the
+    sampler's seeded variant RNG is bypassed for configured variants.
+    `PromptDatabase` seeds templates as `PromptProgram`s with UUID4 ids and
+    selects untried programs by sorting those ids, so initial prompt-variant
+    order can differ across repeated runs. `Program.id` and `PromptProgram.id`
+    are also generated with `uuid4()`. The history and `prompt_history.jsonl`
+    lineage ids therefore differ across repeated runs even when local sampling
+    choices and fake LLM responses are otherwise deterministic. Provider/model
+    nondeterminism is also not recorded as part of a replay contract.
   - Required result: define deterministic run/candidate/prompt id policy for
-    seeded local replay, or explicitly mark UUID-based identity as
-    non-replayable; persist RNG state and provider nondeterminism boundaries
-    where needed; add tests that repeated deterministic runs produce stable
-    lineage ids, prompt ids, archive sampling, and manifest replay metadata.
+    seeded local replay and a deterministic prompt-variant order policy
+    (config-order, seeded shuffle, or bandit initialization), or explicitly
+    mark UUID-based identity and UUID-ordered variants as non-replayable;
+    persist RNG state and provider nondeterminism boundaries where needed; add
+    tests that repeated deterministic runs produce stable lineage ids, prompt
+    ids, prompt variant sequence, archive sampling, and manifest replay
+    metadata.
 
 - [x] Add structured run metadata.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM

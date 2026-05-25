@@ -349,9 +349,10 @@ def solve():
 ```
 
 Unmarked seed programs remain fully supported.
-For current multi-file mutation prompts, keep candidate paths simple
-(`package/helper.py` style). The file-section parser does not yet recognize
-every ordinary filename shape, such as paths with spaces or hyphens.
+For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
+through the same safety normalizer as candidate workspaces, including nested
+paths, hyphens, spaces, Unicode filename characters, and Windows-style
+backslashes.
 Malformed or unsupported file/block mutation envelopes are not fully diagnosed
 as a whole response yet, so partial parses can ignore an intended edit while
 applying another valid section.

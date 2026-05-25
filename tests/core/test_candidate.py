@@ -130,6 +130,50 @@ def test_workspace_diff_mutates_named_file_only():
     assert result.files["helper.py"].strip() == "value = 2"
 
 
+def test_workspace_file_section_accepts_hyphenated_paths():
+    workspace = CandidateWorkspace(
+        files={"main.py": "from my_module import value\n", "src/my-module.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE src/my-module.py\n<<<SEARCH\nvalue = 1\n===\nvalue = 2\n>>>REPLACE\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="diff")
+    assert err is None
+    assert result.files["src/my-module.py"].strip() == "value = 2"
+
+
+def test_workspace_file_section_accepts_spaced_paths():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "data/test case.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE data/test case.py\nvalue = 2\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert result.files["data/test case.py"] == "value = 2"
+
+
+def test_workspace_file_section_normalizes_backslash_paths():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "pkg/helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE pkg\\helper.py\nvalue = 2\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert result.files["pkg/helper.py"] == "value = 2"
+
+
+def test_workspace_file_section_accepts_unicode_paths():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "src/cafe_é.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE src/cafe_é.py\nvalue = 2\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert err is None
+    assert result.files["src/cafe_é.py"] == "value = 2"
+
+
 def test_workspace_diff_accepts_canonical_block_in_file_section():
     workspace = CandidateWorkspace(
         files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
@@ -178,6 +222,14 @@ def test_workspace_rejects_colon_path_component():
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
     assert result == workspace
     assert err == "pkg:bad.py:unsafe_path"
+
+
+def test_workspace_rejects_empty_file_section_path():
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    response = "<<<FILE \nvalue = 2\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "empty_path:unsafe_path"
 
 
 def test_workspace_rejects_malformed_evolve_block_in_target_file():

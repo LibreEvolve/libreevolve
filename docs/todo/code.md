@@ -67,15 +67,19 @@ Primary evidence:
     across marked files/components, and pass the whole candidate workspace to
     `evaluate`.
 
-- [ ] Unify file-section path parsing with workspace path normalization.
+- [x] Unify file-section path parsing with workspace path normalization.
   - Spec evidence: AlphaEvolve can evolve existing code files/codebases, where
     ordinary repository filenames may contain hyphens, spaces, generated-file
     suffixes, or other characters not represented by the current parser.
-  - Current evidence: `_FILE_SECTION_PATTERN` only captures
-    `[A-Za-z0-9_./\\:-]+` after `<<<FILE`, while `normalize_candidate_path()`
-    can represent broader safe relative paths. A response targeting
-    `src/my-module.py` or `data/test case.py` may not be parsed as a file
-    section at all and can fall back to primary-file mutation behavior.
+  - Current evidence: `_FILE_SECTION_PATTERN` captures the full file-section
+    header line and `apply_workspace_mutation()` validates it through
+    `normalize_candidate_path()`. File sections now accept nested paths,
+    hyphens, spaces, Unicode filename characters, and Windows-style
+    backslashes when the normalized path is safe; empty paths and unsafe
+    normalized paths are rejected explicitly.
+  - Status: implemented for current `<<<FILE ... >>>FILE` envelopes, with
+    tests for hyphenated, spaced, nested, backslash-normalized, Unicode, colon,
+    and empty file-section paths.
   - Required result: use one validated relative-path grammar for loader,
     prompt envelopes, mutation parsing, normalization, and diagnostics; reject
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
@@ -88,12 +92,12 @@ Primary evidence:
     partial candidate changes.
   - Current evidence: `_parse_file_sections()` uses `_FILE_SECTION_PATTERN` and
     returns only regex matches. If a response contains one valid `<<<FILE ...`
-    section and another malformed or currently unsupported section, such as a
-    hyphenated path not captured by the regex, `apply_workspace_mutation()`
-    applies the valid section and ignores the unmatched envelope. The same
-    risk exists for multi-block full replacements because
-    `_BLOCK_SECTION_PATTERN` accepts a narrower name grammar than marker names
-    parsed by `extract_evolve_blocks()`.
+    section and another malformed section, such as an unclosed `<<<FILE`
+    envelope, `apply_workspace_mutation()` can apply the valid section and
+    ignore the unmatched intended edit. The same risk exists for multi-block
+    full replacements because `_BLOCK_SECTION_PATTERN` collects only matched
+    `<<<BLOCK ... >>>BLOCK` spans and does not diagnose unmatched block
+    envelopes as a whole document.
   - Required result: parse mutation envelopes as a whole document, reject or
     record unmatched `<<<FILE`/`>>>FILE` and `<<<BLOCK`/`>>>BLOCK` spans,
     surface diagnostics for unsupported names/paths, and add tests for mixed

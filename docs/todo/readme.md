@@ -273,11 +273,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: the custom-problem section describes optional multi-file
     seed workspaces but did not mention that `<<<FILE ... >>>FILE` parsing is
     narrower than ordinary repository path handling.
-  - Current evidence: `_FILE_SECTION_PATTERN` recognizes only a small path
-    character set and can miss hyphenated or spaced filenames even though the
-    workspace path normalizer can handle broader safe relative paths.
-  - Required result: warn readers to keep current file-section paths simple and
-    track parser hardening in the code TODO.
+  - Current evidence: file-section headers now pass through
+    `normalize_candidate_path()`, and README documents that nested paths,
+    hyphens, spaces, Unicode filename characters, and Windows-style
+    backslashes are accepted when normalized safely.
+  - Required result: keep README aligned with current path parser behavior
+    while still warning separately about partial whole-envelope diagnostics.
 
 - [x] Clarify malformed mutation envelopes can be ignored.
   - README evidence: the custom-problem section describes file-section edits,

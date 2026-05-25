@@ -223,10 +223,10 @@ def solve():
 >>>BLOCK
 ```
 
-Current prompt caveat: the built-in prompt template remains diff-oriented and
-asks for SEARCH/REPLACE fences. If you use `mutation_mode: full`, provide a
-`prompt_variants` template that asks for full-file, full-block, or file-section
-replacement payloads until the default prompt becomes mode-aware.
+The built-in prompt template is mode-aware: `diff` asks for SEARCH/REPLACE
+blocks, while `full` asks for full-file, full-block, or file-section
+replacement payloads. Custom `prompt_variants` templates can still override
+that wording.
 
 For multi-file candidates, wrap a file edit in a file section:
 
@@ -240,9 +240,9 @@ new code
 >>>FILE
 ```
 
-Current file-section parsing is conservative and does not recognize every
-valid local filename. Avoid spaces and hyphens in candidate paths until the
-file-section path grammar is unified with workspace path normalization.
+File-section paths use the same relative-path normalization as candidate
+workspaces. Nested paths, hyphens, spaces, Unicode filename characters, and
+Windows-style backslashes are accepted when the normalized path is safe.
 Malformed or unsupported file/block envelopes are not fully diagnosed as a
 whole mutation document yet; a response with mixed valid and malformed sections
 can apply the valid edits while ignoring an unmatched intended edit.

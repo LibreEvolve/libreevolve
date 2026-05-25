@@ -218,9 +218,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: implemented for local Python/text workspaces. Remaining divergence:
     no arbitrary external repository/build-system runner and `best.py` exports
     only the primary file convenience view. Binary/static artifacts are not
-    first-class candidate members yet, the mutation file-section parser has
-    a narrower path grammar than ordinary repository filenames, and validators
-    must currently manage candidate-root imports/relative execution themselves.
+    first-class candidate members yet, and validators must currently manage
+    candidate-root imports/relative execution themselves.
     Malformed or unsupported `<<<FILE`/`<<<BLOCK` envelopes can also be ignored
     during partial parses. File-set topology changes such as delete, rename,
     move, and primary-file replacement are not expressible as mutation

@@ -105,9 +105,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     workspace/codebase fidelity.
 
 - [x] Add file-section path grammar hardening to candidate fidelity.
-  - Evidence: `_FILE_SECTION_PATTERN` captures only
-    `[A-Za-z0-9_./\\:-]+`, while real repository filenames and
-    `normalize_candidate_path()` can require broader safe relative paths.
+  - Evidence: `<<<FILE ... >>>FILE` headers now capture the full header line
+    and pass through `normalize_candidate_path()`, so common repository
+    filename shapes such as nested paths, hyphens, spaces, Unicode filename
+    characters, and Windows-style backslashes are accepted when safe.
   - Current roadmap gap: workspace fidelity covered file sets and artifacts but
     not whether LLM file-section envelopes can address ordinary codebase
     filenames.

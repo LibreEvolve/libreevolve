@@ -90,9 +90,10 @@ new code
 
 `full` mode can replace existing files or create new files with the same
 `<<<FILE path ... >>>FILE` envelope. Candidate paths are normalized and cannot
-escape the candidate workspace. The current file-section parser is stricter
-than path normalization and does not recognize some ordinary filenames, such as
-paths with spaces or hyphens; that is tracked as a codebase-fidelity gap.
+escape the candidate workspace. File-section headers are parsed through the
+same relative-path normalization used by `CandidateWorkspace`, so nested paths,
+hyphens, spaces, Unicode filename characters, and Windows-style backslashes are
+accepted when the resulting normalized path is safe.
 Envelope parsing is also partial: unsupported or malformed `<<<FILE` or
 `<<<BLOCK` spans may be ignored if other valid sections are matched.
 File deletion, rename/move operations, and primary-file changes are not

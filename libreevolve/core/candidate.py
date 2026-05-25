@@ -14,7 +14,7 @@ _BLOCK_SECTION_PATTERN = re.compile(
     r"<<<BLOCK\s+([A-Za-z0-9_.:-]+)\s*\n(.*?)\n>>>BLOCK", re.DOTALL
 )
 _FILE_SECTION_PATTERN = re.compile(
-    r"<<<FILE\s+([A-Za-z0-9_./\\:-]+)\s*\n(.*?)\n>>>FILE", re.DOTALL
+    r"<<<FILE[ \t]*(.*?)\n(.*?)\n>>>FILE", re.DOTALL
 )
 
 
@@ -157,6 +157,8 @@ def apply_workspace_mutation(
     changed = False
     for rel_path, body in sections:
         raw_path = rel_path.strip()
+        if not raw_path:
+            return workspace, "empty_path:unsafe_path"
         try:
             rel_path = normalize_candidate_path(raw_path)
         except ValueError:

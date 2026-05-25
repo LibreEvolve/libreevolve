@@ -150,6 +150,100 @@ def test_configured_stage_uses_distinct_validator_entrypoint():
         shutil.rmtree(d)
 
 
+def test_configured_stage_allows_absolute_problem_local_validator():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        stage_validator = d / "stage_validate.py"
+        stage_validator.write_text(
+            "def evaluate(code, workspace, stage):\n"
+            "    return {'score': 0.9, 'is_valid': True}\n",
+            encoding="utf-8",
+        )
+        ev = CascadeEvaluator(p, stages=[{"name": "hard", "validate_path": str(stage_validator)}])
+        result = ev.evaluate("x=1", None)
+        assert result == 0.9
+        assert result.metadata["validate_path"] == str(stage_validator.resolve())
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_missing_validator_path():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "missing", "validate_path": "missing.py"}])
+        with pytest.raises(ValueError, match="does not exist"):
+            ev.evaluate("x=1", None)
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_validator_directory():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        validator_dir = d / "validators"
+        validator_dir.mkdir()
+        ev = CascadeEvaluator(p, stages=[{"name": "dir", "validate_path": "validators"}])
+        with pytest.raises(ValueError, match="not a file"):
+            ev.evaluate("x=1", None)
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_non_python_validator_path():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        text_validator = d / "stage_validate.txt"
+        text_validator.write_text("not python", encoding="utf-8")
+        ev = CascadeEvaluator(p, stages=[{"name": "text", "validate_path": "stage_validate.txt"}])
+        with pytest.raises(ValueError, match="Python file"):
+            ev.evaluate("x=1", None)
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_outside_validator_path(tmp_path):
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        outside = tmp_path / "outside_validate.py"
+        outside.write_text("def evaluate(c): return {'score':1.0,'is_valid':True}", encoding="utf-8")
+        ev = CascadeEvaluator(p, stages=[{"name": "outside", "validate_path": str(outside)}])
+        with pytest.raises(ValueError, match="escapes problem directory"):
+            ev.evaluate("x=1", None)
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_relative_validator_escape():
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        outside = d.parent / "outside_validate.py"
+        outside.write_text("def evaluate(c): return {'score':1.0,'is_valid':True}", encoding="utf-8")
+        ev = CascadeEvaluator(p, stages=[{"name": "outside", "validate_path": "../outside_validate.py"}])
+        with pytest.raises(ValueError, match="escapes problem directory"):
+            ev.evaluate("x=1", None)
+    finally:
+        if "outside" in locals() and outside.exists():
+            outside.unlink()
+        shutil.rmtree(d)
+
+
+def test_configured_stage_rejects_symlink_to_outside_validator(tmp_path):
+    p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
+    try:
+        outside = tmp_path / "outside_validate.py"
+        outside.write_text("def evaluate(c): return {'score':1.0,'is_valid':True}", encoding="utf-8")
+        link = d / "linked_validate.py"
+        try:
+            link.symlink_to(outside)
+        except OSError:
+            pytest.skip("symlink creation is unavailable")
+        ev = CascadeEvaluator(p, stages=[{"name": "linked", "validate_path": "linked_validate.py"}])
+        with pytest.raises(ValueError, match="escapes problem directory"):
+            ev.evaluate("x=1", None)
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_aggregates_seeded_samples():
     p, d = _problem(
         "def evaluate(code, workspace, stage):\n"

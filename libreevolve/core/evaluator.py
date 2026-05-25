@@ -334,11 +334,12 @@ class CascadeEvaluator:
 
     def _resolve_validate_path(self, raw: object) -> Path:
         if raw is None:
-            return self._problem.validate_path
-        path = Path(str(raw))
-        if not path.is_absolute():
-            path = self._problem.problem_dir / path
-        return path
+            path = self._problem.validate_path
+        else:
+            path = Path(str(raw))
+            if not path.is_absolute():
+                path = self._problem.problem_dir / path
+        return _validate_problem_local_evaluator_path(path, self._problem.problem_dir)
 
     def _aggregate_sample_results(
         self, stage_name: str, results: list["EvaluationResult"], validate_path: Path
@@ -469,6 +470,20 @@ def _eval_metadata(
         "validate_path": str(validate_path),
         "stage": stage_context,
     }
+
+
+def _validate_problem_local_evaluator_path(path: Path, problem_dir: Path) -> Path:
+    resolved_root = problem_dir.resolve()
+    resolved = path.resolve(strict=False)
+    if resolved_root != resolved and resolved_root not in resolved.parents:
+        raise ValueError(f"Evaluator validate_path escapes problem directory: {path}")
+    if not resolved.exists():
+        raise ValueError(f"Evaluator validate_path does not exist: {path}")
+    if not resolved.is_file():
+        raise ValueError(f"Evaluator validate_path is not a file: {path}")
+    if resolved.suffix != ".py":
+        raise ValueError(f"Evaluator validate_path must be a Python file: {path}")
+    return resolved
 
 
 def _retry_attempt_record(result: EvaluationResult, attempt: int, context: dict) -> dict:

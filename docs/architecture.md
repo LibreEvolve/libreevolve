@@ -211,9 +211,9 @@ The default cascade is:
 - Python syntax check across all candidate `.py` files
 - subprocess execution of `validate.py` with the candidate workspace
 
-The syntax prefilter currently reports the first Python syntax error only.
-Additional invalid `.py` files in the same workspace are not surfaced until
-aggregate syntax diagnostics are implemented.
+The syntax prefilter reports all Python syntax errors across the candidate
+workspace with file, line, offset, and message metadata. Non-Python files are
+skipped by this Python-only prefilter.
 
 `Config.eval_stages` can configure local validator stages with separate
 `validate_path` entrypoints, timeouts, `min_score` thresholds, sample counts,
@@ -226,10 +226,13 @@ architecture.
 
 Stage numeric fields are validated at startup: `samples` must be positive,
 `timeout_sec` must be positive, `retries` must be non-negative, `min_score`
-must be numeric, and explicit `seeds` must match `samples`. Remaining cascade
-gaps are higher-level: `validate_path` provenance/preflight, metric-specific
-threshold policies, stage-specific artifact schemas, and distributed evaluator
-workers are not implemented.
+must be numeric, and explicit `seeds` must match `samples`. Stage
+`validate_path` entries are resolved to problem-local Python files before
+execution; missing files, directories, non-Python files, outside-root paths,
+and symlinks that resolve outside the problem directory are rejected. Remaining
+cascade gaps are higher-level: evaluator hash provenance in manifests,
+metric-specific threshold policies, stage-specific artifact schemas, and
+distributed evaluator workers are not implemented.
 
 The subprocess runs with the materialized candidate root as `cwd`, passes that
 root as `workspace_path`, and adds both the candidate root and validator

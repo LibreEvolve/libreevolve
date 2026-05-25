@@ -158,8 +158,9 @@ Default failure scores:
 - otherwise: normalized primary metric
 
 For workspace candidates, the syntax prefilter checks Python files before
-running `validate.py`, but it currently returns only the first Python syntax
-error. Non-Python files are skipped by this Python-only prefilter.
+running `validate.py` and reports all Python syntax errors with file, line,
+offset, and message metadata. Non-Python files are skipped by this Python-only
+prefilter.
 
 `Config.eval_stages` can run configured validator stages with per-stage
 `validate_path`, timeout, `min_score`, `samples`, `seeds`, and `retries`.
@@ -167,8 +168,10 @@ error. Non-Python files are skipped by this Python-only prefilter.
 metric-specific pass/fail rule, and sample aggregation uses fixed defaults.
 Stage numeric fields are prevalidated: `samples` must be positive, `retries`
 non-negative, `timeout_sec` positive, `min_score` numeric, and explicit
-`seeds` must match `samples`. Stage `validate_path` entries still need stronger
-preflight/provenance checks.
+`seeds` must match `samples`. Stage `validate_path` entries must resolve to
+problem-local Python files; absolute paths are allowed only when they remain
+inside the problem directory after symlink resolution. Evaluator code/data
+hashes are not yet recorded in the run manifest.
 Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
 receive stage context containing stage name, index, sample index, seed, attempt,
 and the raw stage config.

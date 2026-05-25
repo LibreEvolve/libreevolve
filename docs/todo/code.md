@@ -1399,15 +1399,16 @@ Primary evidence:
 - [ ] Validate and constrain configured evaluator paths.
   - Spec evidence: AlphaEvolve task setup depends on explicit evaluator
     definitions and reproducible provenance for evaluation code.
-  - Current evidence: `_resolve_validate_path()` accepts relative paths under
-    the problem directory and arbitrary absolute paths, does not check existence
-    before subprocess execution, and records only the resolved string in
-    metadata. Absolute or outside-problem validators can affect a run without
-    manifest hashing, allowlist policy, or clear reproducibility guarantees.
-  - Required result: validate `eval_stages[].validate_path` before a run, define
-    whether outside-problem validators are forbidden or explicitly allowed,
-    record/harden evaluator path provenance and hashes in `manifest.json`, and
-    test missing, outside-root, symlink, and absolute validator paths.
+  - Partial status: `_resolve_validate_path()` now requires stage validators to
+    resolve to problem-local `.py` files before execution. Missing paths,
+    directories, non-Python files, relative/absolute outside-root paths, and
+    symlinks that resolve outside the problem directory are rejected. Absolute
+    paths are allowed only when they resolve inside the problem directory.
+  - Remaining gap: evaluator file hashes, evaluator helper/data provenance,
+    and configured evaluator path details are not recorded in `manifest.json`.
+  - Required result: record/harden evaluator path provenance and hashes in the
+    run manifest; define evaluator helper/data provenance and add tests for
+    manifest hash stability.
 
 - [x] Remove wording that implies the validator subprocess is a security
   sandbox.

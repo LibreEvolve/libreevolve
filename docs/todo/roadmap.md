@@ -588,13 +588,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     CausalEvolve-inspired plugin before treating its guidance as format-stable.
 
 - [x] Add evaluator path validation/provenance to runtime hardening.
-  - Evidence: `eval_stages[].validate_path` can resolve to arbitrary absolute
-    paths and is not prevalidated or hashed before execution.
+  - Evidence: `eval_stages[].validate_path` previously could resolve to
+    arbitrary absolute paths and was not prevalidated or hashed before
+    execution.
   - Current roadmap gap: evaluator hardening covered metric contracts,
     cascades, and artifacts but not validator-code path confinement and
     provenance.
-  - Required result: validate evaluator paths, define outside-problem policy,
-    and include evaluator path/hash provenance in manifests.
+  - Status: path confinement is implemented. Stage validators must resolve to
+    problem-local Python files; missing, directory, non-Python, outside-root,
+    and symlink-escape paths are rejected.
+  - Remaining gap: evaluator path/hash provenance is not yet included in
+    manifests.
 
 - [x] Add validator environment/secret isolation to runtime hardening.
   - Evidence: `.env` is loaded into the parent process, and

@@ -71,6 +71,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     run ids, and artifact consistency across history, prompt history, manifest,
     and `best.py`.
 
+- [x] Add seeded replay determinism to reproducibility work.
+  - Evidence: `Config.seed` seeds Python `random` and prompt variant sampling,
+    but `Program.id` and `PromptProgram.id` use UUID4 values, so persisted
+    candidate/prompt lineage differs across repeated deterministic local runs.
+  - Current roadmap gap: reproducibility work covered manifests, hashes,
+    budgets, and resume state, but not stable seeded identifiers/RNG replay.
+  - Required result: track deterministic run/candidate/prompt id policy, RNG
+    state capture, provider nondeterminism boundaries, and tests proving stable
+    local replay metadata.
+
 - [x] Add evolve-block and skeleton/codebase support to near-term architecture
   alignment.
   - Evidence: AlphaEvolve Section 2.1 defines an input API with marked

@@ -694,6 +694,23 @@ Primary evidence:
     run relationships in manifests; keep `history.jsonl`, `prompt_history.jsonl`,
     and `best.py` consistent with that policy.
 
+- [ ] Make seeded replay and persisted lineage identifiers reproducible.
+  - Spec evidence: AlphaEvolve compares systems over long computation budgets,
+    ablations, and repeated seeds, so local stochastic choices and persisted
+    lineage records must be reproducible enough to replay or diff experiments.
+  - Current evidence: `evolve()` seeds Python's global `random` module and
+    constructs `PromptSampler` with `random.Random(config.seed)`, but
+    `Program.id` and `PromptProgram.id` are generated with `uuid4()`. The
+    history and `prompt_history.jsonl` lineage ids therefore differ across
+    repeated runs even when local sampling choices and fake LLM responses are
+    otherwise deterministic. Provider/model nondeterminism is also not recorded
+    as part of a replay contract.
+  - Required result: define deterministic run/candidate/prompt id policy for
+    seeded local replay, or explicitly mark UUID-based identity as
+    non-replayable; persist RNG state and provider nondeterminism boundaries
+    where needed; add tests that repeated deterministic runs produce stable
+    lineage ids, prompt ids, archive sampling, and manifest replay metadata.
+
 - [x] Add structured run metadata.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
     choices, evaluator stages, compute budgets, and configurations.

@@ -108,6 +108,8 @@ is not yet an AlphaEvolve reproduction.
   long runs.
 - Record Git/code state, problem hashes, plugin specs, and artifact hashes in
   the run manifest.
+- Define seeded replay semantics for run ids, candidate ids, prompt-program ids,
+  RNG state, and provider nondeterminism boundaries.
 - Add deterministic accounting for concurrent evaluations, retries, consumed
   budgets, and budget-exhaustion stop reasons.
 

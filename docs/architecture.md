@@ -269,4 +269,7 @@ prompt-program events in `prompt_history.jsonl`.
   validated model capabilities.
 - `manifest.json` records configuration but not code version, problem hashes,
   plugin specs, artifact hashes, or resume/controller state.
+- `Config.seed` controls local Python-random choices and prompt variant
+  sampling, but candidate and prompt-program ids are UUID4 values, so persisted
+  lineage is not stable across repeated deterministic local runs yet.
 - Plugin names are paper-inspired approximations unless documented otherwise.

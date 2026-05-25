@@ -132,10 +132,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `prompt_history.jsonl` while overwriting `manifest.json`; there is no run
     id or explicit resume/collision policy. Configured `validate_path` entries
     can point at absolute or outside-problem validators without prevalidation,
-    hashes, or manifest provenance.
+    hashes, or manifest provenance. Seeded replay is incomplete because
+    persisted `Program` and `PromptProgram` lineage ids are UUID4 values rather
+    than deterministic seed/run-derived identifiers.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, validate/constrain evaluator paths, and record evaluator hashes
-    plus run/collision metadata in manifests.
+    plus run/collision metadata in manifests; define deterministic lineage-id
+    behavior or document UUID identity as outside the replay contract.
 
 - [ ] Multiple-score optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

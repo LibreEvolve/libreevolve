@@ -99,7 +99,8 @@ metadata stays in the ensemble.
 - `log_dir` (`"runs/"`): root output directory.
 - `problem_name` (`"unnamed"`): final run subdirectory name.
 - `seed` (`42`): random seed for Python's global `random` module and prompt
-  variant sampling.
+  variant sampling. It does not make persisted candidate or prompt-program IDs
+  deterministic yet; those still use UUID4 values.
 
 Note: although `problem_name` is a `Config` field, the current CLI resets it to
 the loaded problem directory name after reading `config.yaml`. Use `--run-name`
@@ -195,6 +196,10 @@ Provider SDKs may honor additional provider-specific variables.
   per-validator timeouts are the only hard stop controls; there are no
   wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or
   accelerator budget counters.
+- Seeded replay is incomplete: `Config.seed` controls local Python `random`
+  choices and prompt variant sampling, but `Program` and `PromptProgram` IDs
+  are UUID4 values, and provider/model nondeterminism is not captured as a
+  replay contract.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - `prompt_variants` seed the prompt-program database; set

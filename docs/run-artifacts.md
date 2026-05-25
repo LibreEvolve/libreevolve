@@ -66,6 +66,8 @@ Important behavior:
 - every evaluated candidate is logged, including invalid candidates
 - the log is append-only
 - the archive and the log are distinct
+- candidate ids and prompt-program ids are UUID4 values, not deterministic
+  seed-derived ids
 - raw metrics and evaluator diagnostics are preserved for later inspection
 - optional critique metadata is stored under `metadata.critique`
 - the mutation backend index is stored under `metadata.backend_idx`

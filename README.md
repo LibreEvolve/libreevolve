@@ -365,6 +365,10 @@ libreevolve show RUN_DIR
   Inspect history.jsonl from a previous run
 ```
 
+The seed controls local Python-random choices and prompt variant sampling, but
+persisted candidate/prompt IDs and provider outputs are not fully replay-stable
+yet.
+
 ## Tests
 
 ```bash

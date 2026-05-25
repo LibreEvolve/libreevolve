@@ -126,15 +126,17 @@ For each generation it:
 4. builds prompt context through `PromptSampler`
 5. calls the LLM ensemble
 6. optionally runs a critique/revision LLM pass on the proposed mutation
-7. applies the configured mutation mode
-8. evaluates the child
-9. optionally applies LLM feedback graders with provenance and score
+7. previews the critique revision and falls back to the original mutation if
+   the revision is malformed but the original applies cleanly
+8. applies the configured mutation mode
+9. evaluates the child
+10. optionally applies LLM feedback graders with provenance and score
    composition
-10. constructs a `Program` with metrics and structured evaluation data
-11. runs plugin score hooks
-12. logs the candidate and archives valid programs
-13. rewards the selected backend with non-negative fitness improvement
-14. migrates elites at the configured interval
+11. constructs a `Program` with metrics and structured evaluation data
+12. runs plugin score hooks
+13. logs the candidate and archives valid programs
+14. rewards the selected backend with non-negative fitness improvement
+15. migrates elites at the configured interval
 
 `VALID_THRESHOLD` is currently `0.0`.
 

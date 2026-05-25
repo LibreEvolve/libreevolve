@@ -83,6 +83,11 @@ Important behavior:
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
 
+When critique is enabled, `metadata.critique` stores the original mutation, the
+revised mutation, the critique prompt, the critique backend index, parser
+diagnostics for the revised and original mutations, and whether the revision or
+the original mutation was selected for evaluation.
+
 Prompt metadata is stored for auditability, but mutation prompts and critique
 prompts are currently persisted as rendered text without a general redaction or
 data-retention policy. LLM feedback workspace prompts use basic secret

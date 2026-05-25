@@ -133,6 +133,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `metrics.yaml` bounds/directions and can be added directly to normalized
     fitness without calibration.
 
+- [x] Critique revision should not degrade valid generated mutations into
+  parser failures.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
+  - Requirement: critique/review is part of the quality-improvement loop.
+  - Status: implemented for the synchronous critique path. Revised mutations
+    are previewed with the active parser; malformed revisions fall back to the
+    original mutation when the original applies cleanly, and selection plus
+    parser diagnostics are logged in `metadata.critique`.
+  - Remaining divergence: this is still one synchronous self-revision call, not
+    AlphaEvolve-scale reviewer pools or async reviewer workers.
+
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
   - Requirement: expensive evaluations can be parallelized, and the whole

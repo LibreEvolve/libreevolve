@@ -99,13 +99,20 @@ def evolve(problem: Problem, config: Config,
                 prompt, diff, critique_prompt=config.critique_prompt or None
             )
             revised_diff, critique_backend_idx = llm.generate(critique_prompt)
+            selected_diff, critique_status = _select_critique_mutation(
+                parent.workspace(),
+                diff,
+                revised_diff,
+                config.mutation_mode,
+            )
             critique_metadata = {
                 "prompt": critique_prompt,
                 "original_diff": diff,
                 "revised_diff": revised_diff,
                 "backend_idx": critique_backend_idx,
+                **critique_status,
             }
-            diff = revised_diff
+            diff = selected_diff
         child_workspace, diff_error = apply_workspace_mutation(
             parent.workspace(), diff, mutation_mode=config.mutation_mode
         )
@@ -232,6 +239,38 @@ def _apply_plugin_scores(
     program.metadata["score_composition"] = composition
     program.fitness = score
     return score
+
+
+def _select_critique_mutation(
+    workspace: CandidateWorkspace,
+    original_diff: str,
+    revised_diff: str,
+    mutation_mode: str,
+) -> tuple[str, dict]:
+    """Validate critique revisions before replacing the original mutation."""
+
+    _, revised_error = apply_workspace_mutation(
+        workspace, revised_diff, mutation_mode=mutation_mode
+    )
+    status = {
+        "selected_diff": "revised",
+        "accepted_revision": revised_error is None,
+        "revised_diff_error": revised_error,
+        "original_diff_error": None,
+        "fallback_reason": None,
+    }
+    if revised_error is None:
+        return revised_diff, status
+
+    _, original_error = apply_workspace_mutation(
+        workspace, original_diff, mutation_mode=mutation_mode
+    )
+    status["original_diff_error"] = original_error
+    if original_error is None:
+        status["selected_diff"] = "original"
+        status["fallback_reason"] = "invalid_revised_diff"
+        return original_diff, status
+    return revised_diff, status
 
 
 def _evaluation_is_valid(program: Program) -> bool:

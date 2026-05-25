@@ -32,7 +32,10 @@ implemented.
 - `meta_prompt_interval` (`25`): generations between optional meta-prompt
   mutations.
 - `critique_enabled` (`False`): when true, run an LLM critique/revision pass
-  on the proposed mutation before applying it.
+  on the proposed mutation before applying it. The revised mutation is
+  previewed with the active mutation parser; if the revision is malformed but
+  the original mutation still applies cleanly, LibreEvolve falls back to the
+  original and records the fallback in candidate metadata.
 - `critique_prompt` (`""`): optional custom instruction for the critique pass.
 - `llm_feedback` (`[]`): optional LLM grader specs that score or discard
   evaluated candidates after local validation.

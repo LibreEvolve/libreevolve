@@ -34,7 +34,10 @@ def test_invalid_diff_not_archived():
         best = evolve(_problem(), Config(max_generations=1,
                                         log_dir=tmpdir, problem_name="t"))
     assert best.fitness == 1.0  # seed still best
-    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
     child = records[-1]
     assert child["metadata"]["archive_admission"]["admitted"] is False
     assert child["metadata"]["archive_admission"]["reason"] == "invalid_evaluation"
@@ -140,7 +143,10 @@ def test_plugin_score_composition_is_logged_for_multiple_plugins():
             plugins=[AddMetricPlugin(), PenalizePlugin()],
         )
 
-    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
     composition = records[-1]["metadata"]["score_composition"]
     assert composition["initial_fitness"] == 1.0
     assert composition["final_fitness"] == pytest.approx(0.9)
@@ -357,6 +363,45 @@ def test_critique_revises_mutation_before_evaluation():
     child = records[-1]
     assert best.code == "x=2"
     assert child["metadata"]["critique"]["original_diff"].endswith("x=0\n>>>REPLACE")
+    assert child["metadata"]["critique"]["accepted_revision"] is True
+    assert child["metadata"]["critique"]["selected_diff"] == "revised"
+
+
+def test_invalid_critique_revision_falls_back_to_original_mutation():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+        ("this is not a mutation", 0),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        problem = _problem(
+            "def evaluate(c): return {'score': 1.0 if 'x=2' in c else 0.0,"
+            "'is_valid':True}"
+        )
+        best = evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                critique_enabled=True,
+            ),
+        )
+
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    critique = child["metadata"]["critique"]
+    assert best.code == "x=2"
+    assert child["metadata"]["diff"].endswith("x=2\n>>>REPLACE")
+    assert critique["accepted_revision"] is False
+    assert critique["selected_diff"] == "original"
+    assert critique["revised_diff_error"] == "no_diff_blocks"
+    assert critique["original_diff_error"] is None
+    assert critique["fallback_reason"] == "invalid_revised_diff"
 
 
 def test_loop_applies_llm_feedback_to_candidate_score():

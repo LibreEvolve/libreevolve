@@ -450,6 +450,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: extend critique/revision toward configurable reviewer
     pools with provenance and accounting.
 
+- [x] Add deterministic critique-revision fallback behavior.
+  - Evidence: a malformed synchronous critique response could previously
+    replace an applicable mutation and be evaluated as a parser failure.
+  - Status: implemented. Critique revisions are previewed before selection;
+    malformed revisions fall back to the original mutation when it still
+    applies cleanly, with parser diagnostics and selection metadata recorded in
+    `metadata.critique`.
+  - Remaining roadmap gap: reviewer pools, role routing, agreement policies,
+    and async critique workers are still tracked separately.
+
 - [x] Add rich evolutionary database work.
   - Evidence: AlphaEvolve's program database stores solutions with scores and
     outputs, then resurfaces ideas to balance exploration and exploitation.

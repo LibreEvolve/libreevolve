@@ -1148,6 +1148,20 @@ Primary evidence:
   - Required result: support optional critique, self-revision, or reviewer
     passes before evaluation.
 
+- [x] Validate critique revisions before replacing the original mutation.
+  - Spec evidence: critique should improve candidate quality, not silently
+    discard an otherwise applicable generated mutation.
+  - Previous gap: `evolve()` replaced the generated mutation with the critique
+    response unconditionally, so a malformed critique response could turn a
+    valid mutation into `no_diff_blocks` or another parser error.
+  - Status: implemented. The loop previews the revised mutation with
+    `apply_workspace_mutation()`, falls back to the original mutation when the
+    revision is malformed and the original applies cleanly, and records
+    `selected_diff`, `accepted_revision`, parser diagnostics, and fallback
+    reason in `metadata.critique`.
+  - Validation: `tests/core/test_loop.py` covers accepted critique revisions
+    and malformed critique fallback.
+
 - [ ] Extend critique from single self-revision to configurable reviewer pools.
   - Spec evidence: AlphaEvolve describes using a set of LLMs to generate,
     critique, and evolve a pool of algorithms, and its system is optimized for

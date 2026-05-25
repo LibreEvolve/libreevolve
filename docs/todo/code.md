@@ -355,6 +355,27 @@ Primary evidence:
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
+- [ ] Define prompt-program reward normalization and selection policy.
+  - Spec evidence: AlphaEvolve treats meta-prompt evolution as a system
+    component that can be ablated, so prompt-program fitness should be
+    reproducible, comparable across runs, and separate enough from candidate
+    scoring to support prompt-lineage analysis.
+  - Current evidence: `evolve()` calls `prompt_db.record_result(prompt_id,
+    score, ...)` with the final composed candidate score after evaluator,
+    feedback, and plugin adjustments. `PromptDatabase.record_result()` adds
+    that raw reward to `reward_sum`, and `PromptDatabase.select()` uses
+    `mean_reward + sqrt(log(total + 1) / uses)` with no configurable
+    exploration coefficient, reward bounds, improvement-vs-absolute choice,
+    metric selection, or ablation/run metadata. Negative, plugin-adjusted, or
+    feedback-adjusted scores can therefore directly drive prompt selection
+    without a documented prompt-fitness contract.
+  - Required result: define prompt reward inputs, normalization/bounds,
+    improvement or absolute-score semantics, exploration coefficient, and
+    ablation labels; persist enough prompt-selection telemetry to compare
+    prompt-program lineages; add tests for negative rewards, plugin-adjusted
+    scores, multiple metrics, and deterministic prompt selection under the
+    chosen policy.
+
 - [ ] Validate mutated prompt templates before adding them to the prompt
   database.
   - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by

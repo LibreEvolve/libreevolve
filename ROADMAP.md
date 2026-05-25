@@ -101,7 +101,8 @@ is not yet an AlphaEvolve reproduction.
 - Persist and resurface failed/rejected proposal text, changed file paths,
   workspace deltas, and error causes, not only changed primary-file snippets.
 - Improve meta-prompt scoring beyond direct child score and add ablation
-  reporting for prompt-program lineages.
+  reporting for prompt-program lineages, including documented prompt reward
+  normalization and selection policy.
 
 ### 5. Documentation truthfulness
 

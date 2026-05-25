@@ -256,8 +256,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     construction and can optionally ask the active LLM to mutate templates.
   - Status: implemented locally. Remaining divergence: initial configured
     prompt variants are selected through UUID4-ordered untried prompt programs
-    rather than a seeded/config-order policy, and there is no published
-    AlphaEvolve-equivalent ablation harness or advanced prompt-fitness model.
+    rather than a seeded/config-order policy. Prompt-program rewards are raw
+    final child scores passed to a fixed UCB-like selector, with no documented
+    normalization, improvement-vs-absolute policy, metric choice, or
+    AlphaEvolve-equivalent ablation harness.
 
 - [ ] AlphaEvolve-style stochastic prompt formatting.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

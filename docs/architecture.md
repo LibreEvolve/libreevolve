@@ -148,7 +148,10 @@ sorting UUID4 ids, so configured prompt-variant order is not currently
 seed-stable. When `meta_prompt_evolution` is enabled, the loop can
 periodically ask the active LLM backend to produce a revised full prompt
 template with an instruction to preserve placeholders. Placeholder validation is
-not enforced yet.
+not enforced yet. Prompt-program rewards are currently the final composed child
+score recorded after evaluator, feedback, and plugin adjustments, and prompt
+selection uses a fixed UCB-like formula rather than a documented
+AlphaEvolve-grade prompt-fitness policy.
 
 ## Evaluation
 

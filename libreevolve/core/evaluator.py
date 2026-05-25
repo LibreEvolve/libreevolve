@@ -42,10 +42,12 @@ _RUNNER = (
 
 
 class CascadeEvaluator:
-    """Tier 0 (diff penalty) -> Tier 1 (syntax) -> Tier 2 (subprocess).
+    """Local staged evaluator with a default diff/syntax/subprocess cascade.
 
     Inspired by staged evaluation and lazy-penalty ideas in adjacent systems.
-    This local implementation is not a reproduction of those papers.
+    This local implementation supports configured validator stages, samples,
+    retries, thresholds, and artifact collection, but is not a reproduction of
+    AlphaEvolve's distributed evaluator workers.
     """
 
     def __init__(

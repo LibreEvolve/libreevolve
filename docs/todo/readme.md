@@ -653,3 +653,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README's compact CLI reference aligned with live
     Click options that affect run budget accounting and artifact collision
     semantics.
+
+- [x] Refresh evaluator labels beyond the original three-tier cascade.
+  - README evidence: the feature list and architecture tree still described
+    the evaluator as only Tier 0/1/2 or diff/syntax/subprocess filtering.
+  - Current evidence: `CascadeEvaluator` keeps that default path but also
+    supports configured validator stages with distinct entrypoints, timeouts,
+    thresholds, samples, seeds, retries, stage context, and artifact policy.
+  - Required result: describe the evaluator as a local staged cascade with
+    configurable validator stages, while keeping distributed evaluator workers
+    tracked separately.

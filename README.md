@@ -52,7 +52,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🗺️ | **MAP-Elites archive** | 3D quality-diversity grid mapping performance, complexity, and TF-IDF diversity |
 | 🏝️ | **5-island migration** | Synchronous island archives with ring-topology migration (70% exploit / 30% explore) |
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
-| ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
+| ⚡ | **Cascade evaluator** | Default diff/syntax/subprocess filtering plus configurable staged validators |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
 | 📜 | **Failure memory** | Failed/rejected mutations are logged to `failure_history.jsonl` and bounded recent examples are shown in prompts |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
@@ -316,7 +316,7 @@ libreevolve/
 │   ├── feedback.py      # optional LLM critique and feedback graders
 │   ├── prompt.py        # prompt sampler + context/stage-feedback rendering
 │   ├── meta_prompt.py   # prompt-program DB, scoring, lineage, mutation
-│   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
+│   ├── evaluator.py     # Local cascade evaluator + configured validator stages
 │   ├── diff.py          # SEARCH/REPLACE diff engine
 │   ├── database.py      # ProgramDatabase facade
 │   └── config.py        # Config dataclass

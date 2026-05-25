@@ -138,11 +138,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     compatibility for current file-section edits.
 
 - [x] Add workspace execution import/cwd fidelity to candidate fidelity.
-  - Evidence: `CascadeEvaluator._run_subprocess()` materializes the candidate
-    workspace and passes its path to the validator, but does not run the
-    validator with the candidate root as `cwd` or place that root on
-    `sys.path`; `workspace_math/validate.py` manually inserts the workspace
-    path before importing candidate modules.
+  - Evidence: `CascadeEvaluator._run_subprocess()` now materializes the
+    candidate workspace, runs the validator with that root as `cwd`, adds the
+    candidate root to `sys.path`, and passes it as `workspace_path`.
   - Current roadmap gap: workspace fidelity covered file sets, fixtures, and
     exports, but not whether validators can execute evolved codebases with
     normal local imports and relative paths.
@@ -151,10 +149,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifacts.
 
 - [x] Add problem-local evaluator import semantics to evaluation hardening.
-  - Evidence: `_RUNNER` loads `validate.py` by file path from a temporary
-    runner and does not put `validate_path.parent` or `problem_dir` on
-    `sys.path`, so validator helper modules and package-style evaluator code
-    are not supported by default.
+  - Evidence: `_RUNNER` still loads `validate.py` by file path from a temporary
+    runner, but now adds `validate_path.parent` to `sys.path`, so sibling
+    validator helper modules are supported by default.
   - Current roadmap gap: workspace execution work covered candidate-root
     imports, but not problem-local evaluator-code imports and relative data.
   - Required result: define validator module/package loading, problem-dir

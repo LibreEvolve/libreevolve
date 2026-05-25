@@ -106,11 +106,9 @@ and expects the returned value to be JSON-serializable. `code` is always the
 contents of the candidate's primary file. `workspace_path` points at the root of
 the materialized candidate file set.
 
-The current subprocess passes `workspace_path` but does not automatically run
-with that directory as the working directory or put it on `sys.path`.
-Workspace-aware validators should import candidate modules and read relative
-files through `workspace_path` until evaluator workspace execution semantics are
-hardened.
+The subprocess runs with `workspace_path` as the working directory and adds it
+to `sys.path`, so validators can import candidate modules and read relative
+candidate files by default.
 
 This is currently a code-file-set model. Problem authors can make validators
 interpret the code as a constructor, solver, or search procedure, but the
@@ -130,6 +128,11 @@ the metrics dictionary.
 
 The evaluator parses the last non-empty stdout line as JSON, so validators may
 print diagnostics before returning.
+
+For workspace candidates, the validator subprocess runs with the materialized
+candidate root as `cwd`, adds that root to `sys.path`, and passes the same root
+as `workspace_path`. The validator directory is also added to `sys.path`, so
+problem-local helper modules beside `validate.py` can be imported normally.
 
 ## Evaluation semantics
 

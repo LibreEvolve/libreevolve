@@ -121,37 +121,38 @@ Primary evidence:
     helper files, renaming packages/modules, primary-file changes, no-op or
     unsafe moves, and validator materialization after topology changes.
 
-- [ ] Make materialized workspace execution import- and cwd-faithful.
+- [x] Make materialized workspace execution import- and cwd-faithful.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, so evaluators
     should be able to exercise a candidate as a normal project with local
     imports and relative data paths.
   - Current evidence: `CascadeEvaluator._run_subprocess()` materializes the
-    candidate into a temporary `candidate/` directory and passes that path to
-    `evaluate(code, workspace_path)`, but `subprocess.run()` does not set
-    `cwd` to the candidate root and the runner does not add that root to
-    `sys.path`. The `workspace_math` example validator manually inserts
-    `workspace_path` into `sys.path`, proving this is currently a validator
-    responsibility rather than a framework execution contract.
+    candidate into a temporary `candidate/` directory, runs the validator
+    subprocess with that directory as `cwd`, passes it as `workspace_path`, and
+    adds it to `sys.path`. Tests cover candidate package imports and relative
+    candidate file reads without validator-managed path edits.
+  - Status: implemented for local Python workspace execution. Remaining
+    divergence: this is not a container/build-system runner, environment
+    isolation and artifact collection are still open, and non-Python
+    workspaces remain out of scope.
   - Required result: define and test the workspace execution contract
     (`cwd`, `PYTHONPATH`/`sys.path`, environment, package entrypoints, and
     relative artifact paths); make project-local imports and relative file
     access work by default where appropriate, or document the deliberate
     validator-managed divergence.
 
-- [ ] Make problem-local evaluator imports package-faithful.
+- [x] Make problem-local evaluator imports package-faithful.
   - Spec evidence: AlphaEvolve task setup can include evaluator code and
     problem-specific test logic. Reproducible evaluation should support
     ordinary multi-file validator modules, not only a single self-contained
     `validate.py`.
-  - Current evidence: `_RUNNER` loads `validate_path` with
-    `importlib.util.spec_from_file_location('v', sys.argv[1])` from a temporary
-    runner, and `subprocess.run()` does not set `cwd` to the problem directory
-    or add `validate_path.parent` / `problem_dir` to `sys.path`. A
-    problem-local `validate.py` that imports sibling helpers such as
-    `from scoring import score` can fail unless the author manually mutates
-    `sys.path` or relies on the process launch directory. Existing tests cover
-    alternate single-file `validate_path` entries, but not validator helper
-    modules or package-style evaluator layouts.
+  - Current evidence: `_RUNNER` adds `validate_path.parent` to `sys.path`
+    before loading the validator file, so sibling helper modules beside
+    `validate.py` can be imported. Tests cover a problem-local `scoring.py`
+    helper imported by `validate.py`.
+  - Status: implemented for sibling helper imports beside validator entrypoint
+    files. Remaining divergence: problem directory is not `cwd`, package-style
+    validator module loading is not a first-class API, and evaluator code/data
+    hashes are not in manifests yet.
   - Required result: define evaluator import semantics for `validate.py`,
     stage validators, sibling helper modules, packages, and relative data
     files; set `cwd`/`PYTHONPATH` or use an explicit module/package loader as

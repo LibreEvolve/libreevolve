@@ -218,8 +218,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: implemented for local Python/text workspaces. Remaining divergence:
     no arbitrary external repository/build-system runner and `best.py` exports
     only the primary file convenience view. Binary/static artifacts are not
-    first-class candidate members yet, and validators must currently manage
-    candidate-root imports/relative execution themselves.
+    first-class candidate members yet. Validator subprocesses now run with the
+    candidate root as `cwd` and import path, but there is still no arbitrary
+    external repository/build-system runner.
     File/block envelope diagnostics now reject malformed sections before
     partial edits are applied. File-set topology changes such as delete, rename,
     move, and primary-file replacement are not expressible as mutation

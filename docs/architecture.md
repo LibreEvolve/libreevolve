@@ -198,13 +198,12 @@ Stage numeric fields are not fully schema-validated before execution. Invalid
 values such as zero samples or negative retries can fail during evaluation
 instead of producing an early configuration error.
 
-The subprocess currently passes the materialized candidate root as an argument
-but does not set that root as the subprocess working directory or import path.
-Validators that need project-local imports or relative files must opt into that
-behavior manually through `workspace_path`.
-Validator entrypoints are also loaded by file path from a temporary runner; the
-problem directory is not automatically `cwd` or `sys.path`, so evaluator helper
-modules beside `validate.py` need manual path handling today.
+The subprocess runs with the materialized candidate root as `cwd`, passes that
+root as `workspace_path`, and adds both the candidate root and validator
+directory to `sys.path`. Validators can import candidate-local modules, read
+relative candidate files, and import sibling problem-local helper modules by
+default. The problem directory is not used as `cwd`, and evaluator helper/data
+provenance is not hashed into manifests yet.
 
 After local evaluation, `Config.llm_feedback` can run optional LLM graders for
 properties that are awkward to encode in `validate.py`, such as clarity or
@@ -330,9 +329,9 @@ prompt-program events in `prompt_history.jsonl`.
 
 - Candidate workspaces are local text file sets, not arbitrary-language build
   systems or external repositories.
-- Materialized workspace execution is not project-faithful by default:
-  validators receive `workspace_path`, but the candidate root is not
-  automatically `cwd` or `sys.path`.
+- Materialized workspace execution uses the candidate root as subprocess `cwd`
+  and import path, but it is still a local Python subprocess rather than a
+  container or arbitrary build-system runner.
 - Validator subprocesses inherit the parent process environment, including
   `.env`-loaded provider credentials, because no validator environment
   allowlist or secret redaction policy exists yet.

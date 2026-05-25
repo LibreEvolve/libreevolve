@@ -392,26 +392,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     persisted candidate/prompt IDs and provider outputs are not fully
     replay-stable yet.
 
-- [x] Clarify workspace validator import/cwd limits.
+- [x] Clarify workspace validator import/cwd behavior.
   - README evidence: the custom-problem section said validators can accept
     `workspace_path`, but did not explain that the evaluator does not
     automatically run with that path as `cwd` or `sys.path`.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` passes the
-    materialized candidate root as an argument only, and the `workspace_math`
-    example manually inserts it into `sys.path`.
-  - Required result: tell problem authors to use `workspace_path` explicitly for
-    local imports/files until workspace execution semantics are hardened.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` now runs with the
+    materialized candidate root as `cwd`, adds that root to `sys.path`, and
+    passes it as `workspace_path`. README now states that candidate-local
+    imports and relative file reads work by default.
+  - Required result: keep README aligned with the current workspace execution
+    contract and track remaining sandbox/build-system gaps separately.
 
-- [x] Clarify problem-local validator helper imports are not automatic.
+- [x] Clarify problem-local validator helper imports.
   - README evidence: the problem-format section says `validate.py` defines
     `evaluate(...)`, but did not warn that `validate.py` is loaded by file path
     from a temporary runner rather than as a normal problem-local package.
-  - Current evidence: `_RUNNER` uses `spec_from_file_location()` and
-    `subprocess.run()` does not set `cwd` to the problem directory or add the
-    validator directory to `sys.path`.
-  - Required result: warn authors that sibling validator helpers/package
-    imports need manual path handling until evaluator import semantics are
-    hardened.
+  - Current evidence: `_RUNNER` still uses `spec_from_file_location()`, but it
+    now adds `validate_path.parent` to `sys.path`, allowing sibling helper
+    modules beside `validate.py` to import normally. README now documents that
+    behavior.
+  - Required result: keep README aligned with current sibling-helper import
+    behavior and track richer package-style evaluator APIs separately.
 
 - [x] Clarify that MAP-Elites archive state is not persisted.
   - README evidence: the feature list and flow describe a MAP-Elites archive

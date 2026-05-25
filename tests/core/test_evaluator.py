@@ -200,6 +200,87 @@ def test_workspace_validator_receives_materialized_files():
         shutil.rmtree(d)
 
 
+def test_workspace_imports_work_from_candidate_root_by_default():
+    p, d = _problem(
+        "def evaluate(code, workspace):\n"
+        "    from pkg.helper import VALUE\n"
+        "    return {'score': 1.0 if VALUE == 7 else 0.0, 'is_valid': VALUE == 7}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": "from pkg.helper import VALUE\n",
+            "pkg/__init__.py": "",
+            "pkg/helper.py": "VALUE = 7\n",
+        },
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == 1.0
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_import_path_precedes_validator_directory():
+    p, d = _problem(
+        "def evaluate(code, workspace):\n"
+        "    from pkg.helper import VALUE\n"
+        "    return {'score': 1.0 if VALUE == 7 else 0.0, 'is_valid': VALUE == 7}\n"
+    )
+    (d / "pkg").mkdir()
+    (d / "pkg" / "__init__.py").write_text("", encoding="utf-8")
+    (d / "pkg" / "helper.py").write_text("VALUE = 0\n", encoding="utf-8")
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": "from pkg.helper import VALUE\n",
+            "pkg/__init__.py": "",
+            "pkg/helper.py": "VALUE = 7\n",
+        },
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == 1.0
+    finally:
+        shutil.rmtree(d)
+
+
+def test_workspace_relative_file_access_uses_candidate_root_by_default():
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(code, workspace):\n"
+        "    ok = Path('data/input.txt').read_text() == 'ready'\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "data/input.txt": "ready"},
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == 1.0
+    finally:
+        shutil.rmtree(d)
+
+
+def test_problem_local_validator_imports_work_from_validate_directory():
+    p, d = _problem(
+        "from scoring import score\n"
+        "def evaluate(code, workspace):\n"
+        "    return {'score': score(code), 'is_valid': True}\n"
+    )
+    (d / "scoring.py").write_text(
+        "def score(code):\n"
+        "    return 0.75 if 'x = 1' in code else 0.0\n",
+        encoding="utf-8",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate("x = 1\n", None)
+        assert result == 0.75
+    finally:
+        shutil.rmtree(d)
+
+
 def test_workspace_syntax_checks_all_python_files():
     p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
     workspace = CandidateWorkspace(

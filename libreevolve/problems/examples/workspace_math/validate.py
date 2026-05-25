@@ -12,7 +12,10 @@ def evaluate(code: str, workspace_path: str) -> dict:
     if not main_path.exists() or not helper_path.exists():
         return {"score": 0.0, "is_valid": False}
 
-    sys.path.insert(0, str(workspace))
+    inserted = False
+    if str(workspace) not in sys.path:
+        sys.path.insert(0, str(workspace))
+        inserted = True
     try:
         spec = importlib.util.spec_from_file_location("candidate_main", main_path)
         if spec is None or spec.loader is None:
@@ -26,10 +29,11 @@ def evaluate(code: str, workspace_path: str) -> dict:
     except Exception:
         return {"score": 0.0, "is_valid": False}
     finally:
-        try:
-            sys.path.remove(str(workspace))
-        except ValueError:
-            pass
+        if inserted:
+            try:
+                sys.path.remove(str(workspace))
+            except ValueError:
+                pass
 
     ok = result == 42
     return {"score": 1.0 if ok else 0.0, "is_valid": ok}

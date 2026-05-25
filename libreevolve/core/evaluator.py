@@ -13,11 +13,15 @@ _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_foun
 # separation, not a security sandbox.
 # Uses importlib to load validate.py and calls evaluate(code) -> prints json.dumps(result)
 _RUNNER = (
-    "import sys,json,importlib.util,inspect\n"
+    "import sys,json,importlib.util,inspect,os\n"
+    "workspace=sys.argv[3]\n"
+    "validate_dir=os.path.dirname(os.path.abspath(sys.argv[1]))\n"
+    "for path in (validate_dir, workspace):\n"
+    "    if path and path not in sys.path: sys.path.insert(0,path)\n"
+    "os.chdir(workspace)\n"
     "spec=importlib.util.spec_from_file_location('v',sys.argv[1])\n"
     "mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)\n"
     "code=open(sys.argv[2],encoding='utf-8').read()\n"
-    "workspace=sys.argv[3]\n"
     "stage=json.loads(sys.argv[4])\n"
     "params=inspect.signature(mod.evaluate).parameters\n"
     "result=mod.evaluate(code, workspace, stage) if len(params) >= 3 else (mod.evaluate(code, workspace) if len(params) >= 2 else mod.evaluate(code))\n"
@@ -201,6 +205,7 @@ class CascadeEvaluator:
                     [sys.executable, str(runner),
                      str(validate_path), str(primary), str(cand_root),
                      json.dumps(stage_context)],
+                    cwd=str(cand_root),
                     capture_output=True, timeout=timeout_sec, text=True,
                 )
             except subprocess.TimeoutExpired:

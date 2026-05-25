@@ -179,27 +179,29 @@ graph TD
 
 ### Evolving a Greeting Function
 
-Seed returns `"Hi {name}"` (0/3 tests). The LLM discovers `f"Hello, {name}!"` in generation 0, then explores alternative implementations:
+Seed returns `"Hi {name}"` (0/3 tests). The checked-in `hello_world_ensemble` history reaches `f"Hello, {name}!"` in generation 0, then records several rejected variants:
 
 ```
 gen  0  -0.10  def greet(name): return f"Hi {name}"                   <- seed (wrong format)
 gen  0   1.00  def greet(name): return f"Hello, {name}!"              <- solved
-gen  2  -0.10  def greet(name): return f"Greetings, {name}!"          <- wrong word
-gen  7   1.00  def greet(name): return "Hello, {}!".format(name)      <- .format() variant
-gen  8   1.00  def greet(name): return "Hello, " + name + "!"         <- concatenation variant
+gen  1  -0.10  def greet(name): return f"Hello, {name}! How are you today?"
+gen  4  -0.10  def greet(name): return f"Hello, {name}!!!"
+gen  7  -0.10  def greet(name): return f"Greetings, {name}!"          <- wrong word
+gen  8  -0.10  def greet(name): return f"Hi there, {name}!"
 ```
 
 ### Evolving a Sort Algorithm
 
-Seed is a bubble sort (already passes all 8 test cases). The LLM discovers `lst.sort()` and explores multiple implementations, all scoring 1.0:
+Seed is a bubble sort (already passes all 8 test cases). The checked-in `sorting_ttt_rl` history first produces a malformed `lst.sort()` edit, then explores multiple valid implementations:
 
 ```
 gen  0   1.00  bubble sort (seed)                                     <- O(n^2)
-gen  0   1.00  lst.sort()                                             <- builtin in-place
-gen  1   1.00  sorted(lst)                                            <- builtin new list
-gen  2   1.00  lst.copy() + sorted()                                  <- copy variant
-gen  3   1.00  [x for x in lst] + sorted()                            <- list comp copy
-gen  4   1.00  sorted(lst, key=lambda x: (x is None, x))              <- None-safe sort
+gen  0  -0.20  malformed lst.sort() edit                              <- syntax error
+gen  1   1.00  lst.sort()                                             <- builtin in-place
+gen 13   1.00  lst = sorted(lst)                                      <- builtin new list
+gen 16   1.00  lst.copy(); lst.sort()                                 <- copy variant
+gen 31   1.00  return sorted(lst)                                     <- direct builtin
+gen 46   1.00  lst.copy(); lst = sorted(lst)                          <- copy + sorted
 ```
 
 ### Circle Packing in a Unit Square

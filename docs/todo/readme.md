@@ -221,3 +221,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     examples.
   - Required result: use `py -3.12 -m libreevolve show ...` in curated example
     run docs.
+
+- [x] Correct stale README example-run snippets.
+  - README evidence: the greeting example claimed `.format()` and string
+    concatenation variants with score `1.00`, and the sorting example claimed a
+    valid `lst.sort()` candidate at generation 0 plus early `sorted`/copy
+    variants.
+  - Current evidence: `examples/runs/hello_world_ensemble/history.jsonl`
+    contains the solved generation 0 greeting plus rejected variants, but not
+    the `.format()` or concatenation examples. `examples/runs/sorting_ttt_rl`
+    has a malformed `lst.sort()` edit at generation 0, valid `lst.sort()` at
+    generation 1, and later valid `sorted`/copy variants.
+  - Required result: align README snippets with the checked-in JSONL histories
+    or explicitly mark them as illustrative rather than curated-output
+    excerpts.

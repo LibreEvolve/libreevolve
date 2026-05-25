@@ -186,12 +186,14 @@ programs, records prompt reward/usage, and logs prompt lineage to
 sorting UUID4 ids, so configured prompt-variant order is not currently
 seed-stable. When `meta_prompt_evolution` is enabled, the loop can
 periodically ask the active LLM backend to produce a revised full prompt
-template with an instruction to preserve placeholders. Placeholder validation is
-not enforced for either configured variants or mutated templates yet.
-Prompt-program rewards are currently the final composed child score recorded
-after evaluator, feedback, and plugin adjustments, and prompt selection uses a
-fixed UCB-like formula rather than a documented AlphaEvolve-grade
-prompt-fitness policy.
+template with an instruction to preserve placeholders. Configured and mutated
+prompt templates are validated against the `PromptSampler` placeholder schema
+before use. Prompt rewards are normalized to `0..1` using
+`prompt_reward_bounds`; `prompt_reward_mode` chooses absolute final composed
+score or child-minus-parent improvement as the raw reward, and
+`prompt_explore_coeff` controls the prompt selector's exploration term.
+The policy is still scalar; richer multi-metric prompt-fitness models and
+experiment ablation reporting remain future work.
 
 ## Evaluation
 
@@ -260,7 +262,9 @@ ignored for score/validity composition. There is not yet a configurable retry,
 penalty, or discard policy for failed feedback graders.
 
 After that, plugin `on_evaluated()` hooks may modify the effective fitness used
-for logging, prompt reward, and backend reward. The loop records
+for logging, prompt reward, and backend reward. Prompt reward uses that final
+composed child score, optionally as an improvement over the parent score. The
+loop records
 `metadata.score_composition` with evaluator fitness, optional feedback-adjusted
 fitness, per-plugin before/after scores, metric additions/changes, invalid
 plugin-score rejections, and final composed fitness. Archive admission uses the
@@ -399,7 +403,8 @@ prompt-program events in `prompt_history.jsonl`.
 - Mutation responses are raw patch text; proposal ideas/rationales are not
   parsed, scored, or resurfaced as separate artifacts.
 - Prompt evolution is implemented at the template boundary with configured and
-  mutated template placeholder validation; richer prompt fitness remains open.
+  mutated template placeholder validation plus bounded absolute/improvement
+  reward normalization; richer ablation reporting remains open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders receive bounded full-workspace file sections, basic

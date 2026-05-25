@@ -22,6 +22,42 @@ def test_prompt_database_selects_and_scores_templates():
     assert (Path(tmpdir) / "prompt_history.jsonl").exists()
 
 
+def test_prompt_database_normalizes_and_clamps_rewards():
+    db = PromptDatabase(
+        tempfile.mkdtemp(),
+        templates=["a {task}"],
+        reward_bounds=(-1.0, 1.0),
+        reward_mode="improvement",
+    )
+    program = db.select()
+
+    db.record_result(program.id, -2.0)
+    db.record_result(program.id, 0.0)
+    db.record_result(program.id, 2.0)
+
+    assert program.reward_sum == 1.5
+    assert program.mean_reward == 0.5
+    assert program.metadata["last_prompt_reward"] == {
+        "mode": "improvement",
+        "raw": 2.0,
+        "normalized": 1.0,
+        "bounds": [-1.0, 1.0],
+    }
+
+
+def test_prompt_database_selection_uses_configured_exploration_coefficient():
+    db = PromptDatabase(
+        tempfile.mkdtemp(),
+        templates=["a {task}", "b {task}"],
+        explore_coeff=0.0,
+    )
+    first, second = sorted(db.all(), key=lambda p: p.id)
+    db.record_result(first.id, 0.2)
+    db.record_result(second.id, 0.8)
+
+    assert db.select().id == second.id
+
+
 def test_prompt_database_mutates_with_lineage():
     db = PromptDatabase(tempfile.mkdtemp(), templates=["a {task}"])
     parent = db.select()

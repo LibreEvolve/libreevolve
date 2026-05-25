@@ -5,7 +5,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from uuid import uuid4
 
-from libreevolve.core.jsonl import append_strict_jsonl
+from libreevolve.core.jsonl import (
+    StrictJsonlError,
+    append_quarantine_record,
+    append_strict_jsonl,
+)
 from libreevolve.core.prompt import (
     DEFAULT_TEMPLATE,
     PromptTemplateError,
@@ -49,10 +53,20 @@ class PromptDatabase:
     loop.
     """
 
-    def __init__(self, log_dir: str | Path, templates: list[str] | None = None):
+    def __init__(
+        self,
+        log_dir: str | Path,
+        templates: list[str] | None = None,
+        reward_bounds: tuple[float, float] = (0.0, 1.0),
+        explore_coeff: float = 1.0,
+        reward_mode: str = "absolute",
+    ):
         self._programs: dict[str, PromptProgram] = {}
         self._log_path = Path(log_dir) / "prompt_history.jsonl"
         self._quarantine_path = Path(log_dir) / "prompt_history_invalid.jsonl"
+        self._reward_bounds = reward_bounds
+        self._explore_coeff = explore_coeff
+        self._reward_mode = reward_mode
         self._log_path.parent.mkdir(parents=True, exist_ok=True)
         seed_templates = templates or [DEFAULT_TEMPLATE]
         for template in seed_templates:
@@ -71,7 +85,8 @@ class PromptDatabase:
         total = sum(p.uses for p in self._programs.values())
         return max(
             self._programs.values(),
-            key=lambda p: p.mean_reward + math.sqrt(math.log(total + 1) / p.uses),
+            key=lambda p: p.mean_reward
+            + self._explore_coeff * math.sqrt(math.log(total + 1) / p.uses),
         )
 
     def record_result(self, prompt_id: str, reward: float, metadata: dict | None = None) -> None:
@@ -79,10 +94,27 @@ class PromptDatabase:
         previous_uses = program.uses
         previous_reward_sum = program.reward_sum
         previous_metadata = dict(program.metadata)
+        try:
+            normalized = self._normalize_reward(reward)
+        except ValueError as exc:
+            append_quarantine_record(
+                self._quarantine_path,
+                {"event": "score", "prompt_id": prompt_id, "reward": reward},
+                exc,
+            )
+            raise StrictJsonlError(
+                f"Could not record prompt reward for {prompt_id}: {exc}"
+            ) from exc
         program.uses += 1
-        program.reward_sum += reward
+        program.reward_sum += normalized
         if metadata:
             program.metadata.update(metadata)
+        program.metadata["last_prompt_reward"] = {
+            "mode": self._reward_mode,
+            "raw": reward,
+            "normalized": normalized,
+            "bounds": [self._reward_bounds[0], self._reward_bounds[1]],
+        }
         try:
             self._write("score", program)
         except Exception:
@@ -114,6 +146,16 @@ class PromptDatabase:
 
     def all(self) -> list[PromptProgram]:
         return list(self._programs.values())
+
+    def _normalize_reward(self, reward: float) -> float:
+        if isinstance(reward, bool) or not isinstance(reward, (int, float)):
+            raise ValueError("prompt reward must be numeric")
+        value = float(reward)
+        if not math.isfinite(value):
+            raise ValueError(f"prompt reward must be finite: {reward!r}")
+        lo, hi = self._reward_bounds
+        normalized = (value - lo) / (hi - lo)
+        return max(0.0, min(1.0, normalized))
 
     def _write(self, event: str, program: PromptProgram) -> None:
         append_strict_jsonl(

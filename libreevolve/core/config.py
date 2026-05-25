@@ -18,6 +18,9 @@ class Config:
     prompt_variants:        list[str] = field(default_factory=list)
     meta_prompt_evolution:  bool  = False
     meta_prompt_interval:   int   = 25
+    prompt_reward_mode:     str   = "absolute"
+    prompt_reward_bounds:   list[float] = field(default_factory=lambda: [0.0, 1.0])
+    prompt_explore_coeff:   float = 1.0
     critique_enabled:       bool  = False
     critique_prompt:        str   = ""
     llm_feedback:           list[dict] = field(default_factory=list)
@@ -50,6 +53,9 @@ class Config:
         _require_probability("explore_ratio", self.explore_ratio)
         _require_enum("mutation_mode", self.mutation_mode, {"diff", "full"})
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
+        _require_enum("prompt_reward_mode", self.prompt_reward_mode, {"absolute", "improvement"})
+        _validate_prompt_reward_bounds(self.prompt_reward_bounds)
+        _require_nonnegative_number("prompt_explore_coeff", self.prompt_explore_coeff)
         _require_int("n_islands", self.n_islands, minimum=1)
         _require_int("migration_interval", self.migration_interval, minimum=0)
         _require_probability("migration_ratio", self.migration_ratio)
@@ -195,3 +201,12 @@ def _validate_prompt_variants(variants: list[str]) -> None:
             validate_prompt_template(template)
         except PromptTemplateError as exc:
             raise ConfigError(f"prompt_variants[{index}]: {exc}") from exc
+
+
+def _validate_prompt_reward_bounds(bounds: object) -> None:
+    if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
+        raise ConfigError("prompt_reward_bounds must be [lo, hi]")
+    lo = _require_number("prompt_reward_bounds[0]", bounds[0])
+    hi = _require_number("prompt_reward_bounds[1]", bounds[1])
+    if lo >= hi:
+        raise ConfigError("prompt_reward_bounds must be strictly increasing [lo, hi]")

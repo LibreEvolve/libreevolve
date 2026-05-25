@@ -52,6 +52,9 @@ def evolve(problem: Problem, config: Config,
     prompt_db = PromptDatabase(
         Path(config.log_dir) / config.problem_name,
         templates=config.prompt_variants or None,
+        reward_bounds=(float(config.prompt_reward_bounds[0]), float(config.prompt_reward_bounds[1])),
+        explore_coeff=config.prompt_explore_coeff,
+        reward_mode=config.prompt_reward_mode,
     )
 
     # Seed population (diff_error=None bypasses Tier 0)
@@ -150,10 +153,16 @@ def evolve(problem: Problem, config: Config,
 
         db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
+        prompt_reward = _prompt_reward(score, parent.fitness, config.prompt_reward_mode)
         prompt_db.record_result(
             prompt_program.id,
-            score,
-            metadata={"last_generation": gen, "last_program_id": program.id},
+            prompt_reward,
+            metadata={
+                "last_generation": gen,
+                "last_program_id": program.id,
+                "last_candidate_score": score,
+                "last_parent_score": parent.fitness,
+            },
         )
         if (
             config.meta_prompt_evolution
@@ -279,3 +288,9 @@ def _select_critique_mutation(
 
 def _evaluation_is_valid(program: Program) -> bool:
     return bool(program.evaluation.get("is_valid", True))
+
+
+def _prompt_reward(score: float, parent_score: float, mode: str) -> float:
+    if mode == "improvement":
+        return score - parent_score
+    return score

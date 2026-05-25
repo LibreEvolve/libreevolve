@@ -242,6 +242,90 @@ def test_loop_logs_prompt_program_id_and_prompt_history():
     assert (run_dir / "prompt_history.jsonl").exists()
 
 
+def test_loop_logs_normalized_prompt_reward_policy_metadata():
+    tmpdir = tempfile.mkdtemp()
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(
+                "def evaluate(c): return {'score': 1.0 if 'x=2' in c else 0.5,"
+                "'is_valid': True}"
+            ),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                prompt_reward_mode="improvement",
+                prompt_reward_bounds=[-1.0, 1.0],
+                prompt_explore_coeff=0.0,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    events = [
+        json.loads(line)
+        for line in (run_dir / "prompt_history.jsonl").read_text().splitlines()
+    ]
+    score_event = next(event for event in events if event["event"] == "score")
+    reward = score_event["program"]["metadata"]["last_prompt_reward"]
+    assert reward["mode"] == "improvement"
+    assert reward["raw"] == 0.5
+    assert reward["normalized"] == 0.75
+    assert reward["bounds"] == [-1.0, 1.0]
+    assert score_event["program"]["metadata"]["last_candidate_score"] == 1.0
+    assert score_event["program"]["metadata"]["last_parent_score"] == 0.5
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    assert manifest["config"]["prompt_reward_mode"] == "improvement"
+    assert manifest["config"]["prompt_reward_bounds"] == [-1.0, 1.0]
+    assert manifest["config"]["prompt_explore_coeff"] == 0.0
+
+
+def test_prompt_reward_uses_plugin_adjusted_score_with_multiple_metrics():
+    tmpdir = tempfile.mkdtemp()
+
+    class BoostPlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            program.metrics["plugin_bonus"] = 0.25
+            return score + 0.25
+
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c): return {'score': 0.4, 'aux': 0.2, 'is_valid': True}"
+    )
+    problem = Problem(
+        name="t",
+        task_description="t",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "aux", "bounds": [0.0, 1.0]},
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1"],
+        problem_dir=d,
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[BoostPlugin()],
+        )
+
+    events = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "prompt_history.jsonl").read_text().splitlines()
+    ]
+    score_event = next(event for event in events if event["event"] == "score")
+    reward = score_event["program"]["metadata"]["last_prompt_reward"]
+    assert reward["raw"] == 0.65
+    assert reward["normalized"] == 0.65
+    assert score_event["program"]["metadata"]["last_candidate_score"] == 0.65
+
+
 def test_loop_logs_mutation_backend_index():
     tmpdir = tempfile.mkdtemp()
     llm = _llm()

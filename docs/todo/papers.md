@@ -305,11 +305,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `prompt_history.jsonl`, records prompt rewards/usages, and supports
     lineage-preserving mutation. `evolve()` uses prompt programs during prompt
     construction and can optionally ask the active LLM to mutate templates.
-  - Status: implemented locally. Remaining divergence: initial configured
-    prompt variants are selected through UUID4-ordered untried prompt programs
-    rather than a seeded/config-order policy. Prompt-program rewards are raw
-    final child scores passed to a fixed UCB-like selector, with no documented
-    normalization, improvement-vs-absolute policy, metric choice, or
+  - Status: implemented locally. Prompt-program reward now has an explicit
+    absolute/improvement mode, bounded normalization, configurable exploration
+    coefficient, and persisted reward telemetry. Remaining divergence: initial
+    configured prompt variants are selected through UUID4-ordered untried
+    prompt programs rather than a seeded/config-order policy. Prompt-program
+    reward is still a scalar final-score/improvement policy rather than a
+    multi-metric prompt-fitness model, and there is no full experiment
     AlphaEvolve-equivalent ablation harness.
 
 - [ ] AlphaEvolve-style stochastic prompt formatting.

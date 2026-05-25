@@ -444,26 +444,25 @@ Primary evidence:
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
-- [ ] Define prompt-program reward normalization and selection policy.
+- [x] Define prompt-program reward normalization and selection policy.
   - Spec evidence: AlphaEvolve treats meta-prompt evolution as a system
     component that can be ablated, so prompt-program fitness should be
     reproducible, comparable across runs, and separate enough from candidate
     scoring to support prompt-lineage analysis.
-  - Current evidence: `evolve()` calls `prompt_db.record_result(prompt_id,
-    score, ...)` with the final composed candidate score after evaluator,
-    feedback, and plugin adjustments. `PromptDatabase.record_result()` adds
-    that raw reward to `reward_sum`, and `PromptDatabase.select()` uses
-    `mean_reward + sqrt(log(total + 1) / uses)` with no configurable
-    exploration coefficient, reward bounds, improvement-vs-absolute choice,
-    metric selection, or ablation/run metadata. Negative, plugin-adjusted, or
-    feedback-adjusted scores can therefore directly drive prompt selection
-    without a documented prompt-fitness contract.
-  - Required result: define prompt reward inputs, normalization/bounds,
-    improvement or absolute-score semantics, exploration coefficient, and
-    ablation labels; persist enough prompt-selection telemetry to compare
-    prompt-program lineages; add tests for negative rewards, plugin-adjusted
-    scores, multiple metrics, and deterministic prompt selection under the
-    chosen policy.
+  - Current evidence: `Config` now exposes `prompt_reward_mode`
+    (`absolute` final composed child score or `improvement` over parent score),
+    `prompt_reward_bounds`, and `prompt_explore_coeff`. `PromptDatabase`
+    normalizes raw prompt rewards to `0..1`, clamps out-of-range values, uses
+    the configured exploration coefficient in selection, and records reward
+    telemetry under `program.metadata.last_prompt_reward`. `evolve()` records
+    parent score, final candidate score, and prompt reward policy in
+    `prompt_history.jsonl`; `manifest.json` includes the effective policy.
+    Tests cover negative/out-of-range rewards, plugin-adjusted scores,
+    multiple metrics, deterministic selection with zero exploration, and
+    improvement-mode telemetry.
+  - Status: implemented for a documented bounded scalar prompt-reward policy.
+    Broader experiment ablation reporting remains tracked with compute-budget
+    and run-manifest work.
 
 - [x] Validate configured and mutated prompt templates before use.
   - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by

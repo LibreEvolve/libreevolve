@@ -31,6 +31,13 @@ implemented.
   backend to produce a revised prompt template.
 - `meta_prompt_interval` (`25`): generations between optional meta-prompt
   mutations.
+- `prompt_reward_mode` (`"absolute"`): prompt-program reward input. `absolute`
+  uses the final composed candidate score; `improvement` uses final composed
+  child score minus parent score.
+- `prompt_reward_bounds` (`[0.0, 1.0]`): `[lo, hi]` bounds used to normalize
+  prompt-program rewards to `0..1` before prompt selection.
+- `prompt_explore_coeff` (`1.0`): exploration coefficient for the prompt
+  database's UCB-like selector.
 - `critique_enabled` (`False`): when true, run an LLM critique/revision pass
   on the proposed mutation before applying it. The revised mutation is
   previewed with the active mutation parser; if the revision is malformed but
@@ -269,5 +276,9 @@ run rather than being recorded as structured failed LLM-call attempts.
   rejected. Invalid LLM-mutated templates are written to
   `prompt_history_invalid.jsonl`, penalize the parent prompt program, and do
   not enter the prompt population.
+- Prompt-program reward telemetry is written into `prompt_history.jsonl` under
+  `program.metadata.last_prompt_reward`, including reward mode, raw reward,
+  normalized reward, and bounds. The same effective prompt reward policy is
+  recorded in `manifest.json`.
 - Critique and LLM feedback use the same backend ensemble as mutation
   generation. They are synchronous and optional, not parallel reviewer workers.

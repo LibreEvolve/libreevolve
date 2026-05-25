@@ -24,6 +24,10 @@ def test_default_backend_is_anthropic():
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),
         ({"mutation_mode": "rewrite"}, "mutation_mode"),
+        ({"prompt_reward_mode": "delta"}, "prompt_reward_mode"),
+        ({"prompt_reward_bounds": [1.0, 1.0]}, "prompt_reward_bounds"),
+        ({"prompt_reward_bounds": [1.0]}, "prompt_reward_bounds"),
+        ({"prompt_explore_coeff": -1.0}, "prompt_explore_coeff"),
         ({"n_islands": 0}, "n_islands"),
         ({"migration_interval": -1}, "migration_interval"),
         ({"migration_ratio": -0.1}, "migration_ratio"),
@@ -116,3 +120,14 @@ def test_rejects_invalid_prompt_variant_templates(template, message):
 
 def test_accepts_minimal_prompt_variant_template():
     assert Config(prompt_variants=["Task: {task}"]).prompt_variants == ["Task: {task}"]
+
+
+def test_accepts_prompt_reward_policy_config():
+    config = Config(
+        prompt_reward_mode="improvement",
+        prompt_reward_bounds=[-1.0, 1.0],
+        prompt_explore_coeff=0.25,
+    )
+    assert config.prompt_reward_mode == "improvement"
+    assert config.prompt_reward_bounds == [-1.0, 1.0]
+    assert config.prompt_explore_coeff == 0.25

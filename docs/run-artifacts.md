@@ -140,6 +140,12 @@ This file records prompt-program events:
 - `penalty`: an invalid meta-prompt mutation was rejected and penalized its
   parent prompt program
 
+Score events store prompt-program reward telemetry in
+`program.metadata.last_prompt_reward`: reward mode, raw reward, normalized
+reward, and normalization bounds. In `absolute` mode the raw reward is the final
+composed candidate score; in `improvement` mode it is child score minus parent
+score.
+
 Rejected meta-prompt mutations are written to `prompt_history_invalid.jsonl`
 with the parent prompt id, generation, rejected template, error, and metadata.
 

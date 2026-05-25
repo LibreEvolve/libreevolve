@@ -295,3 +295,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     example manually inserts it into `sys.path`.
   - Required result: tell problem authors to use `workspace_path` explicitly for
     local imports/files until workspace execution semantics are hardened.
+
+- [x] Clarify that MAP-Elites archive state is not persisted.
+  - README evidence: the feature list and flow describe a MAP-Elites archive
+    and island migration, but did not distinguish runtime archive state from
+    append-only candidate history.
+  - Current evidence: `history.jsonl` records candidates, while
+    `MAPElites._grid`, elite lists, island assignment, descriptor values, and
+    `IslandModel.migrate()` events remain in memory only.
+  - Required result: warn readers that current run history is not a replayable
+    archive checkpoint or migration event log.

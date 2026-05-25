@@ -262,6 +262,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     non-goal. That may remain true for services, but a stronger local
     evolutionary database is required for AlphaEvolve fidelity.
 
+- [x] Add archive-state and migration-event persistence to database work.
+  - Evidence: `ProgramDatabase.log()` writes candidate JSONL records, but
+    `MAPElites` cell grids, elite lists, diversity/complexity normalization
+    state, island assignment, and migration events remain in memory only.
+  - Current roadmap gap: resumability and database work covered queryability
+    and saved state broadly, but not the concrete MAP-Elites/island state
+    needed to inspect or resume the actual archive used by sampling.
+  - Required result: persist archive cell/event snapshots with island ids,
+    descriptors, replacements, elite contents, migration events, and
+    normalization state.
+
 - [x] Add strict JSONL serialization hardening to database work.
   - Evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` use
     `json.dumps(...)` defaults, which permit `NaN`/`Infinity` tokens if

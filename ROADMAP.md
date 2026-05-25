@@ -108,6 +108,8 @@ is not yet an AlphaEvolve reproduction.
 - Add a controller with bounded queues for LLM proposals and evaluator workers.
 - Persist enough archive, bandit, prompt, and pending-evaluation state to resume
   long runs.
+- Persist MAP-Elites cell/island state, descriptor values, elite snapshots, and
+  migration events, not only candidate history records.
 - Record Git/code state, problem hashes, plugin specs, and artifact hashes in
   the run manifest.
 - Define seeded replay semantics for run ids, candidate ids, prompt-program ids,

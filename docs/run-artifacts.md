@@ -88,6 +88,10 @@ That score-composition path is not currently stored as a structured trace, so
 plugin-adjusted records may have top-level `fitness` values that differ from
 `evaluation.fitness` without per-plugin before/after metadata.
 
+Archive state is not serialized yet. `history.jsonl` contains evaluated
+candidates, but not MAP-Elites cell coordinates, island assignment, diversity
+descriptor values, elite-list snapshots, or migration events.
+
 ## `prompt_history.jsonl`
 
 This file records prompt-program events:

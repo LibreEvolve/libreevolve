@@ -205,6 +205,11 @@ Population state is split across:
 length, and TF-IDF char-4gram diversity. Performance bounds now use the
 problem's normalized `0..1` fitness scale.
 
+Archive cells, descriptor values, island assignment, elite snapshots, and
+migration events are in-memory runtime state today. `history.jsonl` logs
+candidates, but it is not a serialized archive checkpoint or MAP-Elites event
+stream.
+
 LibreEvolve stores metric vectors, but its multi-objective policy is still a
 first pass: archive comparison and backend rewards use normalized primary
 fitness. Richer Pareto/frontier sampling remains open.
@@ -260,6 +265,8 @@ prompt-program events in `prompt_history.jsonl`.
 - Runtime budget accounting is limited to `max_generations` and evaluator
   timeouts; there is no run-wide wall-clock, token, cost, evaluator-second, or
   structured stop-reason model.
+- Archive cell/island state and migration events are not persisted separately
+  from candidate history records.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Mutation responses are raw patch text; proposal ideas/rationales are not

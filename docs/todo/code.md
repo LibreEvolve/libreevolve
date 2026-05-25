@@ -522,6 +522,23 @@ Primary evidence:
   - Required result: store rich candidate/evaluation records with queryable
     dimensions and reproducible sampling policies.
 
+- [ ] Persist archive cell/island state and migration events.
+  - Spec evidence: AlphaEvolve's program database is an active evolutionary
+    state, not just a candidate log; resuming, auditing, and comparing runs
+    requires knowing which programs occupied which archive cells and how
+    migration changed island populations.
+  - Current evidence: `ProgramDatabase.log()` writes candidate records to
+    `history.jsonl`, but `MAPElites._grid`, `_elite`, `_max_complexity`,
+    per-cell coordinates, diversity values, island assignment, and migration
+    events are kept only in memory. `ProgramDatabase.maybe_migrate()` mutates
+    islands without writing a history event, and `manifest.json` records only
+    population configuration, not archive state.
+  - Required result: persist archive snapshots or event logs containing island
+    ids, MAP-Elites cell coordinates/descriptors, cell replacements, elite
+    archive contents, migration source/destination/events, and normalization
+    state; add tests that a run's archive state can be inspected and eventually
+    resumed from persisted artifacts.
+
 - [ ] Review and improve parent/inspiration sampling.
   - Spec evidence: AlphaEvolve samples parent programs and inspirations from a
     database using an evolutionary algorithm inspired by MAP-Elites and island

@@ -217,6 +217,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn users that validator environment/secret isolation is
     not implemented and point the implementation gap to the TODOs.
 
+- [x] Clarify validator timeout process-tree limits.
+  - README evidence: README discussed validator subprocess execution and
+    timeouts but did not state whether a timed-out validator's descendant
+    processes are also terminated.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` uses
+    `subprocess.run(..., timeout=...)` without a process group or Windows Job
+    Object. A local proof showed a validator-spawned child process can write a
+    marker after the evaluator has returned `timeout`.
+  - Required result: warn users that validators should avoid long-lived child
+    processes until process-tree cleanup is implemented.
+
 - [x] Clarify validator-generated files are not retained.
   - README evidence: README says raw metrics and diagnostics are stored with
     each candidate, but did not explain that files written by `validate.py`

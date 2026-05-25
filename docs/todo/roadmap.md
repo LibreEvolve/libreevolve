@@ -542,6 +542,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     secret redaction, network policy, and tests proving provider keys are not
     visible to validators by default.
 
+- [x] Add evaluator process-tree cleanup to runtime hardening.
+  - Evidence: `CascadeEvaluator._run_subprocess()` relies on
+    `subprocess.run(..., timeout=...)` and does not create a process group, Job
+    Object, or descendant-cleanup policy. A validator-spawned child process can
+    outlive a timed-out direct validator process.
+  - Current roadmap gap: runtime hardening covered timeouts, sandbox/resource
+    limits, and environment secrets, but not cleanup of subprocess descendants
+    created by evaluator code.
+  - Required result: track process-group/job-object cleanup, timeout metadata,
+    and tests showing validator children are terminated on timeout or failure.
+
 - [x] Add run-wide compute-budget accounting to runtime work.
   - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas
     under a total computation budget, and paper ablations compare progress by

@@ -165,10 +165,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     than deterministic seed/run-derived identifiers. Validator subprocesses
     also inherit `.env`-loaded provider credentials and host environment
     variables by default, so evaluator environment provenance and secret
-    isolation are incomplete. Problem-local evaluator helper modules are not
-    imported only as sibling modules beside a configured validator file;
-    package-style validator entrypoints, relative evaluator data policy, and
-    evaluator code/data hashes are still missing.
+    isolation are incomplete. Validator timeouts also do not clean up spawned
+    descendant processes. Problem-local evaluator helper modules are imported
+    only as sibling modules beside a configured validator file; package-style
+    validator entrypoints, relative evaluator data policy, and evaluator
+    code/data hashes are still missing.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, validate/constrain evaluator paths, define evaluator import
     semantics, and record evaluator hashes plus run/collision metadata in

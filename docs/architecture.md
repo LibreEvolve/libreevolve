@@ -364,6 +364,9 @@ prompt-program events in `prompt_history.jsonl`.
 - Materialized workspace execution uses the candidate root as subprocess `cwd`
   and import path, but it is still a local Python subprocess rather than a
   container or arbitrary build-system runner.
+- Evaluator timeouts apply to the direct validator runner, but there is no
+  process-group/job-object cleanup for subprocess descendants spawned by
+  validator code yet.
 - Validator subprocesses inherit the parent process environment, including
   `.env`-loaded provider credentials, because no validator environment
   allowlist or secret redaction policy exists yet.

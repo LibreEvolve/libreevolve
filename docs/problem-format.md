@@ -141,6 +141,9 @@ temporary directory that is deleted after each subprocess evaluation, so any
 plots, JSON outputs, traces, compiled files, or other generated artifacts must
 be summarized through metrics/stdout/stderr until evaluator artifact collection
 is implemented.
+Timeouts do not yet guarantee process-tree cleanup: validators should avoid
+spawning long-lived child processes until process-group/job-object cleanup is
+implemented.
 
 ## Evaluation semantics
 

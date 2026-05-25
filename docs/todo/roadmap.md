@@ -208,6 +208,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     non-goal. That may remain true for services, but a stronger local
     evolutionary database is required for AlphaEvolve fidelity.
 
+- [x] Add strict JSONL serialization hardening to database work.
+  - Evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` use
+    `json.dumps(...)` defaults, which permit `NaN`/`Infinity` tokens if
+    non-finite values reach records.
+  - Current roadmap gap: database work covered queryability and sampling, but
+    not the validity of persisted JSONL for strict downstream analysis.
+  - Required result: make finite JSON serialization and invalid-record
+    quarantine part of runtime/database hardening.
+
 - [x] Add reproducibility hashes to run metadata work.
   - Evidence: AlphaEvolve-scale runs need exact problem, evaluator, prompt, and
     code-state provenance to support long-running comparisons.

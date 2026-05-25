@@ -147,6 +147,8 @@ is not yet an AlphaEvolve reproduction.
 
 - Validate config files, backend specs, stage configs, and feedback grader
   schemas before starting a run.
+- Harden `history.jsonl` and `prompt_history.jsonl` as strict finite JSONL,
+  rejecting or quarantining non-finite records before persistence.
 - Improve `show` for run summaries, lineage, metrics, and failure statistics.
 - Add packaging/release hygiene beyond editable installs.
 - Broaden CI/interpreter coverage.

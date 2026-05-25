@@ -303,6 +303,22 @@ Primary evidence:
     secondary bounds, missing secondary outputs, non-scalar values,
     NaN/Infinity, and undeclared metrics.
 
+- [ ] Enforce strict finite JSON serialization for run records.
+  - Spec evidence: AlphaEvolve's program database is a machine-readable store
+    of candidates, metrics, outputs, and feedback; downstream selection,
+    replay, and analysis require valid finite scalar records.
+  - Current evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` call
+    `json.dumps(...)` with Python defaults. If evaluator, feedback, or plugin
+    paths leave `NaN`, `Infinity`, or non-JSON-compatible values in fitness,
+    metrics, evaluation metadata, prompt rewards, or plugin metadata, the log
+    can either emit non-standard JSON tokens or fail during logging after
+    evaluation.
+  - Required result: validate/sanitize records before persistence, use
+    `allow_nan=False`, quarantine invalid records with diagnostics, keep
+    `history.jsonl` and `prompt_history.jsonl` strict JSONL, and test
+    non-finite fitness, metrics, feedback scores, prompt rewards, and plugin
+    metadata.
+
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
   - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing

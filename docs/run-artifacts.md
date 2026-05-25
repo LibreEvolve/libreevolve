@@ -1,6 +1,10 @@
 # Run Artifacts
 
 LibreEvolve writes machine-readable run outputs under `runs/` by default.
+Strict JSON serialization is not fully hardened yet: if a plugin, feedback
+grader, or unchecked evaluator path produces non-finite numeric values, the
+current Python JSON writer may emit permissive `NaN`/`Infinity` tokens rather
+than rejecting the record. Treat strict finite JSONL as open hardening work.
 
 ## Directory layout
 

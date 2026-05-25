@@ -103,3 +103,20 @@ def test_workspace_rejects_path_escape():
         assert "Unsafe candidate path" in str(exc)
     else:
         raise AssertionError("expected unsafe path rejection")
+
+
+def test_workspace_rejects_windows_drive_path():
+    try:
+        CandidateWorkspace(files={"C:/bad.py": "x = 1"}, primary_file="C:/bad.py")
+    except ValueError as exc:
+        assert "Unsafe candidate path" in str(exc)
+    else:
+        raise AssertionError("expected unsafe path rejection")
+
+
+def test_workspace_rejects_colon_path_component():
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    response = "<<<FILE pkg:bad.py\nvalue = 2\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "pkg:bad.py:unsafe_path"

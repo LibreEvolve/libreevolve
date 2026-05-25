@@ -40,7 +40,8 @@ Primary evidence:
   - Status: basic local workspace evolution is implemented and covered by
     tests. Remaining limitations: Python syntax validation only, no arbitrary
     language runners/build systems, and `best.py` is still a primary-file
-    convenience artifact.
+    convenience artifact. Candidate paths reject traversal, drive-letter, and
+    colon-component paths before materialization.
   - Required result: represent a candidate as a project/file set, apply diffs
     across marked files/components, and pass the whole candidate workspace to
     `evaluate`.

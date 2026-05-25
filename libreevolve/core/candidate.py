@@ -66,7 +66,7 @@ class CandidateWorkspace:
 def normalize_candidate_path(path: str) -> str:
     normalized = path.replace("\\", "/").strip().lstrip("/")
     parts = [p for p in normalized.split("/") if p and p != "."]
-    if not parts or any(p == ".." for p in parts):
+    if not parts or any(p == ".." or ":" in p for p in parts):
         raise ValueError(f"Unsafe candidate path: {path!r}")
     return "/".join(parts)
 
@@ -181,7 +181,11 @@ def apply_workspace_mutation(
     files = dict(workspace.files)
     changed = False
     for rel_path, body in sections:
-        rel_path = normalize_candidate_path(rel_path)
+        raw_path = rel_path.strip()
+        try:
+            rel_path = normalize_candidate_path(raw_path)
+        except ValueError:
+            return workspace, f"{raw_path}:unsafe_path"
         current = files.get(rel_path, "")
         if mutation_mode == "full" and rel_path not in files:
             new_code, err = body.strip("\n"), None

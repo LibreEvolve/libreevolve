@@ -55,9 +55,10 @@ the primary file content, not every file in the candidate workspace.
 `llm_feedback` grader specs are validated before startup: `name`, `metric`, and
 `prompt` must be strings when present; `weight` and `min_score` must be finite
 numbers; `include_invalid` must be boolean; and unsupported keys are rejected.
-Model responses are still only partially isolated at runtime: provider
-failures, malformed scores, and string discard flags are not yet quarantined as
-structured feedback-stage failures.
+Provider failures, malformed response scores, non-finite response scores, and
+non-boolean discard values are recorded as `llm_feedback_failed` metadata and
+ignored for score/validity composition. There is not yet a configurable retry,
+penalty, or discard policy for failed feedback graders.
 
 ### Population
 

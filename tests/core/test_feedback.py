@@ -31,6 +31,12 @@ def test_parse_feedback_numeric_fallback():
     assert parsed["score"] == 0.5
 
 
+def test_parse_feedback_without_score_keeps_feedback_only():
+    parsed = parse_feedback_response("unclear")
+    assert "score" not in parsed
+    assert parsed["feedback"] == "unclear"
+
+
 def test_apply_llm_feedback_adds_metric_and_weighted_score():
     llm = MagicMock()
     llm.generate.return_value = ('{"score": 0.5, "feedback": "ok"}', 2)
@@ -86,3 +92,81 @@ def test_apply_llm_feedback_skips_invalid_candidates_by_default():
 
     assert updated is result
     llm.generate.assert_not_called()
+
+
+def test_apply_llm_feedback_records_backend_failure_without_changing_score():
+    llm = MagicMock()
+    llm.generate.side_effect = RuntimeError("provider down")
+    result = EvaluationResult(fitness=0.8, metrics={"score": 0.8, "is_valid": True}, is_valid=True)
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity", "weight": 0.2}],
+        llm,
+    )
+
+    assert updated.fitness == 0.8
+    assert updated.is_valid is True
+    assert "simplicity" not in updated.metrics
+    record = updated.metadata["llm_feedback"][0]
+    assert record["error"] == "llm_feedback_failed"
+    assert record["exception"] == "RuntimeError"
+
+
+def test_apply_llm_feedback_records_malformed_response_score():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": "bad", "feedback": "no"}', 1)
+    result = EvaluationResult(fitness=0.8, metrics={"score": 0.8, "is_valid": True}, is_valid=True)
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity", "weight": 0.2}],
+        llm,
+    )
+
+    assert updated.fitness == 0.8
+    assert "simplicity" not in updated.metrics
+    record = updated.metadata["llm_feedback"][0]
+    assert record["error"] == "llm_feedback_failed"
+    assert "score" in record["message"]
+    assert record["backend_idx"] == 1
+
+
+def test_apply_llm_feedback_records_string_discard_without_discarding():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": 0.9, "discard": "false"}', 1)
+    result = EvaluationResult(fitness=0.8, metrics={"score": 0.8, "is_valid": True}, is_valid=True)
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity", "weight": 0.2}],
+        llm,
+    )
+
+    assert updated.is_valid is True
+    assert updated.fitness == 0.8
+    assert "simplicity" not in updated.metrics
+    assert "discard" in updated.metadata["llm_feedback"][0]["message"]
+
+
+def test_apply_llm_feedback_records_non_finite_score():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": NaN}', 1)
+    result = EvaluationResult(fitness=0.8, metrics={"score": 0.8, "is_valid": True}, is_valid=True)
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "simplicity", "metric": "simplicity", "weight": 0.2}],
+        llm,
+    )
+
+    assert updated.fitness == 0.8
+    assert "finite" in updated.metadata["llm_feedback"][0]["message"]

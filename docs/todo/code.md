@@ -626,24 +626,31 @@ Primary evidence:
     prompt-budget controls; add tests proving graders can inspect non-primary
     files and that oversized workspaces are handled deterministically.
 
-- [ ] Isolate malformed or failing LLM feedback graders.
+- [x] Isolate malformed or failing LLM feedback graders.
   - Spec evidence: AlphaEvolve treats LLM-generated feedback as an optional
     evaluation/scoring signal; grader failures should be diagnosable evaluation
     outcomes, not unstructured run crashes or silent misclassifications.
-  - Current evidence: `apply_llm_feedback()` calls `llm.generate()`,
-    `float(parsed["score"])`, and `bool(parsed["discard"])` without failure
-    handling or strict response parsing. `Config.validate()` now rejects invalid
-    grader schema fields (`weight`, `min_score`, `include_invalid`, text fields,
-    and unsupported keys) before startup, but provider exceptions, malformed
-    response scores, non-finite response values, and string booleans such as
-    `"false"` can still crash the run or discard candidates incorrectly. No
-    feedback failure record is stored as an evaluation stage outcome or
-    structured metadata.
-  - Required result: define feedback-grader failure policy (ignore, penalize,
-    discard, retry, or stop), parse booleans/numbers strictly, capture grader
-    exceptions and malformed responses as structured metadata/stage outcomes,
-    and add tests for backend errors, malformed response scores, string discard
-    values, non-finite response values, and configured failure policies.
+  - Current evidence: `apply_llm_feedback()` now catches provider exceptions,
+    malformed response scores, non-finite response scores, and non-boolean
+    discard values as `llm_feedback_failed` records under
+    `evaluation.metadata.llm_feedback`; failed graders are ignored for
+    score/validity composition. `Config.validate()` rejects invalid grader
+    schema fields before startup.
+  - Status: implemented with tests for backend errors, malformed response
+    scores, string discard values, and non-finite response values. Richer
+    configurable retry/penalty/discard policies remain future work.
+
+- [ ] Add configurable LLM feedback failure policies.
+  - Spec evidence: AlphaEvolve-style optional feedback should support explicit
+    experiment policy for how failed reviewer/grader calls affect selection and
+    diagnostics.
+  - Current evidence: failed feedback graders are currently isolated with one
+    hard-coded policy: record failure metadata and ignore the failed grader for
+    score and validity. There is no config option for retry, penalize, discard,
+    stop-run, or fallback-reviewer behavior.
+  - Required result: add a feedback failure-policy config schema, implement
+    retry/penalty/discard/ignore behavior as configured, record policy decisions
+    in history, and test each policy.
 
 - [ ] Calibrate LLM feedback scores against metric schema and fitness
   composition.

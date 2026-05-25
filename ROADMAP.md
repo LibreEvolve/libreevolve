@@ -74,8 +74,8 @@ is not yet an AlphaEvolve reproduction.
 - Add calibration/ablation reporting for LLM feedback graders.
 - Normalize and bound LLM feedback metrics before using them in score
   composition.
-- Isolate LLM feedback provider, parse, and config failures as structured
-  evaluation metadata or stage outcomes.
+- Add configurable retry/penalty policies for LLM feedback provider or parse
+  failures beyond the current ignore-and-record behavior.
 - Preserve every evaluator retry attempt in run history, not only the
   successful or final attempt.
 - Add validator environment allowlisting, secret redaction, and network policy

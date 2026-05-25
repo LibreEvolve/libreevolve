@@ -279,9 +279,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: feedback calibration and config validation were
     tracked, but the roadmap did not call out failure isolation for optional
     feedback graders as an evaluation hardening item.
-  - Required result: quarantine grader call/parse failures as structured
-    metadata or stage outcomes, and test backend errors, malformed responses,
-    non-finite response values, and discard parsing.
+  - Status: implemented as an ignore-and-record policy. Provider failures,
+    malformed response scores, non-finite response scores, and non-boolean
+    discard values are recorded as `llm_feedback_failed` metadata and ignored
+    for score/validity composition.
 
 - [x] Add proposal idea/rationale capture to prompt/context work.
   - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from dataclasses import replace
 
@@ -55,16 +56,32 @@ def apply_llm_feedback(
     is_valid = updated.is_valid
     for grader in active_graders:
         name = str(grader.get("name", f"feedback_{len(feedback_records)}"))
-        prompt = _build_feedback_prompt(grader, workspace, problem, updated)
-        response, backend_idx = llm.generate(prompt)
-        parsed = parse_feedback_response(response)
-        score = float(parsed.get("score", 0.0))
         metric_name = str(grader.get("metric", f"llm_{name}"))
+        response = ""
+        backend_idx = None
+        try:
+            prompt = _build_feedback_prompt(grader, workspace, problem, updated)
+            response, backend_idx = llm.generate(prompt)
+            parsed = parse_feedback_response(response)
+            score = _feedback_score(parsed)
+            discard = _feedback_discard(parsed)
+        except Exception as exc:
+            feedback_records.append(
+                {
+                    "name": name,
+                    "metric": metric_name,
+                    "error": "llm_feedback_failed",
+                    "exception": exc.__class__.__name__,
+                    "message": str(exc),
+                    "backend_idx": backend_idx,
+                    "raw_response": response,
+                }
+            )
+            continue
         updated.metrics[metric_name] = score
         weight = float(grader.get("weight", 0.0))
         fitness += weight * score
         min_score = grader.get("min_score")
-        discard = bool(parsed.get("discard", False))
         if min_score is not None and score < float(min_score):
             discard = True
         if discard:
@@ -109,10 +126,27 @@ def parse_feedback_response(text: str) -> dict:
         except json.JSONDecodeError:
             pass
     number = re.search(r"-?\d+(?:\.\d+)?", stripped)
-    return {
-        "score": float(number.group(0)) if number else 0.0,
-        "feedback": stripped,
-    }
+    parsed = {"feedback": stripped}
+    if number:
+        parsed["score"] = float(number.group(0))
+    return parsed
+
+
+def _feedback_score(parsed: dict) -> float:
+    value = parsed.get("score")
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError("feedback response score must be numeric")
+    score = float(value)
+    if not math.isfinite(score):
+        raise ValueError("feedback response score must be finite")
+    return score
+
+
+def _feedback_discard(parsed: dict) -> bool:
+    value = parsed.get("discard", False)
+    if not isinstance(value, bool):
+        raise ValueError("feedback response discard must be boolean")
+    return value
 
 
 def _build_feedback_prompt(

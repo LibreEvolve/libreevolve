@@ -450,15 +450,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 - [x] Clarify feedback grader failure-isolation limits.
   - README evidence: optional feedback graders are described as able to add
-    metrics or discard candidates, but the current caveats did not explain that
-    malformed grader output or config can still fail outside structured
-    evaluation diagnostics.
+    metrics or discard candidates; the caveats previously said malformed
+    output/config was not isolated.
   - Current evidence: `Config.validate()` now rejects invalid feedback grader
-    config, but `apply_llm_feedback()` still does not isolate `llm.generate()`
-    failures, malformed numeric response scores, non-finite response scores, or
-    string discard flags.
-  - Required result: warn readers that LLM feedback failure handling is not yet
-    AlphaEvolve-grade structured evaluation behavior.
+    config, and `apply_llm_feedback()` now records provider failures, malformed
+    numeric response scores, non-finite response scores, and string discard
+    flags as feedback-failure metadata without changing score/validity.
+  - Required result: warn readers that richer retry/penalty/discard policy and
+    score calibration remain open.
 
 - [x] Clarify evaluator-stage numeric config validation.
   - README evidence: the evaluation and configuration docs show staged

@@ -25,10 +25,12 @@ constructs a `Problem` from:
 - `metrics.yaml`
 - `validate.py`
 - `initial_programs/*.py` or seed directories under `initial_programs/`
-- optional `context/*.{txt,md,py}`
+- optional `context/*.{txt,md,py,pdf}`
 
-The loader keeps all declared metrics, picks a primary metric, and exposes
-metric direction/bounds helpers. Fitness is the normalized primary metric:
+The loader keeps all declared metrics, picks a primary metric, exposes metric
+direction/bounds helpers, and loads deterministic prompt context. Text/code
+context is read directly; PDFs are extracted with `pypdf`; long context is
+bounded before prompt rendering. Fitness is the normalized primary metric:
 `maximize` maps low-to-high bounds to `0..1`; `minimize` inverts that scale.
 
 ## Candidate representation

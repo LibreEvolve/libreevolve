@@ -77,7 +77,8 @@ def _render_context(problem: Problem) -> str:
     if not problem.context_files:
         return "(none)"
     return "\n\n".join(
-        f"--- {name} ---\n{content}" for name, content in problem.context_files.items()
+        f"--- CONTEXT SOURCE: {name} ---\n{content}"
+        for name, content in problem.context_files.items()
     )
 
 

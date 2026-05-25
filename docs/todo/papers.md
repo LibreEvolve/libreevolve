@@ -16,9 +16,10 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: prompts may include previous solutions, system instructions,
     explicit context, stochastic formatting, rendered evaluation results, and
     meta-prompt evolution.
-  - Status: implemented prompt templates, problem context files, stochastic
-    variants, rendered evaluator output, and local prompt-program selection,
-    scoring, lineage, and optional LLM mutation.
+  - Status: implemented prompt templates, deterministic local context files
+    including PDF extraction, stochastic variants, rendered evaluator output,
+    and local prompt-program selection, scoring, lineage, and optional LLM
+    mutation.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.

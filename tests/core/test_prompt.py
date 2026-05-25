@@ -32,6 +32,7 @@ def test_prompt_sampler_renders_context_and_feedback():
 
     prompt = PromptSampler().build(parent, [], problem, extra_context="", recent_failures=[])
 
+    assert "--- CONTEXT SOURCE: notes.md ---" in prompt
     assert "Prefer simple arithmetic." in prompt
     assert "score=0.25" in prompt
     assert "- validate: passed, score=0.25" in prompt

@@ -7,7 +7,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 ## Tech Stack
 
 - Python 3.11+ (use `py -3.12` on this machine, not `python`)
-- Dependencies: numpy, scikit-learn, anthropic, openai, ollama, pyyaml, click, python-dotenv
+- Dependencies: numpy, scikit-learn, anthropic, openai, ollama, pyyaml, click, python-dotenv, pypdf
 - Testing: pytest, pytest-mock
 - No framework — pure Python with dataclasses
 

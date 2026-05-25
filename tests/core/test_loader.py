@@ -75,6 +75,30 @@ def test_reads_context_files():
         assert p.context_files["notes.md"] == "important context"
 
 
+def test_reads_pdf_context_files():
+    from pypdf import PdfWriter
+
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context").mkdir()
+        writer = PdfWriter()
+        writer.add_blank_page(width=72, height=72)
+        with open(d / "context" / "paper.pdf", "wb") as f:
+            writer.write(f)
+        p = load_problem(d)
+        assert p.context_files["paper.pdf"] == "(no extractable text)"
+
+
+def test_truncates_long_context_files():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context").mkdir()
+        (d / "context" / "long.txt").write_text("x" * 7000)
+        p = load_problem(d)
+        assert "showing first 6000 of 7000 characters" in p.context_files["long.txt"]
+        assert len(p.context_files["long.txt"]) < 6100
+
+
 def test_normalizes_minimize_metric():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

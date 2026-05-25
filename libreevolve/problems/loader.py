@@ -4,6 +4,9 @@ from pathlib import Path
 import yaml
 from libreevolve.core.candidate import CandidateWorkspace
 
+_CONTEXT_EXTENSIONS = {".txt", ".md", ".py", ".pdf"}
+_MAX_CONTEXT_CHARS = 6000
+
 @dataclass
 class Problem:
     name:             str
@@ -112,6 +115,32 @@ def _load_context_files(problem_dir: Path) -> dict[str, str]:
         return {}
     result: dict[str, str] = {}
     for path in sorted(context_dir.iterdir()):
-        if path.is_file() and path.suffix.lower() in {".txt", ".md", ".py"}:
-            result[path.name] = path.read_text(encoding="utf-8").strip()
+        if not path.is_file() or path.suffix.lower() not in _CONTEXT_EXTENSIONS:
+            continue
+        if path.suffix.lower() == ".pdf":
+            result[path.name] = _summarize_context_text(_read_pdf_text(path), path.name)
+        else:
+            result[path.name] = _summarize_context_text(
+                path.read_text(encoding="utf-8").strip(), path.name
+            )
     return result
+
+
+def _read_pdf_text(path: Path) -> str:
+    try:
+        from pypdf import PdfReader
+
+        reader = PdfReader(str(path))
+        text = "\n".join(page.extract_text() or "" for page in reader.pages).strip()
+        return text or "(no extractable text)"
+    except Exception as exc:
+        return f"(PDF extraction failed: {exc.__class__.__name__}: {exc})"
+
+
+def _summarize_context_text(text: str, source: str) -> str:
+    if len(text) <= _MAX_CONTEXT_CHARS:
+        return text
+    return (
+        f"[{source}: showing first {_MAX_CONTEXT_CHARS} of {len(text)} characters]\n"
+        f"{text[:_MAX_CONTEXT_CHARS]}"
+    )

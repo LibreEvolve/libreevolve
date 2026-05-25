@@ -35,6 +35,7 @@ The main runtime dependencies are:
 - `pyyaml`
 - `click`
 - `python-dotenv`
+- `pypdf`
 
 Development dependencies include:
 

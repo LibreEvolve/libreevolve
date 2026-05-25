@@ -106,14 +106,17 @@ Primary evidence:
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
-- [ ] Add first-class literature/context ingestion.
+- [x] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,
     equations, code snippets, and relevant literature, including PDF files.
-  - Current evidence: `load_problem()` reads problem-local `.txt`, `.md`, and
-    `.py` files from `context/` and `PromptSampler` renders them. There is no
-    PDF extraction/summarization layer or deterministic literature selector.
-    `DeepResearchPlugin` still searches arXiv by a generic query derived from
-    fitness, not by supplied local literature.
+  - Current evidence: `load_problem()` reads problem-local `.txt`, `.md`,
+    `.py`, and `.pdf` files from `context/`; text/code files are direct,
+    PDFs are extracted with `pypdf`, long context is deterministically bounded,
+    and `PromptSampler` renders source headers. `DeepResearchPlugin` remains a
+    separate arXiv-search plugin, not the local literature ingestion path.
+  - Status: implemented for deterministic local context ingestion and PDF text
+    extraction with documented limits. Remaining hardening: semantic
+    summarization/ranking for very large corpora.
   - Required result: allow problem-local context files, PDFs, equations, and
     code snippets to be selected, summarized, and rendered deterministically.
 

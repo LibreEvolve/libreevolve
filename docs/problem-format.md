@@ -26,11 +26,16 @@ my_problem/
 └── context/
     ├── notes.md
     ├── formula.txt
-    └── helper.py
+    ├── helper.py
+    └── paper.pdf
 ```
 
-Supported context extensions are `.txt`, `.md`, and `.py`. These files are
-rendered into prompts as explicit context.
+Supported context extensions are `.txt`, `.md`, `.py`, and `.pdf`. Text-like
+files are read directly. PDFs are extracted with `pypdf`; files with no
+extractable text are marked as such, and extraction failures are rendered as
+diagnostic context rather than aborting problem load. Each context item is
+rendered into prompts with a source header. Long context files are truncated
+deterministically to the first 6000 characters.
 
 ## `task_description.txt`
 

@@ -144,7 +144,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     implementations landed.
   - Status: refreshed the AlphaEvolve row to distinguish implemented local
     behavior from remaining async, multi-objective, database, canonical-diff,
-    full-workspace export/resume, and benchmark gaps.
+    full-workspace export/resume, metric-validation, feedback-calibration,
+    LLM-accounting, config-validation, and benchmark gaps.
   - Required result: keep the paper index aligned with current code whenever
     todo items are completed or reopened.
 

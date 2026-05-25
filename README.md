@@ -67,10 +67,10 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | Source | Closed-source | **Open-source (MIT)** |
 | LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama backends** |
 | Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with 5-island migration** |
-| LLM selection | Fast/deep model scheduling described | **UCB1 heuristic plus experimental throughput/depth metadata** |
+| LLM selection | Fast/deep model scheduling described | **UCB-style heuristic plus experimental throughput/depth metadata** |
 | Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, and optional synchronous LLM feedback** |
 | Extensibility | Task API, evaluators, prompt/context customization, LLM choices, evolve blocks | **Python problem format, plugins, prompt templates, evolve blocks** |
-| Local models | No | **Yes (Ollama)** |
+| Local models | Published experiments use hosted Gemini models; local model use is not discussed | **Yes (Ollama)** |
 | Research grounding | Published paper | **24-paper local cache and implementation-status docs** |
 
 ## Getting Started

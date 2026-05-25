@@ -83,10 +83,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: `LLMEnsemble` is a UCB-style heuristic over unnormalized
     fitness improvements, with known canonical-UCB gaps tracked in
     `docs/todo/papers.md`.
-  - Status: README now uses "UCB-style" and describes routing as tracking
-    observed fitness improvements.
+  - Status: README now uses "UCB-style" in the feature list, workflow text, and
+    AlphaEvolve comparison, and describes routing as tracking observed fitness
+    improvements.
   - Required result: keep marketing text aligned with the heuristic
     implementation unless canonical UCB1 is implemented and tested.
+
+- [x] Correct the AlphaEvolve local-model comparison row.
+  - README evidence: the comparison table said AlphaEvolve local models:
+    "No."
+  - Spec evidence: the paper describes published experiments with Gemini
+    Flash/Pro and a choice of existing/custom LLMs, but does not make a broad
+    claim about local model support.
+  - Status: README now says local model use is not discussed in the paper,
+    while published experiments use hosted Gemini models.
+  - Required result: avoid inventing a negative AlphaEvolve capability claim
+    when the paper only omits or does not discuss it.
 
 - [x] Qualify "Feed it a problem, a seed program, and any LLM."
   - README evidence: `README.md:22`.

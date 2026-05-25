@@ -332,9 +332,13 @@ excludes the selected parent and deduplicates migrated copies by program id, but
 sampling is not yet metric-aware and does not use novelty, feedback, lineage, or
 recency signals.
 
-LibreEvolve stores metric vectors, but its multi-objective policy is still a
-first pass: archive comparison and backend rewards use normalized primary
-fitness. Richer Pareto/frontier sampling remains open.
+LibreEvolve stores metric vectors and now annotates each program with
+`metadata.normalized_metrics` for declared numeric metrics plus an equal-weight
+`metadata.selection_score`. MAP-Elites performance placement, cell replacement,
+elite ranking, and exploit/best sampling use that selection score with final
+composed fitness as a tie-break. Admission thresholds and backend rewards still
+use final scalar fitness, and richer Pareto/frontier sampling, configurable
+weights, metric-specific elites, and metric-aware inspirations remain open.
 
 ## Backend selection
 

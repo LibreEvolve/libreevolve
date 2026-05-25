@@ -99,6 +99,7 @@ def evolve(problem: Problem, config: Config,
             evaluation=result.to_dict(),
             metadata={"budget": budget.snapshot()},
         )
+        _annotate_metric_policy(program, problem)
         db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
 
@@ -184,7 +185,9 @@ def evolve(problem: Problem, config: Config,
                           metrics=result.metrics,
                           evaluation=result.to_dict())
 
+        _annotate_metric_policy(program, problem)
         score = _apply_plugin_scores(program, score, plugins)
+        _annotate_metric_policy(program, problem)
 
         if program.fitness < VALID_THRESHOLD or not _evaluation_is_valid(program):
             failure = db.log_failure(program, parent, diff, diff_error)
@@ -299,6 +302,32 @@ def _apply_plugin_scores(
     program.metadata["score_composition"] = composition
     program.fitness = score
     return score
+
+
+def _annotate_metric_policy(program: Program, problem: Problem) -> None:
+    normalized: dict[str, float] = {}
+    for metric in problem.metrics:
+        name = metric.get("name")
+        if not isinstance(name, str) or name not in program.metrics:
+            continue
+        value = program.metrics[name]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            continue
+        numeric = float(value)
+        if not math.isfinite(numeric):
+            continue
+        normalized[name] = problem.normalize_metric(name, numeric)
+    if not normalized:
+        return
+    selection_score = sum(normalized.values()) / len(normalized)
+    program.metadata = dict(program.metadata)
+    program.metadata["normalized_metrics"] = normalized
+    program.metadata["selection_score"] = selection_score
+    program.metadata["selection_policy"] = {
+        "type": "mean_normalized_declared_metrics",
+        "metrics": list(normalized),
+        "primary_metric": problem.primary_metric,
+    }
 
 
 def _last_llm_call(llm) -> dict | None:

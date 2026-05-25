@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 from libreevolve.core.config import Config
 from libreevolve.core.jsonl import append_strict_jsonl, strict_json_dump
+from libreevolve.population.map_elites import _selection_score
 from libreevolve.population.islands import IslandModel
 from libreevolve.population.program import Program
 
@@ -96,6 +97,7 @@ class ProgramDatabase:
             event = self.add(program)
             event["threshold"] = threshold
             event["evaluation_is_valid"] = evaluation_is_valid
+        event["selection_score"] = _selection_score(program)
         program.metadata = dict(program.metadata)
         program.metadata["archive_admission"] = event
         return event

@@ -192,7 +192,7 @@ graph TD
 3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff by default, or full-block/full-code replacements when configured with `mutation_mode: full`
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates; malformed critique revisions fall back to the original mutation when it still applies cleanly.
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
-6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
+6. **Archive update** — Valid programs enter the MAP-Elites archive; declared metrics are normalized into a first-pass selection score for archive ranking, and all programs are logged with metrics and evaluation details
 7. **Failure memory** — Failed/rejected mutations are persisted with error causes, changed files, evaluator summaries, and bounded prompt-visible examples
 8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
@@ -226,6 +226,10 @@ are not persisted as replayable MAP-Elites state yet.
 History records include per-candidate `metadata.archive_admission` events with
 threshold status, island id, MAP-Elites cell coordinates/descriptors, previous
 occupant ids, and elite-list effects.
+Declared numeric metrics are normalized through `metrics.yaml` into
+`metadata.normalized_metrics` and averaged into `metadata.selection_score` for
+MAP-Elites replacement and exploit/best sampling. This is a documented scalar
+policy, not a Pareto frontier or metric-specific archive yet.
 
 For workspace candidates, MAP-Elites complexity and TF-IDF diversity descriptors
 currently use the primary-file view, not the full candidate file set.

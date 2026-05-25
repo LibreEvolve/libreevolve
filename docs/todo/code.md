@@ -870,9 +870,13 @@ Primary evidence:
     use diverse high-performing programs under different definitions of "good"
     in prompts.
   - Current evidence: evaluator/database/program records preserve metric
-    vectors, and primary fitness honors direction/bounds. Archive comparisons,
-    backend reward, and parent selection still collapse behavior to normalized
-    primary fitness.
+    vectors, primary fitness honors direction/bounds, and declared numeric
+    metrics are normalized into `metadata.normalized_metrics` plus an
+    equal-weight `metadata.selection_score`. MAP-Elites replacement, elite
+    ranking, and exploit/best sampling use that score with final fitness as a
+    tie-break. Backend reward, admission thresholds, and many parent/inspiration
+    paths still use scalar final fitness, and there is no Pareto/frontier,
+    configurable weighting, or metric-specific archive.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier or score-composition policies, and sample
     inspirations by metric-specific excellence.
@@ -897,10 +901,11 @@ Primary evidence:
     and all metrics used for selection, prompting, or feedback composition need
     consistent semantics.
   - Current evidence: secondary metrics are preserved raw in `Program.metrics`
-    and `history.jsonl`; `apply_llm_feedback()` adds grader scores and
+    and `history.jsonl`; declared numeric secondary metrics are normalized into
+    `metadata.normalized_metrics` and affect the equal-weight archive
+    `selection_score`. `apply_llm_feedback()` still adds grader scores and
     `weight * score` directly to normalized fitness without checking declared
-    bounds/directions or normalizing the feedback metric. The current archive
-    policy ignores secondary metrics except as logged context.
+    bounds/directions or normalizing the feedback metric.
   - Required result: validate every declared metric against schema, normalize
     metric vectors when they affect selection/prompting/archive policy,
     define feedback metric schemas, and test minimize/out-of-range/non-finite

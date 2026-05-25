@@ -56,8 +56,10 @@ is not yet an AlphaEvolve reproduction.
 
 ### 2. Strengthen multi-objective search
 
-- Define a first-class multi-objective policy: Pareto archive, weighted
-  composition, metric-specific elites, or a documented hybrid.
+- Extend the current documented hybrid, which averages normalized declared
+  metrics for archive ranking, into a first-class multi-objective policy:
+  Pareto archive, configurable weighted composition, metric-specific elites,
+  or another tested policy.
 - Reject degenerate or inverted metric bounds before they can affect primary
   normalization, archive placement, or future multi-objective policies.
 - Sample parents/inspirations by score, individual metric excellence, diversity,

@@ -67,6 +67,37 @@ def test_loop_logs_llm_call_telemetry_on_candidate():
     assert child["metadata"]["llm_calls"][0]["backend_name"] == "fake/model"
 
 
+def test_loop_records_normalized_metrics_and_selection_score():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c): return {'accuracy': 0.8, 'latency': 20.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    problem = Problem(
+        name="t",
+        task_description="balance metrics",
+        metrics=[
+            {"name": "accuracy", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "latency", "direction": "minimize", "bounds": [0.0, 100.0]},
+        ],
+        primary_metric="accuracy",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1"],
+        problem_dir=d,
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    record = json.loads((Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()[0])
+    assert record["metadata"]["normalized_metrics"] == {"accuracy": 0.8, "latency": 0.8}
+    assert record["metadata"]["selection_score"] == 0.8
+    assert record["metadata"]["selection_policy"]["type"] == "mean_normalized_declared_metrics"
+    assert record["metadata"]["archive_admission"]["selection_score"] == 0.8
+
+
 def test_evaluation_budget_stops_before_llm_mutation():
     tmpdir = tempfile.mkdtemp()
     llm = _llm()

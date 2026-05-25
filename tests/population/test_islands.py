@@ -4,6 +4,8 @@ from libreevolve.population.program import Program
 
 def _m(n=3): return IslandModel(Config(n_islands=n, migration_interval=5))
 def _p(code="x=1", fitness=0.5): return Program(code=code, fitness=fitness)
+def _pm(code="x=1", fitness=0.5, selection_score=0.5):
+    return Program(code=code, fitness=fitness, metadata={"selection_score": selection_score})
 
 def test_best_returns_highest():
     m = _m(); m.add(_p(fitness=0.3)); m.add(_p(fitness=0.7))
@@ -19,6 +21,15 @@ def test_add_reports_island_id_and_rotates():
 def test_sample_exploit_returns_best():
     m = _m(); m.add(_p(fitness=0.3)); m.add(_p(fitness=0.9))
     assert m.sample("exploit").fitness == 0.9
+
+def test_sample_exploit_uses_selection_score():
+    m = _m()
+    primary_best = _pm(code="x=1", fitness=0.9, selection_score=0.2)
+    balanced = _pm(code="x=2", fitness=0.4, selection_score=0.8)
+    m.add(primary_best)
+    m.add(balanced)
+    assert m.sample("exploit").id == balanced.id
+    assert m.best().id == balanced.id
 
 def test_migration_copies_not_moves():
     m = IslandModel(Config(n_islands=2, migration_ratio=1.0, elite_archive_size=10))

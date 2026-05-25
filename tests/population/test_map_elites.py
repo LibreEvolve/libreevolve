@@ -3,6 +3,9 @@ from libreevolve.population.program import Program
 
 def _p(code="x=1", fitness=0.5): return Program(code=code, fitness=fitness)
 
+def _pm(code="x=1", fitness=0.5, selection_score=0.5):
+    return Program(code=code, fitness=fitness, metadata={"selection_score": selection_score})
+
 def test_best_none_when_empty():
     assert MAPElites().best() is None
 
@@ -70,3 +73,17 @@ def test_performance_bounds_affect_cell():
     a = MAPElites(bins=10, perf_bounds=(0.0, 100.0))
     p = _p(fitness=50.0)
     assert a._cell(p)[0] == 5
+
+
+def test_selection_score_drives_replacement_and_best():
+    a = MAPElites(bins=1)
+    primary_best = _pm(code="x=1", fitness=0.9, selection_score=0.2)
+    a.add(primary_best)
+
+    balanced = _pm(code="x=2", fitness=0.4, selection_score=0.8)
+    event = a.add(balanced)
+
+    assert event["cell_replaced"] is True
+    assert event["selection_score"] == 0.8
+    assert a.best().id == balanced.id
+    assert a._grid[(0, 0, 0)].id == balanced.id

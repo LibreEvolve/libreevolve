@@ -48,7 +48,7 @@ class MAPElites:
         self, p: Program
     ) -> tuple[tuple[int, int, int], dict[str, float]]:
         descriptors = {
-            "performance": self._norm_perf(p.fitness),
+            "performance": self._norm_perf(_selection_score(p)),
             "complexity": self._norm_complexity(p.code),
             "diversity": self._diversity(p.code),
         }
@@ -75,19 +75,21 @@ class MAPElites:
             "entered_elite": False,
             "displaced_elite_ids": [],
         }
-        if not math.isfinite(program.fitness):
+        selection_score = _selection_score(program)
+        event["selection_score"] = selection_score
+        if not math.isfinite(selection_score):
             return event
         cell, descriptors = self._cell_with_descriptors(program)
         event["cell"] = list(cell)
         event["descriptors"] = descriptors
         occ = self._grid.get(cell)
         event["previous_occupant_id"] = occ.id if occ else None
-        if occ is None or program.fitness > occ.fitness:
+        if occ is None or _selection_key(program) > _selection_key(occ):
             self._grid[cell] = program
             event["entered_cell"] = True
             event["cell_replaced"] = occ is not None
         self._elite.append(program)
-        self._elite.sort(key=lambda p: p.fitness, reverse=True)
+        self._elite.sort(key=_selection_key, reverse=True)
         before_trim_ids = [p.id for p in self._elite]
         self._elite = self._elite[:self._elite_size]
         elite_ids = {p.id for p in self._elite}
@@ -121,3 +123,17 @@ class MAPElites:
 
     def elite_archive(self) -> list[Program]:
         return list(self._elite)
+
+
+def _selection_score(program: Program) -> float:
+    raw = program.metadata.get("selection_score")
+    if isinstance(raw, bool):
+        return program.fitness
+    if isinstance(raw, (int, float)) and math.isfinite(float(raw)):
+        return float(raw)
+    return program.fitness
+
+
+def _selection_key(program: Program) -> tuple[float, float]:
+    fitness = program.fitness if math.isfinite(program.fitness) else float("-inf")
+    return (_selection_score(program), fitness)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 import math, random
 from libreevolve.core.config import Config
-from libreevolve.population.map_elites import MAPElites
+from libreevolve.population.map_elites import MAPElites, _selection_key
 from libreevolve.population.program import Program
 
 
@@ -37,7 +37,7 @@ class IslandModel:
     def sample(self, strategy: str = "exploit") -> Program | None:
         if strategy == "exploit":
             cands = [i.best() for i in self.islands if i.best()]
-            return max(cands, key=lambda p: p.fitness) if cands else None
+            return max(cands, key=_selection_key) if cands else None
         if strategy == "explore":
             pool = [p for i in self.islands for p in i.occupied_cells()]
             return random.choice(pool) if pool else None
@@ -57,7 +57,7 @@ class IslandModel:
 
     def best(self) -> Program | None:
         cands = [i.best() for i in self.islands if i.best()]
-        return max(cands, key=lambda p: p.fitness) if cands else None
+        return max(cands, key=_selection_key) if cands else None
 
     def migrate(self) -> None:
         """Ring: island i copies top migrants to island (i+1) % n.

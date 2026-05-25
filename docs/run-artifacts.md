@@ -120,6 +120,10 @@ Important behavior:
 - candidate ids and prompt-program ids are UUID4 values, not deterministic
   seed-derived ids
 - raw metrics and evaluator diagnostics are preserved for later inspection
+- declared numeric metrics normalized through `metrics.yaml` are stored under
+  `metadata.normalized_metrics`; the first-pass multi-objective archive
+  policy stores its equal-weight scalar as `metadata.selection_score` and its
+  policy description as `metadata.selection_policy`
 - optional critique metadata is stored under `metadata.critique`
 - the mutation backend index is stored under `metadata.backend_idx`
 - normalized LLM call telemetry is stored under `metadata.llm_calls` for
@@ -145,6 +149,12 @@ prompt history.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.
+
+`metadata.archive_admission.selection_score` records the score used for
+MAP-Elites cell competition and elite/exploit ordering when present. Threshold
+rejection still uses final top-level `fitness`, so plugin penalties and
+feedback composition can invalidate candidates even when their declared metric
+normalization remains high.
 
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
 stderr, error, elapsed time, and metadata such as the primary file and file

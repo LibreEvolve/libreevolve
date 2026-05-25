@@ -321,17 +321,18 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Evidence: `papers/README.md` still listed workspace file-topology
     mutation, full-workspace best export, full-workspace feedback grading,
     feedback failure isolation, workspace execution/import fidelity, strict
-    scalar metric validation, and broad config validation as remaining
-    AlphaEvolve gaps even though current code/docs/tests cover those local
-    implementations.
+    scalar evaluator-output validation, and broad top-level config validation
+    as remaining AlphaEvolve gaps even though current code/docs/tests cover
+    those local implementations.
   - Status: refreshed the AlphaEvolve status row so implemented local behavior
     is not duplicated in the remaining-open list. The row still calls out
     unresolved gaps such as flexible candidate abstractions, binary/static
-    artifacts, workspace-aware descriptors, custom backend registration,
-    async workers, provider failure policy, validator environment isolation,
-    run-wide budgets, true multi-objective search, queryable database,
-    archive/resume state, reproducible ids, feedback calibration,
-    role-specific LLM accounting, plugin provenance, and benchmark hardening.
+    artifacts, candidate path-collision handling, strict metric-bound ordering,
+    workspace-aware descriptors, custom backend registration, async workers,
+    provider failure policy, validator environment isolation, run-wide budgets,
+    true multi-objective search, queryable database, archive/resume state,
+    reproducible ids, feedback calibration, role-specific LLM accounting,
+    plugin provenance, and benchmark hardening.
 
 - [x] Decide and document the paper corpus source of truth.
   - Evidence: `papers/download_manifest.csv` lists 24 downloaded papers, while

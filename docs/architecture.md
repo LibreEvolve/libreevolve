@@ -471,9 +471,9 @@ counters, not async queue checkpoints or provider token/cost accounting.
 - Config validation now rejects unknown problem config keys, invalid
   mutation/ensemble enums, malformed backend specs, bad evaluator-stage
   numeric fields, invalid top-level population/runtime ranges, and malformed
-  LLM feedback grader specs when `config.yaml` parses to a mapping. Malformed
-  YAML and scalar/list top-level config files can still fail before normalized
-  startup diagnostics. Plugin-specific schemas remain only partially validated.
+  LLM feedback grader specs. Malformed YAML and scalar/list top-level
+  `config.yaml` files now fail with path-aware startup diagnostics.
+  Plugin-specific schemas remain only partially validated.
 - OpenAI API mode is selected by the presence of `reasoning_effort`, not by
   validated model capabilities.
 - `manifest.json` records configuration plus Git/source/problem/plugin-module

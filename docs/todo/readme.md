@@ -577,3 +577,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and `retries < 0` can skip all attempts before an assertion.
   - Required result: keep README/config docs aligned with startup validation
     behavior while broader cascade semantics remain separately tracked.
+
+- [x] Remove stale malformed-config caveats from architecture/configuration
+  docs.
+  - README-adjacent evidence: architecture and configuration docs still said
+    malformed YAML or scalar/list top-level `config.yaml` files could fail
+    before normalized startup diagnostics.
+  - Current evidence: `_build_config()` catches `yaml.YAMLError` and raises a
+    path-aware `ConfigError`, rejects non-mapping top-level YAML with a
+    path-aware `ConfigError`, and CLI tests cover both paths.
+  - Required result: keep docs clear that malformed and non-mapping config
+    files now fail cleanly, while plugin-specific schemas and provider/model
+    API compatibility remain open.

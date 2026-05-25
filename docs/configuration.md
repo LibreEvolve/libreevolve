@@ -225,9 +225,9 @@ values such as `mutation_mode: typo`, invalid ensemble strategies, malformed
 backend specs, and invalid top-level numeric fields before the run mutates or
 evaluates candidates.
 
-This validation still assumes `config.yaml` parses to a top-level mapping.
-Malformed YAML or scalar/list top-level documents can fail before the CLI wraps
-the problem in a path-aware `ConfigError` diagnostic.
+Malformed YAML and scalar/list top-level documents fail at CLI startup with
+path-aware `ConfigError` diagnostics before the run mutates or evaluates
+candidates.
 
 Nested evaluator-stage fields are validated before a run: `samples` must be
 positive, `timeout_sec` must be positive, `retries` must be non-negative,
@@ -318,7 +318,7 @@ policies are separate future work.
   `config.yaml` files fail with path-aware startup errors. Top-level numeric
   fields, mutation/ensemble enums, backend specs, unknown problem-local keys,
   evaluator-stage numeric fields, and LLM feedback grader specs are checked
-  before a run starts when the config file parses to a mapping.
+  before a run starts.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
   overwritten by the problem directory name unless `--run-name` is supplied.
 - Run-wide budget configuration is local and synchronous. `max_generations`,

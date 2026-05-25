@@ -70,7 +70,9 @@ penalty, or discard policy for failed feedback graders.
 - `migration_interval` (`25`): migrate every N generations. `0` disables
   migration.
 - `migration_ratio` (`0.10`): fraction of each island's elite archive copied to
-  the next island, rounded up to at least one migrant.
+  the next island, rounded up to at least one migrant when an island has elites.
+  Because of that minimum, `migration_ratio: 0.0` still copies one elite when
+  migration is enabled; set `migration_interval: 0` to disable migration.
 - `map_elites_bins` (`10`): bins per MAP-Elites dimension.
 - `elite_archive_size` (`50`): cap on the per-island elite list.
 

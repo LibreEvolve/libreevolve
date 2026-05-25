@@ -233,6 +233,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `evolve()` starts.
   - Status: implemented with config range tests.
 
+- [x] Add zero-ratio migration semantics to population config work.
+  - Evidence: `Config.validate()` accepts `migration_ratio=0.0`, while
+    `IslandModel.migrate()` rounds migrant count with `max(1, ...)`. A local
+    proof showed `migration_ratio=0.0` still migrates one elite when migration
+    is enabled.
+  - Current roadmap gap: numeric validation covered bounds checking but not the
+    behavioral meaning of the lower bound for migration.
+  - Required result: define/test whether zero ratio disables migrant selection,
+    is rejected, or remains documented as "at least one migrant per non-empty
+    island whenever migration runs."
+
 - [x] Add async/distributed controller and worker architecture.
   - Evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline with a
     controller, LLM samplers, and evaluation nodes optimized for throughput.

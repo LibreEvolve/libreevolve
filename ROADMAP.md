@@ -77,6 +77,8 @@ is not yet an AlphaEvolve reproduction.
   evaluation metadata or stage outcomes.
 - Add validator environment allowlisting, secret redaction, and network policy
   for subprocess evaluation.
+- Define problem-local evaluator import semantics for validator helper modules,
+  package-style validators, and relative data files.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work

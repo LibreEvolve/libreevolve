@@ -141,11 +141,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     than deterministic seed/run-derived identifiers. Validator subprocesses
     also inherit `.env`-loaded provider credentials and host environment
     variables by default, so evaluator environment provenance and secret
-    isolation are incomplete.
+    isolation are incomplete. Problem-local evaluator helper modules are not
+    imported package-faithfully because `validate.py` is loaded by file path
+    from a temporary runner without adding the problem directory to `sys.path`.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
-    semantics, validate/constrain evaluator paths, and record evaluator hashes
-    plus run/collision metadata in manifests; define deterministic lineage-id
-    behavior or document UUID identity as outside the replay contract.
+    semantics, validate/constrain evaluator paths, define evaluator import
+    semantics, and record evaluator hashes plus run/collision metadata in
+    manifests; define deterministic lineage-id behavior or document UUID
+    identity as outside the replay contract.
 
 - [ ] Multiple-score optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

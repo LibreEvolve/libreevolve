@@ -326,6 +326,10 @@ That subprocess currently inherits the parent process environment. Provider
 keys loaded from `.env` are not hidden from validators until validator
 environment allowlisting is implemented.
 
+`validate.py` is loaded by file path from a temporary runner. Sibling helper
+modules in the problem directory are not automatically importable unless the
+validator handles its own import path.
+
 For multi-file candidates, `workspace_path` points at the materialized file set.
 The evaluator does not yet automatically set that directory as `cwd` or
 `sys.path`, so validators that import candidate modules should use

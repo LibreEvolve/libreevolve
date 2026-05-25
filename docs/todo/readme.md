@@ -330,6 +330,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: tell problem authors to use `workspace_path` explicitly for
     local imports/files until workspace execution semantics are hardened.
 
+- [x] Clarify problem-local validator helper imports are not automatic.
+  - README evidence: the problem-format section says `validate.py` defines
+    `evaluate(...)`, but did not warn that `validate.py` is loaded by file path
+    from a temporary runner rather than as a normal problem-local package.
+  - Current evidence: `_RUNNER` uses `spec_from_file_location()` and
+    `subprocess.run()` does not set `cwd` to the problem directory or add the
+    validator directory to `sys.path`.
+  - Required result: warn authors that sibling validator helpers/package
+    imports need manual path handling until evaluator import semantics are
+    hardened.
+
 - [x] Clarify that MAP-Elites archive state is not persisted.
   - README evidence: the feature list and flow describe a MAP-Elites archive
     and island migration, but did not distinguish runtime archive state from

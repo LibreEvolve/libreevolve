@@ -216,6 +216,9 @@ run rather than being recorded as structured failed LLM-call attempts.
   replay contract.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
+- Validator entrypoints are loaded by file path from a temporary runner. The
+  problem directory is not automatically used as `cwd` or `PYTHONPATH`, so
+  sibling validator helper modules need manual import-path handling today.
 - `prompt_variants` seed the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Meta-prompt mutation uses the same backend ensemble and must preserve every

@@ -132,6 +132,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `cwd`, import path, environment, package/module entrypoints, and relative
     artifacts.
 
+- [x] Add problem-local evaluator import semantics to evaluation hardening.
+  - Evidence: `_RUNNER` loads `validate.py` by file path from a temporary
+    runner and does not put `validate_path.parent` or `problem_dir` on
+    `sys.path`, so validator helper modules and package-style evaluator code
+    are not supported by default.
+  - Current roadmap gap: workspace execution work covered candidate-root
+    imports, but not problem-local evaluator-code imports and relative data.
+  - Required result: define validator module/package loading, problem-dir
+    `cwd` or `PYTHONPATH` policy, evaluator helper/data provenance, and tests
+    for sibling imports and package validators.
+
 - [x] Add multi-objective evaluation and metric-vector storage.
   - Evidence: AlphaEvolve Section 2.4 explicitly supports optimizing multiple
     user-provided scores.

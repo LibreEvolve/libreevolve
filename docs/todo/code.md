@@ -111,6 +111,27 @@ Primary evidence:
     access work by default where appropriate, or document the deliberate
     validator-managed divergence.
 
+- [ ] Make problem-local evaluator imports package-faithful.
+  - Spec evidence: AlphaEvolve task setup can include evaluator code and
+    problem-specific test logic. Reproducible evaluation should support
+    ordinary multi-file validator modules, not only a single self-contained
+    `validate.py`.
+  - Current evidence: `_RUNNER` loads `validate_path` with
+    `importlib.util.spec_from_file_location('v', sys.argv[1])` from a temporary
+    runner, and `subprocess.run()` does not set `cwd` to the problem directory
+    or add `validate_path.parent` / `problem_dir` to `sys.path`. A
+    problem-local `validate.py` that imports sibling helpers such as
+    `from scoring import score` can fail unless the author manually mutates
+    `sys.path` or relies on the process launch directory. Existing tests cover
+    alternate single-file `validate_path` entries, but not validator helper
+    modules or package-style evaluator layouts.
+  - Required result: define evaluator import semantics for `validate.py`,
+    stage validators, sibling helper modules, packages, and relative data
+    files; set `cwd`/`PYTHONPATH` or use an explicit module/package loader as
+    documented; include evaluator code hashes in manifests; and add tests for
+    problem-local helper imports, package validators, relative data files, and
+    failure diagnostics.
+
 - [x] Add language-agnostic candidate support or narrow the claim to Python.
   - Spec evidence: AlphaEvolve is described as being able to evolve code in any
     language.

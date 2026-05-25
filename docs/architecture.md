@@ -179,6 +179,9 @@ The subprocess currently passes the materialized candidate root as an argument
 but does not set that root as the subprocess working directory or import path.
 Validators that need project-local imports or relative files must opt into that
 behavior manually through `workspace_path`.
+Validator entrypoints are also loaded by file path from a temporary runner; the
+problem directory is not automatically `cwd` or `sys.path`, so evaluator helper
+modules beside `validate.py` need manual path handling today.
 
 After local evaluation, `Config.llm_feedback` can run optional LLM graders for
 properties that are awkward to encode in `validate.py`, such as clarity or

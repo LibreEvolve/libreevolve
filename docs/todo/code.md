@@ -1111,8 +1111,8 @@ Primary evidence:
     telemetry with retry/fallback attempt indexes, `will_retry`, and
     `will_fallback`; exhausted failed backends are excluded for the current
     fallback call; successful fallback returns normally without incrementing the
-    failed backend's pull count. Config validation and ensemble tests cover
-    retry, fallback, and disabled-fallback behavior.
+    failed backend's pull count. Config validation, CLI overrides, and ensemble
+    tests cover retry, fallback, and disabled-fallback behavior.
   - Remaining gap: `evolve()` still lets an exhausted mutation-call exception
     abort before candidate/evaluation logging, and exhausted critique, feedback,
     or meta-prompt exceptions can still abort after useful work has already
@@ -1241,7 +1241,8 @@ Primary evidence:
     both config-file and CLI-specified OpenAI backends, do not attach to
     non-OpenAI backends, and are covered by CLI tests. Parent and inspiration
     sampling strategies are also exposed as CLI overrides with precedence
-    tests.
+    tests. LLM retry/fallback controls are exposed as CLI overrides with
+    precedence tests.
   - Required result: define and test remaining field-by-field precedence for
     defaults, config files, and CLI options; make ignored overrides explicit;
     and reflect effective values in `manifest.json`.

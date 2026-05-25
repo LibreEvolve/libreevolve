@@ -493,6 +493,9 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
   --reasoning-effort, -r   Reasoning effort for OpenAI reasoning models (low/medium/high/xhigh; omit to disable)
+  --llm-max-retries        Retry attempts on the same selected LLM backend
+  --llm-fallback / --no-llm-fallback
+                           Enable or disable fallback to another LLM backend
   --mutation-mode          Mutation mode: diff or full
   --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
   --parent-selection-strategy

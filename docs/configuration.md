@@ -249,6 +249,8 @@ The `run` command exposes:
 - `--mutation-mode` (`diff` or `full`)
 - `--seed`
 - `--reasoning-effort`, `-r`
+- `--llm-max-retries`
+- `--llm-fallback` / `--no-llm-fallback`
 - `--explore-ratio`, `-e`
 - `--parent-selection-strategy`
 - `--inspiration-strategy`

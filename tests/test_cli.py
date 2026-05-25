@@ -86,6 +86,36 @@ def test_run_sampling_cli_options_override_config(tmp_path):
     assert config.parent_selection_strategy == "metric"
     assert config.inspiration_strategy == "novelty"
 
+def test_run_llm_failure_policy_cli_options_override_config(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "llm_max_retries": 0,
+                "llm_fallback": True,
+            }
+        )
+    )
+    mock_best = MagicMock(); mock_best.fitness = 0.99; mock_best.code = "x=2"
+
+    with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--llm-max-retries",
+                "2",
+                "--no-llm-fallback",
+            ],
+        )
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.llm_max_retries == 2
+    assert config.llm_fallback is False
+
 def test_run_writes_complete_best_workspace(tmp_path):
     _make_problem(tmp_path)
     log_dir = tmp_path / "runs"

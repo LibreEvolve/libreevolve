@@ -28,6 +28,10 @@ def cli() -> None:
 @click.option("--seed", type=int, default=None)
 @click.option("--reasoning-effort", "-r", type=str, default=None,
               help="Reasoning effort for OpenAI reasoning models (e.g. low, medium, high, xhigh)")
+@click.option("--llm-max-retries", type=int, default=None,
+              help="Retry attempts on the same selected LLM backend before fallback/failure.")
+@click.option("--llm-fallback/--no-llm-fallback", default=None,
+              help="Enable or disable fallback to another LLM backend after retries.")
 @click.option("--explore-ratio", "-e", type=float, default=None,
               help="Probability of exploring (random parent) vs exploiting (best parent). Default: 0.3")
 @click.option("--parent-selection-strategy",
@@ -46,8 +50,9 @@ def cli() -> None:
               help="Delete existing run artifacts in the target run directory before starting.")
 def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         max_runtime_seconds, plugins, backends, seed, reasoning_effort,
-        explore_ratio, parent_selection_strategy, inspiration_strategy,
-        mutation_mode, run_name, overwrite):
+        llm_max_retries, llm_fallback, explore_ratio,
+        parent_selection_strategy, inspiration_strategy, mutation_mode,
+        run_name, overwrite):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import ConfigError
     from libreevolve.problems.loader import load_problem
@@ -65,6 +70,8 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
             list(backends),
             seed,
             reasoning_effort,
+            llm_max_retries,
+            llm_fallback,
             explore_ratio,
             parent_selection_strategy,
             inspiration_strategy,
@@ -126,7 +133,8 @@ def show(run_dir):
 
 def _build_config(problem, max_generations, max_evaluations, max_evaluator_seconds,
                   max_runtime_seconds, plugins, backends, seed,
-                  reasoning_effort=None, explore_ratio=None,
+                  reasoning_effort=None, llm_max_retries=None,
+                  llm_fallback=None, explore_ratio=None,
                   parent_selection_strategy=None, inspiration_strategy=None,
                   mutation_mode=None):
     import yaml
@@ -165,6 +173,8 @@ def _build_config(problem, max_generations, max_evaluations, max_evaluator_secon
             if backend.get("type") == "openai":
                 backend["reasoning_effort"] = reasoning_effort
     if seed is not None: config.seed = seed
+    if llm_max_retries is not None: config.llm_max_retries = llm_max_retries
+    if llm_fallback is not None: config.llm_fallback = llm_fallback
     if explore_ratio is not None: config.explore_ratio = explore_ratio
     if parent_selection_strategy is not None:
         config.parent_selection_strategy = parent_selection_strategy

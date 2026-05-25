@@ -93,9 +93,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     README audit, and tests (`ROADMAP.md:25-32`).
 
 - [x] Add malformed evolve-block marker validation to candidate fidelity.
-  - Evidence: `extract_evolve_blocks()` silently stops when it cannot find a
-    matching end marker and mutation can fall back to whole-file behavior when
-    no complete blocks are parsed.
+  - Evidence: malformed evolve-block layouts can weaken skeleton preservation
+    unless mutation rejects them before deciding whether a file is fully
+    evolvable. `validate_evolve_blocks()` now fails closed during mutation for
+    missing end markers, orphan end markers, nested blocks, invalid names, and
+    duplicate block names.
   - Current roadmap gap: candidate fidelity listed marker support but not
     marker-structure validation, even though skeleton preservation depends on
     rejecting malformed task specifications.

@@ -176,8 +176,11 @@ def solve():
 
 With markers, the surrounding skeleton is preserved and mutations are applied to
 the marked region(s). Without markers, the whole program remains evolvable.
-Marker validation is still permissive: malformed or unmatched marker pairs are
-not rejected at problem-load time yet, so use paired start/end markers exactly.
+Mutation rejects malformed or unmatched marker pairs before applying a change,
+including missing end markers, orphan end markers, nested blocks, duplicate
+names, and invalid block names. Problem loading does not prevalidate markers
+yet, so malformed seeds are diagnosed when the mutation path first touches
+them.
 
 ### Multi-file seeds
 

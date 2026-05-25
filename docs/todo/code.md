@@ -31,15 +31,20 @@ Primary evidence:
     evolvable regions, preserve non-evolved skeleton code, and apply mutations
     only where configured.
 
-- [ ] Reject malformed evolve-block marker structures.
+- [x] Reject malformed evolve-block marker structures during mutation.
   - Spec evidence: AlphaEvolve's task API relies on marked evolvable blocks
     inside a skeleton; an invalid marker layout should not change which code is
     evolvable without an explicit diagnostic.
-  - Current evidence: `extract_evolve_blocks()` stops parsing when it sees a
-    start marker without a following end marker, returns any blocks parsed so
-    far, and does not report an error. If no complete block is returned,
-    mutation falls back to whole-file behavior, so a malformed skeleton can
-    accidentally make all code evolvable.
+  - Current evidence: `validate_evolve_blocks()` checks marker pairing,
+    nesting, block-name syntax, duplicate block names, orphan end markers, and
+    malformed end markers before mutation. `apply_candidate_mutation()` fails
+    closed with `malformed_evolve_blocks:<reason>`, and workspace mutation
+    prefixes the target path in the diagnostic.
+  - Status: implemented at mutation-application time, with tests for missing
+    end markers, orphan end markers, nested blocks, duplicate names, invalid
+    names, anonymous block naming, and malformed target files in workspaces.
+    Problem loading still does not prevalidate seed files before the first
+    evaluation/mutation path sees them.
   - Required result: validate marker pairing, nesting, names, and duplicate
     block identities during problem load or mutation application; reject or
     quarantine malformed candidates with explicit errors; add tests for missing

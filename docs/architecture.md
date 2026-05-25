@@ -55,9 +55,12 @@ def solve():
 Mutation application lives in [`libreevolve/core/candidate.py`](../libreevolve/core/candidate.py).
 When markers are present, surrounding skeleton code is preserved and mutations
 are constrained to marked regions. Multiple blocks are supported. Existing
-unmarked `initial_programs/*.py` remain valid. Marker validation is still
-permissive: malformed start/end pairs are not rejected during problem loading
-and should be treated as an open correctness gap.
+unmarked `initial_programs/*.py` remain valid. Mutation application validates
+marker pairing, nesting, names, duplicate block names, and orphan end markers
+before applying a change, so malformed skeletons fail closed instead of falling
+back to whole-file mutation. Problem loading still accepts malformed seed files
+until mutation/evaluation time; earlier load-time diagnostics remain a useful
+future improvement.
 
 Two mutation modes are supported:
 

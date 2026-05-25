@@ -8,6 +8,7 @@ from libreevolve.core.diff import apply_diff, parse_diff_blocks, _strip_fences
 
 EVOLVE_BLOCK_START = "# EVOLVE-BLOCK-START"
 EVOLVE_BLOCK_END = "# EVOLVE-BLOCK-END"
+_BLOCK_NAME_PATTERN = re.compile(r"^[A-Za-z0-9_.:-]+$")
 
 _BLOCK_SECTION_PATTERN = re.compile(
     r"<<<BLOCK\s+([A-Za-z0-9_.:-]+)\s*\n(.*?)\n>>>BLOCK", re.DOTALL
@@ -92,41 +93,12 @@ class EvolveBlock:
 
 def extract_evolve_blocks(code: str) -> list[EvolveBlock]:
     """Return marked evolvable regions while preserving surrounding skeleton."""
-    blocks: list[EvolveBlock] = []
-    pos = 0
-    idx = 0
-    while True:
-        start = code.find(EVOLVE_BLOCK_START, pos)
-        if start < 0:
-            break
-        start_line_end = code.find("\n", start)
-        if start_line_end < 0:
-            break
-        marker_line = code[start:start_line_end]
-        parts = marker_line.split(maxsplit=2)
-        name = parts[2].strip() if len(parts) >= 3 else f"block_{idx}"
-        content_start = start_line_end + 1
-        end_marker = code.find(EVOLVE_BLOCK_END, content_start)
-        if end_marker < 0:
-            break
-        content_end = end_marker
-        if content_end > content_start and code[content_end - 1] == "\n":
-            content_end -= 1
-        end_line_end = code.find("\n", end_marker)
-        end = len(code) if end_line_end < 0 else end_line_end + 1
-        blocks.append(
-            EvolveBlock(
-                name=name,
-                start=start,
-                content_start=content_start,
-                content_end=content_end,
-                end=end,
-                content=code[content_start:content_end],
-            )
-        )
-        pos = end
-        idx += 1
-    return blocks
+    return _parse_evolve_blocks(code)[0]
+
+
+def validate_evolve_blocks(code: str) -> str | None:
+    """Return an error code when EVOLVE-BLOCK markers are malformed."""
+    return _parse_evolve_blocks(code)[1]
 
 
 def has_evolve_blocks(code: str) -> bool:
@@ -150,6 +122,9 @@ def apply_candidate_mutation(
         replacement code
         >>>BLOCK
     """
+    marker_error = validate_evolve_blocks(code)
+    if marker_error is not None:
+        return code, f"malformed_evolve_blocks:{marker_error}"
     if mutation_mode == "diff":
         return _apply_diff_to_candidate(code, mutation_text)
     if mutation_mode == "full":
@@ -204,6 +179,54 @@ def apply_workspace_mutation(
 def _parse_file_sections(mutation_text: str) -> list[tuple[str, str]]:
     text = _strip_fences(mutation_text.replace("\r\n", "\n"))
     return [(name.strip(), body.rstrip("\n")) for name, body in _FILE_SECTION_PATTERN.findall(text)]
+
+
+def _parse_evolve_blocks(code: str) -> tuple[list[EvolveBlock], str | None]:
+    blocks: list[EvolveBlock] = []
+    seen_names: set[str] = set()
+    open_block: tuple[str, int, int] | None = None
+    offset = 0
+    idx = 0
+    for line in code.splitlines(keepends=True):
+        stripped = line.strip()
+        if stripped.startswith(EVOLVE_BLOCK_START):
+            if open_block is not None:
+                return blocks, "nested_start"
+            raw_name = stripped[len(EVOLVE_BLOCK_START):].strip()
+            name = raw_name or f"block_{idx}"
+            if not _BLOCK_NAME_PATTERN.fullmatch(name):
+                return blocks, "invalid_name"
+            if name in seen_names:
+                return blocks, "duplicate_name"
+            content_start = offset + len(line)
+            open_block = (name, offset, content_start)
+        elif stripped.startswith(EVOLVE_BLOCK_END):
+            if stripped != EVOLVE_BLOCK_END:
+                return blocks, "invalid_end_marker"
+            if open_block is None:
+                return blocks, "orphan_end"
+            name, start, content_start = open_block
+            content_end = offset
+            if content_end > content_start and code[content_end - 1] == "\n":
+                content_end -= 1
+            end = offset + len(line)
+            blocks.append(
+                EvolveBlock(
+                    name=name,
+                    start=start,
+                    content_start=content_start,
+                    content_end=content_end,
+                    end=end,
+                    content=code[content_start:content_end],
+                )
+            )
+            seen_names.add(name)
+            idx += 1
+            open_block = None
+        offset += len(line)
+    if open_block is not None:
+        return blocks, "missing_end"
+    return blocks, None
 
 
 def _apply_diff_to_candidate(code: str, diff_text: str) -> tuple[str, str | None]:

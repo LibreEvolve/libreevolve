@@ -475,10 +475,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     summaries into the prompt. Candidate metadata records bounded retrieval
     events with provider, query, timestamp, status, result length, synthesis
     hash, best-program context, arXiv source IDs/URLs, source
-    timestamps/authors, summary hashes, and available provider errors. The
-    run manifest records bounded retrieval summaries. The plugin does not
-    persist full result payloads, ranking provenance, source-content hashes, or
-    default arXiv network/parse failure categories for the injected context.
+    timestamps/authors, summary hashes, available provider errors, and
+    structured error types when available. The run manifest records bounded
+    retrieval summaries. The plugin does not persist full result payloads,
+    ranking provenance, or source-content hashes for the injected context.
   - Missing: broad external retrieval, source ranking, hypothesis synthesis,
     retrieval provenance/citations, implementation/refinement loop, systematic
     debugging, cross-file editing, and benchmark-grounded result validation.

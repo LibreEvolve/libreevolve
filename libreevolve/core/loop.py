@@ -340,6 +340,8 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
                 }
                 if event.get("error"):
                     summary["error"] = event.get("error")
+                if event.get("error_type"):
+                    summary["error_type"] = event.get("error_type")
                 events[key] = summary
                 plugin_summary = by_plugin.setdefault(
                     plugin_name,

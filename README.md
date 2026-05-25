@@ -472,9 +472,9 @@ The DeepEvolve-inspired retrieval plugin injects best-effort live arXiv
 summaries into prompts. Candidate history records retrieval query/status,
 generation, best-program context, timestamps, result length, synthesis hash,
 source IDs/URLs, source timestamps/authors, summary hashes, and available
-provider errors. The run manifest records a bounded retrieval summary, but
-LibreEvolve does not yet persist full result payloads, ranking provenance, or a
-systematic debug/refinement loop.
+provider errors plus structured error types when available. The run manifest
+records a bounded retrieval summary, but LibreEvolve does not yet persist full
+result payloads, ranking provenance, or a systematic debug/refinement loop.
 
 The ImprovEvolve-inspired modular plugin is static prompt guidance. It does
 not select, execute, or log a `generate_config`/`improve`/`perturb` operation

@@ -54,6 +54,7 @@ def test_records_failed_retrieval_event():
     plugin.on_generation_start(0, db)
     event = plugin.prompt_context_metadata()["retrieval_events"][-1]
     assert event["status"] == "error"
+    assert event["error_type"] == "provider_exception"
     assert event["error"] == "offline"
     assert event["result_chars"] == 0
 
@@ -147,6 +148,30 @@ def test_arxiv_search_returns_none_on_network_error():
     with patch("libreevolve.plugins.deep_research.urllib.request.urlopen",
                side_effect=ConnectionError("offline")):
         assert arxiv_search("test") is None
+
+
+def test_arxiv_search_result_records_network_error_type():
+    with patch(
+        "libreevolve.plugins.deep_research.urllib.request.urlopen",
+        side_effect=ConnectionError("offline"),
+    ):
+        result = arxiv_search_result("test")
+    assert result["status"] == "error"
+    assert result["error_type"] == "network_error"
+    assert result["error"] == "offline"
+
+
+def test_arxiv_search_result_records_parse_error_type():
+    with patch("libreevolve.plugins.deep_research.urllib.request.urlopen") as mock_open:
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = b"<not valid"
+        mock_resp.__enter__ = lambda s: s
+        mock_resp.__exit__ = MagicMock(return_value=False)
+        mock_open.return_value = mock_resp
+        result = arxiv_search_result("test")
+    assert result["status"] == "error"
+    assert result["error_type"] == "parse_error"
+    assert result["error"]
 
 def test_arxiv_search_returns_none_on_empty_results():
     empty_xml = b"""<?xml version="1.0" encoding="UTF-8"?>

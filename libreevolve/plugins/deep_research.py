@@ -25,6 +25,7 @@ def arxiv_search_result(query: str, max_results: int = 3) -> dict:
             "status": "error",
             "provider": "arxiv",
             "query_url": url,
+            "error_type": "network_error",
             "error": str(exc),
             "sources": [],
         }
@@ -36,7 +37,8 @@ def arxiv_search_result(query: str, max_results: int = 3) -> dict:
             "status": "error",
             "provider": "arxiv",
             "query_url": url,
-            "error": f"parse_error:{exc}",
+            "error_type": "parse_error",
+            "error": str(exc),
             "sources": [],
         }
 
@@ -154,7 +156,14 @@ class DeepResearchPlugin(PluginBase):
             result = self._search_fn(query)
         except Exception as exc:
             _log.debug("configured research search failed: %s", exc)
-            event.update({"status": "error", "error": str(exc), "result_chars": 0})
+            event.update(
+                {
+                    "status": "error",
+                    "error_type": "provider_exception",
+                    "error": str(exc),
+                    "result_chars": 0,
+                }
+            )
             self._events.append(event)
             return
         synthesis, result_metadata = _normalize_search_result(result)
@@ -188,7 +197,7 @@ def _normalize_search_result(result: object) -> tuple[str, dict]:
         return (str(result), {}) if result else ("", {})
     status = result.get("status")
     metadata: dict = {}
-    for key in ("provider", "query_url", "sources", "error"):
+    for key in ("provider", "query_url", "sources", "error_type", "error"):
         value = result.get(key)
         if value:
             metadata[key] = value

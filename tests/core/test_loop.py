@@ -621,6 +621,30 @@ def test_manifest_summarizes_retrieval_events():
     assert summary["synthesis_sha256"]
 
 
+def test_manifest_summarizes_retrieval_error_types():
+    tmpdir = tempfile.mkdtemp()
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "error",
+            "error_type": "network_error",
+            "error": "offline",
+        }
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[plugin],
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    summary = manifest["runtime"]["retrieval"]["event_summaries"][0]
+    assert summary["status"] == "error"
+    assert summary["error_type"] == "network_error"
+    assert summary["error"] == "offline"
+
+
 def test_loop_renders_full_mode_prompt_instructions():
     tmpdir = tempfile.mkdtemp()
     llm = _llm("x=2")

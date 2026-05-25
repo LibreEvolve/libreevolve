@@ -537,14 +537,15 @@ Primary evidence:
     `metadata.plugin_context[].metadata.retrieval_events`, including provider,
     query, generation, best id/fitness, timestamp, status, result length,
     synthesis hash, source IDs/URLs, source timestamps/authors, summary hashes,
-    and error text when the configured provider raises. `arxiv_search_result()`
-    preserves those source fields for the default arXiv provider, while
-    `arxiv_search()` remains a string-only compatibility wrapper. Retrieval
-    state still does not include full result payloads, source-content hashes,
-    ranking provenance, default arXiv network/parse failure categories, prompt
-    history entries, or plugin artifacts. Completed manifests now include
-    `runtime.retrieval` with deduplicated event counts, per-plugin status/source
-    counts, and compact event summaries.
+    error text, and structured error types such as `network_error`,
+    `parse_error`, and `provider_exception` when available.
+    `arxiv_search_result()` preserves those source/error fields for the default
+    arXiv provider, while `arxiv_search()` remains a string-only compatibility
+    wrapper. Retrieval state still does not include full result payloads,
+    source-content hashes, ranking provenance, prompt history entries, or
+    plugin artifacts. Completed manifests now include `runtime.retrieval` with
+    deduplicated event counts, per-plugin status/source counts, and compact
+    event summaries.
   - Required result: store retrieval events with provider, query, generation,
     parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
     and hashes; render citations in prompt context; include plugin retrieval

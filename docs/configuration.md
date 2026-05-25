@@ -297,7 +297,7 @@ run rather than being recorded as structured failed LLM-call attempts.
   scheduling settings.
 - Config validation is still incomplete for plugin-specific schemas and
   provider/model API compatibility. Malformed YAML and non-mapping top-level
-  `config.yaml` files also need normalized startup errors. Top-level numeric
+  `config.yaml` files fail with path-aware startup errors. Top-level numeric
   fields, mutation/ensemble enums, backend specs, unknown problem-local keys,
   evaluator-stage numeric fields, and LLM feedback grader specs are checked
   before a run starts when the config file parses to a mapping.

@@ -134,7 +134,15 @@ def _build_config(problem, max_generations, max_evaluations, max_evaluator_secon
     cfg: dict = {}
     cp = Path(problem.problem_dir) / "config.yaml"
     if cp.exists():
-        cfg.update(yaml.safe_load(cp.read_text(encoding="utf-8")) or {})
+        try:
+            loaded = yaml.safe_load(cp.read_text(encoding="utf-8"))
+        except yaml.YAMLError as exc:
+            raise ConfigError(f"Failed to parse {cp}: {exc}") from exc
+        if loaded is None:
+            loaded = {}
+        if not isinstance(loaded, dict):
+            raise ConfigError(f"{cp} must contain a YAML mapping at the top level")
+        cfg.update(loaded)
     valid = {f.name for f in dataclasses.fields(Config)}
     unknown = sorted(set(cfg) - valid)
     if unknown:

@@ -1216,17 +1216,16 @@ Primary evidence:
     `mutation_mode` and `ensemble_strategy` are enum-validated, backend specs
     are checked for supported keys/types/models/metadata, and evaluator-stage
     numeric fields and LLM feedback grader specs are validated before a run
-    starts. Remaining gaps: malformed YAML and non-mapping top-level
-    `config.yaml` files can still raise raw `yaml`/`dict.update()` exceptions
-    before `ConfigError`, plugin-specific configuration schemas do not exist,
-    and model/API capability validation is not implemented. CLI
+    starts. Malformed YAML and non-mapping top-level `config.yaml` files now
+    fail as path-aware `ConfigError` startup diagnostics. Remaining gaps:
+    plugin-specific configuration schemas do not exist, and model/API
+    capability validation is not implemented. CLI
     `--reasoning-effort` now applies to OpenAI backends loaded from
     `config.yaml` or `--backends`, and is ignored for non-OpenAI backends.
   - Required result: add plugin config schemas, document or fix remaining CLI
     override semantics, add model/API-mode compatibility validation where
-    feasible, normalize config-file parse/type failures into path-aware startup
-    diagnostics, and test malformed top-level and nested config cases beyond
-    backend/stage/feedback metadata.
+    feasible, and test malformed nested config cases beyond backend/stage/
+    feedback metadata.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,

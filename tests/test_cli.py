@@ -291,6 +291,21 @@ def test_run_rejects_unknown_config_key(tmp_path):
     assert r.exit_code != 0
     assert "Unknown config keys" in r.output
 
+def test_run_rejects_non_mapping_config_file(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text("- max_generations\n", encoding="utf-8")
+    r = CliRunner().invoke(cli, ["run", str(tmp_path)])
+    assert r.exit_code != 0
+    assert "config.yaml must contain a YAML mapping" in r.output
+
+def test_run_reports_malformed_config_yaml_path(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text("max_generations: [1\n", encoding="utf-8")
+    r = CliRunner().invoke(cli, ["run", str(tmp_path)])
+    assert r.exit_code != 0
+    assert "Failed to parse" in r.output
+    assert "config.yaml" in r.output
+
 def test_run_rejects_bad_cli_backend_spec(tmp_path):
     _make_problem(tmp_path)
     r = CliRunner().invoke(cli, ["run", str(tmp_path), "--backends", "openai:"])

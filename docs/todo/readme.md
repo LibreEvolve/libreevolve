@@ -227,16 +227,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with the implemented allowlist policy
     and continue pointing network/sandbox limits to the TODOs.
 
-- [x] Clarify validator timeout process-tree limits.
+- [x] Clarify validator timeout process-tree behavior.
   - README evidence: README discussed validator subprocess execution and
-    timeouts but did not state whether a timed-out validator's descendant
-    processes are also terminated.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` uses
-    `subprocess.run(..., timeout=...)` without a process group or Windows Job
-    Object. A local proof showed a validator-spawned child process can write a
-    marker after the evaluator has returned `timeout`.
-  - Required result: warn users that validators should avoid long-lived child
-    processes until process-tree cleanup is implemented.
+    timeouts and must state whether a timed-out validator's descendant
+    processes are terminated.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` now launches a
+    killable process tree, timeout results record cleanup metadata, and tests
+    prove a spawned child cannot write a marker after timeout.
+  - Required result: keep README aligned with timeout cleanup while preserving
+    the caveat that this is not a container or general resource sandbox.
 
 - [x] Clarify aggregate workspace syntax diagnostics.
   - README evidence: README described the cascade evaluator's syntax filter

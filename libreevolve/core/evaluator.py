@@ -3,6 +3,7 @@ import hashlib
 import json, math, sys, tempfile
 import os
 import re
+import signal
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -223,18 +224,23 @@ class CascadeEvaluator:
                 validator_env, self._validator_env_allowlist
             )
             started = time.perf_counter()
-            try:
-                # Use list form (not shell=True) to prevent injection
-                res = subprocess.run(
-                    [sys.executable, str(runner),
-                     str(validate_path), str(primary), str(cand_root),
-                     json.dumps(stage_context)],
-                    cwd=str(cand_root),
-                    capture_output=True, timeout=timeout_sec, text=True,
-                    env=validator_env,
-                )
-            except subprocess.TimeoutExpired:
+            # Use list form (not shell=True) to prevent injection.
+            res = _run_validator_process(
+                [sys.executable, str(runner),
+                 str(validate_path), str(primary), str(cand_root),
+                 json.dumps(stage_context)],
+                cwd=cand_root,
+                timeout_sec=timeout_sec,
+                env=validator_env,
+            )
+            stdout = _redact_secrets(res.stdout)
+            stderr = _redact_secrets(res.stderr)
+            if res.timed_out:
                 elapsed = time.perf_counter() - started
+                metadata = _eval_metadata(
+                    workspace, validate_path, stage_context, validator_env_meta
+                )
+                metadata["timeout_cleanup"] = res.cleanup
                 return EvaluationResult(
                     fitness=-0.2,
                     metrics={self._problem.primary_metric: -0.2, "is_valid": False},
@@ -244,19 +250,19 @@ class CascadeEvaluator:
                             name=stage_name,
                             passed=False,
                             score=-0.2,
+                            stdout=stdout,
+                            stderr=stderr,
                             error="timeout",
                             elapsed_sec=elapsed,
                         )
                     ],
+                    stdout=stdout,
+                    stderr=stderr,
                     error="timeout",
                     elapsed_sec=elapsed,
-                    metadata=_eval_metadata(
-                        workspace, validate_path, stage_context, validator_env_meta
-                    ),
+                    metadata=metadata,
                 )
             elapsed = time.perf_counter() - started
-            stdout = _redact_secrets(res.stdout)
-            stderr = _redact_secrets(res.stderr)
             if res.returncode != 0:
                 return EvaluationResult(
                     fitness=-0.2,
@@ -468,6 +474,15 @@ class EvaluationResult:
         }
 
 
+@dataclass
+class _ValidatorProcessResult:
+    returncode: int | None
+    stdout: str
+    stderr: str
+    timed_out: bool = False
+    cleanup: dict = field(default_factory=dict)
+
+
 def _syntax_errors(workspace: CandidateWorkspace) -> list[dict]:
     errors: list[dict] = []
     for rel_path, content in sorted(workspace.files.items()):
@@ -486,6 +501,81 @@ def _syntax_errors(workspace: CandidateWorkspace) -> list[dict]:
                 }
             )
     return errors
+
+
+def _run_validator_process(
+    args: list[str],
+    cwd: Path,
+    timeout_sec: float,
+    env: dict[str, str],
+) -> _ValidatorProcessResult:
+    kwargs = {
+        "cwd": str(cwd),
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "text": True,
+        "env": env,
+    }
+    if os.name == "nt":
+        kwargs["creationflags"] = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+    else:
+        kwargs["start_new_session"] = True
+    proc = subprocess.Popen(args, **kwargs)
+    try:
+        stdout, stderr = proc.communicate(timeout=timeout_sec)
+        return _ValidatorProcessResult(proc.returncode, stdout or "", stderr or "")
+    except subprocess.TimeoutExpired:
+        cleanup = _terminate_process_tree(proc)
+        try:
+            stdout, stderr = proc.communicate(timeout=2.0)
+        except subprocess.TimeoutExpired:
+            cleanup["direct_kill_after_tree_timeout"] = True
+            proc.kill()
+            stdout, stderr = proc.communicate(timeout=2.0)
+        return _ValidatorProcessResult(
+            proc.returncode,
+            stdout or "",
+            stderr or "",
+            timed_out=True,
+            cleanup=cleanup,
+        )
+
+
+def _terminate_process_tree(proc: subprocess.Popen) -> dict:
+    result = {"pid": proc.pid, "attempted": True}
+    if proc.poll() is not None:
+        result.update({"method": "already_exited", "returncode": proc.returncode})
+        return result
+    if os.name == "nt":
+        result["method"] = "taskkill"
+        try:
+            completed = subprocess.run(
+                ["taskkill", "/PID", str(proc.pid), "/T", "/F"],
+                capture_output=True,
+                text=True,
+                timeout=5.0,
+            )
+            result.update(
+                {
+                    "returncode": completed.returncode,
+                    "stdout": _redact_secrets(completed.stdout),
+                    "stderr": _redact_secrets(completed.stderr),
+                }
+            )
+        except (FileNotFoundError, subprocess.SubprocessError) as exc:
+            result.update({"fallback": "kill", "error": f"{exc.__class__.__name__}: {exc}"})
+            proc.kill()
+    else:
+        result["method"] = "killpg"
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+            result["returncode"] = 0
+        except ProcessLookupError:
+            result.update({"returncode": 0, "already_exited": True})
+        except OSError as exc:
+            result.update({"fallback": "kill", "error": f"{exc.__class__.__name__}: {exc}"})
+            proc.kill()
+    return result
 
 
 def _eval_metadata(

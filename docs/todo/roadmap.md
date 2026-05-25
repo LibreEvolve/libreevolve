@@ -631,8 +631,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: runtime hardening covered timeouts, sandbox/resource
     limits, and environment secrets, but not cleanup of subprocess descendants
     created by evaluator code.
-  - Required result: track process-group/job-object cleanup, timeout metadata,
-    and tests showing validator children are terminated on timeout or failure.
+  - Status: implemented for timeouts. Validators now run in a killable process
+    tree, timeout results include cleanup metadata, and tests prove a spawned
+    child cannot outlive a timeout and write a marker after evaluation returns.
+  - Remaining gap: this is not full container/resource sandboxing or a general
+    policy for detached work left by successful validators.
 
 - [x] Add run-wide compute-budget accounting to runtime work.
   - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas

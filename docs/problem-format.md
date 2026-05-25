@@ -165,9 +165,9 @@ temporary directory that is deleted after each subprocess evaluation, so any
 plots, JSON outputs, traces, compiled files, or other generated artifacts must
 be summarized through metrics/stdout/stderr until evaluator artifact collection
 is implemented.
-Timeouts do not yet guarantee process-tree cleanup: validators should avoid
-spawning long-lived child processes until process-group/job-object cleanup is
-implemented.
+On timeout, LibreEvolve attempts to terminate the validator process tree and
+records cleanup metadata in the evaluation result. This timeout cleanup is not
+a container, network sandbox, memory limit, or general resource policy.
 
 ## Evaluation semantics
 

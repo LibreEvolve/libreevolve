@@ -176,11 +176,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     minimal environment plus `validator_env_allowlist`, so `.env` provider
     credentials are hidden by default and persisted stdout/stderr is
     secret-redacted. Network egress policy and stronger sandboxing remain
-    incomplete. Validator timeouts also do not clean up spawned descendant
-    processes. Problem-local evaluator helper modules are imported
-    only as sibling modules beside a configured validator file; package-style
-    validator entrypoints, relative evaluator data policy, and transitive
-    helper/data hashes are still missing.
+    incomplete. Validator timeouts now attempt process-tree cleanup and record
+    cleanup metadata, but this is not a full resource sandbox. Problem-local
+    evaluator helper modules are imported only as sibling modules beside a
+    configured validator file; package-style validator entrypoints, relative
+    evaluator data policy, and transitive helper/data hashes are still missing.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, define evaluator import/data provenance, and record evaluator
     hashes plus run/collision metadata in manifests; define deterministic

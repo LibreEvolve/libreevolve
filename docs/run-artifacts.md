@@ -121,11 +121,13 @@ the full candidate file set for workspace candidates.
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
 stderr, error, elapsed time, and metadata such as the primary file and file
 list. Subprocess metadata records the validator environment policy, provided
-environment keys, and allowlist names, but never environment values. Persisted
-validator stdout/stderr applies basic secret-pattern redaction. If feedback
-graders are enabled, their scores appear in `metrics`, and the composed score
-appears as `feedback_adjusted_fitness` while the raw primary validator metric
-remains intact. Configured evaluator retry attempts are stored under
+environment keys, and allowlist names, but never environment values. Timeout
+results also include `evaluation.metadata.timeout_cleanup` with the attempted
+process-tree cleanup method and outcome. Persisted validator stdout/stderr
+applies basic secret-pattern redaction. If feedback graders are enabled, their
+scores appear in `metrics`, and the composed score appears as
+`feedback_adjusted_fitness` while the raw primary validator metric remains
+intact. Configured evaluator retry attempts are stored under
 `evaluation.metadata.attempts`; each attempt record includes attempt index,
 pass/fail status, fitness, metrics, stdout, stderr, error, elapsed time, stage
 context, and per-stage diagnostics. The selected attempt still determines the

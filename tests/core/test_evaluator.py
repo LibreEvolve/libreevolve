@@ -1,5 +1,6 @@
 import hashlib
 import shutil, tempfile
+import time
 from pathlib import Path
 from libreevolve.core.candidate import CandidateWorkspace
 import pytest
@@ -71,7 +72,34 @@ def test_t2_timeout():
     p, d = _problem("import time\ndef evaluate(c): time.sleep(30); return {'score':1.0,'is_valid':True}")
     try:
         ev = CascadeEvaluator(p, timeout_sec=0.5)
-        assert ev.evaluate("x=1", None) == -0.2
+        result = ev.evaluate("x=1", None)
+        assert result == -0.2
+        assert result.error == "timeout"
+        assert result.metadata["timeout_cleanup"]["attempted"] is True
+    finally:
+        shutil.rmtree(d)
+
+
+def test_timeout_terminates_validator_child_process(tmp_path):
+    marker = tmp_path / "child_survived.txt"
+    child_code = (
+        "import pathlib,time; "
+        "time.sleep(1.0); "
+        f"pathlib.Path({str(marker)!r}).write_text('alive')"
+    )
+    p, d = _problem(
+        "import subprocess, sys, time\n"
+        "def evaluate(c):\n"
+        f"    subprocess.Popen([sys.executable, '-c', {child_code!r}])\n"
+        "    time.sleep(30)\n"
+        "    return {'score':1.0,'is_valid':True}\n"
+    )
+    try:
+        result = CascadeEvaluator(p, timeout_sec=0.3).evaluate("x=1", None)
+        assert result.error == "timeout"
+        assert result.metadata["timeout_cleanup"]["attempted"] is True
+        time.sleep(1.5)
+        assert not marker.exists()
     finally:
         shutil.rmtree(d)
 

@@ -362,9 +362,9 @@ That subprocess uses a minimal environment by default, so provider keys loaded
 from `.env` are not visible to validators unless their names are explicitly
 listed in `validator_env_allowlist`. Persisted evaluator stdout/stderr applies
 basic secret-pattern redaction, but validator network access is not sandboxed.
-Validator timeouts also do not yet guarantee cleanup of child processes spawned
-by evaluator code; keep validators single-process or self-cleaning until
-process-tree cleanup is implemented.
+Validator timeouts attempt to terminate the full validator process tree and
+record cleanup metadata. This is still a local process boundary, not a
+container or general resource sandbox.
 The pre-validator syntax check covers candidate `.py` files and reports all
 Python syntax errors across the workspace with file, line, offset, and message
 metadata.

@@ -392,9 +392,9 @@ policy, but this is provenance metadata rather than resumable state.
 - Materialized workspace execution uses the candidate root as subprocess `cwd`
   and import path, but it is still a local Python subprocess rather than a
   container or arbitrary build-system runner.
-- Evaluator timeouts apply to the direct validator runner, but there is no
-  process-group/job-object cleanup for subprocess descendants spawned by
-  validator code yet.
+- Evaluator timeouts attempt process-tree cleanup and record cleanup metadata,
+  but this remains local subprocess management rather than a container,
+  network sandbox, or general resource-limit system.
 - Validator subprocesses use a minimal environment plus
   `validator_env_allowlist`; provider keys loaded through `.env` are hidden by
   default and persisted evaluator stdout/stderr is secret-redacted. This is not

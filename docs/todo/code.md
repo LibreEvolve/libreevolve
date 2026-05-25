@@ -1370,19 +1370,19 @@ Primary evidence:
   - Required result: add configurable sandbox/container/working-directory
     isolation, resource limits, and artifact collection.
 
-- [ ] Clean up validator process trees on timeout.
+- [x] Clean up validator process trees on timeout.
   - Spec evidence: AlphaEvolve-style automated evaluation needs bounded,
     reproducible execution. A timeout should terminate not only the immediate
     validator runner but also subprocesses spawned by validator code.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` uses
-    `subprocess.run(..., timeout=timeout_sec)` without a process group,
-    Windows Job Object, or child-process cleanup policy. A local proof showed a
-    validator can spawn a short-lived child process, the evaluator returns
-    `timeout`, and the child still writes a file after the timeout.
-  - Required result: run validators in a killable process group/job object or
-    stronger sandbox, terminate descendant processes on timeout/failure, record
-    cleanup outcomes in evaluation metadata, and add tests proving spawned
-    children cannot outlive an evaluation timeout.
+  - Status: implemented for evaluator timeouts. `CascadeEvaluator` now launches
+    validators as a killable process tree (`taskkill /T /F` on Windows and
+    process-group `SIGKILL` on POSIX), returns redacted stdout/stderr on
+    timeout where available, and records `timeout_cleanup` metadata. Tests
+    prove a validator-spawned delayed child cannot outlive the evaluation
+    timeout and write a marker after timeout.
+  - Remaining gap: this is not a container, network sandbox, memory/CPU limit,
+    or general cleanup policy for successful validators that intentionally
+    leave detached work behind.
 
 - [ ] Isolate validator environment, secrets, and network access.
   - Spec evidence: AlphaEvolve evaluates generated code at scale, so evaluator

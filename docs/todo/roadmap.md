@@ -494,17 +494,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and displaced elite ids.
 
 - [x] Add validity/archive-aware run inspection to operational work.
-  - Evidence: `cli.show()` selects the highest top-level `fitness` row from
-    `history.jsonl` and prints only its primary-file `code`; it does not
-    filter by `evaluation.is_valid`, `metadata.archive_admission.admitted`, or
-    archived best workspace artifacts.
+  - Evidence: `cli.show()` now filters modern histories by
+    `metadata.archive_admission.admitted` and `evaluation.is_valid`, reports
+    its selection mode, and prints selected metrics when present. Legacy
+    histories without archive metadata still use highest-fitness fallback. It
+    still prints only the selected primary-file `code` and not archived best
+    workspace artifacts.
   - Current roadmap gap: run-inspection work mentioned summaries, lineage,
     metrics, and failure statistics, but not the correctness problem that
     "Best program" can mean highest logged row rather than best archived
     candidate.
-  - Required result: make `show` validity-aware and archive-aware, report
-    full-workspace artifacts and admission status, and add tests where invalid
-    or non-admitted high-fitness rows do not win the displayed best.
+  - Required result: keep the implemented validity/archive-aware best
+    selection tests, then add full-workspace artifacts and richer admission,
+    stage, lineage, archive, prompt, feedback, and failure diagnostics.
 
 - [x] Add aggregate workspace syntax diagnostics to evaluator feedback work.
   - Evidence: `_syntax_errors()` now checks candidate `.py` files in sorted

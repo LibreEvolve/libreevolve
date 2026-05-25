@@ -54,6 +54,73 @@ def test_show_prints_best(tmp_path):
          "parent_id":None,"lineage":[],"metadata":{}}))
     r = CliRunner().invoke(cli, ["show", str(tmp_path)])
     assert r.exit_code == 0 and "0.9" in r.output and "x=2" in r.output
+    assert "legacy highest-fitness" in r.output
+
+
+def test_show_uses_archive_admitted_valid_best_for_modern_history(tmp_path):
+    rows = [
+        {
+            "id": "seed",
+            "code": "x=1",
+            "fitness": 0.5,
+            "generation": 0,
+            "metadata": {"archive_admission": {"admitted": True}},
+            "metrics": {"score": 0.5, "is_valid": True},
+            "evaluation": {"is_valid": True},
+        },
+        {
+            "id": "invalid",
+            "code": "x=999",
+            "fitness": 2.0,
+            "generation": 1,
+            "metadata": {"archive_admission": {"admitted": False}},
+            "metrics": {"score": 2.0, "is_valid": False},
+            "evaluation": {"is_valid": False},
+        },
+        {
+            "id": "below",
+            "code": "x=500",
+            "fitness": 1.5,
+            "generation": 2,
+            "metadata": {"archive_admission": {"admitted": False}},
+            "metrics": {"score": 1.5, "is_valid": True},
+            "evaluation": {"is_valid": True},
+        },
+    ]
+    (tmp_path / "history.jsonl").write_text(
+        "\n".join(json.dumps(row) for row in rows),
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code == 0
+    assert "archive-admitted valid" in r.output
+    assert "0.500000" in r.output
+    assert "x=1" in r.output
+    assert "x=999" not in r.output
+    assert "x=500" not in r.output
+
+
+def test_show_errors_when_modern_history_has_no_admitted_valid_program(tmp_path):
+    (tmp_path / "history.jsonl").write_text(
+        json.dumps(
+            {
+                "id": "invalid",
+                "code": "x=999",
+                "fitness": 2.0,
+                "generation": 1,
+                "metadata": {"archive_admission": {"admitted": False}},
+                "evaluation": {"is_valid": False},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "No archive-admitted valid programs" in r.output
 
 def test_run_none_best(tmp_path):
     _make_problem(tmp_path)

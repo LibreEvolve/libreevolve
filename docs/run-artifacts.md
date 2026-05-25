@@ -192,12 +192,14 @@ Those checked-in examples are legacy history fixtures. They do not contain the
 complete current artifact layout shown above, including `manifest.json`,
 `prompt_history.jsonl`, `failure_history.jsonl`, or `best_workspace/`.
 
-`show` is currently a compact compatibility view. It selects the highest
-top-level `fitness` row from `history.jsonl`, not a reconstructed
-archive-admitted best candidate. Use `best.py`/`best_workspace/` from the
-original run as the archived best output. Richer validity-aware metric-vector,
-lineage, archive, prompt, feedback, and full-workspace diagnostics are tracked
-as follow-up work.
+`show` is a compact compatibility view. For current histories that include
+`metadata.archive_admission`, it selects the best archive-admitted valid record
+from `history.jsonl` and prints its metrics when present. For legacy histories
+without archive metadata, including the checked-in fixtures above, it falls
+back to the highest top-level `fitness` row. Use `best.py`/`best_workspace/`
+from the original run as the exact archived output. Richer stage, lineage,
+archive, prompt, feedback, and full-workspace diagnostics are tracked as
+follow-up work.
 
 ## Related plugin artifact
 

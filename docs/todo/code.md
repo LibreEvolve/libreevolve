@@ -993,18 +993,17 @@ Primary evidence:
 - [ ] Improve run inspection and archive diagnostics.
   - Spec evidence: AlphaEvolve's evolutionary database attaches scores and
     outputs to programs so explored ideas can be inspected and resurfaced.
-  - Current evidence: `libreevolve show` prints total records, best primary
-    fitness, and the best primary-file code only. It chooses
-    `max(history, key=fitness)` from all JSONL records, so it is not
-    archive-aware and can report an evaluator-invalid, below-threshold, or
-    otherwise non-admitted record as "best" if that row has the largest
-    top-level fitness. It also does not expose full file sets, metric vectors,
-    stage failures, prompt lineage, archive cells, novelty/diversity signals,
+  - Current evidence: `libreevolve show` now detects current histories with
+    `metadata.archive_admission`, selects only archive-admitted records whose
+    evaluation is valid, prints its selection mode, and prints selected metrics
+    when present. It preserves a legacy highest-fitness fallback for old
+    history fixtures that lack archive metadata. It still prints only the
+    selected primary-file code and does not expose full file sets, stage
+    failures, prompt lineage, archive cells, novelty/diversity signals,
     feedback records, or parent/child lineage.
   - Required result: extend `show` and/or machine-readable summaries with
-    validity-aware and archive-admission-aware best selection, metrics, stage
-    diagnostics, full-workspace pointers, lineage, prompt ids, archive
-    diagnostics, and failure statistics; add tests where an invalid or
+    stage diagnostics, full-workspace pointers, lineage, prompt ids, archive
+    diagnostics, and failure statistics; keep tests where an invalid or
     non-admitted high-fitness row is not reported as the archived best.
 
 ## Benchmarks and Problem Fixtures

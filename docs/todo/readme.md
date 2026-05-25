@@ -482,19 +482,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with per-candidate admission events
     while distinguishing them from full archive snapshots.
 
-- [x] Clarify `show` is not archive-best reconstruction.
+- [x] Clarify `show` archive-aware selection and remaining compact-view limits.
   - README evidence: the inspect-results section prints "Best fitness" and
     "Best program" from `libreevolve show`, which can imply the same archived
     best output as a completed run.
-  - Current evidence: `cli.show()` reads `history.jsonl` and selects
-    `max(records, key=lambda r: r["fitness"])` without checking
-    `evaluation.is_valid`, `metadata.archive_admission.admitted`, or full
-    workspace artifacts. The command prints only `best["code"]`.
-  - Status: README now calls `show` a compact history view and tells users to
-    use `best.py`/`best_workspace/` from the original run for the archived best
-    output.
+  - Current evidence: `cli.show()` now checks
+    `metadata.archive_admission.admitted` and `evaluation.is_valid` for modern
+    histories, prints the selection mode, and prints selected metrics when
+    present. It falls back to highest-fitness selection for legacy histories
+    without archive metadata and still prints only `best["code"]`.
+  - Status: README now calls `show` a compact history view, documents the
+    archive-admitted valid selection for current histories, documents the
+    legacy fallback for checked-in fixtures, and tells users to use
+    `best.py`/`best_workspace/` from the original run for exact archived output
+    and full workspace.
   - Required result: keep the README distinction until `show` is made
-    validity-aware, archive-aware, metric-aware, and workspace-aware.
+    workspace-aware and richer stage/lineage/archive diagnostics exist.
 
 - [x] Clarify checked-in example runs are legacy history fixtures.
   - README evidence: README points readers to `examples/runs/*` immediately

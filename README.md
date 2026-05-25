@@ -131,13 +131,17 @@ testing `show`, but they do not include the current full run-artifact set such
 as `manifest.json`, `prompt_history.jsonl`, `failure_history.jsonl`, or
 `best_workspace/`.
 
-`show` is a compact history view. It selects the highest top-level fitness row
-from `history.jsonl`, not a reconstructed archive-admitted best candidate; use
-`best.py` and `best_workspace/` from the original run for the archived best
-output.
+`show` is a compact history view. For current histories that include
+`metadata.archive_admission`, it selects the best archive-admitted valid record
+from `history.jsonl` and prints its metrics when present. For legacy histories
+without archive-admission metadata, including the checked-in fixtures above, it
+falls back to the highest top-level fitness row. Use `best.py` and
+`best_workspace/` from the original run for the exact archived output and full
+workspace.
 
 ```
 Total programs: 11
+Selection:      legacy highest-fitness
 Best fitness:   1.000000 (generation 0)
 
 --- Best program ---

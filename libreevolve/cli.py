@@ -66,9 +66,21 @@ def show(run_dir):
     records = [json.loads(l) for l in h.read_text(encoding="utf-8").splitlines() if l.strip()]
     if not records:
         raise click.ClickException("history.jsonl is empty")
-    best = max(records, key=lambda r: r["fitness"])
+    has_archive_metadata = any(_has_archive_metadata(record) for record in records)
+    if has_archive_metadata:
+        eligible = [record for record in records if _is_archive_admitted_valid(record)]
+        if not eligible:
+            raise click.ClickException("No archive-admitted valid programs found")
+        best = max(eligible, key=lambda r: r["fitness"])
+        selection = "archive-admitted valid"
+    else:
+        best = max(records, key=lambda r: r["fitness"])
+        selection = "legacy highest-fitness"
     click.echo(f"Total programs: {len(records)}")
+    click.echo(f"Selection:      {selection}")
     click.echo(f"Best fitness:   {best['fitness']:.6f} (generation {best['generation']})")
+    if best.get("metrics"):
+        click.echo(f"Metrics:        {json.dumps(best['metrics'], sort_keys=True)}")
     click.echo("\n--- Best program ---\n")
     click.echo(best["code"])
 
@@ -119,6 +131,19 @@ def _load_plugins(names: list[str]) -> list:
             raise click.ClickException(f"Unknown plugin: {n!r}. Available: {list(reg)}")
         result.append(reg[n]())
     return result
+
+
+def _has_archive_metadata(record: dict) -> bool:
+    return isinstance(record.get("metadata"), dict) and "archive_admission" in record["metadata"]
+
+
+def _is_archive_admitted_valid(record: dict) -> bool:
+    metadata = record.get("metadata") if isinstance(record.get("metadata"), dict) else {}
+    admission = metadata.get("archive_admission") if isinstance(metadata, dict) else None
+    evaluation = record.get("evaluation") if isinstance(record.get("evaluation"), dict) else {}
+    return bool(isinstance(admission, dict) and admission.get("admitted")) and bool(
+        evaluation.get("is_valid", True)
+    )
 
 
 def _write_best_artifacts(program, run_dir: Path) -> tuple[Path, Path]:

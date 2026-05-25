@@ -323,8 +323,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     backslashes are accepted when normalized safely. README now also says
     candidate workspace construction rejects raw paths that normalize to the
     same relative path and materialization preflights case-folded host paths,
-    while warning that file-section collision policy and Unicode normalization
-    remain incomplete.
+    and that duplicate file edit sections fail before partial application,
+    while warning that Unicode normalization and topology-operation collision
+    policy remain incomplete.
   - Required result: keep README aligned with current path parser behavior
     while still warning separately about path-collision handling and partial
     whole-envelope diagnostics.

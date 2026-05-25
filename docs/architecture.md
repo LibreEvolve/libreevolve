@@ -99,7 +99,9 @@ accepted when the resulting normalized path is safe. This does not yet provide
 a canonical collision model: workspace construction rejects raw paths that
 normalize to the same relative name, and materialization preflights
 case-folded host-path collisions before writing files. Mutation-envelope
-collision policy and Unicode-normalization collisions remain incomplete.
+handling rejects duplicate edit sections for the same `<<<FILE path ...>>>`
+target. Unicode-normalization collisions and more complex topology-operation
+collision policy remain incomplete.
 Envelope parsing now rejects unmatched, orphaned, nested, duplicate-name,
 empty-name, and invalid-name `<<<FILE` / `<<<BLOCK` sections before applying
 partial edits. It is still a local envelope parser rather than a full mutation

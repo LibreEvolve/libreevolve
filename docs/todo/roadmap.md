@@ -134,12 +134,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `CandidateWorkspace` now rejects distinct raw inputs that normalize to the
     same candidate path. Materialization now preflights case-folded host paths
     before writing, so case-only variants fail closed on case-insensitive
-    filesystems.
+    filesystems. Duplicate file edit sections now fail before partial
+    application.
   - Current roadmap gap: workspace fidelity covered safe path grammar but not
     whether the candidate file set remains one-to-one after normalization and
     host filesystem materialization.
   - Required result: continue tracking Unicode normalization and
-    mutation-envelope collision policy with tests for loader and mutation.
+    topology-operation collision policy with tests for loader and mutation.
 
 - [x] Add mutation-envelope diagnostics for partial parses.
   - Evidence: file and block mutation envelopes now validate unmatched,

@@ -96,11 +96,14 @@ Primary evidence:
     `CandidateWorkspace.materialize()` also preflights case-folded host paths
     before writing any file; tests prove `Readme.md` and `README.md` collisions
     fail without partial materialization.
-  - Remaining evidence: duplicate mutation-envelope targets and
-    Unicode-normalization collisions still need an explicit policy.
-  - Required result: define Unicode-normalization and duplicate
-    mutation-envelope target policy for cross-platform runs, and add
-    loader/mutation tests that no candidate file disappears silently.
+    Duplicate edit sections for the same `<<<FILE path ...>>>` target now fail
+    with `path:duplicate_file_section` before partial application.
+  - Remaining evidence: Unicode-normalization collisions and collision policy
+    for more complex file-topology operation sequences still need an explicit
+    policy.
+  - Required result: define Unicode-normalization and topology-operation
+    collision policy for cross-platform runs, and add loader/mutation tests
+    that no candidate file disappears silently.
 
 - [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every

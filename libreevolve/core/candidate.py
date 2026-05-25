@@ -195,6 +195,9 @@ def apply_workspace_mutation(
         if err is not None:
             return workspace, err
         parsed_sections.append((spec, body))
+    duplicate_edit = _find_duplicate_edit_section_path(parsed_sections)
+    if duplicate_edit is not None:
+        return workspace, f"{duplicate_edit}:duplicate_file_section"
 
     files = dict(workspace.files)
     primary_file = workspace.primary_file
@@ -270,6 +273,18 @@ def _parse_file_section_header(header: str) -> tuple[dict, str | None]:
         return {"op": "edit", "path": normalize_candidate_path(raw)}, None
     except ValueError:
         return {}, f"{raw}:unsafe_path"
+
+
+def _find_duplicate_edit_section_path(sections: list[tuple[dict, str]]) -> str | None:
+    seen: set[str] = set()
+    for spec, _ in sections:
+        if spec.get("op") != "edit":
+            continue
+        path = spec["path"]
+        if path in seen:
+            return path
+        seen.add(path)
+    return None
 
 
 def _parse_single_path_op(op: str, raw_path: str) -> tuple[dict, str | None]:

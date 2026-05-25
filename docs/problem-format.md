@@ -265,8 +265,10 @@ workspaces. Nested paths, hyphens, spaces, Unicode filename characters, and
 Windows-style backslashes are accepted when the normalized path is safe.
 Candidate workspace construction rejects file sets whose raw names normalize to
 the same relative path. Materialization also rejects case-folded host-path
-collisions before writing files. Duplicate mutation-envelope targets and
-Unicode-normalization collisions still need a stricter cross-platform policy.
+collisions before writing files. Duplicate edit sections for the same
+`<<<FILE path ...>>>` target are rejected before application. Unicode
+normalization collisions and more complex topology-operation collision policy
+still need a stricter cross-platform policy.
 File/block envelopes are not represented as a complete mutation AST yet, but
 unmatched, orphaned, nested, empty-name, and invalid-name sections fail before
 any partial edit is applied.

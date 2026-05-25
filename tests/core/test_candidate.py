@@ -249,6 +249,20 @@ def test_workspace_file_section_accepts_unicode_paths():
     assert result.files["src/cafe_é.py"] == "value = 2"
 
 
+def test_workspace_rejects_duplicate_file_edit_sections_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE helper.py\nvalue = 2\n>>>FILE\n"
+        "<<<FILE helper.py\nvalue = 3\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "helper.py:duplicate_file_section"
+
+
 def test_workspace_diff_accepts_canonical_block_in_file_section():
     workspace = CandidateWorkspace(
         files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},

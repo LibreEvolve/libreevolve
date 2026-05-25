@@ -382,8 +382,9 @@ paths, hyphens, spaces, Unicode filename characters, and Windows-style
 backslashes. Collision checks are still incomplete: distinct input names that
 normalize to the same relative path are rejected during candidate workspace
 construction, and materialization preflights case-folded host-path collisions.
-File-section collision policy and Unicode normalization collisions are still
-incomplete.
+Duplicate edit sections for the same `<<<FILE path ...>>>` target are rejected
+before partial application. Unicode normalization collisions and more complex
+topology-operation collision policy are still incomplete.
 File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, duplicate-name, empty-name, and
 invalid-name envelopes now fail before partial edits are applied.

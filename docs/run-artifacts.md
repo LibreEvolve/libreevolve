@@ -81,7 +81,10 @@ the full candidate file set for workspace candidates.
 stderr, error, elapsed time, and metadata such as the primary file and file
 list. If feedback graders are enabled, their scores appear in `metrics`, and
 the composed score appears as `feedback_adjusted_fitness` while the raw primary
-validator metric remains intact.
+validator metric remains intact. Configured evaluator retries are not fully
+auditable yet: fail-then-pass retries preserve the successful attempt, and
+all-fail retries preserve the final failed attempt, but earlier failed attempts
+are not retained as separate history records.
 
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is not currently stored as a structured trace, so

@@ -75,6 +75,8 @@ is not yet an AlphaEvolve reproduction.
   composition.
 - Isolate LLM feedback provider, parse, and config failures as structured
   evaluation metadata or stage outcomes.
+- Preserve every evaluator retry attempt in run history, not only the
+  successful or final attempt.
 - Add validator environment allowlisting, secret redaction, and network policy
   for subprocess evaluation.
 - Define problem-local evaluator import semantics for validator helper modules,

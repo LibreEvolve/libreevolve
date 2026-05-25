@@ -81,7 +81,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Distributed/parallel evaluator nodes remain open. Metric-specific pass
     criteria, explicit sample aggregation policies, and validation for invalid
     stage numeric fields such as zero samples or negative retries also remain
-    open.
+    open. Retry provenance is also incomplete: fail-then-pass retries retain
+    only the successful attempt, and all-fail retries retain only the final
+    failed attempt.
 
 - [ ] Strict scalar metric contract for evaluator outputs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.

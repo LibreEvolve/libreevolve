@@ -9,7 +9,8 @@ from libreevolve.population.program import Program
 class ProgramDatabase:
     """Facade: IslandModel + append-only history.jsonl.
 
-    Source: append-only JSONL lineage log from GigaEvo (arXiv:2511.17592).
+    This is a small local log/archive facade, not a GigaEvo-style lifecycle
+    database.
     """
 
     def __init__(self, config: Config, perf_bounds: tuple[float, float] = (0.0, 1.0)):

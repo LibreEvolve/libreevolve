@@ -295,7 +295,7 @@ metrics:
 
 **validate.py** must define `evaluate(code: str) -> dict` or
 `evaluate(code: str, workspace_path: str) -> dict` returning a dict with all
-metric names. It runs in an isolated subprocess, and its raw metrics and
+metric names. It runs in a temporary local subprocess, and its raw metrics and
 diagnostics are stored with each candidate.
 
 Seed programs may mark evolvable regions while preserving surrounding skeleton code:

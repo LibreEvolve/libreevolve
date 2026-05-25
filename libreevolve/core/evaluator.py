@@ -9,7 +9,8 @@ from libreevolve.problems.loader import Problem
 
 _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_found": -0.3}
 
-# Runner script executed in isolated subprocess.
+# Runner script executed in a temporary local subprocess. This is process
+# separation, not a security sandbox.
 # Uses importlib to load validate.py and calls evaluate(code) -> prints json.dumps(result)
 _RUNNER = (
     "import sys,json,importlib.util,inspect\n"
@@ -27,8 +28,8 @@ _RUNNER = (
 class CascadeEvaluator:
     """Tier 0 (diff penalty) -> Tier 1 (syntax) -> Tier 2 (subprocess).
 
-    Sources: cascade eval from ArchAgent (arXiv:2602.22425) and Magellan
-    (arXiv:2601.21096), lazy penalty system from ThetaEvolve (arXiv:2511.23473).
+    Inspired by staged evaluation and lazy-penalty ideas in adjacent systems.
+    This local implementation is not a reproduction of those papers.
     """
 
     def __init__(

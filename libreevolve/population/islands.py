@@ -8,8 +8,8 @@ from libreevolve.population.program import Program
 class IslandModel:
     """5 independent MAP-Elites archives with ring-topology migration.
 
-    Sources: ring topology ablations from CodeEvolve (arXiv:2510.14150),
-    multi-island elite exchange from GigaEvo (arXiv:2511.17592).
+    Inspired by island population models; this is a synchronous local archive
+    rotation and migration policy.
     """
 
     def __init__(

@@ -176,3 +176,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: `README.md:61-72`.
   - Required result: present LibreEvolve as an open prototype with several
     deliberate divergences and many missing AlphaEvolve features.
+
+- [x] Replace "isolated subprocess" wording for validators.
+  - README evidence: the problem-format section said validators run in an
+    isolated subprocess.
+  - Current evidence: `CascadeEvaluator` executes validators in a temporary
+    subprocess using the current Python interpreter and local filesystem
+    access; this is process separation, not sandbox isolation.
+  - Required result: call it a temporary local subprocess in README and keep
+    real sandbox/resource-limit work in `docs/todo/code.md`.

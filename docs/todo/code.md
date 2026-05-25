@@ -75,6 +75,20 @@ Primary evidence:
     existing compact fences, update prompt examples, and add parser/apply tests
     for both formats.
 
+- [ ] Capture proposal ideas/rationale separately from patch application.
+  - Spec evidence: AlphaEvolve Figure 3 asks the LLM to "suggest a new idea"
+    and describe each change with SEARCH/REPLACE blocks; its process uses LLMs
+    to generate, critique, and evolve a pool of algorithms.
+  - Current evidence: `PromptSampler.DEFAULT_TEMPLATE` says "No comments. No
+    markdown fences. No explanation. Just the raw diff block." The diff parser
+    applies only patch blocks and the database stores the raw diff, but there
+    is no structured proposal idea, rationale, or hypothesis field that can be
+    inspected, critiqued, scored, or resurfaced independently.
+  - Required result: allow and parse bounded proposal rationale/idea sections
+    when configured, store them in candidate metadata, render useful prior
+    ideas in prompts, and keep patch extraction robust for both rationale plus
+    diff and diff-only compatibility modes.
+
 - [ ] Export complete best workspaces, not only the primary file.
   - Spec evidence: AlphaEvolve can evolve entire code files/codebases, so the
     output artifact must preserve all evolved components.
@@ -391,6 +405,18 @@ Primary evidence:
   - Required result: support optional critique, self-revision, or reviewer
     passes before evaluation.
 
+- [ ] Extend critique from single self-revision to configurable reviewer pools.
+  - Spec evidence: AlphaEvolve describes using a set of LLMs to generate,
+    critique, and evolve a pool of algorithms, and its system is optimized for
+    throughput with separate LLM samplers/evaluators.
+  - Current evidence: `evolve()` can make one synchronous critique call after
+    the mutation response. There is no reviewer pool, no independent critique
+    selection policy, no agreement/disagreement logging, no critique score, and
+    no async overlap with generation or evaluation.
+  - Required result: add configurable reviewer roles/backends, provenance,
+    score or accept/reject/revise policies, prompt/log visibility, and tests
+    that critique behavior does not corrupt mutation backend accounting.
+
 ## Runtime, Reproducibility, and Safety
 
 - [ ] Validate configuration schema and backend specs instead of silently
@@ -446,3 +472,17 @@ Primary evidence:
     interpreter and local filesystem access (`libreevolve/core/evaluator.py`).
   - Required result: add configurable sandbox/container/working-directory
     isolation, resource limits, and artifact collection.
+
+- [x] Remove wording that implies the validator subprocess is a security
+  sandbox.
+  - Spec evidence: AlphaEvolve evaluates generated code, so local docs must be
+    precise about execution safety boundaries.
+  - Current evidence: README and evaluator comments referred to an "isolated"
+    subprocess even though validators execute under the current interpreter
+    with local filesystem access and only temporary workspace/process
+    separation.
+  - Status: README and evaluator comments now call this a temporary local
+    subprocess/process separation, while the sandbox/resource-limit work remains
+    open above.
+  - Required result: avoid using "isolated" or "sandboxed" for the current
+    evaluator until real sandbox/resource controls exist.

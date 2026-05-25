@@ -1,7 +1,7 @@
 import random
 
 def evaluate(code: str) -> dict:
-    """Evaluates sorting solution. Runs in isolated subprocess."""
+    """Evaluate sorting solution."""
     ns = {}
     _load_code(ns, code)
     sort_list = ns.get("sort_list")
@@ -22,7 +22,7 @@ def _load_code(ns: dict, code: str) -> None:
     """Load candidate code into namespace. Uses compile + eval for dynamic code."""
     try:
         compiled = compile(code, "<candidate>", "exec")
-        # Note: eval is intentional — candidate code runs in isolated subprocess
+        # Note: eval is intentional; the evaluator calls this in a subprocess.
         eval(compiled, ns)  # noqa: S307
     except Exception:
         pass

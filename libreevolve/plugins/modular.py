@@ -6,14 +6,14 @@ _GUIDANCE = (
     "  - generate_config(n: int) -> dict: generate an initial configuration\n"
     "  - improve(config: dict) -> dict:   improve an existing configuration\n"
     "  - perturb(config: dict) -> dict:   perturb to escape local optima\n"
-    "(From ImprovEvolve arXiv:2602.10233)\n"
+    "(Inspired by ImprovEvolve arXiv:2602.10233; interface not enforced)\n"
 )
 
 class ModularPlugin(PluginBase):
     """ImprovEvolve-inspired modular decomposition prompt guidance.
 
     This does not enforce or execute ImprovEvolve's interface/search loop.
-    Source: arXiv 2602.10233. Hook: build_extra_context.
+    Hook: build_extra_context.
     """
     def build_extra_context(self, parent, inspirations) -> str:
         return _GUIDANCE

@@ -217,6 +217,8 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
+- Mutation responses are raw patch text; proposal ideas/rationales are not
+  parsed, scored, or resurfaced as separate artifacts.
 - Prompt evolution is implemented at the template boundary; richer prompt
   fitness and placeholder validation remain open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,

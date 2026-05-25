@@ -105,6 +105,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: keep bounded execution-output and feedback rendering on
     the roadmap as a prompt fidelity item.
 
+- [x] Add proposal idea/rationale capture to prompt/context work.
+  - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and
+    describe changes with SEARCH/REPLACE blocks.
+  - Current roadmap gap: prompt work covered templates/context but not a
+    structured proposal artifact separate from raw patch text.
+  - Required result: track response formats that can preserve proposal
+    rationale for critique, logging, and future resurfacing.
+
 - [x] Add flexible candidate abstraction modes to candidate fidelity.
   - Evidence: AlphaEvolve Section 2.1 allows user-chosen solution
     abstractions, not only code file sets.
@@ -134,6 +142,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     normalization and breadth/depth tests but not separation of call roles.
   - Required result: track and test mutation, critique, feedback, and
     meta-prompt accounting separately.
+
+- [x] Add reviewer-pool critique fidelity to backend/critique work.
+  - Evidence: AlphaEvolve describes using LLMs to generate, critique, and
+    evolve a pool of algorithms, while LibreEvolve has only a single optional
+    synchronous self-revision pass.
+  - Current roadmap gap: critique work did not explicitly call out reviewer
+    roles, agreement/disagreement logging, or policies beyond one revision.
+  - Required result: extend critique/revision toward configurable reviewer
+    pools with provenance and accounting.
 
 - [x] Add rich evolutionary database work.
   - Evidence: AlphaEvolve's program database stores solutions with scores and

@@ -1,7 +1,8 @@
 """SEARCH/REPLACE diff engine.
 
-Source: AlphaEvolve (arXiv:2506.13131) — consensus diff format across all
-8 core system papers; prevents wholesale rewrites via surgical mutations.
+Inspired by AlphaEvolve (arXiv:2506.13131) SEARCH/REPLACE mutation. The local
+compact fence spelling is a compatibility choice and is not the canonical paper
+format.
 """
 from __future__ import annotations
 import re

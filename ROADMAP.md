@@ -18,7 +18,7 @@ LibreEvolve has:
   thresholds, samples, seeds, retries, and timeouts
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
-- a prompt sampler that renders context files and evaluator feedback
+- a prompt sampler that renders context files and compact stage feedback
 - a local prompt-program database with prompt selection, scoring, lineage, and
   optional interval-based LLM template mutation
 - optional synchronous LLM critique/revision before mutation application
@@ -76,6 +76,8 @@ is not yet an AlphaEvolve reproduction.
 - Render richer bounded evaluator outputs in prompts, including stdout/stderr,
   artifacts, sample-level diagnostics, validator feedback, and LLM grader
   summaries.
+- Add a structured proposal format that can preserve an idea/rationale section
+  separately from the patch blocks while keeping raw-diff compatibility.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages.
 

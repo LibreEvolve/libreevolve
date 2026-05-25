@@ -143,6 +143,18 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: accept both canonical and compact diff formats without
     breaking existing seeds/tests.
 
+- [ ] Structured proposal idea/rationale capture.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3 and Section 2.3.
+  - Requirement: AlphaEvolve asks the LLM to suggest a new idea and describe
+    changes with SEARCH/REPLACE blocks; the evolutionary loop benefits from
+    keeping generated ideas, critiques, and outcomes connected.
+  - Current gap: LibreEvolve prompts demand raw diff only, and history stores
+    the raw diff but not a separate proposal idea, rationale, or hypothesis
+    artifact for later inspection, critique, or resurfacing.
+  - Required result: support a configured response format that separates
+    proposal rationale from patch blocks while preserving diff-only
+    compatibility.
+
 - [x] Meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.
   - Requirement: prompt instructions/context can be co-evolved in a separate
@@ -339,3 +351,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     calls receive a candidate-improvement reward.
   - Missing: role-specific routing/accounting for generation, critique,
     grading, and meta-prompt calls, plus persisted scheduler diagnostics.
+
+- [x] Tighten inline paper-source comments so they do not imply faithful
+  implementations.
+  - Evidence: source comments in the diff engine, evaluator, loop, database,
+    island model, MAP-Elites, and modular plugin cited paper systems in ways
+    that could be read as direct implementations.
+  - Status: inline comments now use "inspired by" language or state the local
+    limitation directly; the larger implementation gaps remain tracked in the
+    paper-specific items above.
+  - Required result: keep code comments aligned with the actual behavior, not
+    just README/docs marketing language.

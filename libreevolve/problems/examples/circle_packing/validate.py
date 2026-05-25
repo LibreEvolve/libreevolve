@@ -43,7 +43,7 @@ def _load_code(ns: dict, code: str) -> None:
     """Load candidate code into namespace. Uses compile + exec for dynamic code."""
     try:
         compiled = compile(code, "<candidate>", "exec")
-        # Note: exec is intentional — candidate code runs in isolated subprocess
+        # Note: exec is intentional; the evaluator calls this in a subprocess.
         eval(compiled, ns)  # noqa: S307
     except Exception:
         pass

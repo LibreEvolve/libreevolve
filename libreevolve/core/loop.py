@@ -1,7 +1,7 @@
 """Core evolution loop: prompt construction, LLM-driven mutation, evaluation.
 
-Source: AlphaEvolve (arXiv:2506.13131) — core loop structure, explore/exploit
-sampling, and failure history in prompt from CodeEvolve (arXiv:2510.14150).
+Inspired by AlphaEvolve's evolutionary loop and adjacent code-evolution systems.
+This synchronous loop is intentionally smaller than the paper systems.
 """
 from __future__ import annotations
 import random

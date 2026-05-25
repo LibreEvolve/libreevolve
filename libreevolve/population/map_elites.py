@@ -10,8 +10,8 @@ from libreevolve.population.program import Program
 class MAPElites:
     """3D MAP-Elites: performance x complexity x diversity.
 
-    Sources: MAP-Elites (Mouret & Clune, 2015), 3D behavioral dimensions from
-    MadEvolve (arXiv:2602.15951), TF-IDF char-4gram diversity metric.
+    This is a fixed local quality-diversity heuristic, not a canonical
+    user-defined behavior descriptor implementation.
     """
 
     def __init__(self, bins: int = 10, elite_archive_size: int = 50,

@@ -98,6 +98,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep marketing text aligned with the heuristic
     implementation unless canonical UCB1 is implemented and tested.
 
+- [ ] Document or fix backend reward-state validation.
+  - README/backend-doc evidence: README and backend docs describe UCB-style
+    routing over observed fitness improvements and normalized ensemble
+    telemetry.
+  - Current evidence: `LLMEnsemble.record_reward()` accepts non-finite and
+    negative values without validation. A local proof stored `nan`, `inf`, and
+    `-5.0` in `wins` and subsequent generation continued from that state.
+  - Required result: either enforce finite bounded reward updates before the
+    scheduler mutates state, or document the current API contract and add tests
+    proving invalid direct or resumed reward state is rejected.
+
 - [x] Clarify LLM provider failure handling is not production-grade.
   - README evidence: README described OpenAI/Anthropic/Ollama support and
     backend routing, but did not warn that provider call failures are not
@@ -108,6 +119,33 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mutation, critique, feedback, or meta-prompt provider exceptions.
   - Required result: warn readers that backend failure retry/fallback and
     failed-call telemetry remain open.
+
+- [ ] Clarify `llm_max_retries` versus provider-adapter internal retries.
+  - README/config evidence: README and configuration docs describe
+    `--llm-max-retries` / `llm_max_retries` as retry attempts on the same
+    selected LLM backend before fallback/failure.
+  - Current evidence: `LLMEnsemble.generate()` honors `llm_max_retries` at the
+    ensemble layer, but `OpenAIBackend.generate()`, `AnthropicBackend.generate()`,
+    and `OllamaBackend.generate()` each perform their own hard-coded three
+    attempts with exponential backoff before returning an error to the
+    ensemble. Therefore `llm_max_retries: 0` does not mean a single provider
+    API attempt, and adapter attempts are not counted in telemetry or budgets.
+  - Required result: either unify provider-adapter retries under the configured
+    ensemble retry policy, or document the two retry layers clearly in README,
+    backend docs, and configuration docs.
+
+- [ ] Document that LLM provider calls are not yet bounded by run timeouts.
+  - README evidence: README and `docs/run-artifacts.md` describe
+    `--max-runtime-seconds` as a wall-clock run budget checked by the runtime.
+  - Current evidence: `RunBudget` is checked between loop steps, but
+    `LLMEnsemble.generate()` makes synchronous provider calls and the
+    OpenAI/Anthropic/Ollama adapters do not accept or enforce a LibreEvolve
+    request timeout/deadline. A slow mutation, critique, feedback, or
+    meta-prompt provider call can exceed `max_runtime_seconds` before the loop
+    can stop or write a timeout-specific artifact.
+  - Required result: either implement provider-call timeouts/cancellation first
+    or update README/backends/run-artifact docs so users understand that the
+    current wall-clock budget is not an interrupt for in-flight LLM API calls.
 
 - [x] Correct the AlphaEvolve local-model comparison row.
   - README evidence: the comparison table said AlphaEvolve local models:
@@ -141,9 +179,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [x] Qualify "comprehensive test coverage."
   - README evidence: `README.md:59` claims comprehensive coverage across all
     components.
-  - Current evidence: the local non-integration suite now has 168 selected
-    tests, but major AlphaEvolve features are still absent or represented only
-    as narrow prototype behavior.
+  - Current evidence: the local non-integration suite currently has 431 passed,
+    1 skipped, and 2 deselected tests under
+    `py -3.12 -m pytest tests/ -m "not integration" --tb=short`, but major
+    AlphaEvolve features are still absent or represented only as narrow
+    prototype behavior.
   - Required result: keep the count but change the coverage claim to the
     current prototype surface.
 
@@ -187,6 +227,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: avoid implying prompt mutation is validated until the
     placeholder-validation todo is implemented.
 
+- [ ] Clarify evolved prompt templates can currently drop essential prompt
+  channels.
+  - README-adjacent evidence: README/configuration/architecture docs describe
+    prompt programs as selected, scored, logged, and optionally mutated, and
+    say configured/evolved prompt templates are validated against the
+    placeholder schema.
+  - Current evidence: syntax/schema validation only requires `{task}`. A local
+    proof admitted a mutated prompt template `Task only: {task}`, which omitted
+    `{parent_code}` and `{mutation_instructions}` while still entering the
+    prompt database.
+  - Required result: either implement semantic placeholder-retention rules
+    first, or document that current validation prevents malformed placeholders
+    but does not guarantee evolved prompts retain code, feedback, inspiration,
+    or mutation-format sections.
+
 - [x] Add missing AlphaEvolve gap callouts to the README architecture section.
   - README evidence: `README.md:225-254` presents the package architecture.
   - Missing from README: evolve-block markers, prompt sampler, multi-objective
@@ -202,6 +257,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     codebase and can evaluate complex workflows.
   - Required result: explicitly state current Python/local-workspace scope and
     remaining arbitrary-language/build-system limitations.
+
+- [ ] Document primary-file identity fallback or enforce strict workspace
+  primary validation first.
+  - README/problem-format evidence: docs explain that workspace seeds choose
+    `main.py`, `seed.py`, or the first `.py` file as the primary file, and
+    `best.py`/legacy validators use that primary-file compatibility view.
+  - Current evidence: lower-level `CandidateWorkspace` accepts an explicit
+    missing `primary_file` and silently rewrites it to the first sorted file. A
+    local proof passed `primary_file="missing.py"` with only `helper.py` in
+    `files`; the resulting workspace used `helper.py` with no diagnostic.
+  - Required result: either make constructor/deserialization strict before
+    documenting primary-file identity as reliable, or document the current
+    fallback behavior and its limits for future resume/history replay.
 
 - [x] Rework the "Comparison to AlphaEvolve" section so it does not overstate
   LibreEvolve as a feature superset.
@@ -257,6 +325,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     workspace.
   - Required result: keep README aligned with configured artifact collection
     and the remaining raw-content/no-outside-workspace limits.
+
+- [ ] Document evaluator artifact copy-out confinement and limit semantics.
+  - README evidence: README says matching files written under the candidate
+    workspace are copied to `evaluator_artifacts/` and that non-matching files
+    are discarded with the temporary workspace.
+  - Current evidence: the implementation matches relative paths under
+    `cand_root`, but it does not resolve artifact targets back inside
+    `cand_root` before reading them. On platforms where symlinks are available,
+    `Path.is_file()` and `read_bytes()` can follow symlink targets. The local
+    Windows account could not create the proof symlink (`WinError 1314`), but
+    the static code path lacks a symlink/path-escape guard and lacks skip
+    metadata. `artifact_max_bytes` is also enforced after a full
+    `read_bytes()`, so README/config docs should not imply that it bounds
+    validator artifact I/O or memory until the collector is hardened.
+  - Required result: either implement confinement/streaming limits first, or
+    document the current caveat plainly in README and run-artifact docs.
 
 - [x] Soften the UCB1 paper-table role.
   - README evidence: the references table described UCB1 as "Multi-armed bandit
@@ -326,6 +410,65 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     while still warning separately about path-collision handling and partial
     whole-envelope diagnostics.
 
+- [ ] Correct docs that imply all unsafe candidate paths are rejected.
+  - README/docs evidence: README and problem-format docs say file-section
+    paths are accepted when normalized safely and unsafe paths are rejected.
+  - Current evidence: `normalize_candidate_path()` rejects traversal,
+    drive-letter, and colon-component paths, but silently strips leading `/`.
+    POSIX-style absolute-looking paths such as `/new.py` are accepted and
+    materialized as relative `new.py`.
+  - Required result: after implementation, document that candidate paths are a
+    strictly relative grammar and include leading-slash examples in path-safety
+    tests/docs; until then, avoid broad "all unsafe paths rejected" wording.
+
+- [ ] Document problem-local `context.yaml`, PDF context ingestion, and current
+  context-selection limits in the README custom-problem section.
+  - README evidence: the custom-problem tree shows only
+    `context/optional_notes.md` and does not mention that `load_problem()` now
+    accepts `.txt`, `.md`, `.py`, and `.pdf` files recursively, supports
+    optional `context.yaml` / `context.yml` include/exclude patterns plus
+    `max_chars_per_source`, and records source hashes/extraction spans for
+    prompts/manifests.
+  - Current evidence: `libreevolve/problems/loader.py` implements recursive
+    deterministic context selection, PDF extraction through `pypdf`,
+    citation-style metadata, and first-span character truncation; the
+    architecture and configuration docs describe that behavior more fully.
+  - Required result: update README's custom-problem example and caveats to
+    show the supported context file types and `context.yaml` knobs, while
+    clearly stating that large PDFs/text are still first-span truncated rather
+    than semantically ranked or summarized.
+
+- [ ] Document context provenance limits, not just supported context knobs.
+  - README/docs evidence: `docs/problem-format.md` says the loader records
+    source hashes and that source records are persisted in `manifest.json` for
+    run provenance, while README does not yet explain the exact boundary.
+  - Current evidence: `manifest.json` persists only selected
+    `problem.context_sources`. It does not include the `context.yaml` file
+    hash, effective include/exclude rules, skipped or excluded files, or
+    unsupported-extension diagnostics, so the full context selection decision
+    cannot be reconstructed from the manifest alone. A local proof showed that
+    an unsupported typo key `includes:` in `context.yaml` is accepted silently,
+    so README/problem-format docs should not imply the context manifest schema
+    is fully validated.
+  - Required result: update README/problem-format/run-artifact docs to state
+    that current context provenance covers selected sources only until context
+    manifest policy, unknown-key diagnostics, and skipped-source diagnostics
+    are persisted.
+
+- [ ] Stop teaching `is_valid` as an ordinary `metrics.yaml` scoring metric.
+  - README evidence: the custom-problem `metrics.yaml` example declares
+    `is_valid` alongside numeric scoring metrics, and the text says
+    `evaluate()` returns a dict with all metric names.
+  - Current evidence: `CascadeEvaluator._validate_metrics()` already requires
+    boolean `is_valid` in evaluator output even when it is not declared in
+    `metrics.yaml`. `load_problem()` currently allows `is_valid` to be
+    declared as primary, which turns boolean validity into normalized fitness;
+    that implementation gap is now tracked in `docs/todo/code.md`.
+  - Required result: once the reserved-field policy is implemented or chosen,
+    update README so `metrics.yaml` contains numeric optimization metrics and
+    `is_valid` is documented as a required evaluator validity flag, not a
+    normal optimizable metric.
+
 - [x] Clarify malformed mutation envelope diagnostics.
   - README evidence: the custom-problem section describes file-section edits,
     but did not explain that unmatched or malformed envelope spans are not
@@ -373,6 +516,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with the current score-composition
     behavior and track broader plugin provenance separately.
 
+- [ ] Document plugin side-effect validation limits.
+  - README/plugin-doc evidence: plugin docs say plugins can modify effective
+    score and maintain internal state, and README says score provenance is
+    recorded under `metadata.score_composition`.
+  - Current evidence: score-return validation exists, but plugin-added metrics
+    and metadata are not validated before history logging. A local proof plugin
+    set `program.metrics["plugin_bad"] = inf`; `evolve()` raised
+    `StrictJsonlError` during `history.jsonl` write and only quarantined the
+    rejected record in `history_invalid.jsonl`.
+  - Required result: either implement plugin side-effect validation first, or
+    document that plugins must currently keep added metrics/metadata finite and
+    strict-JSON-serializable or they can abort the run after evaluation.
+
+- [ ] Document plugin hook exception behavior or implement isolation first.
+  - README evidence: README presents plugins as optional paper-inspired
+    extensions for guidance, retrieval, score adjustment, and training-data
+    export.
+  - Current evidence: the loop does not isolate plugin hook exceptions. Calls to
+    `on_generation_start`, `build_extra_context`, `prompt_context_metadata`,
+    `on_evaluated`, `run_artifacts_metadata`, and `on_generation_end` can raise
+    through the main run. A local proof with a plugin whose
+    `build_extra_context()` raises `RuntimeError("plugin context failed")`
+    aborts `evolve()` before mutation/evaluation logging. README/plugin docs do
+    not warn users that a faulty optional plugin can currently terminate the
+    run.
+  - Required result: either implement structured plugin-failure isolation, or
+    document the current fail-fast behavior in README/plugin docs until the
+    runtime policy exists.
+
 - [x] Clarify causal plugin mutation-format behavior.
   - README evidence: the plugin section labels the causal plugin as
     CausalEvolve-inspired, but did not state that its factor detector is not
@@ -385,6 +557,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with the current parser behavior and
     continue distinguishing parser compatibility from paper-faithful causal
     reasoning.
+
+- [ ] Fix stale causal-plugin fallback wording in plugin documentation.
+  - Documentation evidence: `docs/plugins.md` says that when no causal factor
+    matches, the plugin "falls back to a random factor."
+  - Current evidence: `libreevolve/plugins/causal.py::_detect_factors()` now
+    uses the shared `parse_diff_blocks()` parser and returns
+    `self.FACTORS[0]` as a deterministic default when parsing fails or no
+    factor pattern matches. `_ucb1_factor()` can choose randomly only if called
+    with no observations, but `build_extra_context()` returns no guidance when
+    `_history` is empty.
+  - Required result: update plugin docs to describe deterministic no-match
+    fallback and keep any randomness limited to the actual factor-selection
+    path that can occur.
+
+- [ ] Update plugin hook counts and hook-contract docs.
+  - README/docs evidence: `README.md` advertises the plugin system as
+    "4 lifecycle hooks," and `docs/plugins.md` lists only
+    `on_generation_start()`, `build_extra_context()`, `on_evaluated()`, and
+    `on_generation_end()` in its hook contract.
+  - Current evidence: `PluginBase` also defines `prompt_context_metadata()`
+    and `run_artifacts_metadata()`. These hooks are behaviorally significant:
+    the loop records prompt-context attribution from
+    `prompt_context_metadata()`, and completed manifests include plugin
+    artifact summaries returned by `run_artifacts_metadata()`.
+  - Required result: revise README and plugin docs to describe all current
+    plugin hooks, distinguish lifecycle hooks from metadata/provenance hooks,
+    and update any feature-count wording so the public docs do not understate
+    or misclassify implemented plugin behavior.
 
 - [x] Clarify ThetaEvolve export reward and artifact limitations.
   - README evidence: the plugin section says the ThetaEvolve-inspired plugin
@@ -493,6 +693,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with per-candidate admission events
     while distinguishing them from full archive snapshots.
 
+- [ ] Clarify "archive-admitted" wording for MAP-Elites cell versus elite-list
+  retention.
+  - README evidence: README says `show` selects the best
+    "archive-admitted valid" record and describes `metadata.archive_admission`
+    as archive evidence with cell coordinates/descriptors and elite-list
+    effects.
+  - Current evidence: `MAPElites.add()` sets `admitted=True` for either
+    `entered_cell` or `entered_elite`. A local proof with a one-cell archive and
+    large elite list showed a lower-fitness same-cell program reported as
+    `admitted=True`, `reason="elite_only"`, `entered_cell=False`, while the
+    MAP-Elites grid occupant remained the earlier higher-fitness program.
+    Current README/run-artifact wording does not explain that this admitted flag
+    can mean auxiliary retention rather than a MAP-Elites cell update.
+  - Required result: update README and run-artifact docs after the runtime
+    fields are split, or document the current combined meaning plainly so users
+    do not mistake elite-list retention for behavior-cell admission.
+
 - [x] Clarify `show` archive-aware selection and remaining compact-view limits.
   - README evidence: the inspect-results section prints "Best fitness" and
     "Best program" from `libreevolve show`, which can imply the same archived
@@ -551,6 +768,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that richer retry/penalty/discard policy and
     score calibration remain open.
 
+- [ ] Correct LLM feedback metric-collision documentation.
+  - README/run-artifact evidence: `docs/run-artifacts.md` says the composed
+    feedback score appears as `feedback_adjusted_fitness` while the raw primary
+    validator metric remains intact.
+  - Current evidence: `apply_llm_feedback()` accepts any configured grader
+    metric name and writes it directly into `updated.metrics`. A local proof
+    configured `metric: score` for a feedback grader; the evaluator's primary
+    metric `score=0.8` was overwritten to `score=0.1` while top-level
+    `fitness` stayed `0.8`.
+  - Required result: either implement metric-name collision rejection/namespacing
+    first, or update README/run-artifact docs to avoid claiming raw declared
+    metrics are preserved when feedback graders can overwrite them.
+
 - [x] Clarify prompt/history redaction limits.
   - README evidence: README described basic secret redaction for LLM feedback
     graders, but did not distinguish that from mutation prompts, critique
@@ -589,6 +819,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep docs clear that malformed and non-mapping config
     files now fail cleanly, while plugin-specific schemas and provider/model
     API compatibility remain open.
+
+- [ ] Correct boolean config-validation claims for critique and meta-prompt
+  switches.
+  - README/config evidence: `docs/configuration.md` documents
+    `meta_prompt_evolution` and `critique_enabled` as boolean switches, and
+    adjacent docs say broad top-level config validation is now implemented.
+  - Current evidence: `Config.validate()` does not call `_require_bool()` for
+    either field. A local proof accepted
+    `Config(meta_prompt_evolution="false")` and
+    `Config(critique_enabled="false")`; both values stayed as strings and are
+    truthy in the evolution loop.
+  - Required result: either implement boolean validation for these switches
+    before claiming broad config-schema enforcement, or document the current
+    limitation clearly in README/configuration docs.
 
 - [x] Clarify plugin config schema validation boundary.
   - README-adjacent evidence: architecture/configuration caveats implied
@@ -633,6 +877,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep docs aligned with the exact artifact set that
     preflight collision checks and overwrite cleanup use.
 
+- [ ] Document `show` behavior for malformed or partially corrupt histories.
+  - README/run-artifact evidence: README and `docs/run-artifacts.md` present
+    `libreevolve show` as the compact inspection path for current and legacy
+    `history.jsonl` files.
+  - Current evidence: `show` does not catch `json.JSONDecodeError`. A local
+    proof with one valid history row and one `not-json` row exited with a raw
+    `JSONDecodeError` and no user-facing output, despite write-time JSONL
+    quarantine docs being present elsewhere. A second proof showed a record
+    with `metadata.archive_admission.admitted: true` and no `evaluation` is
+    printed as `archive-admitted valid`, so the README claim about valid-record
+    selection is stronger than the current predicate.
+  - Required result: after implementing read-path diagnostics, document whether
+    malformed history rows fail the whole inspection, are skipped with a
+    warning, or are surfaced through a quarantine/repair workflow, and state
+    the exact validity requirement used for current history records.
+
+- [ ] Document and enforce run-name path confinement.
+  - README/docs evidence: README and `docs/run-artifacts.md` describe
+    `--run-name` as selecting a matching run directory under `runs/`, and
+    `docs/configuration.md` describes `problem_name` as the final run
+    subdirectory name.
+  - Current evidence: the implementation does not validate `problem_name` or
+    `--run-name` as a subdirectory name. A local proof with
+    `log_dir=<tmp>/runs` and `problem_name="../escaped"` wrote artifacts under
+    `<tmp>/escaped` outside the configured log root.
+  - Required result: update docs after implementation to state the accepted
+    run-name grammar and confinement policy, and warn accurately until the path
+    validation gap is closed.
+
 - [x] Add plugin artifacts to the run-artifact layout.
   - README-adjacent evidence: `docs/run-artifacts.md` documented
     `runtime.plugin_artifacts` and the `ttt_rl` export path, but the top-level
@@ -654,6 +927,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Click options that affect run budget accounting and artifact collision
     semantics.
 
+- [ ] Clarify run stop-reason semantics for all-invalid seed populations.
+  - README-adjacent evidence: `docs/run-artifacts.md` lists
+    `no_parent` and `no_valid_programs` as current stop reasons, but does not
+    explain which one applies when initial seed evaluation produces no
+    archive-admitted parent.
+  - Current evidence: a local all-invalid-seed run stops with
+    `runtime.stop_reason == "no_parent"` and `generations_started == 1`; it
+    does not use `no_valid_programs` and does not create failure history.
+    `no_valid_programs` appears to be a fallback in `RunBudget.finish()` rather
+    than the observed startup/no-parent path for normal loaded problems.
+  - Required result: either change the runtime to emit a precise
+    all-invalid-seed/no-valid-programs stop reason before incrementing
+    generation counters, or document the current `no_parent` semantics and
+    remove unreachable or misleading stop-reason descriptions.
+
 - [x] Refresh evaluator labels beyond the original three-tier cascade.
   - README evidence: the feature list and architecture tree still described
     the evaluator as only Tier 0/1/2 or diff/syntax/subprocess filtering.
@@ -663,3 +951,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: describe the evaluator as a local staged cascade with
     configurable validator stages, while keeping distributed evaluator workers
     tracked separately.
+
+- [ ] Document multi-sample evaluator aggregation limits.
+  - README evidence: README describes configurable validator stages with
+    thresholds, samples, seeds, retries, stage context, and artifact policy.
+  - Current evidence: `_aggregate_metrics()` averages numeric metrics across
+    samples. A local proof using a minimize primary metric `runtime` with two
+    seeded samples returning `0.0` and `10.0` produced aggregated
+    `runtime=5.0` and normalized `fitness=0.5`. README does not state that
+    multi-sample numeric metrics currently use mean aggregation, nor that users
+    cannot request worst-case, quantile, all-samples-pass, or per-metric
+    threshold behavior.
+  - Required result: either implement explicit aggregation/pass policy config
+    first, or document the current fixed mean/all-booleans behavior and its
+    limits in README/run-artifact docs.

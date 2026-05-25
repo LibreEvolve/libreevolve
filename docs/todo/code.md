@@ -67,6 +67,24 @@ Primary evidence:
     across marked files/components, and pass the whole candidate workspace to
     `evaluate`.
 
+- [ ] Reject missing declared primary files instead of silently reassigning
+  candidate identity.
+  - Spec evidence: AlphaEvolve-style codebase candidates need a faithful
+    representation of which component/file is the primary render/evaluation
+    view. A corrupted archive record, plugin-generated workspace, or future
+    resume checkpoint should not silently change that identity.
+  - Current evidence: `CandidateWorkspace.__post_init__()` normalizes
+    `primary_file`, but if it is not present in `files`, it silently assigns
+    `sorted(self.files)[0]`. A local proof constructed
+    `CandidateWorkspace(files={"helper.py": "x=1\n"}, primary_file="missing.py")`
+    and received `primary_file == "helper.py"` with no error.
+    File-section `PRIMARY missing.py` is rejected, so the lower-level
+    constructor is less strict than mutation-time topology changes.
+  - Required result: reject missing explicit primary files at workspace
+    construction/load/deserialize boundaries, or require callers to opt into a
+    documented fallback mode; add tests for loader seeds, `from_dict()`/history
+    replay, topology changes, and empty workspace defaults.
+
 - [x] Unify file-section path parsing with workspace path normalization.
   - Spec evidence: AlphaEvolve can evolve existing code files/codebases, where
     ordinary repository filenames may contain hyphens, spaces, generated-file
@@ -84,6 +102,23 @@ Primary evidence:
     prompt envelopes, mutation parsing, normalization, and diagnostics; reject
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
+
+- [ ] Reject leading-slash POSIX absolute candidate paths instead of
+  reinterpreting them as relative paths.
+  - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful,
+    explicit file-set representation. A mutation or seed path that appears
+    absolute should be rejected with diagnostics rather than silently rewritten
+    to a different relative path.
+  - Current evidence: `normalize_candidate_path()` calls `.lstrip("/")`, so
+    `/abs.py` normalizes to `abs.py` and `//pkg/mod.py` normalizes to
+    `pkg/mod.py`. A local proof applying `<<<FILE /new.py ... >>>FILE` in
+    `full` mode returned `err=None` and created candidate file `new.py`.
+    Windows drive-letter paths and traversal paths are rejected, but
+    POSIX-style absolute inputs are not.
+  - Required result: reject leading-slash absolute candidate paths in loader,
+    file-section mutations, primary-file changes, moves/renames, and
+    materialization helpers; add tests proving absolute POSIX-style paths fail
+    without partial application.
 
 - [x] Detect normalized-path and host-filesystem path collisions.
   - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful
@@ -104,6 +139,26 @@ Primary evidence:
     application instead of silently dropping a candidate file.
   - Status: implemented with candidate, loader, mutation, and materialization
     regression tests.
+
+- [ ] Convert host-filesystem materialization collisions into structured
+  candidate failures instead of run aborts.
+  - Spec evidence: AlphaEvolve-style codebase evolution should evaluate and
+    log invalid generated code without crashing the whole evolutionary loop.
+    A candidate file-set that cannot be materialized on the host filesystem is
+    a rejected candidate, not an infrastructure failure.
+  - Current evidence: `CandidateWorkspace.__post_init__()` rejects logical
+    normalized-path duplicates, but case-folded host-path collisions such as
+    `Readme.md` plus `README.md` are detected only inside
+    `CandidateWorkspace.materialize()`. `CascadeEvaluator.evaluate()` and
+    CLI `best_workspace` export do not catch that `ValueError`, so a mutated
+    workspace with a host collision can abort the run before
+    `failure_history.jsonl`, `history.jsonl`, or archive-admission metadata
+    records the rejected candidate.
+  - Required result: preflight the final workspace for host materialization
+    collisions before evaluation/logging/export, or catch materialization
+    errors and return a structured invalid `EvaluationResult`; add tests for
+    case-only collisions and other host-specific materialization failures in
+    mutation, evaluator, failure-history, and best-workspace export paths.
 
 - [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every
@@ -153,6 +208,21 @@ Primary evidence:
     and no partial apply on topology errors. Topology changes persist through
     existing `Program.files`, `primary_file`, `history.jsonl`, and
     `best_workspace/` logging/export paths.
+
+- [ ] Reject ambiguous duplicate primary-file topology operations.
+  - Spec evidence: AlphaEvolve-style codebase candidates should have an
+    unambiguous entrypoint or primary evolved file. Multiple primary-file
+    reassignment commands in one mutation should be rejected or represented as
+    an explicit ordered operation list, not resolved by parser accident.
+  - Current evidence: `apply_workspace_mutation()` skips `PRIMARY` operations
+    in `_find_section_path_conflict()`. A local proof with two file sections,
+    `<<<FILE PRIMARY alt.py ... >>>FILE` followed by
+    `<<<FILE PRIMARY third.py ... >>>FILE`, returned `err=None` and set the
+    candidate `primary_file` to `third.py`, silently discarding the earlier
+    primary intent.
+  - Required result: reject multiple `PRIMARY` topology sections in a single
+    workspace mutation with an explicit diagnostic before partial application;
+    add tests proving the original workspace primary is unchanged.
 
 - [x] Make materialized workspace execution import- and cwd-faithful.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, so evaluators
@@ -440,6 +510,24 @@ Primary evidence:
     rendering, queryable failure-history records, repetition counts, and
     non-primary-file workspace failures.
 
+- [ ] Record invalid seed evaluations in failure memory or a seed-diagnostic
+  stream.
+  - Spec evidence: AlphaEvolve's database preserves past trials, scores,
+    outputs, and feedback so the evolutionary loop can reason about failed
+    ideas and startup state. Invalid initial candidates are evaluated program
+    states, not invisible setup details.
+  - Current evidence: the seed population path in `evolve()` evaluates seeds,
+    calls `db.admit()` and `db.log()`, but never calls `db.log_failure()` for
+    evaluator-invalid or below-threshold seeds. A local proof with a single
+    seed whose validator returned `{"score": -1.0, "is_valid": false}` wrote
+    only `history.jsonl`, `manifest.json`, and `prompt_history.jsonl`; no
+    `failure_history.jsonl` was created, no LLM call occurred, and the run
+    ended with `stop_reason: "no_parent"`.
+  - Required result: persist invalid/rejected seed diagnostics in
+    `failure_history.jsonl` or a clearly named seed-diagnostic artifact,
+    include evaluator stdout/stderr/error and admission reason, and add tests
+    for all-invalid seed populations and mixed valid/invalid seeds.
+
 - [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a
     separate database analogous to solution programs and ablates "No meta
@@ -510,6 +598,22 @@ Primary evidence:
     invalid configured variants, invalid configured prompt database seeds, and
     invalid LLM-mutated prompt templates in the evolution loop.
 
+- [ ] Enforce semantic placeholder retention for meta-prompt mutations.
+  - Spec evidence: AlphaEvolve's prompt evolution should improve the
+    evolutionary loop, not silently remove the code, feedback, inspiration, or
+    mutation-format channels needed to generate valid candidates.
+  - Current evidence: the meta-prompt mutation instruction says "Keep all
+    existing Python format placeholders intact," but
+    `validate_prompt_template()` requires only `{task}`. A local proof mutated
+    `DEFAULT_TEMPLATE` to `Task only: {task}` with `PromptDatabase.mutate()`;
+    the child prompt was accepted, did not contain `{parent_code}` or
+    `{mutation_instructions}`, and the prompt database grew to two programs.
+  - Required result: define required placeholder sets by role or compatibility
+    level, reject or quarantine evolved templates that drop required prompt
+    channels, and add tests proving meta-prompt mutation cannot remove parent
+    code, mutation instructions, or other configured mandatory sections unless
+    an explicit degraded template mode is selected.
+
 - [x] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,
     equations, code snippets, and relevant literature, including PDF files.
@@ -543,6 +647,28 @@ Primary evidence:
   - Status: implemented for deterministic recursive local context provenance.
     Remaining context scale work is tracked separately under prompt budget and
     summarization/ranking tasks.
+
+- [ ] Persist context selection policy and skipped-source diagnostics.
+  - Spec evidence: AlphaEvolve-style prompt sampling can depend on explicit
+    task context and literature; reproducible runs need to know not only which
+    sources were rendered, but also the selection policy that made other
+    candidate context files invisible.
+  - Current evidence: `_load_context_manifest()` reads optional
+    `context.yaml` / `context.yml` `include`, `exclude`, and
+    `max_chars_per_source`, and `_select_context_paths()` uses those rules, but
+    `Problem.context_sources` and `manifest.json` contain only selected source
+    records. A local proof with `include: ["keep.md"]` and
+    `exclude: ["skip.md"]` persisted only `keep.md`; the manifest did not
+    include the context manifest file hash, include/exclude patterns, skipped
+    files, unsupported-extension files, or excluded-source diagnostics. A
+    second proof used a typo key `includes: ["missing/*.md"]`; load succeeded,
+    selected `keep.md`, and emitted no diagnostic that the intended include
+    policy was ignored.
+  - Required result: record context manifest provenance, effective selection
+    rules, selected/skipped/excluded source counts and reasons, unsupported
+    manifest keys or typo diagnostics, and the `context.yaml` file hash in
+    `manifest.json`; add tests that changing include/exclude rules or excluded
+    context files changes the relevant provenance.
 
 - [x] Persist live retrieval/plugin context provenance.
   - Spec evidence: AlphaEvolve-style prompt sampling can include relevant
@@ -636,6 +762,22 @@ Primary evidence:
     undeclared metrics. Multi-objective use of those metric vectors remains
     tracked separately.
 
+- [ ] Treat `is_valid` as a reserved validity flag, not an optimizable primary
+  metric.
+  - Spec evidence: AlphaEvolve's evaluator returns scalar metrics used for
+    scoring, while validity/pass-fail behavior is a separate gate in the
+    evolutionary loop. A boolean validity flag should not be the primary
+    optimization objective.
+  - Current evidence: `_validate_metric_schema()` does not reserve
+    `is_valid`. A local proof with `metrics.yaml` declaring
+    `name: is_valid` and `primary: true` loads successfully, sets
+    `Problem.primary_metric == "is_valid"`, and `fitness_from_metrics()` maps
+    `True` to normalized fitness `1.0`.
+  - Required result: reject `is_valid` as a declared primary metric, or remove
+    it from the declared metric schema entirely and keep it as a required
+    boolean evaluator field; add loader/evaluator tests for the reserved-name
+    policy.
+
 - [x] Reject degenerate or inverted metric bounds.
   - Spec evidence: AlphaEvolve-style scoring depends on meaningful scalar
     metrics and comparable score normalization; local `metrics.yaml` bounds
@@ -676,6 +818,26 @@ Primary evidence:
   - Validation: database tests prove invalid failure-history records are
     quarantined separately and do not create `history_invalid.jsonl`.
 
+- [ ] Harden run-history read paths and `show` diagnostics for malformed JSONL.
+  - Spec evidence: AlphaEvolve-style experiment stores need to be inspectable
+    after long runs; a single corrupt history record should produce a clear
+    diagnostic or quarantine/report path, not an unhandled CLI exception.
+  - Current evidence: write paths use strict JSONL helpers, but
+    `libreevolve.cli.show()` reads `history.jsonl` with a raw
+    `[json.loads(line) ...]` list comprehension. A local proof wrote one valid
+    record followed by `not-json`; `CliRunner().invoke(cli, ["show", run])`
+    exited with `JSONDecodeError` and printed no user-facing output. A second
+    proof wrote a modern record with
+    `metadata.archive_admission.admitted: true` but no `evaluation`; `show`
+    printed `Selection: archive-admitted valid` because
+    `_is_archive_admitted_valid()` defaults missing `evaluation.is_valid` to
+    `True`.
+  - Required result: add a strict JSONL reader or `show`-specific parse
+    diagnostics with file/line context, decide whether to skip/quarantine bad
+    rows or fail with a normalized `ClickException`, require explicit validity
+    evidence for current archive-aware histories, and test malformed, empty,
+    partially valid, missing-evaluation, and legacy history files.
+
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
   - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing
@@ -713,7 +875,12 @@ Primary evidence:
     normalized primary fitness. `_aggregate_metrics()` averages numeric metrics,
     `all()`s boolean metrics, and uses the last non-numeric value; this policy
     is hard-coded and does not let a stage require per-metric thresholds,
-    quantiles, all-samples-pass, artifact checks, or custom aggregators.
+    quantiles, all-samples-pass, artifact checks, or custom aggregators. A local
+    proof with a minimize primary metric `runtime` over two seeded samples
+    returning `0.0` and `10.0` produced aggregated `runtime=5.0` and
+    `fitness=0.5`; there is no stage config to choose worst-case runtime,
+    require every seed to pass a latency threshold, or preserve per-sample
+    score composition as the stage decision.
   - Required result: add configured stage pass criteria by metric name,
     direction, bound, sample aggregation policy, and artifact/output checks;
     document defaults and test average/min/max/quantile/all-pass behavior.
@@ -756,6 +923,27 @@ Primary evidence:
     explicit stage opt-out.
   - Remaining gap: files outside the candidate workspace are not collected, and
     richer artifact schemas remain future work.
+
+- [ ] Harden evaluator artifact copy-out path and size enforcement.
+  - Spec evidence: AlphaEvolve-style evaluator outputs are experiment evidence,
+    so artifact collection should be reproducible, bounded, and confined to the
+    intended evaluation workspace.
+  - Current evidence: `_matching_artifact_paths()` walks `cand_root.rglob("*")`
+    and accepts paths where `Path.is_file()` is true, while
+    `_collect_evaluator_artifacts()` later calls `path.read_bytes()` before
+    applying `artifact_max_bytes`. On platforms where symlinks are available,
+    `is_file()` / `read_bytes()` follow file symlinks unless explicitly guarded,
+    so a validator-created link inside the candidate workspace can copy bytes
+    from a target outside that workspace into `evaluator_artifacts/`. The local
+    Windows account could not create the proof symlink (`WinError 1314`), but
+    the code has no resolved-target containment check, no symlink skip reason,
+    and no non-following file test. Large matching files are also read fully
+    into memory before max-byte rejection, redaction, hashing, or copy-out.
+  - Required result: resolve or lstat artifact candidates without following
+    unsafe links; reject or record symlink/path-escape artifacts with explicit
+    skip reasons; enforce per-file and total byte limits before unbounded reads
+    by streaming or prechecking file sizes; and add tests for symlink escapes
+    where supported, oversized artifact behavior, and skip metadata.
 
 - [x] Validate evaluator-stage numeric fields before running cascades.
   - Spec evidence: AlphaEvolve-style cascades are explicit experiment
@@ -869,11 +1057,22 @@ Primary evidence:
   - Current evidence: `apply_llm_feedback()` accepts undeclared grader metrics,
     converts `score` directly to `float`, and adds `weight * score` directly to
     normalized fitness without checking metric direction, bounds, finite range,
-    or whether the grader score should be part of primary fitness.
+    or whether the grader score should be part of primary fitness. It also does
+    not reject metric-name collisions: a local proof with evaluator
+    `metrics={"score": 0.8, "is_valid": true}` and a feedback grader configured
+    as `metric: score` changed `updated.metrics["score"]` to the grader score
+    `0.1` while leaving `updated.fitness == 0.8`. After feedback,
+    `_annotate_metric_policy()` recomputes `metadata.selection_score` only from
+    declared `metrics.yaml` metrics, so LLM feedback-adjusted fitness usually
+    affects prompt reward/top-level fitness but not MAP-Elites replacement or
+    exploit sampling except as a tie-breaker; colliding feedback metrics can
+    also corrupt the declared metric vector used for selection.
   - Required result: define feedback metric schemas, normalize or bound grader
-    outputs, preserve raw grader scores separately from composed fitness, and
-    add tests for out-of-range, non-finite, minimizing, and discard-only
-    feedback signals.
+    outputs, reject or namespace collisions with declared evaluator metrics and
+    reserved fields, decide whether and how feedback participates in archive
+    selection, preserve raw grader scores separately from composed fitness, and
+    add tests for out-of-range, non-finite, minimizing, archive-selection,
+    metric-collision, and discard-only feedback signals.
 
 - [ ] Implement parallel/asynchronous evaluation.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
@@ -907,11 +1106,14 @@ Primary evidence:
     candidate record stores `metadata.budget`, and completed runs update
     `manifest.json` with consumed budget and structured stop reason. The loop
     still has no LLM-call, token, cost, stage-sample, retry, accelerator, or
-    async worker budget counters.
+    async worker budget counters. A local all-invalid-seed proof also records
+    `generations_started: 1` with `stop_reason: "no_parent"` even though no
+    parent was sampled and no mutation/evaluation generation work occurred.
   - Required result: add a budget schema, deterministic counters for LLM
     calls/tokens/cost/evaluator elapsed time/stage samples/retries, structured
     stop reasons, manifest/history budget summaries, and tests that budget
-    exhaustion stops runs reproducibly.
+    exhaustion stops runs reproducibly, including no-parent startup stops
+    before generation counters are incremented.
 
 ## Metrics and Evolution Database
 
@@ -1042,6 +1244,28 @@ Primary evidence:
     nonreplacement, cell replacement, elite displacement, island assignment, and
     seed/child history records.
 
+- [ ] Separate MAP-Elites cell admission from auxiliary elite-list retention.
+  - Spec evidence: MAP-Elites archives are behavior-cell maps; AlphaEvolve-style
+    database records should make clear whether a candidate changed the search
+    state used for diversity/resurfacing or was only retained in a secondary
+    ranking list.
+  - Current evidence: `MAPElites.add()` appends every finite program to
+    `_elite`, trims by selection score, and then sets
+    `event["admitted"] = event["entered_cell"] or event["entered_elite"]`.
+    A local proof with `MAPElites(bins=1, elite_archive_size=50)` added a
+    `fitness=0.9` program, then a same-cell `fitness=0.1` program; the second
+    event was `admitted=True`, `reason="elite_only"`, and
+    `entered_cell=False`, while the grid occupant remained the first program.
+    `libreevolve show` filters current histories using only
+    `archive_admission.admitted` plus validity, so "archive-admitted" can mean
+    auxiliary elite-list retention rather than MAP-Elites cell entry.
+  - Required result: rename or split admission fields, for example
+    `cell_admitted`, `elite_retained`, and `search_state_changed`; make CLI and
+    run docs report the distinction; define whether parent/inspiration sampling
+    should draw from cell occupants, auxiliary elites, or both; and add tests
+    proving non-cell-retained candidates are not mislabeled as MAP-Elites cell
+    entries.
+
 - [x] Review and improve parent/inspiration sampling.
   - Spec evidence: AlphaEvolve samples parent programs and inspirations from a
     database using an evolutionary algorithm inspired by MAP-Elites and island
@@ -1127,6 +1351,24 @@ Primary evidence:
     accounting per role, persist bandit state in run artifacts, and add tests
     proving critique/feedback/meta-prompt calls do not distort mutation routing.
 
+- [ ] Validate and bound backend reward updates before they enter scheduler
+  state.
+  - Spec evidence: AlphaEvolve-style model scheduling should use comparable,
+    bounded reward signals so backend selection remains stable over long runs
+    and auxiliary roles cannot poison mutation routing.
+  - Current evidence: `LLMEnsemble.record_reward()` directly adds the supplied
+    value to `wins[idx]` with no finite-number or non-negative check. A local
+    proof called `record_reward(0, nan)`, `record_reward(0, inf)`, and
+    `record_reward(0, -5.0)`; the ensemble retained those values and continued
+    selecting/generating with corrupted or negative reward state. The main
+    loop currently passes `max(0.0, score - parent.fitness)`, but the scheduler
+    API itself does not enforce the contract and persisted/resumable bandit
+    state would have no guardrail.
+  - Required result: validate backend reward inputs as finite bounded values,
+    normalize to the documented reward range, reject or quarantine invalid
+    updates, and add tests for non-finite, negative, and out-of-range rewards
+    plus restored/resumed scheduler state.
+
 - [ ] Persist normalized LLM call telemetry and provider response provenance.
   - Spec evidence: AlphaEvolve's scheduler and compute-budget framing depend on
     LLM throughput, cost, latency, and quality; reproducible experiments need
@@ -1162,18 +1404,43 @@ Primary evidence:
     `will_fallback`; exhausted failed backends are excluded for the current
     fallback call; successful fallback returns normally without incrementing the
     failed backend's pull count. Config validation, CLI overrides, and ensemble
-    tests cover retry, fallback, and disabled-fallback behavior.
+    tests cover retry, fallback, and disabled-fallback behavior. The concrete
+    OpenAI, Anthropic, and Ollama adapters still also retry internally three
+    times with exponential backoff before surfacing an exception, regardless of
+    `llm_max_retries`.
   - Remaining gap: `evolve()` still lets an exhausted mutation-call exception
     abort before candidate/evaluation logging, and exhausted critique, feedback,
     or meta-prompt exceptions can still abort after useful work has already
     completed. Failures are not classified by timeout/rate-limit/transport
-    semantics, provider penalties are not applied, and there is no
+    semantics, provider penalties are not applied, adapter-internal retries are
+    neither configurable nor counted against run budgets, and there is no
     role-specific quarantine policy.
   - Required result: define per-role LLM failure policy with bounded retries,
     timeout/rate-limit classification, optional backend fallback, scheduler
-    accounting for failed attempts, structured call/error logs, candidate-level
-    quarantine where appropriate, and tests for mutation, critique, feedback,
-    and meta-prompt provider failures.
+    accounting for failed attempts, unified adapter/ensemble retry semantics,
+    structured call/error logs, candidate-level quarantine where appropriate,
+    and tests for mutation, critique, feedback, and meta-prompt provider
+    failures.
+
+- [ ] Add provider-call timeouts and cancellation to LLM runtime budgets.
+  - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
+    provider latency and stalled model calls must be bounded and attributable to
+    the run budget rather than blocking the controller indefinitely.
+  - Current evidence: `RunBudget` checks `max_runtime_seconds` only before a
+    generation/evaluation boundary. `LLMEnsemble.generate()` calls
+    `backend.generate(prompt)` synchronously, and the OpenAI, Anthropic, and
+    Ollama adapters construct provider clients/calls without a LibreEvolve
+    request timeout, cancellation token, or per-role deadline. A hung or very
+    slow mutation, critique, feedback, or meta-prompt call can therefore exceed
+    `max_runtime_seconds` before the budget is checked again; the elapsed time
+    is visible only after the call returns and is not a distinct stop reason or
+    timeout artifact.
+  - Required result: add configurable LLM request timeouts/deadlines per backend
+    or role; propagate remaining run budget into provider calls where possible;
+    classify provider timeouts separately from other transport errors; record
+    timeout/cancellation metadata in call logs; and add tests proving a slow
+    backend cannot block past the configured budget without a structured
+    failure record.
 
 - [ ] Make OpenAI API routing explicit and validate reasoning-model options.
   - Spec evidence: AlphaEvolve's task setup includes LLM choices and
@@ -1271,14 +1538,17 @@ Primary evidence:
     numeric fields and LLM feedback grader specs are validated before a run
     starts. Malformed YAML and non-mapping top-level `config.yaml` files now
     fail as path-aware `ConfigError` startup diagnostics. Remaining gaps:
-    plugin-specific configuration schemas do not exist, and model/API
-    capability validation is not implemented. CLI
+    `meta_prompt_evolution` and `critique_enabled` are not type-checked as
+    booleans; a local proof with `Config(meta_prompt_evolution="false")` and
+    `Config(critique_enabled="false")` accepted both values as strings, which
+    are truthy at runtime. Plugin-specific configuration schemas do not exist,
+    and model/API capability validation is not implemented. CLI
     `--reasoning-effort` now applies to OpenAI backends loaded from
     `config.yaml` or `--backends`, and is ignored for non-OpenAI backends.
   - Required result: add plugin config schemas, document or fix remaining CLI
-    override semantics, add model/API-mode compatibility validation where
-    feasible, and test malformed nested config cases beyond backend/stage/
-    feedback metadata.
+    override semantics, validate every boolean runtime switch, add
+    model/API-mode compatibility validation where feasible, and test malformed
+    nested config cases beyond backend/stage/feedback metadata.
 
 - [ ] Fix CLI/config override semantics and document precedence with tests.
   - Spec evidence: AlphaEvolve-style task setup depends on explicit,
@@ -1296,6 +1566,23 @@ Primary evidence:
   - Required result: define and test remaining field-by-field precedence for
     defaults, config files, and CLI options; make ignored overrides explicit;
     and reflect effective values in `manifest.json`.
+
+- [ ] Constrain run artifact paths to the configured log root.
+  - Spec evidence: AlphaEvolve-style long-running experiments need reliable
+    run directories, overwrite boundaries, and provenance for all emitted
+    artifacts. A run name should identify a subdirectory, not rewrite the
+    artifact root.
+  - Current evidence: `ProgramDatabase`, `PromptDatabase`, evaluator artifact
+    paths, plugin artifact paths, and CLI best-artifact export all use
+    `Path(config.log_dir) / config.problem_name` without normalizing and
+    checking containment. A local proof with `log_dir=<tmp>/runs` and
+    `problem_name="../escaped"` wrote `manifest.json` under `<tmp>/escaped`;
+    `<tmp>/runs` was never created.
+  - Required result: validate `problem_name` / `--run-name` as a safe relative
+    path component or resolve the final run directory and reject escapes from
+    `log_dir`; add tests for `../`, absolute paths, drive-letter paths, and
+    overwrite behavior so known-artifact cleanup cannot target outside the run
+    root.
 
 - [ ] Add resumable runs.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
@@ -1412,6 +1699,28 @@ Primary evidence:
     per-plugin config schemas, record plugin specs/provenance/artifacts in
     manifests, and test configured plugin behavior without editing the CLI.
 
+- [ ] Isolate plugin hook failures with structured plugin-failure metadata.
+  - Spec evidence: paper-inspired plugins are optional extension behavior around
+    the core evolutionary loop; AlphaEvolve-style long runs should not lose a
+    candidate or run manifest because a retrieval, guidance, score, or export
+    hook throws unexpectedly.
+  - Current evidence: `evolve()` calls `plugin.on_generation_start()`,
+    `_build_plugin_context()` calls `plugin.build_extra_context()` and
+    `prompt_context_metadata()`, `_apply_plugin_scores()` calls
+    `plugin.on_evaluated()`, and the generation tail calls
+    `plugin.on_generation_end()` without exception isolation. A local proof
+    using a `PluginBase` subclass whose `build_extra_context()` raises
+    `RuntimeError("plugin context failed")` aborts `evolve()` with that
+    exception before mutation/evaluation logging. Built-in `DeepResearchPlugin`
+    catches provider exceptions internally, but the loop has no general
+    plugin-hook failure policy.
+  - Required result: define per-hook failure policy (ignore-and-record,
+    candidate quarantine, score penalty, or run abort), record plugin name,
+    hook, generation, candidate/parent ids, exception type/message, and whether
+    the run continued; add tests for failures in `on_generation_start`,
+    `build_extra_context`, `prompt_context_metadata`, `on_evaluated`,
+    `run_artifacts_metadata`, and `on_generation_end`.
+
 - [x] Persist plugin score-composition provenance.
   - Spec evidence: AlphaEvolve stores programs with evaluation scores and
     outputs attached; when local extension hooks change fitness, the database
@@ -1424,6 +1733,25 @@ Primary evidence:
   - Evidence: tests cover multiple plugins, metric additions, non-finite plugin
     scores being rejected, final score preservation, and raw
     `evaluation.fitness` remaining visible.
+
+- [ ] Validate plugin-added metrics and metadata before history logging.
+  - Spec evidence: AlphaEvolve-style program databases depend on finite,
+    machine-readable metric vectors and structured metadata. Plugins can enrich
+    candidates, but extension side effects should not corrupt the core history
+    stream after evaluation work has completed.
+  - Current evidence: `_apply_plugin_scores()` validates a plugin's returned
+    score, but it allows plugin mutations to `program.metrics` and
+    `program.metadata` to flow through unchecked. A local proof used an
+    `on_evaluated()` hook that set `program.metrics["plugin_bad"] = inf` and
+    returned the original score. `evolve()` then raised `StrictJsonlError`
+    while writing `history.jsonl`; `history_invalid.jsonl` contained the
+    rejected record with non-finite paths under `metrics`, `evaluation.metrics`,
+    and `evaluation.stages[1].metrics`.
+  - Required result: define a plugin side-effect schema for added metrics and
+    metadata, reject or quarantine non-finite/non-JSON values before archive
+    admission and history logging, record plugin name/hook/error in structured
+    metadata, and add tests for plugin-added non-finite metrics,
+    non-serializable metadata, and successful finite metric additions.
 
 - [x] Keep evaluator validity separate from plugin-adjusted fitness.
   - Spec evidence: AlphaEvolve's program database is populated by evaluated

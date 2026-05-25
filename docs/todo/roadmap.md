@@ -40,6 +40,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Remaining runtime hardening is focused on plugin-specific config schemas
     and provider/model API capability validation.
 
+- [ ] Add missing boolean-field validation to config hardening.
+  - Evidence: AlphaEvolve-style experiments need explicit configuration
+    switches for critique and meta-prompt evolution; stringly typed booleans
+    can silently enable expensive or behavior-changing LLM paths.
+  - Current evidence: `Config.validate()` checks booleans for
+    `evaluator_artifact_redact_secrets`, `llm_fallback`, and
+    `capture_proposal_metadata`, but not for `meta_prompt_evolution` or
+    `critique_enabled`. A local proof accepted
+    `Config(meta_prompt_evolution="false")` and
+    `Config(critique_enabled="false")`; both fields remained strings and were
+    truthy.
+  - Required result: validate all boolean config fields, cover YAML/CLI paths
+    with tests, and update configuration docs so the completed schema
+    validation claim is bounded to what is actually enforced.
+
 - [x] Add CLI/config precedence semantics to runtime hardening.
   - Evidence: `_build_config()` overwrites `config.yaml` `problem_name` with
     the problem directory name unless `--run-name` is supplied. Previously,
@@ -58,6 +73,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     but not schema enforcement against `metrics.yaml`.
   - Required result: keep metric schema validation on the roadmap because
     multi-objective search depends on trustworthy metric vectors.
+
+- [ ] Narrow roadmap "strict scalar validation" around reserved validity.
+  - Roadmap evidence: `ROADMAP.md` current-state text says LibreEvolve has
+    strict scalar evaluator-output validation against `metrics.yaml`.
+  - Current evidence: scalar numeric validation is strict for declared
+    non-`is_valid` metrics, but `is_valid` is a required boolean evaluator
+    field that can still be declared as the primary `metrics.yaml` metric and
+    used as normalized fitness.
+  - Required result: either implement the reserved `is_valid` policy first, or
+    update roadmap wording so strict scalar validation does not imply validity
+    and optimization metrics are fully separated.
 
 - [x] Add degenerate metric-bound validation to the backlog.
   - Evidence: `metrics.yaml` bounds drive primary fitness normalization and
@@ -90,6 +116,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Remaining roadmap gap: this is not resume; saved archive/controller state,
     parent-run relationships, deterministic replay ids, and evaluator-code
     provenance remain tracked under resumability/reproducibility.
+
+- [ ] Add run-directory path confinement to runtime hardening.
+  - Roadmap evidence: run-directory collision policy now prevents accidental
+    reuse of known artifacts, but roadmap/runtime docs do not require the final
+    run directory to remain under `log_dir`.
+  - Current evidence: `Path(config.log_dir) / config.problem_name` is used
+    directly in database, prompt, evaluator-artifact, plugin-artifact, and
+    best-workspace paths. `problem_name="../escaped"` writes outside the
+    configured log root.
+  - Required result: validate run names and final run paths before preparing
+    or overwriting artifacts, then document the confinement policy.
 
 - [x] Add seeded replay determinism to reproducibility work.
   - Evidence: `Config.seed` seeds Python `random`, but `Program.id` and
@@ -133,6 +170,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track unified path parsing, unsafe-path diagnostics, and
     tests for common repository filename shapes.
 
+- [ ] Add POSIX absolute-path rejection to candidate path hardening.
+  - Roadmap evidence: path grammar hardening now says unsafe paths are
+    rejected, but the implementation accepts leading-slash paths by stripping
+    the slash.
+  - Current evidence: `/abs.py` normalizes to `abs.py`, `//pkg/mod.py`
+    normalizes to `pkg/mod.py`, and `<<<FILE /new.py ... >>>FILE` creates
+    `new.py` without an error.
+  - Required result: keep the candidate path grammar strictly relative across
+    loader, mutation envelopes, topology commands, and materialization helpers.
+
 - [x] Add candidate path-collision handling to candidate fidelity.
   - Evidence: path grammar hardening rejects unsafe paths, and
     `CandidateWorkspace` now rejects distinct raw inputs that normalize to the
@@ -145,6 +192,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     host filesystem materialization.
   - Required result: continue tracking Unicode normalization and
     topology-operation collision policy with tests for loader and mutation.
+
+- [ ] Tighten roadmap collision work around evaluator/export failure
+  semantics.
+  - Roadmap evidence: `ROADMAP.md` still groups candidate collision work under
+    workspace fidelity, but does not explicitly call out the remaining run
+    reliability problem where host-filesystem materialization collisions can
+    raise from evaluator or `best_workspace` export instead of becoming
+    structured candidate diagnostics.
+  - Current evidence: `CandidateWorkspace.materialize()` catches
+    case-folded host collisions, while `CascadeEvaluator.evaluate()` and the
+    CLI best-workspace writer do not convert that `ValueError` into a rejected
+    candidate/failure-history record.
+  - Required result: add evaluator/export materialization-failure handling to
+    the roadmap's candidate fidelity or runtime hardening section, with tests
+    proving the run stays alive and preserves diagnostics.
 
 - [x] Add mutation-envelope diagnostics for partial parses.
   - Evidence: file and block mutation envelopes now validate unmatched,
@@ -178,6 +240,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Status: implemented with path validation, history/export persistence through
     `Program.files` and `primary_file`, mutation tests, and backward
     compatibility for current file-section edits.
+
+- [ ] Add strict primary-file identity validation to candidate fidelity.
+  - Evidence: workspace candidates now persist `primary_file`, and that field
+    controls the compatibility `code` view used by prompts, legacy validators,
+    history, and `best.py`.
+  - Current evidence: constructing
+    `CandidateWorkspace(files={"helper.py": "x=1\n"}, primary_file="missing.py")`
+    silently rewrites `primary_file` to `helper.py`. Mutation-time
+    `PRIMARY missing.py` is rejected, so constructor/deserialization semantics
+    are looser than topology mutation semantics.
+  - Required result: reject missing explicit primary files at load/deserialize
+    boundaries or require a documented fallback mode; test current seed
+    directories, empty defaults, and future resume/history replay paths.
+
+- [ ] Add duplicate primary-topology rejection to candidate fidelity.
+  - Roadmap evidence: workspace topology mutation support now covers delete,
+    move/rename, and primary-file reassignment, but the roadmap does not call
+    out ambiguous duplicate primary commands.
+  - Current evidence: `apply_workspace_mutation()` accepts multiple
+    `<<<FILE PRIMARY ... >>>FILE` sections in one mutation and the later
+    section silently wins. This is narrower than the duplicate edit/block
+    rejection policy already tracked for other mutation envelopes.
+  - Required result: reject or explicitly model multiple primary reassignments
+    in one mutation, and add regression tests for no partial primary changes.
 
 - [x] Add workspace execution import/cwd fidelity to candidate fidelity.
   - Evidence: `CascadeEvaluator._run_subprocess()` now materializes the
@@ -214,6 +300,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     but not staged evaluator definitions, thresholds, budgets, or parallel
     stages.
 
+- [ ] Add explicit sample aggregation and per-metric stage pass policies to
+  evaluation roadmap.
+  - Evidence: current configured stages can run multiple seeded samples, but
+    `_aggregate_metrics()` hard-codes numeric means. A local proof with a
+    minimize primary metric `runtime` over seeds returning `0.0` and `10.0`
+    produced aggregated `runtime=5.0` and `fitness=0.5`; there is no roadmap
+    requirement for worst-case, quantile, all-samples-pass, or per-metric
+    threshold semantics.
+  - Required result: require stage configs to declare aggregation/pass policies
+    per metric or document the fixed mean policy as a deliberate limitation.
+
 - [x] Add evaluator artifact copy-out to evaluation hardening.
   - Evidence: `CascadeEvaluator._run_subprocess()` materializes the candidate
     in a `TemporaryDirectory`, runs the validator with that directory as `cwd`,
@@ -230,6 +327,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cleanup, stage overrides are honored, and secret-like text artifacts are
     redacted by default.
   - Remaining gap: files outside the candidate workspace are not retained.
+
+- [ ] Add artifact copy-out confinement and streaming limits to evaluation
+  hardening.
+  - Evidence: `_matching_artifact_paths()` selects artifact paths with
+    `Path.is_file()` under `cand_root`, and `_collect_evaluator_artifacts()`
+    reads each matched file with `read_bytes()` before applying
+    `artifact_max_bytes`. That makes the configured byte limit a retained-byte
+    limit, not an I/O or memory limit. On platforms where symlinks are
+    available, file symlinks under the candidate workspace can also resolve to
+    targets outside the workspace unless the collector checks resolved targets
+    or skips symlinks. This Windows account could not create a local symlink
+    proof (`WinError 1314`), but the code does not contain the containment
+    guard or skip metadata the roadmap should require.
+  - Required result: make evaluator artifact collection stream or precheck file
+    sizes before reading content, reject or explicitly skip symlink/path-escape
+    artifacts, and record those skips in evaluation metadata.
 
 - [x] Add evaluator-stage numeric validation to config hardening.
   - Evidence: `Config.validate()` now checks evaluator-stage `samples`,
@@ -280,6 +393,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     templates, malformed configured variants, and large context sources, not
     only happy-path template selection.
 
+- [ ] Add semantic placeholder-retention rules to prompt-template validation.
+  - Evidence: AlphaEvolve-style meta-prompt evolution should preserve the
+    prompt channels required for candidate generation while improving wording
+    or context policy.
+  - Current evidence: `PromptDatabase.mutate()` validates syntax and known
+    placeholders, but the only required placeholder is `{task}`. A local proof
+    accepted an evolved template of `Task only: {task}`, dropping
+    `{parent_code}` and `{mutation_instructions}` despite the meta-prompt
+    instruction asking the LLM to keep placeholders intact.
+  - Required result: extend prompt validation with mode-specific required
+    placeholder/channel sets, quarantine semantic regressions, and cover
+    configured variants plus evolved templates in tests.
+
 - [x] Add context-source manifest/provenance work.
   - Evidence: `_load_context_files()` reads only immediate files in `context/`
     into a filename-to-text dictionary and does not preserve hashes, recursive
@@ -290,6 +416,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track recursive source selection, context manifests,
     source hashes, extraction diagnostics, page/span citations, and prompt/run
     provenance.
+
+- [ ] Remove implemented context-source manifest work from open roadmap
+  wording.
+  - Roadmap evidence: `ROADMAP.md` still says to "Add context-source manifests
+    with recursive selection, include/exclude rules, source hashes, extraction
+    diagnostics, and page/span citations" under prompt/context work.
+  - Current evidence: `load_problem()` already supports recursive
+    `.txt`/`.md`/`.py`/`.pdf` context ingestion, optional `context.yaml` /
+    `context.yml` include/exclude rules, per-source SHA-256, extraction
+    status, excerpt spans, and PDF page metadata for selected sources in
+    `context_sources`. The remaining gap is not the existence of source
+    records; it is recording the selection policy itself, skipped/excluded
+    source diagnostics, better summarization/ranking, and prompt-budget
+    packing. A local proof also showed that an unsupported typo key
+    `includes:` in `context.yaml` is silently ignored, so the intended include
+    policy can be lost without a startup diagnostic.
+  - Required result: update ROADMAP so the open item is narrowed to the real
+    remaining work, such as context-manifest file provenance, effective
+    include/exclude policy, unknown-key diagnostics, skipped-source
+    diagnostics, semantic ranking/summarization, global prompt budgets,
+    artifact-content retrieval, and docs/tests for current context knobs.
 
 - [x] Add live retrieval provenance to prompt/plugin context work.
   - Evidence: `DeepResearchPlugin` injects live arXiv search summaries into
@@ -379,6 +526,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     discard values are recorded as `llm_feedback_failed` metadata and ignored
     for score/validity composition.
 
+- [ ] Add LLM feedback metric namespace/collision rules to evaluation and
+  metrics work.
+  - Evidence: `apply_llm_feedback()` writes grader scores directly into
+    `updated.metrics[metric_name]`. A local proof configured a feedback grader
+    with `metric: score` against an evaluator result whose primary metric was
+    `score=0.8`; the feedback pass overwrote `metrics["score"]` with `0.1`
+    while leaving `fitness=0.8`. This contradicts docs that say the raw primary
+    validator metric remains intact and can corrupt declared metric vectors used
+    for archive selection.
+  - Required result: reserve evaluator metric names and fields, namespace
+    feedback metrics or validate explicit overwrite policy, and test collisions
+    with primary, secondary, `is_valid`, and `feedback_adjusted_fitness`.
+
 - [x] Add proposal idea/rationale capture to prompt/context work.
   - Evidence: AlphaEvolve Figure 3 asks the LLM to suggest a new idea and
     describe changes with SEARCH/REPLACE blocks.
@@ -445,6 +605,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track and test mutation, critique, feedback, and
     meta-prompt accounting separately.
 
+- [ ] Add backend reward-state validation to scheduler hardening.
+  - Evidence: UCB-style scheduling assumes rewards are valid comparable
+    scalars; AlphaEvolve-style backend routing should not allow invalid reward
+    state to survive into long-running selection or future resume checkpoints.
+  - Current evidence: `LLMEnsemble.record_reward()` accepts raw values without
+    checking finiteness, sign, or bounds. A local proof injected `nan`, `inf`,
+    and `-5.0` rewards; `wins` stored those values and later `generate()` calls
+    continued from the corrupted scheduler state.
+  - Required result: validate and normalize scheduler rewards at the ensemble
+    boundary, define invalid-reward diagnostics/quarantine behavior, and test
+    direct updates plus any future persisted/resumed bandit state.
+
 - [x] Add normalized LLM call telemetry to backend scheduling work.
   - Evidence: backend adapters return plain text and discard provider usage,
     latency, retry counts, request ids, finish reasons, API mode, and raw
@@ -472,11 +644,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Status: partially implemented at the ensemble boundary. `llm_max_retries`
     retries the same backend, `llm_fallback` can route to another backend, and
     call telemetry records retry/fallback attempt indexes plus retry/fallback
-    decisions. Role-specific quarantine, timeout/rate-limit classification, and
-    penalties remain open.
+    decisions. The provider adapters still have their own hard-coded three
+    attempts before the ensemble observes a failure, so configured retry
+    budgets do not currently control total provider API attempts. Role-specific
+    quarantine, timeout/rate-limit classification, and penalties remain open.
   - Required result: track per-role LLM retry budgets, fallback routing, failed
-    attempt accounting, structured error logs, and tests for mutation,
-    critique, feedback, and meta-prompt failures.
+    attempt accounting, unified adapter/ensemble retry semantics, structured
+    error logs, and tests for mutation, critique, feedback, and meta-prompt
+    failures.
+
+- [ ] Add provider-call timeout/cancellation policy to backend runtime work.
+  - Evidence: `RunBudget` enforces `max_runtime_seconds` only when the loop
+    checks limits before a generation or evaluation. `LLMEnsemble.generate()`
+    then performs synchronous `backend.generate(prompt)` calls, and the
+    OpenAI/Anthropic/Ollama adapters do not receive a LibreEvolve timeout or
+    deadline. A slow or hung mutation, critique, feedback, or meta-prompt
+    provider call can run past the configured runtime budget before the loop
+    regains control.
+  - Required result: define per-backend/per-role LLM request timeouts, pass
+    remaining run deadlines into provider calls where SDKs allow it, classify
+    timeout/cancellation separately from other provider errors, and persist
+    structured timeout records in the LLM call log or role-specific artifacts.
 
 - [x] Add reviewer-pool critique fidelity to backend/critique work.
   - Evidence: AlphaEvolve describes using LLMs to generate, critique, and
@@ -528,6 +716,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     descriptors, replacement status, previous occupant ids, elite-list effects,
     and displaced elite ids.
 
+- [ ] Disambiguate archive admission from cell-grid changes in database and
+  reporting work.
+  - Evidence: `MAPElites.add()` marks a program as admitted when it either
+    enters/replaces a MAP-Elites grid cell or merely remains in the capped
+    auxiliary `_elite` ranking list. A local proof with one bin and a large
+    elite list showed a lower-scoring same-cell program returning
+    `admitted=True`, `reason="elite_only"`, and `entered_cell=False` while the
+    grid occupant stayed unchanged. Current `show` wording says
+    "archive-admitted valid" based on that combined flag.
+  - Required result: split cell-entry, cell-replacement, auxiliary-elite
+    retention, and search-state-change fields; update `show` and run-artifact
+    docs to report the distinction; and decide which pools are eligible for
+    parent and inspiration sampling.
+
 - [x] Add validity/archive-aware run inspection to operational work.
   - Evidence: `cli.show()` now filters modern histories by
     `metadata.archive_admission.admitted` and `evaluation.is_valid`, reports
@@ -563,6 +765,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Status: roadmap updated to treat strict finite JSONL as current coverage
     for candidate, prompt, manifest, and GRPO-export writers, while future
     artifact writers still need the same policy.
+
+- [ ] Add malformed-history read diagnostics to operational/database work.
+  - Evidence: strict JSONL hardening currently covers write paths, but
+    AlphaEvolve-scale run inspection also needs robust read paths for long
+    append-only histories.
+  - Current evidence: `cli.show()` parses `history.jsonl` with raw
+    `json.loads()` calls. A local proof with one valid line followed by
+    `not-json` exited with an unhandled `JSONDecodeError` and no CLI output.
+    Another proof showed that a modern record with archive-admission metadata
+    but no `evaluation` is still labeled `archive-admitted valid`.
+  - Required result: define strict read behavior for current and legacy
+    histories, report file/line parse errors through normalized CLI
+    diagnostics, require explicit validity evidence for current histories, and
+    add tests for malformed, partially valid, and missing-evaluation histories.
 
 - [x] Add failure-history quarantine separation to database hardening.
   - Evidence: `ProgramDatabase.log_failure()` previously wrote invalid
@@ -607,6 +823,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track plugin registry, configuration schema, constructor
     parameters, paper-inspiration scope, and artifact provenance.
 
+- [ ] Add plugin hook failure isolation to runtime/plugin hardening.
+  - Evidence: the main loop invokes `on_generation_start`,
+    `build_extra_context`, `prompt_context_metadata`, `on_evaluated`,
+    `run_artifacts_metadata`, and `on_generation_end` directly. A local proof
+    with a plugin whose `build_extra_context()` raises `RuntimeError` aborts the
+    run before the candidate is mutated/evaluated or a plugin-failure artifact is
+    written.
+  - Required result: define structured plugin failure records, continuation vs
+    abort policy per hook, score/failure quarantine behavior where appropriate,
+    and tests for each hook category.
+
 - [x] Add plugin score-composition provenance to plugin extensibility work.
   - Evidence: `evolve()` lets each plugin return a modified score and stores
     only the final `program.fitness`, while `evaluation.fitness` remains the
@@ -616,6 +843,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track per-plugin before/after scores, reasons, validation,
     and the relationship between raw evaluator fitness and composed archive
     fitness.
+
+- [ ] Add plugin side-effect schema validation to database/plugin hardening.
+  - Evidence: plugin score-return validation is not enough if plugins can also
+    mutate `program.metrics` and `program.metadata` before archive admission
+    and history logging.
+  - Current evidence: a local proof plugin added
+    `program.metrics["plugin_bad"] = inf` while returning a valid score.
+    `evolve()` accepted the hook result until `ProgramDatabase.log()` raised
+    `StrictJsonlError`; the rejected record appeared only in
+    `history_invalid.jsonl`.
+  - Required result: validate plugin-added metrics/metadata at the hook
+    boundary, define quarantine or candidate-rejection semantics, and cover
+    non-finite metrics plus non-serializable metadata in tests.
 
 - [x] Add canonical mutation parsing to plugin truthfulness work.
   - Evidence: the core mutation path accepts both canonical AlphaEvolve
@@ -687,9 +927,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `max_evaluations`, `max_evaluator_seconds`, `max_runtime_seconds`,
     per-candidate `metadata.budget`, and completed-manifest `runtime` stop
     summaries. LLM-call/token/cost, stage-sample/retry, accelerator, async
-    queue, and equal-budget benchmark reporting remain open.
+    queue, and equal-budget benchmark reporting remain open. The current loop
+    can also count a generation as started before parent sampling; an
+    all-invalid-seed run stops with `no_parent` and `generations_started: 1`
+    despite doing no mutation-generation work.
   - Required result: make budget schemas, counters, stop reasons, manifest
-    summaries, and budget-fraction benchmark reporting explicit runtime work.
+    summaries, and budget-fraction benchmark reporting explicit runtime work,
+    including startup/no-parent accounting.
+
+- [ ] Add invalid-seed diagnostics to runtime/database hardening.
+  - Roadmap evidence: current runtime/database work tracks candidate history,
+    failure history, archive admission, and run stop reasons, but not the
+    startup case where every initial seed evaluates invalid.
+  - Current evidence: `evolve()` logs invalid seeds to `history.jsonl` with
+    archive-admission rejection, but does not call `log_failure()` for seeds.
+    A run with no valid seed stops at `no_parent` with no `failure_history.jsonl`
+    and no prompt-visible failed-trial memory.
+  - Required result: add a seed failure/diagnostic artifact or include invalid
+    seeds in failure history, then update run accounting so all-invalid
+    startup is explicit and queryable.
 
 - [x] Refresh current-state example list.
   - Evidence: `libreevolve/problems/examples/` includes `workspace_math`, but

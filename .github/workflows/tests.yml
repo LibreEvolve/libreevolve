@@ -5,8 +5,16 @@ on:
     branches:
       - master
       - main
+    paths-ignore:
+      - "docs/todo/**"
   pull_request:
+    paths-ignore:
+      - "docs/todo/**"
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   secrets:

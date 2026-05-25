@@ -121,7 +121,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [x] Qualify "comprehensive test coverage."
   - README evidence: `README.md:59` claims comprehensive coverage across all
     components.
-  - Current evidence: the local non-integration suite now has 167 selected
+  - Current evidence: the local non-integration suite now has 168 selected
     tests, but major AlphaEvolve features are still absent or represented only
     as narrow prototype behavior.
   - Required result: keep the count but change the coverage claim to the

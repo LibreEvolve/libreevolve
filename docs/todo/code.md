@@ -452,8 +452,10 @@ Primary evidence:
     feedback should correspond to the role and outcome of each LLM call.
   - Current evidence: every `llm.generate()` increments `LLMEnsemble.counts`,
     including critique, LLM feedback, and meta-prompt mutation calls, but only
-    the original mutation `backend_idx` receives `record_reward()`. Auxiliary
-    calls therefore affect routing state as apparent zero-reward pulls.
+    the original mutation `backend_idx` receives `record_reward()`. Mutation
+    candidates now log `metadata.backend_idx`, but auxiliary calls still affect
+    routing state as apparent zero-reward pulls and the scheduler state is not
+    persisted.
   - Required result: track call role/provenance, define reward or no-reward
     accounting per role, persist bandit state in run artifacts, and add tests
     proving critique/feedback/meta-prompt calls do not distort mutation routing.

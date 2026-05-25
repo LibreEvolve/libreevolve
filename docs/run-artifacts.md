@@ -59,6 +59,7 @@ Important behavior:
 - the archive and the log are distinct
 - raw metrics and evaluator diagnostics are preserved for later inspection
 - optional critique metadata is stored under `metadata.critique`
+- the mutation backend index is stored under `metadata.backend_idx`
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
 

@@ -57,6 +57,18 @@ def test_loop_logs_prompt_program_id_and_prompt_history():
     assert (run_dir / "prompt_history.jsonl").exists()
 
 
+def test_loop_logs_mutation_backend_index():
+    tmpdir = tempfile.mkdtemp()
+    llm = _llm()
+    llm.generate.return_value = ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 2)
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), Config(max_generations=1, log_dir=tmpdir, problem_name="t"))
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert child["metadata"]["backend_idx"] == 2
+
+
 def test_meta_prompt_evolution_adds_mutated_prompt_template():
     tmpdir = tempfile.mkdtemp()
     llm = MagicMock()

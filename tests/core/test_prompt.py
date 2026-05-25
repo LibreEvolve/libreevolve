@@ -80,3 +80,58 @@ def test_default_prompt_mentions_canonical_diff_fences():
     assert "AlphaEvolve-style" in prompt
     assert "`<<<<<<< SEARCH`" in prompt
     assert "`>>>>>>> REPLACE`" in prompt
+
+
+def test_default_prompt_uses_full_replacement_instructions_for_full_mode():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["def solve():\n    return 1\n"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="def solve():\n    return 1\n", fitness=0.0)
+
+    prompt = PromptSampler().build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        recent_failures=[],
+        mutation_mode="full",
+    )
+
+    assert "Mutation mode: full" in prompt
+    assert "Return full replacement code, not SEARCH/REPLACE diffs." in prompt
+    assert "<<<BLOCK block_name" in prompt
+    assert "Example format (do NOT copy this" not in prompt
+
+
+def test_custom_prompt_templates_can_use_or_ignore_mutation_mode_fields():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    ignored = PromptSampler().build(
+        parent, [], problem, extra_context="", template="Task: {task}",
+        mutation_mode="full",
+    )
+    rendered = PromptSampler().build(
+        parent, [], problem, extra_context="",
+        template="{mutation_mode}\n{mutation_instructions}",
+        mutation_mode="full",
+    )
+
+    assert ignored == "Task: Improve solve()."
+    assert rendered.startswith("full\nReturn full replacement code")

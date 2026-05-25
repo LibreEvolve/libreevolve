@@ -20,7 +20,10 @@ implemented.
 - `num_inspirations` (`3`): archive members rendered into prompts.
 - `eval_timeout_sec` (`60.0`): default validator subprocess timeout.
 - `explore_ratio` (`0.3`): probability of exploration instead of exploitation.
-- `mutation_mode` (`"diff"`): `diff` or `full`.
+- `mutation_mode` (`"diff"`): `diff` or `full`. The built-in prompt template
+  renders mode-specific mutation instructions; custom prompt variants can use
+  `{mutation_mode}` and `{mutation_instructions}` or ignore them for backward
+  compatibility.
 - `eval_stages` (`[]`): optional configured evaluator stages with stage
   validator entrypoints, thresholds, samples, seeds, retries, and timeouts.
 - `prompt_variants` (`[]`): optional prompt templates for stochastic sampling.

@@ -23,9 +23,12 @@ VALID_THRESHOLD = 0.0
 
 def build_prompt(parent: Program, inspirations: list[Program],
                  problem: Problem, extra_context: str,
-                 recent_failures: list[tuple[str, float]] | None = None) -> str:
+                 recent_failures: list[tuple[str, float]] | None = None,
+                 mutation_mode: str = "diff") -> str:
     return PromptSampler().build(
-        parent, inspirations, problem, extra_context, recent_failures=recent_failures
+        parent, inspirations, problem, extra_context,
+        recent_failures=recent_failures,
+        mutation_mode=mutation_mode,
     )
 
 
@@ -83,6 +86,7 @@ def evolve(problem: Problem, config: Config,
             parent, inspirations, problem, context,
             recent_failures=recent_failures or None,
             template=prompt_program.template,
+            mutation_mode=config.mutation_mode,
         )
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)

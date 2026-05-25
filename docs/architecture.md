@@ -66,10 +66,12 @@ Two mutation modes are supported:
 - `full`: complete replacement of the whole unmarked program, the single marked
   block, or named multi-block replacements with `<<<BLOCK name ... >>>BLOCK`
 
-The default prompt template is not mutation-mode aware yet. It still instructs
-models to return SEARCH/REPLACE fences and a raw diff block even when
-`Config.mutation_mode` is `full`, unless the run supplies a custom prompt
-template that asks for full replacements.
+The default prompt template is mutation-mode aware. In `diff` mode it asks for
+compact or AlphaEvolve-style SEARCH/REPLACE fences. In `full` mode it asks for
+full replacement content, including full-file `<<<FILE ... >>>FILE` sections
+for workspace candidates and named `<<<BLOCK ... >>>BLOCK` sections for
+multi-block replacements. Custom prompt templates remain supported and may
+ignore or render the `{mutation_mode}` and `{mutation_instructions}` fields.
 
 For multi-file candidates, LLM responses can wrap edits in file sections:
 

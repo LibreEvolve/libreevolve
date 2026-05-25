@@ -22,6 +22,7 @@ class PromptSampler:
         extra_context: str,
         recent_failures: list[tuple[str, float]] | None = None,
         template: str | None = None,
+        mutation_mode: str = "diff",
     ) -> str:
         variant = template or (self.rng.choice(self.variants) if self.variants else _DEFAULT_TEMPLATE)
         return variant.format(
@@ -34,6 +35,8 @@ class PromptSampler:
             inspirations=_render_inspirations(inspirations),
             extra_context=extra_context,
             recent_failures=_render_failures(recent_failures),
+            mutation_mode=mutation_mode,
+            mutation_instructions=_render_mutation_instructions(mutation_mode),
         )
 
 
@@ -56,20 +59,9 @@ Evaluation feedback:
 {extra_context}
 {recent_failures}
 [TASK]
-Propose a targeted improvement. For multi-file candidates, wrap each file edit
-in `<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
-Use either compact `<<<SEARCH` / `>>>REPLACE` fences or AlphaEvolve-style
-`<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences.
-Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
-
-Example format (do NOT copy this, use actual code from the program above):
-<<<SEARCH
-def foo():
-    return 1
-===
-def foo():
-    return 2
->>>REPLACE
+Propose a targeted improvement.
+Mutation mode: {mutation_mode}
+{mutation_instructions}
 """
 
 _DEFAULT_TEMPLATE = DEFAULT_TEMPLATE
@@ -82,6 +74,37 @@ def _render_context(problem: Problem) -> str:
         f"--- CONTEXT SOURCE: {name} ---\n{content}"
         for name, content in problem.context_files.items()
     )
+
+
+def _render_mutation_instructions(mutation_mode: str) -> str:
+    if mutation_mode == "full":
+        return """Return full replacement code, not SEARCH/REPLACE diffs.
+For multi-file candidates, wrap each changed file as:
+<<<FILE path/to/file.py
+complete replacement file content
+>>>FILE
+For a single-file candidate without evolve blocks, return only the complete
+replacement primary file. If the file has one evolve block, return only the
+replacement block body. If it has multiple evolve blocks, return one section per
+changed block:
+<<<BLOCK block_name
+replacement block body
+>>>BLOCK
+Rules: No markdown fences. No explanation. No SEARCH/REPLACE blocks."""
+    return """For multi-file candidates, wrap each file edit in
+`<<<FILE path ... >>>FILE`; otherwise edit the current primary file.
+Use either compact `<<<SEARCH` / `>>>REPLACE` fences or AlphaEvolve-style
+`<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences.
+Rules: No comments. No markdown fences. No explanation. Just the raw diff block.
+
+Example format (do NOT copy this, use actual code from the program above):
+<<<SEARCH
+def foo():
+    return 1
+===
+def foo():
+    return 2
+>>>REPLACE"""
 
 
 def _render_metrics(program: Program) -> str:

@@ -69,6 +69,27 @@ def test_loop_logs_mutation_backend_index():
     assert child["metadata"]["backend_idx"] == 2
 
 
+def test_loop_renders_full_mode_prompt_instructions():
+    tmpdir = tempfile.mkdtemp()
+    llm = _llm("x=2")
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+            ),
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert child["metadata"]["mutation_mode"] == "full"
+    assert "Mutation mode: full" in child["metadata"]["prompt"]
+    assert "Return full replacement code, not SEARCH/REPLACE diffs." in child["metadata"]["prompt"]
+
+
 def test_meta_prompt_evolution_adds_mutated_prompt_template():
     tmpdir = tempfile.mkdtemp()
     llm = MagicMock()

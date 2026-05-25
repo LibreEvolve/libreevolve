@@ -427,7 +427,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     token usage, adapter-internal retry counts, response ids, finish reasons,
     and raw provider diagnostics remain unavailable.
   - Status: README now distinguishes implemented ensemble-level call telemetry
-    from missing provider-level telemetry and fallback/retry policy.
+    and retry/fallback routing from missing provider-level telemetry and
+    role-specific quarantine policy.
   - Required result: note that deeper provider telemetry remains backend
     provenance work.
 

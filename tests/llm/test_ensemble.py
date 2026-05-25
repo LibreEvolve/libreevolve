@@ -75,6 +75,59 @@ def test_generate_records_failed_call_before_reraising():
     assert "provider down" in ens.call_history[-1]["error"]
 
 
+def test_generate_retries_same_backend_before_success():
+    backend = _b("b1")
+    backend.generate.side_effect = [RuntimeError("rate limit"), "ok"]
+    ens = LLMEnsemble([backend], max_retries=1)
+
+    response, idx = ens.generate("prompt text", role="mutation")
+
+    assert response == "ok"
+    assert idx == 0
+    assert backend.generate.call_count == 2
+    assert ens.counts == [1]
+    assert ens.call_history[0]["status"] == "error"
+    assert ens.call_history[0]["retry_attempt"] == 0
+    assert ens.call_history[0]["will_retry"] is True
+    assert ens.call_history[1]["status"] == "ok"
+    assert ens.call_history[1]["retry_attempt"] == 1
+
+
+def test_generate_falls_back_to_next_backend_after_failure():
+    bad = _b("bad")
+    good = _b("good", "fallback")
+    bad.generate.side_effect = RuntimeError("provider down")
+    ens = LLMEnsemble([bad, good], max_retries=0, fallback=True)
+
+    response, idx = ens.generate("prompt text", role="mutation")
+
+    assert response == "fallback"
+    assert idx == 1
+    assert ens.counts == [0, 1]
+    assert ens.call_history[0]["backend_idx"] == 0
+    assert ens.call_history[0]["status"] == "error"
+    assert ens.call_history[0]["will_fallback"] is True
+    assert ens.call_history[1]["backend_idx"] == 1
+    assert ens.call_history[1]["status"] == "ok"
+    assert ens.call_history[1]["fallback_attempt"] == 1
+
+
+def test_generate_can_disable_fallback():
+    bad = _b("bad")
+    good = _b("good", "fallback")
+    bad.generate.side_effect = RuntimeError("provider down")
+    ens = LLMEnsemble([bad, good], max_retries=0, fallback=False)
+
+    try:
+        ens.generate("prompt text", role="mutation")
+    except RuntimeError:
+        pass
+
+    assert bad.generate.call_count == 1
+    assert good.generate.call_count == 0
+    assert ens.call_history[-1]["will_fallback"] is False
+
+
 def test_high_reward_preferred_at_zero_explore():
     b1, b2 = _b("b1"), _b("b2")
     ens = LLMEnsemble([b1, b2], explore_coeff=0.0)

@@ -1106,16 +1106,19 @@ Primary evidence:
     and transient transport errors need deterministic accounting and retry or
     fallback behavior so one failed call does not corrupt scheduler state or
     crash unrelated run progress.
-  - Current evidence: `evolve()` calls `llm.generate()` for mutation, optional
-    critique, optional feedback, and meta-prompt mutation with no try/except or
-    retry policy. `LLMEnsemble.generate()` selects a backend, calls
-    `self.backends[idx].generate(prompt)`, increments the global `total`
-    counter before that provider call, and increments `counts[idx]` only after
-    a successful return. Failed provider calls can therefore advance the UCB
-    attempt counter without a matching backend count, structured failure
-    record, or alternate-backend attempt. A mutation-call exception aborts the
-    run before candidate/evaluation logging, while critique, feedback, or
-    meta-prompt exceptions can abort after useful work has already completed.
+  - Current evidence: `LLMEnsemble.generate()` now supports `llm_max_retries`
+    and `llm_fallback`. Failed attempts are recorded in normalized call
+    telemetry with retry/fallback attempt indexes, `will_retry`, and
+    `will_fallback`; exhausted failed backends are excluded for the current
+    fallback call; successful fallback returns normally without incrementing the
+    failed backend's pull count. Config validation and ensemble tests cover
+    retry, fallback, and disabled-fallback behavior.
+  - Remaining gap: `evolve()` still lets an exhausted mutation-call exception
+    abort before candidate/evaluation logging, and exhausted critique, feedback,
+    or meta-prompt exceptions can still abort after useful work has already
+    completed. Failures are not classified by timeout/rate-limit/transport
+    semantics, provider penalties are not applied, and there is no
+    role-specific quarantine policy.
   - Required result: define per-role LLM failure policy with bounded retries,
     timeout/rate-limit classification, optional backend fallback, scheduler
     accounting for failed attempts, structured call/error logs, candidate-level

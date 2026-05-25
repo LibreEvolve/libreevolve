@@ -48,6 +48,8 @@ class Config:
                             ])
     ensemble_explore_coeff: float = 1.0
     ensemble_strategy:      str   = "ucb1"
+    llm_max_retries:        int   = 0
+    llm_fallback:           bool  = True
     # Plugins
     plugins:                list[str] = field(default_factory=list)
     # Logging
@@ -96,6 +98,8 @@ class Config:
         _require_int("elite_archive_size", self.elite_archive_size, minimum=1)
         _require_nonnegative_number("ensemble_explore_coeff", self.ensemble_explore_coeff)
         _require_enum("ensemble_strategy", self.ensemble_strategy, {"ucb1", "throughput_depth"})
+        _require_int("llm_max_retries", self.llm_max_retries, minimum=0)
+        _require_bool("llm_fallback", self.llm_fallback)
         _validate_eval_stages(self.eval_stages)
         _validate_backends(self.backends)
         if not isinstance(self.prompt_variants, list) or not all(

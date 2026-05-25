@@ -64,6 +64,8 @@ def test_default_sampling_strategies():
         ({"elite_archive_size": 0}, "elite_archive_size"),
         ({"ensemble_explore_coeff": -1.0}, "ensemble_explore_coeff"),
         ({"ensemble_strategy": "random"}, "ensemble_strategy"),
+        ({"llm_max_retries": -1}, "llm_max_retries"),
+        ({"llm_fallback": "yes"}, "llm_fallback"),
     ],
 )
 def test_rejects_invalid_top_level_config(kwargs, message):

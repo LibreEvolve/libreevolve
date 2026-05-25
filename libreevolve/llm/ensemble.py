@@ -21,6 +21,8 @@ class LLMEnsemble:
         explore_coeff: float = 1.0,
         strategy: str = "ucb1",
         backend_metadata: list[dict] | None = None,
+        max_retries: int = 0,
+        fallback: bool = True,
     ):
         if not backends:
             raise ValueError("LLMEnsemble requires at least one backend.")
@@ -28,6 +30,8 @@ class LLMEnsemble:
         self.c = explore_coeff
         self.strategy = strategy
         self.backend_metadata = backend_metadata or [{} for _ in backends]
+        self.max_retries = max(0, int(max_retries))
+        self.fallback = bool(fallback)
         self.counts: list[int]   = [0]   * len(backends)
         self.wins:   list[float] = [0.0] * len(backends)
         self.total:  int         = 0
@@ -35,41 +39,60 @@ class LLMEnsemble:
 
     def generate(self, prompt: str, role: str = "mutation") -> tuple[str, int]:
         """Returns (diff_text, backend_index)."""
-        idx = self._ucb1_select()
-        backend = self.backends[idx]
-        started = time.perf_counter()
-        record = self._call_record(
-            role=role,
-            backend_idx=idx,
-            prompt=prompt,
-            counts_before=list(self.counts),
-        )
-        try:
-            response = backend.generate(prompt)
-        except Exception as exc:
-            record.update(
-                {
-                    "status": "error",
-                    "latency_sec": time.perf_counter() - started,
-                    "error_type": exc.__class__.__name__,
-                    "error": str(exc),
-                    "counts_after": list(self.counts),
-                }
-            )
-            self.call_history.append(record)
-            raise
-        self.counts[idx] += 1
-        record.update(
-            {
-                "status": "ok",
-                "latency_sec": time.perf_counter() - started,
-                "output_chars": len(response),
-                "output_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
-                "counts_after": list(self.counts),
-            }
-        )
-        self.call_history.append(record)
-        return response, idx
+        excluded: set[int] = set()
+        backend_attempts = len(self.backends) if self.fallback else 1
+        last_exc: Exception | None = None
+        for fallback_attempt in range(backend_attempts):
+            idx = self._ucb1_select(exclude=excluded)
+            backend = self.backends[idx]
+            for retry_attempt in range(self.max_retries + 1):
+                started = time.perf_counter()
+                record = self._call_record(
+                    role=role,
+                    backend_idx=idx,
+                    prompt=prompt,
+                    counts_before=list(self.counts),
+                    retry_attempt=retry_attempt,
+                    fallback_attempt=fallback_attempt,
+                )
+                try:
+                    response = backend.generate(prompt)
+                except Exception as exc:
+                    last_exc = exc
+                    record.update(
+                        {
+                            "status": "error",
+                            "latency_sec": time.perf_counter() - started,
+                            "error_type": exc.__class__.__name__,
+                            "error": str(exc),
+                            "counts_after": list(self.counts),
+                            "will_retry": retry_attempt < self.max_retries,
+                            "will_fallback": (
+                                retry_attempt >= self.max_retries
+                                and self.fallback
+                                and fallback_attempt < backend_attempts - 1
+                            ),
+                        }
+                    )
+                    self.call_history.append(record)
+                    continue
+                self.counts[idx] += 1
+                record.update(
+                    {
+                        "status": "ok",
+                        "latency_sec": time.perf_counter() - started,
+                        "output_chars": len(response),
+                        "output_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
+                        "counts_after": list(self.counts),
+                        "will_retry": False,
+                        "will_fallback": False,
+                    }
+                )
+                self.call_history.append(record)
+                return response, idx
+            excluded.add(idx)
+        assert last_exc is not None
+        raise last_exc
 
     @property
     def last_call(self) -> dict | None:
@@ -79,15 +102,20 @@ class LLMEnsemble:
         """Caller is responsible for clamping reward >= 0."""
         self.wins[idx] += reward
 
-    def _ucb1_select(self) -> int:
+    def _ucb1_select(self, exclude: set[int] | None = None) -> int:
+        exclude = exclude or set()
         self.total += 1
         # Note: log(1)=0 on first call — initial exploration is guaranteed by the
         # (score, -count) tiebreaker which prefers unexplored arms when scores tie.
-        scores = [
-            (self.wins[i] / max(self.counts[i], 1))
-            + self.c * math.sqrt(math.log(self.total) / max(self.counts[i], 1))
-            for i in range(len(self.backends))
-        ]
+        scores = []
+        for i in range(len(self.backends)):
+            if i in exclude:
+                scores.append(float("-inf"))
+                continue
+            scores.append(
+                (self.wins[i] / max(self.counts[i], 1))
+                + self.c * math.sqrt(math.log(self.total) / max(self.counts[i], 1))
+            )
         # Tiebreaker: prefer arms with fewer pulls (argmax breaks ties by first index,
         # so we use a tuple (score, -count) to prefer lower counts on ties)
         best_idx = 0
@@ -98,7 +126,7 @@ class LLMEnsemble:
                 best_score = current_score
                 best_idx = i
         if self.strategy == "throughput_depth":
-            return self._throughput_depth_select(scores)
+            return self._throughput_depth_select(scores, exclude=exclude)
         return best_idx
 
     def _call_record(
@@ -108,6 +136,8 @@ class LLMEnsemble:
         backend_idx: int,
         prompt: str,
         counts_before: list[int],
+        retry_attempt: int = 0,
+        fallback_attempt: int = 0,
     ) -> dict:
         backend = self.backends[backend_idx]
         metadata = (
@@ -135,11 +165,17 @@ class LLMEnsemble:
             "status": "pending",
             "error_type": None,
             "error": None,
+            "retry_attempt": retry_attempt,
+            "fallback_attempt": fallback_attempt,
+            "will_retry": False,
+            "will_fallback": False,
             "counts_before": counts_before,
             "counts_after": None,
         }
 
-    def _throughput_depth_select(self, ucb_scores: list[float]) -> int:
+    def _throughput_depth_select(
+        self, ucb_scores: list[float], exclude: set[int] | None = None
+    ) -> int:
         """Cost/depth-aware scheduler layered over UCB scores.
 
         Metadata keys are optional:
@@ -149,7 +185,10 @@ class LLMEnsemble:
         """
         best_idx = 0
         best_score = float("-inf")
+        exclude = exclude or set()
         for i, base_score in enumerate(ucb_scores):
+            if i in exclude:
+                continue
             meta = self.backend_metadata[i] if i < len(self.backend_metadata) else {}
             cost = float(meta.get("cost", 1.0))
             latency = float(meta.get("latency", 1.0))
@@ -199,4 +238,6 @@ def build_llm(config) -> LLMEnsemble:
         explore_coeff=config.ensemble_explore_coeff,
         strategy=config.ensemble_strategy,
         backend_metadata=metadata,
+        max_retries=config.llm_max_retries,
+        fallback=config.llm_fallback,
     )

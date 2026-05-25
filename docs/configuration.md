@@ -118,6 +118,11 @@ penalty, or discard policy for failed feedback graders.
   routing.
 - `ensemble_strategy` (`"ucb1"`): `ucb1` or experimental
   `throughput_depth`.
+- `llm_max_retries` (`0`): retry attempts on the same selected backend before
+  trying fallback or failing the call.
+- `llm_fallback` (`true`): when enabled, a failed backend is excluded for the
+  current call after its retries are exhausted and the ensemble attempts another
+  backend when one is available.
 
 Backend specs may include optional scheduling metadata:
 
@@ -286,9 +291,11 @@ Common variables:
 
 Provider SDKs may honor additional provider-specific variables.
 
-LLM provider failures are not retried or routed to fallback backends today.
-Mutation, critique, feedback, and meta-prompt provider exceptions can abort a
-run rather than being recorded as structured failed LLM-call attempts.
+LLM provider failures are recorded as structured call attempts. The ensemble can
+retry the same backend with `llm_max_retries` and can route to another backend
+when `llm_fallback` is enabled. If all attempts fail, the last provider
+exception still aborts the active role; role-specific quarantine or penalty
+policies are separate future work.
 
 ## Known caveats
 

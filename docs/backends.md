@@ -37,9 +37,10 @@ Current behavior:
 - provider usage tokens, retry counts inside adapters, request/response ids,
   finish reasons, and raw provider diagnostics are still unavailable and stored
   as `null`
-- failed provider calls are recorded in in-memory ensemble telemetry, but the
-  ensemble still does not retry or route to fallback backends; mutation,
-  critique, and meta-prompt failures can still abort before a run artifact is
+- failed provider calls are recorded in ensemble telemetry with retry/fallback
+  attempt indexes; `llm_max_retries` can retry the same backend and
+  `llm_fallback` can try another backend, but exhausted mutation, critique, and
+  meta-prompt failures can still abort before a role-specific artifact is
   flushed
 
 This means backends are rewarded for improvement over the selected parent, not

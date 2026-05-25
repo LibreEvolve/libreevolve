@@ -71,7 +71,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     role, backend metadata, API mode, prompt/output sizes, latency, status, and
     scheduler counts. Provider usage, adapter-internal retry counts,
     response-id, finish-reason, and raw provider diagnostics remain unavailable.
-    Provider failures are not retried or routed to fallback backends.
+    Ensemble-level retry and fallback are configurable, but role-specific
+    failure quarantine and penalties remain open.
 
 - [ ] Existing/custom LLM backend extension point.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.

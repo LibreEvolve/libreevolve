@@ -458,6 +458,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: backend scheduling and telemetry work covered
     throughput, usage, and failure metadata, but did not require deterministic
     retry/fallback/quarantine behavior for failed provider calls.
+  - Status: partially implemented at the ensemble boundary. `llm_max_retries`
+    retries the same backend, `llm_fallback` can route to another backend, and
+    call telemetry records retry/fallback attempt indexes plus retry/fallback
+    decisions. Role-specific quarantine, timeout/rate-limit classification, and
+    penalties remain open.
   - Required result: track per-role LLM retry budgets, fallback routing, failed
     attempt accounting, structured error logs, and tests for mutation,
     critique, feedback, and meta-prompt failures.

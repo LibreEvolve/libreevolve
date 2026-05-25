@@ -297,7 +297,9 @@ Per-call LLM telemetry is logged at the ensemble boundary with role, backend,
 API mode, prompt/output sizes and hashes, latency, status, and scheduler-count
 snapshots. Provider token usage, adapter-internal retry counts, response IDs,
 finish reasons, and raw provider diagnostics remain backend-provenance work.
-Provider call failures are still not retried or routed to fallback backends.
+Provider call failures can be retried and routed to fallback backends when
+configured, but exhausted provider failures still propagate to the active role
+instead of becoming role-specific quarantined candidates or prompt records.
 
 <details>
 <summary><h2>Architecture</h2></summary>

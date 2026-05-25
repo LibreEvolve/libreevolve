@@ -186,6 +186,8 @@ def test_manifest_written():
     assert manifest["config"]["evaluator_artifact_max_files"] == 3
     assert manifest["config"]["evaluator_artifact_max_bytes"] == 1234
     assert manifest["config"]["evaluator_artifact_redact_secrets"] is False
+    assert manifest["config"]["llm_max_retries"] == 0
+    assert manifest["config"]["llm_fallback"] is True
 
 
 def test_manifest_writes_context_source_provenance():

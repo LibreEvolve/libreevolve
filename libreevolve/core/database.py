@@ -219,6 +219,8 @@ class ProgramDatabase:
                     "backends": config.backends,
                     "ensemble_explore_coeff": config.ensemble_explore_coeff,
                     "ensemble_strategy": config.ensemble_strategy,
+                    "llm_max_retries": config.llm_max_retries,
+                    "llm_fallback": config.llm_fallback,
                     "plugins": config.plugins,
                     "log_dir": config.log_dir,
                     "problem_name": config.problem_name,

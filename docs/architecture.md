@@ -374,10 +374,12 @@ backend counts before/after the call. Successful mutation/critique calls are
 attached to candidate metadata, feedback calls are attached to feedback records,
 and meta-prompt calls are attached to prompt-history metadata. Provider usage
 tokens, adapter-internal retry counts, request/response ids, finish reasons,
-and raw provider diagnostics are not available yet. Provider exceptions are not
-isolated by role today: mutation, critique, feedback, and meta-prompt calls can
-abort the run, and failed attempts are not retried or routed to fallback
-backends.
+and raw provider diagnostics are not available yet. The ensemble supports
+configured same-backend retries and optional fallback to another backend; each
+attempt is recorded with retry/fallback indexes and whether it will retry or
+fallback. If all provider attempts fail, the final exception still propagates to
+the active role, so mutation, critique, feedback, and meta-prompt calls can
+still abort the run rather than becoming role-specific quarantined records.
 
 ## Logging and artifacts
 

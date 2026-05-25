@@ -251,12 +251,13 @@ yet governed by a global prompt-size budget.
 
 LLM call telemetry is normalized at the ensemble boundary. Records include
 role, backend index/name, backend metadata, strategy, API mode, prompt/output
-sizes and hashes, latency, success/error status, and scheduler counts
-before/after the call. Provider token usage, adapter-internal retry counts,
-request/response ids, finish reasons, and raw provider diagnostics are not
-available yet and are recorded as empty fields. There is no separate run-scoped
-call log yet; successful mutation/critique/feedback call records are embedded
-in candidate history, and meta-prompt call records are embedded in
+sizes and hashes, latency, success/error status, retry/fallback attempt indexes,
+retry/fallback decisions, and scheduler counts before/after the call. Provider
+token usage, adapter-internal retry counts, request/response ids, finish
+reasons, and raw provider diagnostics are not available yet and are recorded as
+empty fields. There is no separate run-scoped call log yet; successful
+mutation/critique/feedback call records are embedded in candidate history, and
+meta-prompt call records are embedded in
 `prompt_history.jsonl`.
 
 ## `best.py` and `best_workspace/`

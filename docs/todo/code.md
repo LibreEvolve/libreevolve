@@ -455,6 +455,22 @@ Primary evidence:
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
+- [ ] Evolve prompt context policy, not only full prompt templates.
+  - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
+    not just swapping one complete prompt string for another.
+  - Current evidence: `PromptDatabase` stores and mutates only template text.
+    `PromptSampler` renders explicit context files, plugin context,
+    inspirations, failure memory, evaluator feedback, and mutation-mode
+    instructions through fixed code paths. Meta-prompt mutation cannot change
+    context-file selection, retrieval/summarization policy, section budgets,
+    placeholder distributions, failure-memory policy, or which evaluator
+    feedback fields are included.
+  - Required result: define prompt-program state that can own context
+    selection/rendering policy as structured data, persist that policy and
+    lineage, allow safe LLM or configured mutations of those knobs, and test
+    that prompt evolution can change context behavior without breaking
+    template placeholder validation.
+
 - [x] Define prompt-program reward normalization and selection policy.
   - Spec evidence: AlphaEvolve treats meta-prompt evolution as a system
     component that can be ablated, so prompt-program fitness should be

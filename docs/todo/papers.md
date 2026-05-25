@@ -340,6 +340,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     multi-metric prompt-fitness model, and there is no full experiment
     AlphaEvolve-equivalent ablation harness.
 
+- [ ] Context-policy side of meta-prompt evolution.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.
+  - Requirement: prompt instructions and prompt context can be improved through
+    meta-prompt evolution.
+  - Current evidence: LibreEvolve's meta-prompt path mutates only full prompt
+    template strings. Context rendering remains fixed in `PromptSampler` and
+    related code: problem context files, plugin context, inspirations, recent
+    failures, evaluator feedback, and mutation-mode instructions are selected
+    and budgeted by static code/config rather than prompt-program state.
+  - Required result: extend prompt programs to include structured context
+    selection/rendering/budget policy, persist and score those policies, and
+    test that meta-prompt evolution can alter context behavior while preserving
+    safe template rendering and auditability.
+
 - [ ] AlphaEvolve-style stochastic prompt formatting.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: support template placeholders with human-provided alternatives

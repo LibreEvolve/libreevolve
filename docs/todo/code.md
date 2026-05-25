@@ -494,6 +494,23 @@ Primary evidence:
     direction, bound, sample aggregation policy, and artifact/output checks;
     document defaults and test average/min/max/quantile/all-pass behavior.
 
+- [ ] Validate evaluator-stage numeric fields before running cascades.
+  - Spec evidence: AlphaEvolve-style cascades are explicit experiment
+    configuration; invalid stage budgets, sample counts, retry counts, and
+    thresholds should fail before evaluation with reproducible diagnostics.
+  - Current evidence: `_run_stage()` casts `timeout_sec`, `samples`, and
+    `retries` at runtime without range validation. `samples <= 0` produces an
+    empty result list and reaches `_aggregate_sample_results()`, where the
+    fitness fallback divides by `len(results)`. `retries < 0` makes
+    `_run_sample_with_retries()` run zero attempts and hit
+    `assert last is not None`. Invalid `min_score`/`timeout_sec` values fail
+    late through `float()` or subprocess timeout behavior instead of config
+    diagnostics.
+  - Required result: validate `eval_stages` at config load/CLI startup with
+    clear errors for non-positive `samples`, negative `retries`, non-positive
+    timeouts, nonnumeric thresholds, and seed/sample length mismatches; add
+    tests proving bad stage configs fail before candidate evaluation begins.
+
 - [x] Preserve full evaluator feedback, not just scalar fitness.
   - Spec evidence: AlphaEvolve stores solutions with evaluation results,
     scores, and program outputs attached.

@@ -424,3 +424,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     string discard flags.
   - Required result: warn readers that LLM feedback failure handling is not yet
     AlphaEvolve-grade structured evaluation behavior.
+
+- [x] Clarify evaluator-stage numeric config is not fully validated.
+  - README evidence: the evaluation and configuration docs show staged
+    validators with `samples`, `retries`, `timeout_sec`, and `min_score`, but
+    did not warn that bad numeric values can fail at runtime.
+  - Current evidence: `_run_stage()` casts stage numeric fields during
+    evaluation; `samples <= 0` can reach aggregation with no sample results,
+    and `retries < 0` can skip all attempts before an assertion.
+  - Required result: document the current limitation and track startup schema
+    validation for evaluator stage ranges in the code TODO.

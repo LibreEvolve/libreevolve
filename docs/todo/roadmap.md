@@ -157,6 +157,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     but not staged evaluator definitions, thresholds, budgets, or parallel
     stages.
 
+- [x] Add evaluator-stage numeric validation to config hardening.
+  - Evidence: `CascadeEvaluator._run_stage()` casts `samples`, `retries`, and
+    `timeout_sec` only at runtime; `samples <= 0` can reach aggregation with no
+    results, and `retries < 0` can skip all attempts.
+  - Current roadmap gap: config validation work called out malformed nested
+    fields generally, but did not name the evaluator-stage ranges that can
+    crash or silently skip evaluation.
+  - Required result: validate stage sample/retry/timeout/threshold fields at
+    config load or CLI startup, with tests for zero/negative counts and
+    nonnumeric values.
+
 - [x] Add async/distributed controller and worker architecture.
   - Evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline with a
     controller, LLM samplers, and evaluation nodes optimized for throughput.

@@ -144,6 +144,11 @@ Unknown config keys are currently ignored rather than rejected. This is a known
 reproducibility gap for AlphaEvolve-style runs because spelling mistakes can
 silently leave defaults in effect.
 
+Nested evaluator-stage numeric fields are also not fully validated before a
+run. Use positive `samples` and `timeout_sec`, non-negative `retries`, and
+numeric `min_score` values; invalid values may currently fail during
+evaluation rather than at config load.
+
 ## CLI overrides
 
 The `run` command exposes:

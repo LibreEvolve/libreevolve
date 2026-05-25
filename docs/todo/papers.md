@@ -79,7 +79,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: added configurable local validator stages with distinct entrypoints,
     thresholds, seeded samples, retries, stage context, and timeouts.
     Distributed/parallel evaluator nodes remain open. Metric-specific pass
-    criteria and explicit sample aggregation policies also remain open.
+    criteria, explicit sample aggregation policies, and validation for invalid
+    stage numeric fields such as zero samples or negative retries also remain
+    open.
 
 - [ ] Strict scalar metric contract for evaluator outputs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.

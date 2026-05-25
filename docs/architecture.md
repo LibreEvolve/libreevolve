@@ -175,6 +175,10 @@ metrics and stop the cascade when validity or threshold checks fail. This is a
 local cascade model, not AlphaEvolve's full parallel evaluator-worker
 architecture.
 
+Stage numeric fields are not fully schema-validated before execution. Invalid
+values such as zero samples or negative retries can fail during evaluation
+instead of producing an early configuration error.
+
 The subprocess currently passes the materialized candidate root as an argument
 but does not set that root as the subprocess working directory or import path.
 Validators that need project-local imports or relative files must opt into that

@@ -38,6 +38,9 @@ Important details:
   - `metadata["diff"]`
 - the return value from `on_evaluated()` becomes the program's final fitness for
   logging, archive admission, and backend reward computation.
+- plugin score adjustments are not recorded as a structured score-composition
+  trace yet. A history record's top-level `fitness` can therefore differ from
+  `evaluation.fitness` without a machine-readable plugin adjustment chain.
 
 ## What plugins can safely do
 

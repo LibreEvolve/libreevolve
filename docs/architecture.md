@@ -174,6 +174,12 @@ weighted feedback adjusts `Program.fitness` while preserving the raw validator
 metric. Feedback score calibration against `metrics.yaml` direction/bounds is
 not implemented yet.
 
+After that, plugin `on_evaluated()` hooks may modify the effective fitness used
+for logging, archive admission, prompt reward, and backend reward. The current
+loop does not persist a structured plugin score-adjustment chain, so
+plugin-adjusted top-level fitness can diverge from `evaluation.fitness` without
+per-plugin provenance.
+
 ## Population model
 
 Population state is split across:

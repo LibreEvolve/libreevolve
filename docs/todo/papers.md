@@ -147,7 +147,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: JSONL records include raw metrics and structured evaluation output.
     Queryable score/metric/diversity/feedback sampling remains open. Strict
     finite JSON serialization is also not guaranteed if unchecked non-finite
-    values enter run records.
+    values enter run records, and plugin score adjustments are not stored as a
+    structured score-composition trace.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

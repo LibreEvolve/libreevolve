@@ -234,6 +234,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track plugin registry, configuration schema, constructor
     parameters, paper-inspiration scope, and artifact provenance.
 
+- [x] Add plugin score-composition provenance to plugin extensibility work.
+  - Evidence: `evolve()` lets each plugin return a modified score and stores
+    only the final `program.fitness`, while `evaluation.fitness` remains the
+    evaluator/feedback result.
+  - Current roadmap gap: plugin work mentioned registration, configuration, and
+    artifacts but not the provenance of score-changing hook chains.
+  - Required result: track per-plugin before/after scores, reasons, validation,
+    and the relationship between raw evaluator fitness and composed archive
+    fitness.
+
 - [x] Add evaluator path validation/provenance to runtime hardening.
   - Evidence: `eval_stages[].validate_path` can resolve to arbitrary absolute
     paths and is not prevalidated or hashed before execution.

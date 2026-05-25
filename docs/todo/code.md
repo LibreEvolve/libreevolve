@@ -678,6 +678,22 @@ Primary evidence:
     per-plugin config schemas, record plugin specs/provenance/artifacts in
     manifests, and test configured plugin behavior without editing the CLI.
 
+- [ ] Persist plugin score-composition provenance.
+  - Spec evidence: AlphaEvolve stores programs with evaluation scores and
+    outputs attached; when local extension hooks change fitness, the database
+    must preserve how the final selection score was produced.
+  - Current evidence: `evolve()` constructs a `Program` from evaluator/feedback
+    output, then calls each plugin's `on_evaluated(program, score)` and assigns
+    the returned value to `program.fitness`. `ProgramDatabase.log()` stores only
+    the final top-level `fitness`; it does not record per-plugin before/after
+    scores, plugin names, reasons, metrics added, or whether
+    `evaluation.fitness` and top-level fitness diverged.
+  - Required result: define a score-composition record for evaluator fitness,
+    LLM feedback composition, and each plugin adjustment; persist per-plugin
+    provenance in history and manifests; make archive admission/backend reward
+    use the documented composed score; add tests for multiple plugins,
+    rejecting invalid plugin scores, and preserving raw validator fitness.
+
 - [ ] Improve isolation beyond a temporary Python subprocess.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,
     potentially with expensive or hardware-backed execution.

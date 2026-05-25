@@ -125,7 +125,8 @@ is not yet an AlphaEvolve reproduction.
 - Allow plugin configuration through `config.yaml`.
 - Record plugin constructor parameters, paper-inspiration scope, and emitted
   artifact paths in run manifests.
-- Clarify score-composition semantics when multiple plugins modify fitness.
+- Clarify and persist score-composition semantics when multiple plugins modify
+  fitness.
 
 ## Longer Term
 

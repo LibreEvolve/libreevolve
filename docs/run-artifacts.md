@@ -81,6 +81,11 @@ list. If feedback graders are enabled, their scores appear in `metrics`, and
 the composed score appears as `feedback_adjusted_fitness` while the raw primary
 validator metric remains intact.
 
+Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
+That score-composition path is not currently stored as a structured trace, so
+plugin-adjusted records may have top-level `fitness` values that differ from
+`evaluation.fitness` without per-plugin before/after metadata.
+
 ## `prompt_history.jsonl`
 
 This file records prompt-program events:

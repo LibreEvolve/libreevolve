@@ -327,6 +327,9 @@ Plugins hook into 4 lifecycle events to extend LibreEvolve's behavior:
 | `on_evaluated(program, score)` | After evaluation | Modify score, accumulate data |
 | `on_generation_end(gen, best)` | After each generation | Logging, training data export |
 
+Plugin score hooks can change the final archived fitness. Structured
+per-plugin score-adjustment provenance is still a roadmap item.
+
 Built-in plugins are paper-inspired approximations, not full reproductions:
 - **CausalEvolve-inspired** — token-pattern outcome-factor guidance
 - **DeepEvolve-inspired** — pluggable arXiv/web-search context

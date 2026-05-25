@@ -254,3 +254,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     workspace path normalizer can handle broader safe relative paths.
   - Required result: warn readers to keep current file-section paths simple and
     track parser hardening in the code TODO.
+
+- [x] Clarify plugin score provenance limitations.
+  - README evidence: the plugin hook table says `on_evaluated()` can modify
+    score, but did not say that per-plugin score-composition provenance is not
+    yet persisted.
+  - Current evidence: `evolve()` applies plugin score returns sequentially and
+    stores the final `Program.fitness`; no structured before/after plugin score
+    chain is written to `history.jsonl`.
+  - Required result: tell readers that plugin score hooks can affect archived
+    fitness and point structured provenance to the roadmap/TODO.

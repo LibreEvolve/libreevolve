@@ -85,19 +85,19 @@ Primary evidence:
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
 
-- [ ] Detect malformed or ignored mutation envelopes.
+- [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every
     intended edit either apply or fail with a diagnostic; silently dropping an
     LLM-proposed file/block section can corrupt the audit trail and hide
     partial candidate changes.
-  - Current evidence: `_parse_file_sections()` uses `_FILE_SECTION_PATTERN` and
-    returns only regex matches. If a response contains one valid `<<<FILE ...`
-    section and another malformed section, such as an unclosed `<<<FILE`
-    envelope, `apply_workspace_mutation()` can apply the valid section and
-    ignore the unmatched intended edit. The same risk exists for multi-block
-    full replacements because `_BLOCK_SECTION_PATTERN` collects only matched
-    `<<<BLOCK ... >>>BLOCK` spans and does not diagnose unmatched block
-    envelopes as a whole document.
+  - Current evidence: `apply_workspace_mutation()` validates file-section
+    envelopes before parsing sections, and multi-block full replacement
+    validates block-section envelopes before applying replacements. Unmatched,
+    orphaned, nested, empty-name, invalid-name, and unsafe-path sections fail
+    before partial edits are applied.
+  - Status: implemented for current `<<<FILE ... >>>FILE` and
+    `<<<BLOCK ... >>>BLOCK` envelopes, with tests proving mixed valid plus
+    malformed sections do not apply partial candidate changes.
   - Required result: parse mutation envelopes as a whole document, reject or
     record unmatched `<<<FILE`/`>>>FILE` and `<<<BLOCK`/`>>>BLOCK` spans,
     surface diagnostics for unsupported names/paths, and add tests for mixed

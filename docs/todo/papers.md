@@ -220,8 +220,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     only the primary file convenience view. Binary/static artifacts are not
     first-class candidate members yet, and validators must currently manage
     candidate-root imports/relative execution themselves.
-    Malformed or unsupported `<<<FILE`/`<<<BLOCK` envelopes can also be ignored
-    during partial parses. File-set topology changes such as delete, rename,
+    File/block envelope diagnostics now reject malformed sections before
+    partial edits are applied. File-set topology changes such as delete, rename,
     move, and primary-file replacement are not expressible as mutation
     operations yet.
 

@@ -118,6 +118,66 @@ def test_full_mode_replaces_multiple_named_blocks():
     assert "x = 10" in result and "y = 20" in result
 
 
+def test_full_mode_rejects_unclosed_block_section():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    response = "<<<BLOCK a\nx = 10\n>>>BLOCK\n<<<BLOCK b\ny = 20\n"
+    result, err = apply_candidate_mutation(code, response, mutation_mode="full")
+    assert result == code
+    assert err == "malformed_block_sections:missing_end"
+
+
+def test_full_mode_rejects_orphan_block_section_end():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    result, err = apply_candidate_mutation(code, ">>>BLOCK", mutation_mode="full")
+    assert result == code
+    assert err == "malformed_block_sections:orphan_end"
+
+
+def test_full_mode_rejects_nested_block_sections():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    response = "<<<BLOCK a\nx = 10\n<<<BLOCK b\ny = 20\n>>>BLOCK\n>>>BLOCK"
+    result, err = apply_candidate_mutation(code, response, mutation_mode="full")
+    assert result == code
+    assert err == "malformed_block_sections:nested_start"
+
+
+def test_full_mode_rejects_empty_block_section_name():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    result, err = apply_candidate_mutation(
+        code,
+        "<<<BLOCK \nx = 10\n>>>BLOCK",
+        mutation_mode="full",
+    )
+    assert result == code
+    assert err == "malformed_block_sections:empty_name"
+
+
+def test_full_mode_rejects_invalid_block_section_name():
+    code = (
+        "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
+        "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
+    )
+    result, err = apply_candidate_mutation(
+        code,
+        "<<<BLOCK bad name\nx = 10\n>>>BLOCK",
+        mutation_mode="full",
+    )
+    assert result == code
+    assert err == "malformed_block_sections:invalid_name"
+
+
 def test_workspace_diff_mutates_named_file_only():
     workspace = CandidateWorkspace(
         files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
@@ -196,6 +256,39 @@ def test_workspace_full_mode_can_create_file():
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
     assert err is None
     assert result.files["helper.py"] == "value = 2"
+
+
+def test_workspace_rejects_unclosed_file_section_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE helper.py\nvalue = 2\n>>>FILE\n"
+        "<<<FILE extra.py\nvalue = 3\n"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "malformed_file_sections:missing_end"
+
+
+def test_workspace_rejects_orphan_file_section_end():
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    response = ">>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "malformed_file_sections:orphan_end"
+
+
+def test_workspace_rejects_nested_file_sections_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE helper.py\nvalue = 2\n<<<FILE other.py\nvalue = 3\n>>>FILE\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "malformed_file_sections:nested_start"
 
 
 def test_workspace_rejects_path_escape():

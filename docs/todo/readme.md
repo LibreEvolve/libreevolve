@@ -280,16 +280,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep README aligned with current path parser behavior
     while still warning separately about partial whole-envelope diagnostics.
 
-- [x] Clarify malformed mutation envelopes can be ignored.
+- [x] Clarify malformed mutation envelope diagnostics.
   - README evidence: the custom-problem section describes file-section edits,
     but did not explain that unmatched or malformed envelope spans are not
     diagnosed as a whole response.
-  - Current evidence: `_parse_file_sections()` and multi-block full replacement
-    use regex `findall()` calls. A response with one valid file/block section
-    and one unsupported or malformed envelope can apply the valid section while
-    ignoring the unmatched intended edit.
-  - Required result: warn readers that current multi-file/block mutation
-    parsing is partial and track full-envelope diagnostics in the code TODO.
+  - Current evidence: file and block envelope validation now rejects unmatched,
+    orphaned, nested, empty-name, invalid-name, and unsafe-path sections before
+    applying partial edits. README now describes that current behavior while
+    noting the parser is not a complete mutation AST.
+  - Required result: keep README aligned with current diagnostics and keep
+    broader mutation-operation gaps, such as delete/rename/move, tracked
+    separately.
 
 - [x] Clarify multi-file mutations cannot delete or rename files yet.
   - README evidence: the custom-problem section describes multi-file seed

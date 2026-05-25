@@ -94,8 +94,9 @@ escape the candidate workspace. File-section headers are parsed through the
 same relative-path normalization used by `CandidateWorkspace`, so nested paths,
 hyphens, spaces, Unicode filename characters, and Windows-style backslashes are
 accepted when the resulting normalized path is safe.
-Envelope parsing is also partial: unsupported or malformed `<<<FILE` or
-`<<<BLOCK` spans may be ignored if other valid sections are matched.
+Envelope parsing now rejects unmatched, orphaned, nested, empty-name, and
+invalid-name `<<<FILE` / `<<<BLOCK` sections before applying partial edits. It
+is still a local envelope parser rather than a full mutation AST.
 File deletion, rename/move operations, and primary-file changes are not
 expressible in mutation responses yet.
 

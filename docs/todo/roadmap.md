@@ -116,9 +116,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     tests for common repository filename shapes.
 
 - [x] Add mutation-envelope diagnostics for partial parses.
-  - Evidence: file and block mutation sections are collected with regex
-    `findall()` calls, so unsupported or malformed envelopes can be omitted
-    while other valid sections still apply.
+  - Evidence: file and block mutation envelopes now validate unmatched,
+    orphaned, nested, empty-name, invalid-name, and unsafe-path sections before
+    partial edits are applied.
   - Current roadmap gap: path grammar hardening covered valid filename support,
     but not detection of unmatched `<<<FILE`/`<<<BLOCK` spans that represent
     intended edits.

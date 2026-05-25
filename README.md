@@ -353,9 +353,9 @@ For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested
 paths, hyphens, spaces, Unicode filename characters, and Windows-style
 backslashes.
-Malformed or unsupported file/block mutation envelopes are not fully diagnosed
-as a whole response yet, so partial parses can ignore an intended edit while
-applying another valid section.
+File/block mutation envelopes are not represented as a complete mutation AST
+yet, but unmatched, orphaned, nested, empty-name, and invalid-name envelopes
+now fail before partial edits are applied.
 Workspace mutations can edit existing files and create new files in `full`
 mode, but file deletion, rename/move operations, and primary-file changes are
 not implemented yet.

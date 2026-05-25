@@ -243,9 +243,9 @@ new code
 File-section paths use the same relative-path normalization as candidate
 workspaces. Nested paths, hyphens, spaces, Unicode filename characters, and
 Windows-style backslashes are accepted when the normalized path is safe.
-Malformed or unsupported file/block envelopes are not fully diagnosed as a
-whole mutation document yet; a response with mixed valid and malformed sections
-can apply the valid edits while ignoring an unmatched intended edit.
+File/block envelopes are not represented as a complete mutation AST yet, but
+unmatched, orphaned, nested, empty-name, and invalid-name sections fail before
+any partial edit is applied.
 
 In `full` mode, the content inside `<<<FILE ... >>>FILE` becomes the file's new
 content, unless the target file contains evolve blocks, in which case the

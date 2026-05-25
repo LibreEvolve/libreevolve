@@ -11,7 +11,7 @@ EVOLVE_BLOCK_END = "# EVOLVE-BLOCK-END"
 _BLOCK_NAME_PATTERN = re.compile(r"^[A-Za-z0-9_.:-]+$")
 
 _BLOCK_SECTION_PATTERN = re.compile(
-    r"<<<BLOCK\s+([A-Za-z0-9_.:-]+)\s*\n(.*?)\n>>>BLOCK", re.DOTALL
+    r"<<<BLOCK[ \t]*(.*?)\n(.*?)\n>>>BLOCK", re.DOTALL
 )
 _FILE_SECTION_PATTERN = re.compile(
     r"<<<FILE[ \t]*(.*?)\n(.*?)\n>>>FILE", re.DOTALL
@@ -142,7 +142,13 @@ def apply_workspace_mutation(
     to that file; unknown files can be created by `full` mode.
     """
 
-    sections = _parse_file_sections(mutation_text)
+    normalized_text = _strip_fences(mutation_text.replace("\r\n", "\n"))
+    envelope_error = _validate_section_envelopes(
+        normalized_text, "<<<FILE", ">>>FILE", "file"
+    )
+    if envelope_error is not None:
+        return workspace, envelope_error
+    sections = _parse_file_sections(normalized_text)
     if not sections:
         code, err = apply_candidate_mutation(
             workspace.code, mutation_text, mutation_mode=mutation_mode
@@ -181,6 +187,28 @@ def apply_workspace_mutation(
 def _parse_file_sections(mutation_text: str) -> list[tuple[str, str]]:
     text = _strip_fences(mutation_text.replace("\r\n", "\n"))
     return [(name.strip(), body.rstrip("\n")) for name, body in _FILE_SECTION_PATTERN.findall(text)]
+
+
+def _validate_section_envelopes(
+    text: str, start_marker: str, end_marker: str, label: str
+) -> str | None:
+    open_section = False
+    matches = sorted(
+        [(match.start(), "start") for match in re.finditer(re.escape(start_marker), text)]
+        + [(match.start(), "end") for match in re.finditer(re.escape(end_marker), text)]
+    )
+    for _, kind in matches:
+        if kind == "start":
+            if open_section:
+                return f"malformed_{label}_sections:nested_start"
+            open_section = True
+        else:
+            if not open_section:
+                return f"malformed_{label}_sections:orphan_end"
+            open_section = False
+    if open_section:
+        return f"malformed_{label}_sections:missing_end"
+    return None
 
 
 def _parse_evolve_blocks(code: str) -> tuple[list[EvolveBlock], str | None]:
@@ -274,7 +302,19 @@ def _apply_full_replacement(code: str, mutation_text: str) -> tuple[str, str | N
             return code, "no_valid_changes"
         return code[: block.content_start] + replacement + code[block.content_end :], None
 
-    sections = {name: body.rstrip("\n") for name, body in _BLOCK_SECTION_PATTERN.findall(replacement)}
+    envelope_error = _validate_section_envelopes(
+        replacement, "<<<BLOCK", ">>>BLOCK", "block"
+    )
+    if envelope_error is not None:
+        return code, envelope_error
+    sections: dict[str, str] = {}
+    for raw_name, body in _BLOCK_SECTION_PATTERN.findall(replacement):
+        name = raw_name.strip()
+        if not name:
+            return code, "malformed_block_sections:empty_name"
+        if not _BLOCK_NAME_PATTERN.fullmatch(name):
+            return code, "malformed_block_sections:invalid_name"
+        sections[name] = body.rstrip("\n")
     if not sections:
         return code, "missing_block_sections"
     result = code

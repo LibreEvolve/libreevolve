@@ -214,6 +214,11 @@ run-scoped artifact. It clips rewards with `max(0.0, score)` and appends to
 `runs/grpo_data.jsonl` by default; that file is not hashed or referenced from
 the run manifest yet.
 
+The DeepEvolve-inspired retrieval plugin also affects prompt context without
+run-scoped provenance. It keeps only the latest synthesis string in memory and
+does not persist provider/query/result metadata, citations, timestamps,
+failure diagnostics, or hashes for the context injected into prompts.
+
 ## Population model
 
 Population state is split across:

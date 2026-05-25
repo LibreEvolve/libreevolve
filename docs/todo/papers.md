@@ -369,10 +369,12 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current evidence: the CLI alias is paper-neutral (`deep_research`) and docs
     label it DeepEvolve-inspired, but `libreevolve/plugins/deep_research.py`
     performs a generic arXiv Atom search every N generations and injects short
-    summaries into the prompt.
+    summaries into the prompt. The plugin does not persist query/result
+    provenance, arXiv IDs/URLs, retrieval timestamps, failure diagnostics, or
+    source hashes for the injected context.
   - Missing: broad external retrieval, source ranking, hypothesis synthesis,
-    implementation/refinement loop, systematic debugging, cross-file editing,
-    and benchmark-grounded result validation.
+    retrieval provenance/citations, implementation/refinement loop, systematic
+    debugging, cross-file editing, and benchmark-grounded result validation.
 
 - [ ] Keep ImprovEvolve-inspired behavior explicitly paper-limited or implement
   the actual generate/improve/perturb parameterization and search dynamics.

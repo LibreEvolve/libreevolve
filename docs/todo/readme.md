@@ -320,6 +320,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: document that the export is a simple clipped-reward JSONL
     side file until run-scoped dataset provenance and real training exist.
 
+- [x] Clarify DeepEvolve retrieval provenance limitations.
+  - README evidence: the plugin section labels `deep_research` as
+    DeepEvolve-inspired web/retrieval context, but did not state that live
+    retrieval events are not persisted.
+  - Current evidence: `DeepResearchPlugin` keeps only `_synthesis` in memory
+    and `arxiv_search()` returns title/summary text without arXiv IDs, URLs,
+    timestamps, query metadata, or failure records. Prompt-injected retrieval
+    context is not linked from history or `manifest.json`.
+  - Required result: document that live retrieval context is best-effort and
+    non-reproducible until provider/query/result provenance is persisted.
+
 - [x] Clarify missing per-call backend telemetry.
   - README evidence: the backend section says the router tracks observed
     fitness improvements, but did not distinguish that from provider-level call

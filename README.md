@@ -379,6 +379,10 @@ SEARCH/REPLACE regex. Canonical AlphaEvolve fences may fall back to random
 factor guidance until plugin mutation parsing is unified with the core diff
 parser.
 
+The DeepEvolve-inspired retrieval plugin injects best-effort live arXiv
+summaries into prompts, but does not yet persist query/result provenance,
+citations, source hashes, timestamps, or failure diagnostics in run artifacts.
+
 The ThetaEvolve-inspired export writes `runs/grpo_data.jsonl` by default and
 stores `reward = max(0.0, score)`. That side file is not yet scoped under the
 active run directory, hashed in `manifest.json`, or a real GRPO/RL trainer.

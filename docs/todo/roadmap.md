@@ -192,6 +192,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source hashes, extraction diagnostics, page/span citations, and prompt/run
     provenance.
 
+- [x] Add live retrieval provenance to prompt/plugin context work.
+  - Evidence: `DeepResearchPlugin` injects live arXiv search summaries into
+    prompts but stores only the latest synthesis string in memory.
+  - Current roadmap gap: context-source provenance covered problem-local files,
+    while plugin-provided external context also needs reproducible query,
+    result, citation, failure, and manifest records.
+  - Required result: persist provider/query/result metadata for retrieval
+    plugins, render citations in prompt context, and test successful, empty,
+    malformed, and failed retrieval events.
+
 - [x] Add prompt budget/context-window accounting to prompt work.
   - Evidence: `PromptSampler.build()` concatenates rendered sections without a
     global budget, and only problem context files have a first-6000-character

@@ -382,6 +382,24 @@ Primary evidence:
     nested context directories, duplicate filenames, changed PDFs, extraction
     failures, and prompt citation rendering.
 
+- [ ] Persist live retrieval/plugin context provenance.
+  - Spec evidence: AlphaEvolve-style prompt sampling can include relevant
+    literature and external context, but reproducible experiments need the
+    source, query, retrieval time, selected excerpts, and failures that shaped
+    a prompt.
+  - Current evidence: `DeepResearchPlugin.on_generation_start()` derives a live
+    query from the current best fitness, stores only `_synthesis`, and
+    `build_extra_context()` injects that text into prompts. `arxiv_search()`
+    returns only title/summary lines, discarding arXiv IDs, links, authors,
+    update timestamps, query URL, provider metadata, and parse/network failure
+    details. None of that retrieval state is written to `history.jsonl`,
+    prompt history, plugin artifacts, or `manifest.json`.
+  - Required result: store retrieval events with provider, query, generation,
+    parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
+    and hashes; render citations in prompt context; include plugin retrieval
+    artifacts or summaries in run manifests; and test successful, empty,
+    malformed, and failed retrieval paths.
+
 - [ ] Replace context truncation with deterministic summarization/ranking for
   large literature corpora.
   - Spec evidence: AlphaEvolve Section 2.2 allows relevant literature, such as

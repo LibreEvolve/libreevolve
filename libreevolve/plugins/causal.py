@@ -18,7 +18,9 @@ _FACTOR_PATTERNS: dict[str, re.Pattern] = {
 
 
 class CausalPlugin(PluginBase):
-    """CausalEvolve: causal scratchpad + MAB outcome-factor guidance.
+    """CausalEvolve-inspired MAB outcome-factor guidance.
+
+    This is not the CausalEvolve causal scratchpad from the paper.
     Source: arXiv 2603.14575. Hooks: build_extra_context, on_evaluated.
     """
     FACTORS = ["loop_structure", "data_types", "algorithm_choice",

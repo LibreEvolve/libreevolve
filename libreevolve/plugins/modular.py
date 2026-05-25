@@ -10,7 +10,9 @@ _GUIDANCE = (
 )
 
 class ModularPlugin(PluginBase):
-    """ImprovEvolve: shapes prompt toward modular decomposition.
+    """ImprovEvolve-inspired modular decomposition prompt guidance.
+
+    This does not enforce or execute ImprovEvolve's interface/search loop.
     Source: arXiv 2602.10233. Hook: build_extra_context.
     """
     def build_extra_context(self, parent, inspirations) -> str:

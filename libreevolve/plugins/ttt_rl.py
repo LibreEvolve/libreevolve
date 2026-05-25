@@ -5,7 +5,9 @@ from libreevolve.plugins.base import PluginBase
 
 
 class TTTRLPlugin(PluginBase):
-    """ThetaEvolve: accumulates GRPO training data from run history.
+    """ThetaEvolve-inspired GRPO training-data export.
+
+    This accumulates examples only; it does not train an RL model.
     Source: arXiv 2511.23473. Hooks: on_evaluated, on_generation_end.
     Writes (prompt, response, reward) triples to grpo_data.jsonl.
     Override _maybe_train() to trigger real GRPO fine-tuning.

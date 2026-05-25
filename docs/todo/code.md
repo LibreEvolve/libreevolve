@@ -178,6 +178,20 @@ Primary evidence:
 
 ## Evaluation
 
+- [ ] Enforce evaluator metric schema and scalar outputs.
+  - Spec evidence: AlphaEvolve task specification requires `evaluate` to
+    return a dictionary of scalar evaluation metrics, and those metrics drive
+    database selection, prompting, and multi-score optimization.
+  - Current evidence: `CascadeEvaluator._run_subprocess()` parses the last
+    stdout line as JSON and requires `is_valid` plus the primary metric for
+    fitness normalization, but it does not verify that every declared
+    `metrics.yaml` metric is present, scalar, finite, or direction/bounds
+    compatible.
+  - Required result: validate evaluator outputs against `metrics.yaml`, reject
+    or quarantine malformed/non-finite metrics with diagnostics, and add tests
+    for missing secondary metrics, non-scalar values, NaN/Infinity, and
+    undeclared metrics.
+
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.
   - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing
@@ -330,6 +344,18 @@ Primary evidence:
   - Required result: write a manifest with effective config, code version,
     problem hash, evaluator stages, backend specs, plugin specs, seed, and
     budget.
+
+- [ ] Add code/problem/plugin hashes and artifact hashes to the run manifest.
+  - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
+    choices, evaluator code, problem context, and compute budget; reproducing a
+    run requires identifying the exact code/problem state.
+  - Current evidence: `ProgramDatabase._write_manifest()` records effective
+    config values, but not the Git commit, dirty-worktree state, problem file
+    hashes, validator hash, context hashes, plugin implementation/spec hashes,
+    or emitted artifact hashes.
+  - Required result: include reproducibility hashes/version metadata in
+    `manifest.json`, document which files are covered, and add tests that a
+    changed problem file changes the manifest hash.
 
 - [ ] Improve isolation beyond a temporary Python subprocess.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,

@@ -132,6 +132,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Architecture Description
 
+- [x] Correct prompt-evolution placeholder guarantee wording.
+  - README-adjacent evidence: architecture/configuration docs described
+    meta-prompt mutation as preserving placeholders.
+  - Current evidence: `evolve()` asks the LLM to keep placeholders but
+    `PromptDatabase.mutate()` accepts arbitrary template text without
+    validation.
+  - Status: architecture/configuration docs now state that placeholder
+    preservation is instructed but not enforced.
+  - Required result: avoid implying prompt mutation is validated until the
+    placeholder-validation todo is implemented.
+
 - [x] Add missing AlphaEvolve gap callouts to the README architecture section.
   - README evidence: `README.md:225-254` presents the package architecture.
   - Missing from README: evolve-block markers, prompt sampler, multi-objective

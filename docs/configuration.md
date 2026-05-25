@@ -176,6 +176,8 @@ Provider SDKs may honor additional provider-specific variables.
 - `prompt_variants` seed the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Meta-prompt mutation uses the same backend ensemble and must preserve every
-  placeholder required by `PromptSampler`.
+  placeholder required by `PromptSampler`. The current implementation instructs
+  the LLM to preserve placeholders but does not reject malformed prompt
+  templates yet.
 - Critique and LLM feedback use the same backend ensemble as mutation
   generation. They are synchronous and optional, not parallel reviewer workers.

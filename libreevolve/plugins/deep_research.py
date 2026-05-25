@@ -47,7 +47,9 @@ def arxiv_search(query: str, max_results: int = 3) -> str | None:
 
 
 class DeepResearchPlugin(PluginBase):
-    """DeepEvolve: web search + hypothesis synthesis before generation.
+    """DeepEvolve-inspired web-search context before generation.
+
+    This does not implement DeepEvolve's cross-file debug/refinement loop.
     Source: arXiv 2510.06056. Hook: on_generation_start.
     Default uses the free arXiv API. Pass search_fn=callable(query)->str
     to override with a custom search provider.

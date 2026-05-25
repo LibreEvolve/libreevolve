@@ -26,6 +26,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Missing Roadmap Items
 
+- [x] Add evaluator metric-contract validation to the backlog.
+  - Evidence: AlphaEvolve Section 2.1 treats `evaluate` as returning scalar
+    metrics, while LibreEvolve currently validates only enough of the result to
+    compute primary fitness.
+  - Current roadmap gap: evaluation hardening covered cascades and artifacts
+    but not schema enforcement against `metrics.yaml`.
+  - Required result: keep metric schema validation on the roadmap because
+    multi-objective search depends on trustworthy metric vectors.
+
 - [x] Add full-workspace export and resume coverage to candidate fidelity.
   - Evidence: AlphaEvolve evolves full files/codebases, while a primary-file
     `best.py` artifact is insufficient for a multi-file candidate.
@@ -96,6 +105,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: `ROADMAP.md:108-113` treats a database backend as a
     non-goal. That may remain true for services, but a stronger local
     evolutionary database is required for AlphaEvolve fidelity.
+
+- [x] Add reproducibility hashes to run metadata work.
+  - Evidence: AlphaEvolve-scale runs need exact problem, evaluator, prompt, and
+    code-state provenance to support long-running comparisons.
+  - Current roadmap gap: `manifest.json` existed, but the roadmap did not make
+    code/problem/plugin/artifact hashes explicit.
+  - Required result: track hashes/version metadata separately from basic config
+    logging.
 
 ## Existing Items That Need Tightening
 

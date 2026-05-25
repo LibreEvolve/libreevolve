@@ -48,6 +48,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     thresholds, seeded samples, retries, stage context, and timeouts.
     Distributed/parallel evaluator nodes remain open.
 
+- [ ] Strict scalar metric contract for evaluator outputs.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
+  - Requirement: `evaluate` maps a solution to a dictionary of scalar
+    evaluation metrics.
+  - Current gap: evaluator output is only partially validated; missing
+    secondary metrics, non-scalar values, non-finite numbers, and undeclared
+    metrics are not consistently rejected against `metrics.yaml`.
+  - Required result: enforce the scalar metric contract and preserve clear
+    diagnostics for invalid evaluator outputs.
+
 - [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optional LLM graders can score hard-to-capture properties or

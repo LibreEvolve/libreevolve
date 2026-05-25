@@ -115,7 +115,8 @@ templates as `PromptProgram` records in `PromptDatabase`, selects prompt
 programs, records prompt reward/usage, and logs prompt lineage to
 `prompt_history.jsonl`. When `meta_prompt_evolution` is enabled, the loop can
 periodically ask the active LLM backend to produce a revised full prompt
-template while preserving placeholders.
+template with an instruction to preserve placeholders. Placeholder validation is
+not enforced yet.
 
 ## Evaluation
 
@@ -203,4 +204,9 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
   parallel reviewer/evaluator workers yet.
 - Prompt evolution is implemented at the template boundary; richer prompt
   fitness and placeholder validation remain open.
+- Evaluator output is parsed as JSON and normalized around the primary metric,
+  but full `metrics.yaml` schema validation for every declared scalar metric is
+  not enforced yet.
+- `manifest.json` records configuration but not code version, problem hashes,
+  plugin specs, artifact hashes, or resume/controller state.
 - Plugin names are paper-inspired approximations unless documented otherwise.

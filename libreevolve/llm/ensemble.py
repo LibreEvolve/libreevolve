@@ -10,11 +10,19 @@ class LLMEnsemble:
     selection per MadEvolve (arXiv:2602.15951).
     """
 
-    def __init__(self, backends: list[LLMBackend], explore_coeff: float = 1.0):
+    def __init__(
+        self,
+        backends: list[LLMBackend],
+        explore_coeff: float = 1.0,
+        strategy: str = "ucb1",
+        backend_metadata: list[dict] | None = None,
+    ):
         if not backends:
             raise ValueError("LLMEnsemble requires at least one backend.")
         self.backends = backends
         self.c = explore_coeff
+        self.strategy = strategy
+        self.backend_metadata = backend_metadata or [{} for _ in backends]
         self.counts: list[int]   = [0]   * len(backends)
         self.wins:   list[float] = [0.0] * len(backends)
         self.total:  int         = 0
@@ -48,6 +56,29 @@ class LLMEnsemble:
             if current_score > best_score:
                 best_score = current_score
                 best_idx = i
+        if self.strategy == "throughput_depth":
+            return self._throughput_depth_select(scores)
+        return best_idx
+
+    def _throughput_depth_select(self, ucb_scores: list[float]) -> int:
+        """Cost/depth-aware scheduler layered over UCB scores.
+
+        Metadata keys are optional:
+        - `cost`: relative cost, lower is better
+        - `latency`: relative latency, lower is better
+        - `depth`: relative capability/depth, higher is better
+        """
+        best_idx = 0
+        best_score = float("-inf")
+        for i, base_score in enumerate(ucb_scores):
+            meta = self.backend_metadata[i] if i < len(self.backend_metadata) else {}
+            cost = float(meta.get("cost", 1.0))
+            latency = float(meta.get("latency", 1.0))
+            depth = float(meta.get("depth", 1.0))
+            score = base_score + (0.10 * depth) - (0.05 * cost) - (0.05 * latency)
+            if score > best_score:
+                best_score = score
+                best_idx = i
         return best_idx
 
 
@@ -65,8 +96,28 @@ def build_llm(config) -> LLMEnsemble:
             return OllamaBackend
         raise ValueError(f"Unknown backend type {t!r}. Valid: ['anthropic', 'openai', 'ollama']")
     backends = []
+    ctor_keys = {
+        "anthropic": {"model", "max_tokens"},
+        "openai": {"model", "max_tokens", "reasoning_effort"},
+        "ollama": {"model", "max_tokens"},
+    }
     for s in config.backends:
         t = s["type"]
         cls = _get_backend_cls(t)
-        backends.append(cls(**{k: v for k, v in s.items() if k != "type"}))
-    return LLMEnsemble(backends, explore_coeff=config.ensemble_explore_coeff)
+        allowed = ctor_keys[t]
+        backends.append(cls(**{k: v for k, v in s.items() if k in allowed}))
+    metadata = [
+        {
+            "cost": s.get("cost", 1.0),
+            "latency": s.get("latency", 1.0),
+            "depth": s.get("depth", 1.0),
+            "role": s.get("role", "general"),
+        }
+        for s in config.backends
+    ]
+    return LLMEnsemble(
+        backends,
+        explore_coeff=config.ensemble_explore_coeff,
+        strategy=config.ensemble_strategy,
+        backend_metadata=metadata,
+    )

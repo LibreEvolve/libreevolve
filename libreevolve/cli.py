@@ -23,10 +23,12 @@ def cli() -> None:
               help="Reasoning effort for OpenAI reasoning models (e.g. low, medium, high, xhigh)")
 @click.option("--explore-ratio", "-e", type=float, default=None,
               help="Probability of exploring (random parent) vs exploiting (best parent). Default: 0.3")
+@click.option("--mutation-mode", type=click.Choice(["diff", "full"]), default=None,
+              help="Mutation response mode: SEARCH/REPLACE diffs or full code/block replacement.")
 @click.option("--run-name", type=str, default=None,
               help="Custom name for this run (default: problem directory name)")
 def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
-        explore_ratio, run_name):
+        explore_ratio, mutation_mode, run_name):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import Config
     from libreevolve.problems.loader import load_problem
@@ -34,7 +36,7 @@ def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
     if not problem.initial_programs:
         raise click.ClickException("No seed programs found.")
     config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
-                           reasoning_effort, explore_ratio)
+                           reasoning_effort, explore_ratio, mutation_mode)
     if run_name:
         config.problem_name = run_name
     active_plugins = _load_plugins(config.plugins)
@@ -67,7 +69,7 @@ def show(run_dir):
 
 
 def _build_config(problem, max_generations, plugins, backends, seed,
-                  reasoning_effort=None, explore_ratio=None):
+                  reasoning_effort=None, explore_ratio=None, mutation_mode=None):
     import yaml
     from libreevolve.core.config import Config
     cfg: dict = {}
@@ -86,6 +88,7 @@ def _build_config(problem, max_generations, plugins, backends, seed,
         config.backends = bd
     if seed is not None: config.seed = seed
     if explore_ratio is not None: config.explore_ratio = explore_ratio
+    if mutation_mode is not None: config.mutation_mode = mutation_mode
     config.problem_name = problem.name
     return config
 

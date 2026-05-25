@@ -6,9 +6,10 @@ sampling, and failure history in prompt from CodeEvolve (arXiv:2510.14150).
 from __future__ import annotations
 import random
 from libreevolve.core.config import Config
+from libreevolve.core.candidate import apply_candidate_mutation
 from libreevolve.core.database import ProgramDatabase
-from libreevolve.core.diff import apply_diff
 from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.core.prompt import PromptSampler
 from libreevolve.llm.ensemble import build_llm
 from libreevolve.plugins.base import PluginBase
 from libreevolve.population.program import Program
@@ -20,24 +21,9 @@ VALID_THRESHOLD = 0.0
 def build_prompt(parent: Program, inspirations: list[Program],
                  problem: Problem, extra_context: str,
                  recent_failures: list[tuple[str, float]] | None = None) -> str:
-    insp = "".join(f"\n--- Inspiration {i+1} (score {ins.fitness:.4f}) ---\n{ins.code}\n"
-                   for i, ins in enumerate(inspirations))
-    failures = ""
-    if recent_failures:
-        lines = "\n".join(f"  Score {score:.2f}: {code}"
-                          for code, score in recent_failures)
-        failures = f"\n[RECENTLY FAILED - do NOT repeat these]\n{lines}\n"
-    return (f"[SYSTEM]\nYou are an expert programmer evolving solutions for: "
-            f"{problem.task_description}\n\n"
-            f"[CURRENT BEST PROGRAM - score: {parent.fitness:.4f}]\n"
-            f"```python\n{parent.code}\n```\n"
-            f"\n[INSPIRATION PROGRAMS]{insp}\n"
-            f"[EXTRA CONTEXT]\n{extra_context}\n"
-            f"{failures}\n"
-            f"[TASK]\nPropose a targeted improvement using SEARCH/REPLACE diffs.\n"
-            f"Rules: No comments. No markdown fences. No explanation. Just the raw diff block.\n\n"
-            f"Example format (do NOT copy this, use actual code from the program above):\n"
-            f"<<<SEARCH\ndef foo():\n    return 1\n===\ndef foo():\n    return 2\n>>>REPLACE\n")
+    return PromptSampler().build(
+        parent, inspirations, problem, extra_context, recent_failures=recent_failures
+    )
 
 
 def evolve(problem: Problem, config: Config,
@@ -45,16 +31,25 @@ def evolve(problem: Problem, config: Config,
     if plugins is None:
         plugins = []
     random.seed(config.seed)
-    db        = ProgramDatabase(config)
-    evaluator = CascadeEvaluator(problem, timeout_sec=config.eval_timeout_sec)
+    db        = ProgramDatabase(config, perf_bounds=(0.0, 1.0))
+    evaluator = CascadeEvaluator(
+        problem, timeout_sec=config.eval_timeout_sec, stages=config.eval_stages
+    )
     llm       = build_llm(config)
+    prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))
 
     # Seed population (diff_error=None bypasses Tier 0)
     for seed_code in problem.initial_programs:
-        score   = evaluator.evaluate(seed_code, diff_error=None)
-        program = Program(code=seed_code, fitness=score)
+        result = evaluator.evaluate(seed_code, diff_error=None)
+        program = Program(
+            code=seed_code,
+            fitness=result.fitness,
+            metrics=result.metrics,
+            evaluation=result.to_dict(),
+        )
         db.log(program)
-        db.add(program)
+        if result.fitness >= VALID_THRESHOLD:
+            db.add(program)
 
     recent_failures: list[tuple[str, float]] = []
     _MAX_FAILURES = 5
@@ -70,15 +65,22 @@ def evolve(problem: Problem, config: Config,
 
         inspirations = db.sample_diverse(k=config.num_inspirations)
         context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
-        prompt = build_prompt(parent, inspirations, problem, context,
-                              recent_failures=recent_failures or None)
+        prompt = prompt_sampler.build(
+            parent, inspirations, problem, context,
+            recent_failures=recent_failures or None,
+        )
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
-        child_code, diff_error = apply_diff(parent.code, diff)
-        score = evaluator.evaluate(child_code, diff_error=diff_error)
+        child_code, diff_error = apply_candidate_mutation(
+            parent.code, diff, mutation_mode=config.mutation_mode
+        )
+        result = evaluator.evaluate(child_code, diff_error=diff_error)
+        score = result.fitness
 
         if score < VALID_THRESHOLD and child_code != parent.code:
-            oneliner = child_code.replace("\n", " ")[:120]
+            oneliner = (
+                f"{result.error or 'invalid'}: " + child_code.replace("\n", " ")[:120]
+            )
             recent_failures.append((oneliner, score))
             recent_failures = recent_failures[-_MAX_FAILURES:]
 
@@ -86,7 +88,10 @@ def evolve(problem: Problem, config: Config,
         program = Program(code=child_code, fitness=score,
                           parent_id=parent.id, generation=gen,
                           lineage=parent.lineage + [parent.id],
-                          metadata={"prompt": prompt, "diff": diff})
+                          metadata={"prompt": prompt, "diff": diff,
+                                    "mutation_mode": config.mutation_mode},
+                          metrics=result.metrics,
+                          evaluation=result.to_dict())
 
         for plugin in plugins:
             score = plugin.on_evaluated(program, score)

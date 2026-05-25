@@ -12,14 +12,14 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-238636?style=for-the-badge&labelColor=30363D&logo=opensourceinitiative&logoColor=white" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/python-3.11+-1F6FEB?style=for-the-badge&labelColor=30363D&logo=python&logoColor=white" alt="Python 3.11+">
   <a href="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml"><img src="https://github.com/romgenie/libreevolve/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
-  <img src="https://img.shields.io/badge/references-23-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Research references">
+  <img src="https://img.shields.io/badge/local%20paper%20cache-24-9E6A03?style=for-the-badge&labelColor=30363D&logo=arxiv&logoColor=white" alt="Local paper cache">
   <a href="https://libreevolve.com"><img src="https://img.shields.io/badge/web-libreevolve.com-6E7681?style=for-the-badge&labelColor=30363D&logo=globe&logoColor=white" alt="Website"></a>
 </p>
 
 <br>
 
 <p align="center">
-  <em>Feed it a problem, a seed program, and any LLM — it evolves better solutions automatically.</em>
+  <em>Feed it a Python problem, seed program, and configured OpenAI/Anthropic/Ollama backend — it evolves candidate solutions automatically.</em>
 </p>
 
 <br>
@@ -28,7 +28,7 @@ LibreEvolve is an open-source Python framework for **automated algorithm discove
 
 This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
-Works with **OpenAI** (GPT-4o, GPT-5.4, o-series reasoning models), **Anthropic Claude** (Sonnet, Opus, Haiku), and **local models via Ollama** (Llama, Mistral, Qwen — any model).
+Works with **OpenAI** (including reasoning models through the Responses API), **Anthropic Claude**, and **local models via Ollama**. Model names in examples are provider-specific examples; LibreEvolve forwards them to the relevant SDK and does not validate current availability.
 
 Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://complete.tech) | [libreevolve.com](https://libreevolve.com)
 
@@ -55,28 +55,28 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
-| 🔌 | **Plugin system** | 4 lifecycle hooks (CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve) |
-| ✅ | **118 unit tests** | Comprehensive test coverage across all components |
+| 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
+| ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
 
 ## Comparison to AlphaEvolve
 
 | Feature | AlphaEvolve (Google DeepMind) | LibreEvolve |
 |---------|-------------------------------|-------------|
 | Source | Closed-source | **Open-source (MIT)** |
-| LLM backends | Gemini only | **OpenAI, Anthropic, Ollama (any model)** |
-| Population model | Proprietary database | **MAP-Elites with 5-island migration** |
-| LLM selection | Not disclosed | **UCB1 multi-armed bandit** |
-| Evaluation | Internal infrastructure | **Cascade evaluator (3 tiers)** |
-| Extensibility | None | **Plugin system with 4 lifecycle hooks** |
+| LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama backends** |
+| Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with 5-island migration** |
+| LLM selection | Fast/deep model scheduling described | **UCB1 heuristic plus experimental throughput/depth metadata** |
+| Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results and configurable stage thresholds** |
+| Extensibility | Task API, evaluators, prompt/context customization, LLM choices, evolve blocks | **Python problem format, plugins, prompt templates, evolve blocks** |
 | Local models | No | **Yes (Ollama)** |
-| Research grounding | Published paper | **23 cited papers** |
+| Research grounding | Published paper | **24-paper local cache and implementation-status docs** |
 
 ## Getting Started
 
 ### Installation
 
 ```bash
-pip install -e ".[dev]"
+py -3.12 -m pip install -e ".[dev]"
 ```
 
 ### Configuration
@@ -93,19 +93,19 @@ OLLAMA_HOST=http://localhost:11434
 
 ```bash
 # OpenAI GPT-4o-mini
-python -m libreevolve run libreevolve/problems/examples/circle_packing \
+py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing \
     --max-generations 15 --backends openai:gpt-4o-mini
 
 # OpenAI reasoning models (GPT-5.4)
-python -m libreevolve run libreevolve/problems/examples/hello_world \
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world \
     --max-generations 5 --backends openai:gpt-5.4-nano --reasoning-effort high
 
 # Anthropic Claude
-python -m libreevolve run libreevolve/problems/examples/sorting \
+py -3.12 -m libreevolve run libreevolve/problems/examples/sorting \
     --max-generations 10 --backends anthropic:claude-sonnet-4-6
 
 # Local models via Ollama
-python -m libreevolve run libreevolve/problems/examples/hello_world \
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world \
     --max-generations 20 --backends ollama:llama3
 ```
 
@@ -114,14 +114,14 @@ python -m libreevolve run libreevolve/problems/examples/hello_world \
 If you ran one of the examples above, inspect the matching run directory under `runs/`:
 
 ```bash
-python -m libreevolve show runs/hello_world
+py -3.12 -m libreevolve show runs/hello_world
 ```
 
 Or inspect one of the checked-in example histories:
 
 ```bash
-python -m libreevolve show examples/runs/hello_world_ensemble
-python -m libreevolve show examples/runs/sorting_ttt_rl
+py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
+py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
 ```
@@ -163,9 +163,9 @@ graph TD
 
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
 2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent failure history
-3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff (targeted edit, not full rewrite)
-4. **Cascade evaluation** — Score the result (Tier 0: diff penalties, Tier 1: syntax check, Tier 2: subprocess execution)
-5. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged
+3. **LLM mutation** — LLM proposes either a SEARCH/REPLACE diff or configured full-block/full-code replacement
+4. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
+5. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
 6. **Failure tracking** — Failed mutations are tracked and shown in subsequent prompts to avoid repeats
 7. **Backend reward** — UCB1 bandit rewards the LLM backend based on fitness improvement
 8. **Island migration** — Periodic migration spreads good solutions across islands
@@ -216,7 +216,7 @@ The seed is intentionally suboptimal but structured: a centered 26-circle hex-st
 Mix backends in a single run — the UCB1 bandit automatically learns which model produces the best mutations for your problem:
 
 ```bash
-python -m libreevolve run my_problem/ \
+py -3.12 -m libreevolve run my_problem/ \
     --backends openai:gpt-4o-mini \
     --backends anthropic:claude-sonnet-4-6 \
     --backends ollama:llama3
@@ -229,6 +229,8 @@ python -m libreevolve run my_problem/ \
 libreevolve/
 ├── core/
 │   ├── loop.py          # evolve() main loop + build_prompt()
+│   ├── candidate.py     # evolve-block markers + mutation modes
+│   ├── prompt.py        # prompt sampler + context/evaluation rendering
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
 │   ├── diff.py          # SEARCH/REPLACE diff engine
 │   ├── database.py      # ProgramDatabase facade
@@ -244,28 +246,31 @@ libreevolve/
 │   └── islands.py       # 5-island ring migration (30% explore / 70% exploit)
 ├── plugins/
 │   ├── base.py          # PluginBase ABC (4 lifecycle hooks)
-│   ├── causal.py        # CausalEvolve — MAB outcome-factor guidance
-│   ├── deep_research.py # DeepEvolve — pluggable web search
-│   ├── modular.py       # ImprovEvolve — modular decomposition prompting
-│   └── ttt_rl.py        # ThetaEvolve — GRPO training data accumulation
+│   ├── causal.py        # CausalEvolve-inspired outcome-factor guidance
+│   ├── deep_research.py # DeepEvolve-inspired pluggable web search
+│   ├── modular.py       # ImprovEvolve-inspired modular prompting
+│   └── ttt_rl.py        # ThetaEvolve-inspired training data export
 └── problems/
     ├── loader.py         # load_problem() + Problem dataclass
-    └── examples/         # hello_world, circle_packing, sorting
+    └── examples/         # hello_world, circle_packing, sorting, matrix_multiplication
 ```
 
 </details>
 
 ## Creating a Custom Problem
 
-A problem is a directory with four files:
+A problem is a directory with four required files/directories and optional
+prompt context:
 
 ```
 my_problem/
 ├── task_description.txt          # What the LLM should optimize
 ├── metrics.yaml                  # Scoring metrics
 ├── validate.py                   # evaluate(code: str) -> dict
-└── initial_programs/
-    └── seed.py                   # Starting program
+├── initial_programs/
+│   └── seed.py                   # Starting program
+└── context/
+    └── optional_notes.md         # Optional explicit prompt context
 ```
 
 **metrics.yaml:**
@@ -280,7 +285,18 @@ metrics:
     primary: false
 ```
 
-**validate.py** must define `evaluate(code: str) -> dict` returning a dict with all metric names. It runs in an isolated subprocess.
+**validate.py** must define `evaluate(code: str) -> dict` returning a dict with all metric names. It runs in an isolated subprocess, and its raw metrics and diagnostics are stored with each candidate.
+
+Seed programs may mark evolvable regions while preserving surrounding skeleton code:
+
+```python
+# EVOLVE-BLOCK-START solve
+def solve():
+    return 1
+# EVOLVE-BLOCK-END
+```
+
+Unmarked seed programs remain fully supported.
 
 **Tip:** Make your seed program intentionally suboptimal. If the seed already scores perfectly, there's nothing to evolve.
 
@@ -295,14 +311,14 @@ Plugins hook into 4 lifecycle events to extend LibreEvolve's behavior:
 | `on_evaluated(program, score)` | After evaluation | Modify score, accumulate data |
 | `on_generation_end(gen, best)` | After each generation | Logging, training data export |
 
-Built-in plugins:
-- **CausalEvolve** — Multi-armed bandit outcome-factor guidance
-- **DeepEvolve** — Pluggable web search for research-augmented evolution
-- **ImprovEvolve** — Modular decomposition prompting
-- **ThetaEvolve** — GRPO training data accumulation
+Built-in plugins are paper-inspired approximations, not full reproductions:
+- **CausalEvolve-inspired** — token-pattern outcome-factor guidance
+- **DeepEvolve-inspired** — pluggable arXiv/web-search context
+- **ImprovEvolve-inspired** — modular decomposition prompting
+- **ThetaEvolve-inspired** — GRPO-style training data export, not training
 
 ```bash
-python -m libreevolve run my_problem/ --plugins causal --plugins deep_research
+py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research
 ```
 
 ## CLI Reference
@@ -313,6 +329,7 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --backends, -b           LLM backend as type:model (repeatable)
   --plugins, -p            Plugin name (repeatable)
   --reasoning-effort, -r   Reasoning effort for OpenAI reasoning models (low/medium/high/xhigh; omit to disable)
+  --mutation-mode          Mutation mode: diff or full
   --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
   --run-name               Custom name for this run (default: problem directory name)
   --seed                   Random seed
@@ -324,11 +341,11 @@ libreevolve show RUN_DIR
 ## Tests
 
 ```bash
-# Unit tests (118 tests)
-pytest tests/ -m "not integration"
+# Unit tests
+py -3.12 -m pytest tests/ -m "not integration" --tb=short
 
 # Integration test (requires API key)
-pytest tests/integration/ -m integration
+py -3.12 -m pytest tests/integration/ -m integration
 ```
 
 <details>
@@ -353,11 +370,11 @@ pytest tests/integration/ -m integration
 </details>
 
 <details>
-<summary><h2>Research References (23)</h2></summary>
+<summary><h2>Local Paper Cache (24)</h2></summary>
 
 <br>
 
-LibreEvolve is informed by 23 research papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The repository cites these papers for context and inspiration; it does not bundle them as part of the project.
+LibreEvolve is informed by a local cache of 24 papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The cache lives in `papers/` with download manifests; see `papers/README.md` for implementation status and benchmark coverage decisions.
 
 **Core system papers:**
 
@@ -366,11 +383,11 @@ LibreEvolve is informed by 23 research papers on LLM-guided evolutionary computa
 | [**AlphaEvolve**](https://arxiv.org/abs/2506.13131) | Novikov et al. (Google DeepMind) | 2025 | Core architecture inspiration |
 | [**GigaEvo**](https://arxiv.org/abs/2511.17592) | Khrulkov et al. | 2025 | Open-source framework patterns |
 | [**CodeEvolve**](https://arxiv.org/abs/2510.14150) | Assumpção et al. | 2025 | Evolutionary coding agent design |
-| [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | GRPO training data plugin |
-| [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Modular decomposition plugin |
+| [**ThetaEvolve**](https://arxiv.org/abs/2511.23473) | Wang et al. | 2025 | Inspiration for export/training boundary |
+| [**ImprovEvolve**](https://arxiv.org/abs/2602.10233) | Kravatskiy et al. | 2026 | Inspiration for modular prompting |
 | [**MadEvolve**](https://arxiv.org/abs/2602.15951) | Li, Zang & Münchmeyer | 2026 | Domain-specific evolution |
-| [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Causal scratchpad plugin |
-| [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Web search augmentation plugin |
+| [**CausalEvolve**](https://arxiv.org/abs/2603.14575) | Chen et al. | 2026 | Inspiration for causal guidance; not scratchpad-complete |
+| [**DeepEvolve**](https://arxiv.org/abs/2510.06056) | Liu et al. | 2025 | Inspiration for retrieval context; not cross-file-debug-loop complete |
 
 **Foundational algorithms:**
 
@@ -397,7 +414,7 @@ py -3.12 -m pre_commit install
 py -3.12 -m pre_commit run --all-files
 ```
 
-Please also run `pytest tests/ -m "not integration"` before submitting PRs.
+Please also run `py -3.12 -m pytest tests/ -m "not integration" --tb=short` before submitting PRs.
 
 ## License
 

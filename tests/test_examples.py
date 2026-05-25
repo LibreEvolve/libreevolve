@@ -9,10 +9,25 @@ EXAMPLE_DIR = (
     / "examples"
     / "circle_packing"
 )
+MATRIX_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "matrix_multiplication"
+)
 
 
 def _load_validator():
     spec = spec_from_file_location("circle_validate", EXAMPLE_DIR / "validate.py")
+    module = module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_matrix_validator():
+    spec = spec_from_file_location("matrix_validate", MATRIX_EXAMPLE_DIR / "validate.py")
     module = module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(module)
@@ -46,3 +61,18 @@ def test_circle_packing_rejects_overlapping_circles():
         "    ]\n"
     )
     assert result == {"sum_radii": 0.0, "is_valid": False}
+
+
+def test_matrix_multiplication_seed_is_valid_and_marked():
+    validate = _load_matrix_validator()
+    seed = (MATRIX_EXAMPLE_DIR / "initial_programs" / "seed.py").read_text(encoding="utf-8")
+    result = validate.evaluate(seed)
+    assert "# EVOLVE-BLOCK-START" in seed
+    assert result["is_valid"] is True
+    assert result["multiplication_count"] == 8
+
+
+def test_matrix_multiplication_rejects_wrong_result():
+    validate = _load_matrix_validator()
+    result = validate.evaluate("def matmul2(a, b):\n    return [[0, 0], [0, 0]]\n")
+    assert result["is_valid"] is False

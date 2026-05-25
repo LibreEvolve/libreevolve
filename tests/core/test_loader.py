@@ -63,3 +63,22 @@ def test_raises_on_malformed_metrics_yaml():
         (d / "metrics.yaml").write_text("not_metrics: true")
         with pytest.raises(ValueError, match="metrics"):
             load_problem(d)
+
+
+def test_reads_context_files():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context").mkdir()
+        (d / "context" / "notes.md").write_text("important context")
+        p = load_problem(d)
+        assert p.context_files["notes.md"] == "important context"
+
+
+def test_normalizes_minimize_metric():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "metrics.yaml").write_text(yaml.dump({"metrics": [
+            {"name": "loss", "direction": "minimize", "primary": True, "bounds": [0.0, 10.0]}
+        ]}))
+        p = load_problem(d)
+        assert p.fitness_from_metrics({"loss": 2.0}) == 0.8

@@ -12,11 +12,17 @@ class IslandModel:
     multi-island elite exchange from GigaEvo (arXiv:2511.17592).
     """
 
-    def __init__(self, config: Config):
+    def __init__(
+        self, config: Config, perf_bounds: tuple[float, float] = (0.0, 1.0)
+    ):
         self.n_islands = config.n_islands
         self._migration_ratio = config.migration_ratio
         self.islands: list[MAPElites] = [
-            MAPElites(bins=config.map_elites_bins, elite_archive_size=config.elite_archive_size)
+            MAPElites(
+                bins=config.map_elites_bins,
+                elite_archive_size=config.elite_archive_size,
+                perf_bounds=perf_bounds,
+            )
             for _ in range(self.n_islands)
         ]
         self._current = 0

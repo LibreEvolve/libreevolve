@@ -1,35 +1,41 @@
 # Run Artifacts
 
-LibreEvolve writes two kinds of outputs during and after a run:
-
-- append-only run history
-- a standalone copy of the final best program
-
-By default these live under `runs/`.
+LibreEvolve writes machine-readable run outputs under `runs/` by default.
 
 ## Directory layout
 
-For a run named `hello_world`, the default output looks like:
+For a run named `hello_world`:
 
 ```text
 runs/
 └── hello_world/
+    ├── manifest.json
     ├── history.jsonl
     └── best.py
 ```
 
-The run subdirectory name comes from:
+The run subdirectory name comes from `--run-name`, if provided, otherwise from
+the loaded problem directory name.
 
-- `--run-name`, if provided
-- otherwise the loaded problem directory name
+## `manifest.json`
+
+`manifest.json` captures the effective run settings used by
+[`ProgramDatabase`](../libreevolve/core/database.py), including:
+
+- problem name
+- generation and population settings
+- mutation mode
+- evaluator stage config
+- backend specs
+- ensemble strategy
+- plugins
+- seed and log directory
+
+This is a reproducibility aid. It is not yet a full resume checkpoint.
 
 ## `history.jsonl`
 
-This file is written by
-[`libreevolve/core/database.py`](../libreevolve/core/database.py). Each line is
-one JSON record for one candidate program.
-
-Current fields:
+Each line is one candidate record. Current fields:
 
 - `id`
 - `code`
@@ -38,35 +44,22 @@ Current fields:
 - `parent_id`
 - `lineage`
 - `metadata`
+- `metrics`
+- `evaluation`
 
 Important behavior:
 
-- every evaluated candidate is logged, even invalid ones
+- every evaluated candidate is logged, including invalid candidates
 - the log is append-only
-- the archive and the log are not the same thing
+- the archive and the log are distinct
+- raw metrics and evaluator diagnostics are preserved for later inspection
 
-That distinction matters:
-
-- `history.jsonl` is a complete run trace
-- the population archive only contains programs whose final score is `>= 0.0`
-
-### `metadata`
-
-The evolution loop currently stores:
-
-- `prompt`: the prompt sent to the chosen backend
-- `diff`: the raw SEARCH/REPLACE response
-
-This makes `history.jsonl` useful for:
-
-- prompt debugging
-- mutation replay
-- backend behavior analysis
-- training data extraction
+`evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
+stderr, error, elapsed time, and metadata.
 
 ## `best.py`
 
-After the run completes, the CLI writes the best archived program's code to
+After a run completes, the CLI writes the best archived program's code to
 `best.py`.
 
 This is a convenience artifact only:
@@ -77,11 +70,8 @@ This is a convenience artifact only:
 
 ## Example histories committed to the repo
 
-The repository also includes curated examples under
-[`examples/runs/`](../examples/runs/README.md). These are intentionally checked
-in so users can inspect representative runs without generating fresh output.
-
-Use:
+The repository includes curated examples under
+[`examples/runs/`](../examples/runs/README.md). Use:
 
 ```bash
 py -3.12 -m libreevolve show examples/runs/hello_world_ensemble

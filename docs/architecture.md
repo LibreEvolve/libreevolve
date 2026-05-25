@@ -1,220 +1,163 @@
 # Architecture
 
-LibreEvolve is a research framework for LLM-guided program mutation. Its runtime
-is deliberately small:
-
-1. Load a filesystem-defined problem.
-2. Build a `Config` from defaults, optional `config.yaml`, and CLI overrides.
-3. Seed an island-based MAP-Elites population.
-4. Repeatedly ask an LLM backend for a SEARCH/REPLACE diff.
-5. Evaluate the mutated candidate through a three-tier cascade.
-6. Log every candidate and archive only valid ones.
-7. Reward the selected backend and periodically migrate elites.
+LibreEvolve is a Python research framework for LLM-guided program mutation. It
+is AlphaEvolve-inspired, but intentionally smaller: the current runtime is
+synchronous, Python-only, and filesystem-backed.
 
 ## Top-level flow
 
 The CLI entrypoint is [`libreevolve/cli.py`](../libreevolve/cli.py). The `run`
 command:
 
-- loads `.env` with `override=True`,
-- loads a problem directory with `load_problem()`,
-- merges problem-local `config.yaml` into the default `Config`,
-- instantiates built-in plugins named on the CLI,
-- calls `evolve(problem, config, plugins)`,
-- writes the best program to `runs/<problem_name>/best.py`.
-
-The `show` command reads `history.jsonl` and prints the highest-fitness record.
+- loads `.env` with `override=True`
+- loads a problem directory with `load_problem()`
+- merges problem-local `config.yaml` into the default `Config`
+- instantiates built-in plugins named on the CLI
+- calls `evolve(problem, config, plugins)`
+- writes the best archived program to `runs/<problem_name>/best.py`
 
 ## Problem loading
 
 `load_problem()` in [`libreevolve/problems/loader.py`](../libreevolve/problems/loader.py)
-constructs a `Problem` dataclass from a directory containing:
+constructs a `Problem` from:
 
 - `task_description.txt`
 - `metrics.yaml`
 - `validate.py`
 - `initial_programs/*.py`
+- optional `context/*.{txt,md,py}`
 
-The loader also parses:
+The loader keeps all declared metrics, picks a primary metric, and exposes
+metric direction/bounds helpers. Fitness is the normalized primary metric:
+`maximize` maps low-to-high bounds to `0..1`; `minimize` inverts that scale.
 
-- `primary_metric`: the first metric marked `primary: true`, or the first metric
-  if none is marked primary
-- `primary_bounds`: metric bounds from `metrics.yaml`, defaulting to `(0.0, 1.0)`
+## Candidate representation
+
+Candidates are still stored as one Python code string for backward
+compatibility, but seed files may now mark evolvable regions:
+
+```python
+# EVOLVE-BLOCK-START main
+def solve():
+    return 1
+# EVOLVE-BLOCK-END
+```
+
+Mutation application lives in [`libreevolve/core/candidate.py`](../libreevolve/core/candidate.py).
+When markers are present, surrounding skeleton code is preserved and mutations
+are constrained to marked regions. Multiple blocks are supported. Existing
+unmarked `initial_programs/*.py` remain valid.
+
+Two mutation modes are supported:
+
+- `diff`: default SEARCH/REPLACE blocks
+- `full`: complete replacement of the whole unmarked program, the single marked
+  block, or named multi-block replacements with `<<<BLOCK name ... >>>BLOCK`
+
+Multi-file/codebase candidates are still a roadmap item.
 
 ## Evolution loop
 
 The core loop lives in [`libreevolve/core/loop.py`](../libreevolve/core/loop.py).
+For each generation it:
 
-### Seeding
-
-Each seed program is evaluated before generation 0. Seed candidates bypass diff
-penalties by calling `CascadeEvaluator.evaluate(..., diff_error=None)`.
-
-Every seed is:
-
-- logged to `history.jsonl`
-- added to the archive only if its score is at least `VALID_THRESHOLD`
+1. runs plugin start hooks
+2. samples a parent from the island model
+3. samples diverse inspirations
+4. builds prompt context through `PromptSampler`
+5. calls the LLM ensemble
+6. applies the configured mutation mode
+7. evaluates the child
+8. constructs a `Program` with metrics and structured evaluation data
+9. runs plugin score hooks
+10. logs the candidate and archives valid programs
+11. rewards the selected backend with non-negative fitness improvement
+12. migrates elites at the configured interval
 
 `VALID_THRESHOLD` is currently `0.0`.
 
-### Per-generation behavior
+## Prompt sampling
 
-For each generation:
+[`libreevolve/core/prompt.py`](../libreevolve/core/prompt.py) provides
+`PromptSampler`. It renders:
 
-1. Call `plugin.on_generation_start(gen, db)` for all active plugins.
-2. Pick a parent with:
-   - `explore`: random occupied cell from any island
-   - `exploit`: best program across islands
-3. Sample `num_inspirations` diverse archive members.
-4. Build prompt context from all plugins via `build_extra_context()`.
-5. Construct a mutation prompt with:
-   - the current best parent code,
-   - inspiration programs,
-   - plugin context,
-   - the last 5 failed mutations, if any.
-6. Ask the LLM ensemble to generate a SEARCH/REPLACE diff.
-7. Apply the diff to the parent code.
-8. Evaluate the resulting child code.
-9. Construct a `Program` object with lineage and metadata.
-10. Pass that `Program` through `plugin.on_evaluated(program, score)`.
-11. Log the program.
-12. Add it to the population if the final score is valid.
-13. Reward the chosen backend with `max(0.0, score - parent.fitness)`.
-14. Run migration when the configured interval is reached.
-15. Call `plugin.on_generation_end(gen, best)`.
+- task description
+- explicit problem context files
+- parent code, normalized fitness, metrics, and recent stage feedback
+- inspiration programs with metrics
+- plugin-provided context
+- recent failed mutations
 
-### Prompt shape
+`Config.prompt_variants` can supply alternate templates. There is not yet a
+meta-prompt database or prompt-evolution controller.
 
-`build_prompt()` is intentionally simple. It uses plain string assembly rather
-than a prompt templating system. The prompt includes a concrete diff-format
-example and explicit instructions to avoid:
+## Evaluation
 
-- markdown fences
-- comments
-- explanatory text
+[`libreevolve/core/evaluator.py`](../libreevolve/core/evaluator.py) returns an
+`EvaluationResult` instead of a bare float. It includes:
 
-This is important because the diff engine performs exact substring replacement.
+- normalized primary `fitness`
+- raw validator `metrics`
+- `is_valid`
+- per-stage outcomes
+- stdout, stderr, error, elapsed time, and metadata
 
-## Diff engine
+For compatibility, `EvaluationResult` can still be compared/subtracted like a
+numeric fitness in existing tests and callers.
 
-[`libreevolve/core/diff.py`](../libreevolve/core/diff.py) implements the
-SEARCH/REPLACE mutation format:
+The default cascade is:
 
-```text
-<<<SEARCH
-old code
-===
-new code
->>>REPLACE
-```
+- mutation/diff penalty
+- Python syntax check
+- subprocess execution of `validate.py`
 
-Behavior to be aware of:
-
-- markdown fences are stripped before parsing
-- multiple diff blocks are supported
-- replacements are applied atomically
-- the search text must match exactly
-- only the first occurrence of each search block is replaced
-
-Possible diff errors are:
-
-- `no_diff_blocks`
-- `search_not_found`
-- `no_valid_changes`
-
-## Evaluation cascade
-
-[`libreevolve/core/evaluator.py`](../libreevolve/core/evaluator.py) uses a
-three-tier evaluator:
-
-- Tier 0: diff penalties for malformed or ineffective mutations
-- Tier 1: `compile()` syntax check
-- Tier 2: isolated subprocess execution of `validate.py`
-
-Current score mapping:
-
-- `no_diff_blocks` -> `-0.4`
-- `search_not_found` -> `-0.3`
-- `no_valid_changes` -> `-0.3`
-- syntax error, subprocess crash, timeout, or malformed JSON -> `-0.2`
-- `is_valid == False` from the validator -> `-0.1`
-- otherwise -> value of the problem's primary metric
-
-Validators run in a temporary subprocess and are expected to expose
-`evaluate(code: str) -> dict`.
+`Config.eval_stages` can configure repeated validator stages with per-stage
+timeouts and `min_score` thresholds. This is an initial local cascade model, not
+AlphaEvolve's full parallel evaluator-worker architecture.
 
 ## Population model
 
-Population state is split across three layers:
+Population state is split across:
 
-- `Program`: a dataclass carrying code, fitness, lineage, and metadata
-- `MAPElites`: a single archive
-- `IslandModel`: a collection of independent archives plus migration
+- `Program`: code, fitness, lineage, metadata, metrics, and evaluation summary
+- `MAPElites`: one quality-diversity archive
+- `IslandModel`: multiple archives plus ring migration
 
-### MAP-Elites
+`MAPElites` maps programs into a 3D grid using normalized performance, code
+length, and TF-IDF char-4gram diversity. Performance bounds now use the
+problem's normalized `0..1` fitness scale.
 
-[`libreevolve/population/map_elites.py`](../libreevolve/population/map_elites.py)
-maps programs into a 3D grid using:
-
-- normalized performance
-- normalized code length
-- TF-IDF char-4gram diversity versus the elite archive
-
-Each occupied cell retains only the highest-fitness program for that cell.
-Separately, the archive maintains a capped global elite list for best-program
-queries and diversity calculations.
-
-### Islands and migration
-
-[`libreevolve/population/islands.py`](../libreevolve/population/islands.py)
-creates `n_islands` independent archives. Adds are round-robin across islands.
-
-Migration uses a ring topology:
-
-- island `i` copies top elites to island `(i + 1) % n_islands`
-- migrants are copied, not moved
-- migration uses a snapshot of each island's elite archive, so a program cannot
-  cascade across multiple islands in one migration step
+LibreEvolve stores metric vectors, but its multi-objective policy is still a
+first pass: archive comparison and backend rewards use normalized primary
+fitness. Richer Pareto/frontier sampling remains open.
 
 ## Backend selection
 
 [`libreevolve/llm/ensemble.py`](../libreevolve/llm/ensemble.py) wraps one or
-more backends in a UCB1 bandit.
+more backends. The default `ensemble_strategy` is `ucb1`, implemented as a
+heuristic adaptation of UCB1 over observed fitness improvements.
 
-- `generate(prompt)` chooses a backend index and returns `(response, idx)`
-- `record_reward(idx, reward)` adds reward after evaluation
-- the loop currently clamps rewards to non-negative values before recording them
-
-On tied UCB1 scores, the ensemble prefers the less-used arm.
-
-## Plugins
-
-Plugins are synchronous hooks invoked directly from the evolution loop. There is
-no event bus or dependency system. Hook order is the order plugins are listed on
-the CLI.
-
-See [Plugins](./plugins.md) for the extension contract.
+An experimental `throughput_depth` strategy layers optional backend metadata
+(`cost`, `latency`, `depth`, `role`) over UCB scores so configs can distinguish
+cheap breadth models from deeper models. This is a scheduling concept, not a
+verified reproduction of AlphaEvolve's Gemini Flash/Pro policy.
 
 ## Logging and artifacts
 
-[`libreevolve/core/database.py`](../libreevolve/core/database.py) logs every
-candidate to `runs/<problem_name>/history.jsonl`, valid or invalid. The archive
-contains only valid programs, but the JSONL log is append-only and includes:
+[`libreevolve/core/database.py`](../libreevolve/core/database.py) writes:
 
-- program identity and lineage
-- code
-- fitness
-- generation
-- metadata, including prompt and diff
+- `manifest.json`: effective run configuration and runtime metadata
+- `history.jsonl`: append-only candidate records
+- `best.py`: final best archived program
 
-The CLI writes the final best code separately to `best.py`.
+Each history record includes code, fitness, lineage, metadata, metrics, and the
+structured evaluation summary.
 
-## Important implementation caveats
+## Known gaps
 
-- `Problem.primary_bounds` is parsed by the loader but is not currently passed
-  into `MAPElites`. Archive performance normalization therefore still defaults
-  to `(0.0, 1.0)` for all problems.
-- Plugins can alter scores in `on_evaluated()`. The logged and archived score is
-  the post-plugin score, not necessarily the evaluator's raw score.
-- The default backend is Anthropic Sonnet unless CLI or `config.yaml` overrides
-  it.
+- Candidate workspaces are still single Python strings, not multi-file
+  codebases.
+- The loop is synchronous; async LLM/evaluator workers are not implemented.
+- There is no LLM critique stage or LLM-generated feedback evaluator.
+- Prompt evolution is architected only at the template boundary.
+- Plugin names are paper-inspired approximations unless documented otherwise.

@@ -12,3 +12,5 @@ class Program:
     parent_id:  str | None    = None
     lineage:    list[str]     = field(default_factory=list)
     metadata:   dict          = field(default_factory=dict)
+    metrics:    dict[str, float | bool | str | int] = field(default_factory=dict)
+    evaluation: dict          = field(default_factory=dict)

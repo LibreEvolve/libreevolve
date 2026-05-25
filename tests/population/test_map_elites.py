@@ -40,3 +40,8 @@ def test_diversity_no_crash_on_first():
     a = MAPElites()
     a.add(_p(code="def foo(): return 42", fitness=0.5))
     assert a.best() is not None
+
+def test_performance_bounds_affect_cell():
+    a = MAPElites(bins=10, perf_bounds=(0.0, 100.0))
+    p = _p(fitness=50.0)
+    assert a._cell(p)[0] == 5

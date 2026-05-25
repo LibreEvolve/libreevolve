@@ -13,6 +13,8 @@ infer behavior from tests and source.
 - [Backends](./backends.md): OpenAI, Anthropic, and Ollama backend behavior.
 - [Run Artifacts](./run-artifacts.md): What gets written under `runs/`.
 - [Development](./development.md): Local setup, tests, and contributor workflow.
+- [Paper Cache](../papers/README.md): Local paper roles, implementation status,
+  and benchmark coverage decisions.
 
 When these documents disagree with an aspiration mentioned elsewhere in the
 repository, prefer the code and tests. The goal here is to describe how the

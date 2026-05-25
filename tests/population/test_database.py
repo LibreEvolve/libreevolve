@@ -32,6 +32,20 @@ def test_log_writes_jsonl():
     records = [json.loads(l) for l in (Path(tmpdir)/"t"/"history.jsonl").read_text().splitlines()]
     assert records[0]["fitness"] == 0.5
 
+def test_log_writes_metrics_and_evaluation():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+    db.log(_p(fitness=0.5))
+    records = [json.loads(l) for l in (Path(tmpdir)/"t"/"history.jsonl").read_text().splitlines()]
+    assert "metrics" in records[0]
+    assert "evaluation" in records[0]
+
+def test_manifest_written():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(Config(log_dir=tmpdir, problem_name="t", mutation_mode="full"))
+    manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
+    assert manifest["config"]["mutation_mode"] == "full"
+
 def test_maybe_migrate_triggers_on_interval():
     db = ProgramDatabase(Config(migration_interval=5, n_islands=2,
                                 log_dir=tempfile.mkdtemp(), problem_name="t"))

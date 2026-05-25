@@ -29,7 +29,11 @@ def test_t0_search_not_found():
 
 def test_t0_none_proceeds():
     p, d = _problem("def evaluate(c): return {'score':0.9,'is_valid':True}")
-    try: assert CascadeEvaluator(p).evaluate("x=1", None) == 0.9
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert result == 0.9
+        assert result.metrics["score"] == 0.9
+        assert result.is_valid is True
     finally: shutil.rmtree(d)
 
 # Tier 1
@@ -51,7 +55,10 @@ def test_t2_crash():
 
 def test_t2_success():
     p, d = _problem("def evaluate(c): return {'score':0.42,'is_valid':True}")
-    try: assert abs(CascadeEvaluator(p).evaluate("x=1", None) - 0.42) < 1e-9
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert abs(result - 0.42) < 1e-9
+        assert result.stages[-1].name == "validate"
     finally: shutil.rmtree(d)
 
 def test_t2_timeout():
@@ -70,5 +77,17 @@ def test_t2_bad_json():
     )
     try:
         assert CascadeEvaluator(p).evaluate("x=1", None) == -0.2
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_threshold_stops_candidate():
+    p, d = _problem("def evaluate(c): return {'score':0.2,'is_valid':True}")
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "small", "min_score": 0.5}])
+        result = ev.evaluate("x=1", None)
+        assert result.is_valid is False
+        assert result.error == "stage_threshold_not_met"
+        assert result.metadata["stopped_at"] == "small"
     finally:
         shutil.rmtree(d)

@@ -16,26 +16,28 @@ my_problem/
     └── optional_more_seeds.py
 ```
 
-All four parts are required. Missing `validate.py` or missing seed files are
-hard errors during load.
+Optional context files can be placed in:
+
+```text
+my_problem/
+└── context/
+    ├── notes.md
+    ├── formula.txt
+    └── helper.py
+```
+
+Supported context extensions are `.txt`, `.md`, and `.py`. These files are
+rendered into prompts as explicit context.
 
 ## `task_description.txt`
 
-This file is inserted directly into the mutation prompt. Keep it concrete and
-task-specific. The model sees it as part of the `[SYSTEM]` prompt block.
-
-Good task descriptions usually specify:
-
-- the target function or API surface
-- optimization goals
-- hard constraints
-- what counts as invalid output
+This file is inserted into the mutation prompt. Keep it concrete and
+task-specific: target API, optimization goal, hard constraints, and invalid
+conditions.
 
 ## `metrics.yaml`
 
 The loader expects a top-level `metrics` list.
-
-Example:
 
 ```yaml
 metrics:
@@ -43,24 +45,26 @@ metrics:
     direction: maximize
     primary: true
     bounds: [0.0, 1.0]
+  - name: runtime
+    direction: minimize
+    primary: false
+    bounds: [0.0, 10.0]
   - name: is_valid
     direction: maximize
     primary: false
 ```
 
-Current loader behavior:
+Behavior:
 
 - `metrics` must be a non-empty list
-- the primary metric is the first metric with `primary: true`
-- if no metric is marked primary, the first metric becomes primary
-- `bounds` defaults to `[0.0, 1.0]` when omitted
-- malformed bounds that are not length 2 raise an error
+- the first metric with `primary: true` is primary
+- if no metric is marked primary, the first metric is primary
+- `bounds` defaults to `[0.0, 1.0]`
+- malformed bounds raise an error
+- `direction: minimize` is inverted during normalization
 
-Important note:
-
-- The loader stores `primary_bounds` on the `Problem` dataclass.
-- The current population code does not yet use those bounds when normalizing
-  MAP-Elites performance cells.
+Fitness is the normalized primary metric. Raw metrics are preserved in
+`Program.metrics` and `history.jsonl`.
 
 ## `validate.py`
 
@@ -71,83 +75,84 @@ def evaluate(code: str) -> dict:
     ...
 ```
 
-LibreEvolve writes the candidate program to a temporary file, imports
-`validate.py` in an isolated subprocess, calls `evaluate(code)`, and expects the
-returned value to be JSON-serializable.
+LibreEvolve writes the candidate to a temporary file, imports `validate.py` in a
+subprocess, calls `evaluate(code)`, and expects the returned value to be
+JSON-serializable.
 
-The returned dict must include:
+The returned dict should include:
 
 - the primary metric name from `metrics.yaml`
 - `is_valid`
+- any secondary metrics useful for prompts, logs, or later analysis
 
-Example:
+The evaluator parses the last non-empty stdout line as JSON, so validators may
+print diagnostics before returning.
 
-```python
-def evaluate(code: str) -> dict:
-    ns = {}
-    try:
-        exec(compile(code, "<candidate>", "exec"), ns)
-    except Exception:
-        return {"score": 0.0, "is_valid": False}
+## Evaluation semantics
 
-    fn = ns.get("solve")
-    if not callable(fn):
-        return {"score": 0.0, "is_valid": False}
+The evaluator returns an `EvaluationResult` with normalized fitness, raw
+metrics, validity, stage outcomes, stdout, stderr, error, elapsed time, and
+metadata.
 
-    try:
-        result = fn()
-    except Exception:
-        return {"score": 0.0, "is_valid": False}
+Default failure scores:
 
-    return {"score": 1.0 if result == 42 else 0.0, "is_valid": result == 42}
-```
+- malformed/no-op mutation: negative diff penalty
+- syntax error, subprocess crash, timeout, or malformed JSON: `-0.2`
+- validator returns `is_valid: false`: `-0.1`
+- otherwise: normalized primary metric
 
-### Validation semantics
-
-The evaluator interprets validator output as follows:
-
-- if the subprocess crashes, times out, or emits invalid JSON, the candidate
-  gets `-0.2`
-- if `is_valid` is false, the candidate gets `-0.1`
-- otherwise the candidate gets the primary metric value
-
-That means `is_valid` is both a domain-validity flag and the gate for archive
-admission. A candidate with a strong metric value but `is_valid: false` is still
-treated as invalid.
+`Config.eval_stages` can run configured validator stages with per-stage timeout
+and `min_score` thresholds.
 
 ## `initial_programs/*.py`
 
 All `*.py` files in `initial_programs/` are loaded, sorted by filename, and used
 as seed candidates.
 
-Current behavior:
+Seeds can be unmarked whole Python programs, preserving backward compatibility,
+or they can mark one or more evolvable regions:
 
-- every seed is evaluated before generation 0
-- every seed is logged
-- only seeds with score `>= 0.0` enter the archive
+```python
+def helper(x):
+    return x
 
-Multiple seeds are useful when you want the run to start from several plausible
-local basins instead of one canonical baseline.
+# EVOLVE-BLOCK-START solve
+def solve():
+    return 1
+# EVOLVE-BLOCK-END
+```
+
+With markers, the surrounding skeleton is preserved and mutations are applied to
+the marked region(s). Without markers, the whole program remains evolvable.
+
+## Mutation modes
+
+`mutation_mode: diff` is the default SEARCH/REPLACE mode:
+
+```text
+<<<SEARCH
+old code
+===
+new code
+>>>REPLACE
+```
+
+`mutation_mode: full` accepts a complete replacement. For one marked block, the
+replacement becomes that block's body. For multiple blocks, use named block
+payloads:
+
+```text
+<<<BLOCK solve
+def solve():
+    return 2
+>>>BLOCK
+```
 
 ## Design guidance
 
-### Use intentionally improvable seeds
-
-A perfect seed can still produce archive diversity, but it reduces the chance of
-meaningful fitness gains. Suboptimal seeds produce better evolutionary pressure.
-
-### Keep validators deterministic when possible
-
-Stochastic validators make backend reward and archive comparisons noisier. If
-randomness is necessary, seed it inside `validate.py`.
-
-### Fail safely
-
-Treat malformed outputs, missing functions, and runtime exceptions as invalid.
-The framework already expects validators to be defensive.
-
-### Keep metrics simple
-
-Only the primary metric is used for final scoring. Additional metrics may be
-useful for your own analysis, but they are not consumed by the current archive
-or CLI.
+- Make seeds intentionally improvable.
+- Keep validators deterministic when possible.
+- Return every metric you want future prompts or analysis to see.
+- Use evolve blocks when the skeleton/API must stay fixed.
+- Treat the current problem model as Python-only and single-workspace; multi-file
+  candidates are planned but not implemented.

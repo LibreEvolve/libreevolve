@@ -52,3 +52,20 @@ def test_ucb1_converges_on_superior_arm():
         ens.record_reward(1, 0.0)
     _, idx = ens.generate("p")
     assert idx == 0
+
+def test_throughput_depth_strategy_uses_metadata():
+    fast = _b("fast")
+    deep = _b("deep")
+    ens = LLMEnsemble(
+        [fast, deep],
+        explore_coeff=0.0,
+        strategy="throughput_depth",
+        backend_metadata=[
+            {"cost": 1.0, "latency": 1.0, "depth": 1.0},
+            {"cost": 1.0, "latency": 1.0, "depth": 5.0},
+        ],
+    )
+
+    _, idx = ens.generate("p")
+
+    assert idx == 1

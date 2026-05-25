@@ -63,7 +63,7 @@ Plugins should not assume:
 Implemented by
 [`libreevolve/plugins/causal.py`](../libreevolve/plugins/causal.py).
 
-Purpose:
+Purpose (CausalEvolve-inspired, not paper-complete):
 
 - infer what kinds of code edits tend to help
 - bias prompt context toward the most promising edit factor
@@ -79,6 +79,8 @@ Mechanics:
 Limitations:
 
 - factor detection is token-pattern based, not AST-based
+- there is no LLM causal scratchpad, abductive factor creation, or
+  surprise-pattern inspection
 - when no factor matches, it falls back to a random factor
 - reward is based on change relative to the plugin's own running history
 
@@ -87,7 +89,7 @@ Limitations:
 Implemented by
 [`libreevolve/plugins/deep_research.py`](../libreevolve/plugins/deep_research.py).
 
-Purpose:
+Purpose (DeepEvolve-inspired, not paper-complete):
 
 - periodically fetch external research context and add it to prompts
 
@@ -106,13 +108,15 @@ Extension point:
 Operational note:
 
 - network failures are swallowed and only affect plugin context, not the run
+- this does not implement cross-file editing, systematic debugging, or
+  hypothesis refinement loops
 
 ### `modular`
 
 Implemented by
 [`libreevolve/plugins/modular.py`](../libreevolve/plugins/modular.py).
 
-Purpose:
+Purpose (ImprovEvolve-inspired, not paper-complete):
 
 - bias the model toward a modular decomposition style inspired by
   ImprovEvolve
@@ -122,13 +126,14 @@ Mechanics:
 - always injects the same static prompt block
 - does not inspect the current parent, archive, or score
 - does not alter evaluation or logging
+- does not enforce or execute generate/improve/perturb interfaces
 
 ### `ttt_rl`
 
 Implemented by
 [`libreevolve/plugins/ttt_rl.py`](../libreevolve/plugins/ttt_rl.py).
 
-Purpose:
+Purpose (ThetaEvolve-inspired, not paper-complete):
 
 - accumulate `(prompt, response, reward)` training examples for future RL or
   GRPO-style fine-tuning

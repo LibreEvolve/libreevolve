@@ -279,6 +279,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers to keep current file-section paths simple and
     track parser hardening in the code TODO.
 
+- [x] Clarify malformed mutation envelopes can be ignored.
+  - README evidence: the custom-problem section describes file-section edits,
+    but did not explain that unmatched or malformed envelope spans are not
+    diagnosed as a whole response.
+  - Current evidence: `_parse_file_sections()` and multi-block full replacement
+    use regex `findall()` calls. A response with one valid file/block section
+    and one unsupported or malformed envelope can apply the valid section while
+    ignoring the unmatched intended edit.
+  - Required result: warn readers that current multi-file/block mutation
+    parsing is partial and track full-envelope diagnostics in the code TODO.
+
 - [x] Clarify multi-file mutations cannot delete or rename files yet.
   - README evidence: the custom-problem section describes multi-file seed
     workspaces and file-section edits, but did not state that workspace

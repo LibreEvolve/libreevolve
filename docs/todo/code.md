@@ -76,6 +76,24 @@ Primary evidence:
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
 
+- [ ] Detect malformed or ignored mutation envelopes.
+  - Spec evidence: AlphaEvolve-style codebase mutation should make every
+    intended edit either apply or fail with a diagnostic; silently dropping an
+    LLM-proposed file/block section can corrupt the audit trail and hide
+    partial candidate changes.
+  - Current evidence: `_parse_file_sections()` uses `_FILE_SECTION_PATTERN` and
+    returns only regex matches. If a response contains one valid `<<<FILE ...`
+    section and another malformed or currently unsupported section, such as a
+    hyphenated path not captured by the regex, `apply_workspace_mutation()`
+    applies the valid section and ignores the unmatched envelope. The same
+    risk exists for multi-block full replacements because
+    `_BLOCK_SECTION_PATTERN` accepts a narrower name grammar than marker names
+    parsed by `extract_evolve_blocks()`.
+  - Required result: parse mutation envelopes as a whole document, reject or
+    record unmatched `<<<FILE`/`>>>FILE` and `<<<BLOCK`/`>>>BLOCK` spans,
+    surface diagnostics for unsupported names/paths, and add tests for mixed
+    valid plus malformed sections so intended edits cannot disappear silently.
+
 - [ ] Support file deletion and rename/move operations in workspace mutations.
   - Spec evidence: AlphaEvolve can evolve whole files/codebases, not only edit
     text inside a fixed set of files. Real codebase evolution may need removing

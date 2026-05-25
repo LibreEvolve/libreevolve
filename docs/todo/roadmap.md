@@ -108,6 +108,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track unified path parsing, unsafe-path diagnostics, and
     tests for common repository filename shapes.
 
+- [x] Add mutation-envelope diagnostics for partial parses.
+  - Evidence: file and block mutation sections are collected with regex
+    `findall()` calls, so unsupported or malformed envelopes can be omitted
+    while other valid sections still apply.
+  - Current roadmap gap: path grammar hardening covered valid filename support,
+    but not detection of unmatched `<<<FILE`/`<<<BLOCK` spans that represent
+    intended edits.
+  - Required result: parse envelopes as a full document, reject or log
+    malformed sections, and test mixed valid plus malformed file/block
+    responses.
+
 - [x] Add workspace file-topology mutation support to candidate fidelity.
   - Evidence: `apply_workspace_mutation()` can edit existing files and create
     unknown files in `full` mode, but there is no mutation syntax or state

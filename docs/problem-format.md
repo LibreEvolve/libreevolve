@@ -228,6 +228,9 @@ new code
 Current file-section parsing is conservative and does not recognize every
 valid local filename. Avoid spaces and hyphens in candidate paths until the
 file-section path grammar is unified with workspace path normalization.
+Malformed or unsupported file/block envelopes are not fully diagnosed as a
+whole mutation document yet; a response with mixed valid and malformed sections
+can apply the valid edits while ignoring an unmatched intended edit.
 
 In `full` mode, the content inside `<<<FILE ... >>>FILE` becomes the file's new
 content, unless the target file contains evolve blocks, in which case the

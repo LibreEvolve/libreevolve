@@ -94,6 +94,10 @@ evaluation counts, cumulative evaluator elapsed seconds, wall-clock runtime
 seconds, and generation counts. Current stop reasons include
 `max_generations`, `max_evaluations`, `max_evaluator_seconds`,
 `max_runtime_seconds`, `no_parent`, `no_valid_programs`, and `completed`.
+If retrieval plugins emitted candidate metadata, `runtime.retrieval` records a
+bounded run-level summary with total deduplicated retrieval events, per-plugin
+status/source counts, and compact event summaries. It intentionally omits full
+source payloads.
 Token, provider cost, LLM-call retry, stage-sample, and accelerator budgets are
 not first-class counters yet.
 
@@ -159,8 +163,8 @@ bounded retrieval events there with provider, query, generation, best id and
 fitness, timestamp, status, result length, synthesis hash, source IDs/URLs,
 source timestamps/authors, summary hashes, and available provider errors. The
 record does not yet include validated plugin constructor config, plugin
-versions, full result payloads, ranking provenance, manifest-level retrieval
-summaries, source-content hashes, or selected strategy operations.
+versions, full result payloads, ranking provenance, source-content hashes, or
+selected strategy operations.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.

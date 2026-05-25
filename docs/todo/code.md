@@ -542,7 +542,9 @@ Primary evidence:
     `arxiv_search()` remains a string-only compatibility wrapper. Retrieval
     state still does not include full result payloads, source-content hashes,
     ranking provenance, default arXiv network/parse failure categories, prompt
-    history entries, plugin artifacts, or `manifest.json` summaries.
+    history entries, or plugin artifacts. Completed manifests now include
+    `runtime.retrieval` with deduplicated event counts, per-plugin status/source
+    counts, and compact event summaries.
   - Required result: store retrieval events with provider, query, generation,
     parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
     and hashes; render citations in prompt context; include plugin retrieval

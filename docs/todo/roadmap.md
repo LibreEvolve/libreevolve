@@ -295,7 +295,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     length/synthesis-hash retrieval events plus arXiv source IDs/URLs,
     timestamps/authors, and summary hashes in candidate plugin-context
     metadata, while full result payloads, ranking provenance, source-content
-    hashes, and manifest-level retrieval summaries remain open.
+    hashes, and richer artifact-level retrieval records remain open. Completed
+    manifests include bounded `runtime.retrieval` summaries.
   - Current roadmap gap: context-source provenance covered problem-local files,
     while plugin-provided external context also needs reproducible query,
     result, citation, failure, and manifest records.

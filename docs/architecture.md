@@ -299,8 +299,8 @@ parent id, and inspiration ids plus bounded retrieval events with provider,
 query, generation, best id/fitness, timestamp, status, result length, synthesis
 hash, arXiv source IDs/URLs, source timestamps/authors, summary hashes, and
 error text when applicable. It still does not persist full result payloads,
-ranking provenance, manifest-level retrieval summaries, or a systematic
-debug/refinement loop.
+ranking provenance, or a systematic debug/refinement loop. Completed manifests
+include bounded `runtime.retrieval` summaries.
 
 The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
 always injects the same guidance block. Candidate metadata can attribute that

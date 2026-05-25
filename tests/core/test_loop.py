@@ -7,6 +7,7 @@ import pytest
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.config import Config
 from libreevolve.core.loop import evolve, VALID_THRESHOLD
+from libreevolve.plugins.deep_research import DeepResearchPlugin
 from libreevolve.problems.loader import Problem
 
 def _problem(src="def evaluate(c): return {'score':1.0,'is_valid':True}"):
@@ -583,6 +584,41 @@ def test_loop_records_per_plugin_prompt_context():
     ).hexdigest()
     assert plugin_context[0]["emitted"] is True
     assert plugin_context[0]["metadata"] == {"strategy": "static_guidance"}
+
+
+def test_manifest_summarizes_retrieval_events():
+    tmpdir = tempfile.mkdtemp()
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "ok",
+            "synthesis": "retrieved context",
+            "sources": [{"id": "paper-1"}, {"id": "paper-2"}],
+        }
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[plugin],
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    retrieval = manifest["runtime"]["retrieval"]
+    assert retrieval["events"] == 1
+    assert retrieval["by_plugin"]["DeepResearchPlugin"] == {
+        "events": 1,
+        "ok": 1,
+        "empty": 0,
+        "error": 0,
+        "sources": 2,
+    }
+    summary = retrieval["event_summaries"][0]
+    assert summary["plugin"] == "DeepResearchPlugin"
+    assert summary["provider"] == "custom"
+    assert summary["status"] == "ok"
+    assert summary["source_count"] == 2
+    assert summary["synthesis_sha256"]
 
 
 def test_loop_renders_full_mode_prompt_instructions():

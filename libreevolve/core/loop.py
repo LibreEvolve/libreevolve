@@ -253,7 +253,11 @@ def evolve(problem: Problem, config: Config,
         budget.record_generation_complete()
 
     best = db.best()
-    db.update_manifest_runtime(budget.finish(best_found=best is not None))
+    runtime = budget.finish(best_found=best is not None)
+    retrieval_summary = _retrieval_manifest_summary(db.all_programs())
+    if retrieval_summary:
+        runtime["retrieval"] = retrieval_summary
+    db.update_manifest_runtime(runtime)
     return best
 
 
@@ -288,6 +292,76 @@ def _build_plugin_context(
                 record["metadata"] = plugin_metadata
         records.append(record)
     return "\n".join(contexts), records
+
+
+def _retrieval_manifest_summary(programs: list[Program]) -> dict:
+    events: dict[tuple, dict] = {}
+    by_plugin: dict[str, dict] = {}
+    for program in programs:
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        plugin_context = metadata.get("plugin_context")
+        if not isinstance(plugin_context, list):
+            continue
+        for context_record in plugin_context:
+            if not isinstance(context_record, dict):
+                continue
+            plugin_name = str(context_record.get("plugin") or "unknown")
+            plugin_meta = context_record.get("metadata")
+            if not isinstance(plugin_meta, dict):
+                continue
+            retrieval_events = plugin_meta.get("retrieval_events")
+            if not isinstance(retrieval_events, list):
+                continue
+            for event in retrieval_events:
+                if not isinstance(event, dict):
+                    continue
+                key = (
+                    plugin_name,
+                    event.get("query"),
+                    event.get("timestamp"),
+                    event.get("status"),
+                    event.get("synthesis_sha256"),
+                    event.get("error"),
+                )
+                if key in events:
+                    continue
+                summary = {
+                    "plugin": plugin_name,
+                    "provider": event.get("provider"),
+                    "query": event.get("query"),
+                    "generation": event.get("generation"),
+                    "status": event.get("status"),
+                    "timestamp": event.get("timestamp"),
+                    "result_chars": event.get("result_chars", 0),
+                    "synthesis_sha256": event.get("synthesis_sha256", ""),
+                    "source_count": len(event.get("sources", []))
+                    if isinstance(event.get("sources"), list)
+                    else 0,
+                }
+                if event.get("error"):
+                    summary["error"] = event.get("error")
+                events[key] = summary
+                plugin_summary = by_plugin.setdefault(
+                    plugin_name,
+                    {
+                        "events": 0,
+                        "ok": 0,
+                        "empty": 0,
+                        "error": 0,
+                        "sources": 0,
+                    },
+                )
+                plugin_summary["events"] += 1
+                if event.get("status") in ("ok", "empty", "error"):
+                    plugin_summary[str(event.get("status"))] += 1
+                plugin_summary["sources"] += summary["source_count"]
+    if not events:
+        return {}
+    return {
+        "events": len(events),
+        "by_plugin": by_plugin,
+        "event_summaries": list(events.values())[-20:],
+    }
 
 
 def _apply_plugin_scores(

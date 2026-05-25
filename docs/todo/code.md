@@ -85,25 +85,25 @@ Primary evidence:
     unsafe paths explicitly; add tests for hyphenated, spaced, nested,
     backslash, Unicode/normalization, and malformed file-section paths.
 
-- [ ] Detect normalized-path and host-filesystem path collisions.
+- [x] Detect normalized-path and host-filesystem path collisions.
   - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful
     candidate file set. Two logical candidate files should not silently collapse
     in memory or overwrite each other when validators materialize the
     workspace.
-  - Partial status: `CandidateWorkspace.__post_init__()` now rejects raw file
-    keys that normalize to the same candidate-relative path, with a regression
-    test for `pkg\\helper.py` versus `pkg/helper.py`.
-    `CandidateWorkspace.materialize()` also preflights case-folded host paths
-    before writing any file; tests prove `Readme.md` and `README.md` collisions
-    fail without partial materialization.
-    Duplicate edit sections for the same `<<<FILE path ...>>>` target now fail
-    with `path:duplicate_file_section` before partial application.
-  - Remaining evidence: Unicode-normalization collisions and collision policy
-    for more complex file-topology operation sequences still need an explicit
-    policy.
-  - Required result: define Unicode-normalization and topology-operation
-    collision policy for cross-platform runs, and add loader/mutation tests
-    that no candidate file disappears silently.
+  - Current evidence: `normalize_candidate_path()` normalizes candidate paths
+    to Unicode NFC after slash normalization. `CandidateWorkspace.__post_init__()`
+    rejects raw file keys that normalize to the same candidate-relative path,
+    including `pkg\\helper.py` versus `pkg/helper.py` and composed/decomposed
+    Unicode names. `_load_initial_workspaces()` now inherits that policy for
+    seed directories. `CandidateWorkspace.materialize()` preflights
+    case-folded host paths before writing any file; tests prove `Readme.md`
+    and `README.md` collisions fail without partial materialization.
+    Duplicate edit sections for the same `<<<FILE path ...>>>` target fail
+    with `path:duplicate_file_section`. Ambiguous edit/delete, edit/move,
+    duplicate move-target, and chained move sequences fail before partial
+    application instead of silently dropping a candidate file.
+  - Status: implemented with candidate, loader, mutation, and materialization
+    regression tests.
 
 - [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every

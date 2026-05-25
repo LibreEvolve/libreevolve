@@ -172,3 +172,19 @@ def test_reads_seed_directory_as_workspace():
         p = load_problem(d)
         assert p.initial_workspaces[0].primary_file == "main.py"
         assert sorted(p.initial_workspaces[0].files) == ["helper.py", "main.py"]
+
+
+def test_rejects_unicode_equivalent_seed_workspace_paths():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        for f in (d / "initial_programs").glob("*.py"):
+            f.unlink()
+        seed = d / "initial_programs" / "seed_a"
+        seed.mkdir()
+        (seed / "café.py").write_text("value = 1\n", encoding="utf-8")
+        (seed / "cafe\u0301.py").write_text("value = 2\n", encoding="utf-8")
+        if len([p for p in seed.iterdir() if p.is_file()]) < 2:
+            pytest.skip("filesystem normalizes Unicode filenames")
+
+        with pytest.raises(ValueError, match="Duplicate candidate path after normalization"):
+            load_problem(d)

@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 import os
 from pathlib import Path
 import re
+import unicodedata
 
 from libreevolve.core.diff import apply_diff, parse_diff_blocks, _strip_fences
 
@@ -85,7 +86,9 @@ class CandidateWorkspace:
 
 
 def normalize_candidate_path(path: str) -> str:
-    normalized = path.replace("\\", "/").strip().lstrip("/")
+    normalized = unicodedata.normalize(
+        "NFC", path.replace("\\", "/").strip().lstrip("/")
+    )
     parts = [p for p in normalized.split("/") if p and p != "."]
     if not parts or any(p == ".." or ":" in p for p in parts):
         raise ValueError(f"Unsafe candidate path: {path!r}")
@@ -195,9 +198,9 @@ def apply_workspace_mutation(
         if err is not None:
             return workspace, err
         parsed_sections.append((spec, body))
-    duplicate_edit = _find_duplicate_edit_section_path(parsed_sections)
-    if duplicate_edit is not None:
-        return workspace, f"{duplicate_edit}:duplicate_file_section"
+    section_conflict = _find_section_path_conflict(parsed_sections)
+    if section_conflict is not None:
+        return workspace, section_conflict
 
     files = dict(workspace.files)
     primary_file = workspace.primary_file
@@ -248,7 +251,10 @@ def apply_workspace_mutation(
             changed = True
     if not changed:
         return workspace, "no_valid_changes"
-    return CandidateWorkspace(files, primary_file), None
+    try:
+        return CandidateWorkspace(files, primary_file), None
+    except ValueError as exc:
+        return workspace, f"candidate_workspace_error:{exc}"
 
 
 def _parse_file_sections(mutation_text: str) -> list[tuple[str, str]]:
@@ -275,15 +281,36 @@ def _parse_file_section_header(header: str) -> tuple[dict, str | None]:
         return {}, f"{raw}:unsafe_path"
 
 
-def _find_duplicate_edit_section_path(sections: list[tuple[dict, str]]) -> str | None:
-    seen: set[str] = set()
+def _find_section_path_conflict(sections: list[tuple[dict, str]]) -> str | None:
+    edit_seen: set[str] = set()
+    topology_sources: set[str] = set()
+    move_targets: set[str] = set()
+    edit_paths: set[str] = set()
     for spec, _ in sections:
-        if spec.get("op") != "edit":
-            continue
+        op = spec.get("op")
         path = spec["path"]
-        if path in seen:
-            return path
-        seen.add(path)
+        if op == "primary":
+            continue
+        if op == "edit":
+            if path in edit_seen:
+                return f"{path}:duplicate_file_section"
+            edit_seen.add(path)
+            edit_paths.add(path)
+        else:
+            if path in topology_sources:
+                return f"{path}:duplicate_topology_section"
+            topology_sources.add(path)
+            if op == "move":
+                target = spec["target"]
+                if target in move_targets:
+                    return f"{target}:duplicate_move_target"
+                move_targets.add(target)
+    conflicting_edits = sorted(edit_paths & (topology_sources | move_targets))
+    if conflicting_edits:
+        return f"{conflicting_edits[0]}:conflicting_file_operations"
+    chained_topology = sorted(move_targets & topology_sources)
+    if chained_topology:
+        return f"{chained_topology[0]}:conflicting_file_operations"
     return None
 
 

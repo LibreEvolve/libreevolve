@@ -3,6 +3,7 @@ from libreevolve.core.candidate import (
     apply_candidate_mutation,
     apply_workspace_mutation,
     extract_evolve_blocks,
+    normalize_candidate_path,
     validate_evolve_blocks,
 )
 
@@ -249,6 +250,22 @@ def test_workspace_file_section_accepts_unicode_paths():
     assert result.files["src/cafe_é.py"] == "value = 2"
 
 
+def test_candidate_paths_normalize_unicode_to_nfc():
+    assert normalize_candidate_path("src/cafe\u0301.py") == "src/café.py"
+
+
+def test_workspace_rejects_unicode_equivalent_paths_after_normalization():
+    try:
+        CandidateWorkspace(
+            files={"src/café.py": "value = 1\n", "src/cafe\u0301.py": "value = 2\n"},
+            primary_file="src/café.py",
+        )
+    except ValueError as exc:
+        assert "Duplicate candidate path after normalization" in str(exc)
+    else:
+        raise AssertionError("expected Unicode-normalized duplicate path rejection")
+
+
 def test_workspace_rejects_duplicate_file_edit_sections_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
@@ -261,6 +278,34 @@ def test_workspace_rejects_duplicate_file_edit_sections_without_partial_apply():
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
     assert result == workspace
     assert err == "helper.py:duplicate_file_section"
+
+
+def test_workspace_rejects_edit_delete_conflict_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE helper.py\nvalue = 2\n>>>FILE\n"
+        "<<<FILE DELETE helper.py\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "helper.py:conflicting_file_operations"
+
+
+def test_workspace_rejects_edit_move_conflict_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE MOVE helper.py -> moved.py\n>>>FILE\n"
+        "<<<FILE moved.py\nvalue = 2\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "moved.py:conflicting_file_operations"
 
 
 def test_workspace_diff_accepts_canonical_block_in_file_section():
@@ -356,6 +401,34 @@ def test_workspace_rejects_move_to_existing_target_without_partial_apply():
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
     assert result == workspace
     assert err == "main.py:target_exists"
+
+
+def test_workspace_rejects_duplicate_move_targets_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "a.py": "a = 1\n", "b.py": "b = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE MOVE a.py -> target.py\n>>>FILE\n"
+        "<<<FILE MOVE b.py -> target.py\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "target.py:duplicate_move_target"
+
+
+def test_workspace_rejects_chained_topology_without_partial_apply():
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "a.py": "a = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE MOVE a.py -> b.py\n>>>FILE\n"
+        "<<<FILE MOVE b.py -> c.py\n>>>FILE"
+    )
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+    assert result == workspace
+    assert err == "b.py:conflicting_file_operations"
 
 
 def test_workspace_rejects_unsafe_move_target():

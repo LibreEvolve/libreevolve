@@ -431,10 +431,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [x] Add canonical mutation parsing to plugin truthfulness work.
   - Evidence: the core mutation path accepts both canonical AlphaEvolve
-    SEARCH/REPLACE fences and the compact local form, but
-    `CausalPlugin._detect_factors()` reads only the compact `DIFF_PATTERN`.
-    Canonical mutations can therefore be ignored by causal factor analysis and
-    fall back to random guidance.
+    SEARCH/REPLACE fences and the compact local form. `CausalPlugin` now uses
+    that shared `parse_diff_blocks()` path for mutation factor detection, and
+    tests cover compact, canonical, and mixed diff blocks.
   - Current roadmap gap: plugin extensibility/truthfulness work covered
     registration, config, artifacts, provenance, and score composition, but not
     shared mutation parsing semantics for plugins that inspect LLM patches.

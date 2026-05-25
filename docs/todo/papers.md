@@ -372,12 +372,12 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current evidence: the CLI alias is paper-neutral (`causal`) and docs label
     it CausalEvolve-inspired, but `libreevolve/plugins/causal.py` still uses
     regex factor detection over changed diff tokens and UCB1-like reward
-    accounting. Its factor detector also parses only LibreEvolve's compact
-    SEARCH/REPLACE regex, so canonical AlphaEvolve diff blocks can produce no
-    factor matches and fall back to random guidance.
+    accounting. Its factor detector now uses the shared compact/canonical
+    SEARCH/REPLACE parser, but the detected factors are still fixed local
+    token-pattern categories rather than LLM-discovered causal variables.
   - Missing: LLM causal scratchpad, POMDP/causal framing, initial factor
     discovery, surprise-pattern inspection, abductive factor creation,
-    canonical mutation parsing, and structured causal knowledge reuse.
+    and structured causal knowledge reuse.
 
 - [ ] Keep DeepEvolve-inspired behavior explicitly paper-limited or implement
   DeepEvolve's retrieval, cross-file editing, and debugging loop.

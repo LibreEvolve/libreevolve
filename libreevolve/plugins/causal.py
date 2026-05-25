@@ -1,7 +1,7 @@
 from __future__ import annotations
 import math, random, re
 from collections import defaultdict
-from libreevolve.core.diff import DIFF_PATTERN
+from libreevolve.core.diff import parse_diff_blocks
 from libreevolve.plugins.base import PluginBase
 
 # Heuristic patterns for classifying which code dimension a diff changed.
@@ -57,11 +57,11 @@ class CausalPlugin(PluginBase):
 
         Extracts tokens that differ between SEARCH and REPLACE blocks,
         then matches against keyword patterns for each factor. Falls back
-        to random when the diff is empty or no patterns match.
+        to a deterministic default when the diff is empty or no patterns match.
         """
-        blocks = DIFF_PATTERN.findall(diff_text)
+        blocks = parse_diff_blocks(diff_text)
         if not blocks:
-            return [random.choice(self.FACTORS)]
+            return [self.FACTORS[0]]
         factors: set[str] = set()
         for search, replace in blocks:
             old_tokens = re.findall(r'\S+', search)
@@ -76,7 +76,7 @@ class CausalPlugin(PluginBase):
             for factor, pattern in _FACTOR_PATTERNS.items():
                 if pattern.search(changed):
                     factors.add(factor)
-        return list(factors) if factors else [random.choice(self.FACTORS)]
+        return sorted(factors) if factors else [self.FACTORS[0]]
 
     def _ucb1_factor(self) -> str:
         if self._total == 0: return random.choice(self.FACTORS)

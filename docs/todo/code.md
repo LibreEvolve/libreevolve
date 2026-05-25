@@ -200,16 +200,17 @@ Primary evidence:
   - Required result: keep both formats backward-compatible in prompt docs,
     parser/apply logic, and mutation tests.
 
-- [ ] Make paper-inspired plugins consume canonical mutation formats.
+- [x] Make paper-inspired plugins consume canonical mutation formats.
   - Spec evidence: AlphaEvolve uses canonical SEARCH/REPLACE blocks, and
     plugin analyses that infer guidance from mutations should share the same
     parser contract as candidate mutation application.
-  - Current evidence: `CausalPlugin._detect_factors()` imports only
-    `DIFF_PATTERN` and calls `DIFF_PATTERN.findall(diff_text)`, while the core
-    mutation path uses `parse_diff_blocks()` to accept both compact and
-    canonical AlphaEvolve fences. Canonical mutations therefore produce no
-    causal factor matches and can fall back to a random factor, making guidance
-    stochastic and wrong for the paper's fence spelling.
+  - Current evidence: `CausalPlugin._detect_factors()` now calls the shared
+    `parse_diff_blocks()` parser, so compact local fences and canonical
+    AlphaEvolve fences are classified through the same mutation parsing
+    contract as candidate application. Empty or unparseable mutation text now
+    uses a deterministic fallback factor instead of random factor guidance.
+  - Status: implemented for the CausalEvolve-inspired plugin; an audit found
+    no other built-in plugin directly parsing SEARCH/REPLACE blocks.
   - Required result: route plugin mutation analysis through
     `parse_diff_blocks()` or a shared mutation AST, add CausalPlugin tests for
     compact and canonical diffs, preserve deterministic fallback semantics,

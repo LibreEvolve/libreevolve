@@ -322,15 +322,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: tell readers that plugin score hooks can affect archived
     fitness and point structured provenance to the roadmap/TODO.
 
-- [x] Clarify causal plugin mutation-format limitations.
+- [x] Clarify causal plugin mutation-format behavior.
   - README evidence: the plugin section labels the causal plugin as
     CausalEvolve-inspired, but did not state that its factor detector is not
     using the same canonical diff parser as candidate mutation application.
-  - Current evidence: `CausalPlugin._detect_factors()` parses only the compact
-    local `DIFF_PATTERN`; canonical AlphaEvolve SEARCH/REPLACE fences can
-    produce no factor matches and fall back to random guidance.
-  - Required result: document that causal guidance is compact-diff-only until
-    plugin mutation analysis is unified with the core parser.
+  - Current evidence: `CausalPlugin._detect_factors()` now uses
+    `parse_diff_blocks()`, matching the core compact/canonical diff parser.
+    README now says canonical AlphaEvolve fences are visible to factor
+    guidance while the plugin remains a lightweight token-pattern heuristic,
+    not CausalEvolve's causal scratchpad.
+  - Required result: keep README aligned with the current parser behavior and
+    continue distinguishing parser compatibility from paper-faithful causal
+    reasoning.
 
 - [x] Clarify ThetaEvolve export reward and artifact limitations.
   - README evidence: the plugin section says the ThetaEvolve-inspired plugin

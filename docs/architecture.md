@@ -225,10 +225,11 @@ per-plugin provenance. Archive admission currently checks the plugin-adjusted
 score against `VALID_THRESHOLD`, not `evaluation.is_valid`, so invalid evaluator
 results can be admitted if a plugin raises their final score.
 
-Plugins that inspect mutation text do not all share the core diff parser yet.
-In particular, `CausalPlugin` analyzes only the compact local SEARCH/REPLACE
-regex, so canonical AlphaEvolve fences can be ignored by causal factor
-analysis and fall back to random guidance.
+Plugins that inspect mutation text should share the core mutation parser.
+`CausalPlugin` now routes factor detection through `parse_diff_blocks()`, so
+compact local SEARCH/REPLACE fences and canonical AlphaEvolve fences are both
+visible to its token-pattern factor analysis. This is still a heuristic,
+paper-limited approximation rather than CausalEvolve's causal scratchpad.
 
 The ThetaEvolve-inspired `ttt_rl` plugin emits a side dataset rather than a
 run-scoped artifact. It clips rewards with `max(0.0, score)` and appends to

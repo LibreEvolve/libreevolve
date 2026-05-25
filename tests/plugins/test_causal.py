@@ -33,6 +33,22 @@ def test_detects_loop_structure():
     factors = c._detect_factors(diff)
     assert "loop_structure" in factors
 
+def test_detects_canonical_alphaevolve_diff_fences():
+    diff = "<<<<<<< SEARCH\nx = 1\n=======\nfor i in range(10): x += i\n>>>>>>> REPLACE"
+    c = CausalPlugin()
+    factors = c._detect_factors(diff)
+    assert "loop_structure" in factors
+
+def test_detects_mixed_compact_and_canonical_diff_blocks():
+    diff = (
+        "<<<SEARCH\nreturn 42\n===\nreturn 99\n>>>REPLACE\n"
+        "<<<<<<< SEARCH\nx = []\n=======\nx = dict()\n>>>>>>> REPLACE"
+    )
+    c = CausalPlugin()
+    factors = c._detect_factors(diff)
+    assert "constants" in factors
+    assert "data_types" in factors
+
 def test_detects_constants():
     diff = "<<<SEARCH\nreturn 42\n===\nreturn 99\n>>>REPLACE"
     c = CausalPlugin()
@@ -60,8 +76,7 @@ def test_detects_algorithm_choice():
 def test_fallback_on_empty_diff():
     c = CausalPlugin()
     factors = c._detect_factors("")
-    assert len(factors) == 1
-    assert factors[0] in CausalPlugin.FACTORS
+    assert factors == ["loop_structure"]
 
 def test_multi_factor_detection():
     diff = "<<<SEARCH\nx = 1\n===\nfor i in range(10): x = float(i)\n>>>REPLACE"

@@ -381,10 +381,10 @@ Built-in plugins are paper-inspired approximations, not full reproductions:
 - **ImprovEvolve-inspired** — modular decomposition prompting
 - **ThetaEvolve-inspired** — clipped-reward JSONL export, not training
 
-The causal plugin's factor detector currently analyzes only the compact local
-SEARCH/REPLACE regex. Canonical AlphaEvolve fences may fall back to random
-factor guidance until plugin mutation parsing is unified with the core diff
-parser.
+The causal plugin's factor detector uses the shared diff parser, so compact
+local SEARCH/REPLACE fences and canonical AlphaEvolve fences are both visible
+to factor guidance. The plugin is still a lightweight token-pattern heuristic,
+not CausalEvolve's causal scratchpad.
 
 The DeepEvolve-inspired retrieval plugin injects best-effort live arXiv
 summaries into prompts, but does not yet persist query/result provenance,

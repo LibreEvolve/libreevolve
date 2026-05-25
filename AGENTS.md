@@ -40,7 +40,7 @@ libreevolve/
 ## Running Tests
 
 ```bash
-py -3.12 -m pytest tests/ -m "not integration" --tb=short    # non-integration tests (159 selected)
+py -3.12 -m pytest tests/ -m "not integration" --tb=short    # non-integration tests (163 selected)
 py -3.12 -m pytest tests/integration/ -m integration          # needs ANTHROPIC_API_KEY
 ```
 

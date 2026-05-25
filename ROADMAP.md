@@ -104,6 +104,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 7. Backend scheduling and critique
 
+- Add a backend registry/plugin interface for custom LLM providers, not only
+  the hard-coded OpenAI/Anthropic/Ollama constructors.
 - Normalize/document UCB rewards against bounded assumptions or rename the
   current policy as a heuristic.
 - Separate backend accounting for mutation generation, critique, feedback

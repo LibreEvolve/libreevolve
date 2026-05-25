@@ -383,6 +383,17 @@ Primary evidence:
 
 ## LLM Ensemble
 
+- [ ] Add a custom LLM backend registry or plugin interface.
+  - Spec evidence: AlphaEvolve's task setup includes a choice of existing or
+    custom LLMs, and the system is described as model-agnostic.
+  - Current evidence: `build_llm()` in `libreevolve/llm/ensemble.py` hard-codes
+    backend type strings for `anthropic`, `openai`, and `ollama`; adding a new
+    provider requires editing source code and constructor-key allowlists rather
+    than declaring a backend module/class in `config.yaml`.
+  - Required result: add a backend registry or plugin loading mechanism with
+    validated backend specs, constructor/config schemas, provenance in
+    manifests, docs, and tests for a custom in-repo or problem-local backend.
+
 - [ ] Separate backend accounting for mutation, critique, feedback, and
   meta-prompt calls.
   - Spec evidence: AlphaEvolve's LLM ensemble is used to generate candidates

@@ -193,3 +193,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     malformed/no-op/search-miss diffs when no changed child code is produced.
   - Required result: describe the current feature as recent failure hints and
     point persistent/queryable failed-proposal memory to the code TODO.
+
+- [x] Fix stale example-run command style.
+  - README-adjacent evidence: `examples/runs/README.md` used `python -m`
+    commands while repository instructions and the main README use `py -3.12`.
+  - Current evidence: this Windows workspace uses `py -3.12` for tests and CLI
+    examples.
+  - Required result: use `py -3.12 -m libreevolve show ...` in curated example
+    run docs.

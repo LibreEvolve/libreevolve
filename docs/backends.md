@@ -106,7 +106,9 @@ The CLI loads `.env` automatically before command execution.
 
 ## Adding a new backend
 
-To add a new provider:
+Today, adding a provider is a source-code extension, not a config-only plugin.
+This is an AlphaEvolve-alignment gap tracked in
+[`docs/todo/code.md`](todo/code.md). To add a new provider today:
 
 1. Implement a backend class with:
    - `generate(prompt) -> str`

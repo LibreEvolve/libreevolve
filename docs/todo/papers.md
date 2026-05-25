@@ -54,6 +54,16 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: added experimental `throughput_depth` scheduling metadata layered
     over UCB-style scores.
 
+- [ ] Existing/custom LLM backend extension point.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.
+  - Requirement: AlphaEvolve is model-agnostic and its setup includes a choice
+    of existing or custom LLMs.
+  - Current gap: LibreEvolve supports OpenAI, Anthropic, and Ollama through a
+    hard-coded `build_llm()` registry. New providers require source edits
+    rather than config-driven or plugin-driven backend registration.
+  - Required result: add a custom backend interface/registry and tests, or
+    document the fixed-provider scope as a deliberate divergence.
+
 - [x] Configurable evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: users can specify increasing-difficulty test ensembles and

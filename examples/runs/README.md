@@ -10,6 +10,6 @@ These histories are checked into Git as curated examples. They were kept because
 ## How to inspect them
 
 ```bash
-python -m libreevolve show examples/runs/hello_world_ensemble
-python -m libreevolve show examples/runs/sorting_ttt_rl
+py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
+py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```

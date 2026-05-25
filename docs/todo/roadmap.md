@@ -134,6 +134,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: the roadmap only covers backend config validation
     (`ROADMAP.md:34-41`) and does not address scheduler strategy.
 
+- [x] Add custom LLM backend extensibility to backend work.
+  - Evidence: AlphaEvolve's setup includes a choice of existing or custom LLMs,
+    while LibreEvolve's current backend registry is hard-coded to three
+    providers in `build_llm()`.
+  - Current roadmap gap: backend work covered validation and scheduling but not
+    config/plugin registration for custom providers.
+  - Required result: track a backend registry or plugin interface with
+    validation and manifest provenance.
+
 - [x] Add role-specific LLM call accounting to backend scheduling work.
   - Evidence: AlphaEvolve's ensemble scheduling should reflect candidate
     generation quality/throughput, while LibreEvolve currently counts

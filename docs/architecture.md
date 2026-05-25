@@ -267,6 +267,9 @@ prompt-program events in `prompt_history.jsonl`.
 - Materialized workspace execution is not project-faithful by default:
   validators receive `workspace_path`, but the candidate root is not
   automatically `cwd` or `sys.path`.
+- Validator subprocesses inherit the parent process environment, including
+  `.env`-loaded provider credentials, because no validator environment
+  allowlist or secret redaction policy exists yet.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.

@@ -319,6 +319,10 @@ metrics:
 metric names. It runs in a temporary local subprocess, and its raw metrics and
 diagnostics are stored with each candidate.
 
+That subprocess currently inherits the parent process environment. Provider
+keys loaded from `.env` are not hidden from validators until validator
+environment allowlisting is implemented.
+
 For multi-file candidates, `workspace_path` points at the materialized file set.
 The evaluator does not yet automatically set that directory as `cwd` or
 `sys.path`, so validators that import candidate modules should use

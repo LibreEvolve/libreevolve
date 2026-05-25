@@ -862,6 +862,24 @@ Primary evidence:
   - Required result: add configurable sandbox/container/working-directory
     isolation, resource limits, and artifact collection.
 
+- [ ] Isolate validator environment, secrets, and network access.
+  - Spec evidence: AlphaEvolve evaluates generated code at scale, so evaluator
+    execution boundaries must be explicit and reproducible. Generated or
+    user-supplied validators should not implicitly inherit unrelated host
+    secrets or network capability when runs load provider credentials.
+  - Current evidence: the CLI loads `.env` with `override=True`, then
+    `CascadeEvaluator._run_subprocess()` invokes `subprocess.run()` without an
+    `env=` allowlist, network policy, or secret redaction. Validator processes
+    therefore inherit variables such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
+    `OLLAMA_HOST`, and any other host environment variables available to the
+    parent process. This is separate from the already tracked filesystem and
+    resource-limit sandbox gap.
+  - Required result: define validator environment policy, pass a minimal
+    allowlisted environment by default, add opt-in variables for benchmark
+    validators that need them, redact secret-like values from logs/metadata,
+    document network expectations, and test that subprocess validators cannot
+    see provider keys unless explicitly allowed.
+
 - [ ] Validate and constrain configured evaluator paths.
   - Spec evidence: AlphaEvolve task setup depends on explicit evaluator
     definitions and reproducible provenance for evaluation code.

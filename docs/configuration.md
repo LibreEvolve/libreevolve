@@ -6,7 +6,11 @@ Configuration is assembled from three sources, in this order:
 2. optional problem-local `config.yaml`
 3. CLI overrides from [`libreevolve/cli.py`](../libreevolve/cli.py)
 
-`.env` is loaded at CLI import time with `override=True`.
+`.env` is loaded at CLI import time with `override=True`. Validator
+subprocesses currently inherit the parent environment, so `.env` values are
+visible to `validate.py` unless the user avoids loading them or runs with a
+sanitized environment. Validator environment allowlisting is not yet
+implemented.
 
 ## `Config` fields
 

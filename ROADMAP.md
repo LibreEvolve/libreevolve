@@ -71,6 +71,8 @@ is not yet an AlphaEvolve reproduction.
   composition.
 - Isolate LLM feedback provider, parse, and config failures as structured
   evaluation metadata or stage outcomes.
+- Add validator environment allowlisting, secret redaction, and network policy
+  for subprocess evaluation.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work

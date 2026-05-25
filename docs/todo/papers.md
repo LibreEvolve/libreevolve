@@ -138,7 +138,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     can point at absolute or outside-problem validators without prevalidation,
     hashes, or manifest provenance. Seeded replay is incomplete because
     persisted `Program` and `PromptProgram` lineage ids are UUID4 values rather
-    than deterministic seed/run-derived identifiers.
+    than deterministic seed/run-derived identifiers. Validator subprocesses
+    also inherit `.env`-loaded provider credentials and host environment
+    variables by default, so evaluator environment provenance and secret
+    isolation are incomplete.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, validate/constrain evaluator paths, and record evaluator hashes
     plus run/collision metadata in manifests; define deterministic lineage-id

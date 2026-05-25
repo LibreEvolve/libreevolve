@@ -207,6 +207,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: call it a temporary local subprocess in README/AGENTS
     guidance and keep real sandbox/resource-limit work in `docs/todo/code.md`.
 
+- [x] Clarify validator subprocesses inherit environment until hardened.
+  - README evidence: README says validators run in a temporary local
+    subprocess but did not mention that the subprocess inherits the parent
+    environment, including `.env`-loaded provider variables.
+  - Current evidence: CLI import loads `.env` with `override=True`, and
+    `CascadeEvaluator._run_subprocess()` does not pass an explicit `env` to
+    `subprocess.run()`.
+  - Required result: warn users that validator environment/secret isolation is
+    not implemented and point the implementation gap to the TODOs.
+
 - [x] Soften the UCB1 paper-table role.
   - README evidence: the references table described UCB1 as "Multi-armed bandit
     selection."

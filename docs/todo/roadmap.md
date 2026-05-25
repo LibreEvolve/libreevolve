@@ -353,6 +353,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: validate evaluator paths, define outside-problem policy,
     and include evaluator path/hash provenance in manifests.
 
+- [x] Add validator environment/secret isolation to runtime hardening.
+  - Evidence: `.env` is loaded into the parent process, and
+    `CascadeEvaluator._run_subprocess()` calls `subprocess.run()` without an
+    `env=` allowlist, so validators inherit provider keys and host environment
+    variables by default.
+  - Current roadmap gap: sandbox/resource-limit and evaluator-path work covered
+    filesystem/process boundaries, but not inherited secrets, environment
+    reproducibility, redaction, or network expectations.
+  - Required result: specify a minimal validator environment, explicit opt-ins,
+    secret redaction, network policy, and tests proving provider keys are not
+    visible to validators by default.
+
 - [x] Add run-wide compute-budget accounting to runtime work.
   - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas
     under a total computation budget, and paper ablations compare progress by

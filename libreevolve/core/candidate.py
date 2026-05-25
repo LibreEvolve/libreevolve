@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import re
 
-from libreevolve.core.diff import apply_diff, _strip_fences
+from libreevolve.core.diff import apply_diff, parse_diff_blocks, _strip_fences
 
 EVOLVE_BLOCK_START = "# EVOLVE-BLOCK-START"
 EVOLVE_BLOCK_END = "# EVOLVE-BLOCK-END"
@@ -231,10 +231,7 @@ def _apply_diff_to_candidate(code: str, diff_text: str) -> tuple[str, str | None
 
 
 def _parse_diff_blocks(diff_text: str) -> list[tuple[str, str]]:
-    from libreevolve.core.diff import DIFF_PATTERN
-
-    diff_text = _strip_fences(diff_text.replace("\r\n", "\n"))
-    return [(s.rstrip("\n"), r.rstrip("\n")) for s, r in DIFF_PATTERN.findall(diff_text)]
+    return parse_diff_blocks(diff_text)
 
 
 def _apply_full_replacement(code: str, mutation_text: str) -> tuple[str, str | None]:

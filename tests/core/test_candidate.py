@@ -23,6 +23,15 @@ def test_diff_mode_preserves_skeleton_around_evolve_block():
     assert "x = 2" in result
 
 
+def test_diff_mode_accepts_canonical_block_inside_evolve_block():
+    code = "keep = 1\n# EVOLVE-BLOCK-START core\nx = 1\n# EVOLVE-BLOCK-END\n"
+    diff = "<<<<<<< SEARCH\nx = 1\n=======\nx = 2\n>>>>>>> REPLACE"
+    result, err = apply_candidate_mutation(code, diff, mutation_mode="diff")
+    assert err is None
+    assert "keep = 1" in result
+    assert "x = 2" in result
+
+
 def test_diff_mode_rejects_skeleton_edit_when_blocks_exist():
     code = "keep = 1\n# EVOLVE-BLOCK-START core\nx = 1\n# EVOLVE-BLOCK-END\n"
     diff = "<<<SEARCH\nkeep = 1\n===\nkeep = 2\n>>>REPLACE"
@@ -57,6 +66,22 @@ def test_workspace_diff_mutates_named_file_only():
         primary_file="main.py",
     )
     response = "<<<FILE helper.py\n<<<SEARCH\nvalue = 1\n===\nvalue = 2\n>>>REPLACE\n>>>FILE"
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="diff")
+    assert err is None
+    assert result.files["main.py"] == workspace.files["main.py"]
+    assert result.files["helper.py"].strip() == "value = 2"
+
+
+def test_workspace_diff_accepts_canonical_block_in_file_section():
+    workspace = CandidateWorkspace(
+        files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE helper.py\n"
+        "<<<<<<< SEARCH\nvalue = 1\n=======\nvalue = 2\n>>>>>>> REPLACE\n"
+        ">>>FILE"
+    )
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="diff")
     assert err is None
     assert result.files["main.py"] == workspace.files["main.py"]

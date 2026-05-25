@@ -65,15 +65,15 @@ Primary evidence:
   - Required result: add a per-problem/per-run mutation mode for full block,
     full file, or diff-based edits, with validator coverage for each mode.
 
-- [ ] Add AlphaEvolve canonical SEARCH/REPLACE diff marker compatibility.
+- [x] Add AlphaEvolve canonical SEARCH/REPLACE diff marker compatibility.
   - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 use
     `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE` blocks.
-  - Current evidence: `libreevolve/core/diff.py` and prompt docs use the local
-    compact `<<<SEARCH ... === ... >>>REPLACE` format. This works for the
-    current prototype but is not source-compatible with AlphaEvolve examples.
-  - Required result: accept both canonical AlphaEvolve diff fences and the
-    existing compact fences, update prompt examples, and add parser/apply tests
-    for both formats.
+  - Status: implemented in `libreevolve/core/diff.py` via
+    `parse_diff_blocks()`, which accepts both canonical AlphaEvolve fences and
+    compact local fences. Tests cover low-level diff application, evolve-block
+    restriction, and multi-file file-section routing for canonical blocks.
+  - Required result: keep both formats backward-compatible in prompt docs,
+    parser/apply logic, and mutation tests.
 
 - [ ] Capture proposal ideas/rationale separately from patch application.
   - Spec evidence: AlphaEvolve Figure 3 asks the LLM to "suggest a new idea"

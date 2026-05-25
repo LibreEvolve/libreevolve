@@ -178,6 +178,10 @@ new code
 >>>REPLACE
 ```
 
+AlphaEvolve-style SEARCH/REPLACE fences are also accepted: start with
+`<<<<<<< SEARCH`, separate old and new text with `=======`, and end with
+`>>>>>>> REPLACE`.
+
 `mutation_mode: full` accepts a complete replacement. For one marked block, the
 replacement becomes that block's body. For multiple blocks, use named block
 payloads:

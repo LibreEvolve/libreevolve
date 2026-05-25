@@ -1,13 +1,16 @@
 """SEARCH/REPLACE diff engine.
 
-Inspired by AlphaEvolve (arXiv:2506.13131) SEARCH/REPLACE mutation. The local
-compact fence spelling is a compatibility choice and is not the canonical paper
-format.
+Inspired by AlphaEvolve (arXiv:2506.13131) SEARCH/REPLACE mutation. LibreEvolve
+accepts both the AlphaEvolve-style fence spelling and the older compact local
+format for backward compatibility.
 """
 from __future__ import annotations
 import re
 
 DIFF_PATTERN = re.compile(r"<<<SEARCH\n(.*?)\n===\n(.*?)\n>>>REPLACE", re.DOTALL)
+CANONICAL_DIFF_PATTERN = re.compile(
+    r"<<<<<<< SEARCH\n(.*?)\n=======\n(.*?)\n>>>>>>> REPLACE", re.DOTALL
+)
 
 def _strip_fences(text: str) -> str:
     """Remove markdown code fences that models wrap around diffs."""
@@ -20,9 +23,7 @@ def apply_diff(code: str, diff_text: str) -> tuple[str, str | None]:
     diff_error is None on success.
     Error values: no_diff_blocks | search_not_found | no_valid_changes
     """
-    diff_text = diff_text.replace("\r\n", "\n")
-    diff_text = _strip_fences(diff_text)
-    blocks = [(s.rstrip("\n"), r.rstrip("\n")) for s, r in DIFF_PATTERN.findall(diff_text)]
+    blocks = parse_diff_blocks(diff_text)
     if not blocks:
         return code, "no_diff_blocks"
     result = code
@@ -35,3 +36,13 @@ def apply_diff(code: str, diff_text: str) -> tuple[str, str | None]:
     if result == code:
         return code, "no_valid_changes"
     return result, None
+
+
+def parse_diff_blocks(diff_text: str) -> list[tuple[str, str]]:
+    """Parse compact and AlphaEvolve-style SEARCH/REPLACE blocks."""
+    diff_text = diff_text.replace("\r\n", "\n")
+    diff_text = _strip_fences(diff_text)
+    blocks: list[tuple[str, str]] = []
+    for pattern in (DIFF_PATTERN, CANONICAL_DIFF_PATTERN):
+        blocks.extend((s.rstrip("\n"), r.rstrip("\n")) for s, r in pattern.findall(diff_text))
+    return blocks

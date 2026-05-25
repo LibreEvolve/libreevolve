@@ -57,7 +57,8 @@ unmarked `initial_programs/*.py` remain valid.
 
 Two mutation modes are supported:
 
-- `diff`: default SEARCH/REPLACE blocks
+- `diff`: default SEARCH/REPLACE blocks, accepting both compact local fences
+  and AlphaEvolve-style `<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences
 - `full`: complete replacement of the whole unmarked program, the single marked
   block, or named multi-block replacements with `<<<BLOCK name ... >>>BLOCK`
 

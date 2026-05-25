@@ -24,9 +24,24 @@ def test_successful_single_block():
     new_code, err = apply_diff(code, diff)
     assert err is None and "x = 10" in new_code and "y = 2" in new_code
 
+def test_successful_canonical_alphaevolve_block():
+    code = "x = 1\ny = 2"
+    diff = "<<<<<<< SEARCH\nx = 1\n=======\nx = 10\n>>>>>>> REPLACE"
+    new_code, err = apply_diff(code, diff)
+    assert err is None and "x = 10" in new_code and "y = 2" in new_code
+
 def test_multiple_blocks():
     code = "a = 1\nb = 2"
     diff = "<<<SEARCH\na = 1\n===\na = 10\n>>>REPLACE\n<<<SEARCH\nb = 2\n===\nb = 20\n>>>REPLACE"
+    new_code, err = apply_diff(code, diff)
+    assert err is None and "a = 10" in new_code and "b = 20" in new_code
+
+def test_mixed_compact_and_canonical_blocks():
+    code = "a = 1\nb = 2"
+    diff = (
+        "<<<SEARCH\na = 1\n===\na = 10\n>>>REPLACE\n"
+        "<<<<<<< SEARCH\nb = 2\n=======\nb = 20\n>>>>>>> REPLACE"
+    )
     new_code, err = apply_diff(code, diff)
     assert err is None and "a = 10" in new_code and "b = 20" in new_code
 

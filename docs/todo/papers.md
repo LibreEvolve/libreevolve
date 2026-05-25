@@ -169,13 +169,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: add `best_workspace/` or equivalent archive artifacts and
     document them in run-artifact docs and tests.
 
-- [ ] Canonical AlphaEvolve diff block compatibility.
+- [x] Canonical AlphaEvolve diff block compatibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Figure 3.
   - Requirement: support the paper's SEARCH/REPLACE fence spelling when using
     AlphaEvolve-style prompts or examples.
-  - Current gap: local mutation parsing uses compact fences only.
-  - Required result: accept both canonical and compact diff formats without
-    breaking existing seeds/tests.
+  - Status: implemented in `libreevolve/core/diff.py` while preserving the
+    compact local format; tests cover canonical parsing for normal candidates,
+    evolve-block candidates, and multi-file file sections.
+  - Required result: keep accepting both canonical and compact diff formats
+    without breaking existing seeds/tests.
 
 - [ ] Structured proposal idea/rationale capture.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3 and Section 2.3.

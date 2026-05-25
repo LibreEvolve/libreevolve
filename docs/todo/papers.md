@@ -486,12 +486,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     scheduled basin-hopping-style application of `improve()` and `perturb()`.
   - Current evidence: the CLI alias is paper-neutral (`modular`) and docs label
     it ImprovEvolve-inspired, but `libreevolve/plugins/modular.py` injects a
-    static prompt block asking for those method names. The run history keeps
-    only the full rendered prompt, not a structured record that this plugin
-    supplied guidance or which generate/improve/perturb operation was selected.
+    static prompt block asking for those method names. Candidate metadata now
+    records that the plugin supplied rendered prompt context, including text,
+    hash, parent id, and inspiration ids, but no generate/improve/perturb
+    operation is selected or executed.
   - Missing: enforced interface, evaluator support for the interface,
     iterative improve/perturb execution, perturbation-intensity scheduling,
-    operation attribution/provenance, and benchmark-specific search loop.
+    operation attribution/provenance beyond static context attribution, and
+    benchmark-specific search loop.
 
 - [ ] Keep ThetaEvolve-inspired behavior explicitly paper-limited or implement
   batch sampling, dynamic RL training, and reward shaping.

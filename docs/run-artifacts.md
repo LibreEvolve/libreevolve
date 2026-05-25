@@ -150,6 +150,13 @@ redaction before provider calls; that redaction path is not yet shared by
 mutation prompts, critique prompts, explicit context files, plugin context, or
 prompt history.
 
+When plugins render extra prompt context for a generated candidate,
+`metadata.plugin_context` records one entry per plugin with the plugin class,
+module, parent id, inspiration ids, rendered text, character count, SHA-256
+hash, and whether non-empty context was emitted. It does not yet include
+validated plugin constructor config, plugin versions, retrieval query/result
+provenance, or selected strategy operations.
+
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.
 

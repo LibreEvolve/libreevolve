@@ -474,8 +474,9 @@ citations, source hashes, timestamps, or failure diagnostics in run artifacts.
 
 The ImprovEvolve-inspired modular plugin is static prompt guidance. It does
 not select, execute, or log a `generate_config`/`improve`/`perturb` operation
-for each candidate, and plugin prompt-context attribution is not structured
-outside the rendered prompt text yet.
+for each candidate. Candidate metadata records per-plugin prompt-context text,
+hashes, and parent/inspiration ids, but plugin configs, versions, and real
+strategy-operation choices are not yet first-class provenance.
 
 The ThetaEvolve-inspired export writes `runs/grpo_data.jsonl` by default and
 stores `reward = max(0.0, score)`. That side file is not yet scoped under the

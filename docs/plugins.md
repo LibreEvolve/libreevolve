@@ -136,8 +136,9 @@ Mechanics:
 - does not inspect the current parent, archive, or score
 - does not alter evaluation or logging
 - does not enforce or execute generate/improve/perturb interfaces
-- does not record a selected operation or a structured per-plugin prompt
-  context event outside the rendered prompt text
+- candidate metadata records the rendered per-plugin prompt-context text and
+  hash, but no selected operation is recorded because the plugin is static
+  prompt guidance
 
 ### `ttt_rl`
 

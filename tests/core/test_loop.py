@@ -549,6 +549,39 @@ def test_loop_excludes_selected_parent_from_inspirations():
     assert parent_id not in inspiration_ids
 
 
+def test_loop_records_per_plugin_prompt_context():
+    tmpdir = tempfile.mkdtemp()
+
+    class ContextPlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def on_evaluated(self, program, score): return score
+        def build_extra_context(self, parent, inspirations):
+            return "[PLUGIN CONTEXT]\nPrefer the simple branch.\n"
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[ContextPlugin()],
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    plugin_context = child["metadata"]["plugin_context"]
+
+    assert "[PLUGIN CONTEXT]" in child["metadata"]["prompt"]
+    assert plugin_context[0]["plugin"] == "ContextPlugin"
+    assert plugin_context[0]["module"] == __name__
+    assert plugin_context[0]["parent_id"] == child["parent_id"]
+    assert plugin_context[0]["context"] == "[PLUGIN CONTEXT]\nPrefer the simple branch.\n"
+    assert plugin_context[0]["chars"] == len(plugin_context[0]["context"])
+    assert plugin_context[0]["sha256"] == hashlib.sha256(
+        plugin_context[0]["context"].encode("utf-8")
+    ).hexdigest()
+    assert plugin_context[0]["emitted"] is True
+
+
 def test_loop_renders_full_mode_prompt_instructions():
     tmpdir = tempfile.mkdtemp()
     llm = _llm("x=2")

@@ -4,6 +4,7 @@ Inspired by AlphaEvolve's evolutionary loop and adjacent code-evolution systems.
 This synchronous loop is intentionally smaller than the paper systems.
 """
 from __future__ import annotations
+import hashlib
 import math
 import random
 from pathlib import Path
@@ -128,7 +129,7 @@ def evolve(problem: Problem, config: Config,
             exclude_ids={parent.id},
             strategy=config.inspiration_strategy,
         )
-        context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
+        context, plugin_context = _build_plugin_context(plugins, parent, inspirations)
         prompt_program = prompt_db.select()
         prompt = prompt_sampler.build(
             parent, inspirations, problem, context,
@@ -190,6 +191,7 @@ def evolve(problem: Problem, config: Config,
                                     "backend_idx": backend_idx,
                                     "critique": critique_metadata,
                                     "mutation_mode": config.mutation_mode,
+                                    "plugin_context": plugin_context,
                                     "prompt_program_id": prompt_program.id,
                                     "llm_calls": _program_llm_calls(
                                         mutation_llm_call, critique_metadata, result
@@ -253,6 +255,34 @@ def evolve(problem: Problem, config: Config,
     best = db.best()
     db.update_manifest_runtime(budget.finish(best_found=best is not None))
     return best
+
+
+def _build_plugin_context(
+    plugins: list[PluginBase],
+    parent: Program,
+    inspirations: list[Program],
+) -> tuple[str, list[dict]]:
+    contexts: list[str] = []
+    records: list[dict] = []
+    inspiration_ids = [program.id for program in inspirations]
+    for index, plugin in enumerate(plugins):
+        rendered = plugin.build_extra_context(parent, inspirations)
+        text = "" if rendered is None else str(rendered)
+        record = {
+            "index": index,
+            "plugin": plugin.__class__.__name__,
+            "module": plugin.__class__.__module__,
+            "parent_id": parent.id,
+            "inspiration_ids": inspiration_ids,
+            "chars": len(text),
+            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest() if text else "",
+            "emitted": bool(text.strip()),
+        }
+        if text:
+            record["context"] = text
+            contexts.append(text)
+        records.append(record)
+    return "\n".join(contexts), records
 
 
 def _apply_plugin_scores(

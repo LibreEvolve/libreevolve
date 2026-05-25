@@ -293,15 +293,15 @@ run-scoped artifact. It clips rewards with `max(0.0, score)` and appends to
 `runs/grpo_data.jsonl` by default; that file is not hashed or referenced from
 the run manifest yet.
 
-The DeepEvolve-inspired retrieval plugin also affects prompt context without
-run-scoped provenance. It keeps only the latest synthesis string in memory and
-does not persist provider/query/result metadata, citations, timestamps,
-failure diagnostics, or hashes for the context injected into prompts.
+The DeepEvolve-inspired retrieval plugin keeps only the latest synthesis string
+in memory. Candidate metadata records the rendered plugin-context text, hash,
+parent id, and inspiration ids, but the plugin still does not persist
+provider/query/result metadata, citations, timestamps, or failure diagnostics.
 
 The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
-always injects the same guidance block and does not record a structured
-plugin-context event or selected generate/improve/perturb operation for the
-candidate.
+always injects the same guidance block. Candidate metadata can attribute that
+rendered block to the plugin, but no selected generate/improve/perturb
+operation is executed or logged for the candidate.
 
 ## Population model
 

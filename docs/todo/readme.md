@@ -622,3 +622,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `docs/todo/papers.md` still tracks AlphaEvolve-scale benchmark hardening.
   - Required result: label the examples as smoke/teaching fixtures and point to
     the paper todo for benchmark hardening.
+
+- [x] Refresh documented run-artifact collision list.
+  - README-adjacent evidence: configuration and run-artifact docs described
+    fail/overwrite semantics but listed only the older history/prompt/manifest
+    and best-output files.
+  - Current evidence: `libreevolve/core/database.py::RUN_ARTIFACT_NAMES`
+    includes candidate, failure, and prompt quarantine JSONL files plus
+    `evaluator_artifacts/` and `plugin_artifacts/`.
+  - Required result: keep docs aligned with the exact artifact set that
+    preflight collision checks and overwrite cleanup use.

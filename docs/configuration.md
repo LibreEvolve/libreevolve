@@ -174,7 +174,9 @@ for quotas, escalation, or role-specific routing.
   already contains known run artifacts. `fail` aborts before appending or
   rewriting artifacts; `overwrite` deletes known run artifacts only
   (`history*.jsonl`, `failure_history*.jsonl`, `prompt_history*.jsonl`,
-  `manifest.json`, `best.py`, and `best_workspace/`) before starting.
+  their invalid-record quarantine streams, `manifest.json`, `best.py`,
+  `best_workspace/`, `evaluator_artifacts/`, and `plugin_artifacts/`) before
+  starting.
 - `seed` (`42`): random seed for Python's global `random` module. Prompt
   variants currently enter `PromptDatabase`, where initial untried selection is
   ordered by UUID4 prompt-program ids rather than this seed. It does not make

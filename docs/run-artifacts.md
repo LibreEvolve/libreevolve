@@ -78,7 +78,7 @@ Before a run starts, LibreEvolve checks the target run directory for known run
 artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
 `failure_history_invalid.jsonl`, `prompt_history.jsonl`,
 `prompt_history_invalid.jsonl`, `manifest.json`, `best.py`, and
-`best_workspace/`, and `evaluator_artifacts/`.
+`best_workspace/`, `evaluator_artifacts/`, and `plugin_artifacts/`.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

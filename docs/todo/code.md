@@ -1315,7 +1315,9 @@ Primary evidence:
     rewriting `manifest.json`, while `--overwrite` /
     `run_collision_policy: overwrite` removes only known run artifacts
     (`history*.jsonl`, `failure_history*.jsonl`, `prompt_history*.jsonl`,
-    `manifest.json`, `best.py`, and `best_workspace/`) before the new run.
+    their invalid-record quarantine streams, `manifest.json`, `best.py`,
+    `best_workspace/`, `evaluator_artifacts/`, and `plugin_artifacts/`) before
+    the new run.
     `manifest.json` records `run_id` and the effective collision policy.
   - Verified by: `tests/test_cli.py`, `tests/population/test_database.py`, and
     `tests/core/test_config.py` cover CLI preflight, overwrite cleanup,

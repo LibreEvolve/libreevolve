@@ -405,7 +405,7 @@ LibreEvolve is informed by a local cache of 24 papers on LLM-guided evolutionary
 | Paper | Authors | Year | Role |
 |-------|---------|:----:|------|
 | **MAP-Elites** | Mouret & Clune | 2015 | Quality-diversity archive |
-| **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Multi-armed bandit selection |
+| **UCB1** | Auer, Cesa-Bianchi & Fischer | 2002 | Inspiration for heuristic backend routing |
 
 The references above are summarized for context in this README. The codebase and
 tests should be treated as the source of truth for current implementation

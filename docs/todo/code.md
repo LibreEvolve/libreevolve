@@ -568,8 +568,8 @@ Primary evidence:
     subprocess even though validators execute under the current interpreter
     with local filesystem access and only temporary workspace/process
     separation.
-  - Status: README and evaluator comments now call this a temporary local
-    subprocess/process separation, while the sandbox/resource-limit work remains
-    open above.
+  - Status: README, AGENTS.md, and evaluator comments now call this a temporary
+    local subprocess/process separation, while the sandbox/resource-limit work
+    remains open above.
   - Required result: avoid using "isolated" or "sandboxed" for the current
     evaluator until real sandbox/resource controls exist.

@@ -193,8 +193,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: `CascadeEvaluator` executes validators in a temporary
     subprocess using the current Python interpreter and local filesystem
     access; this is process separation, not sandbox isolation.
-  - Required result: call it a temporary local subprocess in README and keep
-    real sandbox/resource-limit work in `docs/todo/code.md`.
+  - Required result: call it a temporary local subprocess in README/AGENTS
+    guidance and keep real sandbox/resource-limit work in `docs/todo/code.md`.
+
+- [x] Soften the UCB1 paper-table role.
+  - README evidence: the references table described UCB1 as "Multi-armed bandit
+    selection."
+  - Current evidence: `LLMEnsemble` is a heuristic UCB-style router over
+    unbounded fitness deltas, and canonical reward-normalization work remains
+    open in `docs/todo/papers.md`.
+  - Required result: describe UCB1 as inspiration for backend routing, not as a
+    fully canonical implementation.
 
 - [x] Soften the failure-history feature claim.
   - README evidence: the feature table claimed the last five failed mutations

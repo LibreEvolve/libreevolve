@@ -27,7 +27,8 @@ libreevolve/
 
 - `.env` file at project root for API keys (loaded via python-dotenv with override=True)
 - `runs/` directory is gitignored — contains history.jsonl and best.py per problem
-- All validate.py files run in isolated subprocesses (exec/eval is intentional)
+- All validate.py files run in temporary local subprocesses, not security
+  sandboxes (exec/eval is intentional)
 - SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`
 - Diff engine strips markdown fences automatically
 - VALID_THRESHOLD = 0.0: programs with score >= 0 enter the archive

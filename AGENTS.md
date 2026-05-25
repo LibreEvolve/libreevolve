@@ -27,7 +27,7 @@ libreevolve/
 
 - `.env` file at project root for API keys (loaded via python-dotenv with override=True)
 - `runs/` directory is gitignored — contains manifest.json, history.jsonl,
-  optional prompt_history.jsonl, and best.py per problem
+  prompt_history.jsonl, and best.py per problem
 - All validate.py files run in temporary local subprocesses, not security
   sandboxes (exec/eval is intentional)
 - SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`

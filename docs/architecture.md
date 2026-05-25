@@ -211,10 +211,13 @@ reasoning-model detection or API-mode validation yet.
 
 - `manifest.json`: effective run configuration and runtime metadata
 - `history.jsonl`: append-only candidate records
+- `prompt_history.jsonl`: append-only prompt-program selection/scoring records
 - `best.py`: final best archived program
 
 Each history record includes primary code, candidate files, primary file,
 fitness, lineage, metadata, metrics, and the structured evaluation summary.
+Program records include `metadata.prompt_program_id`, which links candidates to
+prompt-program events in `prompt_history.jsonl`.
 
 ## Known gaps
 

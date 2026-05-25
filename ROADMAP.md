@@ -61,6 +61,8 @@ is not yet an AlphaEvolve reproduction.
   and deduplicating migrated copies from inspiration sets.
 - Make MAP-Elites descriptors workspace-aware instead of using only the
   primary-file compatibility view for complexity/diversity.
+- Stabilize descriptor normalization with fixed bounds, evaluator-provided
+  behavior descriptors, or explicit rebin/snapshot semantics.
 - Expose metric-vector archive diagnostics in run artifacts and `show`.
 
 ### 3. Expand evaluation cascades

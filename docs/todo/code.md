@@ -799,6 +799,26 @@ Primary evidence:
     configured descriptor set; persist descriptor values; and add tests where
     non-primary file changes alter archive cells and inspiration sampling.
 
+- [ ] Stabilize MAP-Elites descriptor normalization and rebinning semantics.
+  - Spec evidence: MAP-Elites illuminates a behavior space whose dimensions
+    are meaningful across the archive. Descriptor coordinates should be
+    reproducible, comparable across runs, and not silently invalidated by later
+    candidates.
+  - Current evidence: `MAPElites._norm_complexity()` updates
+    `self._max_complexity` while computing the candidate cell, so a later
+    longer program changes the normalization denominator for future candidates
+    without recomputing or moving programs already stored in `_grid`.
+    `_diversity()` computes distance against the current capped elite list, so
+    diversity coordinates also depend on current archive contents rather than
+    a persisted descriptor model. `history.jsonl` records per-candidate
+    descriptor values after admission, but the archive does not persist the
+    normalization state or rebin cells when descriptor scales change.
+  - Required result: define fixed descriptor bounds, evaluator-provided
+    behavior descriptors, or an explicit dynamic-normalization/rebinning
+    policy; persist descriptor normalization state in run artifacts; add tests
+    proving that candidate insertion order either does not change existing
+    cells or triggers a documented rebin/snapshot event.
+
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and
   lineage.

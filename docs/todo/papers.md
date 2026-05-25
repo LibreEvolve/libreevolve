@@ -481,11 +481,15 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current evidence: `MAPElites` hard-codes performance, code length, and
     TF-IDF char-4gram diversity as dimensions. For multi-file candidates, code
     length and diversity are computed from `Program.code`, the primary-file
-    compatibility view, not the full candidate workspace.
+    compatibility view, not the full candidate workspace. Complexity
+    normalization updates its maximum length while candidates are inserted, and
+    TF-IDF diversity is recomputed against the current capped elite list, so
+    descriptor coordinates are history-dependent and existing cells are not
+    re-binned when normalization reference state changes.
   - Missing: user-configurable behavior descriptors, phenotype/behavior
-    descriptors from evaluator metadata, workspace-aware descriptors, and
-    diagnostics that show the illuminated search space rather than only
-    best/archive cells.
+    descriptors from evaluator metadata, workspace-aware descriptors, stable
+    descriptor normalization or explicit rebinning, and diagnostics that show
+    the illuminated search space rather than only best/archive cells.
 
 - [ ] Document UCB1 as a heuristic adaptation or adjust it toward canonical
   UCB1.

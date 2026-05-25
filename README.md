@@ -202,6 +202,8 @@ occupant ids, and elite-list effects.
 
 For workspace candidates, MAP-Elites complexity and TF-IDF diversity descriptors
 currently use the primary-file view, not the full candidate file set.
+Those local descriptors are also normalized against evolving in-memory archive
+state, so they are not stable, user-defined behavior dimensions yet.
 
 ## Example Runs
 

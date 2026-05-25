@@ -291,6 +291,12 @@ whether a candidate was rejected by threshold, assigned to an island and cell,
 replaced a cell occupant, entered only the capped elite list, or was ignored by
 cell competition.
 
+Descriptor normalization is also stateful. Complexity is normalized against
+the largest primary-file length seen so far, and TF-IDF diversity is computed
+against the current capped elite list. Existing cells are not re-binned when
+those reference sets change, so current MAP-Elites coordinates are local
+heuristics rather than stable behavior-descriptor coordinates.
+
 Parent selection and inspiration sampling are also intentionally thin today.
 Exploit picks the global best, explore samples a random occupied cell, and
 inspirations are random occupied cells across islands. Inspiration sampling

@@ -535,6 +535,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluator-provided behavior descriptors, persist descriptor values, and
     test non-primary file changes affecting cells and inspiration sampling.
 
+- [x] Add stable MAP-Elites descriptor normalization/rebinning to diversity
+  work.
+  - Evidence: `MAPElites._norm_complexity()` mutates `_max_complexity` while
+    assigning a candidate cell, and `_diversity()` uses the current capped
+    elite list as its TF-IDF reference corpus. Existing grid occupants are not
+    re-binned when either reference state changes.
+  - Current roadmap gap: workspace-aware descriptors were tracked, but not the
+    separate issue that even primary-file descriptor coordinates are
+    insertion-order dependent unless normalization bounds or rebinning
+    semantics are defined.
+  - Required result: track fixed descriptor bounds, evaluator-provided behavior
+    descriptors, persisted normalization state, or explicit rebin/snapshot
+    events with tests for insertion-order stability.
+
 - [x] Expand "training-data export" into a concrete ThetaEvolve/GRPO boundary.
   - Evidence: `ROADMAP.md:98-99` mentions downstream RL fine-tuning around
     `ttt_rl`, while the current plugin only writes JSONL and does not train.

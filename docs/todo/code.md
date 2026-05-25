@@ -833,10 +833,12 @@ Primary evidence:
   - Current evidence: `evolve()` calls `llm.generate()` for mutation, optional
     critique, optional feedback, and meta-prompt mutation with no try/except or
     retry policy. `LLMEnsemble.generate()` selects a backend, calls
-    `self.backends[idx].generate(prompt)`, and increments `counts[idx]` only
-    after a successful return; failed provider calls are neither counted nor
-    logged, and no alternate backend is tried. A mutation-call exception aborts
-    the run before candidate/evaluation logging, while critique, feedback, or
+    `self.backends[idx].generate(prompt)`, increments the global `total`
+    counter before that provider call, and increments `counts[idx]` only after
+    a successful return. Failed provider calls can therefore advance the UCB
+    attempt counter without a matching backend count, structured failure
+    record, or alternate-backend attempt. A mutation-call exception aborts the
+    run before candidate/evaluation logging, while critique, feedback, or
     meta-prompt exceptions can abort after useful work has already completed.
   - Required result: define per-role LLM failure policy with bounded retries,
     timeout/rate-limit classification, optional backend fallback, scheduler

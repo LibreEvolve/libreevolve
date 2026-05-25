@@ -339,8 +339,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [x] Add LLM provider failure policy to backend/runtime work.
   - Evidence: `evolve()` calls `llm.generate()` for mutation, critique,
     feedback, and meta-prompt mutation without retries or exception handling,
-    while `LLMEnsemble.generate()` only increments backend counts after a
-    successful return.
+    while `LLMEnsemble._ucb1_select()` advances the global attempt counter
+    before the provider call and `LLMEnsemble.generate()` increments backend
+    counts only after a successful return.
   - Current roadmap gap: backend scheduling and telemetry work covered
     throughput, usage, and failure metadata, but did not require deterministic
     retry/fallback/quarantine behavior for failed provider calls.

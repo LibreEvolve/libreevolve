@@ -20,7 +20,9 @@ not a canonical UCB1 implementation; reward-normalization gaps are tracked in
 Current behavior:
 
 - `generate(prompt)` returns both the raw backend response and the backend index
-- selection counts are incremented when a backend is chosen
+- the scheduler's global `total` counter advances before the backend call, but
+  the selected backend's `counts` entry advances only after a successful
+  response
 - rewards are recorded only after evaluation
 - the evolution loop clamps reward to `max(0.0, score - parent.fitness)`
 - critique, feedback-grader, and meta-prompt calls currently share this same
@@ -29,6 +31,9 @@ Current behavior:
 - provider response metadata is not persisted. Token usage, latency, retry
   counts, API mode, request/response ids, finish reasons, and raw provider
   diagnostics are discarded by the backend adapters.
+- failed provider calls are not logged or retried by the ensemble; a failure
+  can advance `total` without a matching backend count or structured failure
+  record
 
 This means backends are rewarded for improvement over the selected parent, not
 for absolute score, and role-specific auxiliary-call accounting remains a known

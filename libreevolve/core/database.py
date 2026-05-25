@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 from pathlib import Path
 import shutil
 from libreevolve.core.config import Config
@@ -183,6 +184,9 @@ class ProgramDatabase:
             {
                 "config": {
                     "max_generations": config.max_generations,
+                    "max_evaluations": config.max_evaluations,
+                    "max_evaluator_seconds": config.max_evaluator_seconds,
+                    "max_runtime_seconds": config.max_runtime_seconds,
                     "num_inspirations": config.num_inspirations,
                     "eval_timeout_sec": config.eval_timeout_sec,
                     "validator_env_allowlist": config.validator_env_allowlist,
@@ -227,6 +231,11 @@ class ProgramDatabase:
             self._manifest,
             indent=2,
         )
+
+    def update_manifest_runtime(self, runtime: dict) -> None:
+        manifest = json.loads(self._manifest.read_text(encoding="utf-8"))
+        manifest["runtime"] = runtime
+        strict_json_dump(manifest, self._manifest, indent=2)
 
 
 def prepare_run_directory(run_dir: Path, policy: str) -> None:

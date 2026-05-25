@@ -11,6 +11,9 @@ class ConfigError(ValueError):
 class Config:
     # Evolution
     max_generations:        int   = 1000
+    max_evaluations:        int | None = None
+    max_evaluator_seconds:  float | None = None
+    max_runtime_seconds:    float | None = None
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
     validator_env_allowlist: list[str] = field(default_factory=list)
@@ -57,6 +60,9 @@ class Config:
 
     def validate(self) -> None:
         _require_int("max_generations", self.max_generations, minimum=0)
+        _require_optional_int("max_evaluations", self.max_evaluations, minimum=0)
+        _require_optional_positive_number("max_evaluator_seconds", self.max_evaluator_seconds)
+        _require_optional_positive_number("max_runtime_seconds", self.max_runtime_seconds)
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)
         _validate_string_list("validator_env_allowlist", self.validator_env_allowlist)
@@ -98,6 +104,11 @@ def _require_int(name: str, value: object, minimum: int) -> None:
         raise ConfigError(f"{name} must be an integer >= {minimum}")
 
 
+def _require_optional_int(name: str, value: object, minimum: int) -> None:
+    if value is not None:
+        _require_int(name, value, minimum)
+
+
 def _require_number(name: str, value: object) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ConfigError(f"{name} must be a finite number")
@@ -110,6 +121,11 @@ def _require_number(name: str, value: object) -> float:
 def _require_positive_number(name: str, value: object) -> None:
     if _require_number(name, value) <= 0:
         raise ConfigError(f"{name} must be > 0")
+
+
+def _require_optional_positive_number(name: str, value: object) -> None:
+    if value is not None:
+        _require_positive_number(name, value)
 
 
 def _require_nonnegative_number(name: str, value: object) -> None:

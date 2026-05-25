@@ -836,6 +836,10 @@ Primary evidence:
     a single new solution when evaluation is parallelized.
   - Current evidence: `eval_timeout_sec` defaults to 60 seconds and one
     subprocess (`libreevolve/core/config.py`, `libreevolve/core/evaluator.py`).
+    `RunBudget` now tracks local `max_evaluations`,
+    `max_evaluator_seconds`, and `max_runtime_seconds` limits, but these are
+    synchronous local counters rather than parallel worker, accelerator, or
+    resumable expensive-evaluation controls.
   - Required result: add wall-clock, sample, accelerator, and per-stage budget
     controls, plus resumable evaluation state.
 
@@ -843,11 +847,14 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Section 2.6 frames the system around maximizing
     useful ideas evaluated under an overall computation budget, and Section 4
     ablations report performance by fraction of the compute budget.
-  - Current evidence: `Config` exposes `max_generations` and per-validator
-    timeouts only. The loop has no wall-clock, LLM-call, token, cost,
-    evaluator-second, sample, or retry budget; `manifest.json` does not record
-    consumed budget; runs stop because the generation loop ends or no parent is
-    available, without a structured stop reason.
+  - Current evidence: `Config` exposes `max_generations`, `max_evaluations`,
+    `max_evaluator_seconds`, `max_runtime_seconds`, and per-validator
+    timeouts. `RunBudget` stops the synchronous loop deterministically on
+    exhausted local evaluation/evaluator-second/wall-clock budgets, each
+    candidate record stores `metadata.budget`, and completed runs update
+    `manifest.json` with consumed budget and structured stop reason. The loop
+    still has no LLM-call, token, cost, stage-sample, retry, accelerator, or
+    async worker budget counters.
   - Required result: add a budget schema, deterministic counters for LLM
     calls/tokens/cost/evaluator elapsed time/stage samples/retries, structured
     stop reasons, manifest/history budget summaries, and tests that budget

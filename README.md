@@ -118,6 +118,8 @@ you intentionally want to replace the previous run artifacts.
 Each run manifest records effective settings plus reproducibility provenance:
 Git state when available, `libreevolve/` source-tree hashes, problem-tree
 hashes, direct evaluator entrypoint hashes, and plugin module file hashes.
+It also records completed-run runtime accounting, including structured stop
+reason and consumed local evaluation/generation budgets.
 
 ### Inspect Results
 
@@ -194,7 +196,7 @@ graph TD
 7. **Failure memory** — Failed/rejected mutations are persisted with error causes, changed files, evaluator summaries, and bounded prompt-visible examples
 8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
-10. **Artifacts** — `best.py` preserves the primary-file compatibility view, and `best_workspace/` contains the complete best candidate file set
+10. **Artifacts** — `best.py` preserves the primary-file compatibility view, `best_workspace/` contains the complete best candidate file set, and `manifest.json` records runtime stop/budget accounting
 
 </details>
 

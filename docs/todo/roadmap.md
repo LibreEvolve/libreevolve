@@ -654,6 +654,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     deterministic accounting, but did not require whole-run wall-clock,
     LLM-call, token, cost, evaluator-second, sample/retry counters, stop
     reasons, or equal-budget ablation reporting.
+  - Status: implemented for local synchronous generation/evaluation budgets:
+    `max_evaluations`, `max_evaluator_seconds`, `max_runtime_seconds`,
+    per-candidate `metadata.budget`, and completed-manifest `runtime` stop
+    summaries. LLM-call/token/cost, stage-sample/retry, accelerator, async
+    queue, and equal-budget benchmark reporting remain open.
   - Required result: make budget schemas, counters, stop reasons, manifest
     summaries, and budget-fraction benchmark reporting explicit runtime work.
 

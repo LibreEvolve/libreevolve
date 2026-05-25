@@ -25,6 +25,36 @@ def test_run_calls_evolve(tmp_path):
         r = CliRunner().invoke(cli, ["run", str(tmp_path), "--max-generations", "1"])
     assert r.exit_code == 0 and mock.called
 
+
+def test_run_budget_cli_options_override_config(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(f"log_dir: {(tmp_path / 'runs').as_posix()}\n")
+    mock_best = MagicMock(); mock_best.fitness = 0.99; mock_best.code = "x=2"
+
+    with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "3",
+                "--max-evaluations",
+                "7",
+                "--max-evaluator-seconds",
+                "11.5",
+                "--max-runtime-seconds",
+                "30",
+            ],
+        )
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.max_generations == 3
+    assert config.max_evaluations == 7
+    assert config.max_evaluator_seconds == 11.5
+    assert config.max_runtime_seconds == 30.0
+
 def test_run_writes_complete_best_workspace(tmp_path):
     _make_problem(tmp_path)
     log_dir = tmp_path / "runs"

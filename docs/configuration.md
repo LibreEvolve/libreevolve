@@ -17,6 +17,12 @@ from `validate.py` unless explicitly allowlisted.
 ### Evolution
 
 - `max_generations` (`1000`): generations to run.
+- `max_evaluations` (`null`): optional cap on validator evaluations,
+  including seed evaluations.
+- `max_evaluator_seconds` (`null`): optional cap on cumulative evaluator
+  elapsed seconds recorded from `EvaluationResult.elapsed_sec`.
+- `max_runtime_seconds` (`null`): optional wall-clock cap checked between
+  seed/candidate evaluations. It is not a hard preemptive timeout.
 - `num_inspirations` (`3`): archive members rendered into prompts.
 - `eval_timeout_sec` (`60.0`): default validator subprocess timeout.
 - `validator_env_allowlist` (`[]`): parent environment variable names to pass
@@ -175,6 +181,9 @@ Example:
 
 ```yaml
 max_generations: 200
+max_evaluations: 1000
+max_evaluator_seconds: 7200
+max_runtime_seconds: 14400
 eval_timeout_sec: 15
 mutation_mode: full
 evaluator_artifact_include: ["*.json", "artifacts/**"]
@@ -291,10 +300,10 @@ run rather than being recorded as structured failed LLM-call attempts.
   before a run starts when the config file parses to a mapping.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
   overwritten by the problem directory name unless `--run-name` is supplied.
-- Run-wide budget configuration is not implemented yet. `max_generations` and
-  per-validator timeouts are the only hard stop controls; there are no
-  wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or
-  accelerator budget counters.
+- Run-wide budget configuration is local and synchronous. `max_generations`,
+  `max_evaluations`, `max_evaluator_seconds`, `max_runtime_seconds`, and
+  per-validator timeouts are available, but there are no LLM-call, token, cost,
+  stage-sample, retry, accelerator, or async queue budget counters.
 - Seeded replay is incomplete: `Config.seed` controls local Python `random`
   choices, but prompt variant ordering is mediated by UUID4 prompt-program ids,
   `Program` and `PromptProgram` IDs are UUID4 values, and provider/model

@@ -149,10 +149,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation
     budget, and ablations compare performance as a function of consumed budget.
-  - Current gap: LibreEvolve has `max_generations` plus per-subprocess
-    timeouts, but no run-wide budget object, consumed-budget counters,
-    structured stop reason, token/cost/evaluator-second accounting, or
-    benchmark harness that can report performance by compute-budget fraction.
+  - Partial status: LibreEvolve now has a local `RunBudget` for
+    `max_generations`, optional total evaluation count, optional cumulative
+    evaluator seconds, and optional wall-clock seconds. Candidate history
+    records include budget snapshots, and completed manifests include consumed
+    budgets plus structured stop reason.
+  - Current gap: token/cost accounting, LLM-call retry budgets, stage-sample
+    budgets, accelerator budgets, async queue accounting, and benchmark reports
+    by compute-budget fraction are still missing.
   - Required result: persist budget configuration and consumption in manifests
     and history, stop deterministically on exhausted budgets, and add benchmark
     scripts/reports that can compare variants at equal budget fractions.

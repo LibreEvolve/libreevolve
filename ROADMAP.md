@@ -128,12 +128,16 @@ is not yet an AlphaEvolve reproduction.
   long runs.
 - Persist MAP-Elites cell/island state, descriptor values, elite snapshots, and
   migration events, not only candidate history records.
-- Record Git/code state, problem hashes, plugin specs, and artifact hashes in
-  the run manifest.
+- Complete run manifest hardening for validated plugin specs/constructor
+  parameters and aggregate hashes for artifacts emitted after startup. Git/code
+  state, problem hashes, direct evaluator hashes, and plugin module hashes are
+  already recorded.
 - Define seeded replay semantics for run ids, candidate ids, prompt-program ids,
   RNG state, and provider nondeterminism boundaries.
-- Add deterministic accounting for concurrent evaluations, retries, consumed
-  budgets, and budget-exhaustion stop reasons.
+- Extend budget accounting beyond the current local synchronous generation,
+  evaluator-call, evaluator-second, wall-clock, and stop-reason counters to
+  cover concurrent evaluations, retries, provider tokens/costs, stage samples,
+  async queues, and equal-budget ablation reporting.
 
 ### 7. Backend scheduling and critique
 

@@ -9,8 +9,17 @@ def test_default_n_islands():
     assert Config().n_islands == 5
 
 def test_override_fields():
-    c = Config(max_generations=50, seed=99)
+    c = Config(
+        max_generations=50,
+        max_evaluations=10,
+        max_evaluator_seconds=5.0,
+        max_runtime_seconds=30.0,
+        seed=99,
+    )
     assert c.max_generations == 50 and c.seed == 99
+    assert c.max_evaluations == 10
+    assert c.max_evaluator_seconds == 5.0
+    assert c.max_runtime_seconds == 30.0
 
 def test_default_backend_is_anthropic():
     assert Config().backends[0]["type"] == "anthropic"
@@ -20,6 +29,9 @@ def test_default_backend_is_anthropic():
     ("kwargs", "message"),
     [
         ({"max_generations": -1}, "max_generations"),
+        ({"max_evaluations": -1}, "max_evaluations"),
+        ({"max_evaluator_seconds": 0}, "max_evaluator_seconds"),
+        ({"max_runtime_seconds": 0}, "max_runtime_seconds"),
         ({"num_inspirations": -1}, "num_inspirations"),
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),

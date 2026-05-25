@@ -17,6 +17,12 @@ def cli() -> None:
 @cli.command()
 @click.argument("problem_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--max-generations", "-g", type=int, default=None)
+@click.option("--max-evaluations", type=int, default=None,
+              help="Maximum number of validator evaluations, including seeds.")
+@click.option("--max-evaluator-seconds", type=float, default=None,
+              help="Maximum cumulative evaluator elapsed seconds.")
+@click.option("--max-runtime-seconds", type=float, default=None,
+              help="Maximum wall-clock seconds checked between evaluations.")
 @click.option("--plugins",  "-p", multiple=True)
 @click.option("--backends", "-b", multiple=True)
 @click.option("--seed", type=int, default=None)
@@ -30,7 +36,8 @@ def cli() -> None:
               help="Custom name for this run (default: problem directory name)")
 @click.option("--overwrite", is_flag=True,
               help="Delete existing run artifacts in the target run directory before starting.")
-def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
+def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
+        max_runtime_seconds, plugins, backends, seed, reasoning_effort,
         explore_ratio, mutation_mode, run_name, overwrite):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import ConfigError
@@ -39,8 +46,19 @@ def run(problem_dir, max_generations, plugins, backends, seed, reasoning_effort,
     if not problem.initial_programs:
         raise click.ClickException("No seed programs found.")
     try:
-        config = _build_config(problem, max_generations, list(plugins), list(backends), seed,
-                               reasoning_effort, explore_ratio, mutation_mode)
+        config = _build_config(
+            problem,
+            max_generations,
+            max_evaluations,
+            max_evaluator_seconds,
+            max_runtime_seconds,
+            list(plugins),
+            list(backends),
+            seed,
+            reasoning_effort,
+            explore_ratio,
+            mutation_mode,
+        )
         if run_name:
             config.problem_name = run_name
         if overwrite:
@@ -92,7 +110,8 @@ def show(run_dir):
     click.echo(best["code"])
 
 
-def _build_config(problem, max_generations, plugins, backends, seed,
+def _build_config(problem, max_generations, max_evaluations, max_evaluator_seconds,
+                  max_runtime_seconds, plugins, backends, seed,
                   reasoning_effort=None, explore_ratio=None, mutation_mode=None):
     import yaml
     from libreevolve.core.config import Config, ConfigError
@@ -106,6 +125,9 @@ def _build_config(problem, max_generations, plugins, backends, seed,
         raise ConfigError(f"Unknown config keys in {cp}: {unknown}")
     config = Config(**{k: v for k, v in cfg.items() if k in valid})
     if max_generations is not None: config.max_generations = max_generations
+    if max_evaluations is not None: config.max_evaluations = max_evaluations
+    if max_evaluator_seconds is not None: config.max_evaluator_seconds = max_evaluator_seconds
+    if max_runtime_seconds is not None: config.max_runtime_seconds = max_runtime_seconds
     if plugins: config.plugins = list(plugins)
     if backends:
         bd = [{"type": t, "model": m} for b in backends for t, _, m in [b.partition(":")]]

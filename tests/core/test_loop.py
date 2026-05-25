@@ -26,6 +26,35 @@ def test_returns_program():
                                         log_dir=tempfile.mkdtemp(), problem_name="t"))
     assert best is not None and isinstance(best.fitness, float)
 
+
+def test_evaluation_budget_stops_before_llm_mutation():
+    tmpdir = tempfile.mkdtemp()
+    llm = _llm()
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        best = evolve(
+            _problem(),
+            Config(
+                max_generations=5,
+                max_evaluations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    assert best is not None
+    llm.generate.assert_not_called()
+    run_dir = Path(tmpdir) / "t"
+    records = [json.loads(line) for line in (run_dir / "history.jsonl").read_text().splitlines()]
+    assert len(records) == 1
+    assert records[0]["metadata"]["budget"]["consumed"]["evaluations"] == 1
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    assert manifest["config"]["max_evaluations"] == 1
+    assert manifest["runtime"]["stop_reason"] == "max_evaluations"
+    assert manifest["runtime"]["consumed"]["evaluations"] == 1
+    assert manifest["runtime"]["consumed"]["seed_evaluations"] == 1
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 0
+
 def test_threshold_is_zero():
     assert VALID_THRESHOLD == 0.0
 

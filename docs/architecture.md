@@ -390,6 +390,13 @@ problem-tree hashes, direct evaluator entrypoint hashes, and plugin module file
 hashes. Plugin constructor parameters/spec schemas and aggregate hashes for
 artifacts emitted after startup remain open.
 
+The synchronous loop uses a local `RunBudget` tracker for `max_generations`,
+optional total evaluation count, optional cumulative evaluator seconds, and
+optional wall-clock seconds. Budget consumption is written into each candidate
+record under `metadata.budget`, and the completed run writes a `runtime`
+summary with stop reason back into `manifest.json`. These are local accounting
+counters, not async queue checkpoints or provider token/cost accounting.
+
 ## Known gaps
 
 - Candidate workspaces are local text file sets, not arbitrary-language build
@@ -407,9 +414,10 @@ artifacts emitted after startup remain open.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
-- Runtime budget accounting is limited to `max_generations` and evaluator
-  timeouts; there is no run-wide wall-clock, token, cost, evaluator-second, or
-  structured stop-reason model.
+- Runtime budget accounting covers local generation count, total evaluator
+  calls, cumulative evaluator seconds, wall-clock seconds, and structured stop
+  reasons. Token, provider-cost, LLM retry, stage-sample, accelerator, and
+  async queue budgets are not implemented.
 - Archive cell/island state and migration events are not persisted separately
   from candidate history records.
 - LLM critique and feedback are synchronous optional passes; there are no

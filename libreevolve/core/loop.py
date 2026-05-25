@@ -7,6 +7,7 @@ from __future__ import annotations
 import math
 import random
 from pathlib import Path
+from libreevolve.core.budget import RunBudget
 from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
@@ -45,6 +46,7 @@ def evolve(problem: Problem, config: Config,
     if plugins is None:
         plugins = []
     random.seed(config.seed)
+    budget = RunBudget.from_config(config)
     db        = ProgramDatabase(
         config,
         perf_bounds=(0.0, 1.0),
@@ -84,7 +86,10 @@ def evolve(problem: Problem, config: Config,
         CandidateWorkspace.from_code(code) for code in problem.initial_programs
     ]
     for seed_workspace in seed_workspaces:
+        if budget.check_before_evaluation():
+            break
         result = evaluator.evaluate(seed_workspace, diff_error=None)
+        budget.record_evaluation(result.elapsed_sec, seed=True)
         program = Program(
             code=seed_workspace.code,
             files=dict(seed_workspace.files),
@@ -92,6 +97,7 @@ def evolve(problem: Problem, config: Config,
             fitness=result.fitness,
             metrics=result.metrics,
             evaluation=result.to_dict(),
+            metadata={"budget": budget.snapshot()},
         )
         db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
@@ -100,12 +106,16 @@ def evolve(problem: Problem, config: Config,
     _MAX_FAILURES = 5
 
     for gen in range(config.max_generations):
+        if budget.check_before_generation():
+            break
+        budget.record_generation_start()
         for plugin in plugins:
             plugin.on_generation_start(gen, db)
 
         strategy = "explore" if random.random() < config.explore_ratio else "exploit"
         parent = db.sample(strategy=strategy)
         if parent is None:
+            budget.stop_reason = "no_parent"
             break
 
         inspirations = db.sample_diverse(
@@ -146,6 +156,7 @@ def evolve(problem: Problem, config: Config,
             parent.workspace(), diff, mutation_mode=config.mutation_mode
         )
         result = evaluator.evaluate(child_workspace, diff_error=diff_error)
+        budget.record_evaluation(result.elapsed_sec, seed=False)
         result = apply_llm_feedback(
             result, child_workspace, problem, config.llm_feedback, llm
         )
@@ -162,7 +173,8 @@ def evolve(problem: Problem, config: Config,
                                     "backend_idx": backend_idx,
                                     "critique": critique_metadata,
                                     "mutation_mode": config.mutation_mode,
-                                    "prompt_program_id": prompt_program.id},
+                                    "prompt_program_id": prompt_program.id,
+                                    "budget": budget.snapshot()},
                           metrics=result.metrics,
                           evaluation=result.to_dict())
 
@@ -210,8 +222,11 @@ def evolve(problem: Problem, config: Config,
         best = db.best()
         for plugin in plugins:
             plugin.on_generation_end(gen, best)
+        budget.record_generation_complete()
 
-    return db.best()
+    best = db.best()
+    db.update_manifest_runtime(budget.finish(best_found=best is not None))
+    return best
 
 
 def _apply_plugin_scores(

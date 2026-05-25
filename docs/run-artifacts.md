@@ -39,6 +39,8 @@ the loaded problem directory name.
 
 - problem name
 - generation and population settings
+- run budget limits: `max_generations`, optional `max_evaluations`,
+  `max_evaluator_seconds`, and `max_runtime_seconds`
 - mutation mode
 - evaluator stage config
 - prompt variants, meta-prompt settings, critique settings, and LLM feedback
@@ -85,6 +87,15 @@ the new run begins. Arbitrary files in the run directory are left alone.
 `manifest.json` records `run_id` and `run_collision_policy`. `run_id` is
 provenance metadata, not a resume handle.
 
+After a run exits normally, `manifest.json` also receives a `runtime` section
+with structured stop reason and consumed local budgets: seed/candidate/total
+evaluation counts, cumulative evaluator elapsed seconds, wall-clock runtime
+seconds, and generation counts. Current stop reasons include
+`max_generations`, `max_evaluations`, `max_evaluator_seconds`,
+`max_runtime_seconds`, `no_parent`, `no_valid_programs`, and `completed`.
+Token, provider cost, LLM-call retry, stage-sample, and accelerator budgets are
+not first-class counters yet.
+
 ## `history.jsonl`
 
 Each line is one candidate record. Current fields:
@@ -114,6 +125,8 @@ Important behavior:
 - archive admission metadata is stored under `metadata.archive_admission`
 - optional LLM feedback grader records are stored under
   `evaluation.metadata.llm_feedback`
+- `metadata.budget` stores the run-budget snapshot immediately after that
+  candidate's evaluation
 
 When critique is enabled, `metadata.critique` stores the original mutation, the
 revised mutation, the critique prompt, the critique backend index, parser

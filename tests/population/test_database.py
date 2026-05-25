@@ -160,6 +160,9 @@ def test_manifest_written():
         log_dir=tmpdir,
         problem_name="t",
         mutation_mode="full",
+        max_evaluations=12,
+        max_evaluator_seconds=4.5,
+        max_runtime_seconds=30.0,
         run_id="run-123",
         validator_env_allowlist=["BENCHMARK_DATA_DIR"],
         evaluator_artifact_include=["*.json"],
@@ -170,6 +173,9 @@ def test_manifest_written():
     ))
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
+    assert manifest["config"]["max_evaluations"] == 12
+    assert manifest["config"]["max_evaluator_seconds"] == 4.5
+    assert manifest["config"]["max_runtime_seconds"] == 30.0
     assert manifest["config"]["run_id"] == "run-123"
     assert manifest["config"]["run_collision_policy"] == "fail"
     assert manifest["config"]["validator_env_allowlist"] == ["BENCHMARK_DATA_DIR"]
@@ -196,6 +202,22 @@ def test_manifest_writes_context_source_provenance():
         {"relative_path": "validate.py", "sha256": "def"}
     ]
     assert manifest["provenance"] == {"problem": {"tree_hash": "123"}}
+
+
+def test_manifest_runtime_can_be_updated():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+
+    db.update_manifest_runtime(
+        {
+            "stop_reason": "max_evaluations",
+            "consumed": {"evaluations": 1},
+        }
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    assert manifest["runtime"]["stop_reason"] == "max_evaluations"
+    assert manifest["runtime"]["consumed"]["evaluations"] == 1
 
 
 def test_database_fails_when_run_artifacts_already_exist():

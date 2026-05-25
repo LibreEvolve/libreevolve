@@ -50,7 +50,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     code block when appropriate.
   - Status: implemented `diff` and `full` mutation modes. Canonical
     AlphaEvolve SEARCH/REPLACE fences and the compact local fences are both
-    accepted, including mixed-format blocks in document order.
+    accepted, including mixed-format blocks in document order. Remaining
+    divergence: the built-in prompt template is still diff-oriented and does
+    not change its instructions or examples when `mutation_mode` is `full`.
 
 - [x] Frontier model ensemble scheduling.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.

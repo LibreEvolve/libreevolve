@@ -300,6 +300,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that current multi-file mutation supports
     edits and limited file creation, not full repository topology evolution.
 
+- [x] Clarify full mutation mode is not prompt-aware by default.
+  - README evidence: the workflow says the LLM proposes either a SEARCH/REPLACE
+    diff or configured full-block/full-code replacement.
+  - Current evidence: `mutation_mode` changes the mutation application path,
+    but `PromptSampler.DEFAULT_TEMPLATE` still instructs the model to return
+    SEARCH/REPLACE fences and "Just the raw diff block"; `evolve()` does not
+    pass `config.mutation_mode` into prompt construction.
+  - Required result: tell users that full mode changes parser/application
+    semantics today, while prompt wording remains diff-oriented unless they
+    provide a custom prompt template.
+
 - [x] Clarify plugin score provenance limitations.
   - README evidence: the plugin hook table says `on_evaluated()` can modify
     score, but did not say that per-plugin score-composition provenance is not

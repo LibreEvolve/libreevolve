@@ -213,6 +213,11 @@ def solve():
 >>>BLOCK
 ```
 
+Current prompt caveat: the built-in prompt template remains diff-oriented and
+asks for SEARCH/REPLACE fences. If you use `mutation_mode: full`, provide a
+`prompt_variants` template that asks for full-file, full-block, or file-section
+replacement payloads until the default prompt becomes mode-aware.
+
 For multi-file candidates, wrap a file edit in a file section:
 
 ```text

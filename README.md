@@ -165,7 +165,7 @@ graph TD
 
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
 2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent in-memory failure hints
-3. **LLM mutation** — LLM proposes either a SEARCH/REPLACE diff or configured full-block/full-code replacement
+3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff by default; full-block/full-code parsing is available when configured, but the default prompt wording is still diff-oriented unless you supply a matching prompt template
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
 6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details

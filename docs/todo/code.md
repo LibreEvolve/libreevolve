@@ -170,6 +170,22 @@ Primary evidence:
   - Required result: add a per-problem/per-run mutation mode for full block,
     full file, or diff-based edits, with validator coverage for each mode.
 
+- [ ] Make prompt instructions mutation-mode aware.
+  - Spec evidence: AlphaEvolve can be configured to ask the LLM for a full
+    code block instead of SEARCH/REPLACE diffs; the prompt must match the
+    configured parser/application mode for that run.
+  - Current evidence: `Config.mutation_mode` and CLI `--mutation-mode` switch
+    `apply_workspace_mutation()` between `diff` and `full`, but
+    `PromptSampler.build()` receives no mutation-mode argument and the default
+    template always says to use SEARCH/REPLACE fences and "Just the raw diff
+    block." Unless the user supplies a custom `prompt_variants` template,
+    `mutation_mode: full` still asks the model for a diff-shaped response.
+  - Required result: render mode-specific mutation instructions and examples
+    for `diff`, full-file, full-block, and multi-file full replacement modes;
+    include the active mode in prompt metadata/history; add tests proving the
+    default prompt changes when `mutation_mode` is `full` while preserving
+    backward-compatible custom templates.
+
 - [x] Add AlphaEvolve canonical SEARCH/REPLACE diff marker compatibility.
   - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 use
     `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE` blocks.

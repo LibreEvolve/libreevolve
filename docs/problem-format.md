@@ -77,6 +77,7 @@ Behavior:
 - `direction` must be `maximize` or `minimize`
 - at most one metric can be marked `primary: true`
 - bounds for all declared metrics must be finite numeric `[lo, hi]` pairs
+- unsupported metric fields are rejected
 - `direction: minimize` is inverted during normalization when a metric is
   explicitly normalized
 
@@ -120,7 +121,12 @@ The returned dict should include:
 
 - the primary metric name from `metrics.yaml`
 - `is_valid`
-- any secondary metrics useful for prompts, logs, or later analysis
+- every secondary metric declared in `metrics.yaml`
+
+The evaluator rejects missing declared metrics, undeclared metrics,
+non-boolean `is_valid`, non-numeric metric values, and non-finite numeric
+values. Keep diagnostic strings in stdout/stderr or artifacts rather than in
+the metrics dictionary.
 
 The evaluator parses the last non-empty stdout line as JSON, so validators may
 print diagnostics before returning.

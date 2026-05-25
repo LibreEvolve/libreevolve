@@ -87,18 +87,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     only the successful attempt, and all-fail retries retain only the final
     failed attempt.
 
-- [ ] Strict scalar metric contract for evaluator outputs.
+- [x] Strict scalar metric contract for evaluator outputs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
   - Requirement: `evaluate` maps a solution to a dictionary of scalar
     evaluation metrics.
-  - Current gap: evaluator output is only partially validated; missing
-    secondary metrics, non-scalar values, non-finite numbers, and undeclared
-    metrics are not consistently rejected against `metrics.yaml`. Basic
-    `metrics.yaml` schema validation now rejects missing/duplicate names,
-    invalid directions, multiple primaries, and malformed/non-finite bounds,
-    but unsupported extra schema fields remain permissive.
-  - Required result: enforce the scalar metric contract and preserve clear
-    diagnostics for invalid evaluator outputs.
+  - Status: implemented. Basic `metrics.yaml` schema validation rejects
+    missing/duplicate names, invalid directions, multiple primaries,
+    unsupported fields, and malformed/non-finite bounds. Evaluator output must
+    include all declared metrics plus boolean `is_valid`, cannot include
+    undeclared metrics, and every non-`is_valid` metric must be finite numeric.
+    Invalid evaluator outputs are quarantined as `malformed_metrics`.
 
 - [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

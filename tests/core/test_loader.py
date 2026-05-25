@@ -79,6 +79,10 @@ def test_raises_on_malformed_metrics_yaml():
         ),
         ([{"name": "score", "direction": "higher", "primary": True}], "direction"),
         (
+            [{"name": "score", "direction": "maximize", "primary": True, "unit": "points"}],
+            "unsupported fields",
+        ),
+        (
             [
                 {"name": "score", "direction": "maximize", "primary": True},
                 {"name": "speed", "direction": "maximize", "primary": True},

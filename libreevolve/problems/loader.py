@@ -90,6 +90,12 @@ def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict
             raise ValueError(
                 f"metrics.yaml in {problem_dir}: metric #{index + 1} must be a mapping"
             )
+        unsupported = sorted(set(metric) - {"name", "direction", "primary", "bounds"})
+        if unsupported:
+            raise ValueError(
+                f"metrics.yaml in {problem_dir}: metric #{index + 1} has unsupported "
+                f"fields {unsupported}"
+            )
         name = metric.get("name")
         if not isinstance(name, str) or not name.strip():
             raise ValueError(

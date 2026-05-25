@@ -1,14 +1,18 @@
 import shutil, tempfile
 from pathlib import Path
 from libreevolve.core.candidate import CandidateWorkspace
+import pytest
 from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.problems.loader import Problem
 
-def _problem(validate_src: str):
+def _problem(validate_src: str, metrics: list[dict] | None = None):
     d = Path(tempfile.mkdtemp())
     (d / "validate.py").write_text(validate_src, encoding="utf-8")
     return Problem(name="t", task_description="t",
-                   metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+                   metrics=metrics or [
+                       {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+                       {"name": "is_valid", "primary": False, "bounds": [0.0, 1.0]},
+                   ],
                    primary_metric="score", primary_bounds=(0.0, 1.0),
                    validate_path=d/"validate.py", initial_programs=[], problem_dir=d), d
 
@@ -82,6 +86,41 @@ def test_t2_bad_json():
         shutil.rmtree(d)
 
 
+@pytest.mark.parametrize(
+    "validate_src",
+    [
+        "def evaluate(c): return {'score': 1.0}",
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True, 'extra': 3}",
+        "def evaluate(c): return {'score': 'good', 'is_valid': True}",
+        "def evaluate(c): return {'score': float('nan'), 'is_valid': True}",
+        "def evaluate(c): return {'score': 1.0, 'is_valid': 1}",
+    ],
+)
+def test_rejects_malformed_metric_contract(validate_src):
+    p, d = _problem(validate_src)
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert result == -0.2
+        assert result.error == "malformed_metrics"
+        assert result.stages[-1].error == "malformed_metrics"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_rejects_missing_declared_secondary_metric():
+    metrics = [
+        {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+        {"name": "runtime", "primary": False, "bounds": [0.0, 10.0]},
+        {"name": "is_valid", "primary": False, "bounds": [0.0, 1.0]},
+    ]
+    p, d = _problem("def evaluate(c): return {'score': 1.0, 'is_valid': True}", metrics=metrics)
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert result.error == "malformed_metrics"
+    finally:
+        shutil.rmtree(d)
+
+
 def test_configured_stage_threshold_stops_candidate():
     p, d = _problem("def evaluate(c): return {'score':0.2,'is_valid':True}")
     try:
@@ -100,13 +139,12 @@ def test_configured_stage_uses_distinct_validator_entrypoint():
         stage_validator = d / "stage_validate.py"
         stage_validator.write_text(
             "def evaluate(code, workspace, stage):\n"
-            "    return {'score': 0.8, 'is_valid': True, 'stage_name': stage['name']}\n",
+            "    return {'score': 0.8 if stage['name'] == 'hard' else 0.0, 'is_valid': True}\n",
             encoding="utf-8",
         )
         ev = CascadeEvaluator(p, stages=[{"name": "hard", "validate_path": "stage_validate.py"}])
         result = ev.evaluate("x=1", None)
         assert result == 0.8
-        assert result.metrics["stage_name"] == "hard"
         assert result.metadata["validate_path"].endswith("stage_validate.py")
     finally:
         shutil.rmtree(d)

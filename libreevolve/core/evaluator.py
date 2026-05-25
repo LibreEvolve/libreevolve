@@ -1,5 +1,5 @@
 from __future__ import annotations
-import json, sys, tempfile
+import json, math, sys, tempfile
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -247,7 +247,9 @@ class CascadeEvaluator:
                 )
             try:
                 lines = [line for line in res.stdout.splitlines() if line.strip()]
-                m = json.loads(lines[-1] if lines else "")
+                m = _validate_metrics(
+                    json.loads(lines[-1] if lines else ""), self._problem
+                )
                 if not m.get("is_valid", False):
                     return EvaluationResult(
                         fitness=-0.1,
@@ -443,6 +445,30 @@ def _eval_metadata(
         "validate_path": str(validate_path),
         "stage": stage_context,
     }
+
+
+def _validate_metrics(raw: object, problem: Problem) -> dict:
+    if not isinstance(raw, dict):
+        raise ValueError("evaluator output must be a metrics dictionary")
+    metrics = dict(raw)
+    declared = {str(metric["name"]) for metric in problem.metrics}
+    declared.add("is_valid")
+    missing = sorted(declared - set(metrics))
+    if missing:
+        raise ValueError(f"evaluator output missing declared metrics: {missing}")
+    undeclared = sorted(set(metrics) - declared)
+    if undeclared:
+        raise ValueError(f"evaluator output included undeclared metrics: {undeclared}")
+    if not isinstance(metrics.get("is_valid"), bool):
+        raise ValueError("evaluator output metric 'is_valid' must be boolean")
+    for name in sorted(declared - {"is_valid"}):
+        value = metrics[name]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise ValueError(f"evaluator output metric {name!r} must be numeric")
+        if not math.isfinite(float(value)):
+            raise ValueError(f"evaluator output metric {name!r} must be finite")
+        metrics[name] = float(value)
+    return metrics
 
 
 def _aggregate_metrics(metrics_list: list[dict]) -> dict:

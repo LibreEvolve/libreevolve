@@ -487,22 +487,21 @@ Primary evidence:
 
 ## Evaluation
 
-- [ ] Enforce evaluator scalar outputs against declared metrics.
+- [x] Enforce evaluator scalar outputs against declared metrics.
   - Spec evidence: AlphaEvolve task specification requires `evaluate` to
     return a dictionary of scalar evaluation metrics, and those metrics drive
     database selection, prompting, and multi-score optimization.
   - Current evidence: `load_problem()` now rejects missing metric names,
     duplicate names, invalid `direction` values, multiple primaries, and
-    malformed/non-finite bounds for all declared metrics. Schema-level
-    validation of unsupported extra metric fields is still permissive.
-    `CascadeEvaluator._run_subprocess()` parses the last stdout line as JSON
-    and requires `is_valid` plus the primary metric for fitness normalization,
-    but it does not verify that every declared `metrics.yaml` metric is present,
-    scalar, finite, or direction/bounds compatible in evaluator outputs.
-  - Required result: validate evaluator outputs against `metrics.yaml`, reject
-    or quarantine malformed/non-finite metrics with diagnostics, and add tests
-    for unsupported metric schema fields, missing secondary outputs,
-    non-scalar values, NaN/Infinity, and undeclared metrics.
+    malformed/non-finite bounds for all declared metrics, and unsupported
+    metric schema fields. `CascadeEvaluator._run_subprocess()` validates the
+    last stdout JSON object against `metrics.yaml`: declared metrics must be
+    present, undeclared metrics are rejected, `is_valid` must be boolean, and
+    every non-`is_valid` metric must be finite numeric.
+  - Status: implemented with loader and evaluator tests for unsupported schema
+    fields, missing secondary outputs, non-scalar values, NaN/Infinity, and
+    undeclared metrics. Multi-objective use of those metric vectors remains
+    tracked separately.
 
 - [ ] Enforce strict finite JSON serialization for run records.
   - Spec evidence: AlphaEvolve's program database is a machine-readable store

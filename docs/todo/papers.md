@@ -476,6 +476,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     geometric constructions, and create repeatable benchmark reports tied to
     AlphaEvolve target families.
 
+- [x] Clarify paper-index benchmark wording for circle packing.
+  - Paper-index evidence: `papers/README.md` listed `circle_packing` under
+    implemented benchmark coverage as an AlphaEvolve-adjacent packing benchmark.
+  - Current evidence: the fixture validates fixed-26 unit-square feasibility
+    and summed radii, while `tests/test_examples.py` only checks seed validity
+    plus simple rejection cases. There are no repeated-seed runs, SOTA/target
+    thresholds, saved construction artifact schemas, visual/JSON outputs, or
+    benchmark reports.
+  - Required result: describe `circle_packing` as an AlphaEvolve-adjacent smoke
+    fixture until benchmark hardening is implemented.
+
 ## Paper-Inspired Feature Claims Needing Correction
 
 - [ ] Keep CausalEvolve-inspired behavior explicitly paper-limited or implement

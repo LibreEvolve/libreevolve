@@ -37,8 +37,10 @@ paper is fully implemented.
 
 Implemented:
 
-- `libreevolve/problems/examples/circle_packing`: AlphaEvolve-adjacent packing
-  benchmark.
+- `libreevolve/problems/examples/circle_packing`: AlphaEvolve-adjacent
+  fixed-26 packing smoke fixture. It validates feasibility and optimizes summed
+  radii, but it is not yet a repeated-seed benchmark with SOTA thresholds,
+  construction artifact schemas, or report generation.
 - `libreevolve/problems/examples/matrix_multiplication`: small reproducible
   2x2 multiplication-count smoke benchmark with evolve-block seed and
   validator. It is not a tensor-rank decomposition benchmark.

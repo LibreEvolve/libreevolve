@@ -119,6 +119,8 @@ is not yet an AlphaEvolve reproduction.
   current policy as a heuristic.
 - Separate backend accounting for mutation generation, critique, feedback
   grading, and meta-prompt mutation calls.
+- Persist normalized LLM call telemetry, including provider usage, latency,
+  retries, request ids, finish reasons, and API mode.
 - Add explicit breadth/depth/cost/latency scheduling tests.
 - Extend critique/revision beyond a synchronous self-review call toward
   configurable reviewer pools.

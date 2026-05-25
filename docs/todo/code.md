@@ -573,6 +573,25 @@ Primary evidence:
     accounting per role, persist bandit state in run artifacts, and add tests
     proving critique/feedback/meta-prompt calls do not distort mutation routing.
 
+- [ ] Persist normalized LLM call telemetry and provider response provenance.
+  - Spec evidence: AlphaEvolve's scheduler and compute-budget framing depend on
+    LLM throughput, cost, latency, and quality; reproducible experiments need
+    per-call evidence for which model/API call produced which proposal or
+    feedback.
+  - Current evidence: `LLMBackend.generate()` returns only `str`, and
+    `LLMEnsemble.generate()` returns `(response, backend_idx)`. OpenAI,
+    Anthropic, and Ollama adapters discard provider response ids, usage/token
+    counts, finish reasons, latency, retry counts, API mode, raw error metadata,
+    and request parameters. `history.jsonl` stores `metadata.backend_idx` for
+    mutation calls and limited feedback/critique metadata, but there is no
+    normalized LLM call log or per-call telemetry attached to run artifacts.
+  - Required result: introduce a call result/telemetry object, record role,
+    backend spec, model, API mode, prompt size, output size, usage tokens,
+    latency, retries, finish reason, request/response ids, raw-provider
+    diagnostics, and failure metadata; persist it in history or a separate call
+    log; update scheduler/budget accounting from this telemetry; add tests with
+    fake provider usage for mutation, critique, feedback, and meta-prompt calls.
+
 - [ ] Make OpenAI API routing explicit and validate reasoning-model options.
   - Spec evidence: AlphaEvolve's task setup includes LLM choices and
     configurations; backend behavior must be reproducible and match configured

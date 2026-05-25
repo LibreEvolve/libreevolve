@@ -231,6 +231,10 @@ py -3.12 -m libreevolve run my_problem/ \
     --backends ollama:llama3
 ```
 
+Per-call provider telemetry is not logged yet. Token usage, latency, retry
+counts, response IDs, finish reasons, and API mode remain backend-provenance
+work.
+
 <details>
 <summary><h2>Architecture</h2></summary>
 

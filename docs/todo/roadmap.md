@@ -213,6 +213,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track and test mutation, critique, feedback, and
     meta-prompt accounting separately.
 
+- [x] Add normalized LLM call telemetry to backend scheduling work.
+  - Evidence: backend adapters return plain text and discard provider usage,
+    latency, retry counts, request ids, finish reasons, API mode, and raw
+    provider diagnostics.
+  - Current roadmap gap: backend work covered scheduling and role accounting
+    but not the per-call telemetry needed to prove cost/latency/budget claims.
+  - Required result: track call-result objects, provider usage, prompt/output
+    size, retries, latency, API mode, request/response ids, failure metadata,
+    and scheduler/budget updates from that telemetry.
+
 - [x] Add reviewer-pool critique fidelity to backend/critique work.
   - Evidence: AlphaEvolve describes using LLMs to generate, critique, and
     evolve a pool of algorithms, while LibreEvolve has only a single optional

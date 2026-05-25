@@ -26,6 +26,9 @@ Current behavior:
 - critique, feedback-grader, and meta-prompt calls currently share this same
   selection/count state even though only candidate mutation calls receive an
   improvement reward
+- provider response metadata is not persisted. Token usage, latency, retry
+  counts, API mode, request/response ids, finish reasons, and raw provider
+  diagnostics are discarded by the backend adapters.
 
 This means backends are rewarded for improvement over the selected parent, not
 for absolute score, and role-specific auxiliary-call accounting remains a known

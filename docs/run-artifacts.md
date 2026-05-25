@@ -96,6 +96,11 @@ This file records prompt-program events:
 Program records in `history.jsonl` include `metadata.prompt_program_id` so a
 candidate can be traced back to the prompt program that produced it.
 
+LLM call telemetry is not first-class yet. Candidate records store the mutation
+backend index, and feedback/critique paths store limited backend indexes or raw
+responses, but provider usage, latency, retry counts, request ids, finish
+reasons, and API mode are not persisted as a normalized call log.
+
 ## `best.py`
 
 After a run completes, the CLI writes the best archived program's code to

@@ -223,6 +223,11 @@ For OpenAI, the adapter uses Chat Completions unless `reasoning_effort` is set,
 in which case it uses the Responses API. There is no automatic
 reasoning-model detection or API-mode validation yet.
 
+The backend interface returns only generated text. Provider usage, latency,
+retry count, request/response ids, finish reasons, API mode, and raw response
+metadata are not normalized or persisted, which limits cost accounting,
+debugging, and scheduler analysis.
+
 ## Logging and artifacts
 
 [`libreevolve/core/database.py`](../libreevolve/core/database.py) writes:

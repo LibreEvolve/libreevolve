@@ -57,7 +57,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: combine a fast, lower-latency model for breadth with a stronger
     model for depth.
   - Status: added experimental `throughput_depth` scheduling metadata layered
-    over UCB-style scores.
+    over UCB-style scores. Remaining divergence: provider usage, latency,
+    retry, response-id, finish-reason, and API-mode telemetry is not persisted
+    per LLM call.
 
 - [ ] Existing/custom LLM backend extension point.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.
@@ -438,7 +440,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `LLMEnsemble.generate()` accounting as mutation calls, but only mutation
     calls receive a candidate-improvement reward.
   - Missing: role-specific routing/accounting for generation, critique,
-    grading, and meta-prompt calls, plus persisted scheduler diagnostics.
+    grading, and meta-prompt calls, plus persisted scheduler diagnostics and
+    normalized provider call telemetry.
 
 - [x] Tighten inline paper-source comments so they do not imply faithful
   implementations.

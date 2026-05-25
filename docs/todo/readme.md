@@ -264,3 +264,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     chain is written to `history.jsonl`.
   - Required result: tell readers that plugin score hooks can affect archived
     fitness and point structured provenance to the roadmap/TODO.
+
+- [x] Clarify missing per-call backend telemetry.
+  - README evidence: the backend section says the router tracks observed
+    fitness improvements, but did not distinguish that from provider-level call
+    telemetry.
+  - Current evidence: `LLMBackend.generate()` returns raw text only, and the
+    loop stores backend indexes without token usage, latency, retry counts,
+    response ids, finish reasons, or API-mode provenance.
+  - Required result: note that per-call provider telemetry remains backend
+    provenance work.

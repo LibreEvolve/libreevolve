@@ -276,6 +276,10 @@ The `circle_packing` example is now closer to AlphaEvolve's circle-packing bench
 
 The seed is intentionally suboptimal but structured: a centered 26-circle hex-style layout with equal radii. This gives evolution room to improve radii, spacing, and row structure while staying in the same fixed-`n`, variable-radius problem family as the paper.
 
+These example problems are useful smoke fixtures and teaching cases, not a
+repeatable AlphaEvolve-scale benchmark suite. Benchmark hardening work is
+tracked in `docs/todo/papers.md`.
+
 ## Supported LLM Backends
 
 | Provider | Models | Features |
@@ -532,7 +536,7 @@ py -3.12 -m pytest tests/integration/ -m integration
 ```
 
 <details>
-<summary><h2>Benchmarks and Lessons from Live Testing</h2></summary>
+<summary><h2>Example Lessons from Live Testing</h2></summary>
 
 <br>
 

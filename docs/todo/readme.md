@@ -612,3 +612,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     availability.
   - Required result: avoid stale exhaustive-looking Anthropic model lists in
     README and present examples as provider-specific model IDs.
+
+- [x] Clarify README benchmark-fixture wording.
+  - README evidence: the example section and "Benchmarks and Lessons from Live
+    Testing" heading could imply a benchmark suite rather than smoke examples.
+  - Current evidence: `tests/test_examples.py` checks seed validity and simple
+    validator rejection behavior; `matrix_multiplication` validates a small 2x2
+    Python function and `circle_packing` validates fixed-26 feasibility, while
+    `docs/todo/papers.md` still tracks AlphaEvolve-scale benchmark hardening.
+  - Required result: label the examples as smoke/teaching fixtures and point to
+    the paper todo for benchmark hardening.

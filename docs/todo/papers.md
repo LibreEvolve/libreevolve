@@ -214,13 +214,11 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: prompt context can include program execution results, outputs,
     and scores from previous attempts.
   - Current gap: history records preserve stdout/stderr, retry-attempt records,
-    and LLM feedback provenance, but prompt construction renders only a short
-    recent-stage summary. Validator-generated files are not copied out of the
-    temporary candidate workspace, so construction artifacts, traces, plots,
-    and other evaluator outputs are lost unless a validator encodes them into
-    metrics or stdout/stderr. The pre-validator syntax pass also reports only
-    the first Python syntax error in a multi-file workspace, so prompt/history feedback
-    can hide additional broken components.
+    aggregate syntax diagnostics, and LLM feedback provenance, but prompt
+    construction renders only a short recent-stage summary. Validator-generated
+    files are not copied out of the temporary candidate workspace, so
+    construction artifacts, traces, plots, and other evaluator outputs are lost
+    unless a validator encodes them into metrics or stdout/stderr.
   - Required result: add bounded prompt sections for execution outputs,
     artifacts, validator feedback, sample-level diagnostics, aggregate syntax
     diagnostics, and grader feedback summaries.

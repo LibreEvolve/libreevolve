@@ -333,3 +333,30 @@ def test_workspace_syntax_checks_all_python_files():
         assert "helper.py" in result.stages[0].error
     finally:
         shutil.rmtree(d)
+
+
+def test_workspace_syntax_aggregates_all_python_errors_and_skips_text_files():
+    p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
+    workspace = CandidateWorkspace(
+        files={
+            "a.py": "def bad_a(:\n    pass\n",
+            "b.py": "def bad_b(:\n    pass\n",
+            "notes.txt": "def not_python(:\n",
+            "ok.py": "x = 1\n",
+        },
+        primary_file="ok.py",
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result == -0.2
+        assert result.error == "syntax_error"
+        assert "a.py" in result.stages[0].error
+        assert "b.py" in result.stages[0].error
+        assert "notes.txt" not in result.stages[0].error
+        syntax_errors = result.metadata["syntax_errors"]
+        assert [error["path"] for error in syntax_errors] == ["a.py", "b.py"]
+        assert all(error["line"] == 1 for error in syntax_errors)
+        assert all(error["offset"] is not None for error in syntax_errors)
+        assert all("message" in error for error in syntax_errors)
+    finally:
+        shutil.rmtree(d)

@@ -238,15 +238,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn users that validators should avoid long-lived child
     processes until process-tree cleanup is implemented.
 
-- [x] Clarify first-error-only workspace syntax diagnostics.
+- [x] Clarify aggregate workspace syntax diagnostics.
   - README evidence: README described the cascade evaluator's syntax filter
     but did not say whether multi-file syntax diagnostics are aggregated.
-  - Current evidence: `_syntax_error()` returns immediately on the first
-    Python `SyntaxError`. A local proof with invalid `a.py` and `b.py` reported
-    only `a.py`, while result metadata still listed both files.
-  - Required result: tell users the current pre-validator syntax check covers
-    `.py` files but reports only the first syntax error until aggregate
-    workspace diagnostics are implemented.
+  - Status: README now says the pre-validator syntax check covers `.py` files
+    and reports all Python syntax errors across the workspace with file, line,
+    offset, and message metadata.
 
 - [x] Clarify validator-generated files are not retained.
   - README evidence: README says raw metrics and diagnostics are stored with

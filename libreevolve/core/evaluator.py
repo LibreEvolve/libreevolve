@@ -67,8 +67,9 @@ class CascadeEvaluator:
                 error=diff_error,
                 metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
             )
-        syntax_error = _syntax_error(workspace)
-        if syntax_error is not None:
+        syntax_errors = _syntax_errors(workspace)
+        if syntax_errors:
+            syntax_error = "; ".join(error["summary"] for error in syntax_errors)
             return EvaluationResult(
                 fitness=-0.2,
                 metrics={self._problem.primary_metric: -0.2, "is_valid": False},
@@ -82,7 +83,11 @@ class CascadeEvaluator:
                     )
                 ],
                 error="syntax_error",
-                metadata={"primary_file": workspace.primary_file, "files": sorted(workspace.files)},
+                metadata={
+                    "primary_file": workspace.primary_file,
+                    "files": sorted(workspace.files),
+                    "syntax_errors": syntax_errors,
+                },
             )
         syntax_stage = EvaluationStageResult(name="syntax", passed=True)
         if self._stages:
@@ -435,15 +440,24 @@ class EvaluationResult:
         }
 
 
-def _syntax_error(workspace: CandidateWorkspace) -> str | None:
+def _syntax_errors(workspace: CandidateWorkspace) -> list[dict]:
+    errors: list[dict] = []
     for rel_path, content in sorted(workspace.files.items()):
         if not rel_path.endswith(".py"):
             continue
         try:
             compile(content, rel_path, "exec")
         except SyntaxError as exc:
-            return f"{rel_path}: {exc.__class__.__name__}: {exc}"
-    return None
+            errors.append(
+                {
+                    "path": rel_path,
+                    "line": exc.lineno,
+                    "offset": exc.offset,
+                    "message": exc.msg,
+                    "summary": f"{rel_path}: {exc.__class__.__name__}: {exc}",
+                }
+            )
+    return errors
 
 
 def _eval_metadata(

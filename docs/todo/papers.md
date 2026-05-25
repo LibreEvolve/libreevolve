@@ -291,47 +291,52 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## Paper-Inspired Feature Claims Needing Correction
 
-- [ ] Rename the current CausalEvolve plugin or implement the paper's causal
-  scratchpad.
+- [ ] Keep CausalEvolve-inspired behavior explicitly paper-limited or implement
+  the paper's causal scratchpad.
   - Paper evidence: `2603.14575__CausalEvolve.pdf` describes LLM-assisted
     causal factor identification, outcome-level factors, surprise-pattern
     inspection, and abductive reasoning to hypothesize new factors during
     evolution.
-  - Current evidence: `libreevolve/plugins/causal.py` uses regex factor
-    detection over changed diff tokens and UCB1-like reward accounting.
+  - Current evidence: the CLI alias is paper-neutral (`causal`) and docs label
+    it CausalEvolve-inspired, but `libreevolve/plugins/causal.py` still uses
+    regex factor detection over changed diff tokens and UCB1-like reward
+    accounting.
   - Missing: LLM causal scratchpad, POMDP/causal framing, initial factor
     discovery, surprise-pattern inspection, abductive factor creation, and
     structured causal knowledge reuse.
 
-- [ ] Rename the current DeepEvolve plugin or implement DeepEvolve's retrieval,
-  cross-file editing, and debugging loop.
+- [ ] Keep DeepEvolve-inspired behavior explicitly paper-limited or implement
+  DeepEvolve's retrieval, cross-file editing, and debugging loop.
   - Paper evidence: `2510.06056__DeepEvolve.pdf` integrates external knowledge
     retrieval, cross-file code editing, systematic debugging, hypothesis
     refinement, implementation, and testing in each iteration.
-  - Current evidence: `libreevolve/plugins/deep_research.py` performs a generic
-    arXiv Atom search every N generations and injects short summaries into the
-    prompt.
+  - Current evidence: the CLI alias is paper-neutral (`deep_research`) and docs
+    label it DeepEvolve-inspired, but `libreevolve/plugins/deep_research.py`
+    performs a generic arXiv Atom search every N generations and injects short
+    summaries into the prompt.
   - Missing: broad external retrieval, source ranking, hypothesis synthesis,
     implementation/refinement loop, systematic debugging, cross-file editing,
     and benchmark-grounded result validation.
 
-- [ ] Rename the current ImprovEvolve plugin or implement the actual
-  generate/improve/perturb parameterization and search dynamics.
+- [ ] Keep ImprovEvolve-inspired behavior explicitly paper-limited or implement
+  the actual generate/improve/perturb parameterization and search dynamics.
   - Paper evidence: `2602.10233__ImprovEvolve.pdf` evolves a class/interface
     with `generate_config`, `improve`, and `perturb`, then approaches optima by
     scheduled basin-hopping-style application of `improve()` and `perturb()`.
-  - Current evidence: `libreevolve/plugins/modular.py` injects a static prompt
-    block asking for those method names.
+  - Current evidence: the CLI alias is paper-neutral (`modular`) and docs label
+    it ImprovEvolve-inspired, but `libreevolve/plugins/modular.py` injects a
+    static prompt block asking for those method names.
   - Missing: enforced interface, evaluator support for the interface,
     iterative improve/perturb execution, perturbation-intensity scheduling, and
     benchmark-specific search loop.
 
-- [ ] Rename the current ThetaEvolve plugin or implement batch sampling,
-  dynamic RL training, and reward shaping.
+- [ ] Keep ThetaEvolve-inspired behavior explicitly paper-limited or implement
+  batch sampling, dynamic RL training, and reward shaping.
   - Paper evidence: `2511.23473__ThetaEvolve.pdf` describes a single-LLM
     framework with a large program database, batch sampling, lazy penalties,
     optional reward shaping, and reinforcement learning at test time.
-  - Current evidence: `libreevolve/plugins/ttt_rl.py` writes
+  - Current evidence: the CLI alias is paper-neutral (`ttt_rl`) and docs label
+    it ThetaEvolve-inspired, but `libreevolve/plugins/ttt_rl.py` writes
     `(prompt, response, reward)` JSONL and does not train.
   - Missing: batch prompt sampling, lazy/stagnation penalties, reward shaping,
     online GRPO/RL training loop, dynamic environment integration, and training

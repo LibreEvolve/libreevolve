@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-LibreEvolve is a Python research platform for LLM-guided evolutionary program discovery, inspired by AlphaEvolve, Andrej Karpathy's autoresearch, and related research. It uses SEARCH/REPLACE diffs, a cascade evaluator, MAP-Elites archives with 5-island ring migration, and a UCB1-bandit LLM ensemble.
+LibreEvolve is a Python research platform for LLM-guided evolutionary program discovery, inspired by AlphaEvolve, Andrej Karpathy's autoresearch, and related research. It uses SEARCH/REPLACE diffs, a cascade evaluator, MAP-Elites archives with 5-island ring migration, and a heuristic UCB-style LLM ensemble.
 
 ## Tech Stack
 
@@ -16,7 +16,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 ```
 libreevolve/
   core/       loop.py (evolve + build_prompt), evaluator.py, diff.py, database.py, config.py
-  llm/        ensemble.py (UCB1), anthropic.py, openai.py (Responses API for reasoning), ollama.py
+  llm/        ensemble.py (UCB-style heuristic), anthropic.py, openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
   problems/   loader.py, examples/{hello_world,circle_packing,sorting}/

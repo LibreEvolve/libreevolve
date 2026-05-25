@@ -176,6 +176,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track hashes/version metadata separately from basic config
     logging.
 
+- [x] Add plugin registry/config/provenance work.
+  - Evidence: built-in plugins are currently hard-coded CLI aliases with no
+    per-plugin config schema, constructor options, or manifest provenance.
+  - Current roadmap gap: plugin extensibility covered moving registration out of
+    the CLI, but not config validation or run-provenance records for plugin
+    parameters and emitted artifacts.
+  - Required result: track plugin registry, configuration schema, constructor
+    parameters, paper-inspiration scope, and artifact provenance.
+
 - [x] Add run-wide compute-budget accounting to runtime work.
   - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas
     under a total computation budget, and paper ablations compare progress by

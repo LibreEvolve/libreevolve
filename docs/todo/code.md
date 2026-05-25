@@ -538,6 +538,20 @@ Primary evidence:
     `manifest.json`, document which files are covered, and add tests that a
     changed problem file changes the manifest hash.
 
+- [ ] Add a plugin registry, configuration schema, and plugin provenance.
+  - Spec evidence: AlphaEvolve-style task setup depends on explicit
+    configuration and reproducible extension behavior; paper-inspired plugins
+    should be clearly scoped and configurable without source edits.
+  - Current evidence: `_load_plugins()` hard-codes four CLI aliases and creates
+    plugins with default constructors. Problem-local `config.yaml` can list
+    names only; it cannot pass plugin options such as search cadence, output
+    path, prompt text, or provider function. Run manifests store plugin names
+    but not plugin versions, constructor parameters, paper-inspiration scope, or
+    emitted plugin artifacts.
+  - Required result: add a plugin registry or entry-point interface, validate
+    per-plugin config schemas, record plugin specs/provenance/artifacts in
+    manifests, and test configured plugin behavior without editing the CLI.
+
 - [ ] Improve isolation beyond a temporary Python subprocess.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,
     potentially with expensive or hardware-backed execution.

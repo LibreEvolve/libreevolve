@@ -1191,8 +1191,9 @@ Primary evidence:
     starts. Remaining gaps: malformed YAML and non-mapping top-level
     `config.yaml` files can still raise raw `yaml`/`dict.update()` exceptions
     before `ConfigError`, plugin-specific configuration schemas do not exist,
-    CLI `--reasoning-effort` still affects only CLI-created backend specs, and
-    model/API capability validation is not implemented.
+    and model/API capability validation is not implemented. CLI
+    `--reasoning-effort` now applies to OpenAI backends loaded from
+    `config.yaml` or `--backends`, and is ignored for non-OpenAI backends.
   - Required result: add plugin config schemas, document or fix remaining CLI
     override semantics, add model/API-mode compatibility validation where
     feasible, normalize config-file parse/type failures into path-aware startup
@@ -1205,13 +1206,13 @@ Primary evidence:
     settings, and run metadata.
   - Current evidence: `_build_config()` loads `problem_name` from
     `config.yaml`, then unconditionally overwrites it with `problem.name`;
-    only `--run-name` changes the output directory. `--reasoning-effort` is
-    applied only when `--backends` is also supplied, so it does not update
-    OpenAI backend specs loaded from `config.yaml`.
-  - Required result: define and test field-by-field precedence for defaults,
-    config files, and CLI options; make ignored overrides explicit; ensure
-    OpenAI reasoning options can be set or overridden consistently; and reflect
-    the effective values in `manifest.json`.
+    only `--run-name` changes the output directory.
+  - Partial status: OpenAI reasoning options now override consistently for
+    both config-file and CLI-specified OpenAI backends, do not attach to
+    non-OpenAI backends, and are covered by CLI tests.
+  - Required result: define and test remaining field-by-field precedence for
+    defaults, config files, and CLI options; make ignored overrides explicit;
+    and reflect effective values in `manifest.json`.
 
 - [ ] Add resumable runs.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized

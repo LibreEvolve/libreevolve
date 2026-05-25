@@ -92,8 +92,13 @@ def _build_config(problem, max_generations, plugins, backends, seed,
         bd = [{"type": t, "model": m} for b in backends for t, _, m in [b.partition(":")]]
         if reasoning_effort:
             for d in bd:
-                d["reasoning_effort"] = reasoning_effort
+                if d.get("type") == "openai":
+                    d["reasoning_effort"] = reasoning_effort
         config.backends = bd
+    elif reasoning_effort:
+        for backend in config.backends:
+            if backend.get("type") == "openai":
+                backend["reasoning_effort"] = reasoning_effort
     if seed is not None: config.seed = seed
     if explore_ratio is not None: config.explore_ratio = explore_ratio
     if mutation_mode is not None: config.mutation_mode = mutation_mode

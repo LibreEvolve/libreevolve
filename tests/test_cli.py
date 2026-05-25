@@ -80,3 +80,69 @@ def test_run_rejects_invalid_config_mutation_mode(tmp_path):
     r = CliRunner().invoke(cli, ["run", str(tmp_path)])
     assert r.exit_code != 0
     assert "mutation_mode" in r.output
+
+
+def test_reasoning_effort_overrides_configured_openai_backend(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "backends": [
+                    {"type": "openai", "model": "gpt-5.4-mini"},
+                    {"type": "anthropic", "model": "claude-sonnet-4-6"},
+                ]
+            }
+        )
+    )
+    best = Program(code="x=2", fitness=0.99)
+    with patch("libreevolve.cli.evolve", return_value=best) as mock:
+        r = CliRunner().invoke(cli, ["run", str(tmp_path), "--reasoning-effort", "high"])
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.backends[0]["reasoning_effort"] == "high"
+    assert "reasoning_effort" not in config.backends[1]
+
+
+def test_reasoning_effort_still_applies_to_cli_backends(tmp_path):
+    _make_problem(tmp_path)
+    best = Program(code="x=2", fitness=0.99)
+    with patch("libreevolve.cli.evolve", return_value=best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--backends",
+                "openai:gpt-5.4-mini",
+                "--reasoning-effort",
+                "medium",
+            ],
+        )
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.backends == [
+        {"type": "openai", "model": "gpt-5.4-mini", "reasoning_effort": "medium"}
+    ]
+
+
+def test_reasoning_effort_does_not_attach_to_non_openai_cli_backends(tmp_path):
+    _make_problem(tmp_path)
+    best = Program(code="x=2", fitness=0.99)
+    with patch("libreevolve.cli.evolve", return_value=best) as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--backends",
+                "anthropic:claude-sonnet-4-6",
+                "--reasoning-effort",
+                "medium",
+            ],
+        )
+
+    assert r.exit_code == 0
+    config = mock.call_args.args[1]
+    assert config.backends == [{"type": "anthropic", "model": "claude-sonnet-4-6"}]

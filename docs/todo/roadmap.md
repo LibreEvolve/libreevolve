@@ -39,13 +39,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     instead of raw parser/update exceptions.
 
 - [x] Add CLI/config precedence semantics to runtime hardening.
-  - Evidence: `_build_config()` currently overwrites `config.yaml`
-    `problem_name` with the problem directory name and applies
-    `--reasoning-effort` only to CLI-created backend specs.
+  - Evidence: `_build_config()` overwrites `config.yaml` `problem_name` with
+    the problem directory name unless `--run-name` is supplied. Previously,
+    `--reasoning-effort` applied only to CLI-created backend specs.
   - Current roadmap gap: the roadmap mentioned config validation but did not
     call out field-by-field precedence and effective-config override tests.
-  - Required result: track deterministic precedence, explicit ignored-override
-    behavior, and tests for config-file plus CLI combinations.
+  - Status: OpenAI reasoning-effort override behavior is now deterministic and
+    tested for config-file and CLI backend specs. Remaining ignored-override
+    behavior for `problem_name` is tracked in the code TODO.
 
 - [x] Add evaluator metric-contract validation to the backlog.
   - Evidence: AlphaEvolve Section 2.1 treats `evaluate` as returning scalar

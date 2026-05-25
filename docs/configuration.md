@@ -215,9 +215,9 @@ For OpenAI, `reasoning_effort` also controls API routing: if it is omitted,
 LibreEvolve uses Chat Completions; if it is present, LibreEvolve uses the
 Responses API and forwards the configured reasoning effort. The current code
 does not detect model capabilities or validate reasoning-effort compatibility.
-The CLI `--reasoning-effort` option is currently applied only to backend specs
-created by the same `--backends` invocation; it does not patch OpenAI backend
-entries that came from `config.yaml`.
+The CLI `--reasoning-effort` option applies to OpenAI backend specs from either
+`config.yaml` or the same `--backends` invocation. It is ignored for non-OpenAI
+backends.
 
 ## Environment variables
 
@@ -245,9 +245,7 @@ run rather than being recorded as structured failed LLM-call attempts.
   evaluator-stage numeric fields, and LLM feedback grader specs are checked
   before a run starts when the config file parses to a mapping.
 - CLI override semantics are incomplete: `config.yaml` `problem_name` is
-  overwritten by the problem directory name, and `--reasoning-effort` only
-  affects CLI-supplied backend specs rather than existing OpenAI config-file
-  backends.
+  overwritten by the problem directory name unless `--run-name` is supplied.
 - Run-wide budget configuration is not implemented yet. `max_generations` and
   per-validator timeouts are the only hard stop controls; there are no
   wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or

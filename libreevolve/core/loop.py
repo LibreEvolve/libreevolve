@@ -10,6 +10,7 @@ from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
 from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.core.feedback import apply_llm_feedback, build_critique_prompt
 from libreevolve.core.meta_prompt import PromptDatabase
 from libreevolve.core.prompt import PromptSampler
 from libreevolve.llm.ensemble import build_llm
@@ -84,10 +85,26 @@ def evolve(problem: Problem, config: Config,
         )
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
+        critique_metadata = None
+        if config.critique_enabled:
+            critique_prompt = build_critique_prompt(
+                prompt, diff, critique_prompt=config.critique_prompt or None
+            )
+            revised_diff, critique_backend_idx = llm.generate(critique_prompt)
+            critique_metadata = {
+                "prompt": critique_prompt,
+                "original_diff": diff,
+                "revised_diff": revised_diff,
+                "backend_idx": critique_backend_idx,
+            }
+            diff = revised_diff
         child_workspace, diff_error = apply_workspace_mutation(
             parent.workspace(), diff, mutation_mode=config.mutation_mode
         )
         result = evaluator.evaluate(child_workspace, diff_error=diff_error)
+        result = apply_llm_feedback(
+            result, child_workspace, problem, config.llm_feedback, llm
+        )
         score = result.fitness
 
         child_code = child_workspace.code
@@ -105,6 +122,7 @@ def evolve(problem: Problem, config: Config,
                           parent_id=parent.id, generation=gen,
                           lineage=parent.lineage + [parent.id],
                           metadata={"prompt": prompt, "diff": diff,
+                                    "critique": critique_metadata,
                                     "mutation_mode": config.mutation_mode,
                                     "prompt_program_id": prompt_program.id},
                           metrics=result.metrics,

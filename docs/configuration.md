@@ -24,6 +24,28 @@ Configuration is assembled from three sources, in this order:
   backend to produce a revised prompt template.
 - `meta_prompt_interval` (`25`): generations between optional meta-prompt
   mutations.
+- `critique_enabled` (`False`): when true, run an LLM critique/revision pass
+  on the proposed mutation before applying it.
+- `critique_prompt` (`""`): optional custom instruction for the critique pass.
+- `llm_feedback` (`[]`): optional LLM grader specs that score or discard
+  evaluated candidates after local validation.
+
+Example LLM feedback grader config:
+
+```yaml
+critique_enabled: true
+llm_feedback:
+  - name: simplicity
+    metric: llm_simplicity
+    weight: 0.05
+    min_score: 0.2
+    prompt: "Grade simplicity from 0 to 1. Return JSON with score, feedback, discard."
+```
+
+Feedback scores are logged as metrics, provenance is stored in evaluation
+metadata, and weighted scores adjust candidate fitness without replacing the
+raw primary validator metric. Graders run only for locally valid candidates by
+default; set `include_invalid: true` on a grader to review invalid candidates.
 
 ### Population
 
@@ -147,10 +169,13 @@ Provider SDKs may honor additional provider-specific variables.
 ## Known caveats
 
 - The CLI does not expose every `Config` field directly; use `config.yaml` for
-  migration, archive, prompt, stage, and ensemble scheduling settings.
+  migration, archive, prompt, stage, LLM feedback, critique, and ensemble
+  scheduling settings.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - `prompt_variants` seed the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Meta-prompt mutation uses the same backend ensemble and must preserve every
   placeholder required by `PromptSampler`.
+- Critique and LLM feedback use the same backend ensemble as mutation
+  generation. They are synchronous and optional, not parallel reviewer workers.

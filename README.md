@@ -24,7 +24,7 @@
 
 <br>
 
-LibreEvolve is an open-source Python framework for **automated algorithm discovery** and **code optimization** using large language models and evolutionary computation. It is inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131), [karpathy/autoresearch](https://github.com/karpathy/autoresearch), and related research on LLM-guided evolution, and evolves better programs through LLM-generated SEARCH/REPLACE diffs evaluated in a cascade pipeline.
+LibreEvolve is an open-source Python framework for **automated algorithm discovery** and **code optimization** using large language models and evolutionary computation. It is inspired by [AlphaEvolve](https://arxiv.org/abs/2506.13131), [karpathy/autoresearch](https://github.com/karpathy/autoresearch), and related research on LLM-guided evolution, and evolves better programs through LLM-generated SEARCH/REPLACE diffs or full-block replacements evaluated in a cascade pipeline.
 
 This repository is an independent implementation and is not affiliated with or endorsed by Google DeepMind, Andrej Karpathy, or the authors of the cited papers.
 
@@ -56,6 +56,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
+| 🧐 | **Optional LLM critique and feedback** | Configurable self-review and grader passes can revise mutations, add feedback metrics, or discard candidates |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
 | ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including workspace candidates, candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
 
@@ -67,7 +68,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama backends** |
 | Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with 5-island migration** |
 | LLM selection | Fast/deep model scheduling described | **UCB1 heuristic plus experimental throughput/depth metadata** |
-| Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results and staged validator cascades** |
+| Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, and optional synchronous LLM feedback** |
 | Extensibility | Task API, evaluators, prompt/context customization, LLM choices, evolve blocks | **Python problem format, plugins, prompt templates, evolve blocks** |
 | Local models | No | **Yes (Ollama)** |
 | Research grounding | Published paper | **24-paper local cache and implementation-status docs** |
@@ -165,11 +166,12 @@ graph TD
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
 2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent failure history
 3. **LLM mutation** — LLM proposes either a SEARCH/REPLACE diff or configured full-block/full-code replacement
-4. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
-5. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
-6. **Failure tracking** — Failed mutations are tracked and shown in subsequent prompts to avoid repeats
-7. **Backend reward** — UCB1 bandit rewards the LLM backend based on fitness improvement
-8. **Island migration** — Periodic migration spreads good solutions across islands
+4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
+5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
+6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
+7. **Failure tracking** — Failed mutations are tracked and shown in subsequent prompts to avoid repeats
+8. **Backend reward** — UCB1 bandit rewards the LLM backend based on fitness improvement
+9. **Island migration** — Periodic migration spreads good solutions across islands
 
 </details>
 
@@ -231,6 +233,7 @@ libreevolve/
 ├── core/
 │   ├── loop.py          # evolve() main loop + build_prompt()
 │   ├── candidate.py     # workspace candidates, evolve-block markers + mutation modes
+│   ├── feedback.py      # optional LLM critique and feedback graders
 │   ├── prompt.py        # prompt sampler + context/evaluation rendering
 │   ├── meta_prompt.py   # prompt-program DB, scoring, lineage, mutation
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)

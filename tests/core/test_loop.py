@@ -78,3 +78,58 @@ def test_meta_prompt_evolution_adds_mutated_prompt_template():
         for l in (Path(tmpdir) / "t" / "prompt_history.jsonl").read_text().splitlines()
     ]
     assert events.count("add") == 2
+
+
+def test_critique_revises_mutation_before_evaluation():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("<<<SEARCH\nx=1\n===\nx=0\n>>>REPLACE", 0),
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        problem = _problem(
+            "def evaluate(c): return {'score': 1.0 if 'x=2' in c else 0.5,"
+            "'is_valid':True}"
+        )
+        best = evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                critique_enabled=True,
+            ),
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert best.code == "x=2"
+    assert child["metadata"]["critique"]["original_diff"].endswith("x=0\n>>>REPLACE")
+
+
+def test_loop_applies_llm_feedback_to_candidate_score():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+        ('{"score": 0.5, "feedback": "simple"}', 1),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        best = evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                llm_feedback=[
+                    {"name": "simplicity", "metric": "simplicity", "weight": 0.2}
+                ],
+            ),
+        )
+
+    records = [json.loads(l) for l in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert best.fitness == 1.1
+    assert child["metrics"]["simplicity"] == 0.5
+    assert child["evaluation"]["metadata"]["llm_feedback"][0]["name"] == "simplicity"

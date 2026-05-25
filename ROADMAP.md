@@ -21,6 +21,9 @@ LibreEvolve has:
 - a prompt sampler that renders context files and evaluator feedback
 - a local prompt-program database with prompt selection, scoring, lineage, and
   optional interval-based LLM template mutation
+- optional synchronous LLM critique/revision before mutation application
+- optional LLM feedback graders with provenance, discard rules, and weighted
+  score composition
 - UCB-style backend routing plus experimental throughput/depth metadata
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
   and `best.py` artifacts
@@ -51,8 +54,7 @@ is not yet an AlphaEvolve reproduction.
 ### 3. Expand evaluation cascades
 
 - Add artifact collection and richer per-stage budget accounting.
-- Add optional LLM-generated feedback graders with provenance and score
-  composition rules.
+- Add calibration/ablation reporting for LLM feedback graders.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work
@@ -86,7 +88,8 @@ is not yet an AlphaEvolve reproduction.
 - Normalize/document UCB rewards against bounded assumptions or rename the
   current policy as a heuristic.
 - Add explicit breadth/depth/cost/latency scheduling tests.
-- Support optional critique/revision passes before expensive evaluation.
+- Extend critique/revision beyond a synchronous self-review call toward
+  configurable reviewer pools.
 
 ### 8. Plugin extensibility
 
@@ -124,4 +127,4 @@ is not yet an AlphaEvolve reproduction.
 1. Add queryable database sampling by metric, novelty, lineage, and feedback.
 2. Add one non-toy benchmark run fixture with expected artifacts.
 3. Add workspace export/resume coverage beyond primary `best.py`.
-4. Add LLM feedback graders with provenance and score-composition tests.
+4. Add LLM feedback calibration reports and grader ablation fixtures.

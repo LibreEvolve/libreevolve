@@ -13,6 +13,9 @@ class Config:
     prompt_variants:        list[str] = field(default_factory=list)
     meta_prompt_evolution:  bool  = False
     meta_prompt_interval:   int   = 25
+    critique_enabled:       bool  = False
+    critique_prompt:        str   = ""
+    llm_feedback:           list[dict] = field(default_factory=list)
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25

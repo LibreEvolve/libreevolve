@@ -42,11 +42,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     thresholds, seeded samples, retries, stage context, and timeouts.
     Distributed/parallel evaluator nodes remain open.
 
-- [ ] LLM-generated feedback.
+- [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optional LLM graders can score hard-to-capture properties or
     discard candidates.
-  - Current gap: there is no standard LLM feedback evaluator interface.
+  - Status: implemented as optional synchronous LLM graders with metrics,
+    weighted score composition, discard rules, backend provenance, raw
+    responses, and `history.jsonl` visibility. Parallel reviewer workers and
+    calibrated grader ensembles remain open.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.

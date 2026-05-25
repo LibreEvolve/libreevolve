@@ -84,13 +84,16 @@ For each generation it:
 3. samples diverse inspirations
 4. builds prompt context through `PromptSampler`
 5. calls the LLM ensemble
-6. applies the configured mutation mode
-7. evaluates the child
-8. constructs a `Program` with metrics and structured evaluation data
-9. runs plugin score hooks
-10. logs the candidate and archives valid programs
-11. rewards the selected backend with non-negative fitness improvement
-12. migrates elites at the configured interval
+6. optionally runs a critique/revision LLM pass on the proposed mutation
+7. applies the configured mutation mode
+8. evaluates the child
+9. optionally applies LLM feedback graders with provenance and score
+   composition
+10. constructs a `Program` with metrics and structured evaluation data
+11. runs plugin score hooks
+12. logs the candidate and archives valid programs
+13. rewards the selected backend with non-negative fitness improvement
+14. migrates elites at the configured interval
 
 `VALID_THRESHOLD` is currently `0.0`.
 
@@ -143,6 +146,15 @@ metrics and stop the cascade when validity or threshold checks fail. This is a
 local cascade model, not AlphaEvolve's full parallel evaluator-worker
 architecture.
 
+After local evaluation, `Config.llm_feedback` can run optional LLM graders for
+properties that are awkward to encode in `validate.py`, such as clarity or
+style. Graders run only for locally valid candidates by default unless a grader
+sets `include_invalid: true`. Graders return JSON-like feedback with a numeric
+score and optional discard flag. Scores are added as metrics, raw responses and
+backend indexes are recorded under `evaluation.metadata.llm_feedback`, and
+weighted feedback adjusts `Program.fitness` while preserving the raw validator
+metric.
+
 ## Population model
 
 Population state is split across:
@@ -187,6 +199,8 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 - Candidate workspaces are local text file sets, not arbitrary-language build
   systems or external repositories.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
-- There is no LLM critique stage or LLM-generated feedback evaluator.
-- Prompt evolution is architected only at the template boundary.
+- LLM critique and feedback are synchronous optional passes; there are no
+  parallel reviewer/evaluator workers yet.
+- Prompt evolution is implemented at the template boundary; richer prompt
+  fitness and placeholder validation remain open.
 - Plugin names are paper-inspired approximations unless documented otherwise.

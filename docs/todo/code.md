@@ -146,13 +146,17 @@ Primary evidence:
   - Required result: persist raw metrics dicts, stage outcomes, stdout/stderr,
     error causes, elapsed time, and validator-provided feedback.
 
-- [ ] Add LLM-generated feedback as an optional evaluation signal.
+- [x] Add LLM-generated feedback as an optional evaluation signal.
   - Spec evidence: AlphaEvolve can grade hard-to-code properties, such as
     simplicity, using separate LLM calls and either add scores or discard
     solutions.
-  - Current evidence: plugins can alter final score, but there is no standard
-    feedback evaluator interface or LLM-feedback result schema
-    (`libreevolve/plugins/base.py`).
+  - Current evidence: `Config.llm_feedback` runs optional LLM graders after
+    local evaluation; `libreevolve/core/feedback.py` parses grader responses,
+    logs backend provenance and raw responses, adds feedback metrics, composes
+    weighted fitness, and supports discard rules.
+  - Status: implemented as a synchronous optional feedback pass. Remaining
+    limitations: no parallel reviewer workers, no calibrated grader ensemble,
+    and no ablation harness.
   - Required result: add optional feedback graders with clear provenance,
     score-composition rules, and archive/log visibility.
 
@@ -236,11 +240,15 @@ Primary evidence:
   - Required result: add scheduling modes that can allocate proposal volume by
     cost/latency/capability, not only reward.
 
-- [ ] Add critique/review generation stage.
+- [x] Add critique/review generation stage.
   - Spec evidence: the AlphaEvolve paper describes using LLMs to generate,
     critique, and evolve a pool of algorithms.
-  - Current evidence: there is one generation call per mutation
-    (`libreevolve/core/loop.py:76`) and no critique/refinement stage.
+  - Current evidence: `Config.critique_enabled` triggers an optional LLM
+    critique/revision call before mutation application; the loop logs the
+    original diff, revised diff, critique prompt, and backend index in
+    candidate metadata.
+  - Status: implemented as an optional synchronous self-revision pass. It is
+    not yet a pool of independent critics or async reviewers.
   - Required result: support optional critique, self-revision, or reviewer
     passes before evaluation.
 

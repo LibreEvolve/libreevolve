@@ -27,7 +27,8 @@ the loaded problem directory name.
 - generation and population settings
 - mutation mode
 - evaluator stage config
-- prompt variants and meta-prompt settings
+- prompt variants, meta-prompt settings, critique settings, and LLM feedback
+  grader specs
 - backend specs
 - ensemble strategy
 - plugins
@@ -57,13 +58,18 @@ Important behavior:
 - the log is append-only
 - the archive and the log are distinct
 - raw metrics and evaluator diagnostics are preserved for later inspection
+- optional critique metadata is stored under `metadata.critique`
+- optional LLM feedback grader records are stored under
+  `evaluation.metadata.llm_feedback`
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates.
 
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
 stderr, error, elapsed time, and metadata such as the primary file and file
-list.
+list. If feedback graders are enabled, their scores appear in `metrics`, and
+the composed score appears as `feedback_adjusted_fitness` while the raw primary
+validator metric remains intact.
 
 ## `prompt_history.jsonl`
 

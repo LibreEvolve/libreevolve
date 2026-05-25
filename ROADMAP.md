@@ -13,10 +13,13 @@ LibreEvolve has:
   `# EVOLVE-BLOCK-START/END` regions
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement
+- workspace file topology mutations for create/edit/delete/move/rename and
+  primary-file changes
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
 - configurable local evaluator stages with distinct validator entrypoints,
   thresholds, samples, seeds, retries, and timeouts
+- strict scalar metric validation against `metrics.yaml`
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and compact stage feedback
@@ -27,7 +30,8 @@ LibreEvolve has:
   score composition
 - UCB-style backend routing plus experimental throughput/depth metadata
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
-  and `best.py` artifacts
+  per-candidate archive admission events, `best.py`, and `best_workspace/`
+  artifacts
 - example problems including `hello_world`, `sorting`, `circle_packing`,
   `matrix_multiplication`, and `workspace_math`
 
@@ -41,15 +45,11 @@ is not yet an AlphaEvolve reproduction.
 - Add language/runner declarations or keep the Python-only divergence explicit.
 - Add problem-defined candidate abstraction hooks or keep code-file-set
   evolution documented as a deliberate divergence.
-- Validate evolve-block marker pairing at load/apply time so malformed skeletons
-  cannot silently fall back to whole-file evolution.
-- Unify file-section path parsing with candidate path normalization so ordinary
-  codebase filenames are routable in mutations.
-- Define validator execution semantics for materialized workspaces, including
-  candidate-root `cwd`, import path, package entrypoints, and relative files.
-- Add richer workspace fixtures with nested packages and non-Python artifacts.
-- Preserve full workspace artifacts in `best`/export flows, not only the primary
-  file convenience output.
+- Prevalidate seed evolve-block markers during problem load, not only during
+  mutation application.
+- Add richer workspace fixtures with nested packages, package-style validator
+  entrypoints, relative evaluator data, and non-Python/static artifacts.
+- Define binary/static artifact handling for candidate workspaces.
 - Add migration/resume support for workspace candidates.
 
 ### 2. Strengthen multi-objective search
@@ -65,7 +65,6 @@ is not yet an AlphaEvolve reproduction.
 
 ### 3. Expand evaluation cascades
 
-- Enforce the scalar metric contract from `metrics.yaml` for evaluator outputs.
 - Add artifact collection and richer per-stage budget accounting.
 - Add run-wide wall-clock, LLM-call, token, cost, evaluator-second, sample,
   retry, and stop-reason accounting.
@@ -78,8 +77,8 @@ is not yet an AlphaEvolve reproduction.
   successful or final attempt.
 - Add validator environment allowlisting, secret redaction, and network policy
   for subprocess evaluation.
-- Define problem-local evaluator import semantics for validator helper modules,
-  package-style validators, and relative data files.
+- Extend problem-local evaluator import semantics from sibling helper modules
+  to package-style validators and relative evaluator data files.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
 ### 4. Prompt and context work
@@ -150,8 +149,8 @@ is not yet an AlphaEvolve reproduction.
 - Allow plugin configuration through `config.yaml`.
 - Record plugin constructor parameters, paper-inspiration scope, and emitted
   artifact paths in run manifests.
-- Clarify and persist score-composition semantics when multiple plugins modify
-  fitness.
+- Extend plugin provenance beyond the current score-composition chain to cover
+  prompt-context attribution, configuration, versions, and emitted artifacts.
 
 ## Longer Term
 

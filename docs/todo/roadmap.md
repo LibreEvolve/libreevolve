@@ -483,6 +483,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: include all checked-in examples when the roadmap describes
     current repository state.
 
+- [x] Refresh current-state and near-term lists after workspace/evaluator
+  implementation passes.
+  - Evidence: `ROADMAP.md` still treated unified file-section path parsing,
+    workspace topology mutation, workspace execution import/cwd semantics,
+    full-workspace best export, strict scalar metric validation, and plugin
+    score-composition provenance as near-term or open work after those local
+    behaviors were implemented and documented.
+  - Status: roadmap current-state bullets now include topology mutation,
+    strict metric validation, archive admission events, and `best_workspace/`.
+    Near-term bullets now focus on remaining gaps: load-time seed marker
+    validation, binary/static artifacts, package-style validators, relative
+    evaluator data, and workspace migration/resume.
+  - Required result: keep roadmap work items phrased around the remaining
+    AlphaEvolve divergences rather than stale already-implemented behavior.
+
 ## Existing Items That Need Tightening
 
 - [x] Expand "better diversity measures" into measurable database/sampling

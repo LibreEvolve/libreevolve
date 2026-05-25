@@ -149,8 +149,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     also inherit `.env`-loaded provider credentials and host environment
     variables by default, so evaluator environment provenance and secret
     isolation are incomplete. Problem-local evaluator helper modules are not
-    imported package-faithfully because `validate.py` is loaded by file path
-    from a temporary runner without adding the problem directory to `sys.path`.
+    imported only as sibling modules beside a configured validator file;
+    package-style validator entrypoints, relative evaluator data policy, and
+    evaluator code/data hashes are still missing.
   - Required result: add run ids and explicit overwrite/fail/new-run/resume
     semantics, validate/constrain evaluator paths, define evaluator import
     semantics, and record evaluator hashes plus run/collision metadata in
@@ -291,6 +292,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     gaps.
   - Required result: keep the paper index aligned with current code whenever
     todo items are completed or reopened.
+
+- [x] Remove stale implemented-gap claims from the AlphaEvolve paper-index row.
+  - Evidence: `papers/README.md` still listed workspace file-topology
+    mutation, full-workspace best export, full-workspace feedback grading,
+    feedback failure isolation, workspace execution/import fidelity, strict
+    scalar metric validation, and broad config validation as remaining
+    AlphaEvolve gaps even though current code/docs/tests cover those local
+    implementations.
+  - Status: refreshed the AlphaEvolve status row so implemented local behavior
+    is not duplicated in the remaining-open list. The row still calls out
+    unresolved gaps such as flexible candidate abstractions, binary/static
+    artifacts, workspace-aware descriptors, custom backend registration,
+    async workers, provider failure policy, validator environment isolation,
+    run-wide budgets, true multi-objective search, queryable database,
+    archive/resume state, reproducible ids, feedback calibration,
+    role-specific LLM accounting, plugin provenance, and benchmark hardening.
 
 - [x] Decide and document the paper corpus source of truth.
   - Evidence: `papers/download_manifest.csv` lists 24 downloaded papers, while

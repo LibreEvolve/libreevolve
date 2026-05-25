@@ -315,13 +315,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 - [x] Clarify plugin score provenance limitations.
   - README evidence: the plugin hook table says `on_evaluated()` can modify
-    score, but did not say that per-plugin score-composition provenance is not
-    yet persisted.
-  - Current evidence: `evolve()` applies plugin score returns sequentially and
-    stores the final `Program.fitness`; no structured before/after plugin score
-    chain is written to `history.jsonl`.
-  - Required result: tell readers that plugin score hooks can affect archived
-    fitness and point structured provenance to the roadmap/TODO.
+    score, so it must explain how those changes relate to evaluator validity
+    and archived fitness.
+  - Current evidence: `evolve()` stores per-plugin before/after score records
+    in `metadata.score_composition`, and archive admission remains gated by
+    evaluator/feedback validity.
+  - Status: README now states that plugin score hooks can change final
+    top-level fitness, that score provenance is stored in
+    `metadata.score_composition`, and that archive admission is validity-gated.
+  - Required result: keep README aligned with the current score-composition
+    behavior and track broader plugin provenance separately.
 
 - [x] Clarify causal plugin mutation-format behavior.
   - README evidence: the plugin section labels the causal plugin as

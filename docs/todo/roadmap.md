@@ -222,12 +222,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     stage/sample/attempt artifact provenance.
   - Status: implemented as opt-in artifact copy-out from the candidate
     workspace. Top-level and per-stage include/exclude patterns, size/count
-    limits, copied file hashes, skipped-file reasons, stage/sample/attempt
-    provenance, and run-directory artifact paths are recorded, with tests
-    proving files are retained after subprocess cleanup and stage overrides are
-    honored.
-  - Remaining gap: artifact content is copied raw and files outside the
-    candidate workspace are not retained.
+    limits, text-artifact redaction policy, copied file hashes, skipped-file
+    reasons, stage/sample/attempt provenance, and run-directory artifact paths
+    are recorded, with tests proving files are retained after subprocess
+    cleanup, stage overrides are honored, and secret-like text artifacts are
+    redacted by default.
+  - Remaining gap: files outside the candidate workspace are not retained.
 
 - [x] Add evaluator-stage numeric validation to config hardening.
   - Evidence: `Config.validate()` now checks evaluator-stage `samples`,

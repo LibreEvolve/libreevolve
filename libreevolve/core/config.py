@@ -18,6 +18,7 @@ class Config:
     evaluator_artifact_exclude: list[str] = field(default_factory=list)
     evaluator_artifact_max_files: int = 20
     evaluator_artifact_max_bytes: int = 1_000_000
+    evaluator_artifact_redact_secrets: bool = True
     explore_ratio:          float = 0.3
     mutation_mode:          str   = "diff"
     eval_stages:            list[dict] = field(default_factory=list)
@@ -63,6 +64,7 @@ class Config:
         _validate_string_list("evaluator_artifact_exclude", self.evaluator_artifact_exclude)
         _require_int("evaluator_artifact_max_files", self.evaluator_artifact_max_files, minimum=0)
         _require_int("evaluator_artifact_max_bytes", self.evaluator_artifact_max_bytes, minimum=0)
+        _require_bool("evaluator_artifact_redact_secrets", self.evaluator_artifact_redact_secrets)
         _require_probability("explore_ratio", self.explore_ratio)
         _require_enum("mutation_mode", self.mutation_mode, {"diff", "full"})
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
@@ -126,6 +128,11 @@ def _require_enum(name: str, value: object, allowed: set[str]) -> None:
         raise ConfigError(f"{name} must be one of {sorted(allowed)}, got {value!r}")
 
 
+def _require_bool(name: str, value: object) -> None:
+    if not isinstance(value, bool):
+        raise ConfigError(f"{name} must be boolean")
+
+
 def _validate_string_list(name: str, value: object) -> None:
     if not isinstance(value, list):
         raise ConfigError(f"{name} must be a list of strings")
@@ -153,6 +160,7 @@ def _validate_eval_stages(stages: object) -> None:
             "artifact_exclude",
             "artifact_max_files",
             "artifact_max_bytes",
+            "artifact_redact_secrets",
         })
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
@@ -172,6 +180,8 @@ def _validate_eval_stages(stages: object) -> None:
             _require_int(f"{label}.artifact_max_files", stage["artifact_max_files"], minimum=0)
         if "artifact_max_bytes" in stage:
             _require_int(f"{label}.artifact_max_bytes", stage["artifact_max_bytes"], minimum=0)
+        if "artifact_redact_secrets" in stage:
+            _require_bool(f"{label}.artifact_redact_secrets", stage["artifact_redact_secrets"])
         if "seeds" in stage:
             if not isinstance(stage["seeds"], list):
                 raise ConfigError(f"{label}.seeds must be a list")

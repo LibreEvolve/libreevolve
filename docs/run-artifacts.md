@@ -141,12 +141,15 @@ Validator-generated files are collected only when
 are copied to `evaluator_artifacts/<collection_id>/...` before the temporary
 workspace is deleted. Each copied artifact record in
 `evaluation.metadata.artifacts.files` includes the original relative path,
-stored artifact path, byte count, SHA-256 hash, stage name, sample index, and
-attempt. The collection metadata also records the effective include/exclude
-patterns, max-file and max-byte limits, skipped files, total copied bytes, and
-collection id. `eval_stages[]` can override the top-level artifact policy for
-that stage. Non-matching files and files written outside the candidate
-workspace are not retained.
+stored artifact path, stored byte count, source byte count, SHA-256 hash of the
+stored content, redaction flag/status, stage name, sample index, and attempt.
+The collection metadata also records the effective include/exclude patterns,
+redaction policy, max-file and max-byte limits, skipped files, total copied
+bytes, and collection id. UTF-8 text artifacts receive basic secret-pattern
+redaction by default; binary or non-UTF-8 artifacts are copied raw.
+`eval_stages[]` can override the top-level artifact policy for that stage.
+Non-matching files and files written outside the candidate workspace are not
+retained.
 
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is stored under `metadata.score_composition` with

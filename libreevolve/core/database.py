@@ -180,6 +180,7 @@ class ProgramDatabase:
                     "evaluator_artifact_exclude": config.evaluator_artifact_exclude,
                     "evaluator_artifact_max_files": config.evaluator_artifact_max_files,
                     "evaluator_artifact_max_bytes": config.evaluator_artifact_max_bytes,
+                    "evaluator_artifact_redact_secrets": config.evaluator_artifact_redact_secrets,
                     "explore_ratio": config.explore_ratio,
                     "mutation_mode": config.mutation_mode,
                     "eval_stages": config.eval_stages,

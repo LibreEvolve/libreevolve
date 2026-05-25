@@ -31,6 +31,9 @@ from `validate.py` unless explicitly allowlisted.
 - `evaluator_artifact_max_files` (`20`): maximum copied files per evaluation.
 - `evaluator_artifact_max_bytes` (`1000000`): maximum total copied artifact
   bytes per evaluation.
+- `evaluator_artifact_redact_secrets` (`true`): apply basic secret-pattern
+  redaction to UTF-8 text artifacts before writing them under
+  `evaluator_artifacts/`. Binary or non-UTF-8 artifacts are copied raw.
 - `explore_ratio` (`0.3`): probability of exploration instead of exploitation.
 - `mutation_mode` (`"diff"`): `diff` or `full`. The built-in prompt template
   renders mode-specific mutation instructions; custom prompt variants can use
@@ -188,6 +191,7 @@ eval_stages:
     artifact_exclude: ["reports/tmp/**"]
     artifact_max_files: 5
     artifact_max_bytes: 2000000
+    artifact_redact_secrets: true
 backends:
   - type: openai
     model: gpt-4o-mini
@@ -206,10 +210,11 @@ the problem in a path-aware `ConfigError` diagnostic.
 Nested evaluator-stage fields are validated before a run: `samples` must be
 positive, `timeout_sec` must be positive, `retries` must be non-negative,
 `min_score` must be numeric, artifact include/exclude fields must be lists of
-strings, and artifact max-file/max-byte limits must be non-negative integers.
-If both `samples` and `seeds` are provided, the counts must match so stage
-sampling is reproducible. Stage `artifact_*` settings override top-level
-evaluator artifact settings for that stage.
+strings, artifact redaction flags must be boolean, and artifact
+max-file/max-byte limits must be non-negative integers. If both `samples` and
+`seeds` are provided, the counts must match so stage sampling is reproducible.
+Stage `artifact_*` settings override top-level evaluator artifact settings for
+that stage.
 
 Top-level evolution and population numeric fields are validated. Use
 non-negative `max_generations`, `num_inspirations`, `migration_interval`, and

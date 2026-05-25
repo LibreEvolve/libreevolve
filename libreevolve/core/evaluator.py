@@ -59,6 +59,7 @@ class CascadeEvaluator:
         artifact_exclude: list[str] | None = None,
         artifact_max_files: int = 20,
         artifact_max_bytes: int = 1_000_000,
+        artifact_redact_secrets: bool = True,
     ):
         self._problem = problem
         self._timeout = timeout_sec
@@ -69,6 +70,7 @@ class CascadeEvaluator:
         self._artifact_exclude = list(artifact_exclude or [])
         self._artifact_max_files = artifact_max_files
         self._artifact_max_bytes = artifact_max_bytes
+        self._artifact_redact_secrets = artifact_redact_secrets
 
     def evaluate(
         self, code: str | CandidateWorkspace, diff_error: str | None
@@ -261,6 +263,7 @@ class CascadeEvaluator:
                 exclude=artifact_policy["exclude"],
                 max_files=artifact_policy["max_files"],
                 max_bytes=artifact_policy["max_bytes"],
+                redact_secrets=artifact_policy["redact_secrets"],
                 stage_context=stage_context,
             )
             if res.timed_out:
@@ -426,6 +429,9 @@ class CascadeEvaluator:
             "exclude": list(stage.get("artifact_exclude", self._artifact_exclude)),
             "max_files": int(stage.get("artifact_max_files", self._artifact_max_files)),
             "max_bytes": int(stage.get("artifact_max_bytes", self._artifact_max_bytes)),
+            "redact_secrets": bool(
+                stage.get("artifact_redact_secrets", self._artifact_redact_secrets)
+            ),
         }
 
     def _aggregate_sample_results(
@@ -674,6 +680,7 @@ def _collect_evaluator_artifacts(
     exclude: list[str],
     max_files: int,
     max_bytes: int,
+    redact_secrets: bool,
     stage_context: dict,
 ) -> dict:
     metadata = {
@@ -682,6 +689,7 @@ def _collect_evaluator_artifacts(
         "exclude": exclude,
         "max_files": max_files,
         "max_bytes": max_bytes,
+        "redact_secrets": redact_secrets,
         "files": [],
         "skipped": [],
         "total_bytes": 0,
@@ -705,27 +713,45 @@ def _collect_evaluator_artifacts(
         if len(metadata["files"]) >= max_files:
             metadata["skipped"].append({"path": rel, "reason": "max_files"})
             continue
-        size = path.stat().st_size
+        raw = path.read_bytes()
+        stored_raw, redacted, redaction_status = _artifact_stored_bytes(
+            raw, redact_secrets
+        )
+        size = len(stored_raw)
         if metadata["total_bytes"] + size > max_bytes:
             metadata["skipped"].append({"path": rel, "reason": "max_bytes", "bytes": size})
             continue
-        raw = path.read_bytes()
         dest = target_root / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, dest)
+        dest.write_bytes(stored_raw)
         metadata["total_bytes"] += size
         metadata["files"].append(
             {
                 "path": rel,
                 "artifact_path": (Path(artifact_dir.name) / collection_id / rel).as_posix(),
                 "bytes": size,
-                "sha256": hashlib.sha256(raw).hexdigest(),
+                "source_bytes": len(raw),
+                "sha256": hashlib.sha256(stored_raw).hexdigest(),
+                "redacted": redacted,
+                "redaction_status": redaction_status,
                 "stage_name": stage_name,
                 "sample_index": sample_index,
                 "attempt": attempt,
             }
         )
     return metadata
+
+
+def _artifact_stored_bytes(raw: bytes, redact_secrets: bool) -> tuple[bytes, bool, str]:
+    if not redact_secrets:
+        return raw, False, "disabled"
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw, False, "binary_or_non_utf8"
+    redacted_text = _redact_secrets(text)
+    redacted = redacted_text != text
+    return redacted_text.encode("utf-8"), redacted, "redacted" if redacted else "unchanged"
 
 
 def _matching_artifact_paths(cand_root: Path, include: list[str], exclude: list[str]) -> list[Path]:

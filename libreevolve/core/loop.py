@@ -55,6 +55,7 @@ def evolve(problem: Problem, config: Config,
         artifact_exclude=config.evaluator_artifact_exclude,
         artifact_max_files=config.evaluator_artifact_max_files,
         artifact_max_bytes=config.evaluator_artifact_max_bytes,
+        artifact_redact_secrets=config.evaluator_artifact_redact_secrets,
     )
     llm       = build_llm(config)
     prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))

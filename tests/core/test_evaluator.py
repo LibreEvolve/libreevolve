@@ -200,6 +200,8 @@ def test_validator_artifacts_are_copied_hashed_and_retained(tmp_path):
         assert report_path.read_text(encoding="utf-8") == '{"ok": true}'
         assert trace_path.read_text(encoding="utf-8") == "trace"
         assert copied["report.json"]["sha256"] == hashlib.sha256(b'{"ok": true}').hexdigest()
+        assert copied["report.json"]["redacted"] is False
+        assert copied["report.json"]["redaction_status"] == "unchanged"
         assert copied["report.json"]["stage_name"] == "validate"
     finally:
         shutil.rmtree(d)
@@ -260,6 +262,61 @@ def test_configured_stage_overrides_artifact_policy(tmp_path):
         copied = tmp_path / artifacts["files"][0]["artifact_path"]
         assert copied.read_text(encoding="utf-8") == "hard"
         assert not any(artifact_dir.rglob("global.json"))
+    finally:
+        shutil.rmtree(d)
+
+
+def test_validator_text_artifacts_redact_secret_like_values_by_default(tmp_path):
+    secret = "sk-proj_artifactsecret1234567890"
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(c, workspace):\n"
+        f"    Path(workspace, 'secret.txt').write_text('token={secret}', encoding='utf-8')\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            artifact_dir=tmp_path / "artifacts",
+            artifact_include=["*.txt"],
+        ).evaluate("x=1", None)
+        artifact = result.metadata["artifacts"]["files"][0]
+        copied = tmp_path / artifact["artifact_path"]
+        assert secret not in copied.read_text(encoding="utf-8")
+        assert "[REDACTED]" in copied.read_text(encoding="utf-8")
+        assert artifact["redacted"] is True
+        assert artifact["redaction_status"] == "redacted"
+        assert artifact["source_bytes"] > artifact["bytes"]
+        assert artifact["sha256"] == hashlib.sha256(copied.read_bytes()).hexdigest()
+    finally:
+        shutil.rmtree(d)
+
+
+def test_stage_artifact_redaction_can_be_disabled(tmp_path):
+    secret = "sk-proj_artifactraw1234567890"
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(c, workspace, stage):\n"
+        f"    Path(workspace, 'raw.txt').write_text('token={secret}', encoding='utf-8')\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "raw",
+                    "artifact_include": ["*.txt"],
+                    "artifact_redact_secrets": False,
+                }
+            ],
+            artifact_dir=tmp_path / "artifacts",
+        ).evaluate("x=1", None)
+        artifact = result.metadata["artifacts"]["files"][0]
+        copied = tmp_path / artifact["artifact_path"]
+        assert secret in copied.read_text(encoding="utf-8")
+        assert artifact["redacted"] is False
+        assert artifact["redaction_status"] == "disabled"
     finally:
         shutil.rmtree(d)
 

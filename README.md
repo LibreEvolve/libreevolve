@@ -357,8 +357,9 @@ diagnostics are stored with each candidate.
 Generated evaluator files can be retained when `evaluator_artifact_include`
 patterns are configured. Matching files written under the candidate workspace
 are copied to `evaluator_artifacts/` with hashes and stage/sample/attempt
-metadata; files that do not match the configured patterns are discarded with
-the temporary workspace.
+metadata. UTF-8 text artifacts receive basic secret-pattern redaction by
+default; binary or non-UTF-8 artifacts are copied raw. Files that do not match
+the configured patterns are discarded with the temporary workspace.
 
 That subprocess uses a minimal environment by default, so provider keys loaded
 from `.env` are not visible to validators unless their names are explicitly

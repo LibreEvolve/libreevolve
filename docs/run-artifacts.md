@@ -25,6 +25,10 @@ runs/
     ├── best.py
     ├── evaluator_artifacts/
     │   └── ...                        # Optional collected validator outputs
+    ├── plugin_artifacts/
+    │   └── ttt_rl/
+    │       ├── grpo_data.jsonl         # Only when ttt_rl exports examples
+    │       └── grpo_data_invalid.jsonl # Only when an export record is rejected
     └── best_workspace/
         └── ...                        # Complete best candidate file set
 ```

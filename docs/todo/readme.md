@@ -632,3 +632,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `evaluator_artifacts/` and `plugin_artifacts/`.
   - Required result: keep docs aligned with the exact artifact set that
     preflight collision checks and overwrite cleanup use.
+
+- [x] Add plugin artifacts to the run-artifact layout.
+  - README-adjacent evidence: `docs/run-artifacts.md` documented
+    `runtime.plugin_artifacts` and the `ttt_rl` export path, but the top-level
+    directory tree omitted `plugin_artifacts/`.
+  - Current evidence: the CLI scopes `ttt_rl` to
+    `runs/<run-name>/plugin_artifacts/ttt_rl/`, `TTTRLPlugin` writes
+    `grpo_data.jsonl` and `grpo_data_invalid.jsonl` there, and tests cover the
+    scoped path plus manifest summaries.
+  - Required result: show plugin artifact directories in the canonical run
+    layout so docs match the runtime artifact surface.

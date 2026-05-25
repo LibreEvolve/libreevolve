@@ -219,6 +219,9 @@ fitness, lineage, metadata, metrics, and the structured evaluation summary.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.
+- Runtime budget accounting is limited to `max_generations` and evaluator
+  timeouts; there is no run-wide wall-clock, token, cost, evaluator-second, or
+  structured stop-reason model.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Mutation responses are raw patch text; proposal ideas/rationales are not

@@ -175,6 +175,10 @@ Provider SDKs may honor additional provider-specific variables.
   scheduling settings.
 - Config validation is incomplete: unknown problem-local keys are ignored, and
   nested backend/stage/feedback fields are only partially validated.
+- Run-wide budget configuration is not implemented yet. `max_generations` and
+  per-validator timeouts are the only hard stop controls; there are no
+  wall-clock, LLM-call, token, cost, evaluator-second, sample, retry, or
+  accelerator budget counters.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - `prompt_variants` seed the prompt-program database; set

@@ -100,6 +100,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     pipeline runs as an async controller with LLM samplers and evaluation nodes.
   - Current gap: `evolve()` is synchronous and evaluates one candidate at a time.
 
+- [ ] Overall compute-budget accounting and ablation support.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
+  - Requirement: AlphaEvolve optimizes throughput under a fixed computation
+    budget, and ablations compare performance as a function of consumed budget.
+  - Current gap: LibreEvolve has `max_generations` plus per-subprocess
+    timeouts, but no run-wide budget object, consumed-budget counters,
+    structured stop reason, token/cost/evaluator-second accounting, or
+    benchmark harness that can report performance by compute-budget fraction.
+  - Required result: persist budget configuration and consumption in manifests
+    and history, stop deterministically on exhausted budgets, and add benchmark
+    scripts/reports that can compare variants at equal budget fractions.
+
 - [ ] Multiple-score optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optimize multiple user-provided scores and use programs that

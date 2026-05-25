@@ -322,6 +322,20 @@ Primary evidence:
   - Required result: add wall-clock, sample, accelerator, and per-stage budget
     controls, plus resumable evaluation state.
 
+- [ ] Add run-wide compute budget accounting and stop criteria.
+  - Spec evidence: AlphaEvolve Section 2.6 frames the system around maximizing
+    useful ideas evaluated under an overall computation budget, and Section 4
+    ablations report performance by fraction of the compute budget.
+  - Current evidence: `Config` exposes `max_generations` and per-validator
+    timeouts only. The loop has no wall-clock, LLM-call, token, cost,
+    evaluator-second, sample, or retry budget; `manifest.json` does not record
+    consumed budget; runs stop because the generation loop ends or no parent is
+    available, without a structured stop reason.
+  - Required result: add a budget schema, deterministic counters for LLM
+    calls/tokens/cost/evaluator elapsed time/stage samples/retries, structured
+    stop reasons, manifest/history budget summaries, and tests that budget
+    exhaustion stops runs reproducibly.
+
 ## Metrics and Evolution Database
 
 - [ ] Implement real multi-objective optimization.

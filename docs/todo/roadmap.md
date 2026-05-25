@@ -176,6 +176,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track hashes/version metadata separately from basic config
     logging.
 
+- [x] Add run-wide compute-budget accounting to runtime work.
+  - Evidence: AlphaEvolve Section 2.6 describes maximizing evaluated ideas
+    under a total computation budget, and paper ablations compare progress by
+    fraction of consumed budget.
+  - Current roadmap gap: the roadmap mentioned per-stage budgets and
+    deterministic accounting, but did not require whole-run wall-clock,
+    LLM-call, token, cost, evaluator-second, sample/retry counters, stop
+    reasons, or equal-budget ablation reporting.
+  - Required result: make budget schemas, counters, stop reasons, manifest
+    summaries, and budget-fraction benchmark reporting explicit runtime work.
+
 ## Existing Items That Need Tightening
 
 - [x] Expand "better diversity measures" into measurable database/sampling

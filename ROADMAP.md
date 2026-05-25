@@ -60,6 +60,8 @@ is not yet an AlphaEvolve reproduction.
 
 - Enforce the scalar metric contract from `metrics.yaml` for evaluator outputs.
 - Add artifact collection and richer per-stage budget accounting.
+- Add run-wide wall-clock, LLM-call, token, cost, evaluator-second, sample,
+  retry, and stop-reason accounting.
 - Add calibration/ablation reporting for LLM feedback graders.
 - Normalize and bound LLM feedback metrics before using them in score
   composition.
@@ -100,7 +102,8 @@ is not yet an AlphaEvolve reproduction.
   long runs.
 - Record Git/code state, problem hashes, plugin specs, and artifact hashes in
   the run manifest.
-- Add deterministic accounting for concurrent evaluations and retries.
+- Add deterministic accounting for concurrent evaluations, retries, consumed
+  budgets, and budget-exhaustion stop reasons.
 
 ### 7. Backend scheduling and critique
 
@@ -131,6 +134,8 @@ is not yet an AlphaEvolve reproduction.
   benchmark, or keep it marked background-only in `papers/README.md`.
 - Add repeatable benchmark scripts for backend, seed, prompt, and archive
   ablations.
+- Report benchmark progress at comparable compute-budget fractions, not only
+  final generation counts.
 
 ### 10. Operational maturity
 

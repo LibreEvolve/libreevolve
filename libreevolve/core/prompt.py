@@ -21,8 +21,9 @@ class PromptSampler:
         problem: Problem,
         extra_context: str,
         recent_failures: list[tuple[str, float]] | None = None,
+        template: str | None = None,
     ) -> str:
-        variant = self.rng.choice(self.variants) if self.variants else _DEFAULT_TEMPLATE
+        variant = template or (self.rng.choice(self.variants) if self.variants else _DEFAULT_TEMPLATE)
         return variant.format(
             task=problem.task_description,
             context=_render_context(problem),
@@ -36,7 +37,7 @@ class PromptSampler:
         )
 
 
-_DEFAULT_TEMPLATE = """[SYSTEM]
+DEFAULT_TEMPLATE = """[SYSTEM]
 You are an expert programmer evolving solutions for: {task}
 
 [EXPLICIT CONTEXT]
@@ -68,6 +69,8 @@ def foo():
     return 2
 >>>REPLACE
 """
+
+_DEFAULT_TEMPLATE = DEFAULT_TEMPLATE
 
 
 def _render_context(problem: Problem) -> str:

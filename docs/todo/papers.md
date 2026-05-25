@@ -17,8 +17,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     explicit context, stochastic formatting, rendered evaluation results, and
     meta-prompt evolution.
   - Status: implemented prompt templates, problem context files, stochastic
-    variants, and rendered evaluator output. Co-evolved prompt instructions
-    remain open.
+    variants, rendered evaluator output, and local prompt-program selection,
+    scoring, lineage, and optional LLM mutation.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
@@ -77,11 +77,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     no arbitrary external repository/build-system runner and `best.py` exports
     only the primary file convenience view.
 
-- [ ] Meta-prompt evolution.
+- [x] Meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.
   - Requirement: prompt instructions/context can be co-evolved in a separate
     database.
-  - Current gap: no prompt database or meta-prompt mutation/evaluation path.
+  - Current evidence: `PromptDatabase` stores prompt programs, logs
+    `prompt_history.jsonl`, records prompt rewards/usages, and supports
+    lineage-preserving mutation. `evolve()` uses prompt programs during prompt
+    construction and can optionally ask the active LLM to mutate templates.
+  - Status: implemented locally. Remaining divergence: no published
+    AlphaEvolve-equivalent ablation harness or advanced prompt-fitness model.
 
 ## Local Paper Corpus Issues
 

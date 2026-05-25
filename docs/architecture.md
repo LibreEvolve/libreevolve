@@ -105,8 +105,12 @@ For each generation it:
 - plugin-provided context
 - recent failed mutations
 
-`Config.prompt_variants` can supply alternate templates. There is not yet a
-meta-prompt database or prompt-evolution controller.
+`Config.prompt_variants` seeds alternate templates. The loop stores those
+templates as `PromptProgram` records in `PromptDatabase`, selects prompt
+programs, records prompt reward/usage, and logs prompt lineage to
+`prompt_history.jsonl`. When `meta_prompt_evolution` is enabled, the loop can
+periodically ask the active LLM backend to produce a revised full prompt
+template while preserving placeholders.
 
 ## Evaluation
 

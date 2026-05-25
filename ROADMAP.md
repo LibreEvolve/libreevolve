@@ -18,6 +18,8 @@ LibreEvolve has:
 - MAP-Elites plus 5-island migration
 - metric direction/bounds normalization for primary fitness
 - a prompt sampler that renders context files and evaluator feedback
+- a local prompt-program database with prompt selection, scoring, lineage, and
+  optional interval-based LLM template mutation
 - UCB-style backend routing plus experimental throughput/depth metadata
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
   and `best.py` artifacts
@@ -53,13 +55,14 @@ is not yet an AlphaEvolve reproduction.
   composition rules.
 - Preserve evaluator artifacts beyond stdout/stderr where useful.
 
-### 4. Prompt and meta-prompt work
+### 4. Prompt and context work
 
-- Add problem-local prompt templates and validated template variables.
+- Add stricter validation that mutated prompt templates preserve required
+  placeholders.
 - Add deterministic literature/context ingestion for local PDFs or extracted
   text.
-- Implement a prompt-program database only after prompt variants and feedback
-  metrics are stable enough to score.
+- Improve meta-prompt scoring beyond direct child score and add ablation
+  reporting for prompt-program lineages.
 
 ### 5. Documentation truthfulness
 

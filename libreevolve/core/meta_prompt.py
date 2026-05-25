@@ -1,0 +1,100 @@
+from __future__ import annotations
+
+import json
+import math
+from dataclasses import dataclass, field
+from pathlib import Path
+from uuid import uuid4
+
+from libreevolve.core.prompt import DEFAULT_TEMPLATE
+
+
+@dataclass
+class PromptProgram:
+    template: str
+    id: str = field(default_factory=lambda: uuid4().hex)
+    parent_id: str | None = None
+    generation: int = 0
+    uses: int = 0
+    reward_sum: float = 0.0
+    metadata: dict = field(default_factory=dict)
+
+    @property
+    def mean_reward(self) -> float:
+        return self.reward_sum / self.uses if self.uses else 0.0
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "template": self.template,
+            "parent_id": self.parent_id,
+            "generation": self.generation,
+            "uses": self.uses,
+            "reward_sum": self.reward_sum,
+            "mean_reward": self.mean_reward,
+            "metadata": self.metadata,
+        }
+
+
+class PromptDatabase:
+    """Small evolutionary database for prompt templates.
+
+    This is intentionally local and deterministic. It gives prompt instructions
+    identity, lineage, selection, scoring, and append-only logs so future
+    mutation strategies can evolve prompts without changing the rest of the
+    loop.
+    """
+
+    def __init__(self, log_dir: str | Path, templates: list[str] | None = None):
+        self._programs: dict[str, PromptProgram] = {}
+        self._log_path = Path(log_dir) / "prompt_history.jsonl"
+        self._log_path.parent.mkdir(parents=True, exist_ok=True)
+        seed_templates = templates or [DEFAULT_TEMPLATE]
+        for template in seed_templates:
+            self.add(PromptProgram(template=template, metadata={"source": "seed"}))
+
+    def add(self, program: PromptProgram) -> PromptProgram:
+        self._programs[program.id] = program
+        self._write("add", program)
+        return program
+
+    def select(self) -> PromptProgram:
+        untried = [p for p in self._programs.values() if p.uses == 0]
+        if untried:
+            return sorted(untried, key=lambda p: p.id)[0]
+        total = sum(p.uses for p in self._programs.values())
+        return max(
+            self._programs.values(),
+            key=lambda p: p.mean_reward + math.sqrt(math.log(total + 1) / p.uses),
+        )
+
+    def record_result(self, prompt_id: str, reward: float, metadata: dict | None = None) -> None:
+        program = self._programs[prompt_id]
+        program.uses += 1
+        program.reward_sum += reward
+        if metadata:
+            program.metadata.update(metadata)
+        self._write("score", program)
+
+    def mutate(
+        self,
+        parent_id: str,
+        template: str,
+        generation: int,
+        metadata: dict | None = None,
+    ) -> PromptProgram:
+        parent = self._programs[parent_id]
+        child = PromptProgram(
+            template=template,
+            parent_id=parent.id,
+            generation=generation,
+            metadata=metadata or {"source": "mutation"},
+        )
+        return self.add(child)
+
+    def all(self) -> list[PromptProgram]:
+        return list(self._programs.values())
+
+    def _write(self, event: str, program: PromptProgram) -> None:
+        with open(self._log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"event": event, "program": program.to_dict()}) + "\n")

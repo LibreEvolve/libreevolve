@@ -11,6 +11,7 @@ runs/
 └── hello_world/
     ├── manifest.json
     ├── history.jsonl
+    ├── prompt_history.jsonl
     └── best.py
 ```
 
@@ -26,6 +27,7 @@ the loaded problem directory name.
 - generation and population settings
 - mutation mode
 - evaluator stage config
+- prompt variants and meta-prompt settings
 - backend specs
 - ensemble strategy
 - plugins
@@ -62,6 +64,16 @@ the full candidate file set for workspace candidates.
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
 stderr, error, elapsed time, and metadata such as the primary file and file
 list.
+
+## `prompt_history.jsonl`
+
+This file records prompt-program events:
+
+- `add`: a seed or mutated prompt template entered the prompt database
+- `score`: a prompt template was used for a candidate and received reward
+
+Program records in `history.jsonl` include `metadata.prompt_program_id` so a
+candidate can be traced back to the prompt program that produced it.
 
 ## `best.py`
 

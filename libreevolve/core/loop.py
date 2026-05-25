@@ -5,10 +5,12 @@ sampling, and failure history in prompt from CodeEvolve (arXiv:2510.14150).
 """
 from __future__ import annotations
 import random
+from pathlib import Path
 from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace, apply_workspace_mutation
 from libreevolve.core.database import ProgramDatabase
 from libreevolve.core.evaluator import CascadeEvaluator
+from libreevolve.core.meta_prompt import PromptDatabase
 from libreevolve.core.prompt import PromptSampler
 from libreevolve.llm.ensemble import build_llm
 from libreevolve.plugins.base import PluginBase
@@ -37,6 +39,10 @@ def evolve(problem: Problem, config: Config,
     )
     llm       = build_llm(config)
     prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))
+    prompt_db = PromptDatabase(
+        Path(config.log_dir) / config.problem_name,
+        templates=config.prompt_variants or None,
+    )
 
     # Seed population (diff_error=None bypasses Tier 0)
     seed_workspaces = problem.initial_workspaces or [
@@ -70,9 +76,11 @@ def evolve(problem: Problem, config: Config,
 
         inspirations = db.sample_diverse(k=config.num_inspirations)
         context = "\n".join(p.build_extra_context(parent, inspirations) for p in plugins)
+        prompt_program = prompt_db.select()
         prompt = prompt_sampler.build(
             parent, inspirations, problem, context,
             recent_failures=recent_failures or None,
+            template=prompt_program.template,
         )
 
         diff, backend_idx = llm.generate(prompt)   # LLMEnsemble returns (str, int)
@@ -97,7 +105,8 @@ def evolve(problem: Problem, config: Config,
                           parent_id=parent.id, generation=gen,
                           lineage=parent.lineage + [parent.id],
                           metadata={"prompt": prompt, "diff": diff,
-                                    "mutation_mode": config.mutation_mode},
+                                    "mutation_mode": config.mutation_mode,
+                                    "prompt_program_id": prompt_program.id},
                           metrics=result.metrics,
                           evaluation=result.to_dict())
 
@@ -106,6 +115,29 @@ def evolve(problem: Problem, config: Config,
             program.fitness = score  # keep in sync for next plugin
 
         db.log(program)
+        prompt_db.record_result(
+            prompt_program.id,
+            score,
+            metadata={"last_generation": gen, "last_program_id": program.id},
+        )
+        if (
+            config.meta_prompt_evolution
+            and config.meta_prompt_interval > 0
+            and (gen + 1) % config.meta_prompt_interval == 0
+        ):
+            mutation_prompt = (
+                "Improve this LibreEvolve prompt template for future code evolution. "
+                "Keep all existing Python format placeholders intact. Return only "
+                "the complete revised template.\n\n"
+                f"{prompt_program.template}"
+            )
+            template, prompt_backend_idx = llm.generate(mutation_prompt)
+            prompt_db.mutate(
+                prompt_program.id,
+                template,
+                generation=gen + 1,
+                metadata={"source": "llm", "backend_idx": prompt_backend_idx},
+            )
         if score >= VALID_THRESHOLD:
             db.add(program)
 

@@ -1,4 +1,5 @@
 import tempfile
+import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 from libreevolve.core.config import Config
@@ -42,3 +43,38 @@ def test_plugins_called():
                                   log_dir=tempfile.mkdtemp(), problem_name="t"),
                plugins=[T()])
     assert ("start", 0) in calls and ("end", 0) in calls
+
+
+def test_loop_logs_prompt_program_id_and_prompt_history():
+    tmpdir = tempfile.mkdtemp()
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(_problem(), Config(max_generations=1, log_dir=tmpdir, problem_name="t"))
+
+    run_dir = Path(tmpdir) / "t"
+    records = [json.loads(l) for l in (run_dir / "history.jsonl").read_text().splitlines()]
+    child = records[-1]
+    assert "prompt_program_id" in child["metadata"]
+    assert (run_dir / "prompt_history.jsonl").exists()
+
+
+def test_meta_prompt_evolution_adds_mutated_prompt_template():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+        ("[SYSTEM]\n{task}\n{context}\n{parent_score}\n{parent_metrics}\n{parent_feedback}\n{parent_code}\n{inspirations}\n{extra_context}\n{recent_failures}", 0),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), Config(
+            max_generations=1,
+            log_dir=tmpdir,
+            problem_name="t",
+            meta_prompt_evolution=True,
+            meta_prompt_interval=1,
+        ))
+
+    events = [
+        json.loads(l)["event"]
+        for l in (Path(tmpdir) / "t" / "prompt_history.jsonl").read_text().splitlines()
+    ]
+    assert events.count("add") == 2

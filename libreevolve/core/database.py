@@ -64,6 +64,8 @@ class ProgramDatabase:
                         "mutation_mode": config.mutation_mode,
                         "eval_stages": config.eval_stages,
                         "prompt_variants": config.prompt_variants,
+                        "meta_prompt_evolution": config.meta_prompt_evolution,
+                        "meta_prompt_interval": config.meta_prompt_interval,
                         "n_islands": config.n_islands,
                         "migration_interval": config.migration_interval,
                         "migration_ratio": config.migration_ratio,

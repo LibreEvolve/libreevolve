@@ -11,6 +11,8 @@ class Config:
     mutation_mode:          str   = "diff"
     eval_stages:            list[dict] = field(default_factory=list)
     prompt_variants:        list[str] = field(default_factory=list)
+    meta_prompt_evolution:  bool  = False
+    meta_prompt_interval:   int   = 25
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25

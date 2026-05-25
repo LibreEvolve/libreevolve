@@ -55,6 +55,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
+| 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
 | ✅ | **Focused test suite** | Unit coverage for the current prototype surface, including workspace candidates, candidate blocks, mutation modes, evaluator results, metrics, archives, and CLI behavior |
 
@@ -231,6 +232,7 @@ libreevolve/
 │   ├── loop.py          # evolve() main loop + build_prompt()
 │   ├── candidate.py     # workspace candidates, evolve-block markers + mutation modes
 │   ├── prompt.py        # prompt sampler + context/evaluation rendering
+│   ├── meta_prompt.py   # prompt-program DB, scoring, lineage, mutation
 │   ├── evaluator.py     # Cascade evaluator (Tier 0/1/2)
 │   ├── diff.py          # SEARCH/REPLACE diff engine
 │   ├── database.py      # ProgramDatabase facade

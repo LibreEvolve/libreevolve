@@ -19,6 +19,10 @@ Configuration is assembled from three sources, in this order:
 - `mutation_mode` (`"diff"`): `diff` or `full`.
 - `eval_stages` (`[]`): optional configured evaluator stages.
 - `prompt_variants` (`[]`): optional prompt templates for stochastic sampling.
+- `meta_prompt_evolution` (`False`): when true, periodically ask the active LLM
+  backend to produce a revised prompt template.
+- `meta_prompt_interval` (`25`): generations between optional meta-prompt
+  mutations.
 
 ### Population
 
@@ -141,4 +145,7 @@ Provider SDKs may honor additional provider-specific variables.
   migration, archive, prompt, stage, and ensemble scheduling settings.
 - `eval_stages` currently repeats the same local validator with different
   thresholds/timeouts. It is not yet a distributed test-suite scheduler.
-- `prompt_variants` are templates, not evolved meta-prompts.
+- `prompt_variants` seed the prompt-program database; set
+  `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
+- Meta-prompt mutation uses the same backend ensemble and must preserve every
+  placeholder required by `PromptSampler`.

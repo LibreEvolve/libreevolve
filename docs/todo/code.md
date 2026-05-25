@@ -51,7 +51,7 @@ Primary evidence:
   - Current evidence: `CascadeEvaluator.evaluate()` calls Python `compile()`
     and imports Python `validate.py` (`libreevolve/core/evaluator.py:31-38`).
   - Status: README, architecture, problem format, and roadmap now state the
-    current Python-only/single-workspace scope as a deliberate divergence.
+    current Python-only/local-workspace scope as a deliberate divergence.
   - Required result: either introduce pluggable language runners and validators
     or document Python-only scope as a deliberate divergence.
 
@@ -77,7 +77,7 @@ Primary evidence:
     plugin context, and recent failures.
   - Status: implemented in `libreevolve/core/prompt.py` with configurable
     templates, problem context files, inspirations, metrics, evaluator feedback,
-    plugin context, and recent failures. Meta-prompt evolution remains separate.
+    plugin context, and recent failures.
   - Required result: introduce prompt templates, stochastic template choices,
     user-provided context files, and structured prompt sections.
 
@@ -91,12 +91,18 @@ Primary evidence:
   - Required result: return an evaluation result object, store it with the
     program, and render relevant metrics/output in future prompts.
 
-- [ ] Implement meta-prompt evolution.
+- [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a
     separate database analogous to solution programs and ablates "No meta
     prompt evolution" as a reduced system.
-  - Current evidence: no prompt database exists; prompt text can vary through
-    `Config.prompt_variants`, but variants are configured, not evolved.
+  - Current evidence: `PromptDatabase` stores prompt templates as prompt
+    programs with lineage, selection, scoring, mutation, and append-only
+    `prompt_history.jsonl`. The loop records `prompt_program_id` per candidate
+    and can optionally ask the active LLM to mutate the prompt template at
+    `meta_prompt_interval`.
+  - Status: implemented as a local prompt-program database and optional
+    interval-based LLM template mutation. Remaining hardening: placeholder
+    validation, richer prompt fitness, and ablation reporting.
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 

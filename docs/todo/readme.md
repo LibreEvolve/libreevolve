@@ -331,6 +331,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: document that live retrieval context is best-effort and
     non-reproducible until provider/query/result provenance is persisted.
 
+- [x] Clarify ImprovEvolve guidance is static and unattributed.
+  - README evidence: the plugin section labels `modular` as
+    ImprovEvolve-inspired modular decomposition prompting, but does not state
+    that it always injects the same block and does not log a selected
+    generate/improve/perturb operation.
+  - Current evidence: `ModularPlugin.build_extra_context()` returns a constant
+    prompt block, and `evolve()` concatenates plugin context into the prompt
+    without a structured per-plugin context/provenance record.
+  - Required result: document that modular guidance is static prompt-only until
+    plugin prompt-context attribution or real ImprovEvolve operations exist.
+
 - [x] Clarify missing per-call backend telemetry.
   - README evidence: the backend section says the router tracks observed
     fitness improvements, but did not distinguish that from provider-level call

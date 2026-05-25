@@ -400,6 +400,24 @@ Primary evidence:
     artifacts or summaries in run manifests; and test successful, empty,
     malformed, and failed retrieval paths.
 
+- [ ] Attribute plugin prompt guidance and strategy choices.
+  - Spec evidence: AlphaEvolve-style prompt assembly and paper-inspired
+    plugins should make it possible to audit which prompt/context components
+    influenced a candidate, especially when a plugin claims a specific search
+    strategy such as ImprovEvolve's generate/improve/perturb loop.
+  - Current evidence: `evolve()` builds plugin context with
+    `"\n".join(p.build_extra_context(...))` and stores only the final rendered
+    prompt in `Program.metadata["prompt"]`. There is no structured per-plugin
+    context record, prompt-context hash, selected strategy, or plugin version.
+    `ModularPlugin.build_extra_context()` always returns the same static
+    `generate_config`/`improve`/`perturb` guidance and does not choose,
+    execute, or log an ImprovEvolve operation for the candidate.
+  - Required result: record per-plugin prompt-context events with plugin name,
+    version/config, rendered text hash, parent/inspiration ids, and any chosen
+    strategy or operation; for modular/ImprovEvolve-inspired guidance, either
+    enforce and log generate/improve/perturb execution or label and test it as
+    static prompt-only guidance.
+
 - [ ] Replace context truncation with deterministic summarization/ranking for
   large literature corpora.
   - Spec evidence: AlphaEvolve Section 2.2 allows relevant literature, such as

@@ -202,6 +202,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     plugins, render citations in prompt context, and test successful, empty,
     malformed, and failed retrieval events.
 
+- [x] Add plugin prompt-context attribution to prompt/plugin work.
+  - Evidence: plugin `build_extra_context()` outputs are concatenated into one
+    prompt string, and `ModularPlugin` always returns static
+    generate/improve/perturb guidance without recording a selected strategy.
+  - Current roadmap gap: plugin provenance work covered config/artifacts and
+    score composition, but not the prompt-context components and strategy
+    choices that influence candidate generation before evaluation.
+  - Required result: log per-plugin prompt-context records with rendered hashes
+    and operation/strategy metadata, or explicitly keep plugins such as
+    `modular` as static prompt-only guidance with tests and docs.
+
 - [x] Add prompt budget/context-window accounting to prompt work.
   - Evidence: `PromptSampler.build()` concatenates rendered sections without a
     global budget, and only problem context files have a first-6000-character

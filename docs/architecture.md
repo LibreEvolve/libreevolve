@@ -219,6 +219,11 @@ run-scoped provenance. It keeps only the latest synthesis string in memory and
 does not persist provider/query/result metadata, citations, timestamps,
 failure diagnostics, or hashes for the context injected into prompts.
 
+The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
+always injects the same guidance block and does not record a structured
+plugin-context event or selected generate/improve/perturb operation for the
+candidate.
+
 ## Population model
 
 Population state is split across:

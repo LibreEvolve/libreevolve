@@ -14,7 +14,7 @@ paper is fully implemented.
 | 2511.17592 | GigaEvo | Framework inspiration | Not implemented as described: no Redis lifecycle database, asyncio DAG engine, insight stage, or concurrent units. Diff/full mutation modes are partially present. |
 | 2510.14150 | CodeEvolve | Agentic code-evolution inspiration | Not implemented as described: no crossover, targeted refinement, modular orchestration, or adaptive meta-prompting. |
 | 2511.23473 | ThetaEvolve | Test-time training inspiration | Only clipped-reward JSONL export exists through `ttt_rl`; no run-scoped dataset provenance or online RL/GRPO training loop. |
-| 2602.10233 | ImprovEvolve | Modular search inspiration | Only inspired prompt guidance exists; no enforced generate/improve/perturb execution loop. |
+| 2602.10233 | ImprovEvolve | Modular search inspiration | Only static prompt guidance exists; no enforced or attributed generate/improve/perturb execution loop. |
 | 2602.15951 | MadEvolve | Domain evolution inspiration | Background only; no free-parameter optimization or innovation report. |
 | 2603.14575 | CausalEvolve | Causal-guidance inspiration | Only token-pattern outcome-factor guidance exists; no LLM causal scratchpad. Factor detection is compact-diff-only and can miss canonical AlphaEvolve SEARCH/REPLACE fences. |
 | 2510.06056 | DeepEvolve | Retrieval/debug loop inspiration | Only best-effort arXiv/web-search context exists; no persisted retrieval provenance, cross-file editing, or systematic debugging loop. |

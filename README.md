@@ -383,6 +383,11 @@ The DeepEvolve-inspired retrieval plugin injects best-effort live arXiv
 summaries into prompts, but does not yet persist query/result provenance,
 citations, source hashes, timestamps, or failure diagnostics in run artifacts.
 
+The ImprovEvolve-inspired modular plugin is static prompt guidance. It does
+not select, execute, or log a `generate_config`/`improve`/`perturb` operation
+for each candidate, and plugin prompt-context attribution is not structured
+outside the rendered prompt text yet.
+
 The ThetaEvolve-inspired export writes `runs/grpo_data.jsonl` by default and
 stores `reward = max(0.0, score)`. That side file is not yet scoped under the
 active run directory, hashed in `manifest.json`, or a real GRPO/RL trainer.

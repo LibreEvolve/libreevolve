@@ -132,6 +132,8 @@ Mechanics:
 - does not inspect the current parent, archive, or score
 - does not alter evaluation or logging
 - does not enforce or execute generate/improve/perturb interfaces
+- does not record a selected operation or a structured per-plugin prompt
+  context event outside the rendered prompt text
 
 ### `ttt_rl`
 

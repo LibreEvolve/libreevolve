@@ -89,7 +89,10 @@ are not retained as separate history records.
 Plugin `on_evaluated()` hooks can also modify the final top-level `fitness`.
 That score-composition path is not currently stored as a structured trace, so
 plugin-adjusted records may have top-level `fitness` values that differ from
-`evaluation.fitness` without per-plugin before/after metadata.
+`evaluation.fitness` without per-plugin before/after metadata. Archive
+admission uses the final top-level fitness threshold, so a plugin can currently
+make an evaluator-invalid candidate archive-eligible unless validity override
+semantics are hardened.
 
 Archive state is not serialized yet. `history.jsonl` contains evaluated
 candidates, but not MAP-Elites cell coordinates, island assignment, diversity

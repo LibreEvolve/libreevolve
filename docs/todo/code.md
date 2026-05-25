@@ -1065,6 +1065,26 @@ Primary evidence:
     use the documented composed score; add tests for multiple plugins,
     rejecting invalid plugin scores, and preserving raw validator fitness.
 
+- [ ] Keep evaluator validity separate from plugin-adjusted fitness.
+  - Spec evidence: AlphaEvolve's program database is populated by evaluated
+    solutions whose quality and validity are determined by user-provided
+    evaluators. Extensions may add scoring signals, but they should not
+    accidentally override evaluator invalidity without an explicit policy.
+  - Current evidence: `evolve()` constructs a `Program` with
+    `evaluation.is_valid` from the evaluator/feedback result, then runs plugin
+    `on_evaluated()` hooks and assigns each returned score to
+    `program.fitness`. Archive admission then checks only
+    `if score >= VALID_THRESHOLD: db.add(program)`. A plugin can therefore
+    raise an evaluator-invalid candidate from a negative penalty to a positive
+    top-level fitness and admit it to the MAP-Elites archive, while
+    `evaluation.is_valid` remains false. Current history also does not record
+    whether this happened because archive admission status is not logged.
+  - Required result: define explicit validity/fitness composition semantics;
+    keep archive admission gated by evaluator/feedback validity unless a
+    documented plugin policy can override it; record both raw validity and
+    plugin override decisions; and add tests where a plugin boosts an invalid
+    candidate, penalizes a valid candidate, and returns non-finite scores.
+
 - [ ] Define plugin training-data reward and artifact semantics.
   - Spec evidence: AlphaEvolve-style and ThetaEvolve-style experiments require
     reproducible training/evaluation artifacts with clear reward definitions;

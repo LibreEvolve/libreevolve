@@ -213,7 +213,9 @@ After that, plugin `on_evaluated()` hooks may modify the effective fitness used
 for logging, archive admission, prompt reward, and backend reward. The current
 loop does not persist a structured plugin score-adjustment chain, so
 plugin-adjusted top-level fitness can diverge from `evaluation.fitness` without
-per-plugin provenance.
+per-plugin provenance. Archive admission currently checks the plugin-adjusted
+score against `VALID_THRESHOLD`, not `evaluation.is_valid`, so invalid evaluator
+results can be admitted if a plugin raises their final score.
 
 Plugins that inspect mutation text do not all share the core diff parser yet.
 In particular, `CausalPlugin` analyzes only the compact local SEARCH/REPLACE

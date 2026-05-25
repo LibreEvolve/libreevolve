@@ -123,10 +123,10 @@ Primary evidence:
   - Current evidence: `build_prompt()` delegates to
     `libreevolve/core/prompt.py::PromptSampler`, which supports configurable
     templates, explicit context files, evaluator feedback, inspirations,
-    plugin context, and recent failures.
+    plugin context, and recent in-memory failure hints.
   - Status: implemented in `libreevolve/core/prompt.py` with configurable
     templates, problem context files, inspirations, metrics, evaluator feedback,
-    plugin context, and recent failures.
+    plugin context, and recent in-memory failure hints.
   - Required result: introduce prompt templates, stochastic template choices,
     user-provided context files, and structured prompt sections.
 
@@ -166,6 +166,22 @@ Primary evidence:
     validator feedback, artifacts, sample-level stage diagnostics, and LLM
     grader summaries, with redaction/truncation rules and tests proving prompts
     contain the intended evidence without exceeding configured budgets.
+
+- [ ] Make failed/rejected mutation memory complete and queryable.
+  - Spec evidence: AlphaEvolve prompt context and database are built around
+    past trials, ideas, evaluation results, and feedback, including enough
+    history to avoid repeating unproductive proposals.
+  - Current evidence: `evolve()` keeps only an in-memory list of up to five
+    recent failures, and it appends only when `score < VALID_THRESHOLD` and
+    `child_code != parent.code`. Malformed diffs, `search_not_found`,
+    `no_diff_blocks`, and no-op mutations typically leave the child code equal
+    to the parent, so the failed mutation text/error is not rendered in later
+    prompts even though the candidate is logged in `history.jsonl`.
+  - Required result: store failed mutation text, diff error, parent id,
+    evaluator diagnostics, and retry/repetition counts in candidate metadata or
+    a queryable failure index; render bounded failure examples in prompts; add
+    tests for malformed diff, search miss, no-op, invalid-domain, and
+    validator-crash failures.
 
 - [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a

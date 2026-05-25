@@ -111,12 +111,16 @@ For each generation it:
 - multi-file parent/inspiration contents when present
 - inspiration programs with metrics
 - plugin-provided context
-- recent failed mutations
+- recent in-memory failure hints
 
 The feedback section is intentionally compact today: it renders recent stage
 names, pass/fail states, scores, and errors. Although full stdout, stderr,
 artifacts, and LLM grader records are persisted in run history, prompt rendering
 does not yet include those richer outputs.
+
+Failure hints are also incomplete: malformed diffs, search misses, and no-op
+mutations can be logged to history without becoming prompt-visible negative
+examples when they do not produce changed child code.
 
 `Config.prompt_variants` seeds alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt

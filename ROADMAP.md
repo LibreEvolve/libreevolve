@@ -78,6 +78,8 @@ is not yet an AlphaEvolve reproduction.
   summaries.
 - Add a structured proposal format that can preserve an idea/rationale section
   separately from the patch blocks while keeping raw-diff compatibility.
+- Persist and resurface failed/rejected proposal text and error causes, not only
+  changed invalid child snippets.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages.
 

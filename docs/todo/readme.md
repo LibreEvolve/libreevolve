@@ -185,3 +185,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     access; this is process separation, not sandbox isolation.
   - Required result: call it a temporary local subprocess in README and keep
     real sandbox/resource-limit work in `docs/todo/code.md`.
+
+- [x] Soften the failure-history feature claim.
+  - README evidence: the feature table claimed the last five failed mutations
+    are shown in prompts.
+  - Current evidence: `evolve()` keeps only in-memory failure hints and skips
+    malformed/no-op/search-miss diffs when no changed child code is produced.
+  - Required result: describe the current feature as recent failure hints and
+    point persistent/queryable failed-proposal memory to the code TODO.

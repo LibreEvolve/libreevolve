@@ -54,7 +54,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
-| 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
+| 📜 | **Recent failure hints** | A small in-memory set of failed child snippets can be shown in prompts; persistent/queryable failed-proposal memory remains open |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🧐 | **Optional LLM critique and feedback** | Configurable self-review and grader passes can revise mutations, add feedback metrics, or discard candidates |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
@@ -164,7 +164,7 @@ graph TD
 <br>
 
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
-2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent failure history
+2. **Prompt construction** — Build a prompt with parent code, inspiration programs, and recent in-memory failure hints
 3. **LLM mutation** — LLM proposes either a SEARCH/REPLACE diff or configured full-block/full-code replacement
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
@@ -371,7 +371,7 @@ py -3.12 -m pytest tests/integration/ -m integration
 **Prompt engineering for LLM-guided evolution:**
 - Models wrap diffs in markdown fences — the diff engine strips them automatically
 - Models add comments that cause diff matching failures — the prompt instructs "no comments"
-- Without failure history, models repeat the same bad mutation 8+ times in a row
+- Without stronger failed-proposal memory, models can repeat the same bad mutation many times
 - A concrete diff example in the prompt prevents models from using angle-bracket placeholders literally
 
 **Seeds determine the evolutionary landscape:**

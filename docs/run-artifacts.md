@@ -91,6 +91,10 @@ plugin-adjusted records may have top-level `fitness` values that differ from
 Archive state is not serialized yet. `history.jsonl` contains evaluated
 candidates, but not MAP-Elites cell coordinates, island assignment, diversity
 descriptor values, elite-list snapshots, or migration events.
+Per-candidate archive admission outcomes are also not recorded: history records
+do not say whether a logged program was rejected by threshold, inserted into a
+cell, ignored because it did not replace the occupant, or displaced a previous
+occupant.
 
 ## `prompt_history.jsonl`
 

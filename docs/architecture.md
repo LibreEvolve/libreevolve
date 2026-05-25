@@ -249,6 +249,9 @@ Archive cells, descriptor values, island assignment, elite snapshots, and
 migration events are in-memory runtime state today. `history.jsonl` logs
 candidates, but it is not a serialized archive checkpoint or MAP-Elites event
 stream.
+Candidate records also lack per-program archive admission outcomes, so the log
+does not explicitly state whether a candidate was admitted, rejected by
+threshold, ignored by cell competition, or replaced an existing cell occupant.
 
 LibreEvolve stores metric vectors, but its multi-objective policy is still a
 first pass: archive comparison and backend rewards use normalized primary

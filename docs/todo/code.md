@@ -718,6 +718,25 @@ Primary evidence:
     state; add tests that a run's archive state can be inspected and eventually
     resumed from persisted artifacts.
 
+- [ ] Persist archive admission outcomes per program.
+  - Spec evidence: AlphaEvolve's database stores explored programs with scores
+    and enough evolutionary state to resurface useful ideas; auditing a run
+    should distinguish evaluated-but-rejected candidates from candidates that
+    entered an archive cell or elite list.
+  - Current evidence: `evolve()` calls `db.log(program)` before `db.add()`, and
+    neither `ProgramDatabase.add()` nor `MAPElites.add()` returns an admission
+    result. `history.jsonl` records fitness and evaluation data, but not
+    whether a seed/candidate crossed `VALID_THRESHOLD`, which island received
+    it, which MAP-Elites cell it targeted, whether it replaced an occupant, or
+    whether it entered only the capped elite list. This cannot be reconstructed
+    from the append-only log alone because cell descriptors and island rotation
+    are in-memory.
+  - Required result: make archive insertion return a structured admission
+    event; persist admitted/rejected/displaced status, threshold reason, island
+    id, cell coordinates/descriptors, previous occupant id, and elite-list
+    effect in history or an archive event log; add tests for invalid
+    candidates, valid-but-nonreplacing candidates, and cell replacements.
+
 - [ ] Review and improve parent/inspiration sampling.
   - Spec evidence: AlphaEvolve samples parent programs and inspirations from a
     database using an evolutionary algorithm inspired by MAP-Elites and island

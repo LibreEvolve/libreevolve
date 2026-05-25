@@ -192,6 +192,9 @@ evaluation instead of at configuration load.
 
 Run history logs candidates, but archive cell/island state and migration events
 are not persisted as replayable MAP-Elites state yet.
+History records also do not mark per-candidate archive admission outcomes such
+as rejected-by-threshold, inserted cell, ignored non-replacement, or displaced
+occupant.
 
 For workspace candidates, MAP-Elites complexity and TF-IDF diversity descriptors
 currently use the primary-file view, not the full candidate file set.

@@ -373,6 +373,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     descriptors, replacements, elite contents, migration events, and
     normalization state.
 
+- [x] Add per-program archive admission outcomes to database work.
+  - Evidence: `evolve()` logs a program before calling `db.add()`, and archive
+    insertion does not return whether a candidate entered a cell, replaced an
+    occupant, was ignored by MAP-Elites competition, or was rejected by
+    threshold.
+  - Current roadmap gap: archive-state persistence covered snapshots and
+    migration events, but not a per-history-record admission status that lets
+    users understand which evaluated programs actually affected the archive.
+  - Required result: persist admission events with threshold reason, island id,
+    cell descriptors, replacement status, and previous occupant ids.
+
 - [x] Add strict JSONL serialization hardening to database work.
   - Evidence: `ProgramDatabase.log()` and `PromptDatabase._write()` use
     `json.dumps(...)` defaults, which permit `NaN`/`Infinity` tokens if

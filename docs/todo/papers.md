@@ -259,7 +259,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     tests cover this behavior.
   - Remaining divergence: binary/static non-text artifacts are not first-class
     candidate members, and run-directory collision/resume semantics remain
-    unresolved.
+    unresolved. The committed example run directories are legacy history-only
+    fixtures and do not include `best_workspace/`, so they do not prove the
+    current full-workspace artifact contract.
 
 - [x] Canonical AlphaEvolve diff block compatibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Figure 3.

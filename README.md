@@ -126,6 +126,11 @@ py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
 py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
+These checked-in examples are legacy history fixtures. They are useful for
+testing `show`, but they do not include the current full run-artifact set such
+as `manifest.json`, `prompt_history.jsonl`, `failure_history.jsonl`, or
+`best_workspace/`.
+
 `show` is a compact history view. It selects the highest top-level fitness row
 from `history.jsonl`, not a reconstructed archive-admitted best candidate; use
 `best.py` and `best_workspace/` from the original run for the archived best

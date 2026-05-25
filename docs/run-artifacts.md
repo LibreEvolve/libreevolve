@@ -180,6 +180,10 @@ py -3.12 -m libreevolve show examples/runs/hello_world_ensemble
 py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl
 ```
 
+Those checked-in examples are legacy history fixtures. They do not contain the
+complete current artifact layout shown above, including `manifest.json`,
+`prompt_history.jsonl`, `failure_history.jsonl`, or `best_workspace/`.
+
 `show` is currently a compact compatibility view. It selects the highest
 top-level `fitness` row from `history.jsonl`, not a reconstructed
 archive-admitted best candidate. Use `best.py`/`best_workspace/` from the

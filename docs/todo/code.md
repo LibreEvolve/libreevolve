@@ -1215,6 +1215,22 @@ Primary evidence:
     problem hash, evaluator stages, backend specs, plugin specs, seed, and
     budget.
 
+- [ ] Refresh committed example runs to the current artifact schema.
+  - Spec evidence: AlphaEvolve-style result inspection should make evaluated
+    programs, prompts, manifests, and best artifacts reproducible from saved
+    run outputs.
+  - Current evidence: current CLI runs write `manifest.json`,
+    `prompt_history.jsonl`, `failure_history.jsonl` when failures occur,
+    `best.py`, and `best_workspace/`, but the committed
+    `examples/runs/hello_world_ensemble` and `examples/runs/sorting_ttt_rl`
+    fixtures contain only `history.jsonl` and `best.py`. They cannot exercise
+    current manifest, prompt-history, failure-history, or full-workspace
+    artifact inspection.
+  - Required result: regenerate or migrate curated examples with the current
+    artifact layout, or keep them explicitly labeled as legacy history-only
+    fixtures; add smoke/tests that example artifacts match the documented run
+    contract.
+
 - [ ] Add code/problem/plugin hashes and artifact hashes to the run manifest.
   - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
     choices, evaluator code, problem context, and compute budget; reproducing a

@@ -502,6 +502,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track hashes/version metadata separately from basic config
     logging.
 
+- [x] Add curated example artifact refresh to run-metadata work.
+  - Evidence: `examples/runs/hello_world_ensemble` and
+    `examples/runs/sorting_ttt_rl` contain `history.jsonl` and `best.py` only,
+    while current CLI runs and artifact docs include `manifest.json`,
+    `prompt_history.jsonl`, `failure_history.jsonl`, and `best_workspace/`.
+  - Current roadmap gap: artifact work covered new run outputs but not whether
+    committed examples still prove the documented artifact contract.
+  - Required result: refresh curated examples to the current artifact schema,
+    or clearly keep them as legacy history-only fixtures and test/document that
+    boundary.
+
 - [x] Add plugin registry/config/provenance work.
   - Evidence: built-in plugins are currently hard-coded CLI aliases with no
     per-plugin config schema, constructor options, or manifest provenance.

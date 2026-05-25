@@ -2,6 +2,11 @@
 
 These histories are checked into Git as curated examples. They were kept because they show intended system behavior, not just raw output dumps. Fresh runs still belong under the ignored `runs/` directory.
 
+These are legacy history fixtures, not complete current run directories. They
+contain `history.jsonl` and `best.py`, but they do not include the modern
+artifact set such as `manifest.json`, `prompt_history.jsonl`,
+`failure_history.jsonl`, or `best_workspace/`.
+
 ## Kept examples
 
 - `hello_world_ensemble/`: 11 records. Starts from a failing seed and reaches the correct greeting in generation 0. Useful for showing immediate improvement from a bad seed plus subsequent failed and successful variants.

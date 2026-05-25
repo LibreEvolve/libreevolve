@@ -487,6 +487,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: keep the README distinction until `show` is made
     validity-aware, archive-aware, metric-aware, and workspace-aware.
 
+- [x] Clarify checked-in example runs are legacy history fixtures.
+  - README evidence: README points readers to `examples/runs/*` immediately
+    after describing current run inspection and then says to use
+    `best_workspace/` from the original run for archived best output.
+  - Current evidence: the committed example run directories contain only
+    `history.jsonl` and `best.py`; they do not include `manifest.json`,
+    `prompt_history.jsonl`, `failure_history.jsonl`, or `best_workspace/`.
+  - Required result: tell readers that checked-in example runs are useful
+    history fixtures, not complete current run-artifact directories.
+
 - [x] Clarify MAP-Elites descriptors use the primary-file view for workspaces.
   - README evidence: README advertises workspace candidates and a MAP-Elites
     archive, but did not state that archive complexity/diversity descriptors

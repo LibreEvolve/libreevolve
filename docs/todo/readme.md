@@ -158,7 +158,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - README evidence: `README.md:31`, `README.md:51`, `README.md:99-105`,
     `README.md:212-214`.
   - Current evidence: the code forwards model strings to vendor SDKs and does
-    not validate availability.
+    not validate availability. A 2026-05-25 check of the official OpenAI
+    latest-model guide names `gpt-5.5`; README and configuration examples now
+    avoid stale GPT-5.4 example labels.
   - Required result: say model names are examples and add validation or docs for
     provider-specific availability.
 

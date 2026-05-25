@@ -140,7 +140,7 @@ backends:
     latency: 1.0
     depth: 1.0
   - type: openai
-    model: gpt-5.4-mini
+    model: gpt-5.5
     reasoning_effort: high
     role: depth
     cost: 4.0
@@ -279,6 +279,10 @@ ollama:llama3
 
 The code forwards model names to provider SDKs and does not verify current
 provider availability.
+
+OpenAI's current model guidance names `gpt-5.5` as the latest model family.
+Treat the model strings above as examples, and check provider docs or your
+account's model list before running longer experiments.
 
 For OpenAI, `reasoning_effort` also controls API routing: if it is omitted,
 LibreEvolve uses Chat Completions; if it is present, LibreEvolve uses the

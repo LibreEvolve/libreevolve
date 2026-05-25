@@ -98,9 +98,9 @@ OLLAMA_HOST=http://localhost:11434
 py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing \
     --max-generations 15 --backends openai:gpt-4o-mini
 
-# OpenAI reasoning models (GPT-5.4)
+# OpenAI reasoning model example (GPT-5.5)
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world \
-    --max-generations 5 --backends openai:gpt-5.4-nano --reasoning-effort high
+    --max-generations 5 --backends openai:gpt-5.5 --reasoning-effort high
 
 # Anthropic Claude
 py -3.12 -m libreevolve run libreevolve/problems/examples/sorting \

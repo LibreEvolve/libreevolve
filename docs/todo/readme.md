@@ -299,6 +299,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: tell readers that plugin score hooks can affect archived
     fitness and point structured provenance to the roadmap/TODO.
 
+- [x] Clarify causal plugin mutation-format limitations.
+  - README evidence: the plugin section labels the causal plugin as
+    CausalEvolve-inspired, but did not state that its factor detector is not
+    using the same canonical diff parser as candidate mutation application.
+  - Current evidence: `CausalPlugin._detect_factors()` parses only the compact
+    local `DIFF_PATTERN`; canonical AlphaEvolve SEARCH/REPLACE fences can
+    produce no factor matches and fall back to random guidance.
+  - Required result: document that causal guidance is compact-diff-only until
+    plugin mutation analysis is unified with the core parser.
+
 - [x] Clarify missing per-call backend telemetry.
   - README evidence: the backend section says the router tracks observed
     fitness improvements, but did not distinguish that from provider-level call

@@ -204,6 +204,11 @@ loop does not persist a structured plugin score-adjustment chain, so
 plugin-adjusted top-level fitness can diverge from `evaluation.fitness` without
 per-plugin provenance.
 
+Plugins that inspect mutation text do not all share the core diff parser yet.
+In particular, `CausalPlugin` analyzes only the compact local SEARCH/REPLACE
+regex, so canonical AlphaEvolve fences can be ignored by causal factor
+analysis and fall back to random guidance.
+
 ## Population model
 
 Population state is split across:

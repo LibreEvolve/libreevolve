@@ -366,6 +366,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and the relationship between raw evaluator fitness and composed archive
     fitness.
 
+- [x] Add canonical mutation parsing to plugin truthfulness work.
+  - Evidence: the core mutation path accepts both canonical AlphaEvolve
+    SEARCH/REPLACE fences and the compact local form, but
+    `CausalPlugin._detect_factors()` reads only the compact `DIFF_PATTERN`.
+    Canonical mutations can therefore be ignored by causal factor analysis and
+    fall back to random guidance.
+  - Current roadmap gap: plugin extensibility/truthfulness work covered
+    registration, config, artifacts, provenance, and score composition, but not
+    shared mutation parsing semantics for plugins that inspect LLM patches.
+  - Required result: require plugin mutation analysis to use the shared diff
+    parser or mutation AST, and add compact/canonical parser tests for the
+    CausalEvolve-inspired plugin before treating its guidance as format-stable.
+
 - [x] Add evaluator path validation/provenance to runtime hardening.
   - Evidence: `eval_stages[].validate_path` can resolve to arbitrary absolute
     paths and is not prevalidated or hashed before execution.

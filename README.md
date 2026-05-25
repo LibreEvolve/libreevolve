@@ -374,6 +374,11 @@ Built-in plugins are paper-inspired approximations, not full reproductions:
 - **ImprovEvolve-inspired** — modular decomposition prompting
 - **ThetaEvolve-inspired** — GRPO-style training data export, not training
 
+The causal plugin's factor detector currently analyzes only the compact local
+SEARCH/REPLACE regex. Canonical AlphaEvolve fences may fall back to random
+factor guidance until plugin mutation parsing is unified with the core diff
+parser.
+
 ```bash
 py -3.12 -m libreevolve run my_problem/ --plugins causal --plugins deep_research
 ```

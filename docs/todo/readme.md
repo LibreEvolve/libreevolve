@@ -276,6 +276,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers to keep current file-section paths simple and
     track parser hardening in the code TODO.
 
+- [x] Clarify multi-file mutations cannot delete or rename files yet.
+  - README evidence: the custom-problem section describes multi-file seed
+    workspaces and file-section edits, but did not state that workspace
+    topology changes are not expressible.
+  - Current evidence: `apply_workspace_mutation()` only updates a file's text
+    or creates an unknown file in `full` mode; no delete, rename, move, or
+    primary-file change syntax exists.
+  - Required result: warn readers that current multi-file mutation supports
+    edits and limited file creation, not full repository topology evolution.
+
 - [x] Clarify plugin score provenance limitations.
   - README evidence: the plugin hook table says `on_evaluated()` can modify
     score, but did not say that per-plugin score-composition provenance is not

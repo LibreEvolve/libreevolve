@@ -83,6 +83,8 @@ new code
 escape the candidate workspace. The current file-section parser is stricter
 than path normalization and does not recognize some ordinary filenames, such as
 paths with spaces or hyphens; that is tracked as a codebase-fidelity gap.
+File deletion, rename/move operations, and primary-file changes are not
+expressible in mutation responses yet.
 
 ## Evolution loop
 

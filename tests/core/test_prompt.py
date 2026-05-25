@@ -135,3 +135,39 @@ def test_custom_prompt_templates_can_use_or_ignore_mutation_mode_fields():
 
     assert ignored == "Task: Improve solve()."
     assert rendered.startswith("full\nReturn full replacement code")
+
+
+def test_prompt_sampler_renders_structured_failure_records():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    prompt = PromptSampler().build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        recent_failures=[
+            {
+                "score": -0.4,
+                "error": "no_diff_blocks",
+                "diff_error": "no_diff_blocks",
+                "changed_files": [],
+                "repetition_count": 2,
+                "mutation_text": "not a diff",
+            }
+        ],
+    )
+
+    assert "RECENTLY FAILED" in prompt
+    assert "diff_error=no_diff_blocks" in prompt
+    assert "changed_files=(none)" in prompt
+    assert "repeats=2" in prompt

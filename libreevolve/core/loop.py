@@ -23,7 +23,7 @@ VALID_THRESHOLD = 0.0
 
 def build_prompt(parent: Program, inspirations: list[Program],
                  problem: Problem, extra_context: str,
-                 recent_failures: list[tuple[str, float]] | None = None,
+                 recent_failures: list[dict | tuple[str, float]] | None = None,
                  mutation_mode: str = "diff") -> str:
     return PromptSampler().build(
         parent, inspirations, problem, extra_context,
@@ -66,7 +66,7 @@ def evolve(problem: Problem, config: Config,
         db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)
 
-    recent_failures: list[tuple[str, float]] = []
+    recent_failures: list[dict] = []
     _MAX_FAILURES = 5
 
     for gen in range(config.max_generations):
@@ -114,15 +114,8 @@ def evolve(problem: Problem, config: Config,
         )
         score = result.fitness
 
-        child_code = child_workspace.code
-        if score < VALID_THRESHOLD and child_code != parent.code:
-            oneliner = (
-                f"{result.error or 'invalid'}: " + child_code.replace("\n", " ")[:120]
-            )
-            recent_failures.append((oneliner, score))
-            recent_failures = recent_failures[-_MAX_FAILURES:]
-
         # Construct Program BEFORE calling on_evaluated (plugins need full object)
+        child_code = child_workspace.code
         program = Program(code=child_code, fitness=score,
                           files=dict(child_workspace.files),
                           primary_file=child_workspace.primary_file,
@@ -139,6 +132,11 @@ def evolve(problem: Problem, config: Config,
         for plugin in plugins:
             score = plugin.on_evaluated(program, score)
             program.fitness = score  # keep in sync for next plugin
+
+        if program.fitness < VALID_THRESHOLD:
+            failure = db.log_failure(program, parent, diff, diff_error)
+            recent_failures.append(failure)
+            recent_failures = recent_failures[-_MAX_FAILURES:]
 
         db.admit(program, threshold=VALID_THRESHOLD)
         db.log(program)

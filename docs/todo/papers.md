@@ -192,19 +192,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     artifacts, validator feedback, sample-level diagnostics, and grader
     feedback summaries.
 
-- [ ] Failed-trial and rejected-mutation memory.
+- [x] Failed-trial and rejected-mutation memory.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figures 1-2 and Section 2.2.
   - Requirement: the program database and prompt sampler provide rich context
     containing past trials, ideas, quality scores, and feedback so future
     generations can learn from explored attempts.
-  - Current gap: LibreEvolve keeps a small in-memory recent-failure list and
-    omits malformed/no-op/search-miss diffs from that prompt memory because no
-    child code change is produced. For workspace candidates, invalid changes
-    that touch only non-primary files can also be omitted because failure hints
-    compare only the primary-file view. Failed proposal text is not queryable
-    or persisted as a first-class negative example for future prompts.
-  - Required result: persist and sample failed/rejected proposals with their
-    error causes, outputs, changed files, parent ids, and repetition counts.
+  - Status: implemented as a local JSONL failure index plus bounded recent
+    prompt memory. `failure_history.jsonl` records failed/rejected proposals
+    with error causes, bounded evaluator output summaries, changed files,
+    parent ids, mutation text, and repetition counts. Remaining divergence:
+    failure retrieval is a recent-tail heuristic, not a learned or
+    diversity-aware sampler over all historical negative examples.
 
 - [x] Full-file/full-codebase evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4 ablations.

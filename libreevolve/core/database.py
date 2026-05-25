@@ -19,9 +19,11 @@ class ProgramDatabase:
         log_dir = Path(config.log_dir) / config.problem_name
         log_dir.mkdir(parents=True, exist_ok=True)
         self._jsonl = log_dir / "history.jsonl"
+        self._failures = log_dir / "failure_history.jsonl"
         self._quarantine = log_dir / "history_invalid.jsonl"
         self._manifest = log_dir / "manifest.json"
         self._all: list[Program] = []
+        self._failure_counts: dict[str, int] = {}
         self._write_manifest(config)
 
     def add(self, program: Program) -> dict:
@@ -63,6 +65,47 @@ class ProgramDatabase:
             quarantine_path=self._quarantine,
         )
         self._all.append(program)
+
+    def log_failure(
+        self,
+        program: Program,
+        parent: Program,
+        mutation_text: str,
+        diff_error: str | None,
+    ) -> dict:
+        error = program.evaluation.get("error") if program.evaluation else None
+        key = "|".join(
+            [
+                parent.id,
+                str(diff_error or ""),
+                str(error or ""),
+                _truncate_text(mutation_text, 500),
+            ]
+        )
+        self._failure_counts[key] = self._failure_counts.get(key, 0) + 1
+        record = {
+            "program_id": program.id,
+            "parent_id": parent.id,
+            "generation": program.generation,
+            "score": program.fitness,
+            "is_valid": program.evaluation.get("is_valid") if program.evaluation else None,
+            "error": error,
+            "diff_error": diff_error,
+            "changed_files": _changed_files(parent, program),
+            "file_deltas": _file_deltas(parent, program),
+            "mutation_text": _truncate_text(mutation_text, 4000),
+            "mutation_truncated": len(mutation_text) > 4000,
+            "evaluation": _failure_evaluation_summary(program),
+            "repetition_count": self._failure_counts[key],
+        }
+        program.metadata = dict(program.metadata)
+        program.metadata["failure_record"] = record
+        append_strict_jsonl(
+            self._failures,
+            record,
+            quarantine_path=self._quarantine,
+        )
+        return record
 
     def sample(self, strategy: str = "exploit") -> Program | None:
         return self._islands.sample(strategy=strategy)
@@ -115,3 +158,56 @@ class ProgramDatabase:
             self._manifest,
             indent=2,
         )
+
+
+def _changed_files(parent: Program, child: Program) -> list[str]:
+    parent_files = parent.workspace().files
+    child_files = child.workspace().files
+    paths = sorted(set(parent_files) | set(child_files))
+    return [path for path in paths if parent_files.get(path) != child_files.get(path)]
+
+
+def _file_deltas(parent: Program, child: Program) -> list[dict]:
+    parent_files = parent.workspace().files
+    child_files = child.workspace().files
+    deltas = []
+    for path in sorted(set(parent_files) | set(child_files)):
+        if path not in parent_files:
+            change = "added"
+        elif path not in child_files:
+            change = "deleted"
+        elif parent_files[path] != child_files[path]:
+            change = "modified"
+        else:
+            continue
+        deltas.append({"path": path, "change": change})
+    return deltas
+
+
+def _failure_evaluation_summary(program: Program) -> dict:
+    evaluation = program.evaluation or {}
+    return {
+        "fitness": evaluation.get("fitness", program.fitness),
+        "is_valid": evaluation.get("is_valid"),
+        "error": evaluation.get("error"),
+        "stdout": _truncate_text(str(evaluation.get("stdout", "")), 1000),
+        "stderr": _truncate_text(str(evaluation.get("stderr", "")), 1000),
+        "stages": [
+            {
+                "name": stage.get("name"),
+                "passed": stage.get("passed"),
+                "score": stage.get("score"),
+                "error": stage.get("error"),
+            }
+            for stage in evaluation.get("stages", [])[-3:]
+            if isinstance(stage, dict)
+        ],
+    }
+
+
+def _truncate_text(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    notice = f"\n[truncated {len(text) - max_chars} chars]"
+    keep = max(0, max_chars - len(notice))
+    return text[:keep] + notice

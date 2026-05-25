@@ -226,17 +226,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: describe UCB1 as inspiration for backend routing, not as a
     fully canonical implementation.
 
-- [x] Soften the failure-history feature claim.
+- [x] Update the failure-history feature claim.
   - README evidence: the feature table claimed the last five failed mutations
     are shown in prompts, and the workflow section said failed mutations are
     tracked and shown in later prompts.
-  - Current evidence: `evolve()` keeps only in-memory failure hints and skips
-    malformed/no-op/search-miss diffs when no changed child code is produced.
-    For workspace candidates, invalid non-primary-file changes can also be
-    omitted because the check compares `child_workspace.code` to `parent.code`.
-  - Required result: describe the current feature as recent failure hints and
-    point persistent/queryable full-workspace failed-proposal memory to the
-    code TODO.
+  - Current evidence: `failure_history.jsonl` now persists failed/rejected
+    mutation records with changed files, error causes, mutation text, evaluator
+    summaries, parent ids, and repetition counts. A bounded recent tail is
+    rendered into prompts.
+  - Required result: keep README aligned with the implemented local failure
+    memory and avoid implying a learned long-term retrieval policy.
 
 - [x] Fix stale example-run command style.
   - README-adjacent evidence: `examples/runs/README.md` used `python -m`

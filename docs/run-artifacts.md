@@ -16,6 +16,7 @@ runs/
 └── hello_world/
     ├── manifest.json
     ├── history.jsonl
+    ├── failure_history.jsonl
     ├── history_invalid.jsonl          # Only when a candidate record is rejected
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
@@ -116,6 +117,24 @@ This file records prompt-program events:
 
 Program records in `history.jsonl` include `metadata.prompt_program_id` so a
 candidate can be traced back to the prompt program that produced it.
+
+## `failure_history.jsonl`
+
+This append-only stream records failed or rejected mutations. Each record
+includes:
+
+- `program_id`, `parent_id`, and `generation`
+- final failed score and validity
+- evaluator `error` and mutation `diff_error`
+- changed file paths and file-delta kinds
+- bounded mutation text
+- compact evaluator stdout/stderr/stage summaries
+- `repetition_count` for repeated failures with the same parent, error, and
+  mutation text
+
+The evolution loop renders a bounded recent tail of these records into later
+prompts. The file is queryable as JSONL, but there is not yet a scored
+long-term retrieval policy over all historical failures.
 
 LLM call telemetry is not first-class yet. Candidate records store the mutation
 backend index, and feedback/critique paths store limited backend indexes or raw

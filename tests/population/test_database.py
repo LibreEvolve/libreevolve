@@ -77,6 +77,44 @@ def test_log_writes_candidate_files():
     assert records[0]["primary_file"] == "main.py"
     assert records[0]["files"]["helper.py"] == "y=2"
 
+def test_log_failure_writes_queryable_failure_record():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+    parent = Program(
+        id="parent",
+        files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+        fitness=1.0,
+    )
+    child = Program(
+        files={"main.py": "from helper import value\n", "helper.py": "value = 0\n"},
+        primary_file="main.py",
+        parent_id=parent.id,
+        fitness=-0.4,
+        evaluation={"is_valid": False, "error": "wrong", "stdout": "bad"},
+    )
+
+    record = db.log_failure(child, parent, "<<<FILE helper.py\nvalue = 0\n>>>FILE", None)
+
+    assert record["changed_files"] == ["helper.py"]
+    assert record["file_deltas"] == [{"path": "helper.py", "change": "modified"}]
+    assert record["repetition_count"] == 1
+    assert child.metadata["failure_record"]["program_id"] == child.id
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "failure_history.jsonl").read_text().splitlines()
+    ]
+    assert records[0]["evaluation"]["stdout"] == "bad"
+
+def test_log_failure_counts_repetitions():
+    db = _db()
+    parent = _p(fitness=1.0)
+    child = _p(fitness=-0.4)
+    first = db.log_failure(child, parent, "bad diff", "no_diff_blocks")
+    second = db.log_failure(child, parent, "bad diff", "no_diff_blocks")
+    assert first["repetition_count"] == 1
+    assert second["repetition_count"] == 2
+
 def test_log_rejects_non_finite_records_with_quarantine():
     tmpdir = tempfile.mkdtemp()
     db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))

@@ -20,7 +20,7 @@ class PromptSampler:
         inspirations: list[Program],
         problem: Problem,
         extra_context: str,
-        recent_failures: list[tuple[str, float]] | None = None,
+        recent_failures: list[dict | tuple[str, float]] | None = None,
         template: str | None = None,
         mutation_mode: str = "diff",
     ) -> str:
@@ -155,8 +155,27 @@ def _render_inspirations(inspirations: list[Program]) -> str:
     )
 
 
-def _render_failures(recent_failures: list[tuple[str, float]] | None) -> str:
+def _render_failures(recent_failures: list[dict | tuple[str, float]] | None) -> str:
     if not recent_failures:
         return ""
-    lines = "\n".join(f"  Score {score:.2f}: {code}" for code, score in recent_failures)
+    lines = "\n".join(_render_failure_line(failure) for failure in recent_failures)
     return f"\n[RECENTLY FAILED - do NOT repeat these]\n{lines}\n"
+
+
+def _render_failure_line(failure: dict | tuple[str, float]) -> str:
+    if not isinstance(failure, dict):
+        code, score = failure
+        return f"  Score {score:.2f}: {code}"
+    score = failure.get("score")
+    score_text = f"{float(score):.2f}" if isinstance(score, (int, float)) else "unknown"
+    error = failure.get("error") or failure.get("diff_error") or "invalid"
+    diff_error = failure.get("diff_error")
+    changed = failure.get("changed_files") or []
+    changed_text = ",".join(changed) if changed else "(none)"
+    repeat = failure.get("repetition_count", 1)
+    mutation = str(failure.get("mutation_text", "")).replace("\n", " ")[:160]
+    suffix = f"; diff_error={diff_error}" if diff_error else ""
+    return (
+        f"  Score {score_text}: error={error}{suffix}; "
+        f"changed_files={changed_text}; repeats={repeat}; mutation={mutation}"
+    )

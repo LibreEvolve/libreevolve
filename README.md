@@ -54,7 +54,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
-| 📜 | **Recent failure hints** | A small in-memory set of failed primary-file snippets can be shown in prompts; persistent/queryable full-workspace failed-proposal memory remains open |
+| 📜 | **Failure memory** | Failed/rejected mutations are logged to `failure_history.jsonl` and bounded recent examples are shown in prompts |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🧐 | **Optional LLM critique and feedback** | Configurable self-review and grader passes can revise mutations, add feedback metrics, or discard candidates |
 | 🔌 | **Plugin system** | 4 lifecycle hooks with paper-inspired plugins |
@@ -164,12 +164,12 @@ graph TD
 <br>
 
 1. **Parent selection** — Sample a parent (70% exploit best, 30% explore random from MAP-Elites grid)
-2. **Prompt construction** — Build a prompt with parent code, parent-excluding/deduplicated inspiration programs, and recent in-memory failure hints
+2. **Prompt construction** — Build a prompt with parent code, parent-excluding/deduplicated inspiration programs, and recent failure-memory hints
 3. **LLM mutation** — LLM proposes a SEARCH/REPLACE diff by default, or full-block/full-code replacements when configured with `mutation_mode: full`
 4. **Optional review** — Configured critique and feedback graders can revise mutations, add metrics, or discard candidates
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
 6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
-7. **Failure hints** — A bounded in-memory subset of changed invalid primary-file snippets can be shown in later prompts; persistent full-workspace failed-proposal memory remains open
+7. **Failure memory** — Failed/rejected mutations are persisted with error causes, changed files, evaluator summaries, and bounded prompt-visible examples
 8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
 10. **Artifacts** — `best.py` preserves the primary-file compatibility view, and `best_workspace/` contains the complete best candidate file set

@@ -145,7 +145,7 @@ For each generation it:
 - multi-file parent/inspiration contents when present
 - inspiration programs with metrics
 - plugin-provided context
-- recent in-memory failure hints
+- recent failed/rejected mutation records
 
 Prompt assembly does not yet apply a global token or character budget across
 sections. Large parent workspaces, many inspirations, plugin context, or
@@ -157,11 +157,11 @@ names, pass/fail states, scores, and errors. Although full stdout, stderr,
 artifacts, and LLM grader records are persisted in run history, prompt rendering
 does not yet include those richer outputs.
 
-Failure hints are also incomplete: malformed diffs, search misses, and no-op
-mutations can be logged to history without becoming prompt-visible negative
-examples when they do not produce changed child code. Workspace failures are
-also compared through the primary-file view, so invalid helper-file-only changes
-can be missed by the recent-failure prompt hints.
+Failed/rejected mutations are logged to `failure_history.jsonl` with parent ids,
+mutation text, diff errors, changed file paths, evaluator summaries, and
+repetition counts. A bounded in-memory tail of those records is rendered into
+later prompts as negative examples. This is still a local recent-memory
+mechanism rather than a learned retrieval system over all historical failures.
 
 `Config.prompt_variants` provides alternate templates. The loop stores those
 templates as `PromptProgram` records in `PromptDatabase`, selects prompt

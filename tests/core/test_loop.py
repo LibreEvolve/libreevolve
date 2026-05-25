@@ -2,6 +2,7 @@ import tempfile
 import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.config import Config
 from libreevolve.core.loop import evolve, VALID_THRESHOLD
 from libreevolve.problems.loader import Problem
@@ -36,6 +37,69 @@ def test_invalid_diff_not_archived():
     child = records[-1]
     assert child["metadata"]["archive_admission"]["admitted"] is False
     assert child["metadata"]["archive_admission"]["reason"] == "below_threshold"
+    failure_records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "failure_history.jsonl").read_text().splitlines()
+    ]
+    assert failure_records[-1]["diff_error"] == "no_diff_blocks"
+    assert child["metadata"]["failure_record"]["diff_error"] == "no_diff_blocks"
+
+
+def test_failed_mutation_memory_is_rendered_in_next_prompt():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ("no diff here", 0),
+        ("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE", 0),
+    ]
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(_problem(), Config(max_generations=2, log_dir=tmpdir, problem_name="t"))
+
+    second_prompt = llm.generate.call_args_list[1].args[0]
+    assert "RECENTLY FAILED" in second_prompt
+    assert "diff_error=no_diff_blocks" in second_prompt
+
+
+def test_loop_logs_non_primary_workspace_failure():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "from pathlib import Path\n"
+        "def evaluate(code, workspace_path):\n"
+        "    helper = Path(workspace_path, 'helper.py').read_text()\n"
+        "    return {'score': 1.0 if 'value = 1' in helper else -1.0, "
+        "'is_valid': 'value = 1' in helper}\n"
+    )
+    problem = Problem(
+        name="t",
+        task_description="keep helper valid",
+        metrics=[{"name": "score", "primary": True, "bounds": [-1.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(-1.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["from helper import value\n"],
+        problem_dir=d,
+        initial_workspaces=[
+            CandidateWorkspace(
+                files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
+                primary_file="main.py",
+            )
+        ],
+    )
+    llm = _llm("<<<FILE helper.py\nvalue = 0\n>>>FILE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t", mutation_mode="full"),
+        )
+
+    failure_records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "failure_history.jsonl").read_text().splitlines()
+    ]
+    assert failure_records[-1]["changed_files"] == ["helper.py"]
+    assert failure_records[-1]["score"] == -0.1
 
 def test_plugins_called():
     from libreevolve.plugins.base import PluginBase

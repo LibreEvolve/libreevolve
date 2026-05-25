@@ -290,10 +290,10 @@ Primary evidence:
   - Current evidence: `build_prompt()` delegates to
     `libreevolve/core/prompt.py::PromptSampler`, which supports configurable
     templates, explicit context files, evaluator feedback, inspirations,
-    plugin context, and recent in-memory failure hints.
+    plugin context, and recent failed/rejected mutation records.
   - Status: implemented in `libreevolve/core/prompt.py` with configurable
     templates, problem context files, inspirations, metrics, evaluator feedback,
-    plugin context, and recent in-memory failure hints.
+    plugin context, and recent failed/rejected mutation records.
   - Required result: introduce prompt templates, stochastic template choices,
     user-provided context files, and structured prompt sections.
 
@@ -352,25 +352,22 @@ Primary evidence:
     workspaces/context/plugins/inspirations, and clear behavior when required
     sections cannot fit.
 
-- [ ] Make failed/rejected mutation memory complete and queryable.
+- [x] Make failed/rejected mutation memory complete and queryable.
   - Spec evidence: AlphaEvolve prompt context and database are built around
     past trials, ideas, evaluation results, and feedback, including enough
     history to avoid repeating unproductive proposals.
-  - Current evidence: `evolve()` keeps only an in-memory list of up to five
-    recent failures, and it appends only when `score < VALID_THRESHOLD` and
-    `child_code != parent.code`. Malformed diffs, `search_not_found`,
-    `no_diff_blocks`, and no-op mutations typically leave the child code equal
-    to the parent, so the failed mutation text/error is not rendered in later
-    prompts even though the candidate is logged in `history.jsonl`. For
-    workspace candidates, invalid helper-file-only changes can also be skipped
-    because the comparison uses the primary-file view rather than the full file
-    set.
-  - Required result: store failed mutation text, diff error, parent id,
-    changed file paths/full-workspace deltas, evaluator diagnostics, and
-    retry/repetition counts in candidate metadata or a queryable failure index;
-    render bounded failure examples in prompts; add tests for malformed diff,
-    search miss, no-op, invalid-domain, validator-crash, and non-primary-file
-    workspace failures.
+  - Status: implemented. `ProgramDatabase.log_failure()` writes
+    `failure_history.jsonl` records and mirrors the same bounded failure record
+    into candidate metadata. The loop logs every post-plugin candidate with
+    `fitness < VALID_THRESHOLD`, including malformed/no-op/search-miss diffs
+    that leave code unchanged and workspace failures that modify only
+    non-primary files.
+  - Evidence: failure records include mutation text, diff error, parent id,
+    changed file paths, file deltas, evaluator diagnostics, and repetition
+    counts. `PromptSampler` renders bounded structured failure summaries in
+    later prompts. Tests cover malformed diff persistence, next-prompt failure
+    rendering, queryable failure-history records, repetition counts, and
+    non-primary-file workspace failures.
 
 - [x] Implement meta-prompt evolution.
   - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a

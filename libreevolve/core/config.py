@@ -13,6 +13,7 @@ class Config:
     max_generations:        int   = 1000
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
+    validator_env_allowlist: list[str] = field(default_factory=list)
     explore_ratio:          float = 0.3
     mutation_mode:          str   = "diff"
     eval_stages:            list[dict] = field(default_factory=list)
@@ -53,6 +54,7 @@ class Config:
         _require_int("max_generations", self.max_generations, minimum=0)
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)
+        _validate_string_list("validator_env_allowlist", self.validator_env_allowlist)
         _require_probability("explore_ratio", self.explore_ratio)
         _require_enum("mutation_mode", self.mutation_mode, {"diff", "full"})
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
@@ -114,6 +116,14 @@ def _require_probability(name: str, value: object) -> None:
 def _require_enum(name: str, value: object, allowed: set[str]) -> None:
     if value not in allowed:
         raise ConfigError(f"{name} must be one of {sorted(allowed)}, got {value!r}")
+
+
+def _validate_string_list(name: str, value: object) -> None:
+    if not isinstance(value, list):
+        raise ConfigError(f"{name} must be a list of strings")
+    for item in value:
+        if not isinstance(item, str) or not item.strip() or "=" in item:
+            raise ConfigError(f"{name} must be a list of non-empty environment variable names")
 
 
 def _validate_eval_stages(stages: object) -> None:

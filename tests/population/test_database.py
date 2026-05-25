@@ -161,11 +161,13 @@ def test_manifest_written():
         problem_name="t",
         mutation_mode="full",
         run_id="run-123",
+        validator_env_allowlist=["BENCHMARK_DATA_DIR"],
     ))
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
     assert manifest["config"]["run_id"] == "run-123"
     assert manifest["config"]["run_collision_policy"] == "fail"
+    assert manifest["config"]["validator_env_allowlist"] == ["BENCHMARK_DATA_DIR"]
 
 
 def test_manifest_writes_context_source_provenance():

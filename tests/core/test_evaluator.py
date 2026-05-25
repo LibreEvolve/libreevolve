@@ -87,6 +87,64 @@ def test_t2_bad_json():
         shutil.rmtree(d)
 
 
+def test_validator_environment_hides_provider_keys_by_default(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-proj_hiddenvalidatorsecret123456")
+    p, d = _problem(
+        "import os\n"
+        "def evaluate(c):\n"
+        "    visible = os.getenv('OPENAI_API_KEY') is not None\n"
+        "    return {'score': 0.0 if visible else 1.0, 'is_valid': not visible}\n"
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert result == 1.0
+        env_meta = result.metadata["validator_env"]
+        assert env_meta["policy"] == "minimal_allowlist"
+        assert "OPENAI_API_KEY" not in env_meta["provided_keys"]
+    finally:
+        shutil.rmtree(d)
+
+
+def test_validator_environment_allows_explicit_opt_in(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_DATA_DIR", "fixtures")
+    p, d = _problem(
+        "import os\n"
+        "def evaluate(c):\n"
+        "    ok = os.getenv('BENCHMARK_DATA_DIR') == 'fixtures'\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    try:
+        result = CascadeEvaluator(
+            p, validator_env_allowlist=["BENCHMARK_DATA_DIR"]
+        ).evaluate("x=1", None)
+        assert result == 1.0
+        env_meta = result.metadata["validator_env"]
+        assert env_meta["allowlist"] == ["BENCHMARK_DATA_DIR"]
+        assert "BENCHMARK_DATA_DIR" in env_meta["provided_keys"]
+    finally:
+        shutil.rmtree(d)
+
+
+def test_validator_stdout_and_stderr_redact_secret_like_values():
+    secret = "sk-proj_validatorsecret1234567890"
+    p, d = _problem(
+        "import sys\n"
+        "def evaluate(c):\n"
+        f"    print('api_key={secret}')\n"
+        f"    print('token: {secret}', file=sys.stderr)\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate("x=1", None)
+        assert result == 1.0
+        assert secret not in result.stdout
+        assert secret not in result.stderr
+        assert "[REDACTED]" in result.stdout
+        assert "[REDACTED]" in result.stderr
+    finally:
+        shutil.rmtree(d)
+
+
 @pytest.mark.parametrize(
     "validate_src",
     [

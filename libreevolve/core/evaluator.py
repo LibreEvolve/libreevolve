@@ -1,6 +1,8 @@
 from __future__ import annotations
 import hashlib
 import json, math, sys, tempfile
+import os
+import re
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -9,6 +11,11 @@ from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.problems.loader import Problem
 
 _PENALTIES = {"no_diff_blocks": -0.4, "no_valid_changes": -0.3, "search_not_found": -0.3}
+_DEFAULT_VALIDATOR_ENV_NAMES = ("SYSTEMROOT", "WINDIR", "TEMP", "TMP")
+_SECRET_ASSIGNMENT = re.compile(
+    r"(?i)(api[_-]?key|token|secret|password)(\s*[:=]\s*)(['\"]?)[^\s,'\"]+"
+)
+_SECRET_TOKEN = re.compile(r"\b(?:sk|sk-proj|ghp|gho|github_pat)_[A-Za-z0-9_\-]{12,}\b")
 
 # Runner script executed in a temporary local subprocess. This is process
 # separation, not a security sandbox.
@@ -42,10 +49,12 @@ class CascadeEvaluator:
         problem: Problem,
         timeout_sec: float = 60.0,
         stages: list[dict] | None = None,
+        validator_env_allowlist: list[str] | None = None,
     ):
         self._problem = problem
         self._timeout = timeout_sec
         self._stages = stages or []
+        self._validator_env_allowlist = list(validator_env_allowlist or [])
 
     def evaluate(
         self, code: str | CandidateWorkspace, diff_error: str | None
@@ -209,6 +218,10 @@ class CascadeEvaluator:
             cand_root = tmp_path / "candidate"
             runner.write_text(_RUNNER, encoding="utf-8")
             primary = workspace.materialize(cand_root)
+            validator_env = _validator_env(self._validator_env_allowlist)
+            validator_env_meta = _validator_env_metadata(
+                validator_env, self._validator_env_allowlist
+            )
             started = time.perf_counter()
             try:
                 # Use list form (not shell=True) to prevent injection
@@ -218,6 +231,7 @@ class CascadeEvaluator:
                      json.dumps(stage_context)],
                     cwd=str(cand_root),
                     capture_output=True, timeout=timeout_sec, text=True,
+                    env=validator_env,
                 )
             except subprocess.TimeoutExpired:
                 elapsed = time.perf_counter() - started
@@ -236,9 +250,13 @@ class CascadeEvaluator:
                     ],
                     error="timeout",
                     elapsed_sec=elapsed,
-                    metadata=_eval_metadata(workspace, validate_path, stage_context),
+                    metadata=_eval_metadata(
+                        workspace, validate_path, stage_context, validator_env_meta
+                    ),
                 )
             elapsed = time.perf_counter() - started
+            stdout = _redact_secrets(res.stdout)
+            stderr = _redact_secrets(res.stderr)
             if res.returncode != 0:
                 return EvaluationResult(
                     fitness=-0.2,
@@ -249,17 +267,19 @@ class CascadeEvaluator:
                             name=stage_name,
                             passed=False,
                             score=-0.2,
-                            stdout=res.stdout,
-                            stderr=res.stderr,
+                            stdout=stdout,
+                            stderr=stderr,
                             error=f"returncode_{res.returncode}",
                             elapsed_sec=elapsed,
                         )
                     ],
-                    stdout=res.stdout,
-                    stderr=res.stderr,
+                    stdout=stdout,
+                    stderr=stderr,
                     error="subprocess_error",
                     elapsed_sec=elapsed,
-                    metadata=_eval_metadata(workspace, validate_path, stage_context),
+                    metadata=_eval_metadata(
+                        workspace, validate_path, stage_context, validator_env_meta
+                    ),
                 )
             try:
                 lines = [line for line in res.stdout.splitlines() if line.strip()]
@@ -277,17 +297,19 @@ class CascadeEvaluator:
                                 passed=False,
                                 score=-0.1,
                                 metrics=m,
-                                stdout=res.stdout,
-                                stderr=res.stderr,
+                                stdout=stdout,
+                                stderr=stderr,
                                 error="domain_invalid",
                                 elapsed_sec=elapsed,
                             )
                         ],
-                        stdout=res.stdout,
-                        stderr=res.stderr,
+                        stdout=stdout,
+                        stderr=stderr,
                         error="domain_invalid",
                         elapsed_sec=elapsed,
-                        metadata=_eval_metadata(workspace, validate_path, stage_context),
+                        metadata=_eval_metadata(
+                            workspace, validate_path, stage_context, validator_env_meta
+                        ),
                     )
                 fitness = self._problem.fitness_from_metrics(m)
                 return EvaluationResult(
@@ -300,15 +322,17 @@ class CascadeEvaluator:
                             passed=True,
                             score=fitness,
                             metrics=m,
-                            stdout=res.stdout,
-                            stderr=res.stderr,
+                            stdout=stdout,
+                            stderr=stderr,
                             elapsed_sec=elapsed,
                         )
                     ],
-                    stdout=res.stdout,
-                    stderr=res.stderr,
+                    stdout=stdout,
+                    stderr=stderr,
                     elapsed_sec=elapsed,
-                    metadata=_eval_metadata(workspace, validate_path, stage_context),
+                    metadata=_eval_metadata(
+                        workspace, validate_path, stage_context, validator_env_meta
+                    ),
                 )
             except (json.JSONDecodeError, ValueError, KeyError, TypeError):
                 return EvaluationResult(
@@ -320,17 +344,19 @@ class CascadeEvaluator:
                             name=stage_name,
                             passed=False,
                             score=-0.2,
-                            stdout=res.stdout,
-                            stderr=res.stderr,
+                            stdout=stdout,
+                            stderr=stderr,
                             error="malformed_metrics",
                             elapsed_sec=elapsed,
                         )
                     ],
-                    stdout=res.stdout,
-                    stderr=res.stderr,
+                    stdout=stdout,
+                    stderr=stderr,
                     error="malformed_metrics",
                     elapsed_sec=elapsed,
-                    metadata=_eval_metadata(workspace, validate_path, stage_context),
+                    metadata=_eval_metadata(
+                        workspace, validate_path, stage_context, validator_env_meta
+                    ),
                 )
 
     def _resolve_validate_path(self, raw: object) -> Path:
@@ -463,14 +489,20 @@ def _syntax_errors(workspace: CandidateWorkspace) -> list[dict]:
 
 
 def _eval_metadata(
-    workspace: CandidateWorkspace, validate_path: Path, stage_context: dict
+    workspace: CandidateWorkspace,
+    validate_path: Path,
+    stage_context: dict,
+    validator_env: dict | None = None,
 ) -> dict:
-    return {
+    metadata = {
         "primary_file": workspace.primary_file,
         "files": sorted(workspace.files),
         "validate_path": str(validate_path),
         "stage": stage_context,
     }
+    if validator_env is not None:
+        metadata["validator_env"] = validator_env
+    return metadata
 
 
 def _validate_problem_local_evaluator_path(path: Path, problem_dir: Path) -> Path:
@@ -485,6 +517,45 @@ def _validate_problem_local_evaluator_path(path: Path, problem_dir: Path) -> Pat
     if resolved.suffix != ".py":
         raise ValueError(f"Evaluator validate_path must be a Python file: {path}")
     return resolved
+
+
+def _validator_env(allowlist: list[str]) -> dict[str, str]:
+    env = {"PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    for name in [*_DEFAULT_VALIDATOR_ENV_NAMES, *allowlist]:
+        found = _find_env(name)
+        if found is not None:
+            key, value = found
+            env[key] = value
+    return env
+
+
+def _validator_env_metadata(env: dict[str, str], allowlist: list[str]) -> dict:
+    return {
+        "policy": "minimal_allowlist",
+        "default_keys": sorted(
+            key for key in env if key.upper() in set(_DEFAULT_VALIDATOR_ENV_NAMES)
+        ),
+        "allowlist": sorted(allowlist),
+        "provided_keys": sorted(env),
+        "values_redacted": True,
+    }
+
+
+def _find_env(name: str) -> tuple[str, str] | None:
+    if name in os.environ:
+        return name, os.environ[name]
+    upper = name.upper()
+    for key, value in os.environ.items():
+        if key.upper() == upper:
+            return key, value
+    return None
+
+
+def _redact_secrets(text: str) -> str:
+    if not text:
+        return text
+    text = _SECRET_ASSIGNMENT.sub(r"\1\2\3[REDACTED]", text)
+    return _SECRET_TOKEN.sub("[REDACTED]", text)
 
 
 def evaluator_entrypoint_provenance(problem: Problem, stages: list[dict] | None = None) -> list[dict]:

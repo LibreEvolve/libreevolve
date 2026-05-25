@@ -395,9 +395,10 @@ policy, but this is provenance metadata rather than resumable state.
 - Evaluator timeouts apply to the direct validator runner, but there is no
   process-group/job-object cleanup for subprocess descendants spawned by
   validator code yet.
-- Validator subprocesses inherit the parent process environment, including
-  `.env`-loaded provider credentials, because no validator environment
-  allowlist or secret redaction policy exists yet.
+- Validator subprocesses use a minimal environment plus
+  `validator_env_allowlist`; provider keys loaded through `.env` are hidden by
+  default and persisted evaluator stdout/stderr is secret-redacted. This is not
+  a network sandbox.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - The loop is synchronous; async LLM/evaluator workers are not implemented.

@@ -46,7 +46,10 @@ def evolve(problem: Problem, config: Config,
         evaluator_sources=evaluator_entrypoint_provenance(problem, config.eval_stages),
     )
     evaluator = CascadeEvaluator(
-        problem, timeout_sec=config.eval_timeout_sec, stages=config.eval_stages
+        problem,
+        timeout_sec=config.eval_timeout_sec,
+        stages=config.eval_stages,
+        validator_env_allowlist=config.validator_env_allowlist,
     )
     llm       = build_llm(config)
     prompt_sampler = PromptSampler(config.prompt_variants, random.Random(config.seed))

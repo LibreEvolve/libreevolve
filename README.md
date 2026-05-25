@@ -358,9 +358,10 @@ Generated evaluator files are not collected yet. The candidate workspace is
 temporary, so validators should summarize important plots, traces, or JSON
 outputs through metrics/stdout/stderr until artifact collection is implemented.
 
-That subprocess currently inherits the parent process environment. Provider
-keys loaded from `.env` are not hidden from validators until validator
-environment allowlisting is implemented.
+That subprocess uses a minimal environment by default, so provider keys loaded
+from `.env` are not visible to validators unless their names are explicitly
+listed in `validator_env_allowlist`. Persisted evaluator stdout/stderr applies
+basic secret-pattern redaction, but validator network access is not sandboxed.
 Validator timeouts also do not yet guarantee cleanup of child processes spawned
 by evaluator code; keep validators single-process or self-cleaning until
 process-tree cleanup is implemented.

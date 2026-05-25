@@ -6,11 +6,11 @@ Configuration is assembled from three sources, in this order:
 2. optional problem-local `config.yaml`
 3. CLI overrides from [`libreevolve/cli.py`](../libreevolve/cli.py)
 
-`.env` is loaded at CLI import time with `override=True`. Validator
-subprocesses currently inherit the parent environment, so `.env` values are
-visible to `validate.py` unless the user avoids loading them or runs with a
-sanitized environment. Validator environment allowlisting is not yet
-implemented.
+`.env` is loaded at CLI import time with `override=True` for provider clients.
+Validator subprocesses do not inherit that parent environment by default.
+They run with a minimal environment plus names listed in
+`validator_env_allowlist`, so provider keys such as `OPENAI_API_KEY` are hidden
+from `validate.py` unless explicitly allowlisted.
 
 ## `Config` fields
 
@@ -19,6 +19,10 @@ implemented.
 - `max_generations` (`1000`): generations to run.
 - `num_inspirations` (`3`): archive members rendered into prompts.
 - `eval_timeout_sec` (`60.0`): default validator subprocess timeout.
+- `validator_env_allowlist` (`[]`): parent environment variable names to pass
+  into validator subprocesses in addition to the minimal default environment.
+  Values are not written to metadata; persisted validator stdout/stderr applies
+  basic secret-pattern redaction.
 - `explore_ratio` (`0.3`): probability of exploration instead of exploitation.
 - `mutation_mode` (`"diff"`): `diff` or `full`. The built-in prompt template
   renders mode-specific mutation instructions; custom prompt variants can use
@@ -275,6 +279,9 @@ run rather than being recorded as structured failed LLM-call attempts.
 - Validator entrypoints are loaded by file path from a temporary runner. The
   validator directory is added to `sys.path`; the candidate root is used as
   subprocess `cwd` and added to `sys.path`.
+- Validator subprocess environment isolation is a local allowlist, not a
+  container or network sandbox. LibreEvolve does not yet enforce network
+  egress policy for validator code.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
 - Configured prompt variants and meta-prompt mutations are validated against

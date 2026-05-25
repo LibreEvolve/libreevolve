@@ -615,9 +615,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: sandbox/resource-limit and evaluator-path work covered
     filesystem/process boundaries, but not inherited secrets, environment
     reproducibility, redaction, or network expectations.
-  - Required result: specify a minimal validator environment, explicit opt-ins,
-    secret redaction, network policy, and tests proving provider keys are not
-    visible to validators by default.
+  - Status: validator subprocesses now run with an explicit minimal
+    environment plus `validator_env_allowlist`, metadata records environment
+    keys without values, stdout/stderr is secret-redacted before persistence,
+    and tests prove provider keys are hidden by default while opt-in variables
+    are available.
+  - Remaining gap: network egress policy and stronger sandbox/resource
+    isolation remain open.
 
 - [x] Add evaluator process-tree cleanup to runtime hardening.
   - Evidence: `CascadeEvaluator._run_subprocess()` relies on

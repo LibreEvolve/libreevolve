@@ -28,6 +28,8 @@ def test_default_backend_is_anthropic():
         ({"prompt_reward_bounds": [1.0, 1.0]}, "prompt_reward_bounds"),
         ({"prompt_reward_bounds": [1.0]}, "prompt_reward_bounds"),
         ({"prompt_explore_coeff": -1.0}, "prompt_explore_coeff"),
+        ({"validator_env_allowlist": "PATH"}, "validator_env_allowlist"),
+        ({"validator_env_allowlist": ["GOOD", "BAD=VALUE"]}, "validator_env_allowlist"),
         ({"run_id": ""}, "run_id"),
         ({"run_collision_policy": "append"}, "run_collision_policy"),
         ({"n_islands": 0}, "n_islands"),

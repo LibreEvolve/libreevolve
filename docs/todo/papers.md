@@ -172,11 +172,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     and stage usage metadata. Transitive helper/data provenance is still
     missing. Seeded replay is incomplete because persisted `Program` and
     `PromptProgram` lineage ids are UUID4 values rather than deterministic
-    seed/run-derived identifiers. Validator subprocesses
-    also inherit `.env`-loaded provider credentials and host environment
-    variables by default, so evaluator environment provenance and secret
-    isolation are incomplete. Validator timeouts also do not clean up spawned
-    descendant processes. Problem-local evaluator helper modules are imported
+    seed/run-derived identifiers. Validator subprocesses now use an explicit
+    minimal environment plus `validator_env_allowlist`, so `.env` provider
+    credentials are hidden by default and persisted stdout/stderr is
+    secret-redacted. Network egress policy and stronger sandboxing remain
+    incomplete. Validator timeouts also do not clean up spawned descendant
+    processes. Problem-local evaluator helper modules are imported
     only as sibling modules beside a configured validator file; package-style
     validator entrypoints, relative evaluator data policy, and transitive
     helper/data hashes are still missing.

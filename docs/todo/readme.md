@@ -216,15 +216,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: call it a temporary local subprocess in README/AGENTS
     guidance and keep real sandbox/resource-limit work in `docs/todo/code.md`.
 
-- [x] Clarify validator subprocesses inherit environment until hardened.
+- [x] Clarify validator subprocess environment policy.
   - README evidence: README says validators run in a temporary local
-    subprocess but did not mention that the subprocess inherits the parent
-    environment, including `.env`-loaded provider variables.
-  - Current evidence: CLI import loads `.env` with `override=True`, and
-    `CascadeEvaluator._run_subprocess()` does not pass an explicit `env` to
-    `subprocess.run()`.
-  - Required result: warn users that validator environment/secret isolation is
-    not implemented and point the implementation gap to the TODOs.
+    subprocess and must state what environment boundary applies.
+  - Current evidence: CLI import loads `.env` with `override=True`, but
+    `CascadeEvaluator._run_subprocess()` now passes an explicit minimal
+    environment plus `validator_env_allowlist` to `subprocess.run()`. README
+    now says provider keys are hidden by default, persisted stdout/stderr is
+    secret-redacted, and validator network access is not sandboxed.
+  - Required result: keep README aligned with the implemented allowlist policy
+    and continue pointing network/sandbox limits to the TODOs.
 
 - [x] Clarify validator timeout process-tree limits.
   - README evidence: README discussed validator subprocess execution and

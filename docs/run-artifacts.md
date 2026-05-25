@@ -50,6 +50,7 @@ the loaded problem directory name.
   paths, relative paths, SHA-256 hashes, byte counts, and stage usage metadata
 - seed and log directory
 - run id and run-directory collision policy
+- validator environment allowlist configuration
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.
 Evaluator provenance currently covers the Python files directly configured as
@@ -119,13 +120,16 @@ the full candidate file set for workspace candidates.
 
 `evaluation` includes normalized fitness, validity, per-stage outcomes, stdout,
 stderr, error, elapsed time, and metadata such as the primary file and file
-list. If feedback graders are enabled, their scores appear in `metrics`, and
-the composed score appears as `feedback_adjusted_fitness` while the raw primary
-validator metric remains intact. Configured evaluator retry attempts are stored
-under `evaluation.metadata.attempts`; each attempt record includes attempt
-index, pass/fail status, fitness, metrics, stdout, stderr, error, elapsed time,
-stage context, and per-stage diagnostics. The selected attempt still determines
-the sample/stage result.
+list. Subprocess metadata records the validator environment policy, provided
+environment keys, and allowlist names, but never environment values. Persisted
+validator stdout/stderr applies basic secret-pattern redaction. If feedback
+graders are enabled, their scores appear in `metrics`, and the composed score
+appears as `feedback_adjusted_fitness` while the raw primary validator metric
+remains intact. Configured evaluator retry attempts are stored under
+`evaluation.metadata.attempts`; each attempt record includes attempt index,
+pass/fail status, fitness, metrics, stdout, stderr, error, elapsed time, stage
+context, and per-stage diagnostics. The selected attempt still determines the
+sample/stage result.
 
 Validator-generated files are not collected yet. Evaluators run in a temporary
 candidate workspace, and files created there are deleted with that temporary

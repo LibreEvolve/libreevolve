@@ -154,6 +154,11 @@ For workspace candidates, the validator subprocess runs with the materialized
 candidate root as `cwd`, adds that root to `sys.path`, and passes the same root
 as `workspace_path`. The validator directory is also added to `sys.path`, so
 problem-local helper modules beside `validate.py` can be imported normally.
+Validators run with a minimal environment by default. Add variable names to
+`validator_env_allowlist` when a benchmark needs specific parent environment
+values such as data paths. Provider keys loaded through `.env` are not passed
+unless explicitly allowlisted, and persisted stdout/stderr applies basic
+secret-pattern redaction. Network access is not sandboxed yet.
 
 Validator-created files are not collected yet. The candidate workspace is a
 temporary directory that is deleted after each subprocess evaluation, so any

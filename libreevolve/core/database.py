@@ -174,6 +174,7 @@ class ProgramDatabase:
                     "max_generations": config.max_generations,
                     "num_inspirations": config.num_inspirations,
                     "eval_timeout_sec": config.eval_timeout_sec,
+                    "validator_env_allowlist": config.validator_env_allowlist,
                     "explore_ratio": config.explore_ratio,
                     "mutation_mode": config.mutation_mode,
                     "eval_stages": config.eval_stages,

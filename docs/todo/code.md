@@ -1389,18 +1389,17 @@ Primary evidence:
     execution boundaries must be explicit and reproducible. Generated or
     user-supplied validators should not implicitly inherit unrelated host
     secrets or network capability when runs load provider credentials.
-  - Current evidence: the CLI loads `.env` with `override=True`, then
-    `CascadeEvaluator._run_subprocess()` invokes `subprocess.run()` without an
-    `env=` allowlist, network policy, or secret redaction. Validator processes
-    therefore inherit variables such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
-    `OLLAMA_HOST`, and any other host environment variables available to the
-    parent process. This is separate from the already tracked filesystem and
-    resource-limit sandbox gap.
-  - Required result: define validator environment policy, pass a minimal
-    allowlisted environment by default, add opt-in variables for benchmark
-    validators that need them, redact secret-like values from logs/metadata,
-    document network expectations, and test that subprocess validators cannot
-    see provider keys unless explicitly allowed.
+  - Partial status: validator subprocesses now receive an explicit minimal
+    environment instead of inheriting the parent process environment. Optional
+    `validator_env_allowlist` names can opt variables into validators, metadata
+    records provided keys and allowlist names without values, and persisted
+    stdout/stderr is passed through basic secret-pattern redaction. Tests prove
+    `OPENAI_API_KEY` is hidden by default and that explicit opt-in variables
+    are visible.
+  - Remaining gap: there is still no network egress policy, container sandbox,
+    or stronger resource isolation for validator code.
+  - Required result: define and enforce validator network expectations and
+    sandbox/resource policy, with tests proving the intended boundary.
 
 - [ ] Validate and constrain configured evaluator paths.
   - Spec evidence: AlphaEvolve task setup depends on explicit evaluator

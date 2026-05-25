@@ -39,6 +39,11 @@ This means backends are rewarded for improvement over the selected parent, not
 for absolute score, and role-specific auxiliary-call accounting remains a known
 gap.
 
+For `ensemble_strategy: throughput_depth`, the scheduler currently uses only
+numeric `cost`, `latency`, and `depth` metadata. The optional `role` field is
+preserved as descriptive metadata but does not create breadth/depth quotas,
+escalation rules, or role-specific routing.
+
 ## OpenAI backend
 
 Implemented in [`libreevolve/llm/openai.py`](../libreevolve/llm/openai.py).

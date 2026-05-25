@@ -114,6 +114,10 @@ Backend specs are validated before a run starts. Supported backend types are
 `medium`, `high`, or `xhigh`. Constructor-supported keys are passed to backend
 classes; scheduling metadata stays in the ensemble.
 
+In the current scheduler, `throughput_depth` uses numeric `cost`, `latency`,
+and `depth`. The `role` field is descriptive metadata only; it is not yet used
+for quotas, escalation, or role-specific routing.
+
 ### Plugins and logging
 
 - `plugins` (`[]`): list of built-in plugin names.

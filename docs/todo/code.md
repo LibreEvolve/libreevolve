@@ -1011,6 +1011,23 @@ Primary evidence:
   - Required result: add scheduling modes that can allocate proposal volume by
     cost/latency/capability, not only reward.
 
+- [ ] Make backend role metadata operational or document it as descriptive.
+  - Spec evidence: AlphaEvolve's LLM ensemble separates breadth-oriented fast
+    generation from deeper higher-quality suggestions. If local backend specs
+    expose roles such as `breadth` and `depth`, those roles should influence
+    scheduling or be clearly marked as labels.
+  - Current evidence: `Config._validate_backends()` accepts a string `role`,
+    `build_llm()` stores it in `backend_metadata`, and docs show `role:
+    breadth` / `role: depth` examples. `LLMEnsemble._throughput_depth_select()`
+    reads only `cost`, `latency`, and `depth`; it ignores `role`, and the
+    default `ucb1` strategy ignores all backend metadata. There is no policy
+    that reserves proposal volume for breadth models, escalates selected
+    candidates to depth models, or routes critique/feedback/meta-prompt calls
+    by role.
+  - Required result: either make `role` operational through explicit per-role
+    scheduling quotas/routing rules and tests, or document it as descriptive
+    manifest metadata only; add tests proving the chosen role semantics.
+
 - [x] Add critique/review generation stage.
   - Spec evidence: the AlphaEvolve paper describes using LLMs to generate,
     critique, and evolve a pool of algorithms.

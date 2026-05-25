@@ -64,10 +64,13 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: combine a fast, lower-latency model for breadth with a stronger
     model for depth.
   - Status: added experimental `throughput_depth` scheduling metadata layered
-    over UCB-style scores. Remaining divergence: provider usage, latency,
-    retry, response-id, finish-reason, and API-mode telemetry is not persisted
-    per LLM call. Provider failures are not retried, routed to fallback
-    backends, or logged as structured failed LLM-call attempts.
+    over UCB-style scores. Remaining divergence: the scheduler uses numeric
+    `cost`, `latency`, and `depth` metadata but ignores descriptive `role`
+    labels, so there are no breadth/depth quotas, escalation rules, or
+    role-specific routing semantics yet. Provider usage, latency, retry,
+    response-id, finish-reason, and API-mode telemetry is not persisted per LLM
+    call. Provider failures are not retried, routed to fallback backends, or
+    logged as structured failed LLM-call attempts.
 
 - [ ] Existing/custom LLM backend extension point.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 2 and Section 2.3.

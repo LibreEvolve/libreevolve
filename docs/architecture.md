@@ -318,6 +318,8 @@ An experimental `throughput_depth` strategy layers optional backend metadata
 (`cost`, `latency`, `depth`, `role`) over UCB scores so configs can distinguish
 cheap breadth models from deeper models. This is a scheduling concept, not a
 verified reproduction of AlphaEvolve's Gemini Flash/Pro policy.
+The current scoring formula uses only numeric `cost`, `latency`, and `depth`;
+`role` is preserved as descriptive metadata and does not drive routing yet.
 
 All current LLM calls share the same ensemble state. Mutation calls are rewarded
 after evaluation; critique, feedback, and meta-prompt calls are counted as

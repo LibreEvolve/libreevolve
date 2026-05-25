@@ -144,6 +144,8 @@ is not yet an AlphaEvolve reproduction.
   feedback, and meta-prompt calls, including retries, fallback routing,
   failed-attempt accounting, and structured error logs.
 - Add explicit breadth/depth/cost/latency scheduling tests.
+- Make backend role metadata operational through quotas/routing, or document
+  it as descriptive manifest metadata only.
 - Extend critique/revision beyond a synchronous self-review call toward
   configurable reviewer pools.
 

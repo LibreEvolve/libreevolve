@@ -339,6 +339,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: track a backend registry or plugin interface with
     validation and manifest provenance.
 
+- [x] Add backend role semantics to scheduler work.
+  - Evidence: config examples accept `role: breadth` and `role: depth`, and
+    `build_llm()` carries role metadata into `LLMEnsemble`, but
+    `_throughput_depth_select()` currently reads only numeric `cost`,
+    `latency`, and `depth`.
+  - Current roadmap gap: breadth/depth scheduling work covered cost/latency/
+    depth tests but did not specify whether the role field is operational or
+    descriptive.
+  - Required result: either implement per-role quotas, escalation, and
+    role-specific routing/accounting, or document role as descriptive metadata
+    only with tests for the chosen behavior.
+
 - [x] Add role-specific LLM call accounting to backend scheduling work.
   - Evidence: AlphaEvolve's ensemble scheduling should reflect candidate
     generation quality/throughput, while LibreEvolve currently counts

@@ -110,6 +110,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     so score normalization can still be ill-defined before multi-objective
     policy is considered.
 
+- [x] Correct paper-index metric-validation wording.
+  - Paper-index evidence: `papers/README.md` summarized AlphaEvolve status as
+    "strict scalar metric validation."
+  - Current evidence: evaluator outputs are strictly checked against declared
+    scalar metrics, but `metrics.yaml` still accepts finite zero-width or
+    inverted bounds, so the broader metric-schema claim was too strong.
+  - Status: paper index now says strict scalar evaluator-output validation and
+    primary normalization for well-formed bounds, while listing strict
+    metric-bound ordering as an open AlphaEvolve-alignment gap.
+
 - [x] LLM-generated feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optional LLM graders can score hard-to-capture properties or

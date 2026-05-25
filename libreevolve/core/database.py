@@ -21,6 +21,7 @@ class ProgramDatabase:
         self._jsonl = log_dir / "history.jsonl"
         self._failures = log_dir / "failure_history.jsonl"
         self._quarantine = log_dir / "history_invalid.jsonl"
+        self._failure_quarantine = log_dir / "failure_history_invalid.jsonl"
         self._manifest = log_dir / "manifest.json"
         self._all: list[Program] = []
         self._failure_counts: dict[str, int] = {}
@@ -122,7 +123,7 @@ class ProgramDatabase:
         append_strict_jsonl(
             self._failures,
             record,
-            quarantine_path=self._quarantine,
+            quarantine_path=self._failure_quarantine,
         )
         return record
 

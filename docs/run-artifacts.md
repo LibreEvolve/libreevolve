@@ -5,9 +5,8 @@ Run JSON and JSONL writers use strict finite JSON. Candidate history, prompt
 history, manifests, and the ThetaEvolve-inspired export reject `NaN`/`Infinity`
 or non-JSON-compatible values rather than emitting permissive Python JSON
 tokens. Failed candidate, prompt, and GRPO append attempts write diagnostic
-quarantine records. Failure-history append failures currently use the shared
-`history_invalid.jsonl` quarantine rather than a separate
-`failure_history_invalid.jsonl` stream.
+quarantine records. Failure-history append failures use the separate
+`failure_history_invalid.jsonl` quarantine.
 
 ## Directory layout
 
@@ -20,6 +19,7 @@ runs/
     ├── history.jsonl
     ├── failure_history.jsonl
     ├── history_invalid.jsonl          # Only when a candidate record is rejected
+    ├── failure_history_invalid.jsonl  # Only when a failure record is rejected
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
     ├── best.py

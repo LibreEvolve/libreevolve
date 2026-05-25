@@ -236,9 +236,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     parent ids, mutation text, and repetition counts. Remaining divergence:
     failure retrieval is a recent-tail heuristic, not a learned or
     diversity-aware sampler over all historical negative examples. Invalid
-    failure-history append diagnostics currently share `history_invalid.jsonl`
-    with candidate-history failures rather than using a failure-specific
-    quarantine stream.
+    failure-history append diagnostics now use `failure_history_invalid.jsonl`.
 
 - [x] Full-file/full-codebase evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4 ablations.

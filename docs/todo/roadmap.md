@@ -530,15 +530,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifact writers still need the same policy.
 
 - [x] Add failure-history quarantine separation to database hardening.
-  - Evidence: `ProgramDatabase.log_failure()` writes invalid
+  - Evidence: `ProgramDatabase.log_failure()` previously wrote invalid
     `failure_history.jsonl` records to the shared `history_invalid.jsonl`
-    quarantine. A local proof with a non-finite failed score created
-    `history_invalid.jsonl` and no `failure_history_invalid.jsonl`.
+    quarantine.
   - Current roadmap gap: strict JSONL work covered candidate, prompt,
     manifest, and GRPO append writers, but not whether failure-memory records
     have a stream-specific quarantine/audit path.
-  - Required result: define and test a separate failure-history quarantine or
-    document the shared candidate/failure quarantine policy explicitly.
+  - Status: implemented. Failure-history append failures now use
+    `failure_history_invalid.jsonl`, with tests proving they do not mix with
+    candidate-history quarantine records.
 
 - [x] Add reproducibility hashes to run metadata work.
   - Evidence: AlphaEvolve-scale runs need exact problem, evaluator, prompt, and

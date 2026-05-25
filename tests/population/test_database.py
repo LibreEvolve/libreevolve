@@ -138,6 +138,22 @@ def test_log_rejects_non_finite_records_with_quarantine():
     record = json.loads(quarantine.read_text().splitlines()[0])
     assert "inf" in record["message"]
 
+
+def test_log_failure_uses_failure_history_quarantine():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+    parent = _p(fitness=1.0)
+    child = _p(fitness=math.inf)
+    with pytest.raises(StrictJsonlError):
+        db.log_failure(child, parent, "bad diff", "no_diff_blocks")
+    run_dir = Path(tmpdir) / "t"
+    assert not (run_dir / "failure_history.jsonl").exists()
+    assert not (run_dir / "history_invalid.jsonl").exists()
+    quarantine = run_dir / "failure_history_invalid.jsonl"
+    record = json.loads(quarantine.read_text().splitlines()[0])
+    assert "inf" in record["message"]
+
+
 def test_manifest_written():
     tmpdir = tempfile.mkdtemp()
     ProgramDatabase(Config(log_dir=tmpdir, problem_name="t", mutation_mode="full"))

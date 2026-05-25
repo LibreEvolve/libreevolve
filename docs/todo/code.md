@@ -612,20 +612,15 @@ Primary evidence:
     non-finite prompt rewards with rollback, and non-finite GRPO export
     records. Broader queryable database/resume work remains tracked separately.
 
-- [ ] Give failure-history writes their own quarantine stream.
+- [x] Give failure-history writes their own quarantine stream.
   - Spec evidence: AlphaEvolve-style run records should be machine-readable and
     stream-specific enough to audit which artifact failed to serialize without
     conflating candidate and failure-memory records.
-  - Current evidence: `ProgramDatabase.log_failure()` writes
-    `failure_history.jsonl` with `quarantine_path=self._quarantine`, and
-    `self._quarantine` is `history_invalid.jsonl`. A local proof with a
-    non-finite failed candidate score raised `StrictJsonlError`, created
-    `history_invalid.jsonl`, and did not create
-    `failure_history_invalid.jsonl`.
-  - Required result: add `failure_history_invalid.jsonl` or another
-    stream-specific failure-memory quarantine policy, update run-artifact docs,
-    and add tests proving invalid failure-history records do not mix with
-    invalid candidate-history records.
+  - Status: implemented. `ProgramDatabase.log_failure()` now uses
+    `failure_history_invalid.jsonl` as a stream-specific quarantine path, while
+    candidate-history append failures continue to use `history_invalid.jsonl`.
+  - Validation: database tests prove invalid failure-history records are
+    quarantined separately and do not create `history_invalid.jsonl`.
 
 - [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
   cascades.

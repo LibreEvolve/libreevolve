@@ -322,8 +322,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     hyphens, spaces, Unicode filename characters, and Windows-style
     backslashes are accepted when normalized safely. README now also says
     candidate workspace construction rejects raw paths that normalize to the
-    same relative path, while warning that file-section collision policy and
-    host-filesystem case folding remain incomplete.
+    same relative path and materialization preflights case-folded host paths,
+    while warning that file-section collision policy and Unicode normalization
+    remain incomplete.
   - Required result: keep README aligned with current path parser behavior
     while still warning separately about path-collision handling and partial
     whole-envelope diagnostics.

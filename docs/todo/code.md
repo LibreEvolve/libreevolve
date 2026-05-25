@@ -93,15 +93,14 @@ Primary evidence:
   - Partial status: `CandidateWorkspace.__post_init__()` now rejects raw file
     keys that normalize to the same candidate-relative path, with a regression
     test for `pkg\\helper.py` versus `pkg/helper.py`.
-  - Remaining evidence: on this Windows filesystem,
-    `CandidateWorkspace.materialize()` can still write both `Readme.md` and
-    `README.md` to the same host file, leaving only the later content. Duplicate
-    mutation-envelope targets and Unicode-normalization collisions also still
-    need an explicit policy.
-  - Required result: define case-folding and Unicode-normalization policy for
-    cross-platform runs, detect collisions before materialization, and add
-    loader/mutation/materialization tests that no candidate file disappears
-    silently.
+    `CandidateWorkspace.materialize()` also preflights case-folded host paths
+    before writing any file; tests prove `Readme.md` and `README.md` collisions
+    fail without partial materialization.
+  - Remaining evidence: duplicate mutation-envelope targets and
+    Unicode-normalization collisions still need an explicit policy.
+  - Required result: define Unicode-normalization and duplicate
+    mutation-envelope target policy for cross-platform runs, and add
+    loader/mutation tests that no candidate file disappears silently.
 
 - [x] Detect malformed or ignored mutation envelopes.
   - Spec evidence: AlphaEvolve-style codebase mutation should make every

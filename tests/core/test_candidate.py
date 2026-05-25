@@ -464,6 +464,25 @@ def test_workspace_rejects_duplicate_paths_after_normalization():
         raise AssertionError("expected duplicate normalized path rejection")
 
 
+def test_workspace_rejects_case_collisions_before_materialization(tmp_path, monkeypatch):
+    from libreevolve.core import candidate as candidate_module
+
+    workspace = CandidateWorkspace(
+        files={"Readme.md": "lower\n", "README.md": "upper\n"},
+        primary_file="Readme.md",
+    )
+    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
+
+    try:
+        workspace.materialize(tmp_path)
+    except ValueError as exc:
+        assert "Candidate paths collide when materialized" in str(exc)
+    else:
+        raise AssertionError("expected case-folded materialization collision")
+    assert not (tmp_path / "Readme.md").exists()
+    assert not (tmp_path / "README.md").exists()
+
+
 def test_workspace_rejects_empty_file_section_path():
     workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
     response = "<<<FILE \nvalue = 2\n>>>FILE"

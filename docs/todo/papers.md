@@ -260,8 +260,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     candidate root as `cwd` and import path, but there is still no arbitrary
     external repository/build-system runner. Candidate path collision handling
     is also incomplete: candidate construction rejects duplicate normalized
-    paths, but host-filesystem case-folding collisions can still overwrite
-    materialized files.
+    paths and materialization rejects case-folded host-path collisions before
+    writes, but Unicode-normalization and duplicate mutation-envelope target
+    policy remain incomplete.
     File/block envelope diagnostics now reject malformed sections before
     partial edits are applied. File-set topology changes such as delete, rename,
     move, and primary-file replacement are implemented with command file

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import os
 from pathlib import Path
 import re
 
@@ -66,6 +67,16 @@ class CandidateWorkspace:
         return {"primary_file": self.primary_file, "files": dict(self.files)}
 
     def materialize(self, root: Path) -> Path:
+        targets: dict[str, str] = {}
+        for rel in self.files:
+            target = safe_candidate_path(root, rel)
+            key = os.path.normcase(str(target))
+            if key in targets:
+                raise ValueError(
+                    "Candidate paths collide when materialized: "
+                    f"{targets[key]!r} and {rel!r}"
+                )
+            targets[key] = rel
         for rel, content in self.files.items():
             target = safe_candidate_path(root, rel)
             target.parent.mkdir(parents=True, exist_ok=True)

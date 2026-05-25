@@ -264,9 +264,9 @@ File-section paths use the same relative-path normalization as candidate
 workspaces. Nested paths, hyphens, spaces, Unicode filename characters, and
 Windows-style backslashes are accepted when the normalized path is safe.
 Candidate workspace construction rejects file sets whose raw names normalize to
-the same relative path. Case-folding collisions on case-insensitive filesystems
-and duplicate mutation-envelope targets still need a stricter cross-platform
-policy.
+the same relative path. Materialization also rejects case-folded host-path
+collisions before writing files. Duplicate mutation-envelope targets and
+Unicode-normalization collisions still need a stricter cross-platform policy.
 File/block envelopes are not represented as a complete mutation AST yet, but
 unmatched, orphaned, nested, empty-name, and invalid-name sections fail before
 any partial edit is applied.

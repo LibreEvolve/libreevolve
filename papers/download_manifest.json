@@ -1,0 +1,218 @@
+[
+  {
+    "id": "2506.13131",
+    "title": "AlphaEvolve",
+    "url": "https://arxiv.org/pdf/2506.13131.pdf",
+    "file": "papers/2506.13131__AlphaEvolve.pdf",
+    "ok": true,
+    "bytes": 3525764,
+    "message": "downloaded"
+  },
+  {
+    "id": "2511.17592",
+    "title": "GigaEvo",
+    "url": "https://arxiv.org/pdf/2511.17592.pdf",
+    "file": "papers/2511.17592__GigaEvo.pdf",
+    "ok": true,
+    "bytes": 1393166,
+    "message": "downloaded"
+  },
+  {
+    "id": "2510.14150",
+    "title": "CodeEvolve",
+    "url": "https://arxiv.org/pdf/2510.14150.pdf",
+    "file": "papers/2510.14150__CodeEvolve.pdf",
+    "ok": true,
+    "bytes": 2094810,
+    "message": "downloaded"
+  },
+  {
+    "id": "2511.23473",
+    "title": "ThetaEvolve",
+    "url": "https://arxiv.org/pdf/2511.23473.pdf",
+    "file": "papers/2511.23473__ThetaEvolve.pdf",
+    "ok": true,
+    "bytes": 3949612,
+    "message": "downloaded"
+  },
+  {
+    "id": "2602.10233",
+    "title": "ImprovEvolve",
+    "url": "https://arxiv.org/pdf/2602.10233.pdf",
+    "file": "papers/2602.10233__ImprovEvolve.pdf",
+    "ok": true,
+    "bytes": 10158341,
+    "message": "downloaded"
+  },
+  {
+    "id": "2602.15951",
+    "title": "MadEvolve",
+    "url": "https://arxiv.org/pdf/2602.15951.pdf",
+    "file": "papers/2602.15951__MadEvolve.pdf",
+    "ok": true,
+    "bytes": 1165170,
+    "message": "downloaded"
+  },
+  {
+    "id": "2603.14575",
+    "title": "CausalEvolve",
+    "url": "https://arxiv.org/pdf/2603.14575.pdf",
+    "file": "papers/2603.14575__CausalEvolve.pdf",
+    "ok": true,
+    "bytes": 538166,
+    "message": "downloaded"
+  },
+  {
+    "id": "2510.06056",
+    "title": "DeepEvolve",
+    "url": "https://arxiv.org/pdf/2510.06056.pdf",
+    "file": "papers/2510.06056__DeepEvolve.pdf",
+    "ok": true,
+    "bytes": 2681978,
+    "message": "downloaded"
+  },
+  {
+    "id": "2601.21096",
+    "title": "Magellan",
+    "url": "https://arxiv.org/pdf/2601.21096.pdf",
+    "file": "papers/2601.21096__Magellan.pdf",
+    "ok": true,
+    "bytes": 1483119,
+    "message": "downloaded"
+  },
+  {
+    "id": "2602.22425",
+    "title": "ArchAgent",
+    "url": "https://arxiv.org/pdf/2602.22425.pdf",
+    "file": "papers/2602.22425__ArchAgent.pdf",
+    "ok": true,
+    "bytes": 885845,
+    "message": "downloaded"
+  },
+  {
+    "id": "2602.16928",
+    "title": "Multiagent_Learning",
+    "url": "https://arxiv.org/pdf/2602.16928.pdf",
+    "file": "papers/2602.16928__Multiagent_Learning.pdf",
+    "ok": true,
+    "bytes": 2196483,
+    "message": "downloaded"
+  },
+  {
+    "id": "2603.09172",
+    "title": "Ramsey_Numbers",
+    "url": "https://arxiv.org/pdf/2603.09172.pdf",
+    "file": "papers/2603.09172__Ramsey_Numbers.pdf",
+    "ok": true,
+    "bytes": 302923,
+    "message": "downloaded"
+  },
+  {
+    "id": "2509.18057",
+    "title": "Hardness_of_Approximation",
+    "url": "https://arxiv.org/pdf/2509.18057.pdf",
+    "file": "papers/2509.18057__Hardness_of_Approximation.pdf",
+    "ok": true,
+    "bytes": 7719868,
+    "message": "downloaded"
+  },
+  {
+    "id": "2603.06692",
+    "title": "Combinatorics_Berczy",
+    "url": "https://arxiv.org/pdf/2603.06692.pdf",
+    "file": "papers/2603.06692__Combinatorics_Berczy.pdf",
+    "ok": true,
+    "bytes": 813934,
+    "message": "downloaded"
+  },
+  {
+    "id": "2601.16175",
+    "title": "TTT_Discover",
+    "url": "https://arxiv.org/pdf/2601.16175.pdf",
+    "file": "papers/2601.16175__TTT_Discover.pdf",
+    "ok": true,
+    "bytes": 1286088,
+    "message": "downloaded"
+  },
+  {
+    "id": "2603.08679",
+    "title": "Bilateral_Trade",
+    "url": "https://arxiv.org/pdf/2603.08679.pdf",
+    "file": "papers/2603.08679__Bilateral_Trade.pdf",
+    "ok": true,
+    "bytes": 633706,
+    "message": "downloaded"
+  },
+  {
+    "id": "2601.01235",
+    "title": "Bruhat_Intervals",
+    "url": "https://arxiv.org/pdf/2601.01235.pdf",
+    "file": "papers/2601.01235__Bruhat_Intervals.pdf",
+    "ok": true,
+    "bytes": 735975,
+    "message": "downloaded"
+  },
+  {
+    "id": "2511.12916",
+    "title": "Fault2Flow",
+    "url": "https://arxiv.org/pdf/2511.12916.pdf",
+    "file": "papers/2511.12916__Fault2Flow.pdf",
+    "ok": true,
+    "bytes": 6489403,
+    "message": "downloaded"
+  },
+  {
+    "id": "2601.05943",
+    "title": "Global_NLP_Optimization",
+    "url": "https://arxiv.org/pdf/2601.05943.pdf",
+    "file": "papers/2601.05943__Global_NLP_Optimization.pdf",
+    "ok": true,
+    "bytes": 608432,
+    "message": "downloaded"
+  },
+  {
+    "id": "2506.16750",
+    "title": "Autoconvolution",
+    "url": "https://arxiv.org/pdf/2506.16750.pdf",
+    "file": "papers/2506.16750__Autoconvolution.pdf",
+    "ok": true,
+    "bytes": 446393,
+    "message": "downloaded"
+  },
+  {
+    "id": "2505.16105",
+    "title": "Sums_and_Differences",
+    "url": "https://arxiv.org/pdf/2505.16105.pdf",
+    "file": "papers/2505.16105__Sums_and_Differences.pdf",
+    "ok": true,
+    "bytes": 95450,
+    "message": "downloaded"
+  },
+  {
+    "id": "2506.01896",
+    "title": "Sums_and_Differences_II",
+    "url": "https://arxiv.org/pdf/2506.01896.pdf",
+    "file": "papers/2506.01896__Sums_and_Differences_II.pdf",
+    "ok": true,
+    "bytes": 302747,
+    "message": "downloaded"
+  },
+  {
+    "id": "1504.04909",
+    "title": "MAP_Elites",
+    "url": "https://arxiv.org/pdf/1504.04909.pdf",
+    "file": "papers/1504.04909__MAP_Elites.pdf",
+    "ok": true,
+    "bytes": 3221283,
+    "message": "downloaded"
+  },
+  {
+    "id": "auer-cesa-bianchi-fischer-2002",
+    "title": "UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
+    "url": "https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+    "file": "papers/auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf",
+    "ok": true,
+    "bytes": 207956,
+    "message": "downloaded from accessible academic mirror"
+  }
+]

@@ -4,10 +4,12 @@ from libreevolve.llm.base import LLMBackend
 
 
 class LLMEnsemble:
-    """UCB1-bandit routing layer over one or more LLMBackend instances.
+    """UCB-style routing layer over one or more LLMBackend instances.
 
     Sources: UCB1 (Auer, Cesa-Bianchi & Fischer, 2002), applied to LLM
-    selection per MadEvolve (arXiv:2602.15951).
+    selection per MadEvolve (arXiv:2602.15951). This implementation is a
+    heuristic adaptation over observed fitness improvements, not a canonical
+    regret-analyzed UCB1 implementation.
     """
 
     def __init__(

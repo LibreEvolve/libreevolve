@@ -39,6 +39,9 @@ is not yet an AlphaEvolve reproduction.
 
 - Add language/runner declarations or keep the Python-only divergence explicit.
 - Add richer workspace fixtures with nested packages and non-Python artifacts.
+- Add compatibility with AlphaEvolve's canonical `<<<<<<< SEARCH` /
+  `>>>>>>> REPLACE` diff block spelling while preserving the compact local
+  format.
 - Preserve full workspace artifacts in `best`/export flows, not only the primary
   file convenience output.
 - Add migration/resume support for workspace candidates.
@@ -61,8 +64,10 @@ is not yet an AlphaEvolve reproduction.
 
 - Add stricter validation that mutated prompt templates preserve required
   placeholders.
-- Add deterministic literature/context ingestion for local PDFs or extracted
-  text.
+- Add AlphaEvolve-style stochastic formatting controls with weighted
+  placeholder alternatives.
+- Replace first-N-character context truncation with deterministic
+  summarization/ranking for local PDFs and extracted text.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages.
 

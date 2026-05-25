@@ -30,4 +30,7 @@ __pycache__/
 /docs/superpowers/plans/
 /docs/superpowers/specs/2026-03-18-libreevolve-branding.md
 /old/superpowers/specs/
-/papers/
+/papers/*
+!/papers/README.md
+!/papers/download_manifest.csv
+!/papers/download_manifest.json

@@ -67,6 +67,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [x] Replace "parallel populations" wording for islands.
+  - README evidence: `README.md` described 5-island migration as "Parallel
+    populations."
+  - Current evidence: `IslandModel` keeps multiple MAP-Elites archives but runs
+    synchronously in-process; no population worker concurrency exists.
+  - Status: README now says "synchronous island archives" instead of implying
+    parallel execution.
+  - Required result: avoid using "parallel" for islands until there are actual
+    concurrent island workers.
+
+- [x] Soften UCB1/backend-routing claims.
+  - README evidence: README called the ensemble "UCB1" and said it
+    "automatically learns which model produces the best mutations."
+  - Current evidence: `LLMEnsemble` is a UCB-style heuristic over unnormalized
+    fitness improvements, with known canonical-UCB gaps tracked in
+    `docs/todo/papers.md`.
+  - Status: README now uses "UCB-style" and describes routing as tracking
+    observed fitness improvements.
+  - Required result: keep marketing text aligned with the heuristic
+    implementation unless canonical UCB1 is implemented and tested.
+
 - [x] Qualify "Feed it a problem, a seed program, and any LLM."
   - README evidence: `README.md:22`.
   - Current evidence: supported backend types are hard-coded to OpenAI,
@@ -88,7 +109,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [x] Qualify "comprehensive test coverage."
   - README evidence: `README.md:59` claims comprehensive coverage across all
     components.
-  - Current evidence: the local non-integration suite now has 133 selected
+  - Current evidence: the local non-integration suite now has 159 selected
     tests, but major AlphaEvolve features are still absent or represented only
     as narrow prototype behavior.
   - Required result: keep the count but change the coverage claim to the

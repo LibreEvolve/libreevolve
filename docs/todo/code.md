@@ -65,6 +65,26 @@ Primary evidence:
   - Required result: add a per-problem/per-run mutation mode for full block,
     full file, or diff-based edits, with validator coverage for each mode.
 
+- [ ] Add AlphaEvolve canonical SEARCH/REPLACE diff marker compatibility.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 use
+    `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE` blocks.
+  - Current evidence: `libreevolve/core/diff.py` and prompt docs use the local
+    compact `<<<SEARCH ... === ... >>>REPLACE` format. This works for the
+    current prototype but is not source-compatible with AlphaEvolve examples.
+  - Required result: accept both canonical AlphaEvolve diff fences and the
+    existing compact fences, update prompt examples, and add parser/apply tests
+    for both formats.
+
+- [ ] Export complete best workspaces, not only the primary file.
+  - Spec evidence: AlphaEvolve can evolve entire code files/codebases, so the
+    output artifact must preserve all evolved components.
+  - Current evidence: `libreevolve/cli.py` writes only `best.code` to
+    `runs/<name>/best.py`; `history.jsonl` contains `files`, but there is no
+    best-workspace directory or archive for direct reuse.
+  - Required result: write a reproducible `best_workspace/` or archive with all
+    candidate files, preserve `best.py` only as a compatibility convenience,
+    and document/export this artifact in tests and run docs.
+
 ## Prompt Sampling and Context
 
 - [x] Replace the simple prompt builder with a configurable prompt sampler.
@@ -80,6 +100,17 @@ Primary evidence:
     plugin context, and recent failures.
   - Required result: introduce prompt templates, stochastic template choices,
     user-provided context files, and structured prompt sections.
+
+- [ ] Implement AlphaEvolve-style stochastic formatting controls.
+  - Spec evidence: AlphaEvolve Section 2.2 describes template placeholders with
+    human-provided alternatives instantiated using probability distributions
+    from a separate config file.
+  - Current evidence: `PromptSampler` selects among whole prompt templates with
+    a seeded RNG, but it does not parse placeholder alternatives or probability
+    distributions inside templates/config.
+  - Required result: add a deterministic stochastic-formatting schema,
+    probability validation, seeded sampling tests, and docs that distinguish it
+    from whole-template variants.
 
 - [x] Include rendered evaluation results and program outputs in prompts.
   - Spec evidence: AlphaEvolve prompts can include a program, the result of
@@ -106,6 +137,19 @@ Primary evidence:
   - Required result: create a prompt-program representation, mutation path,
     scoring/selection policy, and integration into `build_prompt()`.
 
+- [ ] Validate mutated prompt templates before adding them to the prompt
+  database.
+  - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by
+    the evolutionary loop; malformed evolved instructions should not break
+    future generations.
+  - Current evidence: `PromptDatabase.mutate()` accepts any returned string and
+    `PromptSampler.build()` later formats it with required placeholders. There
+    is no placeholder preservation check, rollback, or penalty for malformed
+    prompt mutations.
+  - Required result: validate required placeholders before insertion, log and
+    penalize rejected prompt mutations, and add tests for missing/renamed
+    placeholders.
+
 - [x] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,
     equations, code snippets, and relevant literature, including PDF files.
@@ -119,6 +163,18 @@ Primary evidence:
     summarization/ranking for very large corpora.
   - Required result: allow problem-local context files, PDFs, equations, and
     code snippets to be selected, summarized, and rendered deterministically.
+
+- [ ] Replace context truncation with deterministic summarization/ranking for
+  large literature corpora.
+  - Spec evidence: AlphaEvolve Section 2.2 allows relevant literature, such as
+    PDF files, as explicit context; for large corpora this requires selection
+    and compression rather than simply dropping the tail.
+  - Current evidence: `load_problem()` extracts `.pdf` text with `pypdf` and
+    `_summarize_context_text()` keeps the first 6000 characters. This is
+    deterministic, but it is not semantic summarization or relevance ranking.
+  - Required result: add deterministic source selection and summarization
+    metadata, preserve citations/source names in prompts, and test long
+    multi-file context behavior.
 
 ## Evaluation
 

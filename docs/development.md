@@ -92,9 +92,10 @@ py -3.12 -m pre_commit run --all-files
 - make validators defensive
 - return the primary metric and `is_valid`
 
-### Diff-based mutation
+### Mutation output
 
-- LLMs are expected to output SEARCH/REPLACE diffs, not full files
+- `diff` mode expects SEARCH/REPLACE edits
+- `full` mode accepts full-code, full-block, or file-section replacements
 - the diff engine strips markdown fences, but exact search matching still matters
 - comments or formatting drift in the diff can break matching
 

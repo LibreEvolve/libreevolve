@@ -20,12 +20,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     including PDF extraction, stochastic variants, rendered evaluator output,
     and local prompt-program selection, scoring, lineage, and optional LLM
     mutation.
+  - Remaining divergence: stochastic formatting is whole-template sampling, not
+    AlphaEvolve's placeholder alternatives with configured probability
+    distributions; prompt mutations are not validated before insertion.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
   - Requirement: diff blocks are default, but AlphaEvolve can ask for a complete
     code block when appropriate.
   - Status: implemented `diff` and `full` mutation modes.
+  - Remaining divergence: the parser does not accept the canonical
+    `<<<<<<< SEARCH` / `=======` / `>>>>>>> REPLACE` block spelling used in the
+    paper; it accepts LibreEvolve's compact `<<<SEARCH` format.
 
 - [x] Frontier model ensemble scheduling.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
@@ -82,6 +88,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     no arbitrary external repository/build-system runner and `best.py` exports
     only the primary file convenience view.
 
+- [ ] Full-workspace output artifacts.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.
+  - Requirement: if a candidate is a full file/codebase, the selected best
+    candidate must be recoverable as a full codebase.
+  - Current gap: `history.jsonl` stores candidate file sets, but the CLI exports
+    only `best.py`, the primary-file compatibility view.
+  - Required result: add `best_workspace/` or equivalent archive artifacts and
+    document them in run-artifact docs and tests.
+
+- [ ] Canonical AlphaEvolve diff block compatibility.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Figure 3.
+  - Requirement: support the paper's SEARCH/REPLACE fence spelling when using
+    AlphaEvolve-style prompts or examples.
+  - Current gap: local mutation parsing uses compact fences only.
+  - Required result: accept both canonical and compact diff formats without
+    breaking existing seeds/tests.
+
 - [x] Meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.
   - Requirement: prompt instructions/context can be co-evolved in a separate
@@ -93,13 +116,39 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Status: implemented locally. Remaining divergence: no published
     AlphaEvolve-equivalent ablation harness or advanced prompt-fitness model.
 
+- [ ] AlphaEvolve-style stochastic prompt formatting.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
+  - Requirement: support template placeholders with human-provided alternatives
+    and probabilities in configuration.
+  - Current gap: prompt variation is uniform whole-template selection and does
+    not implement probability-distribution placeholders.
+
 ## Local Paper Corpus Issues
+
+- [x] Refresh the local paper index after implementation passes.
+  - Evidence: `papers/README.md` still listed multi-file candidates, critique,
+    LLM feedback, and meta-prompt evolution as open after those local
+    implementations landed.
+  - Status: refreshed the AlphaEvolve row to distinguish implemented local
+    behavior from remaining async, multi-objective, database, canonical-diff,
+    full-workspace export/resume, and benchmark gaps.
+  - Required result: keep the paper index aligned with current code whenever
+    todo items are completed or reopened.
 
 - [x] Decide and document the paper corpus source of truth.
   - Evidence: `papers/download_manifest.csv` lists 24 downloaded papers, while
     the README claims 23 references.
   - Required result: update README badges/text and possibly add a
     `papers/README.md` that explains why each PDF is present.
+
+- [x] Track the paper index and manifests without committing PDFs.
+  - Evidence: README points readers to `papers/README.md`, but `.gitignore`
+    ignored the entire `papers/` directory.
+  - Status: `.gitignore` now ignores `papers/*` while allowing
+    `papers/README.md`, `download_manifest.csv`, and
+    `download_manifest.json`.
+  - Required result: keep small paper-index evidence in version control while
+    leaving large cached PDFs local.
 
 - [x] Add a paper index with roles and implementation status.
   - Evidence: downloaded papers include system papers, domain-result papers,

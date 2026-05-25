@@ -13,7 +13,9 @@ The bandit router that selects among them is implemented in
 ## Selection and reward
 
 `LLMEnsemble` wraps one or more backends and chooses one backend per mutation
-attempt using UCB1.
+attempt using a UCB-style heuristic over observed fitness improvements. It is
+not a canonical UCB1 implementation; reward-normalization gaps are tracked in
+[`docs/todo/papers.md`](todo/papers.md).
 
 Current behavior:
 
@@ -131,5 +133,5 @@ class MyBackend:
   mutations.
 - Use `reasoning_effort` sparingly. Long internal reasoning can consume output
   budget and reduce useful diff text.
-- Mix backends when exploring a new problem. The ensemble can learn which one is
-  producing useful mutations for that task.
+- Mix backends when exploring a new problem. The ensemble tracks which backend
+  has produced useful mutations for that task.

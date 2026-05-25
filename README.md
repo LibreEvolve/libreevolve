@@ -50,10 +50,10 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 |:---:|---|---|
 | 🧠 | **Multi-LLM support** | OpenAI (GPT-4o, GPT-5.4, o-series), Anthropic (Claude Sonnet/Opus), Ollama (any local model) |
 | 🗺️ | **MAP-Elites archive** | 3D quality-diversity grid mapping performance, complexity, and TF-IDF diversity |
-| 🏝️ | **5-island migration** | Parallel populations with ring-topology migration (70% exploit / 30% explore) |
-| 🎰 | **UCB1 bandit ensemble** | Automatically routes mutations to the best-performing LLM backend |
+| 🏝️ | **5-island migration** | Synchronous island archives with ring-topology migration (70% exploit / 30% explore) |
+| 🎰 | **UCB-style ensemble** | Heuristic backend routing over observed fitness improvements |
 | ⚡ | **Cascade evaluator** | Three-tier filtering (diff penalties → syntax → subprocess) — cheap rejects before expensive evals |
-| 🔀 | **SEARCH/REPLACE diffs** | LLMs propose targeted code edits, not full rewrites — precise, composable mutations |
+| 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
 | 📜 | **Failure history** | Last 5 failed mutations shown in prompts to prevent repetitive dead ends |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🧐 | **Optional LLM critique and feedback** | Configurable self-review and grader passes can revise mutations, add feedback metrics, or discard candidates |
@@ -146,7 +146,7 @@ graph TD
     C -->|invalid| E[📜 Failure History]
     E --> B
     D --> F[🏝️ Island Migration]
-    F --> G[🎰 UCB1 Backend Selection]
+    F --> G[🎰 UCB-style Backend Selection]
     G --> B
 
     style A fill:#161B22,stroke:#00FF41,color:#E6EDF3
@@ -170,7 +170,7 @@ graph TD
 5. **Cascade evaluation** — Score the result with structured stage outcomes, raw metrics, stdout/stderr, error, and elapsed time
 6. **Archive update** — Valid programs enter the MAP-Elites archive; all programs are logged with metrics and evaluation details
 7. **Failure tracking** — Failed mutations are tracked and shown in subsequent prompts to avoid repeats
-8. **Backend reward** — UCB1 bandit rewards the LLM backend based on fitness improvement
+8. **Backend reward** — UCB-style routing rewards the LLM backend based on fitness improvement
 9. **Island migration** — Periodic migration spreads good solutions across islands
 
 </details>
@@ -216,7 +216,7 @@ The seed is intentionally suboptimal but structured: a centered 26-circle hex-st
 | **Anthropic** | Claude Sonnet 4.6, Claude Opus 4.6, Claude Haiku 4.5 | Messages API |
 | **Ollama** | Llama 3, Mistral, Qwen, any local model | Local inference, no API key needed |
 
-Mix backends in a single run — the UCB1 bandit automatically learns which model produces the best mutations for your problem:
+Mix backends in a single run — the UCB-style router tracks observed fitness improvements for each backend:
 
 ```bash
 py -3.12 -m libreevolve run my_problem/ \
@@ -241,7 +241,7 @@ libreevolve/
 │   ├── database.py      # ProgramDatabase facade
 │   └── config.py        # Config dataclass
 ├── llm/
-│   ├── ensemble.py      # UCB1-bandit LLM ensemble
+│   ├── ensemble.py      # UCB-style LLM ensemble
 │   ├── anthropic.py     # Claude backend
 │   ├── openai.py        # OpenAI backend (+ Responses API for reasoning models)
 │   └── ollama.py        # Ollama backend

@@ -26,6 +26,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Missing Roadmap Items
 
+- [x] Add full-workspace export and resume coverage to candidate fidelity.
+  - Evidence: AlphaEvolve evolves full files/codebases, while a primary-file
+    `best.py` artifact is insufficient for a multi-file candidate.
+  - Current roadmap gap: candidate workspace work now explicitly includes
+    preserving full workspace artifacts and migration/resume coverage.
+  - Required result: keep export/resume as part of workspace fidelity, not only
+    runtime hardening.
+
 - [x] Add evolve-block and skeleton/codebase support to near-term architecture
   alignment.
   - Evidence: AlphaEvolve Section 2.1 defines an input API with marked
@@ -61,6 +69,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current roadmap gap: prompt evolution is absent; documentation work
     (`ROADMAP.md:50-55`) and search improvements (`ROADMAP.md:83-88`) are too
     broad to cover it.
+
+- [x] Add prompt-template validation and context summarization hardening.
+  - Evidence: AlphaEvolve prompt customization includes stochastic formatting,
+    explicit context, relevant literature, and co-evolved prompts.
+  - Current roadmap gap: after the implementation pass, the roadmap now tracks
+    stricter placeholder validation, deterministic PDF/text context ingestion,
+    and richer prompt-fitness/ablation reporting.
+  - Required result: ensure prompt/context work covers malformed evolved
+    templates and large context sources, not only happy-path template selection.
 
 - [x] Add full-code/full-block mutation mode.
   - Evidence: AlphaEvolve Section 2.3 says the system can be configured to ask

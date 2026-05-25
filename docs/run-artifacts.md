@@ -102,10 +102,11 @@ the full candidate file set for workspace candidates.
 stderr, error, elapsed time, and metadata such as the primary file and file
 list. If feedback graders are enabled, their scores appear in `metrics`, and
 the composed score appears as `feedback_adjusted_fitness` while the raw primary
-validator metric remains intact. Configured evaluator retries are not fully
-auditable yet: fail-then-pass retries preserve the successful attempt, and
-all-fail retries preserve the final failed attempt, but earlier failed attempts
-are not retained as separate history records.
+validator metric remains intact. Configured evaluator retry attempts are stored
+under `evaluation.metadata.attempts`; each attempt record includes attempt
+index, pass/fail status, fitness, metrics, stdout, stderr, error, elapsed time,
+stage context, and per-stage diagnostics. The selected attempt still determines
+the sample/stage result.
 
 Validator-generated files are not collected yet. Evaluators run in a temporary
 candidate workspace, and files created there are deleted with that temporary

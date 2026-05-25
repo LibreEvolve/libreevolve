@@ -670,22 +670,20 @@ Primary evidence:
     direction, bound, sample aggregation policy, and artifact/output checks;
     document defaults and test average/min/max/quantile/all-pass behavior.
 
-- [ ] Preserve retry-attempt outcomes in evaluation records.
+- [x] Preserve retry-attempt outcomes in evaluation records.
   - Spec evidence: AlphaEvolve-style expensive evaluation depends on
     reproducible evidence about which tests, samples, retries, outputs, and
     failures led to accepting or rejecting a candidate.
-  - Current evidence: `_run_sample_with_retries()` loops over attempts and
-    returns immediately on the first valid result. If attempt 0 fails and
-    attempt 1 succeeds, only the successful attempt's stage record, stdout,
-    stderr, metrics, and metadata survive; earlier failed attempts are
-    overwritten in local variables and never appear in `EvaluationResult`,
-    `history.jsonl`, or prompt feedback. If all attempts fail, only the final
-    failed attempt is retained with `attempts` metadata.
-  - Required result: record every retry attempt with attempt index, pass/fail,
-    stdout/stderr/error, metrics, elapsed time, and selected seed; define how
-    attempts aggregate into sample/stage pass decisions; include retry attempt
-    records in history and bounded prompt feedback; add tests for fail-then-
-    pass, pass-first, and all-fail retry paths.
+  - Status: implemented for structured evaluation records and history.
+    `_run_sample_with_retries()` now records `metadata.attempts` with attempt
+    index, pass/fail, fitness, metrics, stdout, stderr, error, elapsed time,
+    stage context, and per-stage diagnostics. The first valid attempt still
+    determines pass decisions; all-fail retries return the final failed attempt
+    while retaining all earlier attempts.
+  - Validation: evaluator tests cover fail-then-pass, pass-first, and all-fail
+    retry paths.
+  - Remaining prompt gap: `PromptSampler` still renders only compact recent
+    stage summaries rather than bounded retry-attempt details.
 
 - [ ] Capture validator-generated artifacts before temporary workspaces are
   deleted.

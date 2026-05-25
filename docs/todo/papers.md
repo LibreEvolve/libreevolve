@@ -92,9 +92,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-positive timeouts, nonnumeric thresholds, and `samples`/`seeds`
     mismatches are now rejected at startup. Distributed/parallel evaluator
     nodes remain open. Metric-specific pass criteria and explicit sample
-    aggregation policies also remain open. Retry provenance is incomplete:
-    fail-then-pass retries retain only the successful attempt, and all-fail
-    retries retain only the final failed attempt.
+    aggregation policies also remain open. Retry provenance is now recorded in
+    `evaluation.metadata.attempts` for pass-first, fail-then-pass, and all-fail
+    retry paths.
 
 - [x] Strict scalar metric contract for evaluator outputs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
@@ -213,13 +213,13 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: prompt context can include program execution results, outputs,
     and scores from previous attempts.
-  - Current gap: history records preserve stdout/stderr and LLM feedback
-    provenance, but prompt construction renders only a short recent-stage
-    summary. Validator-generated files are not copied out of the temporary
-    candidate workspace, so construction artifacts, traces, plots, and other
-    evaluator outputs are lost unless a validator encodes them into metrics or
-    stdout/stderr. The pre-validator syntax pass also reports only the first
-    Python syntax error in a multi-file workspace, so prompt/history feedback
+  - Current gap: history records preserve stdout/stderr, retry-attempt records,
+    and LLM feedback provenance, but prompt construction renders only a short
+    recent-stage summary. Validator-generated files are not copied out of the
+    temporary candidate workspace, so construction artifacts, traces, plots,
+    and other evaluator outputs are lost unless a validator encodes them into
+    metrics or stdout/stderr. The pre-validator syntax pass also reports only
+    the first Python syntax error in a multi-file workspace, so prompt/history feedback
     can hide additional broken components.
   - Required result: add bounded prompt sections for execution outputs,
     artifacts, validator feedback, sample-level diagnostics, aggregate syntax

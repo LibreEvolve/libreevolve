@@ -176,6 +176,46 @@ def test_configured_stage_retries_failed_sample():
         result = ev.evaluate("x=1", None)
         assert result == 1.0
         assert result.metadata["attempt"] == 1
+        assert result.metadata["attempt_count"] == 2
+        assert [attempt["passed"] for attempt in result.metadata["attempts"]] == [False, True]
+        assert [attempt["attempt"] for attempt in result.metadata["attempts"]] == [0, 1]
+        assert result.metadata["attempts"][0]["error"] == "domain_invalid"
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_records_pass_first_retry_attempt():
+    p, d = _problem("def evaluate(code, workspace, stage): return {'score': 1.0, 'is_valid': True}")
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "retry", "retries": 2}])
+        result = ev.evaluate("x=1", None)
+        assert result == 1.0
+        assert result.metadata["attempt_count"] == 1
+        assert [attempt["attempt"] for attempt in result.metadata["attempts"]] == [0]
+        assert result.metadata["attempts"][0]["passed"] is True
+    finally:
+        shutil.rmtree(d)
+
+
+def test_configured_stage_records_all_failed_retry_attempts():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    print(f'attempt={stage[\"attempt\"]}')\n"
+        "    return {'score': 0.0, 'is_valid': False}\n"
+    )
+    try:
+        ev = CascadeEvaluator(p, stages=[{"name": "retry", "retries": 2}])
+        result = ev.evaluate("x=1", None)
+        assert result.is_valid is False
+        assert result.metadata["attempt_count"] == 3
+        assert [attempt["attempt"] for attempt in result.metadata["attempts"]] == [0, 1, 2]
+        assert [attempt["passed"] for attempt in result.metadata["attempts"]] == [
+            False,
+            False,
+            False,
+        ]
+        assert "attempt=0" in result.metadata["attempts"][0]["stdout"]
+        assert "attempt=2" in result.metadata["attempts"][2]["stdout"]
     finally:
         shutil.rmtree(d)
 

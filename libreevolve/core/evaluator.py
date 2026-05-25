@@ -164,6 +164,7 @@ class CascadeEvaluator:
         retries: int,
     ) -> "EvaluationResult":
         last: EvaluationResult | None = None
+        attempts: list[dict] = []
         for attempt in range(retries + 1):
             context = dict(stage_context)
             context["attempt"] = attempt
@@ -175,11 +176,15 @@ class CascadeEvaluator:
                 stage_context=context,
             )
             result.metadata["attempt"] = attempt
+            attempts.append(_retry_attempt_record(result, attempt, context))
             last = result
             if result.is_valid:
+                result.metadata["attempts"] = attempts
+                result.metadata["attempt_count"] = len(attempts)
                 return result
         assert last is not None
-        last.metadata["attempts"] = retries + 1
+        last.metadata["attempts"] = attempts
+        last.metadata["attempt_count"] = len(attempts)
         return last
 
     def _run_subprocess(
@@ -449,6 +454,21 @@ def _eval_metadata(
         "files": sorted(workspace.files),
         "validate_path": str(validate_path),
         "stage": stage_context,
+    }
+
+
+def _retry_attempt_record(result: EvaluationResult, attempt: int, context: dict) -> dict:
+    return {
+        "attempt": attempt,
+        "passed": result.is_valid,
+        "fitness": result.fitness,
+        "metrics": dict(result.metrics),
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "error": result.error,
+        "elapsed_sec": result.elapsed_sec,
+        "stage": dict(context),
+        "stages": [stage.to_dict() for stage in result.stages],
     }
 
 

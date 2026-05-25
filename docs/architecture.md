@@ -32,10 +32,12 @@ constructs a `Problem` from:
 The loader keeps all declared metrics, picks a primary metric, exposes metric
 direction/bounds helpers, and loads deterministic prompt context. Text/code
 context is read directly; PDFs are extracted with `pypdf`; long context is
-bounded before prompt rendering. Context loading is flat and content-only today:
-recursive context directories, include/exclude manifests, page-span citations,
-and source hashes are not recorded yet. Fitness is the normalized primary metric:
-`maximize` maps low-to-high bounds to `0..1`; `minimize` inverts that scale.
+bounded before prompt rendering. Context loading walks `context/` recursively,
+honors optional `context.yaml` include/exclude patterns and per-source character
+budgets, renders prompt citation headers, and records hashes, spans, extraction
+status, and PDF page ranges in the run manifest. Fitness is the normalized
+primary metric: `maximize` maps low-to-high bounds to `0..1`; `minimize` inverts
+that scale.
 
 ## Candidate representation
 

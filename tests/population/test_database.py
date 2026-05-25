@@ -160,6 +160,18 @@ def test_manifest_written():
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
 
+
+def test_manifest_writes_context_source_provenance():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(
+        Config(log_dir=tmpdir, problem_name="t"),
+        context_sources=[{"path": "nested/notes.md", "sha256": "abc"}],
+    )
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    assert manifest["problem"]["context_sources"] == [
+        {"path": "nested/notes.md", "sha256": "abc"}
+    ]
+
 def test_maybe_migrate_triggers_on_interval():
     db = ProgramDatabase(Config(migration_interval=5, n_islands=2,
                                 log_dir=tempfile.mkdtemp(), problem_name="t"))

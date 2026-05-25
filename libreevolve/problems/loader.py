@@ -1,5 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
+import fnmatch
+import hashlib
 import math
 from pathlib import Path
 import yaml
@@ -7,6 +9,7 @@ from libreevolve.core.candidate import CandidateWorkspace
 
 _CONTEXT_EXTENSIONS = {".txt", ".md", ".py", ".pdf"}
 _MAX_CONTEXT_CHARS = 6000
+_CONTEXT_MANIFEST_NAMES = ("context.yaml", "context.yml")
 
 @dataclass
 class Problem:
@@ -19,6 +22,7 @@ class Problem:
     initial_programs: list[str]
     problem_dir:      Path
     context_files:    dict[str, str] = field(default_factory=dict)
+    context_sources:  list[dict] = field(default_factory=list)
     initial_workspaces: list[CandidateWorkspace] = field(default_factory=list)
 
     def metric(self, name: str) -> dict:
@@ -72,12 +76,13 @@ def load_problem(problem_dir: str | Path) -> Problem:
     if not seeds:
         raise ValueError(f"No seed programs (*.py) or seed directories found in {seed_dir}")
     primary_bounds = (float(primary["bounds"][0]), float(primary["bounds"][1]))
-    context_files = _load_context_files(d)
+    context_files, context_sources = _load_context_files(d)
     return Problem(name=d.name, task_description=task, metrics=metrics,
                    primary_metric=primary["name"],
                    primary_bounds=primary_bounds,
                    validate_path=validate_path, initial_programs=seeds,
                    problem_dir=d, context_files=context_files,
+                   context_sources=context_sources,
                    initial_workspaces=workspaces)
 
 
@@ -168,38 +173,131 @@ def _load_initial_workspaces(seed_dir: Path) -> list[CandidateWorkspace]:
     return workspaces
 
 
-def _load_context_files(problem_dir: Path) -> dict[str, str]:
+def _load_context_files(problem_dir: Path) -> tuple[dict[str, str], list[dict]]:
     context_dir = problem_dir / "context"
     if not context_dir.is_dir():
-        return {}
+        return {}, []
+    manifest = _load_context_manifest(context_dir)
+    max_chars = manifest["max_chars_per_source"]
     result: dict[str, str] = {}
-    for path in sorted(context_dir.iterdir()):
-        if not path.is_file() or path.suffix.lower() not in _CONTEXT_EXTENSIONS:
+    sources: list[dict] = []
+    for path in _select_context_paths(context_dir, manifest):
+        rel = path.relative_to(context_dir).as_posix()
+        rendered, metadata = _read_context_source(path, rel, max_chars)
+        result[rel] = rendered
+        sources.append(metadata)
+    return result, sources
+
+
+def _load_context_manifest(context_dir: Path) -> dict:
+    raw: dict = {}
+    for name in _CONTEXT_MANIFEST_NAMES:
+        path = context_dir / name
+        if path.exists():
+            loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            if not isinstance(loaded, dict):
+                raise ValueError(f"{path} must contain a mapping")
+            raw = loaded
+            break
+    include = raw.get("include")
+    exclude = raw.get("exclude", [])
+    if include is not None and (
+        not isinstance(include, list) or not all(isinstance(item, str) for item in include)
+    ):
+        raise ValueError(f"{context_dir}: context include must be a list of strings")
+    if not isinstance(exclude, list) or not all(isinstance(item, str) for item in exclude):
+        raise ValueError(f"{context_dir}: context exclude must be a list of strings")
+    max_chars = raw.get("max_chars_per_source", _MAX_CONTEXT_CHARS)
+    if isinstance(max_chars, bool) or not isinstance(max_chars, int) or max_chars <= 0:
+        raise ValueError(f"{context_dir}: max_chars_per_source must be a positive integer")
+    return {"include": include, "exclude": exclude, "max_chars_per_source": max_chars}
+
+
+def _select_context_paths(context_dir: Path, manifest: dict) -> list[Path]:
+    selected = []
+    for path in sorted((p for p in context_dir.rglob("*") if p.is_file()), key=_context_sort_key):
+        if path.name in _CONTEXT_MANIFEST_NAMES:
             continue
-        if path.suffix.lower() == ".pdf":
-            result[path.name] = _summarize_context_text(_read_pdf_text(path), path.name)
-        else:
-            result[path.name] = _summarize_context_text(
-                path.read_text(encoding="utf-8").strip(), path.name
-            )
-    return result
+        if path.suffix.lower() not in _CONTEXT_EXTENSIONS:
+            continue
+        rel = path.relative_to(context_dir).as_posix()
+        include = manifest["include"]
+        if include is not None and not _matches_any(rel, include):
+            continue
+        if _matches_any(rel, manifest["exclude"]):
+            continue
+        selected.append(path)
+    return selected
 
 
-def _read_pdf_text(path: Path) -> str:
+def _context_sort_key(path: Path) -> str:
+    return path.as_posix()
+
+
+def _matches_any(rel_path: str, patterns: list[str]) -> bool:
+    return any(fnmatch.fnmatchcase(rel_path, pattern) for pattern in patterns)
+
+
+def _read_context_source(path: Path, rel_path: str, max_chars: int) -> tuple[str, dict]:
+    raw_bytes = path.read_bytes()
+    sha256 = hashlib.sha256(raw_bytes).hexdigest()
+    source_type = path.suffix.lower().lstrip(".")
+    if path.suffix.lower() == ".pdf":
+        text, extraction = _read_pdf_text(path)
+    else:
+        text, extraction = _read_text_context(path)
+    rendered, excerpt = _summarize_context_text(text, rel_path, max_chars)
+    metadata = {
+        "path": rel_path,
+        "source_type": source_type,
+        "sha256": sha256,
+        "bytes": len(raw_bytes),
+        "chars_original": len(text),
+        "chars_rendered": len(rendered),
+        "truncated": excerpt["truncated"],
+        "excerpt_start": excerpt["start"],
+        "excerpt_end": excerpt["end"],
+        "max_chars": max_chars,
+        **extraction,
+    }
+    return rendered, metadata
+
+
+def _read_text_context(path: Path) -> tuple[str, dict]:
+    try:
+        return path.read_text(encoding="utf-8").strip(), {"extraction_status": "ok"}
+    except UnicodeDecodeError as exc:
+        return (
+            f"(text extraction failed: {exc.__class__.__name__}: {exc})",
+            {"extraction_status": "failed", "error": str(exc)},
+        )
+
+
+def _read_pdf_text(path: Path) -> tuple[str, dict]:
     try:
         from pypdf import PdfReader
 
         reader = PdfReader(str(path))
         text = "\n".join(page.extract_text() or "" for page in reader.pages).strip()
-        return text or "(no extractable text)"
+        page_count = len(reader.pages)
+        if text:
+            return text, {"extraction_status": "ok", "pages": [1, page_count]}
+        return "(no extractable text)", {
+            "extraction_status": "no_extractable_text",
+            "pages": [1, page_count],
+        }
     except Exception as exc:
-        return f"(PDF extraction failed: {exc.__class__.__name__}: {exc})"
+        return (
+            f"(PDF extraction failed: {exc.__class__.__name__}: {exc})",
+            {"extraction_status": "failed", "error": str(exc)},
+        )
 
 
-def _summarize_context_text(text: str, source: str) -> str:
-    if len(text) <= _MAX_CONTEXT_CHARS:
-        return text
+def _summarize_context_text(text: str, source: str, max_chars: int) -> tuple[str, dict]:
+    if len(text) <= max_chars:
+        return text, {"start": 0, "end": len(text), "truncated": False}
     return (
-        f"[{source}: showing first {_MAX_CONTEXT_CHARS} of {len(text)} characters]\n"
-        f"{text[:_MAX_CONTEXT_CHARS]}"
+        f"[{source}: showing first {max_chars} of {len(text)} characters]\n"
+        f"{text[:max_chars]}",
+        {"start": 0, "end": max_chars, "truncated": True},
     )

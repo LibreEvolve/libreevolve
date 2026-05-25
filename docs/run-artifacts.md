@@ -44,6 +44,8 @@ the loaded problem directory name.
 - backend specs
 - ensemble strategy
 - plugins
+- problem context-source provenance, including selected relative paths, source
+  hashes, extraction status, excerpt spans, and PDF page ranges when available
 - seed and log directory
 
 This is a reproducibility aid. It is not yet a full resume checkpoint.

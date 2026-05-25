@@ -24,23 +24,43 @@ Optional context files can be placed in:
 ```text
 my_problem/
 └── context/
+    ├── context.yaml
     ├── notes.md
     ├── formula.txt
     ├── helper.py
-    └── paper.pdf
+    ├── paper.pdf
+    └── nested/
+        └── extra.md
 ```
 
 Supported context extensions are `.txt`, `.md`, `.py`, and `.pdf`. Text-like
 files are read directly. PDFs are extracted with `pypdf`; files with no
 extractable text are marked as such, and extraction failures are rendered as
 diagnostic context rather than aborting problem load. Each context item is
-rendered into prompts with a source header. Long context files are truncated
-deterministically to the first 6000 characters.
+rendered into prompts with a citation-style source header containing a hash
+prefix, character span, and extraction status. Long context files are truncated
+deterministically to the first 6000 characters unless overridden in
+`context/context.yaml`.
 
-Context ingestion is currently flat and content-only: only immediate files in
-`context/` are read, and source hashes, PDF page spans, extraction metadata,
-include/exclude manifests, and recursive directory selection are not first-class
-yet.
+Context ingestion is recursive and deterministic. Relative paths under
+`context/` are used as source names, so duplicate basenames in different
+subdirectories remain distinct. `context.yaml` can restrict selection and set a
+per-source character budget:
+
+```yaml
+include:
+  - "**/*.md"
+  - "*.py"
+exclude:
+  - "drafts/**"
+max_chars_per_source: 4000
+```
+
+The loader records source hashes, byte counts, original/rendered character
+counts, truncation spans, extraction status, and PDF page ranges where
+available. These source records are persisted in `manifest.json` for run
+provenance. This is still extractive, first-span context handling rather than
+semantic ranking or summarization.
 
 ## `task_description.txt`
 

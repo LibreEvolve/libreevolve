@@ -39,7 +39,11 @@ def evolve(problem: Problem, config: Config,
     if plugins is None:
         plugins = []
     random.seed(config.seed)
-    db        = ProgramDatabase(config, perf_bounds=(0.0, 1.0))
+    db        = ProgramDatabase(
+        config,
+        perf_bounds=(0.0, 1.0),
+        context_sources=problem.context_sources,
+    )
     evaluator = CascadeEvaluator(
         problem, timeout_sec=config.eval_timeout_sec, stages=config.eval_stages
     )

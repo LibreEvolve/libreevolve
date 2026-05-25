@@ -124,6 +124,64 @@ def test_reads_context_files():
         (d / "context" / "notes.md").write_text("important context")
         p = load_problem(d)
         assert p.context_files["notes.md"] == "important context"
+        assert p.context_sources[0]["path"] == "notes.md"
+        assert len(p.context_sources[0]["sha256"]) == 64
+        assert p.context_sources[0]["extraction_status"] == "ok"
+
+
+def test_reads_nested_context_files_with_manifest_selection():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        context = d / "context"
+        (context / "nested").mkdir(parents=True)
+        (context / "nested" / "keep.md").write_text("abcdefghijklmnopqrstuvwxyz")
+        (context / "nested" / "skip.md").write_text("skip me")
+        (context / "top.py").write_text("value = 1\n")
+        (context / "ignored.txt").write_text("ignored")
+        (context / "context.yaml").write_text(yaml.dump({
+            "include": ["nested/*.md", "top.py"],
+            "exclude": ["nested/skip.md"],
+            "max_chars_per_source": 10,
+        }))
+
+        p = load_problem(d)
+
+        assert sorted(p.context_files) == ["nested/keep.md", "top.py"]
+        assert "showing first 10 of 26 characters" in p.context_files["nested/keep.md"]
+        source = next(s for s in p.context_sources if s["path"] == "nested/keep.md")
+        assert source["truncated"] is True
+        assert source["excerpt_start"] == 0
+        assert source["excerpt_end"] == 10
+        assert source["max_chars"] == 10
+
+
+def test_recursive_context_preserves_duplicate_basenames_by_relative_path():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context" / "a").mkdir(parents=True)
+        (d / "context" / "b").mkdir(parents=True)
+        (d / "context" / "a" / "notes.md").write_text("a")
+        (d / "context" / "b" / "notes.md").write_text("b")
+
+        p = load_problem(d)
+
+        assert p.context_files["a/notes.md"] == "a"
+        assert p.context_files["b/notes.md"] == "b"
+        assert [s["path"] for s in p.context_sources] == ["a/notes.md", "b/notes.md"]
+
+
+def test_context_source_hash_changes_when_file_changes():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context").mkdir()
+        source = d / "context" / "notes.md"
+        source.write_text("first")
+        first = load_problem(d).context_sources[0]["sha256"]
+
+        source.write_text("second")
+        second = load_problem(d).context_sources[0]["sha256"]
+
+        assert first != second
 
 
 def test_reads_pdf_context_files():
@@ -138,6 +196,21 @@ def test_reads_pdf_context_files():
             writer.write(f)
         p = load_problem(d)
         assert p.context_files["paper.pdf"] == "(no extractable text)"
+        assert p.context_sources[0]["extraction_status"] == "no_extractable_text"
+        assert p.context_sources[0]["pages"] == [1, 1]
+
+
+def test_records_pdf_context_extraction_failures():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "context").mkdir()
+        (d / "context" / "broken.pdf").write_bytes(b"not a pdf")
+
+        p = load_problem(d)
+
+        assert "PDF extraction failed" in p.context_files["broken.pdf"]
+        assert p.context_sources[0]["extraction_status"] == "failed"
+        assert p.context_sources[0]["path"] == "broken.pdf"
 
 
 def test_truncates_long_context_files():
@@ -148,6 +221,7 @@ def test_truncates_long_context_files():
         p = load_problem(d)
         assert "showing first 6000 of 7000 characters" in p.context_files["long.txt"]
         assert len(p.context_files["long.txt"]) < 6100
+        assert p.context_sources[0]["truncated"] is True
 
 
 def test_normalizes_minimize_metric():

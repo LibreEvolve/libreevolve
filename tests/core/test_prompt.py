@@ -38,6 +38,39 @@ def test_prompt_sampler_renders_context_and_feedback():
     assert "- validate: passed, score=0.25" in prompt
 
 
+def test_prompt_sampler_renders_context_citations_when_sources_are_available():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+        context_files={"papers/a.md": "alpha context"},
+        context_sources=[
+            {
+                "path": "papers/a.md",
+                "sha256": "1234567890abcdef",
+                "chars_original": 13,
+                "excerpt_start": 0,
+                "excerpt_end": 13,
+                "extraction_status": "ok",
+            }
+        ],
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    prompt = PromptSampler().build(parent, [], problem, extra_context="")
+
+    assert (
+        "--- CONTEXT SOURCE: papers/a.md "
+        "(sha256=1234567890ab, chars=13, excerpt=0:13, status=ok) ---"
+    ) in prompt
+    assert "alpha context" in prompt
+
+
 def test_prompt_sampler_renders_multi_file_candidates():
     problem = Problem(
         name="demo",

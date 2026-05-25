@@ -70,9 +70,27 @@ _DEFAULT_TEMPLATE = DEFAULT_TEMPLATE
 def _render_context(problem: Problem) -> str:
     if not problem.context_files:
         return "(none)"
+    sources = {
+        source.get("path"): source
+        for source in getattr(problem, "context_sources", [])
+        if isinstance(source, dict)
+    }
     return "\n\n".join(
-        f"--- CONTEXT SOURCE: {name} ---\n{content}"
+        f"{_render_context_header(name, sources.get(name))}\n{content}"
         for name, content in problem.context_files.items()
+    )
+
+
+def _render_context_header(name: str, source: dict | None) -> str:
+    if not source:
+        return f"--- CONTEXT SOURCE: {name} ---"
+    sha = str(source.get("sha256", ""))[:12] or "unknown"
+    span = f"{source.get('excerpt_start', 0)}:{source.get('excerpt_end', '?')}"
+    status = source.get("extraction_status", "unknown")
+    return (
+        f"--- CONTEXT SOURCE: {name} "
+        f"(sha256={sha}, chars={source.get('chars_original', '?')}, "
+        f"excerpt={span}, status={status}) ---"
     )
 
 

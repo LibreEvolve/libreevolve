@@ -77,6 +77,8 @@ is not yet an AlphaEvolve reproduction.
   placeholder alternatives.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
+- Add context-source manifests with recursive selection, include/exclude rules,
+  source hashes, extraction diagnostics, and page/span citations.
 - Render richer bounded evaluator outputs in prompts, including stdout/stderr,
   artifacts, sample-level diagnostics, validator feedback, and LLM grader
   summaries.

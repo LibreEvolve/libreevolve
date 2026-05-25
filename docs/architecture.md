@@ -30,7 +30,9 @@ constructs a `Problem` from:
 The loader keeps all declared metrics, picks a primary metric, exposes metric
 direction/bounds helpers, and loads deterministic prompt context. Text/code
 context is read directly; PDFs are extracted with `pypdf`; long context is
-bounded before prompt rendering. Fitness is the normalized primary metric:
+bounded before prompt rendering. Context loading is flat and content-only today:
+recursive context directories, include/exclude manifests, page-span citations,
+and source hashes are not recorded yet. Fitness is the normalized primary metric:
 `maximize` maps low-to-high bounds to `0..1`; `minimize` inverts that scale.
 
 ## Candidate representation

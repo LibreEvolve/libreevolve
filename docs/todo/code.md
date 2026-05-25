@@ -271,6 +271,24 @@ Primary evidence:
   - Required result: allow problem-local context files, PDFs, equations, and
     code snippets to be selected, summarized, and rendered deterministically.
 
+- [ ] Add context-source manifests, recursive selection, and provenance.
+  - Spec evidence: AlphaEvolve task setup can include explicit instructions,
+    equations, code snippets, and literature; reproducible runs need to know
+    exactly which context sources and excerpts were available to the prompt
+    sampler.
+  - Current evidence: `_load_context_files()` iterates only immediate files in
+    `context/`, accepts a fixed extension set, and stores `dict[str, str]`
+    content keyed by filename. It does not recurse through context
+    subdirectories, support include/exclude manifests or per-source priorities,
+    record hashes, PDF page ranges, extraction status, truncation spans,
+    token/character budgets per source, or preserve enough provenance in
+    prompts/manifests to reproduce a context selection.
+  - Required result: add a context manifest/schema with deterministic recursive
+    selection, explicit includes/excludes and budgets, source hashes, extraction
+    metadata, page/span citations, manifest/run provenance, and tests for
+    nested context directories, duplicate filenames, changed PDFs, extraction
+    failures, and prompt citation rendering.
+
 - [ ] Replace context truncation with deterministic summarization/ranking for
   large literature corpora.
   - Spec evidence: AlphaEvolve Section 2.2 allows relevant literature, such as

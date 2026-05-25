@@ -37,6 +37,11 @@ diagnostic context rather than aborting problem load. Each context item is
 rendered into prompts with a source header. Long context files are truncated
 deterministically to the first 6000 characters.
 
+Context ingestion is currently flat and content-only: only immediate files in
+`context/` are read, and source hashes, PDF page spans, extraction metadata,
+include/exclude manifests, and recursive directory selection are not first-class
+yet.
+
 ## `task_description.txt`
 
 This file is inserted into the mutation prompt. Keep it concrete and

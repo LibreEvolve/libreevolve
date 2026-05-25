@@ -136,6 +136,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: ensure prompt/context work covers malformed evolved
     templates and large context sources, not only happy-path template selection.
 
+- [x] Add context-source manifest/provenance work.
+  - Evidence: `_load_context_files()` reads only immediate files in `context/`
+    into a filename-to-text dictionary and does not preserve hashes, recursive
+    paths, PDF page spans, extraction metadata, or include/exclude selection.
+  - Current roadmap gap: prompt/context work covered summarization and ranking
+    but not source-selection provenance needed to reproduce AlphaEvolve-style
+    task context.
+  - Required result: track recursive source selection, context manifests,
+    source hashes, extraction diagnostics, page/span citations, and prompt/run
+    provenance.
+
 - [x] Add richer evaluator-output prompt rendering to prompt/context work.
   - Evidence: AlphaEvolve prompts can include execution results and scores, but
     the current prompt sampler only renders compact recent stage summaries.

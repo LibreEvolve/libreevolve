@@ -66,6 +66,51 @@ def test_raises_on_malformed_metrics_yaml():
             load_problem(d)
 
 
+@pytest.mark.parametrize(
+    ("metrics", "message"),
+    [
+        ([{"direction": "maximize", "primary": True}], "non-empty name"),
+        (
+            [
+                {"name": "score", "direction": "maximize", "primary": True},
+                {"name": "score", "direction": "maximize"},
+            ],
+            "duplicate metric name",
+        ),
+        ([{"name": "score", "direction": "higher", "primary": True}], "direction"),
+        (
+            [
+                {"name": "score", "direction": "maximize", "primary": True},
+                {"name": "speed", "direction": "maximize", "primary": True},
+            ],
+            "only one metric can be primary",
+        ),
+        ([{"name": "score", "direction": "maximize", "bounds": [0.0]}], "bounds"),
+        (
+            [{"name": "score", "direction": "maximize", "bounds": [0.0, "nan"]}],
+            "finite",
+        ),
+    ],
+)
+def test_validates_metric_schema(metrics, message):
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "metrics.yaml").write_text(yaml.dump({"metrics": metrics}))
+        with pytest.raises(ValueError, match=message):
+            load_problem(d)
+
+
+def test_validates_secondary_metric_bounds():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "metrics.yaml").write_text(yaml.dump({"metrics": [
+            {"name": "score", "direction": "maximize", "primary": True},
+            {"name": "runtime", "direction": "minimize", "bounds": "fast"},
+        ]}))
+        with pytest.raises(ValueError, match="runtime.*bounds"):
+            load_problem(d)
+
+
 def test_reads_context_files():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

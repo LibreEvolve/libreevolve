@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
+import math
 from pathlib import Path
 import yaml
 from libreevolve.core.candidate import CandidateWorkspace
@@ -60,6 +61,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
     metrics: list[dict] = raw["metrics"]
     if not isinstance(metrics, list) or not metrics:
         raise ValueError(f"metrics.yaml in {d}: 'metrics' must be a non-empty list")
+    metrics = _validate_metric_schema(metrics, d)
     primary = next((m for m in metrics if m.get("primary")), metrics[0])
     validate_path = d / "validate.py"
     if not validate_path.exists():
@@ -69,12 +71,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
     seeds = [workspace.code for workspace in workspaces]
     if not seeds:
         raise ValueError(f"No seed programs (*.py) or seed directories found in {seed_dir}")
-    raw_bounds = primary.get("bounds", [0.0, 1.0])
-    if len(raw_bounds) != 2:
-        raise ValueError(
-            f"Metric '{primary['name']}' bounds must be [lo, hi], got {raw_bounds}"
-        )
-    primary_bounds = (float(raw_bounds[0]), float(raw_bounds[1]))
+    primary_bounds = (float(primary["bounds"][0]), float(primary["bounds"][1]))
     context_files = _load_context_files(d)
     return Problem(name=d.name, task_description=task, metrics=metrics,
                    primary_metric=primary["name"],
@@ -82,6 +79,57 @@ def load_problem(problem_dir: str | Path) -> Problem:
                    validate_path=validate_path, initial_programs=seeds,
                    problem_dir=d, context_files=context_files,
                    initial_workspaces=workspaces)
+
+
+def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict]:
+    normalized: list[dict] = []
+    names: set[str] = set()
+    primaries = 0
+    for index, metric in enumerate(metrics):
+        if not isinstance(metric, dict):
+            raise ValueError(
+                f"metrics.yaml in {problem_dir}: metric #{index + 1} must be a mapping"
+            )
+        name = metric.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(
+                f"metrics.yaml in {problem_dir}: metric #{index + 1} needs a non-empty name"
+            )
+        if name in names:
+            raise ValueError(f"metrics.yaml in {problem_dir}: duplicate metric name {name!r}")
+        names.add(name)
+
+        direction = metric.get("direction", "maximize")
+        if direction not in {"maximize", "minimize"}:
+            raise ValueError(
+                f"metrics.yaml in {problem_dir}: metric {name!r} direction must be "
+                "'maximize' or 'minimize'"
+            )
+
+        if metric.get("primary"):
+            primaries += 1
+
+        raw_bounds = metric.get("bounds", [0.0, 1.0])
+        if not isinstance(raw_bounds, (list, tuple)) or len(raw_bounds) != 2:
+            raise ValueError(f"Metric {name!r} bounds must be [lo, hi], got {raw_bounds}")
+        try:
+            bounds = (float(raw_bounds[0]), float(raw_bounds[1]))
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                f"Metric {name!r} bounds must be numeric [lo, hi], got {raw_bounds}"
+            ) from exc
+        if not all(math.isfinite(value) for value in bounds):
+            raise ValueError(f"Metric {name!r} bounds must be finite, got {raw_bounds}")
+
+        normalized_metric = dict(metric)
+        normalized_metric["name"] = name
+        normalized_metric["direction"] = direction
+        normalized_metric["bounds"] = [bounds[0], bounds[1]]
+        normalized.append(normalized_metric)
+
+    if primaries > 1:
+        raise ValueError(f"metrics.yaml in {problem_dir}: only one metric can be primary")
+    return normalized
 
 
 def _load_initial_workspaces(seed_dir: Path) -> list[CandidateWorkspace]:

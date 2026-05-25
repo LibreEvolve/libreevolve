@@ -93,10 +93,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluation metrics.
   - Current gap: evaluator output is only partially validated; missing
     secondary metrics, non-scalar values, non-finite numbers, and undeclared
-    metrics are not consistently rejected against `metrics.yaml`. The
-    `metrics.yaml` schema itself also lacks full validation for duplicate or
-    missing names, invalid directions, multiple primaries, and malformed
-    secondary bounds.
+    metrics are not consistently rejected against `metrics.yaml`. Basic
+    `metrics.yaml` schema validation now rejects missing/duplicate names,
+    invalid directions, multiple primaries, and malformed/non-finite bounds,
+    but unsupported extra schema fields remain permissive.
   - Required result: enforce the scalar metric contract and preserve clear
     diagnostics for invalid evaluator outputs.
 

@@ -73,9 +73,10 @@ Behavior:
 - the first metric with `primary: true` is primary
 - if no metric is marked primary, the first metric is primary
 - `bounds` defaults to `[0.0, 1.0]`
-- malformed primary-metric bounds raise an error; full schema validation for
-  secondary bounds, missing or duplicate names, invalid directions, and multiple
-  primaries remains open work
+- metric names must be non-empty and unique
+- `direction` must be `maximize` or `minimize`
+- at most one metric can be marked `primary: true`
+- bounds for all declared metrics must be finite numeric `[lo, hi]` pairs
 - `direction: minimize` is inverted during normalization when a metric is
   explicitly normalized
 

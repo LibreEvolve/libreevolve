@@ -205,10 +205,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Evidence: AlphaEvolve prompt customization includes stochastic formatting,
     explicit context, relevant literature, and co-evolved prompts.
   - Current roadmap gap: after the implementation pass, the roadmap now tracks
-    stricter placeholder validation, deterministic PDF/text context ingestion,
-    and richer prompt-fitness/ablation reporting.
+    stricter configured and mutated prompt-template placeholder validation,
+    deterministic PDF/text context ingestion, and richer prompt-fitness/
+    ablation reporting.
   - Required result: ensure prompt/context work covers malformed evolved
-    templates and large context sources, not only happy-path template selection.
+    templates, malformed configured variants, and large context sources, not
+    only happy-path template selection.
 
 - [x] Add context-source manifest/provenance work.
   - Evidence: `_load_context_files()` reads only immediate files in `context/`

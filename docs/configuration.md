@@ -250,9 +250,10 @@ run rather than being recorded as structured failed LLM-call attempts.
   subprocess `cwd` and added to `sys.path`.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
-- Meta-prompt mutation uses the same backend ensemble and must preserve every
-  placeholder required by `PromptSampler`. The current implementation instructs
-  the LLM to preserve placeholders but does not reject malformed prompt
+- Configured prompt variants and meta-prompt mutations must preserve every
+  placeholder required by `PromptSampler`. The current implementation checks
+  only that configured variants are strings and instructs the LLM to preserve
+  placeholders, but it does not reject malformed configured or mutated prompt
   templates yet.
 - Critique and LLM feedback use the same backend ensemble as mutation
   generation. They are synchronous and optional, not parallel reviewer workers.

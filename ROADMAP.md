@@ -83,8 +83,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 4. Prompt and context work
 
-- Add stricter validation that mutated prompt templates preserve required
-  placeholders.
+- Add stricter validation that configured and mutated prompt templates preserve
+  required placeholders and contain no malformed format fields.
 - Add AlphaEvolve-style stochastic formatting controls with weighted
   placeholder alternatives.
 - Replace first-N-character context truncation with deterministic

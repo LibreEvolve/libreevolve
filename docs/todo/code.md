@@ -430,18 +430,24 @@ Primary evidence:
     scores, multiple metrics, and deterministic prompt selection under the
     chosen policy.
 
-- [ ] Validate mutated prompt templates before adding them to the prompt
-  database.
+- [ ] Validate configured and mutated prompt templates before use.
   - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by
-    the evolutionary loop; malformed evolved instructions should not break
-    future generations.
-  - Current evidence: `PromptDatabase.mutate()` accepts any returned string and
-    `PromptSampler.build()` later formats it with required placeholders. There
-    is no placeholder preservation check, rollback, or penalty for malformed
-    prompt mutations.
-  - Required result: validate required placeholders before insertion, log and
-    penalize rejected prompt mutations, and add tests for missing/renamed
-    placeholders.
+    the evolutionary loop; malformed seed or evolved instructions should not
+    break future generations.
+  - Current evidence: `Config.validate()` only checks that `prompt_variants` is
+    a list of strings. `PromptDatabase.__init__()` accepts configured seed
+    templates directly, `PromptDatabase.mutate()` accepts any returned string,
+    and `PromptSampler.build()` later formats templates with Python
+    `str.format()`. Missing required placeholders, renamed placeholders, or
+    stray braces therefore fail late at prompt construction time instead of at
+    config load or prompt-mutation insertion. There is no rollback, quarantine,
+    or penalty path for malformed configured or mutated prompt templates.
+  - Required result: define the required/optional placeholder schema; validate
+    configured prompt variants at startup and mutated prompt templates before
+    insertion; reject or quarantine templates with missing required
+    placeholders, unknown placeholders, malformed braces, or invalid
+    mutation-mode fields; log and penalize rejected prompt mutations; and add
+    tests for malformed configured variants and missing/renamed placeholders.
 
 - [x] Add first-class literature/context ingestion.
   - Spec evidence: AlphaEvolve supports explicit context such as instructions,

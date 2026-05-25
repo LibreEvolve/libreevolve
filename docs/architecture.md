@@ -176,10 +176,11 @@ sorting UUID4 ids, so configured prompt-variant order is not currently
 seed-stable. When `meta_prompt_evolution` is enabled, the loop can
 periodically ask the active LLM backend to produce a revised full prompt
 template with an instruction to preserve placeholders. Placeholder validation is
-not enforced yet. Prompt-program rewards are currently the final composed child
-score recorded after evaluator, feedback, and plugin adjustments, and prompt
-selection uses a fixed UCB-like formula rather than a documented
-AlphaEvolve-grade prompt-fitness policy.
+not enforced for either configured variants or mutated templates yet.
+Prompt-program rewards are currently the final composed child score recorded
+after evaluator, feedback, and plugin adjustments, and prompt selection uses a
+fixed UCB-like formula rather than a documented AlphaEvolve-grade
+prompt-fitness policy.
 
 ## Evaluation
 
@@ -366,7 +367,7 @@ prompt-program events in `prompt_history.jsonl`.
 - Mutation responses are raw patch text; proposal ideas/rationales are not
   parsed, scored, or resurfaced as separate artifacts.
 - Prompt evolution is implemented at the template boundary; richer prompt
-  fitness and placeholder validation remain open.
+  fitness plus configured/mutated template placeholder validation remain open.
 - Prompt feedback rendering is a compact stage summary; richer stdout/stderr,
   artifact, sample-level diagnostic, and grader-feedback rendering remains open.
 - LLM feedback graders receive bounded full-workspace file sections, basic

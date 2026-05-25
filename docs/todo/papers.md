@@ -39,12 +39,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     and optional LLM mutation.
   - Remaining divergence: stochastic formatting is whole-template sampling, not
     AlphaEvolve's placeholder alternatives with configured probability
-    distributions; prompt mutations are not validated before insertion; prompt
-    feedback rendering omits stdout/stderr, artifacts, sample-level outputs,
-    and LLM grader summaries; context ingestion is flat/content-only and lacks
-    recursive selection, source hashes, page/span citations, and manifest
-    provenance; prompt assembly has no global context-window budget or
-    section-level packing policy.
+    distributions; configured and mutated prompt templates are not validated
+    before use; prompt feedback rendering omits stdout/stderr, artifacts,
+    sample-level outputs, and LLM grader summaries; context ingestion is
+    flat/content-only and lacks recursive selection, source hashes, page/span
+    citations, and manifest provenance; prompt assembly has no global
+    context-window budget or section-level packing policy.
 
 - [x] Output modes beyond SEARCH/REPLACE diffs.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.

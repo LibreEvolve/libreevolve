@@ -589,8 +589,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Missing: free-parameter extraction, gradient or gradient-free parameter
     optimization, algorithm comparison report, and parameter-function summary.
 
-- [ ] Document which MAP-Elites behavior is canonical and which is
-  LibreEvolve-specific.
+- [ ] Implement MAP-Elites behavior descriptors beyond the fixed local
+  primary-file archive.
   - Paper evidence: `1504.04909__MAP_Elites.pdf` maps elites over
     user-chosen dimensions of variation to illuminate high-performing
     solutions across a behavior space.
@@ -606,6 +606,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     descriptors from evaluator metadata, workspace-aware descriptors, stable
     descriptor normalization or explicit rebinning, and diagnostics that show
     the illuminated search space rather than only best/archive cells.
+
+- [x] Document the MAP-Elites boundary as fixed local quality-diversity search.
+  - Paper evidence: canonical MAP-Elites illuminates a behavior space chosen
+    for the problem domain.
+  - Current evidence: `MAPElites`'s docstring, README, architecture docs,
+    roadmap, code todo, and paper index describe LibreEvolve's archive as a
+    fixed local 3D heuristic over normalized performance, primary-file code
+    length, and primary-file TF-IDF diversity, not a canonical
+    problem-defined behavior-descriptor implementation.
+  - Required result: keep the documentation boundary explicit while the
+    remaining descriptor implementation work stays open.
 
 - [ ] Bound and normalize the UCB-style backend reward policy, or adjust it
   toward canonical UCB1.

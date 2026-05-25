@@ -404,6 +404,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lineage diversity, recency, novelty, and score-conditioned inspiration
     sampling.
 
+- [x] Add workspace-aware MAP-Elites descriptors to diversity/search work.
+  - Evidence: `MAPElites._cell()` computes complexity and TF-IDF diversity from
+    `Program.code`, which is only the primary-file view for workspace
+    candidates.
+  - Current roadmap gap: diversity work called for better measures generally,
+    but not the distinct mismatch that multi-file candidates are archived by a
+    single-file projection.
+  - Required result: compute descriptors from canonical workspace contents or
+    evaluator-provided behavior descriptors, persist descriptor values, and
+    test non-primary file changes affecting cells and inspiration sampling.
+
 - [x] Expand "training-data export" into a concrete ThetaEvolve/GRPO boundary.
   - Evidence: `ROADMAP.md:98-99` mentions downstream RL fine-tuning around
     `ttt_rl`, while the current plugin only writes JSONL and does not train.

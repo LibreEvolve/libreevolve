@@ -430,10 +430,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     user-chosen dimensions of variation to illuminate high-performing
     solutions across a behavior space.
   - Current evidence: `MAPElites` hard-codes performance, code length, and
-    TF-IDF char-4gram diversity as dimensions.
+    TF-IDF char-4gram diversity as dimensions. For multi-file candidates, code
+    length and diversity are computed from `Program.code`, the primary-file
+    compatibility view, not the full candidate workspace.
   - Missing: user-configurable behavior descriptors, phenotype/behavior
-    descriptors from evaluator metadata, and diagnostics that show the
-    illuminated search space rather than only best/archive cells.
+    descriptors from evaluator metadata, workspace-aware descriptors, and
+    diagnostics that show the illuminated search space rather than only
+    best/archive cells.
 
 - [ ] Document UCB1 as a heuristic adaptation or adjust it toward canonical
   UCB1.

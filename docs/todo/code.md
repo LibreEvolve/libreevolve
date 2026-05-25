@@ -563,6 +563,22 @@ Primary evidence:
     define feedback metric schemas, and test minimize/out-of-range/non-finite
     secondary and feedback metrics.
 
+- [ ] Make MAP-Elites descriptors workspace-aware.
+  - Spec evidence: AlphaEvolve can evolve whole files/codebases, and
+    MAP-Elites-style quality-diversity search should map the candidate being
+    evolved, not just a compatibility projection of one primary file.
+  - Current evidence: `MAPElites._norm_complexity()` and `_diversity()` accept
+    `code: str`; `_cell()` passes `Program.code`, which is the primary-file
+    compatibility view. For multi-file candidates, helper modules, generated
+    support files, and non-primary evolved components do not affect complexity
+    or TF-IDF diversity cells, and `sample_diverse()` can treat candidates with
+    very different workspaces as equivalent if their primary files match.
+  - Required result: define workspace-level descriptor inputs, such as
+    canonicalized file paths plus contents and evaluator-provided behavior
+    descriptors; compute complexity/diversity over the full candidate or
+    configured descriptor set; persist descriptor values; and add tests where
+    non-primary file changes alter archive cells and inspiration sampling.
+
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and
   lineage.

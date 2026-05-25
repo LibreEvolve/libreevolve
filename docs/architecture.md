@@ -210,7 +210,9 @@ Population state is split across:
 
 `MAPElites` maps programs into a 3D grid using normalized performance, code
 length, and TF-IDF char-4gram diversity. Performance bounds now use the
-problem's normalized `0..1` fitness scale.
+problem's normalized `0..1` fitness scale. For workspace candidates,
+complexity and TF-IDF diversity still use `Program.code`, the primary-file
+compatibility view, rather than a canonical full-workspace representation.
 
 Archive cells, descriptor values, island assignment, elite snapshots, and
 migration events are in-memory runtime state today. `history.jsonl` logs

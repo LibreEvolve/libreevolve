@@ -189,6 +189,9 @@ remains open.
 Run history logs candidates, but archive cell/island state and migration events
 are not persisted as replayable MAP-Elites state yet.
 
+For workspace candidates, MAP-Elites complexity and TF-IDF diversity descriptors
+currently use the primary-file view, not the full candidate file set.
+
 ## Example Runs
 
 ### Evolving a Greeting Function

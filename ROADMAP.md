@@ -60,6 +60,8 @@ is not yet an AlphaEvolve reproduction.
   composition, metric-specific elites, or a documented hybrid.
 - Sample parents/inspirations by score, individual metric excellence, diversity,
   novelty, feedback, lineage, and recency.
+- Make MAP-Elites descriptors workspace-aware instead of using only the
+  primary-file compatibility view for complexity/diversity.
 - Expose metric-vector archive diagnostics in run artifacts and `show`.
 
 ### 3. Expand evaluation cascades

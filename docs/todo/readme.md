@@ -337,6 +337,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Required result: warn readers that current run history is not a replayable
     archive checkpoint or migration event log.
 
+- [x] Clarify MAP-Elites descriptors use the primary-file view for workspaces.
+  - README evidence: README advertises workspace candidates and a MAP-Elites
+    archive, but did not state that archive complexity/diversity descriptors
+    are still based on `Program.code`.
+  - Current evidence: `MAPElites._cell()` uses `Program.code`; for multi-file
+    candidates this is the primary-file compatibility view, so non-primary
+    helper files do not affect code length or TF-IDF diversity cells.
+  - Required result: warn readers that current quality-diversity descriptors
+    are not yet full-workspace aware.
+
 - [x] Clarify feedback graders are primary-file-only for workspaces.
   - README evidence: the feature list says feedback graders can add metrics or
     discard candidates, but did not mention the current prompt only includes

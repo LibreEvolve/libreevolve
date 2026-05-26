@@ -1,21 +1,6 @@
 name: Tests
 
 on:
-  push:
-    branches:
-      - master
-      - main
-    paths-ignore:
-      - "docs/**"
-      - "papers/**"
-      - "README.md"
-      - "ROADMAP.md"
-  pull_request:
-    paths-ignore:
-      - "docs/**"
-      - "papers/**"
-      - "README.md"
-      - "ROADMAP.md"
   workflow_dispatch:
 
 concurrency:

@@ -713,6 +713,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording separates current identity provenance from AlphaEvolve-grade
     fixed-budget memory over previously explored programs.
 
+- [ ] Keep discovery-distance roadmap wording scoped until initial-pool
+      divergence reports exist.
+  - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
+    can produce candidates substantially different from the initial candidate
+    pool in syntax and function.
+  - Current evidence: `ROADMAP.md` can claim candidate lineage, workspace
+    hashes, changed files, archive descriptor/novelty views, and proposal
+    metadata. It does not yet promise or evidence initial-pool syntactic or
+    functional-distance reports.
+  - Required result: when initial-pool divergence reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with seed-pool comparison
+    baselines, syntax/code distance, changed-component summaries,
+    metric/behavioral distance, and functional-difference artifacts before
+    using AlphaEvolve-style discovery-distance claims.
+
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both

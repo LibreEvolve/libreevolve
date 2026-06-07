@@ -913,6 +913,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with canonical hash scope, evaluator/config cache-key semantics,
     hit/miss/re-evaluation telemetry, replay behavior, and budget accounting.
 
+- [ ] Keep README discovery-distance wording scoped until initial-pool
+      divergence evidence exists.
+  - Spec evidence: AlphaEvolve's introduction says evolution can discover
+    candidates substantially different from the initial candidate pool in both
+    syntax and function.
+  - Current evidence: README can describe lineage, workspace hashes, changed
+    files, novelty/descriptor sampling, proposal metadata, and retained
+    metrics. It should not imply that retained programs have been measured
+    against every initial-pool candidate for syntactic or functional distance.
+  - Required result: when initial-pool divergence reports land, update README,
+    ROADMAP, papers index, and code/paper TODO entries together with
+    seed-pool baselines, syntax-distance metrics, changed-component summaries,
+    metric/behavior distance, and task-specific functional-difference evidence.
+
 - [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
   - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able
     to reuse failed-proposal evidence across runs through durable, searchable,

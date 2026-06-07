@@ -882,6 +882,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
+- [ ] Track initial-pool syntactic and functional divergence evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction.
+  - Requirement: AlphaEvolve says LLMs responding to feedback can discover
+    candidates substantially different from the initial candidate pool in both
+    syntax and function.
+  - Partial status: LibreEvolve records parent lineage, workspace hashes,
+    changed files, proposal metadata, archive descriptors/novelty, and retained
+    candidate metrics.
+  - Current gap: paper-facing reports do not compare final or retained
+    candidates against the seed/initial-pool programs. There is no syntactic
+    distance, component-change, behavior-vector distance, evaluator-output
+    distance, or task-specific functional-difference evidence proving that
+    accepted candidates moved substantially away from the starting pool.
+  - Required result: add paper-visible divergence reports with initial-pool
+    baselines, syntax/code distance, changed-component summaries,
+    metric/behavioral distance, and functional-difference artifacts before
+    using AlphaEvolve-style discovery-distance wording.
+
 - [ ] Track source/workspace deduplication and evaluation-cache evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
   - Requirement: AlphaEvolve's generated-program database stores previously

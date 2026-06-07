@@ -1277,6 +1277,20 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
+- [ ] Add initial-pool syntactic and functional divergence reporting.
+  - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
+    enables discovery of candidates that are substantially different from the
+    initial candidate pool in both syntax and function.
+  - Current evidence: candidates retain parent ids, workspace hashes, changed
+    files, archive novelty/descriptors, proposal metadata, and current-run
+    resurfacing views. Those records can show ancestry and local novelty, but
+    they do not compute or report distance from the initial candidate pool.
+  - Required result: add versioned run/report fields that compare retained
+    candidates against all seed/initial-pool programs with syntactic distance
+    measures, changed component summaries, behavior/metric-vector distance, and
+    evaluator-output or task-specific functional-difference evidence before
+    claiming AlphaEvolve-style discovery distance from the starting pool.
+
 - [ ] Add source/workspace deduplication and evaluation-cache policy.
   - Spec evidence: AlphaEvolve Section 2.5 describes a growing evolutionary
     database of generated solutions with scores and program outputs attached,

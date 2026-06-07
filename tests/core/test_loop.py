@@ -2769,6 +2769,10 @@ def test_loop_records_normalized_metrics_and_selection_score():
     assert hypothesis_index["schema"] == "libreevolve.hypothesis_index.v1"
     assert hypothesis_index["program_count_considered"] == 0
     assert hypothesis_index["programs"] == []
+    artifact_index = manifest["runtime"]["history"]["artifact_index"]
+    assert artifact_index["schema"] == "libreevolve.artifact_index.v1"
+    assert artifact_index["program_count_considered"] == 0
+    assert artifact_index["programs"] == []
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

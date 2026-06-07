@@ -9641,6 +9641,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused database and loop tests cover the feedback index API
     and manifest persistence.
 
+- [x] Add paper-visible evaluator artifact index evidence.
+  - Paper evidence: AlphaEvolve-style program databases resurface previously
+    explored programs using rich evidence, so evaluator-produced artifacts
+    should be inspectable from completed run artifacts and available to
+    resurfacing heuristics.
+  - Status: completed runtime manifests now persist
+    `runtime.history.artifact_index`, a bounded view over copied evaluator
+    artifacts with path/hash, byte-count, redaction, skipped-file, stage, and
+    bounded content-excerpt summaries. Valid artifact-bearing programs now feed
+    an `artifact` source into `runtime.history.resurfacing_index`.
+  - Remaining paper gap: this remains diagnostic manifest evidence, not a
+    paper-faithful durable program database, full artifact-content index,
+    semantic artifact search layer, or replayable artifact-driven sampling
+    policy.
+  - Verification: focused database and loop tests cover manifest evidence,
+    artifact-index records, and resurfacing source fusion.
+
 - [x] Add paper-visible score-index manifest evidence.
   - Paper evidence: AlphaEvolve-style databases resurface high-performing
     historical programs under exploration/exploitation policies, so ranked

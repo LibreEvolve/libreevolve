@@ -14440,6 +14440,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused database and loop tests cover direct score-index
     content and final manifest persistence.
 
+- [x] Add runtime artifact index for evaluator artifact evidence.
+  - Spec evidence: AlphaEvolve-style program databases need candidate evidence
+    to be queryable by more than scalar score, including artifacts produced by
+    evaluators.
+  - Status: completed runtime manifests now persist
+    `runtime.history.artifact_index`, a bounded per-program view over
+    `evaluation.metadata.artifacts.files` with program id, lineage root,
+    validity, generation, selection score, fitness, collection/stage metadata,
+    retained artifact paths, byte counts, stored SHA-256 hashes, redaction
+    status, skipped-artifact diagnostics, and bounded redacted content-excerpt
+    summaries. Valid artifact-bearing programs now contribute an `artifact`
+    source to `runtime.history.resurfacing_index`.
+  - Remaining gap: this is manifest-visible bounded metadata, not a durable
+    cross-run artifact database, full artifact-content index, semantic artifact
+    search layer, or schema-migration-backed replay policy.
+  - Verification: focused database and loop tests cover the artifact index API,
+    resurfacing contribution, and manifest persistence.
+
 - [x] Declare configured timeout quarantine in runtime cancellation policy.
   - Spec evidence: AlphaEvolve-style long-running LLM controllers need timeout
     handling to be attributable to explicit retry, fallback, quarantine, and

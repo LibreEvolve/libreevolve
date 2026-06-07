@@ -690,14 +690,18 @@ Primary evidence:
     sources, persists `runtime.history.failure_index` grouped by failure
     fingerprint/repetition evidence, persists `runtime.history.hypothesis_index`
     for bounded redacted proposal idea/rationale/hypothesis summaries, includes
-    hypothesis evidence in `resurfacing_index`, and can restore cells/elites
-    from a manifest plus accepted history bundle. However, these are still
-    append-only logs plus an in-memory archive and manifest-visible rebuilt
-    indexes, not a persisted query/index database. There is no durable index
-    over full metric vectors, feedback embeddings/full-text ranking, cross-run
-    failure fingerprints, full lineage subgraphs, semantic/cross-run
-    hypotheses, artifacts, retrieval context, or novelty; the resurfacing index
-    is deterministic rank fusion over bounded current-history views, and
+    hypothesis evidence in `resurfacing_index`, persists
+    `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,
+    redaction, skipped-file, stage, and content-excerpt evidence, includes valid
+    artifact-bearing candidates in `resurfacing_index`, and can restore
+    cells/elites from a manifest plus accepted history bundle. However, these
+    are still append-only logs plus an in-memory archive and manifest-visible
+    rebuilt indexes, not a persisted query/index database. There is no durable
+    index over full metric vectors, feedback embeddings/full-text ranking,
+    cross-run failure fingerprints, full lineage subgraphs, semantic/cross-run
+    hypotheses, full artifact content, retrieval context, or novelty; the
+    resurfacing index is deterministic rank fusion over bounded current-history
+    views, and
     `load_accepted_history_index()` remains an id map for restore/query
     scaffolding rather than a ranked cross-run database. The compact `show`
     path intentionally rejects mixed legacy/current history schemas with a

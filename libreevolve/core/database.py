@@ -100,6 +100,10 @@ _MAX_FAILURE_INDEX_FINGERPRINTS = 50
 _MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT = 5
 _MAX_HYPOTHESIS_INDEX_PROGRAMS = 50
 _MAX_HYPOTHESIS_INDEX_TEXT_CHARS = 300
+_MAX_ARTIFACT_INDEX_PROGRAMS = 50
+_MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM = 10
+_MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM = 10
+_MAX_ARTIFACT_INDEX_TEXT_CHARS = 300
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -702,6 +706,14 @@ class ProgramDatabase:
         return _hypothesis_index_snapshot(
             self._all,
             limit=_MAX_HYPOTHESIS_INDEX_PROGRAMS,
+        )
+
+    def artifact_index_snapshot(self) -> dict:
+        return _artifact_index_snapshot(
+            self._all,
+            program_limit=_MAX_ARTIFACT_INDEX_PROGRAMS,
+            files_per_program_limit=_MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM,
+            skipped_per_program_limit=_MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM,
         )
 
     def resurface_candidates(
@@ -2809,13 +2821,23 @@ def _resurfacing_index_snapshot(
     for rank, record in enumerate(hypothesis["programs"]):
         add_source("hypothesis", "proposal_hypothesis", rank, record, 0.55)
 
+    artifact = _artifact_index_snapshot(
+        programs,
+        program_limit=limit,
+        files_per_program_limit=_MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM,
+        skipped_per_program_limit=_MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM,
+    )
+    for rank, record in enumerate(artifact["programs"]):
+        if record.get("evaluation_is_valid") is True:
+            add_source("artifact", "evaluator_artifacts", rank, record, 0.45)
+
     ranked = sorted(records.values(), key=_resurfacing_index_sort_key)
     retained = ranked[:limit]
     return {
         "schema": "libreevolve.resurfacing_index.v1",
         "policy": (
             "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
-            "descriptor_feedback_hypothesis_indexes"
+            "descriptor_feedback_hypothesis_artifact_indexes"
         ),
         "metric_order": [
             name for name in metric_order if isinstance(name, str) and name
@@ -3158,6 +3180,226 @@ def _hypothesis_index_sort_key(record: dict) -> tuple:
         -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
         str(program_id) if isinstance(program_id, str) else "",
     )
+
+
+def _artifact_index_snapshot(
+    programs: list[Program],
+    *,
+    program_limit: int,
+    files_per_program_limit: int,
+    skipped_per_program_limit: int,
+) -> dict:
+    candidates = [
+        record
+        for program in programs
+        if (
+            record := _artifact_index_program(
+                program,
+                files_per_program_limit=files_per_program_limit,
+                skipped_per_program_limit=skipped_per_program_limit,
+            )
+        )
+        is not None
+    ]
+    candidates.sort(key=_artifact_index_sort_key)
+    retained = candidates[:program_limit]
+    return {
+        "schema": "libreevolve.artifact_index.v1",
+        "policy": "top_programs_with_evaluator_artifact_evidence",
+        "program_count_considered": len(candidates),
+        "retained_count": len(retained),
+        "program_retention_limit": program_limit,
+        "file_retention_limit": files_per_program_limit,
+        "skipped_retention_limit": skipped_per_program_limit,
+        "programs": retained,
+        "limitations": [
+            "runtime_manifest_artifact_index_not_cross_run_database_table",
+            "bounded_artifact_metadata_not_full_artifact_content_search",
+            "uses_evaluation_metadata_artifacts_only",
+            "rebuilt_from_current_runtime_history_records",
+        ],
+    }
+
+
+def _artifact_index_program(
+    program: Program,
+    *,
+    files_per_program_limit: int,
+    skipped_per_program_limit: int,
+) -> dict | None:
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    metadata = evaluation.get("metadata")
+    if not isinstance(metadata, Mapping):
+        return None
+    artifacts = metadata.get("artifacts")
+    if not isinstance(artifacts, Mapping):
+        return None
+    raw_files = artifacts.get("files")
+    if not isinstance(raw_files, list) or not raw_files:
+        return None
+    files = [
+        record
+        for item in raw_files[:files_per_program_limit]
+        if (record := _artifact_index_file_record(item)) is not None
+    ]
+    if not files:
+        return None
+    raw_skipped = artifacts.get("skipped")
+    skipped = []
+    if isinstance(raw_skipped, list):
+        skipped = [
+            record
+            for item in raw_skipped[:skipped_per_program_limit]
+            if (record := _artifact_index_skipped_record(item)) is not None
+        ]
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "evaluation_is_valid": evaluation.get("is_valid") is True,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+        "artifact_count": len(raw_files),
+        "retained_file_count": len(files),
+        "file_retention_limit": files_per_program_limit,
+        "files": files,
+    }
+    collection_id = artifacts.get("collection_id")
+    if isinstance(collection_id, str) and collection_id:
+        record["collection_id"] = _artifact_index_string(collection_id)
+    artifact_dir_name = artifacts.get("artifact_dir_name")
+    if isinstance(artifact_dir_name, str) and artifact_dir_name:
+        record["artifact_dir_name"] = _artifact_index_string(artifact_dir_name)
+    total_bytes = artifacts.get("total_bytes")
+    if _is_non_negative_int(total_bytes):
+        record["total_bytes"] = int(total_bytes)
+    skipped_count = len(raw_skipped) if isinstance(raw_skipped, list) else 0
+    if skipped_count:
+        record["skipped_count"] = skipped_count
+        record["retained_skipped_count"] = len(skipped)
+        record["skipped_retention_limit"] = skipped_per_program_limit
+        record["skipped"] = skipped
+    stage = _artifact_index_stage_record(artifacts.get("stage"))
+    if stage:
+        record["stage"] = stage
+    admission = _history_safe_archive_admission_summary(program)
+    if admission:
+        record["archive_admission"] = admission
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _artifact_index_file_record(item: object) -> dict | None:
+    if not isinstance(item, Mapping):
+        return None
+    record: dict[str, object] = {}
+    for source, target in (
+        ("path", "path"),
+        ("artifact_path", "artifact_path"),
+        ("artifact_path_root", "artifact_path_root"),
+        ("artifact_relative_path", "artifact_relative_path"),
+        ("redaction_status", "redaction_status"),
+        ("content_excerpt_policy", "content_excerpt_policy"),
+        ("content_excerpt_status", "content_excerpt_status"),
+        ("stage_name", "stage_name"),
+    ):
+        value = item.get(source)
+        if isinstance(value, str) and value:
+            record[target] = _artifact_index_string(value)
+    for source, target in (
+        ("bytes", "bytes"),
+        ("source_bytes", "source_bytes"),
+        ("sample_index", "sample_index"),
+        ("attempt", "attempt"),
+        ("content_excerpt_chars", "content_excerpt_chars"),
+        ("content_excerpt_max_chars", "content_excerpt_max_chars"),
+    ):
+        value = item.get(source)
+        if _is_non_negative_int(value):
+            record[target] = int(value)
+    sha256 = item.get("sha256")
+    if _is_sha256_hex(sha256):
+        record["sha256"] = sha256
+    for field in ("redacted", "content_excerpt_truncated"):
+        value = item.get(field)
+        if isinstance(value, bool):
+            record[field] = value
+    excerpt = item.get("content_excerpt")
+    if isinstance(excerpt, str) and excerpt:
+        record["content_excerpt"] = _artifact_index_text_summary(excerpt)
+    return record or None
+
+
+def _artifact_index_skipped_record(item: object) -> dict | None:
+    if not isinstance(item, Mapping):
+        return None
+    record: dict[str, object] = {}
+    for field in ("path", "reason", "message"):
+        value = item.get(field)
+        if isinstance(value, str) and value:
+            record[field] = _artifact_index_string(value)
+    for field in ("bytes", "source_bytes"):
+        value = item.get(field)
+        if _is_non_negative_int(value):
+            record[field] = int(value)
+    return record or None
+
+
+def _artifact_index_stage_record(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        return {}
+    record: dict[str, object] = {}
+    name = value.get("name")
+    if isinstance(name, str) and name:
+        record["name"] = _artifact_index_string(name)
+    for field in ("sample_index", "attempt"):
+        item = value.get(field)
+        if _is_non_negative_int(item):
+            record[field] = int(item)
+    return record
+
+
+def _artifact_index_text_summary(value: str) -> dict:
+    redacted = redact_sensitive_text(value)
+    preview = redacted[:_MAX_ARTIFACT_INDEX_TEXT_CHARS]
+    return {
+        "policy": "bounded_redacted_artifact_excerpt_v1",
+        "chars": len(value),
+        "sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
+        "preview": preview,
+        "preview_chars": len(preview),
+        "truncated": len(redacted) > _MAX_ARTIFACT_INDEX_TEXT_CHARS,
+        "redacted": redacted != value,
+    }
+
+
+def _artifact_index_string(value: str) -> str:
+    return redact_sensitive_text(value)[:_MAX_ARTIFACT_INDEX_TEXT_CHARS]
+
+
+def _artifact_index_sort_key(record: dict) -> tuple:
+    artifact_count = record.get("artifact_count")
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    return (
+        -(int(artifact_count) if _is_non_negative_int(artifact_count) else 0),
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
+
+
+def _is_non_negative_int(value: object) -> bool:
+    return not isinstance(value, bool) and isinstance(value, int) and value >= 0
 
 
 def _program_lineage_root_id(program: Program) -> str:

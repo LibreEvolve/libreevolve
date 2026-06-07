@@ -383,8 +383,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     MAP-Elites cell replacement is still scalar, metric-specific cell
     replacement is not implemented, and durable queryable multi-objective
     resurfacing across persisted database tables, embeddings, cross-run failure
-    and hypothesis indexes, full lineage subgraphs, and schema migrations
-    remains open.
+    and hypothesis indexes, full artifact-content indexes, full lineage
+    subgraphs, and schema migrations remains open. `runtime.history.artifact_index`
+    now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
+    stage, and content-excerpt evidence, and valid artifact-bearing candidates
+    feed into `resurfacing_index`.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.
 

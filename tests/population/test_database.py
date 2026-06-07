@@ -873,6 +873,124 @@ def test_hypothesis_index_snapshot_reports_captured_proposals(tmp_path):
     assert invalid.id not in surfaced
 
 
+def test_artifact_index_snapshot_reports_evaluator_artifact_evidence(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    strong = Program(
+        id="strong-artifact",
+        code="x = 1\n",
+        fitness=0.9,
+        evaluation={
+            "is_valid": True,
+            "metadata": {
+                "artifacts": {
+                    "collection_id": "abc123",
+                    "artifact_dir_name": "evaluator_artifacts",
+                    "total_bytes": 17,
+                    "stage": {"name": "validate", "sample_index": 0, "attempt": 1},
+                    "files": [
+                        {
+                            "path": "reports/result.json",
+                            "artifact_path": "evaluator_artifacts/abc123/reports/result.json",
+                            "artifact_path_root": "artifact_dir_parent",
+                            "artifact_relative_path": "abc123/reports/result.json",
+                            "bytes": 17,
+                            "source_bytes": 17,
+                            "sha256": hashlib.sha256(b'{"ok": true}').hexdigest(),
+                            "redacted": False,
+                            "redaction_status": "unchanged",
+                            "stage_name": "validate",
+                            "sample_index": 0,
+                            "attempt": 1,
+                            "content_excerpt_policy": "stored_utf8_artifact_excerpt_v1",
+                            "content_excerpt_status": "included",
+                            "content_excerpt": '{"ok": true}',
+                            "content_excerpt_chars": 12,
+                            "content_excerpt_truncated": False,
+                            "content_excerpt_max_chars": 2000,
+                        }
+                    ],
+                    "skipped": [{"path": "large.bin", "reason": "max_bytes"}],
+                }
+            },
+        },
+        metadata={"selection_score": 0.9},
+    )
+    invalid = Program(
+        id="invalid-artifact",
+        code="x = 2\n",
+        fitness=1.0,
+        evaluation={
+            "is_valid": False,
+            "metadata": {
+                "artifacts": {
+                    "files": [
+                        {
+                            "path": "invalid.txt",
+                            "artifact_path": "evaluator_artifacts/def/invalid.txt",
+                            "bytes": 7,
+                            "sha256": hashlib.sha256(b"invalid").hexdigest(),
+                        }
+                    ]
+                }
+            },
+        },
+        metadata={"selection_score": 1.0},
+    )
+    no_artifacts = Program(
+        id="no-artifact",
+        code="x = 3\n",
+        fitness=0.1,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.1},
+    )
+    for candidate in (no_artifacts, invalid, strong):
+        db.log(candidate)
+
+    snapshot = db.artifact_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.artifact_index.v1"
+    assert snapshot["policy"] == "top_programs_with_evaluator_artifact_evidence"
+    assert snapshot["program_count_considered"] == 2
+    assert [program["program_id"] for program in snapshot["programs"]] == [
+        invalid.id,
+        strong.id,
+    ]
+    strong_record = {
+        program["program_id"]: program for program in snapshot["programs"]
+    }[strong.id]
+    assert strong_record["collection_id"] == "abc123"
+    assert strong_record["stage"] == {
+        "name": "validate",
+        "sample_index": 0,
+        "attempt": 1,
+    }
+    assert strong_record["artifact_count"] == 1
+    assert strong_record["retained_file_count"] == 1
+    assert strong_record["skipped"] == [{"path": "large.bin", "reason": "max_bytes"}]
+    file_record = strong_record["files"][0]
+    assert file_record["path"] == "reports/result.json"
+    assert file_record["artifact_relative_path"] == "abc123/reports/result.json"
+    assert file_record["sha256"] == hashlib.sha256(b'{"ok": true}').hexdigest()
+    assert file_record["content_excerpt"] == {
+        "policy": "bounded_redacted_artifact_excerpt_v1",
+        "chars": 12,
+        "sha256": hashlib.sha256(b'{"ok": true}').hexdigest(),
+        "preview": '{"ok": true}',
+        "preview_chars": 12,
+        "truncated": False,
+        "redacted": False,
+    }
+
+    resurfacing = db.resurfacing_index_snapshot()
+    surfaced = {
+        record["program_id"]: record for record in resurfacing["programs"]
+    }
+    assert {
+        source["source"] for source in surfaced[strong.id]["sources"]
+    } >= {"score", "artifact"}
+    assert invalid.id not in surfaced
+
+
 def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     top = Program(

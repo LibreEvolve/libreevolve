@@ -229,6 +229,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes report-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
+- [ ] Keep README matrix wording scoped to coefficient-domain validation until
+      scalar-field evidence exists.
+  - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix
+    algorithms use complex-valued multiplications and can be used for exact
+    multiplication of complex or real-valued matrices, while Section 3.1
+    contrasts characteristic-0 and finite-field-only results.
+  - Current evidence: README describes matrix-result fields for coefficient
+    domain and exactness, plus Appendix A target identity and checked Strassen
+    baseline artifacts. It does not yet document scalar-field metadata,
+    exact complex coefficient representation, characteristic/applicability
+    claims, or certificate scope for real-versus-complex multiplication.
+  - Required result: when matrix reports and certificates record scalar field,
+    complex coefficient data, characteristic, and applicability evidence,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README does not imply coefficient-domain validation is sufficient for
+    AlphaEvolve-style complex-valued matrix result claims.
+
 - [ ] Keep README certification and systems-result wording scoped to report
   contracts versus executed independent evidence.
   - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local

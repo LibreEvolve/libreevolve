@@ -623,7 +623,10 @@ Implemented:
   the report exists; it does not yet emit search-time prompt/evaluator evidence
   that candidates were instructed to produce near-integral decompositions,
   rounded to integer or half-integer coefficients, and linked to exactness
-  certificates as in AlphaEvolve Section 3.1.
+  certificates as in AlphaEvolve Section 3.1. Its coefficient-domain field also
+  does not yet encode scalar-field provenance for complex-valued algorithms,
+  field characteristic, or certificate scope for exact real/complex
+  applicability.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

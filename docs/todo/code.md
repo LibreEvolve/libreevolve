@@ -1416,6 +1416,28 @@ Primary evidence:
     evidence before treating matrix search runs as aligned with the Section
     3.1 near-integrality workflow.
 
+- [ ] Add matrix scalar-field provenance for real, complex, and characteristic
+      claims.
+  - Spec evidence: AlphaEvolve Section 3.1 and Table 2 report exact tensor
+    decompositions for matrix multiplication, and explicitly note that some
+    improved algorithms use complex-valued multiplications that can be used for
+    exact multiplication over complex or real-valued matrices. The paper also
+    distinguishes characteristic-0 applicability from finite-field-only
+    results.
+  - Current evidence: `libreevolve.problems.benchmarks.matrix_results`
+    validates a coarse `coefficient_domain` value such as `integer` or
+    `half_integer` for AlphaEvolve-comparable reports, plus exactness and
+    artifact requirements. It does not model the scalar field or semiring over
+    which the decomposition is valid, whether coefficients are real or complex
+    with exact real/imaginary parts, whether a result is characteristic-0
+    versus finite-field-specific, or whether the certificate proves real and
+    complex matrix multiplication applicability separately.
+  - Required result: extend matrix benchmark/report metadata and certificate
+    validation with scalar-field/domain declarations, exact complex-coefficient
+    representation, characteristic/applicability claims, and verifier evidence
+    tying each claim to the target tensor before treating matrix reports as
+    faithful to AlphaEvolve's complex-valued Appendix A results.
+
 - [ ] Connect real systems fixtures to held-out and reference-correctness
   evidence.
   - Spec evidence: AlphaEvolve's engineering applications do not rely only on

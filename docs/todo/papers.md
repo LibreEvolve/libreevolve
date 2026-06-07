@@ -1496,6 +1496,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     diagnostics, per-seed exactness linkage, and prompt/run provenance before
     claiming AlphaEvolve Section 3.1 matrix-search parity.
 
+- [ ] Track matrix scalar-field evidence for complex-valued Appendix A claims.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 says some improved
+    matrix algorithms, including selected Appendix A targets, use
+    complex-valued multiplications and can be used for exact multiplication of
+    complex or real-valued matrices. Section 3.1 also contrasts the
+    characteristic-0 rank-48 result with finite-field-only prior work.
+  - Current evidence: the matrix-result report contract validates target
+    identity, dimensions, best rank, seed hit fraction, exactness status,
+    coefficient domain, and algorithm/certificate/notebook artifacts. Its
+    `coefficient_domain` values do not record scalar field, complex
+    coefficient representation, field characteristic, real-versus-complex
+    applicability, or certificate scope for those claims.
+  - Required result: add paper/report evidence for scalar field, exact complex
+    coefficient data, characteristic/applicability claims, and certificate
+    verification scope before claiming AlphaEvolve-comparable complex-valued
+    matrix results.
+
 - [ ] Generate independent certification evidence for paper-level result
   claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

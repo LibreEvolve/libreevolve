@@ -738,13 +738,42 @@ class ProgramDatabase:
         )
 
     def resurface_candidates(
-        self, k: int, exclude_ids: set[str] | None = None
+        self,
+        k: int,
+        exclude_ids: set[str] | None = None,
+        *,
+        target_metric: str | None = None,
     ) -> list[Program]:
         k = validate_sample_count(k, "database resurfacing count")
         exclude_ids = validate_exclude_ids(exclude_ids, "database resurfacing exclude_ids")
+        target_metric = _validate_resurfacing_target_metric(
+            target_metric,
+            self._objective_metric_order,
+        )
         if k <= 0:
             return []
         programs_by_id = {program.id: program for program in self._all}
+        if target_metric is not None:
+            snapshot = _objective_metric_archives_snapshot(
+                self._all,
+                self._objective_metric_order,
+                limit=max(k + len(exclude_ids), _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS),
+            )
+            surfaced = []
+            for archive in snapshot["archives"]:
+                if archive["metric"] != target_metric:
+                    continue
+                for record in archive["programs"]:
+                    program_id = record["program_id"]
+                    if program_id in exclude_ids:
+                        continue
+                    program = programs_by_id.get(program_id)
+                    if program is not None:
+                        surfaced.append(_program_snapshot(program))
+                    if len(surfaced) >= k:
+                        return surfaced
+                return surfaced
+            return []
         snapshot = _resurfacing_index_snapshot(
             self._all,
             self._objective_metric_order,
@@ -3268,6 +3297,25 @@ def validate_resurfacing_index_summary(index: object) -> dict:
         "metric_order": metric_order,
         "issues": issues,
     }
+
+
+def _validate_resurfacing_target_metric(
+    target_metric: object,
+    metric_order: list[str],
+) -> str | None:
+    if target_metric is None:
+        return None
+    if not isinstance(target_metric, str) or not target_metric:
+        raise ValueError("database resurfacing target_metric must be a declared metric")
+    try:
+        validate_program_metrics({target_metric: 0.0})
+    except ValueError as exc:
+        raise ValueError(
+            "database resurfacing target_metric must be a declared metric"
+        ) from exc
+    if target_metric not in metric_order:
+        raise ValueError("database resurfacing target_metric must be a declared metric")
+    return target_metric
 
 
 def _resurfacing_program_record(program: Program) -> dict:

@@ -15346,3 +15346,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     provider-output replay.
   - Verification: focused budget tests cover LLM provider-attempt, token,
     configured-cost, and latency replay plus snapshot-drift rejection.
+
+- [x] Add declared-metric targeted candidate resurfacing.
+  - Spec evidence: AlphaEvolve-style multi-score search should be able to
+    resurface candidates that excel on a chosen user-provided metric, not only
+    the globally fused score/index view.
+  - Status: `ProgramDatabase.resurface_candidates(target_metric=...)` now
+    queries declared objective metric archives and returns defensive ranked
+    program snapshots for the requested metric while rejecting undeclared or
+    unsafe metric targets.
+  - Remaining gap: this is run-local archive-backed resurfacing; it does not
+    make the primary MAP-Elites grid use Pareto/frontier replacement or create
+    a persisted cross-run multi-objective database table.
+  - Verification: focused database tests cover metric-targeted resurfacing,
+    exclusion handling, defensive copies, and unknown target rejection.

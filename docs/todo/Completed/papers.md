@@ -10214,3 +10214,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     replay are still outside the restored controller budget proof.
   - Verification: focused budget tests cover valid LLM usage replay and
     malformed snapshot drift.
+
+- [x] Add paper-visible declared-metric targeted resurfacing.
+  - Paper evidence: AlphaEvolve Section 2.4 uses multiple user-provided scores
+    and can draw inspirations from programs that are strong under different
+    criteria.
+  - Status: `ProgramDatabase.resurface_candidates(target_metric=...)` now
+    exposes run-local declared-metric queries over objective metric archives,
+    returning defensive ranked program snapshots and rejecting undeclared
+    metric targets.
+  - Remaining paper gap: primary archive replacement is still scalar, and
+    durable cross-run multi-objective database resurfacing remains absent.
+  - Verification: focused database tests cover metric-targeted resurfacing and
+    invalid target rejection.

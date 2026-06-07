@@ -1224,6 +1224,9 @@ Important behavior:
   descriptor, feedback, hypothesis, and artifact indexes. Records deduplicate
   by program id and include source ranks/contributions, lineage root, selection
   score, fitness, archive-admission summary, and available objective evidence.
+  `ProgramDatabase.resurface_candidates(target_metric=...)` can query the same
+  run-local objective metric archives for defensive snapshots of programs that
+  excel on one declared metric, while rejecting undeclared metric targets.
   This makes
   resurfacing decisions manifest-visible, but it is still rebuilt from current
   history records and is not a persisted database table, embedding search

@@ -1088,6 +1088,92 @@ def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
     assert db.all_programs()[1].code == "x = 2\n"
 
 
+def test_resurface_candidates_can_target_declared_objective_metric(tmp_path):
+    schema = {
+        "metrics": [
+            {
+                "name": "score",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            },
+            {
+                "name": "latency",
+                "direction": "maximize",
+                "primary": False,
+                "bounds": [0.0, 1.0],
+            },
+        ],
+        "primary_metric": "score",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 2,
+    }
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=schema,
+    )
+
+    balanced = Program(
+        id="balanced",
+        code="balanced = 1\n",
+        fitness=0.9,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.9,
+            "normalized_metrics": {"score": 0.9, "latency": 0.6},
+        },
+    )
+    latency_leader = Program(
+        id="latency-leader",
+        code="latency = 1\n",
+        fitness=0.4,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.4,
+            "normalized_metrics": {"score": 0.4, "latency": 0.98},
+        },
+    )
+    score_leader = Program(
+        id="score-leader",
+        code="score = 1\n",
+        fitness=1.0,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 1.0,
+            "normalized_metrics": {"score": 1.0, "latency": 0.1},
+        },
+    )
+    for candidate in (balanced, latency_leader, score_leader):
+        db.log(candidate)
+
+    surfaced = db.resurface_candidates(k=2, target_metric="latency")
+
+    assert [program.id for program in surfaced] == [
+        latency_leader.id,
+        balanced.id,
+    ]
+    surfaced[0].code = "mutated"
+    assert db.all_programs()[1].code == "latency = 1\n"
+    assert [
+        program.id
+        for program in db.resurface_candidates(
+            k=2,
+            target_metric="latency",
+            exclude_ids={latency_leader.id},
+        )
+    ] == [balanced.id, score_leader.id]
+
+
+def test_resurface_candidates_rejects_unknown_target_metric(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=_objective_schema(),
+    )
+
+    with pytest.raises(ValueError, match="target_metric"):
+        db.resurface_candidates(k=1, target_metric="unknown")
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(
@@ -3723,6 +3809,10 @@ def test_manifest_written():
         "provider_model_registry": "not_queried",
         "provider_service_api_version": "not_queried",
         "provider_account_availability": "not_checked",
+        "record_count": 1,
+        "records_sha256": (
+            "b1dc311e056f6adcc09881ea7250451266eff4962210b6eb04f3f1511f17e5f9"
+        ),
         "records": [
             {
                 "backend_index": 0,

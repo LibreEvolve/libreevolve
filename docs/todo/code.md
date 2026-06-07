@@ -754,12 +754,15 @@ Primary evidence:
     rejection of primary Pareto/frontier cell-replacement overclaims. Backend
     reward, admission thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
-    scalar selection score rather than Pareto/frontier dominance. Durable
-    queryable multi-objective database resurfacing remains absent.
+    scalar selection score rather than Pareto/frontier dominance.
+    `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes
+    declared-metric-targeted resurfacing over the objective metric archives,
+    returning defensive ranked program snapshots while rejecting undeclared
+    metric targets.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier primary archive replacement, and make durable
-    metric-targeted resurfacing queryable across the database rather than only
-    through bounded in-memory/archive snapshot overlays.
+    metric-targeted resurfacing queryable across persisted database tables
+    rather than only through bounded in-memory/archive snapshot overlays.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

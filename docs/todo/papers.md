@@ -450,6 +450,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     deterministic rank-fusion view over score, metric, frontier, lineage,
     descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`
     returns defensive ranked snapshots from that same source mix.
+    `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes
+    declared-metric-targeted resurfacing over the objective metric archives and
+    rejects undeclared metric targets.
     `validate_resurfacing_index_summary()` now validates that
     `libreevolve.resurfacing_index.v1` record for schema/policy, required
     limitations, counts, source contributions, source records, normalized

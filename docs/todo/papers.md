@@ -1228,6 +1228,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim
     scope mismatches, and inconsistent inventory evidence.
+    The AlphaEvolve paper-index row now describes the checked-in circle task as
+    a circle-packing smoke fixture, matching the Appendix B registry's
+    `implemented_smoke` status rather than treating it as a benchmark-grade
+    packing result.
     `write_matrix_smoke_hardening_bundle()` now emits real hardening files for
     the shipped `matrix_multiplication` smoke fixture: negative-fixture JSON,
     detector log, hardening report, artifact inventory, summary, and

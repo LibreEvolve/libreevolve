@@ -33,6 +33,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current manifest-visible boundary policy nor overclaims AlphaEvolve-grade
     arbitrary-language/codebase support.
 
+- [ ] Keep README seed-provenance wording scoped to source identity until
+      initial-program idea provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.1 makes the initial solution and
+    optional background knowledge part of the task specification, and Section
+    3.1 reports matrix targets where researchers seeded the initial program
+    with their own ideas, such as stochastic evaluation or evolutionary
+    approaches.
+  - Current evidence: README documents seed source safety and provenance,
+    including `seed_source_path`, `seed_source_kind`, `seed_index`,
+    `problem.seed_sources`, skipped-seed diagnostics, inline seed labels, and
+    generation-0 baselines. It does not document benchmark metadata that
+    classifies initial programs by idea origin, records injected human or
+    prior-art ideas, or compares simple/random and idea-seeded starts under a
+    benchmark report.
+  - Required result: when benchmark seed idea-origin metadata and seed-variant
+    result evidence land, update README, ROADMAP, papers index, and code/paper
+    TODO entries together so README does not imply source-path provenance is
+    sufficient for AlphaEvolve-style human-seeded collaboration claims.
+
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,

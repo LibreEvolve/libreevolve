@@ -95,6 +95,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
+- [ ] Keep roadmap seed-provenance wording scoped to source identity versus
+      experiment idea provenance.
+  - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and
+    optional background knowledge as user-provided inputs, and Section 3.1
+    reports matrix runs where researcher-supplied ideas in the initial program
+    affected performance.
+  - Current evidence: ROADMAP and README/code evidence show source-safe seed
+    ingestion and generation-0 baseline provenance, but roadmap wording does
+    not yet require benchmark seed metadata for simple/random starts versus
+    human-idea-seeded starts, injected prior techniques, or seed-variant
+    result comparisons.
+  - Required result: when benchmark seed metadata, idea-origin validation, and
+    seed-variant reports land, update roadmap, README, papers index, and
+    code/paper TODO entries together so roadmap text distinguishes source-path
+    provenance from AlphaEvolve-style human-seeded experiment provenance.
+
 - [ ] Keep workspace-topology roadmap scope aligned with current
       materialization diagnostics.
   - Spec evidence: AlphaEvolve-style codebase evolution should turn invalid

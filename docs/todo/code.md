@@ -41,6 +41,27 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
+- [ ] Add structured initial-program idea provenance for benchmark seeds.
+  - Spec evidence: AlphaEvolve Section 2.1 says the human provides the initial
+    program and optional background knowledge, while Section 3.1 reports that
+    some matrix targets improved when the initial program was seeded with
+    researcher ideas such as stochastic evaluation or evolutionary approaches.
+    That makes the seed's idea origin part of the experiment, not merely a
+    filesystem source artifact.
+  - Current evidence: LibreEvolve records safe initial-seed source provenance
+    such as `seed_source_path`, `seed_source_kind`, `seed_index`, primary file,
+    file counts, skipped seed diagnostics, and generation-0 baseline rows.
+    Those records do not classify a seed as simple, random, researcher-idea
+    seeded, prior-art-derived, or collaboration-enhanced; they do not record
+    which human idea was embedded in the initial program; and benchmark reports
+    do not compare simple versus idea-seeded starts for matrix or constructive
+    math tasks.
+  - Required result: add benchmark seed metadata and validation for initial
+    program idea origin, human/background-knowledge contribution labels,
+    declared prior technique or injected idea, prompt/run linkage, and
+    seed-variant result evidence before claiming AlphaEvolve-style
+    collaboration or human-seeded matrix benchmark parity.
+
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and

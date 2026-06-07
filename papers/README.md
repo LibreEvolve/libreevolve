@@ -192,6 +192,15 @@ retention under that cap.
 | 2602.10233 | ImprovEvolve | Modular search inspiration | Static prompt guidance exists and candidate prompt-context metadata labels it as `static_prompt_only` with `operation_selected: static_modular_guidance`, described `generate_config`/`improve`/`perturb` operation names, and false execution/enforcement flags; no enforced or executed generate/improve/perturb loop exists. |
 | 2602.15951 | MadEvolve | Domain evolution inspiration | Background only; no free-parameter optimization or innovation report. |
 
+AlphaEvolve initial-program provenance note: current manifests and history
+preserve safe seed source identity for generation-0 baselines, but they do not
+record whether a benchmark seed was simple/random, researcher-idea-seeded,
+prior-art-derived, or collaboration-enhanced. AlphaEvolve Section 3.1 reports
+matrix runs boosted by human ideas in the initial program, such as stochastic
+evaluation or evolutionary approaches; LibreEvolve needs structured
+idea-origin metadata and equal-budget seed-variant evidence before making that
+class of paper claim.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

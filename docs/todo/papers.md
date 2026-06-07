@@ -1369,6 +1369,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     once a report names them, or preventing declared hardening evidence from
     overriding the smoke-only scope registry.
 
+- [ ] Track initial-program idea provenance for human-seeded benchmark claims.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the
+    initial solution and optional background knowledge as user inputs, and
+    Section 3.1 says some matrix-multiplication runs were seeded with
+    researchers' own ideas, including adding stochasticity to the evaluation
+    function or using evolutionary approaches, which boosted performance for
+    some parameters.
+  - Current evidence: paper-facing status already distinguishes seed baselines
+    from generated candidates and preserves safe seed source paths/kinds in
+    manifests and history. That is artifact provenance, not paper-ready
+    experiment provenance: it does not state whether a benchmark seed was
+    simple/random versus researcher-idea-seeded, what prior idea or background
+    knowledge was injected, or whether results are comparable across seed
+    variants under equal budgets.
+  - Required result: add paper/report evidence for initial-program idea class,
+    human/background-knowledge contribution, prior-art or injected-idea label,
+    prompt/evaluator linkage, and equal-budget seed-variant outcomes before
+    claiming AlphaEvolve-style scientific-collaboration or human-seeded matrix
+    result parity.
+
 - [ ] Track Section 3.2 incumbent-construction handoff evidence separately
       from generic benchmark artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says many

@@ -1665,6 +1665,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     documentation that separates reproduced paper exhibits from broader
     Appendix B family coverage.
 
+- [ ] Track Appendix B figure-level construction provenance for Figures 10-14.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B presents
+    displayed construction figures beyond Figure 5: Figure 10 for Erdos
+    minimum overlap, Figure 11 for regular-hexagon packings, Figure 12 for
+    maximum/minimum-distance point sets, Figure 13 for Heilbronn variants, and
+    Figure 14 for circle and rectangle packing sum-of-radii improvements.
+  - Current gap: paper-facing Appendix B status is family/status coverage, and
+    existing TODOs require construction-data/verifier exports, aggregate
+    outcome reports, result-version provenance, and Figure 5 exhibit mapping.
+    There is no evidence row or report schema mapping Figures 10-14 to
+    figure/subfigure labels, family/parameter rows, previous/current values,
+    figure-caption values, construction payloads, visual artifact paths/hashes,
+    rendering parameters, source Colab cells/artifacts, or verifier links.
+  - Required result: add Appendix B figure-exhibit metadata with stable
+    figure/subfigure IDs, family and parameter links, previous/current metric
+    values with direction/unit, previous-best source, construction payload,
+    rendered visual/JSON artifacts with hashes, verifier/certificate links,
+    and documentation that separates appendix figure reproduction from broad
+    Appendix B family coverage and main-text Figure 5 exhibit coverage.
+
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the
     initial solution and optional background knowledge as user inputs, and

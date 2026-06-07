@@ -1640,6 +1640,28 @@ Primary evidence:
     verifier/certificate links, and docs that distinguish exhibit
     reproduction from broader Appendix B family coverage.
 
+- [ ] Add Appendix B figure-level construction provenance for Figures 10-14.
+  - Spec evidence: AlphaEvolve Appendix B includes displayed construction
+    figures beyond the main-text Figure 5 summary: Figure 10 for Erdos minimum
+    overlap, Figure 11 for regular-hexagon packings, Figure 12 for
+    maximum/minimum-distance point sets, Figure 13 for Heilbronn variants, and
+    Figure 14 for circle/rectangle packing sum-of-radii improvements.
+  - Current evidence: the Appendix B registry is family/status coverage, and
+    existing TODOs require construction-data/verifier exports, aggregate
+    outcome reports, result-version provenance, and Figure 5 exhibit mapping.
+    No code/report schema records Appendix B figure IDs, subfigure labels,
+    family/parameter links, previous/current values, figure-caption values,
+    construction payloads, visual artifact paths/hashes, rendering parameters,
+    source Colab cells/artifacts, or verifier/certificate links for
+    Figures 10-14.
+  - Required result: add report/inventory metadata for Appendix B figure-level
+    exhibits: stable figure/subfigure IDs, Appendix B family and parameter
+    links, previous/current metric values with direction/unit, previous-best
+    source, construction payload, rendered visual/JSON artifacts with hashes,
+    verifier/certificate links, and docs that distinguish Appendix B figure
+    reproduction from family-level registry coverage and main-text Figure 5
+    exhibit coverage.
+
 - [ ] Add aggregate constructive-math outcome coverage reports.
   - Spec evidence: AlphaEvolve Section 3.2 reports more than 50 mathematical
     problems across more than five branches of mathematics, with best-known

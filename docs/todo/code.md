@@ -1775,6 +1775,32 @@ Primary evidence:
     reproduction from family-level registry coverage and main-text Figure 5
     exhibit coverage.
 
+- [ ] Add Appendix B per-result metric and value provenance.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports heterogeneous
+    mathematical results: autocorrelation constants, the uncertainty constant
+    `C4`, Erdos minimum overlap, finite-set sum/difference ratios, regular
+    hexagon outer side lengths, max/min-distance ratios, Heilbronn minimum
+    areas, the dimension-11 kissing lower bound, and circle/rectangle
+    sum-of-radii values. Each section carries its own parameters, metric
+    definition, inequality direction, previous bound, new value, and source
+    citation or figure/caption linkage.
+  - Current evidence: the Appendix B registry is family/status coverage, and
+    existing TODOs require construction-data/verifier exports, aggregate
+    outcome reports, result-version provenance, Figure 5 exhibit mapping,
+    Figures 10-14 visual provenance, and the kissing-number proof certificate.
+    They do not require a normalized per-result table that binds every
+    Appendix B text-level claim to its exact metric formula or definition,
+    parameter tuple, maximize/minimize or upper/lower-bound direction, prior
+    value and source, reported AlphaEvolve value, manuscript section or figure
+    location, and verifier/construction artifact.
+  - Required result: add Appendix B result-row metadata and validators for
+    all B.1-B.13 claims: stable result ids, family/parameter rows, metric
+    names and formulas, units or bound semantics, optimization direction,
+    previous-best values and citations, AlphaEvolve reported values, source
+    section/figure/caption links, construction/verifier artifact hashes, and
+    docs that distinguish text-level numeric claim provenance from aggregate
+    outcome reports and visual figure reproduction.
+
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing
     number lower bound from 592 to 593 by finding 593 nonzero integral-coordinate

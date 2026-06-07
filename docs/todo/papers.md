@@ -1837,6 +1837,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     and documentation that separates appendix figure reproduction from broad
     Appendix B family coverage and main-text Figure 5 exhibit coverage.
 
+- [ ] Track Appendix B per-result metric and value evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.1-B.13 reports
+    heterogeneous result claims: autocorrelation constants, the uncertainty
+    constant `C4`, Erdos minimum overlap, finite-set sum/difference ratios,
+    regular-hexagon outer side lengths, max/min-distance ratios, Heilbronn
+    minimum areas, the dimension-11 kissing lower bound, and circle/rectangle
+    sum-of-radii values. These claims use different parameter tuples, metric
+    definitions, inequality directions, previous bounds, reported values, and
+    source citations or figure/caption links.
+  - Current gap: paper-facing Appendix B status is family/status coverage, and
+    existing TODOs ask for construction-data/verifier exports, aggregate
+    outcomes, result-version rows, Figure 5 and Figures 10-14 exhibit
+    mappings, and the kissing-number proof certificate. There is no normalized
+    paper-evidence table that maps each text-level Appendix B claim to its
+    metric formula or definition, parameter tuple, upper/lower or
+    maximize/minimize semantics, previous-best value and source, reported
+    AlphaEvolve value, manuscript section/figure location, and linked
+    construction/verifier artifact.
+  - Required result: add paper/report evidence for Appendix B.1-B.13 result
+    rows with stable result ids, family and parameter metadata, exact metric
+    names/formulas, units or bound semantics, optimization direction,
+    previous-best citations and values, AlphaEvolve reported values, source
+    section/figure/caption links, artifact hashes, and README/ROADMAP wording
+    that separates text-level numeric claim provenance from aggregate coverage
+    and figure reproduction.
+
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593
     nonzero integral-coordinate points in dimension 11, with maximum norm

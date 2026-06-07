@@ -1831,6 +1831,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Appendix B family coverage, main-text Figure 5 exhibits, and reproduced
     Appendix B construction figures.
 
+- [ ] Keep Appendix B roadmap wording scoped until per-result metric/value
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual
+    mathematical values across different constants, geometric objectives,
+    finite-set ratios, lower/upper bounds, prior references, parameter tuples,
+    and section/figure/caption locations.
+  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
+    describe Appendix B family/status coverage, construction/verifier export
+    gaps, aggregate constructive-math outcomes, result-version gaps, Figure 5
+    exhibit gaps, Figures 10-14 visual provenance, and the kissing-number
+    certificate gap. They do not require a normalized result-row layer that
+    maps every Appendix B text-level numeric claim to an exact metric
+    definition, parameter tuple, bound direction or optimization direction,
+    previous-best value and source, AlphaEvolve reported value, source
+    location, and construction/verifier artifact hash.
+  - Required result: when Appendix B per-result metric/value provenance lands,
+    update ROADMAP, README, papers index, and code/paper TODO entries together
+    with result-row metadata and validators so roadmap text distinguishes
+    family coverage, aggregate outcome claims, figure reproduction,
+    revised-result history, and text-level numeric claim evidence.
+
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing

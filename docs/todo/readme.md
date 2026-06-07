@@ -952,6 +952,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes family/aggregate constructive-math coverage, main-text
     Figure 5 exhibits, and Appendix B reproduced figure evidence.
 
+- [ ] Keep README Appendix B numeric-result wording scoped until per-result
+      metric/value provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.13 reports individual
+    mathematical result values with heterogeneous metric definitions,
+    parameter settings, inequality directions, prior bounds, reported values,
+    source citations, and section/figure/caption locations.
+  - Current evidence: README describes Appendix B family/status coverage,
+    construction/verifier export gaps, aggregate outcome/report gaps,
+    result-version gaps, Figure 5 exhibit gaps, and Appendix B figure gaps. It
+    does not document per-result rows tying every Appendix B text-level numeric
+    claim to exact metric formulas, parameter tuples, upper/lower or
+    maximize/minimize semantics, previous-best values and sources,
+    AlphaEvolve reported values, source locations, or artifact hashes.
+  - Required result: when Appendix B per-result metric/value provenance lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes family coverage, aggregate outcomes, figure
+    reproduction, revised-result history, and text-level Appendix B numeric
+    claim evidence.
+
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing

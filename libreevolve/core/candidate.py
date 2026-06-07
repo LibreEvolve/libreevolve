@@ -71,6 +71,21 @@ _FILE_SECTION_PATTERN = re.compile(
 )
 
 
+class CandidateMaterializationError(ValueError):
+    """Structured materialization failure for candidate workspaces."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        reason: str,
+        paths: tuple[str, ...] = (),
+    ) -> None:
+        super().__init__(message)
+        self.reason = reason
+        self.paths = paths
+
+
 @dataclass
 class CandidateWorkspace:
     """A candidate represented as a text file set.
@@ -192,9 +207,11 @@ class CandidateWorkspace:
             )
             key = os.path.normcase(str(target))
             if key in targets:
-                raise ValueError(
+                raise CandidateMaterializationError(
                     "Candidate paths collide when materialized: "
-                    f"{targets[key]!r} and {rel!r}"
+                    f"{targets[key]!r} and {rel!r}",
+                    reason="candidate_path_collision",
+                    paths=(targets[key], rel),
                 )
             targets[key] = rel
         materialized_static_files = [
@@ -212,9 +229,11 @@ class CandidateWorkspace:
             )
             key = os.path.normcase(str(target))
             if key in targets:
-                raise ValueError(
+                raise CandidateMaterializationError(
                     "Candidate paths collide when materialized: "
-                    f"{targets[key]!r} and {rel!r}"
+                    f"{targets[key]!r} and {rel!r}",
+                    reason="candidate_path_collision",
+                    paths=(targets[key], rel),
                 )
             targets[key] = rel
         temp_root = _make_materialization_sibling(root, "tmp")

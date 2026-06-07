@@ -15,7 +15,10 @@ from pathlib import Path
 import fnmatch
 import shutil
 from uuid import uuid4
-from libreevolve.core.candidate import CandidateWorkspace
+from libreevolve.core.candidate import (
+    CandidateMaterializationError,
+    CandidateWorkspace,
+)
 from libreevolve.core.config import (
     MAX_EVALUATOR_STDIN_CHARS,
     _require_bool,
@@ -2167,10 +2170,17 @@ def _stage_context_config(
 
 def _materialization_error_metadata(exc: Exception) -> dict:
     message = _bounded_redacted_text(str(exc), 500)
-    return {
+    record = {
         "exception_type": exc.__class__.__name__,
         "message": message,
     }
+    if isinstance(exc, CandidateMaterializationError):
+        record["reason"] = _bounded_redacted_text(exc.reason, 100)
+        record["paths"] = [
+            _bounded_redacted_text(path, 240)
+            for path in exc.paths[:4]
+        ]
+    return record
 
 
 def _validator_output_diagnostics(

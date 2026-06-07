@@ -513,8 +513,11 @@ def test_materialization_collision_returns_invalid_evaluation_result():
         assert result.metrics == {"score": -0.2, "is_valid": False}
         assert result.metadata["primary_file"] == "README.md"
         assert result.metadata["files"] == ["README.md", "readme.md"]
-        assert result.metadata["materialization_error"]["exception_type"] == "ValueError"
-        assert "collide" in result.metadata["materialization_error"]["message"]
+        materialization_error = result.metadata["materialization_error"]
+        assert materialization_error["exception_type"] == "CandidateMaterializationError"
+        assert materialization_error["reason"] == "candidate_path_collision"
+        assert materialization_error["paths"] == ["README.md", "readme.md"]
+        assert "collide" in materialization_error["message"]
     finally:
         shutil.rmtree(d)
 

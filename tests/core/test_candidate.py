@@ -6,6 +6,7 @@ import subprocess
 import pytest
 
 from libreevolve.core.candidate import (
+    CandidateMaterializationError,
     CandidateWorkspace,
     DEFAULT_MAX_CANDIDATE_FILE_CHARS,
     DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES,
@@ -2664,8 +2665,10 @@ def test_workspace_materialize_preflight_failure_preserves_existing_root(
 
     try:
         workspace.materialize(tmp_path)
-    except ValueError as exc:
+    except CandidateMaterializationError as exc:
         assert "Candidate paths collide when materialized" in str(exc)
+        assert exc.reason == "candidate_path_collision"
+        assert exc.paths == ("Readme.md", "README.md")
     else:
         raise AssertionError("expected case-folded materialization collision")
 
@@ -2913,8 +2916,10 @@ def test_workspace_rejects_case_collisions_before_materialization(tmp_path, monk
 
     try:
         workspace.materialize(tmp_path)
-    except ValueError as exc:
+    except CandidateMaterializationError as exc:
         assert "Candidate paths collide when materialized" in str(exc)
+        assert exc.reason == "candidate_path_collision"
+        assert exc.paths == ("Readme.md", "README.md")
     else:
         raise AssertionError("expected case-folded materialization collision")
     assert not (tmp_path / "Readme.md").exists()

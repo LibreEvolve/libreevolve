@@ -3024,6 +3024,8 @@ def test_prompt_context_policy_selects_materialization_error_fields():
             "metadata": {
                 "materialization_error": {
                     "exception_type": "WorkspaceMaterializationError",
+                    "reason": "candidate_path_collision",
+                    "paths": ["README.md", "readme.md"],
                     "message": "candidate path collision",
                 },
             },
@@ -3040,15 +3042,18 @@ def test_prompt_context_policy_selects_materialization_error_fields():
         context_policy={
             "feedback_sections": ["validator_diagnostics"],
             "validator_diagnostic_groups": ["materialization_error"],
-            "materialization_error_fields": ["message"],
+            "materialization_error_fields": ["reason", "paths", "message"],
         },
     )
 
-    assert 'materialization_error, message="candidate path collision"' in prompt
+    assert 'reason="candidate_path_collision"' in prompt
+    assert "README.md" in prompt
+    assert "readme.md" in prompt
+    assert 'message="candidate path collision"' in prompt
     assert "exception_type=" not in prompt
     assert sampler.last_metadata["prompt_context_policy"][
         "materialization_error_fields"
-    ] == ["message"]
+    ] == ["reason", "paths", "message"]
 
 
 def test_prompt_context_policy_caps_materialization_error_fields():
@@ -3070,6 +3075,7 @@ def test_prompt_context_policy_caps_materialization_error_fields():
             "metadata": {
                 "materialization_error": {
                     "exception_type": "WorkspaceMaterializationError_" + ("e" * 80),
+                    "paths": ["very_long_" + ("p" * 80) + ".py"],
                     "message": "candidate path collision " + ("m" * 80),
                 },
             },
@@ -3086,9 +3092,10 @@ def test_prompt_context_policy_caps_materialization_error_fields():
         context_policy={
             "feedback_sections": ["validator_diagnostics"],
             "validator_diagnostic_groups": ["materialization_error"],
-            "materialization_error_fields": ["exception_type", "message"],
+            "materialization_error_fields": ["exception_type", "paths", "message"],
             "materialization_error_max_chars_by_field": {
                 "exception_type": 0,
+                "paths": 32,
                 "message": 40,
             },
         },
@@ -3096,13 +3103,15 @@ def test_prompt_context_policy_caps_materialization_error_fields():
 
     assert "materialization_error" in prompt
     assert "exception_type=" not in prompt
+    assert "paths=" in prompt
+    assert "p" * 80 not in prompt
     assert 'message="candidate path co...[truncated 65 chars]"' in prompt
     assert ("m" * 80) not in prompt
     assert (
         sampler.last_metadata["prompt_context_policy"][
             "materialization_error_max_chars_by_field"
         ]
-        == {"exception_type": 0, "message": 40}
+        == {"exception_type": 0, "paths": 32, "message": 40}
     )
 
 

@@ -38,6 +38,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
+- [ ] Broaden invalid-workspace diagnostics to codebase-scale artifact
+  failures.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
+  - Requirement: AlphaEvolve-style tasks mutate program artifacts under
+    automated evaluator feedback; generated invalid artifacts should leave
+    stable, inspectable diagnostics that can steer future proposals.
+  - Partial status: case-folded materialized candidate-path collisions now use
+    typed `CandidateMaterializationError` records. Evaluations persist
+    `materialization_error` metadata with bounded message text plus structured
+    `reason: "candidate_path_collision"` and conflicting candidate-relative
+    `paths`, and prompt context policy can select/cap those fields for
+    failure-memory feedback. Topology sections are prevalidated for duplicate
+    source/target operations, non-empty command bodies, and primary-file
+    deletion without replacement.
+  - Current gap: remaining materialization failures, including linked roots,
+    linked nested entries, file write/swap/delete failures, and static
+    source-copy failures, still need stable reason/path classification before
+    LibreEvolve can claim robust codebase-scale invalid-artifact feedback.
+
 - [ ] Overall compute-budget accounting and ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation
@@ -812,7 +831,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `materialization_error_fields` can select safe fields inside
     materialization-error diagnostics, and
     `materialization_error_max_chars_by_field` can cap or suppress selected
-    materialization-error text fields before rendering.
+    materialization-error text fields, including typed reason/path fields,
+    before rendering.
     `validator_boundary_fields` can select
     safe fields inside validator-boundary diagnostics.
     `validator_boundary_max_chars_by_field` can cap or suppress selected
@@ -950,7 +970,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     selected configured-stage check fields, selected configured-stage nested
     fields, selected malformed-metric fields,
     selected metric-aggregation fields, selected synthetic metric fields,
-    selected materialization error fields,
+    selected materialization error reason/path fields,
     selected validator-boundary fields,
     selected validator budget fields, selected validator resource-limit fields,
     selected execution-diagnostic subgroups, selected validator-stdin fields,

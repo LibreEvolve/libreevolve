@@ -905,7 +905,8 @@ metric diagnostics, and `synthetic_metric_max_chars_by_field` can cap or
 suppress selected synthetic metric text fields before rendering.
 `materialization_error_fields` can select safe fields inside materialization
 error diagnostics, and `materialization_error_max_chars_by_field` can cap or
-suppress selected materialization error text fields before rendering. `validator_boundary_fields` can
+suppress selected materialization error text fields, including typed `reason`
+and `paths`, before rendering. `validator_boundary_fields` can
 select safe fields inside validator-boundary diagnostics, and
 `validator_boundary_max_chars_by_field` can cap or suppress selected
 validator-boundary text fields before rendering. `validator_resource_limit_fields` can select nested resource-limit fields
@@ -2286,7 +2287,10 @@ input names that normalize to the same relative path are rejected during
 candidate workspace construction, and materialization preflights case-folded
 host-path collisions. During evaluation, materialization failures such as
 case-folded host-path collisions return invalid `materialization_error`
-results and can be logged in failure history instead of aborting the run.
+results with bounded redacted diagnostics; known candidate-path collisions also
+record structured `reason: "candidate_path_collision"` and the conflicting
+candidate-relative `paths`, and can be logged in failure history instead of
+aborting the run.
 Materialization is an exact snapshot operation for a normal target directory:
 after preflight succeeds, the candidate file set is written to a temporary
 sibling workspace and swapped into place only after all files are written.

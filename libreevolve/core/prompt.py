@@ -355,6 +355,8 @@ PROMPT_CONTEXT_POLICY_MALFORMED_METRIC_FIELDS = (
 )
 PROMPT_CONTEXT_POLICY_MATERIALIZATION_ERROR_FIELDS = (
     "exception_type",
+    "reason",
+    "paths",
     "message",
 )
 PROMPT_CONTEXT_POLICY_METRIC_AGGREGATION_FIELDS = (
@@ -10522,6 +10524,8 @@ def _render_materialization_error_diagnostic(
     parts = ["materialization_error"]
     for label, value, max_chars in (
         ("exception_type", record.get("exception_type"), 100),
+        ("reason", record.get("reason"), 100),
+        ("paths", record.get("paths"), 240),
         ("message", record.get("message"), 240),
     ):
         if label not in selected_fields:

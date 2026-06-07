@@ -5471,7 +5471,10 @@ def test_materialization_collision_is_logged_as_failed_candidate():
     records = [json.loads(line) for line in (run_dir / "history.jsonl").read_text().splitlines()]
     child = records[-1]
     assert child["evaluation"]["error"] == "materialization_error"
-    assert child["evaluation"]["metadata"]["materialization_error"]["exception_type"] == "ValueError"
+    materialization_error = child["evaluation"]["metadata"]["materialization_error"]
+    assert materialization_error["exception_type"] == "CandidateMaterializationError"
+    assert materialization_error["reason"] == "candidate_path_collision"
+    assert materialization_error["paths"] == ["README.md", "readme.md"]
     assert child["metadata"]["archive_admission"]["reason"] == "invalid_evaluation"
     failure_records = [
         json.loads(line)

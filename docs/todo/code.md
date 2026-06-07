@@ -41,6 +41,29 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
+- [ ] Broaden workspace topology and materialization diagnostics beyond typed
+  case-folded path collisions.
+  - Spec evidence: AlphaEvolve operates on task-defined program artifacts and
+    codebases; invalid generated workspaces should produce inspectable
+    evaluator feedback rather than opaque local filesystem exceptions.
+  - Current evidence: `CandidateWorkspace.materialize()` now raises
+    `CandidateMaterializationError` for materialized candidate-path collisions,
+    and `CascadeEvaluator` records bounded
+    `evaluation.metadata.materialization_error` fields including
+    `exception_type: "CandidateMaterializationError"`,
+    `reason: "candidate_path_collision"`, and conflicting candidate-relative
+    `paths`. Prompt context policy can select and cap `reason`, `paths`,
+    `exception_type`, and `message` for materialization-error feedback. File
+    topology mutations are also prevalidated for duplicate topology sections,
+    duplicate move targets, chained/conflicting operations, non-empty command
+    bodies, and primary deletion without replacement.
+  - Required result: classify remaining materialization failures such as linked
+    roots, linked nested entries, write/swap/delete failures, and static
+    source-copy materialization failures into stable structured reasons and
+    bounded path fields; extend topology diagnostics where host/case-folded
+    target behavior can still be ambiguous, and keep failed-candidate feedback
+    prompt-safe.
+
 ## Prompt Sampling and Context
 
 - [ ] Add provider-token prompt section fitting and restored token/cost budget state.
@@ -291,7 +314,8 @@ Primary evidence:
     `materialization_error_fields` can select safe fields inside
     materialization-error diagnostics, and
     `materialization_error_max_chars_by_field` can cap or suppress selected
-    materialization-error text fields before rendering.
+    materialization-error text fields, including typed reason/path fields,
+    before rendering.
     `validator_boundary_fields` can select
     safe fields inside validator-boundary diagnostics.
     `validator_boundary_max_chars_by_field` can cap or suppress selected
@@ -492,7 +516,7 @@ Primary evidence:
     evaluator-stage field selection,
     metric-bound field selection, configured-stage check field selection,
     configured-stage nested field selection,
-    malformed-metric field selection, materialization-error field selection,
+    malformed-metric field selection, materialization-error reason/path field selection,
     metric-aggregation field selection,
     synthetic metric field selection,
     execution-diagnostic subgroup selection, validator-boundary field

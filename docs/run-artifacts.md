@@ -1921,7 +1921,10 @@ exception type, and reason such as `non_string_keys`,
 Candidate workspace materialization failures, including host-specific
 case-folded path collisions, are recorded as invalid evaluations with
 `error: "materialization_error"` and bounded redacted diagnostics under
-`evaluation.metadata.materialization_error`.
+`evaluation.metadata.materialization_error`. Known candidate-path collisions
+record `exception_type: "CandidateMaterializationError"`,
+`reason: "candidate_path_collision"`, and the conflicting candidate-relative
+`paths` alongside the bounded message.
 Prompt-visible summaries are bounded separately.
 Use `evaluator_artifact_include` for large diagnostics that should be retained
 as separate files with hashes. Metric schemas reject boolean bounds before run
@@ -2335,7 +2338,8 @@ select safe fields inside synthetic failure-metric diagnostics, and
 metric text fields before rendering. `materialization_error_fields` can select
 safe fields inside materialization-error diagnostics, and
 `materialization_error_max_chars_by_field` can cap or suppress selected
-materialization-error text fields before rendering. `validator_boundary_fields` can select safe
+materialization-error text fields, including typed `reason` and `paths`,
+before rendering. `validator_boundary_fields` can select safe
 fields inside validator-boundary diagnostics, and
 `validator_boundary_max_chars_by_field` can cap or suppress selected
 validator-boundary text fields before rendering.
@@ -2558,7 +2562,8 @@ evaluations. Each record includes:
   occurrence
 - materialization failures reported by the evaluator as
   `materialization_error`, including bounded diagnostics copied from the
-  candidate evaluation
+  candidate evaluation and structured `candidate_path_collision` reason/path
+  fields when a typed candidate materialization error is available
 - topology mutation diagnostics such as `unexpected_command_body` or
   `primary:duplicate_primary_section` when command file sections are ambiguous
   before workspace mutation

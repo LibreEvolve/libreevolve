@@ -85,8 +85,9 @@ is not yet an AlphaEvolve reproduction.
   and non-Python/static artifacts.
 - Extend binary/static candidate handling beyond bounded encoded members to
   external copy-only static assets and raw non-encoded binary members.
-- Tighten topology-operation collision policy and structured
-  materialization-failure diagnostics for invalid generated workspaces.
+- Tighten remaining topology-operation collision policy and broaden structured
+  materialization-failure diagnostics beyond the current typed
+  case-folded-path collision records for invalid generated workspaces.
 - Add migration/resume support for workspace candidates.
 
 ### 2. Strengthen multi-objective search

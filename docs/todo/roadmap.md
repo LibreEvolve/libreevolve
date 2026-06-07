@@ -607,6 +607,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and code/paper TODO entries together so they neither underclaim smoke
     hardening evidence nor overclaim AlphaEvolve-comparable benchmarks.
 
+- [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
+      normalization versus real target/SOTA baselines.
+  - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable
+    metric ranges, target/SOTA values, and normalization behavior explicit so
+    progress comparisons remain ordered and paper-facing claims are auditable.
+  - Current evidence: `ROADMAP.md` asks to document reachable metric ranges,
+    target/SOTA values, and normalization behavior for benchmark fixtures.
+    README documents the checked-in `matrix_multiplication` example as a 2x2
+    smoke fixture whose inverse-count metric is normalized over the full
+    `1/count` range, while matrix and systems report contracts validate target
+    identity, dimensions, comparable-claim flags, finite metrics, and artifact
+    records for reports that already exist. The current example-scope registry
+    still marks smoke examples as not AlphaEvolve-comparable, and no general
+    benchmark-fixture contract yet records reachable ranges, target/SOTA
+    thresholds, or normalization semantics for tensor, geometric, compiler,
+    hardware, kernel, scheduling, or systems fixtures.
+  - Required result: when real benchmark fixtures gain metric-range catalogs,
+    target/SOTA baselines, normalization-policy records, or comparable
+    report-generation scripts, update the roadmap, README, papers index, and
+    code/paper TODO entries together so roadmap wording neither underclaims
+    current smoke normalization evidence nor overclaims AlphaEvolve-grade
+    benchmark calibration.
+
 - [ ] Keep ablation roadmap wording scoped to report validation versus executed
   experiment scripts.
   - Spec evidence: AlphaEvolve Figure 8 compares equal-budget ablation curves

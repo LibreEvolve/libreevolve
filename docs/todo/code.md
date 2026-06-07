@@ -104,11 +104,14 @@ Primary evidence:
     path/content terms, `parent_code_order_policy` can keep path order or rank
     selected parent files by deterministic task term overlap, and
     `parent_code_ranking_terms` can provide explicit safe ranking terms.
+    `parent_code_limit` can cap how many ordered mutable parent files render,
+    including `0` to suppress mutable parent file bodies while retaining
+    diagnostics.
     `parent_code_max_chars`
     can cap or suppress that channel while retaining a prompt-visible omission marker and
     `libreevolve.parent_code_policy.v1` diagnostics with cap, source,
     nested requested/rendered/omitted/missing path policy, term-filter policy,
-    order policy, truncation mode (`head` or `head_tail`), truncation,
+    order policy, render-count limit policy, truncation mode (`head` or `head_tail`), truncation,
     character-count, and hash evidence.
     `proposal_metadata_enabled` can override whether proposal metadata
     instructions and downstream parsing run for that prompt arm while `null`
@@ -411,7 +414,8 @@ Primary evidence:
     and timeout-cleanup field selection.
   - Required result: extend prompt-program context policy beyond optional
     channel disabling, priority overrides, current character caps, parent-code
-    file selection, term filtering, and deterministic ordering, and
+    file selection, term filtering, deterministic ordering, and render-count
+    limiting, and
     truncation-mode selection so safe configured or LLM mutations can change
     retrieval/summarization,
     plugin-context shaping beyond

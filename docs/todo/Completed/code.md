@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code render-count limit.
+  - Spec evidence: AlphaEvolve-style prompt context needs budget-aware control
+    over how much required code context is shown after relevance selection and
+    ordering.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts nullable
+    `parent_code_limit`. `PromptSampler` applies it after parent-code path
+    selection, term filtering, and ordering, including `0` to suppress mutable
+    parent file bodies while retaining workspace headers and diagnostics.
+    Nested parent-code metadata records pre-limit order, rendered paths,
+    omitted-by-limit paths, selected/omitted counts, and a stable selection
+    hash.
+  - Remaining gap: this is deterministic render-count limiting, not semantic
+    retrieval, dependency-aware compression, or provider context allocation.
+  - Verification: focused prompt tests cover validation, ranked limiting,
+    zero-limit suppression, diagnostics, and canonical metadata defaults;
+    focused loop meta-prompt tests cover accepted policy JSON carrying the
+    field.
+
 - [x] Add prompt context-policy parent-code relevance ordering.
   - Spec evidence: AlphaEvolve-style prompt context should be able to prioritize
     relevant required code context rather than only select/filter exact parent

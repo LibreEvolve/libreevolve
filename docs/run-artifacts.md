@@ -1951,6 +1951,10 @@ by required or excluded terms, and a stable selection hash.
 them by deterministic task term overlap, and `parent_code_ranking_terms` can
 provide explicit safe ranking terms; diagnostics record query source, query
 term hash/count, ranked file order, scores, and a ranking hash.
+`parent_code_limit` can cap how many ordered mutable parent files render,
+including `0` to suppress mutable parent file bodies; diagnostics record
+pre-limit order, selected/omitted file counts, omitted files, and a selection
+hash.
 `parent_code_max_chars` can cap or suppress the
 required parent-code channel without removing the placeholder contract; prompt
 diagnostics record `parent_code_policy` with schema

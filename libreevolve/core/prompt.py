@@ -589,6 +589,7 @@ class PromptSampler:
             excluded_terms=prompt_context_policy["parent_code_excluded_terms"],
             ranking_terms=prompt_context_policy["parent_code_ranking_terms"],
             order_policy=prompt_context_policy["parent_code_order_policy"],
+            file_limit=prompt_context_policy["parent_code_limit"],
             query_text=task,
         )
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
@@ -1300,6 +1301,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_excluded_terms",
         "parent_code_ranking_terms",
         "parent_code_order_policy",
+        "parent_code_limit",
         "parent_code_max_chars",
         "parent_code_truncation",
         "inspiration_strategy",
@@ -1462,6 +1464,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     parent_code_order_policy = _validate_prompt_context_parent_code_order_policy(
         value.get("parent_code_order_policy", "path_order")
+    )
+    parent_code_limit = _validate_prompt_context_parent_code_limit(
+        value.get("parent_code_limit")
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
@@ -1937,6 +1942,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_excluded_terms": parent_code_excluded_terms,
         "parent_code_ranking_terms": parent_code_ranking_terms,
         "parent_code_order_policy": parent_code_order_policy,
+        "parent_code_limit": parent_code_limit,
         "parent_code_max_chars": parent_code_max_chars,
         "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
@@ -2111,6 +2117,7 @@ def apply_prompt_context_policy(
         "parent_code_excluded_terms": list(policy["parent_code_excluded_terms"]),
         "parent_code_ranking_terms": list(policy["parent_code_ranking_terms"]),
         "parent_code_order_policy": policy["parent_code_order_policy"],
+        "parent_code_limit": policy["parent_code_limit"],
         "parent_code_max_chars": policy["parent_code_max_chars"],
         "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
@@ -2491,6 +2498,17 @@ def _validate_prompt_context_parent_code_order_policy(value: object) -> str:
         raise PromptTemplateError(
             "prompt context_policy.parent_code_order_policy "
             f"must be one of: {allowed}"
+        )
+    return value
+
+
+def _validate_prompt_context_parent_code_limit(value: object) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_limit "
+            "must be a non-negative integer or null"
         )
     return value
 
@@ -7039,6 +7057,7 @@ def _render_program_files_with_metadata(
     excluded_terms: object = None,
     ranking_terms: object = None,
     order_policy: object = "path_order",
+    file_limit: object = None,
     query_text: str = "",
 ) -> tuple[str, dict]:
     workspace = program.workspace()
@@ -7058,6 +7077,7 @@ def _render_program_files_with_metadata(
     parent_order_policy = _validate_prompt_context_parent_code_order_policy(
         order_policy
     )
+    parent_code_limit = _validate_prompt_context_parent_code_limit(file_limit)
     all_paths = sorted(workspace.files)
     if policy_paths:
         candidate_paths = [path for path in policy_paths if path in workspace.files]
@@ -7091,6 +7111,18 @@ def _render_program_files_with_metadata(
             if policy_paths
             else "task_term_ranked"
         )
+    pre_limit_rendered_paths = list(rendered_paths)
+    if parent_code_limit is None:
+        omitted_by_limit: list[str] = []
+    else:
+        omitted_by_limit = rendered_paths[parent_code_limit:]
+        rendered_paths = rendered_paths[:parent_code_limit]
+        parent_order_metadata = _parent_code_limit_order_policy_metadata(
+            parent_order_metadata,
+            selected_order=rendered_paths,
+            omitted_order=omitted_by_limit,
+            parent_code_limit=parent_code_limit,
+        )
     omitted_by_required_terms = list(
         term_filter_metadata["omitted_by_required_terms"]
     )
@@ -7101,6 +7133,7 @@ def _render_program_files_with_metadata(
         list(omitted_by_path_policy)
         + omitted_by_required_terms
         + omitted_by_excluded_terms
+        + omitted_by_limit
     )
     policy_active = bool(
         policy_paths
@@ -7108,6 +7141,7 @@ def _render_program_files_with_metadata(
         or parent_excluded_terms
         or parent_ranking_terms
         or parent_order_policy != "path_order"
+        or parent_code_limit is not None
     )
     metadata = {
         "schema": "libreevolve.parent_code_paths.v1",
@@ -7117,11 +7151,14 @@ def _render_program_files_with_metadata(
         "excluded_terms": list(parent_excluded_terms),
         "ranking_terms": list(parent_ranking_terms),
         "parent_code_order_policy": parent_order_metadata,
+        "parent_code_limit": parent_code_limit,
+        "pre_limit_rendered_paths": pre_limit_rendered_paths,
         "rendered_paths": list(rendered_paths),
         "omitted_paths": omitted_paths,
         "omitted_by_path_policy": omitted_by_path_policy,
         "omitted_by_required_terms": omitted_by_required_terms,
         "omitted_by_excluded_terms": omitted_by_excluded_terms,
+        "omitted_by_limit": omitted_by_limit,
         "missing_paths": missing_paths,
         "order_policy": path_order_policy,
         "term_filter": term_filter_metadata,
@@ -7250,6 +7287,42 @@ def _parent_code_path_order_policy_metadata(policy: str, order: list[str]) -> di
             for index, path in enumerate(order)
         ],
     }
+
+
+def _parent_code_limit_order_policy_metadata(
+    metadata: dict,
+    *,
+    selected_order: list[str],
+    omitted_order: list[str],
+    parent_code_limit: int,
+) -> dict:
+    updated = dict(metadata)
+    selected = set(selected_order)
+    omitted = set(omitted_order)
+    ranked_files = [
+        dict(item)
+        for item in metadata.get("selected_files", [])
+        if isinstance(item, dict)
+    ]
+    updated["parent_code_limit"] = parent_code_limit
+    updated["pre_limit_selected_count"] = len(ranked_files)
+    updated["selected_count"] = len(selected_order)
+    updated["omitted_count"] = len(omitted_order)
+    updated["selected_files"] = [
+        item for item in ranked_files if item.get("path") in selected
+    ]
+    updated["omitted_files"] = [
+        item for item in ranked_files if item.get("path") in omitted
+    ]
+    updated["selection_policy"] = "ranked_parent_code_files_limited_after_ordering_v1"
+    updated["selection_sha256"] = _stable_json_sha256(
+        {
+            "selected_order": selected_order,
+            "omitted_order": omitted_order,
+            "parent_code_limit": parent_code_limit,
+        }
+    )
+    return updated
 
 
 def _rank_parent_code_paths_by_terms(

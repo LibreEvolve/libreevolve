@@ -4411,6 +4411,21 @@ def test_prompt_context_policy_rejects_invalid_parent_code_ordering():
         validate_prompt_context_policy({"parent_code_ranking_terms": "solver"})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_limit():
+    assert validate_prompt_context_policy({"parent_code_limit": 0})[
+        "parent_code_limit"
+    ] == 0
+    assert validate_prompt_context_policy({"parent_code_limit": 2})[
+        "parent_code_limit"
+    ] == 2
+
+    with pytest.raises(PromptTemplateError, match="parent_code_limit"):
+        validate_prompt_context_policy({"parent_code_limit": -1})
+
+    with pytest.raises(PromptTemplateError, match="parent_code_limit"):
+        validate_prompt_context_policy({"parent_code_limit": True})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -7026,6 +7041,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "parent_code_excluded_terms": [],
         "parent_code_ranking_terms": [],
         "parent_code_order_policy": "path_order",
+        "parent_code_limit": None,
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
         "inspiration_strategy": None,
@@ -8272,11 +8288,14 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "excluded_terms": [],
         "ranking_terms": [],
         "parent_code_order_policy": policy["path_policy"]["parent_code_order_policy"],
+        "parent_code_limit": None,
+        "pre_limit_rendered_paths": ["helper.py"],
         "rendered_paths": ["helper.py"],
         "omitted_paths": ["main.py", "unused.py"],
         "omitted_by_path_policy": ["main.py", "unused.py"],
         "omitted_by_required_terms": [],
         "omitted_by_excluded_terms": [],
+        "omitted_by_limit": [],
         "missing_paths": ["missing.py"],
         "order_policy": "prompt_context_policy_order",
         "term_filter": policy["path_policy"]["term_filter"],
@@ -8458,6 +8477,103 @@ def test_prompt_context_policy_orders_parent_code_by_explicit_ranking_terms():
     assert sampler.last_metadata["prompt_context_policy"][
         "parent_code_order_policy"
     ] == "task_term_ranked"
+
+
+def test_prompt_context_policy_limits_ranked_parent_code_files():
+    problem = Problem(
+        name="demo",
+        task_description="Improve cache solver behavior.",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "a_misc.py": "value = 1\n",
+            "b_solver.py": "def run():\n    return 'solver cache'\n",
+            "c_cache.py": "CACHE = {}\n",
+        },
+        primary_file="a_misc.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_order_policy": "task_term_ranked",
+            "parent_code_limit": 1,
+        },
+    )
+
+    assert "path=b_solver.py" in prompt
+    assert "path=c_cache.py" not in prompt
+    assert "path=a_misc.py" not in prompt
+    path_policy = sampler.last_metadata["parent_code_policy"]["path_policy"]
+    assert path_policy["parent_code_limit"] == 1
+    assert path_policy["pre_limit_rendered_paths"] == [
+        "b_solver.py",
+        "c_cache.py",
+        "a_misc.py",
+    ]
+    assert path_policy["rendered_paths"] == ["b_solver.py"]
+    assert path_policy["omitted_by_limit"] == ["c_cache.py", "a_misc.py"]
+    assert path_policy["omitted_file_count"] == 2
+    order_policy = path_policy["parent_code_order_policy"]
+    assert order_policy["parent_code_limit"] == 1
+    assert order_policy["pre_limit_selected_count"] == 3
+    assert order_policy["selected_count"] == 1
+    assert order_policy["omitted_count"] == 2
+    assert order_policy["selected_files"][0]["path"] == "b_solver.py"
+    assert [item["path"] for item in order_policy["omitted_files"]] == [
+        "c_cache.py",
+        "a_misc.py",
+    ]
+    assert len(order_policy["selection_sha256"]) == 64
+    assert sampler.last_metadata["prompt_context_policy"]["parent_code_limit"] == 1
+
+
+def test_prompt_context_policy_zero_parent_code_limit_omits_mutable_files():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={"main.py": "x = 1\n", "helper.py": "y = 2\n"},
+        primary_file="main.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={"parent_code_limit": 0},
+    )
+
+    assert "Content-JSON" not in prompt
+    assert "Omitted mutable files" in prompt
+    path_policy = sampler.last_metadata["parent_code_policy"]["path_policy"]
+    assert path_policy["parent_code_limit"] == 0
+    assert path_policy["rendered_paths"] == []
+    assert path_policy["omitted_by_limit"] == ["helper.py", "main.py"]
+    assert path_policy["source"] == "prompt_context_policy"
 
 
 @pytest.mark.parametrize(

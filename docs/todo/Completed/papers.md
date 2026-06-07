@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code render-count limiting.
+  - Paper evidence: AlphaEvolve prompt context can include prior code, and
+    prompt-context evolution should have replayable controls over how many
+    selected required code files are shown under prompt budgets.
+  - Status: prompt context policy now accepts nullable `parent_code_limit`.
+    Direct prompt rendering applies it after parent-code path selection, term
+    filtering, and ordering, including `0` to suppress mutable parent file
+    bodies. Diagnostics persist pre-limit order, rendered paths,
+    omitted-by-limit paths, selected/omitted counts, and a selection hash under
+    `libreevolve.parent_code_policy.v1`.
+  - Remaining paper gap: this is deterministic file-count limiting, not
+    semantic parent-code compression, provider context allocation, or learned
+    source relevance.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code relevance ordering.
   - Paper evidence: AlphaEvolve prompt context can include prior code, and
     prompt-context evolution should have replayable controls for prioritizing

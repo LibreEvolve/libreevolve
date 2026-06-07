@@ -858,12 +858,17 @@ Primary evidence:
     Appendix A Table 3 target identities, dimensions, best-known ranks,
     AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
     `alphaevolve_appendix_a` reject unknown target ids and dimension
-    mismatches.
+    mismatches. `libreevolve.matrix_result_artifact_inventory.v1` now verifies
+    declared algorithm/certificate/notebook artifact references against
+    concrete files under an explicit artifact root, checking safe relative
+    paths, existence, SHA-256 hashes, and byte counts.
   - Required result: connect exact tensor-decomposition algorithms,
     certificate artifacts, and notebook/export artifacts to the registered
     target suite; keep the existing Python smoke example clearly outside
     AlphaEvolve-comparison evidence until it emits validated tensor-result
-    reports.
+    reports. The remaining gap is generating real exact algorithms,
+    certificates, and notebook/export files for registered targets, not
+    validating the declared artifact inventory once those files exist.
 
 - [ ] Add held-out evaluation splits and reference-correctness records to
   systems benchmarks.

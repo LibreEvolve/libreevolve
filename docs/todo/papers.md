@@ -851,13 +851,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     the 54 Appendix A Table 3 target identities, dimensions, best-known ranks,
     AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
     `alphaevolve_appendix_a` reject unknown target ids and dimension
-    mismatches. The code still does not provide exact tensor algorithms or
-    generated notebook/export equivalents for reproducing discovered
-    algorithms.
+    mismatches. `libreevolve.matrix_result_artifact_inventory.v1` now verifies
+    declared algorithm/certificate/notebook artifact paths against concrete
+    files under an explicit artifact root, checking safe relative paths,
+    existence, SHA-256 hashes, and byte counts. The code still does not provide
+    exact tensor algorithms or generated notebook/export equivalents for
+    reproducing discovered algorithms.
   - Required result: connect real matrix target tensors, exact algorithm
     artifacts, certificate-generation artifacts, and generated export/notebook
     links to real report instances before treating LibreEvolve matrix results
-    as AlphaEvolve-comparable evidence.
+    as AlphaEvolve-comparable evidence. The remaining gap is producing those
+    real tensor artifacts, not verifying declared report artifacts once they
+    exist.
 
 - [ ] Add independent certification gates for paper-level result claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

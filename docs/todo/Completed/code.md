@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Verify concrete matrix result publication artifact inventories.
+  - Spec evidence: AlphaEvolve matrix publications point to exact algorithms,
+    certificates, and notebook/export artifacts; declared report metadata needs
+    to be tied to actual files before it can serve as publication evidence.
+  - Status: `matrix_result_artifact_inventory()` now emits
+    `libreevolve.matrix_result_artifact_inventory.v1`, verifying report
+    artifact references under an explicit artifact root. It checks safe
+    relative paths, file existence, actual SHA-256 hashes, byte counts, and
+    records verified/missing/mismatch/invalid counts plus a records hash.
+  - Remaining gap: this verifies declared files; it does not generate real
+    tensor-decomposition algorithms, exactness certificates, or
+    notebook/export artifacts for Appendix A targets.
+  - Verification: focused matrix-result tests cover verified inventories,
+    missing files, hash/byte mismatches, and unsafe paths.
+
 - [x] Add lexical grounding records for retained retrieval sources.
   - Spec evidence: AlphaEvolve-style retrieval context should preserve why
     external evidence was considered relevant to the current prompt.

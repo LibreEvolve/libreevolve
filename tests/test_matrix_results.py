@@ -1,7 +1,10 @@
+import hashlib
 import json
 
 from libreevolve.problems.benchmarks.matrix_results import (
+    MATRIX_ARTIFACT_INVENTORY_SCHEMA,
     MATRIX_RESULT_SCHEMA,
+    matrix_result_artifact_inventory,
     render_matrix_result_summary,
     validate_matrix_result_report,
 )
@@ -75,6 +78,61 @@ def test_matrix_result_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.target_id == "mm_4x4x4"
+
+
+def test_matrix_result_artifact_inventory_verifies_declared_files(tmp_path):
+    report = _valid_report()
+    for artifact in report["artifacts"]:
+        path = tmp_path / artifact["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        content = f"{artifact['kind']} artifact".encode("utf-8")
+        path.write_bytes(content)
+        artifact["sha256"] = hashlib.sha256(content).hexdigest()
+        artifact["bytes"] = len(content)
+
+    inventory = matrix_result_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == MATRIX_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["target_id"] == "mm_4x4x4"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 3
+    assert inventory["verified_count"] == 3
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert len(inventory["records_sha256"]) == 64
+    assert {artifact["status"] for artifact in inventory["artifacts"]} == {
+        "verified"
+    }
+    assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+
+
+def test_matrix_result_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    report = _valid_report()
+    first = report["artifacts"][0]
+    first_path = tmp_path / first["path"]
+    first_path.parent.mkdir(parents=True, exist_ok=True)
+    first_path.write_text("wrong", encoding="utf-8")
+    first["sha256"] = "b" * 64
+    first["bytes"] = 999
+    report["artifacts"][1]["path"] = "missing/certificate.json"
+    report["artifacts"][2]["path"] = "../escape.ipynb"
+
+    inventory = matrix_result_artifact_inventory(report, tmp_path)
+    records = {artifact["kind"]: artifact for artifact in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["algorithm"]["status"] == "hash_mismatch"
+    assert "artifact_hash_mismatch" in records["algorithm"]["issues"]
+    assert "artifact_bytes_mismatch" in records["algorithm"]["issues"]
+    assert records["certificate"]["status"] == "missing_file"
+    assert records["notebook"]["status"] == "unsafe_path"
 
 
 def test_matrix_result_report_allows_exploratory_non_publication_domains():

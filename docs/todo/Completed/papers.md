@@ -6,6 +6,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible matrix publication artifact inventory verification.
+  - Paper evidence: AlphaEvolve Appendix A publishes exact matrix algorithms
+    and notebook-linked constructions, so report metadata should verify the
+    files it names.
+  - Status: `libreevolve.matrix_result_artifact_inventory.v1` now verifies
+    declared matrix report artifacts under an explicit artifact root, checking
+    safe relative paths, existence, actual SHA-256 hashes, byte counts, and
+    inventory-level verified/missing/mismatch/invalid counts.
+  - Remaining paper gap: this is physical artifact verification for declared
+    files, not generation of exact tensor algorithms, exactness certificate
+    artifacts, or Colab/notebook exports for registered Appendix A targets.
+  - Verification: focused matrix-result tests cover verified inventories and
+    missing, mismatched, and unsafe artifact references.
+
 - [x] Add paper-visible retrieval source grounding records.
   - Paper evidence: retrieval-driven refinement treats external knowledge as a
     run input, so retained sources need provenance explaining why they were

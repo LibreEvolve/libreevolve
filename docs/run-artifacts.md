@@ -1575,6 +1575,19 @@ attribution beyond exposed `__version__` labels, unbounded full result
 payloads, ranking provenance, source-content trust policy, or real selected
 strategy operations.
 
+Benchmark publication helpers use separate report schemas rather than making
+smoke examples paper-comparable by default.
+`libreevolve.matrix_result_report.v1` validates matrix target identity,
+dimensions, best rank, seed count, best-rank hit fraction, coefficient domain,
+exactness certificate status, per-seed exactness rows, and declared
+algorithm/certificate/notebook artifact metadata.
+`libreevolve.matrix_result_artifact_inventory.v1` verifies those declared
+artifact paths against concrete files under an explicit artifact root: paths
+must stay safe and relative, files must exist, and actual SHA-256 hashes and
+byte counts must match the report. This inventory is publication evidence for
+report artifacts, not a tensor-decomposition algorithm generator or proof that
+the shipped smoke validator is AlphaEvolve-comparable.
+
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,
 the file set is canonical and `code` is derived from `files[primary_file]`.

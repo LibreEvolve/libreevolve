@@ -15177,3 +15177,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused MAP-Elites tests cover valid snapshot policies and
     edited policies with metric-order, bound, and primary-Pareto replacement
     overclaims.
+
+- [x] Add resurfacing-index validation.
+  - Spec evidence: AlphaEvolve-style evolutionary databases need auditable
+    resurfacing decisions across score, metric, frontier, lineage, descriptor,
+    feedback, hypothesis, and artifact evidence without overstating a bounded
+    manifest view as a durable database.
+  - Status: `validate_resurfacing_index_summary()` now validates
+    `libreevolve.resurfacing_index.v1` records for schema/policy, required
+    limitation statements, count consistency, manifest-safe ids, finite scores,
+    supported source records, summed source contributions, normalized objective
+    evidence, and deterministic ranking order while preserving
+    `durable_database_ready: false`.
+  - Remaining gap: this validates the current bounded rank-fusion manifest
+    record; it does not add persisted database tables, embeddings, cross-run
+    indexes, full artifact-content search, lineage subgraphs, or schema
+    migrations.
+  - Verification: focused database tests cover valid runtime-shaped
+    resurfacing snapshots and corrupted records with policy overclaims,
+    missing limitations, source-count errors, contribution mismatches, and
+    ranking-order violations.

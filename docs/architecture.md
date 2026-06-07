@@ -785,8 +785,11 @@ replacement, backend rewards, and sampling replay still use scalar/live
 policies. The MAP-Elites objective archive policy is independently checkable
 with `validate_map_elites_objective_archive_policy()`, which keeps the current
 bounded retention contract separate from primary Pareto/frontier replacement.
-Richer Pareto/frontier archive replacement plus a full persisted database index
-remain open.
+The manifest resurfacing view is independently checkable with
+`validate_resurfacing_index_summary()`, which validates deterministic
+rank-fusion records without claiming a durable database table. Richer
+Pareto/frontier archive replacement plus a full persisted database index remain
+open.
 
 ## Backend selection
 

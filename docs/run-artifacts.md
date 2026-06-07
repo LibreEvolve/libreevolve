@@ -1215,6 +1215,11 @@ Important behavior:
   resurfacing decisions manifest-visible, but it is still rebuilt from current
   history records and is not a persisted database table, embedding search
   engine, or schema-migration layer.
+  `validate_resurfacing_index_summary()` validates this
+  `libreevolve.resurfacing_index.v1` record, including schema/policy,
+  diagnostic limitations, count consistency, source records, summed
+  contributions, and ranking order while keeping `durable_database_ready:
+  false`.
 - `runtime.history.hypothesis_index` stores bounded proposal
   idea/rationale/hypothesis summaries for valid programs with captured
   proposal metadata. Text fields are redacted, hashed, and capped before

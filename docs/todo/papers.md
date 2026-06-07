@@ -438,6 +438,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     deterministic rank-fusion view over score, metric, frontier, lineage,
     descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`
     returns defensive ranked snapshots from that same source mix.
+    `validate_resurfacing_index_summary()` now validates that
+    `libreevolve.resurfacing_index.v1` record for schema/policy, required
+    limitations, counts, source contributions, source records, normalized
+    objective evidence, and deterministic rank order while preserving
+    `durable_database_ready: false`.
     `validate_objective_history_summary()` now validates the runtime
     multi-objective diagnostic history bundle across objective frontier,
     metric leaders, and metric archives, including schema/policy values,

@@ -104,6 +104,27 @@ _MAX_ARTIFACT_INDEX_PROGRAMS = 50
 _MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_TEXT_CHARS = 300
+RESURFACING_INDEX_SCHEMA = "libreevolve.resurfacing_index.v1"
+RESURFACING_INDEX_POLICY = (
+    "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
+    "descriptor_feedback_hypothesis_artifact_indexes"
+)
+_RESURFACING_INDEX_LIMITATIONS = (
+    "manifest_visible_resurfacing_index_not_persisted_database_table",
+    "uses_deterministic_rank_fusion_not_learned_embedding_search",
+    "valid_history_programs_only",
+    "rebuilt_from_current_history_records_at_runtime_summary_time",
+)
+_RESURFACING_INDEX_SOURCES = {
+    "score",
+    "frontier",
+    "metric",
+    "lineage",
+    "descriptor",
+    "feedback",
+    "hypothesis",
+    "artifact",
+}
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -3060,11 +3081,8 @@ def _resurfacing_index_snapshot(
     ranked = sorted(records.values(), key=_resurfacing_index_sort_key)
     retained = ranked[:limit]
     return {
-        "schema": "libreevolve.resurfacing_index.v1",
-        "policy": (
-            "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
-            "descriptor_feedback_hypothesis_artifact_indexes"
-        ),
+        "schema": RESURFACING_INDEX_SCHEMA,
+        "policy": RESURFACING_INDEX_POLICY,
         "metric_order": [
             name for name in metric_order if isinstance(name, str) and name
         ],
@@ -3074,12 +3092,181 @@ def _resurfacing_index_snapshot(
         "retention_limit": limit,
         "source_counts": dict(sorted(source_counts.items())),
         "programs": retained,
-        "limitations": [
-            "manifest_visible_resurfacing_index_not_persisted_database_table",
-            "uses_deterministic_rank_fusion_not_learned_embedding_search",
-            "valid_history_programs_only",
-            "rebuilt_from_current_history_records_at_runtime_summary_time",
-        ],
+        "limitations": list(_RESURFACING_INDEX_LIMITATIONS),
+    }
+
+
+def validate_resurfacing_index_summary(index: object) -> dict:
+    """Validate a runtime.history.resurfacing_index manifest record."""
+    issues: list[dict] = []
+    if not isinstance(index, dict):
+        return {
+            "schema": RESURFACING_INDEX_SCHEMA,
+            "ok": False,
+            "resurfacing_ready": False,
+            "durable_database_ready": False,
+            "program_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "resurfacing index must be an object",
+                }
+            ],
+        }
+
+    _resurfacing_issue_if(
+        issues,
+        index.get("schema") != RESURFACING_INDEX_SCHEMA,
+        "invalid_schema",
+        "resurfacing index schema is unsupported",
+    )
+    _resurfacing_issue_if(
+        issues,
+        index.get("policy") != RESURFACING_INDEX_POLICY,
+        "invalid_policy",
+        "resurfacing index policy is unsupported",
+    )
+    metric_order = _validate_resurfacing_metric_order(
+        index.get("metric_order", []),
+        issues,
+    )
+    programs = index.get("programs")
+    if not isinstance(programs, list):
+        programs = []
+        issues.append(
+            {
+                "code": "invalid_programs",
+                "message": "resurfacing index programs must be a list",
+            }
+        )
+    source_counts = index.get("source_counts")
+    if not isinstance(source_counts, dict):
+        source_counts = {}
+        issues.append(
+            {
+                "code": "invalid_source_counts",
+                "message": "resurfacing index source_counts must be an object",
+            }
+        )
+    program_count_considered = _resurfacing_non_negative_int(
+        index.get("program_count_considered"),
+        "program_count_considered",
+        issues,
+    )
+    candidate_count = _resurfacing_non_negative_int(
+        index.get("candidate_count"),
+        "candidate_count",
+        issues,
+    )
+    retained_count = _resurfacing_non_negative_int(
+        index.get("retained_count"),
+        "retained_count",
+        issues,
+    )
+    retention_limit = _resurfacing_non_negative_int(
+        index.get("retention_limit"),
+        "retention_limit",
+        issues,
+    )
+    _validate_resurfacing_limitations(index.get("limitations"), issues)
+    _validate_resurfacing_source_counts(source_counts, issues)
+
+    records: list[dict] = []
+    retained_source_counts: dict[str, int] = {}
+    seen_ids: set[str] = set()
+    for position, record in enumerate(programs):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_program_record",
+                    "message": f"programs[{position}] must be an object",
+                }
+            )
+            continue
+        normalized = _validate_resurfacing_program_record(
+            record,
+            position,
+            metric_order,
+            issues,
+        )
+        if normalized is None:
+            continue
+        program_id = normalized["program_id"]
+        if program_id in seen_ids:
+            issues.append(
+                {
+                    "code": "duplicate_program_id",
+                    "message": "resurfacing index programs must be unique",
+                }
+            )
+        seen_ids.add(program_id)
+        for source in normalized["source_names"]:
+            retained_source_counts[source] = retained_source_counts.get(source, 0) + 1
+        records.append(normalized["record"])
+
+    if retained_count is not None and retained_count != len(programs):
+        issues.append(
+            {
+                "code": "retained_count_mismatch",
+                "message": "retained_count must equal programs length",
+            }
+        )
+    if candidate_count is not None and candidate_count < len(programs):
+        issues.append(
+            {
+                "code": "candidate_count_mismatch",
+                "message": "candidate_count cannot be smaller than programs length",
+            }
+        )
+    if retention_limit is not None and len(programs) > retention_limit:
+        issues.append(
+            {
+                "code": "retention_limit_exceeded",
+                "message": "retained programs exceed retention_limit",
+            }
+        )
+    if (
+        program_count_considered is not None
+        and candidate_count is not None
+        and candidate_count > program_count_considered
+    ):
+        issues.append(
+            {
+                "code": "candidate_count_exceeds_program_count",
+                "message": "candidate_count cannot exceed program_count_considered",
+            }
+        )
+    for source, retained_count_for_source in retained_source_counts.items():
+        count = source_counts.get(source)
+        if (
+            not isinstance(count, int)
+            or isinstance(count, bool)
+            or count < retained_count_for_source
+        ):
+            issues.append(
+                {
+                    "code": "source_count_below_retained_sources",
+                    "message": (
+                        "source_counts must cover retained program source entries"
+                    ),
+                }
+            )
+            break
+    if records and records != sorted(records, key=_resurfacing_index_sort_key):
+        issues.append(
+            {
+                "code": "programs_not_ranked",
+                "message": "programs must be sorted by resurfacing ranking policy",
+            }
+        )
+    return {
+        "schema": RESURFACING_INDEX_SCHEMA,
+        "ok": not issues,
+        "resurfacing_ready": not issues,
+        "durable_database_ready": False,
+        "program_count": len(programs),
+        "metric_order": metric_order,
+        "issues": issues,
     }
 
 
@@ -3123,6 +3310,356 @@ def _resurfacing_index_sort_key(record: dict) -> tuple:
         ),
         str(record.get("program_id", "")),
     )
+
+
+def _resurfacing_issue_if(
+    issues: list[dict],
+    condition: bool,
+    code: str,
+    message: str,
+) -> None:
+    if condition:
+        issues.append({"code": code, "message": message})
+
+
+def _resurfacing_non_negative_int(
+    value: object,
+    field: str,
+    issues: list[dict],
+) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        issues.append(
+            {
+                "code": f"invalid_{field}",
+                "message": f"{field} must be a non-negative integer",
+            }
+        )
+        return None
+    return value
+
+
+def _validate_resurfacing_metric_order(
+    value: object,
+    issues: list[dict],
+) -> list[str]:
+    if not isinstance(value, list):
+        issues.append(
+            {
+                "code": "invalid_metric_order",
+                "message": "metric_order must be a list",
+            }
+        )
+        return []
+    result: list[str] = []
+    seen: set[str] = set()
+    for metric in value:
+        if not isinstance(metric, str) or not metric:
+            issues.append(
+                {
+                    "code": "invalid_metric_order",
+                    "message": "metric_order entries must be non-empty strings",
+                }
+            )
+            continue
+        try:
+            validate_program_metrics({metric: 0.0})
+        except ValueError as exc:
+            issues.append(
+                {
+                    "code": "invalid_metric_order",
+                    "message": str(exc),
+                }
+            )
+            continue
+        if metric in seen:
+            issues.append(
+                {
+                    "code": "duplicate_metric_order",
+                    "message": "metric_order must not contain duplicates",
+                }
+            )
+            continue
+        seen.add(metric)
+        result.append(metric)
+    return result
+
+
+def _validate_resurfacing_limitations(value: object, issues: list[dict]) -> None:
+    if not isinstance(value, list):
+        issues.append(
+            {
+                "code": "invalid_limitations",
+                "message": "limitations must be a list",
+            }
+        )
+        return
+    missing = [
+        item for item in _RESURFACING_INDEX_LIMITATIONS if item not in value
+    ]
+    if missing:
+        issues.append(
+            {
+                "code": "missing_limitations",
+                "message": f"resurfacing index missing limitations: {missing}",
+            }
+        )
+
+
+def _validate_resurfacing_source_counts(
+    value: Mapping,
+    issues: list[dict],
+) -> None:
+    for source, count in value.items():
+        if source not in _RESURFACING_INDEX_SOURCES:
+            issues.append(
+                {
+                    "code": "invalid_source_count_key",
+                    "message": "source_counts contains unsupported source",
+                }
+            )
+        if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+            issues.append(
+                {
+                    "code": "invalid_source_count_value",
+                    "message": "source_counts values must be non-negative integers",
+                }
+            )
+
+
+def _validate_resurfacing_program_record(
+    record: dict,
+    position: int,
+    metric_order: list[str],
+    issues: list[dict],
+) -> dict | None:
+    required = {
+        "program_id",
+        "lineage_root_id",
+        "generation",
+        "fitness",
+        "source_count",
+        "resurfacing_score",
+        "sources",
+    }
+    missing = required - set(record)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_program_fields",
+                "message": f"programs[{position}] missing fields: {sorted(missing)}",
+            }
+        )
+        return None
+    program_id = record.get("program_id")
+    try:
+        validate_program_identity(program_id)
+    except ValueError as exc:
+        issues.append(
+            {
+                "code": "invalid_program_id",
+                "message": str(exc),
+            }
+        )
+        return None
+    lineage_root_id = record.get("lineage_root_id")
+    try:
+        validate_program_identity(lineage_root_id)
+    except ValueError as exc:
+        issues.append(
+            {
+                "code": "invalid_lineage_root_id",
+                "message": str(exc),
+            }
+        )
+    generation = record.get("generation")
+    if isinstance(generation, bool) or not isinstance(generation, int) or generation < 0:
+        issues.append(
+            {
+                "code": "invalid_program_generation",
+                "message": "program generation must be a non-negative integer",
+            }
+        )
+    fitness = record.get("fitness")
+    if not _is_finite_real(fitness):
+        issues.append(
+            {
+                "code": "invalid_program_fitness",
+                "message": "program fitness must be finite",
+            }
+        )
+    selection_score = record.get("selection_score")
+    if selection_score is not None and not _is_finite_real(selection_score):
+        issues.append(
+            {
+                "code": "invalid_program_selection_score",
+                "message": "program selection_score must be finite or null",
+            }
+        )
+    source_count = record.get("source_count")
+    if isinstance(source_count, bool) or not isinstance(source_count, int) or source_count < 0:
+        issues.append(
+            {
+                "code": "invalid_program_source_count",
+                "message": "program source_count must be a non-negative integer",
+            }
+        )
+        source_count = None
+    resurfacing_score = record.get("resurfacing_score")
+    if not _is_finite_real(resurfacing_score) or float(resurfacing_score) < 0.0:
+        issues.append(
+            {
+                "code": "invalid_resurfacing_score",
+                "message": "program resurfacing_score must be finite and non-negative",
+            }
+        )
+        resurfacing_score = None
+    sources = record.get("sources")
+    if not isinstance(sources, list):
+        issues.append(
+            {
+                "code": "invalid_program_sources",
+                "message": "program sources must be a list",
+            }
+        )
+        sources = []
+    source_names = []
+    contribution_sum = 0.0
+    for source_position, source in enumerate(sources):
+        normalized = _validate_resurfacing_source_entry(
+            source,
+            position,
+            source_position,
+            issues,
+        )
+        if normalized is None:
+            continue
+        source_names.append(normalized["source"])
+        contribution_sum += normalized["contribution"]
+    if source_count is not None and source_count != len(sources):
+        issues.append(
+            {
+                "code": "program_source_count_mismatch",
+                "message": "program source_count must equal sources length",
+            }
+        )
+    if resurfacing_score is not None and not math.isclose(
+        float(resurfacing_score),
+        contribution_sum,
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    ):
+        issues.append(
+            {
+                "code": "resurfacing_score_mismatch",
+                "message": "resurfacing_score must equal summed source contributions",
+            }
+        )
+    _validate_resurfacing_optional_objective_fields(
+        record,
+        metric_order,
+        position,
+        issues,
+    )
+    return {"record": record, "program_id": str(program_id), "source_names": source_names}
+
+
+def _validate_resurfacing_source_entry(
+    source: object,
+    program_position: int,
+    source_position: int,
+    issues: list[dict],
+) -> dict | None:
+    if not isinstance(source, dict):
+        issues.append(
+            {
+                "code": "invalid_source_entry",
+                "message": (
+                    f"programs[{program_position}].sources[{source_position}] "
+                    "must be an object"
+                ),
+            }
+        )
+        return None
+    source_name = source.get("source")
+    if source_name not in _RESURFACING_INDEX_SOURCES:
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "resurfacing source is unsupported",
+            }
+        )
+    source_key = source.get("source_key")
+    if not isinstance(source_key, str) or not source_key:
+        issues.append(
+            {
+                "code": "invalid_source_key",
+                "message": "resurfacing source_key must be a non-empty string",
+            }
+        )
+    rank = source.get("rank")
+    if isinstance(rank, bool) or not isinstance(rank, int) or rank < 0:
+        issues.append(
+            {
+                "code": "invalid_source_rank",
+                "message": "resurfacing source rank must be a non-negative integer",
+            }
+        )
+    contribution = source.get("contribution")
+    if not _is_finite_real(contribution) or float(contribution) <= 0.0:
+        issues.append(
+            {
+                "code": "invalid_source_contribution",
+                "message": "resurfacing source contribution must be positive and finite",
+            }
+        )
+        return None
+    return {"source": str(source_name), "contribution": float(contribution)}
+
+
+def _validate_resurfacing_optional_objective_fields(
+    record: dict,
+    metric_order: list[str],
+    position: int,
+    issues: list[dict],
+) -> None:
+    if "objective_vector" in record:
+        objective = record["objective_vector"]
+        if not isinstance(objective, dict):
+            issues.append(
+                {
+                    "code": "invalid_objective_vector",
+                    "message": f"programs[{position}].objective_vector must be an object",
+                }
+            )
+            return
+        normalized = objective.get("normalized_metrics")
+    else:
+        normalized = record.get("normalized_metrics")
+    if normalized is None:
+        return
+    if not isinstance(normalized, dict):
+        issues.append(
+            {
+                "code": "invalid_normalized_metrics",
+                "message": f"programs[{position}] normalized metrics must be an object",
+            }
+        )
+        return
+    for metric, value in normalized.items():
+        if metric_order and metric not in metric_order:
+            issues.append(
+                {
+                    "code": "normalized_metric_not_in_metric_order",
+                    "message": "normalized metric must be listed in metric_order",
+                }
+            )
+        if not _is_finite_real(value) or not 0.0 <= float(value) <= 1.0:
+            issues.append(
+                {
+                    "code": "invalid_normalized_metric_value",
+                    "message": "normalized metric values must be finite in [0, 1]",
+                }
+            )
 
 
 def _failure_index_snapshot(

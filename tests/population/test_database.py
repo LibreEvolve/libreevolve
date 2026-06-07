@@ -29,6 +29,7 @@ from libreevolve.core.database import (
     _program_from_history_record,
     validate_archive_event_replay_audit,
     validate_archive_state_snapshot,
+    validate_resurfacing_index_summary,
     validate_run_directory_path,
 )
 from libreevolve.core.jsonl import StrictJsonlError
@@ -142,6 +143,75 @@ def test_objective_frontier_snapshot_keeps_non_dominated_declared_metrics(tmp_pa
     assert "dominated" not in {
         record["program_id"] for record in snapshot["programs"]
     }
+
+
+def test_resurfacing_index_summary_validates_rank_fusion_snapshot(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    first = Program(
+        id="first",
+        code="x = 1\n",
+        fitness=0.9,
+        metrics={"score": 0.9},
+        evaluation={"is_valid": True},
+        metadata={"normalized_metrics": {"score": 0.9}, "selection_score": 0.9},
+    )
+    second = Program(
+        id="second",
+        code="x = 2\n",
+        fitness=0.5,
+        metrics={"score": 0.5},
+        evaluation={"is_valid": True},
+        metadata={"normalized_metrics": {"score": 0.5}, "selection_score": 0.5},
+    )
+    db.log(first)
+    db.log(second)
+
+    snapshot = db.resurfacing_index_snapshot()
+    validation = validate_resurfacing_index_summary(snapshot)
+
+    assert snapshot["schema"] == "libreevolve.resurfacing_index.v1"
+    assert validation["ok"] is True
+    assert validation["resurfacing_ready"] is True
+    assert validation["durable_database_ready"] is False
+    assert validation["program_count"] == len(snapshot["programs"])
+    assert validation["metric_order"] == ["score"]
+    assert validation["issues"] == []
+
+
+def test_resurfacing_index_summary_rejects_overclaims_and_bad_rank_data(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    for index, score in enumerate([0.9, 0.5]):
+        db.log(
+            Program(
+                id=f"candidate_{index}",
+                code=f"x = {index}\n",
+                fitness=score,
+                metrics={"score": score},
+                evaluation={"is_valid": True},
+                metadata={
+                    "normalized_metrics": {"score": score},
+                    "selection_score": score,
+                },
+            )
+        )
+    snapshot = db.resurfacing_index_snapshot()
+    snapshot["policy"] = "persisted_cross_run_embedding_database"
+    snapshot["limitations"] = []
+    snapshot["source_counts"]["score"] = 0
+    snapshot["programs"] = list(reversed(snapshot["programs"]))
+    snapshot["programs"][0]["resurfacing_score"] = 999.0
+
+    validation = validate_resurfacing_index_summary(snapshot)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["ok"] is False
+    assert validation["resurfacing_ready"] is False
+    assert validation["durable_database_ready"] is False
+    assert "invalid_policy" in codes
+    assert "missing_limitations" in codes
+    assert "source_count_below_retained_sources" in codes
+    assert "resurfacing_score_mismatch" in codes
+    assert "programs_not_ranked" in codes
 
 
 def test_objective_metric_leaders_snapshot_reports_declared_metric_elites(tmp_path):

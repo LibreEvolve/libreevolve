@@ -782,7 +782,13 @@ Primary evidence:
     `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,
     redaction, skipped-file, stage, and content-excerpt evidence, includes valid
     artifact-bearing candidates in `resurfacing_index`, and can restore
-    cells/elites from a manifest plus accepted history bundle. However, these
+    cells/elites from a manifest plus accepted history bundle.
+    `validate_resurfacing_index_summary()` now validates
+    `libreevolve.resurfacing_index.v1` records for schema/policy, required
+    limitation statements, source-count and retained-count consistency,
+    manifest-safe program ids, finite scores, source contribution sums,
+    supported source records, normalized objective evidence, and deterministic
+    ranking order while keeping `durable_database_ready: false`. However, these
     are still append-only logs plus an in-memory archive and manifest-visible
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,
@@ -794,7 +800,8 @@ Primary evidence:
     scaffolding rather than a ranked cross-run database. The compact `show`
     path intentionally rejects mixed legacy/current history schemas with a
     line-numbered diagnostic instead of migrating them into one compatible
-    database view.
+    database view. The remaining gap is not validation of the current bounded
+    resurfacing-index record.
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, ranked views by
     score/metric/diversity/feedback/lineage/failure/hypothesis/artifact

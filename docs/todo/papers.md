@@ -91,7 +91,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     token-cost estimates, and executed equal-budget benchmark scripts are still
     missing.
     `libreevolve.alphaevolve_ablation_report.v1` now defines and tests an
-    executed ablation-result contract for all six Figure 8 variants, declared
+    executed-ablation report contract for all six Figure 8 variants, declared
     targets, exactly three seeds, required equal-budget fractions, finite
     scores, consumed-budget/fraction consistency, consistent budget unit/limit
     per seed curve and across all variants/seeds for each target, passed

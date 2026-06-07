@@ -458,7 +458,11 @@ explicit validated built-in backend surface for OpenAI `base_url`,
 accepted values are recorded in manifests plus call `client_context`
 telemetry. Omitted fields still inherit SDK/environment defaults, so
 unconfigured proxy hosts, organizations/projects, API hosts, and local Ollama
-server selection remain outside self-describing artifacts.
+server selection remain outside self-describing artifacts. There is also no
+first-class Google/Gemini backend yet, so AlphaEvolve's published Gemini 2.0
+Flash/Gemini 2.0 Pro model mix currently requires either a custom backend with
+separate evidence or a future provider/plugin contract before it can be treated
+as provider-parity reproduction evidence.
 
 LLM feedback artifact note: successful and failed feedback records can keep
 compatibility `raw_response` and parsed `feedback` previews, suppress them to

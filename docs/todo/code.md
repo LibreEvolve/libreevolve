@@ -1514,6 +1514,25 @@ Primary evidence:
     controller-event, ledger, runtime budget-report telemetry, and focused
     `throughput_depth` unit coverage.
 
+- [ ] Add first-class Google/Gemini backend parity for AlphaEvolve model-mix
+      reproduction.
+  - Spec evidence: AlphaEvolve Section 2.3/2.4 says the published system used
+    an ensemble of Gemini 2.0 Flash and Gemini 2.0 Pro so low-latency Flash
+    could generate high-volume candidates while Pro occasionally supplied
+    stronger suggestions.
+  - Current evidence: `builtin_backend_registry()` exposes only `openai`,
+    `anthropic`, and `ollama` built-in constructors; backend validation accepts
+    those types plus `custom`. A custom backend can be written by users, but it
+    does not provide a first-class Google/Gemini config surface, provider-native
+    usage/default/capability telemetry, credential preflight, or Flash/Pro lane
+    labels that the paper-facing scheduler reports can validate.
+  - Required result: add a built-in Google/Gemini backend or an explicitly
+    equivalent provider plugin contract with model-family capability metadata,
+    credential/client preflight, safe request/usage/default telemetry,
+    provider-diagnostic retention policy, and tests/reports that can reproduce
+    or intentionally substitute the paper's Flash/Pro fast/strong ensemble
+    without hiding behind an opaque custom backend.
+
 - [ ] Promote role-scoped LLM routing from shared-bandit audit evidence to
   independent per-role scheduler policy.
   - Spec evidence: AlphaEvolve's ensemble and compute-budget framing separates

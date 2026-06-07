@@ -581,6 +581,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     role-scoped backend eligibility nor overclaims AlphaEvolve-style role or
     model-mix scheduling.
 
+- [ ] Keep README provider claims explicit about missing Google/Gemini
+      first-class support.
+  - Spec evidence: AlphaEvolve's published model mix uses Gemini 2.0 Flash and
+    Gemini 2.0 Pro for fast/strong scheduling.
+  - Current evidence: README can accurately describe OpenAI, Anthropic,
+    Ollama, and custom backend support, but the built-in registry does not
+    include a Google/Gemini backend. A custom backend is not the same as
+    first-class provider telemetry, credential preflight, capability evidence,
+    or Flash/Pro lane labeling.
+  - Required result: if Gemini support or an equivalent provider-plugin
+    contract lands, update README, ROADMAP, papers index, and code/paper TODOs
+    so provider claims distinguish generic extensibility from reproducing or
+    deliberately substituting AlphaEvolve's Gemini Flash/Pro ensemble.
+
 - [ ] Keep README critique-reviewer wording scoped to synchronous first/last
   valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

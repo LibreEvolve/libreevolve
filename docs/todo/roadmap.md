@@ -677,6 +677,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current focused `throughput_depth` coverage nor overclaims
     AlphaEvolve-grade model-scheduling validation.
 
+- [ ] Keep provider-roadmap wording explicit about missing Google/Gemini
+      first-class support.
+  - Spec evidence: AlphaEvolve's concrete model ensemble uses Gemini 2.0 Flash
+    and Gemini 2.0 Pro, not only an abstract fast/deep backend pair.
+  - Current evidence: ROADMAP describes existing or custom LLM choices and
+    fast/deep scheduler validation, while the code's built-in backend registry
+    is OpenAI, Anthropic, and Ollama only. The `custom` backend escape hatch is
+    not equivalent to a self-describing Google/Gemini provider surface.
+  - Required result: when a Gemini backend, provider-plugin contract, or
+    explicit paper-level substitute lands, update ROADMAP, README, papers
+    index, and code/paper TODOs so roadmap language separates generic backend
+    extensibility from AlphaEvolve's published Flash/Pro provider parity.
+
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

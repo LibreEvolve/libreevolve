@@ -67,6 +67,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
     Flash/Pro scheduling evidence.
 
+- [ ] Track Google/Gemini provider parity separately from generic backend
+      configurability.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3/2.4, "Models used".
+  - Requirement: the published AlphaEvolve ensemble used Gemini 2.0 Flash and
+    Gemini 2.0 Pro; a reproduction-oriented implementation should either
+    provide a first-class Google/Gemini backend surface or explicitly document
+    an equivalent substitute with comparable capability and telemetry evidence.
+  - Partial status: LibreEvolve supports multiple built-in providers through
+    OpenAI, Anthropic, and Ollama, plus custom backend class paths.
+  - Current gap: no built-in Google/Gemini backend exists, and `custom`
+    backends do not by themselves supply provider-native usage/default
+    telemetry, account/model capability evidence, credential preflight, or
+    Flash/Pro lane labels for scheduler-validation reports.
+  - Required result: add a Gemini backend or provider-plugin contract with
+    safe request metadata, usage/default diagnostics, model-family capability
+    policy, credential/client preflight, and paper-facing evidence that the
+    fast/strong model mix is reproduced or intentionally substituted.
+
 - [ ] Add AlphaEvolve-grade candidate language, build, and runner contracts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: tasks define the program artifact and evaluator interface; a

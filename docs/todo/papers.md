@@ -998,6 +998,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     confidence or p-value outputs, sequential stopping diagnostics, and
     promotion/rejection linkage from small-scale filters to main test cases.
 
+- [ ] Track qualitative LLM-feedback criterion provenance.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
+  - Requirement: LLM-generated feedback can grade solution characteristics that
+    are difficult to capture precisely in the user-provided evaluator, such as
+    simplicity, and can either add those grades to the score dictionary or
+    discard candidates that fail the criterion.
+  - Partial status: LibreEvolve has optional LLM feedback graders with bounded
+    prompts, parsed scores, normalized bounds/direction, weighted fitness
+    deltas, discard/min-score behavior, failure policies, objective
+    feedback-sourced metrics, feedback-index summaries, and calibration-report
+    validators.
+  - Current gap: paper-facing status does not require each grader to declare
+    the qualitative property it represents, why that property is outside or
+    impractical for the evaluator, whether it is intended as a score,
+    discard gate, or both, or how the rubric/prompt, metric linkage,
+    calibration evidence, and prompt-history rows prove AlphaEvolve-style
+    qualitative feedback rather than generic post-evaluation LLM scoring.
+  - Required result: add report/manifest evidence for qualitative feedback
+    criteria: criterion label and rationale, rubric/prompt artifact hash,
+    score-or-discard intent, metric linkage, calibration/task-suite linkage,
+    prompt-history linkage, and validation examples for hard-to-code properties
+    such as simplicity.
+
 - [ ] Track natural-language proposal preambles separately from structured
       proposal metadata.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.

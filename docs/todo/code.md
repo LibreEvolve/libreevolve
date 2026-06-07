@@ -995,6 +995,31 @@ Primary evidence:
     repeated-seed candidates are promoted or rejected by a hypothesis-testing
     rule rather than only by fixed scalar thresholds.
 
+- [ ] Add qualitative LLM-feedback criterion provenance.
+  - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
+    grade desirable characteristics that are difficult to capture precisely in
+    the user-provided evaluation function, such as program simplicity; those
+    grades can be added as scores to steer evolution or used to discard
+    candidates when a criterion is not fulfilled.
+  - Current evidence: `apply_llm_feedback()` supports configured graders,
+    bounded/redacted full-workspace feedback prompts, JSON or explicit-score
+    parsing, normalized score bounds/direction, weighted fitness deltas,
+    `discard`, `min_score`, `include_invalid`, failure policies/retries, and
+    `objective_metric: true` filling for declared non-primary
+    `source: feedback` metrics. Runtime histories and manifests can expose
+    bounded feedback records, and calibration-report validators can check
+    declared grader calibration evidence. However, grader configs do not record
+    the qualitative property being judged, why the property is hard to encode
+    in `evaluate()`, whether the intended action is score augmentation,
+    discard gating, or both, or how the grader rubric maps to the evaluator
+    metric schema and prompt-visible evidence.
+  - Required result: add versioned qualitative-feedback policy metadata and
+    validation for each grader: criterion name/description, evaluator-gap
+    rationale, rubric or prompt artifact hash, score-versus-discard intent,
+    metric linkage, calibration/report linkage, prompt-history linkage, and
+    tests/docs proving qualitative criteria such as simplicity are explicitly
+    governed rather than implicit free-form grader prompts.
+
 - [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on
     a single new solution when evaluation is parallelized.

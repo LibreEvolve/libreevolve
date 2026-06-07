@@ -745,6 +745,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
+- [ ] Track natural-language proposal preambles separately from structured
+      proposal metadata.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.
+  - Requirement: AlphaEvolve examples can include explanatory natural-language
+    reasoning before the SEARCH/REPLACE edit payload, while the edit itself is
+    still carried by structured diff blocks.
+  - Partial status: LibreEvolve captures bounded structured `IDEA`,
+    `RATIONALE`, and `HYPOTHESIS` proposal metadata before mutation payloads.
+  - Current gap: ordinary prose around valid diff/block/workspace-file
+    sections is rejected with `malformed_diff:unconsumed_text`; this is stricter
+    than the explanatory preamble shown before the Figure 3(c) diff example.
+  - Required result: either support bounded explanatory preambles with
+    redaction/provenance and tests, or keep the paper index, README, ROADMAP,
+    and code TODOs explicit that LibreEvolve requires structured proposal
+    metadata rather than arbitrary natural-language patch rationale.
+
 - [ ] Complete full validator-metadata rendering and provider-token prompt
   packing.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

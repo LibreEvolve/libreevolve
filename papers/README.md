@@ -492,7 +492,10 @@ as a structured mutation-response preamble. Short `IDEA:`, `RATIONALE:`, and
 `[RATIONALE]...[/RATIONALE]`, and `[HYPOTHESIS]...[/HYPOTHESIS]` blocks are
 stored as proposal metadata, while ambiguous wrapped colon-style metadata
 before later proposal markers is rejected before mutation application rather
-than silently becoming candidate code.
+than silently becoming candidate code. Ordinary natural-language explanation
+before or after mutation sections is still rejected unless it uses those
+structured proposal fields, which is stricter than the explanatory preamble
+shown before the Figure 3(c) AlphaEvolve diff example.
 
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive

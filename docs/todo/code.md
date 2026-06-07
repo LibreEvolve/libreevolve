@@ -1109,6 +1109,27 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
+- [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
+      preambles.
+  - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts
+    with natural-language explanation about the current model before
+    SEARCH/REPLACE diff blocks, while Section 2.3 defines diff blocks as the
+    code-edit payload.
+  - Current evidence: `apply_diff()` accepts compact and canonical
+    SEARCH/REPLACE blocks and allows only structured leading
+    `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata outside those blocks.
+    Tests intentionally reject ordinary prose around a valid diff with
+    `malformed_diff:unconsumed_text`, and full/workspace mutation paths also
+    reject prose around block or file sections. The prompt currently says
+    "No extra explanation" and README documents that text outside mutation
+    sections must be proposal metadata.
+  - Required result: decide whether AlphaEvolve-style explanatory preambles
+    should be accepted, normalized into bounded proposal metadata, or remain
+    a documented strict LibreEvolve divergence. If accepted, add parser tests,
+    prompt wording, provenance/redaction policy, and TODO/README/paper-index
+    updates that distinguish safe proposal rationale capture from arbitrary
+    unparsed prose.
+
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs

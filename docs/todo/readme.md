@@ -399,6 +399,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     underclaims current proposal metadata capture nor overclaims
     AlphaEvolve-grade idea memory.
 
+- [ ] Keep README mutation-response wording scoped to structured proposal
+      metadata versus natural-language preambles.
+  - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory natural-language
+    text before a SEARCH/REPLACE diff example.
+  - Current evidence: README accurately says text outside mutation payload
+    sections must be proposal metadata; code accepts bounded structured fields
+    and rejects ordinary prose around valid diff/block/workspace-file sections.
+  - Required result: if LibreEvolve later accepts explanatory preambles, update
+    README, ROADMAP, papers index, and code/paper TODOs with the exact parser
+    boundary, redaction/provenance behavior, and distinction between safe
+    proposal metadata and arbitrary unparsed prose.
+
 - [ ] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated

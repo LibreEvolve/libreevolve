@@ -451,6 +451,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so they neither underclaim current bounded
     hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
 
+- [ ] Keep mutation-response roadmap wording scoped to structured proposal
+      metadata versus natural-language preambles.
+  - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a
+    SEARCH/REPLACE diff example, while Section 2.3 still defines the edit
+    payload through structured diff blocks.
+  - Current evidence: LibreEvolve roadmap claims should distinguish supported
+    structured proposal metadata from ordinary explanatory prose. Current code
+    accepts bounded `IDEA`/`RATIONALE`/`HYPOTHESIS` fields but rejects prose
+    around valid mutation sections.
+  - Required result: when response parsing supports safe explanatory
+    preambles, or when strict structured-metadata divergence is documented as
+    policy, update ROADMAP, README, papers index, and code/paper TODOs
+    together so they do not imply AlphaEvolve-style freeform rationale parsing
+    already exists.
+
 - [ ] Keep database-query-index follow-up wording scoped to run-local
       resurfacing versus durable cross-run indexes.
   - Spec evidence: AlphaEvolve's program database should support durable

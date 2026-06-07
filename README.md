@@ -3095,6 +3095,9 @@ variants/seeds for each target, passed component assertions, and hashed curve
 artifacts. It does not yet require Figure 8 target-family coverage or
 target-metric identity, higher-is-better direction, normalization, and
 aggregation metadata for the plotted y-axis. It also does not prove the
+`No evolution` condition by checking executed prompt/history records for the
+same initial program and absent evolutionary database parent, inspiration,
+previous-candidate, and archive-feedback context. It also does not prove the
 `No context in the prompt` condition by checking executed prompt history for
 absent explicit context, prior-program/inspiration context, failure feedback,
 and plugin context. It validates report shape only; it does not run ablation

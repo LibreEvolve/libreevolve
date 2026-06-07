@@ -217,10 +217,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `archive_admission_enabled`, `prompt_context_sections`,
     `candidate_workspace_mode`, `file_create_delete_enabled`,
     `ensemble_strategy: single_backend`, and `backend_capability_tier`. The
-    registry also does not yet prove the `No context in the prompt` setup where
-    prompt-visible explicit context, sampled prior-program/inspiration context,
-    recent failure feedback, and plugin context are actually absent in executed
-    prompt history. It also does not yet prove the
+    registry also does not yet prove the `No evolution` setup where every
+    prompt is built from the same initial program without database-selected
+    parents, inspirations, previous-candidate feedback, or archive admission
+    feedback. It also does not yet prove the `No context in the prompt` setup
+    where prompt-visible explicit context, sampled prior-program/inspiration
+    context, recent failure feedback, and plugin context are actually absent in
+    executed prompt history. It also does not yet prove the
     paper-specific `No full-file evolution` setup where only the tensor
     decomposition loss function is evolved; generic single-file/diff/no-topology
     labels should not be described as equivalent to that ablation.
@@ -237,6 +240,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     overclaims AlphaEvolve-style executed ablations. For `No full-file
     evolution`, require README wording to distinguish a real loss-function-only
     tensor-decomposition harness from broader localized-edit settings. Require
+    README wording to distinguish `No evolution` registry labels from executed
+    evidence that the same initial program was repeatedly prompted without
+    evolutionary database feedback. Require
     README wording to distinguish `No context in the prompt` registry labels
     from executed prompt-history evidence that context sources and feedback
     sections were absent. Require README wording to distinguish generic

@@ -1344,6 +1344,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     variants, bind every component assertion to executable runtime controls,
     collect intermediate progress from real experiments, or generate
     equal-budget reports from executable benchmark scripts.
+    For `No evolution`, the current registry does not prove that every prompt
+    repeatedly feeds the same initial program with no database-selected parent,
+    inspiration, previous-candidate feedback, or archive-feedback context.
     For `No context in the prompt`, the current registry does not prove that
     executed prompts omitted explicit context files, sampled prior-program or
     inspiration context, recent failure feedback, and plugin context; it only
@@ -1364,7 +1367,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     update the roadmap, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims the current ablation
     report contract nor overclaims repeatable AlphaEvolve-grade benchmark
-    execution. Ensure the `No context in the prompt` harness records prompt
+    execution. Ensure the `No evolution` harness records prompt/history
+    evidence that the same initial program was used for every proposal and
+    that evolutionary database feedback was absent. Ensure the
+    `No context in the prompt` harness records prompt
     history or diagnostics proving absent explicit context, parent/inspiration
     context, recent failure feedback, and plugin context. Ensure the
     `No full-file evolution` harness records the

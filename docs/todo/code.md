@@ -1970,11 +1970,14 @@ Primary evidence:
     config/runtime bindings for every Figure 8 component assertion and keep
     the full-system baseline distinct from the five component-disabled
     ablations before any ablation runner treats the current registry as
-    runnable experiment policy. For `No context in the prompt`, add runner and
-    prompt-history checks proving explicit context files, parent/inspiration
-    program context, recent failure feedback, and plugin context are actually
-    absent from rendered prompts, not only disabled by definition-only registry
-    labels.
+    runnable experiment policy. For `No evolution`, add runner and history
+    checks proving the same initial program is repeatedly fed to the LLM and
+    no generated program is selected from the evolutionary database as parent,
+    inspiration, or archive-feedback context. For `No context in the prompt`,
+    add runner and prompt-history checks proving explicit context files,
+    parent/inspiration program context, recent failure feedback, and plugin
+    context are actually absent from rendered prompts, not only disabled by
+    definition-only registry labels.
 
 - [ ] Bind the `No full-file evolution` ablation to loss-function-only
       tensor-decomposition controls.

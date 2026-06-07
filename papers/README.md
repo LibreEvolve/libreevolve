@@ -61,7 +61,10 @@ metadata, but it does not claim those reports have been run. Its
 `No full-file evolution` row is not yet bound to the paper's
 tensor-decomposition loss-function-only ablation; the current labels are
 definition-only component assertions, not executable proof that only the loss
-function is mutable. The `No context in the prompt` row likewise has no
+function is mutable. The `No evolution` row has no executed prompt/history
+proof that each proposal repeatedly starts from the same initial program
+without evolutionary-database parent, inspiration, previous-candidate, or
+archive-feedback context. The `No context in the prompt` row likewise has no
 executed prompt-history proof that explicit context, prior-program/inspiration
 context, failure feedback, and plugin context were absent from rendered
 prompts. The report contract is also target-family generic: it

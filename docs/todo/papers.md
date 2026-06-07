@@ -390,7 +390,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     or fail when a named assertion is only declarative. For the `No full-file
     evolution` variant, require loss-function-only tensor-decomposition scope
     evidence rather than treating generic single-file/diff/no-topology settings
-    as equivalent. For the `No context in the prompt` variant, require executed
+    as equivalent. For the `No evolution` variant, require executed prompt and
+    history proof that each candidate is generated from the same initial
+    program with no database-selected parent/inspiration programs, archive
+    admission feedback, or previous-candidate resurfacing, rather than relying
+    on declarative `candidate_source` or `archive_admission_enabled` labels.
+    For the `No context in the prompt` variant, require executed
     prompt-history and prompt-diagnostic proof that explicit context files,
     sampled prior-program/inspiration context, recent failure feedback, and
     plugin context were absent, rather than relying on the registry's

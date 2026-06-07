@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add runtime LLM provider diagnostics aggregate.
+  - Spec evidence: AlphaEvolve-scale search needs attributable provider
+    usage, retry, cost-estimate, and diagnostics evidence instead of only
+    final proposal text.
+  - Status: `LLMEnsemble.provider_diagnostics_summary` now emits
+    `libreevolve.llm_provider_diagnostics.v1` over retained LLM call history,
+    grouping by backend index/name and API mode with call outcomes, provider
+    usage totals, bounded diagnostic item/key counts, omitted diagnostic
+    counts, configured cost-estimate counts, not-estimated reasons, backend
+    default API modes, retention metadata, limitations, and a records hash.
+    Final manifests attach this under `runtime.llm_provider_diagnostics`.
+  - Remaining gap: this is retained-call-history-only bounded scalar evidence;
+    it does not fetch live pricing, retain raw provider payloads, or provide
+    remote provider-side default snapshots outside adapter telemetry.
+  - Verification: focused ensemble and loop tests cover aggregate contents and
+    the no-mutation-LLM fallback manifest record.
+
 - [x] Verify concrete matrix result publication artifact inventories.
   - Spec evidence: AlphaEvolve matrix publications point to exact algorithms,
     certificates, and notebook/export artifacts; declared report metadata needs

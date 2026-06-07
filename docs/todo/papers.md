@@ -133,7 +133,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     retry, provider-attempt, token, configured estimated cost, retained LLM
     latency, and scheduler-resume-hash evidence plus self-validation, and
     retained LLM call-history rows now provide per-call provider-internal retry
-    records grouped by role plus configured-cost source metadata. The budget
+    records grouped by role plus configured-cost source metadata. Final
+    manifests also emit `runtime.llm_provider_diagnostics` using
+    `libreevolve.llm_provider_diagnostics.v1`, a retained-call-history
+    aggregate that groups backend/API-mode usage, bounded provider diagnostic
+    keys and omitted counts, configured cost-estimate evidence,
+    not-estimated reasons, backend defaults, call-history retention, and a
+    records hash while explicitly avoiding any live-pricing claim. The budget
     report contract
     now rejects restored-state claims that lack persisted resume-state
     evidence. Focused ensemble tests now cover fake provider usage counts and

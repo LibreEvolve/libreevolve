@@ -12,6 +12,7 @@ from libreevolve.core.prompt import PromptSampler
 from libreevolve.llm.ensemble import (
     LLMCallLedgerError,
     LLMEnsemble,
+    LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
     LLMRoleCallLimitError,
     ProviderCallTimeoutError,
     ProviderResponseError,
@@ -2889,6 +2890,92 @@ def test_generate_records_configured_provider_cost_estimate():
         "live_pricing_status": "not_fetched",
     }
     assert ens.scheduler_state["role_accounting"]["mutation"]["cost_microusd"] == 10000
+
+
+def test_provider_diagnostics_summary_aggregates_retained_call_history():
+    class DiagnosticsBackend:
+        name = "diagnostics"
+        api_mode = "chat"
+        backend_defaults = {
+            "policy": "effective_backend_generation_defaults_v1",
+            "api_mode": "chat",
+            "api_mode_policy": "configured",
+            "max_tokens": 4096,
+            "provider_max_retries": 2,
+            "timeout_sec": None,
+            "reasoning_effort": None,
+        }
+        provider_response_metadata = {
+            "usage": {
+                "input_tokens": 3,
+                "output_tokens": 5,
+                "total_tokens": 8,
+            },
+            "provider_diagnostics": {
+                "system_fingerprint": "fp_safe",
+                "duration_ms": 12,
+            },
+        }
+
+        def generate(self, prompt, **kwargs):
+            return "answer"
+
+    ens = LLMEnsemble(
+        [DiagnosticsBackend()],
+        backend_metadata=[{"cost_usd_per_million_tokens": 2.5}],
+    )
+
+    ens.generate("prompt text", role="mutation")
+
+    summary = ens.provider_diagnostics_summary
+    assert summary["schema"] == LLM_PROVIDER_DIAGNOSTICS_SCHEMA
+    assert summary["status"] == "snapshot"
+    assert summary["source"] == "LLMEnsemble.call_history"
+    assert summary["totals"] == {
+        "call_count": 1,
+        "usage_record_count": 1,
+        "provider_diagnostics_record_count": 1,
+        "provider_diagnostic_item_count": 2,
+        "provider_diagnostic_omitted_item_count": 0,
+        "cost_estimate_count": 1,
+        "cost_not_estimated_count": 0,
+        "configured_pricing_estimate_count": 1,
+        "live_pricing_record_count": 0,
+        "backend_defaults_record_count": 1,
+    }
+    assert summary["backend_count"] == 1
+    backend = summary["backends"][0]
+    assert backend == {
+        "backend_idx": 0,
+        "backend_name": "diagnostics",
+        "api_mode": "chat",
+        "calls": 1,
+        "successes": 1,
+        "failures": 0,
+        "usage_record_count": 1,
+        "input_tokens": 3,
+        "output_tokens": 5,
+        "total_tokens": 8,
+        "provider_diagnostics_record_count": 1,
+        "provider_diagnostic_item_count": 2,
+        "provider_diagnostic_omitted_item_count": 0,
+        "diagnostic_keys": {"duration_ms": 1, "system_fingerprint": 1},
+        "cost_estimate_count": 1,
+        "cost_not_estimated_count": 0,
+        "configured_pricing_estimate_count": 1,
+        "live_pricing_record_count": 0,
+        "cost_status_reasons": {
+            "estimated_from_configured_rate_and_provider_total_tokens": 1,
+        },
+        "backend_defaults_record_count": 1,
+        "backend_default_api_modes": {"chat": 1},
+    }
+    assert len(summary["records_sha256"]) == 64
+    assert summary["limitations"] == [
+        "retained_call_history_window_only",
+        "bounded_scalar_provider_diagnostics_not_raw_payloads",
+        "configured_cost_estimates_not_live_provider_pricing",
+    ]
 
 
 def test_generate_records_provider_cost_estimate_status_without_configured_rate():

@@ -48,7 +48,7 @@ from libreevolve.core.loop import (
 )
 from libreevolve.core.meta_prompt import PromptDatabase, PromptProgram
 from libreevolve.core.prompt import DEFAULT_TEMPLATE
-from libreevolve.llm.ensemble import LLMEnsemble
+from libreevolve.llm.ensemble import LLMEnsemble, LLM_PROVIDER_DIAGNOSTICS_SCHEMA
 from libreevolve.llm.budget_report import (
     LLM_BUDGET_REPORT_SCHEMA,
     validate_llm_budget_report,
@@ -903,6 +903,11 @@ def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():
         "status": "not_initialized",
         "schema": "libreevolve.llm_accounting.v1",
         "policy": "audit_summary_not_budget_enforced",
+        "reason": "no_mutation_llm_was_constructed",
+    }
+    assert manifest["runtime"]["llm_provider_diagnostics"] == {
+        "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+        "status": "not_initialized",
         "reason": "no_mutation_llm_was_constructed",
     }
 

@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible runtime LLM provider diagnostics aggregate.
+  - Paper evidence: AlphaEvolve-style compute budgeting and provider
+    orchestration require auditable evidence for which backend/API mode
+    produced usage, diagnostics, retry, and cost-estimate signals.
+  - Status: final runtime manifests now include
+    `runtime.llm_provider_diagnostics` with schema
+    `libreevolve.llm_provider_diagnostics.v1`, summarizing retained LLM call
+    history by backend index/name and API mode with provider usage totals,
+    bounded diagnostic key counts, omitted diagnostic counts, configured
+    cost-estimate evidence, not-estimated reasons, backend-default API modes,
+    retention metadata, limitations, and a records hash.
+  - Remaining paper gap: this is bounded local telemetry and configured-cost
+    evidence, not live provider pricing, unbounded raw provider payload
+    retention, or remote provider-default discovery.
+  - Verification: focused ensemble and loop tests cover aggregate contents and
+    zero-generation fallback records.
+
 - [x] Add paper-visible matrix publication artifact inventory verification.
   - Paper evidence: AlphaEvolve Appendix A publishes exact matrix algorithms
     and notebook-linked constructions, so report metadata should verify the

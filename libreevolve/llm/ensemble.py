@@ -52,6 +52,7 @@ DEFAULT_MAX_RESPONSE_CHARS = 100_000
 DEFAULT_MAX_CALL_HISTORY = 500
 DEFAULT_MAX_PROMPT_CHARS: int | None = None
 DEFAULT_REWARD_ACCOUNTED_ROLES = ("mutation",)
+LLM_PROVIDER_DIAGNOSTICS_SCHEMA = "libreevolve.llm_provider_diagnostics.v1"
 PROVIDER_RESPONSE_ERROR_CATEGORIES = {
     "non_text",
     "empty_text",
@@ -371,6 +372,13 @@ class LLMEnsemble:
             "total_records": self._call_history_total_records,
             "dropped_records": self._call_history_dropped_records,
         }
+
+    @property
+    def provider_diagnostics_summary(self) -> dict:
+        return _provider_diagnostics_summary(
+            self._call_history,
+            self.call_history_retention,
+        )
 
     @property
     def backend_metadata(self) -> list[dict]:
@@ -3126,6 +3134,166 @@ def _add_provider_failure_policy_summary(
         value = policy.get(source)
         if isinstance(value, str):
             _increment_summary_counter(role_summary[target], value)
+
+
+def _provider_diagnostics_summary(
+    call_history: list[dict],
+    retention: dict,
+) -> dict:
+    groups: dict[str, dict] = {}
+    totals = {
+        "call_count": len(call_history),
+        "usage_record_count": 0,
+        "provider_diagnostics_record_count": 0,
+        "provider_diagnostic_item_count": 0,
+        "provider_diagnostic_omitted_item_count": 0,
+        "cost_estimate_count": 0,
+        "cost_not_estimated_count": 0,
+        "configured_pricing_estimate_count": 0,
+        "live_pricing_record_count": 0,
+        "backend_defaults_record_count": 0,
+    }
+    for record in call_history:
+        if not isinstance(record, dict):
+            continue
+        group = _provider_diagnostics_group(groups, record)
+        group["calls"] += 1
+        if record.get("status") == "ok":
+            group["successes"] += 1
+        elif record.get("status") == "error":
+            group["failures"] += 1
+        usage = record.get("usage")
+        if isinstance(usage, dict):
+            totals["usage_record_count"] += 1
+            group["usage_record_count"] += 1
+            for source, target in (
+                ("input_tokens", "input_tokens"),
+                ("output_tokens", "output_tokens"),
+                ("total_tokens", "total_tokens"),
+            ):
+                token_count = usage.get(source)
+                if (
+                    isinstance(token_count, int)
+                    and not isinstance(token_count, bool)
+                    and token_count > 0
+                ):
+                    group[target] += token_count
+        diagnostics = record.get("provider_diagnostics")
+        if isinstance(diagnostics, dict):
+            totals["provider_diagnostics_record_count"] += 1
+            group["provider_diagnostics_record_count"] += 1
+            items = diagnostics.get("items")
+            if isinstance(items, list):
+                totals["provider_diagnostic_item_count"] += len(items)
+                group["provider_diagnostic_item_count"] += len(items)
+                for item in items:
+                    if isinstance(item, dict) and isinstance(item.get("key"), str):
+                        _increment_summary_counter(group["diagnostic_keys"], item["key"])
+            omitted_items = diagnostics.get("omitted_items")
+            if (
+                isinstance(omitted_items, int)
+                and not isinstance(omitted_items, bool)
+                and omitted_items > 0
+            ):
+                totals["provider_diagnostic_omitted_item_count"] += omitted_items
+                group["provider_diagnostic_omitted_item_count"] += omitted_items
+        cost_estimate = record.get("cost_estimate")
+        if isinstance(cost_estimate, dict):
+            totals["cost_estimate_count"] += 1
+            group["cost_estimate_count"] += 1
+            source = cost_estimate.get("pricing_source")
+            if source == "configured_backend_metadata":
+                totals["configured_pricing_estimate_count"] += 1
+                group["configured_pricing_estimate_count"] += 1
+            elif source == "live_provider_pricing":
+                totals["live_pricing_record_count"] += 1
+                group["live_pricing_record_count"] += 1
+        cost_status = record.get("cost_estimate_status")
+        if isinstance(cost_status, dict):
+            if cost_status.get("status") == "not_estimated":
+                totals["cost_not_estimated_count"] += 1
+                group["cost_not_estimated_count"] += 1
+            reason = cost_status.get("reason")
+            if isinstance(reason, str):
+                _increment_summary_counter(group["cost_status_reasons"], reason)
+        backend_defaults = record.get("backend_defaults")
+        if isinstance(backend_defaults, dict):
+            totals["backend_defaults_record_count"] += 1
+            group["backend_defaults_record_count"] += 1
+            api_mode = backend_defaults.get("api_mode")
+            if isinstance(api_mode, str):
+                _increment_summary_counter(group["backend_default_api_modes"], api_mode)
+    group_records = []
+    for group in groups.values():
+        group["diagnostic_keys"] = dict(sorted(group["diagnostic_keys"].items()))
+        group["cost_status_reasons"] = dict(sorted(group["cost_status_reasons"].items()))
+        group["backend_default_api_modes"] = dict(
+            sorted(group["backend_default_api_modes"].items())
+        )
+        group_records.append(group)
+    group_records.sort(
+        key=lambda item: (
+            item["backend_idx"] if isinstance(item.get("backend_idx"), int) else 999_999,
+            str(item.get("backend_name", "")),
+            str(item.get("api_mode", "")),
+        )
+    )
+    payload = json.dumps(group_records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+        "policy": "bounded_retained_call_history_provider_diagnostics",
+        "status": "snapshot",
+        "source": "LLMEnsemble.call_history",
+        "call_history_retention": deepcopy(retention),
+        "totals": totals,
+        "backend_count": len(group_records),
+        "backends": group_records,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "limitations": [
+            "retained_call_history_window_only",
+            "bounded_scalar_provider_diagnostics_not_raw_payloads",
+            "configured_cost_estimates_not_live_provider_pricing",
+        ],
+    }
+
+
+def _provider_diagnostics_group(groups: dict[str, dict], record: dict) -> dict:
+    backend_idx = record.get("backend_idx")
+    if isinstance(backend_idx, bool) or not isinstance(backend_idx, int):
+        backend_idx = None
+    backend_name = record.get("backend_name")
+    if not isinstance(backend_name, str) or not backend_name:
+        backend_name = "not_recorded"
+    api_mode = record.get("api_mode")
+    if not isinstance(api_mode, str) or not api_mode:
+        api_mode = "unknown"
+    key = f"{backend_idx}:{backend_name}:{api_mode}"
+    return groups.setdefault(
+        key,
+        {
+            "backend_idx": backend_idx,
+            "backend_name": backend_name,
+            "api_mode": api_mode,
+            "calls": 0,
+            "successes": 0,
+            "failures": 0,
+            "usage_record_count": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "provider_diagnostics_record_count": 0,
+            "provider_diagnostic_item_count": 0,
+            "provider_diagnostic_omitted_item_count": 0,
+            "diagnostic_keys": {},
+            "cost_estimate_count": 0,
+            "cost_not_estimated_count": 0,
+            "configured_pricing_estimate_count": 0,
+            "live_pricing_record_count": 0,
+            "cost_status_reasons": {},
+            "backend_defaults_record_count": 0,
+            "backend_default_api_modes": {},
+        },
+    )
 
 
 def _provider_failure_policy_summary_record(summary: dict[str, dict]) -> dict:

@@ -76,6 +76,7 @@ from libreevolve.core.provenance import (
 )
 from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.llm.ensemble import (
+    LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
     LLMEnsemble,
     build_llm,
     validate_scheduler_state_snapshot,
@@ -1716,6 +1717,7 @@ def _attach_runtime_summaries(
         llm_scheduler,
         llm=llm,
     )
+    runtime["llm_provider_diagnostics"] = _runtime_llm_provider_diagnostics(llm)
     runtime["lineage_replay_policy"] = _runtime_lineage_replay_policy()
     runtime["provider_cancellation_policy"] = _runtime_provider_cancellation_policy(
         config
@@ -2079,6 +2081,40 @@ def _runtime_llm_accounting(config: Config, scheduler_record: dict) -> dict:
         }
     )
     return record
+
+
+def _runtime_llm_provider_diagnostics(llm: object | None) -> dict:
+    if llm is None:
+        return {
+            "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+            "status": "not_initialized",
+            "reason": "no_mutation_llm_was_constructed",
+        }
+    if not isinstance(llm, LLMEnsemble):
+        return {
+            "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+            "status": "unavailable",
+            "reason": "llm_is_not_llm_ensemble",
+            "llm_type": _manifest_safe_type_name(llm),
+        }
+    try:
+        summary = llm.provider_diagnostics_summary
+    except Exception as exc:
+        return {
+            "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+            "status": "invalid",
+            "reason": "provider_diagnostics_summary_failed",
+            "error_type": exc.__class__.__name__,
+            "error": redact_sensitive_text(str(exc))[:_MAX_ABORT_MESSAGE_CHARS],
+        }
+    if isinstance(summary, dict):
+        return summary
+    return {
+        "schema": LLM_PROVIDER_DIAGNOSTICS_SCHEMA,
+        "status": "invalid",
+        "reason": "provider_diagnostics_summary_not_mapping",
+        "summary_type": _manifest_safe_type_name(summary),
+    }
 
 
 def _runtime_llm_budget_report(

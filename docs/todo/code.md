@@ -945,7 +945,15 @@ Primary evidence:
     source, provider usage metadata as the token-count source, and mark the
     estimate as not live provider pricing. Each LLM call also records
     `cost_estimate_status`, including strict not-estimated reasons for missing
-    configured rates or missing/invalid provider token totals.
+    configured rates or missing/invalid provider token totals. Final manifests
+    now also expose `runtime.llm_provider_diagnostics` with schema
+    `libreevolve.llm_provider_diagnostics.v1`, grouping retained call-history
+    rows by backend index/name and API mode with usage totals, bounded
+    provider-diagnostic item/key counts, omitted diagnostic counts, configured
+    cost-estimate/not-estimated counts, backend-default API-mode counts, call
+    history retention, a records hash, and explicit limitations that this is
+    retained-history-only, bounded scalar diagnostics, and configured estimates
+    rather than live pricing.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for

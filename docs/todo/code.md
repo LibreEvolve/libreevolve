@@ -52,7 +52,9 @@ Primary evidence:
     aggregate provider-reported token counts when adapters expose them, and
     `runtime.llm_budget_report` validates observed logical-call, retry,
     adapter-attempt, token, cost, wall-clock, and resume-state shapes while
-    marking `paper_budget_ready: false`. Built-in provider tokenizer discovery
+    marking `paper_budget_ready: false`. `validate_llm_budget_evidence_bundle()`
+    now checks LLM budget reports together with matching resume artifact
+    inventory before accepting bundled paper-budget readiness. Built-in provider tokenizer discovery
     and selected-backend tokenizer wiring are still absent; provider usage is
     observed after calls rather than used automatically for exact provider-token
     pre-call fitting.
@@ -84,7 +86,8 @@ Primary evidence:
     provider-specific oversized workspaces/context/plugins/inspirations/failure
     memory under configured backend/model context-window budgets. The remaining
     gap is automatic selected-backend tokenizer discovery/wiring and complete
-    provider-cost restoration, not validating persisted section-budget records.
+    provider-cost restoration, not validating persisted section-budget records
+    or LLM budget report/resume-artifact bundle consistency.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

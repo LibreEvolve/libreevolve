@@ -15266,3 +15266,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused systems-result tests cover valid AlphaEvolve-ready
     bundles and tampered inventory with mismatched benchmark and missing-record
     counters.
+
+- [x] Add LLM budget evidence bundle validation.
+  - Spec evidence: AlphaEvolve-style compute-budget claims need budget reports
+    and persisted resume evidence to agree before paper-budget readiness can
+    be trusted.
+  - Status: `validate_llm_budget_evidence_bundle()` now validates
+    `libreevolve.llm_budget_report.v1` reports together with
+    `libreevolve.llm_budget_resume_artifact_inventory.v1` records, requiring
+    matching run id, report schema, resume-state hash, inventory status,
+    aggregate counts, zero missing/mismatch/invalid records, empty inventory
+    issues, and a records-hash match.
+  - Remaining gap: this validates declared LLM budget evidence bundles; it
+    does not add provider tokenizer discovery, provider-output replay, async
+    queue accounting, pending-work replay, or complete restored controller
+    state.
+  - Verification: focused LLM budget-report tests cover valid paper-budget
+    bundles and tampered inventory with mismatched run id and missing-record
+    counters.

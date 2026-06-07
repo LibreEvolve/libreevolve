@@ -36,6 +36,16 @@ class LLMBudgetValidation:
     issues: list[LLMBudgetIssue]
 
 
+@dataclass(frozen=True)
+class LLMBudgetEvidenceBundleValidation:
+    ok: bool
+    run_id: str | None
+    report_ok: bool
+    inventory_ok: bool
+    paper_budget_ready: bool
+    issues: list[LLMBudgetIssue]
+
+
 def validate_llm_budget_report(report: object | str | Path) -> LLMBudgetValidation:
     """Validate paper-facing LLM role/retry/budget accounting metadata."""
     data, read_issues = _load_report(report)
@@ -55,6 +65,41 @@ def validate_llm_budget_report(report: object | str | Path) -> LLMBudgetValidati
         paper_budget_ready=not issues and data.get("paper_budget_ready") is True,
         run_id=run_id,
         role_count=len(budgets),
+        issues=issues,
+    )
+
+
+def validate_llm_budget_evidence_bundle(
+    report: object | str | Path,
+    inventory: object,
+) -> LLMBudgetEvidenceBundleValidation:
+    """Validate an LLM budget report together with its resume artifact inventory."""
+    data, read_issues = _load_report(report)
+    if read_issues:
+        return LLMBudgetEvidenceBundleValidation(
+            ok=False,
+            run_id=None,
+            report_ok=False,
+            inventory_ok=False,
+            paper_budget_ready=False,
+            issues=read_issues,
+        )
+    assert isinstance(data, dict)
+    issues: list[LLMBudgetIssue] = []
+    report_validation = validate_llm_budget_report(data)
+    issues.extend(report_validation.issues)
+    inventory_ok = _validate_llm_budget_inventory(
+        inventory,
+        data,
+        report_validation.run_id,
+        issues,
+    )
+    return LLMBudgetEvidenceBundleValidation(
+        ok=not issues,
+        run_id=report_validation.run_id,
+        report_ok=report_validation.ok,
+        inventory_ok=inventory_ok,
+        paper_budget_ready=report_validation.paper_budget_ready and inventory_ok and not issues,
         issues=issues,
     )
 
@@ -175,6 +220,119 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [LLMBudgetIssue("invalid_shape", "LLM budget report must be a JSON object")]
+
+
+def _validate_llm_budget_inventory(
+    inventory: object,
+    report: dict[str, Any],
+    run_id: str | None,
+    issues: list[LLMBudgetIssue],
+) -> bool:
+    if not isinstance(inventory, dict):
+        issues.append(LLMBudgetIssue("invalid_inventory", "inventory must be an object"))
+        return False
+    issue_count = len(issues)
+    if inventory.get("schema") != LLM_BUDGET_RESUME_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(LLMBudgetIssue("invalid_inventory_schema", "unsupported LLM budget inventory schema"))
+    if inventory.get("ok") is not True:
+        issues.append(LLMBudgetIssue("inventory_not_ok", "LLM budget inventory must verify every resume artifact"))
+    if inventory.get("report_schema") != report.get("schema"):
+        issues.append(LLMBudgetIssue("inventory_report_schema_mismatch", "inventory report_schema must match LLM budget report"))
+    if run_id is not None and inventory.get("run_id") != run_id:
+        issues.append(LLMBudgetIssue("inventory_run_id_mismatch", "inventory run_id must match LLM budget report"))
+    resume_state = report.get("resume_state")
+    expected_resume_hash = (
+        resume_state.get("state_sha256")
+        if isinstance(resume_state, dict)
+        else None
+    )
+    if isinstance(expected_resume_hash, str) and inventory.get("resume_state_sha256") != expected_resume_hash:
+        issues.append(
+            LLMBudgetIssue(
+                "inventory_resume_state_hash_mismatch",
+                "inventory resume_state_sha256 must match LLM budget report",
+            )
+        )
+    records = inventory.get("artifacts")
+    if not isinstance(records, list) or not records:
+        issues.append(LLMBudgetIssue("invalid_inventory_artifacts", "inventory artifacts must be a non-empty list"))
+        records = []
+    records_payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    records_sha = inventory.get("records_sha256")
+    if not isinstance(records_sha, str) or _SHA256_RE.fullmatch(records_sha) is None:
+        issues.append(
+            LLMBudgetIssue(
+                "invalid_inventory_records_hash",
+                "inventory records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif hashlib.sha256(records_payload.encode("utf-8")).hexdigest() != records_sha:
+        issues.append(
+            LLMBudgetIssue(
+                "inventory_records_hash_mismatch",
+                "inventory records_sha256 must match inventory artifacts",
+            )
+        )
+    expected_counts = {
+        "artifact_count": len(records),
+        "verified_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "verified"
+        ),
+        "missing_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "missing_file"
+        ),
+        "mismatch_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status") in {"hash_mismatch", "bytes_mismatch"}
+        ),
+        "invalid_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status")
+            in {"invalid_artifact", "unsafe_path", "read_error"}
+        ),
+    }
+    for field, expected in expected_counts.items():
+        value = inventory.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                LLMBudgetIssue(
+                    f"invalid_inventory_{field}",
+                    f"inventory {field} must be a non-negative integer",
+                )
+            )
+        elif value != expected:
+            issues.append(
+                LLMBudgetIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match inventory artifacts",
+                )
+            )
+    if inventory.get("verified_count") != inventory.get("artifact_count"):
+        issues.append(
+            LLMBudgetIssue(
+                "inventory_verified_count_mismatch",
+                "inventory verified_count must equal artifact_count",
+            )
+        )
+    for field in ("missing_count", "mismatch_count", "invalid_count"):
+        if inventory.get(field) != 0:
+            issues.append(
+                LLMBudgetIssue(
+                    f"inventory_{field}_nonzero",
+                    f"inventory {field} must be zero for LLM budget evidence",
+                )
+            )
+    if inventory.get("issues"):
+        issues.append(LLMBudgetIssue("inventory_has_issues", "inventory issues must be empty"))
+    return len(issues) == issue_count
 
 
 def _llm_budget_resume_artifact_inventory_record(

@@ -151,7 +151,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     optional LLM budget `resume_state.artifacts[]` records against an artifact
     root, including safe relative paths, file existence, SHA-256 hashes, byte
     counts, per-record statuses, aggregate missing/mismatch/invalid counts, and
-    a stable records hash. Final manifests now emit `runtime.llm_budget_report`
+    a stable records hash. `validate_llm_budget_evidence_bundle()` now checks
+    LLM budget reports together with resume artifact inventory, requiring
+    matching run id, report schema, resume-state hash, inventory status,
+    aggregate counts, zero missing/mismatch/invalid records, and inventory
+    record-hash consistency before accepting bundled paper-budget readiness.
+    Final manifests now emit `runtime.llm_budget_report`
     instances with observed per-role logical-call, retry, provider-attempt,
     usage counters, configured estimated cost, retained LLM latency, and
     scheduler-resume-hash evidence plus self-validation, and retained LLM
@@ -193,7 +198,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     therefore trip the same live stop checks in the resumed run. However,
     restored controller state is not yet connected to pending-work queues,
     async worker state, or provider-output replay. The remaining gap is not
-    LLM budget resume artifact inventory verification.
+    LLM budget resume artifact inventory or bundle-consistency verification.
   - Required result: connect the runtime LLM ensemble and provider adapters to
     the report contract with complete persisted/restored retry/provider-attempt/
     token/configured-cost/latency consumption before

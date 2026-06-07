@@ -6,6 +6,7 @@ from libreevolve.llm.budget_report import (
     LLM_BUDGET_REPORT_SCHEMA,
     llm_budget_resume_artifact_inventory,
     render_llm_budget_summary,
+    validate_llm_budget_evidence_bundle,
     validate_llm_budget_report,
 )
 
@@ -56,6 +57,27 @@ def _valid_report() -> dict:
     }
 
 
+def _write_resume_artifacts(report: dict, root) -> None:
+    artifacts = []
+    for kind, path in (
+        ("runtime_budget_snapshot", "resume/runtime-budget.json"),
+        ("controller_budget_events", "resume/controller-budget-events.jsonl"),
+    ):
+        raw = f"{kind} evidence".encode("utf-8")
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        artifacts.append(
+            {
+                "kind": kind,
+                "path": path,
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "bytes": len(raw),
+            }
+        )
+    report["resume_state"]["artifacts"] = artifacts
+
+
 def test_llm_budget_report_validates_paper_budget_ready_record():
     validation = validate_llm_budget_report(_valid_report())
 
@@ -78,24 +100,7 @@ def test_llm_budget_report_loads_json_file(tmp_path):
 
 def test_llm_budget_resume_artifact_inventory_verifies_declared_files(tmp_path):
     report = _valid_report()
-    artifacts = []
-    for kind, path in (
-        ("runtime_budget_snapshot", "resume/runtime-budget.json"),
-        ("controller_budget_events", "resume/controller-budget-events.jsonl"),
-    ):
-        raw = f"{kind} evidence".encode("utf-8")
-        target = tmp_path / path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(raw)
-        artifacts.append(
-            {
-                "kind": kind,
-                "path": path,
-                "sha256": hashlib.sha256(raw).hexdigest(),
-                "bytes": len(raw),
-            }
-        )
-    report["resume_state"]["artifacts"] = artifacts
+    _write_resume_artifacts(report, tmp_path)
 
     inventory = llm_budget_resume_artifact_inventory(report, tmp_path)
 
@@ -114,6 +119,42 @@ def test_llm_budget_resume_artifact_inventory_verifies_declared_files(tmp_path):
     assert inventory["invalid_count"] == 0
     assert len(inventory["records_sha256"]) == 64
     assert {record["status"] for record in inventory["artifacts"]} == {"verified"}
+
+
+def test_llm_budget_evidence_bundle_validates_report_and_inventory(tmp_path):
+    report = _valid_report()
+    _write_resume_artifacts(report, tmp_path)
+    inventory = llm_budget_resume_artifact_inventory(report, tmp_path)
+
+    validation = validate_llm_budget_evidence_bundle(report, inventory)
+
+    assert validation.ok is True
+    assert validation.run_id == "run_2026_06_04"
+    assert validation.report_ok is True
+    assert validation.inventory_ok is True
+    assert validation.paper_budget_ready is True
+    assert validation.issues == []
+
+
+def test_llm_budget_evidence_bundle_rejects_tampered_inventory(tmp_path):
+    report = _valid_report()
+    _write_resume_artifacts(report, tmp_path)
+    inventory = llm_budget_resume_artifact_inventory(report, tmp_path)
+    inventory["run_id"] = "other_run"
+    inventory["ok"] = False
+    inventory["missing_count"] = 1
+
+    validation = validate_llm_budget_evidence_bundle(report, inventory)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.report_ok is True
+    assert validation.inventory_ok is False
+    assert validation.paper_budget_ready is False
+    assert "inventory_not_ok" in codes
+    assert "inventory_run_id_mismatch" in codes
+    assert "inventory_missing_count_mismatch" in codes
+    assert "inventory_missing_count_nonzero" in codes
 
 
 def test_llm_budget_resume_artifact_inventory_reports_bad_references(tmp_path):

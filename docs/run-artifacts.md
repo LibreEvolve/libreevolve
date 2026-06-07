@@ -802,6 +802,11 @@ artifact root, including safe relative paths, existence, SHA-256 hashes, byte
 counts, per-record statuses, aggregate missing/mismatch/invalid counts, and a
 stable records hash. This verifies named resume evidence files when a report
 declares them; it is not provider-output replay.
+`validate_llm_budget_evidence_bundle()` checks an LLM budget report together
+with its resume artifact inventory, including matching run id, report schema,
+resume-state hash, inventory status, aggregate counts, zero
+missing/mismatch/invalid records, and inventory record-hash consistency before
+treating the bundle as paper-budget-ready.
 Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
 synchronous controller with zero queued/running proposals, evaluations,

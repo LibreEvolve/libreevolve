@@ -55,6 +55,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     checking safe relative paths, existence, SHA-256 hashes, byte counts,
     per-artifact statuses, and aggregate missing/mismatch/invalid counts. No
     benchmark script emits those reports yet.
+    `libreevolve.llm_feedback_calibration.v1` now defines and tests a feedback
+    grader calibration-report contract with declared graders, at least two
+    calibrated tasks for readiness, per-grader/task scored records, finite
+    normalized expected and observed scores, exact absolute-error consistency,
+    and declared calibration artifacts.
+    `libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies those
+    calibration report, raw-record, grader-config, and plot artifacts against a
+    safe artifact root. No runtime feedback-calibration fixture emits those
+    reports yet.
     Evaluator subprocess-attempt, configured-stage sample, retry, timeout, and
     sample/stage budget-exhaustion counters now persist in evaluation
     accounting and runtime manifests, and optional run-wide limits can stop on
@@ -119,9 +128,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     connect hard cancellation semantics to runtime behavior beyond the current
     configured provider request timeout, ensemble `llm_call_timeout_sec`, and
     remaining-runtime wait deadlines, and add benchmark scripts that emit
-    equal-budget ablation reports for real targets. The remaining ablation gap
-    is executing and emitting real equal-budget reports, not validating the
-    declared result artifacts once a report names them. The remaining provider
+    equal-budget ablation reports for real targets plus feedback-grader
+    calibration reports for real reviewer/task suites. The remaining ablation
+    and calibration gap is executing and emitting real reports, not validating
+    declared result or feedback-calibration artifacts once a report names them.
+    The remaining provider
     cancellation gap is live cancellation/stop behavior and richer runtime
     artifact generation, not verifying declared cancellation evidence files
     once a policy names them.

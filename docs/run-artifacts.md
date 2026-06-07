@@ -1787,6 +1787,14 @@ resolve safely under that root, exist as files, and match their reported
 SHA-256 hashes and byte counts. The inventory verifies result artifacts; it
 does not execute Figure 8 ablation runs or prove equal-budget experiment
 coverage by itself.
+`libreevolve.llm_feedback_calibration.v1` validates declared LLM feedback
+grader calibration evidence: grader/metric records, multiple task records for
+readiness, per-grader/task scored samples, finite normalized expected and
+observed scores, exact absolute-error consistency, and declared artifact
+references. `libreevolve.llm_feedback_calibration_artifact_inventory.v1`
+verifies calibration report, raw-record, grader-config, and plot artifacts
+under a safe artifact root. These records validate evidence shape and artifact
+availability; they do not execute grader calibration or ablation runs.
 `libreevolve.benchmark_hardening_artifact_inventory.v1` verifies benchmark
 hardening evidence files under an explicit artifact root. Negative fixtures
 and hardening artifacts must resolve safely under that root, exist as files,

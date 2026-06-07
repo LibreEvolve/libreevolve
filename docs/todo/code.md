@@ -797,6 +797,14 @@ Primary evidence:
     LLM feedback grader, including finite score/delta values, discard/error
     status, objective-metric flags, retention summaries, and bounded text
     hashes/previews when feedback text is retained.
+    `libreevolve.llm_feedback_calibration.v1` now validates declared feedback
+    grader calibration reports across multiple tasks, per-grader/task scored
+    records, normalized expected/observed scores, exact absolute-error
+    consistency, and declared calibration artifacts. Its companion
+    `libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies
+    calibration report, raw-record, grader-config, and plot files under a safe
+    artifact root. No runtime feedback-calibration runner emits these reports
+    yet.
     Plugin score composition is logged separately and can change final fitness.
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter
@@ -837,9 +845,11 @@ Primary evidence:
     returning defensive ranked program snapshots while rejecting undeclared
     metric targets.
   - Required result: represent full metric vectors, choose target metrics,
-    support Pareto/frontier primary archive replacement, and make durable
+    support Pareto/frontier primary archive replacement, make durable
     metric-targeted resurfacing queryable across persisted database tables
-    rather than only through bounded in-memory/archive snapshot overlays.
+    rather than only through bounded in-memory/archive snapshot overlays, and
+    emit real LLM feedback calibration reports for reviewer/task suites rather
+    than only validating declared calibration evidence.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

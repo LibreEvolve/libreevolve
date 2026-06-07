@@ -115,8 +115,10 @@ is not yet an AlphaEvolve reproduction.
   enforcement snapshots to pending-work queues, provider-output replay, and hard
   cancellation semantics; provider-attempt, token, configured-cost, and retained
   latency limits already feed live resumed-run stop checks.
-- Add calibration/ablation reporting for LLM feedback graders, including
-  evidence that normalized reviewer scores remain calibrated across tasks.
+- Emit calibration/ablation runs for LLM feedback graders; the
+  `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
+  contracts now validate declared multi-task calibration evidence, but no
+  runtime fixture generates those reports yet.
 - Add configurable retry/penalty policies for LLM feedback provider or parse
   failures beyond the current ignore-and-record behavior.
 - Define a complete synthetic evaluator-failure metric-vector policy for diff,

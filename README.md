@@ -3036,6 +3036,16 @@ ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,
 curve summaries, raw records, and plots. It proves artifact availability for a
 report, not that the ablation experiment was executed.
+LLM feedback-grader calibration reports use
+`libreevolve.llm_feedback_calibration.v1` in
+`libreevolve/llm/feedback_calibration.py`; the contract validates declared
+graders, at least two calibrated tasks for readiness, per-grader/task scored
+records, finite normalized expected/observed scores, exact absolute-error
+consistency, and declared calibration artifacts. The companion
+`libreevolve.llm_feedback_calibration_artifact_inventory.v1` verifies those
+calibration report, raw-record, grader-config, and plot artifacts under a safe
+artifact root. It validates calibration evidence once a report exists; it does
+not run feedback-grader calibration experiments.
 Paper-facing LLM budget reports use `libreevolve.llm_budget_report.v1` in
 `libreevolve/llm/budget_report.py`; the current report status is
 `cooperative_enforcement_snapshot` under policy

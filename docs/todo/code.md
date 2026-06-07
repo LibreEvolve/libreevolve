@@ -70,7 +70,8 @@ Primary evidence:
 
 ## Prompt Sampling and Context
 
-- [ ] Add provider-token prompt section fitting and restored token/cost budget state.
+- [ ] Complete provider-token prompt section fitting beyond mutation prompts
+      and async/pending-work budget composition.
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts and
     configurable prompt construction; practical long-context evolution needs
     deterministic packing so parent code, inspirations, evaluator feedback,

@@ -1014,13 +1014,17 @@ Primary evidence:
     systems report artifacts against concrete files under an explicit artifact
     root, checking safe relative paths, existence, SHA-256 hashes, and byte
     counts for metrics, heldout-report, reference-report, and summary records.
+    `validate_systems_evidence_bundle()` now checks systems reports together
+    with matching artifact inventory before accepting bundled AlphaEvolve
+    readiness.
   - Required result: connect real compiler, hardware, kernel, scheduling, or
     systems benchmark fixtures to the report contract and implement the actual
     held-out/generalization case sets, randomized/reference-correctness checks,
     and deployment or certification evidence. The remaining gap is generating
     real gate artifacts from those fixtures, not verifying declared artifact
     files once a systems report names them or checking certification
-    report/inventory consistency once those records exist.
+    report/inventory consistency or systems report/inventory consistency once
+    those records exist.
 
 ## LLM Ensemble
 

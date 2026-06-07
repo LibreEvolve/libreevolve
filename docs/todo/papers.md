@@ -1065,14 +1065,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     systems report artifacts against concrete files under an explicit artifact
     root, checking safe relative paths, existence, SHA-256 hashes, and byte
     counts for the metrics, heldout-report, reference-report, and summary
-    evidence files.
+    evidence files. `validate_systems_evidence_bundle()` now validates systems
+    reports together with their artifact inventory, requiring matching
+    benchmark, candidate, domain, report schema, inventory status, record hash,
+    and zero missing/mismatch/invalid evidence before accepting bundled
+    AlphaEvolve readiness.
   - Required result: connect compiler, hardware, kernel, scheduling, or systems
     fixtures to this report format, implement real unseen evaluation cases and
     randomized/reference-correctness checks, and emit report artifacts that
     distinguish loop feedback from held-out, deployment, and certification
     evidence. The remaining paper gap is producing those evidence files from
-    real fixture runs, not verifying the declared files once a report names
-    them.
+    real fixture runs, not verifying the declared files or bundle consistency
+    once a report names them.
 
 ## Paper-Inspired Feature Claims Needing Correction
 

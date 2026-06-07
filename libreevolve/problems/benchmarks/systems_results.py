@@ -39,6 +39,16 @@ class SystemsResultValidation:
     issues: list[SystemsResultIssue]
 
 
+@dataclass(frozen=True)
+class SystemsEvidenceBundleValidation:
+    ok: bool
+    benchmark_id: str | None
+    report_ok: bool
+    inventory_ok: bool
+    alphaevolve_ready: bool
+    issues: list[SystemsResultIssue]
+
+
 def validate_systems_result_report(report: object | str | Path) -> SystemsResultValidation:
     """Validate held-out and reference-correctness gates for systems benchmarks."""
     data, read_issues = _load_report(report)
@@ -79,6 +89,41 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         alphaevolve_ready=alphaevolve_ready,
         benchmark_id=benchmark_id,
         domain=domain,
+        issues=issues,
+    )
+
+
+def validate_systems_evidence_bundle(
+    report: object | str | Path,
+    inventory: object,
+) -> SystemsEvidenceBundleValidation:
+    """Validate a systems result report together with its artifact inventory."""
+    data, read_issues = _load_report(report)
+    if read_issues:
+        return SystemsEvidenceBundleValidation(
+            ok=False,
+            benchmark_id=None,
+            report_ok=False,
+            inventory_ok=False,
+            alphaevolve_ready=False,
+            issues=read_issues,
+        )
+    assert isinstance(data, dict)
+    issues: list[SystemsResultIssue] = []
+    report_validation = validate_systems_result_report(data)
+    issues.extend(report_validation.issues)
+    inventory_ok = _validate_systems_inventory(
+        inventory,
+        data,
+        report_validation.benchmark_id,
+        issues,
+    )
+    return SystemsEvidenceBundleValidation(
+        ok=not issues,
+        benchmark_id=report_validation.benchmark_id,
+        report_ok=report_validation.ok,
+        inventory_ok=inventory_ok,
+        alphaevolve_ready=report_validation.alphaevolve_ready and inventory_ok and not issues,
         issues=issues,
     )
 
@@ -196,6 +241,115 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [SystemsResultIssue("invalid_shape", "systems result report must be a JSON object")]
+
+
+def _validate_systems_inventory(
+    inventory: object,
+    report: dict[str, Any],
+    benchmark_id: str | None,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if not isinstance(inventory, dict):
+        issues.append(SystemsResultIssue("invalid_inventory", "inventory must be an object"))
+        return False
+    issue_count = len(issues)
+    if inventory.get("schema") != SYSTEMS_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(SystemsResultIssue("invalid_inventory_schema", "unsupported systems inventory schema"))
+    if inventory.get("ok") is not True:
+        issues.append(SystemsResultIssue("inventory_not_ok", "systems inventory must verify every artifact"))
+    if inventory.get("report_schema") != report.get("schema"):
+        issues.append(SystemsResultIssue("inventory_report_schema_mismatch", "inventory report_schema must match systems report"))
+    if benchmark_id is not None and inventory.get("benchmark_id") != benchmark_id:
+        issues.append(SystemsResultIssue("inventory_benchmark_id_mismatch", "inventory benchmark_id must match systems report"))
+    for field in ("candidate_id", "domain"):
+        expected = report.get(field)
+        if isinstance(expected, str) and inventory.get(field) != expected:
+            issues.append(
+                SystemsResultIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match systems report",
+                )
+            )
+    records = inventory.get("artifacts")
+    if not isinstance(records, list) or not records:
+        issues.append(SystemsResultIssue("invalid_inventory_artifacts", "inventory artifacts must be a non-empty list"))
+        records = []
+    records_payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    records_sha = inventory.get("records_sha256")
+    if not isinstance(records_sha, str) or _SHA256_RE.fullmatch(records_sha) is None:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_inventory_records_hash",
+                "inventory records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif hashlib.sha256(records_payload.encode("utf-8")).hexdigest() != records_sha:
+        issues.append(
+            SystemsResultIssue(
+                "inventory_records_hash_mismatch",
+                "inventory records_sha256 must match inventory artifacts",
+            )
+        )
+    expected_counts = {
+        "artifact_count": len(records),
+        "verified_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "verified"
+        ),
+        "missing_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "missing_file"
+        ),
+        "mismatch_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status") in {"hash_mismatch", "bytes_mismatch"}
+        ),
+        "invalid_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status")
+            in {"invalid_artifact", "unsafe_path", "read_error"}
+        ),
+    }
+    for field, expected in expected_counts.items():
+        value = inventory.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_inventory_{field}",
+                    f"inventory {field} must be a non-negative integer",
+                )
+            )
+        elif value != expected:
+            issues.append(
+                SystemsResultIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match inventory artifacts",
+                )
+            )
+    if inventory.get("verified_count") != inventory.get("artifact_count"):
+        issues.append(
+            SystemsResultIssue(
+                "inventory_verified_count_mismatch",
+                "inventory verified_count must equal artifact_count",
+            )
+        )
+    for field in ("missing_count", "mismatch_count", "invalid_count"):
+        if inventory.get(field) != 0:
+            issues.append(
+                SystemsResultIssue(
+                    f"inventory_{field}_nonzero",
+                    f"inventory {field} must be zero for systems evidence",
+                )
+            )
+    if inventory.get("issues"):
+        issues.append(SystemsResultIssue("inventory_has_issues", "inventory issues must be empty"))
+    return len(issues) == issue_count
 
 
 def _systems_artifact_inventory_record(artifact: object, root: Path) -> dict[str, Any]:

@@ -6,6 +6,7 @@ from libreevolve.problems.benchmarks.systems_results import (
     SYSTEMS_RESULT_SCHEMA,
     render_systems_result_summary,
     systems_result_artifact_inventory,
+    validate_systems_evidence_bundle,
     validate_systems_result_report,
 )
 
@@ -62,6 +63,16 @@ def _valid_report() -> dict:
     }
 
 
+def _write_systems_files(report: dict, root) -> None:
+    for artifact in report["artifacts"]:
+        path = root / artifact["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        raw = f"{artifact['kind']} evidence".encode("utf-8")
+        path.write_bytes(raw)
+        artifact["sha256"] = hashlib.sha256(raw).hexdigest()
+        artifact["bytes"] = len(raw)
+
+
 def test_systems_result_report_validates_heldout_and_reference_gates():
     validation = validate_systems_result_report(_valid_report())
 
@@ -84,13 +95,7 @@ def test_systems_result_report_loads_json_file(tmp_path):
 
 def test_systems_result_artifact_inventory_verifies_declared_files(tmp_path):
     report = _valid_report()
-    for artifact in report["artifacts"]:
-        path = tmp_path / artifact["path"]
-        path.parent.mkdir(parents=True, exist_ok=True)
-        raw = f"{artifact['kind']} evidence".encode("utf-8")
-        path.write_bytes(raw)
-        artifact["sha256"] = hashlib.sha256(raw).hexdigest()
-        artifact["bytes"] = len(raw)
+    _write_systems_files(report, tmp_path)
 
     inventory = systems_result_artifact_inventory(report, tmp_path)
 
@@ -110,6 +115,42 @@ def test_systems_result_artifact_inventory_verifies_declared_files(tmp_path):
         "verified"
     }
     assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+
+
+def test_systems_evidence_bundle_validates_report_and_inventory(tmp_path):
+    report = _valid_report()
+    _write_systems_files(report, tmp_path)
+    inventory = systems_result_artifact_inventory(report, tmp_path)
+
+    validation = validate_systems_evidence_bundle(report, inventory)
+
+    assert validation.ok is True
+    assert validation.benchmark_id == "flashattention_ir_micro"
+    assert validation.report_ok is True
+    assert validation.inventory_ok is True
+    assert validation.alphaevolve_ready is True
+    assert validation.issues == []
+
+
+def test_systems_evidence_bundle_rejects_tampered_inventory(tmp_path):
+    report = _valid_report()
+    _write_systems_files(report, tmp_path)
+    inventory = systems_result_artifact_inventory(report, tmp_path)
+    inventory["benchmark_id"] = "other_benchmark"
+    inventory["ok"] = False
+    inventory["missing_count"] = 1
+
+    validation = validate_systems_evidence_bundle(report, inventory)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.report_ok is True
+    assert validation.inventory_ok is False
+    assert validation.alphaevolve_ready is False
+    assert "inventory_not_ok" in codes
+    assert "inventory_benchmark_id_mismatch" in codes
+    assert "inventory_missing_count_mismatch" in codes
+    assert "inventory_missing_count_nonzero" in codes
 
 
 def test_systems_result_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):

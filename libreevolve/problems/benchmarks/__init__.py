@@ -52,6 +52,7 @@ from libreevolve.problems.benchmarks.systems_results import (
     SYSTEMS_RESULT_SCHEMA,
     render_systems_result_summary,
     systems_result_artifact_inventory,
+    validate_systems_evidence_bundle,
     validate_systems_result_report,
 )
 
@@ -94,6 +95,7 @@ __all__ = [
     "validate_example_benchmark_scope",
     "validate_matrix_result_report",
     "validate_paper_result_certification",
+    "validate_systems_evidence_bundle",
     "validate_systems_result_report",
     "write_strassen_2x2_publication_bundle",
 ]

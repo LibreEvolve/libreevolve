@@ -1697,6 +1697,10 @@ under the artifact root, exist as files, and match their reported SHA-256
 hashes and byte counts. This verifies report evidence files, not real unseen
 workload generation, randomized reference checking, deployment confirmation,
 or independent certification.
+`validate_systems_evidence_bundle()` checks a systems result report together
+with its artifact inventory, including matching benchmark, candidate, domain,
+report schema, record hash, and zero missing/mismatch/invalid records before
+treating the bundle as AlphaEvolve-ready.
 `libreevolve.paper_result_certification_artifact_inventory.v1` verifies both
 `evidence` and `artifacts` records in paper-result certification reports
 against concrete files under the artifact root. The inventory checks safe

@@ -15247,3 +15247,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused result-certification tests cover valid paper-claim
     bundles and tampered inventory with mismatched claim and missing-record
     counters.
+
+- [x] Add systems evidence bundle validation.
+  - Spec evidence: AlphaEvolve systems-style claims distinguish optimization
+    feedback from held-out, reference-correctness, deployment, and
+    certification evidence, and the declared report must agree with concrete
+    evidence files before readiness is trusted.
+  - Status: `validate_systems_evidence_bundle()` now validates
+    `libreevolve.systems_result_report.v1` reports together with
+    `libreevolve.systems_result_artifact_inventory.v1` records, requiring
+    matching benchmark, candidate, domain, report schema, inventory status,
+    aggregate counts, zero missing/mismatch/invalid records, empty inventory
+    issues, and a records-hash match.
+  - Remaining gap: this validates declared systems evidence bundles; it does
+    not generate real unseen workloads, randomized/reference-correctness
+    checks, deployment measurements, or systems benchmark artifacts from
+    actual fixture runs.
+  - Verification: focused systems-result tests cover valid AlphaEvolve-ready
+    bundles and tampered inventory with mismatched benchmark and missing-record
+    counters.

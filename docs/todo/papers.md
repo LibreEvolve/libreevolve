@@ -629,7 +629,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     section counts, required/optional totals, section hash shape, packing
     decisions, cap-fit claims, and provider-counter boundary fields, but full
     provider-token section packing across all provider families and prompt
-    roles is still absent from the normal evolution path. Backend specs and
+    roles is still absent from the normal evolution path. The AlphaEvolve table
+    now scopes the prompt-token gap to selected-backend
+    provider-token section packing outside mutation prompts plus exact counters
+    across non-OpenAI provider families, rather than implying all tokenizer-aware
+    fitting is absent. Backend specs and
     backend metadata can now carry
     `context_window_tokens` plus optional `reserved_output_tokens`; the
     ensemble subtracts the reserve, applies the derived heuristic prompt-token

@@ -7466,7 +7466,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "artifact_output_check_max_chars_by_field": {},
         "malformed_metric_fields": ["reason", "message"],
         "malformed_metric_max_chars_by_field": {},
-        "materialization_error_fields": ["exception_type", "message"],
+        "materialization_error_fields": ["exception_type", "reason", "paths", "message"],
         "materialization_error_max_chars_by_field": {},
         "metric_aggregation_fields": [
             "sample_count",

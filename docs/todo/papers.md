@@ -1315,7 +1315,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,
-    and code/file terms.
+    and code/file terms. The remaining replay gap is DeepResearch-specific
+    provider-output/transport replay integrated with resumed runtime state, not
+    the current core full-runtime restore bundle for compatible RNG,
+    scheduler, archive, and budget surfaces.
   - Required result: persist unbounded raw provider payload snapshots or a
     stronger raw-evidence preservation model, define
     learned or externally scored ranked-source scoring/selection checks beyond
@@ -1325,5 +1328,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
     remaining paper gap is not retrieval payload sidecar inventory
     verification, deterministic retained-source ranking-provenance
-    validation, semantic-boundary overclaim auditing, or run-level retrieval
-    evidence coverage validation.
+    validation, semantic-boundary overclaim auditing, run-level retrieval
+    evidence coverage validation, or the core full-runtime restore bundle that
+    deliberately excludes provider-output replay.

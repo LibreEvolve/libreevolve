@@ -3144,6 +3144,22 @@ def _provider_diagnostics_summary(
     totals = {
         "call_count": len(call_history),
         "usage_record_count": 0,
+        "provider_response_retention_record_count": 0,
+        "provider_response_hash_count": 0,
+        "provider_response_text_retained_count": 0,
+        "provider_response_stored_chars": 0,
+        "provider_response_redacted_count": 0,
+        "provider_response_truncated_count": 0,
+        "provider_response_retention_modes": {},
+        "provider_response_retention_policies": {},
+        "provider_error_retention_record_count": 0,
+        "provider_error_hash_count": 0,
+        "provider_error_text_retained_count": 0,
+        "provider_error_stored_chars": 0,
+        "provider_error_redacted_count": 0,
+        "provider_error_truncated_count": 0,
+        "provider_error_retention_modes": {},
+        "provider_error_retention_policies": {},
         "provider_diagnostics_record_count": 0,
         "provider_diagnostic_item_count": 0,
         "provider_diagnostic_omitted_item_count": 0,
@@ -3178,6 +3194,18 @@ def _provider_diagnostics_summary(
                     and token_count > 0
                 ):
                     group[target] += token_count
+        _add_provider_retention_summary(
+            totals,
+            group,
+            record.get("output_retention"),
+            prefix="provider_response",
+        )
+        _add_provider_retention_summary(
+            totals,
+            group,
+            record.get("error_retention"),
+            prefix="provider_error",
+        )
         diagnostics = record.get("provider_diagnostics")
         if isinstance(diagnostics, dict):
             totals["provider_diagnostics_record_count"] += 1
@@ -3223,8 +3251,32 @@ def _provider_diagnostics_summary(
             api_mode = backend_defaults.get("api_mode")
             if isinstance(api_mode, str):
                 _increment_summary_counter(group["backend_default_api_modes"], api_mode)
+    totals["provider_response_retention_modes"] = dict(
+        sorted(totals["provider_response_retention_modes"].items())
+    )
+    totals["provider_response_retention_policies"] = dict(
+        sorted(totals["provider_response_retention_policies"].items())
+    )
+    totals["provider_error_retention_modes"] = dict(
+        sorted(totals["provider_error_retention_modes"].items())
+    )
+    totals["provider_error_retention_policies"] = dict(
+        sorted(totals["provider_error_retention_policies"].items())
+    )
     group_records = []
     for group in groups.values():
+        group["provider_response_retention_modes"] = dict(
+            sorted(group["provider_response_retention_modes"].items())
+        )
+        group["provider_response_retention_policies"] = dict(
+            sorted(group["provider_response_retention_policies"].items())
+        )
+        group["provider_error_retention_modes"] = dict(
+            sorted(group["provider_error_retention_modes"].items())
+        )
+        group["provider_error_retention_policies"] = dict(
+            sorted(group["provider_error_retention_policies"].items())
+        )
         group["diagnostic_keys"] = dict(sorted(group["diagnostic_keys"].items()))
         group["cost_status_reasons"] = dict(sorted(group["cost_status_reasons"].items()))
         group["backend_default_api_modes"] = dict(
@@ -3251,10 +3303,51 @@ def _provider_diagnostics_summary(
         "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
         "limitations": [
             "retained_call_history_window_only",
-            "bounded_scalar_provider_diagnostics_not_raw_payloads",
+            "provider_response_error_text_retention_follows_configured_modes",
+            "bounded_scalar_provider_diagnostics_not_full_raw_provider_payloads",
             "configured_cost_estimates_not_live_provider_pricing",
         ],
     }
+
+
+def _add_provider_retention_summary(
+    totals: dict,
+    group: dict,
+    retention: object,
+    *,
+    prefix: str,
+) -> None:
+    if not isinstance(retention, dict):
+        return
+    totals[f"{prefix}_retention_record_count"] += 1
+    group[f"{prefix}_retention_record_count"] += 1
+    mode = retention.get("retention_mode")
+    if isinstance(mode, str):
+        _increment_summary_counter(totals[f"{prefix}_retention_modes"], mode)
+        _increment_summary_counter(group[f"{prefix}_retention_modes"], mode)
+    policy = retention.get("retention_policy")
+    if isinstance(policy, str):
+        _increment_summary_counter(totals[f"{prefix}_retention_policies"], policy)
+        _increment_summary_counter(group[f"{prefix}_retention_policies"], policy)
+    if isinstance(retention.get("sha256"), str):
+        totals[f"{prefix}_hash_count"] += 1
+        group[f"{prefix}_hash_count"] += 1
+    stored_chars = retention.get("stored_chars")
+    if (
+        isinstance(stored_chars, int)
+        and not isinstance(stored_chars, bool)
+        and stored_chars > 0
+    ):
+        totals[f"{prefix}_text_retained_count"] += 1
+        totals[f"{prefix}_stored_chars"] += stored_chars
+        group[f"{prefix}_text_retained_count"] += 1
+        group[f"{prefix}_stored_chars"] += stored_chars
+    if retention.get("redacted") is True:
+        totals[f"{prefix}_redacted_count"] += 1
+        group[f"{prefix}_redacted_count"] += 1
+    if retention.get("truncated") is True:
+        totals[f"{prefix}_truncated_count"] += 1
+        group[f"{prefix}_truncated_count"] += 1
 
 
 def _provider_diagnostics_group(groups: dict[str, dict], record: dict) -> dict:
@@ -3281,6 +3374,22 @@ def _provider_diagnostics_group(groups: dict[str, dict], record: dict) -> dict:
             "input_tokens": 0,
             "output_tokens": 0,
             "total_tokens": 0,
+            "provider_response_retention_record_count": 0,
+            "provider_response_hash_count": 0,
+            "provider_response_text_retained_count": 0,
+            "provider_response_stored_chars": 0,
+            "provider_response_redacted_count": 0,
+            "provider_response_truncated_count": 0,
+            "provider_response_retention_modes": {},
+            "provider_response_retention_policies": {},
+            "provider_error_retention_record_count": 0,
+            "provider_error_hash_count": 0,
+            "provider_error_text_retained_count": 0,
+            "provider_error_stored_chars": 0,
+            "provider_error_redacted_count": 0,
+            "provider_error_truncated_count": 0,
+            "provider_error_retention_modes": {},
+            "provider_error_retention_policies": {},
             "provider_diagnostics_record_count": 0,
             "provider_diagnostic_item_count": 0,
             "provider_diagnostic_omitted_item_count": 0,

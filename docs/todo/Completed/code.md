@@ -14792,3 +14792,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused evaluator and database tests cover per-evaluation
     boundary metadata, host/deny network modes, and startup manifest policy
     persistence.
+
+- [x] Summarize provider response/error retention in runtime diagnostics.
+  - Spec evidence: AlphaEvolve-style reproducibility needs provider-call
+    evidence for which model/API outputs or failures shaped mutations and
+    feedback, without silently losing retention-policy context.
+  - Status: `runtime.llm_provider_diagnostics` now aggregates configured
+    provider response/error retention records from retained call history by
+    backend/API mode. The summary records retention mode and policy counts,
+    retained-hash counts, retained-text counts, stored character totals,
+    redaction counts, and truncation counts for successful provider responses
+    and provider errors. The records hash now covers those retention summaries,
+    and limitations explicitly distinguish configured response/error text
+    retention from full raw provider payload retention.
+  - Remaining gap: this is a bounded retained-call-history summary, not live
+    provider pricing/default discovery, full provider-native payload replay, or
+    one-command restored provider-usage budget enforcement.
+  - Verification: focused ensemble tests cover success response retention and
+    failed provider-error retention aggregation, including redaction of
+    sensitive-looking error text.

@@ -964,12 +964,15 @@ usage and do not claim provider calls were free.
 LLM call history with schema `libreevolve.llm_provider_diagnostics.v1`. Snapshot
 rows group by backend index, manifest-safe backend name, and API mode, and
 summarize call counts, successes/failures, provider usage totals, bounded
-provider-diagnostic item/key counts, omitted diagnostic counts, configured
-cost-estimate counts, not-estimated reasons, backend default API modes, call
-history retention, and a records hash. The field is explicit about its
-limitations: it covers only the retained call-history window, stores bounded
-scalar diagnostics instead of raw provider payloads, and treats configured cost
-rates as estimates rather than live provider pricing.
+successful-response and error-retention mode/policy counts, retained hash
+counts, text-retained counts, retained character totals, redaction/truncation
+counts, provider-diagnostic item/key counts, omitted diagnostic counts,
+configured cost-estimate counts, not-estimated reasons, backend default API
+modes, call history retention, and a records hash. The field is explicit about
+its limitations: it covers only the retained call-history window, summarizes
+configured response/error text retention instead of full raw provider payloads,
+stores bounded scalar diagnostics instead of full provider-native payloads, and
+treats configured cost rates as estimates rather than live provider pricing.
 When a backend spec or direct backend metadata provides
 `prompt_max_estimated_tokens`, the ensemble applies that backend/model
 heuristic prompt-token cap together with any global cap before provider calls.

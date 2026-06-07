@@ -137,9 +137,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifests also emit `runtime.llm_provider_diagnostics` using
     `libreevolve.llm_provider_diagnostics.v1`, a retained-call-history
     aggregate that groups backend/API-mode usage, bounded provider diagnostic
-    keys and omitted counts, configured cost-estimate evidence,
-    not-estimated reasons, backend defaults, call-history retention, and a
-    records hash while explicitly avoiding any live-pricing claim. The budget
+    keys and omitted counts, provider response/error retention modes and
+    policies, retained hash/text/character counts, redaction/truncation
+    counts, configured cost-estimate evidence, not-estimated reasons, backend
+    defaults, call-history retention, and a records hash while explicitly
+    avoiding full raw provider-payload and live-pricing claims. The budget
     report contract
     now rejects restored-state claims that lack persisted resume-state
     evidence. Focused ensemble tests now cover fake provider usage counts and

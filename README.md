@@ -1577,7 +1577,11 @@ adapter-internal retry summaries, retry/fallback attempt state, scheduler
 counters, role-accounting inputs, provider failure categories, safe provider
 status codes when exposed by failed SDK exceptions, successful output text
 retained according to `provider_response_retention_mode`, provider error text
-retained according to `provider_error_retention_mode`, and status; reward rows
+retained according to `provider_error_retention_mode`, and status. Final
+provider-diagnostics summaries aggregate those response/error retention modes,
+policies, hash counts, retained-text counts, stored characters, and
+redaction/truncation counts by backend/API mode without adding new raw provider
+payload retention; reward rows
 link backend reward accounting back to the successful call id. Rewarded
 feedback grader calls use their normalized feedback score as the reward signal
 when the exact feedback role is included in `llm_reward_accounted_roles`.

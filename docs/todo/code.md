@@ -985,19 +985,23 @@ Primary evidence:
     now also expose `runtime.llm_provider_diagnostics` with schema
     `libreevolve.llm_provider_diagnostics.v1`, grouping retained call-history
     rows by backend index/name and API mode with usage totals, bounded
-    provider-diagnostic item/key counts, omitted diagnostic counts, configured
-    cost-estimate/not-estimated counts, backend-default API-mode counts, call
-    history retention, a records hash, and explicit limitations that this is
-    retained-history-only, bounded scalar diagnostics, and configured estimates
-    rather than live pricing.
+    successful-response and error-retention mode/policy counts, retained hash
+    counts, retained-text counts, stored character totals,
+    redaction/truncation counts, provider-diagnostic item/key counts, omitted
+    diagnostic counts, configured cost-estimate/not-estimated counts,
+    backend-default API-mode counts, call history retention, a records hash,
+    and explicit limitations that this is retained-history-only, configured
+    response/error text retention, bounded scalar diagnostics rather than full
+    provider-native payloads, and configured estimates rather than live
+    pricing.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for
     provider-reported token totals, configured estimated cost, and retained LLM
     call latency. Remaining gaps
-    are remote provider-side defaults and live pricing capture,
-    provider-specific diagnostics beyond bounded scalar retained metadata, and
-    full one-command restoration of
+    are remote provider-side defaults and live pricing capture, full raw
+    provider-specific payload retention/replay beyond configured response/error
+    text retention and bounded scalar retained metadata, and full one-command restoration of
     replayable provider-attempt/token/cost/latency controller events.
   - Required result: add bounded raw/provider-specific
     diagnostic retention, remote provider-side default/pricing capture, and

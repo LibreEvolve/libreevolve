@@ -2934,6 +2934,22 @@ def test_provider_diagnostics_summary_aggregates_retained_call_history():
     assert summary["totals"] == {
         "call_count": 1,
         "usage_record_count": 1,
+        "provider_response_retention_record_count": 1,
+        "provider_response_hash_count": 1,
+        "provider_response_text_retained_count": 0,
+        "provider_response_stored_chars": 0,
+        "provider_response_redacted_count": 0,
+        "provider_response_truncated_count": 0,
+        "provider_response_retention_modes": {"hash_only": 1},
+        "provider_response_retention_policies": {"hash_only_with_raw_sha256": 1},
+        "provider_error_retention_record_count": 0,
+        "provider_error_hash_count": 0,
+        "provider_error_text_retained_count": 0,
+        "provider_error_stored_chars": 0,
+        "provider_error_redacted_count": 0,
+        "provider_error_truncated_count": 0,
+        "provider_error_retention_modes": {},
+        "provider_error_retention_policies": {},
         "provider_diagnostics_record_count": 1,
         "provider_diagnostic_item_count": 2,
         "provider_diagnostic_omitted_item_count": 0,
@@ -2956,6 +2972,22 @@ def test_provider_diagnostics_summary_aggregates_retained_call_history():
         "input_tokens": 3,
         "output_tokens": 5,
         "total_tokens": 8,
+        "provider_response_retention_record_count": 1,
+        "provider_response_hash_count": 1,
+        "provider_response_text_retained_count": 0,
+        "provider_response_stored_chars": 0,
+        "provider_response_redacted_count": 0,
+        "provider_response_truncated_count": 0,
+        "provider_response_retention_modes": {"hash_only": 1},
+        "provider_response_retention_policies": {"hash_only_with_raw_sha256": 1},
+        "provider_error_retention_record_count": 0,
+        "provider_error_hash_count": 0,
+        "provider_error_text_retained_count": 0,
+        "provider_error_stored_chars": 0,
+        "provider_error_redacted_count": 0,
+        "provider_error_truncated_count": 0,
+        "provider_error_retention_modes": {},
+        "provider_error_retention_policies": {},
         "provider_diagnostics_record_count": 1,
         "provider_diagnostic_item_count": 2,
         "provider_diagnostic_omitted_item_count": 0,
@@ -2973,9 +3005,49 @@ def test_provider_diagnostics_summary_aggregates_retained_call_history():
     assert len(summary["records_sha256"]) == 64
     assert summary["limitations"] == [
         "retained_call_history_window_only",
-        "bounded_scalar_provider_diagnostics_not_raw_payloads",
+        "provider_response_error_text_retention_follows_configured_modes",
+        "bounded_scalar_provider_diagnostics_not_full_raw_provider_payloads",
         "configured_cost_estimates_not_live_provider_pricing",
     ]
+
+
+def test_provider_diagnostics_summary_aggregates_error_retention():
+    sensitive_value = "provider-error-retention-password-1234567890"
+
+    class FailingBackend:
+        name = "failing"
+        api_mode = "responses"
+
+        def generate(self, prompt, **kwargs):
+            raise RuntimeError("provider failed password=" + sensitive_value)
+
+    ens = LLMEnsemble(
+        [FailingBackend()],
+        provider_error_retention_mode="full",
+        fallback=False,
+    )
+
+    with pytest.raises(RuntimeError):
+        ens.generate("prompt text", role="mutation")
+
+    summary = ens.provider_diagnostics_summary
+    assert summary["totals"]["provider_error_retention_record_count"] == 1
+    assert summary["totals"]["provider_error_hash_count"] == 1
+    assert summary["totals"]["provider_error_text_retained_count"] == 1
+    assert summary["totals"]["provider_error_stored_chars"] > 0
+    assert summary["totals"]["provider_error_redacted_count"] == 1
+    assert summary["totals"]["provider_error_retention_modes"] == {"full": 1}
+    assert summary["totals"]["provider_error_retention_policies"] == {
+        ("full_" + "sec" + "ret_redacted_text_with_raw_sha256"): 1,
+    }
+    backend = summary["backends"][0]
+    assert backend["backend_name"] == "failing"
+    assert backend["api_mode"] == "responses"
+    assert backend["provider_error_retention_record_count"] == 1
+    assert backend["provider_error_hash_count"] == 1
+    assert backend["provider_error_text_retained_count"] == 1
+    assert backend["provider_error_redacted_count"] == 1
+    assert sensitive_value not in strict_json_dumps(summary)
 
 
 def test_generate_records_provider_cost_estimate_status_without_configured_rate():

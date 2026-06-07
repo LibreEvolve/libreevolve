@@ -1547,6 +1547,25 @@ Primary evidence:
     validating the checked bundle wrapper, or emitting the one checked Strassen
     baseline once those files exist.
 
+- [ ] Add matrix scaling resource-frontier evidence for larger target claims.
+  - Spec evidence: AlphaEvolve Appendix A says sizes beyond the reported
+    matrix table were difficult because running discovered programs on larger
+    sizes with 1000 random seeds and a single GPU accelerator often ran out of
+    memory, so extending the setup to larger matrix sizes requires further
+    optimization.
+  - Current evidence: LibreEvolve tracks generic local run budgets,
+    accelerator-environment hints, and unsupported CPU/memory/GPU quotas, and
+    the Appendix A registry records the 54 reported target identities and
+    outcomes. It does not record matrix-benchmark resource frontiers, failed
+    larger-target attempts, accelerator memory profiles, seed-count/resource
+    tradeoffs, or explicit rationale for excluding targets beyond the
+    registered Appendix A suite.
+  - Required result: add matrix benchmark report fields and validators for
+    target-size scaling attempts, seed counts, accelerator/GPU memory profile,
+    OOM or resource-exhaustion diagnostics, attempted-versus-excluded target
+    identities, and optimization/resource rationale before claiming readiness
+    to extend AlphaEvolve-style matrix results beyond the reported suite.
+
 - [ ] Add a matrix coefficient-domain prompt/evaluator contract for
       near-integral decompositions.
   - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition

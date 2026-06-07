@@ -343,6 +343,10 @@ is not yet an AlphaEvolve reproduction.
   style breadth claims: per-problem/per-parameter rows, mathematical branch
   labels, prior-best references, matched/improved/fell-behind status, and
   validated percentages for dozens-problem coverage.
+- Add matrix target-scaling resource-frontier reports before claiming larger
+  Appendix A extensions: attempted target sizes, seed counts, accelerator/GPU
+  memory profile, OOM or resource-exhaustion diagnostics, and exclusion
+  rationale for targets beyond the reported suite.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

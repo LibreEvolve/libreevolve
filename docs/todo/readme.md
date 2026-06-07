@@ -304,6 +304,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims the checked Strassen baseline nor overclaims
     AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README matrix-scaling wording scoped until resource-frontier
+      reports exist.
+  - Spec evidence: AlphaEvolve Appendix A notes that runs on matrix sizes
+    beyond the reported suite often ran out of memory with 1000 random seeds
+    on a single GPU accelerator, and that larger-size extension needs further
+    optimization.
+  - Current evidence: README documents matrix report contracts, Appendix A
+    registry checks, one checked Strassen baseline bundle, generic runtime
+    budget surfaces, and unsupported resource quotas. It does not document
+    matrix-specific scaling attempts, accelerator-memory profiles,
+    OOM/resource-exhaustion diagnostics, or target-exclusion rationale for
+    sizes beyond the reported suite.
+  - Required result: when matrix resource-frontier reports land, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes generic budget/resource metadata from AlphaEvolve Appendix
+    A-style evidence about larger matrix target scaling limits.
+
 - [ ] Keep README matrix wording scoped to result contracts until
       near-integrality prompt/evaluator evidence exists.
   - Spec evidence: AlphaEvolve Section 3.1 says the matrix prompt requested

@@ -1676,6 +1676,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     not verifying declared report artifacts, validating the checked bundle
     wrapper, or emitting one checked Strassen baseline once those files exist.
 
+- [ ] Track matrix target-scaling resource frontier and OOM evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the authors
+    often ran out of memory when trying discovered programs on sizes beyond
+    the reported table with 1000 random seeds on evaluators with a single GPU
+    accelerator, and that extending to larger matrix sizes requires further
+    optimization.
+  - Current evidence: matrix registries and result reports cover the reported
+    Appendix A target identities, rank outcomes, per-seed hit fractions, and
+    artifact links once present. Generic runtime docs also track evaluator
+    seconds, LLM budgets, accelerator environment hints, and unsupported
+    CPU/memory/GPU quota enforcement. They do not provide matrix-specific
+    resource-frontier evidence for larger target attempts, GPU memory
+    exhaustion, seed-count scaling, or target-exclusion rationale.
+  - Required result: add paper/report evidence for attempted larger matrix
+    targets, configured seed counts, accelerator/memory profile, resource
+    exhaustion or OOM diagnostics, reduced-seed tradeoffs if used, and
+    explicit inclusion/exclusion policy before claiming LibreEvolve can extend
+    AlphaEvolve-style matrix search beyond the Appendix A target suite.
+
 - [ ] Track matrix near-integrality prompt/evaluator evidence separately from
       publication-result validation.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 states that the

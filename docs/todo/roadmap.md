@@ -1208,6 +1208,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap text distinguishes report validation from
     AlphaEvolve-style matrix search workflow parity.
 
+- [ ] Keep matrix roadmap wording scoped to reported targets until scaling
+      resource-frontier evidence exists.
+  - Spec evidence: AlphaEvolve Appendix A reports that larger matrix sizes
+    beyond the table often ran out of memory when evaluated with 1000 random
+    seeds on a single GPU accelerator, making further optimization necessary
+    for extending the target suite.
+  - Current evidence: roadmap and report-contract language cover the reported
+    Appendix A target registry, matrix result artifacts, generic runtime
+    budget accounting, and accelerator-environment hints. They do not yet
+    require matrix-specific attempted-target rows, GPU memory/resource
+    diagnostics, seed-count tradeoff records, or a clear policy for target
+    inclusion/exclusion beyond the reported suite.
+  - Required result: when matrix scaling/resource-frontier report fields land,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap text distinguishes AlphaEvolve-comparable reported-target evidence
+    from unsupported claims about larger matrix target scalability.
+
 - [ ] Keep matrix roadmap wording scoped to result artifacts until evolved
       sweep-space provenance exists.
   - Spec evidence: AlphaEvolve Figures 9a-9c show matrix search programs

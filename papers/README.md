@@ -708,6 +708,10 @@ Implemented:
   Figures 9a-9c, such as hyperparameter range declarations, sampled
   configuration ids, per-sweep losses/ranks, or linkage from the winning sweep
   configuration to the final exact decomposition certificate.
+  It also does not yet record the Appendix A resource frontier for larger
+  targets: attempted sizes beyond the table, 1000-seed or reduced-seed
+  policies, accelerator/GPU memory profile, OOM/resource-exhaustion
+  diagnostics, and explicit target-exclusion rationale.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

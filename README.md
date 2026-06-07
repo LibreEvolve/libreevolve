@@ -3041,6 +3041,10 @@ algorithm, certificate, notebook, report, and artifact-inventory files with a
 1.0 per-seed rank-hit fraction. This is a reproducible baseline artifact, not
 evidence that LibreEvolve has discovered or exported the full Appendix A target
 suite.
+LibreEvolve also does not yet record the Appendix A matrix scaling frontier:
+larger target attempts, configured seed counts, accelerator/GPU memory profile,
+OOM or resource-exhaustion diagnostics, and target-exclusion rationale for
+matrix sizes beyond the reported suite are still missing.
 The checked-in
 2x2
 `matrix_multiplication` example remains a smoke fixture until a

@@ -159,6 +159,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     code/paper TODO entries together so README neither underclaims current
     timeout-policy evidence nor overclaims AlphaEvolve-style hard cancellation.
 
+- [ ] Keep README validator sandbox/resource-limit wording scoped to local
+  subprocess audit evidence versus OS/container enforcement.
+  - Spec evidence: AlphaEvolve-scale systems and codebase experiments need
+    trustworthy execution isolation, filesystem capability boundaries, network
+    egress control, and resource quotas when evaluating generated code.
+  - Current evidence: README now says validator execution records expose
+    `libreevolve.validator_execution_policy.v1`,
+    `evaluation.metadata.validator_boundary`, `filesystem_capabilities`, and
+    `resource_limit_policy` with local-subprocess execution,
+    `security_sandbox: "unsupported"`, `container: "unsupported"`, Python
+    socket-denial metadata when configured, wall-clock-only timeout policy,
+    unsupported CPU/memory/GPU/disk/process-count quotas, and a
+    minimal-environment/redacted-diagnostic secret boundary. The README also
+    says the filesystem and resource records are audit evidence for the current
+    local runner, not an OS/container security sandbox. Matching code/paper
+    TODOs still require configurable sandbox/container enforcement,
+    OS/container-grade network egress isolation, OS-enforced filesystem
+    capability policy, CPU/memory/GPU/disk/process quotas, and distributed
+    evaluator worker state.
+  - Required result: when real sandbox/container, filesystem capability,
+    network isolation, or resource-quota enforcement lands, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    neither underclaims the current manifest-visible boundary audit nor
+    overclaims AlphaEvolve-grade execution isolation.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

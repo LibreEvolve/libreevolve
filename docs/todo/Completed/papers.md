@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code term filtering.
+  - Paper evidence: AlphaEvolve prompt context can include prior code, and
+    prompt-context evolution should have a replayable way to focus required
+    code context on relevant source terms before rendering.
+  - Status: prompt context policy now accepts safe
+    `parent_code_required_terms` and `parent_code_excluded_terms`. Direct
+    prompt rendering filters selected parent-code files by path/content terms
+    and persists candidate/selected/omitted counts, omitted paths by required
+    or excluded terms, and a selection hash in
+    `libreevolve.parent_code_term_filter.v1` nested under
+    `libreevolve.parent_code_policy.v1`.
+  - Remaining paper gap: this is deterministic term matching, not semantic
+    parent-code retrieval, dependency-aware ranking, or learned relevance.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code file selection policy.
   - Paper evidence: AlphaEvolve prompt context can include prior code, and
     useful prompt-context evolution should focus required code context on

@@ -1943,7 +1943,11 @@ used by prompt packing, and select the safe enum-valued
 mutation-format example block while preserving the core format rules.
 `parent_code_paths` can select and order safe mutable parent-workspace files,
 recording requested, rendered, omitted, and missing file paths while retaining
-static-file provenance. `parent_code_max_chars` can cap or suppress the
+static-file provenance. `parent_code_required_terms` and
+`parent_code_excluded_terms` can filter candidate parent files by safe
+path/content terms, recording candidate/selected/omitted counts, omitted paths
+by required or excluded terms, and a stable selection hash.
+`parent_code_max_chars` can cap or suppress the
 required parent-code channel without removing the placeholder contract; prompt
 diagnostics record `parent_code_policy` with schema
 `libreevolve.parent_code_policy.v1`, nested `path_policy`, policy source,

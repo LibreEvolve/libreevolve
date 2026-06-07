@@ -585,6 +585,8 @@ class PromptSampler:
         parent_code, parent_code_paths_metadata = _render_program_files_with_metadata(
             parent,
             selected_paths=prompt_context_policy["parent_code_paths"],
+            required_terms=prompt_context_policy["parent_code_required_terms"],
+            excluded_terms=prompt_context_policy["parent_code_excluded_terms"],
         )
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
             parent_code,
@@ -1291,6 +1293,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_include_example",
         "proposal_metadata_enabled",
         "parent_code_paths",
+        "parent_code_required_terms",
+        "parent_code_excluded_terms",
         "parent_code_max_chars",
         "parent_code_truncation",
         "inspiration_strategy",
@@ -1438,6 +1442,14 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     parent_code_paths = _validate_prompt_context_parent_code_paths(
         value.get("parent_code_paths")
+    )
+    parent_code_required_terms = _validate_prompt_context_source_terms(
+        value.get("parent_code_required_terms"),
+        "parent_code_required_terms",
+    )
+    parent_code_excluded_terms = _validate_prompt_context_source_terms(
+        value.get("parent_code_excluded_terms"),
+        "parent_code_excluded_terms",
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
@@ -1909,6 +1921,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_include_example": mutation_instruction_include_example,
         "proposal_metadata_enabled": proposal_metadata_enabled,
         "parent_code_paths": parent_code_paths,
+        "parent_code_required_terms": parent_code_required_terms,
+        "parent_code_excluded_terms": parent_code_excluded_terms,
         "parent_code_max_chars": parent_code_max_chars,
         "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
@@ -2079,6 +2093,8 @@ def apply_prompt_context_policy(
         ],
         "proposal_metadata_enabled": policy["proposal_metadata_enabled"],
         "parent_code_paths": list(policy["parent_code_paths"]),
+        "parent_code_required_terms": list(policy["parent_code_required_terms"]),
+        "parent_code_excluded_terms": list(policy["parent_code_excluded_terms"]),
         "parent_code_max_chars": policy["parent_code_max_chars"],
         "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
@@ -6988,28 +7004,64 @@ def _render_program_files_with_metadata(
     program: Program,
     *,
     selected_paths: object = None,
+    required_terms: object = None,
+    excluded_terms: object = None,
 ) -> tuple[str, dict]:
     workspace = program.workspace()
     policy_paths = _validate_prompt_context_parent_code_paths(selected_paths)
+    parent_required_terms = _validate_prompt_context_source_terms(
+        required_terms,
+        "parent_code_required_terms",
+    )
+    parent_excluded_terms = _validate_prompt_context_source_terms(
+        excluded_terms,
+        "parent_code_excluded_terms",
+    )
     all_paths = sorted(workspace.files)
     if policy_paths:
-        rendered_paths = [path for path in policy_paths if path in workspace.files]
+        candidate_paths = [path for path in policy_paths if path in workspace.files]
         missing_paths = [path for path in policy_paths if path not in workspace.files]
-        omitted_paths = [path for path in all_paths if path not in set(rendered_paths)]
+        omitted_by_path_policy = [path for path in all_paths if path not in set(candidate_paths)]
         order_policy = "prompt_context_policy_order"
     else:
-        rendered_paths = all_paths
+        candidate_paths = all_paths
         missing_paths = []
-        omitted_paths = []
+        omitted_by_path_policy = []
         order_policy = "path_sort"
+    rendered_paths, term_filter_metadata = _filter_parent_code_paths_by_terms(
+        workspace.files,
+        candidate_paths,
+        required_terms=parent_required_terms,
+        excluded_terms=parent_excluded_terms,
+    )
+    omitted_by_required_terms = list(
+        term_filter_metadata["omitted_by_required_terms"]
+    )
+    omitted_by_excluded_terms = list(
+        term_filter_metadata["omitted_by_excluded_terms"]
+    )
+    omitted_paths = (
+        list(omitted_by_path_policy)
+        + omitted_by_required_terms
+        + omitted_by_excluded_terms
+    )
+    policy_active = bool(
+        policy_paths or parent_required_terms or parent_excluded_terms
+    )
     metadata = {
         "schema": "libreevolve.parent_code_paths.v1",
-        "source": "prompt_context_policy" if policy_paths else "default_all_files",
+        "source": "prompt_context_policy" if policy_active else "default_all_files",
         "requested_paths": list(policy_paths),
+        "required_terms": list(parent_required_terms),
+        "excluded_terms": list(parent_excluded_terms),
         "rendered_paths": list(rendered_paths),
         "omitted_paths": omitted_paths,
+        "omitted_by_path_policy": omitted_by_path_policy,
+        "omitted_by_required_terms": omitted_by_required_terms,
+        "omitted_by_excluded_terms": omitted_by_excluded_terms,
         "missing_paths": missing_paths,
         "order_policy": order_policy,
+        "term_filter": term_filter_metadata,
         "primary_file": workspace.primary_file,
         "file_count": len(workspace.files),
         "rendered_file_count": len(rendered_paths),
@@ -7022,7 +7074,7 @@ def _render_program_files_with_metadata(
         f"Primary file: {_short(workspace.primary_file, max_chars=160)}",
         f"File count: {len(workspace.files)}",
     ]
-    if policy_paths:
+    if policy_active:
         rendered.append(f"Rendered mutable file count: {len(rendered_paths)}")
     if workspace.static_files:
         rendered.append(f"Static file count: {len(workspace.static_files)}")
@@ -7063,6 +7115,51 @@ def _render_program_files_with_metadata(
             + json.dumps(missing_paths, sort_keys=True)
         )
     return "\n".join(rendered), metadata
+
+
+def _filter_parent_code_paths_by_terms(
+    files: Mapping[str, str],
+    paths: list[str],
+    *,
+    required_terms: list[str],
+    excluded_terms: list[str],
+) -> tuple[list[str], dict]:
+    selected: list[str] = []
+    omitted_by_required_terms: list[str] = []
+    omitted_by_excluded_terms: list[str] = []
+    for path in paths:
+        content = files.get(path, "")
+        haystack = f"{path}\n{content}".lower()
+        missing_required = [term for term in required_terms if term not in haystack]
+        if missing_required:
+            omitted_by_required_terms.append(path)
+            continue
+        matched_excluded = [term for term in excluded_terms if term in haystack]
+        if matched_excluded:
+            omitted_by_excluded_terms.append(path)
+            continue
+        selected.append(path)
+    metadata = {
+        "schema": "libreevolve.parent_code_term_filter.v1",
+        "required_terms": list(required_terms),
+        "excluded_terms": list(excluded_terms),
+        "candidate_count": len(paths),
+        "selected_count": len(selected),
+        "omitted_by_required_terms": omitted_by_required_terms,
+        "omitted_by_excluded_terms": omitted_by_excluded_terms,
+        "omitted_count": len(omitted_by_required_terms)
+        + len(omitted_by_excluded_terms),
+        "selection_sha256": _stable_json_sha256(
+            {
+                "required_terms": required_terms,
+                "excluded_terms": excluded_terms,
+                "selected": selected,
+                "omitted_by_required_terms": omitted_by_required_terms,
+                "omitted_by_excluded_terms": omitted_by_excluded_terms,
+            }
+        ),
+    }
+    return selected, metadata
 
 
 def _render_feedback(

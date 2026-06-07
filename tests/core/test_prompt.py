@@ -4375,6 +4375,24 @@ def test_prompt_context_policy_rejects_invalid_parent_code_paths():
         validate_prompt_context_policy({"parent_code_paths": "main.py"})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_terms():
+    assert validate_prompt_context_policy(
+        {
+            "parent_code_required_terms": ["Solver", "solver"],
+            "parent_code_excluded_terms": ["Debug"],
+        }
+    )["parent_code_required_terms"] == ["solver"]
+    assert validate_prompt_context_policy(
+        {"parent_code_excluded_terms": ["Debug"]}
+    )["parent_code_excluded_terms"] == ["debug"]
+
+    with pytest.raises(PromptTemplateError, match="parent_code_required_terms"):
+        validate_prompt_context_policy({"parent_code_required_terms": ["a/b"]})
+
+    with pytest.raises(PromptTemplateError, match="parent_code_excluded_terms"):
+        validate_prompt_context_policy({"parent_code_excluded_terms": "debug"})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -6986,6 +7004,8 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "mutation_instruction_include_example": True,
         "proposal_metadata_enabled": None,
         "parent_code_paths": [],
+        "parent_code_required_terms": [],
+        "parent_code_excluded_terms": [],
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
         "inspiration_strategy": None,
@@ -8228,10 +8248,16 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "schema": "libreevolve.parent_code_paths.v1",
         "source": "prompt_context_policy",
         "requested_paths": ["helper.py", "missing.py"],
+        "required_terms": [],
+        "excluded_terms": [],
         "rendered_paths": ["helper.py"],
         "omitted_paths": ["main.py", "unused.py"],
+        "omitted_by_path_policy": ["main.py", "unused.py"],
+        "omitted_by_required_terms": [],
+        "omitted_by_excluded_terms": [],
         "missing_paths": ["missing.py"],
         "order_policy": "prompt_context_policy_order",
+        "term_filter": policy["path_policy"]["term_filter"],
         "primary_file": "main.py",
         "file_count": 3,
         "rendered_file_count": 1,
@@ -8243,6 +8269,71 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "helper.py",
         "missing.py",
     ]
+    assert policy["path_policy"]["term_filter"]["schema"] == (
+        "libreevolve.parent_code_term_filter.v1"
+    )
+    assert policy["path_policy"]["term_filter"]["candidate_count"] == 1
+    assert policy["path_policy"]["term_filter"]["selected_count"] == 1
+    assert len(policy["path_policy"]["term_filter"]["selection_sha256"]) == 64
+
+
+def test_prompt_context_policy_filters_parent_code_paths_by_terms():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "main.py": "from solver import solve\n",
+            "solver.py": "def solve():\n    return 1\n",
+            "debug.py": "def solve_debug():\n    return 0\n",
+            "notes.py": "value = 2\n",
+        },
+        primary_file="main.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_required_terms": ["solve"],
+            "parent_code_excluded_terms": ["debug"],
+        },
+    )
+
+    assert "path=main.py" in prompt
+    assert "path=solver.py" in prompt
+    assert "path=debug.py" not in prompt
+    assert "path=notes.py" not in prompt
+    policy = sampler.last_metadata["parent_code_policy"]
+    path_policy = policy["path_policy"]
+    assert path_policy["source"] == "prompt_context_policy"
+    assert path_policy["required_terms"] == ["solve"]
+    assert path_policy["excluded_terms"] == ["debug"]
+    assert path_policy["rendered_paths"] == ["main.py", "solver.py"]
+    assert path_policy["omitted_by_required_terms"] == ["notes.py"]
+    assert path_policy["omitted_by_excluded_terms"] == ["debug.py"]
+    assert path_policy["term_filter"]["candidate_count"] == 4
+    assert path_policy["term_filter"]["selected_count"] == 2
+    assert path_policy["term_filter"]["omitted_count"] == 2
+    assert len(path_policy["term_filter"]["selection_sha256"]) == 64
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_required_terms"
+    ] == ["solve"]
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_excluded_terms"
+    ] == ["debug"]
 
 
 @pytest.mark.parametrize(

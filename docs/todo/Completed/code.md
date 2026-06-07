@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code term filtering.
+  - Spec evidence: AlphaEvolve-style prompt context should focus required code
+    context on relevant source areas, not only exact file allowlists or whole
+    workspaces.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts
+    `parent_code_required_terms` and `parent_code_excluded_terms` as safe
+    deduplicated alphanumeric term lists. `PromptSampler` applies them to
+    candidate parent-code file path/content text after explicit path selection
+    and records candidate/selected/omitted counts, omitted paths by required or
+    excluded terms, and a stable selection hash in nested
+    `libreevolve.parent_code_term_filter.v1` metadata. The meta-prompt
+    context-policy capability manifest advertises both fields.
+  - Remaining gap: this is deterministic safe term filtering, not semantic
+    retrieval, dependency-aware ranking, or learned relevance over parent
+    source.
+  - Verification: focused prompt tests cover validation, rendering, omitted
+    required/excluded term diagnostics, and canonical metadata defaults;
+    focused loop meta-prompt tests cover accepted policy JSON carrying both
+    fields.
+
 - [x] Add prompt context-policy parent-code file selection.
   - Spec evidence: AlphaEvolve-style prompt context should be able to focus
     required code context on relevant files instead of always rendering the

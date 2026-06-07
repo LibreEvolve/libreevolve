@@ -403,6 +403,35 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so they neither underclaim current bounded
     hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
 
+- [ ] Keep database-query-index follow-up wording scoped to run-local
+      resurfacing versus durable cross-run indexes.
+  - Spec evidence: AlphaEvolve's program database should support durable
+    resurfacing of previously explored programs and ideas across score,
+    metric, diversity/novelty, feedback, lineage, failure, hypothesis, and
+    artifact evidence, with reproducible sampling policies rather than only
+    live in-memory archive views.
+  - Current evidence: `ROADMAP.md` lists "Persist database query indexes
+    beyond run-local metric/novelty/lineage/feedback resurfacing" as a good
+    first follow-up. Code and paper TODO evidence now show bounded
+    current-run `runtime.history.resurfacing_index` support plus defensive
+    `ProgramDatabase.resurface_candidates(target_metric=...)`,
+    `resurface_by_metric()`, `resurface_by_lineage()`,
+    `resurface_by_descriptor()`, `resurface_by_novelty()`, and
+    `resurface_by_feedback()` APIs over score, metric, frontier, lineage,
+    descriptor/novelty, hypothesis, artifact, and feedback views. These
+    records preserve `durable_database_ready: false` and remain append-only
+    logs, an in-memory archive, and manifest-visible bounded summaries rather
+    than persisted cross-run query/index tables, full metric-vector and
+    feedback/artifact-content ranking, semantic/cross-run hypothesis
+    retrieval, learned/cross-run novelty, schema migrations, or replayable
+    durable sampling policies.
+  - Required result: when persisted database tables, cross-run query indexes,
+    replayable ranked sampling policies, schema migration support, or
+    durable full-content/semantic resurfacing lands, update the roadmap,
+    README, papers index, and code/paper TODO entries together so roadmap
+    wording neither underclaims current run-local resurfacing nor overclaims
+    AlphaEvolve-grade queryable database support.
+
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both

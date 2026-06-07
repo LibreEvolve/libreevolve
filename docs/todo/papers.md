@@ -2253,6 +2253,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     results, and docs wording that separates source-artifact verification from
     LibreEvolve reproducing those results.
 
+- [ ] Track paper-artifact creator and assembler roles for figures and Colab.
+  - Paper evidence: the Contributions section of
+    `2506.13131__AlphaEvolve.pdf` states that N.V., E.D., M.E., S.C., A.N.,
+    and A.Z.W. created the figures, while F.J.R.R., A.M., and A.Z.W. assembled
+    the accompanying Google Colab.
+  - Current gap: paper-facing TODOs require exhibit ids, source/caption
+    locations, rendered artifact hashes, companion Colab URL/ref/digest
+    records, and claim-to-cell mappings. They do not require a paper-source
+    role record that attributes figure creation or notebook assembly to the
+    responsible contributors, ties those roles to a figure/table/notebook id,
+    or validates the source location for the role claim.
+  - Required result: add paper-facing artifact-role provenance for figures,
+    tables, and companion notebooks: artifact id/type, creator or assembler
+    role, responsible initials/names, source section/page, artifact hash/link,
+    and README/ROADMAP wording that separates artifact availability from
+    paper-attributed artifact authorship.
+
 - [ ] Track Appendix A matrix target-suite curation provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the 54
     matrix sizes were chosen roughly from dimensions with 2 <= m,n <= 5 and a

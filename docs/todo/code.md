@@ -1747,6 +1747,25 @@ Primary evidence:
     AlphaEvolve source evidence from LibreEvolve's own generated
     Colab-equivalent exports.
 
+- [ ] Add paper-artifact creator and assembler provenance for figures and
+      companion notebooks.
+  - Spec evidence: the AlphaEvolve Contributions section says N.V., E.D.,
+    M.E., S.C., A.N., and A.Z.W. created the paper figures, and F.J.R.R.,
+    A.M., and A.Z.W. assembled the accompanying Google Colab.
+  - Current evidence: TODOs already require figure/exhibit metadata, rendered
+    artifact hashes, companion Colab URL/ref/digest records, claim-to-cell
+    maps, and local Colab-equivalent exports. They do not require any code or
+    paper-source manifest schema to preserve artifact-role provenance for who
+    created a figure or assembled a companion notebook, what artifact each role
+    applies to, or how that role evidence is tied to the PDF Contributions
+    source location.
+  - Required result: extend paper artifact manifests or exhibit/notebook
+    provenance records with source-role metadata: artifact type, figure/table/
+    notebook id, creator or assembler role, responsible initials/names,
+    source PDF section/page, artifact digest/link, and docs wording that
+    distinguishes byte-level artifact verification from paper-attributed
+    artifact authorship.
+
 - [ ] Connect benchmark-grade fixtures to hardening and scope reports.
   - Spec evidence: AlphaEvolve's matrix-multiplication work searches tensor
     decompositions, measures rank over target families and randomized seeds,

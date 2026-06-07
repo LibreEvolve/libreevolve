@@ -915,6 +915,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes PDF-source validation, external AlphaEvolve Colab
     source evidence, and LibreEvolve-generated result notebooks/exports.
 
+- [ ] Keep README figure/notebook provenance wording scoped until paper
+      artifact-role metadata exists.
+  - Spec evidence: AlphaEvolve's Contributions section attributes paper figure
+    creation to specific authors and separately identifies the people who
+    assembled the accompanying Google Colab.
+  - Current evidence: README can describe PDF manifest validation, future
+    companion Colab tracking, exhibit provenance gaps, and rendered artifact
+    hashes. It does not document creator/assembler role metadata for figures,
+    tables, or companion notebooks, nor source locations tying those roles back
+    to the AlphaEvolve Contributions section.
+  - Required result: when paper-artifact role provenance lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes artifact availability, rendered/source hashes, and
+    paper-attributed figure/notebook creator or assembler provenance.
+
 - [ ] Keep README constructive-math wording scoped to static context/artifacts
       versus AlphaEvolve-style incumbent handoff.
   - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs

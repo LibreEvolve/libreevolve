@@ -1599,6 +1599,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve companion-source verification, and generated LibreEvolve
     result-export artifacts.
 
+- [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
+      provenance exists.
+  - Spec evidence: AlphaEvolve's Contributions section identifies the figure
+    creators and the people who assembled the accompanying Google Colab.
+  - Current evidence: roadmap/README/paper-index status can point to PDF
+    manifest validation, planned companion Colab source tracking, and
+    figure/exhibit artifact TODOs. They do not require artifact-role metadata
+    for figure creation, table/figure assembly, notebook assembly, responsible
+    initials/names, source section/page, or linkage from those roles to
+    artifact ids and hashes.
+  - Required result: when paper-artifact role provenance lands, update ROADMAP,
+    README, papers index, and code/paper TODO entries together so roadmap
+    wording distinguishes artifact presence/hash verification from
+    paper-attributed creator or assembler provenance.
+
 - [ ] Keep Appendix A matrix-suite roadmap wording scoped to target identities
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

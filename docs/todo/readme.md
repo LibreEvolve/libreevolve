@@ -600,6 +600,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     boundary, redaction/provenance behavior, and distinction between safe
     proposal metadata and arbitrary unparsed prose.
 
+- [ ] Keep README mutation-mode wording scoped to configured `diff`/`full`
+      support versus adaptive prompting.
+  - Spec evidence: AlphaEvolve Section 2.3 requests diff blocks for larger
+    codebases and direct full-code output when code is very short or a rewrite
+    is more suitable.
+  - Current evidence: README correctly says LLM mutations use SEARCH/REPLACE
+    diffs by default and full-block/full-code replacements when
+    `mutation_mode: full` is configured. It should not imply that LibreEvolve
+    currently chooses that output contract per candidate size, workspace shape,
+    or prior failure mode.
+  - Required result: when adaptive mutation-mode selection lands, update
+    README, ROADMAP, papers index, and code/paper TODOs with the selection
+    policy, per-candidate telemetry, and examples that prove diff prompts and
+    full-rewrite prompts are selected under documented AlphaEvolve-style
+    conditions.
+
 - [ ] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated

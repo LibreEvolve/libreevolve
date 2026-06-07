@@ -799,6 +799,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     and code TODOs explicit that LibreEvolve requires structured proposal
     metadata rather than arbitrary natural-language patch rationale.
 
+- [ ] Track adaptive diff-versus-full mutation prompting.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
+  - Requirement: AlphaEvolve asks for SEARCH/REPLACE blocks for larger
+    codebases, but for very short code or cases where a complete rewrite is
+    more appropriate it can ask the model to output the full code block.
+  - Partial status: LibreEvolve supports canonical diff parsing and a
+    configured `full` mutation mode with full-file, file-section, and
+    full-block replacement semantics.
+  - Current gap: `Config.mutation_mode` is a run-wide enum. The prompt and
+    parser contract do not adapt per candidate, code size, workspace shape, or
+    observed failure mode, and paper-facing telemetry does not explain why a
+    given proposal was requested as a diff or a full rewrite.
+  - Required result: add paper-visible mutation-mode policy evidence for
+    candidate-shape or task-shape selection, per-candidate prompt/output mode
+    records, fallback/critique behavior, and benchmark examples proving the
+    diff/full choice follows documented AlphaEvolve-style conditions rather
+    than a fixed run configuration.
+
 - [ ] Complete full validator-metadata rendering and provider-token prompt
   packing.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

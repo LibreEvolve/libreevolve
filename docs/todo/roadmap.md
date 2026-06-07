@@ -95,6 +95,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
+- [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
+      adaptive AlphaEvolve-style output contracts.
+  - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE diffs for
+    larger codebases and direct full-code output when short code or rewrite
+    conditions make that more appropriate.
+  - Current evidence: ROADMAP and README can accurately claim implemented
+    `diff` and configured `full` mutation modes, including full-file,
+    file-section, and full-block replacement semantics. They do not yet require
+    a policy that selects the prompt/output mode per candidate or records why a
+    candidate received a diff versus full-rewrite contract.
+  - Required result: when adaptive mutation-mode policy, telemetry, and tests
+    land, update roadmap, README, papers index, and code/paper TODO entries so
+    roadmap wording neither underclaims current configured `diff`/`full`
+    support nor overclaims AlphaEvolve-style adaptive mutation prompting.
+
 - [ ] Keep roadmap seed-provenance wording scoped to source identity versus
       experiment idea provenance.
   - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and

@@ -1216,6 +1216,27 @@ Primary evidence:
     updates that distinguish safe proposal rationale capture from arbitrary
     unparsed prose.
 
+- [ ] Add adaptive mutation-output mode selection instead of one run-wide
+      `diff`/`full` contract.
+  - Spec evidence: AlphaEvolve Section 2.3 says larger codebases request
+    SEARCH/REPLACE diff blocks, while very short code or cases where complete
+    rewrites are more appropriate can request the entire code block directly.
+    That is a task/candidate-shape choice, not merely a static parser feature.
+  - Current evidence: LibreEvolve implements both `diff` and `full` mutation
+    modes, validates the mode through `Config.mutation_mode` and CLI
+    `--mutation-mode`, renders matching `{mutation_mode}` and
+    `{mutation_instructions}` prompt fields, and applies all candidates in a
+    run with the same configured mode. It does not choose the mutation-output
+    contract per problem, candidate size, file/block count, parent failure
+    history, or model response quality, and it does not report why a candidate
+    was asked for a diff versus a full rewrite.
+  - Required result: add a versioned mutation-mode policy that can choose
+    between diff and full-output contracts per candidate or prompt arm,
+    including candidate-size/task-shape thresholds, prompt metadata,
+    parser/critique fallback behavior, manifest/report telemetry, and tests
+    proving large-codebase diff prompts and short-code/full-rewrite prompts
+    are selected under documented AlphaEvolve-style conditions.
+
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs

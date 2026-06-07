@@ -527,6 +527,14 @@ before or after mutation sections is still rejected unless it uses those
 structured proposal fields, which is stricter than the explanatory preamble
 shown before the Figure 3(c) AlphaEvolve diff example.
 
+AlphaEvolve mutation-mode note: LibreEvolve implements canonical diff parsing
+and configured `full` replacement mode, but `Config.mutation_mode` is currently
+a run-wide prompt/parser contract. AlphaEvolve Section 2.3 distinguishes
+diff-block output for larger codebases from direct full-code output for very
+short code or rewrite-friendly cases, so LibreEvolve still needs adaptive
+per-candidate mutation-mode policy and telemetry before claiming that
+diff-versus-full prompting follows the paper's conditions.
+
 AlphaEvolve scope-boundary note: the paper explicitly treats automated
 evaluation as both a core advantage and a limitation, keeping tasks that require
 manual experimentation out of scope and describing LLM-provided evaluation of

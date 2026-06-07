@@ -1344,6 +1344,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     variants, bind every component assertion to executable runtime controls,
     collect intermediate progress from real experiments, or generate
     equal-budget reports from executable benchmark scripts.
+    For `No context in the prompt`, the current registry does not prove that
+    executed prompts omitted explicit context files, sampled prior-program or
+    inspiration context, recent failure feedback, and plugin context; it only
+    carries definition-only component labels and declarative config assertions.
     For `No full-file evolution`, the current registry also does not encode
     AlphaEvolve's tensor-decomposition-specific loss-function-only restriction;
     broad single-file/diff/no-create-delete labels are not the same as proving
@@ -1360,7 +1364,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     update the roadmap, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims the current ablation
     report contract nor overclaims repeatable AlphaEvolve-grade benchmark
-    execution. Ensure the `No full-file evolution` harness records the
+    execution. Ensure the `No context in the prompt` harness records prompt
+    history or diagnostics proving absent explicit context, parent/inspiration
+    context, recent failure feedback, and plugin context. Ensure the
+    `No full-file evolution` harness records the
     loss-function target scope, fixed tensor-search components, and report
     evidence before claiming parity with Figure 8. Also require ablation
     reports to identify the matrix and kissing-number target families and

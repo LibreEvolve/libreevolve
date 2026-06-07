@@ -3094,10 +3094,12 @@ budget unit/limit across each seed's fraction curve and across all
 variants/seeds for each target, passed component assertions, and hashed curve
 artifacts. It does not yet require Figure 8 target-family coverage or
 target-metric identity, higher-is-better direction, normalization, and
-aggregation metadata for the plotted y-axis. It validates report shape only;
-it does not run ablation experiments or add accelerator/async-worker budget
-stops beyond the current live provider-token and configured-cost LLM budget
-surfaces.
+aggregation metadata for the plotted y-axis. It also does not prove the
+`No context in the prompt` condition by checking executed prompt history for
+absent explicit context, prior-program/inspiration context, failure feedback,
+and plugin context. It validates report shape only; it does not run ablation
+experiments or add accelerator/async-worker budget stops beyond the current
+live provider-token and configured-cost LLM budget surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
 ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,

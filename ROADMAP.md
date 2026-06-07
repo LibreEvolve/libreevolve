@@ -350,6 +350,10 @@ is not yet an AlphaEvolve reproduction.
   benchmark, or keep it marked background-only in `papers/README.md`.
 - Add repeatable benchmark scripts for backend, seed, prompt, and archive
   ablations.
+- For the Figure 8 `No context in the prompt` ablation, require prompt-history
+  or prompt-diagnostic proof that explicit context, prior-program/inspiration
+  context, failure feedback, and plugin context were absent in executed runs,
+  not only definition-only registry labels.
 - Report benchmark progress at comparable compute-budget fractions, not only
   final generation counts, with explicit target-metric identity, direction,
   normalization, and aggregation policy for paper-facing curves.

@@ -666,6 +666,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they neither underclaim the report contract nor overclaim
     executed ablation experiments.
 
+- [ ] Keep benchmark-script roadmap wording scoped to report contracts versus
+      runnable ablation harnesses.
+  - Spec evidence: AlphaEvolve-style ablations require repeatable benchmark
+    scripts that run comparable backend, seed, prompt, and archive variants and
+    report progress at equal compute-budget fractions, not only final
+    generation counts or hand-authored report files.
+  - Current evidence: `ROADMAP.md` separately asks to add repeatable benchmark
+    scripts for backend, seed, prompt, and archive ablations and to report
+    benchmark progress at comparable compute-budget fractions. README and code
+    evidence show `libreevolve.alphaevolve_ablation_report.v1` validates
+    declared Figure 8-style report shape, exactly three seeds, required
+    equal-budget fractions, finite scores, consumed-budget consistency, and
+    artifact references, while `alphaevolve_ablations.json` defines the named
+    variants. Those validators do not schedule runs, enforce backend/seed/
+    prompt/archive variants, collect intermediate progress from real
+    experiments, or generate equal-budget reports from executable benchmark
+    scripts.
+  - Required result: when runnable ablation harnesses, backend/seed/prompt/
+    archive script entrypoints, progress-at-budget-fraction exports, or
+    generated report bundles land, update the roadmap, README, papers index,
+    and code/paper TODO entries together so roadmap wording neither underclaims
+    the current ablation report contract nor overclaims repeatable
+    AlphaEvolve-grade benchmark execution.
+
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous reviewer
   pools versus AlphaEvolve-grade reviewer orchestration.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

@@ -197,13 +197,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current executable config switches, including `candidate_source`,
     `archive_admission_enabled`, `candidate_workspace_mode`,
     `file_create_delete_enabled`, `ensemble_strategy: single_backend`, and
-    `backend_capability_tier`.
+    `backend_capability_tier`. The registry also does not yet prove the
+    paper-specific `No full-file evolution` setup where only the tensor
+    decomposition loss function is evolved; generic single-file/diff/no-topology
+    labels should not be described as equivalent to that ablation.
   - Required result: when benchmark scripts emit executed equal-budget
     ablation reports, when component assertions are bound to supported runtime
     config controls, or when accelerator/async-worker budgets land, update
     README, ROADMAP, papers index, and code/paper TODO entries together so the
     README neither underclaims current token/configured-cost budget stops nor
-    overclaims AlphaEvolve-style executed ablations.
+    overclaims AlphaEvolve-style executed ablations. For `No full-file
+    evolution`, require README wording to distinguish a real loss-function-only
+    tensor-decomposition harness from broader localized-edit settings.
 
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.

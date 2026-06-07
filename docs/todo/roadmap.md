@@ -1268,13 +1268,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     variants, bind every component assertion to executable runtime controls,
     collect intermediate progress from real experiments, or generate
     equal-budget reports from executable benchmark scripts.
+    For `No full-file evolution`, the current registry also does not encode
+    AlphaEvolve's tensor-decomposition-specific loss-function-only restriction;
+    broad single-file/diff/no-create-delete labels are not the same as proving
+    only the loss function was mutable.
   - Required result: when runnable ablation harnesses, backend/seed/prompt/
     archive script entrypoints, component-assertion-to-config binding,
     progress-at-budget-fraction exports, or generated report bundles land,
     update the roadmap, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims the current ablation
     report contract nor overclaims repeatable AlphaEvolve-grade benchmark
-    execution.
+    execution. Ensure the `No full-file evolution` harness records the
+    loss-function target scope, fixed tensor-search components, and report
+    evidence before claiming parity with Figure 8.
 
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
       valid mutation selection.

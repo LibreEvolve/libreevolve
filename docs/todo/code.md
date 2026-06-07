@@ -1880,6 +1880,26 @@ Primary evidence:
     ablations before any ablation runner treats the current registry as
     runnable experiment policy.
 
+- [ ] Bind the `No full-file evolution` ablation to loss-function-only
+      tensor-decomposition controls.
+  - Spec evidence: AlphaEvolve Figure 8 defines `No full-file evolution` in the
+    tensor-decomposition setting as evolving only the loss function, contrasting
+    that localized edit surface with full-file/codebase evolution.
+  - Current evidence: `alphaevolve_ablations.json` currently records the
+    variant as `definition_only` with broad declarative assertions such as
+    `mutation_mode: diff`, `candidate_workspace_mode: single_primary_file`,
+    and `file_create_delete_enabled: false`. Those labels are not executable
+    config fields, and they do not prove that a benchmark runner restricts
+    mutation to a named loss-function region while leaving initializer,
+    optimizer, sweep logic, certificate/export logic, and other tensor-search
+    code fixed.
+  - Required result: add executable ablation-runner bindings for a
+    loss-function-only tensor-decomposition variant, including target file/block
+    identity, allowed mutable symbol or evolve-block scope, config/runtime
+    assertions, prompt wording, history metadata, and report fields that
+    distinguish AlphaEvolve's localized loss-function ablation from generic
+    single-file, diff-only, or no-topology-mutation runs.
+
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
     provider latency and stalled model calls must be bounded and attributable to

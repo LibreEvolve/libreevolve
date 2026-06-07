@@ -54,7 +54,11 @@ system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,
 `No full-file evolution`, and `Small base LLM only`. The registry requires
 component-disable assertions, three independent seeds, target aggregation,
 equal-budget fractions, required result fields, and AlphaEvolve citation
-metadata, but it does not claim those reports have been run.
+metadata, but it does not claim those reports have been run. Its
+`No full-file evolution` row is not yet bound to the paper's
+tensor-decomposition loss-function-only ablation; the current labels are
+definition-only component assertions, not executable proof that only the loss
+function is mutable.
 For AlphaEvolve context-ingestion status, "deterministic selection provenance"
 means path-segment-aware local context globs: `*` stays within one path
 component and `**` recursively matches zero or more components.

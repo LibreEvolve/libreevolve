@@ -313,9 +313,11 @@ is not yet an AlphaEvolve reproduction.
   run summaries, lineage, richer metrics, workspace artifacts, and failure
   statistics.
 - Add packaging/release hygiene beyond editable installs.
-- Re-enable or explicitly track disabled GitHub workflow state, add docs/paper
-  validation, and broaden CI/interpreter coverage without reintroducing
-  notification noise.
+- Extend the current path-scoped GitHub Actions workflow beyond secret scan,
+  Python 3.11/3.12 non-integration tests, optional integration tests, and
+  documented paper-manifest commands with broader docs/paper-specific
+  validation, more interpreter/platform coverage, and notification-safe trigger
+  and branch policy.
 
 ## Non-Goals For Now
 

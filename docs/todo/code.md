@@ -1159,9 +1159,12 @@ Primary evidence:
     `status_code` attributes also record `provider_status_code`. Final
     manifests now expose role-accounting/token summaries through compact
     `runtime.llm_accounting` totals and self-validated
-    `runtime.llm_budget_report` instances now retain per-call
-    provider-internal retry details from bounded LLM call history when
-    available. Focused ensemble tests now cover fake provider usage counts and
+    `runtime.llm_budget_report` instances now use status
+    `cooperative_enforcement_snapshot` and policy
+    `runtime_cooperative_budget_enforcement_v1`, validate that report metadata,
+    and retain per-call provider-internal retry details from bounded LLM call
+    history when available. Focused ensemble tests now cover fake provider
+    usage counts and
     adapter retry diagnostics for `mutation`, `critique`, `feedback:<name>`,
     and `meta_prompt` roles. Backend specs and direct backend metadata now
     accept positive `cost_usd_per_million_tokens`; when sanitized provider
@@ -1229,7 +1232,10 @@ Primary evidence:
     `libreevolve.llm_budget_report.v1` now defines and tests a report contract
     for role-specific logical-call, retry-attempt, adapter-attempt,
     token/cost/wall-clock limits and usage, provider-internal retry caps, and
-    persisted resume-state hashes.
+    persisted resume-state hashes. Current report metadata is validated as a
+    `cooperative_enforcement_snapshot` under policy
+    `runtime_cooperative_budget_enforcement_v1`, so stale audit-only policy
+    labels are rejected.
     `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
     optional `resume_state.artifacts[]` records against an artifact root,
     including safe relative paths, file existence, SHA-256 hashes, byte counts,

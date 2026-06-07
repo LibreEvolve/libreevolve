@@ -111,10 +111,10 @@ is not yet an AlphaEvolve reproduction.
   Provider-attempt, provider-token, configured-cost, and retained LLM latency
   usage now stop live runs before the next LLM call; accelerator, async queue,
   and restored budget consumption remain open.
-- Connect paper-facing `libreevolve.llm_budget_report.v1` audits to live
-  enforcement for persisted/restored retry-budget consumption and hard
-  cancellation semantics rather than treating the report as audit-only
-  evidence.
+- Extend paper-facing `libreevolve.llm_budget_report.v1` cooperative
+  enforcement snapshots to pending-work queues, provider-output replay, and hard
+  cancellation semantics; provider-attempt, token, configured-cost, and retained
+  latency limits already feed live resumed-run stop checks.
 - Add calibration/ablation reporting for LLM feedback graders, including
   evidence that normalized reviewer scores remain calibrated across tasks.
 - Add configurable retry/penalty policies for LLM feedback provider or parse

@@ -154,7 +154,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.llm_budget_report.v1` now defines and tests paper-index-visible
     retry-budget report semantics for mutation, critique, and feedback roles,
     adapter-internal attempts, token/cost/wall-clock limits and usage, and
-    persisted resume-state hashes.
+    persisted resume-state hashes. Current reports use status
+    `cooperative_enforcement_snapshot` and policy
+    `runtime_cooperative_budget_enforcement_v1`, and the validator rejects
+    stale audit-only policy labels.
     `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
     optional LLM budget `resume_state.artifacts[]` records against an artifact
     root, including safe relative paths, file existence, SHA-256 hashes, byte
@@ -201,7 +204,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     budget contract and rejects snapshot drift before restored consumption is
     trusted.
   - Current gap: runtime enforcement is still incomplete for full restored
-    controller state. LLM budget deltas are replayable through validated
+    controller state. LLM budget reports now describe cooperative live
+    enforcement snapshots rather than audit-only evidence. LLM budget deltas
+    are replayable through validated
     controller events, and prior manifest runtime budget snapshots can now be
     restored through direct `evolve()` calls or CLI
     `--restore-budget-from-manifest` before new work. Exhausted restored
@@ -209,7 +214,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     therefore trip the same live stop checks in the resumed run. However,
     restored controller state is not yet connected to pending-work queues,
     async worker state, or provider-output replay. The remaining gap is not
-    LLM budget resume artifact inventory or bundle-consistency verification.
+    LLM budget resume artifact inventory, bundle-consistency verification, or
+    current-report policy/status validation.
   - Required result: connect the runtime LLM ensemble and provider adapters to
     the report contract with complete persisted/restored retry/provider-attempt/
     token/configured-cost/latency consumption before

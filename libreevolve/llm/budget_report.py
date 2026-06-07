@@ -13,6 +13,8 @@ from .prompt_roles import validate_prompt_role_label
 
 
 LLM_BUDGET_REPORT_SCHEMA = "libreevolve.llm_budget_report.v1"
+LLM_BUDGET_REPORT_STATUS = "cooperative_enforcement_snapshot"
+LLM_BUDGET_REPORT_POLICY = "runtime_cooperative_budget_enforcement_v1"
 LLM_BUDGET_RESUME_ARTIFACT_INVENTORY_SCHEMA = (
     "libreevolve.llm_budget_resume_artifact_inventory.v1"
 )
@@ -55,6 +57,10 @@ def validate_llm_budget_report(report: object | str | Path) -> LLMBudgetValidati
     issues: list[LLMBudgetIssue] = []
     if data.get("schema") != LLM_BUDGET_REPORT_SCHEMA:
         issues.append(LLMBudgetIssue("invalid_schema", "unsupported LLM budget report schema"))
+    if data.get("status") != LLM_BUDGET_REPORT_STATUS:
+        issues.append(LLMBudgetIssue("invalid_status", "unsupported LLM budget report status"))
+    if data.get("policy") != LLM_BUDGET_REPORT_POLICY:
+        issues.append(LLMBudgetIssue("invalid_policy", "unsupported LLM budget report policy"))
     run_id = _id_field(data, "run_id", issues)
     budgets = _validate_role_budgets(data.get("role_budgets"), issues)
     usage = _validate_role_usage(data.get("role_usage"), budgets, issues)

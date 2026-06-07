@@ -3036,11 +3036,13 @@ ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,
 curve summaries, raw records, and plots. It proves artifact availability for a
 report, not that the ablation experiment was executed.
-Paper-facing LLM budget audits use `libreevolve.llm_budget_report.v1` in
-`libreevolve/llm/budget_report.py`; the contract validates per-role logical
-call, retry-attempt, adapter-attempt, token, cost, and wall-clock limits and
-usage, provider-internal retry-attempt caps, persisted resume-state hashes, and
-paper-ready coverage for mutation, critique, and feedback roles. A report
+Paper-facing LLM budget reports use `libreevolve.llm_budget_report.v1` in
+`libreevolve/llm/budget_report.py`; the current report status is
+`cooperative_enforcement_snapshot` under policy
+`runtime_cooperative_budget_enforcement_v1`. The contract validates per-role
+logical call, retry-attempt, adapter-attempt, token, cost, and wall-clock limits
+and usage, provider-internal retry-attempt caps, persisted resume-state hashes,
+and paper-ready coverage for mutation, critique, and feedback roles. A report
 cannot claim restored retry-budget state unless it also carries persisted
 resume-state evidence. `llm_budget_resume_artifact_inventory()` emits
 `libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional

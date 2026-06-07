@@ -70,7 +70,9 @@ from libreevolve.core.meta_prompt import PromptDatabase, PromptProgram
 from libreevolve.core.prompt import DEFAULT_TEMPLATE, validate_prompt_context_policy
 from libreevolve.llm.ensemble import LLMEnsemble, LLM_PROVIDER_DIAGNOSTICS_SCHEMA
 from libreevolve.llm.budget_report import (
+    LLM_BUDGET_REPORT_POLICY,
     LLM_BUDGET_REPORT_SCHEMA,
+    LLM_BUDGET_REPORT_STATUS,
     validate_llm_budget_report,
 )
 from libreevolve.llm.cancellation_policy import validate_provider_cancellation_policy
@@ -1461,8 +1463,8 @@ def test_completed_runtime_persists_llm_scheduler_state_snapshot():
     budget_report = manifest["runtime"]["llm_budget_report"]
     budget_validation = validate_llm_budget_report(budget_report)
     assert budget_report["schema"] == LLM_BUDGET_REPORT_SCHEMA
-    assert budget_report["status"] == "audit_snapshot"
-    assert budget_report["policy"] == "runtime_observed_usage_not_budget_enforced"
+    assert budget_report["status"] == LLM_BUDGET_REPORT_STATUS
+    assert budget_report["policy"] == LLM_BUDGET_REPORT_POLICY
     assert budget_report["paper_budget_ready"] is False
     assert budget_report["validation"]["ok"] is True
     assert budget_report["validation"]["paper_budget_ready"] is False

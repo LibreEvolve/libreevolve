@@ -814,6 +814,14 @@ with its resume artifact inventory, including matching run id, report schema,
 resume-state hash, inventory status, aggregate counts, zero
 missing/mismatch/invalid records, and inventory record-hash consistency before
 treating the bundle as paper-budget-ready.
+Runtime `libreevolve.llm_budget_report.v1` records now use status
+`cooperative_enforcement_snapshot` and policy
+`runtime_cooperative_budget_enforcement_v1`; the report validator rejects older
+audit-only policy labels for current reports. This policy means logical-call,
+provider-attempt, provider-token, configured-cost, and retained-latency usage
+are live cooperative stop inputs before the next LLM call, including from
+restored runtime budget snapshots. It still does not mean hard provider
+cancellation, pending-work queue restoration, or provider-output replay.
 Runtime manifests also include `runtime.prompt_section_packing` with schema
 `libreevolve.prompt_section_packing_coverage.v1`. It records which prompt
 roles use section-level packing before the LLM call, which roles only have the

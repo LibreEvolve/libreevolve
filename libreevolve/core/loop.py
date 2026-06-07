@@ -88,7 +88,9 @@ from libreevolve.llm.cancellation_policy import (
     validate_provider_cancellation_policy,
 )
 from libreevolve.llm.budget_report import (
+    LLM_BUDGET_REPORT_POLICY,
     LLM_BUDGET_REPORT_SCHEMA,
+    LLM_BUDGET_REPORT_STATUS,
     validate_llm_budget_report,
 )
 from libreevolve.llm.tokenization import discover_prompt_token_counter
@@ -2733,7 +2735,7 @@ def _runtime_llm_budget_report(
         return {
             "schema": LLM_BUDGET_REPORT_SCHEMA,
             "status": status if isinstance(status, str) else "unavailable",
-            "policy": "runtime_observed_usage_not_budget_enforced",
+            "policy": LLM_BUDGET_REPORT_POLICY,
             "paper_budget_ready": False,
             "reason": (
                 reason
@@ -2748,7 +2750,7 @@ def _runtime_llm_budget_report(
         return {
             "schema": LLM_BUDGET_REPORT_SCHEMA,
             "status": "unavailable",
-            "policy": "runtime_observed_usage_not_budget_enforced",
+            "policy": LLM_BUDGET_REPORT_POLICY,
             "paper_budget_ready": False,
             "reason": "no_llm_role_accounting_records",
         }
@@ -2756,8 +2758,8 @@ def _runtime_llm_budget_report(
     adapter_attempts_by_role = _runtime_llm_budget_adapter_attempts_by_role(llm)
     report = {
         "schema": LLM_BUDGET_REPORT_SCHEMA,
-        "status": "audit_snapshot",
-        "policy": "runtime_observed_usage_not_budget_enforced",
+        "status": LLM_BUDGET_REPORT_STATUS,
+        "policy": LLM_BUDGET_REPORT_POLICY,
         "run_id": config.run_id,
         "paper_budget_ready": False,
         "role_budgets": [

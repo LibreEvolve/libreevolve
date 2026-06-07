@@ -3,7 +3,9 @@ import hashlib
 
 from libreevolve.llm.budget_report import (
     LLM_BUDGET_RESUME_ARTIFACT_INVENTORY_SCHEMA,
+    LLM_BUDGET_REPORT_POLICY,
     LLM_BUDGET_REPORT_SCHEMA,
+    LLM_BUDGET_REPORT_STATUS,
     llm_budget_resume_artifact_inventory,
     render_llm_budget_summary,
     validate_llm_budget_evidence_bundle,
@@ -45,6 +47,8 @@ def _role_usage(role: str) -> dict:
 def _valid_report() -> dict:
     return {
         "schema": LLM_BUDGET_REPORT_SCHEMA,
+        "status": LLM_BUDGET_REPORT_STATUS,
+        "policy": LLM_BUDGET_REPORT_POLICY,
         "run_id": "run_2026_06_04",
         "paper_budget_ready": True,
         "role_budgets": [_role_budget("mutation"), _role_budget("critique"), _role_budget("feedback")],
@@ -86,6 +90,19 @@ def test_llm_budget_report_validates_paper_budget_ready_record():
     assert validation.run_id == "run_2026_06_04"
     assert validation.role_count == 3
     assert validation.issues == []
+
+
+def test_llm_budget_report_rejects_invalid_status_and_policy():
+    report = _valid_report()
+    report["status"] = "audit_snapshot"
+    report["policy"] = "runtime_observed_usage_not_budget_enforced"
+
+    validation = validate_llm_budget_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_status" in codes
+    assert "invalid_policy" in codes
 
 
 def test_llm_budget_report_loads_json_file(tmp_path):

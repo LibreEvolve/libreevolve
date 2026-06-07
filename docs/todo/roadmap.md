@@ -19,6 +19,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     claims, keep the intro and matching README/papers/TODO evidence aligned
     with the current worktree rather than a stale dated audit snapshot.
 
+- [ ] Keep documentation-truthfulness roadmap wording scoped to partial
+      cross-document guards.
+  - Spec evidence: AlphaEvolve-alignment documentation should keep README,
+    ROADMAP, paper-index, and TODO-ledger claims synchronized with implemented
+    behavior, but path coverage and local consistency checks are not a full
+    semantic proof that every claim is current.
+  - Current evidence: `ROADMAP.md` says to keep README, docs, paper index, and
+    `docs/todo/*` aligned with implemented behavior. Current tests check that
+    the GitHub Actions workflow runs on README, ROADMAP, docs, papers, TODO,
+    source, and test path changes; paper-manifest validation checks README and
+    `papers/README.md` paper-count/status-table consistency; and
+    `tests/test_paper_manifest.py` verifies each manifest id has exactly one
+    TODO-coverage row. These guards do not prove every README, ROADMAP,
+    paper-index, and TODO statement has matching code evidence, nor do they
+    detect all stale completed TODO references, all missing active TODO links,
+    or all semantic mismatches between implemented behavior and prose.
+  - Required result: when stronger cross-document claim verification,
+    implementation-evidence mapping, stale completed-entry detection,
+    README/ROADMAP/paper/TODO semantic diffing, or generated alignment reports
+    land, update the roadmap, README, papers index, and TODO ledgers together
+    so they neither underclaim current path/test guards nor overclaim complete
+    documentation truthfulness.
+
 - [ ] Keep roadmap current-state budget bullets aligned with implemented LLM
       budget surfaces.
   - Spec evidence: AlphaEvolve-style fixed-budget comparisons require docs to

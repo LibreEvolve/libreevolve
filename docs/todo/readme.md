@@ -1204,16 +1204,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     of scope, and LLM-provided evaluation of ideas is possible but not the
     optimized setting. The paper's future bridge is high-level idea feedback
     before transitioning to an implementation stage with machine feedback
-    through code execution.
+    through code execution. The Discussion also says future high-value
+    discoveries depend on setting up more problem environments with robust
+    evaluation functions.
   - Current evidence: README describes automated algorithm discovery, local
     subprocess evaluators, staged validator cascades, optional LLM feedback,
     and proposal metadata, but it does not yet state a clear AlphaEvolve scope
     boundary for machine-gradeable tasks versus manual-experiment scientific
-    workflows or pre-code LLM-only idea review.
+    workflows or pre-code LLM-only idea review, nor does it describe
+    evaluator-environment readiness evidence such as robust evaluator design,
+    automatable-domain boundaries, setup effort, and expected discovery value.
   - Required result: once scope metadata/reporting exists, update README,
     ROADMAP, papers index, and matching TODOs so public wording neither
     underclaims the current executable-evaluator workflow nor overclaims
-    manual-experiment or AI-Co-Scientist-style idea-feedback support.
+    environment-scaling, manual-experiment, or AI-Co-Scientist-style
+    idea-feedback support.
 
 - [ ] Keep README cascade wording scoped to staged threshold gates until
       statistical hypothesis-test promotion is implemented.

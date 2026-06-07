@@ -670,18 +670,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     it handles problems where an automated evaluator can be devised; domains
     requiring manual experimentation are out of scope, and LLM-provided
     high-level idea evaluation is a possible but not optimized bridge toward
-    an implementation stage with machine feedback through code execution.
+    an implementation stage with machine feedback through code execution. The
+    Discussion also says future progress depends on setting up more
+    environments or problems with robust evaluation functions.
   - Current evidence: the roadmap tracks executable validators, staged
     evaluator feedback, optional LLM feedback graders, proposal metadata,
     retrieval, and hypothesis-memory follow-ups. It does not yet require
     roadmap-level scope metadata or workflow wording that separates
     machine-gradeable evolution from manual-experiment scientific workflows or
-    AI-Co-Scientist-style pre-implementation idea review.
+    AI-Co-Scientist-style pre-implementation idea review. It also does not
+    require roadmap evidence for evaluator-environment setup readiness:
+    robust-evaluator rationale, automatable-domain boundaries, setup effort,
+    and expected high-value discovery scope.
   - Required result: when problem/run/report scope metadata lands, update
     ROADMAP, README, papers index, and code/paper TODO entries together so the
     project neither underclaims executable evaluator support nor overclaims
-    AlphaEvolve coverage for manual-experiment or LLM-only idea-feedback
-    workflows.
+    AlphaEvolve coverage for environment-scaling, manual-experiment, or
+    LLM-only idea-feedback workflows.
 
 - [ ] Keep self-improvement roadmap wording scoped until infrastructure and
       distillation evidence exists.

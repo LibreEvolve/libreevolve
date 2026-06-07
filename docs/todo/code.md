@@ -1482,7 +1482,10 @@ Primary evidence:
     not the optimized setting. The paper frames a future link to
     AI-Co-Scientist-style workflows as LLM feedback on high-level ideas before
     transitioning to an implementation stage with machine feedback through
-    code execution.
+    code execution. The Discussion also says AlphaEvolve's future value depends
+    on setting up more problem environments with robust evaluation functions,
+    so environment readiness is part of the claim boundary, not just local
+    validator execution.
   - Current evidence: LibreEvolve problem execution is centered on local
     subprocess validators, staged evaluator results, optional LLM feedback
     graders after candidate evaluation, and bounded proposal
@@ -1490,12 +1493,16 @@ Primary evidence:
     or report whether a task is machine-gradeable, requires manual
     experimentation, uses LLM-only idea review before code generation, or has
     a defined transition from natural-language idea feedback into executable
-    candidate evaluation.
+    candidate evaluation. It also does not record evaluator-environment setup
+    provenance such as why the evaluator is robust enough for sustained search,
+    which parts of the domain are automatable versus experimental, setup effort,
+    or expected high-value discovery scope.
   - Required result: add versioned problem/run/report scope metadata for
     automated-evaluator availability, manual-experiment exclusion, optional
-    LLM-only idea-feedback stages, and transition criteria into executable
-    code-evaluation feedback before claiming AlphaEvolve coverage for broader
-    scientific-discovery or AI-Co-Scientist-style workflows.
+    LLM-only idea-feedback stages, transition criteria into executable
+    code-evaluation feedback, and robust-evaluator environment readiness before
+    claiming AlphaEvolve coverage for broader scientific-discovery,
+    environment-scaling, or AI-Co-Scientist-style workflows.
 
 - [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
       preambles.

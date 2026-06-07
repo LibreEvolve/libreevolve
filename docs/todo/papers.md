@@ -1129,17 +1129,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     out of scope and says LLM-provided idea evaluation is possible but not its
     optimized setting. The future bridge to AI Co-Scientist-style workflows is
     high-level idea feedback followed by an implementation stage where code
-    execution provides machine feedback.
+    execution provides machine feedback. The Discussion also says future
+    progress depends on setting up more environments or problems with robust
+    evaluation functions, making evaluator-environment readiness a paper-facing
+    scope claim.
   - Current gap: the paper index and TODOs describe local validators,
     cascades, optional LLM feedback graders, proposal metadata, and
     DeepEvolve-style retrieval, but they do not yet require a paper-facing
     scope record that separates machine-gradeable executable evaluation from
-    manual experimentation or pre-code natural-language idea review.
+    manual experimentation or pre-code natural-language idea review. They also
+    do not require environment-setup evidence for robust evaluator design,
+    automatable-domain boundaries, setup effort, or expected discovery value.
   - Required result: add benchmark/report metadata and documentation checks
     that label automated-evaluator readiness, manual-experiment exclusion,
-    LLM-only idea-feedback stages, and transition criteria into executable
-    candidate evaluation before broad scientific-discovery or
-    AI-Co-Scientist-style claims appear in paper-facing docs.
+    LLM-only idea-feedback stages, transition criteria into executable
+    candidate evaluation, and robust-evaluator environment readiness before
+    broad scientific-discovery, environment-scaling, or AI-Co-Scientist-style
+    claims appear in paper-facing docs.
 
 - [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.

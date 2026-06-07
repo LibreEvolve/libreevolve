@@ -2186,6 +2186,29 @@ Primary evidence:
     attribution. Until then, finite systems metrics should not be treated as
     reproducible AlphaEvolve result-magnitude evidence.
 
+- [ ] Add application-owner and domain-review provenance for practical systems
+      reports.
+  - Spec evidence: AlphaEvolve Section 3.3 reports production-facing
+    applications across Borg scheduling, Gemini/Pallas kernels, TPU RTL, and
+    XLA/FlashAttention IR, while the Acknowledgements and Contributions
+    sections identify co-leads, domain advisors, reviewers, validation
+    infrastructure owners, TPU designers, and XLA modification reviewers for
+    those applications.
+  - Current evidence: systems report contracts can validate generic
+    held-out/reference/deployment/certification gates, and separate TODOs
+    require scheduling safety, kernel shape-corpus, RTL verification, compiler
+    reference checks, claim calibration, and exhibit provenance. They do not
+    record application-owner identity, domain-reviewer roles, reviewer or
+    signoff scope, validation-infrastructure ownership, workload/shape/capacity
+    data stewardship, production rollout approvers, or links from
+    claim-calibrated metrics to the responsible domain teams.
+  - Required result: extend systems report and certification metadata with
+    domain-owner and reviewer provenance: application domain, responsible team
+    or reviewer role labels, data/source ownership, validation infrastructure
+    owner, review/signoff scope, approval or deployment state, evidence
+    artifact links, and docs that distinguish local benchmark reports from
+    AlphaEvolve-style production/domain-owner validation.
+
 - [ ] Add scheduling ranking-only safety provenance for Borg-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the discovered Borg
     scheduling heuristic outputs a priority score for machines that Borg has

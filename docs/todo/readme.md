@@ -644,6 +644,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README, ROADMAP, papers index, and matching TODOs so README does not imply
     generic finite gate metrics reproduce AlphaEvolve result magnitudes.
 
+- [ ] Keep README systems-result wording scoped until application-owner and
+      domain-review provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.3 frames the Borg scheduling,
+    Gemini/Pallas kernel, TPU RTL, and XLA/FlashAttention IR results as
+    production-facing practical applications, and the Acknowledgements and
+    Contributions sections identify the co-leads, advisors, reviewers,
+    validation owners, TPU designers, and XLA reviewers involved in those
+    domains.
+  - Current evidence: README can describe systems report metrics, held-out
+    gates, reference-correctness gates, deployment/reviewer evidence gaps, and
+    artifact inventories. It does not yet state that AlphaEvolve-style
+    practical systems claims also need domain-owner and reviewer provenance:
+    responsible application role, review/signoff scope, validation/source data
+    owner, production approval state, and links from calibrated metrics to the
+    responsible domain team.
+  - Required result: when systems reports or certification records add
+    application-owner and domain-review provenance, update README, ROADMAP,
+    papers index, and matching TODOs so README distinguishes local benchmark
+    reports from domain-owner validated production or deployment claims.
+
 - [ ] Keep README scheduling wording scoped to generic systems reports until
       ranking-only safety provenance exists.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling

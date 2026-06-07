@@ -2333,6 +2333,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     pre/postprocessing speedup attribution with randomized-reference and
     tolerance provenance.
 
+- [ ] Track practical-application owner and reviewer provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 presents
+    practical systems discoveries as production-facing work in Borg scheduling,
+    Gemini/Pallas kernels, TPU RTL, and XLA/FlashAttention IR. The
+    Acknowledgements and Contributions sections also identify application
+    co-leads, domain advisors, reviewers, validation infrastructure owners,
+    TPU designers, and XLA modification reviewers tied to those systems
+    results.
+  - Current gap: paper/status records and
+    `libreevolve.systems_result_report.v1` can track metrics, artifacts,
+    held-out gates, reference-correctness gates, and domain-readiness evidence,
+    but they do not preserve paper-facing provenance for the domain owners and
+    reviewers behind a practical result: owner role, reviewer scope,
+    validation-infrastructure owner, workload/shape/capacity data steward,
+    production approver, approval state, or how each responsible role maps to
+    a calibrated Section 3.3-style claim.
+  - Required result: add paper-facing owner/reviewer provenance records for
+    systems results before presenting local reports as AlphaEvolve-style
+    practical-application evidence, including domain, responsible team or role
+    labels, review/signoff scope, validation/source ownership, deployment or
+    approval state, artifact links, and wording that separates local benchmark
+    evidence from domain-owner validated production claims.
+
 - [ ] Track self-improvement and distillation evidence for Discussion claims.
   - Paper evidence: AlphaEvolve's Discussion says practical discoveries can
     improve its own infrastructure and future base LLMs, while distilling

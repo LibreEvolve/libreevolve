@@ -429,6 +429,11 @@ Primary evidence:
     sources include one-based retained rank, provider rank, source
     identity/content hashes, redacted URL transport expectations, and an
     aggregate ranking hash linked to the prompt-visible synthesis hash.
+    Retained source rows now include
+    `libreevolve.retrieval_source_grounding_policy.v1` lexical grounding
+    records, and events/cache snapshots include an aggregate
+    `source_grounding_policy` with source counts, lexically grounded source
+    counts, and a records hash.
     Retained source rows with summary/content text include bounded/redacted
     `libreevolve.retrieval_source_content_snapshot.v1` snapshots with raw and
     stored hashes. Retained source rows also include
@@ -457,7 +462,8 @@ Primary evidence:
     payloads become metadata-only omitted artifacts, and `hash_only`/`off`
     record sidecar suppression. It still does not store unbounded raw provider
     payload artifacts, unbounded source-content artifacts, learned/external
-    semantic ranking scores beyond deterministic query overlap, or a
+    semantic ranking scores beyond deterministic query overlap and lexical
+    grounding, or a
     DeepEvolve-style hypothesis refinement/debug loop.
   - Required result: persist replayable source-content artifacts beyond bounded
     retained-source snapshots and retention-budgeted redacted sidecars; add
@@ -466,12 +472,13 @@ Primary evidence:
     candidate metadata, cache snapshots, and run manifests; and add tests for
     successful, empty, malformed, oversized, and failed retrieval artifact
     paths. The remaining gap is unbounded raw provider/source payload
-    persistence, semantic source-content verification, learned/external ranking, and
+    persistence, semantic source-content verification beyond lexical grounding,
+    learned/external ranking, and
     DeepEvolve-style hypothesis refinement/debug loops, not cache-snapshot
     summarization, bounded provider-result snapshots, bounded source-content
     snapshots, retention-budgeted redacted payload sidecars, active-context
-    hashes, query grounding, audit-only relevance scores, or retained source
-    order/hash metadata.
+    hashes, query grounding, lexical grounding records, audit-only relevance
+    scores, or retained source order/hash metadata.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.
   - Spec evidence: external literature/retrieval context can directly shape
@@ -499,7 +506,8 @@ Primary evidence:
     snapshots, hash-only evidence, and missing evidence; event-level trust
     policy records replayable-evidence counts and record hashes. Semantic
     integrity still remains limited to retained-source hashes, deterministic
-    query-overlap scores, and redacted/hash-backed artifact evidence; transport
+    query-overlap scores, lexical grounding records, and redacted/hash-backed
+    artifact evidence; transport
     policies explicitly list `tls_certificate_chain_not_retained` and either
     `semantic_content_integrity_not_verified` or
     `semantic_content_integrity_bounded_to_redacted_payload_artifacts`. Query
@@ -507,7 +515,8 @@ Primary evidence:
     `libreevolve.retrieval_evidence_boundary_policy.v1`, explicitly documenting
     that raw provider/source payloads, TLS certificate chains, and semantic
     verification are outside the current retained-evidence boundary while
-    linking payload-artifact, source-content, and transport evidence states.
+    linking payload-artifact, source-content, source-grounding, and transport
+    evidence states.
   - Required result: add tests proving default and
     custom providers either supply enough replayable evidence or are marked
     degraded/unauditable before their context is treated as auditable. The
@@ -518,7 +527,7 @@ Primary evidence:
     transport classification, bounded retained-source snapshots, bounded
     provider-result snapshots, query-overlap audit scores, request URL
     redaction, active-context hashes, redacted source-content trust policy, or
-    evidence-boundary policy records.
+    evidence-boundary policy records with lexical grounding aggregates.
 
 ## Evaluation
 

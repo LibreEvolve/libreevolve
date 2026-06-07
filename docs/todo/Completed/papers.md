@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible retrieval source grounding records.
+  - Paper evidence: retrieval-driven refinement treats external knowledge as a
+    run input, so retained sources need provenance explaining why they were
+    relevant to the prompt.
+  - Status: DeepResearch retrieval events now attach
+    `libreevolve.retrieval_source_grounding_policy.v1` records to retained
+    sources, aggregate them under `source_grounding_policy`, link the aggregate
+    from active prompt-context metadata, and expose the same counts/hash through
+    the retrieval evidence-boundary policy.
+  - Remaining paper gap: this remains deterministic lexical grounding over
+    bounded retained text, not learned/external semantic ranking,
+    source-content semantic verification, unbounded raw provider/source
+    payload retention, or replayable transport/TLS evidence.
+  - Verification: focused DeepResearch tests cover payload-artifact,
+    arXiv-provider, query-overlap ranking, active-context, and boundary-policy
+    grounding evidence.
+
 - [x] Add a runtime hypothesis index for captured proposal metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
     program database that resurfaces prior programs and ideas as inspirations

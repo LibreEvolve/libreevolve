@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add lexical grounding records for retained retrieval sources.
+  - Spec evidence: AlphaEvolve-style retrieval context should preserve why
+    external evidence was considered relevant to the current prompt.
+  - Status: `DeepResearchPlugin` now attaches
+    `libreevolve.retrieval_source_grounding_policy.v1` records to retained
+    sources using deterministic query-term lexical overlap, emits an aggregate
+    `source_grounding_policy` with source counts, grounded-source counts, and a
+    records hash, links the aggregate from active prompt context, and includes
+    source-grounding state in the retrieval evidence-boundary policy.
+  - Remaining gap: this is lexical grounding over bounded redacted retained
+    source text, not learned/external semantic ranking, full source-content
+    verification, unbounded raw payload preservation, or a replayable TLS/
+    redirect decision tree.
+  - Verification: focused DeepResearch plugin tests cover payload-backed,
+    arXiv-backed, query-overlap ranking, boundary-policy, and active-context
+    grounding records.
+
 - [x] Add a runtime hypothesis index for captured proposal metadata.
   - Spec evidence: AlphaEvolve-style program databases should resurface useful
     prior ideas and hypotheses, not only final scores or archive cells.

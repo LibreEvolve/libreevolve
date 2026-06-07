@@ -40,6 +40,9 @@ RETRIEVAL_PAYLOAD_ARTIFACT_POLICY_SCHEMA = (
 RETRIEVAL_SOURCE_CONTENT_TRUST_POLICY_SCHEMA = (
     "libreevolve.retrieval_source_content_trust_policy.v1"
 )
+RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA = (
+    "libreevolve.retrieval_source_grounding_policy.v1"
+)
 RETRIEVAL_SOURCE_INTEGRITY_POLICY = "retained_source_integrity_v1"
 RETRIEVAL_SOURCE_RANKING_POLICY = "provider_order_retained_v1"
 RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY = "query_overlap_score_desc_v1"
@@ -435,6 +438,7 @@ class DeepResearchPlugin(PluginBase):
                 self._synthesis,
                 ranking_policy=self._source_ranking_policy,
             )
+            _attach_source_grounding_policy(event)
             _attach_source_content_trust_policy(event)
             self._append_event(event)
             self._synthesis_event = dict(event)
@@ -874,6 +878,19 @@ def _active_context_metadata(event: dict) -> dict:
             ),
             "relevance_affects_order": source_ranking.get("relevance_affects_order"),
             "prompt_link": source_ranking.get("prompt_link"),
+        }
+    source_grounding = event.get("source_grounding_policy")
+    if isinstance(source_grounding, dict):
+        active["source_grounding"] = {
+            "schema": source_grounding.get("schema"),
+            "policy": source_grounding.get("policy"),
+            "status": source_grounding.get("status"),
+            "source_count": source_grounding.get("source_count"),
+            "lexically_grounded_source_count": source_grounding.get(
+                "lexically_grounded_source_count"
+            ),
+            "records_sha256": source_grounding.get("records_sha256"),
+            "semantic_verified": source_grounding.get("semantic_verified"),
         }
     cache = event.get("cache")
     if isinstance(cache, dict):
@@ -1692,6 +1709,131 @@ def _sort_sources_by_query_overlap(sources: list[dict]) -> None:
             integrity["rank"] = rank
 
 
+def _attach_source_grounding_policy(event: dict) -> None:
+    sources = event.get("sources")
+    query = event.get("query")
+    if not isinstance(sources, list) or not sources or not isinstance(query, str):
+        return
+    query_terms = _query_relevance_terms(query)
+    records = []
+    for source in sources:
+        if not isinstance(source, dict):
+            continue
+        record = _source_grounding_record(source, query_terms)
+        source["grounding_policy"] = record
+        records.append(record)
+    if not records:
+        return
+    grounded_count = sum(1 for record in records if record["lexically_grounded"])
+    evidence_count = sum(1 for record in records if record["content_evidence_available"])
+    missing_query_terms = sum(1 for record in records if record["query_terms_considered"] == 0)
+    if grounded_count == len(records):
+        status = "all_sources_lexically_grounded"
+    elif grounded_count:
+        status = "partially_lexically_grounded"
+    elif missing_query_terms == len(records):
+        status = "no_query_terms_available"
+    else:
+        status = "no_lexical_grounding"
+    issues = []
+    if grounded_count == 0:
+        issues.append("no_lexically_grounded_sources")
+    if missing_query_terms:
+        issues.append("missing_query_terms_for_grounding")
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    event["source_grounding_policy"] = {
+        "schema": RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
+        "policy": "query_term_lexical_grounding_v1",
+        "status": status,
+        "source_count": len(records),
+        "content_evidence_count": evidence_count,
+        "lexically_grounded_source_count": grounded_count,
+        "semantic_verified": False,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "issues": issues,
+        "limitations": [
+            "lexical_overlap_not_semantic_verification",
+            "bounded_redacted_source_text_only",
+        ],
+    }
+
+
+def _source_grounding_record(source: dict, query_terms: list[str]) -> dict:
+    relevance = source.get("query_relevance")
+    if not isinstance(relevance, dict):
+        relevance = _source_query_relevance(
+            source,
+            query_terms,
+            affects_order=False,
+        )
+    matched_terms = [
+        term for term in relevance.get("matched_terms", []) if isinstance(term, str)
+    ][:12]
+    overlap_count = (
+        int(relevance.get("overlap_count"))
+        if isinstance(relevance.get("overlap_count"), int)
+        and not isinstance(relevance.get("overlap_count"), bool)
+        else len(matched_terms)
+    )
+    snapshot = source.get("content_snapshot")
+    if not isinstance(snapshot, dict):
+        snapshot = {}
+    artifact = source.get("content_payload_artifact")
+    if not isinstance(artifact, dict):
+        artifact = {}
+    integrity = source.get("integrity")
+    if not isinstance(integrity, dict):
+        integrity = {}
+    content_evidence_available = bool(
+        snapshot
+        or artifact
+        or integrity.get("content_sha256")
+        or integrity.get("declared_content_sha256")
+    )
+    lexically_grounded = bool(query_terms and overlap_count > 0)
+    if lexically_grounded and content_evidence_available:
+        status = "lexically_grounded_with_content_evidence"
+    elif lexically_grounded:
+        status = "lexically_grounded_without_content_evidence"
+    elif not query_terms:
+        status = "missing_query_terms"
+    elif not content_evidence_available:
+        status = "missing_content_evidence"
+    else:
+        status = "not_lexically_grounded"
+    issues = []
+    if not query_terms:
+        issues.append("missing_query_terms")
+    if not content_evidence_available:
+        issues.append("missing_content_evidence")
+    if not lexically_grounded and query_terms:
+        issues.append("no_query_term_overlap")
+    return {
+        "schema": RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
+        "policy": "query_term_lexical_grounding_v1",
+        "status": status,
+        "rank": source.get("rank"),
+        "provider_rank": source.get("provider_rank"),
+        "query_terms_considered": len(query_terms),
+        "matched_terms": matched_terms,
+        "overlap_count": overlap_count,
+        "lexically_grounded": lexically_grounded,
+        "content_evidence_available": content_evidence_available,
+        "content_field": (
+            snapshot.get("field")
+            or integrity.get("content_field")
+            or artifact.get("payload_field")
+            or "none"
+        ),
+        "semantic_verified": False,
+        "issues": issues,
+        "limitations": [
+            "lexical_overlap_not_semantic_verification",
+            "bounded_redacted_source_text_only",
+        ],
+    }
+
+
 def _attach_source_content_trust_policy(event: dict) -> None:
     sources = event.get("sources")
     if not isinstance(sources, list) or not sources:
@@ -2469,14 +2611,28 @@ def _retrieval_evidence_boundary_policy(event: dict) -> dict:
     source_trust = event.get("source_content_trust_policy")
     if not isinstance(source_trust, dict):
         source_trust = {}
+    source_grounding = event.get("source_grounding_policy")
+    if not isinstance(source_grounding, dict):
+        source_grounding = {}
     transport_policy = event.get("transport_policy")
     if not isinstance(transport_policy, dict):
         transport_policy = {}
 
-    stored_payload_artifacts = int(payload_policy.get("stored_artifacts") or 0)
-    omitted_payload_artifacts = int(payload_policy.get("omitted_artifacts") or 0)
-    replayable_sources = int(source_trust.get("replayable_source_count") or 0)
-    content_evidence = int(source_trust.get("content_evidence_count") or 0)
+    stored_payload_artifacts = _safe_non_negative_count(
+        payload_policy.get("stored_artifacts")
+    )
+    omitted_payload_artifacts = _safe_non_negative_count(
+        payload_policy.get("omitted_artifacts")
+    )
+    replayable_sources = _safe_non_negative_count(
+        source_trust.get("replayable_source_count")
+    )
+    content_evidence = _safe_non_negative_count(
+        source_trust.get("content_evidence_count")
+    )
+    lexically_grounded_sources = _safe_non_negative_count(
+        source_grounding.get("lexically_grounded_source_count")
+    )
     tls_chain_retained = False
     semantic_verified = False
     raw_payload_retained = False
@@ -2487,6 +2643,8 @@ def _retrieval_evidence_boundary_policy(event: dict) -> dict:
     ]
     if replayable_sources == 0:
         issues.append("no_replayable_source_payload_artifacts")
+    if lexically_grounded_sources == 0:
+        issues.append("no_lexically_grounded_sources")
     if omitted_payload_artifacts:
         issues.append("payload_artifacts_omitted_by_budget")
     status = (
@@ -2522,6 +2680,14 @@ def _retrieval_evidence_boundary_policy(event: dict) -> dict:
             "replayable_source_count": replayable_sources,
             "records_sha256": source_trust.get("records_sha256", ""),
         },
+        "source_grounding": {
+            "policy_schema": source_grounding.get("schema"),
+            "policy": source_grounding.get("policy"),
+            "status": source_grounding.get("status", "not_available"),
+            "source_count": source_grounding.get("source_count", 0),
+            "lexically_grounded_source_count": lexically_grounded_sources,
+            "records_sha256": source_grounding.get("records_sha256", ""),
+        },
         "transport": {
             "policy_schema": transport_policy.get("schema"),
             "status": transport_policy.get("status", "not_available"),
@@ -2531,7 +2697,11 @@ def _retrieval_evidence_boundary_policy(event: dict) -> dict:
         },
         "semantic_verification": {
             "verified": semantic_verified,
-            "policy": "hash_and_redacted_artifact_evidence_only",
+            "policy": "lexical_grounding_audit_not_semantic_verification",
+            "lexical_grounding_status": source_grounding.get(
+                "status", "not_available"
+            ),
+            "lexically_grounded_source_count": lexically_grounded_sources,
         },
         "issues": sorted(set(issues)),
         "limitations": [
@@ -2552,6 +2722,12 @@ def _retrieval_failure_classification(event: dict) -> str:
     if event.get("status") == "error":
         return "unknown_error"
     return "none"
+
+
+def _safe_non_negative_count(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return 0
+    return value
 
 
 def _read_limited_response(

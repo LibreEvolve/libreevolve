@@ -11,6 +11,7 @@ from libreevolve.plugins.deep_research import (
     MAX_RETRIEVAL_SOURCE_CONTENT_CHARS,
     RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
     RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
+    RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
     RETRIEVAL_SOURCE_RELEVANCE_POLICY,
     RETRIEVAL_TRANSPORT_POLICY_SCHEMA,
     _arxiv_query_url,
@@ -358,7 +359,7 @@ def test_cache_snapshot_persists_redacted_provider_result_snapshot(tmp_path):
             "synthesis": f"retrieved token={secret}",
             "sources": [
                 {
-                    "title": "payload source",
+                    "title": "fitness payload source",
                     "summary": f"source token={secret}",
                 }
             ],
@@ -402,6 +403,19 @@ def test_cache_snapshot_persists_redacted_provider_result_snapshot(tmp_path):
     assert source_trust["semantic_verified"] is False
     assert source_trust["payload_artifact_path"] == source_reference["path"]
     assert source_trust["payload_raw_sha256"] == source_trust["content_sha256"]
+    source_grounding = event["sources"][0]["grounding_policy"]
+    assert source_grounding["schema"] == RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA
+    assert source_grounding["policy"] == "query_term_lexical_grounding_v1"
+    assert source_grounding["status"] == "lexically_grounded_with_content_evidence"
+    assert source_grounding["lexically_grounded"] is True
+    assert source_grounding["semantic_verified"] is False
+    assert "fitness" in source_grounding["matched_terms"]
+    aggregate_grounding = event["source_grounding_policy"]
+    assert aggregate_grounding["schema"] == RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA
+    assert aggregate_grounding["status"] == "all_sources_lexically_grounded"
+    assert aggregate_grounding["lexically_grounded_source_count"] == 1
+    assert aggregate_grounding["semantic_verified"] is False
+    assert len(aggregate_grounding["records_sha256"]) == 64
     aggregate_trust = event["source_content_trust_policy"]
     assert aggregate_trust["schema"] == (
         "libreevolve.retrieval_source_content_trust_policy.v1"
@@ -422,8 +436,18 @@ def test_cache_snapshot_persists_redacted_provider_result_snapshot(tmp_path):
     }
     assert boundary["payload_artifacts"]["stored_artifacts"] == 2
     assert boundary["source_content"]["replayable_source_count"] == 1
+    assert boundary["source_grounding"]["status"] == "all_sources_lexically_grounded"
+    assert boundary["source_grounding"]["lexically_grounded_source_count"] == 1
     assert boundary["transport"]["tls_certificate_chain_retained"] is False
     assert boundary["semantic_verification"]["verified"] is False
+    assert (
+        boundary["semantic_verification"]["policy"]
+        == "lexical_grounding_audit_not_semantic_verification"
+    )
+    assert (
+        boundary["semantic_verification"]["lexical_grounding_status"]
+        == "all_sources_lexically_grounded"
+    )
     assert "raw_provider_payload_not_retained" in boundary["issues"]
     assert event["transport_policy"]["limitations"] == [
         "tls_certificate_chain_not_retained",
@@ -1116,6 +1140,16 @@ def test_default_plugin_records_arxiv_sources():
     assert trust["semantic_verified"] is False
     assert trust["content_sha256"] == snapshot["raw_sha256"]
     assert trust["content_snapshot_sha256"] == snapshot["stored_sha256"]
+    grounding = event["sources"][0]["grounding_policy"]
+    assert grounding["schema"] == RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA
+    assert grounding["status"] == "lexically_grounded_with_content_evidence"
+    assert grounding["lexically_grounded"] is True
+    assert grounding["semantic_verified"] is False
+    assert {"evolutionary", "optimization"} & set(grounding["matched_terms"])
+    aggregate_grounding = event["source_grounding_policy"]
+    assert aggregate_grounding["status"] == "all_sources_lexically_grounded"
+    assert aggregate_grounding["lexically_grounded_source_count"] == 1
+    assert aggregate_grounding["semantic_verified"] is False
     aggregate_trust = event["source_content_trust_policy"]
     assert aggregate_trust["status"] == "bounded_or_hash_only_content_evidence"
     assert aggregate_trust["content_evidence_count"] == 1
@@ -1126,8 +1160,17 @@ def test_default_plugin_records_arxiv_sources():
     assert boundary["source_content"]["status"] == "bounded_or_hash_only_content_evidence"
     assert boundary["source_content"]["content_evidence_count"] == 1
     assert boundary["source_content"]["replayable_source_count"] == 0
+    assert boundary["source_grounding"]["status"] == "all_sources_lexically_grounded"
+    assert boundary["source_grounding"]["lexically_grounded_source_count"] == 1
     assert boundary["transport"]["status"] == "audit_grade"
-    assert boundary["semantic_verification"]["policy"] == "hash_and_redacted_artifact_evidence_only"
+    assert (
+        boundary["semantic_verification"]["policy"]
+        == "lexical_grounding_audit_not_semantic_verification"
+    )
+    assert (
+        boundary["semantic_verification"]["lexical_grounding_status"]
+        == "all_sources_lexically_grounded"
+    )
     assert "semantic_content_integrity_not_verified" in event["transport_policy"]["limitations"]
     assert event["source_ranking"]["policy"] == "retained_source_integrity_v1"
     assert event["source_ranking"]["ranking_policy"] == "provider_order_retained_v1"
@@ -1531,6 +1574,13 @@ def test_query_overlap_source_ranking_policy_reorders_retained_sources():
     active = plugin.prompt_context_metadata()["active_context"]["source_ranking"]
     assert active["ranking_policy"] == RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY
     assert active["relevance_affects_order"] is True
+    active_grounding = plugin.prompt_context_metadata()["active_context"][
+        "source_grounding"
+    ]
+    assert active_grounding["schema"] == RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA
+    assert active_grounding["status"] == "partially_lexically_grounded"
+    assert active_grounding["lexically_grounded_source_count"] == 1
+    assert active_grounding["semantic_verified"] is False
 
 
 def test_source_ranking_policy_is_part_of_cache_key(tmp_path):

@@ -963,6 +963,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     responses, missing custom-provider transport, and TLS/certificate-looking
     failures as audit-grade, degraded, or unauditable, but it is still a
     bounded event policy rather than a replayable transport decision tree.
+    Retained source rows now include
+    `libreevolve.retrieval_source_grounding_policy.v1` lexical grounding
+    records, and event/cache snapshots include an aggregate
+    `source_grounding_policy` with source counts, lexically grounded source
+    counts, and a records hash. Active prompt context links to the same
+    grounding aggregate. This is deterministic lexical provenance, not semantic
+    source verification.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,
@@ -970,6 +977,7 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: persist unbounded raw provider payload snapshots or a
     stronger raw-evidence preservation model, define
     learned or externally scored ranked-source scoring/selection checks beyond
-    deterministic query-overlap ranking, semantic source-content verification, and
+    deterministic query-overlap ranking, semantic source-content verification
+    beyond lexical grounding, and
     replayable redirect/TLS decision evidence before
     claiming DeepEvolve-style retrieval is reproducible and audit-grade.

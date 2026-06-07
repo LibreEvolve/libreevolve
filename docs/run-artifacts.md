@@ -1511,6 +1511,12 @@ and record the suppression in `payload_artifact_policy`.
 Retained source rows include provider rank, current retained rank, source
 integrity hashes, bounded source-content snapshots when available, and
 `query_term_overlap_audit_v1` relevance scores. Retained rows also include
+`libreevolve.retrieval_source_grounding_policy.v1` records that state whether
+bounded retained source text is lexically grounded by deterministic query-term
+overlap, plus an event-level `source_grounding_policy` aggregate with source
+counts, grounded-source counts, and a records hash. This is lexical provenance,
+not semantic verification.
+Retained rows also include
 `libreevolve.retrieval_source_content_trust_policy.v1` records that classify
 content evidence as verified redacted payload artifacts, metadata-only oversized
 payload artifacts, bounded content snapshots, hash-only content evidence, or no
@@ -1522,8 +1528,8 @@ semantic correctness. Query events also include
 `libreevolve.retrieval_evidence_boundary_policy.v1`, which records the explicit
 retention boundary for raw provider/source payloads, TLS certificate chains, and
 semantic verification. It links the payload-artifact, source-content, and
-transport evidence states so cache snapshots preserve what evidence was retained
-versus what remains outside the audit boundary. The default
+source-grounding, and transport evidence states so cache snapshots preserve
+what evidence was retained versus what remains outside the audit boundary. The default
 `source_ranking_policy` keeps provider order; opt-in
 `query_overlap_score_desc_v1` reorders retained sources by deterministic
 query-overlap score with provider rank as a tie-breaker, and records
@@ -1538,8 +1544,8 @@ run-level retrieval summaries record the trust policy, prompt-boundary policy,
 and `authoritative: false` for successful retrieval context.
 These retrieval records are best-effort provenance, not audit-grade source
 integrity evidence: unbounded raw provider payloads, learned or externally
-scored semantic ranking, semantic source-content verification, and a replayable
-transport/TLS decision tree are still not persisted.
+scored semantic ranking, semantic source-content verification beyond lexical
+grounding, and a replayable transport/TLS decision tree are still not persisted.
 DeepResearch cache metadata records mode, cache key, hit/miss, source
 (`memory`, `disk`, or `none`), no-expiry staleness fields, and snapshot hash.
 When the CLI loads the built-in `deep_research` plugin, cache snapshots are

@@ -189,6 +189,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes context-source artifact tracking from
     AlphaEvolve-style human expert problem-formulation evidence.
 
+- [ ] Keep README robustness and versatility wording scoped until early-user
+      feedback provenance exists.
+  - Spec evidence: AlphaEvolve's Acknowledgements say early users and
+    collaborators supplied diverse use cases and insightful feedback that
+    shaped the system into a more robust and versatile tool.
+  - Current evidence: README can describe implemented surfaces, local examples,
+    paper/status rows, expert formulation gaps, and domain-owner review gaps.
+    It does not document feedback-provenance records for early-user or
+    collaborator use cases, affected workflow areas, resulting changes,
+    validation outcomes, or privacy/redaction policy.
+  - Required result: when use-case feedback provenance lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes local feature breadth and smoke examples from
+    AlphaEvolve-style robustness or versatility claims backed by diverse
+    collaborator feedback.
+
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,

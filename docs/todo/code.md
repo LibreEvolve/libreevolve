@@ -166,6 +166,26 @@ Primary evidence:
     report/run provenance before claiming AlphaEvolve-style expert-guided
     mathematical benchmark formulation.
 
+- [ ] Add early-user and collaborator feedback provenance for robustness
+      claims.
+  - Spec evidence: AlphaEvolve's Acknowledgements thank early users and
+    collaborators for diverse use cases and insightful feedback that shaped
+    the system into a more robust and versatile tool. That is a
+    use-case-feedback evidence claim, distinct from expert mathematical
+    problem formulation and from production-domain owner signoff.
+  - Current evidence: LibreEvolve records problem/source provenance, local
+    context sources, benchmark status rows, systems owner/reviewer TODOs, and
+    expert formulation TODOs. It does not define a report schema that records
+    early-user or collaborator feedback events, use-case taxonomy, affected
+    feature or benchmark area, resulting product/code/documentation changes,
+    validation evidence, privacy/redaction policy, or links from feedback to
+    robustness or versatility claims.
+  - Required result: add feedback-provenance metadata for use-case cohorts,
+    collaborator role labels, feedback event IDs, affected workflow areas,
+    change/artifact links, validation outcomes, and redaction policy before
+    README, ROADMAP, or papers-index wording claims AlphaEvolve-style
+    robustness or versatility shaped by broad collaborator feedback.
+
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and

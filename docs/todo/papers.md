@@ -260,6 +260,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     abstractions before claiming AlphaEvolve-style abstraction-selection
     evidence.
 
+- [ ] Track early-user and collaborator feedback provenance as paper evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early
+    users and collaborators for diverse use cases and insightful feedback,
+    stating that this feedback shaped AlphaEvolve into a more robust and
+    versatile tool.
+  - Current gap: paper/status records track local problem/source provenance,
+    expert mathematical formulation gaps, application owner/reviewer gaps, and
+    benchmark/report artifacts. They do not preserve a feedback-provenance
+    layer for early users or collaborators: use-case family, contributor role,
+    feedback event/source, affected system surface, resulting change,
+    validation evidence, privacy/redaction policy, or linkage from feedback to
+    robustness and versatility claims.
+  - Required result: add paper-facing use-case feedback records with safe
+    cohort/role labels, feedback event IDs, use-case taxonomy, affected
+    workflow and artifact links, change/result validation, privacy/redaction
+    metadata, and README/ROADMAP wording that separates documented local
+    breadth from AlphaEvolve-style broad collaborator-feedback evidence.
+
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.

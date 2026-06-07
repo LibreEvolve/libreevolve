@@ -2377,6 +2377,67 @@ def test_log_failure_counts_repetitions():
     assert second["repetition_count"] == 2
 
 
+def test_failure_index_snapshot_groups_repeated_failure_fingerprints():
+    db = _db()
+    parent = Program(
+        id="parent",
+        files={"main.py": "from helper import value\n", "helper.py": "value = 1\n"},
+        primary_file="main.py",
+        fitness=1.0,
+    )
+    first_child = Program(
+        id="failed-1",
+        files={"main.py": "from helper import value\n", "helper.py": "value = 0\n"},
+        primary_file="main.py",
+        parent_id=parent.id,
+        generation=1,
+        fitness=-0.4,
+        evaluation={
+            "is_valid": False,
+            "error": "wrong answer",
+            "stdout": "bad output",
+            "stages": [{"error": "stage failed"}],
+        },
+    )
+    second_child = Program(
+        id="failed-2",
+        files={"main.py": "from helper import value\n", "helper.py": "value = 0\n"},
+        primary_file="main.py",
+        parent_id=parent.id,
+        generation=2,
+        fitness=-0.4,
+        evaluation={"is_valid": False, "error": "wrong answer"},
+    )
+    first = db.log_failure(first_child, parent, "bad diff", "no_diff_blocks")
+    second = db.log_failure(second_child, parent, "bad diff", "no_diff_blocks")
+
+    snapshot = db.failure_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.failure_index.v1"
+    assert snapshot["policy"] == "failure_records_grouped_by_fingerprint_repetition_and_recency"
+    assert snapshot["failure_record_count"] == 2
+    assert snapshot["fingerprint_count"] == 1
+    assert snapshot["retained_fingerprint_count"] == 1
+    [fingerprint] = snapshot["fingerprints"]
+    assert fingerprint["fingerprint_sha256"] == first["failure_fingerprint"]["sha256"]
+    assert fingerprint["fingerprint_sha256"] == second["failure_fingerprint"]["sha256"]
+    assert fingerprint["occurrence_count"] == 2
+    assert fingerprint["max_repetition_count"] == 2
+    assert fingerprint["changed_files"] == ["helper.py"]
+    assert fingerprint["latest_record"]["program_id"] == second_child.id
+    assert fingerprint["latest_record"]["repetition_count"] == 2
+    assert fingerprint["records"][1]["program_id"] == first_child.id
+    assert fingerprint["records"][1]["evaluation"]["stage_errors"] == [
+        "stage failed"
+    ]
+    assert snapshot["limitations"] == [
+        "runtime_manifest_failure_index_not_cross_run_database_table",
+        "groups_by_failure_fingerprint_without_semantic_similarity",
+        "retains_bounded_records_per_fingerprint",
+        "rebuilt_from_current_runtime_failure_records",
+    ]
+
+
 def test_log_records_recent_hypothesis_context():
     db = _db()
     program = _p()

@@ -1147,6 +1147,13 @@ Important behavior:
   and bounded redacted feedback text hashes/previews when feedback text is
   retained by policy. This is not a feedback embedding store or replayable
   sampling policy.
+- `runtime.history.failure_index` stores bounded failure records grouped by
+  `failure_fingerprint.sha256`. Each group records occurrence/repetition
+  counts, record type, parent id, changed files, latest failure record, and
+  bounded representative records with mutation payload hashes, failure reasons,
+  file deltas, and redacted evaluation summaries. This makes failure
+  repetition evidence manifest-visible, but it is not a cross-run failure
+  database or semantic failure-similarity index.
 - `runtime.history.resurfacing_index` stores a bounded deterministic
   rank-fusion view over the score, objective-frontier, metric, lineage,
   descriptor, and feedback indexes. Records deduplicate by program id and

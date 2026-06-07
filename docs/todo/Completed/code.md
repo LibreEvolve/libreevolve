@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add a runtime failure index grouped by failure fingerprint.
+  - Spec evidence: AlphaEvolve-style resurfacing should use negative evidence
+    and repeated failure modes, not only successful archive entries.
+  - Status: `ProgramDatabase.failure_index_snapshot()` now emits
+    `libreevolve.failure_index.v1`, grouping validated runtime failure records
+    by `failure_fingerprint.sha256` with occurrence counts, max repetition
+    counts, changed files, latest failure record, and bounded representative
+    records. Final runtime manifests persist it under
+    `runtime.history.failure_index`.
+  - Remaining gap: this is a bounded runtime manifest view, not a cross-run
+    durable failure database, semantic failure-similarity index, or learned
+    negative-evidence retrieval policy.
+  - Verification: focused database tests cover repeated-fingerprint grouping,
+    latest-record ordering, bounded evaluation summaries, and manifest schema
+    persistence is covered in the loop runtime-history test.
+
 - [x] Add a bounded resurfacing index over existing candidate evidence.
   - Spec evidence: AlphaEvolve's program database resurfaces useful prior
     ideas across score, diversity, lineage, and other evidence instead of only

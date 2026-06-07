@@ -96,6 +96,8 @@ _MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR = 10
 _MAX_FEEDBACK_INDEX_PROGRAMS_PER_GRADER = 10
 _MAX_FEEDBACK_INDEX_TEXT_CHARS = 200
 _MAX_RESURFACING_INDEX_PROGRAMS = 50
+_MAX_FAILURE_INDEX_FINGERPRINTS = 50
+_MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT = 5
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -215,6 +217,7 @@ class ProgramDatabase:
         self._all: list[Program] = []
         self._ids: set[str] = set()
         self._failed_program_ids: set[str] = set()
+        self._failure_records: list[dict] = []
         self.retrieval_failure_context: list[dict] = []
         self.retrieval_hypothesis_context: list[dict] = []
         self._logged_programs_by_id: dict[str, Program] = {}
@@ -500,6 +503,7 @@ class ProgramDatabase:
         )
         self._failed_program_ids.add(program.id)
         self._failure_counts[key] = repetition_count
+        self._failure_records.append(copy.deepcopy(record))
         self._append_retrieval_failure_context(record)
         program.metadata = validate_program_metadata(program.metadata)
         program.metadata["failure_record"] = record
@@ -580,6 +584,7 @@ class ProgramDatabase:
         )
         self._failed_program_ids.add(program.id)
         self._failure_counts[key] = repetition_count
+        self._failure_records.append(copy.deepcopy(record))
         self._append_retrieval_failure_context(record)
         program.metadata = validate_program_metadata(program.metadata)
         program.metadata["failure_record"] = record
@@ -682,6 +687,13 @@ class ProgramDatabase:
             self._all,
             self._objective_metric_order,
             limit=_MAX_RESURFACING_INDEX_PROGRAMS,
+        )
+
+    def failure_index_snapshot(self) -> dict:
+        return _failure_index_snapshot(
+            self._failure_records,
+            fingerprint_limit=_MAX_FAILURE_INDEX_FINGERPRINTS,
+            records_per_fingerprint_limit=_MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT,
         )
 
     def resurface_candidates(
@@ -2850,6 +2862,200 @@ def _resurfacing_index_sort_key(record: dict) -> tuple:
             else float("-inf")
         ),
         str(record.get("program_id", "")),
+    )
+
+
+def _failure_index_snapshot(
+    records: list[dict],
+    *,
+    fingerprint_limit: int,
+    records_per_fingerprint_limit: int,
+) -> dict:
+    by_fingerprint: dict[str, list[dict]] = {}
+    for record in records:
+        indexed = _failure_index_record(record)
+        if indexed is None:
+            continue
+        by_fingerprint.setdefault(indexed["fingerprint_sha256"], []).append(indexed)
+
+    fingerprints: list[dict] = []
+    for fingerprint_sha256, indexed_records in by_fingerprint.items():
+        indexed_records.sort(key=_failure_index_record_sort_key)
+        retained = indexed_records[:records_per_fingerprint_limit]
+        latest = retained[0]
+        fingerprints.append(
+            {
+                "fingerprint_sha256": fingerprint_sha256,
+                "record_type": latest["record_type"],
+                "parent_id": latest.get("parent_id"),
+                "occurrence_count": len(indexed_records),
+                "max_repetition_count": max(
+                    record["repetition_count"] for record in indexed_records
+                ),
+                "retained_count": len(retained),
+                "record_retention_limit": records_per_fingerprint_limit,
+                "changed_files": latest.get("changed_files", []),
+                "latest_record": latest,
+                "records": retained,
+            }
+        )
+    fingerprints.sort(key=_failure_index_fingerprint_sort_key)
+    retained_fingerprints = fingerprints[:fingerprint_limit]
+    return {
+        "schema": "libreevolve.failure_index.v1",
+        "policy": "failure_records_grouped_by_fingerprint_repetition_and_recency",
+        "failure_record_count": len(records),
+        "fingerprint_count": len(fingerprints),
+        "retained_fingerprint_count": len(retained_fingerprints),
+        "fingerprint_retention_limit": fingerprint_limit,
+        "record_retention_limit": records_per_fingerprint_limit,
+        "fingerprints": retained_fingerprints,
+        "limitations": [
+            "runtime_manifest_failure_index_not_cross_run_database_table",
+            "groups_by_failure_fingerprint_without_semantic_similarity",
+            "retains_bounded_records_per_fingerprint",
+            "rebuilt_from_current_runtime_failure_records",
+        ],
+    }
+
+
+def _failure_index_record(record: Mapping) -> dict | None:
+    fingerprint = record.get("failure_fingerprint")
+    fingerprint_sha256 = None
+    fingerprint_record_type = None
+    if isinstance(fingerprint, Mapping):
+        raw_sha = fingerprint.get("sha256")
+        if _is_sha256_hex(raw_sha):
+            fingerprint_sha256 = str(raw_sha)
+        if isinstance(fingerprint.get("record_type"), str):
+            fingerprint_record_type = fingerprint["record_type"]
+    if fingerprint_sha256 is None:
+        raw_sha = record.get("mutation_sha256")
+        if _is_sha256_hex(raw_sha):
+            fingerprint_sha256 = str(raw_sha)
+    if fingerprint_sha256 is None:
+        return None
+    program_id = record.get("program_id")
+    try:
+        validate_program_identity(program_id)
+    except ValueError:
+        return None
+    indexed: dict[str, object] = {
+        "program_id": program_id,
+        "fingerprint_sha256": fingerprint_sha256,
+        "record_type": (
+            fingerprint_record_type
+            if isinstance(fingerprint_record_type, str) and fingerprint_record_type
+            else record.get("record_type", "generated")
+        ),
+        "generation": _failure_index_non_negative_int(record.get("generation")),
+        "repetition_count": _failure_index_positive_int(
+            record.get("repetition_count")
+        ),
+        "mutation_sha256": record.get("mutation_sha256"),
+        "mutation_payload_type": _failure_optional_text(
+            record.get("mutation_payload_type"),
+            80,
+        ),
+        "mutation_payload_text": record.get("mutation_payload_text"),
+    }
+    parent_id = record.get("parent_id")
+    if isinstance(parent_id, str) and parent_id:
+        indexed["parent_id"] = parent_id
+    score = record.get("score")
+    if _is_finite_real(score):
+        indexed["score"] = float(score)
+    is_valid = record.get("is_valid")
+    if isinstance(is_valid, bool):
+        indexed["is_valid"] = is_valid
+    reason = _failure_optional_json_text(
+        record.get("admission_reason")
+        or record.get("diff_error")
+        or record.get("error"),
+        300,
+    )
+    if reason:
+        indexed["reason"] = reason
+    for field in ("error", "diff_error", "admission_reason"):
+        value = _failure_optional_json_text(record.get(field), 300)
+        if value:
+            indexed[field] = value
+    changed_files = record.get("changed_files")
+    if isinstance(changed_files, list):
+        indexed["changed_files"] = [
+            path
+            for path in (
+                _failure_optional_text(path, 120) for path in changed_files
+            )
+            if path
+        ][:8]
+    file_deltas = record.get("file_deltas")
+    if isinstance(file_deltas, list):
+        indexed["file_deltas"] = _failure_index_file_deltas(file_deltas)
+    evaluation = record.get("evaluation")
+    if isinstance(evaluation, Mapping):
+        summary = _failure_index_evaluation_summary(evaluation)
+        if summary:
+            indexed["evaluation"] = summary
+    return indexed
+
+
+def _failure_index_file_deltas(file_deltas: list) -> list[dict]:
+    restored = []
+    for delta in file_deltas[:8]:
+        if not isinstance(delta, Mapping):
+            continue
+        path = _failure_optional_text(delta.get("path"), 120)
+        change = delta.get("change")
+        if path and change in {"added", "deleted", "modified", "seed"}:
+            restored.append({"path": path, "change": change})
+    return restored
+
+
+def _failure_index_evaluation_summary(evaluation: Mapping) -> dict:
+    summary: dict[str, object] = {}
+    for field in ("error", "stdout", "stderr"):
+        value = _failure_optional_text(evaluation.get(field), 200)
+        if value:
+            summary[field] = value
+    stages = evaluation.get("stages")
+    if isinstance(stages, list):
+        stage_errors = []
+        for stage in stages[:3]:
+            if isinstance(stage, Mapping):
+                error = _failure_optional_text(stage.get("error"), 200)
+                if error:
+                    stage_errors.append(error)
+        if stage_errors:
+            summary["stage_errors"] = stage_errors
+    return summary
+
+
+def _failure_index_non_negative_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return 0
+    return value
+
+
+def _failure_index_positive_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+        return 1
+    return value
+
+
+def _failure_index_record_sort_key(record: dict) -> tuple:
+    return (
+        -int(record.get("repetition_count", 1)),
+        -int(record.get("generation", 0)),
+        str(record.get("program_id", "")),
+    )
+
+
+def _failure_index_fingerprint_sort_key(record: dict) -> tuple:
+    return (
+        -int(record.get("max_repetition_count", 1)),
+        -int(record.get("occurrence_count", 0)),
+        str(record.get("fingerprint_sha256", "")),
     )
 
 

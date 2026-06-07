@@ -2761,6 +2761,10 @@ def test_loop_records_normalized_metrics_and_selection_score():
     assert {
         source["source"] for source in resurfacing_index["programs"][0]["sources"]
     } >= {"score", "frontier", "metric", "lineage", "descriptor"}
+    failure_index = manifest["runtime"]["history"]["failure_index"]
+    assert failure_index["schema"] == "libreevolve.failure_index.v1"
+    assert failure_index["failure_record_count"] == 0
+    assert failure_index["fingerprints"] == []
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add a runtime failure index grouped by failure fingerprint.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
+    program database that resurfaces prior attempts; failed proposals and
+    repeated failure modes are part of the evidence needed for useful future
+    prompting and search steering.
+  - Status: final runtime manifests now include
+    `runtime.history.failure_index`, a bounded grouping of validated failure
+    records by fingerprint with repetition counts, changed files, latest
+    representative record, and bounded redacted evaluation summaries.
+  - Remaining paper gap: this does not yet provide cross-run failure
+    persistence, semantic failure clustering, learned negative-evidence
+    retrieval, or a full durable program database.
+  - Verification: focused database and loop tests cover repeated-fingerprint
+    grouping, latest-record evidence, bounded summaries, and manifest schema
+    persistence.
+
 - [x] Add a bounded resurfacing index over existing candidate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
     program database that resurfaces diverse prior programs as inspirations for

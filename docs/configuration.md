@@ -1162,6 +1162,13 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   container sandbox. `validator_network_policy: deny` blocks Python socket APIs
   during preflight/evaluation and records the boundary, but LibreEvolve still
   does not provide OS/container-level network isolation for validator code.
+- Validator boundary metadata and startup `policies.validator_execution` include
+  `filesystem_capabilities` and `resource_limit_policy` records. These declare
+  the temporary candidate-root workspace, declared-problem-file provenance
+  checks, bounded artifact copy-out, unsupported host-filesystem sandboxing,
+  wall-clock timeout cleanup, and unsupported CPU/memory/GPU/disk/process-count
+  quotas. They are audit evidence for the local runner, not enforcement of a
+  configurable container or OS resource sandbox.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
   Identical configured variants are intentionally admitted as separate prompt

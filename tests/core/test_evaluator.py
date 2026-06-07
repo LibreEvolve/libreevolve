@@ -1033,10 +1033,41 @@ def test_validator_boundary_declares_host_network_not_sandboxed():
         assert boundary["container"] == "unsupported"
         assert boundary["network_egress"] == "host_inherited_not_sandboxed"
         assert boundary["network_denial"] == "unsupported"
+        assert boundary["filesystem_capabilities"]["schema"] == (
+            "libreevolve.validator_filesystem_capabilities.v1"
+        )
+        assert boundary["filesystem_capabilities"]["cwd"] == {
+            "path": "materialized_candidate_root",
+            "read": True,
+            "write": True,
+            "execute": True,
+            "lifetime": "temporary_per_attempt",
+        }
+        assert boundary["filesystem_capabilities"]["declared_problem_files"][
+            "undeclared_problem_local_reads"
+        ] == "python_open_and_import_checks_denied"
+        assert boundary["filesystem_capabilities"]["host_filesystem"] == {
+            "os_sandbox": "unsupported",
+            "ambient_access_possible": True,
+            "undeclared_host_paths": "not_capability_enforced",
+        }
         assert boundary["resource_limits"]["wall_clock_timeout"] == (
             "configured_stage_or_sample_timeout"
         )
         assert boundary["resource_limits"]["memory"] == "unsupported"
+        assert boundary["resource_limit_policy"]["schema"] == (
+            "libreevolve.validator_resource_limit_policy.v1"
+        )
+        assert boundary["resource_limit_policy"]["wall_clock_timeout"][
+            "supported"
+        ] is True
+        assert boundary["resource_limit_policy"]["memory"] == {
+            "supported": False,
+            "quota": "unsupported",
+        }
+        assert boundary["resource_limit_policy"]["container_runtime_limits"] == (
+            "unsupported"
+        )
         assert boundary["secret_boundary"] == (
             "minimal_environment_allowlist_with_redacted_diagnostics"
         )
@@ -1066,6 +1097,7 @@ def test_validator_network_deny_blocks_python_socket_calls():
             "python_socket_api_only_not_kernel_or_container"
         )
         assert boundary["security_sandbox"] == "unsupported"
+        assert boundary["resource_limit_policy"]["gpu"]["supported"] is False
     finally:
         shutil.rmtree(d)
 

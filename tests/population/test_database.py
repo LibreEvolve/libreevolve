@@ -3324,6 +3324,44 @@ def test_manifest_written():
             ),
             "host_filesystem_sandbox": "unsupported",
         },
+        "filesystem_capabilities": {
+            "schema": "libreevolve.validator_filesystem_capabilities.v1",
+            "policy": "candidate_root_plus_declared_problem_files",
+            "enforcement": "python_runner_problem_local_provenance_checks",
+            "cwd": {
+                "path": "materialized_candidate_root",
+                "read": True,
+                "write": True,
+                "execute": True,
+                "lifetime": "temporary_per_attempt",
+            },
+            "candidate_workspace": {
+                "scope": "materialized_candidate_files",
+                "read": True,
+                "write": True,
+                "execute": True,
+                "host_filesystem_sandbox": "unsupported",
+            },
+            "declared_problem_files": {
+                "scope": "entrypoint_companion_data_and_stdin_provenance",
+                "read": True,
+                "write": False,
+                "execute": True,
+                "undeclared_problem_local_reads": (
+                    "python_open_and_import_checks_denied"
+                ),
+            },
+            "evaluator_artifacts": {
+                "write": "bounded_include_globs",
+                "copy_out": "hashed_redacted_optional",
+                "symlink_policy": "link_metadata_not_unbounded_follow",
+            },
+            "host_filesystem": {
+                "os_sandbox": "unsupported",
+                "ambient_access_possible": True,
+                "undeclared_host_paths": "not_capability_enforced",
+            },
+        },
         "network_policy": "host",
         "network_egress": "host_inherited_not_sandboxed",
         "network_denial": "unsupported",
@@ -3336,12 +3374,33 @@ def test_manifest_written():
             "disk": "unsupported",
             "process_count": "unsupported",
         },
+        "resource_limit_policy": {
+            "schema": "libreevolve.validator_resource_limit_policy.v1",
+            "policy": "wall_clock_timeout_only",
+            "enforcement": "local_subprocess_timeout_cleanup",
+            "wall_clock_timeout": {
+                "supported": True,
+                "source": "configured_stage_or_sample_timeout",
+                "cleanup": "process_group_or_windows_job_object_plus_tree_kill",
+            },
+            "cpu": {"supported": False, "quota": "unsupported"},
+            "memory": {"supported": False, "quota": "unsupported"},
+            "gpu": {"supported": False, "quota": "unsupported"},
+            "disk": {"supported": False, "quota": "unsupported"},
+            "process_count": {"supported": False, "quota": "unsupported"},
+            "container_runtime_limits": "unsupported",
+            "remaining_gap": (
+                "CPU/memory/GPU/disk/process quotas require an external sandbox "
+                "or worker runtime"
+            ),
+        },
         "secret_boundary": "minimal_environment_allowlist_with_redacted_diagnostics",
         "startup_manifest_only": True,
         "per_evaluation_metadata": "evaluation.metadata.validator_boundary",
         "remaining_gap": (
-            "configurable sandbox/container, filesystem capability model, "
-            "CPU/memory/GPU/disk/process quotas, and distributed worker state"
+            "configurable sandbox/container enforcement, OS filesystem "
+            "capabilities, CPU/memory/GPU/disk/process quotas, and distributed "
+            "worker state"
         ),
     }
     assert manifest["policies"]["validator_network"] == {

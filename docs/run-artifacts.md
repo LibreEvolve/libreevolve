@@ -1639,15 +1639,21 @@ unsupported security sandbox/container, candidate-root plus declared
 problem-file filesystem policy, the effective validator `network_policy`,
 network egress/denial status, wall-clock-only timeout limits, unsupported
 CPU/memory/GPU/disk/process-count limits, and a
-minimal-environment/redacted-diagnostic secret boundary. This is still local
-subprocess containment, not a full resource sandbox. Startup manifests also
-persist `policies.validator_execution` with schema
+minimal-environment/redacted-diagnostic secret boundary. It also carries
+`filesystem_capabilities` with the candidate workspace, declared problem files,
+artifact copy-out, and unsupported host-filesystem sandbox boundary, plus
+`resource_limit_policy` with the wall-clock cleanup mechanism and unsupported
+CPU/memory/GPU/disk/process quotas. This is still local subprocess containment,
+not a full resource sandbox. Startup manifests also persist
+`policies.validator_execution` with schema
 `libreevolve.validator_execution_policy.v1`; it records the same configured
 local-subprocess boundary before any evaluation row exists, including
 unsupported sandbox/container status, candidate-root plus declared-problem-file
-filesystem scope, the effective network policy, wall-clock-only timeout limits,
-unsupported CPU/memory/GPU/disk/process-count quotas, the secret boundary, and
-`per_evaluation_metadata: "evaluation.metadata.validator_boundary"`. Startup
+filesystem scope, structured filesystem-capability evidence, the effective
+network policy, wall-clock-only timeout limits, structured resource-limit
+evidence, unsupported CPU/memory/GPU/disk/process-count quotas, the secret
+boundary, and the `per_evaluation_metadata` value
+`evaluation.metadata.validator_boundary`. Startup
 manifests also persist the effective `config.validator_network_policy` and
 `policies.validator_network`, so allowed host/deny modes and the remaining
 OS/container network-sandbox gap are visible before individual evaluation

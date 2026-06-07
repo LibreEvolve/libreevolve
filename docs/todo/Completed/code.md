@@ -14769,3 +14769,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused MAP-Elites, island, database, and loop tests cover
     retention, snapshot/restore validation, retained-pool inclusion, and
     manifest validation.
+
+- [x] Add structured validator filesystem and resource policy evidence.
+  - Spec evidence: AlphaEvolve-style evolution can evaluate real code under
+    expensive or hardware-backed validators, so validator boundary evidence
+    must expose what filesystem and resource capabilities are actually
+    enforced.
+  - Status: `evaluation.metadata.validator_boundary` and startup
+    `policies.validator_execution` now carry
+    `libreevolve.validator_filesystem_capabilities.v1` and
+    `libreevolve.validator_resource_limit_policy.v1` records. The filesystem
+    record declares candidate-root read/write/execute scope, declared
+    problem-file read/execute and no-write scope, bounded evaluator-artifact
+    copy-out, unsupported host-filesystem sandboxing, and Python-runner
+    problem-local provenance checks. The resource record declares
+    wall-clock-timeout cleanup as the only supported quota mechanism and marks
+    CPU, memory, GPU, disk, process-count, and container-runtime quotas
+    unsupported.
+  - Remaining gap: this is audit evidence for the current local runner, not a
+    configurable container, OS filesystem sandbox, cgroup/job-object quota
+    model, or distributed evaluator-worker state.
+  - Verification: focused evaluator and database tests cover per-evaluation
+    boundary metadata, host/deny network modes, and startup manifest policy
+    persistence.

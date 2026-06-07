@@ -2112,15 +2112,20 @@ Python-socket-denied egress, denial scope, and the remaining OS/container
 network-sandbox gap. They also persist `policies.validator_execution`, a
 startup-level local-subprocess boundary record covering unsupported
 sandbox/container status, candidate-root plus declared-problem-file filesystem
-scope, wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count
+scope, `filesystem_capabilities` with the candidate-root, declared-problem-file,
+artifact, and unsupported host-filesystem capability boundary, wall-clock-only
+limits, `resource_limit_policy`, unsupported CPU/memory/GPU/disk/process-count
 quotas, and the per-evaluation metadata field that repeats the boundary.
 `evaluation.metadata.validator_boundary` records the current local-subprocess
 boundary, `security_sandbox: "unsupported"`, `container: "unsupported"`,
 the effective `network_policy`, `network_egress`, `network_denial`,
 `network_denial_scope`, the candidate-root plus declared-problem-file
-filesystem policy, wall-clock-only timeout policy, unsupported CPU/memory/GPU/
+filesystem policy, structured `filesystem_capabilities`, wall-clock-only
+timeout policy, structured `resource_limit_policy`, unsupported CPU/memory/GPU/
 disk/process-count limits, and the minimal-environment/redacted-diagnostic
-secret boundary. Validator standard input defaults to `subprocess.DEVNULL`;
+secret boundary. The filesystem and resource records are audit evidence for the
+current local runner, not an OS/container security sandbox. Validator standard
+input defaults to `subprocess.DEVNULL`;
 interactive prompts are unsupported by default, `input()` receives EOF, and
 direct `sys.stdin.read()` returns an empty string. Problem config may set
 `evaluator_stdin_text`,

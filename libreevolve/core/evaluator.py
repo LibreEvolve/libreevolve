@@ -1990,23 +1990,95 @@ def _validator_stdin_source(
     return text, metadata
 
 
-def _validator_boundary_metadata(network_policy: str = "host") -> dict:
+def _validator_filesystem_capabilities() -> dict:
+    return {
+        "schema": "libreevolve.validator_filesystem_capabilities.v1",
+        "policy": "candidate_root_plus_declared_problem_files",
+        "enforcement": "python_runner_problem_local_provenance_checks",
+        "cwd": {
+            "path": "materialized_candidate_root",
+            "read": True,
+            "write": True,
+            "execute": True,
+            "lifetime": "temporary_per_attempt",
+        },
+        "candidate_workspace": {
+            "scope": "materialized_candidate_files",
+            "read": True,
+            "write": True,
+            "execute": True,
+            "host_filesystem_sandbox": "unsupported",
+        },
+        "declared_problem_files": {
+            "scope": "entrypoint_companion_data_and_stdin_provenance",
+            "read": True,
+            "write": False,
+            "execute": True,
+            "undeclared_problem_local_reads": "python_open_and_import_checks_denied",
+        },
+        "evaluator_artifacts": {
+            "write": "bounded_include_globs",
+            "copy_out": "hashed_redacted_optional",
+            "symlink_policy": "link_metadata_not_unbounded_follow",
+        },
+        "host_filesystem": {
+            "os_sandbox": "unsupported",
+            "ambient_access_possible": True,
+            "undeclared_host_paths": "not_capability_enforced",
+        },
+    }
+
+
+def _validator_resource_limit_policy() -> dict:
+    return {
+        "schema": "libreevolve.validator_resource_limit_policy.v1",
+        "policy": "wall_clock_timeout_only",
+        "enforcement": "local_subprocess_timeout_cleanup",
+        "wall_clock_timeout": {
+            "supported": True,
+            "source": "configured_stage_or_sample_timeout",
+            "cleanup": "process_group_or_windows_job_object_plus_tree_kill",
+        },
+        "cpu": {"supported": False, "quota": "unsupported"},
+        "memory": {"supported": False, "quota": "unsupported"},
+        "gpu": {"supported": False, "quota": "unsupported"},
+        "disk": {"supported": False, "quota": "unsupported"},
+        "process_count": {"supported": False, "quota": "unsupported"},
+        "container_runtime_limits": "unsupported",
+        "remaining_gap": (
+            "CPU/memory/GPU/disk/process quotas require an external sandbox "
+            "or worker runtime"
+        ),
+    }
+
+
+def _validator_network_boundary(network_policy: str) -> dict:
     network_policy = _validate_validator_network_policy(network_policy)
     if network_policy == "deny":
-        network_egress = "python_socket_denied_not_os_sandbox"
-        network_denial = "python_socket_monkeypatch"
-    else:
-        network_egress = "host_inherited_not_sandboxed"
-        network_denial = "unsupported"
+        return {
+            "network_policy": network_policy,
+            "network_egress": "python_socket_denied_not_os_sandbox",
+            "network_denial": "python_socket_monkeypatch",
+        }
+    return {
+        "network_policy": network_policy,
+        "network_egress": "host_inherited_not_sandboxed",
+        "network_denial": "unsupported",
+    }
+
+
+def _validator_boundary_metadata(network_policy: str = "host") -> dict:
+    network = _validator_network_boundary(network_policy)
     return {
         "policy": "local_subprocess_boundary_v1",
         "execution": "temporary_local_subprocess",
         "security_sandbox": "unsupported",
         "container": "unsupported",
         "filesystem_capability_model": "candidate_root_plus_declared_problem_files",
-        "network_policy": network_policy,
-        "network_egress": network_egress,
-        "network_denial": network_denial,
+        "filesystem_capabilities": _validator_filesystem_capabilities(),
+        "network_policy": network["network_policy"],
+        "network_egress": network["network_egress"],
+        "network_denial": network["network_denial"],
         "network_denial_scope": "python_socket_api_only_not_kernel_or_container",
         "resource_limits": {
             "wall_clock_timeout": "configured_stage_or_sample_timeout",
@@ -2016,6 +2088,7 @@ def _validator_boundary_metadata(network_policy: str = "host") -> dict:
             "disk": "unsupported",
             "process_count": "unsupported",
         },
+        "resource_limit_policy": _validator_resource_limit_policy(),
         "secret_boundary": "minimal_environment_allowlist_with_redacted_diagnostics",
     }
 

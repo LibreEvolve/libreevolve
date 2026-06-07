@@ -1213,16 +1213,23 @@ Primary evidence:
     also persist
     `policies.validator_execution` with schema
     `libreevolve.validator_execution_policy.v1`, repeating the configured
-    local-subprocess boundary, filesystem scope, network mode, wall-clock-only
-    limit policy, unsupported CPU/memory/GPU/disk/process-count quotas,
-    secret boundary, and the per-evaluation metadata field that carries the
-    attempt-level boundary.
+    local-subprocess boundary, filesystem scope, structured
+    `filesystem_capabilities`, network mode, wall-clock-only limit policy,
+    structured `resource_limit_policy`, unsupported CPU/memory/GPU/disk/
+    process-count quotas, secret boundary, and the per-evaluation metadata
+    field that carries the attempt-level boundary. The structured filesystem
+    record declares candidate-root read/write/execute scope, declared
+    problem-file read/execute and no-write scope, bounded evaluator-artifact
+    copy-out, and unsupported ambient host-filesystem sandboxing. The
+    structured resource record declares local subprocess timeout cleanup as the
+    only supported quota mechanism and explicitly marks CPU, memory, GPU, disk,
+    process-count, and container-runtime quotas unsupported.
   - Remaining gap: there is still no configurable container/security sandbox,
     no OS/container-grade network egress sandbox, no proof that native
     extensions, subprocesses, or alternate runtimes cannot connect out, no
-    filesystem capability model beyond candidate-root execution plus
-    problem-local provenance/artifact/data declarations, no CPU, memory, GPU,
-    disk, or process-count quotas, no network-mediated provider-secret
+    OS-enforced filesystem capability model beyond candidate-root execution
+    plus problem-local provenance/artifact/data declarations, no CPU, memory,
+    GPU, disk, or process-count quotas, no network-mediated provider-secret
     boundary audit, and no resumable distributed evaluator worker state.
   - Required result: define and enforce configurable sandbox/container,
     filesystem capability, OS/container network capability, and resource-limit

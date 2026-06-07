@@ -1266,6 +1266,10 @@ Important behavior:
   `ProgramDatabase.resurface_candidates(target_metric=...)` can query the same
   run-local objective metric archives for defensive snapshots of programs that
   excel on one declared metric, while rejecting undeclared metric targets.
+  `ProgramDatabase.resurface_by_metric()`, `resurface_by_lineage()`,
+  `resurface_by_descriptor()`, `resurface_by_novelty()`, and
+  `resurface_by_feedback()` expose the same bounded current-history index
+  surfaces as defensive run-local program snapshots.
   This makes
   resurfacing decisions manifest-visible, but it is still rebuilt from current
   history records and is not a persisted database table, embedding search

@@ -91,9 +91,10 @@ is not yet an AlphaEvolve reproduction.
   metrics for archive ranking, into a first-class multi-objective policy:
   Pareto archive, configurable weighted composition, metric-specific elites,
   or another tested policy.
-- Extend the current configurable parent/inspiration sampling beyond score,
-  individual metric excellence, novelty, recency, and random/mixed policies to
-  include persisted feedback, lineage diversity, and queryable novelty indexes.
+- Extend the current configurable parent/inspiration sampling and run-local
+  resurfacing queries beyond score, individual metric excellence, novelty,
+  recency, lineage, feedback, and random/mixed policies to persisted
+  feedback, lineage-diversity, and novelty indexes.
 - Replace the remaining adaptive diversity descriptor with evaluator-provided
   behavior descriptors, a fixed descriptor model, or explicit rebin/snapshot
   semantics.
@@ -308,7 +309,8 @@ is not yet an AlphaEvolve reproduction.
 
 ## Good First Follow-Ups
 
-1. Add queryable database sampling by metric, novelty, lineage, and feedback.
+1. Persist database query indexes beyond run-local metric/novelty/lineage/
+   feedback resurfacing.
 2. Add one non-toy benchmark run fixture with expected artifacts.
 3. Add workspace resume coverage beyond current `best_workspace/` export.
 4. Add LLM feedback calibration reports and grader ablation fixtures.

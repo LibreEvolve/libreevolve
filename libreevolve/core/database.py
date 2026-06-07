@@ -791,6 +791,137 @@ class ProgramDatabase:
                 break
         return surfaced
 
+    def resurface_by_metric(
+        self,
+        metric: str,
+        k: int,
+        exclude_ids: set[str] | None = None,
+    ) -> list[Program]:
+        """Return top retained candidates for one declared normalized metric."""
+        return self.resurface_candidates(
+            k=k,
+            exclude_ids=exclude_ids,
+            target_metric=metric,
+        )
+
+    def resurface_by_lineage(
+        self,
+        lineage_root_id: str,
+        k: int,
+        exclude_ids: set[str] | None = None,
+    ) -> list[Program]:
+        k = validate_sample_count(k, "database lineage resurfacing count")
+        exclude_ids = validate_exclude_ids(
+            exclude_ids,
+            "database lineage resurfacing exclude_ids",
+        )
+        lineage_root_id = _validate_database_query_program_id(
+            lineage_root_id,
+            "database lineage resurfacing lineage_root_id",
+        )
+        if k <= 0:
+            return []
+        snapshot = _lineage_index_snapshot(
+            self._all,
+            root_limit=max(len(self._all), 1),
+            programs_per_root_limit=max(k + len(exclude_ids), 1),
+        )
+        programs_by_id = {program.id: program for program in self._all}
+        for lineage in snapshot["lineages"]:
+            if lineage["lineage_root_id"] != lineage_root_id:
+                continue
+            return _ranked_program_snapshots_from_index_records(
+                programs_by_id,
+                lineage["programs"],
+                k=k,
+                exclude_ids=exclude_ids,
+            )
+        return []
+
+    def resurface_by_descriptor(
+        self,
+        descriptor: str,
+        k: int,
+        exclude_ids: set[str] | None = None,
+    ) -> list[Program]:
+        k = validate_sample_count(k, "database descriptor resurfacing count")
+        exclude_ids = validate_exclude_ids(
+            exclude_ids,
+            "database descriptor resurfacing exclude_ids",
+        )
+        descriptor = _validate_database_query_key(
+            descriptor,
+            "database descriptor resurfacing descriptor",
+        )
+        if k <= 0:
+            return []
+        snapshot = _descriptor_index_snapshot(
+            self._all,
+            limit=max(k + len(exclude_ids), 1),
+        )
+        programs_by_id = {program.id: program for program in self._all}
+        for descriptor_record in snapshot["descriptors"]:
+            if descriptor_record["descriptor"] != descriptor:
+                continue
+            return _ranked_program_snapshots_from_index_records(
+                programs_by_id,
+                descriptor_record["programs"],
+                k=k,
+                exclude_ids=exclude_ids,
+            )
+        return []
+
+    def resurface_by_novelty(
+        self,
+        k: int,
+        exclude_ids: set[str] | None = None,
+        *,
+        descriptor: str = "diversity",
+    ) -> list[Program]:
+        """Return candidates ranked by a novelty-like archive descriptor.
+
+        The default uses the MAP-Elites diversity descriptor; configured
+        descriptor axes can be queried by passing their descriptor label.
+        """
+        return self.resurface_by_descriptor(
+            descriptor,
+            k=k,
+            exclude_ids=exclude_ids,
+        )
+
+    def resurface_by_feedback(
+        self,
+        feedback_name: str,
+        k: int,
+        exclude_ids: set[str] | None = None,
+    ) -> list[Program]:
+        k = validate_sample_count(k, "database feedback resurfacing count")
+        exclude_ids = validate_exclude_ids(
+            exclude_ids,
+            "database feedback resurfacing exclude_ids",
+        )
+        feedback_name = _validate_database_query_key(
+            feedback_name,
+            "database feedback resurfacing feedback_name",
+        )
+        if k <= 0:
+            return []
+        snapshot = _feedback_index_snapshot(
+            self._all,
+            limit=max(k + len(exclude_ids), 1),
+        )
+        programs_by_id = {program.id: program for program in self._all}
+        for grader in snapshot["graders"]:
+            if grader["feedback_name"] != feedback_name:
+                continue
+            return _ranked_program_snapshots_from_index_records(
+                programs_by_id,
+                grader["programs"],
+                k=k,
+                exclude_ids=exclude_ids,
+            )
+        return []
+
     def _log_archive_event(self, event: dict) -> None:
         append_strict_jsonl(
             self._archive_events,
@@ -3316,6 +3447,58 @@ def _validate_resurfacing_target_metric(
     if target_metric not in metric_order:
         raise ValueError("database resurfacing target_metric must be a declared metric")
     return target_metric
+
+
+def _validate_database_query_program_id(value: object, label: str) -> str:
+    try:
+        validate_program_identity(value)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be a manifest-safe identifier") from exc
+    assert isinstance(value, str)
+    return value
+
+
+def _validate_database_query_key(value: object, label: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{label} must be non-empty text")
+    if len(value) > 128:
+        raise ValueError(f"{label} must be at most 128 characters")
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        raise ValueError(f"{label} must be display-safe text")
+    if redact_sensitive_text(value) != value:
+        raise ValueError(f"{label} must not contain sensitive-looking text")
+    return value
+
+
+def _ranked_program_snapshots_from_index_records(
+    programs_by_id: Mapping[str, Program],
+    records: object,
+    *,
+    k: int,
+    exclude_ids: set[str],
+) -> list[Program]:
+    if not isinstance(records, list):
+        return []
+    surfaced: list[Program] = []
+    seen: set[str] = set()
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        program_id = record.get("program_id")
+        if (
+            not isinstance(program_id, str)
+            or program_id in exclude_ids
+            or program_id in seen
+        ):
+            continue
+        program = programs_by_id.get(program_id)
+        if program is None:
+            continue
+        seen.add(program_id)
+        surfaced.append(_program_snapshot(program))
+        if len(surfaced) >= k:
+            break
+    return surfaced
 
 
 def _resurfacing_program_record(program: Program) -> dict:

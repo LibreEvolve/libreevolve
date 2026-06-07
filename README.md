@@ -1325,7 +1325,11 @@ full queryable local database; `runtime.history.lineage_index` is a bounded
 diagnostic view and `runtime.history.descriptor_index` is a bounded
 descriptor-coordinate view. `runtime.history.feedback_index` is a bounded
 feedback evidence view, and `runtime.history.score_index` is a bounded
-score-ranked view; none of these are replayable sampling engines.
+score-ranked view. `ProgramDatabase.resurface_by_metric()`,
+`resurface_by_lineage()`, `resurface_by_descriptor()`,
+`resurface_by_novelty()`, and `resurface_by_feedback()` can return defensive
+run-local snapshots from those current-history views, but those indexes are
+not persisted database tables or replayable sampling engines.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

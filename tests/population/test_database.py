@@ -1164,6 +1164,164 @@ def test_resurface_candidates_can_target_declared_objective_metric(tmp_path):
     ] == [balanced.id, score_leader.id]
 
 
+def test_resurface_candidates_can_query_metric_lineage_descriptor_and_feedback(tmp_path):
+    schema = {
+        "metrics": [
+            {
+                "name": "score",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            }
+        ],
+        "primary_metric": "score",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 1,
+    }
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=schema,
+    )
+
+    def candidate(
+        program_id: str,
+        *,
+        score: float,
+        selection_score: float,
+        lineage: list[str] | None = None,
+        parent_id: str | None = None,
+        diversity: float | None = None,
+        feedback_name: str | None = None,
+        feedback_score: float | None = None,
+    ) -> Program:
+        metadata = {
+            "selection_score": selection_score,
+            "normalized_metrics": {"score": score},
+        }
+        if diversity is not None:
+            metadata["archive_admission"] = {
+                "admitted": True,
+                "descriptors": {"diversity": diversity},
+            }
+        evaluation = {"is_valid": True}
+        if feedback_name is not None and feedback_score is not None:
+            evaluation["metadata"] = {
+                "llm_feedback": [
+                    {
+                        "name": feedback_name,
+                        "score": feedback_score,
+                        "normalized_score": feedback_score,
+                    }
+                ]
+            }
+        return Program(
+            id=program_id,
+            code=f"{program_id.replace('-', '_')} = 1\n",
+            fitness=selection_score,
+            parent_id=parent_id,
+            lineage=lineage or [],
+            evaluation=evaluation,
+            metadata=metadata,
+        )
+
+    root_a = candidate("root-a", score=0.20, selection_score=0.20)
+    child_a = candidate(
+        "child-a",
+        score=0.70,
+        selection_score=0.70,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        diversity=0.70,
+        feedback_name="reviewer",
+        feedback_score=0.40,
+    )
+    best_child_a = candidate(
+        "best-child-a",
+        score=0.80,
+        selection_score=0.90,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        diversity=0.40,
+        feedback_name="reviewer",
+        feedback_score=0.90,
+    )
+    root_b = candidate(
+        "root-b",
+        score=0.95,
+        selection_score=0.60,
+        diversity=0.95,
+        feedback_name="style",
+        feedback_score=0.80,
+    )
+    invalid = Program(
+        id="invalid",
+        code="invalid = 1\n",
+        fitness=1.0,
+        evaluation={"is_valid": False},
+        metadata={
+            "selection_score": 1.0,
+            "normalized_metrics": {"score": 1.0},
+            "archive_admission": {
+                "admitted": False,
+                "descriptors": {"diversity": 1.0},
+            },
+        },
+    )
+    for program in (root_a, child_a, best_child_a, root_b, invalid):
+        db.log(program)
+
+    assert [program.id for program in db.resurface_by_metric("score", k=2)] == [
+        root_b.id,
+        best_child_a.id,
+    ]
+    assert [program.id for program in db.resurface_by_lineage(root_a.id, k=2)] == [
+        best_child_a.id,
+        child_a.id,
+    ]
+    assert [
+        program.id
+        for program in db.resurface_by_descriptor(
+            "diversity",
+            k=2,
+            exclude_ids={root_b.id},
+        )
+    ] == [child_a.id, best_child_a.id]
+    assert [program.id for program in db.resurface_by_novelty(k=2)] == [
+        root_b.id,
+        child_a.id,
+    ]
+    assert [program.id for program in db.resurface_by_feedback("reviewer", k=2)] == [
+        best_child_a.id,
+        child_a.id,
+    ]
+    assert [program.id for program in db.resurface_by_feedback("style", k=2)] == [
+        root_b.id
+    ]
+
+    surfaced = db.resurface_by_feedback("reviewer", k=1)
+    surfaced[0].code = "mutated"
+    assert db.all_programs()[2].code == "best_child_a = 1\n"
+    assert invalid.id not in {
+        program.id for program in db.resurface_by_novelty(k=10)
+    }
+
+
+def test_resurface_query_methods_validate_keys(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=_objective_schema(),
+    )
+
+    with pytest.raises(ValueError, match="target_metric"):
+        db.resurface_by_metric("unknown", k=1)
+    with pytest.raises(ValueError, match="lineage_root_id"):
+        db.resurface_by_lineage("../escape", k=1)
+    with pytest.raises(ValueError, match="descriptor"):
+        db.resurface_by_descriptor("", k=1)
+    with pytest.raises(ValueError, match="feedback_name"):
+        db.resurface_by_feedback("sk-" + "proj_sensitive_1234567890abcdef", k=1)
+
+
 def test_resurface_candidates_rejects_unknown_target_metric(tmp_path):
     db = ProgramDatabase(
         Config(log_dir=str(tmp_path), problem_name="t"),

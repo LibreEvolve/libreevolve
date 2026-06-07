@@ -473,7 +473,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     returns defensive ranked snapshots from that same source mix.
     `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes
     declared-metric-targeted resurfacing over the objective metric archives and
-    rejects undeclared metric targets.
+    rejects undeclared metric targets. `ProgramDatabase.resurface_by_metric()`,
+    `resurface_by_lineage()`, `resurface_by_descriptor()`,
+    `resurface_by_novelty()`, and `resurface_by_feedback()` now expose
+    defensive run-local query results from the bounded metric, lineage,
+    descriptor/novelty, and feedback views.
     `validate_resurfacing_index_summary()` now validates that
     `libreevolve.resurfacing_index.v1` record for schema/policy, required
     limitations, counts, source contributions, source records, normalized
@@ -496,15 +500,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     and feeds hypothesis records into `resurfacing_index`. This remains a
     heuristic rather than a paper-faithful multi-score database policy:
     primary MAP-Elites cell replacement is still scalar, Pareto/frontier
-    dominance does not replace the primary grid, and durable queryable multi-objective
-    resurfacing across persisted database tables, embeddings, cross-run failure
-    and hypothesis indexes, full artifact-content indexes, full lineage
-    subgraphs, and schema migrations remains open. `runtime.history.artifact_index`
+    dominance does not replace the primary grid, and durable queryable
+    multi-objective resurfacing across persisted database tables, embeddings,
+    cross-run failure and hypothesis indexes, full artifact-content indexes,
+    full lineage subgraphs, learned/cross-run novelty indexes, and schema
+    migrations remains open. `runtime.history.artifact_index`
     now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
     stage, and content-excerpt evidence, and valid artifact-bearing candidates
     feed into `resurfacing_index`.
-  - Required result: add Pareto/frontier archive replacement and queryable
-    lineage-aware resurfacing for programs that excel under different metrics.
+  - Required result: add Pareto/frontier archive replacement and durable
+    persisted lineage-aware resurfacing for programs that excel under different
+    metrics.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

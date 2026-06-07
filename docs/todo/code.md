@@ -843,7 +843,11 @@ Primary evidence:
     `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes
     declared-metric-targeted resurfacing over the objective metric archives,
     returning defensive ranked program snapshots while rejecting undeclared
-    metric targets.
+    metric targets. `ProgramDatabase.resurface_by_metric()`,
+    `resurface_by_lineage()`, `resurface_by_descriptor()`,
+    `resurface_by_novelty()`, and `resurface_by_feedback()` now expose
+    run-local defensive query results from the bounded metric, lineage,
+    descriptor/novelty, and feedback index views.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier primary archive replacement, make durable
     metric-targeted resurfacing queryable across persisted database tables
@@ -868,7 +872,11 @@ Primary evidence:
     view, score index view, descriptor index view, feedback index view, and a
     bounded `resurfacing_index` rank-fusion view in runtime manifests, exposes
     `resurface_candidates()` for defensive ranked snapshots from those same
-    sources, persists `runtime.history.failure_index` grouped by failure
+    sources, exposes `resurface_by_metric()`, `resurface_by_lineage()`,
+    `resurface_by_descriptor()`, `resurface_by_novelty()`, and
+    `resurface_by_feedback()` for bounded run-local metric, lineage,
+    descriptor/novelty, and feedback query results, persists
+    `runtime.history.failure_index` grouped by failure
     fingerprint/repetition evidence, persists `runtime.history.hypothesis_index`
     for bounded redacted proposal idea/rationale/hypothesis summaries, includes
     hypothesis evidence in `resurfacing_index`, persists
@@ -886,7 +894,8 @@ Primary evidence:
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,
     cross-run failure fingerprints, full lineage subgraphs, semantic/cross-run
-    hypotheses, full artifact content, retrieval context, or novelty; the
+    hypotheses, full artifact content, retrieval context, or learned/cross-run
+    novelty; the
     resurfacing index is deterministic rank fusion over bounded current-history
     views, and
     `load_accepted_history_index()` remains an id map for restore/query
@@ -896,11 +905,11 @@ Primary evidence:
     database view. The remaining gap is not validation of the current bounded
     resurfacing-index record.
   - Required result: store rich candidate/evaluation records with queryable
-    persisted dimensions, reproducible sampling policies, ranked views by
-    score/metric/diversity/feedback/lineage/failure/hypothesis/artifact
+    persisted dimensions, reproducible sampling policies, durable ranked views
+    by score/metric/diversity/feedback/lineage/failure/hypothesis/artifact
     evidence, versioned schema-migration rules for legacy/current run records,
-    and tests proving resurfacing decisions can be rebuilt from run artifacts
-    rather than only from the live in-memory `IslandModel`.
+    and tests proving resurfacing decisions can be rebuilt from persisted run
+    artifacts rather than only from the live in-memory history/archive facade.
 
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary

@@ -1528,6 +1528,25 @@ Primary evidence:
     consistency, or systems evidence bundle consistency once those records
     exist.
 
+- [ ] Add scheduling ranking-only safety provenance for Borg-style heuristics.
+  - Spec evidence: AlphaEvolve Section 3.3.1 says the discovered Borg
+    scheduling heuristic outputs a priority score for machines that Borg has
+    already determined are available and capable of running the pending job,
+    making scheduling decisions effectively correct by construction.
+  - Current evidence: `libreevolve.systems_result_report.v1` can validate
+    generic optimization, held-out, and reference-correctness gates and can
+    accept `reference_correctness: not_applicable` for scheduling with a
+    rationale. It does not require scheduling-domain reports to declare the
+    candidate-set feasibility oracle, prove that evolved code only reorders
+    feasible machines, record resource constraint invariants, or distinguish a
+    safe ranking heuristic from code that directly admits, rejects, or places
+    jobs.
+  - Required result: add scheduling-specific report metadata and validator
+    rules for feasibility-filter provenance, ranking-only heuristic scope,
+    resource/capacity invariant checks, simulator/admission-boundary evidence,
+    and allowed `not_applicable` reference-correctness rationale before
+    treating Borg-style scheduling reports as AlphaEvolve-ready.
+
 ## LLM Ensemble
 
 - [ ] Add live pricing/default-rate capture, raw provider replay, and

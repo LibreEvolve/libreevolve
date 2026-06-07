@@ -961,6 +961,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so roadmap wording neither underclaims current report
     validation nor overclaims AlphaEvolve-style systems evidence.
 
+- [ ] Keep scheduling roadmap wording scoped to generic systems reports until
+      ranking-only feasibility evidence exists.
+  - Spec evidence: AlphaEvolve's Borg scheduling heuristic only scores
+    machines that Borg already determined were available and capable of
+    running the job, so the heuristic influences ranking without owning
+    feasibility or admission decisions.
+  - Current evidence: roadmap systems-result wording names unseen workload,
+    deployment, and domain-specific readiness gaps, while current report
+    validation allows scheduling reference correctness to be `not_applicable`
+    with a rationale. It does not require scheduling-specific feasibility
+    filter provenance or proof that evolved code is only a ranking heuristic
+    over feasible machines.
+  - Required result: when scheduling fixtures or report validators add
+    feasible candidate-set provenance, ranking-only boundaries,
+    resource/capacity invariant checks, and simulator/admission-boundary
+    evidence, update ROADMAP, README, papers index, and code/paper TODOs so
+    roadmap text distinguishes generic systems readiness from Borg-style
+    correctness-by-construction scheduling evidence.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

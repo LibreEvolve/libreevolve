@@ -655,7 +655,11 @@ Implemented:
   counts/seeds, finite metrics, artifact hashes, passed-gate artifact-kind
   requirements, optional certification linkage that cannot contradict
   `alphaevolve_ready`, and readiness gating, but it does not provide real
-  compiler, hardware, kernel, scheduling, or systems fixtures.
+  compiler, hardware, kernel, scheduling, or systems fixtures. For scheduling,
+  it also does not yet require Borg-style feasibility-boundary evidence that
+  an evolved heuristic only ranks machines already deemed feasible by an
+  external scheduler and cannot directly alter admission or placement
+  constraints.
 - `libreevolve/problems/benchmarks/benchmark_hardening.py`: anti-gaming
   hardening report contract. It validates protected benchmark signals,
   shortcut threats, protected-signal links for each shortcut threat, detector

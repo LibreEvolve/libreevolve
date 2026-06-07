@@ -290,6 +290,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README neither underclaims the current report and inventory contracts
     nor overclaims AlphaEvolve-style confirmed result evidence.
 
+- [ ] Keep README scheduling wording scoped to generic systems reports until
+      ranking-only safety provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
+    heuristic scores only machines already determined by Borg to be available
+    and capable of running the pending job, so correctness is effectively by
+    construction.
+  - Current evidence: README documents systems result reports and artifact
+    inventories, and notes that deployment evidence and domain-specific
+    readiness gates remain open. It does not yet document scheduling-specific
+    evidence that a heuristic only reorders feasible machines, preserves
+    resource/capacity constraints, and cannot directly admit, reject, or place
+    jobs outside the scheduler's feasibility boundary.
+  - Required result: once scheduling report metadata captures feasibility
+    filter provenance, ranking-only scope, resource invariants, and
+    simulator/admission-boundary evidence, update README, ROADMAP, papers
+    index, and matching TODOs so README does not imply generic systems report
+    readiness proves Borg-style scheduling safety.
+
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.
   - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target

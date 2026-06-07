@@ -1309,6 +1309,29 @@ Primary evidence:
     controller-event, ledger, runtime budget-report telemetry, and focused
     `throughput_depth` unit coverage.
 
+- [ ] Promote role-scoped LLM routing from shared-bandit audit evidence to
+  independent per-role scheduler policy.
+  - Spec evidence: AlphaEvolve's ensemble and compute-budget framing separates
+    proposal generation, critique, feedback, and prompt-improvement work; a
+    faithful implementation needs role-specific model-selection state, budgets,
+    and reward semantics that can be evaluated independently.
+  - Current evidence: `LLMEnsemble` supports configured
+    `llm_role_backend_indices`, backend-metadata role matching, per-role
+    logical call caps, role-scoped provider/token/configured-cost/latency
+    budget maps in `RunBudget`, configured reward-accounted roles, feedback
+    reward wiring for exact configured feedback roles, scheduler-policy
+    telemetry, and restorable `role_scheduler_state` audit records. However,
+    `_ucb1_select()` still uses the shared `_counts`, `_wins`, and `_total`
+    arrays as the authoritative live selection state; role matches only narrow
+    eligible backend indices, and `role_scheduler_state` records counts/wins
+    after selection instead of owning independent per-role bandit state,
+    exploration coefficients, budgets, or calibrated reward contracts.
+  - Required result: add explicit per-role scheduler policies for mutation,
+    critique, feedback, and meta-prompt calls, including independent live
+    selection state, role-specific reward calibration, quota/budget ownership,
+    restore validation, and experiment-level reports proving that role
+    selection behavior is not just shared global-bandit telemetry.
+
 - [ ] Enforce adapter retry/token/cost/wall-clock budgets live.
   - Spec evidence: AlphaEvolve-style LLM scheduling is compute-budgeted; retry
     knobs should not allow an effectively unbounded number of provider calls

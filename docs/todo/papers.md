@@ -19,6 +19,26 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
     a time; there are no async LLM sampler queues or parallel evaluator nodes.
 
+- [ ] Independent per-role LLM scheduler state and reward policy.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.
+  - Requirement: AlphaEvolve-style model orchestration should be able to
+    schedule proposal generation, critique, feedback, and prompt-improvement
+    calls as distinct work classes with separately auditable budgets, reward
+    semantics, and model-selection behavior.
+  - Partial status: LibreEvolve now has configured role-backend indices,
+    backend-metadata role matching, configured reward-accounted roles,
+    per-role logical call limits, role-scoped provider/token/configured-cost/
+    latency budget maps, feedback reward wiring for exact configured feedback
+    roles, scheduler-policy telemetry, and restorable per-role scheduler audit
+    records.
+  - Current gap: the live selection state is still the shared ensemble bandit;
+    role routing only narrows eligible backend indices, and
+    `role_scheduler_state` is audit/restore evidence rather than independent
+    per-role scheduler ownership with calibrated rewards and quotas.
+  - Required result: add independent per-role scheduler policies for mutation,
+    critique, feedback, and meta-prompt calls, plus restore validation and
+    experiment reports proving role-specific selection and budget behavior.
+
 - [ ] Add AlphaEvolve-grade candidate language, build, and runner contracts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: tasks define the program artifact and evaluator interface; a

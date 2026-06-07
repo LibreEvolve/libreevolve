@@ -9,6 +9,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README per-role LLM scheduler claims scoped to current role routing
+  and budget maps.
+  - Spec evidence: AlphaEvolve-style LLM orchestration needs role-specific
+    scheduling and reward semantics for proposal generation, critique,
+    feedback, and prompt improvement, not only role labels on shared telemetry.
+  - Current evidence: README now says `role_scheduler_state` is an
+    audit/restoration record, while role routing can narrow eligible backends
+    and role budget maps can stop matching roles before later calls. It also
+    states that the global ensemble state remains authoritative and that
+    independent per-role scheduler configuration, reward calibration, and
+    quota/budget ownership remain open.
+  - Required result: once independent per-role live scheduler state, calibrated
+    reward semantics, and quota/budget ownership land, update the README and
+    matching code/paper TODO entries together so the README neither underclaims
+    current role-scoped backend eligibility nor overclaims AlphaEvolve-style
+    role scheduling.
+
 - [ ] Keep README LLM budget/replay claims scoped to current synchronous
   restore boundaries.
   - Spec evidence: AlphaEvolve-scale reproduction needs compute-budgeted model

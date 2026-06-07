@@ -10,6 +10,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
+- [ ] Keep per-role scheduler roadmap wording scoped to role-scoped backend
+  eligibility and role budget maps versus independent live scheduler state.
+  - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific
+    model-selection behavior for mutation generation, critique, feedback, and
+    prompt-improvement calls, with budgets and rewards that can be evaluated
+    independently.
+  - Current evidence: the roadmap now distinguishes configured
+    reward-accounted roles, role-scoped backend eligibility, logical call caps,
+    and role budget maps from still-open independent per-role live scheduler
+    state, calibrated reward signals, quota ownership, and budget policy.
+  - Required result: when independent per-role scheduler state lands, update
+    the roadmap, README, papers index, and code/paper TODO entries together so
+    they neither underclaim current role routing and budget maps nor overclaim
+    AlphaEvolve-style per-role scheduling.
+
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

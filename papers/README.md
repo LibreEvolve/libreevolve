@@ -535,12 +535,12 @@ primarily in `docs/todo/papers.md` and `docs/todo/code.md`.
 | 2506.13131 | `docs/todo/papers.md`; `docs/todo/code.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
 | 1504.04909 | `docs/todo/papers.md` | `docs/todo/Completed/archive_policy.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
 | auer-cesa-bianchi-fischer-2002 | None active | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
-| 2511.17592 | `docs/todo/papers.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2510.14150 | `docs/todo/papers.md` | `docs/todo/Completed/readme.md` |
-| 2511.23473 | `docs/todo/papers.md` grouped paper-inspired plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
-| 2602.10233 | None active | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2602.15951 | None active | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2603.14575 | None active | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2511.17592 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2510.14150 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/readme.md` |
+| 2511.23473 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
+| 2602.10233 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2602.15951 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2603.14575 | `docs/todo/papers.md` grouped paper-inspired framework/plugin scope gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
 | 2510.06056 | `docs/todo/papers.md`; `docs/todo/code.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
 | 2601.21096 | `docs/todo/papers.md` grouped background benchmark gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
 | 2602.22425 | `docs/todo/papers.md` grouped background benchmark gap | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |

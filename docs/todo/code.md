@@ -1257,6 +1257,31 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
+- [ ] Add source/workspace deduplication and evaluation-cache policy.
+  - Spec evidence: AlphaEvolve Section 2.5 describes a growing evolutionary
+    database of generated solutions with scores and program outputs attached,
+    whose purpose is to resurface previously explored ideas under fixed
+    compute budgets. That does not require one specific cache key, but a
+    faithful implementation needs an explicit policy for repeated identical
+    programs: skip, reuse prior evaluation, or intentionally re-evaluate as a
+    controlled stochastic sample.
+  - Current evidence: generated candidate ids include generation coordinates,
+    parent id, prompt-program id, mutation hash, and workspace hash, and
+    `ProgramDatabase` rejects duplicate program ids before logging/admission.
+    The evolution loop still evaluates seed and generated workspaces before
+    any source/workspace deduplication gate. There is no run-local or durable
+    index keyed by canonical workspace/source hash, evaluator contract,
+    evaluator inputs, seed/sample configuration, static sidecars, or
+    environment provenance; identical workspaces proposed through different
+    parents, prompt arms, or mutation text can consume fresh evaluator budget
+    without manifest-visible reuse/rejection telemetry.
+  - Required result: add a versioned dedup/evaluation-cache policy that records
+    canonical candidate source/workspace hashes, evaluator/config/cache-key
+    scope, duplicate-detection timing, cache hit/miss/re-evaluation reasons,
+    stochastic sample policy, budget-accounting effects, and replay semantics
+    before presenting the program database as AlphaEvolve-grade fixed-budget
+    memory over previously explored programs.
+
 - [ ] Add an automated-evaluator scope policy for manual-experiment and
       LLM-only idea-feedback boundaries.
   - Spec evidence: AlphaEvolve says automated evaluation is both an advantage

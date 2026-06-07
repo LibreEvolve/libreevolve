@@ -421,6 +421,13 @@ semantic/cross-run novelty or hypothesis retrieval, schema migrations, and
 replayable sampling policies, not the absence of any resurfacing API or
 proposal metadata capture.
 
+AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
+identity provenance, but LibreEvolve does not yet expose paper-visible evidence
+for source/workspace deduplication, evaluation-cache reuse, or documented
+stochastic re-evaluation of identical proposals. The remaining gap is a
+canonical hash/evaluator-cache scope with cache hit/miss/re-evaluation
+telemetry and budget accounting for repeated previously explored programs.
+
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,
 generation counters, and stop reasons before finalization. Restored-budget

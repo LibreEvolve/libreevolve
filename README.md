@@ -1358,6 +1358,12 @@ score-ranked view. `ProgramDatabase.resurface_by_metric()`,
 `resurface_by_novelty()`, and `resurface_by_feedback()` can return defensive
 run-local snapshots from those current-history views, but those indexes are
 not persisted database tables or replayable sampling engines.
+Generated candidate ids include a workspace hash for identity provenance, and
+history/database paths reject duplicate program ids, but LibreEvolve does not
+yet have a source/workspace deduplication or evaluation-cache policy. Identical
+candidate workspaces can still consume evaluator budget unless a future
+canonical hash/evaluator-cache scope explicitly skips, reuses, or deliberately
+re-evaluates them with manifest-visible telemetry.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

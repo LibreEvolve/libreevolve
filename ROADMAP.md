@@ -127,6 +127,10 @@ is not yet an AlphaEvolve reproduction.
   resurfacing queries beyond score, individual metric excellence, novelty,
   recency, lineage, feedback, and random/mixed policies to persisted
   feedback, lineage-diversity, and novelty indexes.
+- Add source/workspace deduplication and evaluation-cache policy before
+  treating deterministic candidate ids or workspace hashes as AlphaEvolve-grade
+  memory over previously explored programs; identical proposals are not yet
+  proved to skip, reuse, or intentionally re-evaluate with budget telemetry.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics.

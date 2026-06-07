@@ -882,6 +882,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
+- [ ] Track source/workspace deduplication and evaluation-cache evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
+  - Requirement: AlphaEvolve's generated-program database stores previously
+    explored programs with evaluation results and program outputs under fixed
+    search budgets, so repeated identical programs need an explicit
+    resurfacing/reuse/re-evaluation policy.
+  - Partial status: generated candidate ids include a workspace hash, and
+    database/history restore paths validate unique program ids.
+  - Current gap: the workspace hash is used for identity provenance, not for a
+    pre-evaluation duplicate gate or evaluation-cache lookup. The paper index
+    has no evidence for canonical source/workspace hash indexes, evaluator
+    cache-key scope, cache hit/miss telemetry, stochastic re-evaluation policy,
+    or replayable budget accounting for duplicate proposals.
+  - Required result: add paper-visible run reports or manifest fields proving
+    whether identical source/workspace proposals are skipped, reuse prior
+    evaluation results, or are intentionally re-evaluated as new stochastic
+    samples with documented budget effects.
+
 - [ ] Record AlphaEvolve's automated-evaluator scope boundary.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 context, Related Work, and
     Discussion.

@@ -661,6 +661,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     program-output indexes as part of that durable database surface, not merely
     prompt feedback or artifact excerpts.
 
+- [ ] Keep database-memory roadmap wording scoped until duplicate-work policy
+      lands.
+  - Spec evidence: AlphaEvolve's program database is a memory of generated
+    solutions with attached evaluation evidence, used to resurface previously
+    explored ideas under fixed budgets.
+  - Current evidence: `ROADMAP.md` can claim deterministic candidate ids,
+    unique program-id validation, workspace-hash identity components, current
+    JSONL history, and bounded current-run resurfacing. It does not yet claim,
+    and should not imply, that identical source/workspace proposals are
+    detected before evaluation, served from a cache, or deliberately
+    re-evaluated under a stochastic sample policy.
+  - Required result: when duplicate-work policy, source/workspace hash indexes,
+    evaluation-cache reuse, or documented stochastic re-evaluation lands,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap wording separates current identity provenance from AlphaEvolve-grade
+    fixed-budget memory over previously explored programs.
+
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.
   - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both

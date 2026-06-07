@@ -813,6 +813,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     entries together so README distinguishes prompt-visible program outputs
     from AlphaEvolve-style queryable output-attached database evidence.
 
+- [ ] Keep README database-memory wording scoped until source/workspace dedup
+      and evaluation-cache policy exists.
+  - Spec evidence: AlphaEvolve's database stores generated solutions with
+    attached evaluations and is meant to resurface previously explored ideas
+    under fixed compute budgets.
+  - Current evidence: README can describe deterministic candidate ids,
+    candidate history, workspace hashes, unique program-id validation, and
+    current-run resurfacing views. It should not imply that identical
+    source/workspace proposals are rejected before evaluation, served from an
+    evaluation cache, or intentionally re-evaluated under a documented
+    stochastic-sampling policy.
+  - Required result: when source/workspace deduplication or evaluation-cache
+    policy lands, update README, ROADMAP, papers index, and code/paper TODOs
+    with canonical hash scope, evaluator/config cache-key semantics,
+    hit/miss/re-evaluation telemetry, replay behavior, and budget accounting.
+
 - [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
   - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able
     to reuse failed-proposal evidence across runs through durable, searchable,

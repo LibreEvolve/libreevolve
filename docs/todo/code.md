@@ -2319,7 +2319,9 @@ Primary evidence:
     Borg scheduling, 23% average kernel speedup and 1% Gemini training-time
     reduction for Pallas/Gemini kernels, power/area objectives for TPU RTL, and
     32% kernel plus 15% pre/postprocessing speedups for FlashAttention
-    compiler IR.
+    compiler IR. Section 3.3.2 also claims the Pallas workflow reduced kernel
+    optimization time from several months of engineering effort to days of
+    automated experimentation and improved deployment/research ergonomics.
   - Current evidence: `libreevolve.systems_result_report.v1` requires finite
     numeric metrics inside optimization, held-out, and reference-correctness
     gates, and nearby TODOs require domain-specific evidence for scheduling,
@@ -2336,7 +2338,10 @@ Primary evidence:
     power/area/PPA deltas with synthesis flow and correctness signoff; and
     compiler kernel/pre/postprocessing speedups with target configuration,
     tolerance, randomized-reference provenance, and abstraction-level
-    attribution. Until then, finite systems metrics should not be treated as
+    attribution. Include engineering-effort and deployment-velocity fields for
+    claims such as months-to-days optimization turnaround, manual-tuning
+    baseline, affected engineer workflow, and production adoption state. Until
+    then, finite systems metrics should not be treated as
     reproducible AlphaEvolve result-magnitude evidence.
 
 - [ ] Add application-owner and domain-review provenance for practical systems

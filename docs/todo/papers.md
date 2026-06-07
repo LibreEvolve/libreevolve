@@ -2498,7 +2498,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     recovered about 0.7% fleet-wide compute resources, Gemini/Pallas kernels
     achieved 23% average kernel speedup and 1% Gemini training-time reduction,
     hardware RTL optimization targeted power and area, and FlashAttention IR
-    changes delivered 32% kernel and 15% pre/postprocessing speedups.
+    changes delivered 32% kernel and 15% pre/postprocessing speedups. The
+    Gemini/Pallas section also reports reducing kernel optimization time from
+    several months of dedicated engineering effort to days of automated
+    experimentation, plus deployment and research/engineering-velocity impact.
   - Current gap: current paper/status wording and
     `libreevolve.systems_result_report.v1` can require finite metrics, case
     hashes, artifacts, and domain readiness evidence, but they do not require
@@ -2513,7 +2516,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     training-time reduction baseline/runtime/shape-split aggregation; RTL
     power/area/PPA units and synthesis flow; and compiler kernel versus
     pre/postprocessing speedup attribution with randomized-reference and
-    tolerance provenance.
+    tolerance provenance. Also capture paper-facing engineering-effort and
+    deployment-velocity calibration for kernel claims, including manual-tuning
+    baseline duration, automated-experiment duration, workflow affected, and
+    production adoption status.
 
 - [ ] Track practical-application owner and reviewer provenance as paper
       evidence.

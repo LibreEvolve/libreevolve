@@ -781,12 +781,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     held-out/reference gates, but it does not yet document kernel-specific
     shape-corpus provenance, train/eval split hashes, accelerator runtime
     artifacts, expert-baseline heuristic identity, tiling-only output
-    constraints, or correctness-by-construction scope.
+    constraints, correctness-by-construction scope, or engineering-effort
+    calibration for months-to-days optimization turnaround and deployment/
+    ergonomics impact.
   - Required result: once kernel report metadata captures shape-corpus,
     train/eval split, TPU runtime, expert-baseline comparison, tiling
-    constraints, and unchanged-operation evidence, update README, ROADMAP,
-    papers index, and matching TODOs so README does not imply generic systems
-    report readiness proves AlphaEvolve-style Pallas kernel optimization.
+    constraints, unchanged-operation evidence, engineering-effort baseline,
+    automated-experiment duration, and production/workflow adoption state,
+    update README, ROADMAP, papers index, and matching TODOs so README does not
+    imply generic systems report readiness proves AlphaEvolve-style Pallas
+    kernel optimization.
 
 - [ ] Keep README hardware wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.

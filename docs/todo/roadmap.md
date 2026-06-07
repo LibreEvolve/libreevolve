@@ -1481,13 +1481,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and reference-correctness gaps, but it does not require kernel-specific
     shape-corpus provenance, deterministic train/eval split records, real TPU
     runtime measurement artifacts, expert-baseline comparison, or tiling-only
-    correctness boundaries.
+    correctness boundaries. It also does not require engineering-effort
+    calibration for the paper's several-months-to-days optimization-turnaround
+    claim or the deployment/research-velocity impact of the kernel heuristic.
   - Required result: when kernel fixtures or systems report validators add
     shape-corpus, train/eval split, accelerator-runtime, baseline-heuristic,
-    tiling-constraint, and unchanged-operation evidence, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap text distinguishes
-    generic systems readiness from AlphaEvolve-style Pallas kernel-tiling
-    evidence.
+    tiling-constraint, unchanged-operation evidence, engineering-effort
+    baseline, automated-experiment duration, and production/workflow adoption
+    state, update ROADMAP, README, papers index, and code/paper TODOs so
+    roadmap text distinguishes generic systems readiness from AlphaEvolve-style
+    Pallas kernel-tiling evidence.
 
 - [ ] Keep hardware roadmap wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.

@@ -1087,6 +1087,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style evidence that proposals edit the sampled current program
     rather than pasted prompt scaffolding.
 
+- [ ] Keep README Figure 3 supervised-learning example wording scoped until
+      exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Figure 3 presents a supervised-learning pipeline
+    example with linked subfigures for a user-provided JAX/Jaxline file and
+    `evaluate` function, an assembled prompt with prior/current program scores,
+    and an LLM output containing explanatory prose plus SEARCH/REPLACE edits.
+  - Current evidence: README documents evolve-block parsing, prompt context,
+    SEARCH/REPLACE mutation, strict prose handling, and prompt-example-copy
+    gaps. It does not document Figure 3 exhibit IDs, subfigure labels, exact
+    source/prompt/output excerpt artifact hashes, displayed score values,
+    omitted-line/ellipsis policy, source PDF/caption location, rendered
+    artifact paths/hashes, or links from the displayed example to prompt
+    history, evaluator, candidate, and run artifacts.
+  - Required result: when Figure 3 exhibit provenance lands, update README,
+    ROADMAP, papers index, and matching TODOs so README distinguishes
+    reproduced supervised-learning paper-example evidence from generic
+    prompt/mutation/evaluator feature support.
+
 - [ ] Keep README mutation-mode wording scoped to configured `diff`/`full`
       support versus adaptive prompting.
   - Spec evidence: AlphaEvolve Section 2.3 requests diff blocks for larger

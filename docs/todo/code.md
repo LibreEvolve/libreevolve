@@ -1467,6 +1467,28 @@ Primary evidence:
     prompt examples can remain useful without being mistaken for valid
     AlphaEvolve-style edits to the current program.
 
+- [ ] Add Figure 3 supervised-learning example exhibit provenance.
+  - Spec evidence: AlphaEvolve Figure 3 is a paper-facing supervised-learning
+    pipeline exhibit with three linked subfigures: the user-provided JAX/Jaxline
+    file and `evaluate(eval_inputs)` function, the assembled prompt containing
+    prior/current program scores and abbreviated context, and the LLM's
+    explanatory SEARCH/REPLACE output that edits the current program.
+  - Current evidence: LibreEvolve tracks evolve-block parsing,
+    SEARCH/REPLACE compatibility, prompt-context rendering, natural-language
+    preamble divergence, and prompt-example copy diagnostics as separate
+    behavior gaps. No code/report schema records Figure 3 exhibit IDs,
+    subfigure labels, exact source/prompt/output excerpt artifacts and hashes,
+    score values shown in the prompt, ellipsis/skipped-line policy, source PDF
+    location, rendering/text artifact hashes, or links from the displayed
+    example to prompt-history, evaluator, candidate, and run artifacts.
+  - Required result: add Figure 3-style prompt/evaluation exhibit metadata with
+    stable figure/subfigure IDs, source file/evaluate-function excerpt
+    artifacts, rendered prompt excerpt artifacts, LLM-output excerpt artifacts,
+    displayed metric values and candidate links, omitted-line/abbreviation
+    policy, source/rendered artifact hashes, and links to prompt history,
+    candidate history, evaluator results, and paper-source evidence so docs can
+    distinguish feature support from reproduced paper example evidence.
+
 - [ ] Add adaptive mutation-output mode selection instead of one run-wide
       `diff`/`full` contract.
   - Spec evidence: AlphaEvolve Section 2.3 says larger codebases request

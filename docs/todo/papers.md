@@ -1079,6 +1079,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-example compatibility as AlphaEvolve-style current-program editing
     fidelity.
 
+- [ ] Track Figure 3 supervised-learning example exhibit provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 3 presents a
+    supervised-learning pipeline example with three abbreviated subfigures: a
+    user-provided JAX/Jaxline file with evolve blocks and `evaluate`, an
+    assembled prompt showing prior/current programs and scores, and an LLM
+    response containing explanatory prose plus SEARCH/REPLACE edits.
+  - Current gap: paper-facing TODOs track mutation parsing, prompt-context
+    policy, preamble handling, and prompt-example-copy diagnostics. They do not
+    preserve Figure 3 as its own paper exhibit with stable figure/subfigure IDs,
+    exact source/prompt/output excerpt artifacts and hashes, displayed metric
+    values, omitted-line/ellipsis policy, source PDF page/caption location,
+    rendering/text artifact paths, or links from the displayed snippets to
+    prompt-history, evaluator, candidate-history, and run artifacts.
+  - Required result: add paper-facing Figure 3 exhibit records and validation:
+    figure/subfigure IDs, source file and `evaluate` excerpt artifacts,
+    rendered prompt excerpt artifact, LLM-output excerpt artifact, prompt score
+    values, candidate/evaluator/run links, ellipsis/skipped-content policy,
+    source/rendered artifact hashes, and README/ROADMAP wording that separates
+    reproduced supervised-learning example evidence from generic prompt,
+    mutation, and evaluator support.
+
 - [ ] Track adaptive diff-versus-full mutation prompting.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
   - Requirement: AlphaEvolve asks for SEARCH/REPLACE blocks for larger

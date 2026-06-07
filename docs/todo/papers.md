@@ -154,18 +154,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     mutation timeout failures now write generated failure-history rows with
     retained timeout telemetry and can continue later generations when budget
     remains. Failed LLM call rows now record
-    `provider_failure_policy` with retry/fallback decisions and explicit
-    ensemble-layer non-quarantine/non-penalty markers, and strict ledger replay
-    now derives `provider_failure_policy_summary` for audit-only role/category/
-    decision evidence. Ensemble-deadline timeout rows now also include a
+    `provider_failure_policy` with retry/fallback decisions plus explicit
+    quarantine/penalty decisions; configured
+    `llm_role_failure_quarantine_after` roles can now quarantine exhausted
+    failing role/backend pairs and apply zero-reward scheduler penalties to
+    reward-accounted failures. Strict ledger replay now derives
+    `provider_failure_policy_summary` for audit-only role/category/decision
+    evidence. Ensemble-deadline timeout rows now also include a
     replay-validated `libreevolve.provider_cancellation_record.v1` with the
     role, backend, call id, timeout seconds, retry/fallback/telemetry budget
     action, and explicit `unsupported_daemon_worker_may_continue` hard-cancel
     gap. Remaining budget/runtime gaps are live hard cancellation handles,
     timeout-driven stop enforcement beyond audit observations, timeout call
-    records, and mutation failure-history logging, accelerator/worker budget enforcement,
-    live provider pricing capture, and one-command restoration of replayable
-    provider-attempt/token/cost/latency controller events.
+    records, and mutation failure-history logging, accelerator/worker budget
+    enforcement, live provider pricing capture, provider-output replay, and
+    async/pending-work controller restore. The remaining gap is not one-command
+    restoration of replayable provider-attempt/token/configured-cost/latency
+    controller events for the current synchronous runtime bundle.
   - Required result: unify retry accounting across provider adapters and the
     ensemble, add accelerator/async-worker budget counters,
     connect hard cancellation semantics to runtime behavior beyond the current

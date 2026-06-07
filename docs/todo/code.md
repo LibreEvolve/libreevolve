@@ -1282,13 +1282,16 @@ Primary evidence:
     call latency. Remaining gaps
     are remote provider-side defaults and live pricing capture, full raw
     provider-specific payload retention/replay beyond configured response/error
-    text retention and bounded scalar retained metadata, and full one-command restoration of
-    replayable provider-attempt/token/cost/latency controller events.
+    text retention and bounded scalar retained metadata, provider-output replay,
+    and composition with async/pending-work controller restore. The remaining
+    gap is not one-command restoration of replayable provider-attempt/token/
+    configured-cost/latency controller events for the current synchronous
+    runtime bundle.
   - Required result: add bounded raw/provider-specific
-    diagnostic retention, remote provider-side default/pricing capture, and
-    full restored provider-usage budget policy that consumes the existing safe
-    usage, retry, status, controller-event, ledger, and runtime budget-report
-    telemetry.
+    diagnostic retention, remote provider-side default/pricing capture,
+    provider-output replay boundaries, and async/pending-work budget policy
+    that composes with the existing safe usage, retry, status,
+    controller-event, ledger, and runtime budget-report telemetry.
 
 - [ ] Enforce adapter retry/token/cost/wall-clock budgets live.
   - Spec evidence: AlphaEvolve-style LLM scheduling is compute-budgeted; retry

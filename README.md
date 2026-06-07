@@ -1671,8 +1671,12 @@ provider-response validation failures, timeouts, rate limits, transport
 errors, provider client/server status errors, and unknown failures. Failures
 can be retried and routed to fallback backends when configured, and role
 accounting aggregates the categories as audit counters. Failed call records also
-include `provider_failure_policy`, which records retry/fallback decisions and
-explicitly marks quarantine and penalty as not applied by the ensemble policy.
+include `provider_failure_policy`, which records retry/fallback decisions plus
+the ensemble's quarantine and penalty decision. When
+`llm_role_failure_quarantine_after` is configured for a role, exhausted
+role/backend failures can quarantine that backend for later calls in the same
+role and can apply a zero-reward scheduler penalty for reward-accounted failed
+calls; otherwise records explicitly mark quarantine and penalty as not applied.
 Strict ledger replay aggregates those failed-call policy records into
 `provider_failure_policy_summary` for audit-only role/category/decision
 evidence.

@@ -236,10 +236,11 @@ is not yet an AlphaEvolve reproduction.
   summaries, and token/cost/latency budget stops to include raw provider
   diagnostics, live provider pricing/cost capture, and richer budget-event
   evidence.
-- Add role-specific provider-failure handling for mutation, critique,
-  feedback, and meta-prompt calls, including quarantine/penalty policy beyond
-  the current normalized timeout/rate-limit/transport/status categories and
-  role-level failure-category summaries.
+- Extend the current configurable role/backend consecutive-failure quarantine
+  and zero-reward scheduler penalty beyond ensemble-local retry/fallback
+  handling to cross-run resume, provider isolation, live cancellation/stop
+  behavior, and persisted runtime artifacts for mutation, critique, feedback,
+  and meta-prompt calls.
 - Connect `libreevolve.provider_cancellation_policy.v1` to live provider SDK
   cancellation, budget-affecting timeout/cancellation stop or quarantine
   behavior across LLM roles, and persisted role-specific timeout artifacts

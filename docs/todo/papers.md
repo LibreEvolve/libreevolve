@@ -326,9 +326,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     composition, and `objective_metric: true` filling for declared non-primary
     `source: feedback` objective metrics. Metric-specific archive policies and
     Pareto/frontier optimization remain open because the frontier and
-    metric-leader view are diagnostic and not sampling/archive policies.
+    metric-leader view are diagnostic and not archive policies.
     Parent and inspiration sampling can now use
-    metric-leader, novelty, recency, selection-score, random, and mixed
+    metric-leader, frontier, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
     copies by program id. Persisted/queryable feedback and lineage-aware
     resurfacing remain open. Metric bounds are now strictly ordered before they
@@ -336,9 +336,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     through primary and secondary metric targets in configured order and
     persists target-metric provenance. Metric-leader inspiration sampling now
     persists selected ids plus metric target/program pairs in generated
-    candidate metadata. This remains a heuristic rather than a paper-faithful
+    candidate metadata. Frontier parent/inspiration sampling uses complete
+    declared normalized metric vectors to surface non-dominated retained
+    programs and persists frontier size/metric-order provenance. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
-  - Required result: add Pareto/frontier sampling/archive, metric-specific
+  - Required result: add Pareto/frontier archive replacement, metric-specific
     elite/archive views, objective-schema integration
     for feedback/reviewer metrics when desired, and queryable lineage-aware
     resurfacing for programs that excel under different metrics.

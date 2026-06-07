@@ -139,6 +139,7 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
     assert snapshot["archive_sequence"] == 3
     assert snapshot["migration_sequence"] == 0
     assert snapshot["metric_sample_index"] == 0
+    assert snapshot["frontier_sample_index"] == 0
     assert snapshot["migration_replay"] == {
         "schema": ISLAND_MIGRATION_REPLAY_SCHEMA,
         "status": "not_applied_as_restore_engine",
@@ -172,6 +173,7 @@ def test_restore_cursor_state_applies_next_island_and_sequences():
     source.add(second)
     snapshot = source.state_snapshot()
     snapshot["metric_sample_index"] = 4
+    snapshot["frontier_sample_index"] = 5
 
     restored = IslandModel(Config(n_islands=2, migration_interval=5))
     result = restored.restore_cursor_state(snapshot)
@@ -185,6 +187,7 @@ def test_restore_cursor_state_applies_next_island_and_sequences():
     assert event["island_id"] == snapshot["next_island_id"]
     assert event["archive_sequence"] == snapshot["archive_sequence"] + 1
     assert restored.state_snapshot()["metric_sample_index"] == 4
+    assert restored.state_snapshot()["frontier_sample_index"] == 5
     assert restored.state_snapshot()["archive_sequence_by_program_id"][first.id] == 1
 
 
@@ -364,6 +367,123 @@ def test_metric_sampling_ignores_undeclared_normalized_metrics():
 
     assert m.sample("metric").id == honest.id
     assert [p.id for p in m.sample_diverse(k=1, strategy="metric")] == [honest.id]
+
+
+def test_frontier_parent_sampling_cycles_non_dominated_programs():
+    m = IslandModel(
+        Config(n_islands=1, migration_interval=5),
+        metric_order=["accuracy", "latency"],
+    )
+    accuracy_leader = _pmeta(
+        code="accuracy",
+        fitness=0.70,
+        metrics={"accuracy": 0.95, "latency": 0.20},
+    )
+    latency_leader = _pmeta(
+        code="latency",
+        fitness=0.60,
+        metrics={"accuracy": 0.20, "latency": 0.95},
+    )
+    balanced = _pmeta(
+        code="balanced",
+        fitness=0.80,
+        metrics={"accuracy": 0.80, "latency": 0.80},
+    )
+    dominated = _pmeta(
+        code="dominated",
+        fitness=0.90,
+        metrics={"accuracy": 0.50, "latency": 0.50},
+    )
+    for program in (dominated, latency_leader, accuracy_leader, balanced):
+        m.add(program)
+
+    assert [m.sample("frontier").id for _ in range(4)] == [
+        balanced.id,
+        accuracy_leader.id,
+        latency_leader.id,
+        balanced.id,
+    ]
+    assert m.last_sample_metadata() == {
+        "strategy": "frontier",
+        "selected_program_id": balanced.id,
+        "frontier_index": 0,
+        "frontier_size": 3,
+        "metric_order": ["accuracy", "latency"],
+    }
+
+
+def test_frontier_inspiration_sampling_uses_non_dominated_programs_with_exclusions():
+    m = IslandModel(
+        Config(n_islands=1, migration_interval=5),
+        metric_order=["accuracy", "latency"],
+    )
+    accuracy_leader = _pmeta(
+        code="accuracy",
+        fitness=0.70,
+        metrics={"accuracy": 0.95, "latency": 0.20},
+    )
+    latency_leader = _pmeta(
+        code="latency",
+        fitness=0.60,
+        metrics={"accuracy": 0.20, "latency": 0.95},
+    )
+    balanced = _pmeta(
+        code="balanced",
+        fitness=0.80,
+        metrics={"accuracy": 0.80, "latency": 0.80},
+    )
+    dominated = _pmeta(
+        code="dominated",
+        fitness=0.90,
+        metrics={"accuracy": 0.50, "latency": 0.50},
+    )
+    for program in (dominated, latency_leader, accuracy_leader, balanced):
+        m.add(program)
+
+    selected = m.sample_diverse(
+        k=3, exclude_ids={balanced.id}, strategy="frontier"
+    )
+
+    assert [program.id for program in selected] == [
+        dominated.id,
+        accuracy_leader.id,
+        latency_leader.id,
+    ]
+    assert m.last_sample_metadata() == {
+        "strategy": "frontier",
+        "sample_kind": "diverse",
+        "requested_count": 3,
+        "selected_count": 3,
+        "selected_program_ids": [
+            dominated.id,
+            accuracy_leader.id,
+            latency_leader.id,
+        ],
+        "excluded_count": 1,
+        "frontier_size": 3,
+        "metric_order": ["accuracy", "latency"],
+    }
+
+
+def test_frontier_sampling_falls_back_without_declared_metrics():
+    m = _m()
+    weaker = _pmeta(code="weaker", fitness=0.4)
+    stronger = _pmeta(code="stronger", fitness=0.9)
+    m.add(weaker)
+    m.add(stronger)
+
+    assert m.sample("frontier").id == stronger.id
+    assert m.last_sample_metadata() == {
+        "strategy": "frontier",
+        "fallback_strategy": "exploit",
+        "selected_program_id": stronger.id,
+        "frontier_size": 0,
+        "metric_order": [],
+    }
+    assert [p.id for p in m.sample_diverse(k=1, strategy="frontier")] == [
+        stronger.id
+    ]
+    assert m.last_sample_metadata()["fallback_strategy"] == "selection"
 
 
 def test_sample_novelty_and_recency_strategies():

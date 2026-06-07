@@ -1102,7 +1102,9 @@ Important behavior:
   per-metric weights.
 - `runtime.history.objective_frontier` stores a bounded diagnostic Pareto
   frontier over complete declared normalized metric vectors. This is an
-  inspection artifact, not the MAP-Elites replacement or sampling policy.
+  inspection artifact, not the MAP-Elites replacement policy. The live
+  `frontier` parent/inspiration strategy computes its own non-dominated
+  retained-program pool from the same declared normalized metric semantics.
 - `runtime.history.objective_metric_leaders` stores a diagnostic
   best-program-per-declared-normalized-metric view with leader program ids,
   generations, metric values, selection scores, and available normalized
@@ -1115,7 +1117,8 @@ Important behavior:
 - the mutation backend index is stored under `metadata.backend_idx`
 - inspiration sampling provenance is stored under
   `metadata.inspiration_selection`; metric leader policies include target
-  metric/program pairs so metric-specific inspiration choices are auditable
+  metric/program pairs so metric-specific inspiration choices are auditable,
+  and frontier policies include frontier size and declared metric order
 - normalized LLM call telemetry is stored under `metadata.llm_calls` as the
   candidate-linked mutation/critique/feedback call span, including recovered
   retry or fallback attempts that led to a successful candidate

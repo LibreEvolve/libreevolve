@@ -52,6 +52,7 @@ class IslandModel:
         self._archive_sequences: dict[str, int] = {}
         self._migration_sequence = 0
         self._metric_sample_index = 0
+        self._frontier_sample_index = 0
         self._last_sample_metadata: dict = {}
         self.islands: list[MAPElites] = [
             MAPElites(
@@ -117,6 +118,31 @@ class IslandModel:
                 "metric_target_count": len(entries),
             }
             return selected
+        if strategy == "frontier":
+            frontier = _frontier_programs(
+                self._retained_programs(), self._metric_order
+            )
+            if not frontier:
+                selected = self.sample("exploit")
+                self._last_sample_metadata = {
+                    "strategy": strategy,
+                    "fallback_strategy": "exploit",
+                    "selected_program_id": selected.id if selected is not None else None,
+                    "frontier_size": 0,
+                    "metric_order": list(self._metric_order),
+                }
+                return selected
+            target_index = self._frontier_sample_index % len(frontier)
+            self._frontier_sample_index += 1
+            selected = frontier[target_index]
+            self._last_sample_metadata = {
+                "strategy": strategy,
+                "selected_program_id": selected.id,
+                "frontier_index": target_index,
+                "frontier_size": len(frontier),
+                "metric_order": list(self._metric_order),
+            }
+            return selected
         if strategy == "novelty":
             pool = self._retained_programs()
             selected = max(pool, key=_novelty_key) if pool else None
@@ -142,6 +168,7 @@ class IslandModel:
             "archive_sequence": self._sequence,
             "migration_sequence": self._migration_sequence,
             "metric_sample_index": self._metric_sample_index,
+            "frontier_sample_index": self._frontier_sample_index,
             "migration_replay": _migration_replay_policy(self._migration_sequence),
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
@@ -174,6 +201,7 @@ class IslandModel:
         self._sequence = restored["archive_sequence"]
         self._migration_sequence = restored["migration_sequence"]
         self._metric_sample_index = restored["metric_sample_index"]
+        self._frontier_sample_index = restored["frontier_sample_index"]
         self._archive_sequences = dict(restored["archive_sequence_by_program_id"])
         migration_replay = dict(restored["migration_replay"])
         self._last_sample_metadata = {}
@@ -185,6 +213,7 @@ class IslandModel:
             "archive_sequence": self._sequence,
             "migration_sequence": self._migration_sequence,
             "metric_sample_index": self._metric_sample_index,
+            "frontier_sample_index": self._frontier_sample_index,
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
             ),
@@ -259,6 +288,30 @@ class IslandModel:
                     {"metric": metric, "program_id": program.id}
                     for metric, program in leader_entries
                 ],
+            )
+            return selected
+        if strategy == "frontier":
+            frontier = _frontier_programs(candidates, self._metric_order)
+            if not frontier:
+                selected = sorted(candidates, key=_selection_key, reverse=True)[:k]
+                self._record_diverse_sample_metadata(
+                    strategy,
+                    selected,
+                    k,
+                    exclude_ids,
+                    fallback_strategy="selection",
+                    frontier_size=0,
+                    metric_order=list(self._metric_order),
+                )
+                return selected
+            selected = frontier[:k]
+            self._record_diverse_sample_metadata(
+                strategy,
+                selected,
+                k,
+                exclude_ids,
+                frontier_size=len(frontier),
+                metric_order=list(self._metric_order),
             )
             return selected
         if strategy == "novelty":
@@ -450,6 +503,42 @@ def _metric_leader_entries(
     return leaders
 
 
+def _frontier_programs(
+    candidates: list[Program], metric_order: list[str] | None = None
+) -> list[Program]:
+    metric_order = [
+        name for name in (metric_order or []) if isinstance(name, str) and name
+    ]
+    if not metric_order:
+        return []
+    declared_names = set(metric_order)
+    records: list[tuple[Program, dict[str, float]]] = []
+    for program in candidates:
+        metrics = _normalized_metrics(program, declared_names)
+        if all(name in metrics for name in metric_order):
+            records.append((program, {name: metrics[name] for name in metric_order}))
+    frontier = [
+        program
+        for index, (program, metrics) in enumerate(records)
+        if not any(
+            other_index != index
+            and _frontier_dominates(other_metrics, metrics, metric_order)
+            for other_index, (_, other_metrics) in enumerate(records)
+        )
+    ]
+    return sorted(frontier, key=_selection_key, reverse=True)
+
+
+def _frontier_dominates(
+    left: dict[str, float],
+    right: dict[str, float],
+    metric_order: list[str],
+) -> bool:
+    return all(left[name] >= right[name] for name in metric_order) and any(
+        left[name] > right[name] for name in metric_order
+    )
+
+
 def _normalized_metrics(program: Program, declared_names: set[str] | None = None) -> dict[str, float]:
     raw = program.metadata.get("normalized_metrics")
     if not isinstance(raw, dict):
@@ -601,6 +690,10 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         snapshot.get("metric_sample_index"),
         "metric_sample_index",
     )
+    frontier_sample_index = _validate_snapshot_non_negative_int(
+        snapshot.get("frontier_sample_index", 0),
+        "frontier_sample_index",
+    )
     archive_sequences = _validate_cursor_archive_sequences(
         snapshot.get("archive_sequence_by_program_id"),
         archive_sequence,
@@ -615,6 +708,7 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         "archive_sequence": archive_sequence,
         "migration_sequence": migration_sequence,
         "metric_sample_index": metric_sample_index,
+        "frontier_sample_index": frontier_sample_index,
         "archive_sequence_by_program_id": archive_sequences,
         "migration_replay": migration_replay,
     }

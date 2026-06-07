@@ -753,9 +753,12 @@ sampling use that selection score with final composed fitness as a tie-break.
 Final runtime manifests also include `runtime.history.objective_frontier`, a
 bounded diagnostic Pareto frontier over complete declared normalized metric
 vectors, and `runtime.history.objective_metric_leaders`, a diagnostic
-best-program view for each declared normalized metric. Admission thresholds and
-backend rewards still use final scalar fitness, and richer Pareto/frontier
-sampling plus metric-specific elite archives remain open.
+best-program view for each declared normalized metric. Parent and inspiration
+sampling can use a `frontier` strategy to surface non-dominated retained
+programs with complete declared normalized metric vectors. Admission thresholds,
+archive replacement, and backend rewards still use scalar policies, and richer
+Pareto/frontier archive replacement plus metric-specific elite archives remain
+open.
 
 ## Backend selection
 

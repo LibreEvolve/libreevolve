@@ -852,7 +852,7 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
         raise ArchiveStateRestoreError(
             f"archive state snapshot missing fields: {sorted(missing)}"
         )
-    optional = {"archive_contents", "migration_replay"}
+    optional = {"archive_contents", "migration_replay", "frontier_sample_index"}
     unsupported = set(snapshot) - required - optional
     if unsupported:
         raise ArchiveStateRestoreError(
@@ -890,6 +890,10 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
         snapshot["metric_sample_index"],
         "metric_sample_index",
     )
+    frontier_sample_index = _validate_snapshot_non_negative_int(
+        snapshot.get("frontier_sample_index", 0),
+        "frontier_sample_index",
+    )
     sequence_by_program = _validate_archive_sequence_by_program(
         snapshot["archive_sequence_by_program_id"],
         archive_sequence,
@@ -904,6 +908,7 @@ def validate_archive_state_snapshot(snapshot: object) -> dict:
         "archive_sequence": archive_sequence,
         "migration_sequence": migration_sequence,
         "metric_sample_index": metric_sample_index,
+        "frontier_sample_index": frontier_sample_index,
         "migration_replay": migration_replay,
         "archive_sequence_by_program_id": sequence_by_program,
         "islands": islands,
@@ -3188,6 +3193,7 @@ def _archive_cursor_restore_policy(restore_result: dict | None) -> dict:
         "archive_sequence": restore_result["archive_sequence"],
         "migration_sequence": restore_result["migration_sequence"],
         "metric_sample_index": restore_result["metric_sample_index"],
+        "frontier_sample_index": restore_result["frontier_sample_index"],
         "archive_sequence_by_program_id": restore_result[
             "archive_sequence_by_program_id"
         ],

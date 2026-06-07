@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Pareto-frontier parent and inspiration sampling.
+  - Spec evidence: AlphaEvolve-style multi-score search should resurface
+    high-performing programs under different score tradeoffs, not only the
+    scalar best program.
+  - Status: `parent_selection_strategy` and `inspiration_strategy` now accept
+    `frontier`. `IslandModel` computes a non-dominated retained-program pool
+    over complete declared normalized metric vectors, cycles frontier parent
+    selection through that pool with a persisted `frontier_sample_index`, and
+    samples frontier inspirations after applying parent/exclusion filters.
+    Parent and inspiration metadata records include frontier size and declared
+    metric order, and the CLI plus prompt context-policy validation accept the
+    strategy.
+  - Remaining gap: this is not a Pareto archive replacement policy,
+    metric-specific elite archive, plugin-objective policy, or queryable
+    lineage-aware multi-objective database.
+  - Verification: focused island, database, config/prompt, and CLI tests cover
+    non-dominated frontier sampling, fallback behavior, exclusion-sensitive
+    inspiration pools, cursor persistence, and public strategy validation.
+
 - [x] Add configurable critique reviewer pools and aggregation policy.
   - Spec evidence: AlphaEvolve describes using a set of LLMs to generate,
     critique, and evolve a pool of algorithms, with separate LLM samplers and
@@ -12783,8 +12802,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     leader count, leader program ids, generations, selected metric values,
     selection scores, and available declared normalized metric vectors.
   - Remaining gap: this is diagnostic visibility, not metric-specific archive
-    replacement, Pareto/frontier sampling, declared plugin-score objective
-    integration, or lineage-aware resurfacing.
+    replacement, Pareto/frontier archive replacement, declared plugin-score
+    objective integration, or lineage-aware resurfacing.
   - Verification: focused database tests cover metric-specific leader
     selection; loop tests cover final manifest persistence beside the objective
     frontier.

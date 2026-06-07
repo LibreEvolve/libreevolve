@@ -1220,23 +1220,26 @@ score. This is a documented scalar policy, not a Pareto or metric-specific
 archive policy yet. Final manifests
 also include `runtime.history.objective_frontier`, a bounded diagnostic Pareto
 frontier over complete declared normalized metric vectors, so non-dominated
-metric tradeoffs are visible even though they do not drive archive replacement
-or parent selection. They also include
+metric tradeoffs are visible. The `frontier` parent/inspiration sampling
+strategy can surface non-dominated retained programs from the same declared
+objective metric semantics, but archive replacement remains scalar rather than
+Pareto-specific. Final manifests also include
 `runtime.history.objective_metric_leaders`, a diagnostic best-program view for
 each declared normalized metric. Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.
 Parent and inspiration sampling are configurable via `parent_selection_strategy`
 and `inspiration_strategy`, including metric-leader, novelty, recency,
-selection-score, random, and mixed policies. Metric-leader sampling uses the
+frontier, selection-score, random, and mixed policies. Metric-leader sampling uses the
 declared primary metric first, then the remaining `metrics.yaml` order, then
 extra normalized metrics alphabetically. Metric parent selection cycles through
 those metric targets so secondary-metric leaders can become direct parents;
 generated candidate history records persist the selected parent strategy,
-parent id, and target metric under `metadata.parent_selection`. Inspiration
+parent id, target metric when applicable, and frontier metadata when applicable
+under `metadata.parent_selection`. Inspiration
 sampling records `metadata.inspiration_selection` with strategy, requested and
 selected counts, selected ids, metric target/program pairs for metric
-leader policies, and any prompt-context-policy required-metric filter
+leader policies, frontier size and metric order for frontier policies, and any prompt-context-policy required-metric filter
 or metric-threshold filter including pool size, matching count, filtered count,
 threshold bounds, ranking policy, and selected ids.
 Inspiration `mixed` is a deterministic priority cascade:

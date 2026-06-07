@@ -448,9 +448,9 @@ def test_run_sampling_cli_options_override_config(tmp_path):
                 "run",
                 str(tmp_path),
                 "--parent-selection-strategy",
-                "metric",
+                "frontier",
                 "--inspiration-strategy",
-                "novelty",
+                "frontier",
                 "--prompt-max-chars",
                 "2048",
                 "--prompt-max-estimated-tokens",
@@ -460,8 +460,8 @@ def test_run_sampling_cli_options_override_config(tmp_path):
 
     assert r.exit_code == 0
     config = mock.call_args.args[1]
-    assert config.parent_selection_strategy == "metric"
-    assert config.inspiration_strategy == "novelty"
+    assert config.parent_selection_strategy == "frontier"
+    assert config.inspiration_strategy == "frontier"
     assert config.prompt_max_chars == 2048
     assert config.prompt_max_estimated_tokens == 512
 
@@ -573,6 +573,7 @@ def test_run_can_restore_archive_cursor_snapshot_from_manifest(tmp_path):
         "archive_sequence": 3,
         "migration_sequence": 1,
         "metric_sample_index": 2,
+        "frontier_sample_index": 0,
         "archive_sequence_by_program_id": {"p1": 1, "p2": 3},
         "islands": [
             {"island_id": 0, "occupied_cell_count": 1, "elite_count": 1},

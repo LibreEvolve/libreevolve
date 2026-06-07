@@ -999,6 +999,7 @@ def test_archive_state_snapshot_exposes_island_cursor_for_runtime_manifest():
     )
     assert snapshot["next_island_id"] == 0
     assert snapshot["archive_sequence"] == 3
+    assert snapshot["frontier_sample_index"] == 0
     assert snapshot["archive_sequence_by_program_id"] == {
         first.id: 1,
         second.id: 2,
@@ -1054,6 +1055,7 @@ def test_database_constructor_restores_compact_island_cursor_state(tmp_path):
     assert restored["full_archive_restore_required"] is True
     assert restored["next_island_id"] == snapshot["next_island_id"]
     assert restored["archive_sequence"] == snapshot["archive_sequence"]
+    assert restored["frontier_sample_index"] == snapshot["frontier_sample_index"]
     assert restored["archive_sequence_by_program_id"] == {
         "p1": 1,
         "p2": 3,
@@ -4004,6 +4006,7 @@ def _archive_state_snapshot() -> dict:
         "archive_sequence": 3,
         "migration_sequence": 1,
         "metric_sample_index": 2,
+        "frontier_sample_index": 4,
         "archive_sequence_by_program_id": {"p1": 1, "p2": 3},
         "islands": [
             {"island_id": 0, "occupied_cell_count": 1, "elite_count": 2},

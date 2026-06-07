@@ -110,7 +110,7 @@ PROMPT_CONTEXT_POLICY_MUTATION_INSTRUCTION_VARIANTS = frozenset(
     {"default", "minimal", "exploratory"}
 )
 PROMPT_CONTEXT_POLICY_INSPIRATION_STRATEGIES = frozenset(
-    {"mixed", "random", "selection", "metric", "novelty", "recency"}
+    {"mixed", "random", "selection", "metric", "frontier", "novelty", "recency"}
 )
 PROMPT_CONTEXT_POLICY_CONTEXT_SOURCE_TRUNCATION = frozenset(
     {"head", "head_tail"}

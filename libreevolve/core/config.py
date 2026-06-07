@@ -229,12 +229,12 @@ class Config:
         _require_enum(
             "parent_selection_strategy",
             self.parent_selection_strategy,
-            {"mixed", "exploit", "explore", "metric", "novelty", "recency"},
+            {"mixed", "exploit", "explore", "metric", "frontier", "novelty", "recency"},
         )
         _require_enum(
             "inspiration_strategy",
             self.inspiration_strategy,
-            {"mixed", "random", "selection", "metric", "novelty", "recency"},
+            {"mixed", "random", "selection", "metric", "frontier", "novelty", "recency"},
         )
         _require_enum("mutation_mode", self.mutation_mode, MUTATION_MODES)
         _require_int(

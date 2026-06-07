@@ -612,18 +612,21 @@ Primary evidence:
     over complete declared normalized metric vectors, plus
     `runtime.history.objective_metric_leaders`, a diagnostic best-program view
     for each declared normalized metric. Metric-leader parent and
-    inspiration sampling can surface secondary-metric leaders, and generated candidates now persist
+    inspiration sampling can surface secondary-metric leaders, `frontier`
+    parent/inspiration sampling can surface non-dominated retained programs
+    with complete declared normalized metric vectors, and generated candidates now persist
     `metadata.parent_selection` and `metadata.inspiration_selection` provenance,
-    including metric target/program pairs for metric inspiration policies.
+    including metric target/program pairs for metric policies and frontier
+    size/metric-order metadata for frontier policies.
     Plugin score composition is logged separately and can change final fitness,
     but undeclared plugin-added metrics do not enter `normalized_metrics`,
     metric-leader sampling, or `selection_score`. Backend reward, admission
     thresholds, and some parent/inspiration paths still use scalar final
-    fitness, and the Pareto frontier and metric-leader view are diagnostic
-    rather than archive, sampling, or replacement policies. There is still no
-    declared plugin-score objective policy or metric-specific archive.
+    fitness, and Pareto/frontier behavior is still a sampling surface rather
+    than an archive replacement policy. There is still no declared
+    plugin-score objective policy or metric-specific archive.
   - Required result: represent full metric vectors, choose target metrics,
-    support Pareto/frontier sampling/archive, connect
+    support Pareto/frontier archive replacement, connect
     plugin-adjusted fitness or plugin-emitted metrics to declared objective
     semantics when desired, and make metric-targeted sampling/archive behavior
     part of that policy instead of a standalone heuristic.

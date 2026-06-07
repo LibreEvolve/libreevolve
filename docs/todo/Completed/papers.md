@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add Pareto-frontier parent and inspiration sampling.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
+    optimizing multiple user-provided scores and using programs that excel
+    under different criteria as varied inspirations.
+  - Status: parent and inspiration sampling now support a `frontier` strategy
+    over complete declared normalized metric vectors. Parent sampling cycles
+    through non-dominated retained programs, inspiration sampling returns
+    non-dominated retained programs after exclusions, and generated candidate
+    metadata records frontier size and declared metric order.
+  - Remaining paper gap: the policy is still heuristic and in-memory; it does
+    not provide Pareto archive replacement, metric-specific elite views,
+    plugin-objective integration, or queryable lineage-aware resurfacing.
+  - Verification: focused tests cover frontier parent cycling, frontier
+    inspirations, fallback without declared objective metrics, cursor restore,
+    and CLI strategy acceptance.
+
 - [x] Add bounded fallback prompt rendering for validator metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.2, says prompt
     context can include execution results and feedback from previous attempts.
@@ -47,10 +63,10 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     over complete declared normalized metric vectors. It records schema,
     policy, metric order, considered count, frontier size, retained limit, and
     non-dominated program metric vectors.
-  - Remaining paper gap: the frontier is diagnostic only; metric-specific
-    archives, frontier-driven parent/inspiration sampling, configurable
-    score-composition weights, plugin-objective integration, and queryable
-    lineage-aware resurfacing remain open.
+  - Remaining paper gap: the persisted frontier is diagnostic only;
+    metric-specific archives, Pareto/frontier archive replacement,
+    plugin-objective integration, and queryable lineage-aware resurfacing
+    remain open.
   - Verification: focused database and loop tests cover non-dominated
     frontier selection, dominated-program exclusion, metric order, and runtime
     manifest persistence.

@@ -928,6 +928,10 @@ Primary evidence:
     `workspace_math`, `matrix_multiplication`, and `circle_packing` examples as
     smoke-only and not AlphaEvolve-comparable, preventing those fixtures from
     being counted as benchmark evidence by accident.
+    `validate_benchmark_evidence_scope()` now cross-checks hardening reports
+    against the matching scope record and optional hardening artifact inventory,
+    rejecting smoke-only example promotion, paper-claim scope mismatches, and
+    inconsistent inventory evidence.
   - Required result: connect benchmark-grade fixtures beyond smoke validators
     to `libreevolve.benchmark_hardening.v1` and
     `libreevolve.example_benchmark_scope.v1`; emit expected artifact schemas,
@@ -935,7 +939,8 @@ Primary evidence:
     for comparing AlphaEvolve-alignment features, and real anti-gaming
     fixtures for benchmark-grade operation/rank discovery. The remaining gap
     is generating those benchmark-grade hardening files from real fixtures, not
-    verifying declared files once a report names them.
+    verifying declared files once a report names them or preventing declared
+    hardening evidence from overriding the smoke-only scope registry.
 
 - [ ] Add matrix tensor benchmark result artifacts and per-seed hit-rate
   reporting.

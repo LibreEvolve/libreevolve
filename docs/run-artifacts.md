@@ -1717,6 +1717,10 @@ and hardening artifacts must resolve safely under that root, exist as files,
 and match their reported SHA-256 hashes and byte counts. This verifies
 anti-gaming evidence files, not a real benchmark runner or randomized/
 exhaustive fixture execution.
+`validate_benchmark_evidence_scope()` cross-checks a hardening report against
+its example scope record and optional hardening artifact inventory. This keeps
+smoke-only shipped examples from being promoted to benchmark or paper-claim
+evidence by a standalone hardening report.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

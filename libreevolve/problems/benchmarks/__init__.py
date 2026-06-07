@@ -17,10 +17,12 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     validate_appendix_a_matrix_registry,
 )
 from libreevolve.problems.benchmarks.benchmark_hardening import (
+    BENCHMARK_EVIDENCE_SCOPE_SCHEMA,
     BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA,
     BENCHMARK_HARDENING_SCHEMA,
     benchmark_hardening_artifact_inventory,
     render_benchmark_hardening_summary,
+    validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
 )
 from libreevolve.problems.benchmarks.example_scope import (
@@ -58,6 +60,7 @@ __all__ = [
     "APPENDIX_A_MATRIX_REGISTRY_SCHEMA",
     "APPENDIX_A_MATRIX_TARGET_SUITE",
     "BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA",
+    "BENCHMARK_EVIDENCE_SCOPE_SCHEMA",
     "BENCHMARK_HARDENING_SCHEMA",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
@@ -84,6 +87,7 @@ __all__ = [
     "systems_result_artifact_inventory",
     "validate_ablation_result_report",
     "validate_appendix_a_matrix_registry",
+    "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
     "validate_example_benchmark_scope",
     "validate_matrix_result_report",

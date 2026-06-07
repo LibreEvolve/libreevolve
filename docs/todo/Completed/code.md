@@ -15213,3 +15213,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result tests cover the valid generated bundle
     and a tampered bundle with schema, target, report-hash, and inventory
     inconsistencies.
+
+- [x] Add benchmark evidence scope cross-checks.
+  - Spec evidence: AlphaEvolve-grade benchmark claims need artifact evidence
+    and scope boundaries to agree, so smoke fixtures are not promoted into
+    paper-comparable evidence by metadata alone.
+  - Status: `validate_benchmark_evidence_scope()` now cross-checks
+    `libreevolve.benchmark_hardening.v1` reports against matching
+    `libreevolve.example_benchmark_scope.v1` records and optional
+    `libreevolve.benchmark_hardening_artifact_inventory.v1` evidence,
+    rejecting smoke-only example promotion, paper-claim scope mismatches, bad
+    inventory status, count mismatches, and inventory record-hash mismatches.
+  - Remaining gap: this validates declared evidence boundaries; it does not
+    generate real benchmark-grade hardening files, repeated-seed reports, SOTA
+    thresholds, or geometric/tensor benchmark artifacts.
+  - Verification: focused benchmark-hardening tests cover valid smoke-scope
+    evidence, attempted smoke-example promotion, and tampered inventory.

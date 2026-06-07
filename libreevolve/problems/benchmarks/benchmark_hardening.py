@@ -10,6 +10,7 @@ from typing import Any
 
 BENCHMARK_HARDENING_SCHEMA = "libreevolve.benchmark_hardening.v1"
 BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.benchmark_hardening_artifact_inventory.v1"
+BENCHMARK_EVIDENCE_SCOPE_SCHEMA = "libreevolve.benchmark_evidence_scope.v1"
 BENCHMARK_LEVELS = frozenset({"smoke", "benchmark", "paper_claim"})
 SHORTCUT_CATEGORIES = frozenset(
     {
@@ -43,6 +44,18 @@ class BenchmarkHardeningValidation:
     benchmark_ready: bool
     benchmark_id: str | None
     level: str | None
+    issues: list[BenchmarkHardeningIssue]
+
+
+@dataclass(frozen=True)
+class BenchmarkEvidenceScopeValidation:
+    ok: bool
+    benchmark_id: str | None
+    hardening_ok: bool
+    inventory_ok: bool
+    scope_level: str | None
+    hardening_level: str | None
+    alphaevolve_comparable: bool
     issues: list[BenchmarkHardeningIssue]
 
 
@@ -83,6 +96,58 @@ def validate_benchmark_hardening_report(report: object | str | Path) -> Benchmar
         benchmark_ready=benchmark_ready,
         benchmark_id=benchmark_id,
         level=level,
+        issues=issues,
+    )
+
+
+def validate_benchmark_evidence_scope(
+    hardening_report: object | str | Path,
+    scope_record: dict[str, Any],
+    inventory: dict[str, Any] | None = None,
+) -> BenchmarkEvidenceScopeValidation:
+    """Validate benchmark hardening evidence against its declared scope."""
+    hardening_data, read_issues = _load_report(hardening_report)
+    issues = list(read_issues)
+    if hardening_data is None:
+        return BenchmarkEvidenceScopeValidation(
+            ok=False,
+            benchmark_id=None,
+            hardening_ok=False,
+            inventory_ok=False,
+            scope_level=None,
+            hardening_level=None,
+            alphaevolve_comparable=False,
+            issues=issues,
+        )
+
+    hardening_validation = validate_benchmark_hardening_report(hardening_data)
+    issues.extend(hardening_validation.issues)
+    benchmark_id = hardening_validation.benchmark_id
+    hardening_level = hardening_validation.level
+    scope_level, alphaevolve_comparable = _validate_scope_record(
+        scope_record,
+        benchmark_id,
+        hardening_level,
+        issues,
+    )
+    inventory_ok = True
+    if inventory is not None:
+        inventory_ok = _validate_hardening_inventory(
+            inventory,
+            hardening_data,
+            benchmark_id,
+            hardening_level,
+            issues,
+        )
+
+    return BenchmarkEvidenceScopeValidation(
+        ok=not issues,
+        benchmark_id=benchmark_id,
+        hardening_ok=hardening_validation.ok,
+        inventory_ok=inventory_ok,
+        scope_level=scope_level,
+        hardening_level=hardening_level,
+        alphaevolve_comparable=alphaevolve_comparable,
         issues=issues,
     )
 
@@ -195,6 +260,144 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [BenchmarkHardeningIssue("invalid_shape", "benchmark hardening report must be a JSON object")]
+
+
+def _validate_scope_record(
+    scope_record: dict[str, Any],
+    benchmark_id: str | None,
+    hardening_level: str | None,
+    issues: list[BenchmarkHardeningIssue],
+) -> tuple[str | None, bool]:
+    if not isinstance(scope_record, dict):
+        issues.append(BenchmarkHardeningIssue("invalid_scope_record", "scope record must be an object"))
+        return None, False
+    if scope_record.get("schema") != "libreevolve.example_benchmark_scope.v1":
+        issues.append(BenchmarkHardeningIssue("invalid_scope_schema", "unsupported benchmark scope schema"))
+    scope_id = scope_record.get("problem_id")
+    if not isinstance(scope_id, str) or _ID_RE.fullmatch(scope_id) is None:
+        issues.append(BenchmarkHardeningIssue("invalid_scope_problem_id", "scope problem_id must be stable"))
+    elif benchmark_id is not None and not benchmark_id.startswith(scope_id):
+        issues.append(
+            BenchmarkHardeningIssue(
+                "scope_benchmark_id_mismatch",
+                "hardening benchmark_id must be tied to scope problem_id",
+            )
+        )
+    scope_level = scope_record.get("level")
+    if scope_level not in BENCHMARK_LEVELS:
+        issues.append(BenchmarkHardeningIssue("invalid_scope_level", "unsupported benchmark scope level"))
+        scope_level = None
+    alphaevolve_comparable = scope_record.get("alphaevolve_comparable")
+    if not isinstance(alphaevolve_comparable, bool):
+        issues.append(BenchmarkHardeningIssue("invalid_scope_comparable_flag", "scope alphaevolve_comparable must be boolean"))
+        alphaevolve_comparable = False
+    if scope_level == "smoke" and hardening_level in {"benchmark", "paper_claim"}:
+        issues.append(
+            BenchmarkHardeningIssue(
+                "smoke_scope_promoted",
+                "smoke-only examples cannot be promoted by hardening evidence",
+            )
+        )
+    if hardening_level == "paper_claim" and not alphaevolve_comparable:
+        issues.append(
+            BenchmarkHardeningIssue(
+                "paper_claim_scope_not_comparable",
+                "paper-claim hardening evidence requires comparable scope",
+            )
+        )
+    return scope_level, alphaevolve_comparable
+
+
+def _validate_hardening_inventory(
+    inventory: dict[str, Any],
+    hardening_data: dict[str, Any],
+    benchmark_id: str | None,
+    hardening_level: str | None,
+    issues: list[BenchmarkHardeningIssue],
+) -> bool:
+    if not isinstance(inventory, dict):
+        issues.append(BenchmarkHardeningIssue("invalid_inventory", "inventory must be an object"))
+        return False
+    issue_count = len(issues)
+    if inventory.get("schema") != BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(BenchmarkHardeningIssue("invalid_inventory_schema", "unsupported hardening inventory schema"))
+    if inventory.get("ok") is not True:
+        issues.append(BenchmarkHardeningIssue("inventory_not_ok", "hardening inventory must verify every record"))
+    if benchmark_id is not None and inventory.get("benchmark_id") != benchmark_id:
+        issues.append(BenchmarkHardeningIssue("inventory_benchmark_id_mismatch", "inventory benchmark_id must match hardening report"))
+    if hardening_level is not None and inventory.get("level") != hardening_level:
+        issues.append(BenchmarkHardeningIssue("inventory_level_mismatch", "inventory level must match hardening report"))
+    if inventory.get("report_schema") != hardening_data.get("schema"):
+        issues.append(BenchmarkHardeningIssue("inventory_report_schema_mismatch", "inventory report_schema must match hardening report"))
+    records = inventory.get("records")
+    if not isinstance(records, list) or not records:
+        issues.append(BenchmarkHardeningIssue("invalid_inventory_records", "inventory records must be a non-empty list"))
+        records = []
+    records_payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    records_sha = inventory.get("records_sha256")
+    if not isinstance(records_sha, str) or _SHA256_RE.fullmatch(records_sha) is None:
+        issues.append(
+            BenchmarkHardeningIssue(
+                "invalid_inventory_records_hash",
+                "inventory records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif hashlib.sha256(records_payload.encode("utf-8")).hexdigest() != records_sha:
+        issues.append(
+            BenchmarkHardeningIssue(
+                "inventory_records_hash_mismatch",
+                "inventory records_sha256 must match inventory records",
+            )
+        )
+    expected_counts = {
+        "record_count": len(records),
+        "verified_count": sum(1 for record in records if isinstance(record, dict) and record.get("status") == "verified"),
+        "missing_count": sum(1 for record in records if isinstance(record, dict) and record.get("status") == "missing_file"),
+        "mismatch_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") in {"hash_mismatch", "bytes_mismatch"}
+        ),
+        "invalid_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") in {"invalid_record", "unsafe_path", "read_error"}
+        ),
+    }
+    for field, expected in expected_counts.items():
+        value = inventory.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                BenchmarkHardeningIssue(
+                    f"invalid_inventory_{field}",
+                    f"inventory {field} must be a non-negative integer",
+                )
+            )
+        elif value != expected:
+            issues.append(
+                BenchmarkHardeningIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match inventory records",
+                )
+            )
+    if inventory.get("verified_count") != inventory.get("record_count"):
+        issues.append(
+            BenchmarkHardeningIssue(
+                "inventory_verified_count_mismatch",
+                "inventory verified_count must equal record_count",
+            )
+        )
+    for field in ("missing_count", "mismatch_count", "invalid_count"):
+        if inventory.get(field) != 0:
+            issues.append(
+                BenchmarkHardeningIssue(
+                    f"inventory_{field}_nonzero",
+                    f"inventory {field} must be zero for benchmark evidence scope",
+                )
+            )
+    if inventory.get("issues"):
+        issues.append(BenchmarkHardeningIssue("inventory_has_issues", "inventory issues must be empty"))
+    return len(issues) == issue_count
 
 
 def _hardening_inventory_record(

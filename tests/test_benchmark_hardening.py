@@ -6,7 +6,11 @@ from libreevolve.problems.benchmarks.benchmark_hardening import (
     BENCHMARK_HARDENING_SCHEMA,
     benchmark_hardening_artifact_inventory,
     render_benchmark_hardening_summary,
+    validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
+)
+from libreevolve.problems.benchmarks.example_scope import (
+    example_benchmark_scope_records,
 )
 
 
@@ -78,6 +82,26 @@ def _valid_report() -> dict:
     }
 
 
+def _matrix_scope_record() -> dict:
+    return next(
+        record
+        for record in example_benchmark_scope_records()
+        if record["problem_id"] == "matrix_multiplication"
+    )
+
+
+def _write_report_files(report: dict, root) -> None:
+    for section in ("negative_fixtures", "artifacts"):
+        for record in report[section]:
+            path = root / record["path"]
+            path.parent.mkdir(parents=True, exist_ok=True)
+            label = record.get("kind", record.get("category", "unknown"))
+            raw = f"{section}:{label}".encode("utf-8")
+            path.write_bytes(raw)
+            record["sha256"] = hashlib.sha256(raw).hexdigest()
+            record["bytes"] = len(raw)
+
+
 def test_benchmark_hardening_validates_benchmark_ready_report():
     validation = validate_benchmark_hardening_report(_valid_report())
 
@@ -100,15 +124,7 @@ def test_benchmark_hardening_loads_json_file(tmp_path):
 
 def test_benchmark_hardening_artifact_inventory_verifies_fixture_and_artifact_files(tmp_path):
     report = _valid_report()
-    for section in ("negative_fixtures", "artifacts"):
-        for record in report[section]:
-            path = tmp_path / record["path"]
-            path.parent.mkdir(parents=True, exist_ok=True)
-            label = record.get("kind", record.get("category", "unknown"))
-            raw = f"{section}:{label}".encode("utf-8")
-            path.write_bytes(raw)
-            record["sha256"] = hashlib.sha256(raw).hexdigest()
-            record["bytes"] = len(raw)
+    _write_report_files(report, tmp_path)
 
     inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
 
@@ -132,6 +148,69 @@ def test_benchmark_hardening_artifact_inventory_verifies_fixture_and_artifact_fi
         "negative_fixtures",
         "artifacts",
     }
+
+
+def test_benchmark_evidence_scope_allows_smoke_hardening_for_smoke_example(tmp_path):
+    report = _valid_report()
+    report["level"] = "smoke"
+    _write_report_files(report, tmp_path)
+    inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
+
+    validation = validate_benchmark_evidence_scope(
+        report,
+        _matrix_scope_record(),
+        inventory,
+    )
+
+    assert validation.ok is True
+    assert validation.hardening_ok is True
+    assert validation.inventory_ok is True
+    assert validation.benchmark_id == "matrix_multiplication_smoke"
+    assert validation.scope_level == "smoke"
+    assert validation.hardening_level == "smoke"
+    assert validation.alphaevolve_comparable is False
+    assert validation.issues == []
+
+
+def test_benchmark_evidence_scope_rejects_smoke_example_promotion(tmp_path):
+    report = _valid_report()
+    _write_report_files(report, tmp_path)
+    inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
+
+    validation = validate_benchmark_evidence_scope(
+        report,
+        _matrix_scope_record(),
+        inventory,
+    )
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.hardening_ok is True
+    assert validation.inventory_ok is True
+    assert "smoke_scope_promoted" in codes
+
+
+def test_benchmark_evidence_scope_rejects_bad_inventory(tmp_path):
+    report = _valid_report()
+    report["level"] = "smoke"
+    _write_report_files(report, tmp_path)
+    inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
+    inventory["ok"] = False
+    inventory["missing_count"] = 1
+
+    validation = validate_benchmark_evidence_scope(
+        report,
+        _matrix_scope_record(),
+        inventory,
+    )
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.hardening_ok is True
+    assert validation.inventory_ok is False
+    assert "inventory_not_ok" in codes
+    assert "inventory_missing_count_mismatch" in codes
+    assert "inventory_missing_count_nonzero" in codes
 
 
 def test_benchmark_hardening_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):

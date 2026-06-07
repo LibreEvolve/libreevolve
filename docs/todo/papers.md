@@ -949,14 +949,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     scope registry that labels `hello_world`, `sorting`, `workspace_math`,
     `matrix_multiplication`, and `circle_packing` as smoke-only and not
     AlphaEvolve-comparable, but it is an exclusion boundary rather than a real
-    benchmark harness.
+    benchmark harness. `validate_benchmark_evidence_scope()` now cross-checks
+    hardening reports against the matching scope record and optional hardening
+    artifact inventory, rejecting smoke-only example promotion, paper-claim
+    scope mismatches, and inconsistent inventory evidence.
   - Required result: distinguish smoke examples from benchmark fixtures in docs,
     add operation/rank-aware matrix benchmark validation beyond the current
     2x2 smoke checks, connect hardening reports and artifact schemas for
     geometric constructions, and create repeatable benchmark reports tied to
     AlphaEvolve target families. The remaining paper gap is generating those
     anti-gaming evidence files from real benchmark fixtures, not verifying
-    declared hardening files once a report names them.
+    declared hardening files once a report names them or preventing declared
+    hardening evidence from overriding the smoke-only scope registry.
 
 - [ ] Preserve AlphaEvolve's matrix-result publication contract.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A

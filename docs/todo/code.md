@@ -1084,7 +1084,7 @@ Primary evidence:
     cases, and add restore/replay tests covering migration ordering,
     replacement, duplicate-placement, and descriptor-policy mismatches.
 
-- [ ] Add controller and pending-work resume state for archive restores.
+- [ ] Add async/pending-work controller resume state for archive restores.
   - Spec evidence: AlphaEvolve-style evolutionary databases should make
     population-state updates auditable and reproducible; a candidate that does
     not enter the archive should not silently change future island assignment
@@ -1648,7 +1648,7 @@ Primary evidence:
     runtime plus budget-accounting records, and a restore/check validator that
     distinguishes bounded audit hints from replayable environment proof.
 
-- [ ] Add unified full-resume orchestration and controller replay.
+- [ ] Add pending-work full-resume orchestration and replay proof.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
     for large computation budgets.
   - Current evidence: runs append to `history.jsonl`; `PromptDatabase` replays

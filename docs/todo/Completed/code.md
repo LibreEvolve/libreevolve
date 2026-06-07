@@ -14402,3 +14402,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused database tests cover verified, superseded/missing,
     absent-stream, and invalid admitted-without-cell cases; loop tests cover
     manifest persistence.
+
+- [x] Persist terminal synchronous controller state.
+  - Spec evidence: AlphaEvolve-style long-running controllers need explicit
+    resume boundaries for queued, running, and pending work instead of only
+    archive contents and budget counters.
+  - Status: completed runtime manifests now include
+    `runtime.history.controller_state`, a terminal drained-state snapshot for
+    the current single-process synchronous loop. It records zero queued/running
+    proposals, evaluations, in-flight LLM calls, and pending archive admissions
+    at finalization plus the `controller_budget_events.jsonl` stream summary.
+  - Remaining gap: this is a terminal drained-state boundary, not an async
+    worker queue checkpoint, provider-output replay, or mid-generation resume
+    mechanism.
+  - Verification: focused loop tests cover the manifest field and terminal
+    pending-work counters.

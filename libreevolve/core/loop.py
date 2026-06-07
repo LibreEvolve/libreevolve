@@ -3661,6 +3661,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             run_dir / "archive_events.jsonl",
             archive_state,
         ),
+        "controller_state": _runtime_controller_state(run_dir, budget),
     }
     if summary["no_candidates_evaluated"]:
         absence_reason = _no_candidate_absence_reason(budget)
@@ -3668,6 +3669,69 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _runtime_controller_state(run_dir: Path, budget: RunBudget) -> dict:
+    event_stream = _controller_budget_event_stream_summary(
+        run_dir / "controller_budget_events.jsonl"
+    )
+    return {
+        "schema": "libreevolve.controller_state.v1",
+        "status": "terminal_synchronous_controller_drained",
+        "controller_model": "single_process_serial_loop",
+        "resume_scope": "terminal_drained_state_only",
+        "pending_work": {
+            "queued_proposals": 0,
+            "running_proposals": 0,
+            "queued_evaluations": 0,
+            "running_evaluations": 0,
+            "in_flight_llm_calls": 0,
+            "pending_archive_admissions": 0,
+            "partially_completed_generation": False,
+        },
+        "terminal": {
+            "stop_reason": budget.stop_reason,
+            "generations_completed": budget.generations_completed,
+            "evaluations": budget.evaluations,
+        },
+        "event_stream": event_stream,
+        "limitations": [
+            "synchronous_terminal_snapshot_not_async_queue_checkpoint",
+            "no_mid_generation_resume_boundary",
+            "provider_outputs_not_replayed",
+            "plugin_internal_pending_work_reported_separately",
+        ],
+    }
+
+
+def _controller_budget_event_stream_summary(path: Path) -> dict:
+    if not path.exists():
+        return {
+            "path": path.name,
+            "status": "absent",
+            "event_count": 0,
+            "last_sequence": None,
+            "last_kind": None,
+            "replay_scope": "budget_counters_only",
+        }
+    event_count = 0
+    last_sequence = None
+    last_kind = None
+    for event in iter_strict_jsonl_objects(
+        path,
+        stream_name="controller_budget_events.jsonl",
+    ):
+        event_count += 1
+        last_sequence = event.get("sequence")
+        last_kind = event.get("kind")
+    return {
+        "path": path.name,
+        "status": "present",
+        "event_count": event_count,
+        "last_sequence": last_sequence,
+        "last_kind": last_kind,
+        "replay_scope": "budget_counters_only",
+    }
 
 
 def _no_candidate_absence_reason(budget: RunBudget) -> str:

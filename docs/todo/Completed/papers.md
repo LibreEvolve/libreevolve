@@ -9613,3 +9613,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     engine and does not restore controller or pending worker state.
   - Verification: focused database and loop tests cover the audit helper and
     manifest field.
+
+- [x] Add paper-visible terminal controller drained-state evidence.
+  - Paper evidence: AlphaEvolve-style resume claims need explicit controller
+    state boundaries, including whether queued/running work remains at a
+    checkpoint.
+  - Status: completed runtime manifests now persist
+    `runtime.history.controller_state`, showing that the synchronous
+    single-process controller is terminally drained with no queued/running
+    proposals, evaluations, in-flight LLM calls, or pending archive admissions.
+  - Remaining paper gap: async controller queues, mid-generation checkpoints,
+    pending worker state, and provider-output replay remain open.
+  - Verification: focused loop tests cover the terminal controller-state
+    manifest field.

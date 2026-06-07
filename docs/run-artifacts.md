@@ -782,8 +782,13 @@ RNG, LLM scheduler, full archive restore inputs, the checked runtime RNG replay
 boundary, and the checked lineage-policy provider-output boundary. The
 controller event rows are replayed and their non-wall-clock consumed counters
 must match the manifest budget snapshot before the bundle passes that budget
-snapshot into `evolve()`; queued/running async worker state, provider-output
-replay, and end-to-end lineage replay proof remain separate resume work.
+snapshot into `evolve()`. Completed runtime history also records
+`runtime.history.controller_state`, a terminal drained-state snapshot for the
+synchronous controller with zero queued/running proposals, evaluations,
+in-flight LLM calls, and pending archive admissions plus a compact
+`controller_budget_events.jsonl` summary. Queued/running async worker state,
+provider-output replay, and end-to-end lineage replay proof remain separate
+resume work.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a
@@ -1278,6 +1283,9 @@ archive bundle from a prior manifest plus sibling `history.jsonl` with
 `load_runtime_archive_state_snapshot()` validates this compact manifest field
 for future resume use, including schema/status, cursor bounds, manifest-safe
 program ids in `archive_sequence_by_program_id`, and per-island count records.
+`runtime.history.controller_state` records the terminal synchronous controller
+boundary beside this archive state, but does not reconstruct async worker
+queues or partially completed generation work.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

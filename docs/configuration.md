@@ -1134,8 +1134,10 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   `runtime_budget_state_snapshot`, and CLI runs can use
   `--restore-budget-from-manifest`, to apply prior consumed runtime budget
   counters before new work while appending a new wall-clock resume segment.
-  Migration-event replay, controller pending-work state, provider/model output
-  replay, and plugin-owned RNG capture are still not a replay contract.
+  Migration-event replay, async controller pending-work state, provider/model
+  output replay, and plugin-owned RNG capture are still not a replay contract.
+  Completed manifests do record a terminal drained synchronous controller state
+  under `runtime.history.controller_state`.
   `runtime.rng.replay_boundary` records the current framework-owned RNG
   boundary and explicit external exclusions.
 - `eval_stages` is still local subprocess execution. It is not yet a

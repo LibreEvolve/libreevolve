@@ -746,13 +746,20 @@ Primary evidence:
     cell/elite state before new seed/candidate admission. Startup manifests
     record `policies.archive_cursor_restore` and
     `policies.archive_identity.resume_status` so restored surfaces and
-    unsupported migration replay are visible.
+    unsupported migration replay are visible. Completed runtime manifests now
+    include `runtime.history.controller_state`, a terminal drained-state
+    snapshot for the synchronous controller with zero queued/running proposals,
+    evaluations, in-flight LLM calls, and pending archive admissions at
+    finalization plus a compact `controller_budget_events.jsonl` stream
+    summary.
   - Remaining gap: migration event-order replay is tracked separately by the
-    archive-event replay TODO. Controller state and pending/in-flight work are
-    still absent from the restore surface: no queued/running proposal records,
-    evaluator-worker state, in-flight LLM calls, pending archive admissions,
-    partially completed generation state, or deterministic controller resume
-    ledger is persisted or restored.
+    archive-event replay TODO. The terminal synchronous controller boundary is
+    visible, but async/mid-run controller state and pending/in-flight work are
+    still absent from the restore surface: no queued/running proposal records
+    for async workers, evaluator-worker state, in-flight provider outputs,
+    pending archive admissions, partially completed generation state, or
+    deterministic mid-generation controller resume ledger is persisted or
+    restored.
   - Required result: add controller/pending-work resume state and extend
     end-to-end resume tests across below-threshold, non-admitted, elite-only,
     in-flight generation/evaluation, and cell-replacement cases.

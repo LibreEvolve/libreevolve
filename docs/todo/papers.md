@@ -455,8 +455,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     reject replay-engine overclaims.
   - Current gap: cursor and archive-content restore are implemented, but
     migration placement rows are reconciled only as audit evidence rather than
-    replayed as an ordered restore engine, and controller/pending-work state is
-    still absent from one-command resumed experiment traces.
+    replayed as an ordered restore engine. Completed manifests now include
+    `runtime.history.controller_state`, a terminal drained-state snapshot for
+    the synchronous controller with zero queued/running proposals, evaluations,
+    in-flight LLM calls, and pending archive admissions at finalization plus a
+    compact controller-budget event-stream summary. Async or mid-generation
+    controller/pending-work state is still absent from one-command resumed
+    experiment traces.
   - Required result: apply or explicitly model migration-event replay, add
     controller/pending-work resume state, and add paper-visible resume/replay
     tests covering below-threshold, non-admitted, elite-only, and

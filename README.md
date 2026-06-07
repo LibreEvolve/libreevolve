@@ -1202,7 +1202,13 @@ manifest/history bundle. Startup manifests also record
 `policies.archive_identity.resume_status:
 manifest_archive_state_restore_supported`, the restored archive surfaces, and
 `migration_event_replay: audit_only_not_restore_engine`. Full migration
-event-order restore and controller/pending-work restore remain open.
+event-order restore and async controller/pending-work restore remain open.
+Completed runtime manifests also include `runtime.history.controller_state`,
+a terminal drained-state snapshot for the current single-process synchronous
+loop. It records zero queued/running proposals, evaluations, in-flight LLM
+calls, and pending archive admissions at finalization, plus the
+`controller_budget_events.jsonl` stream summary. This is not a mid-generation
+or async worker queue checkpoint.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

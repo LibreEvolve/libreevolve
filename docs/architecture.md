@@ -695,7 +695,13 @@ manifest_archive_state_restore_supported`, the restored archive surfaces, and
 `migration_event_replay: audit_only_not_restore_engine`. `archive_events.jsonl` persists
 versioned migration placement events, and `load_archive_event_records()`
 validates that stream as migration audit data. Full migration event-order
-restore and controller/pending-work restore remain open.
+restore and async controller/pending-work restore remain open.
+Final runtime history also includes `runtime.history.controller_state`, a
+terminal drained-state snapshot for the synchronous single-process controller.
+It records zero queued/running proposals, evaluations, in-flight LLM calls, and
+pending archive admissions at finalization plus a compact
+`controller_budget_events.jsonl` stream summary. This is a terminal resume
+boundary, not an async worker queue checkpoint or mid-generation restore point.
 `history.jsonl` logs candidates, but it is not a serialized archive checkpoint
 or MAP-Elites event stream.
 Candidate records do include `metadata.archive_admission` events that state
@@ -1075,9 +1081,10 @@ authoritative run accounting.
   Token, provider-cost, LLM retry, accelerator, async queue, and independent
   stop policies for the detailed evaluator counters are not implemented.
 - Archive cell/island state is persisted in manifests with full cell/elite
-  restore support from accepted history; migration-event replay, controller
-  queues, pending evaluations, and broader resumed experiment traces remain
-  open.
+  restore support from accepted history; migration-event replay, async
+  controller queues, pending evaluations, and broader resumed experiment traces
+  remain open. Terminal synchronous controller state is manifest-visible under
+  `runtime.history.controller_state`.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Proposal ideas/rationales can be parsed, stored, and rendered for selected

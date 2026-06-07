@@ -10337,3 +10337,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still correctly leave full migration
     event restore and controller/pending-work replay open.
   - Verification: focused database and loop tests cover the manifest field.
+
+- [x] Document terminal controller state.
+  - Evidence: README, architecture, configuration, run-artifact, and todo docs
+    needed to distinguish terminal synchronous drained-state evidence from
+    async controller queue restore.
+  - Status: docs now describe `runtime.history.controller_state`, its
+    pending-work counters, controller-budget event-stream summary, and terminal
+    resume scope.
+  - Remaining documentation gap: docs still leave async queues, mid-generation
+    resume, and provider-output replay open.
+  - Verification: focused loop tests cover the manifest field.

@@ -1118,6 +1118,29 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert replay_audit["audit_only"] is True
     assert replay_audit["replay_engine_supported"] is False
     assert replay_audit["event_count"] == 0
+    controller_state = manifest["runtime"]["history"]["controller_state"]
+    assert controller_state["schema"] == "libreevolve.controller_state.v1"
+    assert controller_state["status"] == "terminal_synchronous_controller_drained"
+    assert controller_state["controller_model"] == "single_process_serial_loop"
+    assert controller_state["resume_scope"] == "terminal_drained_state_only"
+    assert controller_state["pending_work"] == {
+        "queued_proposals": 0,
+        "running_proposals": 0,
+        "queued_evaluations": 0,
+        "running_evaluations": 0,
+        "in_flight_llm_calls": 0,
+        "pending_archive_admissions": 0,
+        "partially_completed_generation": False,
+    }
+    assert controller_state["terminal"]["stop_reason"] == "max_generations"
+    assert controller_state["event_stream"] == {
+        "path": "controller_budget_events.jsonl",
+        "status": "present",
+        "event_count": 2,
+        "last_sequence": 1,
+        "last_kind": "stop",
+        "replay_scope": "budget_counters_only",
+    }
 
 
 def test_completed_runtime_persists_llm_scheduler_state_snapshot():

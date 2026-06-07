@@ -251,7 +251,9 @@ is not yet an AlphaEvolve reproduction.
   cancellation, budget-affecting timeout/cancellation stop or quarantine
   behavior across LLM roles, and persisted role-specific timeout artifacts
   beyond the currently covered mutation timeout failure-history path.
-- Add explicit breadth/depth/cost/latency scheduling tests.
+- Extend current focused `throughput_depth` metadata tests into
+  AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
+  experiment-level selection traces and equal-budget report evidence.
 - Extend current synchronous configurable critique reviewer pools toward async
   reviewer overlap, calibrated reviewer scoring, stronger provider isolation,
   and runtime artifacts for reviewer-specific timeout/failure behavior.

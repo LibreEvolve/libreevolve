@@ -1283,6 +1283,11 @@ Primary evidence:
     integrity, non-negative counters, backend-count, total/backend aggregate
     count and retention-counter consistency, required limitation statements,
     and the current no-live-pricing/no-raw-payload replay boundary.
+    Focused ensemble tests now cover `throughput_depth` metadata selection,
+    normalized depth/cost/latency contribution against the reward scale,
+    descriptive breadth/depth role metadata, live role metadata routing,
+    configured role-backend overrides, fallback to global selection without a
+    role match, and pull-once initialization before metadata priority.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for
@@ -1295,11 +1300,14 @@ Primary evidence:
     gap is not one-command restoration of replayable provider-attempt/token/
     configured-cost/latency controller events for the current synchronous
     runtime bundle.
-  - Required result: add bounded raw/provider-specific
-    diagnostic retention, remote provider-side default/pricing capture,
-    provider-output replay boundaries, and async/pending-work budget policy
+  - Required result: add AlphaEvolve-style scheduler validation and reports
+    that prove breadth/depth/cost/latency selection behavior over real
+    experiment traces and equal-budget runs; bounded raw/provider-specific
+    diagnostic retention; remote provider-side default/pricing capture;
+    provider-output replay boundaries; and async/pending-work budget policy
     that composes with the existing safe usage, retry, status,
-    controller-event, ledger, and runtime budget-report telemetry.
+    controller-event, ledger, runtime budget-report telemetry, and focused
+    `throughput_depth` unit coverage.
 
 - [ ] Enforce adapter retry/token/cost/wall-clock budgets live.
   - Spec evidence: AlphaEvolve-style LLM scheduling is compute-budgeted; retry

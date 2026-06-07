@@ -72,4 +72,5 @@ model ids before running.
 - Models add markdown fences around diffs — _strip_fences() handles one outer response wrapper
 - Models add comments that break diff matching — prompt says "No comments"
 - The seed program should be intentionally suboptimal to give evolution room to improve
-- `config.seed` is wired to random.seed() at the top of evolve()
+- `config.seed` initializes the run-local framework `random.Random`; `evolve()`
+  no longer reseeds Python's process-global `random` module

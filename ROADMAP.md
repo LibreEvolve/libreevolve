@@ -94,6 +94,10 @@ is not yet an AlphaEvolve reproduction.
   candidates.
 - Add richer workspace fixtures beyond the current `workspace_math` nested
   package, JSON data, and binary static seed asset smoke case.
+- Add a codebase-scale benchmark/report before claiming AlphaEvolve Table 1
+  parity for entire-code-file, hundreds-of-lines, or multi-component algorithm
+  evolution; current multi-file workspace support is only a local mechanics
+  surface.
 - Extend binary/static candidate handling beyond the current bounded encoded
   static members, verified copy-only static assets, and raw direct-workspace
   byte normalization into richer binary mutation/replay policy.

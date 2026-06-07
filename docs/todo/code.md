@@ -154,6 +154,26 @@ Primary evidence:
     reason/path contract whenever new materialization filesystem paths are
     added.
 
+- [ ] Add codebase-scale benchmark evidence for multi-component generated
+      programs.
+  - Spec evidence: AlphaEvolve Table 1 contrasts prior FunSearch-style systems
+    with AlphaEvolve's ability to evolve entire code files, hundreds of lines
+    of code, arbitrary languages, and complex algorithms spanning multiple
+    functions and components.
+  - Current evidence: LibreEvolve supports Python-primary text workspaces,
+    multi-file seed loading, topology mutations, full-workspace prompt
+    rendering/materialization, complete `best_workspace/` export, and a small
+    `workspace_math` smoke fixture. The current examples and tests do not
+    constitute a codebase-scale benchmark: they do not exercise hundreds of
+    generated lines, multiple coupled components, language/build runners, or
+    long-horizon automated evaluation over a realistic multi-component
+    codebase.
+  - Required result: add a benchmark/report contract and fixtures that track
+    generated line counts, changed component counts, cross-file dependency
+    edits, evaluator runtime, validity/admission rates, and quality progress
+    for a large multi-function or multi-file codebase before README, ROADMAP,
+    or paper-index wording claims AlphaEvolve Table 1 code-scale parity.
+
 ## Prompt Sampling and Context
 
 - [ ] Complete provider-token prompt section fitting beyond mutation prompts

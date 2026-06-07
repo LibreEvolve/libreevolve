@@ -142,6 +142,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     neither underclaims current structured invalid-workspace feedback nor
     overclaims robust AlphaEvolve-grade codebase-scale diagnostics.
 
+- [ ] Keep README code-scale claims scoped to current workspace support versus
+      Table 1 parity.
+  - Spec evidence: AlphaEvolve Table 1 claims evolution of entire code files,
+    hundreds of lines of code, any language, and complex algorithms spanning
+    multiple functions and components.
+  - Current evidence: README can accurately describe Python-primary seed
+    workspaces, multi-file candidates, topology mutations, materialization
+    diagnostics, and `best_workspace/` export. It should not imply those
+    mechanics prove AlphaEvolve-scale large-codebase behavior.
+  - Required result: when a codebase-scale benchmark/report lands, update
+    README, ROADMAP, papers index, and code/paper TODO entries with the
+    generated-line/component counts, cross-file dependency edit evidence,
+    evaluator budget, and quality-progress results that justify any
+    AlphaEvolve Table 1 code-scale comparison.
+
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be

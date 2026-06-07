@@ -264,6 +264,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     reason/path diagnostic contract before LibreEvolve can claim robust
     codebase-scale invalid-artifact feedback.
 
+- [ ] Track Table 1 code-scale benchmark evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.
+  - Requirement: AlphaEvolve reports evolving entire code files, hundreds of
+    lines of code, any language, and complex algorithms spanning multiple
+    functions and components.
+  - Partial status: LibreEvolve has Python-primary workspaces, multi-file seed
+    loading, file-topology mutations, materialization diagnostics, full-workspace
+    prompt/export paths, and a small multi-file smoke fixture.
+  - Current gap: there is no paper-facing benchmark or report that demonstrates
+    hundreds-line generated programs, coupled multi-component edits, non-Python
+    or build-runner execution, realistic codebase dependency edits, evaluator
+    throughput, or quality progress on a large codebase-scale task.
+  - Required result: add codebase-scale benchmark fixtures and reports with
+    generated/changed line counts, component/file counts, dependency-edit
+    evidence, evaluator/runtime budgets, valid/admitted/retained rates, and
+    score progress before treating current workspace support as AlphaEvolve
+    Table 1 code-scale parity.
+
 - [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation

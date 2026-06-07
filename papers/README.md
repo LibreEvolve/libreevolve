@@ -538,6 +538,16 @@ representations, with different biases for symmetric and non-symmetric
 problems. LibreEvolve still needs benchmark metadata and equal-budget reports
 that justify and compare those abstraction choices.
 
+Code-scale evidence is separate from workspace mechanics. AlphaEvolve Table 1
+reports evolving entire code files, hundreds of lines, arbitrary languages, and
+multi-component algorithms. LibreEvolve currently has Python-primary multi-file
+workspaces, topology mutations, materialization diagnostics, full-workspace
+prompt/export paths, and a small `workspace_math` smoke fixture, but it lacks a
+paper-facing benchmark/report with hundreds-line generated programs, coupled
+cross-file/component edits, non-Python or build-runner execution, evaluator
+budget evidence, validity/admission rates, and score progress on a realistic
+codebase-scale task.
+
 LLM feedback artifact note: successful and failed feedback records can keep
 compatibility `raw_response` and parsed `feedback` previews, suppress them to
 hashes, or suppress text and hashes according to `feedback_retention_mode`.

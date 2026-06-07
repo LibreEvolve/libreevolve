@@ -2940,6 +2940,12 @@ requires claim scope, verifier identity/independence, verdict, passed evidence,
 hashed artifact records, and artifact kinds matching the passed evidence kind.
 This contract does not run independent verifiers or create deployment/reviewer
 evidence by itself.
+`libreevolve.paper_result_certification_artifact_inventory.v1` verifies the
+certification report's evidence and artifact records against concrete files
+under an explicit artifact root, checking safe relative paths, existence,
+SHA-256 hashes, and byte counts. It proves that named certification evidence
+files are present, not that an independent verifier, deployment measurement,
+or human review has been performed.
 Systems-style benchmark reports use
 `libreevolve.systems_result_report.v1` in
 `libreevolve/problems/benchmarks/systems_results.py`; the contract requires

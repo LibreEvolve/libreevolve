@@ -922,14 +922,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper-claim-ready independent certifications, requires verifier
     identity/independence, claim scope, verdict, passed evidence,
     evidence-kind-specific artifact requirements, and hashed artifact records,
-    and renders summary readiness. It still does not provide independent
-    verifier scripts, external/human-review records,
+    and renders summary readiness.
+    `libreevolve.paper_result_certification_artifact_inventory.v1` now
+    verifies the certification report's evidence and artifact records against
+    concrete files under an explicit artifact root, checking safe relative
+    paths, existence, SHA-256 hashes, byte counts, per-record status, and
+    aggregate missing/mismatch/invalid counts. It still does not provide
+    independent verifier scripts, external/human-review records,
     deployment/simulator confirmation records, or generated signed/exact
     certificate artifacts for actual benchmark claims.
   - Required result: connect benchmark outputs to real independent verifier
     scripts, exact certificate generation, reviewer/deployment provenance, and
     external confirmation artifacts before treating local evaluator validity as
-    AlphaEvolve-style confirmed result evidence.
+    AlphaEvolve-style confirmed result evidence. The remaining gap is
+    producing those independent evidence files from real verification
+    workflows, not checking declared files once a certification report names
+    them.
 
 - [ ] Require holdout/generalization and reference-correctness gates for
   systems-style benchmarks.

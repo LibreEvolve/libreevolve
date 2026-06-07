@@ -1,7 +1,10 @@
+import hashlib
 import json
 
 from libreevolve.problems.benchmarks.result_certification import (
+    CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,
+    certification_artifact_inventory,
     render_certification_summary,
     validate_paper_result_certification,
 )
@@ -71,6 +74,70 @@ def test_paper_result_certification_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.paper_claim_ready is True
+
+
+def test_certification_artifact_inventory_verifies_evidence_and_artifacts(tmp_path):
+    report = _valid_certification()
+    for section in ("evidence", "artifacts"):
+        for record in report[section]:
+            path = tmp_path / record["path"]
+            path.parent.mkdir(parents=True, exist_ok=True)
+            raw = f"{section}:{record['kind']}".encode("utf-8")
+            path.write_bytes(raw)
+            record["sha256"] = hashlib.sha256(raw).hexdigest()
+            record["bytes"] = len(raw)
+
+    inventory = certification_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["report_schema"] == PAPER_CERTIFICATION_SCHEMA
+    assert inventory["claim_id"] == "circle26_sum_radii_run_001"
+    assert inventory["benchmark_id"] == "unit_square_circle_packing_26"
+    assert inventory["candidate_id"] == "program-000123"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["record_count"] == 3
+    assert inventory["verified_count"] == 3
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert {record["status"] for record in inventory["records"]} == {
+        "verified"
+    }
+    assert {record["section"] for record in inventory["records"]} == {
+        "evidence",
+        "artifacts",
+    }
+
+
+def test_certification_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    report = _valid_certification()
+    evidence = report["evidence"][0]
+    evidence_path = tmp_path / evidence["path"]
+    evidence_path.parent.mkdir(parents=True, exist_ok=True)
+    evidence_path.write_text("wrong", encoding="utf-8")
+    evidence["sha256"] = "b" * 64
+    evidence["bytes"] = 999
+    report["artifacts"][0]["path"] = "missing/verifier.log"
+    report["artifacts"][1]["path"] = "../escape-certificate.json"
+
+    inventory = certification_artifact_inventory(report, tmp_path)
+    records = {
+        (record["section"], record["kind"]): record
+        for record in inventory["records"]
+    }
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records[("evidence", "verifier_output")]["status"] == "hash_mismatch"
+    assert "record_hash_mismatch" in records[("evidence", "verifier_output")]["issues"]
+    assert "record_bytes_mismatch" in records[("evidence", "verifier_output")]["issues"]
+    assert records[("artifacts", "verifier_log")]["status"] == "missing_file"
+    assert records[("artifacts", "certificate")]["status"] == "unsafe_path"
 
 
 def test_local_validator_record_is_valid_but_not_paper_claim_ready():

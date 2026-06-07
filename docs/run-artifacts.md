@@ -1626,6 +1626,13 @@ under the artifact root, exist as files, and match their reported SHA-256
 hashes and byte counts. This verifies report evidence files, not real unseen
 workload generation, randomized reference checking, deployment confirmation,
 or independent certification.
+`libreevolve.paper_result_certification_artifact_inventory.v1` verifies both
+`evidence` and `artifacts` records in paper-result certification reports
+against concrete files under the artifact root. The inventory checks safe
+relative paths, file existence, SHA-256 hashes, byte counts, per-record
+statuses, and aggregate missing/mismatch/invalid counts. It is evidence-file
+verification, not a substitute for an independent verifier script, deployment
+measurement, or human review.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

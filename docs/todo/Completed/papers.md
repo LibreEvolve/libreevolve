@@ -9974,3 +9974,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     reference, deployment, and certification evidence files.
   - Verification: focused systems-result tests cover valid inventories and
     missing, mismatched, and unsafe artifact references.
+
+- [x] Add paper-visible certification evidence inventory verification.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 distinguishes
+    local optimization/evaluation from stronger confirmation such as
+    deployment measurements, reference checks, exact certificates, and expert
+    review.
+  - Status: `libreevolve.paper_result_certification_artifact_inventory.v1`
+    now verifies certification report evidence and artifact records against
+    concrete files under a safe artifact root. Verifier output, review,
+    deployment, simulator, reference, certificate, and reproduction records
+    can be checked for safe paths, existence, SHA-256 hashes, byte counts, and
+    aggregate inventory status.
+  - Remaining paper gap: this is certification evidence-file verification
+    only; actual benchmark workflows still need to produce independent
+    verifier, deployment, simulator, reference, exact-certificate, and human
+    review evidence.
+  - Verification: focused certification tests cover valid inventories and
+    missing, mismatched, and unsafe evidence/artifact references.

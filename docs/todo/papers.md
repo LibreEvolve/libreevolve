@@ -1389,6 +1389,31 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## Paper-Inspired Feature Claims Needing Correction
 
+- [ ] Keep framework and plugin inspiration rows scoped to partial or
+  background status.
+  - Paper evidence: the local paper index includes GigaEvo, CodeEvolve,
+    ThetaEvolve, ImprovEvolve, MadEvolve, CausalEvolve, and DeepEvolve as
+    framework/plugin inspiration rows adjacent to the AlphaEvolve target.
+  - Current evidence: `papers/README.md` says GigaEvo lacks Redis lifecycle
+    database, asyncio DAG engine, insight stage, and concurrent units;
+    CodeEvolve lacks crossover, targeted refinement, modular orchestration,
+    and context-aware recombination; ThetaEvolve has clipped-reward export but
+    no online RL/GRPO training loop, checkpointing, resume, or lazy-penalty
+    dynamics; ImprovEvolve has static prompt guidance with false
+    execution/enforcement flags; MadEvolve is background only; CausalEvolve is
+    fixed token-pattern guidance rather than LLM-discovered causal variables;
+    and DeepEvolve remains bounded retrieval context rather than a full
+    cross-file debugging loop.
+  - Current gap: these rows are honest implementation-status boundaries, not
+    completed paper reproductions. The missing systems are paper-specific
+    orchestration, training, interface execution, causal reasoning,
+    recombination/refinement, domain-evolution reporting, and debug-loop
+    behavior.
+  - Required result: either implement the paper-specific behavior with
+    matching tests/artifacts/metadata for each row, or keep `papers/README.md`,
+    README, ROADMAP, and code TODO wording explicit that the current features
+    are inspiration-only, approximation, or background-only references.
+
 - [ ] Make DeepEvolve-inspired live retrieval transport audit-grade.
   - Paper evidence: retrieval-driven debugging/refinement treats external
     knowledge as part of the experimental input; the paper-aligned record

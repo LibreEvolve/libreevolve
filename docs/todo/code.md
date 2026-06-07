@@ -1566,6 +1566,28 @@ Primary evidence:
     and replay/restore exclusions without introspecting arbitrary live object
     state or leaking secrets.
 
+- [ ] Keep built-in paper-inspired plugin behavior scoped to approximation
+  metadata.
+  - Spec evidence: paper-inspired plugins and framework references should not
+    claim faithful CausalEvolve, ThetaEvolve, ImprovEvolve, GigaEvo,
+    CodeEvolve, or MadEvolve behavior unless their paper-specific loops,
+    training, orchestration, or interfaces are actually implemented.
+  - Current evidence: `CausalPlugin` exposes fixed token-pattern
+    outcome-factor guidance and explicitly says it is not the CausalEvolve
+    causal scratchpad. `TTTRLPlugin` writes clipped-reward JSONL export rows
+    and explicitly does not train an RL model. `ModularPlugin` emits static
+    prompt guidance and metadata with `operation_executed: false` and
+    `interface_enforced: false`. The paper index marks GigaEvo, CodeEvolve,
+    and MadEvolve as inspiration/background rows rather than implemented
+    behavior.
+  - Required result: if future work implements paper-specific plugin loops,
+    training/checkpointing, causal scratchpads, generate/improve/perturb
+    execution, Redis/DAG/insight orchestration, crossover/refinement, or
+    domain-evolution innovation reports, update plugin metadata, README,
+    ROADMAP, papers index, and matching TODO entries together. Until then,
+    keep implementation metadata and public docs explicit that these are
+    approximations or background-only references.
+
 - [ ] Add release artifact and install-from-wheel verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be
     reproducible from the code and dependency environment that produced them;

@@ -10,6 +10,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
+- [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
+  - Spec evidence: roadmap references to paper-inspired systems should remain
+    clear about whether LibreEvolve implements the cited paper behavior or only
+    borrows a prompt/plugin idea.
+  - Current evidence: the roadmap already says to continue labeling
+    CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve, GigaEvo, CodeEvolve,
+    and MadEvolve features as inspired unless paper behavior is actually
+    implemented.
+  - Required result: when faithful paper-specific behavior lands, update the
+    roadmap, README, papers index, and code/paper TODO entries together. Until
+    then, keep roadmap wording from promoting token-pattern causal guidance,
+    clipped JSONL export, static modular prompting, retrieval context, or
+    generic prompt-program mutation into the cited papers' full systems.
+
 - [ ] Keep custom-plugin roadmap wording scoped to entry-point provenance
   versus direct-instance value attribution.
   - Spec evidence: AlphaEvolve-style extension points need reproducible plugin

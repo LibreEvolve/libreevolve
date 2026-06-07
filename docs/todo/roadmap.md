@@ -699,6 +699,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they do not imply AlphaEvolve-style freeform rationale parsing
     already exists.
 
+- [ ] Keep diff-format roadmap wording scoped until canonical AlphaEvolve
+      fence guidance is primary.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define SEARCH/REPLACE
+    blocks with canonical fences: `<<<<<<< SEARCH`, `=======`, and
+    `>>>>>>> REPLACE`.
+  - Current evidence: `ROADMAP.md` lists SEARCH/REPLACE mutation including
+    canonical AlphaEvolve fences, and the parser accepts both canonical and
+    compact local spellings. Root `AGENTS.md`, however, still lists only the
+    compact `<<<SEARCH` / `===` / `>>>REPLACE` syntax as the project
+    convention. That leaves roadmap and agent-facing guidance out of sync and
+    can obscure which spelling is paper-spec evidence versus backwards
+    compatibility.
+  - Required result: when the diff-format guidance is aligned, update ROADMAP,
+    README, AGENTS, papers index, and code/paper TODOs together so canonical
+    AlphaEvolve fences are treated as primary paper-aligned guidance and
+    compact local fences remain explicitly documented compatibility support.
+
 - [ ] Keep prompt-example roadmap wording scoped until example-copy
       diagnostics exist.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program

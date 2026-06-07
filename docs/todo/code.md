@@ -1469,6 +1469,24 @@ Primary evidence:
     updates that distinguish safe proposal rationale capture from arbitrary
     unparsed prose.
 
+- [ ] Align agent-facing diff-format guidance with canonical AlphaEvolve
+      fences.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define the
+    SEARCH/REPLACE edit payload with canonical seven-character fences:
+    `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE`.
+  - Current evidence: `apply_diff()` accepts both canonical AlphaEvolve fences
+    and the older compact local `<<<SEARCH` / `===` / `>>>REPLACE` form, and
+    `PromptSampler` currently tells LLMs either spelling is accepted. However,
+    root `AGENTS.md` still lists only the compact local syntax as the
+    project convention. That is a documentation drift: it can steer future
+    agents toward compatibility syntax while README/ROADMAP and the paper spec
+    treat canonical AlphaEvolve fences as the paper-facing contract.
+  - Required result: update AGENTS/README/ROADMAP/paper-index wording and
+    prompt-format tests so canonical AlphaEvolve fences are documented as the
+    primary paper-aligned syntax, compact fences are labelled compatibility
+    input, and code/report evidence continues to prove both forms parse
+    without implying the compact spelling is the AlphaEvolve specification.
+
 - [ ] Add prompt example-copy diagnostics for AlphaEvolve-style concrete diff
       examples.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete current-program

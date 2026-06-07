@@ -1122,6 +1122,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     and code TODOs explicit that LibreEvolve requires structured proposal
     metadata rather than arbitrary natural-language patch rationale.
 
+- [ ] Track canonical AlphaEvolve diff-fence guidance separately from compact
+      compatibility syntax.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 and Figure 3 use
+    canonical SEARCH/REPLACE fences with `<<<<<<< SEARCH`, `=======`, and
+    `>>>>>>> REPLACE`.
+  - Current gap: paper-facing status can say LibreEvolve parses canonical
+    SEARCH/REPLACE blocks, and code also accepts the older compact local
+    `<<<SEARCH` / `===` / `>>>REPLACE` spelling. But root `AGENTS.md` still
+    advertises only the compact local syntax as the diff convention, while the
+    paper evidence does not yet distinguish canonical paper-aligned guidance
+    from compact backwards-compatible parsing.
+  - Required result: add paper-facing documentation/provenance evidence that
+    AGENTS, README, ROADMAP, prompt instructions, and parser tests all present
+    canonical AlphaEvolve fences as the primary paper-spec syntax, with compact
+    fences explicitly scoped to compatibility support rather than AlphaEvolve
+    specification parity.
+
 - [ ] Track prompt example-copy diagnostics separately from diff syntax
       compatibility.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.

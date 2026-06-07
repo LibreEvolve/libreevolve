@@ -1221,6 +1221,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     boundary, redaction/provenance behavior, and distinction between safe
     proposal metadata and arbitrary unparsed prose.
 
+- [ ] Keep README/AGENTS diff-format wording scoped until canonical
+      AlphaEvolve fence guidance is primary.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 show the
+    SEARCH/REPLACE payload using canonical fences: `<<<<<<< SEARCH`,
+    `=======`, and `>>>>>>> REPLACE`.
+  - Current evidence: README documents that both compact local fences and
+    canonical AlphaEvolve fences are accepted, and the parser has tests for
+    both forms. But root `AGENTS.md` still names only the compact
+    `<<<SEARCH` / `===` / `>>>REPLACE` spelling as the project convention,
+    which can make agent-facing guidance look paper-aligned when it is only
+    compatibility syntax.
+  - Required result: when agent-facing diff-format guidance is corrected,
+    update AGENTS, README, ROADMAP, papers index, and code/paper TODOs
+    together so canonical AlphaEvolve fences are the primary documented
+    syntax, compact fences are compatibility-only, and README does not imply
+    local compact examples are the AlphaEvolve paper format.
+
 - [ ] Keep README prompt-example wording scoped until copy-detection
       diagnostics exist.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program

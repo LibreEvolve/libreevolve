@@ -662,6 +662,170 @@ def test_feedback_index_snapshot_groups_feedback_records_by_grader(tmp_path):
     }
 
 
+def test_resurfacing_index_snapshot_fuses_queryable_program_sources(tmp_path):
+    schema = {
+        "metrics": [
+            {
+                "name": "accuracy",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            },
+            {
+                "name": "latency",
+                "direction": "maximize",
+                "primary": False,
+                "bounds": [0.0, 1.0],
+            },
+        ],
+        "primary_metric": "accuracy",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 2,
+    }
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=schema,
+    )
+
+    def program(
+        program_id: str,
+        *,
+        accuracy: float,
+        latency: float,
+        selection_score: float,
+        feedback_score: float | None = None,
+        descriptor: float | None = None,
+        valid: bool = True,
+    ) -> Program:
+        metadata = {
+            "selection_score": selection_score,
+            "normalized_metrics": {"accuracy": accuracy, "latency": latency},
+        }
+        if descriptor is not None:
+            metadata["archive_admission"] = {
+                "admitted": True,
+                "reason": "empty_cell",
+                "descriptors": {"diversity": descriptor},
+            }
+        evaluation = {"is_valid": valid}
+        if feedback_score is not None:
+            evaluation["metadata"] = {
+                "llm_feedback": [
+                    {
+                        "name": "reviewer",
+                        "score": feedback_score,
+                        "normalized_score": feedback_score,
+                    }
+                ],
+            }
+        return Program(
+            id=program_id,
+            code=f"{program_id} = 1\n",
+            fitness=selection_score,
+            evaluation=evaluation,
+            metadata=metadata,
+        )
+
+    balanced = program(
+        "balanced",
+        accuracy=0.80,
+        latency=0.80,
+        selection_score=0.80,
+        descriptor=0.95,
+    )
+    accuracy_leader = program(
+        "accuracy-leader",
+        accuracy=0.95,
+        latency=0.20,
+        selection_score=0.60,
+    )
+    feedback_leader = program(
+        "feedback-leader",
+        accuracy=0.30,
+        latency=0.30,
+        selection_score=0.30,
+        feedback_score=0.99,
+    )
+    invalid_feedback = program(
+        "invalid-feedback",
+        accuracy=1.0,
+        latency=1.0,
+        selection_score=1.0,
+        feedback_score=1.0,
+        valid=False,
+    )
+    for candidate in (
+        feedback_leader,
+        invalid_feedback,
+        accuracy_leader,
+        balanced,
+    ):
+        db.log(candidate)
+
+    snapshot = db.resurfacing_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.resurfacing_index.v1"
+    assert snapshot["metric_order"] == ["accuracy", "latency"]
+    assert snapshot["program_count_considered"] == 3
+    assert snapshot["candidate_count"] == 3
+    assert snapshot["source_counts"]["score"] == 3
+    assert snapshot["source_counts"]["metric"] == 6
+    assert snapshot["source_counts"]["feedback"] == 1
+    programs = {record["program_id"]: record for record in snapshot["programs"]}
+    assert set(programs) == {
+        balanced.id,
+        accuracy_leader.id,
+        feedback_leader.id,
+    }
+    assert invalid_feedback.id not in programs
+    assert snapshot["programs"][0]["program_id"] == balanced.id
+    assert {
+        (source["source"], source["source_key"])
+        for source in programs[balanced.id]["sources"]
+    } >= {
+        ("score", "selection_score"),
+        ("frontier", "declared_objective_vector"),
+        ("metric", "accuracy"),
+        ("metric", "latency"),
+        ("descriptor", "diversity"),
+    }
+    assert {
+        source["source"] for source in programs[feedback_leader.id]["sources"]
+    } >= {"feedback", "score"}
+    assert snapshot["limitations"] == [
+        "manifest_visible_resurfacing_index_not_persisted_database_table",
+        "uses_deterministic_rank_fusion_not_learned_embedding_search",
+        "valid_history_programs_only",
+        "rebuilt_from_current_history_records_at_runtime_summary_time",
+    ]
+
+
+def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    top = Program(
+        id="top",
+        code="x = 1\n",
+        fitness=0.9,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.9},
+    )
+    second = Program(
+        id="second",
+        code="x = 2\n",
+        fitness=0.8,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.8},
+    )
+    db.log(top)
+    db.log(second)
+
+    surfaced = db.resurface_candidates(k=1, exclude_ids={top.id})
+
+    assert [program.id for program in surfaced] == [second.id]
+    surfaced[0].code = "mutated"
+    assert db.all_programs()[1].code == "x = 2\n"
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(

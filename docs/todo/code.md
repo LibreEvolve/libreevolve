@@ -684,15 +684,20 @@ Primary evidence:
     `IslandModel`, persists compact and full archive-state snapshots, validates
     archive-event streams, supports lineage-aware live sampling through
     best-per-root retained representatives, persists a bounded lineage index
-    view, score index view, descriptor index view, and feedback index view in runtime manifests, and can restore cells/elites from a
-    manifest plus accepted history bundle. However, these are still append-only logs plus an
-    in-memory archive, not a persisted query/index database. There is no durable
-    index over full metric vectors, feedback embeddings/full-text ranking,
-    failure fingerprints, full lineage subgraphs, hypotheses, artifacts, retrieval
-    context, or novelty; `load_accepted_history_index()` is an id map for
-    restore/query scaffolding, not a ranked resurfacing database. The compact
-    `show` path intentionally rejects mixed legacy/current history schemas with
-    a line-numbered diagnostic instead of migrating them into one compatible
+    view, score index view, descriptor index view, feedback index view, and a
+    bounded `resurfacing_index` rank-fusion view in runtime manifests, exposes
+    `resurface_candidates()` for defensive ranked snapshots from those same
+    sources, and can restore cells/elites from a manifest plus accepted history
+    bundle. However, these are still append-only logs plus an in-memory archive
+    and manifest-visible rebuilt indexes, not a persisted query/index database.
+    There is no durable index over full metric vectors, feedback
+    embeddings/full-text ranking, failure fingerprints, full lineage subgraphs,
+    hypotheses, artifacts, retrieval context, or novelty; the resurfacing index
+    is deterministic rank fusion over bounded current-history views, and
+    `load_accepted_history_index()` remains an id map for restore/query
+    scaffolding rather than a ranked cross-run database. The compact `show`
+    path intentionally rejects mixed legacy/current history schemas with a
+    line-numbered diagnostic instead of migrating them into one compatible
     database view.
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, ranked views by

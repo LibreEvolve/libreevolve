@@ -370,11 +370,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-dominated Pareto archive over complete declared normalized metric
     vectors, persist/restore Pareto frontier program ids and the objective
     archive policy, and allow island metric/frontier retained pools to sample
-    Pareto-only programs that lost scalar cell/elite placement. This remains a
-    heuristic rather than a paper-faithful multi-score database policy:
+    Pareto-only programs that lost scalar cell/elite placement. Runtime
+    manifests now include `runtime.history.resurfacing_index`, a bounded
+    deterministic rank-fusion view over score, metric, frontier, lineage,
+    descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`
+    returns defensive ranked snapshots from that same source mix. This remains
+    a heuristic rather than a paper-faithful multi-score database policy:
     MAP-Elites cell replacement is still scalar, metric-specific cell
     replacement is not implemented, and durable queryable multi-objective
-    resurfacing remains open.
+    resurfacing across persisted database tables, embeddings, full lineage
+    subgraphs, and schema migrations remains open.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.
 

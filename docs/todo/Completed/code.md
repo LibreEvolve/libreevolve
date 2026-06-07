@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add a bounded resurfacing index over existing candidate evidence.
+  - Spec evidence: AlphaEvolve's program database resurfaces useful prior
+    ideas across score, diversity, lineage, and other evidence instead of only
+    returning the scalar best program.
+  - Status: `ProgramDatabase.resurfacing_index_snapshot()` now emits
+    `libreevolve.resurfacing_index.v1`, a deterministic rank-fusion view over
+    score, objective-frontier, metric, lineage, descriptor, and feedback
+    indexes. `ProgramDatabase.resurface_candidates()` returns defensive ranked
+    program snapshots from the same deduplicated source mix, and runtime
+    manifests persist the index under `runtime.history.resurfacing_index`.
+  - Remaining gap: this is a bounded manifest-visible rebuilt index, not a
+    durable persisted database table, embedding/full-text search layer,
+    failure/hypothesis/artifact index, or schema-migration engine.
+  - Verification: focused database tests cover source fusion, invalid-program
+    exclusion, feedback/descriptor/metric source evidence, and defensive
+    candidate snapshots; the loop manifest test covers runtime persistence.
+
 - [x] Add bounded Pareto archive retention to MAP-Elites.
   - Spec evidence: AlphaEvolve-style multi-score search should preserve
     programs that are useful under different objective tradeoffs, even when

@@ -2753,6 +2753,14 @@ def test_loop_records_normalized_metrics_and_selection_score():
     )
     assert performance["programs"][0]["program_id"] == record["id"]
     assert performance["programs"][0]["descriptor_value"] == 0.8
+    resurfacing_index = manifest["runtime"]["history"]["resurfacing_index"]
+    assert resurfacing_index["schema"] == "libreevolve.resurfacing_index.v1"
+    assert resurfacing_index["metric_order"] == ["accuracy", "latency"]
+    assert resurfacing_index["program_count_considered"] == 1
+    assert resurfacing_index["programs"][0]["program_id"] == record["id"]
+    assert {
+        source["source"] for source in resurfacing_index["programs"][0]["sources"]
+    } >= {"score", "frontier", "metric", "lineage", "descriptor"}
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

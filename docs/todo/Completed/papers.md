@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add a bounded resurfacing index over existing candidate evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
+    program database that resurfaces diverse prior programs as inspirations for
+    future LLM proposals.
+  - Status: final runtime manifests now include
+    `runtime.history.resurfacing_index`, a deterministic rank-fusion view over
+    score, objective-frontier, metric, lineage, descriptor, and feedback
+    indexes. `ProgramDatabase.resurface_candidates()` exposes the same ranked
+    deduplicated source mix as defensive program snapshots.
+  - Remaining paper gap: this is not yet a durable persisted program database
+    with learned retrieval, full lineage/failure/hypothesis/artifact indexes,
+    or versioned schema migration across legacy/current run records.
+  - Verification: focused database and loop tests cover rank-fusion source
+    evidence, invalid-program exclusion, defensive candidate snapshots, and
+    manifest persistence.
+
 - [x] Add bounded Pareto archive retention to MAP-Elites.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
     optimizing multiple user-provided scores and using programs that excel

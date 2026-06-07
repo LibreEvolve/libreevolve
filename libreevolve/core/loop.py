@@ -3677,6 +3677,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "lineage_index": db.lineage_index_snapshot(),
         "descriptor_index": db.descriptor_index_snapshot(),
         "feedback_index": db.feedback_index_snapshot(),
+        "resurfacing_index": db.resurfacing_index_snapshot(),
         "archive_state": archive_state,
         "archive_event_replay_audit": archive_event_replay_audit(
             run_dir / "archive_events.jsonl",

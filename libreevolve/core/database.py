@@ -95,6 +95,7 @@ _MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT = 5
 _MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR = 10
 _MAX_FEEDBACK_INDEX_PROGRAMS_PER_GRADER = 10
 _MAX_FEEDBACK_INDEX_TEXT_CHARS = 200
+_MAX_RESURFACING_INDEX_PROGRAMS = 50
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -675,6 +676,38 @@ class ProgramDatabase:
             self._all,
             limit=_MAX_FEEDBACK_INDEX_PROGRAMS_PER_GRADER,
         )
+
+    def resurfacing_index_snapshot(self) -> dict:
+        return _resurfacing_index_snapshot(
+            self._all,
+            self._objective_metric_order,
+            limit=_MAX_RESURFACING_INDEX_PROGRAMS,
+        )
+
+    def resurface_candidates(
+        self, k: int, exclude_ids: set[str] | None = None
+    ) -> list[Program]:
+        k = validate_sample_count(k, "database resurfacing count")
+        exclude_ids = validate_exclude_ids(exclude_ids, "database resurfacing exclude_ids")
+        if k <= 0:
+            return []
+        programs_by_id = {program.id: program for program in self._all}
+        snapshot = _resurfacing_index_snapshot(
+            self._all,
+            self._objective_metric_order,
+            limit=max(k + len(exclude_ids), _MAX_RESURFACING_INDEX_PROGRAMS),
+        )
+        surfaced: list[Program] = []
+        for record in snapshot["programs"]:
+            program_id = record["program_id"]
+            if program_id in exclude_ids:
+                continue
+            program = programs_by_id.get(program_id)
+            if program is not None:
+                surfaced.append(_program_snapshot(program))
+            if len(surfaced) >= k:
+                break
+        return surfaced
 
     def _log_archive_event(self, event: dict) -> None:
         append_strict_jsonl(
@@ -2646,6 +2679,177 @@ def _feedback_index_sort_key(record: dict) -> tuple:
         -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
         -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
         str(program_id) if isinstance(program_id, str) else "",
+    )
+
+
+def _resurfacing_index_snapshot(
+    programs: list[Program],
+    metric_order: list[str],
+    *,
+    limit: int,
+) -> dict:
+    valid_programs = [
+        program for program in programs if program.evaluation.get("is_valid") is True
+    ]
+    by_id = {program.id: program for program in valid_programs}
+    records: dict[str, dict] = {}
+    source_counts: dict[str, int] = {}
+
+    def add_source(
+        source: str,
+        source_key: str,
+        rank: int,
+        source_record: Mapping,
+        contribution_weight: float,
+    ) -> None:
+        program_id = source_record.get("program_id")
+        if not isinstance(program_id, str) or program_id not in by_id:
+            return
+        source_counts[source] = source_counts.get(source, 0) + 1
+        record = records.setdefault(
+            program_id,
+            _resurfacing_program_record(by_id[program_id]),
+        )
+        contribution = contribution_weight / float(rank + 1)
+        record["resurfacing_score"] = float(record["resurfacing_score"]) + contribution
+        record["source_count"] = int(record["source_count"]) + 1
+        source_entry: dict[str, object] = {
+            "source": source,
+            "source_key": source_key,
+            "rank": rank,
+            "contribution": contribution,
+        }
+        for field in (
+            "metric",
+            "descriptor",
+            "feedback_name",
+            "normalized_metric",
+            "descriptor_value",
+            "normalized_score",
+            "score",
+            "weighted_delta",
+        ):
+            value = source_record.get(field)
+            if isinstance(value, str) and value:
+                source_entry[field] = value
+            elif _is_finite_real(value):
+                source_entry[field] = float(value)
+        record["sources"].append(source_entry)
+
+    score = _score_index_snapshot(programs, limit=limit)
+    for rank, record in enumerate(score["programs"]):
+        add_source("score", "selection_score", rank, record, 1.0)
+
+    frontier = _objective_frontier_snapshot(
+        programs,
+        metric_order,
+        limit=limit,
+    )
+    for rank, record in enumerate(frontier["programs"]):
+        add_source("frontier", "declared_objective_vector", rank, record, 0.9)
+
+    metric_archives = _objective_metric_archives_snapshot(
+        programs,
+        metric_order,
+        limit=limit,
+    )
+    for archive in metric_archives["archives"]:
+        metric = archive["metric"]
+        for rank, record in enumerate(archive["programs"]):
+            add_source("metric", str(metric), rank, record, 0.9)
+
+    lineage = _lineage_index_snapshot(
+        programs,
+        root_limit=limit,
+        programs_per_root_limit=1,
+    )
+    for rank, lineage_record in enumerate(lineage["lineages"]):
+        add_source(
+            "lineage",
+            str(lineage_record["lineage_root_id"]),
+            rank,
+            lineage_record["best_program"],
+            0.7,
+        )
+
+    descriptor = _descriptor_index_snapshot(programs, limit=limit)
+    for descriptor_record in descriptor["descriptors"]:
+        descriptor_name = descriptor_record["descriptor"]
+        for rank, record in enumerate(descriptor_record["programs"]):
+            add_source("descriptor", str(descriptor_name), rank, record, 0.5)
+
+    feedback = _feedback_index_snapshot(programs, limit=limit)
+    for grader in feedback["graders"]:
+        grader_name = grader["feedback_name"]
+        for rank, record in enumerate(grader["programs"]):
+            if record.get("evaluation_is_valid") is True:
+                add_source("feedback", str(grader_name), rank, record, 0.6)
+
+    ranked = sorted(records.values(), key=_resurfacing_index_sort_key)
+    retained = ranked[:limit]
+    return {
+        "schema": "libreevolve.resurfacing_index.v1",
+        "policy": (
+            "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
+            "descriptor_feedback_indexes"
+        ),
+        "metric_order": [
+            name for name in metric_order if isinstance(name, str) and name
+        ],
+        "program_count_considered": len(valid_programs),
+        "candidate_count": len(ranked),
+        "retained_count": len(retained),
+        "retention_limit": limit,
+        "source_counts": dict(sorted(source_counts.items())),
+        "programs": retained,
+        "limitations": [
+            "manifest_visible_resurfacing_index_not_persisted_database_table",
+            "uses_deterministic_rank_fusion_not_learned_embedding_search",
+            "valid_history_programs_only",
+            "rebuilt_from_current_history_records_at_runtime_summary_time",
+        ],
+    }
+
+
+def _resurfacing_program_record(program: Program) -> dict:
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+        "source_count": 0,
+        "resurfacing_score": 0.0,
+        "sources": [],
+    }
+    admission = _history_safe_archive_admission_summary(program)
+    if admission:
+        record["archive_admission"] = admission
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _resurfacing_index_sort_key(record: dict) -> tuple:
+    return (
+        -int(record.get("source_count", 0)),
+        -(float(record.get("resurfacing_score", 0.0))),
+        -(
+            float(record["selection_score"])
+            if _is_finite_real(record.get("selection_score"))
+            else float("-inf")
+        ),
+        -(
+            float(record["fitness"])
+            if _is_finite_real(record.get("fitness"))
+            else float("-inf")
+        ),
+        str(record.get("program_id", "")),
     )
 
 

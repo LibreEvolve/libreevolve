@@ -58,6 +58,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
+- [ ] Stable behavior descriptor models and archive rebin semantics.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.3 and 2.4.
+  - Requirement: a quality-diversity archive should use task-meaningful
+    behavior descriptors or explicitly stable descriptor models; adaptive
+    descriptors need clear compatibility and rebin semantics.
+  - Partial status: MAP-Elites defaults to selection score, serialized
+    workspace complexity, and TF-IDF char-ngram diversity against the current
+    capped elite list. `map_elites_descriptor_axes` can select normalized
+    evaluator metrics, numeric evaluator metadata, or numeric candidate
+    metadata as descriptor axes. Archive snapshots persist descriptor policy
+    and descriptor-model records with axes, bounds, diversity reference ids,
+    revision, dynamic-reference status, and explicit no-rebin policy.
+  - Current gap: existing cell coordinates are insertion-time snapshots under
+    a local adaptive TF-IDF novelty heuristic. There is no learned descriptor
+    model, evaluator-provided descriptor contract with compatibility rules, or
+    tested archive rebin engine.
+  - Required result: add stable task behavior descriptor contracts or learned
+    descriptor models, tested rebin/snapshot compatibility semantics, restore
+    validation across descriptor revisions, and paper-facing reports that do
+    not confuse insertion-time TF-IDF coordinates with AlphaEvolve-grade
+    behavior descriptors.
+
 - [ ] Tighten remaining invalid-workspace topology diagnostics for codebase-scale
   artifact failures.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.

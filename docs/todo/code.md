@@ -807,6 +807,29 @@ Primary evidence:
 
 ## Metrics and Evolution Database
 
+- [ ] Promote MAP-Elites descriptor modeling beyond insertion-time TF-IDF
+  snapshot coordinates.
+  - Spec evidence: AlphaEvolve-style quality-diversity search should use task
+    meaningful behavior descriptors or explicitly stable descriptor models; if
+    descriptors adapt during a run, the archive needs tested rebin/snapshot
+    semantics so cells remain comparable.
+  - Current evidence: `MAPElites` defaults to performance, serialized
+    workspace complexity, and TF-IDF char-ngram diversity against the current
+    capped elite list. `map_elites_descriptor_axes` can choose three axes from
+    built-in performance/complexity/diversity, normalized evaluator metrics,
+    numeric evaluator metadata, or numeric candidate metadata. State snapshots
+    persist `descriptor_policy` and `descriptor_model` records with axes,
+    performance/complexity bounds, current diversity reference ids, a revision
+    counter, `dynamic_diversity_reference: true`, and rebin policy
+    `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`.
+    Restore validation rejects descriptor axes/model mismatches and rejects
+    rebin overclaims such as `full_rebin`.
+  - Required result: add evaluator-provided or learned descriptor models with
+    stable versioning, explicit descriptor training inputs, tested full or
+    partial archive rebin semantics, manifest-visible descriptor compatibility
+    checks across restore, and reports that distinguish task behavior
+    descriptors from local TF-IDF novelty heuristics.
+
 - [ ] Implement real multi-objective optimization.
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and
     use diverse high-performing programs under different definitions of "good"

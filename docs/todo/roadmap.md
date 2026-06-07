@@ -10,6 +10,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
+- [ ] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
+  TF-IDF coordinates versus stable learned descriptors.
+  - Spec evidence: AlphaEvolve-style quality-diversity search needs
+    task-meaningful behavior descriptors or stable descriptor models with
+    tested compatibility when descriptors change.
+  - Current evidence: the roadmap now names evaluator-provided behavior
+    descriptors, fixed descriptor models, or explicit rebin/snapshot semantics
+    as the remaining work. Current archive snapshots already record descriptor
+    axes, current diversity reference ids, descriptor-model revision, dynamic
+    TF-IDF reference status, and the no-rebin insertion-time coordinate policy.
+  - Required result: when learned/evaluator-provided descriptor models or
+    archive rebin semantics land, update the roadmap, README, papers index,
+    and code/paper TODO entries together so they neither underclaim current
+    descriptor-policy snapshots nor overclaim stable AlphaEvolve-grade
+    behavior descriptors.
+
 - [ ] Keep per-role scheduler roadmap wording scoped to role-scoped backend
   eligibility and role budget maps versus independent live scheduler state.
   - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific

@@ -103,9 +103,9 @@ is not yet an AlphaEvolve reproduction.
   resurfacing queries beyond score, individual metric excellence, novelty,
   recency, lineage, feedback, and random/mixed policies to persisted
   feedback, lineage-diversity, and novelty indexes.
-- Replace the remaining adaptive diversity descriptor with evaluator-provided
-  behavior descriptors, a fixed descriptor model, or explicit rebin/snapshot
-  semantics.
+- Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
+  with evaluator-provided behavior descriptors, a fixed/learned descriptor
+  model, or explicit tested rebin/snapshot semantics.
 - Extend the current `show` archive objective-vector summaries into future
   metric-specific archive views.
 

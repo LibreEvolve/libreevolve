@@ -9,6 +9,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README MAP-Elites descriptor claims scoped to insertion-time
+  TF-IDF coordinates.
+  - Spec evidence: AlphaEvolve-grade quality-diversity search should use
+    task-meaningful behavior descriptors or stable learned descriptor models,
+    with explicit archive compatibility when descriptors change.
+  - Current evidence: README now documents that workspace complexity/diversity
+    use stable text-workspace serialization, that `map_elites_descriptor_axes`
+    can select configured metric/metadata axes, and that archive snapshots
+    persist a `descriptor_model` with current diversity reference ids plus
+    no-rebin insertion-time coordinate policy. It also says existing cells are
+    not re-binned and diversity coordinates are local heuristic coordinates
+    rather than stable learned descriptors.
+  - Required result: once evaluator-provided behavior descriptors, learned
+    descriptor models, or tested archive rebin semantics land, update the
+    README and matching code/paper TODO entries together so the README neither
+    underclaims descriptor-policy snapshots nor overclaims AlphaEvolve-grade
+    behavior descriptors.
+
 - [ ] Keep README per-role LLM scheduler claims scoped to current role routing
   and budget maps.
   - Spec evidence: AlphaEvolve-style LLM orchestration needs role-specific

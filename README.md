@@ -1375,7 +1375,9 @@ and a no-rebin policy:
 `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`.
 Existing cells are not re-binned when the reference list changes, so diversity
 coordinates are documented insertion-time local heuristic coordinates rather
-than stable learned descriptors.
+than stable learned descriptors; evaluator-provided behavior descriptor
+contracts, learned descriptor models, and tested archive rebin semantics remain
+future work.
 Rejected non-admitted candidates also leave the island assignment cursor on the
 same island for the next retained archive-state change.
 

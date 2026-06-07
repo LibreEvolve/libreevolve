@@ -612,6 +612,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current heuristic routing nor overclaims regret-analyzed or
     paper-faithful scheduler behavior.
 
+- [ ] Keep `throughput_depth` roadmap wording scoped to metadata/unit tests
+      versus scheduler-validation reports.
+  - Spec evidence: AlphaEvolve-style fast/deep model scheduling needs
+    experiment-level selection traces, budget-normalized comparisons, and
+    breadth/depth/cost/latency evidence across real runs, not only deterministic
+    backend metadata arithmetic.
+  - Current evidence: `ROADMAP.md` asks to extend current focused
+    `throughput_depth` metadata tests into AlphaEvolve-style scheduler
+    validation. README and code evidence show the current policy is a
+    heuristic global backend bandit with optional normalized metadata weights
+    (`depth: 0.10`, `cost: -0.05`, `latency: -0.05`) after pull-once
+    initialization. Focused ensemble tests cover metadata validation and
+    defensive copying, secret-safe metadata retention, descriptive
+    breadth/depth role metadata, per-selection min/max normalization against
+    reward scale, metadata-priority selection after all backends are
+    initialized, and call telemetry for the effective policy. They do not run
+    benchmark workloads, emit experiment-level selection traces, compare
+    equal-budget scheduler variants, or prove that breadth/depth/cost/latency
+    choices improve AlphaEvolve-style search outcomes.
+  - Required result: when executable scheduler-validation fixtures,
+    experiment-level selection trace artifacts, equal-budget scheduler reports,
+    or calibrated breadth/depth/cost/latency policy evidence land, update the
+    roadmap, README, papers index, and code/paper TODO entries together so
+    roadmap wording neither underclaims current focused `throughput_depth`
+    coverage nor overclaims AlphaEvolve-grade model-scheduling validation.
+
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

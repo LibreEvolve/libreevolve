@@ -42,8 +42,9 @@ libreevolve/
   sampling_eligible.
 - Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
   parent-selection strategies bypass that ratio
-- Up to 5 recent in-memory failed child snippets can be shown in prompts;
-  persistent/queryable failed-proposal memory remains open work
+- Failed/rejected candidates are persisted to `failure_history.jsonl`, and
+  prompts render bounded recent failure memory with configurable filters and
+  limits; durable cross-run/semantic failed-proposal memory remains open work
 
 ## Running Tests
 

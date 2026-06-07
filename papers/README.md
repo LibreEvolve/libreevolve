@@ -329,6 +329,16 @@ metrics can include the plugin-adjusted final score in the objective vector.
 These records are audit evidence for the current scalar policy and
 metric-specific tradeoffs, not frontier-driven archive replacement.
 
+AlphaEvolve database-resurfacing note: bounded current-run resurfacing now exists
+through `runtime.history.resurfacing_index`,
+`ProgramDatabase.resurface_candidates(target_metric=...)`,
+`resurface_by_metric()`, `resurface_by_lineage()`,
+`resurface_by_descriptor()`, `resurface_by_novelty()`, and
+`resurface_by_feedback()`. This narrows the remaining database gap to durable
+cross-run query/index tables, full metric-vector and feedback/artifact-content
+ranking, semantic/cross-run novelty or hypothesis retrieval, schema migrations,
+and replayable sampling policies, not the absence of any resurfacing API.
+
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,
 generation counters, and stop reasons before finalization. Restored-budget

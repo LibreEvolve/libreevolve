@@ -500,7 +500,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     metric-leader, frontier, lineage, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
     copies by program id. Bounded score-ranked manifest evidence is now
-    available. Persisted/queryable feedback and full durable
+    available. Durable persisted feedback ranking and full cross-run
     database resurfacing remain open. Metric bounds are now strictly ordered before they
     can be used as policy inputs. Metric-leader parent sampling now cycles
     through primary and secondary metric targets in configured order and
@@ -541,6 +541,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     limitations, counts, source contributions, source records, normalized
     objective evidence, and deterministic rank order while preserving
     `durable_database_ready: false`.
+    The paper index now includes a dedicated database-resurfacing note that
+    lists the bounded current-run resurfacing APIs and narrows the remaining
+    AlphaEvolve gap to durable cross-run query/index tables, full
+    metric-vector and feedback/artifact-content ranking, semantic/cross-run
+    novelty or hypothesis retrieval, schema migrations, and replayable
+    sampling policies.
     `validate_objective_history_summary()` now validates the runtime
     multi-objective diagnostic history bundle across objective frontier,
     metric leaders, and metric archives, including schema/policy values,

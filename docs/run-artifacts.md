@@ -1539,7 +1539,16 @@ semantic correctness. Query events also include
 retention boundary for raw provider/source payloads, TLS certificate chains, and
 semantic verification. It links the payload-artifact, source-content, and
 source-grounding, and transport evidence states so cache snapshots preserve
-what evidence was retained versus what remains outside the audit boundary. The default
+what evidence was retained versus what remains outside the audit boundary.
+Query events also include
+`libreevolve.retrieval_context_audit_policy.v1`, an event-level classification
+of whether the prompt-visible retrieval context has audit-grade bounded replay
+evidence, audit-grade bounded snapshot evidence, degraded evidence, or
+unauditable evidence. The policy records that retrieval context remains
+untrusted prompt evidence, links transport/source-content/evidence-boundary
+status, and is summarized in active-context metadata for the exact injected
+retrieval synthesis.
+The default
 `source_ranking_policy` keeps provider order; opt-in
 `query_overlap_score_desc_v1` reorders retained sources by deterministic
 query-overlap score with provider rank as a tie-breaker, and records

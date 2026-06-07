@@ -55,6 +55,9 @@ RETRIEVAL_TRANSPORT_POLICY_SCHEMA = "libreevolve.retrieval_transport_policy.v1"
 RETRIEVAL_EVIDENCE_BOUNDARY_POLICY_SCHEMA = (
     "libreevolve.retrieval_evidence_boundary_policy.v1"
 )
+RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA = (
+    "libreevolve.retrieval_context_audit_policy.v1"
+)
 MAX_RETRIEVAL_QUERY_METRICS = 6
 MAX_RETRIEVAL_QUERY_CODE_TERMS = 8
 MAX_RETRIEVAL_QUERY_TASK_TERMS = 8
@@ -777,6 +780,8 @@ class DeepResearchPlugin(PluginBase):
             event["transport_policy"] = _retrieval_transport_policy(event)
         if "query" in event and "evidence_boundary_policy" not in event:
             event["evidence_boundary_policy"] = _retrieval_evidence_boundary_policy(event)
+        if "query" in event and "context_audit_policy" not in event:
+            event["context_audit_policy"] = _retrieval_context_audit_policy(event)
         event["event_index"] = self._events_seen
         self._events_seen += 1
         self._events.append(event)
@@ -910,6 +915,25 @@ def _active_context_metadata(event: dict) -> dict:
             "source": transport_policy.get("source"),
             "issues": transport_policy.get("issues", [])[:5]
             if isinstance(transport_policy.get("issues"), list)
+            else [],
+        }
+    context_audit = event.get("context_audit_policy")
+    if isinstance(context_audit, dict):
+        active["context_audit_policy"] = {
+            "schema": context_audit.get("schema"),
+            "status": context_audit.get("status"),
+            "bounded_context_audit_ready": context_audit.get(
+                "bounded_context_audit_ready"
+            ),
+            "full_replay_ready": context_audit.get("full_replay_ready"),
+            "transport_status": context_audit.get("transport_status"),
+            "source_content_status": context_audit.get("source_content_status"),
+            "evidence_boundary_status": context_audit.get(
+                "evidence_boundary_status"
+            ),
+            "semantic_verified": context_audit.get("semantic_verified"),
+            "issues": context_audit.get("issues", [])[:5]
+            if isinstance(context_audit.get("issues"), list)
             else [],
         }
     return active
@@ -2707,6 +2731,121 @@ def _retrieval_evidence_boundary_policy(event: dict) -> dict:
         "limitations": [
             "redacted_payload_artifacts_not_raw_provider_payloads",
             "tls_certificate_chain_not_retained",
+            "semantic_meaning_not_verified",
+        ],
+    }
+
+
+def _retrieval_context_audit_policy(event: dict) -> dict:
+    """Classify prompt-visible retrieval evidence without making it authoritative."""
+    transport_policy = event.get("transport_policy")
+    if not isinstance(transport_policy, dict):
+        transport_policy = {}
+    evidence_boundary = event.get("evidence_boundary_policy")
+    if not isinstance(evidence_boundary, dict):
+        evidence_boundary = {}
+    source_trust = event.get("source_content_trust_policy")
+    if not isinstance(source_trust, dict):
+        source_trust = {}
+    source_grounding = event.get("source_grounding_policy")
+    if not isinstance(source_grounding, dict):
+        source_grounding = {}
+
+    transport_status = str(transport_policy.get("status") or "not_available")
+    evidence_boundary_status = str(
+        evidence_boundary.get("status") or "not_available"
+    )
+    source_content_status = str(source_trust.get("status") or "not_available")
+    grounding_status = str(source_grounding.get("status") or "not_available")
+    replayable_sources = _safe_non_negative_count(
+        source_trust.get("replayable_source_count")
+    )
+    content_evidence = _safe_non_negative_count(
+        source_trust.get("content_evidence_count")
+    )
+    lexically_grounded_sources = _safe_non_negative_count(
+        source_grounding.get("lexically_grounded_source_count")
+    )
+    source_count = _safe_non_negative_count(source_trust.get("source_count"))
+    semantic_verified = False
+    raw_payload_retention = evidence_boundary.get("raw_payload_retention")
+    if not isinstance(raw_payload_retention, dict):
+        raw_payload_retention = {}
+    bounded_context_audit_ready = (
+        transport_status == "audit_grade"
+        and content_evidence > 0
+        and evidence_boundary_status
+        in {"bounded_redacted_replay_evidence", "metadata_only_or_hash_evidence"}
+    )
+    full_replay_ready = (
+        transport_status == "audit_grade"
+        and replayable_sources > 0
+        and bool(raw_payload_retention.get("provider_payload_retained"))
+        and semantic_verified
+    )
+
+    if transport_status == "audit_grade" and replayable_sources > 0:
+        status = "audit_grade_bounded_replay_evidence"
+    elif transport_status == "audit_grade" and content_evidence > 0:
+        status = "audit_grade_bounded_snapshot_evidence"
+    elif transport_status == "audit_grade":
+        status = "audit_grade_transport_without_source_content_evidence"
+    elif transport_status == "degraded" and content_evidence > 0:
+        status = "degraded_transport_with_bounded_source_evidence"
+    elif transport_status == "degraded":
+        status = "degraded_transport_without_source_content_evidence"
+    else:
+        status = "unauditable_retrieval_context"
+
+    issues: list[str] = []
+    issues.extend(
+        issue
+        for issue in transport_policy.get("issues", [])
+        if isinstance(issue, str)
+    )
+    issues.extend(
+        issue
+        for issue in evidence_boundary.get("issues", [])
+        if isinstance(issue, str)
+    )
+    issues.extend(
+        issue for issue in source_trust.get("issues", []) if isinstance(issue, str)
+    )
+    if not bounded_context_audit_ready:
+        issues.append("bounded_context_audit_not_ready")
+    if replayable_sources == 0:
+        issues.append("no_replayable_source_payload_artifacts")
+    if content_evidence == 0:
+        issues.append("no_source_content_evidence")
+    if source_count and lexically_grounded_sources == 0:
+        issues.append("no_lexically_grounded_sources")
+    issues.append("prompt_context_is_untrusted_evidence")
+    if not semantic_verified:
+        issues.append("semantic_verification_not_available")
+
+    return {
+        "schema": RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA,
+        "status": status,
+        "bounded_context_audit_ready": bounded_context_audit_ready,
+        "full_replay_ready": full_replay_ready,
+        "prompt_context_trust_policy": event.get(
+            "trust_policy",
+            RETRIEVAL_TRUST_POLICY,
+        ),
+        "prompt_context_authoritative": bool(event.get("authoritative", False)),
+        "transport_status": transport_status,
+        "evidence_boundary_status": evidence_boundary_status,
+        "source_content_status": source_content_status,
+        "source_grounding_status": grounding_status,
+        "source_count": source_count,
+        "content_evidence_count": content_evidence,
+        "replayable_source_count": replayable_sources,
+        "lexically_grounded_source_count": lexically_grounded_sources,
+        "semantic_verified": semantic_verified,
+        "issues": sorted(set(issues)),
+        "limitations": [
+            "retrieval_context_remains_untrusted_prompt_evidence",
+            "bounded_redacted_or_hash_evidence_not_full_raw_replay",
             "semantic_meaning_not_verified",
         ],
     }

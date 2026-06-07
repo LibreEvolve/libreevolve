@@ -2613,6 +2613,14 @@ content evidence. Query events also carry
 record stating that raw provider/source payloads and TLS certificate chains are
 not retained, semantic content is not verified, and reproducibility is limited
 to redacted byte-budgeted artifacts, hashes, and bounded transport metadata.
+Successful query events also include
+`libreevolve.retrieval_context_audit_policy.v1`, which classifies the exact
+prompt-visible retrieval context as audit-grade bounded replay evidence,
+audit-grade bounded snapshot evidence, degraded evidence, or unauditable
+context while keeping `authoritative: false` and recording that semantic
+verification is unavailable. Active-context metadata carries the same compact
+classification so candidate prompts can be linked back to the retained
+transport, source-content, grounding, and evidence-boundary states.
 Retrieval events and cache snapshots retain bounded/redacted provider-result
 snapshots with raw/stored hashes and redaction/truncation metadata by default.
 Set

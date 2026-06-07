@@ -14736,3 +14736,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     discovery.
   - Verification: focused config and ensemble tests cover invalid reserves,
     normalized backend specs, pre-call enforcement, and call telemetry.
+
+- [x] Add retrieval context audit policy classification.
+  - Spec evidence: retrieval context can shape generated mutations, so prompt
+    provenance should say whether the active retrieval context has bounded
+    replay evidence, only bounded snapshots, degraded evidence, or unauditable
+    evidence.
+  - Status: successful retrieval events now include
+    `libreevolve.retrieval_context_audit_policy.v1`, which links transport,
+    source-content trust, evidence-boundary, and lexical-grounding states for
+    the exact prompt-visible retrieval synthesis while preserving
+    non-authoritative `untrusted_evidence_v1` semantics. Active-context
+    metadata carries the compact classification.
+  - Remaining gap: this does not persist unbounded raw provider/source payloads,
+    retain TLS certificate chains, or semantically verify source content.
+  - Verification: focused DeepResearch tests cover default arXiv bounded
+    snapshot evidence, unauditable custom string retrieval, and custom HTTPS
+    transport plus replayable redacted source payload artifacts.

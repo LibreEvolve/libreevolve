@@ -9910,3 +9910,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider-tokenizer packing or live provider context/pricing discovery.
   - Verification: focused config and ensemble tests cover validation,
     normalized metadata, pre-call enforcement, and telemetry.
+
+- [x] Add paper-visible retrieval context audit classification.
+  - Paper evidence: external retrieval context can influence candidate
+    mutations, so paper-level provenance needs to distinguish bounded
+    replay/snapshot evidence from degraded or unauditable prompt context.
+  - Status: successful retrieval events and active-context metadata now expose
+    `libreevolve.retrieval_context_audit_policy.v1`, linking the exact
+    prompt-visible retrieval synthesis to transport, source-content trust,
+    evidence-boundary, and lexical-grounding states while keeping retrieval
+    text non-authoritative.
+  - Remaining paper gap: unbounded raw provider/source payloads, TLS
+    certificate chains, semantic source-content verification, and
+    DeepEvolve-style hypothesis refinement remain open.
+  - Verification: focused DeepResearch tests cover default arXiv bounded
+    snapshot evidence, unauditable custom string retrieval, and custom HTTPS
+    transport plus replayable redacted source payload artifacts.

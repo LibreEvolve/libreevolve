@@ -543,18 +543,23 @@ Primary evidence:
     that raw provider/source payloads, TLS certificate chains, and semantic
     verification are outside the current retained-evidence boundary while
     linking payload-artifact, source-content, source-grounding, and transport
-    evidence states.
-  - Required result: add tests proving default and
-    custom providers either supply enough replayable evidence or are marked
-    degraded/unauditable before their context is treated as auditable. The
-    remaining gap is unbounded raw provider-payload persistence, full
+    evidence states. Successful retrieval events now also include
+    `libreevolve.retrieval_context_audit_policy.v1`, which classifies the exact
+    prompt-visible retrieval context as audit-grade bounded replay evidence,
+    audit-grade bounded snapshot evidence, degraded evidence, or unauditable
+    evidence while preserving `authoritative: false`. Focused tests now prove
+    default arXiv bounded-snapshot evidence, unauditable custom string
+    retrieval, and custom HTTPS transport plus replayable redacted source
+    payload artifacts.
+  - Required result: add unbounded raw provider-payload persistence, full
     source-content artifacts beyond the redacted byte-budgeted sidecars,
     replayable source-content verification, retained transport/TLS
     decision evidence, and stronger semantic source verification, not basic
     transport classification, bounded retained-source snapshots, bounded
     provider-result snapshots, query-overlap audit scores, request URL
     redaction, active-context hashes, redacted source-content trust policy, or
-    evidence-boundary policy records with lexical grounding aggregates.
+    evidence-boundary/context-audit policy records with lexical grounding
+    aggregates.
 
 ## Evaluation
 

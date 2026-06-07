@@ -1001,7 +1001,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     `source_grounding_policy` with source counts, lexically grounded source
     counts, and a records hash. Active prompt context links to the same
     grounding aggregate. This is deterministic lexical provenance, not semantic
-    source verification.
+    source verification. Query events now also include
+    `libreevolve.retrieval_context_audit_policy.v1`, which ties the exact
+    prompt-visible retrieval context to the retained transport,
+    source-content, evidence-boundary, and grounding states and classifies it
+    as audit-grade bounded replay evidence, audit-grade bounded snapshot
+    evidence, degraded evidence, or unauditable evidence while still marking it
+    as untrusted, non-authoritative prompt context. Focused tests cover default
+    arXiv bounded-snapshot evidence, unauditable custom string retrieval, and a
+    custom HTTPS provider with replayable redacted source payload artifacts.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,

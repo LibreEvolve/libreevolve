@@ -9,6 +9,7 @@ from libreevolve.plugins.deep_research import (
     MAX_RETRIEVAL_PAYLOAD_ARTIFACTS,
     MAX_RETRIEVAL_RESPONSE_BYTES,
     MAX_RETRIEVAL_SOURCE_CONTENT_CHARS,
+    RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA,
     RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
     RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
     RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
@@ -478,6 +479,82 @@ def test_cache_snapshot_persists_redacted_provider_result_snapshot(tmp_path):
     assert metadata["payload_artifact_count"] == 2
     assert metadata["retained_payload_artifact_count"] == 2
     assert len(metadata["payload_artifacts_sha256"]) == 64
+
+
+def test_custom_provider_supplied_transport_and_payload_artifacts_are_bounded_auditable(
+    tmp_path,
+):
+    def search(query):
+        return {
+            "status": "ok",
+            "provider": "custom-index",
+            "query_url": "https://retrieval.example/search?q=evolution",
+            "transport": {
+                "request": {
+                    "scheme": "https",
+                    "host": "retrieval.example",
+                    "path": "/search",
+                    "sanitized_url": "https://retrieval.example/search",
+                },
+                "final": {
+                    "scheme": "https",
+                    "host": "retrieval.example",
+                    "path": "/search",
+                    "sanitized_url": "https://retrieval.example/search",
+                },
+                "redirected": False,
+                "status_code": 200,
+                "payload_sha256": "a" * 64,
+            },
+            "synthesis": "evolutionary fitness payload source",
+            "sources": [
+                {
+                    "id": "paper-1",
+                    "url": "https://retrieval.example/paper-1",
+                    "title": "Evolutionary fitness payload source",
+                    "summary": "Fitness optimization evidence for program evolution.",
+                }
+            ],
+        }
+
+    plugin = DeepResearchPlugin(search_fn=search, cache_dir=tmp_path, search_every=1)
+    db = MagicMock()
+    db.best.return_value = _p()
+
+    plugin.on_generation_start(1, db)
+
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    context_audit = event["context_audit_policy"]
+    assert event["provider"] == "custom-index"
+    assert event["transport_policy"]["status"] == "audit_grade"
+    assert event["source_content_trust_policy"]["status"] == (
+        "replayable_redacted_payload_artifacts"
+    )
+    assert context_audit["schema"] == RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA
+    assert context_audit["status"] == "audit_grade_bounded_replay_evidence"
+    assert context_audit["bounded_context_audit_ready"] is True
+    assert context_audit["full_replay_ready"] is False
+    assert context_audit["transport_status"] == "audit_grade"
+    assert context_audit["evidence_boundary_status"] == (
+        "bounded_redacted_replay_evidence"
+    )
+    assert context_audit["source_content_status"] == (
+        "replayable_redacted_payload_artifacts"
+    )
+    assert context_audit["content_evidence_count"] == 1
+    assert context_audit["replayable_source_count"] == 1
+    assert context_audit["semantic_verified"] is False
+    assert "bounded_context_audit_not_ready" not in context_audit["issues"]
+    assert "prompt_context_is_untrusted_evidence" in context_audit["issues"]
+    assert "semantic_verification_not_available" in context_audit["issues"]
+    active = plugin.prompt_context_metadata()["active_context"]
+    assert active["context_audit_policy"]["schema"] == (
+        RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA
+    )
+    assert active["context_audit_policy"]["status"] == (
+        "audit_grade_bounded_replay_evidence"
+    )
+    assert active["context_audit_policy"]["bounded_context_audit_ready"] is True
 
 
 def test_payload_artifact_omits_text_when_redacted_payload_exceeds_budget(tmp_path):
@@ -1110,6 +1187,19 @@ def test_default_plugin_records_arxiv_sources():
     assert event["transport_policy"]["payload_integrity"] == "observed_hash"
     assert event["transport_policy"]["failure_classification"] == "none"
     assert event["transport_policy"]["issues"] == []
+    context_audit = event["context_audit_policy"]
+    assert context_audit["schema"] == RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA
+    assert context_audit["status"] == "audit_grade_bounded_snapshot_evidence"
+    assert context_audit["bounded_context_audit_ready"] is True
+    assert context_audit["full_replay_ready"] is False
+    assert context_audit["transport_status"] == "audit_grade"
+    assert context_audit["evidence_boundary_status"] == "metadata_only_or_hash_evidence"
+    assert context_audit["source_content_status"] == "bounded_or_hash_only_content_evidence"
+    assert context_audit["content_evidence_count"] == 1
+    assert context_audit["replayable_source_count"] == 0
+    assert context_audit["prompt_context_authoritative"] is False
+    assert "prompt_context_is_untrusted_evidence" in context_audit["issues"]
+    assert "semantic_verification_not_available" in context_audit["issues"]
     assert event["sources"][0]["id"] == "http://arxiv.org/abs/1234.56789v1"
     assert event["sources"][0]["rank"] == 1
     assert event["sources"][0]["provider_rank"] == 1
@@ -1383,6 +1473,16 @@ def test_custom_search_fn_overrides_default():
     assert event["transport_policy"]["failure_classification"] == "none"
     assert "missing_transport_metadata" in event["transport_policy"]["issues"]
     assert "missing_request_metadata" in event["transport_policy"]["issues"]
+    context_audit = event["context_audit_policy"]
+    assert context_audit["schema"] == RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA
+    assert context_audit["status"] == "unauditable_retrieval_context"
+    assert context_audit["bounded_context_audit_ready"] is False
+    assert context_audit["full_replay_ready"] is False
+    assert context_audit["transport_status"] == "unauditable"
+    assert context_audit["source_content_status"] == "not_available"
+    assert "bounded_context_audit_not_ready" in context_audit["issues"]
+    assert "missing_transport_metadata" in context_audit["issues"]
+    assert "no_source_content_evidence" in context_audit["issues"]
 
 
 def test_custom_instruction_like_retrieval_is_wrapped_as_untrusted_evidence():

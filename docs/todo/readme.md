@@ -50,6 +50,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims current token/configured-cost budget stops nor
     overclaims AlphaEvolve-style executed ablations.
 
+- [ ] Keep README matrix-publication wording scoped to one checked Strassen
+  baseline versus full Appendix A discovery.
+  - Spec evidence: AlphaEvolve Appendix A reports a matrix-multiplication
+    target suite with discovered algorithms, exact constructions, and
+    accompanying export/notebook artifacts; a single checked baseline bundle is
+    not evidence that LibreEvolve discovered or exported the full suite.
+  - Current evidence: README now says
+    `write_strassen_2x2_publication_bundle()` emits a concrete checked
+    Strassen bundle for registered `mm_2x2x2` with canonical algorithm,
+    certificate, notebook, report, and artifact-inventory files, while also
+    stating that this is a reproducible baseline artifact and not evidence that
+    LibreEvolve discovered or exported the full Appendix A target suite.
+    Matching paper TODO and paper-index entries now make the same distinction.
+  - Required result: when real tensor-decomposition benchmark runs emit
+    discovered algorithms, certificates, notebooks, or publication bundles
+    across Appendix A targets, update README, ROADMAP, papers index, and
+    code/paper TODO entries together so README neither underclaims the checked
+    Strassen baseline nor overclaims AlphaEvolve-comparable discovery coverage.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

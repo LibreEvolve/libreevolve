@@ -1274,16 +1274,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     the shipped `matrix_multiplication` smoke fixture: negative-fixture JSON,
     detector log, hardening report, artifact inventory, summary, and
     smoke-scope validation, all while preserving `alphaevolve_comparable:
-    false`.
+    false`. `alphaevolve_appendix_b.json` enumerates the thirteen Appendix B
+    constructive-math families, but it is still a coverage/status registry:
+    twelve families are `planned`, every paper-result family keeps
+    `target_baseline.value` null, and its construction/certificate artifact
+    schemas are labels for expected evidence rather than executable validators,
+    reported construction payloads, SOTA numeric thresholds, or verification
+    scripts.
   - Required result: distinguish smoke examples from benchmark fixtures in docs,
     add operation/rank-aware matrix benchmark validation beyond the current
-    2x2 smoke checks, connect hardening reports and artifact schemas for
-    geometric constructions, and create repeatable benchmark reports tied to
-    AlphaEvolve target families. The remaining paper gap is generating those
-    anti-gaming evidence files from benchmark-grade tensor/geometric fixtures,
-    not emitting matrix smoke hardening evidence, verifying declared hardening
-    files once a report names them, or preventing declared hardening evidence
-    from overriding the smoke-only scope registry.
+    2x2 smoke checks, connect hardening reports and executable artifact/
+    certificate validators for geometric and constructive-math constructions,
+    and create repeatable benchmark reports tied to AlphaEvolve target
+    families. The remaining paper gap is generating those anti-gaming evidence
+    files from benchmark-grade tensor/geometric/constructive-math fixtures, not
+    emitting matrix smoke hardening evidence, verifying declared hardening files
+    once a report names them, or preventing declared hardening evidence from
+    overriding the smoke-only scope registry.
 
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A

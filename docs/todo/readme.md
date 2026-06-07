@@ -213,13 +213,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Matching roadmap/paper/code TODOs distinguish the checked matrix smoke
     hardening bundle, which preserves `alphaevolve_comparable: false`, from
     still-missing benchmark-grade tensor/geometric/compiler/systems fixtures
-    with real randomized or exhaustive anti-gaming evidence.
+    with real randomized or exhaustive anti-gaming evidence. Matching paper and
+    code TODOs also mark the Appendix B registry as a family/status ledger:
+    paper-result families still have null target-baseline values, and
+    construction/certificate artifact-schema strings are not executable
+    validators, reported constructions, SOTA thresholds, or verifier scripts.
   - Required result: when real target-family benchmark runners emit
     benchmark-grade hardening reports, negative fixtures, detector logs, and
-    artifact inventories, update README, ROADMAP, papers index, and code/paper
-    TODO entries together so README neither underclaims the checked smoke
-    hardening evidence nor overclaims AlphaEvolve-comparable benchmark
-    hardening.
+    artifact inventories, and when Appendix B families gain executable
+    construction/certificate validators plus target baselines, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    neither underclaims the checked smoke hardening evidence nor overclaims
+    AlphaEvolve-comparable benchmark hardening.
 
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.

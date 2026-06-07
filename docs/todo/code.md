@@ -1208,13 +1208,20 @@ Primary evidence:
     `validate_benchmark_evidence_scope()` now cross-checks hardening reports
     against the matching scope record and optional hardening artifact inventory,
     rejecting smoke-only example promotion, paper-claim scope mismatches, and
-    inconsistent inventory evidence.
+    inconsistent inventory evidence. The checked Appendix B registry is still a
+    family-coverage ledger rather than a constructive-math benchmark contract:
+    twelve families remain `planned`, every paper-result family has
+    `target_baseline.value: null`, and the `artifact_schema` construction/
+    certificate strings describe expected artifact kinds rather than executable
+    validators, exact construction payloads, SOTA numeric targets, or verifier
+    scripts.
   - Required result: connect benchmark-grade fixtures beyond smoke validators
     to `libreevolve.benchmark_hardening.v1` and
     `libreevolve.example_benchmark_scope.v1`; emit benchmark-grade artifact
-    files, repeated-seed evaluation, target/SOTA baselines, benchmark reports
-    suitable for comparing AlphaEvolve-alignment features, and real anti-gaming
-    fixtures for benchmark-grade operation/rank discovery. The matrix smoke
+    files, repeated-seed evaluation, target/SOTA baselines, executable
+    construction/certificate validators, benchmark reports suitable for
+    comparing AlphaEvolve-alignment features, and real anti-gaming fixtures for
+    benchmark-grade operation/rank discovery. The matrix smoke
     fixture now has `write_matrix_smoke_hardening_bundle()`, which emits
     concrete negative-fixture files, detector-log, hardening report,
     artifact inventory, summary, and smoke-scope validation evidence while

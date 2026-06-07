@@ -857,17 +857,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     report-contract surfaces. The Appendix A matrix registry records target
     identities, dimensions, and rank/outcome metadata, not target tensors,
     discovered decompositions, coefficient data, per-target certificates,
-    notebook exports, or construction provenance. Current surfaces are not
-    implemented tensor-decomposition suites, kissing-number/circle-packing
-    benchmark families, constructive-math validators, or
+    notebook exports, or construction provenance. The Appendix B registry is
+    likewise a family/status ledger: planned paper-result families keep null
+    target-baseline values, and construction/certificate artifact-schema labels
+    are not executable validators, reported constructions, SOTA thresholds, or
+    verifier scripts. Current surfaces are not implemented
+    tensor-decomposition suites, kissing-number/circle-packing benchmark
+    families, constructive-math validators, or
     compiler/hardware/kernel/scheduling fixtures.
   - Required result: when real target-suite fixtures, validators, repeated-seed
     runs, target/SOTA baselines, target tensors, coefficient/certificate
-    artifacts, and artifact/report emitters land for matrix, constructive-math,
-    geometric, or systems domains, update the roadmap, README, papers index,
-    and code/paper TODO entries together so roadmap wording neither underclaims
-    current registries/smoke fixtures nor overclaims AlphaEvolve-scale
-    benchmark coverage.
+    artifacts, executable construction/certificate checks, and artifact/report
+    emitters land for matrix, constructive-math, geometric, or systems domains,
+    update the roadmap, README, papers index, and code/paper TODO entries
+    together so roadmap wording neither underclaims current registries/smoke
+    fixtures nor overclaims AlphaEvolve-scale benchmark coverage.
 
 - [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
       expected artifacts.

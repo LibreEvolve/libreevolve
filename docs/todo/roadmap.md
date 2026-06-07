@@ -61,3 +61,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rate capture, or account/model-specific pricing evidence lands, update the
     roadmap, README, papers index, and code/paper TODO entries together so they
     neither underclaim configured cost accounting nor overclaim live pricing.
+
+- [ ] Keep feedback-calibration roadmap wording scoped to report contracts
+  versus executed calibration fixtures.
+  - Spec evidence: AlphaEvolve-style feedback graders need calibration evidence
+    from real reviewer/task suites, not only validators for declared reports.
+  - Current evidence: `libreevolve.llm_feedback_calibration.v1` and its
+    artifact-inventory contract validate declared multi-task calibration
+    evidence and safe artifact references once a report exists. The roadmap
+    now scopes the follow-up to emitting real reports and grader ablation
+    fixtures.
+  - Required result: when a runtime fixture or benchmark script emits real
+    feedback-calibration reports, update the roadmap, README, papers index, and
+    code/paper TODO entries together so they neither underclaim the report
+    contract nor overclaim executed calibration evidence.

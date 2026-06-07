@@ -352,4 +352,4 @@ is not yet an AlphaEvolve reproduction.
    feedback resurfacing.
 2. Add one non-toy benchmark run fixture with expected artifacts.
 3. Add workspace resume coverage beyond current `best_workspace/` export.
-4. Add LLM feedback calibration reports and grader ablation fixtures.
+4. Emit real LLM feedback calibration reports and grader ablation fixtures.

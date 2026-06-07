@@ -680,8 +680,11 @@ telemetry, with role-scoped timeout rules for `mutation`, `critique`,
 `feedback:*`, and `meta_prompt`. When
 `llm_role_failure_quarantine_after` configures matching exact roles, those
 timeout rules also declare `quarantine` actions and `quarantine_record`
-artifact evidence. The record is still not an SDK cancellation token or a
-timeout-specific stop policy. Completed runtime and aborted runtime records include
+artifact evidence. The record also includes
+`libreevolve.provider_cancellation_observations.v1` from the runtime LLM
+scheduler snapshot, with timeout-failure counts by role, configured quarantine
+thresholds, and quarantined backend counts when observed. The record is still
+not an SDK cancellation handle or a timeout-specific stop policy. Completed runtime and aborted runtime records include
 `runtime.wall_clock` with
 `schema: "utc_run_timestamps_v1"`, UTC `started_at`, `updated_at`,
 `finished_at`, and status-specific `completed_at` or `aborted_at` fields.
@@ -2513,8 +2516,10 @@ the artifact list. Provider-request and ensemble-deadline rules are scoped to
 the loop's current LLM role surfaces: `mutation`, `critique`, `feedback:*`,
 and `meta_prompt`. Rules for scopes with configured
 `llm_role_failure_quarantine_after` thresholds also declare quarantine action
-and `quarantine_record` evidence. The record deliberately reports
-`hard_cancel_ready: false` until provider SDK cancellation tokens and
+and `quarantine_record` evidence. The record also summarizes observed
+timeout-failure and role/backend quarantine state from `runtime.llm_scheduler`.
+It deliberately reports
+`hard_cancel_ready: false` until provider SDK cancellation handles and
 timeout-driven stop policies are implemented.
 Bundled adapters use configured `llm_prompt_roles` entries to add structured
 role instructions before the rendered user prompt: OpenAI receives

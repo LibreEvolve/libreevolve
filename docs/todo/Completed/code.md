@@ -14811,3 +14811,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused ensemble tests cover success response retention and
     failed provider-error retention aggregation, including redaction of
     sensitive-looking error text.
+
+- [x] Add runtime provider-cancellation observation evidence.
+  - Spec evidence: AlphaEvolve-style long-running searches need provider
+    timeout and quarantine evidence tied to actual scheduler state, not only
+    configured policy rules.
+  - Status: `runtime.provider_cancellation_policy` now includes
+    `libreevolve.provider_cancellation_observations.v1`, derived from the
+    validated `runtime.llm_scheduler` snapshot. The observation record reports
+    timeout failures by role, total timeout failures, configured
+    role/backend-quarantine thresholds, observed quarantined backend counts by
+    role, and explicit unsupported markers for SDK hard cancellation and
+    timeout-driven stop enforcement.
+  - Remaining gap: this is audit evidence only; provider SDK hard-cancel
+    handles and timeout-specific stop policies remain unimplemented.
+  - Verification: focused loop tests cover unavailable scheduler observations
+    and observed timeout/quarantine state, and cancellation-policy tests still
+    validate the policy contract.

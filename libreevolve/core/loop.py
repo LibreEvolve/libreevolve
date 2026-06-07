@@ -1723,7 +1723,8 @@ def _attach_runtime_summaries(
     runtime["llm_provider_diagnostics"] = _runtime_llm_provider_diagnostics(llm)
     runtime["lineage_replay_policy"] = _runtime_lineage_replay_policy()
     runtime["provider_cancellation_policy"] = _runtime_provider_cancellation_policy(
-        config
+        config,
+        llm_scheduler,
     )
     retrieval_summary = _retrieval_manifest_summary(db.all_programs())
     if retrieval_summary:
@@ -2787,7 +2788,10 @@ def _restore_llm_scheduler_state_snapshot(
     return restore_runtime_llm_scheduler_state_snapshot(llm, snapshot)
 
 
-def _runtime_provider_cancellation_policy(config: Config) -> dict:
+def _runtime_provider_cancellation_policy(
+    config: Config,
+    llm_scheduler_record: Mapping[str, object] | None = None,
+) -> dict:
     provider_timeout_rules = [
         _provider_timeout_policy_rule(role, config)
         for role in ("mutation", "critique", "feedback:*", "meta_prompt")
@@ -2839,6 +2843,9 @@ def _runtime_provider_cancellation_policy(config: Config) -> dict:
     return {
         "status": "valid" if validation.ok else "invalid",
         "policy": policy,
+        "observations": _runtime_provider_cancellation_observations(
+            llm_scheduler_record
+        ),
         "validation": {
             "ok": validation.ok,
             "hard_cancel_ready": validation.hard_cancel_ready,
@@ -2849,6 +2856,102 @@ def _runtime_provider_cancellation_policy(config: Config) -> dict:
                 for issue in validation.issues
             ],
         },
+    }
+
+
+def _runtime_provider_cancellation_observations(
+    llm_scheduler_record: Mapping[str, object] | None,
+) -> dict:
+    base = {
+        "schema": "libreevolve.provider_cancellation_observations.v1",
+        "source": "runtime.llm_scheduler",
+    }
+    if not isinstance(llm_scheduler_record, Mapping):
+        return {
+            **base,
+            "status": "unavailable",
+            "reason": "llm_scheduler_snapshot_missing",
+        }
+    status = llm_scheduler_record.get("status")
+    if status != "snapshot":
+        reason = llm_scheduler_record.get("reason")
+        return {
+            **base,
+            "status": status if isinstance(status, str) else "unavailable",
+            "reason": (
+                reason
+                if isinstance(reason, str)
+                else "llm_scheduler_snapshot_unavailable"
+            ),
+        }
+    state = llm_scheduler_record.get("state")
+    if not isinstance(state, Mapping):
+        return {
+            **base,
+            "status": "invalid",
+            "reason": "llm_scheduler_state_missing",
+        }
+    role_accounting = state.get("role_accounting")
+    if not isinstance(role_accounting, Mapping):
+        role_accounting = {}
+    timeout_failures_by_role: dict[str, int] = {}
+    for raw_role, raw_accounting in role_accounting.items():
+        if not isinstance(raw_role, str) or not isinstance(raw_accounting, Mapping):
+            continue
+        timeout_failures = raw_accounting.get("timeout_failures")
+        if (
+            isinstance(timeout_failures, int)
+            and not isinstance(timeout_failures, bool)
+            and timeout_failures > 0
+        ):
+            timeout_failures_by_role[raw_role] = timeout_failures
+    quarantine_state = state.get("provider_failure_policy_state")
+    quarantine_thresholds: dict[str, int] = {}
+    quarantined_backends_by_role: dict[str, int] = {}
+    total_quarantined_backends = 0
+    if isinstance(quarantine_state, Mapping):
+        raw_thresholds = quarantine_state.get("role_quarantine_after")
+        if isinstance(raw_thresholds, Mapping):
+            for role, threshold in raw_thresholds.items():
+                if (
+                    isinstance(role, str)
+                    and isinstance(threshold, int)
+                    and not isinstance(threshold, bool)
+                    and threshold > 0
+                ):
+                    quarantine_thresholds[role] = threshold
+        roles = quarantine_state.get("roles")
+        if isinstance(roles, Mapping):
+            for role, role_state in roles.items():
+                if not isinstance(role, str) or not isinstance(role_state, Mapping):
+                    continue
+                backends = role_state.get("backends")
+                if not isinstance(backends, list):
+                    continue
+                count = sum(
+                    1
+                    for item in backends
+                    if isinstance(item, Mapping) and item.get("quarantined") is True
+                )
+                if count > 0:
+                    quarantined_backends_by_role[role] = count
+                    total_quarantined_backends += count
+    return {
+        **base,
+        "status": "snapshot",
+        "timeout_failures_total": sum(timeout_failures_by_role.values()),
+        "timeout_failures_by_role": dict(sorted(timeout_failures_by_role.items())),
+        "quarantine_thresholds": dict(sorted(quarantine_thresholds.items())),
+        "quarantined_backend_count": total_quarantined_backends,
+        "quarantined_backends_by_role": dict(
+            sorted(quarantined_backends_by_role.items())
+        ),
+        "hard_cancel_runtime_enforcement": "unsupported",
+        "timeout_stop_runtime_enforcement": "unsupported",
+        "remaining_gap": (
+            "timeout observations are audit evidence only; SDK hard "
+            "cancellation handles and timeout-driven stop policies remain open"
+        ),
     }
 
 

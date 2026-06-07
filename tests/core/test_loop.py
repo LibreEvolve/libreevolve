@@ -36,6 +36,7 @@ from libreevolve.core.loop import (
     restore_runtime_rng_state_snapshot,
     _runtime_artifact_pointers,
     _runtime_llm_scheduler_state,
+    _runtime_provider_cancellation_policy,
     _runtime_rng_state,
     _workspace_sha256,
     _generate_with_budget,
@@ -939,6 +940,12 @@ def test_completed_runtime_records_valid_provider_cancellation_policy():
     assert policy["configured_limits"]["llm_call_timeout_sec"] == 0.25
     assert policy["configured_limits"]["max_runtime_seconds"] == 10.0
     assert policy["configured_limits"]["llm_role_failure_quarantine_after"] == {}
+    assert record["observations"] == {
+        "schema": "libreevolve.provider_cancellation_observations.v1",
+        "source": "runtime.llm_scheduler",
+        "status": "not_initialized",
+        "reason": "no_mutation_llm_was_constructed",
+    }
     assert policy["role_scope"] == {
         "policy": "libreevolve.llm_timeout_role_scope.v1",
         "roles": ["mutation", "critique", "feedback:*", "meta_prompt"],
@@ -1026,6 +1033,51 @@ def test_provider_cancellation_policy_records_configured_timeout_quarantine():
         "timeout_log",
         "quarantine_record",
         "budget_stop_record",
+    }
+
+
+def test_provider_cancellation_policy_observes_timeout_quarantine_state():
+    class TimeoutBackend:
+        name = "timeout/model"
+        api_mode = "chat"
+
+        def generate(self, prompt, **kwargs):
+            raise TimeoutError("provider timeout")
+
+    llm = LLMEnsemble(
+        [TimeoutBackend()],
+        fallback=False,
+        role_failure_quarantine_after={"mutation": 1},
+    )
+    with pytest.raises(TimeoutError):
+        llm.generate("prompt", role="mutation")
+
+    scheduler = _runtime_llm_scheduler_state(llm)
+    record = _runtime_provider_cancellation_policy(
+        Config(
+            llm_call_timeout_sec=0.25,
+            llm_role_failure_quarantine_after={"mutation": 1},
+        ),
+        scheduler,
+    )
+
+    observations = record["observations"]
+    assert record["status"] == "valid"
+    assert observations == {
+        "schema": "libreevolve.provider_cancellation_observations.v1",
+        "source": "runtime.llm_scheduler",
+        "status": "snapshot",
+        "timeout_failures_total": 1,
+        "timeout_failures_by_role": {"mutation": 1},
+        "quarantine_thresholds": {"mutation": 1},
+        "quarantined_backend_count": 1,
+        "quarantined_backends_by_role": {"mutation": 1},
+        "hard_cancel_runtime_enforcement": "unsupported",
+        "timeout_stop_runtime_enforcement": "unsupported",
+        "remaining_gap": (
+            "timeout observations are audit evidence only; SDK hard "
+            "cancellation handles and timeout-driven stop policies remain open"
+        ),
     }
 
 

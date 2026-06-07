@@ -171,7 +171,9 @@ Current behavior:
   `llm_role_failure_quarantine_after` is configured for a role, exhausted
   timeout failures also participate in that role/backend quarantine policy and
   runtime cancellation-policy manifests declare the matching quarantine action
-  and evidence artifact. There is still no hard provider cancellation token or
+  and evidence artifact. Runtime cancellation-policy manifests also summarize
+  observed timeout failures and quarantined backend counts from the LLM
+  scheduler snapshot. There is still no hard provider cancellation handle or
   timeout-specific stop policy.
 - empty, whitespace-only, non-text, oversized, refusal, or tool-call-only
   backend response payloads are recorded as failed ensemble calls with

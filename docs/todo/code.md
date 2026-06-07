@@ -1095,6 +1095,11 @@ Primary evidence:
     `llm_role_failure_quarantine_after` configures a matching exact role,
     reflecting the ensemble's role/backend failure-threshold quarantine state
     for exhausted timeout failures.
+    Runtime cancellation-policy records now also include
+    `libreevolve.provider_cancellation_observations.v1`, derived from the
+    validated LLM scheduler snapshot, with timeout-failure counts by role,
+    configured quarantine thresholds, and quarantined backend counts when
+    observed.
   - Required result: connect the existing timeout/cancellation policy contract
     to live in-flight provider SDK cancellation, turn timeout categories into
     role-specific stop runtime policy, and add tests that runtime-budget

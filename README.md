@@ -1688,8 +1688,11 @@ Run wall-clock limits are checked between loop steps, not inside synchronous
 provider calls. Mutation, critique, feedback, and meta-prompt requests can use
 configured provider request timeouts and the ensemble `llm_call_timeout_sec`
 wait deadline; deadline-aware `LLMEnsemble` calls are also clamped to the
-remaining `max_runtime_seconds` budget. Hard provider cancellation tokens and
-role-specific timeout/quarantine policy remain future work.
+remaining `max_runtime_seconds` budget. Hard provider cancellation handles and
+role-specific timeout-stop policy remain future work. Runtime cancellation
+policy records include observation evidence from the LLM scheduler snapshot:
+timeout failures by role, configured quarantine thresholds, and quarantined
+backend counts when those surfaces were observed.
 Backend `role` labels, when configured, are manifest-safe live routing lanes:
 matching call roles restrict selection to matching backend metadata, while
 roles with no matching backend fall back to the global bandit path.
@@ -2977,9 +2980,12 @@ stop-run, artifact requirements, required artifact-kind linkage, hard-cancel
 readiness, and hashed cancellation artifacts. Hard-cancel readiness requires a
 stop-run hard-cancel rule with `cancellation_record` artifact evidence. Runtime
 manifests scope provider request-timeout and ensemble-deadline rules to
-`mutation`, `critique`, `feedback:*`, and `meta_prompt` roles. This defines
-policy evidence only; provider SDK hard cancellation and timeout-driven
-stop/quarantine enforcement remain runtime work.
+`mutation`, `critique`, `feedback:*`, and `meta_prompt` roles. They also attach
+`libreevolve.provider_cancellation_observations.v1` from the runtime LLM
+scheduler snapshot, including timeout-failure counts and role/backend
+quarantine observations when available. This defines policy and observation
+evidence only; provider SDK hard cancellation and timeout-driven stop
+enforcement remain runtime work.
 The same command validates
 `libreevolve/problems/benchmarks/alphaevolve_ablations.json`, which defines the
 AlphaEvolve Figure 8 full-system baseline plus the five named component

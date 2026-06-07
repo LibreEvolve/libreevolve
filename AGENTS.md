@@ -30,9 +30,9 @@ libreevolve/
   failure/quarantine JSONL streams, archive_events.jsonl, llm_calls.jsonl,
   prompt_history.jsonl, best.py, best_workspace/, evaluator_artifacts/, and
   plugin_artifacts/ per problem
-- Validator execution runs in temporary local subprocesses, not security
-  sandboxes; CLI startup also imports validators in-process for contract
-  preflight before evaluator timeouts/capture apply
+- Validator execution and CLI/direct contract preflight run in temporary local
+  subprocesses, not security sandboxes; validator modules are not imported in
+  the parent CLI/runtime process during preflight
 - SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`
 - Diff engine strips a single outer markdown fence wrapper automatically
 - VALID_THRESHOLD = 0.0 is the pre-admission eligibility gate. A valid finite

@@ -371,15 +371,20 @@ The returned dict should include:
 The evaluator treats `is_valid` as a required boolean validity gate, not as an
 optimization metric. Evaluator result keys must be strings before transport;
 non-string keys are rejected before JSON serialization can coerce them. The
-evaluator also rejects missing declared metrics, undeclared metrics,
-non-boolean `is_valid`, non-numeric metric values, and non-finite numeric
-values. Rejected evaluator contracts record a bounded diagnostic in
+evaluator also rejects missing declared metrics, undeclared metrics other than
+the reserved `outputs` / `program_output` evidence keys, non-boolean
+`is_valid`, non-numeric metric values, and non-finite numeric values. Rejected
+evaluator contracts record a bounded diagnostic in
 `evaluation.metadata.malformed_metrics` with a machine-readable `reason`, the
-exception type, and a redacted message. Non-scalar return keys such as
-`program_output`, traces, examples, or rich feedback are not first-class
-evaluator attachments yet and are rejected as undeclared metrics. Keep
-diagnostic strings in stdout/stderr, or write structured files under the
-candidate workspace and retain them with `evaluator_artifact_include`.
+exception type, and a redacted message. Reserved `outputs` or `program_output`
+return keys may carry strict-JSON evaluator evidence beside scalar metrics;
+LibreEvolve redacts common secret patterns, hashes and size-accounts the
+payload, stores retained values under `evaluation.metadata.program_outputs`
+when the redacted JSON is at or below the 4,000-character cap, and keeps only
+bounded preview/hash/omission metadata for larger payloads. Other undeclared
+non-scalar return keys remain malformed metrics. Keep large reports, traces,
+plots, or datasets as structured files under the candidate workspace and
+retain them with `evaluator_artifact_include`.
 This declared-metric contract applies to validator-returned JSON. Internal
 framework failures such as diff, syntax, timeout, subprocess, and malformed
 output diagnostics may synthesize only the primary metric plus `is_valid`
@@ -390,10 +395,12 @@ The validator return value is transported through a runner-owned result file,
 not stdout. Validators may print diagnostics before or during `evaluate()`;
 those prints are preserved as diagnostic stdout but cannot replace the returned
 metrics.
-Persisted stdout/stderr is secret-redacted but not size-capped yet. Prompt
-summaries of those fields are truncated later, but run history can still retain
-the full strings. Prefer configured evaluator artifacts for large reports,
-traces, plots, or datasets.
+Persisted stdout/stderr is decoded with replacement diagnostics, redacted by
+the shared secret-pattern grammar, and capped by
+`evaluator_output_max_chars` (`20000` by default) before being stored in
+history. `evaluation.metadata.diagnostic_output` records byte counts,
+replacement counts, truncation flags, and retained character counts. Prefer
+configured evaluator artifacts for large reports, traces, plots, or datasets.
 
 For workspace candidates, the validator subprocess runs with the materialized
 candidate root as `cwd`, adds that root to `sys.path`, and passes the same root
@@ -408,8 +415,8 @@ values such as data paths. Allowlist names are stripped, uppercased,
 deduplicated, and limited to manifest-safe environment labels before they are
 used or persisted. Provider keys loaded through `.env` are not passed unless
 explicitly allowlisted, and persisted stdout/stderr applies the shared
-versioned secret-pattern grammar, including common provider-token shapes,
-without a persisted size cap. Network access is not sandboxed yet.
+versioned secret-pattern grammar, including common provider-token shapes, before
+the evaluator-output cap. Network access is not sandboxed yet.
 
 Validator-created files can be collected before the temporary workspace is
 deleted when `evaluator_artifact_include` is configured. Include/exclude

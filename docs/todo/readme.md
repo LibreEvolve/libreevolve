@@ -9,6 +9,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README provider-token prompt-packing wording scoped to implemented
+  mutation and final-prompt boundaries.
+  - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections
+    and context surfaces to fit model-specific context windows without
+    silently dropping important evaluator, parent, inspiration, or retrieval
+    evidence.
+  - Current evidence: README now distinguishes implemented backend
+    context-window heuristic capacity, automatic mutation-path local OpenAI
+    tokenizer discovery, and role-scoped final-prompt exact token counting
+    from the still-open provider-token section-priority packing outside
+    mutation prompts and exact counters across non-OpenAI provider families.
+    Code evidence includes `core.loop.discover_prompt_token_counter(...)`
+    before `PromptSampler` construction, `LLMEnsemble._prompt_token_counter_for_role(...)`
+    before final prompt validation, and tests covering mutation diagnostics and
+    critique-role final-prompt counter telemetry.
+  - Required result: when selected-backend provider-token section packing
+    covers critique, feedback, meta-prompt, registry-created, custom, and
+    retrieval/context/plugin/failure-memory sections across provider families,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README neither underclaims automatic OpenAI counter discovery nor
+    overclaims full AlphaEvolve-grade context-window fitting.
+
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

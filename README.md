@@ -735,9 +735,12 @@ applying the final cap, leaving required channels intact and recording the
 packing decisions. The same configured character/estimated-token prompt caps
 are also enforced by `LLMEnsemble.generate()` before backend selection, so
 critique, feedback, meta-prompt, registry-created, and custom backends cannot
-receive oversized prompts through the normal ensemble path. Provider-token
-context accounting, backend context-window budgets, and exact token fitting
-remain prompt-hardening gaps.
+receive oversized prompts through the normal ensemble path. Backend
+context-window metadata can derive heuristic prompt-token capacity, and
+role-scoped final-prompt exact token counting is automatic when all eligible
+backends share a local OpenAI tokenizer. Automatic provider-token
+section-priority packing outside mutation prompts and exact counters across
+non-OpenAI provider families remain prompt-hardening gaps.
 Prompt-visible evaluator stage summaries use tri-state status labels:
 `passed`, `failed`, or `unknown` for missing/restored/malformed state.
 Prompt feedback also renders bounded validator diagnostics for aggregate
@@ -1485,8 +1488,12 @@ model/context-window cap. `LLMEnsemble` combines the global
 calls and records the effective, configured, and selected-backend caps in call
 telemetry. Direct `PromptSampler` callers can provide a manifest-safe
 `prompt_token_counter` to pack optional prompt sections against exact provider
-token counts before final prompt retention; built-in provider tokenizer
-discovery and selected-backend tokenizer wiring are still not automatic.
+token counts before final prompt retention. The normal mutation path can
+discover a shared local OpenAI tokenizer before constructing prompt sections,
+and `LLMEnsemble` performs role-scoped final-prompt counter discovery before
+provider calls. Automatic provider-token section-priority packing outside
+mutation prompts and exact counters across non-OpenAI provider families remain
+open.
 Malformed provider outputs are failed calls, not successful proposals: empty,
 non-text, oversized, refusal, and tool-call-only responses are categorized in
 call telemetry before mutation parsing or candidate admission can see them.

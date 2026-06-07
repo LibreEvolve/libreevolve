@@ -1978,6 +1978,29 @@ Primary evidence:
     before claiming parity with AlphaEvolve's Figure 4/Figure 9 matrix search
     workflow.
 
+- [ ] Add Figure 4 matrix-discovery exhibit provenance.
+  - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix
+    multiplication discovery exhibit: a concrete evolved 4x4
+    tensor-decomposition search-program diff with optimizer, initialization,
+    noise, clipping, and loss changes, tied to the Section 3.1/Table 2 matrix
+    rank-improvement claims.
+  - Current evidence: LibreEvolve tracks Appendix A target/report contracts,
+    checked Strassen bundle evidence, matrix baseline-component TODOs, and
+    Figure 9 sweep-space provenance TODOs. Those cover benchmark/result shape
+    and the Appendix A search-program workflow, but no code/report schema
+    records a Figure 4 exhibit id, exact source diff excerpt artifact/hash,
+    selected target/result-row mapping, caption values, rendering/source
+    parameters, visual/text artifact hashes, or links from the displayed
+    exhibit to decomposition reports, certificates, and companion paper
+    evidence.
+  - Required result: add Figure 4-style matrix exhibit metadata with stable
+    exhibit ids, target ids, exact source/diff excerpt artifacts and hashes,
+    selected Table 2/Appendix A row mappings, rank/baseline/outcome values,
+    rendered figure/text artifacts, and links to matrix report, certificate,
+    notebook, and paper-source evidence so docs distinguish main-text exhibit
+    reproduction from general matrix benchmark readiness and Appendix A
+    Figure 9 sweep evidence.
+
 - [ ] Add matrix scalar-field provenance for real, complex, and characteristic
       claims.
   - Spec evidence: AlphaEvolve Section 3.1 and Table 2 report exact tensor

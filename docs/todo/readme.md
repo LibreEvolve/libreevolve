@@ -467,6 +467,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matrix artifacts alone prove AlphaEvolve Figure 4/Figure 9 search-program
     parity.
 
+- [ ] Keep README Figure 4 matrix-exhibit wording scoped until exhibit
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figure 4 is the main-text matrix discovery
+    exhibit, showing a concrete evolved 4x4 tensor-decomposition search-program
+    diff and tying it to Section 3.1/Table 2 matrix rank-improvement results.
+  - Current evidence: README documents matrix result reports, Appendix A
+    registry checks, checked Strassen baseline evidence, and open
+    near-integrality, scalar-field, baseline, and sweep-space gaps. It does
+    not document Figure 4 exhibit ids, exact source diff excerpt
+    artifacts/hashes, selected matrix target/result-row mappings, caption
+    values, rendered visual/text artifact paths/hashes, rendering parameters,
+    or links from the displayed exhibit to matrix reports, certificates,
+    notebooks, and paper-source evidence.
+  - Required result: when Figure 4 exhibit provenance lands, update README,
+    ROADMAP, papers index, and matching TODOs so README distinguishes
+    reproduced main-text matrix exhibit evidence from general matrix benchmark
+    readiness and Appendix A Figure 9 sweep-space parity.
+
 - [ ] Keep README matrix wording scoped to final reports until
       baseline-component provenance exists.
   - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition search

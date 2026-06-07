@@ -2044,6 +2044,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
     tensor-decomposition search workflow.
 
+- [ ] Track Figure 4 matrix-discovery exhibit provenance as paper evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 4 presents the
+    main-text matrix multiplication discovery exhibit, including a concrete
+    4x4 tensor-decomposition search-program diff and the surrounding
+    Section 3.1/Table 2 matrix rank-improvement context.
+  - Current gap: matrix paper evidence tracks Appendix A target identities,
+    report validation, companion Colab TODOs, near-integrality, scalar-field,
+    baseline, and Figure 9 sweep-space gaps. It does not preserve the
+    paper-facing Figure 4 exhibit as its own evidence object with stable
+    exhibit id, exact source diff excerpt artifact/hash, selected matrix target
+    and result-row links, caption values, visual/text artifact hashes,
+    rendering/source parameters, or links from the displayed figure to report,
+    certificate, notebook, and source-paper artifacts.
+  - Required result: add paper-facing Figure 4 exhibit records and validation:
+    figure/exhibit id, source PDF page/caption location, target ids, exact diff
+    excerpt artifact and hash, Table 2/Appendix A row mappings, rank/baseline
+    values, rendered artifact paths/hashes, and links to decomposition reports,
+    exactness certificates, companion notebook/source evidence, and README/
+    ROADMAP wording that separates main-text exhibit reproduction from general
+    matrix benchmark coverage.
+
 - [ ] Track matrix baseline-component provenance for Section 3.1 workflows.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the
     matrix-decomposition work starts from the problem description and a

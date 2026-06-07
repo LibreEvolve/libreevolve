@@ -630,6 +630,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     persisted lineage-aware resurfacing for programs that excel under different
     metrics.
 
+- [ ] Proposal scoring and semantic hypothesis retrieval.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 2.4.
+  - Requirement: prior ideas and hypotheses should be reusable as searchable
+    evolutionary evidence, with proposal quality and novelty reflected in
+    future selection rather than only attached as candidate metadata.
+  - Partial status: mutation outputs can include bounded `IDEA`, `RATIONALE`,
+    and `HYPOTHESIS` proposal metadata. `runtime.history.hypothesis_index`
+    exposes bounded redacted proposal idea/rationale/hypothesis summaries for
+    valid programs, sorted by scalar selection score/final fitness/generation,
+    and feeds hypothesis evidence into the run-local resurfacing index. Recent
+    proposal-hypothesis terms can also feed DeepResearch retrieval queries.
+  - Current gap: there is no versioned proposal score, calibrated hypothesis
+    quality or novelty signal, embedding/semantic proposal index, cross-run
+    persisted proposal table, or policy that fully governs which proposal
+    fields can influence retrieval, prompting, and archive resurfacing.
+  - Required result: add proposal scoring, semantic/cross-run
+    proposal-hypothesis retrieval, persisted proposal-index tables, and
+    prompt/retrieval/archive policy boundaries before treating proposal
+    metadata as AlphaEvolve-grade idea memory.
+
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: prompt context can include program execution results, outputs,

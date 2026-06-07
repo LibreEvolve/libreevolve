@@ -9,6 +9,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README proposal-memory claims scoped to bounded hypothesis indexes.
+  - Spec evidence: AlphaEvolve-style evolutionary memory should be able to
+    reuse prior proposal ideas, rationales, and hypotheses through scored and
+    semantically searchable idea memory.
+  - Current evidence: README now documents `runtime.history.hypothesis_index`
+    as bounded redacted proposal `idea`/`rationale`/`hypothesis` summaries for
+    valid programs that can feed current-run `resurfacing_index`, while noting
+    that proposal scoring, semantic proposal retrieval, and persisted cross-run
+    hypothesis tables remain open.
+  - Required result: once proposal scoring, semantic/cross-run proposal
+    indexes, or stricter proposal-field influence policy lands, update the
+    README and matching code/paper TODO entries together so the README neither
+    underclaims current proposal metadata capture nor overclaims
+    AlphaEvolve-grade idea memory.
+
 - [ ] Keep README MAP-Elites descriptor claims scoped to insertion-time
   TF-IDF coordinates.
   - Spec evidence: AlphaEvolve-grade quality-diversity search should use

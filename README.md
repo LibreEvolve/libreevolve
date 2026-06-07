@@ -1290,6 +1290,11 @@ diversity/complexity/performance coordinates are inspectable after the run.
 LLM feedback grader, including scores, weighted deltas, discard/error status,
 retention summaries, and bounded text hashes/previews when feedback text is
 retained.
+`runtime.history.hypothesis_index` stores bounded redacted proposal
+`idea`/`rationale`/`hypothesis` summaries for valid programs and can contribute
+current-run hypothesis evidence to `runtime.history.resurfacing_index`.
+Proposal scoring, semantic proposal/hypothesis retrieval, and persisted
+cross-run proposal-index tables remain future work.
 Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.

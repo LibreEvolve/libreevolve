@@ -996,6 +996,26 @@ Primary evidence:
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.
 
+- [ ] Add proposal scoring and semantic proposal-index retrieval beyond
+  bounded hypothesis summaries.
+  - Spec evidence: AlphaEvolve-style idea resurfacing should be able to judge
+    proposal rationales, hypotheses, and prior idea families semantically, not
+    only surface high-fitness programs that happen to carry proposal text.
+  - Current evidence: mutation output can carry bounded `idea`, `rationale`,
+    and `hypothesis` proposal metadata. `runtime.history.hypothesis_index`
+    stores only valid programs with captured proposal metadata, ranks them by
+    archive selection score/final fitness/generation/program id, and retains
+    bounded redacted previews plus hashes for `idea`, `rationale`, and
+    `hypothesis`. `resurfacing_index` can include those hypothesis records, and
+    DeepResearch retrieval query context can use recent proposal-hypothesis
+    terms. These are run-local manifest summaries rebuilt from current
+    history, not persisted semantic indexes or proposal-quality scores.
+  - Required result: add versioned proposal-score records, calibrated
+    proposal-quality and novelty signals, semantic or embedding-backed
+    proposal/hypothesis retrieval, cross-run persisted proposal indexes, and
+    prompt/retrieval/archive policies that state exactly which proposal fields
+    may influence resurfacing and future candidate generation.
+
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs

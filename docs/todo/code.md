@@ -1438,6 +1438,11 @@ Primary evidence:
     descriptive breadth/depth role metadata, live role metadata routing,
     configured role-backend overrides, fallback to global selection without a
     role match, and pull-once initialization before metadata priority.
+    This is not yet AlphaEvolve's Flash/Pro-style scheduler evidence: no
+    runtime policy reserves a low-latency breadth lane for high-volume
+    candidate generation while injecting a stronger depth lane for occasional
+    higher-quality proposals, and no report proves the mix improves search
+    under equal budgets.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for
@@ -1451,8 +1456,9 @@ Primary evidence:
     configured-cost/latency controller events for the current synchronous
     runtime bundle.
   - Required result: add AlphaEvolve-style scheduler validation and reports
-    that prove breadth/depth/cost/latency selection behavior over real
-    experiment traces and equal-budget runs; bounded raw/provider-specific
+    that prove fast-breadth versus strong-depth model-mix behavior,
+    breadth/depth/cost/latency selection behavior, and scheduler outcomes over
+    real experiment traces and equal-budget runs; bounded raw/provider-specific
     diagnostic retention; remote provider-side default/pricing capture;
     provider-output replay boundaries; and async/pending-work budget policy
     that composes with the existing safe usage, retry, status,

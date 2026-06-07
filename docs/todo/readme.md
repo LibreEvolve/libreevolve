@@ -516,17 +516,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve-style LLM orchestration needs role-specific
     scheduling and reward semantics for proposal generation, critique,
     feedback, and prompt improvement, not only role labels on shared telemetry.
+    Its Section 2.4 model mix also uses a fast model for high-volume
+    candidate generation and a stronger model for occasional higher-quality
+    suggestions.
   - Current evidence: README now says `role_scheduler_state` is an
     audit/restoration record, while role routing can narrow eligible backends
     and role budget maps can stop matching roles before later calls. It also
     states that the global ensemble state remains authoritative and that
     independent per-role scheduler configuration, reward calibration, and
-    quota/budget ownership remain open.
+    quota/budget ownership remain open. README should likewise avoid implying
+    that backend metadata or `throughput_depth` unit coverage proves a
+    Flash/Pro-style fast-breadth plus strong-depth scheduling policy.
   - Required result: once independent per-role live scheduler state, calibrated
-    reward semantics, and quota/budget ownership land, update the README and
-    matching code/paper TODO entries together so the README neither underclaims
-    current role-scoped backend eligibility nor overclaims AlphaEvolve-style
-    role scheduling.
+    reward semantics, quota/budget ownership, and experiment-backed fast/
+    strong model-mix scheduling land, update the README and matching
+    code/paper TODO entries together so the README neither underclaims current
+    role-scoped backend eligibility nor overclaims AlphaEvolve-style role or
+    model-mix scheduling.
 
 - [ ] Keep README critique-reviewer wording scoped to synchronous first/last
   valid mutation selection.

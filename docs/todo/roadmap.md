@@ -617,7 +617,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve-style fast/deep model scheduling needs
     experiment-level selection traces, budget-normalized comparisons, and
     breadth/depth/cost/latency evidence across real runs, not only deterministic
-    backend metadata arithmetic.
+    backend metadata arithmetic. Section 2.4's concrete model mix uses a
+    low-latency model for high-volume idea generation and a stronger model for
+    occasional higher-quality suggestions.
   - Current evidence: `ROADMAP.md` asks to extend current focused
     `throughput_depth` metadata tests into AlphaEvolve-style scheduler
     validation. README and code evidence show the current policy is a
@@ -630,13 +632,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     initialized, and call telemetry for the effective policy. They do not run
     benchmark workloads, emit experiment-level selection traces, compare
     equal-budget scheduler variants, or prove that breadth/depth/cost/latency
-    choices improve AlphaEvolve-style search outcomes.
+    choices improve AlphaEvolve-style search outcomes. They also do not prove
+    a dedicated fast-breadth plus strong-depth model-mix policy analogous to
+    AlphaEvolve's Flash/Pro scheduling.
   - Required result: when executable scheduler-validation fixtures,
     experiment-level selection trace artifacts, equal-budget scheduler reports,
-    or calibrated breadth/depth/cost/latency policy evidence land, update the
-    roadmap, README, papers index, and code/paper TODO entries together so
-    roadmap wording neither underclaims current focused `throughput_depth`
-    coverage nor overclaims AlphaEvolve-grade model-scheduling validation.
+    dedicated fast/strong lane policies, or calibrated breadth/depth/cost/
+    latency policy evidence land, update the roadmap, README, papers index,
+    and code/paper TODO entries together so roadmap wording neither
+    underclaims current focused `throughput_depth` coverage nor overclaims
+    AlphaEvolve-grade model-scheduling validation.
 
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.

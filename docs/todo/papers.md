@@ -45,6 +45,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     critique, feedback, and meta-prompt calls, plus restore validation and
     experiment reports proving role-specific selection and budget behavior.
 
+- [ ] Validate fast/strong model-mix scheduling beyond local metadata tests.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".
+  - Requirement: AlphaEvolve's LLM ensemble mixes Gemini Flash for low-latency,
+    high-volume candidate generation with Gemini Pro for occasional stronger
+    suggestions that can advance search depth. A faithful implementation needs
+    evidence for that throughput/quality tradeoff under a fixed compute
+    budget, not only a generic list of interchangeable backends.
+  - Partial status: `LLMEnsemble` supports multiple providers, backend
+    metadata, role-backend eligibility, UCB-style selection, and a
+    `throughput_depth` strategy with focused metadata/unit coverage for
+    normalized depth/cost/latency contribution and breadth/depth role labels.
+  - Current gap: there is no runtime scheduler policy or experiment report
+    proving a reserved fast-breadth lane plus occasional strong-depth lane,
+    no equal-budget comparison against single-model or generic UCB routing,
+    and no paper-level evidence that the configured mix increases evaluated
+    idea volume while preserving breakthrough-quality proposals.
+  - Required result: add scheduler-validation fixtures and reports that record
+    model lane roles, selection traces, consumed budget, candidate throughput,
+    quality/depth outcomes, and equal-budget comparisons for fast/strong
+    model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
+    Flash/Pro scheduling evidence.
+
 - [ ] Add AlphaEvolve-grade candidate language, build, and runner contracts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: tasks define the program artifact and evaluator interface; a

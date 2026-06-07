@@ -1947,6 +1947,10 @@ static-file provenance. `parent_code_required_terms` and
 `parent_code_excluded_terms` can filter candidate parent files by safe
 path/content terms, recording candidate/selected/omitted counts, omitted paths
 by required or excluded terms, and a stable selection hash.
+`parent_code_order_policy` can keep selected parent files in path order or rank
+them by deterministic task term overlap, and `parent_code_ranking_terms` can
+provide explicit safe ranking terms; diagnostics record query source, query
+term hash/count, ranked file order, scores, and a ranking hash.
 `parent_code_max_chars` can cap or suppress the
 required parent-code channel without removing the placeholder contract; prompt
 diagnostics record `parent_code_policy` with schema

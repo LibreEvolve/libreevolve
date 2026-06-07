@@ -587,6 +587,9 @@ class PromptSampler:
             selected_paths=prompt_context_policy["parent_code_paths"],
             required_terms=prompt_context_policy["parent_code_required_terms"],
             excluded_terms=prompt_context_policy["parent_code_excluded_terms"],
+            ranking_terms=prompt_context_policy["parent_code_ranking_terms"],
+            order_policy=prompt_context_policy["parent_code_order_policy"],
+            query_text=task,
         )
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
             parent_code,
@@ -1295,6 +1298,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_paths",
         "parent_code_required_terms",
         "parent_code_excluded_terms",
+        "parent_code_ranking_terms",
+        "parent_code_order_policy",
         "parent_code_max_chars",
         "parent_code_truncation",
         "inspiration_strategy",
@@ -1450,6 +1455,13 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     parent_code_excluded_terms = _validate_prompt_context_source_terms(
         value.get("parent_code_excluded_terms"),
         "parent_code_excluded_terms",
+    )
+    parent_code_ranking_terms = _validate_prompt_context_source_terms(
+        value.get("parent_code_ranking_terms"),
+        "parent_code_ranking_terms",
+    )
+    parent_code_order_policy = _validate_prompt_context_parent_code_order_policy(
+        value.get("parent_code_order_policy", "path_order")
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
@@ -1923,6 +1935,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_paths": parent_code_paths,
         "parent_code_required_terms": parent_code_required_terms,
         "parent_code_excluded_terms": parent_code_excluded_terms,
+        "parent_code_ranking_terms": parent_code_ranking_terms,
+        "parent_code_order_policy": parent_code_order_policy,
         "parent_code_max_chars": parent_code_max_chars,
         "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
@@ -2095,6 +2109,8 @@ def apply_prompt_context_policy(
         "parent_code_paths": list(policy["parent_code_paths"]),
         "parent_code_required_terms": list(policy["parent_code_required_terms"]),
         "parent_code_excluded_terms": list(policy["parent_code_excluded_terms"]),
+        "parent_code_ranking_terms": list(policy["parent_code_ranking_terms"]),
+        "parent_code_order_policy": policy["parent_code_order_policy"],
         "parent_code_max_chars": policy["parent_code_max_chars"],
         "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
@@ -2462,6 +2478,21 @@ def _validate_prompt_context_parent_code_paths(value: object) -> list[str]:
             normalized.append(path)
             seen.add(path)
     return normalized
+
+
+def _validate_prompt_context_parent_code_order_policy(value: object) -> str:
+    if (
+        not isinstance(value, str)
+        or value not in PROMPT_CONTEXT_POLICY_CONTEXT_SOURCE_ORDER_POLICIES
+    ):
+        allowed = ", ".join(
+            sorted(PROMPT_CONTEXT_POLICY_CONTEXT_SOURCE_ORDER_POLICIES)
+        )
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_order_policy "
+            f"must be one of: {allowed}"
+        )
+    return value
 
 
 def _validate_prompt_context_parent_code_max_chars(value: object) -> int | None:
@@ -7006,6 +7037,9 @@ def _render_program_files_with_metadata(
     selected_paths: object = None,
     required_terms: object = None,
     excluded_terms: object = None,
+    ranking_terms: object = None,
+    order_policy: object = "path_order",
+    query_text: str = "",
 ) -> tuple[str, dict]:
     workspace = program.workspace()
     policy_paths = _validate_prompt_context_parent_code_paths(selected_paths)
@@ -7017,23 +7051,46 @@ def _render_program_files_with_metadata(
         excluded_terms,
         "parent_code_excluded_terms",
     )
+    parent_ranking_terms = _validate_prompt_context_source_terms(
+        ranking_terms,
+        "parent_code_ranking_terms",
+    )
+    parent_order_policy = _validate_prompt_context_parent_code_order_policy(
+        order_policy
+    )
     all_paths = sorted(workspace.files)
     if policy_paths:
         candidate_paths = [path for path in policy_paths if path in workspace.files]
         missing_paths = [path for path in policy_paths if path not in workspace.files]
         omitted_by_path_policy = [path for path in all_paths if path not in set(candidate_paths)]
-        order_policy = "prompt_context_policy_order"
+        path_order_policy = "prompt_context_policy_order"
     else:
         candidate_paths = all_paths
         missing_paths = []
         omitted_by_path_policy = []
-        order_policy = "path_sort"
+        path_order_policy = "path_sort"
     rendered_paths, term_filter_metadata = _filter_parent_code_paths_by_terms(
         workspace.files,
         candidate_paths,
         required_terms=parent_required_terms,
         excluded_terms=parent_excluded_terms,
     )
+    parent_order_metadata = _parent_code_path_order_policy_metadata(
+        "path_order",
+        rendered_paths,
+    )
+    if parent_order_policy == "task_term_ranked":
+        rendered_paths, parent_order_metadata = _rank_parent_code_paths_by_terms(
+            workspace.files,
+            rendered_paths,
+            query_text=query_text,
+            ranking_terms=parent_ranking_terms,
+        )
+        path_order_policy = (
+            "prompt_context_policy_paths_task_term_ranked"
+            if policy_paths
+            else "task_term_ranked"
+        )
     omitted_by_required_terms = list(
         term_filter_metadata["omitted_by_required_terms"]
     )
@@ -7046,7 +7103,11 @@ def _render_program_files_with_metadata(
         + omitted_by_excluded_terms
     )
     policy_active = bool(
-        policy_paths or parent_required_terms or parent_excluded_terms
+        policy_paths
+        or parent_required_terms
+        or parent_excluded_terms
+        or parent_ranking_terms
+        or parent_order_policy != "path_order"
     )
     metadata = {
         "schema": "libreevolve.parent_code_paths.v1",
@@ -7054,13 +7115,15 @@ def _render_program_files_with_metadata(
         "requested_paths": list(policy_paths),
         "required_terms": list(parent_required_terms),
         "excluded_terms": list(parent_excluded_terms),
+        "ranking_terms": list(parent_ranking_terms),
+        "parent_code_order_policy": parent_order_metadata,
         "rendered_paths": list(rendered_paths),
         "omitted_paths": omitted_paths,
         "omitted_by_path_policy": omitted_by_path_policy,
         "omitted_by_required_terms": omitted_by_required_terms,
         "omitted_by_excluded_terms": omitted_by_excluded_terms,
         "missing_paths": missing_paths,
-        "order_policy": order_policy,
+        "order_policy": path_order_policy,
         "term_filter": term_filter_metadata,
         "primary_file": workspace.primary_file,
         "file_count": len(workspace.files),
@@ -7160,6 +7223,95 @@ def _filter_parent_code_paths_by_terms(
         ),
     }
     return selected, metadata
+
+
+def _parent_code_path_order_policy_metadata(policy: str, order: list[str]) -> dict:
+    return {
+        "schema": "libreevolve.parent_code_order_policy.v1",
+        "policy": policy,
+        "ranking_policy": "path_order_v1",
+        "candidate_count": len(order),
+        "selected_count": len(order),
+        "query_terms_sha256": hashlib.sha256(b"").hexdigest(),
+        "query_term_count": 0,
+        "ranking_sha256": _stable_json_sha256(
+            [
+                {"path": redact_sensitive_text(path), "rank": index + 1}
+                for index, path in enumerate(order)
+            ]
+        ),
+        "selected_files": [
+            {
+                "path": redact_sensitive_text(path),
+                "rank": index + 1,
+                "score": None,
+                "original_index": index,
+            }
+            for index, path in enumerate(order)
+        ],
+    }
+
+
+def _rank_parent_code_paths_by_terms(
+    files: Mapping[str, str],
+    order: list[str],
+    *,
+    query_text: str,
+    ranking_terms: list[str],
+) -> tuple[list[str], dict]:
+    if ranking_terms:
+        query_terms = list(ranking_terms)
+        query_source = "parent_code_ranking_terms"
+    else:
+        query_terms = _context_source_order_query_terms(query_text)
+        query_source = "task_description"
+    query_hash = hashlib.sha256(" ".join(query_terms).encode("utf-8")).hexdigest()
+    candidates = []
+    for original_index, path in enumerate(order):
+        content = files.get(path, "")
+        candidate_text = f"{path}\n{content}"
+        candidates.append(
+            {
+                "path": path,
+                "score": _context_source_order_score(candidate_text, query_terms)
+                if query_terms
+                else 0,
+                "original_index": original_index,
+                "chars": len(candidate_text),
+            }
+        )
+    ranked = sorted(
+        candidates,
+        key=lambda item: (-item["score"], item["original_index"], item["path"]),
+    )
+    ranked_paths = [str(item["path"]) for item in ranked]
+    selected_files = [
+        {
+            "path": redact_sensitive_text(str(item["path"])),
+            "rank": rank,
+            "score": int(item["score"]),
+            "original_index": int(item["original_index"]),
+            "chars": int(item["chars"]),
+        }
+        for rank, item in enumerate(ranked, start=1)
+    ]
+    metadata = {
+        "schema": "libreevolve.parent_code_order_policy.v1",
+        "policy": "task_term_ranked",
+        "ranking_policy": "term_overlap_parent_code_v1",
+        "query_source": query_source,
+        "candidate_count": len(candidates),
+        "selected_count": len(selected_files),
+        "query_terms_sha256": query_hash,
+        "query_term_count": len(query_terms),
+        "ranking_sha256": _stable_json_sha256(selected_files),
+        "selected_files": selected_files,
+    }
+    if ranking_terms:
+        metadata["configured_query_terms"] = list(query_terms)
+    if not query_terms:
+        metadata["ranking_fallback"] = "empty_query_terms"
+    return ranked_paths, metadata
 
 
 def _render_feedback(

@@ -4393,6 +4393,24 @@ def test_prompt_context_policy_rejects_invalid_parent_code_terms():
         validate_prompt_context_policy({"parent_code_excluded_terms": "debug"})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_ordering():
+    assert validate_prompt_context_policy({"parent_code_order_policy": "path_order"})[
+        "parent_code_order_policy"
+    ] == "path_order"
+    assert validate_prompt_context_policy(
+        {"parent_code_order_policy": "task_term_ranked"}
+    )["parent_code_order_policy"] == "task_term_ranked"
+    assert validate_prompt_context_policy(
+        {"parent_code_ranking_terms": ["Solver", "solver"]}
+    )["parent_code_ranking_terms"] == ["solver"]
+
+    with pytest.raises(PromptTemplateError, match="parent_code_order_policy"):
+        validate_prompt_context_policy({"parent_code_order_policy": "semantic"})
+
+    with pytest.raises(PromptTemplateError, match="parent_code_ranking_terms"):
+        validate_prompt_context_policy({"parent_code_ranking_terms": "solver"})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -7006,6 +7024,8 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "parent_code_paths": [],
         "parent_code_required_terms": [],
         "parent_code_excluded_terms": [],
+        "parent_code_ranking_terms": [],
+        "parent_code_order_policy": "path_order",
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
         "inspiration_strategy": None,
@@ -8250,6 +8270,8 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "requested_paths": ["helper.py", "missing.py"],
         "required_terms": [],
         "excluded_terms": [],
+        "ranking_terms": [],
+        "parent_code_order_policy": policy["path_policy"]["parent_code_order_policy"],
         "rendered_paths": ["helper.py"],
         "omitted_paths": ["main.py", "unused.py"],
         "omitted_by_path_policy": ["main.py", "unused.py"],
@@ -8272,6 +8294,10 @@ def test_prompt_context_policy_selects_parent_code_paths():
     assert policy["path_policy"]["term_filter"]["schema"] == (
         "libreevolve.parent_code_term_filter.v1"
     )
+    assert policy["path_policy"]["parent_code_order_policy"]["schema"] == (
+        "libreevolve.parent_code_order_policy.v1"
+    )
+    assert policy["path_policy"]["parent_code_order_policy"]["policy"] == "path_order"
     assert policy["path_policy"]["term_filter"]["candidate_count"] == 1
     assert policy["path_policy"]["term_filter"]["selected_count"] == 1
     assert len(policy["path_policy"]["term_filter"]["selection_sha256"]) == 64
@@ -8334,6 +8360,104 @@ def test_prompt_context_policy_filters_parent_code_paths_by_terms():
     assert sampler.last_metadata["prompt_context_policy"][
         "parent_code_excluded_terms"
     ] == ["debug"]
+
+
+def test_prompt_context_policy_orders_parent_code_by_task_terms():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solver cache behavior.",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "a_misc.py": "value = 1\n",
+            "b_solver.py": "def run():\n    return 'solver cache'\n",
+            "c_cache.py": "CACHE = {}\n",
+        },
+        primary_file="a_misc.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={"parent_code_order_policy": "task_term_ranked"},
+    )
+
+    assert prompt.index("path=b_solver.py") < prompt.index("path=c_cache.py")
+    assert prompt.index("path=c_cache.py") < prompt.index("path=a_misc.py")
+    policy = sampler.last_metadata["parent_code_policy"]["path_policy"]
+    assert policy["order_policy"] == "task_term_ranked"
+    assert policy["rendered_paths"] == ["b_solver.py", "c_cache.py", "a_misc.py"]
+    order_policy = policy["parent_code_order_policy"]
+    assert order_policy["schema"] == "libreevolve.parent_code_order_policy.v1"
+    assert order_policy["policy"] == "task_term_ranked"
+    assert order_policy["ranking_policy"] == "term_overlap_parent_code_v1"
+    assert order_policy["query_source"] == "task_description"
+    assert order_policy["selected_files"][0]["path"] == "b_solver.py"
+    assert order_policy["selected_files"][0]["score"] > order_policy[
+        "selected_files"
+    ][2]["score"]
+    assert len(order_policy["query_terms_sha256"]) == 64
+    assert len(order_policy["ranking_sha256"]) == 64
+
+
+def test_prompt_context_policy_orders_parent_code_by_explicit_ranking_terms():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "a_matrix.py": "def multiply():\n    return 1\n",
+            "b_sorting.py": "def sort_values():\n    return 'sorting'\n",
+        },
+        primary_file="a_matrix.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_order_policy": "task_term_ranked",
+            "parent_code_ranking_terms": ["sorting"],
+        },
+    )
+
+    assert prompt.index("path=b_sorting.py") < prompt.index("path=a_matrix.py")
+    policy = sampler.last_metadata["parent_code_policy"]["path_policy"]
+    assert policy["rendered_paths"] == ["b_sorting.py", "a_matrix.py"]
+    order_policy = policy["parent_code_order_policy"]
+    assert order_policy["query_source"] == "parent_code_ranking_terms"
+    assert order_policy["configured_query_terms"] == ["sorting"]
+    assert order_policy["selected_files"][0]["path"] == "b_sorting.py"
+    assert order_policy["selected_files"][0]["score"] == 1
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_ranking_terms"
+    ] == ["sorting"]
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_order_policy"
+    ] == "task_term_ranked"
 
 
 @pytest.mark.parametrize(

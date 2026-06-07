@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code relevance ordering.
+  - Spec evidence: AlphaEvolve-style prompt context should be able to prioritize
+    relevant required code context rather than only select/filter exact parent
+    files.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts
+    `parent_code_order_policy` with safe `path_order` and `task_term_ranked`
+    values plus optional `parent_code_ranking_terms`. `PromptSampler` applies
+    ordering after parent-code path selection and term filtering, ranking
+    mutable parent files by deterministic overlap against either task derived
+    terms or explicit safe ranking terms. Nested
+    `libreevolve.parent_code_order_policy.v1` diagnostics record query source,
+    query hash/count, file ranks, scores, candidate/selected counts, and a
+    ranking hash.
+  - Remaining gap: this is deterministic lexical relevance ordering, not
+    semantic retrieval, dependency-graph ranking, or learned source relevance.
+  - Verification: focused prompt tests cover validation, task derived ranking,
+    explicit ranking terms, diagnostics, and canonical metadata defaults;
+    focused loop meta-prompt tests cover accepted policy JSON carrying the
+    fields.
+
 - [x] Add prompt context-policy parent-code term filtering.
   - Spec evidence: AlphaEvolve-style prompt context should focus required code
     context on relevant source areas, not only exact file allowlists or whole

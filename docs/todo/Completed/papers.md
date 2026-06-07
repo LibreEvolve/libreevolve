@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code relevance ordering.
+  - Paper evidence: AlphaEvolve prompt context can include prior code, and
+    prompt-context evolution should have replayable controls for prioritizing
+    relevant required code context before rendering.
+  - Status: prompt context policy now accepts `parent_code_order_policy`
+    (`path_order` or `task_term_ranked`) and optional
+    `parent_code_ranking_terms`. Direct prompt rendering ranks parent-code
+    files after path selection and term filtering, then persists query source,
+    query hash/count, ranks, scores, candidate/selected counts, and a ranking
+    hash in `libreevolve.parent_code_order_policy.v1` nested under
+    `libreevolve.parent_code_policy.v1`.
+  - Remaining paper gap: this is lexical overlap ranking, not semantic
+    parent-code retrieval, dependency-aware ranking, or learned relevance.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code term filtering.
   - Paper evidence: AlphaEvolve prompt context can include prior code, and
     prompt-context evolution should have a replayable way to focus required

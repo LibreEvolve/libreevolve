@@ -786,9 +786,11 @@ nullable `parent_code_max_chars` cap can bound or suppress the required
 parent-code channel while `parent_code_paths` selects and orders safe mutable
 parent-workspace files before rendering. `parent_code_required_terms` and
 `parent_code_excluded_terms` filter those files by safe path/content terms,
-and `parent_code_truncation` chooses deterministic `head` or `head_tail`
-retention under that cap. Prompt diagnostics retain parent-code path and term
-policy, hashes, and truncation/count metadata. A
+`parent_code_order_policy` can rank them by deterministic task term overlap,
+and `parent_code_ranking_terms` can provide explicit safe ranking terms.
+`parent_code_truncation` chooses deterministic `head` or `head_tail` retention
+under that cap. Prompt diagnostics retain parent-code path, term, ordering,
+hash, and truncation/count metadata. A
 nullable `proposal_metadata_enabled` override can enable or disable proposal
 metadata instructions and parsing for that prompt arm while `null` keeps the
 run-level `capture_proposal_metadata` setting. A

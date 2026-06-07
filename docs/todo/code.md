@@ -2004,6 +2004,28 @@ Primary evidence:
     lower-bound value, source section linkage, and README/ROADMAP wording that
     distinguishes the two witness sets from aggregate Appendix B coverage.
 
+- [ ] Add Appendix B.9-B.10 Heilbronn minimum-area provenance.
+  - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
+    construction improvements with distinct domains and parameters: `n = 11`
+    points in a unit-area triangle improve the minimum triangle area from
+    `0.036` to greater than `0.0365`; `n = 13` points in a unit-area convex
+    region improve `0.0306` to `0.0309`; and `n = 14` points in a unit-area
+    convex region improve `0.0277` to `0.0278`. Figure 13 displays the three
+    constructions as left/middle/right panels.
+  - Current evidence: the broad Appendix B per-result TODO names Heilbronn
+    minimum areas and Figure 13 visual provenance, but no code/report schema
+    separately records the three B.9-B.10 parameter rows, domain type,
+    unit-area normalization, point-coordinate payload hashes, minimum-area
+    certificate, strict-versus-rounded comparison policy, or prior SOTA values.
+    A generated report could quote "Heilbronn improved" without proving which
+    construction, domain, and `n` value supports each bound.
+  - Required result: add Appendix B.9-B.10-specific result rows and validators
+    for `n`, domain type (`triangle` or `convex_region`), unit-area scaling,
+    point-set/region artifact hashes, all-triples minimum-area certificate,
+    prior value/source, reported value and strict inequality policy, Figure 13
+    panel linkage, and README/ROADMAP wording that distinguishes the three
+    Heilbronn constructions from aggregate Appendix B coverage.
+
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing
     number lower bound from 592 to 593 by finding 593 nonzero integral-coordinate

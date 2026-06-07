@@ -2058,6 +2058,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     derived lower-bound values, payload hashes, and source links from aggregate
     Appendix B coverage.
 
+- [ ] Keep Appendix B.9-B.10 roadmap wording scoped until Heilbronn
+      minimum-area provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
+    minimum-area improvements: `n = 11` points in a unit-area triangle improve
+    the prior `0.036` bound to greater than `0.0365`; `n = 13` points in a
+    unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
+    in a unit-area convex region improve `0.0277` to `0.0278`.
+  - Current evidence: roadmap/README/paper-index wording can cite the broad
+    Appendix B per-result and Figure 13 visual gaps, but it does not require
+    B.9-B.10-specific parameter rows, domain type, unit-area normalization,
+    point/region artifact hashes, all-triples minimum-area certificates,
+    prior/current values, or strict inequality/rounding policy.
+  - Required result: when Appendix B.9-B.10 Heilbronn metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish the three `n` values, domains, certificate evidence,
+    prior/current values, Figure 13 panel links, payload hashes, and source
+    locations from aggregate Appendix B coverage.
+
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing

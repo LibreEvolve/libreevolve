@@ -1123,6 +1123,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     values, payload hashes, and source links without collapsing the result to
     one aggregate finite-set claim.
 
+- [ ] Keep README Appendix B.9-B.10 Heilbronn wording scoped until
+      minimum-area provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
+    improvements: `n = 11` points in a unit-area triangle improve the minimum
+    triangle area from `0.036` to greater than `0.0365`; `n = 13` points in a
+    unit-area convex region improve `0.0306` to `0.0309`; and `n = 14` points
+    in a unit-area convex region improve `0.0277` to `0.0278`.
+  - Current evidence: README can point to broad Appendix B per-result
+    metric/value and Figure 13 visual gaps, but it does not separately warn
+    that the Heilbronn results need per-parameter domain, unit-area,
+    coordinate/region payload, all-triples certificate, and prior/current
+    value evidence before quoting those bounds.
+  - Required result: when Appendix B.9-B.10 Heilbronn metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    names the three `n` values, domains, minimum-area certificates, prior and
+    reported values, Figure 13 panel links, and artifact hashes without merging
+    them into one generic Heilbronn claim.
+
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing

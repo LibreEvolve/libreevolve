@@ -196,8 +196,9 @@ is not yet an AlphaEvolve reproduction.
 - Add a controller with bounded queues for LLM proposals and evaluator workers;
   the current loop supports sequential `proposals_per_generation` batches but
   not concurrent proposal/evaluation queues.
-- Persist enough bandit, prompt, controller, and pending-evaluation state to
-  resume long runs.
+- Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
+  budget snapshots with controller and pending-evaluation checkpoint state so
+  long runs can resume from more than a terminal drained boundary.
 - Extend the current restorable MAP-Elites cell/island snapshots, elite
   snapshots, and island cursor/counter state with descriptor-value replay
   semantics, ordered migration-event replay, controller queues, and pending-work
@@ -217,11 +218,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
   configured-cost/latency, synchronous controller-budget event replay, and
-  stop-reason counters to cover concurrent evaluations, async queues,
-  pending-work restore, provider-output replay, and executed equal-budget
-  ablation reports. The named AlphaEvolve Figure 8 ablation variants are now
-  captured as a validated report contract, but the runs/curves are not
-  implemented.
+  stop-reason counters, plus pre-applied full-runtime restore bundles, to cover
+  concurrent evaluations, async queues, pending-work restore, provider-output
+  replay, and executed equal-budget ablation reports. The named AlphaEvolve
+  Figure 8 ablation variants are now captured as a validated report contract,
+  but the runs/curves are not implemented.
 
 ### 7. Backend scheduling and critique
 

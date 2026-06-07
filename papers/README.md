@@ -321,8 +321,9 @@ AlphaEvolve budget-accounting note: runtime manifests validate current-process
 generation counters, and stop reasons before finalization. Restored-budget
 loading, controller budget-event rows, and a composed runtime restore bundle
 now exist for current manifests, with CLI forwarding through
-`--restore-runtime-from-manifest`. Provider-output replay, pending controller
-work, automatic controller-event application inside `evolve()`, ordered
+`--restore-runtime-from-manifest` and controller-budget events pre-applied to
+the restored `evolve()` budget snapshot. Provider-output replay, pending
+controller work, direct event-stream consumption inside `evolve()`, ordered
 migration-event replay, and end-to-end resumed-trace evidence remain open
 before budget manifests can be treated as robust cross-process experiment
 accounting.

@@ -270,10 +270,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     async worker state, or provider-output replay. The remaining gap is not
     LLM budget resume artifact inventory, bundle-consistency verification, or
     current-report policy/status validation.
-  - Required result: connect the runtime LLM ensemble and provider adapters to
-    the report contract with complete persisted/restored retry/provider-attempt/
-    token/configured-cost/latency consumption before
-    treating local LLM ensemble scheduling as AlphaEvolve-grade budgeted search.
+  - Required result: connect restored LLM budget state to async controller
+    queues, pending-work restore, provider-output replay boundaries, and
+    executed equal-budget ablation runs before treating local LLM ensemble
+    scheduling as AlphaEvolve-grade budgeted search. The remaining gap is not
+    provider-attempt/token/configured-cost/latency replay through the current
+    synchronous controller budget stream.
 
 - [ ] Add remaining full-run replay, lineage, provider, and custom-plugin
   provenance policy.

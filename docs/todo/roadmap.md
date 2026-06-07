@@ -19,6 +19,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     claims, keep the intro and matching README/papers/TODO evidence aligned
     with the current worktree rather than a stale dated audit snapshot.
 
+- [ ] Keep roadmap current-state budget bullets aligned with implemented LLM
+      budget surfaces.
+  - Spec evidence: AlphaEvolve-style fixed-budget comparisons require docs to
+    distinguish current stop/accounting surfaces from still-open accelerator,
+    async-queue, and pending-work budget gaps.
+  - Current evidence: `ROADMAP.md` now lists current run-budget stops for
+    generations, evaluations, evaluator-seconds, wall-clock runtime, logical
+    LLM calls, provider attempts, provider-reported tokens, configured
+    estimated cost, and retained LLM latency. Its evaluation-cascade follow-up
+    now scopes remaining budget work to accelerator and async queue budgets
+    rather than implying provider-attempt/token/configured-cost/latency stops
+    are absent.
+  - Required result: when new budget surfaces land, update the roadmap,
+    README, papers index, and code/paper TODO entries together so they neither
+    underclaim current LLM budget stops nor overclaim AlphaEvolve-grade
+    accelerator/async budgeted search.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

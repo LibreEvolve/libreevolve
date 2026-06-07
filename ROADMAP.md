@@ -63,7 +63,9 @@ LibreEvolve has:
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported
 - local run-budget stop accounting for generations, evaluations,
-  evaluator-seconds, and wall-clock runtime
+  evaluator-seconds, wall-clock runtime, logical LLM calls, provider attempts,
+  provider-reported tokens, configured estimated cost, and retained LLM
+  latency
 - framework-owned run-local RNG isolation plus persisted `runtime.rng`
   snapshots that direct callers and CLI runs can restore before startup
 - example problems including `hello_world`, `sorting`, `circle_packing`,
@@ -121,8 +123,9 @@ is not yet an AlphaEvolve reproduction.
   outside-workspace artifacts, aggregate emitted-artifact hashes, and clearer
   artifact schemas for benchmarks.
 - Extend budget accounting beyond current generation/evaluation/
-  evaluator-second/wall-clock/logical-LLM-call stop reasons to token, cost,
-  provider-attempt, LLM wall-clock, accelerator, and async queue budgets.
+  evaluator-second/wall-clock/logical-LLM-call, provider-attempt,
+  provider-token, configured-cost, and retained LLM-latency stop reasons to
+  accelerator and async queue budgets.
   Provider-attempt, provider-token, configured-cost, and retained LLM latency
   usage now stop live runs before the next LLM call and can be pre-applied
   from full-runtime restore bundles; accelerator budgets, async queue budgets,

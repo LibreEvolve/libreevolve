@@ -14958,3 +14958,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused LLM budget-report tests cover verified resume
     artifact inventories plus hash/byte mismatches, missing files, and unsafe
     paths.
+
+- [x] Add controller event-stream artifact inventory verification.
+  - Spec evidence: AlphaEvolve-style long-running controllers need auditable
+    resume evidence for controller state and budget-event streams, not only a
+    terminal summary embedded in the manifest.
+  - Status: `libreevolve.controller_state_artifact_inventory.v1` now verifies
+    the terminal synchronous controller event stream against the manifest
+    artifact record and disk file. The inventory checks safe relative paths,
+    file existence, SHA-256 hashes, byte counts, strict JSONL event count, last
+    sequence/kind, per-record statuses, aggregate missing/mismatch/invalid
+    counts, and a stable records hash.
+  - Remaining gap: this verifies the terminal drained controller event stream;
+    async worker queues, mid-generation pending work, in-flight provider
+    outputs, pending archive admissions, and deterministic controller resume
+    ledgers remain open.
+  - Verification: focused loop tests cover a verified controller event stream
+    plus bad manifest artifact hashes/bytes, event-count mismatches,
+    last-event mismatches, and unsafe paths.

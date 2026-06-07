@@ -10066,3 +10066,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     replay, and replay-only budget-stop packaging remain unimplemented.
   - Verification: focused LLM budget-report tests cover valid resume
     inventories and missing, mismatched, and unsafe resume artifact references.
+
+- [x] Add paper-visible controller event-stream inventory verification.
+  - Paper evidence: AlphaEvolve-style autonomous controllers need resume and
+    budget-event evidence that can be audited from concrete retained files.
+  - Status: `libreevolve.controller_state_artifact_inventory.v1` now verifies
+    the terminal synchronous controller event stream under a safe artifact
+    root. The event stream is checked against the manifest artifact record and
+    disk file for safe path handling, existence, SHA-256 hash, byte count,
+    strict JSONL event count, last sequence/kind, and aggregate inventory
+    status.
+  - Remaining paper gap: this is terminal event-stream evidence-file
+    verification only; async controller queues, pending work, in-flight
+    provider outputs, and resumed-trace controller proof remain unimplemented.
+  - Verification: focused loop tests cover valid event-stream inventories and
+    mismatched, missing, and unsafe controller evidence references.

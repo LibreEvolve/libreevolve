@@ -21,10 +21,12 @@ from libreevolve.core.budget import (
 from libreevolve.core.config import Config
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
+    CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
     RuntimeFullResumeBundleError,
     RuntimeLineageReplayPolicyError,
     RuntimeLLMSchedulerStateError,
     RuntimeRngStateError,
+    controller_state_artifact_inventory,
     evolve,
     VALID_THRESHOLD,
     _build_meta_prompt_mutation_request,
@@ -1198,6 +1200,87 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
         "last_kind": "stop",
         "replay_scope": "budget_counters_only",
     }
+
+
+def test_controller_state_artifact_inventory_verifies_event_stream(tmp_path):
+    backend = MagicMock()
+    backend.name = "controller/model"
+    backend.api_mode = None
+    backend.generate.return_value = "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+
+    with patch("libreevolve.core.loop.build_llm", return_value=LLMEnsemble([backend])):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=str(tmp_path), problem_name="source"),
+        )
+
+    run_dir = tmp_path / "source"
+    manifest_path = run_dir / "manifest.json"
+
+    inventory = controller_state_artifact_inventory(manifest_path, run_dir)
+
+    assert inventory["schema"] == CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["controller_state_schema"] == "libreevolve.controller_state.v1"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_controller_artifact_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 1
+    assert inventory["verified_count"] == 1
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert len(inventory["records_sha256"]) == 64
+    [record] = inventory["artifacts"]
+    assert record["path"] == "controller_budget_events.jsonl"
+    assert record["status"] == "verified"
+    assert record["actual_event_count"] == 6
+    assert record["actual_last_kind"] == "stop"
+
+
+def test_controller_state_artifact_inventory_reports_bad_references(tmp_path):
+    backend = MagicMock()
+    backend.name = "controller/model"
+    backend.api_mode = None
+    backend.generate.return_value = "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+
+    with patch("libreevolve.core.loop.build_llm", return_value=LLMEnsemble([backend])):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=str(tmp_path), problem_name="source"),
+        )
+
+    run_dir = tmp_path / "source"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    state = manifest["runtime"]["history"]["controller_state"]
+    state["event_stream"]["event_count"] = 999
+    state["event_stream"]["last_kind"] = "candidate_evaluation"
+    artifact = manifest["runtime"]["artifacts"]["controller_budget_events.jsonl"]
+    artifact["sha256"] = "0" * 64
+    artifact["bytes"] = 999
+
+    inventory = controller_state_artifact_inventory(manifest, run_dir)
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    [record] = inventory["artifacts"]
+    assert record["status"] == "hash_mismatch"
+    assert "controller_event_artifact_hash_mismatch" in record["issues"]
+    assert "controller_event_artifact_bytes_mismatch" in record["issues"]
+    assert "controller_event_count_mismatch" in record["issues"]
+    assert "controller_last_kind_mismatch" in record["issues"]
+
+    state["event_stream"]["path"] = "../escape.jsonl"
+    unsafe = controller_state_artifact_inventory(manifest, run_dir)
+    assert unsafe["ok"] is False
+    assert unsafe["invalid_count"] == 1
+    assert unsafe["artifacts"][0]["status"] == "unsafe_path"
+
+    state["event_stream"]["path"] = "missing-controller-events.jsonl"
+    missing = controller_state_artifact_inventory(manifest, run_dir)
+    assert missing["ok"] is False
+    assert missing["missing_count"] == 1
+    assert missing["artifacts"][0]["status"] == "missing_file"
 
 
 def test_completed_runtime_persists_llm_scheduler_state_snapshot():

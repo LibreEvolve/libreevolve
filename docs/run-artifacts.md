@@ -1342,6 +1342,13 @@ program ids in `archive_sequence_by_program_id`, and per-island count records.
 `runtime.history.controller_state` records the terminal synchronous controller
 boundary beside this archive state, but does not reconstruct async worker
 queues or partially completed generation work.
+`controller_state_artifact_inventory()` emits
+`libreevolve.controller_state_artifact_inventory.v1` to verify the terminal
+controller event stream against the manifest artifact record and disk file.
+The inventory checks safe relative path handling, file existence, SHA-256, byte
+count, strict JSONL event count, last sequence/kind, per-record status, and a
+stable records hash. It is event-stream evidence-file verification, not
+queued/running worker reconstruction.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

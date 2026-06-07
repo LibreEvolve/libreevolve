@@ -1221,8 +1221,13 @@ Completed runtime manifests also include `runtime.history.controller_state`,
 a terminal drained-state snapshot for the current single-process synchronous
 loop. It records zero queued/running proposals, evaluations, in-flight LLM
 calls, and pending archive admissions at finalization, plus the
-`controller_budget_events.jsonl` stream summary. This is not a mid-generation
-or async worker queue checkpoint.
+`controller_budget_events.jsonl` stream summary.
+`controller_state_artifact_inventory()` emits
+`libreevolve.controller_state_artifact_inventory.v1` to verify that terminal
+controller event stream against the manifest artifact record and disk file,
+including safe relative path checks, file existence, SHA-256, byte count,
+strict JSONL event count, last sequence/kind, per-record status, and a stable
+records hash. This is not a mid-generation or async worker queue checkpoint.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

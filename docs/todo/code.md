@@ -835,7 +835,11 @@ Primary evidence:
     snapshot for the synchronous controller with zero queued/running proposals,
     evaluations, in-flight LLM calls, and pending archive admissions at
     finalization plus a compact `controller_budget_events.jsonl` stream
-    summary.
+    summary. `libreevolve.controller_state_artifact_inventory.v1` now verifies
+    that terminal controller event stream against the manifest artifact record
+    and disk file, including safe relative path checks, file existence,
+    SHA-256, byte count, strict JSONL event count, last sequence/kind,
+    per-record status, and a stable records hash.
   - Remaining gap: migration event-order replay is tracked separately by the
     archive-event replay TODO. The terminal synchronous controller boundary is
     visible, but async/mid-run controller state and pending/in-flight work are
@@ -843,7 +847,8 @@ Primary evidence:
     for async workers, evaluator-worker state, in-flight provider outputs,
     pending archive admissions, partially completed generation state, or
     deterministic mid-generation controller resume ledger is persisted or
-    restored.
+    restored. The remaining gap is not terminal controller event-stream
+    artifact verification.
   - Required result: add controller/pending-work resume state and extend
     end-to-end resume tests across below-threshold, non-admitted, elite-only,
     in-flight generation/evaluation, and cell-replacement cases.

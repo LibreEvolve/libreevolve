@@ -103,6 +103,9 @@ from libreevolve.population.program import (
 from libreevolve.problems.loader import Problem
 
 VALID_THRESHOLD = 0.0
+CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA = (
+    "libreevolve.controller_state_artifact_inventory.v1"
+)
 _MAX_PLUGIN_METADATA_KEY_CHARS = 160
 _MAX_PLUGIN_METADATA_STRING_CHARS = 4096
 _MAX_PLUGIN_METADATA_DEPTH = 20
@@ -2640,6 +2643,280 @@ def _replay_controller_budget_events_to_snapshot(
         snapshot,
     )
     return snapshot
+
+
+def controller_state_artifact_inventory(
+    manifest: object | str | Path,
+    artifact_root: str | Path,
+) -> dict:
+    """Verify terminal controller-state event stream evidence under a root."""
+    data, issues = _load_controller_state_inventory_manifest(manifest)
+    root = Path(artifact_root)
+    records: list[dict[str, object]] = []
+    controller_state = _manifest_controller_state(data) if data is not None else None
+    artifacts = _manifest_artifacts(data) if data is not None else {}
+    if controller_state is None and data is not None:
+        issues.append(
+            {
+                "code": "missing_controller_state",
+                "message": "manifest runtime.history.controller_state must be an object",
+            }
+        )
+    elif controller_state is not None:
+        record = _controller_event_stream_inventory_record(
+            controller_state.get("event_stream"),
+            artifacts,
+            root,
+        )
+        records.append(record)
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    missing_count = sum(1 for record in records if record["status"] == "missing_file")
+    mismatch_count = sum(
+        1
+        for record in records
+        if record["status"]
+        in {
+            "hash_mismatch",
+            "bytes_mismatch",
+            "event_count_mismatch",
+            "last_event_mismatch",
+            "artifact_record_mismatch",
+        }
+    )
+    invalid_count = sum(
+        1
+        for record in records
+        if record["status"] in {"invalid_artifact", "unsafe_path", "read_error"}
+    )
+    if not records and data is not None and not issues:
+        issues.append(
+            {
+                "code": "empty_controller_state_inventory",
+                "message": "no controller-state artifact records were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
+        "manifest_schema": data.get("schema") if isinstance(data, dict) else None,
+        "controller_state_schema": (
+            controller_state.get("schema") if isinstance(controller_state, dict) else None
+        ),
+        "artifact_root_policy": "safe_relative_controller_artifact_paths_under_artifact_root",
+        "artifact_root_name": root.name,
+        "artifact_count": len(records),
+        "verified_count": verified_count,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and missing_count == 0
+            and mismatch_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "artifacts": records,
+    }
+
+
+def _load_controller_state_inventory_manifest(
+    manifest: object | str | Path,
+) -> tuple[dict | None, list[dict[str, str]]]:
+    if isinstance(manifest, dict):
+        return dict(manifest), []
+    if isinstance(manifest, (str, Path)):
+        try:
+            data = load_strict_json_object(Path(manifest), source="manifest.json")
+        except (StrictJsonlError, OSError, ValueError) as exc:
+            return (
+                None,
+                [
+                    {
+                        "code": "read_error",
+                        "message": f"failed to read controller-state manifest: {exc}",
+                    }
+                ],
+            )
+        if isinstance(data, dict):
+            return data, []
+    return (
+        None,
+        [
+            {
+                "code": "invalid_manifest",
+                "message": "controller-state artifact inventory requires a manifest object",
+            }
+        ],
+    )
+
+
+def _manifest_controller_state(manifest: dict) -> dict | None:
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return None
+    history = runtime.get("history")
+    if not isinstance(history, dict):
+        return None
+    controller_state = history.get("controller_state")
+    return controller_state if isinstance(controller_state, dict) else None
+
+
+def _manifest_artifacts(manifest: dict) -> dict:
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return {}
+    artifacts = runtime.get("artifacts")
+    return artifacts if isinstance(artifacts, dict) else {}
+
+
+def _controller_event_stream_inventory_record(
+    event_stream: object,
+    artifacts: Mapping[str, object],
+    root: Path,
+) -> dict[str, object]:
+    if not isinstance(event_stream, dict):
+        return {
+            "kind": "controller_budget_events",
+            "path": "",
+            "status": "invalid_artifact",
+            "issues": ["invalid_controller_event_stream"],
+        }
+    path = event_stream.get("path")
+    record: dict[str, object] = {
+        "kind": "controller_budget_events",
+        "path": path if isinstance(path, str) else "",
+        "expected_status": event_stream.get("status")
+        if isinstance(event_stream.get("status"), str)
+        else None,
+        "expected_event_count": event_stream.get("event_count")
+        if isinstance(event_stream.get("event_count"), int)
+        and not isinstance(event_stream.get("event_count"), bool)
+        else None,
+        "expected_last_sequence": event_stream.get("last_sequence"),
+        "expected_last_kind": event_stream.get("last_kind")
+        if isinstance(event_stream.get("last_kind"), str)
+        else None,
+        "status": "verified",
+        "issues": [],
+    }
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_controller_event_stream_path")
+        return record
+    artifact_record = artifacts.get(path) if isinstance(path, str) else None
+    if not isinstance(artifact_record, dict):
+        record["status"] = "artifact_record_mismatch"
+        record["issues"].append("missing_controller_event_artifact_record")
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / path_obj).resolve(strict=False)
+    except OSError:
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_controller_event_stream_path")
+        return record
+    if not resolved_path.is_relative_to(resolved_root):
+        record["status"] = "unsafe_path"
+        record["issues"].append("controller_event_stream_path_outside_root")
+        return record
+    if not resolved_path.exists():
+        record["status"] = "missing_file"
+        record["issues"].append("missing_controller_event_stream_file")
+        return record
+    if not resolved_path.is_file() or resolved_path.is_symlink():
+        record["status"] = "unsafe_path"
+        record["issues"].append("controller_event_stream_path_not_regular_file")
+        return record
+    try:
+        raw = resolved_path.read_bytes()
+        events = list(
+            iter_strict_jsonl_objects(
+                resolved_path,
+                stream_name="controller_budget_events.jsonl",
+            )
+        )
+    except (OSError, StrictJsonlError) as exc:
+        record["status"] = "read_error"
+        record["issues"].append("controller_event_stream_read_error")
+        record["error"] = redact_sensitive_text(str(exc))
+        return record
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    actual_bytes = len(raw)
+    record["actual_sha256"] = actual_sha
+    record["actual_bytes"] = actual_bytes
+    record["actual_event_count"] = len(events)
+    record["actual_last_sequence"] = events[-1].get("sequence") if events else None
+    record["actual_last_kind"] = events[-1].get("kind") if events else None
+    _compare_controller_artifact_record(record, artifact_record, actual_sha, actual_bytes)
+    if record["expected_status"] not in {None, "present"}:
+        if record["status"] == "verified":
+            record["status"] = "artifact_record_mismatch"
+        record["issues"].append("controller_event_stream_not_present")
+    if (
+        record["expected_event_count"] is not None
+        and record["expected_event_count"] != len(events)
+    ):
+        if record["status"] == "verified":
+            record["status"] = "event_count_mismatch"
+        record["issues"].append("controller_event_count_mismatch")
+    if record["expected_last_sequence"] != record["actual_last_sequence"]:
+        if record["status"] == "verified":
+            record["status"] = "last_event_mismatch"
+        record["issues"].append("controller_last_sequence_mismatch")
+    if (
+        record["expected_last_kind"] is not None
+        and record["expected_last_kind"] != record["actual_last_kind"]
+    ):
+        if record["status"] == "verified":
+            record["status"] = "last_event_mismatch"
+        record["issues"].append("controller_last_kind_mismatch")
+    return record
+
+
+def _compare_controller_artifact_record(
+    record: dict[str, object],
+    artifact_record: object,
+    actual_sha: str,
+    actual_bytes: int,
+) -> None:
+    if not isinstance(artifact_record, dict):
+        return
+    exists = artifact_record.get("exists")
+    if exists is not True:
+        record["status"] = "artifact_record_mismatch"
+        record["issues"].append("controller_event_artifact_record_not_existing")
+    expected_sha = artifact_record.get("sha256")
+    if not isinstance(expected_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_sha):
+        if record["status"] == "verified":
+            record["status"] = "hash_mismatch"
+        record["issues"].append("invalid_controller_event_artifact_hash")
+    elif expected_sha != actual_sha:
+        if record["status"] == "verified":
+            record["status"] = "hash_mismatch"
+        record["issues"].append("controller_event_artifact_hash_mismatch")
+    expected_bytes = artifact_record.get("bytes")
+    if (
+        isinstance(expected_bytes, bool)
+        or not isinstance(expected_bytes, int)
+        or expected_bytes <= 0
+    ):
+        if record["status"] == "verified":
+            record["status"] = "bytes_mismatch"
+        record["issues"].append("invalid_controller_event_artifact_bytes")
+    elif expected_bytes != actual_bytes:
+        if record["status"] == "verified":
+            record["status"] = "bytes_mismatch"
+        record["issues"].append("controller_event_artifact_bytes_mismatch")
 
 
 def _budget_for_controller_event_replay(snapshot: Mapping[str, object]) -> RunBudget:

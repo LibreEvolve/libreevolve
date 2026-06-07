@@ -526,10 +526,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     compact controller-budget event-stream summary. Async or mid-generation
     controller/pending-work state is still absent from one-command resumed
     experiment traces.
+    `libreevolve.controller_state_artifact_inventory.v1` now verifies the
+    terminal synchronous controller event stream against the manifest artifact
+    record and disk file, including safe relative path checks, file existence,
+    SHA-256, byte count, strict JSONL event count, last sequence/kind,
+    per-record status, and a stable records hash.
   - Required result: apply or explicitly model migration-event replay, add
     controller/pending-work resume state, and add paper-visible resume/replay
     tests covering below-threshold, non-admitted, elite-only, and
-    cell-replacement cases.
+    cell-replacement cases. The remaining paper gap is not terminal controller
+    event-stream artifact verification.
 
 - [ ] Context-policy side of meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.

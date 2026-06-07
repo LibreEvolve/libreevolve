@@ -954,10 +954,12 @@ Primary evidence:
     views, and
     `load_accepted_history_index()` remains an id map for restore/query
     scaffolding rather than a ranked cross-run database. The compact `show`
-    path intentionally rejects mixed legacy/current history schemas with a
+    path now prints selected-row runtime status, lineage, prompt, evaluation,
+    feedback, failure-count, objective-vector, and workspace-file summaries, and
+    intentionally rejects mixed legacy/current history schemas with a
     line-numbered diagnostic instead of migrating them into one compatible
     database view. The remaining gap is not validation of the current bounded
-    resurfacing-index record.
+    resurfacing-index record or the selected-row `show` summaries.
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, durable ranked views
     by score/metric/diversity/feedback/lineage/failure/hypothesis/artifact

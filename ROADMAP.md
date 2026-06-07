@@ -309,9 +309,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend strict finite JSONL coverage and diagnostics beyond current
   candidate, prompt, manifest, and GRPO-export writers as new run artifacts are
   added.
-- Improve `show` beyond the current validity/archive-aware compact view with
-  run summaries, lineage, richer metrics, workspace artifacts, and failure
-  statistics.
+- Improve `show` beyond the current validity/archive-aware selected-row view
+  with runtime status, lineage/prompt/evaluation/feedback/failure summaries,
+  bounded objective-vector metrics, and workspace-file display toward whole-run
+  source integrity checks, richer archive/prompt/failure drill-downs, and
+  durable query views over run artifacts.
 - Add packaging/release hygiene beyond editable installs.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and

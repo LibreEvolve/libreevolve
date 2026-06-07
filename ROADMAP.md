@@ -339,6 +339,10 @@ is not yet an AlphaEvolve reproduction.
   construction artifacts. For Appendix B-style constructive-math claims, add
   Colab-equivalent construction-data exports and runnable verifier-code
   artifacts rather than only family/status registry entries.
+- Add constructive-math aggregate outcome ledgers before making Section 3.2-
+  style breadth claims: per-problem/per-parameter rows, mathematical branch
+  labels, prior-best references, matched/improved/fell-behind status, and
+  validated percentages for dozens-problem coverage.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

@@ -517,6 +517,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes static problem context and post-run artifacts from
     first-class incumbent-construction benchmark handoff evidence.
 
+- [ ] Keep README constructive-math coverage wording scoped to Appendix B
+      family status until aggregate outcome reports exist.
+  - Spec evidence: AlphaEvolve Section 3.2 reports over 50 mathematical
+    problems across more than five branches, with roughly 75% matching best
+    known constructions and roughly 20% improving SOTA.
+  - Current evidence: README describes the Appendix B registry as thirteen
+    constructive-math families with one smoke fixture and planned entries for
+    the rest. That is a family/status and expected-artifact ledger, not a
+    per-problem/per-parameter outcome report with branch taxonomy, previous
+    best references, construction links, and matched/improved aggregate
+    percentages.
+  - Required result: when constructive-math outcome reports land, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes Appendix B family coverage from AlphaEvolve-style aggregate
+    mathematical breadth and SOTA-rate claims.
+
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.
   - Spec evidence: AlphaEvolve-style feedback and reviewer channels need

@@ -51,6 +51,12 @@ metadata. Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts.
+It also is not the Section 3.2 aggregate mathematical-outcome evidence: the
+paper reports over 50 problems across more than five branches, with roughly
+75% matching best known constructions and roughly 20% improving SOTA.
+LibreEvolve still needs per-problem/per-parameter rows, branch labels,
+previous-best references, construction/verifier links, outcome statuses, and
+validated aggregate percentages before making that class of breadth claim.
 It also checks `libreevolve/problems/benchmarks/alphaevolve_ablations.json`,
 which defines the AlphaEvolve Figure 8 ablation report contract for the full
 system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,

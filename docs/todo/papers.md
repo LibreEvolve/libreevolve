@@ -1609,6 +1609,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     heuristic output construction, verifier/certificate inputs, and improvement
     status for at least one constructive-math benchmark family.
 
+- [ ] Track aggregate constructive-math breadth and outcome-rate evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says
+    AlphaEvolve was applied to a curated set of over 50 mathematical problems
+    spanning more than five branches, rediscovered the best known
+    constructions in about 75% of cases, and improved the SOTA in about 20%.
+  - Current evidence: the Appendix B registry is a thirteen-family coverage
+    ledger with planned/smoke statuses, expected artifact kinds, and citation
+    metadata. Existing TODOs require construction-data exports, verifier code,
+    target baselines, incumbent handoff, and expert-formulation provenance.
+    They do not yet require a per-problem/per-parameter outcome ledger whose
+    branch labels and matched/improved/failed counts reproduce the Section 3.2
+    aggregate claims.
+  - Required result: add paper/report evidence for constructive-math problem
+    instances, branch taxonomy, parameter settings, previous-best references,
+    AlphaEvolve/LibreEvolve result status, construction/verifier links, and
+    validated aggregate percentages before claiming Section 3.2-style
+    mathematical breadth or SOTA-improvement rates.
+
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
     report matrix multiplication over 54 target sizes, measure both the best

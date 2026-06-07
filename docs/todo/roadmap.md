@@ -1280,6 +1280,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     verifier/certificate hooks, and evidence that this is more than static
     context injection or smoke artifact export.
 
+- [ ] Keep constructive-math coverage roadmap wording scoped to family
+      registries until aggregate outcome reports exist.
+  - Spec evidence: AlphaEvolve Section 3.2 claims breadth over a curated set
+    of more than 50 mathematical problems spanning more than five branches,
+    with best-known constructions matched in about 75% of cases and SOTA
+    improved in about 20%.
+  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
+    describe Appendix B family/status coverage, smoke fixture boundaries,
+    expected construction/certificate artifacts, and missing Colab-equivalent
+    verifier data. They do not yet require per-problem/per-parameter outcome
+    rows, branch labels, prior-best references, matched/improved/fell-behind
+    status, or aggregate percentage validation for Section 3.2 claims.
+  - Required result: when constructive-math outcome ledgers and validators
+    land, update roadmap, README, papers index, and code/paper TODOs together
+    so roadmap wording neither underclaims the current Appendix B family
+    registry nor overclaims AlphaEvolve-style mathematical breadth evidence.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

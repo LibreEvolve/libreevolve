@@ -3017,7 +3017,11 @@ example only, and requires unimplemented families to carry explicit objective,
 target/baseline, construction-artifact, certification, rationale, and citation
 coverage. It is a coverage ledger, not the paper's accompanying-Colab evidence:
 it does not yet export the reported construction data or runnable verification
-code needed to reproduce Appendix B construction claims. Matrix-result
+code needed to reproduce Appendix B construction claims. It is also not a
+Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
+paper's over-50 mathematical problem instances, branch taxonomy, previous-best
+references, matched/improved/failed statuses, or aggregate percentages for
+best-known rediscovery and SOTA improvement. Matrix-result
 publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target

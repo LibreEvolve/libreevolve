@@ -1646,6 +1646,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     them, or preventing declared hardening evidence from overriding the
     smoke-only scope registry.
 
+- [ ] Track Figure 5 construction-exhibit provenance as paper evidence.
+  - Paper evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking
+    mathematical construction examples with branch labels, problem labels,
+    before/after metric values, and rendered construction visuals such as
+    hexagon outer-edge, max-distance/min-distance, and sum-of-radii examples.
+  - Current gap: the paper-facing Appendix B registry is family/status
+    coverage, and existing TODOs ask for construction-data/verifier exports,
+    aggregate outcome reports, benchmark hardening, and result-version
+    provenance. There is no paper-evidence row or report schema that maps
+    Figure 5 exhibits to selected Appendix B results, previous-best/result
+    values, branch/problem labels, visual artifact paths/hashes, rendering
+    parameters, source Colab cells/artifacts, or verifier links.
+  - Required result: add Figure 5-style exhibit metadata with stable exhibit
+    IDs, Appendix B family/parameter links, previous/current metric values with
+    direction/unit, previous-best source, construction payload, rendered
+    visual/JSON artifacts with hashes, verifier/certificate links, and
+    documentation that separates reproduced paper exhibits from broader
+    Appendix B family coverage.
+
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the
     initial solution and optional background knowledge as user inputs, and

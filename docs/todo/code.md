@@ -1621,6 +1621,25 @@ Primary evidence:
     preventing declared hardening evidence from overriding the smoke-only
     scope registry.
 
+- [ ] Add Figure 5 construction-exhibit provenance and visual artifacts.
+  - Spec evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking
+    mathematical construction examples with branch labels, problem labels,
+    before/after metric values, and rendered construction visuals such as
+    hexagon outer-edge, max-distance/min-distance, and sum-of-radii examples.
+  - Current evidence: the Appendix B registry is family/status coverage, and
+    existing TODOs ask for construction-data/verifier exports, aggregate
+    outcome reports, benchmark hardening, and result-version provenance. No
+    code/report schema records Figure 5 exhibit IDs, selected Appendix B result
+    rows, previous-best/result values, branch/problem labels, visual artifact
+    paths/hashes, rendering parameters, source Colab cell/artifact, or verifier
+    linkage.
+  - Required result: add report/inventory metadata for Figure 5-style
+    exhibits: stable exhibit IDs, Appendix B family/parameter links,
+    previous/current metric values with direction/unit, previous-best source,
+    construction payload, rendered visual/JSON artifacts with hashes,
+    verifier/certificate links, and docs that distinguish exhibit
+    reproduction from broader Appendix B family coverage.
+
 - [ ] Add aggregate constructive-math outcome coverage reports.
   - Spec evidence: AlphaEvolve Section 3.2 reports more than 50 mathematical
     problems across more than five branches of mathematics, with best-known

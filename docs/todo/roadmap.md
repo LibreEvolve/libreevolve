@@ -1512,6 +1512,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording neither underclaims the current Appendix B family
     registry nor overclaims AlphaEvolve-style mathematical breadth evidence.
 
+- [ ] Keep Figure 5 roadmap wording scoped until construction-exhibit
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking
+    mathematical construction examples with branch labels, problem labels,
+    before/after metric values, and rendered construction visuals.
+  - Current evidence: `ROADMAP.md`, README, papers index, and code evidence
+    describe Appendix B family/status coverage, smoke fixture boundaries,
+    expected construction/certificate artifacts, aggregate outcome gaps, and
+    result-version provenance gaps. They do not require Figure 5 exhibit IDs,
+    selected result-row links, visual artifact paths/hashes, rendering
+    parameters, previous-best sources, source Colab cells/artifacts, or verifier
+    linkage for the paper's displayed examples.
+  - Required result: when construction-exhibit provenance lands, update
+    roadmap, README, papers index, and code/paper TODO entries together with
+    exhibit-level metadata and validators so roadmap wording distinguishes
+    Appendix B family coverage, aggregate constructive-math outcomes, and
+    reproduced Figure 5 visual/result exhibits.
+
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.
   - Spec evidence: AlphaEvolve Appendix B includes result-level revision

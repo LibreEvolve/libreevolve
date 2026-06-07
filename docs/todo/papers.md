@@ -670,6 +670,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `snapshot_persisted_cursor_and_full_archive_restore_supported`, while
     validators still accept the earlier cursor-only status for legacy manifest
     restore.
+    The paper index now reflects that CLI full-runtime restore composes the
+    compatible archive restore bundle with runtime RNG, LLM scheduler, budget,
+    and controller-budget replay surfaces; it no longer treats generic
+    full-resume wiring as open for these synchronous checked surfaces.
     `policies.archive_identity.resume_status` now advertises
     `manifest_archive_state_restore_supported`, lists restored archive
     surfaces, and explicitly marks migration-event replay as

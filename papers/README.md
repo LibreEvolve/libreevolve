@@ -293,8 +293,10 @@ archive configuration. `load_archive_restore_bundle()` combines that manifest
 state with accepted `history.jsonl` records, and
 `ProgramDatabase(..., archive_state_snapshot=..., archive_programs_by_id=...)`
 can restore both the cursor/counter subset and the cell/elite contents. CLI
-full-resume wiring and migration-event replay remain part of the broader resume
-gap.
+full-runtime restore now composes that compatible archive restore bundle with
+the runtime RNG, LLM scheduler, budget, and controller-budget replay surfaces;
+ordered migration-event replay plus async/provider-output/pending-work resume
+remain part of the broader resume gap.
 
 AlphaEvolve rejected-diagnostics note: rejected archive-admission metadata is
 kept JSON-safe, but hook-mutated/restored programs with non-finite top-level

@@ -136,6 +136,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so they neither underclaim current bounded
     hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
 
+- [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
+  current fields.
+  - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve both
+    prompt instructions and prompt context policy, not only mutate whole prompt
+    template strings or a fixed subset of locally known rendering controls.
+  - Current evidence: `ROADMAP.md` currently documents prompt-program
+    selection, scoring, lineage, optional interval-based LLM template mutation,
+    prompt-template validation, bounded prompt/context retention surfaces, and
+    the need for richer context-policy ownership. Code, README, and paper TODO
+    evidence now also show that prompt programs persist validated
+    `libreevolve.prompt_context_policy.v1` state, meta-prompt evidence exposes
+    a checked `libreevolve.meta_prompt_context_policy_capabilities.v1`
+    capability map, and the current tunable fields include optional channel
+    controls, section priorities, mutation-instruction variants, parent metric
+    selection/caps, parent-code selection/filtering/order/limits/caps/
+    truncation, proposal metadata enablement, feedback subsection controls, and
+    inspiration sampling controls.
+  - Required result: when prompt-program policy can control retrieval or
+    summarization behavior, learned/semantic context selection, arbitrary
+    instruction channels, broader per-role retention, or other prompt surfaces
+    beyond the currently validated field set, update `ROADMAP.md`, README,
+    papers index, and code/paper TODO entries together so roadmap wording
+    neither underclaims current structured policy mutation nor overclaims full
+    AlphaEvolve-grade prompt evolution.
+
 - [ ] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
   TF-IDF coordinates versus stable learned descriptors.
   - Spec evidence: AlphaEvolve-style quality-diversity search needs

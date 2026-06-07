@@ -177,6 +177,26 @@ Primary evidence:
     current synchronous provider-attempt/token/configured-cost/latency
     controller-event replay.
 
+- [ ] Extend prompt-template compatibility beyond current mutation-template
+  checks and duplicate-arm audit.
+  - Spec evidence: AlphaEvolve-style prompt evolution should make prompt
+    templates compatible with the roles and context channels that consume them,
+    and should define whether identical prompt text is intentionally preserved
+    as separate experimental arms or deduplicated as one prompt policy.
+  - Current evidence: `validate_prompt_template()` enforces known simple
+    placeholders, required generic prompt fields, and dry-run format
+    compatibility. `validate_configured_prompt_template_semantics()` can require
+    AlphaEvolve-style mutation channels for configured seeds unless
+    `prompt_variant_semantic_policy: compatibility` is selected. Meta-prompt
+    children cannot drop placeholders used by their selected parent, and
+    duplicate configured or evolved templates are retained as separate prompt
+    arms with deterministic ids plus `template_sha256` audit identity.
+  - Required result: add explicit role-specific compatibility policy for
+    mutation, critique, feedback grading, and meta-prompt surfaces; decide and
+    test a prompt-program text deduplication or explicit no-dedup policy; and
+    update README, ROADMAP, and paper TODO wording so duplicate template text is
+    not mistaken for implemented prompt-program deduplication.
+
 - [ ] Extend structured prompt context policy beyond validated current fields.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
     not just swapping one complete prompt string for another.

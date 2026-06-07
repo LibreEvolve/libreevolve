@@ -9,6 +9,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
+  routing.
+  - Spec evidence: AlphaEvolve-style runs should make provider request
+    surfaces explicit enough for reproducibility; local docs should not imply a
+    different API route than the configured adapter will use.
+  - Current evidence: README correctly states that OpenAI defaults to Chat
+    Completions and uses Responses API when `api_mode: responses` or
+    `reasoning_effort` is configured. `OpenAIBackend` resolves explicit
+    `api_mode: responses` without reasoning into Responses mode, while
+    `api_mode: auto` without reasoning preserves Chat Completions. `AGENTS.md`
+    has been updated to match that boundary.
+  - Required result: when OpenAI API-mode routing, supported request
+    parameters, or static compatibility checks change, update README,
+    `AGENTS.md`, code TODOs, and paper TODOs together so docs neither
+    underclaim explicit Responses support nor overclaim live provider
+    capability discovery.
+
 - [ ] Keep README paper-inspired plugin claims scoped to approximation status.
   - Spec evidence: citing CausalEvolve, DeepEvolve, ImprovEvolve,
     ThetaEvolve, GigaEvo, CodeEvolve, or MadEvolve should not imply faithful

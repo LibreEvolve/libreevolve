@@ -111,6 +111,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code/paper TODO entries together so roadmap text distinguishes source-path
     provenance from AlphaEvolve-style human-seeded experiment provenance.
 
+- [ ] Keep roadmap seed-validity wording scoped to permissive baselines versus
+      AlphaEvolve-strict complete initial programs.
+  - Spec evidence: AlphaEvolve Section 2.1 expects the initial implementation
+    inside evolvable blocks to be complete, although possibly rudimentary, and
+    runnable through the supplied task skeleton/evaluator.
+  - Current evidence: ROADMAP and README currently document source-safe seed
+    ingestion, skipped-seed diagnostics, generation-0 baselines, and example
+    seed-score classes. The implementation evaluates seeds and logs invalid
+    seed failures, so current permissive optimization-pressure seeds are not
+    equivalent to an AlphaEvolve-strict complete initial-program precondition.
+  - Required result: when a strict initial-program validity policy, benchmark
+    seed-validity report fields, and README/paper-index wording land, update
+    roadmap text so it neither rejects the current permissive examples nor
+    overclaims that invalid generation-0 baselines satisfy AlphaEvolve's
+    complete initial-implementation requirement.
+
 - [ ] Keep roadmap problem-formulation wording scoped to context artifacts
       until expert provenance exists.
   - Spec evidence: AlphaEvolve Section 3.2 says external mathematicians

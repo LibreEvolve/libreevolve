@@ -201,6 +201,15 @@ evaluation or evolutionary approaches; LibreEvolve needs structured
 idea-origin metadata and equal-budget seed-variant evidence before making that
 class of paper claim.
 
+AlphaEvolve initial-program validity note: current seed handling can evaluate
+and record invalid generation-0 seeds as permissive optimization-pressure
+baselines, including examples such as `hello_world`. AlphaEvolve Section 2.1
+describes the initial implementation inside evolvable blocks as complete,
+though rudimentary, and runnable through the task skeleton/evaluator. LibreEvolve
+needs an explicit strict seed-validity policy and benchmark/report evidence
+before treating every initial seed baseline as paper-faithful AlphaEvolve
+initial-solution evidence.
+
 AlphaEvolve expert-formulation note: local context-source and problem/source
 provenance records identify artifacts and rendered prompt context, but they do
 not yet capture expert contributor roles, problem-origin notes, formulation

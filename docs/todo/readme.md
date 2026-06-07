@@ -52,6 +52,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     TODO entries together so README does not imply source-path provenance is
     sufficient for AlphaEvolve-style human-seeded collaboration claims.
 
+- [ ] Keep README seed-validity wording scoped to permissive examples versus
+      AlphaEvolve-strict complete starts.
+  - Spec evidence: AlphaEvolve Section 2.1 describes the initial implementation
+    as complete but rudimentary, with the task skeleton and evaluator able to
+    invoke it before evolution.
+  - Current evidence: README documents valid/suboptimal seeds and deliberately
+    invalid optimization-pressure seeds, including `hello_world`, and states
+    that runs can record invalid seed baselines. That is useful prototype
+    behavior, but it is not the same as a strict AlphaEvolve initial-program
+    contract where every selected seed is complete, runnable, and validator
+    valid before mutation begins.
+  - Required result: when strict seed-validity policy/reporting lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes permissive invalid seed baselines from benchmark claims that
+    require complete AlphaEvolve-style initial implementations.
+
 - [ ] Keep README problem-formulation wording scoped until expert provenance
       exists.
   - Spec evidence: AlphaEvolve Section 3.2 reports that many mathematical

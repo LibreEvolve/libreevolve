@@ -62,6 +62,28 @@ Primary evidence:
     seed-variant result evidence before claiming AlphaEvolve-style
     collaboration or human-seeded matrix benchmark parity.
 
+- [ ] Add an AlphaEvolve-strict seed validity policy for complete initial
+      programs.
+  - Spec evidence: AlphaEvolve Section 2.1 says the initial implementation
+    inside the evolvable code blocks should be complete, although it may be
+    rudimentary, and the surrounding skeleton should let the evaluator invoke
+    it as a working program before evolution.
+  - Current evidence: LibreEvolve validates seed source safety, UTF-8/text
+    limits, workspace shape, Python-primary marker structure, and evaluator
+    return contracts. It then evaluates each seed, admits valid seeds, and logs
+    invalid generation-0 seeds through `log_seed_failure()`. The shipped
+    examples intentionally include optimization-pressure starts such as
+    `hello_world`, whose seed is evaluator-invalid, and a run can record that
+    every evaluated seed was invalid instead of failing task setup as an
+    AlphaEvolve-strict initial-program contract violation.
+  - Required result: add an explicit problem/run policy for strict
+    AlphaEvolve-style initial-program validation, including seed evaluation
+    before mutation, required validity/declared metric presence for every
+    selected seed, manifest/report evidence distinguishing permissive
+    optimization-pressure seeds from strict complete seeds, and docs that do
+    not present invalid generation-0 baselines as faithful AlphaEvolve initial
+    implementations.
+
 - [ ] Add expert problem-formulation provenance for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,
     evaluator, initial solution, and optional background knowledge as

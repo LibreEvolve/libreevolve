@@ -1409,6 +1409,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     claiming AlphaEvolve-style scientific-collaboration or human-seeded matrix
     result parity.
 
+- [ ] Track strict completeness of initial programs separately from
+      optimization-pressure seeds.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 describes the
+    initial implementation inside code blocks as complete, even if
+    rudimentary, with the broader skeleton used by the evaluator to run the
+    evolving solution.
+  - Current evidence: LibreEvolve can evaluate and record invalid generation-0
+    seeds as failed baselines, and README explicitly names examples such as
+    `hello_world` as invalid greeting seeds used for seed-to-best optimization
+    pressure. Current seed provenance and evaluator-contract records prove
+    where a seed came from and how it evaluated; they do not prove that every
+    initial implementation is a complete runnable AlphaEvolve-style starting
+    point.
+  - Required result: add paper-facing evidence and configuration/report fields
+    that distinguish strict complete/runnable initial programs from permissive
+    invalid or deliberately failing optimization-pressure seeds, require
+    strict-seed validity for AlphaEvolve-parity benchmarks, and keep seed
+    failure logs from being treated as paper-ready initial-solution evidence.
+
 - [ ] Track expert problem-formulation provenance for mathematical benchmarks.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says most
     mathematical discoveries came from open problems suggested by external

@@ -1250,7 +1250,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     files once a report names them, or preventing declared hardening evidence
     from overriding the smoke-only scope registry.
 
-- [ ] Preserve AlphaEvolve's matrix-result publication contract.
+- [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
     report matrix multiplication over 54 target sizes, measure both the best
     rank and the fraction of random seeds achieving that rank, provide exact
@@ -1294,7 +1294,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     artifacts, validating the checked bundle wrapper, or emitting one checked
     Strassen baseline once those files exist.
 
-- [ ] Add independent certification gates for paper-level result claims.
+- [ ] Generate independent certification evidence for paper-level result
+  claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from
     stronger confirmation for deployed or claimed discoveries. Section 3.3.1
     reports post-deployment fleet measurements confirming a scheduling
@@ -1330,8 +1331,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     workflows, not checking declared files or bundle consistency once a
     certification report names them.
 
-- [ ] Require holdout/generalization and reference-correctness gates for
-  systems-style benchmarks.
+- [ ] Connect systems-style benchmarks to held-out and reference-correctness
+  evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 evaluates
     production-oriented discoveries beyond the optimization loop: the Borg
     scheduling heuristic is optimized with historical simulator feedback, then

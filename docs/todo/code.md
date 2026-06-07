@@ -1181,8 +1181,7 @@ Primary evidence:
     preventing declared hardening evidence from overriding the smoke-only
     scope registry.
 
-- [ ] Add matrix tensor benchmark result artifacts and per-seed hit-rate
-  reporting.
+- [ ] Generate suite matrix tensor artifacts and per-seed hit-rate reports.
   - Spec evidence: AlphaEvolve Section 3.1 and Appendix A evaluate low-rank
     tensor decomposition targets with multiple random seeds, report the best
     rank plus the fraction of seeds that achieved it, and publish exact
@@ -1227,8 +1226,8 @@ Primary evidence:
     wrapper, or emitting the one checked Strassen baseline once those files
     exist.
 
-- [ ] Add held-out evaluation splits and reference-correctness records to
-  systems benchmarks.
+- [ ] Connect real systems fixtures to held-out and reference-correctness
+  evidence.
   - Spec evidence: AlphaEvolve's engineering applications do not rely only on
     the same evaluator signal used during search. Section 3.3 reports unseen
     workload/capacity tests for scheduling, train/evaluation input-shape splits

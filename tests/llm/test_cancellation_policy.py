@@ -1,7 +1,10 @@
+import hashlib
 import json
 
 from libreevolve.llm.cancellation_policy import (
+    PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA,
     PROVIDER_CANCELLATION_POLICY_SCHEMA,
+    provider_cancellation_artifact_inventory,
     render_provider_cancellation_summary,
     validate_provider_cancellation_policy,
 )
@@ -76,6 +79,69 @@ def test_provider_cancellation_policy_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.hard_cancel_ready is True
+
+
+def test_provider_cancellation_artifact_inventory_verifies_declared_files(tmp_path):
+    policy = _valid_policy()
+    for artifact in policy["artifacts"]:
+        path = tmp_path / artifact["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        raw = f"{artifact['kind']} evidence".encode("utf-8")
+        path.write_bytes(raw)
+        artifact["sha256"] = hashlib.sha256(raw).hexdigest()
+        artifact["bytes"] = len(raw)
+
+    inventory = provider_cancellation_artifact_inventory(policy, tmp_path)
+
+    assert inventory["schema"] == PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["policy_schema"] == PROVIDER_CANCELLATION_POLICY_SCHEMA
+    assert inventory["policy_id"] == "default_llm_timeout_policy"
+    assert inventory["hard_cancel_ready"] is True
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 2
+    assert inventory["verified_count"] == 2
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert {record["status"] for record in inventory["artifacts"]} == {
+        "verified"
+    }
+    assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+
+
+def test_provider_cancellation_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    policy = _valid_policy()
+    policy["artifacts"].append(
+        {
+            "kind": "quarantine_record",
+            "path": "../escape-quarantine.json",
+            "sha256": "c" * 64,
+            "bytes": 1024,
+        }
+    )
+    first = policy["artifacts"][0]
+    first_path = tmp_path / first["path"]
+    first_path.parent.mkdir(parents=True, exist_ok=True)
+    first_path.write_text("wrong", encoding="utf-8")
+    first["sha256"] = "d" * 64
+    first["bytes"] = 999
+    policy["artifacts"][1]["path"] = "missing/cancellation.json"
+
+    inventory = provider_cancellation_artifact_inventory(policy, tmp_path)
+    records = {artifact["kind"]: artifact for artifact in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["timeout_log"]["status"] == "hash_mismatch"
+    assert "artifact_hash_mismatch" in records["timeout_log"]["issues"]
+    assert "artifact_bytes_mismatch" in records["timeout_log"]["issues"]
+    assert records["cancellation_record"]["status"] == "missing_file"
+    assert records["quarantine_record"]["status"] == "unsafe_path"
 
 
 def test_hard_cancel_ready_requires_stop_rule_with_artifact():

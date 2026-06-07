@@ -3015,6 +3015,11 @@ scheduler snapshot, including timeout-failure counts and role/backend
 quarantine observations when available. This defines policy and observation
 evidence only; provider SDK hard cancellation and timeout-driven stop
 enforcement remain runtime work.
+`libreevolve.provider_cancellation_artifact_inventory.v1` verifies declared
+timeout, cancellation, budget-stop, and quarantine artifacts against concrete
+files under an explicit artifact root, checking safe relative paths, existence,
+SHA-256 hashes, and byte counts. It proves named cancellation evidence files
+exist, not that in-flight provider SDK calls can be hard-cancelled.
 The same command validates
 `libreevolve/problems/benchmarks/alphaevolve_ablations.json`, which defines the
 AlphaEvolve Figure 8 full-system baseline plus the five named component

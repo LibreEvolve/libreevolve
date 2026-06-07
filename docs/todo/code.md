@@ -1118,12 +1118,19 @@ Primary evidence:
     validated LLM scheduler snapshot, with timeout-failure counts by role,
     configured quarantine thresholds, and quarantined backend counts when
     observed.
+    `libreevolve.provider_cancellation_artifact_inventory.v1` now verifies
+    declared timeout, cancellation, budget-stop, and quarantine artifacts
+    against concrete files under an explicit artifact root, checking safe
+    relative paths, existence, SHA-256 hashes, byte counts, per-artifact
+    status, and aggregate missing/mismatch/invalid counts.
   - Required result: connect the existing timeout/cancellation policy contract
     to live in-flight provider SDK cancellation, turn timeout categories into
     role-specific stop runtime policy, and add tests that runtime-budget
     exhaustion produces role-specific structured timeout/cancellation artifacts
     beyond the currently covered mutation timeout failure-history and policy
-    quarantine-evidence paths.
+    quarantine-evidence paths. The remaining gap is live cancellation/stop
+    behavior and richer runtime artifact generation, not verifying declared
+    cancellation evidence files once a policy names them.
 
 ## Runtime, Reproducibility, and Safety
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -10,6 +11,7 @@ from .prompt_roles import validate_prompt_role_label
 
 
 PROVIDER_CANCELLATION_POLICY_SCHEMA = "libreevolve.provider_cancellation_policy.v1"
+PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.provider_cancellation_artifact_inventory.v1"
 CANCELLATION_KINDS = frozenset({"provider_request_timeout", "ensemble_wait_deadline", "runtime_deadline", "hard_cancel"})
 BUDGET_ACTIONS = frozenset({"retry", "fallback", "quarantine", "stop_run", "telemetry_only"})
 ARTIFACT_KINDS = frozenset({"timeout_log", "cancellation_record", "budget_stop_record", "quarantine_record"})
@@ -81,6 +83,76 @@ def render_provider_cancellation_summary(policy: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def provider_cancellation_artifact_inventory(
+    policy: object | str | Path,
+    artifact_root: str | Path,
+) -> dict[str, Any]:
+    """Verify cancellation policy artifact references under a root."""
+    data, read_issues = _load_policy(policy)
+    root = Path(artifact_root)
+    records: list[dict[str, Any]] = []
+    issues = [
+        {"code": issue.code, "message": issue.message}
+        for issue in read_issues
+    ]
+    if data is not None:
+        artifacts = data.get("artifacts")
+        if isinstance(artifacts, list):
+            for artifact in artifacts:
+                records.append(_cancellation_artifact_inventory_record(artifact, root))
+        else:
+            issues.append(
+                {
+                    "code": "invalid_artifacts",
+                    "message": "artifacts must be a non-empty list",
+                }
+            )
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    missing_count = sum(1 for record in records if record["status"] == "missing_file")
+    mismatch_count = sum(
+        1
+        for record in records
+        if record["status"] in {"hash_mismatch", "bytes_mismatch"}
+    )
+    invalid_count = sum(
+        1
+        for record in records
+        if record["status"] in {"invalid_artifact", "unsafe_path", "read_error"}
+    )
+    if not records and data is not None:
+        issues.append(
+            {
+                "code": "empty_artifact_inventory",
+                "message": "no cancellation artifact records were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA,
+        "policy_schema": data.get("schema") if isinstance(data, dict) else None,
+        "policy_id": data.get("policy_id") if isinstance(data, dict) else None,
+        "hard_cancel_ready": data.get("hard_cancel_ready") if isinstance(data, dict) else None,
+        "artifact_root_policy": "safe_relative_report_paths_under_artifact_root",
+        "artifact_root_name": root.name,
+        "artifact_count": len(records),
+        "verified_count": verified_count,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and missing_count == 0
+            and mismatch_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "artifacts": records,
+    }
+
+
 def _load_policy(policy: object | str | Path) -> tuple[dict[str, Any] | None, list[CancellationPolicyIssue]]:
     if isinstance(policy, dict):
         return dict(policy), []
@@ -95,6 +167,83 @@ def _load_policy(policy: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [CancellationPolicyIssue("invalid_shape", "cancellation policy must be a JSON object")]
+
+
+def _cancellation_artifact_inventory_record(artifact: object, root: Path) -> dict[str, Any]:
+    if not isinstance(artifact, dict):
+        return {
+            "kind": "unknown",
+            "path": "",
+            "status": "invalid_artifact",
+            "issues": ["invalid_artifact"],
+        }
+    kind = artifact.get("kind")
+    path = artifact.get("path")
+    expected_sha = artifact.get("sha256")
+    expected_bytes = artifact.get("bytes")
+    record: dict[str, Any] = {
+        "kind": kind if isinstance(kind, str) else "unknown",
+        "path": path if isinstance(path, str) else "",
+        "expected_sha256": expected_sha if isinstance(expected_sha, str) else "",
+        "expected_bytes": expected_bytes if isinstance(expected_bytes, int) and not isinstance(expected_bytes, bool) else None,
+        "status": "verified",
+        "issues": [],
+    }
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_artifact_path")
+        return record
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / path_obj).resolve(strict=False)
+    except OSError:
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_artifact_path")
+        return record
+    if not resolved_path.is_relative_to(resolved_root):
+        record["status"] = "unsafe_path"
+        record["issues"].append("artifact_path_outside_root")
+        return record
+    if not resolved_path.exists():
+        record["status"] = "missing_file"
+        record["issues"].append("missing_artifact_file")
+        return record
+    if not resolved_path.is_file():
+        record["status"] = "unsafe_path"
+        record["issues"].append("artifact_path_not_file")
+        return record
+    try:
+        raw = resolved_path.read_bytes()
+    except OSError:
+        record["status"] = "read_error"
+        record["issues"].append("artifact_read_error")
+        return record
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    actual_bytes = len(raw)
+    record["actual_sha256"] = actual_sha
+    record["actual_bytes"] = actual_bytes
+    if not isinstance(expected_sha, str) or _SHA256_RE.fullmatch(expected_sha) is None:
+        record["status"] = "hash_mismatch"
+        record["issues"].append("invalid_expected_artifact_hash")
+    elif actual_sha != expected_sha:
+        record["status"] = "hash_mismatch"
+        record["issues"].append("artifact_hash_mismatch")
+    if isinstance(expected_bytes, bool) or not isinstance(expected_bytes, int) or expected_bytes <= 0:
+        if record["status"] == "verified":
+            record["status"] = "bytes_mismatch"
+        record["issues"].append("invalid_expected_artifact_bytes")
+    elif actual_bytes != expected_bytes:
+        if record["status"] == "verified":
+            record["status"] = "bytes_mismatch"
+        record["issues"].append("artifact_bytes_mismatch")
+    return record
 
 
 def _id_field(data: dict[str, Any], field: str, issues: list[CancellationPolicyIssue]) -> str | None:

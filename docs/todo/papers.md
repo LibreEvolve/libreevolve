@@ -90,7 +90,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.provider_cancellation_observations.v1`, derived from the
     validated LLM scheduler snapshot, with timeout-failure counts by role,
     configured quarantine thresholds, and quarantined backend counts when
-    observed. Exhausted
+    observed. `libreevolve.provider_cancellation_artifact_inventory.v1` now
+    verifies declared timeout, cancellation, budget-stop, and quarantine
+    artifacts against concrete files under an explicit artifact root, checking
+    safe relative paths, existence, SHA-256 hashes, byte counts, per-artifact
+    status, and aggregate missing/mismatch/invalid counts. Exhausted
     mutation timeout failures now write generated failure-history rows with
     retained timeout telemetry and can continue later generations when budget
     remains. Failed LLM call rows now record
@@ -109,7 +113,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     remaining-runtime wait deadlines, and add benchmark scripts that emit
     equal-budget ablation reports for real targets. The remaining ablation gap
     is executing and emitting real equal-budget reports, not validating the
-    declared result artifacts once a report names them.
+    declared result artifacts once a report names them. The remaining provider
+    cancellation gap is live cancellation/stop behavior and richer runtime
+    artifact generation, not verifying declared cancellation evidence files
+    once a policy names them.
 
 - [ ] Connect LLM budget-report contracts to live enforcement and restored
   consumption.

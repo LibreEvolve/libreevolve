@@ -2555,6 +2555,11 @@ timeout-failure and role/backend quarantine state from `runtime.llm_scheduler`.
 It deliberately reports
 `hard_cancel_ready: false` until provider SDK cancellation handles and
 timeout-driven stop policies are implemented.
+`libreevolve.provider_cancellation_artifact_inventory.v1` can verify the
+policy's declared timeout, cancellation, budget-stop, and quarantine artifacts
+under a safe artifact root. Each artifact must resolve under that root, exist
+as a file, and match its reported SHA-256 hash and byte count. This inventory
+is evidence-file verification, not live in-flight cancellation enforcement.
 Bundled adapters use configured `llm_prompt_roles` entries to add structured
 role instructions before the rendered user prompt: OpenAI receives
 system/developer messages or input items, Anthropic receives a composed

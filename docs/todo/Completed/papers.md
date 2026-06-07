@@ -10022,3 +10022,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     randomized/exhaustive operation, rank, construction, and systems fixtures.
   - Verification: focused benchmark-hardening tests cover valid inventories
     and missing, mismatched, and unsafe fixture/artifact references.
+
+- [x] Add paper-visible provider cancellation artifact inventory verification.
+  - Paper evidence: AlphaEvolve-style compute-budgeted experiments need
+    provider timeout, cancellation, quarantine, and budget-stop evidence that
+    can be audited from concrete artifacts.
+  - Status: `libreevolve.provider_cancellation_artifact_inventory.v1` now
+    verifies timeout logs, cancellation records, budget-stop records, and
+    quarantine records under a safe artifact root. Artifacts are checked for
+    safe paths, existence, SHA-256 hashes, byte counts, and aggregate inventory
+    status.
+  - Remaining paper gap: this is cancellation evidence-file verification only;
+    live provider SDK hard cancellation, timeout-driven stop policy, and richer
+    runtime cancellation artifacts remain unimplemented.
+  - Verification: focused cancellation-policy tests cover valid inventories
+    and missing, mismatched, and unsafe cancellation artifact references.

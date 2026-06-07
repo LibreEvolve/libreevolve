@@ -14909,3 +14909,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     generate randomized/exhaustive hardening reports and detector artifacts.
   - Verification: focused benchmark-hardening tests cover fully verified
     inventories plus hash/byte mismatches, missing files, and unsafe paths.
+
+- [x] Add provider cancellation artifact inventory verification.
+  - Spec evidence: AlphaEvolve-style long-running provider orchestration needs
+    timeout, cancellation, quarantine, and budget-stop evidence that is tied to
+    concrete run artifacts rather than only shaped path/hash fields.
+  - Status: `libreevolve.provider_cancellation_artifact_inventory.v1` now
+    verifies declared cancellation-policy artifacts under an explicit artifact
+    root. The inventory checks safe relative paths, file existence, SHA-256
+    hashes, byte counts, per-artifact statuses, aggregate
+    missing/mismatch/invalid counts, and a stable records hash.
+  - Remaining gap: this verifies named cancellation evidence files; live
+    provider SDK hard cancellation, timeout-driven stop enforcement, and richer
+    role-specific runtime artifact generation remain open.
+  - Verification: focused cancellation-policy tests cover fully verified
+    inventories plus hash/byte mismatches, missing files, and unsafe paths.

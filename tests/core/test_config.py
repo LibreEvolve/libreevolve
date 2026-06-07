@@ -857,6 +857,27 @@ def test_rejects_non_string_nested_config_keys_before_unsupported_sort(kwargs, m
             {"type": "openai", "model": "m", "prompt_max_estimated_tokens": 0},
             "prompt_max_estimated_tokens",
         ),
+        (
+            {"type": "openai", "model": "m", "context_window_tokens": 0},
+            "context_window_tokens",
+        ),
+        (
+            {"type": "openai", "model": "m", "reserved_output_tokens": -1},
+            "reserved_output_tokens",
+        ),
+        (
+            {"type": "openai", "model": "m", "reserved_output_tokens": 1},
+            "context_window_tokens",
+        ),
+        (
+            {
+                "type": "openai",
+                "model": "m",
+                "context_window_tokens": 1024,
+                "reserved_output_tokens": 1024,
+            },
+            "reserved_output_tokens",
+        ),
         ({"type": "openai", "model": "m", "timeout_sec": 0}, "timeout_sec"),
         ({"type": "anthropic", "model": "m", "timeout_sec": True}, "timeout_sec"),
         ({"type": "ollama", "model": "m", "timeout_sec": float("inf")}, "timeout_sec"),

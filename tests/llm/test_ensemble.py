@@ -595,6 +595,13 @@ def test_restore_scheduler_state_accepts_legacy_without_role_call_limits():
         ({"backend_metadata": [{"nested": {"bad\nkey": "value"}}]}, "manifest-safe metadata labels"),
         ({"backend_metadata": [{"cost": 0.0}]}, "cost"),
         ({"backend_metadata": [{"cost_usd_per_million_tokens": 0.0}]}, "cost_usd_per_million_tokens"),
+        ({"backend_metadata": [{"context_window_tokens": 0}]}, "context_window_tokens"),
+        ({"backend_metadata": [{"reserved_output_tokens": -1}]}, "reserved_output_tokens"),
+        ({"backend_metadata": [{"reserved_output_tokens": 1}]}, "context_window_tokens"),
+        (
+            {"backend_metadata": [{"context_window_tokens": 8, "reserved_output_tokens": 8}]},
+            "reserved_output_tokens",
+        ),
         ({"backend_metadata": [{"latency": -1.0}]}, "latency"),
         ({"backend_metadata": [{"depth": math.nan}]}, "depth"),
         ({"backend_metadata": [{"role": "bad role"}]}, "role"),
@@ -777,6 +784,7 @@ def test_build_llm_copies_valid_backend_specs_before_construction():
             "cost": 2,
             "cost_usd_per_million_tokens": 0.75,
             "prompt_max_estimated_tokens": 4096,
+            "context_window_tokens": 8192,
             "latency": 3,
             "depth": 4,
             "role": "breadth",
@@ -792,6 +800,8 @@ def test_build_llm_copies_valid_backend_specs_before_construction():
         "cost": 2.0,
         "cost_usd_per_million_tokens": 0.75,
         "prompt_max_estimated_tokens": 4096,
+        "context_window_tokens": 8192,
+        "reserved_output_tokens": 64,
         "latency": 3.0,
         "depth": 4.0,
         "role": "breadth",
@@ -807,6 +817,8 @@ def test_validate_restored_backend_specs_returns_normalized_defensive_copy():
             "max_tokens": 64,
             "cost": 2,
             "prompt_max_estimated_tokens": 2048,
+            "context_window_tokens": 4096,
+            "reserved_output_tokens": 128,
             "latency": 3,
             "depth": 4,
             "role": "feedback:simplicity",
@@ -825,6 +837,8 @@ def test_validate_restored_backend_specs_returns_normalized_defensive_copy():
             "max_tokens": 64,
             "cost": 2.0,
             "prompt_max_estimated_tokens": 2048,
+            "context_window_tokens": 4096,
+            "reserved_output_tokens": 128,
             "latency": 3.0,
             "depth": 4.0,
             "role": "feedback:simplicity",
@@ -1354,6 +1368,45 @@ def test_generate_records_effective_backend_prompt_estimated_token_limit():
     assert record["max_prompt_estimated_tokens"] == 8
     assert record["configured_max_prompt_estimated_tokens"] == 10
     assert record["backend_prompt_max_estimated_tokens"] == 8
+
+
+def test_generate_enforces_backend_context_window_prompt_limit_before_call():
+    backend = _b("windowed", "answer")
+    ens = LLMEnsemble(
+        [backend],
+        backend_metadata=[{"context_window_tokens": 10, "reserved_output_tokens": 6}],
+    )
+
+    with pytest.raises(ValueError, match=r"max_prompt_estimated_tokens \(5 > 4\)"):
+        ens.generate("abcdefghijklmnopq")
+
+    assert backend.generate.call_count == 0
+    assert ens.call_history == []
+
+
+def test_generate_records_backend_context_window_prompt_limit():
+    backend = _b("windowed", "answer")
+    ens = LLMEnsemble(
+        [backend],
+        max_prompt_estimated_tokens=12,
+        backend_metadata=[
+            {
+                "prompt_max_estimated_tokens": 10,
+                "context_window_tokens": 9,
+                "reserved_output_tokens": 2,
+            }
+        ],
+    )
+
+    ens.generate("prompt text")
+
+    record = ens.call_history[0]
+    assert record["max_prompt_estimated_tokens"] == 7
+    assert record["configured_max_prompt_estimated_tokens"] == 12
+    assert record["backend_prompt_max_estimated_tokens"] == 10
+    assert record["backend_context_window_tokens"] == 9
+    assert record["backend_reserved_output_tokens"] == 2
+    assert record["backend_context_window_prompt_estimated_tokens"] == 7
 
 
 def test_build_llm_passes_configured_call_attempt_limit():

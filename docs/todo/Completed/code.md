@@ -14434,3 +14434,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prompt and loop tests cover policy validation,
     default diagnostics, prompt-visible head-tail retention, metadata evidence,
     and meta-prompt exposure.
+
+- [x] Add backend context-window prompt cap metadata.
+  - Spec evidence: AlphaEvolve-style long-context prompt construction needs
+    model/backend context-window budgets and output-token reserves to bound
+    prompt size before provider calls.
+  - Status: backend specs and direct backend metadata now accept
+    `context_window_tokens` plus optional `reserved_output_tokens`. The
+    ensemble derives a heuristic prompt-token capacity from
+    `context_window_tokens - reserved_output_tokens`, applies it alongside
+    global and backend `prompt_max_estimated_tokens` caps before provider
+    calls, and records the window, reserve, and derived capacity in call
+    telemetry. Backend specs default the reserve from `max_tokens` when an
+    explicit reserve is not configured.
+  - Remaining gap: this is a heuristic context-window contract, not
+    provider-tokenizer-backed section packing or live provider context-window
+    discovery.
+  - Verification: focused config and ensemble tests cover invalid reserves,
+    normalized backend specs, pre-call enforcement, and call telemetry.

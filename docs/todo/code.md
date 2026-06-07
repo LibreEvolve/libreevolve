@@ -59,7 +59,14 @@ Primary evidence:
     Backend specs and direct backend metadata can now include
     `prompt_max_estimated_tokens`; the ensemble applies the minimum applicable
     global/eligible-backend heuristic prompt-token cap before provider calls and
-    records effective/global/backend caps in call telemetry.
+    records effective/global/backend caps in call telemetry. Backend specs and
+    direct backend metadata can also include `context_window_tokens` plus
+    optional `reserved_output_tokens`; when present, the ensemble subtracts the
+    reserve from the context window, applies that derived heuristic prompt-token
+    capacity alongside global/backend prompt caps before provider calls, and
+    records the window, reserve, and derived capacity in call telemetry. If a
+    backend spec omits `reserved_output_tokens` but sets `max_tokens`, the
+    output-token cap is used as the reserve.
   - Required result: add configurable backend/model context-window budgets,
     provider-specific tokenizer integration, exact provider-token
     section-priority fitting over parent code, inspirations, explicit context,

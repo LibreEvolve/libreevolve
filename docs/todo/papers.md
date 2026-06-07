@@ -402,7 +402,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     overhead, required-section fit status, and heuristic character/token-budget
     packing decisions for omitted optional sections, but it is still
     heuristic packing/fallback truncation rather than provider-token
-    context-window fitting.
+    context-window fitting. Backend specs and backend metadata can now carry
+    `context_window_tokens` plus optional `reserved_output_tokens`; the
+    ensemble subtracts the reserve, applies the derived heuristic prompt-token
+    capacity before provider calls, and records the window, reserve, and
+    derived capacity in call telemetry.
   - Required result: add configurable/full validator-metadata prompt policy
     and deterministic provider-token section-priority packing across
     evaluator, feedback, artifact, and context prompt sections.

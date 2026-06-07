@@ -83,6 +83,8 @@ _THROUGHPUT_DEPTH_NORMALIZATION = "per_selection_minmax"
 _NEUTRAL_NORMALIZED_METADATA = 0.5
 _COST_USD_PER_MILLION_TOKENS_FIELD = "cost_usd_per_million_tokens"
 _PROMPT_MAX_ESTIMATED_TOKENS_FIELD = "prompt_max_estimated_tokens"
+_CONTEXT_WINDOW_TOKENS_FIELD = "context_window_tokens"
+_RESERVED_OUTPUT_TOKENS_FIELD = "reserved_output_tokens"
 
 
 class LLMEnsemble:
@@ -781,6 +783,9 @@ class LLMEnsemble:
             limit = metadata.get(_PROMPT_MAX_ESTIMATED_TOKENS_FIELD)
             if limit is not None:
                 limits.append(limit)
+            context_window_limit = _backend_context_window_prompt_limit(metadata)
+            if context_window_limit is not None:
+                limits.append(context_window_limit)
         return min(limits) if limits else None
 
     def _call_record(
@@ -858,6 +863,15 @@ class LLMEnsemble:
             "configured_max_prompt_estimated_tokens": self.max_prompt_estimated_tokens,
             "backend_prompt_max_estimated_tokens": metadata.get(
                 _PROMPT_MAX_ESTIMATED_TOKENS_FIELD
+            ),
+            "backend_context_window_tokens": metadata.get(
+                _CONTEXT_WINDOW_TOKENS_FIELD
+            ),
+            "backend_reserved_output_tokens": metadata.get(
+                _RESERVED_OUTPUT_TOKENS_FIELD
+            ),
+            "backend_context_window_prompt_estimated_tokens": (
+                _backend_context_window_prompt_limit(metadata)
             ),
             "prompt_chars": len(prompt),
             "prompt_estimated_tokens": _estimate_prompt_tokens(len(prompt)),
@@ -3765,12 +3779,21 @@ def _validate_metadata_mapping(mapping: dict, path: str) -> dict:
         key = _validate_metadata_key(key, path)
         if key in {"cost", "latency", "depth", _COST_USD_PER_MILLION_TOKENS_FIELD}:
             normalized[key] = _validate_positive_metadata_number(f"{path}.{key}", value)
-        elif key == _PROMPT_MAX_ESTIMATED_TOKENS_FIELD:
+        elif key in {
+            _PROMPT_MAX_ESTIMATED_TOKENS_FIELD,
+            _CONTEXT_WINDOW_TOKENS_FIELD,
+        }:
             normalized[key] = validate_backend_max_tokens(value, field=f"{path}.{key}")
+        elif key == _RESERVED_OUTPUT_TOKENS_FIELD:
+            normalized[key] = _validate_non_negative_metadata_int(
+                f"{path}.{key}",
+                value,
+            )
         elif key == "role":
             normalized[key] = validate_llm_call_role(value)
         else:
             normalized[key] = _validate_json_safe_metadata_value(value, f"{path}.{key}")
+    _validate_backend_context_window_budget(normalized, path)
     return normalized
 
 
@@ -3988,6 +4011,53 @@ def _validate_positive_metadata_number(path: str, value: object) -> float:
     return numeric
 
 
+def _validate_non_negative_metadata_int(path: str, value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"{path} must be a non-negative integer")
+    return value
+
+
+def _validate_backend_context_window_budget(metadata: dict, path: str) -> None:
+    context_window = metadata.get(_CONTEXT_WINDOW_TOKENS_FIELD)
+    if context_window is None and _RESERVED_OUTPUT_TOKENS_FIELD in metadata:
+        raise ValueError(
+            f"{path}.{_RESERVED_OUTPUT_TOKENS_FIELD} requires "
+            f"{path}.{_CONTEXT_WINDOW_TOKENS_FIELD}"
+        )
+    if context_window is None:
+        return
+    reserved = metadata.get(_RESERVED_OUTPUT_TOKENS_FIELD, 0)
+    if not isinstance(reserved, int) or isinstance(reserved, bool) or reserved < 0:
+        raise ValueError(
+            f"{path}.{_RESERVED_OUTPUT_TOKENS_FIELD} must be a non-negative integer"
+        )
+    if reserved >= context_window:
+        raise ValueError(
+            f"{path}.{_RESERVED_OUTPUT_TOKENS_FIELD} must be less than "
+            f"{path}.{_CONTEXT_WINDOW_TOKENS_FIELD}"
+        )
+
+
+def _backend_context_window_prompt_limit(metadata: object) -> int | None:
+    if not isinstance(metadata, dict):
+        return None
+    context_window = metadata.get(_CONTEXT_WINDOW_TOKENS_FIELD)
+    if context_window is None:
+        return None
+    reserved = metadata.get(_RESERVED_OUTPUT_TOKENS_FIELD, 0)
+    if (
+        isinstance(context_window, bool)
+        or not isinstance(context_window, int)
+        or context_window < 1
+        or isinstance(reserved, bool)
+        or not isinstance(reserved, int)
+        or reserved < 0
+        or reserved >= context_window
+    ):
+        return None
+    return context_window - reserved
+
+
 def _validate_json_safe_metadata_value(value: object, path: str) -> object:
     if value is None or isinstance(value, bool):
         return value
@@ -4129,6 +4199,8 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
         "cost",
         _COST_USD_PER_MILLION_TOKENS_FIELD,
         _PROMPT_MAX_ESTIMATED_TOKENS_FIELD,
+        _CONTEXT_WINDOW_TOKENS_FIELD,
+        _RESERVED_OUTPUT_TOKENS_FIELD,
         "latency",
         "depth",
         "role",
@@ -4212,6 +4284,19 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
                 spec[_PROMPT_MAX_ESTIMATED_TOKENS_FIELD],
                 field=f"{label}.{_PROMPT_MAX_ESTIMATED_TOKENS_FIELD}",
             )
+        if _CONTEXT_WINDOW_TOKENS_FIELD in spec:
+            item[_CONTEXT_WINDOW_TOKENS_FIELD] = validate_backend_max_tokens(
+                spec[_CONTEXT_WINDOW_TOKENS_FIELD],
+                field=f"{label}.{_CONTEXT_WINDOW_TOKENS_FIELD}",
+            )
+        if _RESERVED_OUTPUT_TOKENS_FIELD in spec:
+            item[_RESERVED_OUTPUT_TOKENS_FIELD] = _validate_non_negative_metadata_int(
+                f"{label}.{_RESERVED_OUTPUT_TOKENS_FIELD}",
+                spec[_RESERVED_OUTPUT_TOKENS_FIELD],
+            )
+        elif _CONTEXT_WINDOW_TOKENS_FIELD in item and "max_tokens" in item:
+            item[_RESERVED_OUTPUT_TOKENS_FIELD] = item["max_tokens"]
+        _validate_backend_context_window_budget(item, label)
         if "role" in spec:
             item["role"] = validate_llm_call_role(spec["role"])
         if "reasoning_effort" in spec:

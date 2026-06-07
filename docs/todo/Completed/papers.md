@@ -9640,3 +9640,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     retrieval/summarization transport or a learned source-ranking policy.
   - Verification: focused prompt and loop tests cover validation, prompt
     rendering, metadata persistence, and meta-prompt evidence.
+
+- [x] Add paper-visible backend context-window prompt cap evidence.
+  - Paper evidence: AlphaEvolve-style prompt construction operates under
+    model context limits and output budgets, so backend/model prompt caps should
+    be attributable before provider calls.
+  - Status: backend specs and direct backend metadata can now declare
+    `context_window_tokens` and optional `reserved_output_tokens`. The ensemble
+    subtracts the reserve, applies the derived heuristic prompt capacity before
+    provider calls, and records the configured window, reserve, and derived
+    prompt capacity in LLM call telemetry.
+  - Remaining paper gap: this is explicit heuristic budget evidence, not exact
+    provider-tokenizer packing or live provider context/pricing discovery.
+  - Verification: focused config and ensemble tests cover validation,
+    normalized metadata, pre-call enforcement, and telemetry.

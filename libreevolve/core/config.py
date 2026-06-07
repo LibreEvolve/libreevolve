@@ -1141,6 +1141,8 @@ def _validate_backends(backends: object) -> None:
         "cost",
         "cost_usd_per_million_tokens",
         "prompt_max_estimated_tokens",
+        "context_window_tokens",
+        "reserved_output_tokens",
         "latency",
         "depth",
         "role",
@@ -1205,6 +1207,37 @@ def _validate_backends(backends: object) -> None:
                 backend["prompt_max_estimated_tokens"],
                 minimum=1,
             )
+        if "context_window_tokens" in backend:
+            _require_int(
+                f"{label}.context_window_tokens",
+                backend["context_window_tokens"],
+                minimum=1,
+            )
+        if "reserved_output_tokens" in backend:
+            _require_int(
+                f"{label}.reserved_output_tokens",
+                backend["reserved_output_tokens"],
+                minimum=0,
+            )
+            if "context_window_tokens" not in backend:
+                raise ConfigError(
+                    f"{label}.reserved_output_tokens requires "
+                    f"{label}.context_window_tokens"
+                )
+        if "context_window_tokens" in backend:
+            reserved_output_tokens = backend.get(
+                "reserved_output_tokens",
+                backend.get("max_tokens", 0),
+            )
+            if (
+                isinstance(reserved_output_tokens, bool)
+                or not isinstance(reserved_output_tokens, int)
+                or reserved_output_tokens >= backend["context_window_tokens"]
+            ):
+                raise ConfigError(
+                    f"{label}.reserved_output_tokens must be less than "
+                    f"{label}.context_window_tokens"
+                )
         if "role" in backend:
             _require_role_label(f"{label}.role", backend["role"])
         if "reasoning_effort" in backend:

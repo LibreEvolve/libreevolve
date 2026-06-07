@@ -208,7 +208,12 @@ from `validate.py` unless explicitly allowlisted.
   provider-specific tokenizer integration.
   Individual backend specs can also set `prompt_max_estimated_tokens`; the
   ensemble combines the global cap with eligible backend/model caps and records
-  the effective cap in call telemetry.
+  the effective cap in call telemetry. Backend specs can also set
+  `context_window_tokens` with optional `reserved_output_tokens` to derive a
+  heuristic prompt-token capacity of `context_window_tokens -
+  reserved_output_tokens`; when `reserved_output_tokens` is omitted and
+  `max_tokens` is set, the backend output cap is used as the reserve. This is
+  still heuristic prompt fitting, not provider-tokenizer integration.
 - `prompt_artifact_content_mode` (`"excerpt"`): controls validator-artifact
   content rendered into mutation prompts. `excerpt` uses the bounded
   `content_excerpt` already stored in evaluation metadata, `bounded_file`
@@ -448,7 +453,13 @@ estimate, but LibreEvolve still does not fetch live provider prices.
 Backend specs may also include `prompt_max_estimated_tokens`, a positive
 heuristic prompt-token cap for that backend/model. It is enforced before
 provider calls when the backend is eligible for the call role and is recorded in
-call telemetry alongside the global configured cap.
+call telemetry alongside the global configured cap. Backend specs may also
+include `context_window_tokens` and optional `reserved_output_tokens`; the
+ensemble subtracts the reserve from the window and applies the result as another
+eligible-backend heuristic prompt-token cap. If `reserved_output_tokens` is
+omitted and `max_tokens` is present, `max_tokens` is used as the output reserve.
+`reserved_output_tokens` requires `context_window_tokens` and must be smaller
+than it.
 
 - `ensemble_explore_coeff` (`1.0`): exploration coefficient for UCB-style
   routing.

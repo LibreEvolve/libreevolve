@@ -131,4 +131,10 @@ def _backend_metadata_from_spec(spec: dict) -> dict:
         metadata["prompt_max_estimated_tokens"] = spec[
             "prompt_max_estimated_tokens"
         ]
+    if "context_window_tokens" in spec:
+        metadata["context_window_tokens"] = spec["context_window_tokens"]
+        metadata["reserved_output_tokens"] = spec.get(
+            "reserved_output_tokens",
+            spec.get("max_tokens", 0),
+        )
     return metadata

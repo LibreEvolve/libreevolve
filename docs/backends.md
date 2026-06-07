@@ -193,6 +193,12 @@ Current behavior:
   applicable global and eligible-backend heuristic token cap before provider
   calls. This is model/context-window evidence, not provider-tokenizer-backed
   section packing.
+- backend specs and direct backend metadata can set `context_window_tokens`
+  plus optional `reserved_output_tokens`; the ensemble subtracts the reserve
+  from the window and applies the resulting heuristic prompt-token capacity
+  before provider calls. If a backend spec omits `reserved_output_tokens` but
+  sets `max_tokens`, that output cap is used as the reserve; explicit reserves
+  require `context_window_tokens` and must be smaller than it.
 - the bundled OpenAI, Anthropic, and Ollama adapters also validate direct
   `generate(prompt)` calls with the same non-empty text prompt policy before
   constructing provider SDK payloads

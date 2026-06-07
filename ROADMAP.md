@@ -158,9 +158,11 @@ is not yet an AlphaEvolve reproduction.
   provider output/error text, plugin context, meta-prompt evidence, framework
   quarantine snapshots, and DeepResearch retrieval bodies already have
   bounded configurable retention surfaces.
-- Extend current bounded evaluator-output prompt summaries with full/live
-  artifact content retrieval, specialized aggregate syntax diagnostics, and
-  integration with backend-token-aware global prompt-size budgeting.
+- Integrate current evaluator-output prompt summaries, aggregate syntax
+  diagnostics, and bounded run-local artifact content retrieval with
+  backend-token-aware global prompt-size budgeting. Artifact content can
+  already be reopened from copied UTF-8 evaluator artifacts under bounded,
+  redacted, run-local policy.
 - Extend DeepEvolve-inspired retrieval from bounded provenance into
   audit-grade source integrity: unbounded provider-payload/source-content
   artifacts, learned or externally scored ranking/selection evidence beyond

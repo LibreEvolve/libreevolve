@@ -2187,6 +2187,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     versioned result rows prevent mixing stale and current mathematical
     claims.
 
+- [ ] Track Appendix B.4 prior-construction similarity and hypothesis evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 reports the
+    uncertainty-inequality construction and then says the AlphaEvolve linear
+    combination is qualitatively very similar to the construction in reference
+    `[33]`, which the paper presents as empirical confirmation of the
+    hypothesis that the construction is nearly optimal.
+  - Current gap: paper-facing Appendix B TODOs track numeric result rows,
+    Hermite/coefficient payloads, prior-best values, revised constants, and
+    verifier/Colab links. They do not preserve the qualitative
+    construction-to-prior comparison or the near-optimality hypothesis as a
+    distinct paper-evidence claim.
+  - Required result: add B.4 paper-evidence records for the comparison to
+    reference `[33]`: prior construction identifier, comparable structure or
+    coefficient fields, qualitative-similarity claim, near-optimality
+    hypothesis claim id, source page/section, evidence-strength label, and
+    README/ROADMAP wording that does not conflate numerical improvement with
+    qualitative hypothesis support.
+
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
     report matrix multiplication over 54 target sizes, measure both the best

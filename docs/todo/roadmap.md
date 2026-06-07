@@ -2058,6 +2058,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     revision-aware result rows and validation so roadmap wording cannot treat a
     family/status registry as current AlphaEvolve Appendix B result evidence.
 
+- [ ] Keep Appendix B.4 roadmap wording scoped until prior-construction
+      similarity evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 reports that the
+    uncertainty-inequality linear combination found by AlphaEvolve is
+    qualitatively very similar to the construction in reference `[33]`, and
+    uses that similarity as empirical support for the hypothesis that the
+    construction is nearly optimal.
+  - Current evidence: roadmap/README/paper-index wording can cite Appendix B
+    numeric-result rows, coefficient/construction payload gaps,
+    construction/verifier exports, and revised-result provenance. It does not
+    require a separate B.4 comparison record that ties the AlphaEvolve
+    construction to the prior `[33]` construction and labels the
+    near-optimality hypothesis evidence.
+  - Required result: when Appendix B.4 prior-construction comparison metadata
+    and validators land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish value improvement, method similarity,
+    and empirical support for near-optimality.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

@@ -1122,6 +1122,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve Appendix B constants or accidentally mix stale and revised
     bounds.
 
+- [ ] Keep README Appendix B.4 interpretation wording scoped until
+      prior-construction similarity evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 says the uncertainty-inequality
+    construction found by AlphaEvolve is qualitatively very similar to the one
+    in reference `[33]`, and presents that similarity as empirical support for
+    the prior hypothesis that the construction is nearly optimal.
+  - Current evidence: README can point to Appendix B numeric-value,
+    coefficient, construction/verifier, and revised-result gaps. It does not
+    separately warn that B.4's interpretation claim needs source-linked
+    comparison evidence before README characterizes the result as supporting a
+    near-optimality hypothesis.
+  - Required result: when Appendix B.4 comparison metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes the reported `C4` numeric bound from qualitative similarity
+    to prior work and from any claim that the construction is nearly optimal.
+
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.
   - Spec evidence: AlphaEvolve-style feedback and reviewer channels need

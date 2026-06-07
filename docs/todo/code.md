@@ -2041,6 +2041,27 @@ Primary evidence:
     do not mix first-version and updated bounds when claiming AlphaEvolve-style
     mathematical result parity.
 
+- [ ] Add Appendix B.4 prior-construction similarity and hypothesis provenance.
+  - Spec evidence: AlphaEvolve Appendix B.4 does more than report the
+    uncertainty-inequality value and Hermite-polynomial coefficients. After
+    deriving `C4 <= 0.3521`, it says the AlphaEvolve linear combination is
+    qualitatively very similar to the construction in reference `[33]` and
+    treats that similarity as empirical support for the prior hypothesis that
+    the construction is nearly optimal.
+  - Current evidence: existing Appendix B TODOs require per-result values,
+    coefficient payloads, verifier links, revised-result provenance, and
+    comparison to previous numeric bounds. They do not require a source-linked
+    qualitative comparison between the AlphaEvolve construction and the prior
+    `[33]` construction, nor a claim record for the near-optimality hypothesis
+    that the paper says was empirically supported.
+  - Required result: add Appendix B.4 comparison/provenance metadata that links
+    the AlphaEvolve Hermite-polynomial construction to the prior `[33]`
+    construction: source reference and page/section, comparable construction
+    family, coefficient/structure comparison fields, qualitative-similarity
+    claim text, hypothesis claim id, evidence strength label, and docs
+    validation that separates numeric bound improvement from qualitative
+    near-optimality evidence.
+
 - [ ] Add incumbent-construction handoff contracts for heuristic-search
       benchmarks.
   - Spec evidence: AlphaEvolve Section 3.2 describes evolving programs that

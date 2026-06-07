@@ -12,6 +12,10 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: `proposals_per_generation` can now create, evaluate,
     reward, and log multiple sequential sibling candidates inside one
     generation with per-proposal batch metadata and deterministic ids.
+    Completed manifests also embed
+    `libreevolve.controller_state_validation.v1` to verify the current
+    controller boundary is terminal, synchronous, and drained rather than an
+    async queue checkpoint.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
     a time; there are no async LLM sampler queues or parallel evaluator nodes.
 
@@ -612,11 +616,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     record and disk file, including safe relative path checks, file existence,
     SHA-256, byte count, strict JSONL event count, last sequence/kind,
     per-record status, and a stable records hash.
+    `libreevolve.controller_state_validation.v1` now verifies the terminal
+    drained synchronous boundary and reports pending-work or async/full-replay
+    overclaims as manifest validation failures.
   - Required result: apply or explicitly model migration-event replay, add
     controller/pending-work resume state, and add paper-visible resume/replay
     tests covering below-threshold, non-admitted, elite-only, and
     cell-replacement cases. The remaining paper gap is not terminal controller
-    event-stream artifact verification.
+    event-stream artifact verification or terminal drained-state validation.
 
 - [ ] Context-policy side of meta-prompt evolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.

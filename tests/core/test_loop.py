@@ -23,6 +23,7 @@ from libreevolve.core.config import Config
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
+    CONTROLLER_STATE_VALIDATION_SCHEMA,
     FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
     RuntimeLineageReplayPolicyError,
@@ -30,6 +31,7 @@ from libreevolve.core.loop import (
     RuntimeRngStateError,
     controller_state_artifact_inventory,
     evolve,
+    validate_controller_state_snapshot,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -1206,6 +1208,80 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
         "last_kind": "stop",
         "replay_scope": "budget_counters_only",
     }
+    validation = controller_state["validation"]
+    assert validation["schema"] == CONTROLLER_STATE_VALIDATION_SCHEMA
+    assert validation["controller_state_schema"] == "libreevolve.controller_state.v1"
+    assert validation["ok"] is True
+    assert validation["status"] == "verified"
+    assert validation["terminal_drained"] is True
+    assert validation["pending_work_count"] == 0
+    assert validation["overclaim_count"] == 0
+    assert validation["invalid_count"] == 0
+    assert len(validation["records_sha256"]) == 64
+    assert validation["issues"] == []
+    assert validation["record"]["event_stream_status"] == "present"
+    assert validation["record"]["event_count"] == 2
+
+
+def test_validate_controller_state_snapshot_reports_overclaims_and_pending_work():
+    controller_state = {
+        "schema": "libreevolve.controller_state.v1",
+        "status": "terminal_synchronous_controller_drained",
+        "controller_model": "single_process_serial_loop",
+        "resume_scope": "terminal_drained_state_only",
+        "pending_work": {
+            "queued_proposals": 1,
+            "running_proposals": 0,
+            "queued_evaluations": 0,
+            "running_evaluations": 0,
+            "in_flight_llm_calls": 0,
+            "pending_archive_admissions": 0,
+            "partially_completed_generation": False,
+        },
+        "terminal": {
+            "stop_reason": "max_generations",
+            "generations_completed": 1,
+            "evaluations": 2,
+        },
+        "event_stream": {
+            "path": "controller_budget_events.jsonl",
+            "status": "present",
+            "event_count": 2,
+            "last_sequence": 1,
+            "last_kind": "stop",
+            "replay_scope": "full_controller_replay",
+        },
+        "async_resume_ready": True,
+        "pending_work_resume_ready": False,
+        "full_replay_ready": True,
+        "provider_output_replay_ready": False,
+        "limitations": [
+            "synchronous_terminal_snapshot_not_async_queue_checkpoint",
+            "no_mid_generation_resume_boundary",
+            "provider_outputs_not_replayed",
+        ],
+    }
+
+    validation = validate_controller_state_snapshot(controller_state)
+
+    assert validation["schema"] == CONTROLLER_STATE_VALIDATION_SCHEMA
+    assert validation["ok"] is False
+    assert validation["status"] == "overclaim"
+    assert validation["terminal_drained"] is False
+    assert validation["pending_work_count"] == 1
+    assert validation["overclaim_count"] == 1
+    assert validation["invalid_count"] == 0
+    assert "controller_pending_work_not_drained" in validation["issues"]
+    assert "async_resume_ready_overclaimed" in validation["issues"]
+    assert "full_replay_ready_overclaimed" in validation["issues"]
+    assert "event_stream_replay_scope_overclaimed" in validation["issues"]
+
+    invalid = validate_controller_state_snapshot("bad")
+
+    assert invalid["ok"] is False
+    assert invalid["status"] == "invalid_record"
+    assert invalid["invalid_count"] == 1
+    assert invalid["issues"] == ["invalid_controller_state"]
 
 
 def test_controller_state_artifact_inventory_verifies_event_stream(tmp_path):

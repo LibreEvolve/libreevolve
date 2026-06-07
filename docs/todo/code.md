@@ -648,6 +648,11 @@ Primary evidence:
     remains a local staged subprocess evaluator, not distributed workers, and
     `RunBudget` explicitly tracks synchronous local consumption; controller
     budget-state validators exist only for future async/resume events.
+    Completed manifests now embed
+    `libreevolve.controller_state_validation.v1` under
+    `runtime.history.controller_state.validation` to verify that the current
+    controller boundary is terminal, synchronous, and drained, and to reject
+    pending work or async/full-replay overclaims.
   - Required result: introduce an async controller with concurrent LLM
     samplers, evaluator workers, bounded queues, deterministic worker ids,
     deterministic result merge/admission order, concurrency-safe database,
@@ -930,6 +935,9 @@ Primary evidence:
     and disk file, including safe relative path checks, file existence,
     SHA-256, byte count, strict JSONL event count, last sequence/kind,
     per-record status, and a stable records hash.
+    `libreevolve.controller_state_validation.v1` is embedded in the
+    controller-state snapshot to verify the terminal drained synchronous
+    boundary and flag pending-work or async/full-replay overclaims.
   - Remaining gap: migration event-order replay is tracked separately by the
     archive-event replay TODO. The terminal synchronous controller boundary is
     visible, but async/mid-run controller state and pending/in-flight work are
@@ -938,7 +946,7 @@ Primary evidence:
     pending archive admissions, partially completed generation state, or
     deterministic mid-generation controller resume ledger is persisted or
     restored. The remaining gap is not terminal controller event-stream
-    artifact verification.
+    artifact verification or terminal drained-state validation.
   - Required result: add controller/pending-work resume state and extend
     end-to-end resume tests across below-threshold, non-admitted, elite-only,
     in-flight generation/evaluation, and cell-replacement cases.

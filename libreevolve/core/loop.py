@@ -109,6 +109,7 @@ VALID_THRESHOLD = 0.0
 CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA = (
     "libreevolve.controller_state_artifact_inventory.v1"
 )
+CONTROLLER_STATE_VALIDATION_SCHEMA = "libreevolve.controller_state_validation.v1"
 _MAX_PLUGIN_METADATA_KEY_CHARS = 160
 _MAX_PLUGIN_METADATA_STRING_CHARS = 4096
 _MAX_PLUGIN_METADATA_DEPTH = 20
@@ -3045,6 +3046,190 @@ def controller_state_artifact_inventory(
     }
 
 
+def validate_controller_state_snapshot(controller_state: object) -> dict:
+    """Validate the terminal synchronous controller-state boundary."""
+    record = _controller_state_validation_record(controller_state)
+    issues = list(record["issues"])
+    overclaim_count = (
+        1
+        if record["status"] == "overclaim"
+        else 0
+    )
+    invalid_count = (
+        1
+        if record["status"] == "invalid_record"
+        else 0
+    )
+    payload = json.dumps(record, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": CONTROLLER_STATE_VALIDATION_SCHEMA,
+        "controller_state_schema": (
+            controller_state.get("schema")
+            if isinstance(controller_state, dict)
+            else None
+        ),
+        "controller_model": record.get("controller_model"),
+        "resume_scope": record.get("resume_scope"),
+        "status": record["status"],
+        "terminal_drained": record["terminal_drained"],
+        "pending_work_count": record["pending_work_count"],
+        "overclaim_count": overclaim_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": record["status"] == "verified" and not issues,
+        "issues": issues,
+        "record": record,
+    }
+
+
+def _controller_state_validation_record(controller_state: object) -> dict:
+    if not isinstance(controller_state, dict):
+        return {
+            "status": "invalid_record",
+            "controller_model": None,
+            "resume_scope": None,
+            "terminal_drained": False,
+            "pending_work_count": 0,
+            "issues": ["invalid_controller_state"],
+        }
+    issues: list[str] = []
+    if controller_state.get("schema") != "libreevolve.controller_state.v1":
+        issues.append("controller_state_schema_mismatch")
+    if controller_state.get("status") != "terminal_synchronous_controller_drained":
+        issues.append("controller_state_status_not_terminal_drained")
+    controller_model = controller_state.get("controller_model")
+    if controller_model != "single_process_serial_loop":
+        issues.append("controller_model_not_single_process_serial_loop")
+    resume_scope = controller_state.get("resume_scope")
+    if resume_scope != "terminal_drained_state_only":
+        issues.append("resume_scope_overclaimed")
+    pending = controller_state.get("pending_work")
+    pending_count = _controller_pending_work_count(pending, issues)
+    terminal_drained = pending_count == 0 and not any(
+        issue == "invalid_pending_work"
+        or issue == "missing_pending_work_fields"
+        or issue == "unsupported_pending_work_fields"
+        or issue.startswith("invalid_pending_work_")
+        for issue in issues
+    )
+    terminal = controller_state.get("terminal")
+    if not isinstance(terminal, dict):
+        issues.append("invalid_terminal_controller_state")
+    else:
+        if not isinstance(terminal.get("stop_reason"), str) or not terminal.get(
+            "stop_reason"
+        ):
+            issues.append("invalid_terminal_stop_reason")
+        for field in ("generations_completed", "evaluations"):
+            value = terminal.get(field)
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                issues.append(f"invalid_terminal_{field}")
+    event_stream = controller_state.get("event_stream")
+    if not isinstance(event_stream, dict):
+        issues.append("invalid_controller_event_stream")
+    else:
+        if event_stream.get("replay_scope") != "budget_counters_only":
+            issues.append("event_stream_replay_scope_overclaimed")
+        event_count = event_stream.get("event_count")
+        if (
+            isinstance(event_count, bool)
+            or not isinstance(event_count, int)
+            or event_count < 0
+        ):
+            issues.append("invalid_event_stream_event_count")
+        status = event_stream.get("status")
+        if status not in {"present", "absent"}:
+            issues.append("invalid_event_stream_status")
+    for field in (
+        "async_resume_ready",
+        "pending_work_resume_ready",
+        "full_replay_ready",
+        "provider_output_replay_ready",
+    ):
+        if controller_state.get(field) is True:
+            issues.append(f"{field}_overclaimed")
+    limitations = controller_state.get("limitations")
+    if not isinstance(limitations, list) or not all(
+        isinstance(item, str) for item in limitations
+    ):
+        issues.append("invalid_controller_state_limitations")
+    else:
+        required = {
+            "synchronous_terminal_snapshot_not_async_queue_checkpoint",
+            "no_mid_generation_resume_boundary",
+            "provider_outputs_not_replayed",
+        }
+        missing = sorted(required - set(limitations))
+        issues.extend(f"missing_limitation_{item}" for item in missing)
+    overclaim_codes = {
+        "resume_scope_overclaimed",
+        "event_stream_replay_scope_overclaimed",
+        "async_resume_ready_overclaimed",
+        "pending_work_resume_ready_overclaimed",
+        "full_replay_ready_overclaimed",
+        "provider_output_replay_ready_overclaimed",
+    }
+    if any(issue in overclaim_codes for issue in issues):
+        status = "overclaim"
+    elif issues:
+        status = "invalid_record"
+    else:
+        status = "verified"
+    return {
+        "status": status,
+        "controller_model": controller_model,
+        "resume_scope": resume_scope,
+        "terminal_drained": terminal_drained,
+        "pending_work_count": pending_count,
+        "event_stream_status": (
+            event_stream.get("status") if isinstance(event_stream, dict) else None
+        ),
+        "event_count": (
+            event_stream.get("event_count") if isinstance(event_stream, dict) else None
+        ),
+        "issues": sorted(set(issues)),
+    }
+
+
+def _controller_pending_work_count(
+    pending: object,
+    issues: list[str],
+) -> int:
+    if not isinstance(pending, dict):
+        issues.append("invalid_pending_work")
+        return 0
+    expected = {
+        "queued_proposals",
+        "running_proposals",
+        "queued_evaluations",
+        "running_evaluations",
+        "in_flight_llm_calls",
+        "pending_archive_admissions",
+        "partially_completed_generation",
+    }
+    extra = set(pending) - expected
+    missing = expected - set(pending)
+    if extra:
+        issues.append("unsupported_pending_work_fields")
+    if missing:
+        issues.append("missing_pending_work_fields")
+    total = 0
+    for field in sorted(expected - {"partially_completed_generation"}):
+        value = pending.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(f"invalid_pending_work_{field}")
+            continue
+        total += value
+    partial = pending.get("partially_completed_generation")
+    if not isinstance(partial, bool):
+        issues.append("invalid_pending_work_partially_completed_generation")
+    elif partial:
+        total += 1
+    if total:
+        issues.append("controller_pending_work_not_drained")
+    return total
+
+
 def _load_controller_state_inventory_manifest(
     manifest: object | str | Path,
 ) -> tuple[dict | None, list[dict[str, str]]]:
@@ -4380,7 +4565,7 @@ def _runtime_controller_state(run_dir: Path, budget: RunBudget) -> dict:
     event_stream = _controller_budget_event_stream_summary(
         run_dir / "controller_budget_events.jsonl"
     )
-    return {
+    state = {
         "schema": "libreevolve.controller_state.v1",
         "status": "terminal_synchronous_controller_drained",
         "controller_model": "single_process_serial_loop",
@@ -4407,6 +4592,8 @@ def _runtime_controller_state(run_dir: Path, budget: RunBudget) -> dict:
             "plugin_internal_pending_work_reported_separately",
         ],
     }
+    state["validation"] = validate_controller_state_snapshot(state)
+    return state
 
 
 def _controller_budget_event_stream_summary(path: Path) -> dict:

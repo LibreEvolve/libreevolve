@@ -818,7 +818,10 @@ Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
 synchronous controller with zero queued/running proposals, evaluations,
 in-flight LLM calls, and pending archive admissions plus a compact
-`controller_budget_events.jsonl` summary. Queued/running async worker state,
+`controller_budget_events.jsonl` summary. Its embedded
+`libreevolve.controller_state_validation.v1` record verifies the terminal
+drained boundary and reports pending work, malformed fields, or async/full
+replay overclaims as validation failures. Queued/running async worker state,
 provider-output replay, and end-to-end lineage replay proof remain separate
 resume work.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
@@ -1399,7 +1402,9 @@ for future resume use, including schema/status, cursor bounds, manifest-safe
 program ids in `archive_sequence_by_program_id`, and per-island count records.
 `runtime.history.controller_state` records the terminal synchronous controller
 boundary beside this archive state, but does not reconstruct async worker
-queues or partially completed generation work.
+queues or partially completed generation work. Its embedded
+`libreevolve.controller_state_validation.v1` record keeps that claim bounded to
+a drained terminal snapshot.
 `controller_state_artifact_inventory()` emits
 `libreevolve.controller_state_artifact_inventory.v1` to verify the terminal
 controller event stream against the manifest artifact record and disk file.

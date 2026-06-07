@@ -1158,7 +1158,8 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   Migration-event replay, async controller pending-work state, provider/model
   output replay, and plugin-owned RNG capture are still not a replay contract.
   Completed manifests do record a terminal drained synchronous controller state
-  under `runtime.history.controller_state`.
+  under `runtime.history.controller_state` with embedded validation for the
+  drained terminal boundary.
   `runtime.rng.replay_boundary` records the current framework-owned RNG
   boundary and explicit external exclusions.
 - `eval_stages` is still local subprocess execution. It is not yet a

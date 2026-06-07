@@ -708,7 +708,10 @@ Final runtime history also includes `runtime.history.controller_state`, a
 terminal drained-state snapshot for the synchronous single-process controller.
 It records zero queued/running proposals, evaluations, in-flight LLM calls, and
 pending archive admissions at finalization plus a compact
-`controller_budget_events.jsonl` stream summary. This is a terminal resume
+`controller_budget_events.jsonl` stream summary. The embedded
+`libreevolve.controller_state_validation.v1` record verifies that the snapshot
+is terminal and drained, rejects pending work and async/full-replay overclaims,
+and preserves that boundary in the manifest. This is a terminal resume
 boundary, not an async worker queue checkpoint or mid-generation restore point.
 `history.jsonl` logs candidates, but it is not a serialized archive checkpoint
 or MAP-Elites event stream.
@@ -1102,7 +1105,8 @@ authoritative run accounting.
   restore support from accepted history; migration-event replay, async
   controller queues, pending evaluations, and broader resumed experiment traces
   remain open. Terminal synchronous controller state is manifest-visible under
-  `runtime.history.controller_state`.
+  `runtime.history.controller_state` with an embedded validation record for
+  the drained synchronous boundary.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Proposal ideas/rationales can be parsed, stored, and rendered for selected

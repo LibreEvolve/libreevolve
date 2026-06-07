@@ -150,6 +150,97 @@ def test_prompt_context_policy_selects_mutation_instruction_variant():
     )
 
 
+def test_prompt_context_policy_selects_parent_metric_names():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "latency", "bounds": [0.0, 100.0], "direction": "minimize"},
+            {"name": "size", "bounds": [0.0, 1000.0]},
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        id="p0",
+        code="x=1",
+        fitness=0.25,
+        metrics={"score": 0.25, "latency": 12.0, "size": 77.0},
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\nMetrics: {parent_metrics}\n{mutation_instructions}",
+        context_policy={"parent_metric_names": ["latency", "size"]},
+    )
+
+    assert "latency=12.0" in prompt
+    assert "size=77.0" in prompt
+    assert "score=0.25" not in prompt
+    policy = sampler.last_metadata["prompt_context_policy"]
+    assert policy["parent_metric_names"] == ["latency", "size"]
+    assert policy["parent_metrics_max_chars_by_name"] == {}
+
+
+def test_prompt_context_policy_caps_parent_metrics_by_name():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "latency", "bounds": [0.0, 100.0], "direction": "minimize"},
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        id="p0",
+        code="x=1",
+        fitness=0.25,
+        metrics={"score": 0.25, "latency": 12.0},
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\nMetrics: {parent_metrics}\n{mutation_instructions}",
+        context_policy={"parent_metrics_max_chars_by_name": {"latency": 0}},
+    )
+
+    assert "score=0.25" in prompt
+    assert "latency=12.0" not in prompt
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_metrics_max_chars_by_name"
+    ] == {"latency": 0}
+
+
+def test_prompt_context_policy_rejects_invalid_parent_metric_controls():
+    with pytest.raises(PromptTemplateError, match="parent_metric_names"):
+        validate_prompt_context_policy({"parent_metric_names": "score"})
+    with pytest.raises(PromptTemplateError, match="parent_metric_names"):
+        validate_prompt_context_policy({"parent_metric_names": ["bad/path"]})
+    with pytest.raises(PromptTemplateError, match="parent_metrics_max_chars_by_name"):
+        validate_prompt_context_policy({"parent_metrics_max_chars_by_name": []})
+    with pytest.raises(PromptTemplateError, match="parent_metrics_max_chars_by_name"):
+        validate_prompt_context_policy(
+            {"parent_metrics_max_chars_by_name": {"score": True}}
+        )
+
+
 def test_prompt_context_policy_can_disable_plugin_context_generation():
     policy = validate_prompt_context_policy({"plugin_context_enabled": False})
 
@@ -7172,6 +7263,8 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "mutation_instruction_variant": "default",
         "mutation_instruction_include_example": True,
         "proposal_metadata_enabled": None,
+        "parent_metric_names": None,
+        "parent_metrics_max_chars_by_name": {},
         "parent_code_paths": [],
         "parent_code_required_terms": [],
         "parent_code_excluded_terms": [],

@@ -2114,6 +2114,12 @@ mutation-format example block while preserving the core format rules.
 shown to meta-prompt mutation calls, verifying schema, section shape,
 duplicate detection, and exact coverage of the current
 `libreevolve.prompt_context_policy.v1` fields.
+`parent_metric_names` can select which manifest-safe metrics render in the
+`{parent_metrics}` prompt channel, including `[]` to suppress metric entries
+without disabling the placeholder. `parent_metrics_max_chars_by_name` can cap
+or suppress individual rendered parent metric entries by metric name before
+the metrics string is inserted, and prompt diagnostics persist both policy
+fields under `metadata.prompt_diagnostics.prompt_context_policy`.
 `parent_code_paths` can select and order safe mutable parent-workspace files,
 recording requested, rendered, omitted, and missing file paths while retaining
 static-file provenance. `parent_code_required_terms` and

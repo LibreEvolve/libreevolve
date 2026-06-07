@@ -118,6 +118,10 @@ Primary evidence:
     `minimal`, or `exploratory`) for rendered mutation-format instructions.
     `mutation_instruction_include_example` can keep or remove the built-in
     mutation-format example block while preserving the core format rules.
+    `parent_metric_names` can select which safe metric entries render in the
+    `{parent_metrics}` channel, including suppressing all parent metrics with
+    an empty list, and `parent_metrics_max_chars_by_name` can cap or suppress
+    individual parent metric entries by metric name before prompt rendering.
     `validate_meta_prompt_context_policy_capabilities()` now validates the
     meta-prompt-visible `libreevolve.meta_prompt_context_policy_capabilities.v1`
     map before evidence rendering, checking schema, section shape, duplicate
@@ -405,7 +409,8 @@ Primary evidence:
     preview. Focused tests assert that meta-prompt evidence includes current
     context-policy values and the tunable policy surface under the redacted
     prompt-evidence cap. However, the policy currently controls only optional channel
-    disabling, section-priority overrides, mutation-instruction variants, and
+    disabling, section-priority overrides, mutation-instruction variants,
+    parent-metric selection/caps, and
     parent-feedback subsection selection, stochastic prompt-format weights, and
     local context source selection/term-filtering/ranking/render-count, recent failure-memory selection/rendering, upstream inspiration sampling
     plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin context ordering, plugin context cap/truncation shape, and coarse
@@ -417,7 +422,7 @@ Primary evidence:
     upstream inspiration selection policy beyond strategy, sampled count,
     required/excluded-metric filtering, fitness-threshold filtering, metric-threshold filtering, metric ranking, and rendered count,
     or deeper per-field policy inside selected validator diagnostic groups
-    beyond metadata-summary key selection, syntax-error field selection,
+    beyond metadata-summary key selection, parent-metric selection/caps, syntax-error field selection,
     proposal field selection,
     stage-summary field selection,
     execution-output field selection,
@@ -449,7 +454,7 @@ Primary evidence:
     plugin-context shaping beyond
     enable/disable/allowlist/order/per-plugin caps, upstream inspiration selection beyond
     strategy/sample-count/required-metric-filter/excluded-metric-filter/fitness-threshold-filter/metric-ranking/render-count, context-source policy beyond exact path selection, safe required/excluded term filtering, task-term ranking, per-source char caps, truncation, and render-count, failure-memory selection beyond exact required/excluded error-label, required/excluded changed-file, required/excluded stage-name, repetition-count, and finite-score filtering plus recent/oldest/lowest-score/highest-repetition retained records, and deeper per-field evaluator-feedback controls beyond
-    validator metadata summary keys, syntax-error fields, proposal fields, stage-summary fields,
+    validator metadata summary keys, parent metric names/caps, syntax-error fields, proposal fields, stage-summary fields,
     execution-output fields and caps, sample/retry diagnostic fields and caps, program-output fields and caps, metric-bound fields,
     validator-artifact fields and caps, artifact-content nested fields,
     artifact-content policy overrides,

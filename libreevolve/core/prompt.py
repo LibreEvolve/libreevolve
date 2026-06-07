@@ -607,7 +607,14 @@ class PromptSampler:
             "task": task,
             "context": context,
             "parent_score": _PromptScore(parent.fitness),
-            "parent_metrics": _render_metrics(parent, problem),
+            "parent_metrics": _render_metrics(
+                parent,
+                problem,
+                selected_names=prompt_context_policy["parent_metric_names"],
+                max_chars_by_name=prompt_context_policy[
+                    "parent_metrics_max_chars_by_name"
+                ],
+            ),
             "parent_feedback": _render_feedback(
                 parent,
                 artifact_base_dir=self.artifact_base_dir,
@@ -1301,6 +1308,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant",
         "mutation_instruction_include_example",
         "proposal_metadata_enabled",
+        "parent_metric_names",
+        "parent_metrics_max_chars_by_name",
         "parent_code_paths",
         "parent_code_required_terms",
         "parent_code_excluded_terms",
@@ -1452,6 +1461,14 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     proposal_metadata_enabled = _validate_prompt_context_proposal_metadata_enabled(
         value.get("proposal_metadata_enabled")
+    )
+    parent_metric_names = _validate_prompt_context_parent_metric_names(
+        value.get("parent_metric_names")
+    )
+    parent_metrics_max_chars_by_name = (
+        _validate_prompt_context_parent_metrics_max_chars_by_name(
+            value.get("parent_metrics_max_chars_by_name")
+        )
     )
     parent_code_paths = _validate_prompt_context_parent_code_paths(
         value.get("parent_code_paths")
@@ -1946,6 +1963,8 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant": mutation_instruction_variant,
         "mutation_instruction_include_example": mutation_instruction_include_example,
         "proposal_metadata_enabled": proposal_metadata_enabled,
+        "parent_metric_names": parent_metric_names,
+        "parent_metrics_max_chars_by_name": parent_metrics_max_chars_by_name,
         "parent_code_paths": parent_code_paths,
         "parent_code_required_terms": parent_code_required_terms,
         "parent_code_excluded_terms": parent_code_excluded_terms,
@@ -2122,6 +2141,14 @@ def apply_prompt_context_policy(
             "mutation_instruction_include_example"
         ],
         "proposal_metadata_enabled": policy["proposal_metadata_enabled"],
+        "parent_metric_names": (
+            list(policy["parent_metric_names"])
+            if policy["parent_metric_names"] is not None
+            else None
+        ),
+        "parent_metrics_max_chars_by_name": dict(
+            policy["parent_metrics_max_chars_by_name"]
+        ),
         "parent_code_paths": list(policy["parent_code_paths"]),
         "parent_code_required_terms": list(policy["parent_code_required_terms"]),
         "parent_code_excluded_terms": list(policy["parent_code_excluded_terms"]),
@@ -2468,6 +2495,66 @@ def _validate_prompt_context_proposal_metadata_enabled(
             "must be boolean or null"
         )
     return value
+
+
+def _validate_prompt_context_parent_metric_names(value: object) -> list[str] | None:
+    if value is None:
+        return None
+    if not isinstance(value, list):
+        raise PromptTemplateError(
+            "prompt context_policy.parent_metric_names must be a list or null"
+        )
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for index, item in enumerate(value):
+        if not isinstance(item, str) or not _METRIC_LABEL_RE.fullmatch(item):
+            raise PromptTemplateError(
+                "prompt context_policy.parent_metric_names"
+                f"[{index}] must match [A-Za-z_][A-Za-z0-9_.-]{{0,127}}"
+            )
+        if redact_sensitive_text(item) != item:
+            raise PromptTemplateError(
+                "prompt context_policy.parent_metric_names"
+                f"[{index}] must not look secret-like"
+            )
+        if item not in seen:
+            normalized.append(item)
+            seen.add(item)
+    return normalized
+
+
+def _validate_prompt_context_parent_metrics_max_chars_by_name(
+    value: object,
+) -> dict[str, int]:
+    if value is None:
+        return {}
+    if not isinstance(value, Mapping):
+        raise PromptTemplateError(
+            "prompt context_policy.parent_metrics_max_chars_by_name must be a mapping"
+        )
+    normalized: dict[str, int] = {}
+    for raw_name, raw_limit in value.items():
+        if not isinstance(raw_name, str) or not _METRIC_LABEL_RE.fullmatch(raw_name):
+            raise PromptTemplateError(
+                "prompt context_policy.parent_metrics_max_chars_by_name "
+                "keys must be manifest-safe metric labels"
+            )
+        if redact_sensitive_text(raw_name) != raw_name:
+            raise PromptTemplateError(
+                "prompt context_policy.parent_metrics_max_chars_by_name "
+                "keys must not look secret-like"
+            )
+        if (
+            isinstance(raw_limit, bool)
+            or not isinstance(raw_limit, int)
+            or raw_limit < 0
+        ):
+            raise PromptTemplateError(
+                "prompt context_policy.parent_metrics_max_chars_by_name"
+                f"[{raw_name!r}] must be a non-negative integer"
+            )
+        normalized[raw_name] = raw_limit
+    return normalized
 
 
 def _validate_prompt_context_parent_code_paths(value: object) -> list[str]:
@@ -7333,28 +7420,41 @@ def foo():
 >>>REPLACE"""
 
 
-def _render_metrics(program: Program, problem: Problem | None = None) -> str:
+def _render_metrics(
+    program: Program,
+    problem: Problem | None = None,
+    *,
+    selected_names: list[str] | tuple[str, ...] | None = None,
+    max_chars_by_name: Mapping[str, int] | None = None,
+) -> str:
     if not program.metrics:
         return "(none)"
+    selected = set(selected_names) if selected_names is not None else None
+    caps = dict(max_chars_by_name or {})
     ordered_keys = _prompt_metric_keys(program, problem)
     rendered: list[str] = []
     seen: dict[str, int] = {}
     for key in ordered_keys:
         raw_key = str(key)
+        if selected is not None and raw_key not in selected:
+            continue
         display_key = _metric_key_text(raw_key)
         count = seen.get(display_key, 0)
         seen[display_key] = count + 1
         if count:
             display_key = f"{display_key}__{count + 1}"
-        rendered.append(
-            _render_metric_entry(
-                program,
-                problem,
-                raw_key,
-                display_key,
-                program.metrics[key],
-            )
+        entry = _render_metric_entry(
+            program,
+            problem,
+            raw_key,
+            display_key,
+            program.metrics[key],
         )
+        cap = caps.get(raw_key)
+        if cap is not None:
+            entry = _short(entry, max_chars=cap) if cap > 0 else ""
+        if entry:
+            rendered.append(entry)
     return ", ".join(rendered) or "(none)"
 
 

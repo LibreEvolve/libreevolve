@@ -622,6 +622,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     mutation-instruction variants for rendered mutation-format guidance.
     `mutation_instruction_include_example` can keep or remove the built-in
     mutation-format example block while preserving the core format rules. It
+    can select safe parent metric names for the `{parent_metrics}` channel and
+    cap or suppress individual parent metric entries by metric name before
+    rendering. It
     now validates the meta-prompt-visible
     `libreevolve.meta_prompt_context_policy_capabilities.v1` map against the
     actual `libreevolve.prompt_context_policy.v1` keys before rendering
@@ -882,7 +885,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     selected artifact-content policy overrides,
     selected skipped-artifact fields,
     selected validator diagnostic groups, selected validator
-    metadata keys, selected syntax-error fields, selected metric-bound fields,
+    metadata keys, selected parent metric names/caps, selected syntax-error fields, selected metric-bound fields,
     selected configured-stage check fields, selected configured-stage nested
     fields, selected malformed-metric fields,
     selected metric-aggregation fields, selected synthetic metric fields,
@@ -907,10 +910,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     the bounded redacted prompt-performance evidence.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
     code: plugin context shaping beyond enable/disable, allowlist, ordering,
-    caps, truncation, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,
+    caps, truncation, parent-metric selection/caps, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,
     retrieval/summarization beyond deterministic source selection/ranking/count caps, and deeper
     per-field policy inside selected validator diagnostic groups beyond
-    metadata-summary key selection, syntax-error field selection, and
+    metadata-summary key selection, parent-metric selection/caps, syntax-error field selection, and
     proposal field selection, and
     stage-summary field selection, and
     execution-output field selection, and

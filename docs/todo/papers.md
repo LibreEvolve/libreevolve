@@ -108,6 +108,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     not confuse insertion-time TF-IDF coordinates with AlphaEvolve-grade
     behavior descriptors.
 
+- [ ] Keep island-count and topology claims scoped to configurable defaults.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
+  - Requirement: AlphaEvolve describes an evolutionary database inspired by
+    MAP-Elites and island-based population models; paper-facing LibreEvolve
+    claims should state the local island topology honestly without implying an
+    unsupported fixed or paper-identical island policy.
+  - Partial status: LibreEvolve's island count is configurable through
+    `Config.n_islands`, defaults to five, and migration uses the configured
+    island count in a synchronous ring topology. README, ROADMAP, AGENTS, and
+    the `IslandModel` docstring now describe configurable island migration
+    with a five-island default instead of hardcoding all claims to five
+    islands.
+  - Current gap: this is a truthful local topology boundary, not proof of a
+    paper-identical AlphaEvolve evolutionary database. Adaptive island counts,
+    non-ring topologies, topology-specific ablations, and paper-facing
+    migration-policy reports remain absent.
+  - Required result: if future work adds adaptive island topology or
+    AlphaEvolve-specific migration policy fidelity, update the papers index,
+    README, ROADMAP, and code TODO entries together so they neither underclaim
+    current configurability nor overclaim fixed five-island policy.
+
 - [ ] Tighten remaining invalid-workspace topology diagnostics for codebase-scale
   artifact failures.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.

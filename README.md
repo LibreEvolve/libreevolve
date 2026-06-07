@@ -50,7 +50,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 |:---:|---|---|
 | 🧠 | **Multi-LLM support** | OpenAI, Anthropic, and Ollama adapters with provider-specific model strings |
 | 🗺️ | **MAP-Elites archive** | 3D quality-diversity grid plus retained elite list using archive selection score, complexity, and TF-IDF diversity |
-| 🏝️ | **5-island migration** | Synchronous island archives with periodic ring-topology migration |
+| 🏝️ | **Configurable island migration** | Synchronous island archives with periodic ring-topology migration; defaults to five islands |
 | 🎰 | **UCB-style ensemble** | Heuristic backend routing over archive-retained valid fitness improvements |
 | ⚡ | **Cascade evaluator** | Default diff/syntax/subprocess filtering plus configurable staged validators |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
@@ -66,7 +66,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 |---------|-------------------------------|-------------|
 | Source | Closed-source | **Open-source (MIT)** |
 | LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama, and configured custom import-path backends** |
-| Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with 5-island migration** |
+| Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with configurable island migration, defaulting to five islands** |
 | LLM selection | Fast/deep model scheduling described | **UCB-style heuristic plus bounded normalized throughput/depth metadata after pull-once initialization** |
 | Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, and optional synchronous LLM feedback** |
 | Candidate abstraction | User-chosen solution abstractions, including raw strings, constructors, bespoke search algorithms, or paired solution/search representations | **Deliberate code-file-set abstraction with a primary text file; no first-class non-code serializer or paired solution/search API yet** |
@@ -1781,7 +1781,7 @@ libreevolve/
 ├── population/
 │   ├── program.py       # Program dataclass
 │   ├── map_elites.py    # 3D MAP-Elites (TF-IDF char-4gram diversity)
-│   └── islands.py       # 5-island ring migration
+│   └── islands.py       # Configurable ring-topology island migration
 ├── plugins/
 │   ├── base.py          # PluginBase ABC (lifecycle + metadata/artifact hooks)
 │   ├── causal.py        # CausalEvolve-inspired outcome-factor guidance

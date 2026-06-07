@@ -29,7 +29,8 @@ LibreEvolve has:
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
   redaction, and best-effort timeout process-tree cleanup
-- MAP-Elites plus 5-island migration
+- MAP-Elites plus configurable ring-topology island migration, defaulting to
+  five islands
 - metric direction/bounds normalization for declared evaluator metrics and
   feedback-sourced objective metrics, averaged into archive selection score
 - a prompt sampler that renders context files, compact stage feedback,

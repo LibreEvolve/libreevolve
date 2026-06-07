@@ -31,7 +31,7 @@ ISLAND_MIGRATION_REPLAY_POLICY = (
 
 
 class IslandModel:
-    """5 independent MAP-Elites archives with ring-topology migration.
+    """Configurable independent MAP-Elites archives with ring-topology migration.
 
     Inspired by island population models; this is a synchronous local archive
     rotation and migration policy.

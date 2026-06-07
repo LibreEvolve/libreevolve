@@ -807,6 +807,23 @@ Primary evidence:
 
 ## Metrics and Evolution Database
 
+- [ ] Keep island-count claims scoped to configurable defaults.
+  - Spec evidence: AlphaEvolve describes an evolutionary database inspired by
+    MAP-Elites and island-based population models, but the local implementation
+    must not present its default island count as a fixed runtime invariant.
+  - Current evidence: `Config.n_islands` defaults to `5` but is validated as a
+    configurable positive integer; tests instantiate `IslandModel` and
+    `ProgramDatabase` with one, two, and three islands; migration uses the
+    configured island count in a ring topology. The `IslandModel` docstring,
+    README feature/comparison text, ROADMAP feature list, and AGENTS overview
+    now say configurable island migration with a five-island default instead
+    of implying a hardcoded five-island model.
+  - Required result: if future work adds paper-specific island counts,
+    adaptive island topologies, or non-ring migration policies, update code
+    comments, README, ROADMAP, papers index, and matching TODO entries
+    together so they neither underclaim the configurable default nor overclaim
+    AlphaEvolve-specific island policy fidelity.
+
 - [ ] Promote MAP-Elites descriptor modeling beyond insertion-time TF-IDF
   snapshot coordinates.
   - Spec evidence: AlphaEvolve-style quality-diversity search should use task

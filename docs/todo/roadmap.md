@@ -57,6 +57,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     descriptor-policy snapshots nor overclaim stable AlphaEvolve-grade
     behavior descriptors.
 
+- [ ] Keep island-count roadmap wording scoped to configurable defaults.
+  - Spec evidence: AlphaEvolve's paper names MAP-Elites and island-based
+    population models at a high level; local roadmap wording should not turn
+    LibreEvolve's default island count into an unsupported fixed fidelity
+    claim.
+  - Current evidence: the roadmap now says MAP-Elites plus configurable
+    ring-topology island migration, defaulting to five islands. That matches
+    `Config.n_islands`, validation for positive configured island counts, and
+    tests with non-default island counts.
+  - Required result: when adaptive island counts, non-ring topologies, or
+    AlphaEvolve-specific migration policies land, update the roadmap, README,
+    papers index, and code/paper TODO entries together so they do not
+    underclaim current configurability or overclaim fixed five-island policy.
+
 - [ ] Keep per-role scheduler roadmap wording scoped to role-scoped backend
   eligibility and role budget maps versus independent live scheduler state.
   - Spec evidence: AlphaEvolve-scale LLM orchestration needs role-specific

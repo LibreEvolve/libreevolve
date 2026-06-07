@@ -526,9 +526,9 @@ remain legacy-limited to arity/type/non-negative validation.
 This maintained map ties each implementation-status row to backlog evidence.
 The active column points only at currently open backlog files or grouped open
 gap families; completed files preserve implemented decisions and prior
-paper-index cleanups. `docs/todo/readme.md` and `docs/todo/roadmap.md`
-currently have no active paper-row-specific items, so they appear only in
-completed evidence where relevant.
+paper-index cleanups. `docs/todo/roadmap.md` now carries a grouped
+local-domain-paper status guard; row-specific implementation gaps still live
+primarily in `docs/todo/papers.md` and `docs/todo/code.md`.
 
 | ID | Active gap evidence | Completed/grouped evidence |
 |---|---|---|

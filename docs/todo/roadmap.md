@@ -607,6 +607,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and code/paper TODO entries together so they neither underclaim smoke
     hardening evidence nor overclaim AlphaEvolve-comparable benchmarks.
 
+- [ ] Keep representative-fixture roadmap wording scoped to registries and
+      smoke examples versus real target suites.
+  - Spec evidence: AlphaEvolve-style benchmark coverage should include
+    non-toy target suites for matrix multiplication, constructive math,
+    geometric packing, and at least one safe compiler/hardware/kernel/
+    scheduling-style systems domain, with validators, repeated seeds, target
+    baselines, and artifacts.
+  - Current evidence: `ROADMAP.md` asks for stronger fixtures beyond toy
+    examples, including matrix-multiplication variants, kissing/circle-packing
+    extensions, constructive math, and one safe systems-style microbenchmark.
+    README, papers index, and code evidence show checked registries for the 54
+    AlphaEvolve Appendix A matrix targets and thirteen Appendix B constructive
+    math families, a checked Strassen 2x2 baseline bundle helper, example-scope
+    records that mark shipped examples as `alphaevolve_comparable: false`, and
+    a scope-checked matrix smoke hardening bundle. Those are coverage and
+    report-contract surfaces, not implemented tensor-decomposition suites,
+    kissing-number/circle-packing benchmark families, constructive-math
+    validators, or compiler/hardware/kernel/scheduling fixtures.
+  - Required result: when real target-suite fixtures, validators, repeated-seed
+    runs, target/SOTA baselines, and artifact/report emitters land for matrix,
+    constructive-math, geometric, or systems domains, update the roadmap,
+    README, papers index, and code/paper TODO entries together so roadmap
+    wording neither underclaims current registries/smoke fixtures nor
+    overclaims AlphaEvolve-scale benchmark coverage.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

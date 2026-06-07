@@ -338,6 +338,10 @@ is not yet an AlphaEvolve reproduction.
   held-out/generalization, and reference-correctness gates plus artifacts that
   distinguish loop feedback from generalization, deployment, or independent
   certification evidence.
+- For scheduling fixtures, add mission-critical deployment evidence beyond
+  generic systems gates: interpretable heuristic structure, debuggability and
+  operator review, predictable behavior checks, rollout-risk evidence, and
+  comparison against less interpretable learned-policy baselines.
 - Document reachable metric ranges, target/SOTA values, and normalization
   behavior for benchmark fixtures so intended improvements remain ordered.
 - For each local domain paper, either add a benchmark, link it to an existing

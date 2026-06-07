@@ -695,10 +695,14 @@ Implemented:
   it also does not yet require Borg-style feasibility-boundary evidence that
   an evolved heuristic only ranks machines already deemed feasible by an
   external scheduler and cannot directly alter admission or placement
-  constraints. For kernel reports, it does not yet require Pallas/Gemini-style
-  input-shape corpus provenance, deterministic train/eval split records, real
-  TPU runtime measurement artifacts, baseline tiling-heuristic identity, or
-  unchanged-operation correctness-by-construction evidence. For hardware, it
+  constraints, nor does it require mission-critical deployment evidence such
+  as interpretable heuristic structure, debuggability/operator review,
+  predictability checks, rollout-risk evidence, or comparison against less
+  interpretable learned-policy baselines. For kernel reports, it does not yet
+  require Pallas/Gemini-style input-shape corpus provenance, deterministic
+  train/eval split records, real TPU runtime measurement artifacts, baseline
+  tiling-heuristic identity, or unchanged-operation correctness-by-construction
+  evidence. For hardware, it
   does not yet require RTL/EDA evidence such as
   Verilog source boundaries, synthesis/PPA metric provenance, equivalence or
   formal verification artifacts, timing constraints, designer signoff, or

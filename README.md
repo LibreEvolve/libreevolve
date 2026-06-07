@@ -3057,7 +3057,11 @@ hashes, sample counts/seeds, finite metrics, artifacts matching passed gate
 kinds, explicit rationale when a gate is not applicable, and optional
 certification links that cannot contradict `alphaevolve_ready` claims. It is a
 readiness/report schema only, not a compiler, kernel, scheduling, or
-deployment benchmark implementation.
+deployment benchmark implementation. Scheduling reports also still need
+domain-specific evidence for mission-critical deployment suitability, such as
+interpretable heuristic structure, debuggability/operator review,
+predictability checks, rollout-risk evidence, and comparison against less
+interpretable learned-policy baselines.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

@@ -1636,6 +1636,28 @@ Primary evidence:
     and allowed `not_applicable` reference-correctness rationale before
     treating Borg-style scheduling reports as AlphaEvolve-ready.
 
+- [ ] Add scheduling interpretability and deployment-readiness evidence for
+      mission-critical heuristics.
+  - Spec evidence: AlphaEvolve Section 3.3.1 says AlphaEvolve was chosen over
+    a deep reinforcement learning approach for Borg scheduling because the
+    code solution had better performance and offered interpretability,
+    debuggability, predictability, and ease of deployment for a
+    mission-critical system.
+  - Current evidence: `libreevolve.systems_result_report.v1` can validate
+    generic optimization, held-out, reference-correctness, artifact, and
+    certification-link fields. The scheduling-specific TODO above requires
+    ranking-only feasibility provenance. Neither surface requires a
+    scheduling-domain report to include reviewer/debuggability notes, code
+    simplicity or rule-shape evidence, predictability or monotonicity checks,
+    operational rollout constraints, deployment-risk review, or a comparison
+    against less interpretable learned policies.
+  - Required result: add scheduling-domain report fields and validators for
+    interpretable heuristic structure, human/operator review, debuggability
+    artifacts, predictability/invariant checks, deployment ergonomics, and
+    baseline comparison against black-box or less interpretable approaches
+    before treating Borg-style scheduling reports as mission-critical
+    AlphaEvolve-ready evidence.
+
 - [ ] Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes a Pallas tiling
     heuristic for a Gemini matrix-multiplication kernel by minimizing actual

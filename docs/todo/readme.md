@@ -355,6 +355,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     index, and matching TODOs so README does not imply generic systems report
     readiness proves Borg-style scheduling safety.
 
+- [ ] Keep README scheduling wording scoped to generic systems reports until
+      interpretability/deployment-readiness evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
+    heuristic was chosen over deep reinforcement learning because the code
+    solution offered interpretability, debuggability, predictability, and ease
+    of deployment, which were essential for a mission-critical system.
+  - Current evidence: README documents generic systems result reports,
+    deployment evidence gaps, and scheduling ranking-only safety gaps. It does
+    not yet document scheduling-specific evidence for human-readable heuristic
+    structure, operator/debug review, predictable behavior under edge cases,
+    deployment-risk controls, or comparison against less interpretable learned
+    policies.
+  - Required result: once scheduling report metadata captures
+    interpretability/debuggability review, predictability checks, deployment
+    ergonomics, rollout-risk evidence, and baseline comparison against
+    black-box approaches, update README, ROADMAP, papers index, and matching
+    TODOs so README does not imply generic systems report readiness proves
+    AlphaEvolve-style mission-critical deployment suitability.
+
 - [ ] Keep README kernel wording scoped to generic systems reports until
       Pallas shape-split/runtime evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas

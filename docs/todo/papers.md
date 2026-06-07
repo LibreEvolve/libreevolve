@@ -411,8 +411,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     lineage-id behavior or an explicit UUID identity exclusion from the replay
     contract, provider-output replay boundaries, arbitrary direct-plugin
     constructor value/schema policy, richer custom plugin package provenance
-    beyond entry-point distribution records, and live provider-authentication
-    evidence beyond local client construction.
+    beyond entry-point distribution records, and live authenticated provider
+    request/model-registry evidence beyond credential-presence and local client
+    construction.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation
@@ -424,7 +425,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     cleanup or `evolve()`. Remaining provider-readiness gaps are that local
     preflight still does not prove live provider authentication, and the
     explicit non-blank credential trim check is CLI-scoped while core runtime
-    preflight relies on backend client construction.
+    preflight relies on backend client construction. The AlphaEvolve table now
+    scopes the open provider-auth gap to live authenticated request/model-registry
+    validation rather than implying credential-presence and client-construction
+    preflight are absent.
 
 - [ ] Integrate restored run-local RNG with full AlphaEvolve replay claims.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.6.

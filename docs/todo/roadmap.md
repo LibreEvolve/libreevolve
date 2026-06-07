@@ -2023,6 +2023,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validators land, update ROADMAP, README, papers index, and code/paper TODOs
     so roadmap claims cannot compare or quote B.8 values in the wrong unit.
 
+- [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.6 improves the
+    sums-and-differences lower bound using two finite sets: `U1` has size
+    `2003` and yields `1.1479 <= C6`, while `U2` has size `54265` and yields
+    `1.1584 <= C6`. The claim is tied to the Gyarmati et al. inequality and
+    requires set-level checks for zero membership, `|U - U| <= 2 max(U) + 1`,
+    `|U-U|`, `|U+U|`, and the denominator `2 max(U) + 1`.
+  - Current evidence: roadmap/README/paper-index wording can cite the broad
+    Appendix B per-result metric/value gap, but it does not require B.6-
+    specific witness ids, cardinalities, integer-set payload hashes, condition
+    checks, or separate lower-bound values for the two found sets.
+  - Required result: when Appendix B.6 witness metadata and validators land,
+    update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish `U1` and `U2`, their sizes, feasibility evidence,
+    derived lower-bound values, payload hashes, and source links from aggregate
+    Appendix B coverage.
+
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing

@@ -1962,6 +1962,26 @@ Primary evidence:
     README/ROADMAP wording that labels both the squared value and the geometric
     square-root ratio unambiguously.
 
+- [ ] Add Appendix B.6 finite-set witness provenance.
+  - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
+    lower bound by finding a finite set `U1` of size `2003`, yielding
+    `1.1479 <= C6`, and a second finite set `U2` of size `54265`, yielding
+    `1.1584 <= C6`. The result depends on the Gyarmati et al. inequality,
+    the conditions that `U` contains zero and satisfies
+    `|U - U| <= 2 max(U) + 1`, and computed `|U-U|` and `|U+U|` values.
+  - Current evidence: the broad Appendix B per-result TODO names finite-set
+    construction representations, but no code/report schema separately records
+    B.6 witness ids, set cardinalities, integer payload hashes, condition
+    checks, sumset/difference-set counts, denominator `2 max(U) + 1`, or the
+    two staged lower-bound values. A generated report could claim the final
+    `1.1584 <= C6` value without retaining the intermediate `U1` witness or
+    the inequality inputs that make either witness verifiable.
+  - Required result: add Appendix B.6-specific witness rows and validators for
+    `U1` and `U2`: set size, max element, contains-zero flag, sorted integer
+    payload hash, `|U-U|`, `|U+U|`, feasibility inequality status, derived
+    lower-bound value, source section linkage, and README/ROADMAP wording that
+    distinguishes the two witness sets from aggregate Appendix B coverage.
+
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing
     number lower bound from 592 to 593 by finding 593 nonzero integral-coordinate

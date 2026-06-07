@@ -1088,6 +1088,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     dimensions, coordinate artifacts, and comparison units without conflating
     squared and unsquared objectives.
 
+- [ ] Keep README Appendix B.6 finite-set wording scoped until witness
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
+    lower bound with two finite integer-set witnesses: `U1` has size `2003`
+    and gives `1.1479 <= C6`, while `U2` has size `54265` and gives
+    `1.1584 <= C6`. The derivation uses the Gyarmati et al. inequality with
+    `U` containing zero, `|U - U| <= 2 max(U) + 1`, and recomputed
+    `|U-U|`/`|U+U|` counts.
+  - Current evidence: README can point to broad Appendix B per-result
+    metric/value and finite-set payload gaps, but it does not separately warn
+    that B.6 needs two witness-specific records before quoting the lower-bound
+    improvements.
+  - Required result: when Appendix B.6 witness metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README names both
+    witness sets, cardinalities, feasibility checks, derived lower-bound
+    values, payload hashes, and source links without collapsing the result to
+    one aggregate finite-set claim.
+
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing

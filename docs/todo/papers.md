@@ -2034,6 +2034,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     update README/ROADMAP wording so claims about Appendix B.8 name the
     squared-ratio convention explicitly.
 
+- [ ] Track Appendix B.6 finite-set witness evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 improves the
+    sums-and-differences lower bound using two finite integer-set witnesses:
+    a set `U1` of size `2003` giving `1.1479 <= C6`, and a set `U2` of size
+    `54265` giving `1.1584 <= C6`. The paper cites the Gyarmati et al.
+    inequality, requiring `U` to contain zero and satisfy
+    `|U - U| <= 2 max(U) + 1`, with the lower bound derived from
+    `|U-U|`, `|U+U|`, and `2 max(U) + 1`.
+  - Current gap: paper-facing Appendix B TODOs require normalized result rows
+    and finite-set construction payloads in general, but they do not force B.6
+    reports to retain both witness identities, the two cardinalities, the
+    intermediate and final lower-bound values, or the set-specific arithmetic
+    evidence needed to recompute the Gyarmati-bound expression.
+  - Required result: add paper/report evidence for Appendix B.6 witness rows:
+    `U1`/`U2` ids, set cardinality, max element, contains-zero and feasibility
+    checks, sorted integer payload hash, `|U-U|`, `|U+U|`, denominator,
+    derived lower-bound value, source section linkage, and README/ROADMAP text
+    that separates the two finite-set witnesses from broad Appendix B family
+    coverage.
+
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593
     nonzero integral-coordinate points in dimension 11, with maximum norm

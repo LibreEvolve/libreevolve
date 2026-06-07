@@ -324,6 +324,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     generic systems report readiness proves AlphaEvolve-style TPU-circuit
     optimization evidence.
 
+- [ ] Keep README compiler-IR wording scoped to final reference gates until
+      per-edit randomized checks exist.
+  - Spec evidence: AlphaEvolve Section 3.3.4 checked each FlashAttention
+    compiler-IR modification against reference code on randomized inputs and
+    then separately had the final code confirmed by human experts for all
+    possible inputs.
+  - Current evidence: README documents generic systems result reports and
+    reference-correctness gates, but it does not yet describe per-edit
+    randomized reference-check traces, reference implementation hashes,
+    randomized input generator provenance, numerical tolerance policy, or
+    kernel-versus-pre/postprocessing attribution.
+  - Required result: once compiler/kernel report metadata captures per-edit
+    reference checks, randomized input coverage, tolerance/failure policy,
+    abstraction-level attribution, and final expert signoff scope, update
+    README, ROADMAP, papers index, and matching TODOs so README does not imply
+    final reference-gate artifacts prove AlphaEvolve-style compiler-IR traces.
+
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.
   - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target

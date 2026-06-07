@@ -998,6 +998,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes generic systems readiness from AlphaEvolve-style hardware
     circuit optimization evidence.
 
+- [ ] Keep compiler-IR roadmap wording scoped to final reference gates until
+      per-edit randomized checks exist.
+  - Spec evidence: AlphaEvolve Section 3.3.4 checks each FlashAttention
+    compiler-IR modification against reference code on randomized inputs, then
+    separately reports final expert confirmation for all possible inputs.
+  - Current evidence: roadmap systems-result wording covers generic
+    reference-correctness and expert-confirmation gaps, but current report
+    validation does not require per-edit randomized reference-check traces,
+    input-generator provenance, numerical tolerance policy, or attribution of
+    improvements to the kernel versus pre/postprocessing IR levels.
+  - Required result: when compiler/kernel fixtures or report validators add
+    edit-sequence reference-check artifacts, reference-code hashes,
+    randomized-input coverage, tolerance/failure policy, abstraction-level
+    attribution, and expert signoff scope, update ROADMAP, README, papers
+    index, and code/paper TODOs so roadmap text distinguishes final
+    correctness gates from AlphaEvolve-style compiler-IR optimization traces.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

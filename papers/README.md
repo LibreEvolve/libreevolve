@@ -662,7 +662,11 @@ Implemented:
   constraints. For hardware, it does not yet require RTL/EDA evidence such as
   Verilog source boundaries, synthesis/PPA metric provenance, equivalence or
   formal verification artifacts, timing constraints, designer signoff, or
-  downstream synthesis-tool confirmation.
+  downstream synthesis-tool confirmation. For compiler-generated IR tasks, it
+  does not yet require per-edit randomized reference-check traces, reference
+  implementation hashes, input-generator provenance, numerical tolerance
+  policy, kernel versus pre/postprocessing attribution, or final expert
+  all-input signoff scope.
 - `libreevolve/problems/benchmarks/benchmark_hardening.py`: anti-gaming
   hardening report contract. It validates protected benchmark signals,
   shortcut threats, protected-signal links for each shortcut threat, detector

@@ -1667,6 +1667,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent review signoff, and synthesis-tool confirmation before making
     AlphaEvolve-comparable TPU-circuit optimization claims.
 
+- [ ] Record per-edit reference checks for compiler-generated IR results.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says
+    AlphaEvolve optimized XLA-generated IR for FlashAttention and surrounding
+    pre/postprocessing code; every modification was checked against the
+    reference unmodified code on randomized inputs, and the final code was
+    confirmed by human experts for all possible inputs.
+  - Current gap: current systems result contracts can name a final
+    `reference_correctness` gate, but they do not require paper-facing
+    per-edit reference-check traces, randomized input generator provenance,
+    reference implementation identity, numerical tolerance policy, attribution
+    to kernel versus pre/postprocessing abstraction levels, or separate final
+    expert signoff scope.
+  - Required result: add compiler/kernel report fields and validation for
+    edit-by-edit randomized reference checks, reference-code hashes,
+    input-generator seeds and coverage, numerical tolerance/failure policy,
+    abstraction-level attribution, and final expert/all-input confirmation
+    before claiming AlphaEvolve-comparable compiler-generated IR evidence.
+
 - [ ] Keep named AlphaEvolve application-context rows background-only until
   benchmark fixtures exist.
   - Paper evidence: the local paper index includes AlphaEvolve application

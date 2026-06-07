@@ -1292,6 +1292,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     once a report names them, or preventing declared hardening evidence from
     overriding the smoke-only scope registry.
 
+- [ ] Track Section 3.2 incumbent-construction handoff evidence separately
+      from generic benchmark artifacts.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says many
+    mathematical applications evolved search heuristics that receive a time
+    budget and a strong previously found construction, then search for an
+    improved construction. This differs from only validating a final
+    construction artifact after the fact.
+  - Current evidence: the paper TODOs already require benchmark-grade
+    constructive-math fixtures, construction/certificate validators, target
+    baselines, and saved artifacts. Current code/docs also support static
+    context and evaluator artifact copy-out. They do not yet define paper
+    evidence for an AlphaEvolve-style handoff where the evaluator provides the
+    incumbent construction and budget to the candidate heuristic, records the
+    candidate's improved construction, and verifies the improvement as part of
+    the benchmark result.
+  - Required result: before claiming Section 3.2-style constructive-math
+    alignment, add paper/report evidence for incumbent identity, budget,
+    heuristic output construction, verifier/certificate inputs, and improvement
+    status for at least one constructive-math benchmark family.
+
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
     report matrix multiplication over 54 target sizes, measure both the best

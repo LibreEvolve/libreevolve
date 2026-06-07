@@ -229,6 +229,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     neither underclaims the checked smoke hardening evidence nor overclaims
     AlphaEvolve-comparable benchmark hardening.
 
+- [ ] Keep README constructive-math wording scoped to static context/artifacts
+      versus AlphaEvolve-style incumbent handoff.
+  - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs
+    that use a fixed budget and a strong previously discovered construction as
+    input, then return an improved construction for verification.
+  - Current evidence: README can accurately describe workspace seeds, static
+    context, evaluator artifacts, Appendix B coverage/status records, and
+    smoke examples. It should not imply current constructive-math support
+    includes a benchmark runner that passes incumbent constructions to
+    candidate heuristics, records the fixed search budget, or verifies
+    candidate-produced construction improvements as a Section 3.2-style loop.
+  - Required result: when real heuristic-search handoff support lands, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README distinguishes static problem context and post-run artifacts from
+    first-class incumbent-construction benchmark handoff evidence.
+
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.
   - Spec evidence: AlphaEvolve-style feedback and reviewer channels need

@@ -915,6 +915,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     target/SOTA baseline, seed/budget policy, and evidence that the fixture is
     not merely a smoke example or predeclared static artifact bundle.
 
+- [ ] Keep heuristic-search benchmark roadmap wording scoped to real
+      incumbent-construction handoff support.
+  - Spec evidence: AlphaEvolve Section 3.2 mathematical applications evolved
+    search heuristics that were given a fixed budget and a previous best
+    construction to improve, not just standalone final construction validators.
+  - Current evidence: roadmap and TODO entries already ask for constructive
+    math benchmarks, target/SOTA baselines, construction artifacts, and
+    certificate validators. Current code supports static context files and
+    evaluator artifact copy-out, but no roadmap-backed runtime or benchmark
+    contract yet models the incumbent-construction input, candidate heuristic
+    output, budget record, and improvement verification as a first-class loop.
+  - Required result: when heuristic-search benchmark runners land, update
+    roadmap, README, papers index, and code/paper TODO entries together with
+    the incumbent-construction schema, budget policy, result-artifact paths,
+    verifier/certificate hooks, and evidence that this is more than static
+    context injection or smoke artifact export.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

@@ -1232,6 +1232,29 @@ Primary evidence:
     preventing declared hardening evidence from overriding the smoke-only
     scope registry.
 
+- [ ] Add incumbent-construction handoff contracts for heuristic-search
+      benchmarks.
+  - Spec evidence: AlphaEvolve Section 3.2 describes evolving programs that
+    act as search heuristics for constructive-math problems. The evaluator
+    gives those heuristics a fixed search budget and a strong incumbent or
+    previous best construction, then scores whether the candidate improves the
+    construction under that budget.
+  - Current evidence: LibreEvolve can evolve Python workspaces, pass static
+    context files, copy evaluator artifacts out of temporary workspaces, and
+    validate benchmark/result schemas after reports are declared. The Appendix
+    B registry and circle-packing smoke example can describe expected
+    construction/certificate artifact kinds, but there is no first-class
+    problem contract or benchmark runner that supplies an incumbent
+    construction to a candidate search heuristic, records the fixed budget and
+    incumbent identity, captures the returned improved construction, and
+    links that handoff to result artifacts and verifier inputs.
+  - Required result: add a benchmark-grade heuristic-search fixture contract
+    that makes incumbent construction, budget, candidate-produced construction,
+    verifier/certificate artifacts, and improvement status explicit in
+    evaluator metadata and benchmark reports. Keep this separate from generic
+    context files or smoke artifact copy-out until a runner proves the full
+    AlphaEvolve Section 3.2 handoff loop.
+
 - [ ] Generate suite matrix tensor artifacts and per-seed hit-rate reports.
   - Spec evidence: AlphaEvolve Section 3.1 and Appendix A evaluate low-rank
     tensor decomposition targets with multiple random seeds, report the best

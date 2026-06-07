@@ -1,5 +1,6 @@
 import tempfile
 import base64
+import copy
 import hashlib
 import json
 import math
@@ -22,6 +23,7 @@ from libreevolve.core.config import Config
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
+    FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
     RuntimeLineageReplayPolicyError,
     RuntimeLLMSchedulerStateError,
@@ -46,6 +48,7 @@ from libreevolve.core.loop import (
     _generate_with_budget,
     load_full_resume_bundle,
     load_runtime_llm_scheduler_state_snapshot,
+    validate_full_resume_bundle,
     validate_runtime_rng_state_snapshot,
     validate_runtime_lineage_replay_policy,
     validate_runtime_llm_scheduler_state_snapshot,
@@ -1711,6 +1714,15 @@ def test_load_full_resume_bundle_composes_checked_runtime_restore_surfaces(tmp_p
     assert bundle["manifest_name"] == "manifest.json"
     assert bundle["history_name"] == "history.jsonl"
     assert bundle["controller_budget_events_name"] == "controller_budget_events.jsonl"
+    assert bundle["bundle_validation"]["schema"] == (
+        FULL_RESUME_BUNDLE_VALIDATION_SCHEMA
+    )
+    assert bundle["bundle_validation"]["ok"] is True
+    assert bundle["bundle_validation"]["compatible_resume_ready"] is True
+    assert bundle["bundle_validation"]["full_replay_ready"] is False
+    assert bundle["bundle_validation"]["provider_output_replay_ready"] is False
+    assert bundle["bundle_validation"]["pending_work_resume_ready"] is False
+    assert bundle["bundle_validation"]["controller_event_count"] == 6
     assert kwargs["runtime_rng_state_snapshot"]["seed"] == 99
     assert kwargs["runtime_llm_scheduler_state_snapshot"]["state"]["total"] == 1
     assert kwargs["runtime_budget_state_snapshot"]["consumed"]["generations_completed"] == 1
@@ -1754,6 +1766,47 @@ def test_load_full_resume_bundle_composes_checked_runtime_restore_surfaces(tmp_p
     }
     assert bundle["lineage_replay_policy"]["full_replay_ready"] is False
     assert "provider_outputs" in bundle["unsupported_surfaces"]
+
+
+def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
+    class UsageBackend:
+        name = "usage/model"
+        api_mode = None
+
+        def generate(self, prompt, **kwargs):
+            return "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+
+    with patch("libreevolve.core.loop.build_llm", return_value=LLMEnsemble([UsageBackend()])):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=str(tmp_path),
+                problem_name="source",
+                seed=99,
+            ),
+        )
+
+    bundle = load_full_resume_bundle(tmp_path / "source" / "manifest.json")
+    edited = copy.deepcopy(bundle)
+    edited["lineage_replay_policy"]["provider_boundary"][
+        "provider_outputs_replayed"
+    ] = True
+    edited["unsupported_surfaces"] = ["controller_pending_work"]
+    edited["controller_budget_replay"]["event_count"] = 999
+
+    validation = validate_full_resume_bundle(edited)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["schema"] == FULL_RESUME_BUNDLE_VALIDATION_SCHEMA
+    assert validation["ok"] is False
+    assert validation["compatible_resume_ready"] is False
+    assert validation["full_replay_ready"] is False
+    assert validation["provider_output_replay_ready"] is False
+    assert "invalid_lineage_replay_policy" in codes
+    assert "provider_output_replay_overclaim" in codes
+    assert "unsupported_surfaces_mismatch" in codes
+    assert "controller_budget_replay_event_count_mismatch" in codes
 
 
 def test_load_full_resume_bundle_rejects_budget_event_manifest_mismatch(tmp_path):

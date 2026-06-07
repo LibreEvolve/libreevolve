@@ -789,6 +789,12 @@ boundary, and the checked lineage-policy provider-output boundary. The
 controller event rows are replayed and their non-wall-clock consumed counters
 must match the manifest budget snapshot before the bundle passes that budget
 snapshot into `evolve()`.
+The returned bundle also includes `bundle_validation` with schema
+`libreevolve.full_resume_bundle_validation.v1`; it revalidates the composed
+runtime RNG, LLM scheduler, archive restore, runtime budget, controller-budget
+replay, lineage boundary, and unsupported-surface list while keeping
+`full_replay_ready`, `provider_output_replay_ready`, and
+`pending_work_resume_ready` false.
 `llm_budget_resume_artifact_inventory()` emits
 `libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional
 `runtime.llm_budget_report.resume_state.artifacts[]` records against an
@@ -1014,6 +1020,9 @@ internal replay state remain separate gaps.
 `load_full_resume_bundle()` exposes the validated replay boundary as
 `runtime_rng_replay_boundary`, making the RNG-owned and external non-replay
 surfaces inspectable alongside the other restore metadata.
+The bundle's `bundle_validation` record also checks that this RNG boundary
+matches the RNG snapshot and that provider-output replay remains outside the
+current restore claim.
 
 `runtime.lineage_replay_policy` records schema
 `libreevolve.lineage_replay_policy.v1` for the loop-owned replay boundary. It

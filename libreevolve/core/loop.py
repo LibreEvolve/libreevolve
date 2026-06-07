@@ -233,6 +233,14 @@ _LLM_SCHEDULER_RESUME_STATUSES = {
 _RNG_REPLAY_BOUNDARY_SCHEMA = "libreevolve.runtime_rng_replay_boundary.v1"
 _LINEAGE_REPLAY_POLICY_SCHEMA = "libreevolve.lineage_replay_policy.v1"
 _FULL_RESUME_BUNDLE_SCHEMA = "libreevolve.full_resume_bundle.v1"
+FULL_RESUME_BUNDLE_VALIDATION_SCHEMA = "libreevolve.full_resume_bundle_validation.v1"
+_FULL_RESUME_UNSUPPORTED_SURFACES = (
+    "provider_outputs",
+    "controller_pending_work",
+    "plugin_internal_state",
+    "validator_subprocess_state",
+    "ordered_migration_event_replay",
+)
 _RNG_REPLAY_OWNED_SURFACES = [
     "loop_parent_explore_exploit_choice",
     "prompt_template_sampling",
@@ -2593,7 +2601,7 @@ def load_full_resume_bundle(
         "runtime_archive_programs_by_id": archive_bundle["archive_programs_by_id"],
         "runtime_budget_state_snapshot": budget_snapshot,
     }
-    return {
+    bundle = {
         "schema": _FULL_RESUME_BUNDLE_SCHEMA,
         "restore_entrypoint": "evolve",
         "manifest_name": manifest.name,
@@ -2609,14 +2617,314 @@ def load_full_resume_bundle(
             "replay_entrypoint": "apply_controller_budget_event",
             "runtime_seconds_policy": "manifest_snapshot_authoritative",
         },
-        "unsupported_surfaces": [
-            "provider_outputs",
-            "controller_pending_work",
-            "plugin_internal_state",
-            "validator_subprocess_state",
-            "ordered_migration_event_replay",
+        "unsupported_surfaces": list(_FULL_RESUME_UNSUPPORTED_SURFACES),
+    }
+    validation = validate_full_resume_bundle(bundle)
+    if not validation["ok"]:
+        issues = ",".join(issue["code"] for issue in validation["issues"][:5])
+        raise RuntimeFullResumeBundleError(
+            f"full resume bundle validation failed: {issues}"
+        )
+    bundle["bundle_validation"] = validation
+    return bundle
+
+
+def validate_full_resume_bundle(bundle: object) -> dict:
+    """Validate the composed full-resume bundle without upgrading replay claims."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(bundle, Mapping):
+        return {
+            "schema": FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
+            "bundle_schema": None,
+            "ok": False,
+            "compatible_resume_ready": False,
+            "full_replay_ready": False,
+            "provider_output_replay_ready": False,
+            "pending_work_resume_ready": False,
+            "unsupported_surface_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "full resume bundle must be an object",
+                }
+            ],
+        }
+    if bundle.get("schema") != _FULL_RESUME_BUNDLE_SCHEMA:
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported full resume bundle schema",
+            }
+        )
+    if bundle.get("restore_entrypoint") != "evolve":
+        issues.append(
+            {
+                "code": "invalid_restore_entrypoint",
+                "message": "full resume bundle restore_entrypoint must be evolve",
+            }
+        )
+    for field in ("manifest_name", "history_name", "controller_budget_events_name"):
+        if not isinstance(bundle.get(field), str) or not bundle.get(field):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be non-empty text",
+                }
+            )
+    kwargs = bundle.get("evolve_kwargs")
+    if not isinstance(kwargs, Mapping):
+        issues.append(
+            {
+                "code": "invalid_evolve_kwargs",
+                "message": "evolve_kwargs must be an object",
+            }
+        )
+        kwargs = {}
+    _validate_full_resume_bundle_kwargs(kwargs, issues)
+    _validate_full_resume_bundle_boundaries(bundle, kwargs, issues)
+    controller_event_count = _validate_full_resume_controller_state(bundle, issues)
+    _validate_full_resume_unsupported_surfaces(bundle.get("unsupported_surfaces"), issues)
+    return {
+        "schema": FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
+        "bundle_schema": bundle.get("schema"),
+        "ok": not issues,
+        "compatible_resume_ready": not issues,
+        "full_replay_ready": False,
+        "provider_output_replay_ready": False,
+        "pending_work_resume_ready": False,
+        "controller_event_count": controller_event_count,
+        "unsupported_surface_count": len(bundle.get("unsupported_surfaces", []))
+        if isinstance(bundle.get("unsupported_surfaces"), list)
+        else 0,
+        "issues": issues,
+        "limitations": [
+            "provider_outputs_not_replayed",
+            "controller_pending_work_not_restored",
+            "plugin_internal_state_not_restored",
+            "validator_subprocess_state_not_restored",
+            "ordered_migration_event_replay_not_restore_engine",
         ],
     }
+
+
+def _validate_full_resume_bundle_kwargs(
+    kwargs: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> None:
+    expected = {
+        "runtime_rng_state_snapshot",
+        "runtime_llm_scheduler_state_snapshot",
+        "runtime_archive_state_snapshot",
+        "runtime_archive_programs_by_id",
+        "runtime_budget_state_snapshot",
+    }
+    missing = sorted(expected - set(kwargs))
+    if missing:
+        issues.append(
+            {
+                "code": "missing_evolve_kwargs",
+                "message": f"evolve_kwargs missing restore inputs: {missing}",
+            }
+        )
+    unsupported = sorted(set(kwargs) - expected)
+    if unsupported:
+        issues.append(
+            {
+                "code": "unsupported_evolve_kwargs",
+                "message": f"evolve_kwargs has unsupported fields: {unsupported}",
+            }
+        )
+    _record_validation_issue(
+        issues,
+        "invalid_runtime_rng_state_snapshot",
+        lambda: validate_runtime_rng_state_snapshot(
+            kwargs.get("runtime_rng_state_snapshot")
+        ),
+    )
+    _record_validation_issue(
+        issues,
+        "invalid_runtime_llm_scheduler_state_snapshot",
+        lambda: validate_runtime_llm_scheduler_state_snapshot(
+            kwargs.get("runtime_llm_scheduler_state_snapshot")
+        ),
+    )
+    _record_validation_issue(
+        issues,
+        "invalid_runtime_budget_state_snapshot",
+        lambda: validate_restored_budget_snapshot(
+            kwargs.get("runtime_budget_state_snapshot")
+        ),
+    )
+    archive_state = kwargs.get("runtime_archive_state_snapshot")
+    if not isinstance(archive_state, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runtime_archive_state_snapshot",
+                "message": "runtime_archive_state_snapshot must be an object",
+            }
+        )
+    else:
+        archive_contents = archive_state.get("archive_contents")
+        if not isinstance(archive_contents, Mapping):
+            issues.append(
+                {
+                    "code": "missing_archive_contents",
+                    "message": "runtime archive state must include archive_contents",
+                }
+            )
+        migration_replay = archive_state.get("migration_replay")
+        if (
+            isinstance(migration_replay, Mapping)
+            and migration_replay.get("replay_engine_supported") is True
+        ):
+            issues.append(
+                {
+                    "code": "migration_replay_overclaim",
+                    "message": "full resume bundle must not claim ordered migration replay support",
+                }
+            )
+    programs = kwargs.get("runtime_archive_programs_by_id")
+    if not isinstance(programs, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runtime_archive_programs_by_id",
+                "message": "runtime_archive_programs_by_id must be a mapping",
+            }
+        )
+    elif any(not isinstance(program, Program) for program in programs.values()):
+        issues.append(
+            {
+                "code": "invalid_runtime_archive_program_record",
+                "message": "runtime archive program restore map must contain Program objects",
+            }
+        )
+
+
+def _validate_full_resume_bundle_boundaries(
+    bundle: Mapping[str, object],
+    kwargs: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> None:
+    rng_snapshot = kwargs.get("runtime_rng_state_snapshot")
+    rng_boundary = (
+        rng_snapshot.get("replay_boundary")
+        if isinstance(rng_snapshot, Mapping)
+        else None
+    )
+    if bundle.get("runtime_rng_replay_boundary") != rng_boundary:
+        issues.append(
+            {
+                "code": "runtime_rng_replay_boundary_mismatch",
+                "message": "bundle runtime_rng_replay_boundary must match RNG snapshot",
+            }
+        )
+    _record_validation_issue(
+        issues,
+        "invalid_lineage_replay_policy",
+        lambda: validate_runtime_lineage_replay_policy(
+            bundle.get("lineage_replay_policy")
+        ),
+    )
+    lineage_policy = bundle.get("lineage_replay_policy")
+    if isinstance(lineage_policy, Mapping):
+        provider_boundary = lineage_policy.get("provider_boundary")
+        if (
+            not isinstance(provider_boundary, Mapping)
+            or provider_boundary.get("provider_outputs_replayed") is not False
+        ):
+            issues.append(
+                {
+                    "code": "provider_output_replay_overclaim",
+                    "message": "lineage replay policy must keep provider outputs outside replay",
+                }
+            )
+        if lineage_policy.get("full_replay_ready") is not False:
+            issues.append(
+                {
+                    "code": "full_replay_overclaim",
+                    "message": "current full resume bundle is not full replay ready",
+                }
+            )
+
+
+def _validate_full_resume_controller_state(
+    bundle: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> int:
+    controller_state = bundle.get("controller_budget_state")
+    event_count = 0
+    try:
+        validated = validate_controller_budget_state(controller_state)
+        event_count = len(validated["events"])
+    except (BudgetSnapshotError, ValueError, TypeError) as exc:
+        issues.append(
+            {
+                "code": "invalid_controller_budget_state",
+                "message": redact_sensitive_text(str(exc)),
+            }
+        )
+    replay = bundle.get("controller_budget_replay")
+    if not isinstance(replay, Mapping):
+        issues.append(
+            {
+                "code": "invalid_controller_budget_replay",
+                "message": "controller_budget_replay must be an object",
+            }
+        )
+        return event_count
+    expected = {
+        "status": "replayed_and_applied_to_evolve_budget_snapshot",
+        "replay_entrypoint": "apply_controller_budget_event",
+        "runtime_seconds_policy": "manifest_snapshot_authoritative",
+    }
+    for field, expected_value in expected.items():
+        if replay.get(field) != expected_value:
+            issues.append(
+                {
+                    "code": f"invalid_controller_budget_replay_{field}",
+                    "message": f"controller_budget_replay.{field} is unsupported",
+                }
+            )
+    if replay.get("event_count") != event_count:
+        issues.append(
+            {
+                "code": "controller_budget_replay_event_count_mismatch",
+                "message": "controller_budget_replay event_count must match state events",
+            }
+        )
+    return event_count
+
+
+def _validate_full_resume_unsupported_surfaces(
+    surfaces: object,
+    issues: list[dict[str, str]],
+) -> None:
+    if not isinstance(surfaces, list):
+        issues.append(
+            {
+                "code": "invalid_unsupported_surfaces",
+                "message": "unsupported_surfaces must be a list",
+            }
+        )
+        return
+    if surfaces != list(_FULL_RESUME_UNSUPPORTED_SURFACES):
+        issues.append(
+            {
+                "code": "unsupported_surfaces_mismatch",
+                "message": "unsupported_surfaces must preserve current replay boundaries",
+            }
+        )
+
+
+def _record_validation_issue(
+    issues: list[dict[str, str]],
+    code: str,
+    validator: Callable[[], object],
+) -> None:
+    try:
+        validator()
+    except (BudgetSnapshotError, RuntimeRngStateError, RuntimeLLMSchedulerStateError, RuntimeLineageReplayPolicyError, ValueError, TypeError) as exc:
+        issues.append({"code": code, "message": redact_sensitive_text(str(exc))})
 
 
 def _load_controller_budget_events_restore_stream(path: Path) -> list[dict]:

@@ -15121,3 +15121,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prompt tests cover valid heuristic section packing,
     valid provider-counter packing, and malformed persisted section-budget
     records.
+
+- [x] Add full-resume bundle validation.
+  - Spec evidence: AlphaEvolve-style long-running searches need a single
+    resume entrypoint whose current restore surfaces are explicit and
+    auditable, while unsupported replay surfaces remain impossible to overclaim.
+  - Status: `validate_full_resume_bundle()` now validates
+    `libreevolve.full_resume_bundle.v1` records and `load_full_resume_bundle()`
+    attaches `libreevolve.full_resume_bundle_validation.v1`. The validator
+    checks composed runtime RNG, LLM scheduler, archive restore, runtime
+    budget, controller-budget replay, lineage boundary, and unsupported-surface
+    records while keeping full replay, provider-output replay, and pending-work
+    resume marked unavailable.
+  - Remaining gap: this validates the current compatible restore bundle; it
+    does not add provider-output replay, queued/running controller state,
+    ordered migration-event restore, plugin internal state, validator
+    subprocess state, or end-to-end resumed-trace proof.
+  - Verification: focused loop tests cover valid full-resume bundle validation
+    and edited bundle overclaims for provider-output replay, unsupported
+    surfaces, and controller-budget replay event counts.

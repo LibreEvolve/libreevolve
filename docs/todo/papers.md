@@ -244,7 +244,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     full run-resume/replay contract across provider outputs, archive restore,
     controller state, and migration ordering. Runtime manifests now declare
     `runtime.lineage_replay_policy`, and full-runtime restore validates and
-    packages that provider-output non-replay boundary as checked metadata, but
+    packages that provider-output non-replay boundary as checked metadata.
+    Full-runtime restore now also emits
+    `libreevolve.full_resume_bundle_validation.v1`, validating the composed
+    runtime RNG, LLM scheduler, archive restore, runtime budget,
+    controller-budget replay, lineage boundary, and unsupported-surface list
+    while keeping full replay, provider-output replay, and pending-work resume
+    marked unavailable. But
     this still stops short of an end-to-end replay trace that proves identical
     provider outputs or resumed lineage. Validator subprocesses now use an
     explicit

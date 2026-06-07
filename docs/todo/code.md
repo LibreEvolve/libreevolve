@@ -1210,7 +1210,12 @@ Primary evidence:
     and CLI `--restore-runtime-from-manifest` now validate and compose the
     currently compatible surfaces together: runtime RNG, LLM scheduler, full
     archive contents, budget counters, and the sibling controller budget event
-    stream as checked replay input. Archive restore explicitly covers current
+    stream as checked replay input. The returned bundle now includes
+    `libreevolve.full_resume_bundle_validation.v1`, which revalidates the
+    composed runtime RNG, LLM scheduler, archive restore, runtime budget,
+    controller-budget replay, lineage boundary, and unsupported-surface list
+    while preserving `full_replay_ready: false`, provider-output non-replay,
+    and no pending-work resume claim. Archive restore explicitly covers current
     cell/elite placements without replaying migration events as an ordered
     restore engine. Remaining gaps are no provider-output replay, no controller
     queue or pending-evaluation state, no migration-event replay engine, and
@@ -1221,7 +1226,8 @@ Primary evidence:
     database state, RNG state, provider-output boundaries, migration replay or
     explicit non-replay policy, and pending controller/evaluation work, with an
     end-to-end resumed trace proving parent/inspiration/prompt/archive/
-    controller continuity.
+    controller continuity. The remaining gap is not validating the current
+    compatible full-resume bundle shape.
 
 - [ ] Define lineage replay contract for direct UUIDs and provider boundaries.
   - Spec evidence: AlphaEvolve compares systems over long computation budgets,

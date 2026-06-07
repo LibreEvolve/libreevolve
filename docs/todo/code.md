@@ -1421,6 +1421,29 @@ Primary evidence:
 
 ## Runtime, Reproducibility, and Safety
 
+- [ ] Add release artifact and install-from-wheel verification.
+  - Spec evidence: AlphaEvolve-style experimental artifacts should be
+    reproducible from the code and dependency environment that produced them;
+    release packaging is also the boundary users will install before running
+    long experiments.
+  - Current evidence: `pyproject.toml` already declares a setuptools
+    `build-system`, PEP 621 project metadata, runtime dependencies, dev extras,
+    package discovery, and the `libreevolve` console script. Runtime manifests
+    record selected package/build metadata, installed distribution
+    name/version, bounded `WHEEL`, redacted/hash-backed `direct_url.json`,
+    `INSTALLER`, hash-only `RECORD`, known lockfile hashes, bounded
+    `pip_freeze`, bounded `pip_config`, NumPy config, provider SDK versions,
+    and accelerator hints.
+  - Remaining gap: there is no committed wheel/sdist build check,
+    install-from-wheel CLI smoke test, package-data inclusion validation,
+    release checklist, or release-artifact provenance tying a generated
+    distribution back to the source and manifest environment evidence.
+  - Required result: add local/CI validation that builds the wheel and sdist,
+    installs the wheel into an isolated environment, checks the console script
+    and required package data, and records or documents release-artifact
+    provenance without overclaiming full private-index or remote artifact
+    verification.
+
 - [ ] Add unified full-resume orchestration and controller replay.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
     for large computation budgets.

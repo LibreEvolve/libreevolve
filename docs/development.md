@@ -53,9 +53,15 @@ are `project.name`, `project.version`, `project.requires-python`,
 license, authors/maintainers, keywords, classifiers, project URLs, optional
 dependency groups, scripts, arbitrary entry-point groups,
 `build-system.build-backend`, and `build-system.requires`, plus installed
-versions for declared runtime dependencies. Arbitrary project metadata,
-dev/test tools, transitive dependency source/options, and `pip freeze` output
-are outside the current provenance contract.
+versions for declared runtime dependencies. It also records bounded installed
+distribution name/version, `WHEEL`, `direct_url.json`, `INSTALLER`, and
+hash-only `RECORD` metadata, known project-root lockfile hashes, bounded
+`pip freeze --all` and `pip config list` evidence, NumPy config summaries,
+provider SDK versions, and bounded accelerator hints. Arbitrary project
+metadata, dev/test tool runtime state beyond declared optional groups, complete
+private package-source interpretation, full transitive dependency
+source/options, and release-artifact verification are outside the current
+provenance contract.
 
 ## Environment variables
 

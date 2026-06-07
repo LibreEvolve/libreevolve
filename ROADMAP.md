@@ -314,7 +314,10 @@ is not yet an AlphaEvolve reproduction.
   bounded objective-vector metrics, and workspace-file display toward whole-run
   source integrity checks, richer archive/prompt/failure drill-downs, and
   durable query views over run artifacts.
-- Add packaging/release hygiene beyond editable installs.
+- Extend current `pyproject.toml` metadata, dev extras, and console-script
+  packaging beyond editable/local use with wheel/sdist build checks,
+  package-data validation, install-from-wheel smoke tests, and release-artifact
+  provenance.
 - Extend the current path-scoped GitHub Actions workflow beyond secret scan,
   Python 3.11/3.12 non-integration tests, optional integration tests, and
   documented paper-manifest commands with broader docs/paper-specific

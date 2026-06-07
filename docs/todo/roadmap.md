@@ -1012,6 +1012,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap text distinguishes report validation from
     AlphaEvolve-style matrix search workflow parity.
 
+- [ ] Keep matrix roadmap wording scoped to result artifacts until evolved
+      sweep-space provenance exists.
+  - Spec evidence: AlphaEvolve Figures 9a-9c show matrix search programs
+    evolving a `sweep()` function over user-provided `hyper` ranges, not just
+    a final tensor-decomposition artifact.
+  - Current evidence: roadmap benchmark language points to matrix result
+    contracts, Appendix A registry coverage, checked Strassen artifacts, and
+    near-integrality/scalar-field follow-ups. It does not yet require
+    candidate-produced sweep-space metadata, sampled sweep configuration
+    records, per-sweep outcomes, or linkage from a selected sweep
+    configuration to the final exact certificate.
+  - Required result: when matrix benchmark runners persist evolved sweep
+    functions, hyperparameter ranges, sampled configuration ids, per-sweep
+    diagnostics, and certificate linkage, update ROADMAP, README, papers
+    index, and code/paper TODO entries together so roadmap text distinguishes
+    final result artifacts from AlphaEvolve-style matrix search-program
+    provenance.
+
 - [ ] Keep matrix roadmap wording scoped to coefficient-domain validation
       until scalar-field evidence exists.
   - Spec evidence: AlphaEvolve Table 2 and Section 3.1 distinguish

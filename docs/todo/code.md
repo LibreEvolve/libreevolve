@@ -1439,6 +1439,24 @@ Primary evidence:
     evidence before treating matrix search runs as aligned with the Section
     3.1 near-integrality workflow.
 
+- [ ] Add matrix hyperparameter-sweep provenance for evolved search programs.
+  - Spec evidence: AlphaEvolve's Appendix A Figure 9 matrix example evolves a
+    program that includes a `sweep()` function backed by a user-provided
+    `hyper` library, adding optimizer, noise, clipping, and discretization
+    hyperparameter ranges that drive the tensor-decomposition search.
+  - Current evidence: LibreEvolve records matrix result reports after a
+    candidate run exists and has a 2x2 smoke fixture plus a checked Strassen
+    publication bundle. It does not define a matrix benchmark protocol for
+    candidate-produced sweep spaces, user-provided hyperparameter libraries,
+    sampled sweep configurations, per-sweep/per-seed outcomes, or provenance
+    tying evolved search-code changes to the final exact decomposition.
+  - Required result: add matrix benchmark metadata and evaluator/report
+    artifacts for evolved sweep functions, hyperparameter-range declarations,
+    sampled configuration ids, per-sweep losses/ranks/exactness diagnostics,
+    and linkage from selected sweep outcomes to final coefficient certificates
+    before claiming parity with AlphaEvolve's Figure 4/Figure 9 matrix search
+    workflow.
+
 - [ ] Add matrix scalar-field provenance for real, complex, and characteristic
       claims.
   - Spec evidence: AlphaEvolve Section 3.1 and Table 2 report exact tensor

@@ -638,7 +638,11 @@ Implemented:
   certificates as in AlphaEvolve Section 3.1. Its coefficient-domain field also
   does not yet encode scalar-field provenance for complex-valued algorithms,
   field characteristic, or certificate scope for exact real/complex
-  applicability.
+  applicability. It also does not yet preserve the evolved `sweep()` function
+  and user-provided `hyper` search-space provenance shown in AlphaEvolve
+  Figures 9a-9c, such as hyperparameter range declarations, sampled
+  configuration ids, per-sweep losses/ranks, or linkage from the winning sweep
+  configuration to the final exact decomposition certificate.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

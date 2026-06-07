@@ -1516,6 +1516,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     diagnostics, per-seed exactness linkage, and prompt/run provenance before
     claiming AlphaEvolve Section 3.1 matrix-search parity.
 
+- [ ] Track matrix sweep-space provenance for AlphaEvolve Figure 9 workflows.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figures 9a-9c show the
+    matrix-search program evolving not only tensor update code but also a
+    `sweep()` function with `hyper.uniform(...)` ranges for optimizer,
+    discretization, noise, clipping, and related search parameters.
+  - Current evidence: the matrix-result report contract validates finished
+    result metadata and artifact references, but it does not require
+    candidate-produced sweep-space declarations, user-provided hyper-library
+    identity, sampled configuration records, per-sweep losses/ranks, or
+    linkage from the winning sweep configuration to the published exact
+    decomposition/certificate.
+  - Required result: add paper-facing matrix benchmark artifacts for evolved
+    sweep functions, hyperparameter range provenance, sampled sweep ids,
+    per-sweep/per-seed outcomes, and final certificate linkage before treating
+    LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
+    tensor-decomposition search workflow.
+
 - [ ] Track matrix scalar-field evidence for complex-valued Appendix A claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 says some improved
     matrix algorithms, including selected Appendix A targets, use

@@ -229,6 +229,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes report-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
+- [ ] Keep README matrix wording scoped to final artifacts until sweep-space
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figures 9a-9c show the 4x4 matrix program
+    evolving a `sweep()` function that declares user-provided `hyper` ranges
+    for optimizer, noise, clipping, discretization, and related search
+    parameters.
+  - Current evidence: README documents matrix result reports, Appendix A
+    registry checks, the checked Strassen baseline bundle, and open
+    near-integrality/scalar-field gaps. It does not yet document a matrix
+    benchmark path that preserves candidate-produced sweep spaces, sampled
+    configuration ids, per-sweep outcomes, or linkage from the selected sweep
+    configuration to the final exact decomposition certificate.
+  - Required result: when sweep-space provenance lands, update README,
+    ROADMAP, papers index, and matching TODOs so README does not imply final
+    matrix artifacts alone prove AlphaEvolve Figure 4/Figure 9 search-program
+    parity.
+
 - [ ] Keep README matrix wording scoped to coefficient-domain validation until
       scalar-field evidence exists.
   - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix

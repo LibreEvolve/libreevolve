@@ -3100,7 +3100,10 @@ same initial program and absent evolutionary database parent, inspiration,
 previous-candidate, and archive-feedback context. It also does not prove the
 `No context in the prompt` condition by checking executed prompt history for
 absent explicit context, prior-program/inspiration context, failure feedback,
-and plugin context. It validates report shape only; it does not run ablation
+and plugin context. It also does not prove the `Small base LLM only` condition
+with backend metadata and call-ledger evidence that every mutation-generation
+call used one configured small/base-capable model with no large-model routing
+or fallback. It validates report shape only; it does not run ablation
 experiments or add accelerator/async-worker budget stops beyond the current
 live provider-token and configured-cost LLM budget surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared

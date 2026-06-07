@@ -67,9 +67,11 @@ without evolutionary-database parent, inspiration, previous-candidate, or
 archive-feedback context. The `No context in the prompt` row likewise has no
 executed prompt-history proof that explicit context, prior-program/inspiration
 context, failure feedback, and plugin context were absent from rendered
-prompts. The report contract is also target-family generic: it
-does not require Figure 8's matrix tensor-decomposition and kissing-number
-sphere-packing target families or validate target-metric identity,
+prompts. The `Small base LLM only` row has no backend metadata or call-ledger
+proof that every mutation-generation call used a single small/base model with
+no large-model routing or fallback. The report contract is also target-family
+generic: it does not require Figure 8's matrix tensor-decomposition and
+kissing-number sphere-packing target families or validate target-metric identity,
 higher-is-better direction, normalization policy, or mean/standard-deviation
 curve summaries against the three independent seed traces.
 For AlphaEvolve context-ingestion status, "deterministic selection provenance"

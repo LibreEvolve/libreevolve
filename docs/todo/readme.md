@@ -224,6 +224,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     where prompt-visible explicit context, sampled prior-program/inspiration
     context, recent failure feedback, and plugin context are actually absent in
     executed prompt history. It also does not yet prove the
+    `Small base LLM only` setup where every mutation-generation call uses only
+    one configured small/base-capable model and has no large-model eligibility,
+    fallback, critique, or router leakage. It also does not yet prove the
     paper-specific `No full-file evolution` setup where only the tensor
     decomposition loss function is evolved; generic single-file/diff/no-topology
     labels should not be described as equivalent to that ablation.
@@ -246,6 +249,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README wording to distinguish `No context in the prompt` registry labels
     from executed prompt-history evidence that context sources and feedback
     sections were absent. Require README wording to distinguish generic
+    `Small base LLM only` labels from executed backend telemetry proving a
+    single small/base model actually handled every relevant generation call.
+    Require README wording to distinguish generic
     ablation-result schemas from
     Figure 8-equivalent matrix/kissing target-family reports with validated
     target-metric identity/direction/normalization and mean/standard-deviation

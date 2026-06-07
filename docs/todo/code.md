@@ -1977,7 +1977,10 @@ Primary evidence:
     add runner and prompt-history checks proving explicit context files,
     parent/inspiration program context, recent failure feedback, and plugin
     context are actually absent from rendered prompts, not only disabled by
-    definition-only registry labels.
+    definition-only registry labels. For `Small base LLM only`, add executable
+    backend policy and call-ledger checks proving all mutation-generation calls
+    use exactly one configured small/base-capable model and never route or fall
+    back to large-model backends during the ablation.
 
 - [ ] Bind the `No full-file evolution` ablation to loss-function-only
       tensor-decomposition controls.

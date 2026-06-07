@@ -358,6 +358,9 @@ is not yet an AlphaEvolve reproduction.
   or prompt-diagnostic proof that explicit context, prior-program/inspiration
   context, failure feedback, and plugin context were absent in executed runs,
   not only definition-only registry labels.
+- For the Figure 8 `Small base LLM only` ablation, require backend metadata and
+  call-ledger proof that every mutation-generation call used one configured
+  small/base-capable model with no large-model routing or fallback.
 - Report benchmark progress at comparable compute-budget fractions, not only
   final generation counts, with explicit target-metric identity, direction,
   normalization, and aggregation policy for paper-facing curves.

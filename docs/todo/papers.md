@@ -399,7 +399,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-history and prompt-diagnostic proof that explicit context files,
     sampled prior-program/inspiration context, recent failure feedback, and
     plugin context were absent, rather than relying on the registry's
-    declarative `prompt_context_sections` and context-disabled labels. The
+    declarative `prompt_context_sections` and context-disabled labels. For the
+    `Small base LLM only` variant, require executed backend telemetry proving
+    that every mutation-generation call used one configured small/base-capable
+    model with no large-model backend eligibility, fallback, critique, or
+    router leakage, rather than relying on declarative `single_backend`,
+    `backend_count`, or `backend_capability_tier` labels. The
     remaining ablation and calibration gap is executing and
     emitting real reports from runnable variants over the Figure 8 matrix and
     kissing-number target families, with curve summaries that expose

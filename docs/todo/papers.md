@@ -146,12 +146,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.llm_budget_report.v1` now defines and tests paper-index-visible
     retry-budget report semantics for mutation, critique, and feedback roles,
     adapter-internal attempts, token/cost/wall-clock limits and usage, and
-    persisted resume-state hashes. Final manifests now emit
-    `runtime.llm_budget_report` instances with observed per-role logical-call,
-    retry, provider-attempt, token, configured estimated cost, retained LLM
-    latency, and scheduler-resume-hash evidence plus self-validation, and
-    retained LLM call-history rows now provide per-call provider-internal retry
-    records grouped by role plus configured-cost source metadata. Final
+    persisted resume-state hashes.
+    `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
+    optional LLM budget `resume_state.artifacts[]` records against an artifact
+    root, including safe relative paths, file existence, SHA-256 hashes, byte
+    counts, per-record statuses, aggregate missing/mismatch/invalid counts, and
+    a stable records hash. Final manifests now emit `runtime.llm_budget_report`
+    instances with observed per-role logical-call, retry, provider-attempt,
+    usage counters, configured estimated cost, retained LLM latency, and
+    scheduler-resume-hash evidence plus self-validation, and retained LLM
+    call-history rows now provide per-call provider-internal retry records
+    grouped by role plus configured-cost source metadata. Final
     manifests also emit `runtime.llm_provider_diagnostics` using
     `libreevolve.llm_provider_diagnostics.v1`, a retained-call-history
     aggregate that groups backend/API-mode usage, bounded provider diagnostic
@@ -178,7 +183,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     provider-attempt, token, configured-cost, latency, or wall-clock usage can
     therefore trip the same live stop checks in the resumed run. However,
     restored controller state is not yet connected to pending-work queues,
-    async worker state, or provider-output replay.
+    async worker state, or provider-output replay. The remaining gap is not
+    LLM budget resume artifact inventory verification.
   - Required result: connect the runtime LLM ensemble and provider adapters to
     the report contract with complete persisted/restored retry/provider-attempt/
     token/configured-cost/latency consumption before

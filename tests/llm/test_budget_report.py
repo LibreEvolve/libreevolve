@@ -1,7 +1,10 @@
 import json
+import hashlib
 
 from libreevolve.llm.budget_report import (
+    LLM_BUDGET_RESUME_ARTIFACT_INVENTORY_SCHEMA,
     LLM_BUDGET_REPORT_SCHEMA,
+    llm_budget_resume_artifact_inventory,
     render_llm_budget_summary,
     validate_llm_budget_report,
 )
@@ -71,6 +74,90 @@ def test_llm_budget_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.paper_budget_ready is True
+
+
+def test_llm_budget_resume_artifact_inventory_verifies_declared_files(tmp_path):
+    report = _valid_report()
+    artifacts = []
+    for kind, path in (
+        ("runtime_budget_snapshot", "resume/runtime-budget.json"),
+        ("controller_budget_events", "resume/controller-budget-events.jsonl"),
+    ):
+        raw = f"{kind} evidence".encode("utf-8")
+        target = tmp_path / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        artifacts.append(
+            {
+                "kind": kind,
+                "path": path,
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "bytes": len(raw),
+            }
+        )
+    report["resume_state"]["artifacts"] = artifacts
+
+    inventory = llm_budget_resume_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == LLM_BUDGET_RESUME_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["report_schema"] == LLM_BUDGET_REPORT_SCHEMA
+    assert inventory["run_id"] == "run_2026_06_04"
+    assert inventory["resume_state_sha256"] == "a" * 64
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_resume_artifact_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 2
+    assert inventory["verified_count"] == 2
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert len(inventory["records_sha256"]) == 64
+    assert {record["status"] for record in inventory["artifacts"]} == {"verified"}
+
+
+def test_llm_budget_resume_artifact_inventory_reports_bad_references(tmp_path):
+    report = _valid_report()
+    bad_path = tmp_path / "resume" / "runtime-budget.json"
+    bad_path.parent.mkdir(parents=True, exist_ok=True)
+    bad_path.write_text("wrong", encoding="utf-8")
+    report["resume_state"]["artifacts"] = [
+        {
+            "kind": "runtime_budget_snapshot",
+            "path": "resume/runtime-budget.json",
+            "sha256": "b" * 64,
+            "bytes": 999,
+        },
+        {
+            "kind": "controller_budget_events",
+            "path": "resume/missing-events.jsonl",
+            "sha256": "c" * 64,
+            "bytes": 10,
+        },
+        {
+            "kind": "provider_replay",
+            "path": "../escape-provider.json",
+            "sha256": "d" * 64,
+            "bytes": 10,
+        },
+    ]
+
+    inventory = llm_budget_resume_artifact_inventory(report, tmp_path)
+    records = {artifact["kind"]: artifact for artifact in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["runtime_budget_snapshot"]["status"] == "hash_mismatch"
+    assert "resume_artifact_hash_mismatch" in records["runtime_budget_snapshot"][
+        "issues"
+    ]
+    assert "resume_artifact_bytes_mismatch" in records["runtime_budget_snapshot"][
+        "issues"
+    ]
+    assert records["controller_budget_events"]["status"] == "missing_file"
+    assert records["provider_replay"]["status"] == "unsafe_path"
 
 
 def test_llm_budget_report_rejects_usage_over_limits():

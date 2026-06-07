@@ -10053,3 +10053,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     replayable redirect/TLS evidence remain unimplemented.
   - Verification: focused DeepResearch tests cover valid sidecar inventories
     and missing, mismatched, and unsafe sidecar references.
+
+- [x] Add paper-visible LLM budget resume artifact inventory verification.
+  - Paper evidence: AlphaEvolve-style compute budgets need persisted retry and
+    provider-usage resume evidence that can be audited from concrete artifacts.
+  - Status: `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
+    optional LLM budget `resume_state.artifacts[]` records under a safe
+    artifact root. Resume evidence files are checked for safe paths,
+    existence, SHA-256 hashes, byte counts, and aggregate inventory status.
+  - Remaining paper gap: this is LLM budget resume evidence-file verification
+    only; async controller restore, pending-work queues, provider-output
+    replay, and replay-only budget-stop packaging remain unimplemented.
+  - Verification: focused LLM budget-report tests cover valid resume
+    inventories and missing, mismatched, and unsafe resume artifact references.

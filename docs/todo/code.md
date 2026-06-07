@@ -1054,9 +1054,14 @@ Primary evidence:
     `libreevolve.llm_budget_report.v1` now defines and tests a report contract
     for role-specific logical-call, retry-attempt, adapter-attempt,
     token/cost/wall-clock limits and usage, provider-internal retry caps, and
-    persisted resume-state hashes. Final runtime reports now include retained
-    per-call adapter retry details from LLM call history and state when those
-    details are bounded by call-history retention.
+    persisted resume-state hashes.
+    `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
+    optional `resume_state.artifacts[]` records against an artifact root,
+    including safe relative paths, file existence, SHA-256 hashes, byte counts,
+    per-record statuses, aggregate missing/mismatch/invalid counts, and a
+    stable records hash. Final runtime reports now include retained per-call
+    adapter retry details from LLM call history and state when those details
+    are bounded by call-history retention.
     `max_llm_provider_attempts` now records those adapter-internal attempts
     into `RunBudget` and stops before the next LLM call when the cap is
     exhausted. `max_llm_tokens` and `max_llm_cost_microusd` now stop before the
@@ -1082,7 +1087,8 @@ Primary evidence:
   - Remaining gap: the replayed controller budget stream is not yet composed
     with queued/running async worker state, pending-work restore, provider-output
     replay, or separate budget-stop manifests for replay-only exhaustion
-    scenarios beyond the manifest stop snapshot.
+    scenarios beyond the manifest stop snapshot. The remaining gap is not
+    resume-state artifact inventory verification.
   - Required result: connect replayed budget state to future async
     worker/pending-work controller state, provider-output replay, and
     budget-stop packaging for restored controller work.

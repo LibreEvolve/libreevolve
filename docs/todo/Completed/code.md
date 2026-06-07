@@ -14942,3 +14942,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused DeepResearch tests cover verified sidecar
     inventories from both retrieval events and plugin metadata, plus
     hash/byte mismatches, missing files, and unsafe paths.
+
+- [x] Add LLM budget resume artifact inventory verification.
+  - Spec evidence: AlphaEvolve-style compute-budgeted LLM scheduling needs
+    persisted retry, provider-attempt, usage, cost, and latency resume evidence
+    to be auditable from concrete files, not only shaped hash fields.
+  - Status: `libreevolve.llm_budget_resume_artifact_inventory.v1` now verifies
+    optional LLM budget `resume_state.artifacts[]` records under an explicit
+    artifact root. The inventory checks safe relative paths, file existence,
+    SHA-256 hashes, byte counts, per-record statuses, aggregate
+    missing/mismatch/invalid counts, and a stable records hash.
+  - Remaining gap: this verifies named LLM budget resume evidence files;
+    async worker/pending-work controller restore, provider-output replay, and
+    richer replay-only budget-stop packaging remain open.
+  - Verification: focused LLM budget-report tests cover verified resume
+    artifact inventories plus hash/byte mismatches, missing files, and unsafe
+    paths.

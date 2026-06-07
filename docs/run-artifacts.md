@@ -785,7 +785,15 @@ RNG, LLM scheduler, full archive restore inputs, the checked runtime RNG replay
 boundary, and the checked lineage-policy provider-output boundary. The
 controller event rows are replayed and their non-wall-clock consumed counters
 must match the manifest budget snapshot before the bundle passes that budget
-snapshot into `evolve()`. Completed runtime history also records
+snapshot into `evolve()`.
+`llm_budget_resume_artifact_inventory()` emits
+`libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional
+`runtime.llm_budget_report.resume_state.artifacts[]` records against an
+artifact root, including safe relative paths, existence, SHA-256 hashes, byte
+counts, per-record statuses, aggregate missing/mismatch/invalid counts, and a
+stable records hash. This verifies named resume evidence files when a report
+declares them; it is not provider-output replay.
+Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
 synchronous controller with zero queued/running proposals, evaluations,
 in-flight LLM calls, and pending archive admissions plus a compact

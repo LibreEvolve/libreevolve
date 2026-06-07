@@ -2005,6 +2005,28 @@ Primary evidence:
     before treating Borg-style scheduling reports as mission-critical
     AlphaEvolve-ready evidence.
 
+- [ ] Add Figure 6 scheduling-heuristic exhibit provenance and heatmap
+      artifacts.
+  - Spec evidence: AlphaEvolve Figure 6 presents the concrete Borg scheduling
+    heuristic `alpha_evolve_score(required, free)` with CPU/memory residual
+    terms and a rendered residual heatmap; Section 3.3.1 ties that heuristic to
+    historical simulator feedback, unseen recent workloads, deployment, and
+    about 0.7% fleet-wide resource recovery.
+  - Current evidence: systems report contracts and scheduling TODOs track
+    claim-calibrated metrics, ranking-only safety, and
+    interpretability/deployment evidence. No code/report schema records a
+    Figure 6 exhibit ID, exact heuristic source artifact/hash, residual input
+    definitions and units, heatmap grid/rendering parameters, visual artifact
+    paths/hashes, baseline production heuristic identity, or links from the
+    displayed exhibit to simulator, held-out, deployment, and claim-calibration
+    records.
+  - Required result: add report/inventory metadata for Figure 6-style systems
+    exhibits: stable exhibit ID, scheduling benchmark/candidate link, exact
+    heuristic code artifact and hash, residual-feature definitions, baseline
+    heuristic provenance, heatmap/JSON data plus rendered visual artifacts with
+    hashes, rendering parameters, held-out/deployment report links, and docs
+    that distinguish exhibit reproduction from generic scheduling readiness.
+
 - [ ] Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes a Pallas tiling
     heuristic for a Gemini matrix-multiplication kernel by minimizing actual

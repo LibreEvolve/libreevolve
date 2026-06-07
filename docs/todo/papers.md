@@ -2140,6 +2140,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence, and black-box-baseline comparison before claiming
     AlphaEvolve-comparable mission-critical scheduling readiness.
 
+- [ ] Track Figure 6 scheduling-heuristic exhibit provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 6 shows the concrete
+    Borg scheduling heuristic `alpha_evolve_score(required, free)` with
+    CPU/memory residual terms and a rendered residual heatmap. Section 3.3.1
+    connects that heuristic to historical simulator feedback, unseen recent
+    workload measurements, deployment, and about 0.7% fleet-wide compute
+    resource recovery.
+  - Current gap: paper-facing systems TODOs require claim-calibrated metrics,
+    ranking-only scheduling safety, and interpretability/deployment evidence,
+    but no evidence row or report schema maps a Figure 6 exhibit to exact
+    heuristic code, residual-feature definitions and units, heatmap data,
+    rendering parameters, visual artifact paths/hashes, baseline production
+    heuristic identity, simulator/held-out/deployment reports, or a
+    Section 3.3 claim-calibration record.
+  - Required result: add Figure 6-style exhibit metadata with a stable exhibit
+    ID, scheduling benchmark/candidate link, exact heuristic source artifact
+    and hash, residual grid/units, baseline heuristic provenance, heatmap data
+    and rendered visual artifacts with hashes, rendering parameters,
+    simulator/held-out/deployment report links, and documentation that
+    separates reproduced systems figures from generic scheduling readiness.
+
 - [ ] Record kernel-tiling shape-corpus evidence for Gemini/Pallas results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 says
     AlphaEvolve optimized Pallas matrix-multiplication tiling heuristics by

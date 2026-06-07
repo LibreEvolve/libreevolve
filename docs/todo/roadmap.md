@@ -1348,7 +1348,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     placeholder `hello_world` target, and neither the registry nor report
     validator requires Figure 8's matrix tensor-decomposition and
     kissing-number sphere-packing target families, per-target curve summaries,
-    or intra-target standard-deviation evidence over three independent seeds.
+    target-metric identity/direction/normalization, or intra-target
+    standard-deviation evidence over three independent seeds.
   - Required result: when runnable ablation harnesses, backend/seed/prompt/
     archive script entrypoints, component-assertion-to-config binding,
     progress-at-budget-fraction exports, or generated report bundles land,
@@ -1359,8 +1360,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     loss-function target scope, fixed tensor-search components, and report
     evidence before claiming parity with Figure 8. Also require ablation
     reports to identify the matrix and kissing-number target families and
-    validate mean/standard-deviation curve summaries against per-target
-    three-seed records before treating generic declared-target reports as
+    validate target-metric identity/direction/normalization plus
+    mean/standard-deviation curve summaries against per-target three-seed
+    records before treating generic declared-target reports as
     Figure 8-equivalent.
 
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last

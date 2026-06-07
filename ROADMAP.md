@@ -349,7 +349,8 @@ is not yet an AlphaEvolve reproduction.
 - Add repeatable benchmark scripts for backend, seed, prompt, and archive
   ablations.
 - Report benchmark progress at comparable compute-budget fractions, not only
-  final generation counts.
+  final generation counts, with explicit target-metric identity, direction,
+  normalization, and aggregation policy for paper-facing curves.
 
 ### 10. Operational maturity
 

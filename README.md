@@ -3089,9 +3089,12 @@ ablations, declared targets, exactly three seeds per variant/target, required
 equal-budget fractions, finite scores, consumed budget consistency, consistent
 budget unit/limit across each seed's fraction curve and across all
 variants/seeds for each target, passed component assertions, and hashed curve
-artifacts. It validates report shape only; it does not run ablation experiments
-or add accelerator/async-worker budget stops beyond the current live
-provider-token and configured-cost LLM budget surfaces.
+artifacts. It does not yet require Figure 8 target-family coverage or
+target-metric identity, higher-is-better direction, normalization, and
+aggregation metadata for the plotted y-axis. It validates report shape only;
+it does not run ablation experiments or add accelerator/async-worker budget
+stops beyond the current live provider-token and configured-cost LLM budget
+surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
 ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,

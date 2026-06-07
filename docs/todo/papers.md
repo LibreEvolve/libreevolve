@@ -392,10 +392,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence rather than treating generic single-file/diff/no-topology settings
     as equivalent. The remaining ablation and calibration gap is executing and
     emitting real reports from runnable variants over the Figure 8 matrix and
-    kissing-number target families, with curve summaries that expose per-target
-    and cross-target mean/standard-deviation evidence. The gap is not
-    validating declared result or feedback-calibration artifacts once a report
-    names them.
+    kissing-number target families, with curve summaries that expose
+    target-metric identity, higher-is-better direction, normalization policy,
+    and per-target and cross-target mean/standard-deviation evidence. The gap
+    is not validating declared result or feedback-calibration artifacts once a
+    report names them.
     The remaining provider cancellation gap is live cancellation/stop behavior,
     cross-run quarantine/resume behavior, and richer runtime artifact
     generation, not configured in-run role/backend quarantine observations or

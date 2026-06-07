@@ -558,7 +558,7 @@ Primary evidence:
     manifest-visible coverage validation of the current meta-prompt-tunable
     policy surface.
 
-- [ ] Persist full retrieval payload artifacts and learned ranking provenance.
+- [ ] Persist unbounded raw retrieval evidence and learned ranking provenance.
   - Spec evidence: AlphaEvolve-style prompt context can include relevant
     literature and external context; reproducible experiments need to know not
     only which compact snippets were injected but also how sources were ranked

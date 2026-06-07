@@ -818,6 +818,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     program-output indexes as part of that durable database surface, not merely
     prompt feedback or artifact excerpts.
 
+- [ ] Keep database-sampling roadmap wording scoped until exploration /
+      exploitation balance evidence exists.
+  - Spec evidence: AlphaEvolve's database balances exploration and exploitation
+    while maintaining diversity across the search space.
+  - Current evidence: `ROADMAP.md` can describe configurable `explore_ratio`,
+    mixed parent selection, explicit parent/inspiration strategies, MAP-Elites
+    cells, islands, metric/frontier sampling, lineage sampling, novelty
+    sampling, recency sampling, and bounded current-run resurfacing. It should
+    not imply that the current knobs are calibrated database-balance evidence
+    or that a run report can explain the improvement/diversity tradeoff.
+  - Required result: when sampling-balance reports land, update ROADMAP,
+    README, papers index, and code/paper TODO entries with per-run and
+    per-generation parent/inspiration decision counts, fallback and source-pool
+    provenance, selected-program repetition, island/cell/metric/lineage/
+    descriptor coverage, score-improvement versus diversity effects, and
+    equal-budget comparisons across exploit, explore, mixed, metric, frontier,
+    and lineage policies.
+
 - [ ] Keep database-memory roadmap wording scoped until duplicate-work policy
       lands.
   - Spec evidence: AlphaEvolve's program database is a memory of generated

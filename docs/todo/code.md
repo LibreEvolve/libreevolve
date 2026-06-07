@@ -1388,6 +1388,31 @@ Primary evidence:
     evolutionary evidence rather than only prompt text or stage-threshold
     checks.
 
+- [ ] Add exploration/exploitation sampling-balance reports for database
+  resurfacing.
+  - Spec evidence: AlphaEvolve Section 2.5 says the evolutionary database must
+    balance exploration and exploitation so the search keeps improving the best
+    programs while maintaining diversity across the search space.
+  - Current evidence: `Config.explore_ratio` defaults to `0.3`, `mixed`
+    parent selection chooses `explore` or `exploit` from the run-local RNG,
+    explicit parent strategies can choose `exploit`, `explore`, `metric`,
+    `frontier`, `lineage`, `novelty`, `recency`, `selection`, or `random`,
+    inspiration sampling has related strategy controls, and selected parent /
+    inspiration metadata is retained on generated candidates. MAP-Elites and
+    island sampling can surface best programs, occupied cells, metric leaders,
+    Pareto/frontier pools, lineage representatives, and descriptor/novelty
+    records. These controls prove configurable sampling paths exist, but they
+    do not prove the configured policy achieved an AlphaEvolve-style balance
+    in a run.
+  - Required result: add run/report artifacts that aggregate actual parent and
+    inspiration sampling decisions by strategy, fallback, source pool,
+    selected program, island/cell/metric/lineage/descriptor contribution,
+    score improvement, diversity coverage, repeated-selection rate, and budget
+    impact. Include validation and equal-budget comparison hooks so reports can
+    distinguish pure exploitation, pure exploration, default mixed sampling,
+    and metric/frontier/lineage variants before docs treat `explore_ratio` or
+    strategy metadata as calibrated database-balance evidence.
+
 - [ ] Add proposal scoring and semantic proposal-index retrieval beyond
   bounded hypothesis summaries.
   - Spec evidence: AlphaEvolve-style idea resurfacing should be able to judge

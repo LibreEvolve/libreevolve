@@ -1064,6 +1064,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluation results, or are intentionally re-evaluated as new stochastic
     samples with documented budget effects.
 
+- [ ] Track exploration/exploitation sampling-balance evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
+  - Requirement: AlphaEvolve's evolutionary database balances exploration and
+    exploitation, improving the best programs while maintaining enough
+    diversity to explore the search space.
+  - Partial status: LibreEvolve exposes `explore_ratio`, `mixed` parent
+    selection, explicit parent and inspiration strategies, MAP-Elites cells,
+    island pools, metric/frontier/lineage/novelty/recency sampling paths, and
+    selected parent/inspiration metadata in candidate history.
+  - Current gap: paper-facing reports do not aggregate actual sampling
+    decisions by explore/exploit branch, strategy fallback, source pool,
+    island/cell/metric/lineage/descriptor contribution, repeated-selection
+    rate, score improvement, diversity coverage, or budget impact. The paper
+    index therefore cannot distinguish configurable sampling controls from
+    measured AlphaEvolve-style balance under equal budgets.
+  - Required result: add manifest/report evidence and validators for
+    sampling-balance summaries, including per-run and per-generation decision
+    counts, selected-program provenance, diversity and exploitation metrics,
+    fallback accounting, and equal-budget comparisons of pure exploit, pure
+    explore, default mixed, and metric/frontier/lineage variants.
+
 - [ ] Record AlphaEvolve's automated-evaluator scope boundary.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 context, Related Work, and
     Discussion.

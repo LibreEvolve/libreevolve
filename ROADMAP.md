@@ -273,7 +273,8 @@ is not yet an AlphaEvolve reproduction.
 
 - Extend the bounded `libreevolve.plugins` entry-point registry toward richer
   package policy and direct custom-plugin schema/provenance beyond the current
-  entry-point distribution metadata and direct-instance signature-only policy.
+  entry-point distribution metadata and direct-instance signature-only policy
+  that explicitly excludes constructor values.
 - Broaden plugin configuration schemas beyond built-in scalar/path options and
   entry-point declared constructor schemas to cover direct custom constructor
   policy.

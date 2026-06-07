@@ -1529,6 +1529,26 @@ Primary evidence:
 
 ## Runtime, Reproducibility, and Safety
 
+- [ ] Extend direct custom plugin provenance beyond signature-only records.
+  - Spec evidence: AlphaEvolve-style experiments need reproducible extension
+    boundaries: a run should state which custom plugin code and configuration
+    influenced prompts, scores, artifacts, and lifecycle hooks.
+  - Current evidence: built-in plugin specs validate supported constructor
+    options before construction; entry-point plugin specs can capture
+    manifest-safe or declared-schema constructor options, configured
+    paper-inspiration labels, constructor signature shape, and distribution
+    name/version plus hash-only `RECORD`/`WHEEL` metadata when available.
+    Direct custom plugin instances record module/qualname/file hashes, exposed
+    version metadata, constructor signature shape, and
+    `libreevolve.direct_plugin_policy.v1`, which explicitly marks constructor
+    values as excluded and package scope as module identity/file hash/version
+    only.
+  - Required result: add a versioned direct custom plugin registry or
+    declaration path that can safely attribute constructor values/schemas,
+    package/distribution source, paper-inspiration scope, artifact ownership,
+    and replay/restore exclusions without introspecting arbitrary live object
+    state or leaking secrets.
+
 - [ ] Add release artifact and install-from-wheel verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be
     reproducible from the code and dependency environment that produced them;

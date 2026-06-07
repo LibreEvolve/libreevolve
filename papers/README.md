@@ -421,8 +421,9 @@ cleanup. Entry-point plugins now record configured paper-inspiration labels,
 manifest-safe or declared-schema constructor options, constructor signature
 shape, and distribution name/version plus hash-only RECORD/WHEEL metadata when
 available. Arbitrary direct-plugin constructor value capture, direct-plugin
-schema policy, and richer custom package-registry semantics remain open; direct
-custom plugin constructor signature shape is recorded without values.
+schema policy, versioned custom plugin registries, and richer custom package
+provenance remain open; direct custom plugin constructor signature shape is
+recorded without values.
 
 AlphaEvolve prompt-config provenance note: startup manifests retain
 prompt-bearing config through a redacted, bounded, hash-backed policy.

@@ -25,6 +25,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Existing Items That Need Tightening
 
+- [ ] Keep the multi-objective roadmap item scoped to primary archive policy
+      versus retained diagnostic overlays.
+  - Spec evidence: AlphaEvolve-style multi-objective search should make
+    tradeoff-aware retention and inspiration part of the durable optimization
+    policy, not only a diagnostic view.
+  - Current evidence: `ROADMAP.md` now distinguishes the current scalar primary
+    MAP-Elites grid plus bounded Pareto and metric-cell retained overlays from
+    the still-open Pareto/frontier primary archive replacement and durable
+    cross-run metric-specific optimization work. Code evidence includes
+    bounded `pareto_frontier_archive()` retention, `metric_cell_archive()`
+    overlays, persisted/restored `pareto_frontier_program_ids` and
+    `metric_cell_archives`, and policy validation that rejects primary Pareto
+    replacement overclaims.
+  - Required result: when Pareto/frontier replacement becomes the primary
+    archive policy, or durable cross-run metric-specific optimization lands,
+    update the roadmap, README, papers index, and code/paper TODO entries
+    together so they neither underclaim the retained overlays nor overclaim
+    AlphaEvolve-grade multi-objective optimization.
+
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

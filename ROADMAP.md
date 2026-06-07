@@ -101,8 +101,9 @@ is not yet an AlphaEvolve reproduction.
 
 - Extend the current documented hybrid, which averages normalized declared
   metrics for archive ranking, into a first-class multi-objective policy:
-  Pareto archive, configurable weighted composition, metric-specific elites,
-  or another tested policy.
+  Pareto/frontier primary archive replacement, durable cross-run
+  metric-specific optimization, or another tested policy beyond the current
+  scalar primary grid plus bounded Pareto and metric-cell retained overlays.
 - Extend the current configurable parent/inspiration sampling and run-local
   resurfacing queries beyond score, individual metric excellence, novelty,
   recency, lineage, feedback, and random/mixed policies to persisted

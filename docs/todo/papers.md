@@ -27,6 +27,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     treating LibreEvolve evaluator outputs as AlphaEvolve-comparable metric
     evidence.
 
+- [ ] Track candidate-embedded evaluator entrypoint parity.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
+  - Requirement: AlphaEvolve's example codebase contains an
+    `evaluate(eval_inputs) -> dict[str, float]` function that invokes the
+    evolved skeleton and returns the scores for the generated program.
+  - Partial status: LibreEvolve records structured results from problem-local
+    validators, validates direct evaluator entrypoint provenance, enforces
+    problem-local validator dependency policy, and can import candidate modules
+    from external validators.
+  - Current gap: paper-facing evidence does not show candidate-owned
+    `evaluate` functions, `eval_inputs` provenance, skeleton-to-evolved-block
+    invocation paths, or a clear distinction between embedded AlphaEvolve-style
+    evaluation and external `validate.py`-style problem validators.
+  - Required result: add report fields or runtime mode proving embedded
+    candidate evaluator entrypoints, eval-input datasets, callable isolation,
+    and score-field mapping before treating local validator execution as
+    AlphaEvolve Figure 3 evaluator parity.
+
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
   - Requirement: expensive evaluations can be parallelized, and the whole

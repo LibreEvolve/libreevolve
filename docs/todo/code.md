@@ -41,6 +41,24 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
+- [ ] Add candidate-embedded `evaluate(eval_inputs)` entrypoint support and
+      evidence.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 present a
+    user-provided `evaluate(eval_inputs) -> dict[str, float]` function inside
+    the codebase skeleton, with evolved blocks tied together so the evaluator
+    can invoke the candidate program directly.
+  - Current evidence: LibreEvolve runs problem-local validator entrypoints,
+    usually external `validate.py` files, and records direct evaluator
+    entrypoint provenance, problem-local dependency provenance, validator
+    boundary metadata, and candidate imports in local validators. This is useful
+    local validation, but it is not a first-class candidate-embedded evaluator
+    API.
+  - Required result: add a mode or report contract for candidate-owned
+    `evaluate(eval_inputs)` functions, eval-input provenance, skeleton-to-block
+    coupling, callable import/build isolation, and paper-facing evidence that
+    distinguishes embedded AlphaEvolve-style evaluation from external
+    problem-validator execution.
+
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem

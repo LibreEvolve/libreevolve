@@ -76,6 +76,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording neither underclaims current strict local
     evaluator validation nor overclaims AlphaEvolve-comparable metric evidence.
 
+- [ ] Keep evaluator-entrypoint roadmap wording scoped to external validators
+      until embedded `evaluate(eval_inputs)` support exists.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate
+    codebase with an `evaluate(eval_inputs) -> dict[str, float]` function that
+    invokes the evolved skeleton.
+  - Current evidence: `ROADMAP.md` can claim configured local validators,
+    staged evaluator entrypoints, direct evaluator path provenance, and
+    problem-local dependency policy. It should not imply that these external
+    validators are equivalent to a candidate-owned evaluator entrypoint.
+  - Required result: when embedded evaluator entrypoints land, update ROADMAP,
+    README, papers index, and code/paper TODOs with `evaluate` callable
+    provenance, eval-input dataset provenance, skeleton-to-block invocation
+    evidence, isolation/build policy, and score-field mapping.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

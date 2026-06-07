@@ -26,6 +26,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes the implemented LibreEvolve validity gate from
     AlphaEvolve-comparable scored scalar metrics.
 
+- [ ] Keep README evaluator-entrypoint wording scoped to external validators
+      until embedded `evaluate(eval_inputs)` evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show the codebase
+    skeleton exposing `evaluate(eval_inputs) -> dict[str, float]`, which invokes
+    the evolved blocks and returns scores for the generated program.
+  - Current evidence: README can describe local validators, configured stages,
+    direct evaluator entrypoint provenance, and candidate imports in
+    problem-local validators. It should not imply that external `validate.py`
+    execution is the same as a candidate-owned `evaluate` function wired into
+    the evolved skeleton.
+  - Required result: when embedded evaluator-entrypoint support or report
+    evidence lands, update README, ROADMAP, papers index, and code/paper TODOs
+    with `evaluate` callable provenance, eval-input datasets, skeleton/block
+    coupling, isolation policy, and score-field mapping.
+
 - [ ] Keep README candidate-language wording scoped to the Python-primary
   boundary record versus real language/build runners.
   - Spec evidence: AlphaEvolve tasks can define program artifacts and

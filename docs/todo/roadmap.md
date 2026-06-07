@@ -529,6 +529,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     index, and code/paper TODO entries together so they neither underclaim the
     current compatible restore bundle nor overclaim AlphaEvolve-style replay.
 
+- [ ] Keep workspace-resume follow-up wording scoped to export artifacts versus
+      resumable candidate state.
+  - Spec evidence: AlphaEvolve-style workspace/codebase resume should restore
+    enough candidate workspace state to continue search, not only materialize a
+    terminal best workspace for inspection or reuse outside the evolutionary
+    controller.
+  - Current evidence: `ROADMAP.md` lists workspace resume beyond current
+    `best_workspace/` export as a good first follow-up. README and code
+    evidence show the CLI writes `best.py` plus the complete
+    `best_workspace/` file set, including static sidecar metadata and tree hash
+    records, and final manifests record best-artifact export success/failure.
+    Separate archive restore surfaces can rehydrate accepted history and
+    per-island archive contents, but `best_workspace/` itself is an exported
+    terminal artifact, not a workspace-candidate resume engine with build
+    inputs, pending materialization state, evaluator artifacts, or continuation
+    semantics.
+  - Required result: when workspace-candidate resume, build/input restoration,
+    materialization-state replay, or continuation from exported workspace
+    artifacts lands, update the roadmap, README, papers index, and code/paper
+    TODO entries together so they neither underclaim current complete
+    `best_workspace/` export nor overclaim resumable AlphaEvolve-style
+    workspace state.
+
 - [ ] Keep environment-provenance roadmap wording scoped to bounded audit
   evidence versus replayable build/package/accelerator state.
   - Spec evidence: AlphaEvolve-scale experiments need environment evidence

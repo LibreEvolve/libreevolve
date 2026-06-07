@@ -469,6 +469,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README does not imply coefficient-domain validation is sufficient for
     AlphaEvolve-style complex-valued matrix result claims.
 
+- [ ] Keep README matrix rank wording scoped until tensor-rank and recursive
+      applicability caveats exist.
+  - Spec evidence: AlphaEvolve Section 3.1 frames matrix improvements as
+    low-rank tensor decompositions, and footnote 3 says some algorithms using
+    fewer than 49 multiplications do not correspond to matrix-multiplication
+    tensor decompositions and cannot be applied recursively to larger matrix
+    multiplication.
+  - Current evidence: README describes Appendix A target/rank/outcome
+    validation, coefficient-domain/exactness fields, scalar-field gaps, and
+    checked Strassen artifacts. It does not document algorithm-kind metadata,
+    tensor-decomposition certificate scope, recursive applicability, or
+    footnote-level caveats that separate tensor-rank evidence from
+    non-recursive multiplication algorithms.
+  - Required result: when matrix reports or companion metadata capture
+    tensor-rank applicability and recursive-use caveats, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    qualifies rank comparisons and does not imply every fewer-multiplication
+    algorithm is a recursive tensor-decomposition baseline.
+
 - [ ] Keep README certification and systems-result wording scoped to report
   contracts versus executed independent evidence.
   - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local

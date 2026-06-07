@@ -1512,6 +1512,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap text distinguishes coefficient-domain validation from
     AlphaEvolve-style scalar-field result provenance.
 
+- [ ] Keep matrix roadmap wording scoped until tensor-rank and recursive-use
+      caveats exist.
+  - Spec evidence: AlphaEvolve Section 3.1 reports matrix multiplication
+    improvements as low-rank tensor decompositions, and footnote 3 says some
+    fewer-than-49 multiplication algorithms do not correspond to decompositions
+    of the matrix multiplication tensor and cannot be applied recursively to
+    larger matrix multiplication.
+  - Current evidence: roadmap/README/paper-index status points to the Appendix
+    A target registry, matrix result reports, coefficient-domain/exactness
+    fields, scalar-field follow-ups, and checked Strassen artifacts. It does
+    not require algorithm-kind metadata, tensor-decomposition certificate
+    scope, recursive applicability, or footnote/source-note provenance for
+    rank comparisons against non-tensor or non-recursive algorithms.
+  - Required result: when matrix reports or companion metadata capture
+    tensor-rank applicability and recursive-use caveats, update ROADMAP,
+    README, papers index, and code/paper TODO entries together so roadmap text
+    distinguishes tensor-decomposition rank evidence from broader
+    multiplication-count claims that are not AlphaEvolve-comparable baselines.
+
 - [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
       expected artifacts.
   - Spec evidence: AlphaEvolve-style benchmark evidence needs repeatable

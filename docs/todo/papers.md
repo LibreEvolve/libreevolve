@@ -2014,6 +2014,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     verification scope before claiming AlphaEvolve-comparable complex-valued
     matrix results.
 
+- [ ] Track matrix tensor-rank applicability and recursive-use caveats.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 reports matrix
+    results as low-rank tensor decompositions and footnote 3 says that some
+    algorithms use fewer than 49 multiplications but do not correspond to
+    decompositions of the matrix multiplication tensor and cannot be applied
+    recursively to larger matrix multiplication.
+  - Current gap: the paper-facing Appendix A registry/status and matrix result
+    contract store target ids, dimensions, rank values, outcomes, exactness,
+    coefficient domain, and artifacts, but not whether an algorithm is a
+    tensor decomposition versus another multiplication algorithm, whether the
+    construction is recursively applicable, whether the certificate proves the
+    target tensor identity, or whether docs should qualify comparisons against
+    non-tensor or finite-field-only prior algorithms.
+  - Required result: add paper-facing metadata for matrix rank claims:
+    algorithm kind, tensor-decomposition certificate scope, recursive
+    applicability, source note/page or footnote locator, and docs validation
+    that rank/outcome wording does not treat non-recursive multiplication
+    algorithms as comparable tensor-rank baselines.
+
 - [ ] Generate independent certification evidence for paper-level result
   claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

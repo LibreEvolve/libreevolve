@@ -1930,6 +1930,28 @@ Primary evidence:
     tying each claim to the target tensor before treating matrix reports as
     faithful to AlphaEvolve's complex-valued Appendix A results.
 
+- [ ] Add matrix tensor-rank applicability and recursive-use caveats.
+  - Spec evidence: AlphaEvolve Section 3.1 frames matrix multiplication results
+    as low-rank tensor decompositions, contrasts the characteristic-0 rank-48
+    `4x4` tensor-decomposition result with finite-field-only prior work, and
+    footnote 3 says some algorithms use fewer than 49 multiplications but do
+    not correspond to matrix-multiplication tensor decompositions and cannot be
+    applied recursively to larger matrix multiplication.
+  - Current evidence: the Appendix A matrix registry and
+    `libreevolve.matrix_result_report.v1` store target ids, dimensions,
+    best/AlphaEvolve ranks, outcomes, exactness, coefficient domains, and
+    artifacts. They do not require an algorithm-kind field distinguishing
+    tensor decompositions from other multiplication algorithms, a recursive
+    applicability flag, evidence that the certificate proves tensor equality
+    rather than only functional multiplication for one size, or report/docs
+    caveats for rank comparisons where non-tensor algorithms are not
+    comparable to recursive tensor-rank claims.
+  - Required result: extend matrix reports or companion metadata with
+    algorithm kind, tensor-decomposition certificate scope, recursive
+    applicability, field/characteristic caveats, and source-note provenance so
+    Appendix A rank claims remain faithful to the paper's distinction between
+    tensor-rank improvements and non-recursive multiplication algorithms.
+
 - [ ] Connect real systems fixtures to held-out and reference-correctness
   evidence.
   - Spec evidence: AlphaEvolve's engineering applications do not rely only on

@@ -539,6 +539,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     rows, replays final admitted migration placements, and compares that
     audit-only partial event view with `archive_contents`. The validators
     reject replay-engine overclaims.
+    `validate_archive_event_replay_audit()` now validates the audit result,
+    including schema/status, audit-only and no-restore-engine flags, event and
+    placement count consistency, retained mismatch shape, mismatch retention
+    limits, verified/absent status invariants, and required audit-boundary
+    limitations.
   - Current gap: cursor and archive-content restore are implemented, but
     migration placement rows are reconciled only as audit evidence rather than
     replayed as an ordered restore engine. Completed manifests now include

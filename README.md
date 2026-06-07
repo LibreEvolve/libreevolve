@@ -1199,6 +1199,10 @@ which validates and replays the final admitted migration placement rows enough
 to compare them with `archive_contents`. This is audit evidence only:
 normal archive admissions are not reconstructed from `archive_events.jsonl`,
 and `archive_contents` remains the restore source.
+`validate_archive_event_replay_audit()` checks that audit result for
+schema/status, audit-only/no-restore-engine flags, count consistency, retained
+mismatch shape and limits, status invariants, and required audit-boundary
+limitations.
 `load_runtime_archive_state_snapshot()` can validate it from `manifest.json`
 before resume use. `IslandModel.restore_cursor_state()` can apply only the
 compact cursor/counter portion, while `IslandModel.restore_archive_state()` can

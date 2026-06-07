@@ -38,6 +38,7 @@ from libreevolve.core.database import (
     ProgramDatabase,
     archive_event_replay_audit,
     load_archive_restore_bundle,
+    validate_archive_event_replay_audit,
     validate_seed_source_record,
 )
 from libreevolve.core.diff import (
@@ -4101,9 +4102,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
         "archive_state": archive_state,
-        "archive_event_replay_audit": archive_event_replay_audit(
-            run_dir / "archive_events.jsonl",
-            archive_state,
+        "archive_event_replay_audit": validate_archive_event_replay_audit(
+            archive_event_replay_audit(
+                run_dir / "archive_events.jsonl",
+                archive_state,
+            )
         ),
         "controller_state": _runtime_controller_state(run_dir, budget),
     }

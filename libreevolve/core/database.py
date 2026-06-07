@@ -1020,6 +1020,228 @@ def audit_archive_event_records(
     }
 
 
+def validate_archive_event_replay_audit(audit: object) -> dict:
+    """Validate archive-event replay audit summaries before manifest use."""
+    if not isinstance(audit, dict):
+        raise ArchiveEventRestoreError("archive event replay audit must be an object")
+    required = {
+        "schema",
+        "status",
+        "audit_only",
+        "replay_engine_supported",
+        "event_count",
+        "admitted_event_count",
+        "skipped_event_count",
+        "final_replayed_placement_count",
+        "matched_placement_count",
+        "superseded_or_missing_count",
+        "mismatches",
+        "mismatch_retention_limit",
+        "limitations",
+    }
+    missing = required - set(audit)
+    if missing:
+        raise ArchiveEventRestoreError(
+            f"archive event replay audit missing fields: {sorted(missing)}"
+        )
+    unsupported = set(audit) - required
+    if unsupported:
+        raise ArchiveEventRestoreError(
+            f"archive event replay audit has unsupported fields: {sorted(unsupported)}"
+        )
+    if audit["schema"] != "libreevolve.archive_event_replay_audit.v1":
+        raise ArchiveEventRestoreError("archive event replay audit schema is unsupported")
+    allowed_statuses = {
+        "archive_events_absent",
+        "archive_contents_missing",
+        "no_migration_placements",
+        "verified_against_archive_contents",
+        "superseded_or_missing_migration_placements",
+    }
+    status = audit["status"]
+    if status not in allowed_statuses:
+        raise ArchiveEventRestoreError("archive event replay audit status is unsupported")
+    if audit["audit_only"] is not True:
+        raise ArchiveEventRestoreError("archive event replay audit must be audit-only")
+    if audit["replay_engine_supported"] is not False:
+        raise ArchiveEventRestoreError(
+            "archive event replay audit must not claim restore-engine support"
+        )
+    counts = {
+        field: _validate_snapshot_non_negative_int(audit[field], field)
+        for field in (
+            "event_count",
+            "admitted_event_count",
+            "skipped_event_count",
+            "final_replayed_placement_count",
+            "matched_placement_count",
+            "superseded_or_missing_count",
+            "mismatch_retention_limit",
+        )
+    }
+    if counts["event_count"] != (
+        counts["admitted_event_count"] + counts["skipped_event_count"]
+    ):
+        raise ArchiveEventRestoreError(
+            "archive event replay audit event counts are inconsistent"
+        )
+    if counts["final_replayed_placement_count"] != (
+        counts["matched_placement_count"] + counts["superseded_or_missing_count"]
+    ):
+        raise ArchiveEventRestoreError(
+            "archive event replay audit placement counts are inconsistent"
+        )
+    mismatches = _validate_archive_event_audit_mismatches(
+        audit["mismatches"],
+        counts["mismatch_retention_limit"],
+    )
+    if len(mismatches) > counts["superseded_or_missing_count"]:
+        raise ArchiveEventRestoreError(
+            "archive event replay audit retained mismatches exceed mismatch count"
+        )
+    if status == "verified_against_archive_contents" and (
+        counts["superseded_or_missing_count"] != 0 or mismatches
+    ):
+        raise ArchiveEventRestoreError(
+            "verified archive event replay audits must not retain mismatches"
+        )
+    if status == "archive_events_absent" and any(
+        counts[field] != 0
+        for field in (
+            "event_count",
+            "admitted_event_count",
+            "skipped_event_count",
+            "final_replayed_placement_count",
+            "matched_placement_count",
+            "superseded_or_missing_count",
+        )
+    ):
+        raise ArchiveEventRestoreError(
+            "absent archive event replay audits must have zero counts"
+        )
+    limitations = audit["limitations"]
+    required_limitations = set(_archive_event_replay_audit_limitations())
+    if not isinstance(limitations, list) or not required_limitations <= set(limitations):
+        raise ArchiveEventRestoreError(
+            "archive event replay audit limitations must state audit boundaries"
+        )
+    return {
+        "schema": audit["schema"],
+        "status": status,
+        "audit_only": True,
+        "replay_engine_supported": False,
+        "event_count": counts["event_count"],
+        "admitted_event_count": counts["admitted_event_count"],
+        "skipped_event_count": counts["skipped_event_count"],
+        "final_replayed_placement_count": counts["final_replayed_placement_count"],
+        "matched_placement_count": counts["matched_placement_count"],
+        "superseded_or_missing_count": counts["superseded_or_missing_count"],
+        "mismatches": mismatches,
+        "mismatch_retention_limit": counts["mismatch_retention_limit"],
+        "limitations": list(limitations),
+    }
+
+
+def _validate_archive_event_audit_mismatches(
+    value: object,
+    retention_limit: int,
+) -> list[dict]:
+    if not isinstance(value, list):
+        raise ArchiveEventRestoreError(
+            "archive event replay audit mismatches must be a list"
+        )
+    if len(value) > retention_limit:
+        raise ArchiveEventRestoreError(
+            "archive event replay audit mismatches exceed retention limit"
+        )
+    restored = []
+    for index, item in enumerate(value):
+        if not isinstance(item, dict):
+            raise ArchiveEventRestoreError(
+                "archive event replay audit mismatches entries must be objects"
+            )
+        required = {
+            "island_id",
+            "cell",
+            "expected_program_id",
+            "actual_program_id",
+            "migration_sequence",
+            "reason",
+        }
+        missing = required - set(item)
+        if missing:
+            raise ArchiveEventRestoreError(
+                "archive event replay audit mismatches"
+                f"[{index}] missing fields: {sorted(missing)}"
+            )
+        unsupported = set(item) - required
+        if unsupported:
+            raise ArchiveEventRestoreError(
+                "archive event replay audit mismatches"
+                f"[{index}] has unsupported fields: {sorted(unsupported)}"
+            )
+        island_id = _validate_archive_audit_non_negative_int(
+            item["island_id"], f"mismatches[{index}].island_id"
+        )
+        cell = _validate_archive_audit_mismatch_cell(item["cell"], index)
+        try:
+            validate_program_identity(item["expected_program_id"])
+            actual_program_id = item["actual_program_id"]
+            if actual_program_id is not None:
+                validate_program_identity(actual_program_id)
+        except ValueError as exc:
+            raise ArchiveEventRestoreError(
+                f"archive event replay audit mismatches[{index}] has invalid program id: {exc}"
+            ) from exc
+        migration_sequence = _validate_archive_audit_positive_int(
+            item["migration_sequence"],
+            f"mismatches[{index}].migration_sequence",
+        )
+        if item["reason"] != "migration_placement_not_current_in_archive_contents":
+            raise ArchiveEventRestoreError(
+                "archive event replay audit mismatch reason is unsupported"
+            )
+        restored.append(
+            {
+                "island_id": island_id,
+                "cell": cell,
+                "expected_program_id": item["expected_program_id"],
+                "actual_program_id": item["actual_program_id"],
+                "migration_sequence": migration_sequence,
+                "reason": item["reason"],
+            }
+        )
+    return restored
+
+
+def _validate_archive_audit_mismatch_cell(value: object, index: int) -> list[int]:
+    if not isinstance(value, list) or len(value) != 3:
+        raise ArchiveEventRestoreError(
+            f"archive event replay audit mismatches[{index}].cell must be a 3-item list"
+        )
+    return [
+        _validate_archive_audit_non_negative_int(
+            coordinate,
+            f"mismatches[{index}].cell[{coordinate_index}]",
+        )
+        for coordinate_index, coordinate in enumerate(value)
+    ]
+
+
+def _validate_archive_audit_non_negative_int(value: object, field: str) -> int:
+    try:
+        return _validate_snapshot_non_negative_int(value, field)
+    except ArchiveStateRestoreError as exc:
+        raise ArchiveEventRestoreError(str(exc)) from exc
+
+
+def _validate_archive_audit_positive_int(value: object, field: str) -> int:
+    try:
+        return _validate_snapshot_positive_int(value, field)
+    except ArchiveStateRestoreError as exc:
+        raise ArchiveEventRestoreError(str(exc)) from exc
+
+
 def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
     """Load and validate runtime.history.archive_state from manifest.json."""
     try:

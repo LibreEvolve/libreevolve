@@ -6,6 +6,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible validation for archive-event replay audits.
+  - Paper evidence: AlphaEvolve-style island-model resume needs migration
+    placement evidence that can be audited while clearly separating final
+    archive-content restore from unsupported ordered migration replay.
+  - Status: `validate_archive_event_replay_audit()` now validates
+    `runtime.history.archive_event_replay_audit` summaries with schema
+    `libreevolve.archive_event_replay_audit.v1`, including schema/status,
+    audit-only and no-restore-engine flags, event and placement count
+    consistency, retained mismatch shape, mismatch retention limits,
+    verified/absent status invariants, and required audit-boundary
+    limitations.
+  - Remaining paper gap: this makes audit evidence checkable, but migration
+    placement rows are still not a full restore engine and controller
+    pending-work replay remains open.
+  - Verification: focused database tests cover verified, superseded, and
+    absent audit summaries plus restore-engine overclaims, count
+    inconsistencies, and malformed retained mismatch records.
+
 - [x] Add paper-visible validation for multi-objective history diagnostics.
   - Paper evidence: AlphaEvolve optimizes multiple user-provided scores and
     needs reproducible evidence for which programs excel under each declared

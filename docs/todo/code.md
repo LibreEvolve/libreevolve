@@ -809,6 +809,11 @@ Primary evidence:
     `archive_events.jsonl`, replays the final admitted migration placement per
     target island/cell, and compares that audit-only partial event view against
     `archive_contents`, reporting verified or superseded/missing placements.
+    `validate_archive_event_replay_audit()` now validates that audit result
+    before manifest use, including schema/status, audit-only and
+    no-restore-engine flags, event and placement count consistency, retained
+    mismatch shape, mismatch retention limits, verified/absent status
+    invariants, and required audit-boundary limitations.
     Remaining gap: `archive_events.jsonl` is still not applied as a full
     migration restore engine.
   - Required result: implement an ordered `archive_events.jsonl` replay engine

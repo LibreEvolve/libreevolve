@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Validate archive-event replay audit summaries.
+  - Spec evidence: AlphaEvolve-style resumed searches need migration event
+    replay evidence that is checkable without overstating audit-only
+    reconciliation as a full archive restore engine.
+  - Status: `validate_archive_event_replay_audit()` now validates
+    `libreevolve.archive_event_replay_audit.v1` summaries for schema/status,
+    audit-only and no-restore-engine flags, event and placement count
+    consistency, retained mismatch shape, mismatch retention limits,
+    verified/absent status invariants, and required audit-boundary
+    limitations. It returns a defensive normalized audit record and rejects
+    replay-engine overclaims.
+  - Remaining gap: this validates migration replay audit evidence only;
+    ordered migration rows still are not applied as a full archive restore
+    engine, and controller pending work remains outside archive restore.
+  - Verification: focused database tests cover valid verified, superseded, and
+    absent audit summaries plus restore-engine overclaims, inconsistent event
+    and placement counts, invalid retained mismatch program ids, and malformed
+    mismatch cells.
+
 - [x] Validate multi-objective runtime history diagnostics.
   - Spec evidence: AlphaEvolve-style multi-score work needs auditable evidence
     for declared metric vectors, Pareto/frontier diagnostics, and metric

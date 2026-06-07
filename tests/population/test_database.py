@@ -27,6 +27,7 @@ from libreevolve.core.database import (
     load_failure_history_records,
     load_runtime_archive_state_snapshot,
     _program_from_history_record,
+    validate_archive_event_replay_audit,
     validate_archive_state_snapshot,
     validate_run_directory_path,
 )
@@ -5308,6 +5309,7 @@ def test_archive_event_replay_audit_verifies_current_migration_placements(tmp_pa
     assert audit["matched_placement_count"] == 2
     assert audit["superseded_or_missing_count"] == 0
     assert audit["mismatches"] == []
+    assert validate_archive_event_replay_audit(audit) == audit
 
 
 def test_archive_event_replay_audit_reports_superseded_migration_placement():
@@ -5332,6 +5334,7 @@ def test_archive_event_replay_audit_reports_superseded_migration_placement():
             "reason": "migration_placement_not_current_in_archive_contents",
         }
     ]
+    assert validate_archive_event_replay_audit(audit) == audit
 
 
 def test_archive_event_replay_audit_reports_absent_stream(tmp_path):
@@ -5348,6 +5351,74 @@ def test_archive_event_replay_audit_reports_absent_stream(tmp_path):
         "superseded_non_migration_cell_replacements_report_as_mismatches",
         "archive_contents_snapshot_remains_restore_source",
     ]
+    assert validate_archive_event_replay_audit(audit) == audit
+
+
+def test_validate_archive_event_replay_audit_rejects_restore_overclaim():
+    audit = audit_archive_event_records(
+        [_archive_event_row("p1")],
+        _archive_state_snapshot_with_contents(
+            island1_cells=[
+                {"cell": [0, 1, 2], "program_id": "p1", "selection_score": 0.5},
+            ],
+        ),
+    )
+    audit["audit_only"] = False
+    audit["replay_engine_supported"] = True
+
+    with pytest.raises(ArchiveEventRestoreError, match="audit-only"):
+        validate_archive_event_replay_audit(audit)
+
+    audit["audit_only"] = True
+    with pytest.raises(ArchiveEventRestoreError, match="restore-engine"):
+        validate_archive_event_replay_audit(audit)
+
+
+def test_validate_archive_event_replay_audit_rejects_count_mismatch():
+    audit = audit_archive_event_records(
+        [_archive_event_row("p1"), _archive_event_row("p2", admitted=False, cell=None)],
+        _archive_state_snapshot_with_contents(
+            island1_cells=[
+                {"cell": [0, 1, 2], "program_id": "p1", "selection_score": 0.5},
+            ],
+        ),
+    )
+    audit["event_count"] = 99
+
+    with pytest.raises(ArchiveEventRestoreError, match="event counts"):
+        validate_archive_event_replay_audit(audit)
+
+    audit["event_count"] = 2
+    audit["final_replayed_placement_count"] = 99
+    with pytest.raises(ArchiveEventRestoreError, match="placement counts"):
+        validate_archive_event_replay_audit(audit)
+
+
+def test_validate_archive_event_replay_audit_rejects_malformed_mismatch():
+    audit = audit_archive_event_records(
+        [_archive_event_row("p1")],
+        _archive_state_snapshot_with_contents(
+            island1_cells=[
+                {"cell": [0, 1, 2], "program_id": "replacement", "selection_score": 0.9},
+            ],
+        ),
+    )
+    audit["mismatches"][0]["actual_program_id"] = "../escape"
+
+    with pytest.raises(ArchiveEventRestoreError, match="program id"):
+        validate_archive_event_replay_audit(audit)
+
+    audit = audit_archive_event_records(
+        [_archive_event_row("p1")],
+        _archive_state_snapshot_with_contents(
+            island1_cells=[
+                {"cell": [0, 1, 2], "program_id": "replacement", "selection_score": 0.9},
+            ],
+        ),
+    )
+    audit["mismatches"][0]["cell"] = [0, -1, 2]
+    with pytest.raises(ArchiveEventRestoreError, match=r"cell\[1\]"):
+        validate_archive_event_replay_audit(audit)
 
 
 def test_archive_event_replay_audit_rejects_admitted_event_without_cell():

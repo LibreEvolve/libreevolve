@@ -1324,6 +1324,11 @@ target island/cell, and compares that partial event-derived view with
 placements, verified placements, and superseded or missing placements. The
 audit is not a restore engine because normal archive admissions and controller
 pending work are not reconstructed from migration rows.
+`validate_archive_event_replay_audit()` checks that audit result before
+manifest use, including schema/status, audit-only and no-restore-engine flags,
+event and placement count consistency, retained mismatch shape, retained
+mismatch limits, verified/absent status invariants, and the required audit
+boundary limitations.
 The descriptor model explicitly records dynamic TF-IDF diversity references
 and the no-rebin policy
 `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`;

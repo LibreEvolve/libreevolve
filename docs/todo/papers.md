@@ -101,9 +101,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `provider_failure_policy` with retry/fallback decisions and explicit
     ensemble-layer non-quarantine/non-penalty markers, and strict ledger replay
     now derives `provider_failure_policy_summary` for audit-only role/category/
-    decision evidence. Remaining budget/runtime gaps are live
-    hard cancellation handles, timeout-driven stop enforcement beyond audit
-    observations and mutation failure-history logging, accelerator/worker budget enforcement,
+    decision evidence. Ensemble-deadline timeout rows now also include a
+    replay-validated `libreevolve.provider_cancellation_record.v1` with the
+    role, backend, call id, timeout seconds, retry/fallback/telemetry budget
+    action, and explicit `unsupported_daemon_worker_may_continue` hard-cancel
+    gap. Remaining budget/runtime gaps are live hard cancellation handles,
+    timeout-driven stop enforcement beyond audit observations, timeout call
+    records, and mutation failure-history logging, accelerator/worker budget enforcement,
     live provider pricing capture, and one-command restoration of replayable
     provider-attempt/token/cost/latency controller events.
   - Required result: unify retry accounting across provider adapters and the

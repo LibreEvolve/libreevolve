@@ -10187,3 +10187,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused provider capability-policy tests cover valid static
     records, JSON-file loading, live-lookup overclaims, malformed records, and
     missing records.
+
+- [x] Add paper-visible provider timeout cancellation records.
+  - Paper evidence: long-running AlphaEvolve-style experiments should make LLM
+    timeout handling auditable at the call-record level, including whether the
+    controller retried, fell back, or only retained telemetry.
+  - Status: failed LLM call rows from ensemble-level timeout deadlines now
+    include replay-validated `libreevolve.provider_cancellation_record.v1`
+    evidence with role/backend/call-id linkage, timeout seconds,
+    retry/fallback/telemetry budget action, and the explicit hard-cancel
+    unsupported boundary.
+  - Remaining paper gap: live provider SDK hard cancellation and
+    timeout-driven stop enforcement remain unimplemented.
+  - Verification: focused ensemble tests cover valid timeout cancellation
+    records and replay rejection for malformed cancellation evidence.

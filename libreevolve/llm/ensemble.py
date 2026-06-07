@@ -290,6 +290,12 @@ class LLMEnsemble:
                                 will_fallback=will_fallback,
                                 state=failure_policy_state,
                             ),
+                            "cancellation_record": _provider_cancellation_record(
+                                record,
+                                exc,
+                                will_retry=will_retry,
+                                will_fallback=will_fallback,
+                            ),
                             "cost_estimate": cost_estimate,
                             "cost_estimate_status": _provider_cost_estimate_status_record(
                                 record["backend_metadata"],
@@ -908,6 +914,7 @@ class LLMEnsemble:
             "provider_status_code": None,
             "provider_response_error": None,
             "provider_failure_policy": None,
+            "cancellation_record": None,
             "retry_attempt": retry_attempt,
             "fallback_attempt": fallback_attempt,
             "attempt_index": attempt_index,
@@ -1278,6 +1285,11 @@ def _validate_replayed_call_record(
                 "Malformed llm_calls.jsonl at line "
                 f"{line_number}: ok call provider_failure_policy must be null"
             )
+        if record.get("cancellation_record") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call cancellation_record must be null"
+            )
         if record.get("error_retention") is not None:
             raise LLMCallLedgerError(
                 "Malformed llm_calls.jsonl at line "
@@ -1303,6 +1315,11 @@ def _validate_replayed_call_record(
         )
         _validate_provider_failure_policy_record(
             record.get("provider_failure_policy"),
+            line_number,
+            record,
+        )
+        _validate_provider_cancellation_record(
+            record.get("cancellation_record"),
             line_number,
             record,
         )
@@ -1787,6 +1804,122 @@ def _validate_provider_failure_policy_record(
         raise LLMCallLedgerError(
             "Malformed llm_calls.jsonl at line "
             f"{line_number}: provider_failure_policy.remaining_gap is unsupported"
+        )
+
+
+def _validate_provider_cancellation_record(
+    value: object,
+    line_number: int,
+    record: dict,
+) -> None:
+    if value is None:
+        return
+    if not isinstance(value, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record must be an object or null"
+        )
+    required = {
+        "schema",
+        "scope",
+        "role",
+        "backend_idx",
+        "call_id",
+        "cancellation_kind",
+        "timeout_sec",
+        "status",
+        "budget_action",
+        "hard_cancel_ready",
+        "in_flight_cancellation",
+        "remaining_gap",
+    }
+    missing = sorted(required - set(value))
+    if missing:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record missing fields: {missing}"
+        )
+    unsupported = sorted(set(value) - required)
+    if unsupported:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record has unsupported fields: {unsupported}"
+        )
+    if value["schema"] != "libreevolve.provider_cancellation_record.v1":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.schema is unsupported"
+        )
+    if value["scope"] != "ensemble_call_timeout":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.scope is unsupported"
+        )
+    if value["role"] != record.get("role"):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.role is inconsistent"
+        )
+    if value["backend_idx"] != record.get("backend_idx"):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.backend_idx is inconsistent"
+        )
+    if value["call_id"] != record.get("id"):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.call_id is inconsistent"
+        )
+    if value["cancellation_kind"] != "ensemble_wait_deadline":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.cancellation_kind is unsupported"
+        )
+    timeout_sec = value["timeout_sec"]
+    if (
+        isinstance(timeout_sec, bool)
+        or not isinstance(timeout_sec, (int, float))
+        or not math.isfinite(float(timeout_sec))
+        or float(timeout_sec) <= 0
+    ):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.timeout_sec is invalid"
+        )
+    if record.get("provider_failure_category") != "timeout":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record requires timeout failure category"
+        )
+    if value["status"] != "deadline_exceeded":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.status is unsupported"
+        )
+    if value["budget_action"] not in {"retry", "fallback", "telemetry_only"}:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.budget_action is unsupported"
+        )
+    if not isinstance(value["hard_cancel_ready"], bool):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.hard_cancel_ready is invalid"
+        )
+    if value["hard_cancel_ready"] is not False:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.hard_cancel_ready is unsupported"
+        )
+    if value["in_flight_cancellation"] != "unsupported_daemon_worker_may_continue":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.in_flight_cancellation is unsupported"
+        )
+    if value["remaining_gap"] != "provider_sdk_hard_cancellation_not_implemented":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: cancellation_record.remaining_gap is unsupported"
         )
 
 
@@ -2528,6 +2661,37 @@ def _provider_failure_policy_record(
             "backend_quarantined": state["backend_quarantined"],
         })
     return record
+
+
+def _provider_cancellation_record(
+    record: dict,
+    exc: Exception,
+    *,
+    will_retry: bool,
+    will_fallback: bool,
+) -> dict | None:
+    if not isinstance(exc, ProviderCallTimeoutError):
+        return None
+    if will_retry:
+        budget_action = "retry"
+    elif will_fallback:
+        budget_action = "fallback"
+    else:
+        budget_action = "telemetry_only"
+    return {
+        "schema": "libreevolve.provider_cancellation_record.v1",
+        "scope": "ensemble_call_timeout",
+        "role": record["role"],
+        "backend_idx": record["backend_idx"],
+        "call_id": record["id"],
+        "cancellation_kind": "ensemble_wait_deadline",
+        "timeout_sec": exc.timeout_sec,
+        "status": "deadline_exceeded",
+        "budget_action": budget_action,
+        "hard_cancel_ready": False,
+        "in_flight_cancellation": "unsupported_daemon_worker_may_continue",
+        "remaining_gap": "provider_sdk_hard_cancellation_not_implemented",
+    }
 
 
 def _provider_status_code(exc: Exception) -> int | None:

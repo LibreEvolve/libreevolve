@@ -2242,6 +2242,31 @@ def test_load_llm_call_ledger_validates_call_and_reward_rows(tmp_path):
             "ok call provider_failure_category must be null",
         ),
         (
+            lambda rows: rows[0].update(
+                {
+                    "cancellation_record": {
+                        "schema": "libreevolve.provider_cancellation_record.v1",
+                        "scope": "ensemble_call_timeout",
+                        "role": "mutation",
+                        "backend_idx": 0,
+                        "call_id": rows[0]["id"],
+                        "cancellation_kind": "ensemble_wait_deadline",
+                        "timeout_sec": 0.1,
+                        "status": "deadline_exceeded",
+                        "budget_action": "telemetry_only",
+                        "hard_cancel_ready": False,
+                        "in_flight_cancellation": (
+                            "unsupported_daemon_worker_may_continue"
+                        ),
+                        "remaining_gap": (
+                            "provider_sdk_hard_cancellation_not_implemented"
+                        ),
+                    }
+                }
+            ),
+            "ok call cancellation_record must be null",
+        ),
+        (
             lambda rows: rows[0].update({"provider_status_code": 429}),
             "ok call provider_status_code must be null",
         ),
@@ -2317,6 +2342,70 @@ def test_load_llm_call_ledger_validates_provider_failure_policy(tmp_path):
             "provider_output_replay_and_hard_cancellation_not_implemented"
         ),
     }
+
+
+def test_load_llm_call_ledger_validates_timeout_cancellation_record(tmp_path):
+    records = []
+
+    class SlowBackend:
+        name = "slow"
+        api_mode = None
+
+        def generate(self, prompt, **kwargs):
+            time.sleep(0.05)
+            return "late"
+
+    ens = LLMEnsemble([SlowBackend()], call_timeout_sec=0.001)
+    ens.set_call_record_sink(records.append)
+
+    with pytest.raises(ProviderCallTimeoutError):
+        ens.generate("prompt text", role="feedback:judge")
+
+    ledger = tmp_path / "llm_calls.jsonl"
+    _write_llm_call_ledger(ledger, records)
+
+    replay = load_llm_call_ledger(ledger, backend_count=1)
+    call = replay["calls"][records[0]["id"]]
+
+    assert call["cancellation_record"] == {
+        "schema": "libreevolve.provider_cancellation_record.v1",
+        "scope": "ensemble_call_timeout",
+        "role": "feedback:judge",
+        "backend_idx": 0,
+        "call_id": records[0]["id"],
+        "cancellation_kind": "ensemble_wait_deadline",
+        "timeout_sec": 0.001,
+        "status": "deadline_exceeded",
+        "budget_action": "telemetry_only",
+        "hard_cancel_ready": False,
+        "in_flight_cancellation": "unsupported_daemon_worker_may_continue",
+        "remaining_gap": "provider_sdk_hard_cancellation_not_implemented",
+    }
+
+
+def test_load_llm_call_ledger_rejects_malformed_timeout_cancellation_record(tmp_path):
+    records = []
+
+    class SlowBackend:
+        name = "slow"
+        api_mode = None
+
+        def generate(self, prompt, **kwargs):
+            time.sleep(0.05)
+            return "late"
+
+    ens = LLMEnsemble([SlowBackend()], call_timeout_sec=0.001)
+    ens.set_call_record_sink(records.append)
+
+    with pytest.raises(ProviderCallTimeoutError):
+        ens.generate("prompt text", role="mutation")
+    records[0]["cancellation_record"]["call_id"] = "wrong-call-id"
+
+    ledger = tmp_path / "llm_calls.jsonl"
+    _write_llm_call_ledger(ledger, records)
+
+    with pytest.raises(LLMCallLedgerError, match="cancellation_record.call_id"):
+        load_llm_call_ledger(ledger, backend_count=1)
 
 
 def test_load_llm_call_ledger_rejects_duplicate_json_names(tmp_path):
@@ -3781,6 +3870,20 @@ def test_generate_times_out_slow_backend_with_structured_telemetry():
     assert record["error_type"] == "ProviderCallTimeoutError"
     assert record["provider_failure_category"] == "timeout"
     assert record["call_timeout_sec"] == 0.001
+    assert record["cancellation_record"] == {
+        "schema": "libreevolve.provider_cancellation_record.v1",
+        "scope": "ensemble_call_timeout",
+        "role": "mutation",
+        "backend_idx": 0,
+        "call_id": record["id"],
+        "cancellation_kind": "ensemble_wait_deadline",
+        "timeout_sec": 0.001,
+        "status": "deadline_exceeded",
+        "budget_action": "telemetry_only",
+        "hard_cancel_ready": False,
+        "in_flight_cancellation": "unsupported_daemon_worker_may_continue",
+        "remaining_gap": "provider_sdk_hard_cancellation_not_implemented",
+    }
     assert record["counts_after"] == [1]
     _assert_role_accounting(
         ens.scheduler_state["role_accounting"]["mutation"],
@@ -3809,6 +3912,7 @@ def test_generate_can_fallback_after_ensemble_call_timeout():
     assert [record["status"] for record in ens.call_history] == ["error", "ok"]
     assert ens.call_history[0]["provider_failure_category"] == "timeout"
     assert ens.call_history[0]["will_fallback"] is True
+    assert ens.call_history[0]["cancellation_record"]["budget_action"] == "fallback"
     assert ens.call_history[1]["fallback_attempt"] == 1
 
 

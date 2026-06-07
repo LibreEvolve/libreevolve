@@ -15315,3 +15315,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     account-availability, provider-default, or live-pricing discovery.
   - Verification: focused provider capability policy tests cover valid
     count/hash evidence plus mismatched record count/hash records.
+
+- [x] Add replay-validated provider timeout cancellation records.
+  - Spec evidence: AlphaEvolve-style long-running provider calls need
+    attributable timeout/cancellation evidence so stalled calls do not vanish
+    into generic provider errors.
+  - Status: ensemble-level `llm_call_timeout_sec` failures now attach
+    `libreevolve.provider_cancellation_record.v1` to the failed LLM call row,
+    recording role, backend index, call id, timeout seconds,
+    retry/fallback/telemetry budget action, `hard_cancel_ready: false`, and the
+    explicit daemon-worker hard-cancel gap.
+  - Remaining gap: this is structured timeout evidence for local ensemble
+    deadlines; it does not add live provider SDK cancellation handles or a
+    runtime timeout-driven stop policy.
+  - Verification: focused ensemble tests cover generated timeout records,
+    fallback budget actions, replay validation, and malformed cancellation
+    record rejection.

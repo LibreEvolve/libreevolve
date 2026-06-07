@@ -2670,6 +2670,12 @@ policy's declared timeout, cancellation, budget-stop, and quarantine artifacts
 under a safe artifact root. Each artifact must resolve under that root, exist
 as a file, and match its reported SHA-256 hash and byte count. This inventory
 is evidence-file verification, not live in-flight cancellation enforcement.
+LLM call rows produced by ensemble-level `llm_call_timeout_sec` deadlines also
+include `cancellation_record`, a
+`libreevolve.provider_cancellation_record.v1` entry with role/backend/call-id
+linkage, timeout seconds, retry/fallback/telemetry budget action, and an
+explicit `unsupported_daemon_worker_may_continue` hard-cancel gap. Strict
+`llm_calls.jsonl` replay validates this record when present.
 Bundled adapters use configured `llm_prompt_roles` entries to add structured
 role instructions before the rendered user prompt: OpenAI receives
 system/developer messages or input items, Anthropic receives a composed

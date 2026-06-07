@@ -1193,8 +1193,11 @@ Primary evidence:
     the remaining wall-clock runtime budget before each attempt. Exhausted
     mutation timeouts now produce generated failure-history rows with retained
     timeout call telemetry and can continue later generations when budget
-    remains. There is still no live hard provider cancellation token or
-    timeout-driven stop policy.
+    remains. Ensemble-deadline timeout rows now also include a replay-validated
+    `libreevolve.provider_cancellation_record.v1` with the role, backend, call
+    id, timeout seconds, retry/fallback/telemetry budget action, and explicit
+    `unsupported_daemon_worker_may_continue` hard-cancel gap. There is still
+    no live hard provider cancellation token or timeout-driven stop policy.
     `libreevolve.provider_cancellation_policy.v1` now
     defines and tests a policy/report contract for provider request timeouts,
     ensemble wait deadlines, runtime deadlines, hard cancellation rules,
@@ -1228,8 +1231,9 @@ Primary evidence:
     exhaustion produces role-specific structured timeout/cancellation artifacts
     beyond the currently covered mutation timeout failure-history and policy
     quarantine-evidence paths. The remaining gap is live cancellation/stop
-    behavior and richer runtime artifact generation, not verifying declared
-    cancellation evidence files once a policy names them.
+    behavior and runtime-budget exhaustion cancellation artifacts, not
+    ensemble-deadline timeout call records or verifying declared cancellation
+    evidence files once a policy names them.
 
 ## Runtime, Reproducibility, and Safety
 

@@ -1425,6 +1425,34 @@ Primary evidence:
     ensemble-deadline timeout call records or verifying declared cancellation
     evidence files once a policy names them.
 
+- [ ] Extend critique reviewer pools beyond synchronous first/last-valid
+  selection.
+  - Spec evidence: AlphaEvolve-style generation can use multiple model calls
+    and feedback channels under explicit budget policy; reviewer-style critique
+    should contribute calibrated, attributable signal rather than only a
+    sequential replacement filter.
+  - Current evidence: `critique_reviewers` accepts up to eight manifest-safe
+    reviewer specs with optional prompts and role labels, and
+    `critique_aggregation_policy` selects `first_valid` or `last_valid`
+    revised mutations. The loop runs a synchronous bounded reviewer pool,
+    persists `metadata.critique.reviewer_pool` with schema
+    `libreevolve.critique_reviewer_pool.v1`, reviewer roles, backend indices,
+    parser status, valid-revision counts, aggregation policy, and selected
+    reviewer provenance. Existing `llm_role_backend_indices`, role accounting,
+    and timeout/cancellation policy records can route and account for exact
+    reviewer roles such as `critique:correctness`.
+  - Remaining gap: reviewer calls are still sequential, replacement-only, and
+    selected by first/last valid mutation rather than calibrated reviewer score
+    or benchmarked reviewer reliability. Reviewer pools do not yet overlap
+    asynchronously, do not produce calibrated reviewer-score reports, do not
+    isolate provider-failure policy per reviewer beyond the current role label,
+    and do not emit richer reviewer-specific timeout/failure artifacts.
+  - Required result: add async or parallel reviewer execution where appropriate,
+    calibrated reviewer scoring and ablation reports for reviewer pools,
+    stronger per-reviewer provider isolation and budget policy, and
+    reviewer-specific timeout/failure artifacts before treating critique
+    reviewer pools as AlphaEvolve-grade critique orchestration.
+
 ## Runtime, Reproducibility, and Safety
 
 - [ ] Add release artifact and install-from-wheel verification.

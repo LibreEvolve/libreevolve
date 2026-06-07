@@ -252,8 +252,9 @@ is not yet an AlphaEvolve reproduction.
   behavior across LLM roles, and persisted role-specific timeout artifacts
   beyond the currently covered mutation timeout failure-history path.
 - Add explicit breadth/depth/cost/latency scheduling tests.
-- Extend critique/revision beyond a synchronous self-review call toward
-  configurable reviewer pools.
+- Extend current synchronous configurable critique reviewer pools toward async
+  reviewer overlap, calibrated reviewer scoring, stronger provider isolation,
+  and runtime artifacts for reviewer-specific timeout/failure behavior.
 
 ### 8. Plugin extensibility
 

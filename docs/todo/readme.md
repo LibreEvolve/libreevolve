@@ -247,6 +247,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     underclaims current proposal metadata capture nor overclaims
     AlphaEvolve-grade idea memory.
 
+- [ ] Keep README meta-prompt context-policy wording scoped to validated
+  current fields.
+  - Spec evidence: AlphaEvolve-style meta-prompt evolution should improve
+    prompt instructions and context policy, not only mutate whole prompt text
+    or a fixed subset of locally known rendering controls.
+  - Current evidence: README now documents prompt-program selection, scoring,
+    lineage, prompt-history replay, rejected mutation diagnostics, bounded
+    meta-prompt evidence, accepted JSON meta-prompt responses with optional
+    `context_policy`, and validated `libreevolve.prompt_context_policy.v1`
+    controls for optional channels, section priorities, mutation-instruction
+    variants, parent-code selection/filtering/ranking/caps/truncation,
+    proposal metadata enablement, feedback subsection selection/order/caps,
+    inspiration sampling controls, and related diagnostics. It also documents
+    `validate_meta_prompt_context_policy_capabilities()` checking the
+    meta-prompt-visible capability map against the current structured policy
+    fields.
+  - Required result: when prompt-program policy can control retrieval or
+    summarization behavior, learned/semantic context selection, arbitrary
+    instruction channels, broader per-role retention, or other prompt surfaces
+    beyond the currently validated field set, update README, ROADMAP, papers
+    index, and code/paper TODO entries together so README neither underclaims
+    current structured policy mutation nor overclaims full AlphaEvolve-grade
+    prompt evolution.
+
 - [ ] Keep README MAP-Elites descriptor claims scoped to insertion-time
   TF-IDF coordinates.
   - Spec evidence: AlphaEvolve-grade quality-diversity search should use

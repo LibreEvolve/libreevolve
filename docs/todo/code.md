@@ -1580,8 +1580,9 @@ Primary evidence:
     training, orchestration, or interfaces are actually implemented.
   - Current evidence: `CausalPlugin` exposes fixed token-pattern
     outcome-factor guidance and explicitly says it is not the CausalEvolve
-    causal scratchpad. `TTTRLPlugin` writes clipped-reward JSONL export rows
-    and explicitly does not train an RL model. `ModularPlugin` emits static
+    causal scratchpad. `TTTRLPlugin` now scopes its docstring to
+    clipped-reward training-data export and explicitly does not implement
+    online GRPO/RL training. `ModularPlugin` emits static
     prompt guidance and metadata with `operation_executed: false` and
     `interface_enforced: false`. The paper index marks GigaEvo, CodeEvolve,
     and MadEvolve as inspiration/background rows rather than implemented

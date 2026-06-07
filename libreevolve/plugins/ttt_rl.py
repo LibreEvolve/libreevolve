@@ -17,12 +17,11 @@ DEFAULT_MAX_PAYLOAD_TOTAL_CHARS = 40_000
 
 
 class TTTRLPlugin(PluginBase):
-    """ThetaEvolve-inspired GRPO training-data export.
+    """ThetaEvolve-inspired clipped-reward training-data export.
 
-    This accumulates examples only; it does not train an RL model.
+    This accumulates examples only; it does not implement online GRPO/RL training.
     Source: arXiv 2511.23473. Hooks: on_evaluated, on_generation_end.
     Writes (prompt, response, reward) triples to grpo_data.jsonl.
-    Override _maybe_train() to trigger real GRPO fine-tuning.
     """
     def __init__(
         self,

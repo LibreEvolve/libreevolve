@@ -197,6 +197,22 @@ Primary evidence:
     update README, ROADMAP, and paper TODO wording so duplicate template text is
     not mistaken for implemented prompt-program deduplication.
 
+- [ ] Calibrate meta-prompt scoring beyond absolute/improvement child rewards.
+  - Spec evidence: AlphaEvolve-style prompt evolution should justify prompt
+    policy changes with calibrated reward signals and ablations that attribute
+    improvements to prompt-program lineages rather than only latest child
+    fitness.
+  - Current evidence: `PromptDatabase` supports `absolute` and `improvement`
+    reward modes, finite strictly increasing reward bounds, normalized prompt
+    reward metadata, reward-policy compatibility checks during history replay,
+    and UCB-style prompt-arm selection over mean normalized rewards. The loop
+    records prompt rewards from child score or score-parent delta and includes a
+    bounded prompt-performance evidence block in meta-prompt mutation requests.
+  - Required result: add calibrated prompt reward signals, prompt-lineage
+    ablation/report artifacts, and tests that distinguish prompt-policy effects
+    from parent/program/evaluator noise before claiming AlphaEvolve-grade
+    meta-prompt scoring.
+
 - [ ] Extend structured prompt context policy beyond validated current fields.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
     not just swapping one complete prompt string for another.

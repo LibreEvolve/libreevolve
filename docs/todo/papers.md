@@ -1198,6 +1198,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifest-visible validation of the current meta-prompt-tunable context
     policy surface.
 
+- [ ] Calibrate meta-prompt rewards and add prompt-lineage ablation evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.6, and 4.
+  - Requirement: prompt-improvement claims should be backed by reward signals
+    and ablation evidence that separate prompt-program lineage effects from
+    candidate, evaluator, model, and stochastic search noise.
+  - Current evidence: prompt programs have deterministic ids, lineage, usage
+    counts, reward sums, normalized mean rewards, `absolute` and `improvement`
+    child-score reward modes, reward-policy compatibility checks during
+    history replay, and UCB-style prompt-arm selection. Meta-prompt mutation
+    requests include bounded prompt-performance evidence with reward policy,
+    selected prompt statistics, latest candidate outcome, prompt-arm summaries,
+    and recent failure summaries.
+  - Required result: add calibrated prompt-specific reward signals,
+    prompt-lineage ablation/report artifacts, and tests showing prompt-policy
+    attribution across comparable runs before claiming AlphaEvolve-grade
+    meta-prompt scoring or prompt-improvement evidence.
+
 ## Local Paper Corpus Issues
 
 - [ ] Harden benchmark implementations beyond smoke-example fidelity.

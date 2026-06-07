@@ -407,6 +407,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     together so README neither underclaims current template validation nor
     overclaims AlphaEvolve-grade prompt-policy management.
 
+- [ ] Keep README meta-prompt scoring wording scoped to absolute/improvement
+  reward modes and UCB-style prompt-arm selection.
+  - Spec evidence: AlphaEvolve-style prompt evolution needs calibrated reward
+    signals and ablation evidence for prompt-program lineages, not only direct
+    child fitness or immediate score improvement.
+  - Current evidence: README documents prompt-program selection, scoring,
+    lineage, reward bounds/modes, normalized prompt reward metadata,
+    reward-policy-compatible history replay, bounded prompt-performance
+    evidence in meta-prompt requests, and UCB-style prompt-arm selection. Code
+    currently supports `absolute` and `improvement` prompt reward modes rather
+    than calibrated prompt-specific reward models or lineage ablation reports.
+  - Required result: when calibrated meta-prompt rewards,
+    prompt-lineage ablation reporting, or stronger prompt-policy attribution
+    lands, update README, ROADMAP, papers index, and code/paper TODO entries
+    together so README neither underclaims current prompt reward accounting nor
+    overclaims AlphaEvolve-grade prompt evolution scoring.
+
 - [ ] Keep README MAP-Elites descriptor claims scoped to insertion-time
   TF-IDF coordinates.
   - Spec evidence: AlphaEvolve-grade quality-diversity search should use

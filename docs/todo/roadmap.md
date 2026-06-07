@@ -265,6 +265,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they neither underclaim current validation nor imply
     implemented prompt-program deduplication.
 
+- [ ] Keep meta-prompt scoring roadmap wording scoped to current child-score
+  rewards and prompt-arm UCB selection.
+  - Spec evidence: AlphaEvolve-style meta-prompt evolution should have
+    calibrated reward signals and ablation evidence that can attribute outcomes
+    to prompt-program lineages.
+  - Current evidence: `ROADMAP.md` already says the current state is
+    absolute/improvement child score reward modes plus UCB-style prompt-arm
+    selection. README and code evidence show finite reward bounds, normalized
+    prompt reward metadata, reward-policy-compatible history replay, and
+    bounded prompt-performance evidence for meta-prompt calls, but no calibrated
+    prompt reward model or prompt-lineage ablation report.
+  - Required result: when calibrated meta-prompt reward signals,
+    prompt-lineage ablation reports, or stronger prompt-policy attribution
+    land, update the roadmap, README, papers index, and code/paper TODO entries
+    together so the roadmap neither underclaims current prompt scoring nor
+    overclaims AlphaEvolve-grade meta-prompt reward calibration.
+
 - [ ] Keep MAP-Elites descriptor roadmap wording scoped to insertion-time
   TF-IDF coordinates versus stable learned descriptors.
   - Spec evidence: AlphaEvolve-style quality-diversity search needs

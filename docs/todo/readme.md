@@ -619,6 +619,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
     benchmark hardening.
 
+- [ ] Keep README paper-source wording scoped until companion Colab artifacts
+      are tracked.
+  - Spec evidence: AlphaEvolve footnote 2 and Table 2 point readers to the
+    accompanying `google-deepmind/alphaevolve_results` Colab notebook for
+    discovered algorithms, mathematical results, and shown matrix
+    decompositions.
+  - Current evidence: README describes the local paper cache as PDF-only:
+    `papers/README.md` plus CSV/JSON download manifests with canonical PDF
+    byte counts and SHA-256 digests. It also describes future local
+    Colab-equivalent construction exports and matrix notebooks, but it does
+    not document the actual AlphaEvolve companion Colab as a tracked source
+    artifact with URL/ref, digest, cache/readability checks, or claim mapping.
+  - Required result: when companion-artifact manifest support lands, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README distinguishes PDF-source validation, external AlphaEvolve Colab
+    source evidence, and LibreEvolve-generated result notebooks/exports.
+
 - [ ] Keep README constructive-math wording scoped to static context/artifacts
       versus AlphaEvolve-style incumbent handoff.
   - Spec evidence: AlphaEvolve Section 3.2 evolved heuristic search programs

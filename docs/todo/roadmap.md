@@ -1321,6 +1321,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
+- [ ] Keep paper-source roadmap wording scoped until companion Colab artifacts
+      are tracked.
+  - Spec evidence: AlphaEvolve footnote 2 and Table 2 cite an accompanying
+    `google-deepmind/alphaevolve_results` Colab notebook for discovered
+    algorithms, mathematical results, and matrix decompositions.
+  - Current evidence: roadmap and README text accurately describe the local
+    paper manifest as PDF-oriented, and TODOs already require local
+    Colab-equivalent Appendix A/B exports once LibreEvolve produces them. They
+    do not require a companion source-artifact manifest for the actual
+    AlphaEvolve notebook: canonical URL/repository/ref, digest/byte metadata,
+    notebook readability, cache policy, or claim-to-cell mapping.
+  - Required result: when companion paper-artifact tracking lands, update
+    ROADMAP, README, papers index, and code/paper TODO entries together so
+    roadmap wording distinguishes PDF manifest validation, external
+    AlphaEvolve companion-source verification, and generated LibreEvolve
+    result-export artifacts.
+
 - [ ] Keep Appendix A matrix-suite roadmap wording scoped to target identities
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

@@ -1537,6 +1537,29 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
+- [ ] Add companion Colab/source-artifact tracking for AlphaEvolve results.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
+    algorithms and new mathematical results are available in the accompanying
+    `google-deepmind/alphaevolve_results` Colab notebook, and Table 2 points
+    to that Colab for the matrix decompositions shown in the paper.
+  - Current evidence: `papers/download_manifest.*` and
+    `libreevolve.tools.paper_manifest` track PDF sources, byte counts,
+    SHA-256 digests, README status-table consistency, optional local PDF
+    readability, and benchmark registries. The manifest does not track
+    companion notebooks or public result repositories. Existing matrix and
+    Appendix B TODOs ask for local Colab-equivalent construction exports, but
+    they do not preserve the actual AlphaEvolve companion notebook URL,
+    retrieval status, content digest, version/commit, notebook-cell-to-claim
+    mapping, or source-artifact checks that tie local Appendix A/B evidence
+    back to the paper's public result artifact.
+  - Required result: extend paper/source-artifact manifests and validation for
+    non-PDF companion result artifacts: canonical URL/repository/ref,
+    retrieval policy, SHA-256/byte metadata, notebook readability checks,
+    claim-to-cell or claim-to-artifact mapping for matrix and Appendix B
+    results, and README/papers-index wording that distinguishes external
+    AlphaEvolve source evidence from LibreEvolve's own generated
+    Colab-equivalent exports.
+
 - [ ] Connect benchmark-grade fixtures to hardening and scope reports.
   - Spec evidence: AlphaEvolve's matrix-multiplication work searches tensor
     decompositions, measures rank over target families and randomized seeds,

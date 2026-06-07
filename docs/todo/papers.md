@@ -1808,6 +1808,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     not verifying declared report artifacts, validating the checked bundle
     wrapper, or emitting one checked Strassen baseline once those files exist.
 
+- [ ] Track AlphaEvolve companion Colab as paper source evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
+    discovered algorithms and new mathematical results are available at the
+    `google-deepmind/alphaevolve_results` `mathematical_results.ipynb` Colab,
+    and Table 2 says the shown matrix decompositions can be found in the
+    accompanying Google Colab.
+  - Current evidence: the committed paper manifest tracks PDF rows only. The
+    paper index and TODOs require local Appendix A/B result artifacts,
+    notebooks, verifier code, and Colab-equivalent exports once LibreEvolve
+    emits them, but they do not preserve the actual AlphaEvolve companion
+    notebook as a versioned source artifact. There is no URL/ref/digest record,
+    notebook readability check, cell-to-claim map, or distinction between
+    external source evidence from DeepMind's notebook and future LibreEvolve
+    generated notebook/export artifacts.
+  - Required result: add paper-facing companion-artifact provenance for the
+    AlphaEvolve Colab: canonical notebook URL and repository/ref, retrieval and
+    integrity metadata, optional local cache validation, claim-to-cell or
+    claim-to-artifact links for Appendix A matrix and Appendix B constructive
+    results, and docs wording that separates source-artifact verification from
+    LibreEvolve reproducing those results.
+
 - [ ] Track Appendix A matrix target-suite curation provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the 54
     matrix sizes were chosen roughly from dimensions with 2 <= m,n <= 5 and a

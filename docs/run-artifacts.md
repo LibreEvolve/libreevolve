@@ -677,8 +677,11 @@ provider request timeout, ensemble wait-deadline, and runtime-deadline
 semantics. The default runtime record has `hard_cancel_ready: false`: it
 documents retry/fallback/stop actions and artifact locations for timeout
 telemetry, with role-scoped timeout rules for `mutation`, `critique`,
-`feedback:*`, and `meta_prompt`, but it is not an SDK cancellation token or a
-timeout-driven quarantine policy. Completed runtime and aborted runtime records include
+`feedback:*`, and `meta_prompt`. When
+`llm_role_failure_quarantine_after` configures matching exact roles, those
+timeout rules also declare `quarantine` actions and `quarantine_record`
+artifact evidence. The record is still not an SDK cancellation token or a
+timeout-specific stop policy. Completed runtime and aborted runtime records include
 `runtime.wall_clock` with
 `schema: "utc_run_timestamps_v1"`, UTC `started_at`, `updated_at`,
 `finished_at`, and status-specific `completed_at` or `aborted_at` fields.
@@ -2369,9 +2372,11 @@ locations. Rules that require artifacts declare matching `artifact_kinds`, and
 policy validation rejects required rule artifacts whose kinds are absent from
 the artifact list. Provider-request and ensemble-deadline rules are scoped to
 the loop's current LLM role surfaces: `mutation`, `critique`, `feedback:*`,
-and `meta_prompt`. The record deliberately reports `hard_cancel_ready: false`
-until provider SDK cancellation tokens and timeout-driven quarantine/stop
-policies are implemented.
+and `meta_prompt`. Rules for scopes with configured
+`llm_role_failure_quarantine_after` thresholds also declare quarantine action
+and `quarantine_record` evidence. The record deliberately reports
+`hard_cancel_ready: false` until provider SDK cancellation tokens and
+timeout-driven stop policies are implemented.
 Bundled adapters use configured `llm_prompt_roles` entries to add structured
 role instructions before the rendered user prompt: OpenAI receives
 system/developer messages or input items, Anthropic receives a composed

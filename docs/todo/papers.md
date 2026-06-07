@@ -78,15 +78,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     hard-cancel readiness gated on `cancellation_record` artifact evidence, and
     hashed cancellation artifacts. Runtime manifests now scope provider-timeout
     and ensemble-deadline rules to `mutation`, `critique`, `feedback:*`, and
-    `meta_prompt`. Exhausted mutation timeout failures now write generated
-    failure-history rows with retained timeout telemetry and can continue later
-    generations when budget remains. Failed LLM call rows now record
+    `meta_prompt`. Rules for scopes with configured
+    `llm_role_failure_quarantine_after` now declare timeout-driven
+    `quarantine` actions and `quarantine_record` evidence, matching the
+    ensemble's role/backend failure-threshold quarantine state. Exhausted
+    mutation timeout failures now write generated failure-history rows with
+    retained timeout telemetry and can continue later generations when budget
+    remains. Failed LLM call rows now record
     `provider_failure_policy` with retry/fallback decisions and explicit
     ensemble-layer non-quarantine/non-penalty markers, and strict ledger replay
     now derives `provider_failure_policy_summary` for audit-only role/category/
     decision evidence. Remaining budget/runtime gaps are live
-    hard cancellation tokens, timeout-driven stop/quarantine enforcement beyond
-    mutation failure-history logging, accelerator/worker budget enforcement,
+    hard cancellation tokens, timeout-driven stop enforcement beyond mutation
+    failure-history logging, accelerator/worker budget enforcement,
     live provider pricing capture, and one-command restoration of replayable
     provider-attempt/token/cost/latency controller events.
   - Required result: unify retry accounting across provider adapters and the

@@ -1030,13 +1030,15 @@ use their configured failure policy. Ensemble telemetry keeps the exception
 type separately, stores redacted/truncated error text, and records a normalized
 `provider_failure_category` such as `provider_response`, `timeout`,
 `rate_limit`, `transport`, provider client/server status categories, or
-`unknown`; role-specific quarantine or penalty policies are separate future
-work. Built-in backend `timeout_sec` values bound provider SDK requests where
-the SDK exposes that setting, and `llm_call_timeout_sec` bounds the ensemble
-attempt wait for built-in or custom backends. Remaining runtime budget is not
-propagated as a provider cancellation token, but deadline-aware `LLMEnsemble`
-calls are clamped to the remaining `max_runtime_seconds` budget before each
-attempt starts.
+`unknown`. `llm_role_failure_quarantine_after` can quarantine a backend for a
+configured exact role after exhausted consecutive failures, including timeout
+failures, and runtime cancellation-policy manifests expose those quarantine
+actions for timeout rules when configured. Built-in backend `timeout_sec`
+values bound provider SDK requests where the SDK exposes that setting, and
+`llm_call_timeout_sec` bounds the ensemble attempt wait for built-in or custom
+backends. Remaining runtime budget is not propagated as a provider cancellation
+token, but deadline-aware `LLMEnsemble` calls are clamped to the remaining
+`max_runtime_seconds` budget before each attempt starts.
 The ensemble-layer `llm_max_retries` value is capped at `10`, and
 `llm_max_call_attempts` caps total original/retry/fallback attempts for each
 logical ensemble call. Separate adapter-internal `provider_max_retries` caps

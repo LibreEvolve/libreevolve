@@ -933,6 +933,7 @@ def test_completed_runtime_records_valid_provider_cancellation_policy():
     assert policy["hard_cancel_ready"] is False
     assert policy["configured_limits"]["llm_call_timeout_sec"] == 0.25
     assert policy["configured_limits"]["max_runtime_seconds"] == 10.0
+    assert policy["configured_limits"]["llm_role_failure_quarantine_after"] == {}
     assert policy["role_scope"] == {
         "policy": "libreevolve.llm_timeout_role_scope.v1",
         "roles": ["mutation", "critique", "feedback:*", "meta_prompt"],
@@ -963,6 +964,62 @@ def test_completed_runtime_records_valid_provider_cancellation_policy():
     assert all(rule["artifact_required"] is True for rule in policy["rules"])
     assert {artifact["kind"] for artifact in policy["artifacts"]} == {
         "timeout_log",
+        "quarantine_record",
+        "budget_stop_record",
+    }
+
+
+def test_provider_cancellation_policy_records_configured_timeout_quarantine():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        _problem(),
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            llm_call_timeout_sec=0.25,
+            llm_role_failure_quarantine_after={
+                "feedback:grader": 2,
+                "mutation": 1,
+            },
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    record = manifest["runtime"]["provider_cancellation_policy"]
+    policy = record["policy"]
+
+    assert record["status"] == "valid"
+    assert validate_provider_cancellation_policy(policy).ok is True
+    assert policy["configured_limits"]["llm_role_failure_quarantine_after"] == {
+        "feedback:grader": 2,
+        "mutation": 1,
+    }
+    timeout_rules = {
+        (rule["kind"], rule["role"]): rule
+        for rule in policy["rules"]
+        if rule["kind"] in {"provider_request_timeout", "ensemble_wait_deadline"}
+    }
+    for kind in ("provider_request_timeout", "ensemble_wait_deadline"):
+        mutation_rule = timeout_rules[(kind, "mutation")]
+        feedback_rule = timeout_rules[(kind, "feedback:*")]
+        critique_rule = timeout_rules[(kind, "critique")]
+        assert mutation_rule["budget_actions"] == ["retry", "fallback", "quarantine"]
+        assert mutation_rule["artifact_kinds"] == [
+            "timeout_log",
+            "quarantine_record",
+        ]
+        assert feedback_rule["budget_actions"] == ["retry", "fallback", "quarantine"]
+        assert feedback_rule["artifact_kinds"] == [
+            "timeout_log",
+            "quarantine_record",
+        ]
+        assert critique_rule["budget_actions"] == ["retry", "fallback"]
+        assert critique_rule["artifact_kinds"] == ["timeout_log"]
+    assert {artifact["kind"] for artifact in policy["artifacts"]} == {
+        "timeout_log",
+        "quarantine_record",
         "budget_stop_record",
     }
 

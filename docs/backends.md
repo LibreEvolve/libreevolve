@@ -167,8 +167,12 @@ Current behavior:
   attempts are recorded as `ProviderCallTimeoutError` with
   `provider_failure_category: timeout` and can use the normal retry/fallback
   path. Deadline-aware `LLMEnsemble` calls are also clamped to the remaining
-  `max_runtime_seconds` budget before each attempt starts. There is still no
-  hard provider cancellation token or role-specific timeout/quarantine policy.
+  `max_runtime_seconds` budget before each attempt starts. When
+  `llm_role_failure_quarantine_after` is configured for a role, exhausted
+  timeout failures also participate in that role/backend quarantine policy and
+  runtime cancellation-policy manifests declare the matching quarantine action
+  and evidence artifact. There is still no hard provider cancellation token or
+  timeout-specific stop policy.
 - empty, whitespace-only, non-text, oversized, refusal, or tool-call-only
   backend response payloads are recorded as failed ensemble calls with
   `provider_response_error` categories, normalized

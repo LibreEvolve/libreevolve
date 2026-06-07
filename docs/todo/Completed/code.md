@@ -14371,3 +14371,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     hypotheses, artifacts, retrieval context, and novelty.
   - Verification: focused database and loop tests cover direct score-index
     content and final manifest persistence.
+
+- [x] Declare configured timeout quarantine in runtime cancellation policy.
+  - Spec evidence: AlphaEvolve-style long-running LLM controllers need timeout
+    handling to be attributable to explicit retry, fallback, quarantine, and
+    stop policies.
+  - Status: `runtime.provider_cancellation_policy` timeout rules now include
+    `quarantine` actions and `quarantine_record` evidence when
+    `llm_role_failure_quarantine_after` configures a matching role. The policy
+    also records the configured quarantine thresholds under
+    `configured_limits`.
+  - Remaining gap: this is policy/evidence alignment for the existing
+    role/backend failure-threshold quarantine path, not live provider SDK
+    cancellation or timeout-specific stop/quarantine artifacts for pending
+    async controller work.
+  - Verification: focused loop tests cover valid default cancellation-policy
+    records and configured timeout-quarantine rules.

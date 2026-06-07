@@ -9590,3 +9590,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     decisions.
   - Verification: focused database and loop tests cover the score index API and
     manifest persistence.
+
+- [x] Make timeout quarantine policy paper-visible in manifests.
+  - Paper evidence: AlphaEvolve-style budgeted LLM systems need timeout and
+    failure handling to be auditable by role and budget action.
+  - Status: runtime cancellation-policy manifests now declare timeout
+    `quarantine` actions and `quarantine_record` evidence for role scopes with
+    configured `llm_role_failure_quarantine_after` thresholds.
+  - Remaining paper gap: this remains manifest evidence for the existing
+    failure-threshold quarantine mechanism, not hard provider cancellation,
+    timeout-specific stop enforcement, or async controller cancellation.
+  - Verification: focused loop tests cover valid default and configured
+    timeout-quarantine policy records.

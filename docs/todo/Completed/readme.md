@@ -10316,3 +10316,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still correctly distinguish this from a
     full database/replay behavior.
   - Verification: focused database and loop tests cover the new manifest field.
+
+- [x] Document timeout quarantine policy evidence.
+  - Evidence: backend, configuration, architecture, run-artifact, and todo docs
+    needed to stop describing role/backend quarantine as wholly future work.
+  - Status: docs now state that configured
+    `llm_role_failure_quarantine_after` thresholds apply to exhausted timeout
+    failures and are exposed by runtime cancellation-policy manifests.
+  - Remaining documentation gap: docs still distinguish this from hard SDK
+    cancellation and timeout-specific stop policies.
+  - Verification: focused loop tests cover the manifest policy evidence.

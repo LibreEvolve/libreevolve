@@ -860,8 +860,10 @@ Built-in adapters copy safe provider usage counts, request/response ids, and
 finish reasons into call telemetry when SDK responses expose them.
 Built-in adapters also record safe `adapter_retry` telemetry for their
 configured internal provider retry cap, provider attempts, failed attempt
-count, and exception type labels. Raw provider diagnostics, provider-cost
-accounting, and token-budget stop policy are not available yet. Provider
+count, and exception type labels. Raw provider diagnostics, configured
+provider-cost accounting, and token-budget stop policy are available as bounded
+telemetry and live run-budget inputs; live provider pricing remains out of
+scope. Provider
 exception text is redacted and truncated before it is stored in telemetry, while
 `provider_failure_category` classifies failures as provider-response, timeout,
 rate-limit, transport, provider client/server status, or unknown. Failed SDK
@@ -870,8 +872,11 @@ exceptions with safe integer HTTP-style status codes also retain
 capped at `10` and optional fallback to another backend; each attempt is
 recorded with retry/fallback indexes and whether it will retry or fallback. If
 failed, the call also records `provider_failure_policy` with the local
-retry/fallback decision and explicit non-quarantine/non-penalty decisions for
-the ensemble layer. Strict ledger replay returns
+retry/fallback decision and, when `llm_role_failure_quarantine_after` is
+configured for that exact role, role/backend quarantine state after exhausted
+failures. Runtime cancellation-policy manifests expose matching timeout
+quarantine actions and `quarantine_record` evidence for configured roles.
+Strict ledger replay returns
 `provider_failure_policy_summary` so the failed-call policy evidence can be
 audited by role, failure category, retry/fallback decision, and
 quarantine/penalty decision. If

@@ -2748,11 +2748,11 @@ def _restore_llm_scheduler_state_snapshot(
 
 def _runtime_provider_cancellation_policy(config: Config) -> dict:
     provider_timeout_rules = [
-        _provider_timeout_policy_rule(role)
+        _provider_timeout_policy_rule(role, config)
         for role in ("mutation", "critique", "feedback:*", "meta_prompt")
     ]
     ensemble_timeout_rules = [
-        _ensemble_timeout_policy_rule(role)
+        _ensemble_timeout_policy_rule(role, config)
         for role in ("mutation", "critique", "feedback:*", "meta_prompt")
     ]
     policy = {
@@ -2763,6 +2763,9 @@ def _runtime_provider_cancellation_policy(config: Config) -> dict:
             "llm_call_timeout_sec": config.llm_call_timeout_sec,
             "max_runtime_seconds": config.max_runtime_seconds,
             "backend_timeout_fields": "per-backend timeout_sec",
+            "llm_role_failure_quarantine_after": dict(
+                sorted(config.llm_role_failure_quarantine_after.items())
+            ),
         },
         "role_scope": {
             "policy": "libreevolve.llm_timeout_role_scope.v1",
@@ -2787,6 +2790,7 @@ def _runtime_provider_cancellation_policy(config: Config) -> dict:
         ],
         "artifacts": [
             _policy_artifact_record("timeout_log", "llm_calls.jsonl"),
+            _policy_artifact_record("quarantine_record", "llm_calls.jsonl"),
             _policy_artifact_record("budget_stop_record", "manifest.json"),
         ],
     }
@@ -2807,37 +2811,64 @@ def _runtime_provider_cancellation_policy(config: Config) -> dict:
     }
 
 
-def _provider_timeout_policy_rule(role: str) -> dict:
+def _provider_timeout_policy_rule(role: str, config: Config) -> dict:
     suffix = _policy_role_suffix(role)
+    quarantine_enabled = _timeout_quarantine_enabled(role, config)
     return {
         "id": f"provider_request_timeout_{suffix}",
         "kind": "provider_request_timeout",
         "role": role,
-        "budget_actions": ["retry", "fallback"],
+        "budget_actions": _timeout_budget_actions(quarantine_enabled),
         "artifact_required": True,
-        "artifact_kinds": ["timeout_log"],
+        "artifact_kinds": _timeout_artifact_kinds(quarantine_enabled),
         "description": (
             "Bundled provider request timeout_sec values are forwarded to "
             f"provider clients for {role} calls and failures enter normal "
-            "retry/fallback telemetry."
+            "retry/fallback telemetry plus configured role/backend quarantine "
+            "when that role has llm_role_failure_quarantine_after."
         ),
     }
 
 
-def _ensemble_timeout_policy_rule(role: str) -> dict:
+def _ensemble_timeout_policy_rule(role: str, config: Config) -> dict:
     suffix = _policy_role_suffix(role)
+    quarantine_enabled = _timeout_quarantine_enabled(role, config)
     return {
         "id": f"ensemble_wait_deadline_{suffix}",
         "kind": "ensemble_wait_deadline",
         "role": role,
-        "budget_actions": ["retry", "fallback"],
+        "budget_actions": _timeout_budget_actions(quarantine_enabled),
         "artifact_required": True,
-        "artifact_kinds": ["timeout_log"],
+        "artifact_kinds": _timeout_artifact_kinds(quarantine_enabled),
         "description": (
             "llm_call_timeout_sec wraps each ensemble backend attempt for "
-            f"{role} calls and records ProviderCallTimeoutError timeout telemetry."
+            f"{role} calls and records ProviderCallTimeoutError timeout telemetry "
+            "plus configured role/backend quarantine when that role has "
+            "llm_role_failure_quarantine_after."
         ),
     }
+
+
+def _timeout_quarantine_enabled(role: str, config: Config) -> bool:
+    thresholds = config.llm_role_failure_quarantine_after
+    if role.endswith(":*"):
+        prefix = role[:-1]
+        return any(candidate.startswith(prefix) for candidate in thresholds)
+    return role in thresholds
+
+
+def _timeout_budget_actions(quarantine_enabled: bool) -> list[str]:
+    actions = ["retry", "fallback"]
+    if quarantine_enabled:
+        actions.append("quarantine")
+    return actions
+
+
+def _timeout_artifact_kinds(quarantine_enabled: bool) -> list[str]:
+    kinds = ["timeout_log"]
+    if quarantine_enabled:
+        kinds.append("quarantine_record")
+    return kinds
 
 
 def _policy_role_suffix(role: str) -> str:

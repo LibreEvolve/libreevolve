@@ -973,7 +973,7 @@ Primary evidence:
     mutation timeouts now produce generated failure-history rows with retained
     timeout call telemetry and can continue later generations when budget
     remains. There is still no live hard provider cancellation token or
-    cross-role timeout-driven quarantine/stop policy.
+    timeout-driven stop policy.
     `libreevolve.provider_cancellation_policy.v1` now
     defines and tests a policy/report contract for provider request timeouts,
     ensemble wait deadlines, runtime deadlines, hard cancellation rules,
@@ -986,13 +986,17 @@ Primary evidence:
     `hard_cancel_ready: false`.
     Provider-request-timeout and ensemble-deadline rules are now scoped to the
     loop's active LLM role surfaces: `mutation`, `critique`, `feedback:*`, and
-    `meta_prompt`.
+    `meta_prompt`. Those rules now declare `quarantine` actions and
+    `quarantine_record` artifact evidence when
+    `llm_role_failure_quarantine_after` configures a matching exact role,
+    reflecting the ensemble's role/backend failure-threshold quarantine state
+    for exhausted timeout failures.
   - Required result: connect the existing timeout/cancellation policy contract
     to live in-flight provider SDK cancellation, turn timeout categories into
-    role-specific stop/quarantine runtime policy, and add tests that
-    runtime-budget exhaustion produces role-specific structured
-    timeout/cancellation artifacts beyond the currently covered mutation
-    timeout failure-history path.
+    role-specific stop runtime policy, and add tests that runtime-budget
+    exhaustion produces role-specific structured timeout/cancellation artifacts
+    beyond the currently covered mutation timeout failure-history and policy
+    quarantine-evidence paths.
 
 ## Runtime, Reproducibility, and Safety
 

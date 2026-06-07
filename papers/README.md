@@ -309,9 +309,11 @@ retained row. Runtime manifests also persist
 `runtime.history.objective_frontier`, a bounded diagnostic Pareto frontier over
 complete declared normalized metric vectors, plus
 `runtime.history.objective_metric_archives`, a bounded top-program view for
-each declared normalized metric. These records are audit evidence for the
-current scalar policy and metric-specific tradeoffs, not frontier-driven
-archive replacement.
+each declared normalized metric. Declared non-primary `source: plugin` metrics
+can now be filled by plugin hooks as validated metric side effects before the
+final objective annotation. These records are audit evidence for the current
+scalar policy and metric-specific tradeoffs, not frontier-driven archive
+replacement.
 
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,

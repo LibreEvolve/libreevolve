@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document declared plugin-sourced objective metrics.
+  - Status: README, problem-format, configuration, plugin, and architecture
+    docs now describe non-primary `source: plugin` metrics, explain that
+    validators must not return them, and state that plugin hooks can fill them
+    as validated metric side effects that participate in declared objective
+    normalization and `selection_score`.
+  - Remaining README gap: plugin-adjusted top-level fitness is still a scalar
+    composition path, not a declared objective policy.
+  - Verification: docs were updated alongside focused loader/loop tests for
+    plugin-sourced objective metrics.
+
 - [x] Refresh or de-emphasize time-sensitive provider model examples.
   - Status: README, configuration, development, and AGENTS quick-run examples
     now use clearly marked provider/account placeholders instead of stale
@@ -9972,12 +9983,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     metrics can be objective-schema metrics.
   - Status: README, configuration, problem-format, architecture, plugin, and
     run-artifact docs now state that problem metrics default to
-    `source: evaluator`, non-primary metrics can declare `source: feedback`,
-    validators must not return feedback-sourced names, and
-    `objective_metric: true` graders can fill those declared metrics for
-    normalization and archive `selection_score`.
-  - Remaining README gap: full Pareto/frontier policy, configurable metric
-    weighting, and metric-specific resurfacing remain open.
+    `source: evaluator`, non-primary metrics can declare `source: feedback`
+    or `source: plugin`, validators must not return those sourced names,
+    `objective_metric: true` graders can fill feedback-sourced metrics, and
+    plugin hooks can fill plugin-sourced metrics for normalization and archive
+    `selection_score`.
+  - Remaining README gap: Pareto/frontier archive replacement and
+    lineage-aware resurfacing remain open.
   - Verification: docs scans plus focused loader/evaluator/feedback/config/loop
     tests cover the documented behavior.
 

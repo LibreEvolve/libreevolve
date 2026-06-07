@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Allow declared plugin-sourced objective metrics.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
+    optimizing multiple user-provided scores and using varied high-performing
+    programs under different criteria.
+  - Status: non-primary metrics can now declare `source: plugin`. Plugin hooks
+    can fill those declared metrics through validated metric side effects, and
+    the resulting values participate in normalized objective vectors,
+    selection score, archive-admission objective-vector audit records, metric
+    leaders, metric archives, and complete-vector frontier views.
+  - Remaining paper gap: plugin-adjusted top-level fitness still remains a
+    scalar score-composition path rather than a declared objective policy, and
+    Pareto/frontier archive replacement plus queryable lineage-aware
+    resurfacing remain open.
+  - Verification: focused loader and loop tests cover schema validation,
+    plugin-filled objective metrics, selection-score participation, objective
+    vectors, and metric archive manifest output.
+
 - [x] Add bounded metric-specific objective archive views.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
     optimizing multiple user-provided scores and using programs that excel

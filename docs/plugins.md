@@ -112,11 +112,11 @@ Important details:
   backend reward uses that final score only when the candidate is
   evaluator-valid and archive-admitted.
 - MAP-Elites cell competition, elite ordering, and parent sampling still use
-  `metadata.selection_score`, computed from declared objective metrics before
-  plugin hooks. Feedback-sourced objective metrics can contribute after their
-  graders fill them; plugin-added metrics are persisted as ordinary metrics
-  when valid, but they do not affect archive ranking unless a future
-  plugin-metric selection policy is added.
+  `metadata.selection_score`, computed from declared objective metrics. Plugin
+  hooks run before the final metric-policy annotation, so a valid plugin-added
+  metric can affect archive ranking when the problem declares that non-primary
+  metric with `source: plugin`; undeclared plugin metrics remain ordinary
+  persisted metrics without declared objective semantics.
 - plugin score adjustments are recorded under `metadata.score_composition`,
   including per-plugin before/after scores, metric additions/changes, invalid
   score rejections, and whether final top-level fitness diverges from

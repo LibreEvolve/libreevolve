@@ -1747,8 +1747,10 @@ non-boolean numeric `[lo, hi]` pairs; YAML/Python booleans are rejected rather
 than coerced to `0.0/1.0`. Direct `primary_bounds` must exactly match the
 declared primary metric bounds. Problem metrics default to `source: evaluator`,
 which means validators must return them. Non-primary metrics may use
-`source: feedback`; validators must not return those names, and
-`llm_feedback` graders can fill them only with `objective_metric: true`.
+`source: feedback` or `source: plugin`; validators must not return those names.
+`llm_feedback` graders can fill feedback-sourced metrics only with
+`objective_metric: true`, while plugin hooks can fill plugin-sourced metrics as
+validated metric side effects.
 Objective helper methods
 (`metric`, `metric_bounds`, `metric_direction`, and `normalize_metric`) require
 declared metric names; undeclared feedback or plugin metrics can still be

@@ -326,7 +326,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     feedback graders now support
     bounded raw scores, maximize/minimize direction, normalized fitness-delta
     composition, and `objective_metric: true` filling for declared non-primary
-    `source: feedback` objective metrics. Metric-specific archive replacement and
+    `source: feedback` objective metrics. Declared non-primary
+    `source: plugin` metrics can be filled by plugin hooks through validated
+    metric side effects and then participate in normalized objective selection
+    and metric-specific views. Metric-specific archive replacement and
     Pareto/frontier optimization remain open because the frontier and
     metric-specific views are diagnostic and not archive replacement policies.
     Parent and inspiration sampling can now use
@@ -342,10 +345,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     declared normalized metric vectors to surface non-dominated retained
     programs and persists frontier size/metric-order provenance. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
-  - Required result: add Pareto/frontier archive replacement,
-    objective-schema integration
-    for feedback/reviewer metrics when desired, and queryable lineage-aware
-    resurfacing for programs that excel under different metrics.
+  - Required result: add Pareto/frontier archive replacement, define whether
+    plugin-adjusted top-level fitness can be a declared objective policy, and
+    add queryable lineage-aware resurfacing for programs that excel under
+    different metrics.
 
 - [ ] Rich prompt rendering of execution outputs and feedback.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

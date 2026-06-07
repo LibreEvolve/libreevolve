@@ -2449,7 +2449,7 @@ def test_effective_metric_schema_is_immutable_after_construction():
         assert problem.metric_bounds("score") == (0.0, 1.0)
 
 
-def test_problem_metric_schema_supports_feedback_sourced_secondary_metric():
+def test_problem_metric_schema_supports_non_evaluator_sourced_secondary_metrics():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)
         problem = Problem(
@@ -2463,6 +2463,11 @@ def test_problem_metric_schema_supports_feedback_sourced_secondary_metric():
                     "bounds": [0.0, 100.0],
                     "source": "feedback",
                 },
+                {
+                    "name": "plugin_quality",
+                    "bounds": [0.0, 10.0],
+                    "source": "plugin",
+                },
             ],
             primary_metric="score",
             primary_bounds=(0.0, 1.0),
@@ -2473,11 +2478,20 @@ def test_problem_metric_schema_supports_feedback_sourced_secondary_metric():
 
         assert problem.metric("score")["source"] == "evaluator"
         assert problem.metric("review_latency_ms")["source"] == "feedback"
+        assert problem.metric("plugin_quality")["source"] == "plugin"
         assert problem.objective_schema()["metrics"][1] == {
             "name": "review_latency_ms",
             "direction": "minimize",
             "bounds": [0.0, 100.0],
             "source": "feedback",
+            "weight": 1.0,
+            "primary": False,
+        }
+        assert problem.objective_schema()["metrics"][2] == {
+            "name": "plugin_quality",
+            "direction": "maximize",
+            "bounds": [0.0, 10.0],
+            "source": "plugin",
             "weight": 1.0,
             "primary": False,
         }
@@ -2491,12 +2505,16 @@ def test_problem_metric_schema_supports_feedback_sourced_secondary_metric():
             "primary metric .* source 'evaluator'",
         ),
         (
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": "plugin"},
+            "primary metric .* source 'evaluator'",
+        ),
+        (
             {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": "grader"},
-            "source must be 'evaluator' or 'feedback'",
+            "source must be 'evaluator', 'feedback', or 'plugin'",
         ),
         (
             {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": 7},
-            "source must be 'evaluator' or 'feedback'",
+            "source must be 'evaluator', 'feedback', or 'plugin'",
         ),
     ],
 )

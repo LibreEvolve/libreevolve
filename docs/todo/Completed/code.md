@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Allow declared plugin-sourced objective metrics.
+  - Spec evidence: AlphaEvolve-style multi-score search should connect
+    plugin-emitted metrics to declared objective semantics when desired,
+    instead of treating every plugin metric as undeclared telemetry.
+  - Status: non-primary problem metrics now accept `source: plugin`.
+    Validator output remains responsible only for evaluator-sourced metrics;
+    plugin hooks can fill declared plugin-sourced metrics through validated
+    metric side effects before the final metric-policy annotation. Those
+    metrics then enter `metadata.normalized_metrics`, `metadata.selection_score`,
+    archive-admission objective vectors, metric leaders, metric archives, and
+    frontier sampling when complete declared vectors are available.
+  - Remaining gap: plugin-adjusted top-level fitness is still scalar
+    composition, not a declared objective policy, and Pareto/frontier archive
+    replacement remains open.
+  - Verification: focused loader and loop tests cover plugin-source schema
+    acceptance/rejection, primary-metric source restrictions, plugin-filled
+    normalized metrics, selection-score participation, objective-vector
+    persistence, and metric archive manifest output.
+
 - [x] Add bounded metric-specific objective archive views.
   - Spec evidence: AlphaEvolve-style multi-score search should retain and
     inspect programs that excel under different declared score definitions,

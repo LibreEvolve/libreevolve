@@ -2631,6 +2631,86 @@ def test_loop_uses_configured_metric_weights_for_selection_score():
     ] == record["metadata"]["selection_policy"]
 
 
+def test_loop_includes_plugin_emitted_declared_objective_metric_in_selection_score():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    problem = Problem(
+        name="t",
+        task_description="plugin metrics",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {
+                "name": "plugin_quality",
+                "bounds": [0.0, 10.0],
+                "source": "plugin",
+            },
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1"],
+        problem_dir=d,
+    )
+
+    class PluginMetric:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            program.metrics["plugin_quality"] = 2.5
+            return score
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[PluginMetric()],
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+
+    assert child["metrics"]["plugin_quality"] == 2.5
+    assert child["metadata"]["score_composition"]["plugins"][0]["metrics_added"] == [
+        "plugin_quality"
+    ]
+    assert child["metadata"]["normalized_metrics"] == {
+        "plugin_quality": 0.25,
+        "score": 1.0,
+    }
+    assert child["metadata"]["selection_score"] == pytest.approx(0.625)
+    assert child["metadata"]["selection_policy"] == {
+        "type": "mean_normalized_declared_metrics",
+        "metrics": ["score", "plugin_quality"],
+        "primary_metric": "score",
+    }
+    assert child["metadata"]["archive_admission"]["objective_vector"] == {
+        "policy": "normalized_declared_metric_vector_v1",
+        "normalized_metrics": {"plugin_quality": 0.25, "score": 1.0},
+        "selection_policy": child["metadata"]["selection_policy"],
+    }
+
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    assert manifest["problem"]["objective_schema"]["metrics"][1]["source"] == "plugin"
+    metric_archives = manifest["runtime"]["history"]["objective_metric_archives"]
+    plugin_archive = next(
+        archive
+        for archive in metric_archives["archives"]
+        if archive["metric"] == "plugin_quality"
+    )
+    assert plugin_archive["program_count_considered"] == 1
+    assert plugin_archive["programs"][0]["program_id"] == child["id"]
+    assert plugin_archive["programs"][0]["normalized_metric"] == 0.25
+
+
 def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     tmpdir = tempfile.mkdtemp()
     d = Path(tempfile.mkdtemp())

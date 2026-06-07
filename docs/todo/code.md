@@ -620,19 +620,22 @@ Primary evidence:
     `metadata.parent_selection` and `metadata.inspiration_selection` provenance,
     including metric target/program pairs for metric policies and frontier
     size/metric-order metadata for frontier policies.
-    Plugin score composition is logged separately and can change final fitness,
-    but undeclared plugin-added metrics do not enter `normalized_metrics`,
-    metric-leader sampling, or `selection_score`. Backend reward, admission
-    thresholds, and some parent/inspiration paths still use scalar final
-    fitness, and Pareto/frontier behavior is still a sampling surface rather
-    than an archive replacement policy. There is still no declared
-    plugin-score objective policy or metric-specific MAP-Elites replacement
-    policy.
+    Plugin score composition is logged separately and can change final fitness.
+    Declared non-primary `source: plugin` metrics can be filled by plugin hooks
+    through validated metric side effects and then enter
+    `normalized_metrics`, metric-leader/frontier sampling, metric archive
+    views, and `selection_score`; undeclared plugin-added metrics remain
+    ordinary metrics without declared objective semantics. Backend reward,
+    admission thresholds, and some parent/inspiration paths still use scalar
+    final fitness, and Pareto/frontier behavior is still a sampling surface
+    rather than an archive replacement policy. There is still no declared
+    plugin-adjusted-fitness objective policy or metric-specific MAP-Elites
+    replacement policy.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier archive replacement, connect
-    plugin-adjusted fitness or plugin-emitted metrics to declared objective
-    semantics when desired, and make metric-targeted sampling/archive behavior
-    part of that policy instead of a standalone heuristic.
+    plugin-adjusted top-level fitness to declared objective semantics when
+    desired, and make metric-targeted sampling/archive behavior part of that
+    policy instead of a standalone heuristic.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

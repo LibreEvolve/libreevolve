@@ -747,7 +747,9 @@ LibreEvolve stores metric vectors and now annotates each program with
 `metadata.normalized_metrics` for declared numeric objective metrics plus an
 equal-weight `metadata.selection_score`. Evaluator-sourced metrics are required
 from validators; feedback-sourced non-primary metrics can be filled only by
-`llm_feedback` graders configured with `objective_metric: true`. MAP-Elites
+`llm_feedback` graders configured with `objective_metric: true`; plugin-sourced
+non-primary metrics can be filled by plugin hooks as validated metric side
+effects. MAP-Elites
 performance placement, cell replacement, elite ranking, and exploit/best
 sampling use that selection score with final composed fitness as a tie-break.
 Final runtime manifests also include `runtime.history.objective_frontier`, a

@@ -279,8 +279,10 @@ direct `primary_bounds` must be finite numeric `[lo, hi]` pairs that exactly
 match the declared primary metric bounds. `Problem.__post_init__` also marks
 the effective primary metric in `Problem.metrics`. Metrics default to
 `source: evaluator`, which means validator output must include them. Non-primary
-metrics may declare `source: feedback`; validator output must not include those
-names, and feedback graders may fill them only with `objective_metric: true`.
+metrics may declare `source: feedback` or `source: plugin`; validator output
+must not include those names. Feedback graders may fill feedback-sourced metrics
+only with `objective_metric: true`, and plugins may fill plugin-sourced metrics
+through validated metric side effects.
 Objective helper methods
 (`metric`, `metric_bounds`, `metric_direction`, and `normalize_metric`) reject
 undeclared names; prompt/history rendering can still display undeclared

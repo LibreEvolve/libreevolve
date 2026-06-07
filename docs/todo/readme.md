@@ -25,4 +25,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current synchronous budget replay nor overclaims full AlphaEvolve-style
     replay.
 
+- [ ] Keep README archive restore claims scoped to current archive-content
+  restore.
+  - Spec evidence: AlphaEvolve-style long-running evolutionary search needs
+    reproducible population state and clear boundaries for migration-order
+    replay versus snapshot restore.
+  - Current evidence: README now says full archive cell/island contents can be
+    restored from manifest snapshots plus checked accepted-history rows, while
+    ordered migration-event replay remains audit-only rather than a MAP-Elites
+    restore engine.
+  - Required result: when ordered migration-event replay or async
+    controller/pending-work resume lands, update README archive sections,
+    roadmap, papers index, and code/paper TODO entries together so they do not
+    underclaim archive-content restore or overclaim migration replay.
+
 ## Architecture Description

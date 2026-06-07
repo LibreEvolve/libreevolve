@@ -1175,8 +1175,9 @@ Run history logs candidates, and run manifests record the archive identity
 policy for duplicate ids and migration references. `archive_events.jsonl`
 persists migration placement events, and `load_archive_event_records()` can
 validate those rows as a checked migration audit stream. Full archive
-cell/island state and replayable MAP-Elites checkpoint restore are not
-implemented yet. Accepted programs are snapshotted at archive/log boundaries;
+cell/island contents can now be restored from manifest snapshots plus checked
+accepted-history rows; ordered migration-event replay remains audit-only and is
+not a MAP-Elites restore engine. Accepted programs are snapshotted at archive/log boundaries;
 mutating a
 caller-held `Program` object or a program returned by `best()`, `sample()`,
 `sample_diverse()`, or `all_programs()` does not rewrite stored in-memory

@@ -152,8 +152,12 @@ is not yet an AlphaEvolve reproduction.
 - Extend the current rendered-prompt character cap and deterministic
   section-budget diagnostics into backend-token-aware context-window accounting
   with real section-level packing.
-- Add prompt/history redaction and data-retention controls for mutation,
-  critique, feedback, plugin, and explicit-context prompt sections.
+- Extend current prompt/history retention controls into replay-retention
+  policy and richer context-policy ownership. Mutation prompts, explicit
+  context spans, critique prompts/mutations, feedback raw/parsed fields,
+  provider output/error text, plugin context, meta-prompt evidence, framework
+  quarantine snapshots, and DeepResearch retrieval bodies already have
+  bounded configurable retention surfaces.
 - Extend current bounded evaluator-output prompt summaries with full/live
   artifact content retrieval, specialized aggregate syntax diagnostics, and
   integration with backend-token-aware global prompt-size budgeting.

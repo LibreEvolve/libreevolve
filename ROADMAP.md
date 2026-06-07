@@ -337,7 +337,7 @@ is not yet an AlphaEvolve reproduction.
 - Improve `show` beyond the current validity/archive-aware selected-row view
   with runtime status, lineage/prompt/evaluation/feedback/failure summaries,
   bounded objective-vector metrics, and workspace-file display toward whole-run
-  source integrity checks, richer archive/prompt/failure drill-downs, and
+  source integrity reports, richer archive/prompt/failure drill-downs, and
   durable query views over run artifacts.
 - Extend current `pyproject.toml` metadata, dev extras, and console-script
   packaging beyond editable/local use with wheel/sdist build checks,

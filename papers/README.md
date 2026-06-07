@@ -492,9 +492,11 @@ than silently becoming candidate code.
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive
 diagnostics, including malformed unselected retained rows. Its non-archive
-source/workspace display path remains selected-row scope; it does not yet
-validate or summarize every unselected row's `code`, `files`, or
-`primary_file` payloads as whole-run source integrity evidence.
+source/workspace display path remains selected-row scope, but streamed
+current and legacy history rows now validate `code`, `files`, and
+`primary_file` payload shape before any best-looking row is printed. It still
+does not summarize every unselected row's source/workspace payloads as
+whole-run source integrity evidence.
 
 MAP-Elites cell-inspection note: `libreevolve show` rejects malformed current
 history cells by arity/type/non-negativity and, when

@@ -1003,8 +1003,11 @@ Primary evidence:
     feedback, failure-count, objective-vector, and workspace-file summaries, and
     intentionally rejects mixed legacy/current history schemas with a
     line-numbered diagnostic instead of migrating them into one compatible
-    database view. The remaining gap is not validation of the current bounded
-    resurfacing-index record or the selected-row `show` summaries.
+    database view. It also validates streamed current and legacy history-row
+    `code`, `files`, and `primary_file` payloads, so malformed unselected rows
+    fail before any best-looking row is printed. The remaining gap is not
+    validation of the current bounded resurfacing-index record, the selected-row
+    `show` summaries, or malformed unselected source/workspace payloads.
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, durable ranked views
     by score/metric/diversity/feedback/lineage/failure/hypothesis/artifact

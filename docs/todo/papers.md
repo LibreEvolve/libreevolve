@@ -1418,6 +1418,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     README, ROADMAP, and code TODO wording explicit that the current features
     are inspiration-only, approximation, or background-only references.
 
+- [ ] Add whole-run source/workspace integrity reports for run inspection.
+  - Paper evidence: AlphaEvolve-scale runs need auditable generated program
+    databases, not only a selected best-program display.
+  - Current evidence: `libreevolve show` now streams current and legacy
+    `history.jsonl` rows and validates source/workspace payload shape for every
+    row before printing a best-looking candidate: legacy `code` must be text,
+    workspace `files` must map safe candidate paths to text, and `primary_file`
+    must be a safe path present in `files`. This prevents malformed unselected,
+    invalid, or non-admitted rows from being hidden by the selected row.
+  - Required result: add whole-run source/workspace integrity summaries and
+    durable query/report surfaces over every candidate's source payloads,
+    workspace paths, source hashes, primary-file coherence, and display/truncation
+    policy. The remaining gap is not malformed unselected source-payload
+    validation or selected-row workspace display.
+
 - [ ] Make DeepEvolve-inspired live retrieval transport audit-grade.
   - Paper evidence: retrieval-driven debugging/refinement treats external
     knowledge as part of the experimental input; the paper-aligned record

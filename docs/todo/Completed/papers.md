@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible provider diagnostics summary validation.
+  - Paper evidence: AlphaEvolve-style experiments need provider diagnostics and
+    cost/latency/accounting evidence that can be inspected from run artifacts
+    without implying unsupported raw-payload replay or live billing capture.
+  - Status: `validate_llm_provider_diagnostics_summary()` now validates
+    `runtime.llm_provider_diagnostics` summaries with schema
+    `libreevolve.llm_provider_diagnostics.v1`, including retained-history
+    scope, backend-record hash integrity, non-negative counters,
+    backend-count and call-count consistency, required limitation statements,
+    and the no-live-pricing/no-raw-payload replay boundary.
+  - Remaining paper gap: this is a retained-call-history aggregate validator,
+    not a live provider-pricing feed, raw provider-payload replay trace, or
+    complete restored provider-output controller.
+  - Verification: focused diagnostics-policy tests cover a real
+    ensemble-produced summary plus JSON loading, overclaim, counter, count, and
+    hash failure cases.
+
 - [x] Add paper-visible parent-code per-file content caps.
   - Paper evidence: AlphaEvolve prompt context can include prior code, and
     prompt-context evolution should be able to budget individual required code

@@ -169,7 +169,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, OpenAI API-mode policy linkage, offline
     compatibility, and explicit non-use of live model-registry,
-    service/API-version, or account-availability discovery. The budget report contract
+    service/API-version, or account-availability discovery.
+    `validate_llm_provider_diagnostics_summary()` now validates the provider
+    diagnostics summary contract, including record-hash integrity,
+    non-negative counters, backend-count and call-count consistency, required
+    limitation statements, and the no-live-pricing/no-raw-payload replay
+    boundary. The budget report contract
     now rejects restored-state claims that lack persisted resume-state
     evidence. Focused ensemble tests now cover fake provider usage counts and
     adapter retry diagnostics for mutation, critique, feedback, and

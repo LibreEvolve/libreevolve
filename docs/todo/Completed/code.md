@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Validate runtime LLM provider diagnostics summaries.
+  - Spec evidence: AlphaEvolve-grade provider accounting needs manifest-visible
+    diagnostics that are checkable as retained evidence, while still separating
+    aggregate retained metadata from unsupported raw-provider-payload replay and
+    live pricing capture.
+  - Status: `validate_llm_provider_diagnostics_summary()` now validates
+    `libreevolve.llm_provider_diagnostics.v1` summaries for schema, policy,
+    status, source, retained-history scope, backend-record SHA-256 integrity,
+    non-negative counters, backend-count and call-count consistency, required
+    limitation statements, and the current no-live-pricing/no-raw-payload replay
+    boundary. The validation result keeps `live_pricing_ready` and
+    `raw_payload_replay_ready` false for the current contract.
+  - Remaining gap: this validates the retained aggregate summary only; remote
+    provider-side defaults, live pricing capture, raw provider-payload replay,
+    and full restored provider-output/controller replay remain open.
+  - Verification: focused diagnostics-policy tests cover validation of a real
+    ensemble-produced summary, JSON loading, malformed core fields, live
+    pricing overclaims, counter errors, count mismatches, and hash mismatches.
+
 - [x] Add prompt context-policy parent-code per-file content caps.
   - Spec evidence: AlphaEvolve-style prompt context needs budget-aware control
     over individual required code files, not only full parent-workspace or

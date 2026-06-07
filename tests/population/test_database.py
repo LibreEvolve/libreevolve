@@ -377,6 +377,99 @@ def test_lineage_index_snapshot_groups_valid_programs_by_root(tmp_path):
     }
 
 
+def test_descriptor_index_snapshot_reports_top_archive_descriptor_programs(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+    )
+
+    def program(program_id: str, selection_score: float, descriptors: dict) -> Program:
+        return Program(
+            id=program_id,
+            code="x = 1\n",
+            fitness=selection_score,
+            evaluation={"is_valid": True},
+            metadata={
+                "selection_score": selection_score,
+                "archive_admission": {
+                    "admitted": True,
+                    "descriptors": descriptors,
+                },
+            },
+        )
+
+    high_diversity = program(
+        "high-diversity",
+        0.4,
+        {"diversity": 0.95, "complexity": 0.30},
+    )
+    high_score = program(
+        "high-score",
+        0.9,
+        {"diversity": 0.50, "complexity": 0.60},
+    )
+    invalid_descriptor = program(
+        "invalid-descriptor",
+        1.0,
+        {"diversity": "bad", "complexity": 0.10},
+    )
+    invalid_evaluation = Program(
+        id="invalid-eval",
+        code="x = 1\n",
+        fitness=1.0,
+        evaluation={"is_valid": False},
+        metadata={
+            "selection_score": 1.0,
+            "archive_admission": {
+                "admitted": False,
+                "descriptors": {"diversity": 1.0},
+            },
+        },
+    )
+    for candidate in (
+        high_diversity,
+        high_score,
+        invalid_descriptor,
+        invalid_evaluation,
+    ):
+        db.log(candidate)
+
+    snapshot = db.descriptor_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.descriptor_index.v1"
+    assert snapshot["policy"] == "top_valid_programs_per_archive_descriptor"
+    assert snapshot["descriptor_count"] == 2
+    assert snapshot["retention_limit"] == 10
+    assert [entry["descriptor"] for entry in snapshot["descriptors"]] == [
+        "complexity",
+        "diversity",
+    ]
+    complexity = snapshot["descriptors"][0]
+    diversity = snapshot["descriptors"][1]
+    assert [program["program_id"] for program in complexity["programs"]] == [
+        high_score.id,
+        high_diversity.id,
+        invalid_descriptor.id,
+    ]
+    assert [program["program_id"] for program in diversity["programs"]] == [
+        high_diversity.id,
+        high_score.id,
+    ]
+    assert diversity["programs"][0] == {
+        "descriptor": "diversity",
+        "program_id": high_diversity.id,
+        "lineage_root_id": high_diversity.id,
+        "generation": 0,
+        "descriptor_value": 0.95,
+        "selection_score": 0.4,
+        "fitness": 0.4,
+    }
+    assert invalid_evaluation.id not in {
+        program["program_id"]
+        for entry in snapshot["descriptors"]
+        for program in entry["programs"]
+    }
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(

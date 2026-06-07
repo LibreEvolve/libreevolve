@@ -1121,6 +1121,12 @@ Important behavior:
   lineage-depth, selection score, fitness, and available normalized objective
   evidence. This is an inspection artifact, not a persisted sampling replay
   engine.
+- `runtime.history.descriptor_index` stores bounded diagnostic top-program
+  views for finite values found in `metadata.archive_admission.descriptors`.
+  Each descriptor record includes descriptor value, generation, lineage root,
+  selection score, fitness, and available objective evidence. Descriptor values
+  are insertion-time archive coordinates, not stable learned descriptor
+  normalization replay.
 - optional critique metadata is stored under `metadata.critique`
 - optional proposal idea/rationale/hypothesis sections are stored under
   `metadata.proposal` when `capture_proposal_metadata` is enabled; when critique

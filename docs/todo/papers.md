@@ -324,7 +324,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.objective_metric_archives`, a bounded top-program view for
     each declared normalized metric. Runtime manifests now also include
     `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs
-    view grouped by root lineage. LLM
+    view grouped by root lineage, and `runtime.history.descriptor_index`, a
+    bounded diagnostic top-program view for finite archive-admission descriptor
+    values. LLM
     feedback graders now support
     bounded raw scores, maximize/minimize direction, normalized fitness-delta
     composition, and `objective_metric: true` filling for declared non-primary
@@ -351,7 +353,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     programs and persists frontier size/metric-order provenance. Lineage
     parent/inspiration sampling uses root lineage metadata to surface the best
     retained representative per root, persists lineage-root provenance, and
-    exposes bounded lineage-index evidence in final manifests. This remains a heuristic rather than a paper-faithful
+    exposes bounded lineage-index evidence in final manifests. Descriptor-index
+    evidence makes insertion-time diversity/complexity/performance coordinates
+    inspectable from run artifacts. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.

@@ -14324,3 +14324,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     artifacts, failures, and replayable sampling decisions.
   - Verification: focused database and loop tests cover direct snapshot content
     and final manifest persistence.
+
+- [x] Persist a bounded archive-descriptor index in runtime history.
+  - Spec evidence: AlphaEvolve-style quality-diversity databases should make
+    diversity and descriptor-based resurfacing evidence inspectable from run
+    artifacts, not only from live MAP-Elites cells.
+  - Status: `ProgramDatabase.descriptor_index_snapshot()` now builds
+    `libreevolve.descriptor_index.v1`, a bounded top-program view for finite
+    values in `metadata.archive_admission.descriptors`. Final manifests persist
+    it under `runtime.history.descriptor_index` with descriptor value,
+    generation, lineage root, selection score, fitness, and available objective
+    evidence.
+  - Remaining gap: descriptor values are insertion-time archive coordinates,
+    not stable descriptor-normalization replay or a full persisted database
+    index over feedback, hypotheses, artifacts, failures, and sampling
+    decisions.
+  - Verification: focused database and loop tests cover direct descriptor-index
+    content and final manifest persistence.

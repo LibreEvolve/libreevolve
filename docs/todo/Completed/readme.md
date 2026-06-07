@@ -10285,3 +10285,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still correctly distinguish this from a
     full persisted database/replay engine.
   - Verification: focused docs and loop tests cover the new manifest field.
+
+- [x] Document descriptor-index runtime history.
+  - Evidence: README, architecture, run-artifact, and todo docs needed to track
+    that finite archive-admission descriptor values now have a bounded
+    manifest-visible index.
+  - Status: docs now describe `runtime.history.descriptor_index`, retained
+    descriptor record fields, and the insertion-time coordinate/replay
+    limitation.
+  - Remaining documentation gap: docs still correctly distinguish this from
+    stable descriptor replay or a full persisted database.
+  - Verification: focused database and loop tests cover the new manifest field.

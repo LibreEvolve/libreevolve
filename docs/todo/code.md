@@ -626,7 +626,9 @@ Primary evidence:
     Runtime manifests also include `runtime.history.lineage_index`, a bounded
     diagnostic best-valid-programs view grouped by root lineage with top
     retained programs, selection scores, fitness, lineage depth, and available
-    objective-vector evidence.
+    objective-vector evidence. `runtime.history.descriptor_index` adds bounded
+    top-program views for finite archive-admission descriptor values, including
+    diversity/complexity/performance coordinates when those axes are present.
     Plugin score composition is logged separately and can change final fitness.
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter
@@ -659,10 +661,10 @@ Primary evidence:
     `IslandModel`, persists compact and full archive-state snapshots, validates
     archive-event streams, supports lineage-aware live sampling through
     best-per-root retained representatives, persists a bounded lineage index
-    view in runtime manifests, and can restore cells/elites from a
+    view and descriptor index view in runtime manifests, and can restore cells/elites from a
     manifest plus accepted history bundle. However, these are still append-only logs plus an
     in-memory archive, not a persisted query/index database. There is no durable
-    index over score, metric vectors, diversity descriptors, feedback text,
+    index over score, full metric vectors, feedback text,
     failure fingerprints, full lineage subgraphs, hypotheses, artifacts, retrieval
     context, or novelty; `load_accepted_history_index()` is an id map for
     restore/query scaffolding, not a ranked resurfacing database. The compact

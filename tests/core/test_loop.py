@@ -2639,6 +2639,19 @@ def test_loop_records_normalized_metrics_and_selection_score():
             ],
         }
     ]
+    descriptor_index = manifest["runtime"]["history"]["descriptor_index"]
+    assert descriptor_index["schema"] == "libreevolve.descriptor_index.v1"
+    assert descriptor_index["policy"] == "top_valid_programs_per_archive_descriptor"
+    assert {
+        descriptor["descriptor"] for descriptor in descriptor_index["descriptors"]
+    } == {"performance", "complexity", "diversity"}
+    performance = next(
+        descriptor
+        for descriptor in descriptor_index["descriptors"]
+        if descriptor["descriptor"] == "performance"
+    )
+    assert performance["programs"][0]["program_id"] == record["id"]
+    assert performance["programs"][0]["descriptor_value"] == 0.8
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

@@ -90,6 +90,7 @@ _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
 _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
 _MAX_LINEAGE_INDEX_ROOTS = 50
 _MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT = 5
+_MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR = 10
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -651,6 +652,12 @@ class ProgramDatabase:
             self._all,
             root_limit=_MAX_LINEAGE_INDEX_ROOTS,
             programs_per_root_limit=_MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT,
+        )
+
+    def descriptor_index_snapshot(self) -> dict:
+        return _descriptor_index_snapshot(
+            self._all,
+            limit=_MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR,
         )
 
     def _log_archive_event(self, event: dict) -> None:
@@ -2123,6 +2130,103 @@ def _lineage_index_program(program: Program) -> dict:
         if normalized_metrics:
             record["normalized_metrics"] = normalized_metrics
     return record
+
+
+def _descriptor_index_snapshot(
+    programs: list[Program],
+    *,
+    limit: int,
+) -> dict:
+    by_descriptor: dict[str, list[dict]] = {}
+    for program in programs:
+        if program.evaluation.get("is_valid") is not True:
+            continue
+        descriptors = _history_safe_archive_descriptors(program)
+        for descriptor, value in descriptors.items():
+            by_descriptor.setdefault(descriptor, []).append(
+                _descriptor_index_program(program, descriptor, value)
+            )
+
+    descriptors: list[dict] = []
+    for descriptor, records in sorted(by_descriptor.items()):
+        records.sort(key=_descriptor_index_sort_key)
+        retained = records[:limit]
+        descriptors.append(
+            {
+                "descriptor": descriptor,
+                "program_count_considered": len(records),
+                "retained_count": len(retained),
+                "retention_limit": limit,
+                "programs": retained,
+            }
+        )
+    return {
+        "schema": "libreevolve.descriptor_index.v1",
+        "policy": "top_valid_programs_per_archive_descriptor",
+        "descriptor_count": len(descriptors),
+        "retention_limit": limit,
+        "descriptors": descriptors,
+        "limitations": [
+            "diagnostic_descriptor_index_not_sampling_replay_engine",
+            "valid_history_programs_with_archive_admission_descriptors_only",
+            "descriptor_values_are_insertion_time_archive_coordinates",
+            "bounded_top_per_descriptor_view_not_full_persisted_database_index",
+        ],
+    }
+
+
+def _descriptor_index_program(
+    program: Program,
+    descriptor: str,
+    value: float,
+) -> dict:
+    record: dict[str, object] = {
+        "descriptor": descriptor,
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "descriptor_value": value,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+    }
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _history_safe_archive_descriptors(program: Program) -> dict[str, float]:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    admission = metadata.get("archive_admission")
+    if not isinstance(admission, Mapping):
+        return {}
+    raw = admission.get("descriptors")
+    if not isinstance(raw, Mapping):
+        return {}
+    descriptors: dict[str, float] = {}
+    for name, value in sorted(raw.items()):
+        if isinstance(name, str) and name and _is_finite_real(value):
+            descriptors[name] = float(value)
+    return descriptors
+
+
+def _descriptor_index_sort_key(record: dict) -> tuple:
+    descriptor_value = record.get("descriptor_value")
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    return (
+        -(float(descriptor_value) if _is_finite_real(descriptor_value) else float("-inf")),
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
 
 
 def _program_lineage_root_id(program: Program) -> str:

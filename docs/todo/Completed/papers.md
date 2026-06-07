@@ -9549,3 +9549,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     indexes and replayable resurfacing decisions.
   - Verification: focused database and loop tests cover the lineage index API
     and manifest persistence.
+
+- [x] Add paper-visible descriptor-index manifest evidence.
+  - Paper evidence: AlphaEvolve's quality-diversity database should make varied
+    historical programs auditable across archive descriptor surfaces, including
+    diversity-like coordinates.
+  - Status: completed runs now persist `runtime.history.descriptor_index`, a
+    bounded top-program view for finite archive-admission descriptor values
+    with lineage root, selection score, fitness, and available objective
+    evidence.
+  - Remaining paper gap: this remains a diagnostic view over insertion-time
+    descriptor coordinates, not stable descriptor replay, learned behavior
+    embeddings, or a full replayable evolutionary database.
+  - Verification: focused database and loop tests cover the descriptor index
+    API and manifest persistence.

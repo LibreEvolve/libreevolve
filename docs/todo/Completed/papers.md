@@ -10081,3 +10081,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     provider outputs, and resumed-trace controller proof remain unimplemented.
   - Verification: focused loop tests cover valid event-stream inventories and
     mismatched, missing, and unsafe controller evidence references.
+
+- [x] Add paper-visible validator execution-policy validation.
+  - Paper evidence: AlphaEvolve-style system evaluations require clear,
+    reproducible execution boundaries and honest statements about unsupported
+    sandbox, filesystem, network, and quota enforcement.
+  - Status: `validate_validator_execution_policy()` now validates
+    `libreevolve.validator_execution_policy.v1` records for local subprocess
+    execution, unsupported sandbox/container claims, filesystem-capability
+    structure, network mode and denial scope, wall-clock-only limits,
+    unsupported CPU/memory/GPU/disk/process-count quotas, startup-manifest
+    scope, and the required per-evaluation boundary pointer.
+  - Remaining paper gap: this is policy-record validation only; configurable
+    container/security sandboxing, OS-enforced filesystem and network
+    capabilities, resource quotas, and distributed evaluator worker state
+    remain unimplemented.
+  - Verification: focused validator-policy tests cover valid host/deny
+    policies, JSON-file loading, sandbox/resource overclaims,
+    network-boundary mismatches, and missing structured records.

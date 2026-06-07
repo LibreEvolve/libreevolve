@@ -1279,13 +1279,20 @@ Primary evidence:
     structured resource record declares local subprocess timeout cleanup as the
     only supported quota mechanism and explicitly marks CPU, memory, GPU, disk,
     process-count, and container-runtime quotas unsupported.
+    `validate_validator_execution_policy()` now validates the startup policy
+    record itself, including schema, local subprocess execution, unsupported
+    sandbox/container claims, filesystem-capability structure, network mode and
+    denial scope, wall-clock-only limits, unsupported CPU/memory/GPU/disk/
+    process-count quotas, and the required pointer to per-evaluation boundary
+    metadata.
   - Remaining gap: there is still no configurable container/security sandbox,
     no OS/container-grade network egress sandbox, no proof that native
     extensions, subprocesses, or alternate runtimes cannot connect out, no
     OS-enforced filesystem capability model beyond candidate-root execution
     plus problem-local provenance/artifact/data declarations, no CPU, memory,
-    GPU, disk, or process-count quotas, no network-mediated provider-secret
-    boundary audit, and no resumable distributed evaluator worker state.
+    GPU, disk, or process-count quotas, no network-mediated provider credential
+    boundary audit, and no resumable distributed evaluator worker state. The
+    remaining gap is not startup validator policy-record validation.
   - Required result: define and enforce configurable sandbox/container,
     filesystem capability, OS/container network capability, and resource-limit
     policy for validators, with manifest-visible evidence and tests proving the

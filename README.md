@@ -2128,6 +2128,12 @@ scope, `filesystem_capabilities` with the candidate-root, declared-problem-file,
 artifact, and unsupported host-filesystem capability boundary, wall-clock-only
 limits, `resource_limit_policy`, unsupported CPU/memory/GPU/disk/process-count
 quotas, and the per-evaluation metadata field that repeats the boundary.
+`validate_validator_execution_policy()` validates that startup policy record,
+including schema, local subprocess execution, unsupported sandbox/container
+claims, candidate-root plus declared-problem-file filesystem scope, Python
+socket network modes, wall-clock-only limits, unsupported CPU/memory/GPU/disk/
+process-count quotas, and the required pointer to
+`evaluation.metadata.validator_boundary`.
 `evaluation.metadata.validator_boundary` records the current local-subprocess
 boundary, `security_sandbox: "unsupported"`, `container: "unsupported"`,
 the effective `network_policy`, `network_egress`, `network_denial`,

@@ -1714,8 +1714,13 @@ filesystem scope, structured filesystem-capability evidence, the effective
 network policy, wall-clock-only timeout limits, structured resource-limit
 evidence, unsupported CPU/memory/GPU/disk/process-count quotas, the secret
 boundary, and the `per_evaluation_metadata` value
-`evaluation.metadata.validator_boundary`. Startup
-manifests also persist the effective `config.validator_network_policy` and
+`evaluation.metadata.validator_boundary`.
+`validate_validator_execution_policy()` validates this startup policy record,
+including schema, local subprocess execution, unsupported sandbox/container
+claims, filesystem-capability structure, network mode and denial scope,
+wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count quotas,
+and the required pointer to the per-evaluation boundary metadata.
+Startup manifests also persist the effective `config.validator_network_policy` and
 `policies.validator_network`, so allowed host/deny modes and the remaining
 OS/container network-sandbox gap are visible before individual evaluation
 records are inspected. With

@@ -14976,3 +14976,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover a verified controller event stream
     plus bad manifest artifact hashes/bytes, event-count mismatches,
     last-event mismatches, and unsafe paths.
+
+- [x] Add validator execution-policy record validation.
+  - Spec evidence: AlphaEvolve-style evaluations can touch existing codebases
+    and expensive systems, so validator execution boundaries must be auditable
+    and must not overclaim unsupported sandbox/container/resource guarantees.
+  - Status: `validate_validator_execution_policy()` now validates
+    `libreevolve.validator_execution_policy.v1` records for schema,
+    local-subprocess execution, unsupported sandbox/container claims,
+    filesystem-capability structure, network mode and denial scope,
+    wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count
+    quotas, startup-manifest scope, and the per-evaluation boundary pointer.
+  - Remaining gap: this validates the manifest policy record; it does not add
+    a configurable container/security sandbox, OS-enforced filesystem
+    capabilities, OS/container network isolation, CPU/memory/GPU/disk/process
+    quotas, or distributed evaluator worker state.
+  - Verification: focused validator-policy tests cover valid host/deny policy
+    records, JSON-file loading, sandbox/resource overclaims, network-boundary
+    mismatches, and missing structured records.

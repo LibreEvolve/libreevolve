@@ -243,7 +243,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     credentials are hidden by default and persisted stdout/stderr is
     secret-redacted. Network egress policy and stronger sandboxing remain
     incomplete. Validator timeouts now attempt process-tree cleanup and record
-    cleanup metadata, but this is not a full resource sandbox. Problem-local
+    cleanup metadata, but this is not a full resource sandbox.
+    `validate_validator_execution_policy()` now validates startup
+    `libreevolve.validator_execution_policy.v1` records for honest local
+    subprocess execution, unsupported sandbox/container claims,
+    filesystem-capability structure, network mode and denial scope,
+    wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count
+    quotas, and the required per-evaluation boundary pointer. Problem-local
     evaluator helper modules are imported as sibling modules beside a
     configured validator file or through package-relative imports for package
     validators; declared evaluator data files are hashed and exposed through

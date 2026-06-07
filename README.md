@@ -1349,6 +1349,11 @@ a solver, constructor, or search procedure, but there is no first-class
 candidate-abstraction hook for raw non-code objects, custom serializers, or
 paired solution/search representations. This is a deliberate current
 divergence from AlphaEvolve's flexible solution-abstraction API.
+Startup manifests include `policies.candidate_language` with schema
+`libreevolve.candidate_language_policy.v1`, which declares this
+Python-primary text-workspace boundary, fail-closed non-Python marker handling,
+typed static-member support, and unsupported arbitrary-language/build-system
+runner surfaces.
 
 For workspace candidates, MAP-Elites defaults to performance, complexity, and
 adaptive TF-IDF char-ngram diversity descriptors. Complexity and diversity use a

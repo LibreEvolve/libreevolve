@@ -29,6 +29,7 @@ from libreevolve.core.database import (
     _program_from_history_record,
     validate_archive_event_replay_audit,
     validate_archive_state_snapshot,
+    validate_candidate_language_policy,
     validate_resurfacing_index_summary,
     validate_run_directory_path,
 )
@@ -3758,6 +3759,54 @@ def test_manifest_written():
             "network-mediated secret-boundary audit"
         ),
     }
+    candidate_language = manifest["policies"]["candidate_language"]
+    assert candidate_language == {
+        "schema": "libreevolve.candidate_language_policy.v1",
+        "policy": "python_primary_text_workspace_v1",
+        "candidate_representation": (
+            "bounded_utf8_text_workspace_with_typed_static_members"
+        ),
+        "primary_language": "python",
+        "primary_file_policy": "python_primary_file_required_for_seed_and_best_py",
+        "text_member_policy": {
+            "python_files": "evolve_block_markers_supported",
+            "non_python_text_files": "allowed_as_unmarked_workspace_members",
+            "non_python_marker_like_declarations": "rejected_fail_closed",
+        },
+        "static_member_policy": {
+            "encoded_static_binary": "bounded_base64_metadata",
+            "verified_source_copy_static_asset": "copy_only_after_hash_and_size_check",
+            "raw_binary_workspace_records": "normalized_to_static_members",
+        },
+        "runner_policy": {
+            "validator_runner": "python_subprocess_entrypoint",
+            "validator_entrypoints": "problem_local_python_files_or_packages",
+            "arbitrary_language_runners": "unsupported",
+            "build_system_runners": "unsupported",
+            "problem_defined_solution_abstractions": "unsupported",
+        },
+        "alphaevolve_divergence": (
+            "LibreEvolve currently evolves bounded Python-primary workspace "
+            "file sets instead of arbitrary language/codebase solution objects."
+        ),
+        "language_runner_ready": False,
+        "remaining_gap": [
+            "language_or_runner_declarations_for_non_python_candidates",
+            "language_aware_evolve_block_marker_grammars",
+            "problem_defined_candidate_abstraction_hooks",
+            "build_system_and_arbitrary_language_runner_contracts",
+        ],
+    }
+    candidate_language_validation = validate_candidate_language_policy(
+        candidate_language
+    )
+    assert candidate_language_validation == {
+        "schema": "libreevolve.candidate_language_policy.v1",
+        "ok": True,
+        "language_runner_ready": False,
+        "primary_language": "python",
+        "issues": [],
+    }
     assert manifest["policies"]["prompt_config_retention"] == {
         "policy": "redact_and_hash_prompt_bearing_config",
         "fields": [
@@ -3997,6 +4046,50 @@ def test_manifest_written():
         "foreign_entry_count": 0,
         "foreign_entries": [],
     }
+
+
+def test_validate_candidate_language_policy_rejects_runner_overclaims():
+    policy = {
+        "schema": "libreevolve.candidate_language_policy.v1",
+        "policy": "python_primary_text_workspace_v1",
+        "candidate_representation": (
+            "bounded_utf8_text_workspace_with_typed_static_members"
+        ),
+        "primary_language": "python",
+        "primary_file_policy": "python_primary_file_required_for_seed_and_best_py",
+        "text_member_policy": {
+            "python_files": "evolve_block_markers_supported",
+            "non_python_text_files": "allowed_as_unmarked_workspace_members",
+            "non_python_marker_like_declarations": "rejected_fail_closed",
+        },
+        "static_member_policy": {
+            "encoded_static_binary": "bounded_base64_metadata",
+            "verified_source_copy_static_asset": "copy_only_after_hash_and_size_check",
+            "raw_binary_workspace_records": "normalized_to_static_members",
+        },
+        "runner_policy": {
+            "validator_runner": "python_subprocess_entrypoint",
+            "validator_entrypoints": "problem_local_python_files_or_packages",
+            "arbitrary_language_runners": "supported",
+            "build_system_runners": "supported",
+            "problem_defined_solution_abstractions": "supported",
+        },
+        "alphaevolve_divergence": "overclaimed",
+        "language_runner_ready": True,
+        "remaining_gap": [],
+    }
+
+    validation = validate_candidate_language_policy(policy)
+
+    codes = {issue["code"] for issue in validation["issues"]}
+    assert validation["ok"] is False
+    assert validation["language_runner_ready"] is False
+    assert "runner_policy_arbitrary_language_runners_mismatch" in codes
+    assert "arbitrary_language_runners_overclaim" in codes
+    assert "build_system_runners_overclaim" in codes
+    assert "problem_defined_solution_abstractions_overclaim" in codes
+    assert "language_runner_ready_overclaim" in codes
+    assert "missing_remaining_gap" in codes
 
 
 def test_manifest_records_validator_network_deny_policy():

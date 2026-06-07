@@ -104,6 +104,7 @@ _MAX_ARTIFACT_INDEX_PROGRAMS = 50
 _MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_TEXT_CHARS = 300
+CANDIDATE_LANGUAGE_POLICY_SCHEMA = "libreevolve.candidate_language_policy.v1"
 RESURFACING_INDEX_SCHEMA = "libreevolve.resurfacing_index.v1"
 RESURFACING_INDEX_POLICY = (
     "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
@@ -5369,6 +5370,7 @@ def _startup_manifest_payload(
             "validator_network": _validator_network_policy(
                 config.validator_network_policy
             ),
+            "candidate_language": _candidate_language_policy(),
             "seed_post_processing": {
                 "policy": "raw_evaluator_baseline",
                 "llm_feedback": "not_applied",
@@ -5442,6 +5444,296 @@ def _startup_manifest_payload(
         },
         "provenance": run_provenance,
 }
+
+
+def _candidate_language_policy() -> dict:
+    return {
+        "schema": CANDIDATE_LANGUAGE_POLICY_SCHEMA,
+        "policy": "python_primary_text_workspace_v1",
+        "candidate_representation": (
+            "bounded_utf8_text_workspace_with_typed_static_members"
+        ),
+        "primary_language": "python",
+        "primary_file_policy": "python_primary_file_required_for_seed_and_best_py",
+        "text_member_policy": {
+            "python_files": "evolve_block_markers_supported",
+            "non_python_text_files": "allowed_as_unmarked_workspace_members",
+            "non_python_marker_like_declarations": "rejected_fail_closed",
+        },
+        "static_member_policy": {
+            "encoded_static_binary": "bounded_base64_metadata",
+            "verified_source_copy_static_asset": "copy_only_after_hash_and_size_check",
+            "raw_binary_workspace_records": "normalized_to_static_members",
+        },
+        "runner_policy": {
+            "validator_runner": "python_subprocess_entrypoint",
+            "validator_entrypoints": "problem_local_python_files_or_packages",
+            "arbitrary_language_runners": "unsupported",
+            "build_system_runners": "unsupported",
+            "problem_defined_solution_abstractions": "unsupported",
+        },
+        "alphaevolve_divergence": (
+            "LibreEvolve currently evolves bounded Python-primary workspace "
+            "file sets instead of arbitrary language/codebase solution objects."
+        ),
+        "language_runner_ready": False,
+        "remaining_gap": [
+            "language_or_runner_declarations_for_non_python_candidates",
+            "language_aware_evolve_block_marker_grammars",
+            "problem_defined_candidate_abstraction_hooks",
+            "build_system_and_arbitrary_language_runner_contracts",
+        ],
+    }
+
+
+def validate_candidate_language_policy(policy: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(policy, Mapping):
+        return {
+            "schema": CANDIDATE_LANGUAGE_POLICY_SCHEMA,
+            "ok": False,
+            "language_runner_ready": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "candidate language policy must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "policy",
+        "candidate_representation",
+        "primary_language",
+        "primary_file_policy",
+        "text_member_policy",
+        "static_member_policy",
+        "runner_policy",
+        "alphaevolve_divergence",
+        "language_runner_ready",
+        "remaining_gap",
+    }
+    missing = required - set(policy)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"candidate language policy missing fields: {sorted(missing)}",
+            }
+        )
+    unsupported = set(policy) - required
+    if unsupported:
+        issues.append(
+            {
+                "code": "unsupported_fields",
+                "message": (
+                    "candidate language policy has unsupported fields: "
+                    f"{sorted(unsupported)}"
+                ),
+            }
+        )
+    _candidate_policy_issue_if(
+        issues,
+        policy.get("schema") != CANDIDATE_LANGUAGE_POLICY_SCHEMA,
+        "invalid_schema",
+        "candidate language policy schema is unsupported",
+    )
+    _candidate_policy_issue_if(
+        issues,
+        policy.get("policy") != "python_primary_text_workspace_v1",
+        "invalid_policy",
+        "candidate language policy must declare the Python-primary workspace policy",
+    )
+    _candidate_policy_issue_if(
+        issues,
+        policy.get("candidate_representation")
+        != "bounded_utf8_text_workspace_with_typed_static_members",
+        "invalid_candidate_representation",
+        "candidate representation must be the bounded text workspace",
+    )
+    _candidate_policy_issue_if(
+        issues,
+        policy.get("primary_language") != "python",
+        "invalid_primary_language",
+        "primary_language must be python until non-Python runners exist",
+    )
+    _candidate_policy_issue_if(
+        issues,
+        policy.get("primary_file_policy")
+        != "python_primary_file_required_for_seed_and_best_py",
+        "invalid_primary_file_policy",
+        "primary file policy must state the Python seed/best.py boundary",
+    )
+    text_policy = policy.get("text_member_policy")
+    if not isinstance(text_policy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_text_member_policy",
+                "message": "text_member_policy must be an object",
+            }
+        )
+    else:
+        expected_text = {
+            "python_files": "evolve_block_markers_supported",
+            "non_python_text_files": "allowed_as_unmarked_workspace_members",
+            "non_python_marker_like_declarations": "rejected_fail_closed",
+        }
+        _candidate_policy_expected_mapping(
+            issues,
+            text_policy,
+            expected_text,
+            "text_member_policy",
+        )
+    static_policy = policy.get("static_member_policy")
+    if not isinstance(static_policy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_static_member_policy",
+                "message": "static_member_policy must be an object",
+            }
+        )
+    else:
+        expected_static = {
+            "encoded_static_binary": "bounded_base64_metadata",
+            "verified_source_copy_static_asset": "copy_only_after_hash_and_size_check",
+            "raw_binary_workspace_records": "normalized_to_static_members",
+        }
+        _candidate_policy_expected_mapping(
+            issues,
+            static_policy,
+            expected_static,
+            "static_member_policy",
+        )
+    runner_policy = policy.get("runner_policy")
+    if not isinstance(runner_policy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runner_policy",
+                "message": "runner_policy must be an object",
+            }
+        )
+    else:
+        expected_runner = {
+            "validator_runner": "python_subprocess_entrypoint",
+            "validator_entrypoints": "problem_local_python_files_or_packages",
+            "arbitrary_language_runners": "unsupported",
+            "build_system_runners": "unsupported",
+            "problem_defined_solution_abstractions": "unsupported",
+        }
+        _candidate_policy_expected_mapping(
+            issues,
+            runner_policy,
+            expected_runner,
+            "runner_policy",
+        )
+        for field in (
+            "arbitrary_language_runners",
+            "build_system_runners",
+            "problem_defined_solution_abstractions",
+        ):
+            if runner_policy.get(field) != "unsupported":
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain unsupported in this policy",
+                    }
+                )
+    if not isinstance(policy.get("alphaevolve_divergence"), str) or not policy[
+        "alphaevolve_divergence"
+    ].strip():
+        issues.append(
+            {
+                "code": "invalid_alphaevolve_divergence",
+                "message": "policy must describe the AlphaEvolve divergence",
+            }
+        )
+    ready = policy.get("language_runner_ready")
+    if ready is not False:
+        issues.append(
+            {
+                "code": "language_runner_ready_overclaim",
+                "message": "language_runner_ready must be false for this policy",
+            }
+        )
+    required_gaps = {
+        "language_or_runner_declarations_for_non_python_candidates",
+        "language_aware_evolve_block_marker_grammars",
+        "problem_defined_candidate_abstraction_hooks",
+        "build_system_and_arbitrary_language_runner_contracts",
+    }
+    gaps = policy.get("remaining_gap")
+    if not isinstance(gaps, list) or not all(
+        isinstance(item, str) and item for item in gaps
+    ):
+        issues.append(
+            {
+                "code": "invalid_remaining_gap",
+                "message": "remaining_gap must list unsupported language-runner work",
+            }
+        )
+    elif required_gaps - set(gaps):
+        issues.append(
+            {
+                "code": "missing_remaining_gap",
+                "message": (
+                    "remaining_gap must include all unsupported language-runner "
+                    "boundaries"
+                ),
+            }
+        )
+    return {
+        "schema": CANDIDATE_LANGUAGE_POLICY_SCHEMA,
+        "ok": not issues,
+        "language_runner_ready": not issues and ready is True,
+        "primary_language": (
+            policy.get("primary_language")
+            if isinstance(policy.get("primary_language"), str)
+            else None
+        ),
+        "issues": issues,
+    }
+
+
+def _candidate_policy_issue_if(
+    issues: list[dict],
+    condition: bool,
+    code: str,
+    message: str,
+) -> None:
+    if condition:
+        issues.append({"code": code, "message": message})
+
+
+def _candidate_policy_expected_mapping(
+    issues: list[dict],
+    value: Mapping,
+    expected: dict[str, str],
+    label: str,
+) -> None:
+    missing = set(expected) - set(value)
+    if missing:
+        issues.append(
+            {
+                "code": f"{label}_missing_fields",
+                "message": f"{label} missing fields: {sorted(missing)}",
+            }
+        )
+    unsupported = set(value) - set(expected)
+    if unsupported:
+        issues.append(
+            {
+                "code": f"{label}_unsupported_fields",
+                "message": f"{label} has unsupported fields: {sorted(unsupported)}",
+            }
+        )
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(
+                {
+                    "code": f"{label}_{field}_mismatch",
+                    "message": f"{label}.{field} must be {expected_value}",
+                }
+            )
 
 
 def _validator_stdin_policy() -> dict:

@@ -657,6 +657,12 @@ Marker validation is fail-closed for non-Python marker-looking files:
 JavaScript/C-style, HTML-style, or `# EVOLVE-BLOCK-*` declarations in
 non-`.py` candidate files produce `unsupported_evolve_block_marker_syntax`
 before mutation or persistence.
+Startup manifests include `policies.candidate_language` with schema
+`libreevolve.candidate_language_policy.v1`. That record declares the current
+Python-primary bounded text-workspace representation, typed static-member
+support, fail-closed non-Python marker handling, Python subprocess validator
+runner boundary, and explicit unsupported status for arbitrary-language
+runners, build-system runners, and problem-defined solution abstractions.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

@@ -55,6 +55,9 @@ LibreEvolve has:
   `best_workspace/` artifacts; startup manifests retain configured absolute
   `log_dir` roots as a placeholder plus SHA-256 metadata rather than raw local
   paths
+- manifest-visible `libreevolve.candidate_language_policy.v1` records that
+  declare the current Python-primary text-workspace boundary and explicitly
+  mark arbitrary-language/build-system runners as unsupported
 - local run-budget stop accounting for generations, evaluations,
   evaluator-seconds, and wall-clock runtime
 - framework-owned run-local RNG isolation plus persisted `runtime.rng`
@@ -69,7 +72,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 1. Finish candidate workspace fidelity
 
-- Add language/runner declarations or keep the Python-only divergence explicit.
+- Extend the current Python-primary candidate-language policy into actual
+  language/runner declarations when non-Python candidates become supported.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.

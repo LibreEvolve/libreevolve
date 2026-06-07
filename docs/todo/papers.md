@@ -19,6 +19,25 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
     a time; there are no async LLM sampler queues or parallel evaluator nodes.
 
+- [ ] Add AlphaEvolve-grade candidate language, build, and runner contracts.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
+  - Requirement: tasks define the program artifact and evaluator interface; a
+    faithful system should be able to operate on codebases and task-specific
+    solution representations rather than only one Python-primary workspace
+    shape.
+  - Partial status: startup manifests now include
+    `libreevolve.candidate_language_policy.v1`, declaring the current
+    `python_primary_text_workspace_v1` boundary, bounded UTF-8 workspace plus
+    typed static members, fail-closed non-Python marker handling, Python
+    subprocess validator runner, and unsupported arbitrary-language,
+    build-system, and problem-defined solution-abstraction surfaces.
+    `validate_candidate_language_policy()` rejects overclaims that those
+    surfaces are ready.
+  - Current gap: this is an honest boundary record, not non-Python or
+    arbitrary-codebase support. There are no configured language runners,
+    build-system contracts, language-aware marker grammars, or task-defined
+    candidate abstraction hooks.
+
 - [ ] Overall compute-budget accounting and ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation

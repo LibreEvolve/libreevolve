@@ -15,6 +15,32 @@ Primary evidence:
 - Current implementation in `libreevolve/core`, `libreevolve/population`,
   `libreevolve/problems`, `libreevolve/llm`, and `libreevolve/plugins`.
 
+## Candidate Workspace Fidelity
+
+- [ ] Extend the Python-primary candidate-language policy to real language and
+  runner declarations.
+  - Spec evidence: AlphaEvolve describes evolving code in existing codebases
+    with task-defined evaluators; a faithful implementation needs explicit
+    candidate language/build/runner boundaries instead of treating every
+    candidate as a Python-primary file set.
+  - Current evidence: startup manifests now include
+    `policies.candidate_language` with schema
+    `libreevolve.candidate_language_policy.v1`. The record declares
+    `python_primary_text_workspace_v1`, bounded UTF-8 text workspace plus typed
+    static members, Python-primary seed and `best.py` compatibility policy,
+    fail-closed marker handling for non-Python marker-like files, Python
+    subprocess validator entrypoints, and explicit unsupported status for
+    arbitrary-language runners, build-system runners, and problem-defined
+    solution abstractions. `validate_candidate_language_policy()` rejects
+    overclaims that those runner surfaces are supported or language-runner
+    ready.
+  - Required result: add configured candidate language/runner declarations,
+    language-aware evolve-block grammars, build-system runner contracts, and
+    problem-defined candidate abstraction hooks before claiming non-Python or
+    arbitrary-codebase AlphaEvolve fidelity. The remaining gap is implementing
+    those runners and abstractions, not making the current Python-only
+    divergence manifest-visible.
+
 ## Prompt Sampling and Context
 
 - [ ] Add provider-token prompt section fitting and restored token/cost budget state.

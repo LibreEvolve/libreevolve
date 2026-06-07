@@ -524,7 +524,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     objective metric descriptor-cell overlays that retain best programs by each
     normalized metric and feed metric/frontier retained pools, so programs can
     survive for excelling in a specific metric even when they lose scalar
-    primary-cell placement. Runtime
+    primary-cell placement. The AlphaEvolve table now scopes the open
+    multi-objective search gap to Pareto/frontier primary archive replacement
+    and durable cross-run metric-specific optimization rather than claiming all
+    frontier or metric-specific search remains absent. Runtime
     manifests now include `runtime.history.resurfacing_index`, a bounded
     deterministic rank-fusion view over score, metric, frontier, lineage,
     descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`

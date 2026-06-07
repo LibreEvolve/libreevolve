@@ -249,9 +249,10 @@ is not yet an AlphaEvolve reproduction.
   token-cost estimates, and richer budget-event evidence.
 - Extend the current configurable role/backend consecutive-failure quarantine
   and zero-reward scheduler penalty beyond ensemble-local retry/fallback
-  handling to cross-run resume, provider isolation, live cancellation/stop
-  behavior, and persisted runtime artifacts for mutation, critique, feedback,
-  and meta-prompt calls.
+  handling, restorable scheduler failure-policy state, and strict ledger
+  summaries to cross-run resume, provider isolation, live cancellation/stop
+  behavior, raw provider-output replay, and persisted runtime artifacts for
+  mutation, critique, feedback, and meta-prompt calls.
 - Connect `libreevolve.provider_cancellation_policy.v1` to live provider SDK
   cancellation, budget-affecting timeout/cancellation stop behavior across LLM
   roles, cross-run quarantine/resume behavior, and persisted role-specific

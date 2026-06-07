@@ -172,9 +172,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     role-specific timeout/cancellation artifacts beyond configured in-run
     quarantine observations, accelerator/worker budget enforcement, live
     provider pricing/default-rate capture beyond configured token-cost
-    estimates, provider-output replay, and async/pending-work controller
-    restore. The remaining gap is not
-    remaining-runtime wait-deadline propagation, timeout call telemetry,
+    estimates, provider-output/raw-payload replay beyond bounded retained
+    diagnostics, and async/pending-work controller restore. The remaining gap
+    is not in-run role/backend failure quarantine state, strict
+    provider-failure ledger summaries, restorable scheduler failure-policy
+    state, remaining-runtime wait-deadline propagation, timeout call telemetry,
     mutation timeout failure-history logging, or one-command restoration of
     replayable provider-attempt/token/configured-cost/latency controller events
     for the current synchronous runtime bundle.

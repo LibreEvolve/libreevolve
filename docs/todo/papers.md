@@ -2347,22 +2347,28 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 4 presents the
     main-text matrix multiplication discovery exhibit, including a concrete
     4x4 tensor-decomposition search-program diff and the surrounding
-    Section 3.1/Table 2 matrix rank-improvement context.
+    Section 3.1/Table 2 matrix rank-improvement context. Its caption says the
+    displayed discovery required 15 mutations and made non-trivial changes to
+    the optimizer, weight initialization, loss function, and hyperparameter
+    sweep.
   - Current gap: matrix paper evidence tracks Appendix A target identities,
     report validation, companion Colab TODOs, near-integrality, scalar-field,
     baseline, and Figure 9 sweep-space gaps. It does not preserve the
     paper-facing Figure 4 exhibit as its own evidence object with stable
     exhibit id, exact source diff excerpt artifact/hash, selected matrix target
     and result-row links, caption values, visual/text artifact hashes,
-    rendering/source parameters, or links from the displayed figure to report,
-    certificate, notebook, and source-paper artifacts.
+    rendering/source parameters, the accepted 15-mutation sequence, component
+    labels for optimizer/initialization/loss/sweep changes, or links from the
+    displayed figure to report, certificate, notebook, and source-paper
+    artifacts.
   - Required result: add paper-facing Figure 4 exhibit records and validation:
     figure/exhibit id, source PDF page/caption location, target ids, exact diff
     excerpt artifact and hash, Table 2/Appendix A row mappings, rank/baseline
-    values, rendered artifact paths/hashes, and links to decomposition reports,
-    exactness certificates, companion notebook/source evidence, and README/
-    ROADMAP wording that separates main-text exhibit reproduction from general
-    matrix benchmark coverage.
+    values, rendered artifact paths/hashes, accepted mutation count and
+    component lineage, and links to decomposition reports, exactness
+    certificates, companion notebook/source evidence, and README/ROADMAP
+    wording that separates main-text exhibit reproduction from general matrix
+    benchmark coverage.
 
 - [ ] Track matrix baseline-component provenance for Section 3.1 workflows.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the

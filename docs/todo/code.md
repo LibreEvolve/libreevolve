@@ -2209,23 +2209,27 @@ Primary evidence:
     multiplication discovery exhibit: a concrete evolved 4x4
     tensor-decomposition search-program diff with optimizer, initialization,
     noise, clipping, and loss changes, tied to the Section 3.1/Table 2 matrix
-    rank-improvement claims.
+    rank-improvement claims. The caption also says AlphaEvolve made
+    non-trivial changes to the optimizer, weight initialization, loss function,
+    and hyperparameter sweep, requiring 15 accepted mutations during the
+    evolutionary process.
   - Current evidence: LibreEvolve tracks Appendix A target/report contracts,
     checked Strassen bundle evidence, matrix baseline-component TODOs, and
     Figure 9 sweep-space provenance TODOs. Those cover benchmark/result shape
     and the Appendix A search-program workflow, but no code/report schema
     records a Figure 4 exhibit id, exact source diff excerpt artifact/hash,
     selected target/result-row mapping, caption values, rendering/source
-    parameters, visual/text artifact hashes, or links from the displayed
-    exhibit to decomposition reports, certificates, and companion paper
-    evidence.
+    parameters, visual/text artifact hashes, the 15-mutation accepted-lineage
+    count, per-mutation component labels, or links from the displayed exhibit
+    to decomposition reports, certificates, and companion paper evidence.
   - Required result: add Figure 4-style matrix exhibit metadata with stable
     exhibit ids, target ids, exact source/diff excerpt artifacts and hashes,
     selected Table 2/Appendix A row mappings, rank/baseline/outcome values,
-    rendered figure/text artifacts, and links to matrix report, certificate,
-    notebook, and paper-source evidence so docs distinguish main-text exhibit
-    reproduction from general matrix benchmark readiness and Appendix A
-    Figure 9 sweep evidence.
+    rendered figure/text artifacts, accepted mutation sequence length,
+    component-change categories for each accepted mutation, and links to matrix
+    report, certificate, notebook, and paper-source evidence so docs
+    distinguish main-text exhibit reproduction from general matrix benchmark
+    readiness and Appendix A Figure 9 sweep evidence.
 
 - [ ] Add matrix scalar-field provenance for real, complex, and characteristic
       claims.

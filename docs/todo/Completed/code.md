@@ -14994,3 +14994,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused validator-policy tests cover valid host/deny policy
     records, JSON-file loading, sandbox/resource overclaims, network-boundary
     mismatches, and missing structured records.
+
+- [x] Add provider capability lookup policy validation.
+  - Spec evidence: AlphaEvolve-style provider orchestration needs auditable
+    model/API capability provenance and must not imply live provider discovery
+    when only local static validation occurred.
+  - Status: `validate_provider_capability_lookup_policy()` now validates
+    `libreevolve.provider_capability_lookup_policy.v1` records for static-only
+    provider lookup boundaries, required local validation checks, unique
+    backend indices, OpenAI API-mode policy linkage, offline compatibility, and
+    explicit non-use of live model-registry, service/API-version, or
+    account-availability discovery.
+  - Remaining gap: this validates the static manifest policy record; live
+    provider model-registry discovery, service/API-version capture,
+    account-availability evidence, remote provider defaults, live pricing, and
+    raw provider payload replay remain open.
+  - Verification: focused provider capability-policy tests cover valid static
+    records, JSON-file loading, live-lookup overclaims, malformed records, and
+    missing record lists.

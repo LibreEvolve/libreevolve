@@ -164,8 +164,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     policies, retained hash/text/character counts, redaction/truncation
     counts, configured cost-estimate evidence, not-estimated reasons, backend
     defaults, call-history retention, and a records hash while explicitly
-    avoiding full raw provider-payload and live-pricing claims. The budget
-    report contract
+    avoiding full raw provider-payload and live-pricing claims.
+    `validate_provider_capability_lookup_policy()` now validates
+    `libreevolve.provider_capability_lookup_policy.v1` records for static-only
+    provider lookup boundaries, OpenAI API-mode policy linkage, offline
+    compatibility, and explicit non-use of live model-registry,
+    service/API-version, or account-availability discovery. The budget report contract
     now rejects restored-state claims that lack persisted resume-state
     evidence. Focused ensemble tests now cover fake provider usage counts and
     adapter retry diagnostics for mutation, critique, feedback, and

@@ -1027,6 +1027,12 @@ Primary evidence:
     response/error text retention, bounded scalar diagnostics rather than full
     provider-native payloads, and configured estimates rather than live
     pricing.
+    `validate_provider_capability_lookup_policy()` now validates
+    `libreevolve.provider_capability_lookup_policy.v1` records for static-only
+    provider lookup boundaries, required local validation checks, OpenAI
+    API-mode policy linkage, offline compatibility, and explicit non-use of
+    live model-registry, service/API-version, or account-availability
+    discovery.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for

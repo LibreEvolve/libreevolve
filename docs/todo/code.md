@@ -1322,6 +1322,31 @@ Primary evidence:
     proving large-codebase diff prompts and short-code/full-rewrite prompts
     are selected under documented AlphaEvolve-style conditions.
 
+- [ ] Add mutation-operator construction policy beyond fixed local edit modes.
+  - Spec evidence: AlphaEvolve Section 2.3 still uses structured edit
+    payloads such as SEARCH/REPLACE or direct full-code output, but Related
+    Work contrasts AlphaEvolve with classic evolutionary systems that require
+    a fixed handwritten set of mutation and crossover operators. The paper
+    frames the LLM as using world knowledge and prior solution ideas to
+    construct useful program mutations, not merely selecting among
+    predeclared local operator families.
+  - Current evidence: LibreEvolve currently exposes a fixed mutation surface:
+    configured `diff` or `full` response modes plus bounded full-workspace
+    file/block and topology commands. Prompt templates can vary wording and
+    proposal metadata, and future adaptive `diff`/`full` selection is tracked
+    separately, but the run does not declare, generate, score, or report
+    open-ended mutation-operator families such as targeted decomposition,
+    algorithmic reformulation, data-structure substitution, multi-component
+    refactoring, recombination, or benchmark-specific edit strategies. Any
+    strategy must fit through the locally handwritten parser/operator grammar.
+  - Required result: add a versioned mutation-operator policy/report that
+    distinguishes the edit payload grammar from the higher-level mutation
+    strategy, records which operator family a proposal attempted or generated,
+    allows task/candidate/failure-aware operator construction or adaptive
+    strategy selection, and includes tests plus benchmark telemetry before
+    claiming AlphaEvolve's "no fixed handwritten mutation-operator set"
+    related-work contrast.
+
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs

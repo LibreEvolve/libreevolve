@@ -98,6 +98,11 @@ is not yet an AlphaEvolve reproduction.
   parity for entire-code-file, hundreds-of-lines, or multi-component algorithm
   evolution; current multi-file workspace support is only a local mechanics
   surface.
+- Add mutation-operator construction reporting before claiming AlphaEvolve's
+  Related Work distinction from systems with fixed handwritten mutation or
+  crossover operator sets. Current diff/full/topology support is an edit
+  grammar, not evidence that LLMs construct or adapt higher-level operator
+  families.
 - Extend binary/static candidate handling beyond the current bounded encoded
   static members, verified copy-only static assets, and raw direct-workspace
   byte normalization into richer binary mutation/replay policy.

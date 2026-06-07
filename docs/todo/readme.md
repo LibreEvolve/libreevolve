@@ -779,6 +779,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     full-rewrite prompts are selected under documented AlphaEvolve-style
     conditions.
 
+- [ ] Keep README mutation-operator wording scoped to fixed local edit
+      surfaces until operator-construction evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.3 uses structured edit payloads, but
+    Related Work distinguishes AlphaEvolve from evolutionary systems that need
+    a handwritten set of mutation or crossover operators.
+  - Current evidence: README correctly describes SEARCH/REPLACE diffs,
+    configured full-block/full-code replacement, workspace file sections, and
+    topology mutations. It does not yet describe a policy or report proving
+    that LLMs construct higher-level mutation-operator families, that those
+    families are selected adaptively from task/candidate/failure evidence, or
+    that operator-family telemetry exists beyond the fixed parser/edit modes.
+  - Required result: when mutation-operator construction policy lands, update
+    README, ROADMAP, papers index, and code/paper TODOs with the boundary
+    between edit payload grammar and mutation strategy, proposal-level
+    operator-family provenance, adaptive selection/construction evidence, and
+    benchmark telemetry before README implies AlphaEvolve-style replacement of
+    handwritten mutation operators.
+
 - [ ] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated

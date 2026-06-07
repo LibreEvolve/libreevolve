@@ -613,6 +613,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they do not imply AlphaEvolve-style freeform rationale parsing
     already exists.
 
+- [ ] Keep mutation-operator roadmap wording scoped to fixed edit surfaces
+      until operator-construction evidence lands.
+  - Spec evidence: AlphaEvolve Section 2.3 uses structured edit outputs, while
+    Related Work contrasts the system with evolutionary approaches that rely
+    on a pre-defined handwritten mutation/crossover operator set.
+  - Current evidence: `ROADMAP.md` current state lists SEARCH/REPLACE diff
+    mutation, configurable full replacement, and workspace topology mutations.
+    That is accurate for the local edit grammar, but it does not prove that
+    LibreEvolve can declare, generate, select, score, or report higher-level
+    LLM-constructed mutation-operator families independent of the fixed local
+    parser surfaces.
+  - Required result: when mutation-operator construction or adaptive
+    operator-family selection lands, update ROADMAP, README, papers index, and
+    code/paper TODOs together so roadmap wording separates implemented
+    edit-payload support from AlphaEvolve's broader claim that LLMs replace
+    handwritten mutation-operator sets.
+
 - [ ] Keep database-query-index follow-up wording scoped to run-local
       resurfacing versus durable cross-run indexes.
   - Spec evidence: AlphaEvolve's program database should support durable

@@ -956,6 +956,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     diff/full choice follows documented AlphaEvolve-style conditions rather
     than a fixed run configuration.
 
+- [ ] Track LLM-constructed mutation-operator evidence beyond fixed edit
+      modes.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Related Work.
+  - Requirement: AlphaEvolve uses structured edit payloads, but the paper
+    contrasts its LLM-guided mutation with evolutionary systems that depend on
+    handwritten mutation/crossover operator sets.
+  - Partial status: LibreEvolve supports canonical SEARCH/REPLACE diffs,
+    configured full replacement modes, workspace file sections, and bounded
+    topology commands.
+  - Current gap: those are still fixed local edit surfaces selected by
+    configuration and parser grammar. The paper index has no evidence that
+    LibreEvolve declares, generates, selects, scores, or reports higher-level
+    LLM-constructed operator families such as decomposition, algorithmic
+    reformulation, recombination, multi-component refactoring, or
+    benchmark-specific edit strategies.
+  - Required result: add a paper-visible mutation-operator policy/report with
+    proposal-level operator-family provenance, adaptive operator construction
+    or selection evidence, parser/edit-grammar separation, and benchmark
+    telemetry before claiming AlphaEvolve parity for replacing handwritten
+    mutation operators with LLM-generated program mutations.
+
 - [ ] Complete full validator-metadata rendering and provider-token prompt
   packing.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.

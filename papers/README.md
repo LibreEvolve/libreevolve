@@ -229,6 +229,14 @@ evaluation or evolutionary approaches; LibreEvolve needs structured
 idea-origin metadata and equal-budget seed-variant evidence before making that
 class of paper claim.
 
+AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
+surfaces listed in the table, including SEARCH/REPLACE, configured full
+replacement, file/block sections, and topology commands. It does not yet have
+paper-visible evidence that LLMs construct or adapt higher-level mutation
+operator families beyond those fixed local parser surfaces, so the
+AlphaEvolve Related Work distinction from handwritten mutation/crossover
+operator sets remains an open evidence gap.
+
 AlphaEvolve initial-program validity note: current seed handling can evaluate
 and record invalid generation-0 seeds as permissive optimization-pressure
 baselines, including examples such as `hello_world`. AlphaEvolve Section 2.1

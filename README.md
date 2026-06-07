@@ -702,6 +702,15 @@ as JSON strings under typed feedback sections. Parent and inspiration
 workspaces are rendered as typed, length-counted, JSON-escaped file records
 instead of markdown code fences, preserving embedded backticks and non-Python
 file metadata as content rather than prompt structure.
+
+The current mutation surface is still a fixed local edit grammar:
+SEARCH/REPLACE diffs, configured full replacement, workspace file/block
+sections, and topology commands. AlphaEvolve also emphasizes LLM-guided
+mutation beyond handwritten mutation/crossover operator sets; LibreEvolve does
+not yet report LLM-constructed operator families, adaptive operator-strategy
+selection, or benchmark telemetry separating higher-level mutation strategy
+from the parser grammar.
+
 Explicit problem context bodies are also rendered as character-counted JSON
 strings under source citation headers, and context entries render in
 deterministic path order. Citation headers use bounded/redacted display

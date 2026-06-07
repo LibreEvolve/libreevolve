@@ -1248,10 +1248,14 @@ Primary evidence:
     Appendix A Table 3 target identities, dimensions, best-known ranks,
     AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
     `alphaevolve_appendix_a` reject unknown target ids and dimension
-    mismatches. `libreevolve.matrix_result_artifact_inventory.v1` now verifies
-    declared algorithm/certificate/notebook artifact references against
-    concrete files under an explicit artifact root, checking safe relative
-    paths, existence, SHA-256 hashes, and byte counts.
+    mismatches. That registry is rank/outcome metadata only: it does not store
+    the target tensors, discovered tensor decompositions, coefficient lists,
+    per-target exactness certificates, notebook exports, or construction
+    provenance needed to reproduce Appendix A algorithms.
+    `libreevolve.matrix_result_artifact_inventory.v1` now verifies declared
+    algorithm/certificate/notebook artifact references against concrete files
+    under an explicit artifact root, checking safe relative paths, existence,
+    SHA-256 hashes, and byte counts.
     `write_strassen_2x2_publication_bundle()` now emits a concrete checked
     Strassen artifact bundle for the registered `mm_2x2x2` target, including
     canonical algorithm, certificate, notebook, report, and artifact-inventory
@@ -1260,15 +1264,15 @@ Primary evidence:
     `libreevolve.matrix_publication_bundle.v1` wrapper, embedded report,
     target identity, report-file hash/byte evidence, and inventory
     consistency for that bundle.
-  - Required result: connect exact tensor-decomposition algorithms,
-    certificate artifacts, and notebook/export artifacts to the registered
-    target suite; keep the existing Python smoke example clearly outside
-    AlphaEvolve-comparison evidence until it emits validated tensor-result
-    reports. The remaining gap is generating discovered exact algorithms,
-    certificates, and notebook/export files across the registered target suite,
-    not validating declared artifact inventory, validating the checked bundle
-    wrapper, or emitting the one checked Strassen baseline once those files
-    exist.
+  - Required result: connect exact target tensors, tensor-decomposition
+    algorithms, coefficient-domain data, certificate artifacts, and
+    notebook/export artifacts to the registered target suite; keep the existing
+    Python smoke example clearly outside AlphaEvolve-comparison evidence until
+    it emits validated tensor-result reports. The remaining gap is generating
+    discovered exact algorithms, certificates, and notebook/export files across
+    the registered target suite, not validating declared artifact inventory,
+    validating the checked bundle wrapper, or emitting the one checked Strassen
+    baseline once those files exist.
 
 - [ ] Connect real systems fixtures to held-out and reference-correctness
   evidence.

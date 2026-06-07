@@ -163,13 +163,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Strassen bundle for registered `mm_2x2x2` with canonical algorithm,
     certificate, notebook, report, and artifact-inventory files, while also
     stating that this is a reproducible baseline artifact and not evidence that
-    LibreEvolve discovered or exported the full Appendix A target suite.
+    LibreEvolve discovered or exported the full Appendix A target suite. The
+    54-target Appendix A registry is rank/outcome metadata, not stored target
+    tensors, discovered decompositions, coefficient lists, per-target
+    certificates, notebook exports, or construction provenance.
     Matching paper TODO and paper-index entries now make the same distinction.
   - Required result: when real tensor-decomposition benchmark runs emit
-    discovered algorithms, certificates, notebooks, or publication bundles
-    across Appendix A targets, update README, ROADMAP, papers index, and
-    code/paper TODO entries together so README neither underclaims the checked
-    Strassen baseline nor overclaims AlphaEvolve-comparable discovery coverage.
+    target tensors, discovered algorithms, coefficient data, certificates,
+    notebooks, or publication bundles across Appendix A targets, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README neither underclaims the checked Strassen baseline nor overclaims
+    AlphaEvolve-comparable discovery coverage.
 
 - [ ] Keep README certification and systems-result wording scoped to report
   contracts versus executed independent evidence.

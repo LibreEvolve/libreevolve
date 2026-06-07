@@ -1308,7 +1308,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     the 54 Appendix A Table 3 target identities, dimensions, best-known ranks,
     AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
     `alphaevolve_appendix_a` reject unknown target ids and dimension
-    mismatches. `libreevolve.matrix_result_artifact_inventory.v1` now verifies
+    mismatches. The registry is not itself construction evidence: it does not
+    store target tensors, discovered tensor decompositions, coefficient lists,
+    per-target exactness certificates, notebook exports, or construction
+    provenance for reproducing Appendix A algorithms.
+    `libreevolve.matrix_result_artifact_inventory.v1` now verifies
     declared algorithm/certificate/notebook artifact paths against concrete
     files under an explicit artifact root, checking safe relative paths,
     existence, SHA-256 hashes, and byte counts.
@@ -1323,12 +1327,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     equivalents for reproducing discovered algorithms across the full Appendix
     A suite.
   - Required result: connect real matrix target tensors, exact algorithm
-    artifacts, certificate-generation artifacts, and generated export/notebook
-    links to real report instances before treating LibreEvolve matrix results
-    as AlphaEvolve-comparable evidence. The remaining gap is producing those
-    discovered tensor artifacts for the suite, not verifying declared report
-    artifacts, validating the checked bundle wrapper, or emitting one checked
-    Strassen baseline once those files exist.
+    artifacts, coefficient-domain data, certificate-generation artifacts, and
+    generated export/notebook links to real report instances before treating
+    LibreEvolve matrix results as AlphaEvolve-comparable evidence. The
+    remaining gap is producing those discovered tensor artifacts for the suite,
+    not verifying declared report artifacts, validating the checked bundle
+    wrapper, or emitting one checked Strassen baseline once those files exist.
 
 - [ ] Generate independent certification evidence for paper-level result
   claims.

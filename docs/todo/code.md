@@ -959,10 +959,16 @@ Primary evidence:
     `libreevolve.example_benchmark_scope.v1`; emit expected artifact schemas,
     repeated-seed evaluation, target/SOTA baselines, benchmark reports suitable
     for comparing AlphaEvolve-alignment features, and real anti-gaming
-    fixtures for benchmark-grade operation/rank discovery. The remaining gap
-    is generating those benchmark-grade hardening files from real fixtures, not
-    verifying declared files once a report names them or preventing declared
-    hardening evidence from overriding the smoke-only scope registry.
+    fixtures for benchmark-grade operation/rank discovery. The matrix smoke
+    fixture now has `write_matrix_smoke_hardening_bundle()`, which emits
+    concrete negative-fixture files, detector-log, hardening report,
+    artifact inventory, summary, and smoke-scope validation evidence while
+    preserving `alphaevolve_comparable: false`.
+    The remaining gap is generating benchmark-grade hardening files from real
+    tensor/geometric benchmark fixtures, not emitting smoke-scope matrix
+    hardening evidence, verifying declared files once a report names them, or
+    preventing declared hardening evidence from overriding the smoke-only
+    scope registry.
 
 - [ ] Add matrix tensor benchmark result artifacts and per-seed hit-rate
   reporting.

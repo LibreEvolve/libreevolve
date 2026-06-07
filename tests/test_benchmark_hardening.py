@@ -2,12 +2,14 @@ import hashlib
 import json
 
 from libreevolve.problems.benchmarks.benchmark_hardening import (
+    BENCHMARK_HARDENING_BUNDLE_SCHEMA,
     BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA,
     BENCHMARK_HARDENING_SCHEMA,
     benchmark_hardening_artifact_inventory,
     render_benchmark_hardening_summary,
     validate_benchmark_evidence_scope,
     validate_benchmark_hardening_report,
+    write_matrix_smoke_hardening_bundle,
 )
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
@@ -324,3 +326,36 @@ def test_benchmark_hardening_summary_renders_coverage_counts():
     assert "| protected_signal_count | 2 |" in summary
     assert "| shortcut_threat_count | 3 |" in summary
     assert "| negative_fixture_count | 3 |" in summary
+
+
+def test_matrix_smoke_hardening_bundle_writes_scope_checked_evidence(tmp_path):
+    bundle = write_matrix_smoke_hardening_bundle(tmp_path)
+    report = bundle["report"]
+    inventory = bundle["inventory"]
+
+    assert bundle["schema"] == BENCHMARK_HARDENING_BUNDLE_SCHEMA
+    assert bundle["benchmark_id"] == "matrix_multiplication_smoke"
+    assert bundle["level"] == "smoke"
+    assert bundle["alphaevolve_comparable"] is False
+    assert bundle["scope_validation"]["ok"] is True
+    assert bundle["scope_validation"]["scope_level"] == "smoke"
+    assert bundle["scope_validation"]["hardening_level"] == "smoke"
+    assert validate_benchmark_hardening_report(report).ok is True
+    assert inventory["ok"] is True
+    assert inventory["record_count"] == 4
+    assert {record["status"] for record in inventory["records"]} == {"verified"}
+
+    report_path = tmp_path / bundle["report_path"]
+    inventory_path = tmp_path / bundle["inventory_path"]
+    summary_path = tmp_path / bundle["summary_path"]
+    scope_path = tmp_path / bundle["scope_validation_path"]
+    assert report_path.exists()
+    assert inventory_path.exists()
+    assert summary_path.exists()
+    assert scope_path.exists()
+    assert hashlib.sha256(report_path.read_bytes()).hexdigest() == bundle["report_sha256"]
+    assert hashlib.sha256(inventory_path.read_bytes()).hexdigest() == bundle["inventory_sha256"]
+    assert hashlib.sha256(summary_path.read_bytes()).hexdigest() == bundle["summary_sha256"]
+    assert "Benchmark hardening report: matrix_multiplication_smoke" in summary_path.read_text(
+        encoding="utf-8"
+    )

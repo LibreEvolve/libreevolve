@@ -977,14 +977,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim
     scope mismatches, and inconsistent inventory evidence.
+    `write_matrix_smoke_hardening_bundle()` now emits real hardening files for
+    the shipped `matrix_multiplication` smoke fixture: negative-fixture JSON,
+    detector log, hardening report, artifact inventory, summary, and
+    smoke-scope validation, all while preserving `alphaevolve_comparable:
+    false`.
   - Required result: distinguish smoke examples from benchmark fixtures in docs,
     add operation/rank-aware matrix benchmark validation beyond the current
     2x2 smoke checks, connect hardening reports and artifact schemas for
     geometric constructions, and create repeatable benchmark reports tied to
     AlphaEvolve target families. The remaining paper gap is generating those
-    anti-gaming evidence files from real benchmark fixtures, not verifying
-    declared hardening files once a report names them or preventing declared
-    hardening evidence from overriding the smoke-only scope registry.
+    anti-gaming evidence files from benchmark-grade tensor/geometric fixtures,
+    not emitting matrix smoke hardening evidence, verifying declared hardening
+    files once a report names them, or preventing declared hardening evidence
+    from overriding the smoke-only scope registry.
 
 - [ ] Preserve AlphaEvolve's matrix-result publication contract.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A

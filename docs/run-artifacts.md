@@ -1741,6 +1741,14 @@ and hardening artifacts must resolve safely under that root, exist as files,
 and match their reported SHA-256 hashes and byte counts. This verifies
 anti-gaming evidence files, not a real benchmark runner or randomized/
 exhaustive fixture execution.
+`write_matrix_smoke_hardening_bundle()` emits a checked
+`libreevolve.benchmark_hardening_bundle.v1` bundle for the shipped
+`matrix_multiplication` smoke fixture under
+`hardening/matrix_multiplication_smoke/`. The bundle writes negative-fixture
+JSON files, a detector log, hardening report, artifact inventory, summary, and
+scope-validation JSON. Its scope policy keeps the shipped matrix example
+smoke-only with `alphaevolve_comparable: false`; it is not tensor-rank
+benchmark evidence.
 `validate_benchmark_evidence_scope()` cross-checks a hardening report against
 its example scope record and optional hardening artifact inventory. This keeps
 smoke-only shipped examples from being promoted to benchmark or paper-claim

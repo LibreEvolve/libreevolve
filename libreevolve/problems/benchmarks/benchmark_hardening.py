@@ -11,6 +11,7 @@ from typing import Any
 BENCHMARK_HARDENING_SCHEMA = "libreevolve.benchmark_hardening.v1"
 BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.benchmark_hardening_artifact_inventory.v1"
 BENCHMARK_EVIDENCE_SCOPE_SCHEMA = "libreevolve.benchmark_evidence_scope.v1"
+BENCHMARK_HARDENING_BUNDLE_SCHEMA = "libreevolve.benchmark_hardening_bundle.v1"
 BENCHMARK_LEVELS = frozenset({"smoke", "benchmark", "paper_claim"})
 SHORTCUT_CATEGORIES = frozenset(
     {
@@ -175,6 +176,163 @@ def render_benchmark_hardening_summary(report: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def write_matrix_smoke_hardening_bundle(artifact_root: str | Path) -> dict[str, Any]:
+    """Emit checked hardening evidence for the shipped matrix smoke fixture."""
+    root = Path(artifact_root)
+    bundle_dir = root / "hardening" / "matrix_multiplication_smoke"
+    fixture_dir = bundle_dir / "negative_fixtures"
+    detector_log = {
+        "schema": "libreevolve.matrix_smoke_detector_log.v1",
+        "benchmark_id": "matrix_multiplication_smoke",
+        "scope": "smoke_only_not_alphaevolve_tensor_rank_benchmark",
+        "detectors": [
+            {
+                "category": "hardcoded_cases",
+                "kind": "randomized_cases",
+                "description": "Validator uses deterministic integer cases beyond the seed examples and rejects fixed-case lookup shortcuts.",
+            },
+            {
+                "category": "library_delegation",
+                "kind": "static_ast",
+                "description": "Validator rejects numpy/import and library delegation paths for matmul2.",
+            },
+            {
+                "category": "dead_code_counter",
+                "kind": "static_ast",
+                "description": "Validator counts multiplication operators inside matmul2 and rejects module-level dead-code counters.",
+            },
+        ],
+    }
+    fixture_payloads = {
+        "hardcoded_cases": {
+            "schema": "libreevolve.matrix_smoke_negative_fixture.v1",
+            "category": "hardcoded_cases",
+            "candidate_summary": "fixed-three-case lookup table for validator examples",
+            "expected_detector": "randomized_cases",
+            "expected_status": "rejected",
+        },
+        "library_delegation": {
+            "schema": "libreevolve.matrix_smoke_negative_fixture.v1",
+            "category": "library_delegation",
+            "candidate_summary": "delegates multiplication to numpy or imported helpers",
+            "expected_detector": "static_ast",
+            "expected_status": "rejected",
+        },
+        "dead_code_counter": {
+            "schema": "libreevolve.matrix_smoke_negative_fixture.v1",
+            "category": "dead_code_counter",
+            "candidate_summary": "declares fake multiplication counter outside matmul2",
+            "expected_detector": "static_ast",
+            "expected_status": "rejected",
+        },
+    }
+    fixture_records = []
+    for category, payload in fixture_payloads.items():
+        path = fixture_dir / f"reject_{category}.json"
+        info = _write_json_artifact(path, payload)
+        fixture_records.append(
+            {
+                "id": f"reject_{category}",
+                "category": category,
+                "status": "passed",
+                "path": _relative_artifact_path(root, path),
+                "sha256": info["sha256"],
+                "bytes": info["bytes"],
+            }
+        )
+    detector_info = _write_json_artifact(bundle_dir / "detector_log.json", detector_log)
+    report = {
+        "schema": BENCHMARK_HARDENING_SCHEMA,
+        "benchmark_id": "matrix_multiplication_smoke",
+        "level": "smoke",
+        "protected_signals": [
+            {
+                "id": "matmul_operation_count",
+                "kind": "operation_count",
+                "description": "Counts scalar multiplication operators in the candidate matmul2 body.",
+            },
+            {
+                "id": "matmul_correctness",
+                "kind": "correctness",
+                "description": "Requires exact 2x2 matrix multiplication on validator cases.",
+            },
+        ],
+        "shortcut_threats": [
+            {
+                "category": "hardcoded_cases",
+                "protected_signal_ids": ["matmul_correctness"],
+                "detector": {
+                    "kind": "randomized_cases",
+                    "description": "Use non-seed integer cases and reject fixed lookup tables.",
+                },
+            },
+            {
+                "category": "library_delegation",
+                "protected_signal_ids": ["matmul_operation_count", "matmul_correctness"],
+                "detector": {
+                    "kind": "static_ast",
+                    "description": "Reject imports and library calls that bypass candidate scalar-operation accounting.",
+                },
+            },
+            {
+                "category": "dead_code_counter",
+                "protected_signal_ids": ["matmul_operation_count"],
+                "detector": {
+                    "kind": "static_ast",
+                    "description": "Restrict multiplication counting to the matmul2 function body.",
+                },
+            },
+        ],
+        "negative_fixtures": fixture_records,
+        "artifacts": [
+            {
+                "kind": "detector_log",
+                "path": _relative_artifact_path(root, bundle_dir / "detector_log.json"),
+                "sha256": detector_info["sha256"],
+                "bytes": detector_info["bytes"],
+            }
+        ],
+    }
+    report_info = _write_json_artifact(bundle_dir / "report.json", report)
+    inventory = benchmark_hardening_artifact_inventory(report, root)
+    inventory_info = _write_json_artifact(bundle_dir / "inventory.json", inventory)
+    summary = render_benchmark_hardening_summary(report)
+    summary_path = bundle_dir / "summary.md"
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
+    summary_path.write_text(summary, encoding="utf-8")
+    summary_raw = summary_path.read_bytes()
+    scope_record = _matrix_scope_record()
+    scope_validation = validate_benchmark_evidence_scope(
+        report,
+        scope_record,
+        inventory,
+    )
+    scope_payload = _scope_validation_payload(scope_validation)
+    scope_info = _write_json_artifact(bundle_dir / "scope_validation.json", scope_payload)
+    return {
+        "schema": BENCHMARK_HARDENING_BUNDLE_SCHEMA,
+        "benchmark_id": "matrix_multiplication_smoke",
+        "level": "smoke",
+        "alphaevolve_comparable": False,
+        "scope_policy": "shipped_matrix_multiplication_example_remains_smoke_only",
+        "report_path": _relative_artifact_path(root, bundle_dir / "report.json"),
+        "report_sha256": report_info["sha256"],
+        "report_bytes": report_info["bytes"],
+        "inventory_path": _relative_artifact_path(root, bundle_dir / "inventory.json"),
+        "inventory_sha256": inventory_info["sha256"],
+        "summary_path": _relative_artifact_path(root, summary_path),
+        "summary_sha256": hashlib.sha256(summary_raw).hexdigest(),
+        "scope_validation_path": _relative_artifact_path(
+            root,
+            bundle_dir / "scope_validation.json",
+        ),
+        "scope_validation_sha256": scope_info["sha256"],
+        "report": report,
+        "inventory": inventory,
+        "scope_validation": scope_payload,
+    }
+
+
 def benchmark_hardening_artifact_inventory(
     report: object | str | Path,
     artifact_root: str | Path,
@@ -243,6 +401,51 @@ def benchmark_hardening_artifact_inventory(
         ),
         "issues": issues,
         "records": records,
+    }
+
+
+def _write_json_artifact(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    raw = json.dumps(payload, sort_keys=True, indent=2).encode("utf-8")
+    path.write_bytes(raw)
+    return {
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "bytes": len(raw),
+    }
+
+
+def _relative_artifact_path(root: Path, path: Path) -> str:
+    return path.resolve(strict=False).relative_to(root.resolve(strict=False)).as_posix()
+
+
+def _matrix_scope_record() -> dict[str, Any]:
+    from libreevolve.problems.benchmarks.example_scope import (
+        example_benchmark_scope_records,
+    )
+
+    return next(
+        record
+        for record in example_benchmark_scope_records()
+        if record["problem_id"] == "matrix_multiplication"
+    )
+
+
+def _scope_validation_payload(
+    validation: BenchmarkEvidenceScopeValidation,
+) -> dict[str, Any]:
+    return {
+        "schema": BENCHMARK_EVIDENCE_SCOPE_SCHEMA,
+        "ok": validation.ok,
+        "benchmark_id": validation.benchmark_id,
+        "hardening_ok": validation.hardening_ok,
+        "inventory_ok": validation.inventory_ok,
+        "scope_level": validation.scope_level,
+        "hardening_level": validation.hardening_level,
+        "alphaevolve_comparable": validation.alphaevolve_comparable,
+        "issues": [
+            {"code": issue.code, "message": issue.message}
+            for issue in validation.issues
+        ],
     }
 
 

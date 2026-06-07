@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add bounded metric-specific objective archive views.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
+    optimizing multiple user-provided scores and using programs that excel
+    under different criteria as varied inspirations.
+  - Status: final runtime manifests now include
+    `runtime.history.objective_metric_archives`, a bounded
+    top-program-per-declared-normalized-metric view. Each metric archive
+    records considered and retained counts plus retained program ids,
+    generations, normalized metric values, selection scores, and available
+    declared normalized metric vectors.
+  - Remaining paper gap: this is still an in-memory diagnostic view, not
+    Pareto/frontier archive replacement, plugin-objective integration, or
+    queryable lineage-aware resurfacing.
+  - Verification: focused database and loop tests cover top-program ordering,
+    invalid metric/evaluation exclusion, retention metadata, and final manifest
+    persistence.
+
 - [x] Add Pareto-frontier parent and inspiration sampling.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
     optimizing multiple user-provided scores and using programs that excel
@@ -16,8 +33,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     non-dominated retained programs after exclusions, and generated candidate
     metadata records frontier size and declared metric order.
   - Remaining paper gap: the policy is still heuristic and in-memory; it does
-    not provide Pareto archive replacement, metric-specific elite views,
-    plugin-objective integration, or queryable lineage-aware resurfacing.
+    not provide Pareto archive replacement, plugin-objective integration, or
+    queryable lineage-aware resurfacing.
   - Verification: focused tests cover frontier parent cycling, frontier
     inspirations, fallback without declared objective metrics, cursor restore,
     and CLI strategy acceptance.
@@ -327,8 +344,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `metadata.inspiration_selection` for inspiration sampling, including
     selected ids and metric target/program pairs when metric-leader inspiration
     policies are used.
-  - Remaining paper gap: Pareto/frontier optimization, configurable
-    score-composition weights, and metric-specific archive views remain open.
+  - Remaining paper gap: Pareto/frontier archive replacement and
+    plugin-objective integration remain open.
   - Verification: focused island and loop tests cover metric-targeted
     inspiration metadata.
 
@@ -8060,8 +8077,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     scalar selection policy when available. `show` now validates
     current-history objective vectors while streaming and prints bounded
     selected-row normalized-metric summaries.
-  - Remaining paper gap: this does not implement Pareto/frontier optimization,
-    configurable score weights, or metric-specific archive views.
+  - Remaining paper gap: this does not implement Pareto/frontier archive
+    replacement or plugin-objective integration.
   - Verification: focused loop/database/island/CLI tests cover evaluator
     metrics, feedback-filled objective metrics, objective-vector validation,
     selected `show` display, bounded summaries, and malformed unselected row

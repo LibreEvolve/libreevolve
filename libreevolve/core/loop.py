@@ -3618,6 +3618,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "no_candidates_evaluated": budget.evaluations == 0 and programs_logged == 0,
         "objective_frontier": db.objective_frontier_snapshot(),
         "objective_metric_leaders": db.objective_metric_leaders_snapshot(),
+        "objective_metric_archives": db.objective_metric_archives_snapshot(),
         "archive_state": db.archive_state_snapshot(),
     }
     if summary["no_candidates_evaluated"]:

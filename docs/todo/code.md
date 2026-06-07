@@ -611,7 +611,9 @@ Primary evidence:
     `runtime.history.objective_frontier`, a bounded diagnostic Pareto frontier
     over complete declared normalized metric vectors, plus
     `runtime.history.objective_metric_leaders`, a diagnostic best-program view
-    for each declared normalized metric. Metric-leader parent and
+    for each declared normalized metric, and
+    `runtime.history.objective_metric_archives`, a bounded top-program archive
+    view for each declared normalized metric. Metric-leader parent and
     inspiration sampling can surface secondary-metric leaders, `frontier`
     parent/inspiration sampling can surface non-dominated retained programs
     with complete declared normalized metric vectors, and generated candidates now persist
@@ -624,7 +626,8 @@ Primary evidence:
     thresholds, and some parent/inspiration paths still use scalar final
     fitness, and Pareto/frontier behavior is still a sampling surface rather
     than an archive replacement policy. There is still no declared
-    plugin-score objective policy or metric-specific archive.
+    plugin-score objective policy or metric-specific MAP-Elites replacement
+    policy.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier archive replacement, connect
     plugin-adjusted fitness or plugin-emitted metrics to declared objective

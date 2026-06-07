@@ -307,9 +307,11 @@ weights when configured. The
 streaming and prints bounded normalized-metric summaries for the selected
 retained row. Runtime manifests also persist
 `runtime.history.objective_frontier`, a bounded diagnostic Pareto frontier over
-complete declared normalized metric vectors. These records are audit evidence
-for the current scalar policy and non-dominated metric tradeoffs, not
-frontier-driven archive optimization.
+complete declared normalized metric vectors, plus
+`runtime.history.objective_metric_archives`, a bounded top-program view for
+each declared normalized metric. These records are audit evidence for the
+current scalar policy and metric-specific tradeoffs, not frontier-driven
+archive replacement.
 
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,

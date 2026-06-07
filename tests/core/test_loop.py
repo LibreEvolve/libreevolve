@@ -2547,6 +2547,44 @@ def test_loop_records_normalized_metrics_and_selection_score():
             "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
         },
     ]
+    metric_archives = manifest["runtime"]["history"]["objective_metric_archives"]
+    assert metric_archives["schema"] == "libreevolve.objective_metric_archives.v1"
+    assert metric_archives["policy"] == "top_programs_per_declared_normalized_metric"
+    assert metric_archives["metric_order"] == ["accuracy", "latency"]
+    assert metric_archives["archives"] == [
+        {
+            "metric": "accuracy",
+            "program_count_considered": 1,
+            "retained_count": 1,
+            "retention_limit": 10,
+            "programs": [
+                {
+                    "metric": "accuracy",
+                    "program_id": record["id"],
+                    "generation": 0,
+                    "normalized_metric": 0.8,
+                    "selection_score": 0.8,
+                    "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
+                }
+            ],
+        },
+        {
+            "metric": "latency",
+            "program_count_considered": 1,
+            "retained_count": 1,
+            "retention_limit": 10,
+            "programs": [
+                {
+                    "metric": "latency",
+                    "program_id": record["id"],
+                    "generation": 0,
+                    "normalized_metric": 0.8,
+                    "selection_score": 0.8,
+                    "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
+                }
+            ],
+        },
+    ]
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

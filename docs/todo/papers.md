@@ -320,13 +320,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     Runtime manifests now include `runtime.history.objective_frontier`, a
     bounded diagnostic Pareto frontier over complete declared normalized metric
     vectors, plus `runtime.history.objective_metric_leaders`, a diagnostic
-    best-program view for each declared normalized metric. LLM
+    best-program view for each declared normalized metric, and
+    `runtime.history.objective_metric_archives`, a bounded top-program view for
+    each declared normalized metric. LLM
     feedback graders now support
     bounded raw scores, maximize/minimize direction, normalized fitness-delta
     composition, and `objective_metric: true` filling for declared non-primary
-    `source: feedback` objective metrics. Metric-specific archive policies and
+    `source: feedback` objective metrics. Metric-specific archive replacement and
     Pareto/frontier optimization remain open because the frontier and
-    metric-leader view are diagnostic and not archive policies.
+    metric-specific views are diagnostic and not archive replacement policies.
     Parent and inspiration sampling can now use
     metric-leader, frontier, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
@@ -340,8 +342,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     declared normalized metric vectors to surface non-dominated retained
     programs and persists frontier size/metric-order provenance. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
-  - Required result: add Pareto/frontier archive replacement, metric-specific
-    elite/archive views, objective-schema integration
+  - Required result: add Pareto/frontier archive replacement,
+    objective-schema integration
     for feedback/reviewer metrics when desired, and queryable lineage-aware
     resurfacing for programs that excel under different metrics.
 

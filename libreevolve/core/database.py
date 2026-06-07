@@ -87,6 +87,7 @@ _MAX_CONTEXT_PROVENANCE_JSON_CHARS = 200_000
 _MAX_SEED_SOURCE_STRING_CHARS = 1024
 _MAX_ARCHIVE_EVENT_REASON_CHARS = 128
 _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
+_MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -634,6 +635,13 @@ class ProgramDatabase:
         return _objective_metric_leaders_snapshot(
             self._all,
             self._objective_metric_order,
+        )
+
+    def objective_metric_archives_snapshot(self) -> dict:
+        return _objective_metric_archives_snapshot(
+            self._all,
+            self._objective_metric_order,
+            limit=_MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS,
         )
 
     def _log_archive_event(self, event: dict) -> None:
@@ -1935,6 +1943,55 @@ def _objective_metric_leaders_snapshot(
         "leaders": leaders,
         "limitations": [
             "diagnostic_metric_leaders_not_archive_selection_policy",
+            "requires_declared_normalized_metric_value",
+            "plugin_metrics_not_declared_in_objective_schema_are_excluded",
+        ],
+    }
+
+
+def _objective_metric_archives_snapshot(
+    programs: list[Program],
+    metric_order: list[str],
+    *,
+    limit: int,
+) -> dict:
+    metric_order = [name for name in metric_order if isinstance(name, str) and name]
+    archives: list[dict] = []
+    for metric in metric_order:
+        candidates = [
+            record
+            for program in programs
+            if (
+                record := _objective_metric_leader_candidate(program, metric, metric_order)
+            )
+            is not None
+        ]
+        candidates.sort(
+            key=lambda record: (
+                -record["normalized_metric"],
+                -(record["selection_score"] if record["selection_score"] is not None else -1.0),
+                record["program_id"],
+            )
+        )
+        retained = candidates[:limit]
+        archives.append(
+            {
+                "metric": metric,
+                "program_count_considered": len(candidates),
+                "retained_count": len(retained),
+                "retention_limit": limit,
+                "programs": retained,
+            }
+        )
+    return {
+        "schema": "libreevolve.objective_metric_archives.v1",
+        "policy": "top_programs_per_declared_normalized_metric",
+        "metric_order": list(metric_order),
+        "retention_limit": limit,
+        "archive_count": len(archives),
+        "archives": archives,
+        "limitations": [
+            "diagnostic_metric_archives_not_archive_replacement_policy",
             "requires_declared_normalized_metric_value",
             "plugin_metrics_not_declared_in_objective_schema_are_excluded",
         ],

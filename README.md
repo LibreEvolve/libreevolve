@@ -1225,7 +1225,9 @@ strategy can surface non-dominated retained programs from the same declared
 objective metric semantics, but archive replacement remains scalar rather than
 Pareto-specific. Final manifests also include
 `runtime.history.objective_metric_leaders`, a diagnostic best-program view for
-each declared normalized metric. Declared metric bounds must be finite,
+each declared normalized metric, and
+`runtime.history.objective_metric_archives`, a bounded top-program archive view
+for each declared normalized metric. Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.
 Parent and inspiration sampling are configurable via `parent_selection_strategy`

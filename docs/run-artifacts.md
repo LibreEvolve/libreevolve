@@ -1110,6 +1110,11 @@ Important behavior:
   generations, metric values, selection scores, and available normalized
   metric vectors. This is an inspection artifact, not a metric-specific archive
   replacement policy.
+- `runtime.history.objective_metric_archives` stores a bounded
+  top-program-per-declared-normalized-metric view with retained program ids,
+  generations, metric values, selection scores, and available declared
+  normalized metric vectors. This is an inspection artifact, not a MAP-Elites
+  replacement policy.
 - optional critique metadata is stored under `metadata.critique`
 - optional proposal idea/rationale/hypothesis sections are stored under
   `metadata.proposal` when `capture_proposal_metadata` is enabled; when critique

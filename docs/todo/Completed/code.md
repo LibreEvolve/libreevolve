@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add bounded metric-specific objective archive views.
+  - Spec evidence: AlphaEvolve-style multi-score search should retain and
+    inspect programs that excel under different declared score definitions,
+    not only one leader per metric.
+  - Status: `ProgramDatabase.objective_metric_archives_snapshot()` now emits
+    `libreevolve.objective_metric_archives.v1`, a deterministic bounded
+    top-program-per-declared-normalized-metric view. Final runtime manifests
+    persist it under `runtime.history.objective_metric_archives` with metric
+    order, archive count, per-metric considered counts, retained counts,
+    retention limit, program ids, generations, normalized metric values,
+    selection scores, and available declared normalized metric vectors.
+  - Remaining gap: this is a diagnostic archive view, not MAP-Elites
+    replacement, Pareto/frontier replacement, declared plugin-score objective
+    integration, or lineage-aware resurfacing.
+  - Verification: focused database and loop tests cover per-metric ordering,
+    invalid metric/evaluation exclusion, retention metadata, and final manifest
+    persistence.
+
 - [x] Add Pareto-frontier parent and inspiration sampling.
   - Spec evidence: AlphaEvolve-style multi-score search should resurface
     high-performing programs under different score tradeoffs, not only the
@@ -1723,8 +1741,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     leader policies. `evolve()` persists this under
     `metadata.inspiration_selection` on generated candidates.
   - Remaining gap: this is still heuristic metric-leader provenance, not
-    Pareto/frontier optimization, configurable metric weighting, or
-    metric-specific archive views.
+    Pareto/frontier archive replacement or plugin-objective integration.
   - Verification: focused island tests cover metric inspiration target
     metadata, and focused loop tests prove generated history records persist
     metric-targeted inspiration provenance.
@@ -11192,9 +11209,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     omit the field. `show` now validates current-history objective vectors
     while streaming and prints bounded normalized-metric summaries for the
     selected retained row.
-  - Remaining gap: this is audit evidence for the current equal-weight scalar
-    policy, not Pareto/frontier optimization, configurable weighting, or
-    metric-specific archive views.
+  - Remaining gap: this is audit evidence for the current scalar policy, not
+    Pareto/frontier archive replacement or plugin-objective integration.
   - Verification: focused loop, island, database, and CLI tests cover evaluator
     and feedback objective metrics, migration rows, archive-event validation,
     selected `show` display, bounded large-vector summaries, and malformed

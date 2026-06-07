@@ -7571,8 +7571,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     admissions and migration rows when normalized metrics are available, and
     `show` validates current-history objective vectors while streaming and
     prints bounded selected-row objective metrics.
-  - Remaining roadmap gap: Pareto/frontier policy, configurable weighting, and
-    metric-specific archive views remain open.
+  - Remaining roadmap gap: Pareto/frontier archive replacement and
+    plugin-objective integration remain open.
   - Verification: focused loop/database/island tests cover objective-vector
     emission and validation; focused CLI tests cover `show` display, bounded
     large-vector summaries, and malformed unselected objective-vector rejection.

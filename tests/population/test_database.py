@@ -213,6 +213,87 @@ def test_objective_metric_leaders_snapshot_reports_declared_metric_elites(tmp_pa
     ]
 
 
+def test_objective_metric_archives_snapshot_reports_top_declared_metric_programs(
+    tmp_path,
+):
+    schema = {
+        "metrics": [
+            {
+                "name": "accuracy",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            },
+            {
+                "name": "latency",
+                "direction": "minimize",
+                "primary": False,
+                "bounds": [0.0, 100.0],
+            },
+        ],
+        "primary_metric": "accuracy",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 2,
+    }
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+        objective_schema=schema,
+    )
+
+    def program(program_id: str, accuracy: float, latency: float) -> Program:
+        selection_score = (accuracy + latency) / 2.0
+        return Program(
+            id=program_id,
+            code="x = 1\n",
+            fitness=selection_score,
+            metrics={"accuracy": accuracy, "latency": latency},
+            evaluation={"is_valid": True},
+            metadata={
+                "normalized_metrics": {"accuracy": accuracy, "latency": latency},
+                "selection_score": selection_score,
+            },
+        )
+
+    for candidate in [
+        program("accuracy_leader", 0.95, 0.20),
+        program("balanced", 0.80, 0.80),
+        program("latency_leader", 0.20, 0.95),
+        program("invalid_metric", 1.50, 0.10),
+        Program(
+            id="invalid_eval",
+            code="x = 1\n",
+            fitness=1.0,
+            metrics={"accuracy": 1.0, "latency": 1.0},
+            evaluation={"is_valid": False},
+            metadata={
+                "normalized_metrics": {"accuracy": 1.0, "latency": 1.0},
+                "selection_score": 1.0,
+            },
+        ),
+    ]:
+        db.log(candidate)
+
+    snapshot = db.objective_metric_archives_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.objective_metric_archives.v1"
+    assert snapshot["policy"] == "top_programs_per_declared_normalized_metric"
+    assert snapshot["metric_order"] == ["accuracy", "latency"]
+    assert snapshot["archive_count"] == 2
+    assert snapshot["retention_limit"] == 10
+    assert [
+        record["program_id"]
+        for record in snapshot["archives"][0]["programs"]
+    ] == ["accuracy_leader", "balanced", "latency_leader"]
+    assert [
+        record["program_id"]
+        for record in snapshot["archives"][1]["programs"]
+    ] == ["latency_leader", "balanced", "accuracy_leader", "invalid_metric"]
+    assert snapshot["archives"][0]["program_count_considered"] == 3
+    assert snapshot["archives"][0]["retained_count"] == 3
+    assert snapshot["archives"][1]["program_count_considered"] == 4
+    assert snapshot["archives"][1]["retained_count"] == 4
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(

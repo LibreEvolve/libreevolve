@@ -1940,12 +1940,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     maps every Appendix B text-level numeric claim to an exact metric
     definition, parameter tuple, bound direction or optimization direction,
     previous-best value and source, AlphaEvolve reported value, source
-    location, and construction/verifier artifact hash.
+    location, construction-representation schema, and construction/verifier
+    artifact hash.
   - Required result: when Appendix B per-result metric/value provenance lands,
     update ROADMAP, README, papers index, and code/paper TODO entries together
     with result-row metadata and validators so roadmap text distinguishes
     family coverage, aggregate outcome claims, figure reproduction,
-    revised-result history, and text-level numeric claim evidence.
+    revised-result history, construction-payload evidence, and text-level
+    numeric claim evidence.
 
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.

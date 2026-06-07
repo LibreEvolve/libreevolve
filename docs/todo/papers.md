@@ -1950,7 +1950,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     minimum areas, the dimension-11 kissing lower bound, and circle/rectangle
     sum-of-radii values. These claims use different parameter tuples, metric
     definitions, inequality directions, previous bounds, reported values, and
-    source citations or figure/caption links.
+    source citations or figure/caption links. They also require different
+    construction representations, including step functions, polynomial or
+    coefficient lists, finite integer sets, point coordinates, kissing
+    configurations, and geometric packing placements.
   - Current gap: paper-facing Appendix B status is family/status coverage, and
     existing TODOs ask for construction-data/verifier exports, aggregate
     outcomes, result-version rows, Figure 5 and Figures 10-14 exhibit
@@ -1959,14 +1962,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     metric formula or definition, parameter tuple, upper/lower or
     maximize/minimize semantics, previous-best value and source, reported
     AlphaEvolve value, manuscript section/figure location, and linked
-    construction/verifier artifact.
+    construction representation schema plus construction/verifier artifact.
   - Required result: add paper/report evidence for Appendix B.1-B.13 result
     rows with stable result ids, family and parameter metadata, exact metric
     names/formulas, units or bound semantics, optimization direction,
     previous-best citations and values, AlphaEvolve reported values, source
-    section/figure/caption links, artifact hashes, and README/ROADMAP wording
-    that separates text-level numeric claim provenance from aggregate coverage
-    and figure reproduction.
+    section/figure/caption links, construction-type schemas and payload hashes
+    for step functions, coefficients, finite sets, coordinates, and packing
+    placements, verifier artifact hashes, and README/ROADMAP wording that
+    separates text-level numeric claim provenance from aggregate coverage and
+    figure reproduction.
 
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593

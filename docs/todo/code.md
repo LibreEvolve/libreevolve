@@ -1857,7 +1857,10 @@ Primary evidence:
     areas, the dimension-11 kissing lower bound, and circle/rectangle
     sum-of-radii values. Each section carries its own parameters, metric
     definition, inequality direction, previous bound, new value, and source
-    citation or figure/caption linkage.
+    citation or figure/caption linkage. The reproducible construction
+    representation also varies by family: step functions over fixed intervals,
+    polynomial or coefficient lists, finite integer sets, point coordinates,
+    sphere/kissing configurations, and geometric packing placements.
   - Current evidence: the Appendix B registry is family/status coverage, and
     existing TODOs require construction-data/verifier exports, aggregate
     outcome reports, result-version provenance, Figure 5 exhibit mapping,
@@ -1866,14 +1869,17 @@ Primary evidence:
     Appendix B text-level claim to its exact metric formula or definition,
     parameter tuple, maximize/minimize or upper/lower-bound direction, prior
     value and source, reported AlphaEvolve value, manuscript section or figure
-    location, and verifier/construction artifact.
+    location, construction representation schema, and verifier/construction
+    artifact.
   - Required result: add Appendix B result-row metadata and validators for
     all B.1-B.13 claims: stable result ids, family/parameter rows, metric
     names and formulas, units or bound semantics, optimization direction,
     previous-best values and citations, AlphaEvolve reported values, source
-    section/figure/caption links, construction/verifier artifact hashes, and
-    docs that distinguish text-level numeric claim provenance from aggregate
-    outcome reports and visual figure reproduction.
+    section/figure/caption links, construction-type schemas and payload hashes
+    for step functions, coefficients, finite sets, coordinates, and packing
+    placements, verifier artifact hashes, and docs that distinguish text-level
+    numeric claim provenance from aggregate outcome reports and visual figure
+    reproduction.
 
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing

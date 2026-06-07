@@ -95,6 +95,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
+- [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
+      abstraction-choice reports exist.
+  - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate
+    abstraction as a problem-dependent experimental choice with known biases:
+    direct solution search, constructor functions, bespoke search algorithms,
+    or paired intermediate solution/search representations can suit different
+    problem structures.
+  - Current evidence: `ROADMAP.md` asks for problem-defined candidate
+    abstraction hooks and README identifies the current code-file-set
+    abstraction boundary, but roadmap wording does not yet require benchmark
+    metadata or reports that justify the chosen abstraction or compare
+    alternative formulations under equal budgets.
+  - Required result: when abstraction-choice metadata, rationale fields,
+    symmetry/structure labels, paired solution/search support, or
+    equal-budget abstraction-comparison reports land, update ROADMAP, README,
+    papers index, and code/paper TODOs together so roadmap language does not
+    confuse hooks with AlphaEvolve-style abstraction-selection evidence.
+
 - [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
       adaptive AlphaEvolve-style output contracts.
   - Spec evidence: AlphaEvolve Section 2.3 chooses SEARCH/REPLACE diffs for

@@ -33,6 +33,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current manifest-visible boundary policy nor overclaims AlphaEvolve-grade
     arbitrary-language/codebase support.
 
+- [ ] Keep README candidate-abstraction wording scoped to current divergence
+      until abstraction-choice evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.1 and Discussion say users can choose
+    different candidate abstractions for the same problem, and those choices
+    carry biases: constructor functions can favor highly symmetric solutions,
+    while customized search algorithms may work better for non-symmetric
+    solutions.
+  - Current evidence: README says LibreEvolve currently uses a deliberate
+    code-file-set abstraction with a primary text file and lacks first-class
+    non-code serializers or paired solution/search APIs. It does not describe
+    benchmark metadata that records why one abstraction was selected, whether
+    the problem is symmetric/non-symmetric, or how alternative abstractions
+    performed under comparable budgets.
+  - Required result: when abstraction-choice metadata, benchmark rationale,
+    problem-structure labels, paired solution/search APIs, or equal-budget
+    abstraction-comparison reports land, update README, ROADMAP, papers index,
+    and code/paper TODOs so README distinguishes a documented divergence from
+    AlphaEvolve-style abstraction-selection evidence.
+
 - [ ] Keep README seed-provenance wording scoped to source identity until
       initial-program idea provenance exists.
   - Spec evidence: AlphaEvolve Section 2.1 makes the initial solution and

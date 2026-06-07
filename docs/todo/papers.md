@@ -126,6 +126,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
+- [ ] Track candidate-abstraction choice and bias evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.
+  - Requirement: AlphaEvolve treats the candidate representation as a
+    problem-dependent choice: direct solution search, constructor functions,
+    bespoke search algorithms, or co-evolved intermediate solution/search
+    pairs. The paper says these choices carry different biases, including
+    constructor functions being advantageous for highly symmetric solutions and
+    customized search algorithms for non-symmetric solutions.
+  - Partial status: the papers index and README state that LibreEvolve's
+    current boundary is a Python-primary code-file-set abstraction and that
+    flexible non-code or paired solution/search abstractions are unsupported.
+  - Current gap: no paper-facing report records abstraction choice, problem
+    structure rationale, symmetry assumptions, or equal-budget comparisons
+    across direct-solution, constructor-function, and search-algorithm
+    formulations.
+  - Required result: add benchmark/report metadata for candidate abstraction
+    family, rationale, expected problem bias, serializer/runner contract,
+    paired solution/search linkage, and comparable results for alternative
+    abstractions before claiming AlphaEvolve-style abstraction-selection
+    evidence.
+
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.

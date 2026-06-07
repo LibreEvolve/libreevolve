@@ -501,6 +501,14 @@ account for LLM calls and provider usage, but no report yet proves useful
 target progress in thousands-scale generated/evaluated proposal counts versus
 FunSearch-style much larger sample budgets or small-base-model alternatives.
 
+Candidate-abstraction evidence is also still missing: the primary row records
+LibreEvolve's code-file-set abstraction as a current divergence, but Section
+2.1 and the Discussion describe choosing between direct solution search,
+constructor functions, bespoke search algorithms, and paired solution/search
+representations, with different biases for symmetric and non-symmetric
+problems. LibreEvolve still needs benchmark metadata and equal-budget reports
+that justify and compare those abstraction choices.
+
 LLM feedback artifact note: successful and failed feedback records can keep
 compatibility `raw_response` and parsed `feedback` previews, suppress them to
 hashes, or suppress text and hashes according to `feedback_retention_mode`.

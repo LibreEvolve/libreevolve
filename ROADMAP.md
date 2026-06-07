@@ -83,6 +83,10 @@ is not yet an AlphaEvolve reproduction.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.
+- Add abstraction-choice reporting so benchmark claims can record why a
+  direct-solution, constructor-function, or search-algorithm formulation was
+  chosen, what symmetry/structure bias was expected, and how alternatives
+  performed under comparable budgets.
 - Add language-aware evolve-block marker grammars if non-Python workspace files
   should preserve skeleton regions; the current boundary rejects marker-like
   declarations in non-`.py` files instead of treating them as unmarked full-file

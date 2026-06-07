@@ -41,6 +41,29 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
+- [ ] Add abstraction-choice metadata and benchmark evidence for candidate
+      representations.
+  - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem
+    can be approached by searching for solutions directly, evolving constructor
+    functions, evolving bespoke search algorithms, or co-evolving intermediate
+    solutions and search algorithms. The paper explicitly notes that these
+    abstraction choices introduce biases, such as constructor functions
+    favoring highly symmetric solutions while customized search algorithms may
+    suit non-symmetric solutions.
+  - Current evidence: LibreEvolve documents its current code-file-set
+    candidate boundary and records unsupported problem-defined candidate
+    abstraction hooks through `libreevolve.candidate_language_policy.v1`. It
+    does not define an experiment/report schema that records which abstraction
+    was selected for a benchmark, why that abstraction matches the problem's
+    symmetry or search structure, or how alternative abstractions performed
+    under comparable budgets.
+  - Required result: add problem/run metadata for candidate abstraction choice,
+    abstraction rationale, symmetry/structure assumptions, serializer/runner
+    linkage, paired solution/search representations when supported, and
+    benchmark reports comparing direct-solution, constructor, and
+    search-algorithm approaches before claiming AlphaEvolve-style abstraction
+    selection fidelity.
+
 - [ ] Add structured initial-program idea provenance for benchmark seeds.
   - Spec evidence: AlphaEvolve Section 2.1 says the human provides the initial
     program and optional background knowledge, while Section 3.1 reports that

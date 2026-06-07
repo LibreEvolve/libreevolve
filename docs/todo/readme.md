@@ -401,6 +401,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matrix artifacts alone prove AlphaEvolve Figure 4/Figure 9 search-program
     parity.
 
+- [ ] Keep README matrix wording scoped to final reports until
+      baseline-component provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition search
+    starts from a standard gradient-based algorithm with an initializer,
+    reconstruction loss function, and Adam optimizer before evolving more
+    sophisticated tensor-decomposition algorithms.
+  - Current evidence: README documents matrix result reports, Appendix A
+    registry coverage, checked Strassen artifacts, and open follow-ups for
+    near-integrality, sweep provenance, scalar fields, and scaling limits. It
+    does not yet document a matrix benchmark run record that inventories the
+    generation-0 initializer/loss/optimizer components, records their source
+    hashes/configuration, declares mutable versus fixed scopes, or links
+    accepted mutations back to changed baseline components.
+  - Required result: when matrix benchmark runs persist baseline component
+    inventory and mutation-lineage records, update README, ROADMAP, papers
+    index, and code/paper TODO entries together so README distinguishes final
+    matrix result-report validation from AlphaEvolve Section 3.1
+    baseline-to-evolved-program workflow evidence.
+
 - [ ] Keep README matrix wording scoped to coefficient-domain validation until
       scalar-field evidence exists.
   - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix

@@ -1709,6 +1709,27 @@ Primary evidence:
     validating the checked bundle wrapper, or emitting the one checked Strassen
     baseline once those files exist.
 
+- [ ] Record matrix baseline-component provenance for Section 3.1 starts.
+  - Spec evidence: AlphaEvolve Section 3.1 says the matrix-decomposition
+    search starts from a problem description and a standard gradient-based
+    algorithm including an initializer, reconstruction loss function, and Adam
+    optimizer before AlphaEvolve evolves more sophisticated tensor-search
+    programs.
+  - Current evidence: LibreEvolve records matrix target/result metadata after
+    a report exists, plus TODOs for near-integrality, sweep provenance,
+    scalar fields, and the Figure 8 loss-only ablation. It does not yet define
+    a matrix benchmark runner or report field that inventories the initial
+    gradient-based solver components, records their source hashes, declares
+    which components are fixed versus mutable, or links accepted mutations
+    back to the baseline initializer/loss/optimizer boundaries.
+  - Required result: add matrix benchmark metadata and validators for the
+    starting algorithm component inventory: initializer, reconstruction loss,
+    optimizer identity and version/config, mutable component scopes, fixed
+    component hashes, generation-0 baseline outcomes, and mutation lineage
+    showing which baseline components changed. Keep this separate from final
+    result reports and from the Figure 8 loss-function-only ablation until an
+    executed matrix runner proves the baseline-to-evolved-program path.
+
 - [ ] Add Appendix A matrix target-suite curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 matrix multiplication
     sizes were chosen roughly from sizes where 2 <= m,n <= 5 with a reasonable

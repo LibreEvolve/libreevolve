@@ -1389,6 +1389,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     final result artifacts from AlphaEvolve-style matrix search-program
     provenance.
 
+- [ ] Keep matrix roadmap wording scoped to final reports until
+      baseline-component provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.1 starts matrix-decomposition search
+    from a standard gradient-based algorithm including an initializer,
+    reconstruction loss function, and Adam optimizer, then evolves the search
+    program from that baseline.
+  - Current evidence: roadmap benchmark language points to matrix result
+    contracts, Appendix A registry coverage, checked Strassen artifacts, and
+    follow-ups for near-integrality, sweep spaces, scalar fields, and scaling
+    resource frontiers. It does not yet require run artifacts that inventory
+    the generation-0 matrix solver components, record their hashes/config, mark
+    fixed versus mutable scopes, or link accepted mutations to changed
+    initializer/loss/optimizer/search-code components.
+  - Required result: when matrix benchmark runners persist baseline component
+    inventory, generation-0 outcomes, mutable-scope declarations, and mutation
+    lineage, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap text distinguishes final result/report readiness from
+    AlphaEvolve Section 3.1 baseline-to-evolved-program parity.
+
 - [ ] Keep matrix roadmap wording scoped to coefficient-domain validation
       until scalar-field evidence exists.
   - Spec evidence: AlphaEvolve Table 2 and Section 3.1 distinguish

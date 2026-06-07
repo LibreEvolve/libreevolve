@@ -1882,6 +1882,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
     tensor-decomposition search workflow.
 
+- [ ] Track matrix baseline-component provenance for Section 3.1 workflows.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the
+    matrix-decomposition work starts from the problem description and a
+    standard gradient-based algorithm including an initializer, reconstruction
+    loss function, and Adam optimizer, then evolves increasingly sophisticated
+    tensor-decomposition algorithms.
+  - Current evidence: the paper-facing matrix TODOs track result reports,
+    Appendix A target curation, near-integrality prompt/evaluator evidence,
+    sweep-space provenance, scalar-field evidence, resource-frontier records,
+    and final artifact/certificate availability. They do not require a
+    paper-facing run record for the generation-0 matrix solver components,
+    their source hashes/configuration, fixed-versus-mutable boundaries, or
+    mutation lineage showing how later accepted candidates changed the
+    initializer, loss, optimizer, or surrounding search program.
+  - Required result: add paper-facing matrix run artifacts that inventory the
+    initial gradient-based algorithm, record initializer/loss/optimizer
+    configuration and hashes, declare mutable and fixed scopes, include
+    generation-0 baseline outcomes, and link accepted mutations to changed
+    baseline components before claiming Section 3.1 workflow parity.
+
 - [ ] Track matrix scalar-field evidence for complex-valued Appendix A claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 says some improved
     matrix algorithms, including selected Appendix A targets, use

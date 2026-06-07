@@ -1115,6 +1115,11 @@ Important behavior:
   generations, metric values, selection scores, and available declared
   normalized metric vectors. This is an inspection artifact, not a MAP-Elites
   replacement policy.
+- `runtime.history.score_index` stores a bounded diagnostic top-valid-programs
+  view ranked by archive selection score, then final fitness. Records include
+  program id, generation, lineage root, selection score, fitness, archive
+  admission summary, and available objective-vector evidence. This is an
+  inspection artifact, not a replayable sampling policy.
 - `runtime.history.lineage_index` stores a bounded diagnostic
   best-valid-programs view grouped by root lineage. Each retained root records
   the best representative, selected top lineage programs, generation,

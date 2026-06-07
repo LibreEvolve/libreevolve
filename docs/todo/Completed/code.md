@@ -14356,3 +14356,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     embedding store, full-text ranked index, or replayable sampling database.
   - Verification: focused database and loop tests cover direct feedback-index
     content and final manifest persistence.
+
+- [x] Persist a bounded score index in runtime history.
+  - Spec evidence: AlphaEvolve-style program databases should expose ranked
+    high-performing historical programs by the active archive score, not only a
+    single best program.
+  - Status: `ProgramDatabase.score_index_snapshot()` now builds
+    `libreevolve.score_index.v1`, a bounded top-valid-programs view ranked by
+    archive selection score and final fitness. Final manifests persist it under
+    `runtime.history.score_index` with generation, lineage root,
+    archive-admission summary, and available objective-vector evidence.
+  - Remaining gap: this is a diagnostic bounded score view, not a full
+    replayable sampling database over all metrics, feedback, failures,
+    hypotheses, artifacts, retrieval context, and novelty.
+  - Verification: focused database and loop tests cover direct score-index
+    content and final manifest persistence.

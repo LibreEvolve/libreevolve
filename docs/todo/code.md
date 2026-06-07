@@ -629,6 +629,9 @@ Primary evidence:
     objective-vector evidence. `runtime.history.descriptor_index` adds bounded
     top-program views for finite archive-admission descriptor values, including
     diversity/complexity/performance coordinates when those axes are present.
+    `runtime.history.score_index` adds a bounded top-valid-program view ranked
+    by archive selection score and final fitness with archive-admission and
+    objective-vector evidence when present.
     `runtime.history.feedback_index` adds bounded feedback records grouped by
     LLM feedback grader, including finite score/delta values, discard/error
     status, objective-metric flags, retention summaries, and bounded text
@@ -665,10 +668,10 @@ Primary evidence:
     `IslandModel`, persists compact and full archive-state snapshots, validates
     archive-event streams, supports lineage-aware live sampling through
     best-per-root retained representatives, persists a bounded lineage index
-    view, descriptor index view, and feedback index view in runtime manifests, and can restore cells/elites from a
+    view, score index view, descriptor index view, and feedback index view in runtime manifests, and can restore cells/elites from a
     manifest plus accepted history bundle. However, these are still append-only logs plus an
     in-memory archive, not a persisted query/index database. There is no durable
-    index over score, full metric vectors, feedback embeddings/full-text ranking,
+    index over full metric vectors, feedback embeddings/full-text ranking,
     failure fingerprints, full lineage subgraphs, hypotheses, artifacts, retrieval
     context, or novelty; `load_accepted_history_index()` is an id map for
     restore/query scaffolding, not a ranked resurfacing database. The compact

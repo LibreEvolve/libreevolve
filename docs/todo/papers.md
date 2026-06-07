@@ -326,7 +326,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs
     view grouped by root lineage, and `runtime.history.descriptor_index`, a
     bounded diagnostic top-program view for finite archive-admission descriptor
-    values. Runtime manifests now also include `runtime.history.feedback_index`,
+    values. Runtime manifests now also include `runtime.history.score_index`, a
+    bounded diagnostic top-valid-program view ranked by selection score and
+    final fitness. Runtime manifests now also include `runtime.history.feedback_index`,
     a bounded diagnostic feedback-record view grouped by LLM feedback grader.
     LLM
     feedback graders now support
@@ -344,7 +346,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     Parent and inspiration sampling can now use
     metric-leader, frontier, lineage, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
-    copies by program id. Persisted/queryable feedback and full durable
+    copies by program id. Bounded score-ranked manifest evidence is now
+    available. Persisted/queryable feedback and full durable
     database resurfacing remain open. Metric bounds are now strictly ordered before they
     can be used as policy inputs. Metric-leader parent sampling now cycles
     through primary and secondary metric targets in configured order and

@@ -294,6 +294,83 @@ def test_objective_metric_archives_snapshot_reports_top_declared_metric_programs
     assert snapshot["archives"][1]["retained_count"] == 4
 
 
+def test_score_index_snapshot_reports_top_valid_programs_by_selection_score(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+    )
+    high_fitness_low_score = Program(
+        id="high-fitness-low-score",
+        code="x = 1\n",
+        fitness=0.95,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.2},
+    )
+    balanced = Program(
+        id="balanced",
+        code="x = 2\n",
+        fitness=0.8,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.8,
+            "normalized_metrics": {"score": 0.8},
+            "archive_admission": {
+                "admitted": True,
+                "reason": "new_cell",
+                "cell_admitted": True,
+                "elite_retained": True,
+                "sampling_eligible": True,
+                "search_state_changed": True,
+                "island_id": 0,
+                "archive_sequence": 3,
+                "cell": [7, 2, 1],
+            },
+        },
+    )
+    top = Program(
+        id="top",
+        code="x = 3\n",
+        fitness=0.7,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.9},
+    )
+    invalid = Program(
+        id="invalid",
+        code="x = 4\n",
+        fitness=1.0,
+        evaluation={"is_valid": False},
+        metadata={"selection_score": 1.0},
+    )
+    for candidate in (high_fitness_low_score, balanced, top, invalid):
+        db.log(candidate)
+
+    snapshot = db.score_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.score_index.v1"
+    assert snapshot["policy"] == "top_valid_programs_by_selection_score_then_fitness"
+    assert snapshot["program_count_considered"] == 3
+    assert [program["program_id"] for program in snapshot["programs"]] == [
+        top.id,
+        balanced.id,
+        high_fitness_low_score.id,
+    ]
+    assert snapshot["programs"][1]["objective_vector"] == {
+        "policy": "normalized_declared_metric_vector_v1",
+        "normalized_metrics": {"score": 0.8},
+    }
+    assert snapshot["programs"][1]["archive_admission"] == {
+        "admitted": True,
+        "cell_admitted": True,
+        "elite_retained": True,
+        "sampling_eligible": True,
+        "search_state_changed": True,
+        "reason": "new_cell",
+        "island_id": 0,
+        "archive_sequence": 3,
+        "cell": [7, 2, 1],
+    }
+    assert invalid.id not in {program["program_id"] for program in snapshot["programs"]}
+
+
 def test_lineage_index_snapshot_groups_valid_programs_by_root(tmp_path):
     db = ProgramDatabase(
         Config(log_dir=str(tmp_path), problem_name="t"),

@@ -760,6 +760,8 @@ best-program view for each declared normalized metric. They also include
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
 for each declared normalized metric, and `runtime.history.lineage_index`, a
 bounded best-valid-programs view grouped by root lineage. It also includes
+`runtime.history.score_index`, a bounded top-valid-programs view ranked by
+selection score and final fitness,
 `runtime.history.descriptor_index`, a bounded top-program view for finite
 archive-admission descriptor values such as diversity, complexity, and
 performance, and `runtime.history.feedback_index`, a bounded feedback-record

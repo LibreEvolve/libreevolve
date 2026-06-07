@@ -9577,3 +9577,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     feedback-driven sampling decisions.
   - Verification: focused database and loop tests cover the feedback index API
     and manifest persistence.
+
+- [x] Add paper-visible score-index manifest evidence.
+  - Paper evidence: AlphaEvolve-style databases resurface high-performing
+    historical programs under exploration/exploitation policies, so ranked
+    score evidence should be inspectable from completed run artifacts.
+  - Status: completed runs now persist `runtime.history.score_index`, a bounded
+    top-valid-programs view ranked by selection score then final fitness with
+    archive-admission and objective-vector evidence when available.
+  - Remaining paper gap: this remains diagnostic manifest evidence, not the
+    paper-faithful durable database or replayable score-driven sampling
+    decisions.
+  - Verification: focused database and loop tests cover the score index API and
+    manifest persistence.

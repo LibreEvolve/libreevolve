@@ -1228,6 +1228,8 @@ Pareto-specific. Final manifests also include
 each declared normalized metric, and
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
 for each declared normalized metric. Final manifests also include
+`runtime.history.score_index`, a bounded diagnostic top-valid-programs view by
+archive selection score and final fitness. Final manifests also include
 `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs view
 grouped by root lineage, so lineage resurfacing evidence is inspectable from
 run artifacts. `runtime.history.descriptor_index` similarly stores bounded
@@ -1272,7 +1274,8 @@ order. The sampling pool is still in-memory MAP-Elites state rather than a
 full queryable local database; `runtime.history.lineage_index` is a bounded
 diagnostic view and `runtime.history.descriptor_index` is a bounded
 descriptor-coordinate view. `runtime.history.feedback_index` is a bounded
-feedback evidence view; none of these are replayable sampling engines.
+feedback evidence view, and `runtime.history.score_index` is a bounded
+score-ranked view; none of these are replayable sampling engines.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

@@ -88,6 +88,7 @@ _MAX_SEED_SOURCE_STRING_CHARS = 1024
 _MAX_ARCHIVE_EVENT_REASON_CHARS = 128
 _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
 _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
+_MAX_SCORE_INDEX_PROGRAMS = 50
 _MAX_LINEAGE_INDEX_ROOTS = 50
 _MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT = 5
 _MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR = 10
@@ -647,6 +648,12 @@ class ProgramDatabase:
             self._all,
             self._objective_metric_order,
             limit=_MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS,
+        )
+
+    def score_index_snapshot(self) -> dict:
+        return _score_index_snapshot(
+            self._all,
+            limit=_MAX_SCORE_INDEX_PROGRAMS,
         )
 
     def lineage_index_snapshot(self) -> dict:
@@ -2064,6 +2071,98 @@ def _objective_metric_leader_candidate(
         "selection_score": _history_safe_selection_score(program),
         "normalized_metrics": declared_metrics,
     }
+
+
+def _score_index_snapshot(
+    programs: list[Program],
+    *,
+    limit: int,
+) -> dict:
+    candidates = [
+        record
+        for program in programs
+        if (record := _score_index_program(program)) is not None
+    ]
+    candidates.sort(key=_score_index_sort_key)
+    retained = candidates[:limit]
+    return {
+        "schema": "libreevolve.score_index.v1",
+        "policy": "top_valid_programs_by_selection_score_then_fitness",
+        "program_count_considered": len(candidates),
+        "retained_count": len(retained),
+        "retention_limit": limit,
+        "programs": retained,
+        "limitations": [
+            "diagnostic_score_index_not_sampling_replay_engine",
+            "valid_history_programs_only",
+            "selection_score_uses_current_record_metadata_policy",
+            "bounded_top_score_view_not_full_persisted_database_index",
+        ],
+    }
+
+
+def _score_index_program(program: Program) -> dict | None:
+    if program.evaluation.get("is_valid") is not True:
+        return None
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "generation": program.generation,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+    }
+    admission = _history_safe_archive_admission_summary(program)
+    if admission:
+        record["archive_admission"] = admission
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    return record
+
+
+def _history_safe_archive_admission_summary(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    admission = metadata.get("archive_admission")
+    if not isinstance(admission, Mapping):
+        return {}
+    summary: dict[str, object] = {}
+    for field in (
+        "admitted",
+        "cell_admitted",
+        "elite_retained",
+        "sampling_eligible",
+        "search_state_changed",
+    ):
+        value = admission.get(field)
+        if isinstance(value, bool):
+            summary[field] = value
+    for field in ("reason",):
+        value = admission.get(field)
+        if isinstance(value, str) and value:
+            summary[field] = value
+    for field in ("island_id", "archive_sequence"):
+        value = admission.get(field)
+        if isinstance(value, int) and not isinstance(value, bool):
+            summary[field] = value
+    cell = admission.get("cell")
+    if isinstance(cell, list) and all(
+        isinstance(item, int) and not isinstance(item, bool) for item in cell
+    ):
+        summary["cell"] = list(cell)
+    return summary
+
+
+def _score_index_sort_key(record: dict) -> tuple:
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    return (
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
 
 
 def _lineage_index_snapshot(

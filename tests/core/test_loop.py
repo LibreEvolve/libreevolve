@@ -2588,6 +2588,21 @@ def test_loop_records_normalized_metrics_and_selection_score():
             ],
         },
     ]
+    score_index = manifest["runtime"]["history"]["score_index"]
+    assert score_index["schema"] == "libreevolve.score_index.v1"
+    assert score_index["policy"] == "top_valid_programs_by_selection_score_then_fitness"
+    assert score_index["program_count_considered"] == 1
+    assert score_index["programs"][0]["program_id"] == record["id"]
+    assert score_index["programs"][0]["selection_score"] == 0.8
+    assert score_index["programs"][0]["objective_vector"] == {
+        "policy": "normalized_declared_metric_vector_v1",
+        "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
+        "selection_policy": {
+            "type": "mean_normalized_declared_metrics",
+            "primary_metric": "accuracy",
+            "metrics": ["accuracy", "latency"],
+        },
+    }
     lineage_index = manifest["runtime"]["history"]["lineage_index"]
     assert lineage_index["schema"] == "libreevolve.lineage_index.v1"
     assert lineage_index["policy"] == "best_valid_programs_grouped_by_root_lineage"

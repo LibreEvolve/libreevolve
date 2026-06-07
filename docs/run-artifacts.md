@@ -1013,10 +1013,14 @@ limitation statements, and the current no-live-pricing/no-raw-payload replay
 boundary.
 When a backend spec or direct backend metadata provides
 `prompt_max_estimated_tokens`, the ensemble applies that backend/model
-heuristic prompt-token cap together with any global cap before provider calls.
-Call telemetry records the effective `max_prompt_estimated_tokens`, the global
-`configured_max_prompt_estimated_tokens`, and the selected backend's
-`backend_prompt_max_estimated_tokens`.
+prompt-token cap together with any global cap before provider calls. If every
+role-eligible backend shares a locally available provider-token counter, that
+exact count is used for the final prompt; otherwise the call remains on the
+heuristic estimate and records the unavailable reason. Call telemetry records
+the effective `max_prompt_estimated_tokens`, the global
+`configured_max_prompt_estimated_tokens`, the selected backend's
+`backend_prompt_max_estimated_tokens`, the `prompt_token_count_policy`, and
+role-scoped `prompt_token_counter_capability`.
 
 `runtime.rng` records the run-local Python RNG state observed at finalization.
 A `snapshot` row has schema `python.random.mt19937.v1`, includes the configured
@@ -2601,9 +2605,10 @@ evolution loop records `prompt_token_counter_capability` with schema
 `libreevolve.prompt_token_counter_capability.v1` for mutation prompts. When all
 eligible mutation backends share a locally available OpenAI `tiktoken` counter,
 that counter is wired into `PromptSampler`; otherwise the record explains why
-the mutation prompt remained on heuristic estimates. Full provider/backend
-tokenizer discovery and selected-backend tokenizer wiring for all roles are
-not automatic yet.
+the mutation prompt remained on heuristic estimates. The ensemble also records
+role-scoped token-counter capability for every final prompt call and uses exact
+counts when all role-eligible backends share the local counter. Full
+provider-token section packing outside mutation prompts is not automatic yet.
 The configured `prompt_max_chars` and `prompt_max_estimated_tokens` values are
 also enforced at the `LLMEnsemble.generate()` boundary before backend selection
 for all ensemble roles. Oversized ensemble prompts therefore do not produce

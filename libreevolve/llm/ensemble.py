@@ -45,6 +45,7 @@ from libreevolve.llm.prompt_roles import (
     prompt_role_policy_record,
     validate_prompt_role_policy,
 )
+from libreevolve.llm.tokenization import discover_prompt_token_counter
 
 MAX_REWARD = 1.0
 MAX_PROVIDER_ERROR_CHARS = 500
@@ -176,10 +177,19 @@ class LLMEnsemble:
         effective_prompt_token_limit = self._effective_prompt_estimated_token_limit(
             role_backend_indices
         )
+        prompt_token_counter, prompt_token_counter_capability = (
+            self._prompt_token_counter_for_role(role, role_backend_indices)
+        )
         prompt = validate_llm_prompt(
             prompt,
             max_chars=self.max_prompt_chars,
             max_estimated_tokens=effective_prompt_token_limit,
+            prompt_token_counter=prompt_token_counter,
+        )
+        prompt_provider_tokens = (
+            _provider_prompt_token_count(prompt, prompt_token_counter)
+            if prompt_token_counter is not None
+            else None
         )
         self._enforce_role_call_limit(role)
         self._logical_role_calls[role] = self._logical_role_calls.get(role, 0) + 1
@@ -217,6 +227,8 @@ class LLMEnsemble:
                     attempt_index=attempt_index,
                     role_backend_indices=role_backend_indices,
                     effective_prompt_token_limit=effective_prompt_token_limit,
+                    prompt_token_counter_capability=prompt_token_counter_capability,
+                    prompt_provider_tokens=prompt_provider_tokens,
                 )
                 attempt_index += 1
                 try:
@@ -802,6 +814,22 @@ class LLMEnsemble:
                 limits.append(context_window_limit)
         return min(limits) if limits else None
 
+    def _prompt_token_counter_for_role(
+        self,
+        role: str,
+        role_backend_indices: set[int] | None,
+    ) -> tuple[Callable[[str], int] | None, dict]:
+        scoped_indices = (
+            {role: sorted(role_backend_indices)}
+            if role_backend_indices is not None
+            else None
+        )
+        return discover_prompt_token_counter(
+            self._backend_metadata,
+            role=role,
+            role_backend_indices=scoped_indices,
+        )
+
     def _call_record(
         self,
         *,
@@ -814,6 +842,8 @@ class LLMEnsemble:
         attempt_index: int = 0,
         role_backend_indices: set[int] | None = None,
         effective_prompt_token_limit: int | None = None,
+        prompt_token_counter_capability: dict | None = None,
+        prompt_provider_tokens: int | None = None,
     ) -> dict:
         backend = self.backends[backend_idx]
         metadata = (
@@ -889,6 +919,22 @@ class LLMEnsemble:
             ),
             "prompt_chars": len(prompt),
             "prompt_estimated_tokens": _estimate_prompt_tokens(len(prompt)),
+            "prompt_token_count_policy": (
+                "provider_token_counter"
+                if prompt_provider_tokens is not None
+                else "heuristic_chars_div_4"
+            ),
+            "prompt_provider_tokens": prompt_provider_tokens,
+            "prompt_token_limit_count": (
+                prompt_provider_tokens
+                if prompt_provider_tokens is not None
+                else _estimate_prompt_tokens(len(prompt))
+            ),
+            "prompt_token_counter_capability": deepcopy(
+                prompt_token_counter_capability
+            )
+            if prompt_token_counter_capability is not None
+            else None,
             "prompt_sha256": prompt_sha256,
             "output": None,
             "output_retention": None,
@@ -2759,6 +2805,7 @@ def validate_llm_prompt(
     *,
     max_chars: int | None = None,
     max_estimated_tokens: int | None = None,
+    prompt_token_counter: Callable[[str], int] | None = None,
 ) -> str:
     if not isinstance(prompt, str):
         raise ValueError(f"LLM prompt must be text, got {type(prompt).__name__}")
@@ -2770,11 +2817,15 @@ def validate_llm_prompt(
             f"LLM prompt exceeds max_prompt_chars ({len(prompt)} > {limit})"
         )
     token_limit = _validate_optional_max_prompt_estimated_tokens(max_estimated_tokens)
-    estimated_tokens = _estimate_prompt_tokens(len(prompt))
-    if token_limit is not None and estimated_tokens > token_limit:
+    token_count = (
+        _provider_prompt_token_count(prompt, prompt_token_counter)
+        if prompt_token_counter is not None
+        else _estimate_prompt_tokens(len(prompt))
+    )
+    if token_limit is not None and token_count > token_limit:
         raise ValueError(
             "LLM prompt exceeds max_prompt_estimated_tokens "
-            f"({estimated_tokens} > {token_limit})"
+            f"({token_count} > {token_limit})"
         )
     return prompt
 
@@ -2935,6 +2986,18 @@ def _validate_optional_max_prompt_estimated_tokens(value: object) -> int | None:
 
 def _estimate_prompt_tokens(chars: int) -> int:
     return max(1, math.ceil(chars / 4)) if chars > 0 else 0
+
+
+def _provider_prompt_token_count(
+    prompt: str,
+    prompt_token_counter: Callable[[str], int],
+) -> int:
+    count = prompt_token_counter(prompt)
+    if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+        raise ValueError(
+            "provider prompt token counter must return a non-negative integer"
+        )
+    return count
 
 
 def _validate_role_backend_indices_policy(

@@ -523,12 +523,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     every eligible mutation backend can use a locally installed OpenAI
     `tiktoken` counter, and otherwise persists
     `libreevolve.prompt_token_counter_capability.v1` diagnostics with the
-    precise unavailable reason.
+    precise unavailable reason. The ensemble boundary now repeats that
+    role-scoped common-counter discovery for mutation, critique, feedback,
+    meta-prompt, registry-created, and custom role labels; when all eligible
+    backends for a role share the local counter, the final prompt cap is
+    enforced with exact provider-token counts and call telemetry records
+    `prompt_token_count_policy`, `prompt_provider_tokens`,
+    `prompt_token_limit_count`, and the role-specific capability record.
     `validate_prompt_section_budget_report()` now validates persisted
     `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
     section counts, required/optional totals, section hash shape, packing
     decisions, cap-fit claims, and provider-counter boundary fields, but full
-    selected-backend tokenizer wiring across all provider families and prompt
+    provider-token section packing across all provider families and prompt
     roles is still absent from the normal evolution path. Backend specs and
     backend metadata can now carry
     `context_window_tokens` plus optional `reserved_output_tokens`; the
@@ -538,7 +544,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: add configurable/full validator-metadata prompt policy
     and automatic selected-backend provider-token section-priority packing
     across evaluator, feedback, artifact, and context prompt sections. The
-    remaining paper gap is not persisted section-budget validation.
+    remaining paper gap is not persisted section-budget validation or
+    role-scoped final-prompt exact token counting.
 
 - [ ] Model migration replay and controller state for one-command archive
   resume.

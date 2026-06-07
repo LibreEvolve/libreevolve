@@ -275,13 +275,18 @@ priority before the final rendered-prompt cap is applied; required
 AlphaEvolve channels remain intact, so large required sections can still force
 character-level truncation. The local caps are enforced once during mutation
 prompt rendering and again at the `LLMEnsemble.generate()` boundary before
-backend selection; the run records prompt-size diagnostics for rendered
-mutation prompts. Those diagnostics include `section_budget`, a deterministic
-per-placeholder accounting record with section priorities, hashes, character
-counts, estimated tokens, required/optional totals, template overhead,
-required-section fit status, configured cap sources, and packing decisions.
-This is still character-budget packing with heuristic token estimates, not
-provider-token context-window fitting.
+backend selection. The ensemble boundary uses a common locally available
+provider-token counter for the selected role's eligible backends when one can
+be discovered, including critique, feedback, meta-prompt, registry-created, and
+custom roles; otherwise it records why exact counting was unavailable and uses
+the heuristic token estimate. The run records prompt-size diagnostics for
+rendered mutation prompts. Those diagnostics include `section_budget`, a
+deterministic per-placeholder accounting record with section priorities,
+hashes, character counts, estimated tokens, required/optional totals, template
+overhead, required-section fit status, configured cap sources, and packing
+decisions. Prompt section packing is still only fully automatic in the mutation
+sampler; non-mutation roles get final-prompt validation and telemetry, not
+per-section provider-token packing.
 
 Generated candidate metadata persists mutation prompts according to
 `mutation_prompt_retention_mode`: `redacted` by default, with `full`,
@@ -843,10 +848,14 @@ avoid claiming live provider pricing. A companion `cost_estimate_status` record
 keeps not-estimated cases explicit instead of silently treating missing local
 rates or missing token totals as free calls.
 Backend metadata can also supply `prompt_max_estimated_tokens`; the ensemble
-combines that eligible backend/model heuristic cap with the global prompt-token
-cap before provider calls and records the effective/global/backend caps in call
-telemetry. This is still heuristic character-derived fitting, not
-provider-tokenizer-backed section packing.
+combines that eligible backend/model prompt-token cap with the global cap
+before provider calls and records the effective/global/backend caps in call
+telemetry. When the selected role's eligible backends share a local tokenizer
+counter, call telemetry also records exact provider-token counts and the
+role-scoped capability record; otherwise it records the unavailable reason and
+uses the heuristic character-derived estimate. This is still final-prompt
+fitting, not complete provider-tokenizer-backed section packing for every
+rendered prompt component.
 Final runtime manifests
 record `runtime.llm_scheduler` as a JSON-finite scheduler snapshot validated
 against the `LLMEnsemble` restore contract, or as explicit `not_initialized` /

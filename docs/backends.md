@@ -192,9 +192,14 @@ Current behavior:
   extension-owned.
 - backend specs and direct backend metadata can set
   `prompt_max_estimated_tokens`; when present, the ensemble applies the minimum
-  applicable global and eligible-backend heuristic token cap before provider
-  calls. This is model/context-window evidence, not provider-tokenizer-backed
-  section packing.
+  applicable global and eligible-backend prompt-token cap before provider
+  calls. When every role-eligible backend exposes the same locally available
+  provider tokenizer, the ensemble uses that exact count for mutation,
+  critique, feedback, meta-prompt, registry-created, and custom role labels;
+  otherwise it records role-scoped token-counter capability diagnostics and
+  falls back to the heuristic character-derived estimate. This is
+  model/context-window evidence at the final prompt boundary, not complete
+  provider-tokenizer-backed section packing.
 - backend specs and direct backend metadata can set `context_window_tokens`
   plus optional `reserved_output_tokens`; the ensemble subtracts the reserve
   from the window and applies the resulting heuristic prompt-token capacity

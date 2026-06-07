@@ -50,9 +50,17 @@ Primary evidence:
     `prompt_token_counter_capability` with schema
     `libreevolve.prompt_token_counter_capability.v1` and the exact unavailable
     reason, such as a missing optional dependency or a provider with no local
-    tokenizer registered. Generated program history,
-    failed-generation records, manifests, scheduler state, and LLM call history
-    persist these diagnostics.
+    tokenizer registered. `LLMEnsemble.generate()` now performs the same
+    role-scoped common-counter discovery at the final prompt boundary for
+    mutation, critique, feedback, meta-prompt, registry-created, and custom
+    roles. When all role-eligible backends share a local counter, the ensemble
+    enforces `prompt_max_estimated_tokens` with exact provider-token counts and
+    records `prompt_token_count_policy`, `prompt_provider_tokens`,
+    `prompt_token_limit_count`, and the role-specific
+    `prompt_token_counter_capability` in call telemetry; otherwise it records
+    the unavailable reason and uses the heuristic estimate. Generated program
+    history, failed-generation records, manifests, scheduler state, and LLM call
+    history persist these diagnostics.
     `validate_prompt_section_budget_report()` now validates persisted
     `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
     section counts, required/optional totals, section hash shape, packing
@@ -63,11 +71,12 @@ Primary evidence:
     marking `paper_budget_ready: false`. `validate_llm_budget_evidence_bundle()`
     now checks LLM budget reports together with matching resume artifact
     inventory before accepting bundled paper-budget readiness. Provider-token
-    discovery is still limited to optional local OpenAI `tiktoken` counters on
-    mutation prompts; selected-backend tokenizer wiring across critique,
-    feedback, and meta-prompt roles is still absent, and provider usage is
-    observed after calls rather than universally used for exact provider-token
-    pre-call fitting.
+    discovery is still limited to optional local OpenAI `tiktoken` counters;
+    selected-backend final prompt counting now covers critique, feedback, and
+    meta-prompt roles when their eligible backends share that counter, but
+    automatic provider-token section packing remains limited to mutation
+    prompts, and provider usage is observed after calls rather than universally
+    used for exact provider-token pre-call fitting.
     `cost_usd` is now populated from configured
     `backend_metadata.cost_usd_per_million_tokens` when provider usage exposes
     `total_tokens`, and `RunBudget` now enforces logical LLM calls plus a
@@ -79,8 +88,10 @@ Primary evidence:
     stop resumed runs through the same live checks.
     Backend specs and direct backend metadata can now include
     `prompt_max_estimated_tokens`; the ensemble applies the minimum applicable
-    global/eligible-backend heuristic prompt-token cap before provider calls and
-    records effective/global/backend caps in call telemetry. Backend specs and
+    global/eligible-backend prompt-token cap before provider calls, using exact
+    provider-token counts when role-scoped discovery succeeds and heuristic
+    counts otherwise, and records effective/global/backend caps in call
+    telemetry. Backend specs and
     direct backend metadata can also include `context_window_tokens` plus
     optional `reserved_output_tokens`; when present, the ensemble subtracts the
     reserve from the context window, applies that derived heuristic prompt-token
@@ -88,17 +99,18 @@ Primary evidence:
     records the window, reserve, and derived capacity in call telemetry. If a
     backend spec omits `reserved_output_tokens` but sets `max_tokens`, the
     output-token cap is used as the reserve.
-  - Required result: wire backend/provider tokenizer discovery into the
-    mutation/critique/feedback/meta-prompt path, make selected-backend exact
-    token counters automatic for parent code, inspirations, explicit context,
-    plugin context, evaluator feedback, and failure memory, persist complete
-    budget/resume state for token/provider-cost limits, and add tests for
-    provider-specific oversized workspaces/context/plugins/inspirations/failure
-    memory under configured backend/model context-window budgets. The remaining
-    gap is automatic selected-backend tokenizer discovery/wiring for all prompt
-    roles and complete provider-cost restoration, not mutation-path optional
-    OpenAI counter discovery, validating persisted section-budget records, or
-    LLM budget report/resume-artifact bundle consistency.
+  - Required result: make selected-backend exact token counters automatic for
+    parent code, inspirations, explicit context, plugin context, evaluator
+    feedback, and failure memory section-packing across all prompt roles,
+    persist complete budget/resume state for token/provider-cost limits, and
+    add tests for provider-specific oversized
+    workspaces/context/plugins/inspirations/failure memory under configured
+    backend/model context-window budgets. The remaining gap is automatic
+    selected-backend provider-token section packing outside mutation prompts
+    and complete provider-cost restoration, not mutation-path optional OpenAI
+    counter discovery, final-prompt selected-backend tokenizer discovery across
+    LLM roles, validating persisted section-budget records, or LLM budget
+    report/resume-artifact bundle consistency.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

@@ -204,8 +204,10 @@ from `validate.py` unless explicitly allowlisted.
   LibreEvolve estimates tokens as `ceil(rendered_chars / 4)`, converts this cap
   into an effective character budget for deterministic section-priority
   packing, records the configured token source in `section_budget`, and rejects
-  over-budget ensemble prompts before scheduler/backend selection. This is not
-  provider-specific tokenizer integration.
+  over-budget ensemble prompts before scheduler/backend selection. The final
+  ensemble boundary upgrades this cap to exact provider-token counting when all
+  role-eligible backends share a locally available tokenizer counter; otherwise
+  it records the unavailable reason and uses the character-derived heuristic.
   Individual backend specs can also set `prompt_max_estimated_tokens`; the
   ensemble combines the global cap with eligible backend/model caps and records
   the effective cap in call telemetry. Backend specs can also set
@@ -213,7 +215,8 @@ from `validate.py` unless explicitly allowlisted.
   heuristic prompt-token capacity of `context_window_tokens -
   reserved_output_tokens`; when `reserved_output_tokens` is omitted and
   `max_tokens` is set, the backend output cap is used as the reserve. This is
-  still heuristic prompt fitting, not provider-tokenizer integration.
+  still final-prompt fitting, not full provider-tokenizer section packing for
+  every rendered prompt component.
 - `prompt_artifact_content_mode` (`"excerpt"`): controls validator-artifact
   content rendered into mutation prompts. `excerpt` uses the bounded
   `content_excerpt` already stored in evaluation metadata, `bounded_file`
@@ -451,9 +454,11 @@ role accounting/budget reports aggregate it as `cost_microusd` / `cost_usd`.
 `max_llm_cost_microusd` can enforce a live run-wide stop from this configured
 estimate, but LibreEvolve still does not fetch live provider prices.
 Backend specs may also include `prompt_max_estimated_tokens`, a positive
-heuristic prompt-token cap for that backend/model. It is enforced before
-provider calls when the backend is eligible for the call role and is recorded in
-call telemetry alongside the global configured cap. Backend specs may also
+prompt-token cap for that backend/model. It is enforced before provider calls
+when the backend is eligible for the call role, using exact provider-token
+counts when role-scoped tokenizer discovery succeeds and heuristic counts
+otherwise, and is recorded in call telemetry alongside the global configured
+cap. Backend specs may also
 include `context_window_tokens` and optional `reserved_output_tokens`; the
 ensemble subtracts the reserve from the window and applies the result as another
 eligible-backend heuristic prompt-token cap. If `reserved_output_tokens` is
@@ -1061,9 +1066,14 @@ accounting and downstream mutation or persistence paths.
 local prompt-input caps for ensemble calls: when set, oversized prompts fail
 before backend selection, call-history mutation, or provider/custom backend
 invocation. The estimated-token cap uses the same deterministic four-character
-heuristic as prompt section packing; it is not provider tokenizer accounting.
+heuristic as prompt section packing unless every role-eligible backend exposes
+a common local provider-token counter, in which case the ensemble validates the
+final prompt with that exact count and records
+`prompt_token_counter_capability`, `prompt_token_count_policy`, and
+`prompt_provider_tokens` in call telemetry.
 Backend specs can set their own `prompt_max_estimated_tokens`; the same
-heuristic is applied to the minimum eligible backend/global cap.
+role-scoped exact-or-heuristic policy is applied to the minimum eligible
+backend/global cap.
 Secret-like prompt text is not rejected at this boundary because private tasks
 may include private context, but raw prompt text is not retained in LLM call
 telemetry.

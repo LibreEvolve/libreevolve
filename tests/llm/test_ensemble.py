@@ -1355,6 +1355,92 @@ def test_generate_enforces_backend_prompt_estimated_token_limit_before_call():
     assert ens.counts == [0]
 
 
+def test_generate_uses_role_scoped_provider_token_counter_before_backend_call(monkeypatch):
+    class FakeEncoding:
+        name = "fixture_base"
+
+        def encode(self, text):
+            return text.split()
+
+    class FakeEncoderPackage:
+        @staticmethod
+        def encoding_for_model(model):
+            return FakeEncoding()
+
+        @staticmethod
+        def get_encoding(name):
+            return FakeEncoding()
+
+    monkeypatch.setattr(
+        "libreevolve.llm.tokenization.importlib.import_module",
+        lambda name: FakeEncoderPackage,
+    )
+    mutation_backend = _b("mutation", "mutation-answer")
+    feedback_backend = _b("feedback", "feedback-answer")
+    ens = LLMEnsemble(
+        [mutation_backend, feedback_backend],
+        backend_metadata=[
+            {"type": "anthropic", "model": "claude-sonnet-4-6", "role": "mutation"},
+            {
+                "type": "openai",
+                "model": "gpt-4o-mini",
+                "role": "feedback:grader",
+                "prompt_max_estimated_tokens": 2,
+            },
+        ],
+    )
+
+    with pytest.raises(ValueError, match=r"max_prompt_estimated_tokens \(3 > 2\)"):
+        ens.generate("a b c", role="feedback:grader")
+
+    mutation_backend.generate.assert_not_called()
+    feedback_backend.generate.assert_not_called()
+    assert ens.call_history == []
+    assert ens.counts == [0, 0]
+
+
+def test_generate_records_role_prompt_token_counter_capability(monkeypatch):
+    class FakeEncoding:
+        name = "fixture_base"
+
+        def encode(self, text):
+            return text.split()
+
+    class FakeEncoderPackage:
+        @staticmethod
+        def encoding_for_model(model):
+            return FakeEncoding()
+
+        @staticmethod
+        def get_encoding(name):
+            return FakeEncoding()
+
+    monkeypatch.setattr(
+        "libreevolve.llm.tokenization.importlib.import_module",
+        lambda name: FakeEncoderPackage,
+    )
+    backend = _b("critic", "answer")
+    ens = LLMEnsemble(
+        [backend],
+        max_prompt_estimated_tokens=5,
+        backend_metadata=[{"type": "openai", "model": "gpt-4o-mini", "role": "critique"}],
+    )
+
+    ens.generate("a b c", role="critique")
+
+    record = ens.call_history[0]
+    assert record["prompt_estimated_tokens"] == 2
+    assert record["prompt_token_count_policy"] == "provider_token_counter"
+    assert record["prompt_provider_tokens"] == 3
+    assert record["prompt_token_limit_count"] == 3
+    capability = record["prompt_token_counter_capability"]
+    assert capability["schema"] == "libreevolve.prompt_token_counter_capability.v1"
+    assert capability["role"] == "critique"
+    assert capability["status"] == "ready"
+    assert capability["counter_name"] == "openai:encoding:fixture_base"
+    assert capability["eligible_backend_indices"] == [0]
+
+
 def test_generate_records_effective_backend_prompt_estimated_token_limit():
     backend = _b("limited", "answer")
     ens = LLMEnsemble(

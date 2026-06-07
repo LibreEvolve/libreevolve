@@ -6,6 +6,26 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible validation for multi-objective history diagnostics.
+  - Paper evidence: AlphaEvolve optimizes multiple user-provided scores and
+    needs reproducible evidence for which programs excel under each declared
+    metric and which retained programs are non-dominated.
+  - Status: `validate_objective_history_summary()` now validates
+    `runtime.history.objective_frontier`,
+    `runtime.history.objective_metric_leaders`, and
+    `runtime.history.objective_metric_archives` together, checking schema and
+    policy values, shared metric order, non-negative counters, retained-count
+    and retention-limit consistency, normalized metric ranges, non-dominated
+    retained frontier records, and explicit diagnostic-not-primary-archive
+    limitation statements.
+  - Remaining paper gap: this is a validator for diagnostic runtime evidence,
+    not a paper-faithful primary archive replacement or durable
+    multi-objective database query layer.
+  - Verification: focused objective-history tests cover real database
+    snapshots, manifest JSON loading, frontier overclaim rejection,
+    metric-order mismatch rejection, archive count/retention failures, and
+    malformed program records.
+
 - [x] Add paper-visible provider diagnostics summary validation.
   - Paper evidence: AlphaEvolve-style experiments need provider diagnostics and
     cost/latency/accounting evidence that can be inspected from run artifacts

@@ -427,6 +427,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     deterministic rank-fusion view over score, metric, frontier, lineage,
     descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`
     returns defensive ranked snapshots from that same source mix.
+    `validate_objective_history_summary()` now validates the runtime
+    multi-objective diagnostic history bundle across objective frontier,
+    metric leaders, and metric archives, including schema/policy values,
+    shared metric order, non-negative counters, retained-count and
+    retention-limit consistency, normalized metric ranges, non-dominated
+    retained frontier records, and explicit diagnostic-not-primary-archive
+    limitation statements.
     `runtime.history.failure_index` now groups failure records by fingerprint
     with bounded repetition/latest-record evidence. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence

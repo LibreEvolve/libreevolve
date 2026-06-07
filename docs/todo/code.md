@@ -715,7 +715,14 @@ Primary evidence:
     `metric_cell_archives`, per-declared-metric descriptor-cell overlays that
     retain the best program per complete normalized objective metric in each
     descriptor cell, record metric-cell admission telemetry, and include
-    metric-cell-only programs in island metric/frontier retained pools. Backend
+    metric-cell-only programs in island metric/frontier retained pools. The
+    runtime objective-history evidence is now self-checkable:
+    `validate_objective_history_summary()` validates the multi-objective
+    diagnostic history bundle across objective frontier, metric leaders, and
+    metric archives, including schema/policy values, shared metric order,
+    non-negative counters, retained-count and retention-limit consistency,
+    normalized metric ranges, non-dominated retained frontier records, and
+    explicit diagnostic-not-primary-archive limitation statements. Backend
     reward, admission thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
     scalar selection score rather than Pareto/frontier dominance. Durable

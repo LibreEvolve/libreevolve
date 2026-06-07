@@ -1155,6 +1155,12 @@ Important behavior:
   generations, metric values, selection scores, and available declared
   normalized metric vectors. This is an inspection artifact, not a MAP-Elites
   replacement policy.
+  `validate_objective_history_summary()` checks the objective history bundle
+  across frontier, metric leaders, and metric archives, including schemas,
+  policies, shared metric order, non-negative counters, retained-count and
+  retention-limit consistency, normalized metric ranges, non-dominated
+  retained frontier records, and the explicit diagnostic-not-primary-archive
+  limitation statements.
 - `runtime.history.score_index` stores a bounded diagnostic top-valid-programs
   view ranked by archive selection score, then final fitness. Records include
   program id, generation, lineage root, selection score, fitness, archive

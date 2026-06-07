@@ -1258,7 +1258,11 @@ objective metric semantics. Final manifests also include
 `runtime.history.objective_metric_leaders`, a diagnostic best-program view for
 each declared normalized metric, and
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
-for each declared normalized metric. Final manifests also include
+for each declared normalized metric. `validate_objective_history_summary()`
+checks those three runtime history records together for schema/policy values,
+shared metric order, normalized metric ranges, retained counts, retention
+limits, non-dominated frontier records, and explicit limitations that the
+records are diagnostic rather than primary archive policy. Final manifests also include
 `runtime.history.score_index`, a bounded diagnostic top-valid-programs view by
 archive selection score and final fitness. Final manifests also include
 `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs view

@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Validate multi-objective runtime history diagnostics.
+  - Spec evidence: AlphaEvolve-style multi-score work needs auditable evidence
+    for declared metric vectors, Pareto/frontier diagnostics, and metric
+    leader/archive views without overstating them as primary archive policy.
+  - Status: `validate_objective_history_summary()` now validates the runtime
+    objective-history bundle across `objective_frontier`,
+    `objective_metric_leaders`, and `objective_metric_archives`. It checks
+    schema/policy values, shared metric order, non-negative counters,
+    retained-count and retention-limit consistency, normalized metric ranges,
+    non-dominated retained frontier records, and explicit diagnostic-not-
+    primary-archive limitation statements. The validation result keeps
+    `primary_archive_policy_ready=false` for the current contract.
+  - Remaining gap: this validates diagnostic runtime evidence only; scalar
+    primary MAP-Elites replacement, durable multi-objective database queries,
+    and full paper-faithful multi-score archive policy remain open.
+  - Verification: focused objective-history tests cover real
+    `ProgramDatabase` snapshots, manifest JSON loading, frontier overclaims,
+    metric-order mismatches, archive count failures, retention-limit failures,
+    metric-value mismatches, and malformed program records.
+
 - [x] Validate runtime LLM provider diagnostics summaries.
   - Spec evidence: AlphaEvolve-grade provider accounting needs manifest-visible
     diagnostics that are checkable as retained evidence, while still separating

@@ -247,6 +247,13 @@ class CandidateWorkspace:
             try:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(content, encoding="utf-8")
+            except OSError as exc:
+                _remove_materialization_tree(temp_root, root.parent)
+                raise CandidateMaterializationError(
+                    f"Candidate file could not be written: {rel}: {exc}",
+                    reason="candidate_file_write_failed",
+                    paths=(rel,),
+                ) from exc
             except BaseException:
                 _remove_materialization_tree(temp_root, root.parent)
                 raise
@@ -260,6 +267,16 @@ class CandidateWorkspace:
             try:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(_static_file_materialization_bytes(item))
+            except CandidateMaterializationError:
+                _remove_materialization_tree(temp_root, root.parent)
+                raise
+            except OSError as exc:
+                _remove_materialization_tree(temp_root, root.parent)
+                raise CandidateMaterializationError(
+                    f"Candidate static file could not be written: {rel}: {exc}",
+                    reason="candidate_static_file_write_failed",
+                    paths=(rel,),
+                ) from exc
             except BaseException:
                 _remove_materialization_tree(temp_root, root.parent)
                 raise
@@ -520,43 +537,61 @@ def _static_file_materialization_bytes(record: Mapping[str, str | int]) -> bytes
         return _static_file_content_bytes(record)
     source_copy_path = record.get("source_copy_path")
     if not isinstance(source_copy_path, str):
-        raise ValueError(
-            f"Static file {record.get('path')!r} has no materializable content"
+        raise CandidateMaterializationError(
+            f"Static file {record.get('path')!r} has no materializable content",
+            reason="static_source_copy_missing_content",
+            paths=_materialization_paths(record.get("path")),
         )
     source = Path(source_copy_path)
     if _path_is_link(source):
-        raise ValueError(
-            f"Static file {record.get('path')!r} source_copy_path cannot be a link"
+        raise CandidateMaterializationError(
+            f"Static file {record.get('path')!r} source_copy_path cannot be a link",
+            reason="static_source_copy_link",
+            paths=_materialization_paths(record.get("path"), source_copy_path),
         )
     linked_ancestor = _linked_existing_ancestor(source)
     if linked_ancestor is not None:
-        raise ValueError(
+        raise CandidateMaterializationError(
             f"Static file {record.get('path')!r} source_copy_path contains "
-            f"a linked ancestor: {linked_ancestor}"
+            f"a linked ancestor: {linked_ancestor}",
+            reason="static_source_copy_linked_ancestor",
+            paths=_materialization_paths(record.get("path"), str(linked_ancestor)),
         )
     try:
         if not source.is_file():
-            raise ValueError(
-                f"Static file {record.get('path')!r} source_copy_path is not a file"
+            raise CandidateMaterializationError(
+                f"Static file {record.get('path')!r} source_copy_path is not a file",
+                reason="static_source_copy_not_file",
+                paths=_materialization_paths(record.get("path"), source_copy_path),
             )
         raw = source.read_bytes()
     except OSError as exc:
-        raise ValueError(
-            f"Static file {record.get('path')!r} source_copy_path could not be read"
+        raise CandidateMaterializationError(
+            f"Static file {record.get('path')!r} source_copy_path could not be read",
+            reason="static_source_copy_read_failed",
+            paths=_materialization_paths(record.get("path"), source_copy_path),
         ) from exc
     expected_bytes = record.get("bytes")
     if len(raw) != expected_bytes:
-        raise ValueError(
+        raise CandidateMaterializationError(
             f"Static file {record.get('path')!r} source_copy_path byte count "
-            "does not match bytes"
+            "does not match bytes",
+            reason="static_source_copy_byte_count_mismatch",
+            paths=_materialization_paths(record.get("path"), source_copy_path),
         )
     expected_sha256 = record.get("sha256")
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
-        raise ValueError(
+        raise CandidateMaterializationError(
             f"Static file {record.get('path')!r} source_copy_path sha256 "
-            "does not match sha256"
+            "does not match sha256",
+            reason="static_source_copy_sha256_mismatch",
+            paths=_materialization_paths(record.get("path"), source_copy_path),
         )
     return raw
+
+
+def _materialization_paths(*values: object) -> tuple[str, ...]:
+    return tuple(str(value) for value in values if isinstance(value, (str, Path)))
 
 
 def _normalize_candidate_path_text(path: str) -> str:
@@ -764,15 +799,25 @@ def validate_candidate_workspace_limits(
 def _prepare_materialization_root(root: Path) -> Path:
     root = root.absolute()
     if _path_is_link(root):
-        raise ValueError(f"Candidate workspace root cannot be a link: {root}")
+        raise CandidateMaterializationError(
+            f"Candidate workspace root cannot be a link: {root}",
+            reason="candidate_root_link",
+            paths=(str(root),),
+        )
     linked_ancestor = _linked_existing_ancestor(root)
     if linked_ancestor is not None:
-        raise ValueError(
-            f"Candidate workspace root contains a linked ancestor: {linked_ancestor}"
+        raise CandidateMaterializationError(
+            f"Candidate workspace root contains a linked ancestor: {linked_ancestor}",
+            reason="candidate_root_linked_ancestor",
+            paths=(str(linked_ancestor),),
         )
     root = root.resolve()
     if root.exists() and not root.is_dir():
-        raise ValueError(f"Candidate workspace root must be a directory: {root}")
+        raise CandidateMaterializationError(
+            f"Candidate workspace root must be a directory: {root}",
+            reason="candidate_root_not_directory",
+            paths=(str(root),),
+        )
     root.parent.mkdir(parents=True, exist_ok=True)
     if root.exists():
         _reject_linked_materialization_entries(root)
@@ -795,7 +840,11 @@ def _remove_materialization_tree(path: Path, parent: Path) -> None:
     resolved = path.resolve()
     parent_resolved = parent.resolve()
     if resolved == parent_resolved or parent_resolved not in resolved.parents:
-        raise ValueError(f"Refusing to remove path outside materialization parent: {path}")
+        raise CandidateMaterializationError(
+            f"Refusing to remove path outside materialization parent: {path}",
+            reason="materialization_cleanup_outside_parent",
+            paths=(str(path), str(parent)),
+        )
     shutil.rmtree(resolved)
 
 
@@ -809,16 +858,26 @@ def _reject_linked_materialization_entries(root: Path) -> None:
     while stack:
         current = stack.pop()
         if _path_is_link(current):
-            raise ValueError(f"Candidate workspace root contains a link: {current}")
+            raise CandidateMaterializationError(
+                f"Candidate workspace root contains a link: {current}",
+                reason="candidate_root_contains_link",
+                paths=(str(current),),
+            )
         try:
             children = list(current.iterdir())
         except OSError as exc:
-            raise ValueError(
-                f"Candidate workspace root could not be inspected: {current}"
+            raise CandidateMaterializationError(
+                f"Candidate workspace root could not be inspected: {current}",
+                reason="candidate_root_inspection_failed",
+                paths=(str(current),),
             ) from exc
         for child in children:
             if _path_is_link(child):
-                raise ValueError(f"Candidate workspace root contains a link: {child}")
+                raise CandidateMaterializationError(
+                    f"Candidate workspace root contains a link: {child}",
+                    reason="candidate_root_contains_link",
+                    paths=(str(child),),
+                )
             if child.is_dir():
                 stack.append(child)
 

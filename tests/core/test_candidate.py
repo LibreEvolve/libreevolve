@@ -1435,8 +1435,13 @@ def test_workspace_rejects_source_copy_static_file_hash_mismatch(tmp_path):
         ],
     )
 
-    with pytest.raises(ValueError, match="source_copy_path sha256 does not match"):
+    with pytest.raises(
+        CandidateMaterializationError,
+        match="source_copy_path sha256 does not match",
+    ) as excinfo:
         workspace.materialize(tmp_path / "candidate")
+    assert excinfo.value.reason == "static_source_copy_sha256_mismatch"
+    assert excinfo.value.paths == ("fixtures/input.bin", str(source))
 
 
 @pytest.mark.parametrize(
@@ -2698,8 +2703,10 @@ def test_workspace_materialize_write_failure_preserves_existing_root(
 
     try:
         workspace.materialize(tmp_path)
-    except OSError as exc:
+    except CandidateMaterializationError as exc:
         assert "disk failed" in str(exc)
+        assert exc.reason == "candidate_file_write_failed"
+        assert exc.paths == ("b.py",)
     else:
         raise AssertionError("expected write failure")
 
@@ -2715,8 +2722,10 @@ def test_workspace_materialize_rejects_file_root_without_writes(tmp_path):
 
     try:
         workspace.materialize(root)
-    except ValueError as exc:
+    except CandidateMaterializationError as exc:
         assert "Candidate workspace root must be a directory" in str(exc)
+        assert exc.reason == "candidate_root_not_directory"
+        assert exc.paths == (str(root.resolve()),)
     else:
         raise AssertionError("expected file root rejection")
 
@@ -2735,8 +2744,10 @@ def test_workspace_materialize_rejects_symlink_ancestor(tmp_path):
 
     try:
         workspace.materialize(linked_parent / "workspace")
-    except ValueError as exc:
+    except CandidateMaterializationError as exc:
         assert "linked ancestor" in str(exc)
+        assert exc.reason == "candidate_root_linked_ancestor"
+        assert exc.paths == (str(linked_parent.absolute()),)
     else:
         raise AssertionError("expected linked ancestor rejection")
 
@@ -2760,8 +2771,10 @@ def test_workspace_materialize_rejects_nested_symlink_before_cleanup(tmp_path):
 
     try:
         workspace.materialize(root)
-    except ValueError as exc:
+    except CandidateMaterializationError as exc:
         assert "contains a link" in str(exc)
+        assert exc.reason == "candidate_root_contains_link"
+        assert exc.paths == (str(link),)
     else:
         raise AssertionError("expected nested symlink rejection")
 
@@ -2789,8 +2802,10 @@ def test_workspace_materialize_rejects_windows_junction_ancestor(tmp_path):
     try:
         try:
             workspace.materialize(junction_parent / "workspace")
-        except ValueError as exc:
+        except CandidateMaterializationError as exc:
             assert "linked ancestor" in str(exc)
+            assert exc.reason == "candidate_root_linked_ancestor"
+            assert exc.paths == (str(junction_parent.absolute()),)
         else:
             raise AssertionError("expected junction ancestor rejection")
         assert not (outside / "workspace").exists()
@@ -2822,8 +2837,10 @@ def test_workspace_materialize_rejects_nested_windows_junction_before_cleanup(tm
     try:
         try:
             workspace.materialize(root)
-        except ValueError as exc:
+        except CandidateMaterializationError as exc:
             assert "contains a link" in str(exc)
+            assert exc.reason == "candidate_root_contains_link"
+            assert exc.paths == (str(junction),)
         else:
             raise AssertionError("expected nested junction rejection")
         assert (outside / "marker.txt").read_text(encoding="utf-8") == "outside\n"

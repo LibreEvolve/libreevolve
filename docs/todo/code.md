@@ -41,28 +41,29 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
-- [ ] Broaden workspace topology and materialization diagnostics beyond typed
-  case-folded path collisions.
+- [ ] Finish workspace topology and materialization diagnostics beyond the
+  current typed materialization failure set.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and
     codebases; invalid generated workspaces should produce inspectable
     evaluator feedback rather than opaque local filesystem exceptions.
   - Current evidence: `CandidateWorkspace.materialize()` now raises
     `CandidateMaterializationError` for materialized candidate-path collisions,
-    and `CascadeEvaluator` records bounded
+    linked target roots or ancestors, linked nested entries, file target roots,
+    candidate text/static write failures, and static source-copy link/read/
+    not-file/hash/byte-count failures. `CascadeEvaluator` records bounded
     `evaluation.metadata.materialization_error` fields including
-    `exception_type: "CandidateMaterializationError"`,
-    `reason: "candidate_path_collision"`, and conflicting candidate-relative
-    `paths`. Prompt context policy can select and cap `reason`, `paths`,
-    `exception_type`, and `message` for materialization-error feedback. File
-    topology mutations are also prevalidated for duplicate topology sections,
-    duplicate move targets, chained/conflicting operations, non-empty command
-    bodies, and primary deletion without replacement.
-  - Required result: classify remaining materialization failures such as linked
-    roots, linked nested entries, write/swap/delete failures, and static
-    source-copy materialization failures into stable structured reasons and
-    bounded path fields; extend topology diagnostics where host/case-folded
-    target behavior can still be ambiguous, and keep failed-candidate feedback
-    prompt-safe.
+    `exception_type: "CandidateMaterializationError"`, stable `reason`, and
+    bounded relevant `paths`. Prompt context policy can select and cap
+    `reason`, `paths`, `exception_type`, and `message` for
+    materialization-error feedback. File topology mutations are also
+    prevalidated for duplicate topology sections, duplicate move targets,
+    chained/conflicting operations, non-empty command bodies, and primary
+    deletion without replacement.
+  - Required result: classify remaining materialization failures such as
+    cleanup/swap/delete failures and any unstructured filesystem exceptions
+    into stable structured reasons and bounded path fields; extend topology
+    diagnostics where host/case-folded target behavior can still be ambiguous,
+    and keep failed-candidate feedback prompt-safe.
 
 ## Prompt Sampling and Context
 

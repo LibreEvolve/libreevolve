@@ -1921,10 +1921,13 @@ exception type, and reason such as `non_string_keys`,
 Candidate workspace materialization failures, including host-specific
 case-folded path collisions, are recorded as invalid evaluations with
 `error: "materialization_error"` and bounded redacted diagnostics under
-`evaluation.metadata.materialization_error`. Known candidate-path collisions
-record `exception_type: "CandidateMaterializationError"`,
-`reason: "candidate_path_collision"`, and the conflicting candidate-relative
-`paths` alongside the bounded message.
+`evaluation.metadata.materialization_error`. Known materialization failures
+record `exception_type: "CandidateMaterializationError"`, stable `reason`
+labels, and bounded relevant `paths` alongside the bounded message. Current
+typed reasons cover candidate path collisions, linked roots or ancestors,
+linked nested root entries, root file targets, text/static file write failures,
+static source-copy link/read/not-file failures, and static source-copy
+byte-count or SHA-256 mismatches.
 Prompt-visible summaries are bounded separately.
 Use `evaluator_artifact_include` for large diagnostics that should be retained
 as separate files with hashes. Metric schemas reject boolean bounds before run

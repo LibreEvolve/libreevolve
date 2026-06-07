@@ -522,6 +522,36 @@ def test_materialization_collision_returns_invalid_evaluation_result():
         shutil.rmtree(d)
 
 
+def test_static_source_copy_materialization_error_has_structured_metadata():
+    p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
+    source = d / "external.bin"
+    source.write_bytes(b"actual")
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n"},
+        primary_file="main.py",
+        static_files=[
+            {
+                "path": "fixtures/input.bin",
+                "kind": "binary",
+                "sha256": hashlib.sha256(b"expected").hexdigest(),
+                "bytes": len(b"actual"),
+                "source_kind": "copied_static_asset",
+                "source_copy_path": str(source),
+            }
+        ],
+    )
+    try:
+        result = CascadeEvaluator(p).evaluate(workspace, None)
+        assert result.error == "materialization_error"
+        materialization_error = result.metadata["materialization_error"]
+        assert materialization_error["exception_type"] == "CandidateMaterializationError"
+        assert materialization_error["reason"] == "static_source_copy_sha256_mismatch"
+        assert materialization_error["paths"] == ["fixtures/input.bin", str(source)]
+        assert "source_copy_path sha256 does not match" in materialization_error["message"]
+    finally:
+        shutil.rmtree(d)
+
+
 @pytest.mark.parametrize(
     ("validate_src", "candidate", "expected_error"),
     [

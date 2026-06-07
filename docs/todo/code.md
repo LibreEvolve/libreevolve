@@ -930,10 +930,16 @@ Primary evidence:
     certification linkage that cannot contradict readiness claims; and an
     `alphaevolve_ready` gate that fails unless held-out and correctness gates
     are passed or explicitly documented as not applicable.
+    `libreevolve.systems_result_artifact_inventory.v1` now verifies declared
+    systems report artifacts against concrete files under an explicit artifact
+    root, checking safe relative paths, existence, SHA-256 hashes, and byte
+    counts for metrics, heldout-report, reference-report, and summary records.
   - Required result: connect real compiler, hardware, kernel, scheduling, or
     systems benchmark fixtures to the report contract and implement the actual
     held-out/generalization case sets, randomized/reference-correctness checks,
-    and deployment or certification evidence.
+    and deployment or certification evidence. The remaining gap is generating
+    real gate artifacts from those fixtures, not verifying declared artifact
+    files once a systems report names them.
 
 ## LLM Ensemble
 

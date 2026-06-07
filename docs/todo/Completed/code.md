@@ -14845,3 +14845,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result tests cover bundle generation,
     exactness certificate contents, artifact inventory validation, per-seed
     rank-hit rows, and bad seed-list rejection.
+
+- [x] Add systems result artifact inventory verification.
+  - Spec evidence: AlphaEvolve-style systems results distinguish optimization
+    feedback from held-out, reference-correctness, deployment, and
+    certification evidence, so report artifacts need concrete file evidence
+    rather than only shaped hash fields.
+  - Status: `libreevolve.systems_result_artifact_inventory.v1` now verifies
+    declared systems report artifacts against an explicit artifact root. The
+    inventory checks safe relative paths, file existence, SHA-256 hashes, byte
+    counts, per-artifact statuses, aggregate mismatch/missing/invalid counts,
+    and a stable records hash.
+  - Remaining gap: this verifies named systems report evidence files; real
+    compiler, hardware, kernel, scheduling, or systems fixtures still need to
+    generate held-out, randomized reference, deployment, and certification
+    artifacts.
+  - Verification: focused systems-result tests cover fully verified artifact
+    inventories plus hash/byte mismatches, missing files, and unsafe paths.

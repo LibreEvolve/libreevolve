@@ -9958,3 +9958,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused matrix-result tests cover the generated publication
     report, artifact inventory, exactness certificate, and per-seed hit-rate
     consistency.
+
+- [x] Add paper-visible systems artifact inventory verification.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 reports systems
+    discoveries with evidence beyond the optimization loop, including
+    held-out workloads, reference-code checks, deployment measurements, and
+    expert confirmation.
+  - Status: `libreevolve.systems_result_artifact_inventory.v1` now verifies
+    that systems result reports point to concrete evidence files under a safe
+    artifact root. Metrics, heldout-report, reference-report, and summary
+    artifacts are checked for safe paths, existence, SHA-256 hashes, byte
+    counts, and aggregate inventory status.
+  - Remaining paper gap: this is report-evidence verification only; actual
+    systems fixtures still need to produce unseen-workload, randomized
+    reference, deployment, and certification evidence files.
+  - Verification: focused systems-result tests cover valid inventories and
+    missing, mismatched, and unsafe artifact references.

@@ -1619,6 +1619,13 @@ report, and artifact-inventory files. Its per-seed rows all achieve the
 rank-7 Strassen construction exactly, so the generated report has a 1.0
 best-rank hit fraction. Broader generated/discovered algorithm artifacts for
 the full Appendix A suite remain outside the current runner.
+`libreevolve.systems_result_artifact_inventory.v1` applies the same concrete
+artifact-root boundary to systems-style reports: declared metrics,
+heldout-report, reference-report, and summary artifacts must resolve safely
+under the artifact root, exist as files, and match their reported SHA-256
+hashes and byte counts. This verifies report evidence files, not real unseen
+workload generation, randomized reference checking, deployment confirmation,
+or independent certification.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

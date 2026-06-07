@@ -950,11 +950,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     that cannot contradict readiness claims. It rejects `alphaevolve_ready`
     claims unless held-out and reference gates passed or are explicitly
     documented as not applicable.
+    `libreevolve.systems_result_artifact_inventory.v1` now verifies declared
+    systems report artifacts against concrete files under an explicit artifact
+    root, checking safe relative paths, existence, SHA-256 hashes, and byte
+    counts for the metrics, heldout-report, reference-report, and summary
+    evidence files.
   - Required result: connect compiler, hardware, kernel, scheduling, or systems
     fixtures to this report format, implement real unseen evaluation cases and
     randomized/reference-correctness checks, and emit report artifacts that
     distinguish loop feedback from held-out, deployment, and certification
-    evidence.
+    evidence. The remaining paper gap is producing those evidence files from
+    real fixture runs, not verifying the declared files once a report names
+    them.
 
 ## Paper-Inspired Feature Claims Needing Correction
 

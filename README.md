@@ -2949,6 +2949,12 @@ kinds, explicit rationale when a gate is not applicable, and optional
 certification links that cannot contradict `alphaevolve_ready` claims. It is a
 readiness/report schema only, not a compiler, kernel, scheduling, or
 deployment benchmark implementation.
+`libreevolve.systems_result_artifact_inventory.v1` verifies the declared
+systems report artifacts against concrete files under an explicit artifact
+root, including safe relative paths, existence, SHA-256 hashes, and byte
+counts. It proves report artifact availability, not that unseen workloads,
+reference-code checks, deployment evidence, or independent certification have
+been generated.
 Benchmark anti-gaming coverage uses
 `libreevolve.benchmark_hardening.v1` in
 `libreevolve/problems/benchmarks/benchmark_hardening.py`; advertised benchmark

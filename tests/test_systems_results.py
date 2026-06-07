@@ -1,8 +1,11 @@
+import hashlib
 import json
 
 from libreevolve.problems.benchmarks.systems_results import (
+    SYSTEMS_ARTIFACT_INVENTORY_SCHEMA,
     SYSTEMS_RESULT_SCHEMA,
     render_systems_result_summary,
+    systems_result_artifact_inventory,
     validate_systems_result_report,
 )
 
@@ -77,6 +80,61 @@ def test_systems_result_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.alphaevolve_ready is True
+
+
+def test_systems_result_artifact_inventory_verifies_declared_files(tmp_path):
+    report = _valid_report()
+    for artifact in report["artifacts"]:
+        path = tmp_path / artifact["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        raw = f"{artifact['kind']} evidence".encode("utf-8")
+        path.write_bytes(raw)
+        artifact["sha256"] = hashlib.sha256(raw).hexdigest()
+        artifact["bytes"] = len(raw)
+
+    inventory = systems_result_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == SYSTEMS_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["report_schema"] == SYSTEMS_RESULT_SCHEMA
+    assert inventory["benchmark_id"] == "flashattention_ir_micro"
+    assert inventory["candidate_id"] == "program-000234"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["verified_count"] == 3
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert {record["status"] for record in inventory["artifacts"]} == {
+        "verified"
+    }
+    assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+
+
+def test_systems_result_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    report = _valid_report()
+    first = report["artifacts"][0]
+    first_path = tmp_path / first["path"]
+    first_path.parent.mkdir(parents=True, exist_ok=True)
+    first_path.write_text("wrong", encoding="utf-8")
+    first["sha256"] = "b" * 64
+    first["bytes"] = 999
+    report["artifacts"][1]["path"] = "missing/heldout.json"
+    report["artifacts"][2]["path"] = "../escape-reference.json"
+
+    inventory = systems_result_artifact_inventory(report, tmp_path)
+    records = {artifact["kind"]: artifact for artifact in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["metrics"]["status"] == "hash_mismatch"
+    assert "artifact_hash_mismatch" in records["metrics"]["issues"]
+    assert "artifact_bytes_mismatch" in records["metrics"]["issues"]
+    assert records["heldout_report"]["status"] == "missing_file"
+    assert records["reference_report"]["status"] == "unsafe_path"
 
 
 def test_systems_result_report_rejects_ready_claim_without_required_gates():

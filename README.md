@@ -391,8 +391,8 @@ redacted inspection errors. Completed and aborted manifests also include
 counters, per-role scheduler audit state, configured reward-accounted roles,
 the scheduler `reward_accounting_policy`, and configured LLM
 call/retry/prompt/output limits. The runtime budget snapshot remains the
-authoritative stop-policy record for logical-call, provider-attempt, token, and
-configured estimated-cost caps.
+authoritative stop-policy record for logical-call, provider-attempt, token,
+configured estimated-cost, and retained-latency caps.
 `max_evaluations=0` is treated as an explicit dry budget point and
 records that no seed or generated candidate was evaluated; zero
 evaluator-second and zero runtime-second limits are rejected during config
@@ -1460,8 +1460,11 @@ are rejected rather than persisted. Backend specs can
 set `cost_usd_per_million_tokens`; when provider usage exposes
 `total_tokens`, call telemetry records an estimated cost and role accounting
 accumulates `cost_microusd` for runtime budget reports. Live provider
-pricing/default capture and full token/cost budget-stop replay remain
-backend-provenance work.
+pricing/default capture, provider-output replay, and async/pending-work budget
+composition remain backend-provenance work. Synchronous
+provider-attempt/token/configured-cost/latency stops and full-runtime budget
+replay are already covered by runtime budget snapshots and controller-budget
+events.
 Backend specs can also set `prompt_max_estimated_tokens` as a local heuristic
 model/context-window cap. `LLMEnsemble` combines the global
 `prompt_max_estimated_tokens` cap with eligible backend caps before provider

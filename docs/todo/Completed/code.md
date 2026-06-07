@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code truncation mode.
+  - Spec evidence: AlphaEvolve-style prompt/context evolution needs
+    deterministic control over which parts of required code context survive a
+    cap, not only whether optional sections render.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts
+    `parent_code_truncation` with safe `head` and `head_tail` values.
+    `PromptSampler` applies it when `parent_code_max_chars` truncates the
+    required `{parent_code}` channel and records the selected mode in
+    `libreevolve.parent_code_policy.v1` diagnostics. The meta-prompt
+    context-policy capability manifest advertises the field for LLM-mutated
+    policy JSON.
+  - Remaining gap: this is deterministic character-level retention for the
+    required parent-code channel, not semantic/code-aware parent-workspace
+    summarization or selected-backend tokenizer allocation.
+  - Verification: focused prompt tests cover validation, canonical defaults,
+    and explicit head-tail rendering; focused loop meta-prompt tests cover
+    accepted policy JSON carrying the field.
+
 - [x] Add prompt context-policy parent-code cap.
   - Spec evidence: AlphaEvolve-style prompt/context evolution needs control
     over required code/context volume, not only optional prompt channels.

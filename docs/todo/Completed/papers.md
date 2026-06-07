@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code truncation policy.
+  - Paper evidence: AlphaEvolve prompt context can include prior code; useful
+    prompt-context evolution should control which parts of required code
+    context survive bounded rendering.
+  - Status: prompt context policy now accepts `parent_code_truncation` with
+    safe `head` and `head_tail` values. Direct prompt rendering applies the
+    selected mode when `parent_code_max_chars` truncates the required
+    parent-code workspace channel, persists the mode in
+    `libreevolve.parent_code_policy.v1`, and exposes it in the meta-prompt
+    capability manifest.
+  - Remaining paper gap: this remains deterministic character-level retention,
+    not semantic parent-workspace summarization, provider-token allocation, or
+    replayable backend context budgeting.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code context cap.
   - Paper evidence: AlphaEvolve prompt context can include prior code and
     execution-derived state; meta-prompt evolution should be able to control

@@ -514,7 +514,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     can also set `parent_code_max_chars` to cap or suppress the required
     parent-code channel while retaining an explicit omission marker and
     `libreevolve.parent_code_policy.v1` diagnostics for source, cap,
-    truncation, character counts, and hashes. It
+    truncation mode (`head` or `head_tail`), character counts, and hashes. It
     can also set `proposal_metadata_enabled` to override whether proposal
     metadata instructions and parsing run for the selected prompt arm while
     preserving run-level defaults when unset. It
@@ -778,7 +778,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     capability manifest plus per-prompt non-default context-policy previews in
     the bounded redacted prompt-performance evidence.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
-    code: plugin context shaping beyond enable/disable, allowlist, ordering, caps, truncation, and required parent-code character capping,
+    code: plugin context shaping beyond enable/disable, allowlist, ordering,
+    caps, truncation, and required parent-code character capping/truncation-mode selection,
     retrieval/summarization beyond deterministic source selection/ranking/count caps, and deeper
     per-field policy inside selected validator diagnostic groups beyond
     metadata-summary key selection, syntax-error field selection, and
@@ -806,7 +807,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     required/excluded-metric filtering, fitness-threshold filtering, metric-threshold filtering, metric ranking, and rendered
     inspiration count, but not richer upstream inspiration selection policy.
   - Required result: extend prompt-program context policy beyond optional
-    channel disabling, packing-priority overrides, and current character caps so meta-prompt evolution
+    channel disabling, packing-priority overrides, current character caps, and truncation-mode selection so meta-prompt evolution
     can safely alter source selection, retrieval/summarization, inspiration and
     feedback field policy, and additional instruction/context controls while preserving
     safe template rendering and auditability.

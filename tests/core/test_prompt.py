@@ -4351,6 +4351,18 @@ def test_prompt_context_policy_rejects_invalid_parent_code_max_chars():
         validate_prompt_context_policy({"parent_code_max_chars": True})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_truncation():
+    assert validate_prompt_context_policy({"parent_code_truncation": "head"})[
+        "parent_code_truncation"
+    ] == "head"
+    assert validate_prompt_context_policy({"parent_code_truncation": "head_tail"})[
+        "parent_code_truncation"
+    ] == "head_tail"
+
+    with pytest.raises(PromptTemplateError, match="parent_code_truncation"):
+        validate_prompt_context_policy({"parent_code_truncation": "middle"})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -6962,6 +6974,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "mutation_instruction_include_example": True,
         "proposal_metadata_enabled": None,
         "parent_code_max_chars": None,
+        "parent_code_truncation": "head",
         "inspiration_strategy": None,
         "inspiration_required_metric": None,
         "inspiration_excluded_metrics": [],
@@ -8102,6 +8115,7 @@ def test_prompt_context_policy_caps_required_parent_code_channel():
     policy = sampler.last_metadata["parent_code_policy"]
     assert policy["schema"] == "libreevolve.parent_code_policy.v1"
     assert policy["max_chars"] == 120
+    assert policy["truncation"] == "head"
     assert policy["source"] == "prompt_context_policy"
     assert policy["truncated"] is True
     assert policy["original_chars"] > policy["rendered_chars"]
@@ -8109,6 +8123,50 @@ def test_prompt_context_policy_caps_required_parent_code_channel():
     assert len(policy["original_sha256"]) == 64
     assert len(policy["rendered_sha256"]) == 64
     assert sampler.last_metadata["prompt_context_policy"]["parent_code_max_chars"] == 120
+
+
+def test_prompt_context_policy_uses_head_tail_parent_code_truncation():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        code="HEAD_MARKER\n" + ("MIDDLE_ONLY\n" * 40) + "TAIL_MARKER\n",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_max_chars": 260,
+            "parent_code_truncation": "head_tail",
+        },
+    )
+
+    assert "[PROGRAM WORKSPACE]" in prompt
+    assert "Content-JSON" in prompt
+    assert "TAIL_MARKER" in prompt
+    assert "MIDDLE_ONLY\nMIDDLE_ONLY\nMIDDLE_ONLY" not in prompt
+    assert "...[truncated " in prompt
+    policy = sampler.last_metadata["parent_code_policy"]
+    assert policy["max_chars"] == 260
+    assert policy["truncation"] == "head_tail"
+    assert policy["truncated"] is True
+    assert policy["original_chars"] > policy["rendered_chars"]
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_truncation"
+    ] == "head_tail"
 
 
 @pytest.mark.parametrize(

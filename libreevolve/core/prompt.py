@@ -585,6 +585,7 @@ class PromptSampler:
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
             _render_program_files(parent),
             prompt_context_policy["parent_code_max_chars"],
+            prompt_context_policy["parent_code_truncation"],
         )
         render_values = {
             "task": task,
@@ -1285,6 +1286,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_include_example",
         "proposal_metadata_enabled",
         "parent_code_max_chars",
+        "parent_code_truncation",
         "inspiration_strategy",
         "inspiration_required_metric",
         "inspiration_excluded_metrics",
@@ -1430,6 +1432,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
+    )
+    parent_code_truncation = _validate_prompt_context_parent_code_truncation(
+        value.get("parent_code_truncation", "head")
     )
     inspiration_strategy = _validate_prompt_context_inspiration_strategy(
         value.get("inspiration_strategy")
@@ -1895,6 +1900,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_include_example": mutation_instruction_include_example,
         "proposal_metadata_enabled": proposal_metadata_enabled,
         "parent_code_max_chars": parent_code_max_chars,
+        "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
         "inspiration_required_metric": inspiration_required_metric,
         "inspiration_excluded_metrics": inspiration_excluded_metrics,
@@ -2063,6 +2069,7 @@ def apply_prompt_context_policy(
         ],
         "proposal_metadata_enabled": policy["proposal_metadata_enabled"],
         "parent_code_max_chars": policy["parent_code_max_chars"],
+        "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
         "inspiration_required_metric": policy["inspiration_required_metric"],
         "inspiration_excluded_metrics": list(policy["inspiration_excluded_metrics"]),
@@ -2409,6 +2416,19 @@ def _validate_prompt_context_parent_code_max_chars(value: object) -> int | None:
         raise PromptTemplateError(
             "prompt context_policy.parent_code_max_chars "
             "must be a non-negative integer or null"
+        )
+    return value
+
+
+def _validate_prompt_context_parent_code_truncation(value: object) -> str:
+    if (
+        not isinstance(value, str)
+        or value not in PROMPT_CONTEXT_POLICY_CONTEXT_SOURCE_TRUNCATION
+    ):
+        allowed = ", ".join(sorted(PROMPT_CONTEXT_POLICY_CONTEXT_SOURCE_TRUNCATION))
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_truncation "
+            f"must be one of: {allowed}"
         )
     return value
 
@@ -5364,6 +5384,7 @@ def _prompt_section_packing_marker(
 def _apply_parent_code_policy(
     parent_code: str,
     max_chars: int | None,
+    truncation: str,
 ) -> tuple[str, dict]:
     if not isinstance(parent_code, str):
         parent_code = str(parent_code)
@@ -5371,6 +5392,7 @@ def _apply_parent_code_policy(
     metadata = {
         "schema": "libreevolve.parent_code_policy.v1",
         "max_chars": max_chars,
+        "truncation": truncation,
         "source": (
             "prompt_context_policy"
             if max_chars is not None
@@ -5393,7 +5415,11 @@ def _apply_parent_code_policy(
         )
         omitted_chars = original_chars
     else:
-        rendered = _truncate_text(parent_code, max_chars)
+        rendered = _truncate_parent_code_text(
+            parent_code,
+            max_chars,
+            truncation=truncation,
+        )
         omitted_chars = max(0, original_chars - len(rendered))
     metadata.update(
         {
@@ -5404,6 +5430,25 @@ def _apply_parent_code_policy(
         }
     )
     return rendered, metadata
+
+
+def _truncate_parent_code_text(
+    text: str,
+    max_chars: int,
+    *,
+    truncation: str,
+) -> str:
+    if truncation != "head_tail":
+        return _truncate_text(text, max_chars)
+    if len(text) <= max_chars:
+        return text
+    notice = f"...[truncated {len(text) - max_chars} chars]..."
+    keep = max(0, max_chars - len(notice))
+    head_chars = (keep + 1) // 2
+    tail_chars = keep - head_chars
+    if tail_chars <= 0:
+        return text[:head_chars] + notice
+    return text[:head_chars] + notice + text[-tail_chars:]
 
 
 def _required_prompt_chars_with_overhead(

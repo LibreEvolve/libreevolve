@@ -125,7 +125,7 @@ _META_PROMPT_CONTEXT_POLICY_CAPABILITIES = {
     "channel_controls": (
         "disabled_sections,section_priorities,mutation_instruction_variant,"
         "mutation_instruction_include_example,proposal_metadata_enabled,"
-        "parent_code_max_chars"
+        "parent_code_max_chars,parent_code_truncation"
     ),
     "feedback_selection": (
         "feedback_sections,feedback_section_order,feedback_section_max_chars_by_name,"

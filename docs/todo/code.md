@@ -101,7 +101,8 @@ Primary evidence:
     `parent_code_max_chars` can cap or suppress the required `{parent_code}`
     channel while retaining a prompt-visible omission marker and
     `libreevolve.parent_code_policy.v1` diagnostics with cap, source,
-    truncation, character-count, and hash evidence.
+    truncation mode (`head` or `head_tail`), truncation, character-count, and
+    hash evidence.
     `proposal_metadata_enabled` can override whether proposal metadata
     instructions and downstream parsing run for that prompt arm while `null`
     preserves the run-level `capture_proposal_metadata` setting.
@@ -402,8 +403,9 @@ Primary evidence:
     selection, execution-output, sample/retry, program-output, and validator-artifact field caps,
     and timeout-cleanup field selection.
   - Required result: extend prompt-program context policy beyond optional
-    channel disabling, priority overrides, and current character caps so safe
-    configured or LLM mutations can change retrieval/summarization,
+    channel disabling, priority overrides, current character caps, and
+    truncation-mode selection so safe configured or LLM mutations can change
+    retrieval/summarization,
     plugin-context shaping beyond
     enable/disable/allowlist/order/per-plugin caps, upstream inspiration selection beyond
     strategy/sample-count/required-metric-filter/excluded-metric-filter/fitness-threshold-filter/metric-ranking/render-count, context-source policy beyond exact path selection, safe required/excluded term filtering, task-term ranking, per-source char caps, truncation, and render-count, failure-memory selection beyond exact required/excluded error-label, required/excluded changed-file, required/excluded stage-name, repetition-count, and finite-score filtering plus recent/oldest/lowest-score/highest-repetition retained records, and deeper per-field evaluator-feedback controls beyond

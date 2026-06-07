@@ -285,8 +285,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     generation, not configured in-run role/backend quarantine observations or
     verifying declared cancellation evidence files once a policy names them.
 
-- [ ] Connect LLM budget-report contracts to live enforcement and restored
-  consumption.
+- [ ] Connect LLM budget reports to async/pending-work resume and
+  provider-output replay.
   - Paper evidence: AlphaEvolve-style systems use large but explicit compute
     budgets; provider retry settings should be bounded, attributable, and
     resumable rather than open-ended integers.

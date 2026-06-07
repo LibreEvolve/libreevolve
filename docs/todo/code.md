@@ -1269,7 +1269,8 @@ Primary evidence:
 
 ## LLM Ensemble
 
-- [ ] Add provider cost/raw diagnostics and live budget policy.
+- [ ] Add live pricing/default-rate capture, raw provider replay, and
+      async-aware budget policy beyond current diagnostics.
   - Spec evidence: AlphaEvolve's scheduler and compute-budget framing depend on
     LLM throughput, cost, latency, and quality; reproducible experiments need
     per-call evidence for which model/API call produced which proposal or

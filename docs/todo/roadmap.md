@@ -1409,6 +1409,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes rank-value registry coverage from traceable prior-baseline
     evidence.
 
+- [ ] Keep Appendix A row-note roadmap wording scoped until concurrent-work
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level notes,
+    including the note that concurrent work [49] also found a rank-90 algorithm
+    for the `<4, 5, 6>` matrix target.
+  - Current evidence: roadmap/README/paper-index status points to the checked
+    Appendix A registry and matrix report validation. That registry stores
+    target ids, dimensions, best-known rank values, AlphaEvolve ranks,
+    outcomes, and exact-algorithm flags, but not per-target result notes,
+    concurrent-work attributions, independently matched result flags, note
+    source locations, or report-visible caveats for rows such as `mm_4x5x6`.
+  - Required result: when Appendix A row-note provenance lands, update ROADMAP,
+    README, papers index, and code/paper TODOs together so roadmap text
+    distinguishes rank/outcome registry coverage from paper-faithful
+    row-note/concurrent-work evidence and avoids overclaiming exclusive SOTA
+    priority.
+
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.
   - Spec evidence: AlphaEvolve Section 3.1 describes prompting for

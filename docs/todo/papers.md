@@ -1865,6 +1865,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     report-visible baseline-source fields, and docs that distinguish cited
     prior baselines from LibreEvolve-generated constructions.
 
+- [ ] Track Appendix A matrix row-note and concurrent-work provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
+    a note that concurrent work [49] also found a rank-90 algorithm for the
+    `<4, 5, 6>` target.
+  - Current gap: the paper-facing Appendix A registry/status stores target
+    ids, dimensions, best-known ranks, AlphaEvolve ranks, outcomes, and
+    exact-algorithm flags, while separate TODOs require baseline citations,
+    target-suite curation, scalar-field evidence, and companion Colab links.
+    It does not preserve row-level notes, concurrent-work attribution,
+    independently matched result flags, note source location, or docs caveats
+    for matrix rows such as `mm_4x5x6`.
+  - Required result: add paper-facing row-note metadata for Appendix A matrix
+    targets: affected target id, note type, cited reference id, note text/source
+    location, relationship to the AlphaEvolve result, and validation that
+    README/ROADMAP/papers wording qualifies SOTA-priority claims when the
+    paper records concurrent matching work.
+
 - [ ] Track AlphaEvolve companion Colab as paper source evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
     discovered algorithms and new mathematical results are available at the

@@ -1812,6 +1812,25 @@ Primary evidence:
     tensor/decomposition construction artifacts, and baseline solver-component
     provenance.
 
+- [ ] Add Appendix A matrix row-note and concurrent-work provenance.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level result
+    notes beyond the rank columns, including the note that concurrent work [49]
+    also found a rank-90 algorithm for the `<4, 5, 6>` target.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
+    stores target ids, dimensions, best-known ranks, AlphaEvolve ranks,
+    outcomes, and exact-algorithm flags, and separate TODOs require
+    best-known-rank source citations, target-suite curation, scalar-field
+    evidence, and Colab artifacts. It does not store per-target result notes,
+    concurrent-work attributions, independently matched result flags, note
+    source page/table locations, or report-visible caveats for rows such as
+    `mm_4x5x6`.
+  - Required result: extend the Appendix A registry or companion metadata with
+    row-level note provenance: note type, cited reference id, note text/source
+    location, affected target id, relationship to AlphaEvolve's result
+    (for example independently matched, superseded, or caveated), and
+    report/docs validation so matrix claims do not overstate exclusive SOTA
+    priority when the paper itself records concurrent matching work.
+
 - [ ] Add Appendix A matrix target-suite curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 matrix multiplication
     sizes were chosen roughly from sizes where 2 <= m,n <= 5 with a reasonable

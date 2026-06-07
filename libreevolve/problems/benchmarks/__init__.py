@@ -44,6 +44,7 @@ from libreevolve.problems.benchmarks.result_certification import (
     PAPER_CERTIFICATION_SCHEMA,
     certification_artifact_inventory,
     render_certification_summary,
+    validate_certification_evidence_bundle,
     validate_paper_result_certification,
 )
 from libreevolve.problems.benchmarks.systems_results import (
@@ -89,6 +90,7 @@ __all__ = [
     "validate_appendix_a_matrix_registry",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",
+    "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
     "validate_matrix_result_report",
     "validate_paper_result_certification",

@@ -15229,3 +15229,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     thresholds, or geometric/tensor benchmark artifacts.
   - Verification: focused benchmark-hardening tests cover valid smoke-scope
     evidence, attempted smoke-example promotion, and tampered inventory.
+
+- [x] Add certification evidence bundle validation.
+  - Spec evidence: AlphaEvolve-grade result claims require independent
+    certification records and concrete evidence files to agree before paper
+    claim readiness can be trusted.
+  - Status: `validate_certification_evidence_bundle()` now validates
+    `libreevolve.paper_result_certification.v1` reports together with
+    `libreevolve.paper_result_certification_artifact_inventory.v1` records,
+    requiring matching claim, benchmark, candidate, report schema, inventory
+    status, aggregate counts, zero missing/mismatch/invalid records, empty
+    inventory issues, and a records-hash match.
+  - Remaining gap: this validates declared certification evidence bundles; it
+    does not generate independent verifier scripts, human-review records,
+    deployment measurements, or exact certification artifacts from real
+    benchmark workflows.
+  - Verification: focused result-certification tests cover valid paper-claim
+    bundles and tampered inventory with mismatched claim and missing-record
+    counters.

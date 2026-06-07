@@ -1026,8 +1026,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifies the certification report's evidence and artifact records against
     concrete files under an explicit artifact root, checking safe relative
     paths, existence, SHA-256 hashes, byte counts, per-record status, and
-    aggregate missing/mismatch/invalid counts. It still does not provide
-    independent verifier scripts, external/human-review records,
+    aggregate missing/mismatch/invalid counts. `validate_certification_evidence_bundle()`
+    now validates certification reports together with their artifact inventory,
+    requiring matching claim, benchmark, candidate, report schema, record hash,
+    and zero missing/mismatch/invalid evidence before paper-claim readiness is
+    accepted as a bundle. It still does not provide independent verifier
+    scripts, external/human-review records,
     deployment/simulator confirmation records, or generated signed/exact
     certificate artifacts for actual benchmark claims.
   - Required result: connect benchmark outputs to real independent verifier
@@ -1035,8 +1039,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     external confirmation artifacts before treating local evaluator validity as
     AlphaEvolve-style confirmed result evidence. The remaining gap is
     producing those independent evidence files from real verification
-    workflows, not checking declared files once a certification report names
-    them.
+    workflows, not checking declared files or bundle consistency once a
+    certification report names them.
 
 - [ ] Require holdout/generalization and reference-correctness gates for
   systems-style benchmarks.

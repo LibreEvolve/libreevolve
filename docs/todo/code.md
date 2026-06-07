@@ -999,7 +999,10 @@ Primary evidence:
     open benchmark TODOs cover stronger matrix/packing fixtures and broad
     compiler/hardware/systems coverage decisions. The
     `libreevolve.paper_result_certification.v1` contract can distinguish local
-    validator records from independent certification evidence.
+    validator records from independent certification evidence, and
+    `validate_certification_evidence_bundle()` checks certification reports
+    together with matching artifact inventory before accepting bundled
+    paper-claim readiness.
     `libreevolve.systems_result_report.v1` now defines and tests a systems
     report contract with named optimization, held-out, and
     reference-correctness gates; case-set hashes; sample counts/seeds; finite
@@ -1016,7 +1019,8 @@ Primary evidence:
     held-out/generalization case sets, randomized/reference-correctness checks,
     and deployment or certification evidence. The remaining gap is generating
     real gate artifacts from those fixtures, not verifying declared artifact
-    files once a systems report names them.
+    files once a systems report names them or checking certification
+    report/inventory consistency once those records exist.
 
 ## LLM Ensemble
 

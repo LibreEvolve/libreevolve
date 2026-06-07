@@ -6,6 +6,7 @@ from libreevolve.problems.benchmarks.result_certification import (
     PAPER_CERTIFICATION_SCHEMA,
     certification_artifact_inventory,
     render_certification_summary,
+    validate_certification_evidence_bundle,
     validate_paper_result_certification,
 )
 
@@ -55,6 +56,17 @@ def _valid_certification() -> dict:
     }
 
 
+def _write_certification_files(report: dict, root) -> None:
+    for section in ("evidence", "artifacts"):
+        for record in report[section]:
+            path = root / record["path"]
+            path.parent.mkdir(parents=True, exist_ok=True)
+            raw = f"{section}:{record['kind']}".encode("utf-8")
+            path.write_bytes(raw)
+            record["sha256"] = hashlib.sha256(raw).hexdigest()
+            record["bytes"] = len(raw)
+
+
 def test_paper_result_certification_validates_paper_claim_ready_record():
     validation = validate_paper_result_certification(_valid_certification())
 
@@ -78,14 +90,7 @@ def test_paper_result_certification_loads_json_file(tmp_path):
 
 def test_certification_artifact_inventory_verifies_evidence_and_artifacts(tmp_path):
     report = _valid_certification()
-    for section in ("evidence", "artifacts"):
-        for record in report[section]:
-            path = tmp_path / record["path"]
-            path.parent.mkdir(parents=True, exist_ok=True)
-            raw = f"{section}:{record['kind']}".encode("utf-8")
-            path.write_bytes(raw)
-            record["sha256"] = hashlib.sha256(raw).hexdigest()
-            record["bytes"] = len(raw)
+    _write_certification_files(report, tmp_path)
 
     inventory = certification_artifact_inventory(report, tmp_path)
 
@@ -110,6 +115,42 @@ def test_certification_artifact_inventory_verifies_evidence_and_artifacts(tmp_pa
         "evidence",
         "artifacts",
     }
+
+
+def test_certification_evidence_bundle_validates_report_and_inventory(tmp_path):
+    report = _valid_certification()
+    _write_certification_files(report, tmp_path)
+    inventory = certification_artifact_inventory(report, tmp_path)
+
+    validation = validate_certification_evidence_bundle(report, inventory)
+
+    assert validation.ok is True
+    assert validation.claim_id == "circle26_sum_radii_run_001"
+    assert validation.report_ok is True
+    assert validation.inventory_ok is True
+    assert validation.paper_claim_ready is True
+    assert validation.issues == []
+
+
+def test_certification_evidence_bundle_rejects_tampered_inventory(tmp_path):
+    report = _valid_certification()
+    _write_certification_files(report, tmp_path)
+    inventory = certification_artifact_inventory(report, tmp_path)
+    inventory["claim_id"] = "other_claim"
+    inventory["ok"] = False
+    inventory["missing_count"] = 1
+
+    validation = validate_certification_evidence_bundle(report, inventory)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.report_ok is True
+    assert validation.inventory_ok is False
+    assert validation.paper_claim_ready is False
+    assert "inventory_not_ok" in codes
+    assert "inventory_claim_id_mismatch" in codes
+    assert "inventory_missing_count_mismatch" in codes
+    assert "inventory_missing_count_nonzero" in codes
 
 
 def test_certification_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):

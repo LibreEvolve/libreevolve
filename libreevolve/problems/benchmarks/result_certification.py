@@ -71,6 +71,16 @@ class CertificationValidation:
     issues: list[CertificationIssue]
 
 
+@dataclass(frozen=True)
+class CertificationEvidenceBundleValidation:
+    ok: bool
+    claim_id: str | None
+    report_ok: bool
+    inventory_ok: bool
+    paper_claim_ready: bool
+    issues: list[CertificationIssue]
+
+
 def validate_paper_result_certification(report: object | str | Path) -> CertificationValidation:
     """Validate independent certification metadata for paper-level result claims."""
     data, read_issues = _load_report(report)
@@ -126,6 +136,41 @@ def validate_paper_result_certification(report: object | str | Path) -> Certific
         claim_id=claim_id,
         certification_level=level,
         verdict=verdict,
+        issues=issues,
+    )
+
+
+def validate_certification_evidence_bundle(
+    report: object | str | Path,
+    inventory: object,
+) -> CertificationEvidenceBundleValidation:
+    """Validate a certification report together with its artifact inventory."""
+    data, read_issues = _load_report(report)
+    if read_issues:
+        return CertificationEvidenceBundleValidation(
+            ok=False,
+            claim_id=None,
+            report_ok=False,
+            inventory_ok=False,
+            paper_claim_ready=False,
+            issues=read_issues,
+        )
+    assert isinstance(data, dict)
+    issues: list[CertificationIssue] = []
+    report_validation = validate_paper_result_certification(data)
+    issues.extend(report_validation.issues)
+    inventory_ok = _validate_certification_inventory(
+        inventory,
+        data,
+        report_validation.claim_id,
+        issues,
+    )
+    return CertificationEvidenceBundleValidation(
+        ok=not issues,
+        claim_id=report_validation.claim_id,
+        report_ok=report_validation.ok,
+        inventory_ok=inventory_ok,
+        paper_claim_ready=report_validation.paper_claim_ready and inventory_ok and not issues,
         issues=issues,
     )
 
@@ -243,6 +288,115 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [CertificationIssue("invalid_shape", "certification report must be a JSON object")]
+
+
+def _validate_certification_inventory(
+    inventory: object,
+    report: dict[str, Any],
+    claim_id: str | None,
+    issues: list[CertificationIssue],
+) -> bool:
+    if not isinstance(inventory, dict):
+        issues.append(CertificationIssue("invalid_inventory", "inventory must be an object"))
+        return False
+    issue_count = len(issues)
+    if inventory.get("schema") != CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(CertificationIssue("invalid_inventory_schema", "unsupported certification inventory schema"))
+    if inventory.get("ok") is not True:
+        issues.append(CertificationIssue("inventory_not_ok", "certification inventory must verify every record"))
+    if inventory.get("report_schema") != report.get("schema"):
+        issues.append(CertificationIssue("inventory_report_schema_mismatch", "inventory report_schema must match certification report"))
+    if claim_id is not None and inventory.get("claim_id") != claim_id:
+        issues.append(CertificationIssue("inventory_claim_id_mismatch", "inventory claim_id must match certification report"))
+    for field in ("benchmark_id", "candidate_id"):
+        expected = report.get(field)
+        if isinstance(expected, str) and inventory.get(field) != expected:
+            issues.append(
+                CertificationIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match certification report",
+                )
+            )
+    records = inventory.get("records")
+    if not isinstance(records, list) or not records:
+        issues.append(CertificationIssue("invalid_inventory_records", "inventory records must be a non-empty list"))
+        records = []
+    records_payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    records_sha = inventory.get("records_sha256")
+    if not isinstance(records_sha, str) or _SHA256_RE.fullmatch(records_sha) is None:
+        issues.append(
+            CertificationIssue(
+                "invalid_inventory_records_hash",
+                "inventory records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif hashlib.sha256(records_payload.encode("utf-8")).hexdigest() != records_sha:
+        issues.append(
+            CertificationIssue(
+                "inventory_records_hash_mismatch",
+                "inventory records_sha256 must match inventory records",
+            )
+        )
+    expected_counts = {
+        "record_count": len(records),
+        "verified_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "verified"
+        ),
+        "missing_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict) and record.get("status") == "missing_file"
+        ),
+        "mismatch_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status") in {"hash_mismatch", "bytes_mismatch"}
+        ),
+        "invalid_count": sum(
+            1
+            for record in records
+            if isinstance(record, dict)
+            and record.get("status")
+            in {"invalid_record", "unsafe_path", "read_error"}
+        ),
+    }
+    for field, expected in expected_counts.items():
+        value = inventory.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                CertificationIssue(
+                    f"invalid_inventory_{field}",
+                    f"inventory {field} must be a non-negative integer",
+                )
+            )
+        elif value != expected:
+            issues.append(
+                CertificationIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match inventory records",
+                )
+            )
+    if inventory.get("verified_count") != inventory.get("record_count"):
+        issues.append(
+            CertificationIssue(
+                "inventory_verified_count_mismatch",
+                "inventory verified_count must equal record_count",
+            )
+        )
+    for field in ("missing_count", "mismatch_count", "invalid_count"):
+        if inventory.get(field) != 0:
+            issues.append(
+                CertificationIssue(
+                    f"inventory_{field}_nonzero",
+                    f"inventory {field} must be zero for certification evidence",
+                )
+            )
+    if inventory.get("issues"):
+        issues.append(CertificationIssue("inventory_has_issues", "inventory issues must be empty"))
+    return len(issues) == issue_count
 
 
 def _certification_inventory_record(

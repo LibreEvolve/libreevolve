@@ -1704,6 +1704,10 @@ relative paths, file existence, SHA-256 hashes, byte counts, per-record
 statuses, and aggregate missing/mismatch/invalid counts. It is evidence-file
 verification, not a substitute for an independent verifier script, deployment
 measurement, or human review.
+`validate_certification_evidence_bundle()` checks a certification report
+together with its artifact inventory, including matching claim, benchmark,
+candidate, report schema, record hash, and zero missing/mismatch/invalid
+records before treating the bundle as paper-claim-ready.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
 ablation report artifacts against concrete files under an explicit artifact
 root. Variant reports, curve summaries, raw records, and plot artifacts must

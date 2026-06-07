@@ -93,7 +93,9 @@ is not yet an AlphaEvolve reproduction.
 - Keep topology-operation collision policy and structured materialization-
   failure diagnostics complete as new workspace, language, and build-runner
   edge cases are introduced.
-- Add migration/resume support for workspace candidates.
+- Extend workspace-candidate resume beyond the current archive-content restore
+  bundle to ordered migration-event replay, controller queues, and pending-work
+  resume.
 
 ### 2. Strengthen multi-objective search
 

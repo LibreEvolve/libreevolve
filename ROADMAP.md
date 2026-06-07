@@ -205,12 +205,13 @@ is not yet an AlphaEvolve reproduction.
   restore. Current manifests can restore cursor-only state or full archive
   cell/elite placements from a previous manifest/history bundle, but they are
   not a full resumed experiment trace.
-- Complete run manifest hardening for custom plugin package-registry and
-  constructor-schema attribution beyond exposed `__version__` labels, plus
-  aggregate hashes for artifacts emitted after startup.
-  Git/code state, redacted/hash-backed source/problem/Git root labels, problem
-  hashes, direct evaluator hashes, plugin module hashes, and built-in plugin
-  constructor specs are already recorded.
+- Complete run manifest hardening for direct custom plugin package-registry and
+  constructor-value/schema attribution beyond the current direct-instance
+  signature-only policy, plus aggregate hashes for artifacts emitted after
+  startup. Git/code state, redacted/hash-backed source/problem/Git root labels,
+  problem hashes, direct evaluator hashes, plugin module hashes, built-in plugin
+  constructor specs, and entry-point distribution/schema/paper-scope metadata
+  are already recorded.
 - Complete seeded replay semantics for run ids, candidate ids, prompt-program
   ids, restored archive/controller state, plugin/provider RNG boundaries, and
   provider nondeterminism. The framework RNG snapshot can already be restored
@@ -252,14 +253,18 @@ is not yet an AlphaEvolve reproduction.
 ### 8. Plugin extensibility
 
 - Extend the bounded `libreevolve.plugins` entry-point registry toward richer
-  package policy and direct custom-plugin schema/provenance.
+  package policy and direct custom-plugin schema/provenance beyond the current
+  entry-point distribution metadata and direct-instance signature-only policy.
 - Broaden plugin configuration schemas beyond built-in scalar/path options and
-  define policy for custom constructor introspection.
-- Record custom plugin paper-inspiration scope, package versions, and stronger
-  emitted artifact provenance in run manifests.
+  entry-point declared constructor schemas to cover direct custom constructor
+  policy.
+- Extend paper-inspiration scope and package-version attribution beyond current
+  configured entry-point plugin labels/distribution records to direct custom
+  plugins and versioned custom registries.
 - Extend plugin provenance beyond current prompt-context/configuration/artifact
-  records to cover versioned custom registry entries and richer strategy
-  choices.
+  records and manifest-safe emitted artifact summaries to cover stronger
+  artifact lifecycle hashes, versioned custom registry entries, and richer
+  strategy choices.
 
 ## Longer Term
 

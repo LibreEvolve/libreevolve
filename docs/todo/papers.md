@@ -311,10 +311,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     specs now validate supported constructor options before construction, and
     configured entry-point plugin classes can publish declared constructor
     option schemas that reject unknown or malformed options before
-    instantiation. Custom direct plugin specs record constructor signature shape
-    without parameter values. Captured direct-plugin constructor values,
-    arbitrary direct-plugin schemas, and richer custom package policy remain
-    part of the broader plugin registry gap. Problem-local evaluator
+    instantiation. Entry-point plugin specs also record configured paper-
+    inspiration labels and distribution name/version plus hash-only RECORD/WHEEL
+    metadata when available. Custom direct plugin specs record constructor
+    signature shape without parameter values. Captured direct-plugin
+    constructor values, arbitrary direct-plugin schemas, and richer custom
+    package policy beyond entry-point distribution records remain part of the
+    broader plugin registry gap. Problem-local evaluator
     helper/data access is now governed by an enforced declared-dependency
     policy: validator imports and file reads may touch only the configured
     entrypoint, captured companion sources, or captured declared data sources.
@@ -403,8 +406,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: add true full-run resume/replay semantics, deterministic
     lineage-id behavior or an explicit UUID identity exclusion from the replay
     contract, provider-output replay boundaries, arbitrary direct-plugin
-    constructor value/schema policy, richer custom plugin package provenance,
-    and live provider-authentication evidence beyond local client construction.
+    constructor value/schema policy, richer custom plugin package provenance
+    beyond entry-point distribution records, and live provider-authentication
+    evidence beyond local client construction.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

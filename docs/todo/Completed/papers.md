@@ -9535,3 +9535,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     decisions.
   - Verification: focused island, CLI/config, loop, prompt-policy, and docs
     tests cover the lineage strategy surfaces.
+
+- [x] Add paper-visible lineage-index manifest evidence.
+  - Paper evidence: AlphaEvolve-style program databases need auditable
+    evolutionary lineage context when varied historical programs are reused as
+    parents or inspirations.
+  - Status: completed runs now persist `runtime.history.lineage_index`, a
+    bounded best-valid-programs view grouped by root lineage, with top retained
+    lineage records and available objective-vector evidence. This makes
+    lineage-aware resurfacing evidence inspectable from run artifacts.
+  - Remaining paper gap: this remains a bounded diagnostic manifest view, not
+    the paper-faithful durable database with full lineage/feedback/metric
+    indexes and replayable resurfacing decisions.
+  - Verification: focused database and loop tests cover the lineage index API
+    and manifest persistence.

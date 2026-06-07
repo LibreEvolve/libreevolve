@@ -623,6 +623,10 @@ Primary evidence:
     including metric target/program pairs for metric policies and frontier
     size/metric-order metadata for frontier policies plus lineage-root metadata
     for lineage policies.
+    Runtime manifests also include `runtime.history.lineage_index`, a bounded
+    diagnostic best-valid-programs view grouped by root lineage with top
+    retained programs, selection scores, fitness, lineage depth, and available
+    objective-vector evidence.
     Plugin score composition is logged separately and can change final fitness.
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter
@@ -654,11 +658,12 @@ Primary evidence:
     DeepResearch, delegates metric/novelty/recency/selection/random sampling to
     `IslandModel`, persists compact and full archive-state snapshots, validates
     archive-event streams, supports lineage-aware live sampling through
-    best-per-root retained representatives, and can restore cells/elites from a
+    best-per-root retained representatives, persists a bounded lineage index
+    view in runtime manifests, and can restore cells/elites from a
     manifest plus accepted history bundle. However, these are still append-only logs plus an
     in-memory archive, not a persisted query/index database. There is no durable
     index over score, metric vectors, diversity descriptors, feedback text,
-    failure fingerprints, lineage subgraphs, hypotheses, artifacts, retrieval
+    failure fingerprints, full lineage subgraphs, hypotheses, artifacts, retrieval
     context, or novelty; `load_accepted_history_index()` is an id map for
     restore/query scaffolding, not a ranked resurfacing database. The compact
     `show` path intentionally rejects mixed legacy/current history schemas with

@@ -1227,7 +1227,10 @@ Pareto-specific. Final manifests also include
 `runtime.history.objective_metric_leaders`, a diagnostic best-program view for
 each declared normalized metric, and
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
-for each declared normalized metric. Declared metric bounds must be finite,
+for each declared normalized metric. Final manifests also include
+`runtime.history.lineage_index`, a bounded diagnostic best-valid-programs view
+grouped by root lineage, so lineage resurfacing evidence is inspectable from
+run artifacts. Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.
 Parent and inspiration sampling are configurable via `parent_selection_strategy`
@@ -1259,7 +1262,8 @@ tie-breaks; accepted history records persist that sequence in
 `metadata.archive_sequence` and `metadata.archive_admission.archive_sequence`
 for audit/provenance, but later metadata mutations do not change live recency
 order. The sampling pool is still in-memory MAP-Elites state rather than a
-queryable local database.
+full queryable local database; `runtime.history.lineage_index` is a bounded
+diagnostic view, not a replayable sampling engine.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

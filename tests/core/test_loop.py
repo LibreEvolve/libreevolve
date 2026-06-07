@@ -2588,6 +2588,57 @@ def test_loop_records_normalized_metrics_and_selection_score():
             ],
         },
     ]
+    lineage_index = manifest["runtime"]["history"]["lineage_index"]
+    assert lineage_index["schema"] == "libreevolve.lineage_index.v1"
+    assert lineage_index["policy"] == "best_valid_programs_grouped_by_root_lineage"
+    assert lineage_index["program_count_considered"] == 1
+    assert lineage_index["lineage_count"] == 1
+    assert lineage_index["lineages"] == [
+        {
+            "lineage_root_id": record["id"],
+            "program_count": 1,
+            "retained_count": 1,
+            "program_retention_limit": 5,
+            "best_program": {
+                "program_id": record["id"],
+                "lineage_root_id": record["id"],
+                "parent_id": None,
+                "generation": 0,
+                "lineage_depth": 0,
+                "selection_score": 0.8,
+                "fitness": 0.8,
+                "objective_vector": {
+                    "policy": "normalized_declared_metric_vector_v1",
+                    "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
+                    "selection_policy": {
+                        "type": "mean_normalized_declared_metrics",
+                        "primary_metric": "accuracy",
+                        "metrics": ["accuracy", "latency"],
+                    },
+                },
+            },
+            "programs": [
+                {
+                    "program_id": record["id"],
+                    "lineage_root_id": record["id"],
+                    "parent_id": None,
+                    "generation": 0,
+                    "lineage_depth": 0,
+                    "selection_score": 0.8,
+                    "fitness": 0.8,
+                    "objective_vector": {
+                        "policy": "normalized_declared_metric_vector_v1",
+                        "normalized_metrics": {"accuracy": 0.8, "latency": 0.8},
+                        "selection_policy": {
+                            "type": "mean_normalized_declared_metrics",
+                            "primary_metric": "accuracy",
+                            "metrics": ["accuracy", "latency"],
+                        },
+                    },
+                }
+            ],
+        }
+    ]
 
 
 def test_loop_uses_configured_metric_weights_for_selection_score():

@@ -1105,9 +1105,6 @@ Important behavior:
   inspection artifact, not the MAP-Elites replacement policy. The live
   `frontier` parent/inspiration strategy computes its own non-dominated
   retained-program pool from the same declared normalized metric semantics.
-  The live `lineage` parent/inspiration strategy computes best-per-root
-  retained representatives from program lineage metadata; it is also a
-  sampling policy rather than a persisted lineage index.
 - `runtime.history.objective_metric_leaders` stores a diagnostic
   best-program-per-declared-normalized-metric view with leader program ids,
   generations, metric values, selection scores, and available normalized
@@ -1118,6 +1115,12 @@ Important behavior:
   generations, metric values, selection scores, and available declared
   normalized metric vectors. This is an inspection artifact, not a MAP-Elites
   replacement policy.
+- `runtime.history.lineage_index` stores a bounded diagnostic
+  best-valid-programs view grouped by root lineage. Each retained root records
+  the best representative, selected top lineage programs, generation,
+  lineage-depth, selection score, fitness, and available normalized objective
+  evidence. This is an inspection artifact, not a persisted sampling replay
+  engine.
 - optional critique metadata is stored under `metadata.critique`
 - optional proposal idea/rationale/hypothesis sections are stored under
   `metadata.proposal` when `capture_proposal_metadata` is enabled; when critique

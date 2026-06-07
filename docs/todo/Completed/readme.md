@@ -10274,3 +10274,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     lineage-index resurfacing as open.
   - Verification: docs tests check the sampling strategy list and runtime
     artifact docs are covered by focused test runs.
+
+- [x] Document lineage-index runtime history.
+  - Evidence: README, architecture, run-artifact, and todo docs needed to track
+    that lineage now has a bounded manifest-visible index instead of only live
+    sampling metadata.
+  - Status: docs now describe `runtime.history.lineage_index`, the best-valid
+    grouped-by-root policy, retained record fields, and its diagnostic-only
+    limitations.
+  - Remaining documentation gap: docs still correctly distinguish this from a
+    full persisted database/replay engine.
+  - Verification: focused docs and loop tests cover the new manifest field.

@@ -88,6 +88,8 @@ _MAX_SEED_SOURCE_STRING_CHARS = 1024
 _MAX_ARCHIVE_EVENT_REASON_CHARS = 128
 _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
 _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
+_MAX_LINEAGE_INDEX_ROOTS = 50
+_MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT = 5
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -642,6 +644,13 @@ class ProgramDatabase:
             self._all,
             self._objective_metric_order,
             limit=_MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS,
+        )
+
+    def lineage_index_snapshot(self) -> dict:
+        return _lineage_index_snapshot(
+            self._all,
+            root_limit=_MAX_LINEAGE_INDEX_ROOTS,
+            programs_per_root_limit=_MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT,
         )
 
     def _log_archive_event(self, event: dict) -> None:
@@ -2040,6 +2049,113 @@ def _objective_metric_leader_candidate(
         "selection_score": _history_safe_selection_score(program),
         "normalized_metrics": declared_metrics,
     }
+
+
+def _lineage_index_snapshot(
+    programs: list[Program],
+    *,
+    root_limit: int,
+    programs_per_root_limit: int,
+) -> dict:
+    by_root: dict[str, list[dict]] = {}
+    for program in programs:
+        if program.evaluation.get("is_valid") is not True:
+            continue
+        record = _lineage_index_program(program)
+        by_root.setdefault(record["lineage_root_id"], []).append(record)
+
+    lineages: list[dict] = []
+    for root_id, records in by_root.items():
+        records.sort(key=_lineage_index_sort_key)
+        retained = records[:programs_per_root_limit]
+        best = retained[0] if retained else None
+        if best is None:
+            continue
+        lineages.append(
+            {
+                "lineage_root_id": root_id,
+                "program_count": len(records),
+                "retained_count": len(retained),
+                "program_retention_limit": programs_per_root_limit,
+                "best_program": best,
+                "programs": retained,
+            }
+        )
+    lineages.sort(
+        key=lambda lineage: (
+            _lineage_index_sort_key(lineage["best_program"]),
+            lineage["lineage_root_id"],
+        )
+    )
+    retained_lineages = lineages[:root_limit]
+    return {
+        "schema": "libreevolve.lineage_index.v1",
+        "policy": "best_valid_programs_grouped_by_root_lineage",
+        "program_count_considered": sum(lineage["program_count"] for lineage in lineages),
+        "lineage_count": len(lineages),
+        "retained_lineage_count": len(retained_lineages),
+        "root_retention_limit": root_limit,
+        "program_retention_limit": programs_per_root_limit,
+        "lineages": retained_lineages,
+        "limitations": [
+            "diagnostic_lineage_index_not_sampling_replay_engine",
+            "valid_history_programs_only",
+            "bounded_best_per_root_view_not_full_persisted_database_index",
+        ],
+    }
+
+
+def _lineage_index_program(program: Program) -> dict:
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "parent_id": program.parent_id,
+        "generation": program.generation,
+        "lineage_depth": len(program.lineage),
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+    }
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _program_lineage_root_id(program: Program) -> str:
+    if program.lineage:
+        return program.lineage[0]
+    return program.id
+
+
+def _lineage_index_sort_key(record: dict) -> tuple:
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    return (
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
+
+
+def _history_safe_normalized_metrics(program: Program) -> dict[str, float]:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    raw = metadata.get("normalized_metrics")
+    if not isinstance(raw, dict):
+        return {}
+    metrics: dict[str, float] = {}
+    for name, value in sorted(raw.items()):
+        if isinstance(name, str) and _is_finite_real(value):
+            numeric = float(value)
+            if 0.0 <= numeric <= 1.0:
+                metrics[name] = numeric
+    return metrics
 
 
 def _is_finite_real(value: object) -> bool:

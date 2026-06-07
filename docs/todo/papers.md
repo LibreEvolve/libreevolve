@@ -322,7 +322,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     vectors, plus `runtime.history.objective_metric_leaders`, a diagnostic
     best-program view for each declared normalized metric, and
     `runtime.history.objective_metric_archives`, a bounded top-program view for
-    each declared normalized metric. LLM
+    each declared normalized metric. Runtime manifests now also include
+    `runtime.history.lineage_index`, a bounded diagnostic best-valid-programs
+    view grouped by root lineage. LLM
     feedback graders now support
     bounded raw scores, maximize/minimize direction, normalized fitness-delta
     composition, and `objective_metric: true` filling for declared non-primary
@@ -338,8 +340,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     Parent and inspiration sampling can now use
     metric-leader, frontier, lineage, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
-    copies by program id. Persisted/queryable feedback and durable
-    lineage-index resurfacing remain open. Metric bounds are now strictly ordered before they
+    copies by program id. Persisted/queryable feedback and full durable
+    database resurfacing remain open. Metric bounds are now strictly ordered before they
     can be used as policy inputs. Metric-leader parent sampling now cycles
     through primary and secondary metric targets in configured order and
     persists target-metric provenance. Metric-leader inspiration sampling now
@@ -348,7 +350,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     declared normalized metric vectors to surface non-dominated retained
     programs and persists frontier size/metric-order provenance. Lineage
     parent/inspiration sampling uses root lineage metadata to surface the best
-    retained representative per root and persists lineage-root provenance. This remains a heuristic rather than a paper-faithful
+    retained representative per root, persists lineage-root provenance, and
+    exposes bounded lineage-index evidence in final manifests. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.

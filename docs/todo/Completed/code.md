@@ -14309,3 +14309,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused island, CLI/config, loop, prompt-policy, and docs
     tests cover lineage strategy validation, cursor restore, sampling order,
     and documentation.
+
+- [x] Persist a bounded lineage index in runtime history.
+  - Spec evidence: AlphaEvolve-style evolutionary databases should make
+    lineage-aware resurfacing auditable from run artifacts, not only from live
+    in-memory sampling state.
+  - Status: `ProgramDatabase.lineage_index_snapshot()` now builds
+    `libreevolve.lineage_index.v1`, grouping valid history programs by root
+    lineage and retaining bounded best-program records with lineage depth,
+    generation, selection score, fitness, and available objective evidence.
+    Final manifests persist this view under `runtime.history.lineage_index`.
+  - Remaining gap: this is a diagnostic bounded view, not a full persisted
+    database index over score, metrics, diversity, feedback, hypotheses,
+    artifacts, failures, and replayable sampling decisions.
+  - Verification: focused database and loop tests cover direct snapshot content
+    and final manifest persistence.

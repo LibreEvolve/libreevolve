@@ -758,13 +758,14 @@ bounded diagnostic Pareto frontier over complete declared normalized metric
 vectors, and `runtime.history.objective_metric_leaders`, a diagnostic
 best-program view for each declared normalized metric. They also include
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
-for each declared normalized metric. Parent and inspiration sampling can use a
-`frontier` strategy to surface non-dominated retained programs with complete
-declared normalized metric vectors, and a `lineage` strategy to cycle or render
-the best retained representative for each root lineage. Admission thresholds,
-archive replacement, and backend rewards still use scalar policies, and richer
-Pareto/frontier archive replacement plus persisted lineage-index resurfacing
-remain open.
+for each declared normalized metric, and `runtime.history.lineage_index`, a
+bounded best-valid-programs view grouped by root lineage. Parent and inspiration
+sampling can use a `frontier` strategy to surface non-dominated retained
+programs with complete declared normalized metric vectors, and a `lineage`
+strategy to cycle or render the best retained representative for each root
+lineage. Admission thresholds, archive replacement, backend rewards, and
+sampling replay still use scalar/live policies, and richer Pareto/frontier
+archive replacement plus a full persisted database index remain open.
 
 ## Backend selection
 

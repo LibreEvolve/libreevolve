@@ -294,6 +294,89 @@ def test_objective_metric_archives_snapshot_reports_top_declared_metric_programs
     assert snapshot["archives"][1]["retained_count"] == 4
 
 
+def test_lineage_index_snapshot_groups_valid_programs_by_root(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+    )
+    root_a = Program(
+        id="root-a",
+        code="x = 1\n",
+        fitness=0.2,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.2},
+    )
+    weaker_child_a = Program(
+        id="weaker-child-a",
+        code="x = 2\n",
+        fitness=0.5,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.5},
+    )
+    best_child_a = Program(
+        id="best-child-a",
+        code="x = 3\n",
+        fitness=0.9,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.9,
+            "normalized_metrics": {"score": 0.9},
+        },
+    )
+    root_b = Program(
+        id="root-b",
+        code="x = 4\n",
+        fitness=0.7,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 0.7},
+    )
+    invalid = Program(
+        id="invalid-child",
+        code="x = 5\n",
+        fitness=1.0,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=2,
+        evaluation={"is_valid": False},
+        metadata={"selection_score": 1.0},
+    )
+    for program in (root_a, weaker_child_a, best_child_a, root_b, invalid):
+        db.log(program)
+
+    snapshot = db.lineage_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.lineage_index.v1"
+    assert snapshot["policy"] == "best_valid_programs_grouped_by_root_lineage"
+    assert snapshot["program_count_considered"] == 4
+    assert snapshot["lineage_count"] == 2
+    assert snapshot["retained_lineage_count"] == 2
+    assert [lineage["lineage_root_id"] for lineage in snapshot["lineages"]] == [
+        root_a.id,
+        root_b.id,
+    ]
+    assert snapshot["lineages"][0]["program_count"] == 3
+    assert snapshot["lineages"][0]["best_program"]["program_id"] == best_child_a.id
+    assert snapshot["lineages"][0]["best_program"]["objective_vector"] == {
+        "policy": "normalized_declared_metric_vector_v1",
+        "normalized_metrics": {"score": 0.9},
+    }
+    assert [program["program_id"] for program in snapshot["lineages"][0]["programs"]] == [
+        best_child_a.id,
+        weaker_child_a.id,
+        root_a.id,
+    ]
+    assert invalid.id not in {
+        program["program_id"]
+        for lineage in snapshot["lineages"]
+        for program in lineage["programs"]
+    }
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(

@@ -1554,6 +1554,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so provider claims distinguish generic extensibility from reproducing or
     deliberately substituting AlphaEvolve's Gemini Flash/Pro ensemble.
 
+- [ ] Keep README parallelized-evaluation wording scoped until compute-hour
+      throughput reports exist.
+  - Spec evidence: AlphaEvolve Section 2.4 says individual candidate
+    evaluations can consume roughly 100 compute-hours and should be
+    parallelized so slow evaluator wall-clock time does not prevent several
+    consecutive mutations.
+  - Current evidence: README can describe the synchronous loop,
+    `proposals_per_generation` sequential sibling batches, staged samples and
+    retries, stage/sample wall-clock budgets, evaluator-second accounting, and
+    future parallel LLM/evaluator workers. It should not imply that current
+    sequential batches prove evaluation-cluster fan-out, compute-hour
+    accounting, or preserved mutation-chain depth under expensive evaluation.
+  - Required result: when parallelized-evaluation reports land, update README,
+    ROADMAP, papers index, and code/paper TODOs with per-candidate compute-hour
+    budget, wall-clock duration, evaluator-worker fan-out, randomized
+    initialization shard counts/seeds, queued/running/completed worker state,
+    local-or-cluster execution identity, mutation-depth impact, pending-work
+    resume behavior, and equal-budget report links.
+
 - [ ] Keep README sample-efficiency claims scoped to budget telemetry until
       proposal-count evidence exists.
   - Spec evidence: AlphaEvolve Table 1 contrasts FunSearch's millions of LLM

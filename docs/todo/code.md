@@ -1105,6 +1105,8 @@ Primary evidence:
     account for per-candidate compute-hours, worker/accelerator leases,
     CPU/memory/GPU quotas, token/cost/provider-attempt spend where evaluator
     feedback uses models, queued/running/completed long-evaluation state,
+    evaluator-worker fan-out, randomized-initialization shard counts/seeds,
+    compute-hour versus wall-clock compression, mutation-chain-depth impact,
     checkpoint/resume of partially completed expensive evaluations, and
     paper-grade equal-budget reporting; preserve the existing synchronous
     wall-clock/sample/stage budget tests as the local fallback contract.

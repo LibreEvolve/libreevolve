@@ -278,6 +278,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap separates current workspace mechanics from AlphaEvolve Table 1
     code-scale parity.
 
+- [ ] Keep parallel-evaluation roadmap wording scoped until compute-hour
+      throughput evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.4 says candidate evaluation can spend
+    on the order of 100 compute-hours and relies on parallelized evaluator
+    work so wall-clock latency does not stall multiple consecutive mutations.
+  - Current evidence: ROADMAP lists bounded queues for LLM proposals and
+    evaluator workers as future work and notes current sequential
+    `proposals_per_generation` batches. Code/paper TODO evidence already
+    tracks local evaluator-second counters and expensive-evaluation budget
+    gaps. The roadmap should not treat generic async queues as sufficient
+    without compute-hour, wall-clock compression, worker fan-out, and
+    mutation-depth evidence.
+  - Required result: when parallel evaluator execution or reports land, update
+    ROADMAP, README, papers index, and code/paper TODOs with per-candidate
+    compute-hour budgets, evaluator-worker fan-out, randomized-initialization
+    shard counts/seeds, queued/running/completed state, cluster/local execution
+    identity, wall-clock versus compute-hour compression, mutation-chain-depth
+    impact, pending-work resume behavior, and equal-budget report links.
+
 - [ ] Keep Table 1 roadmap wording scoped until capability-table exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between

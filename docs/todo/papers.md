@@ -64,6 +64,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     explicit mutation-chain-depth policy for expensive/slow-feedback
     evaluations. Sequential sibling proposal batches are accounting evidence,
     not AlphaEvolve-style throughput depth.
+  - Required result: add paper-visible parallel-evaluation reports and
+    validators that record per-candidate compute-hour budget, wall-clock
+    duration, evaluator-worker fan-out, randomized-initialization shard
+    counts/seeds, queued/running/completed evaluator-node state, cluster or
+    local fallback identity, mutation-chain-depth impact, and resumed
+    pending-work behavior before treating LibreEvolve's synchronous evaluator
+    loop or sequential sibling batches as AlphaEvolve-style parallelized
+    evaluation evidence.
 
 - [ ] Track Figure 1/Figure 2 architecture-process exhibit provenance as paper
       evidence.

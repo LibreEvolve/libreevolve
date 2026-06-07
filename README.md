@@ -3110,6 +3110,9 @@ recovery percentages, kernel speedups, training-time reductions, RTL PPA
 deltas, or compiler pre/postprocessing speedups. Compiler-IR reports also do
 not yet identify XLA-IR origin, debugging-only versus direct-editing
 boundaries, or compiler-generated/already-optimized baseline provenance.
+Hardware reports also do not yet identify RTL-stage workflow placement,
+standard-Verilog trust/adoption evidence, upcoming-chip integration, or
+time-to-market impact.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

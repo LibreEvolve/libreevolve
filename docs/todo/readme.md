@@ -803,16 +803,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU
     arithmetic circuit, tracks power/area objectives, requires robust
     functional verification, and reports TPU-designer plus downstream
-    synthesis-tool confirmation.
+    synthesis-tool confirmation. It also frames the result as an early
+    RTL-stage contribution integrated into an upcoming TPU, with direct
+    Verilog communication fostering trust, simplifying adoption, and
+    potentially reducing time to market.
   - Current evidence: README documents systems result reports and artifact
     inventories as generic readiness/report contracts. It does not yet
     document hardware-specific evidence for HDL source boundaries,
     synthesis/PPA metrics, equivalence or formal verification, timing/power/
-    area constraints, designer signoff, or downstream synthesis confirmation.
+    area constraints, designer signoff, downstream synthesis confirmation,
+    RTL-stage placement, standard-language adoption/trust evidence,
+    upcoming-chip integration, or time-to-market impact.
   - Required result: when RTL/EDA report metadata and validators land, update
     README, ROADMAP, papers index, and matching TODOs so README does not imply
     generic systems report readiness proves AlphaEvolve-style TPU-circuit
-    optimization evidence.
+    optimization, adoption, or deployment evidence.
 
 - [ ] Keep README compiler-IR wording scoped to final reference gates until
       per-edit randomized checks exist.

@@ -2681,16 +2681,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and
     area while preserving functionality. It says the final proposal must pass
     robust verification, was validated by TPU designers, and was also found by
-    downstream synthesis tools.
+    downstream synthesis tools. It also says the contribution was useful at
+    the RTL stage before downstream synthesis, was integrated into an upcoming
+    TPU, communicated changes directly in Verilog, fostered trust and simpler
+    adoption, and could reduce time to market.
   - Current gap: current systems report contracts do not distinguish generic
     hardware metrics from RTL/EDA evidence. They do not require HDL language
     identity, synthesis or place-and-route tool provenance, PPA metric units,
     equivalence/formal verification artifacts, timing constraints, designer
-    signoff, or downstream synthesis confirmation.
+    signoff, downstream synthesis confirmation, RTL-stage versus synthesis
+    workflow placement, standard-language adoption evidence, upcoming-TPU
+    integration, or time-to-market impact.
   - Required result: add hardware-domain paper/report fields for Verilog/RTL
     source boundaries, synthesis/PPA provenance, functional equivalence or
     formal verification evidence, timing/power/area constraints, designer or
-    independent review signoff, and synthesis-tool confirmation before making
+    independent review signoff, synthesis-tool confirmation, RTL-flow
+    contribution timing, hardware-engineer trust/adoption rationale,
+    integration target, and deployment/time-to-market evidence before making
     AlphaEvolve-comparable TPU-circuit optimization claims.
 
 - [ ] Record per-edit reference checks for compiler-generated IR results.

@@ -2488,18 +2488,25 @@ Primary evidence:
     objectives to reduce area and power while preserving core functionality.
     The paper says the final proposal must pass robust verification methods,
     was validated by TPU designers, and was independently caught later by
-    downstream synthesis tools.
+    downstream synthesis tools. It also frames the contribution as early
+    RTL-stage optimization integrated into an upcoming TPU, communicated
+    directly in Verilog to foster hardware-engineer trust and adoption, and
+    potentially reducing time to market.
   - Current evidence: `libreevolve.systems_result_report.v1` can represent a
     generic `hardware` domain with optimization, held-out, and
     reference-correctness gates, but it has no RTL/EDA-specific fields for
     source HDL language, synthesis toolchain/provenance, power/area/timing
     metrics, equivalence or formal verification artifacts, designer-review
-    signoff, or downstream synthesis confirmation.
+    signoff, downstream synthesis confirmation, RTL-stage contribution timing,
+    standard-language trust/adoption evidence, upcoming-chip integration, or
+    time-to-market impact.
   - Required result: add hardware-domain report metadata and validators for
     Verilog/RTL source boundaries, synthesis/PPA metric provenance,
     equivalence/formal verification evidence, timing/power/area constraints,
-    designer or independent review signoff, and downstream synthesis-tool
-    confirmation before treating hardware-circuit results as AlphaEvolve-ready.
+    designer or independent review signoff, downstream synthesis-tool
+    confirmation, RTL-flow placement, adoption/trust rationale, integration
+    target, and deployment/time-to-market evidence before treating
+    hardware-circuit results as AlphaEvolve-ready.
 
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.
   - Spec evidence: AlphaEvolve Section 3.3.4 directly optimizes

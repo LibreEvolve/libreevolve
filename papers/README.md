@@ -778,7 +778,10 @@ Implemented:
   does not yet require RTL/EDA evidence such as
   Verilog source boundaries, synthesis/PPA metric provenance, equivalence or
   formal verification artifacts, timing constraints, designer signoff, or
-  downstream synthesis-tool confirmation. For compiler-generated IR tasks, it
+  downstream synthesis-tool confirmation, nor hardware adoption evidence such
+  as RTL-stage workflow placement, standard-Verilog trust/adoption rationale,
+  upcoming-chip integration, or time-to-market impact. For compiler-generated
+  IR tasks, it
   does not yet require per-edit randomized reference-check traces, reference
   implementation hashes, input-generator provenance, IR-origin/editability
   constraints, compiler-generated/already-optimized baseline provenance,

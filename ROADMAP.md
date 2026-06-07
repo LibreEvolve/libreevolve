@@ -380,6 +380,10 @@ is not yet an AlphaEvolve reproduction.
   runtime/synthesis context, and explicit mapping to scheduling resource
   recovery, kernel/training-time speedups, RTL PPA deltas, and compiler
   kernel/pre/postprocessing speedups.
+- Add hardware-adoption evidence for TPU RTL-style reports before claiming
+  Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
+  trust/adoption rationale, upcoming-chip integration, and time-to-market
+  impact in addition to PPA and verification artifacts.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

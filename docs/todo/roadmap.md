@@ -1502,15 +1502,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization
     for a TPU arithmetic circuit, with power/area objectives, robust
     functional verification, TPU-designer validation, and downstream synthesis
-    confirmation.
+    confirmation. It also claims value from refining source RTL early in the
+    design flow, integrating the improvement into an upcoming TPU, and using
+    Verilog as the standard hardware-engineer language to build trust,
+    simplify adoption, and potentially reduce time to market.
   - Current evidence: roadmap systems-result wording covers generic
     optimization, held-out, reference-correctness, deployment, and
     domain-specific readiness gaps. It does not yet require hardware-specific
     HDL source boundaries, synthesis/PPA metric provenance, equivalence/formal
     verification artifacts, timing constraints, designer signoff, or synthesis
-    tool confirmation.
+    tool confirmation. It also does not require RTL-flow placement,
+    standard-language adoption evidence, upcoming-chip integration, or
+    time-to-market impact.
   - Required result: when hardware fixtures or systems report validators add
-    RTL/EDA source, synthesis, equivalence, PPA, timing, and review evidence,
+    RTL/EDA source, synthesis, equivalence, PPA, timing, review,
+    workflow-placement, adoption, integration, and deployment-impact evidence,
     update ROADMAP, README, papers index, and code/paper TODOs so roadmap text
     distinguishes generic systems readiness from AlphaEvolve-style hardware
     circuit optimization evidence.

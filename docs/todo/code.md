@@ -2195,20 +2195,27 @@ Primary evidence:
     magnified version of Figure 4's left panel: a three-part source/diff
     exhibit for the 4x4 matrix search program that discovers the rank-48
     decomposition, including optimizer, initialization, noise, loss,
-    discretization, and `hyper` sweep edits.
+    discretization, and `hyper` sweep edits. The displayed source changes
+    include concrete semantic components such as Adam to AdamW, scaled complex
+    initialization, gradient/decomposition/target noise, soft clipping,
+    hallucination and discretization losses, large-value penalties, and named
+    sweep fields.
   - Current evidence: separate TODOs require Figure 4 exhibit provenance and
     Figure 9 sweep-space metadata. They do not record Figure 9a/9b/9c as
     appendix exhibit panels with stable panel IDs, page/caption locations,
     exact line-span coverage, source/diff excerpt artifacts and hashes,
     continuation ordering across the three panels, OCR/rendered-text
-    validation, or links from each panel to the same matrix target, sweep
-    metadata, exactness certificate, and companion notebook/source evidence.
+    validation, semantic component labels for the shown code changes, or links
+    from each panel to the same matrix target, sweep metadata, exactness
+    certificate, and companion notebook/source evidence.
   - Required result: add Figure 9 exhibit metadata and validators with
     figure/panel IDs, source PDF page and caption locations, ordered panel
     continuity, exact code/diff line-span artifacts, rendered image/text
-    artifact hashes, target/result-row mappings, sweep-field links, and docs
-    that distinguish reproduced Appendix A magnified-diff exhibits from
-    Figure 4 main-text evidence and generic sweep-space provenance.
+    artifact hashes, target/result-row mappings, semantic component inventories
+    for optimizer/init/noise/clipping/loss/discretization/sweep changes,
+    sweep-field links, and docs that distinguish reproduced Appendix A
+    magnified-diff exhibits from Figure 4 main-text evidence and generic
+    sweep-space provenance.
 
 - [ ] Add Figure 4 matrix-discovery exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix

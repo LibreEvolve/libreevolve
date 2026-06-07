@@ -9,6 +9,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README ablation-report wording aligned with current LLM budget
+  stops.
+  - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget
+    ablation curves; report-schema validation alone is not executed
+    budget-controlled experimentation, but README text should not deny budget
+    stops that now exist.
+  - Current evidence: README now says
+    `libreevolve.alphaevolve_ablation_report.v1` validates report shape only
+    and does not run ablation experiments or add accelerator/async-worker
+    budget stops beyond the current live provider-token and configured-cost LLM
+    budget surfaces. Code evidence includes `RunBudget.max_llm_tokens`,
+    `RunBudget.max_llm_cost_microusd`, role-scoped token/cost limits, and
+    controller-budget event replay into restored budget snapshots.
+  - Required result: when benchmark scripts emit executed equal-budget
+    ablation reports, or when accelerator/async-worker budgets land, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so the
+    README neither underclaims current token/configured-cost budget stops nor
+    overclaims AlphaEvolve-style executed ablations.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

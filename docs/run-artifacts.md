@@ -1522,6 +1522,12 @@ payloads are represented by metadata-only omitted artifacts with raw hashes and
 counts. Retrieval events, cache snapshots, retained source rows, and
 `runtime.plugin_artifacts[].metadata` link the sidecars by relative path,
 SHA-256, artifact kind, payload field, raw/stored hashes, and retention policy.
+`retrieval_payload_artifact_inventory()` emits
+`libreevolve.retrieval_payload_artifact_inventory.v1` to verify those event or
+plugin-metadata sidecar references against an artifact root, including safe
+relative paths, existence, SHA-256 hashes, byte counts, artifact schema,
+selected sidecar metadata, per-record statuses, aggregate
+missing/mismatch/invalid counts, and a stable records hash.
 `hash_only` and `off` retrieval-body retention modes suppress payload sidecars
 and record the suppression in `payload_artifact_policy`.
 Retained source rows include provider rank, current retained rank, source

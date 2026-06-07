@@ -14924,3 +14924,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     role-specific runtime artifact generation remain open.
   - Verification: focused cancellation-policy tests cover fully verified
     inventories plus hash/byte mismatches, missing files, and unsafe paths.
+
+- [x] Add retrieval payload sidecar inventory verification.
+  - Spec evidence: AlphaEvolve-style retrieval-augmented prompt context needs
+    replayable evidence for the provider and source payload sidecars that
+    shaped candidate prompts, not only shaped path/hash references.
+  - Status: `libreevolve.retrieval_payload_artifact_inventory.v1` now verifies
+    DeepResearch event or plugin-metadata payload sidecar references against an
+    explicit artifact root. The inventory checks safe relative paths, file
+    existence, SHA-256 hashes, byte counts, artifact schema, selected sidecar
+    metadata, per-record statuses, aggregate missing/mismatch/invalid counts,
+    and a stable records hash.
+  - Remaining gap: this verifies retention-budgeted redacted payload sidecars;
+    unbounded raw provider/source payload persistence, semantic source-content
+    verification, learned/external ranking, and DeepEvolve-style hypothesis
+    refinement/debug loops remain open.
+  - Verification: focused DeepResearch tests cover verified sidecar
+    inventories from both retrieval events and plugin metadata, plus
+    hash/byte mismatches, missing files, and unsafe paths.

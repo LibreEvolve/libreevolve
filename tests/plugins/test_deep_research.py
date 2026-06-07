@@ -10,6 +10,7 @@ from libreevolve.plugins.deep_research import (
     MAX_RETRIEVAL_RESPONSE_BYTES,
     MAX_RETRIEVAL_SOURCE_CONTENT_CHARS,
     RETRIEVAL_CONTEXT_AUDIT_POLICY_SCHEMA,
+    RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA,
     RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
     RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
     RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
@@ -18,6 +19,7 @@ from libreevolve.plugins.deep_research import (
     _arxiv_query_url,
     arxiv_search,
     arxiv_search_result,
+    retrieval_payload_artifact_inventory,
 )
 from libreevolve.population.program import Program
 
@@ -350,6 +352,110 @@ def test_run_artifacts_metadata_summarizes_disk_cache_snapshots(tmp_path):
     assert payload_artifact["payload_field"] == "provider_result"
     assert payload_artifact["bytes"] == tmp_path.joinpath(payload_artifact["file"]).stat().st_size
     assert len(payload_artifact["sha256"]) == 64
+
+
+def test_retrieval_payload_artifact_inventory_verifies_event_and_metadata_refs(tmp_path):
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "ok",
+            "synthesis": "retrieved matrix algorithm context",
+            "sources": [
+                {
+                    "title": "matrix algorithm source",
+                    "summary": "matrix multiplication context",
+                }
+            ],
+        },
+        cache_dir=tmp_path,
+        search_every=1,
+    )
+    db = MagicMock()
+    db.best.return_value = _p()
+
+    plugin.on_generation_start(1, db)
+
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    event_inventory = retrieval_payload_artifact_inventory(
+        event["payload_artifacts"],
+        tmp_path,
+    )
+    assert event_inventory["schema"] == RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA
+    assert event_inventory["payload_artifact_schema"] == RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA
+    assert event_inventory["artifact_root_policy"] == (
+        "safe_relative_payload_artifact_paths_under_artifact_root"
+    )
+    assert event_inventory["ok"] is True
+    assert event_inventory["artifact_count"] == 2
+    assert event_inventory["verified_count"] == 2
+    assert event_inventory["missing_count"] == 0
+    assert event_inventory["mismatch_count"] == 0
+    assert event_inventory["invalid_count"] == 0
+    assert len(event_inventory["records_sha256"]) == 64
+    assert {record["status"] for record in event_inventory["artifacts"]} == {
+        "verified"
+    }
+
+    metadata = plugin.run_artifacts_metadata()
+    metadata_inventory = retrieval_payload_artifact_inventory(metadata, tmp_path)
+    assert metadata_inventory["source_schema"] == "deep_research_cache_v1"
+    assert metadata_inventory["ok"] is True
+    assert metadata_inventory["artifact_count"] == 2
+    assert metadata_inventory["verified_count"] == 2
+
+
+def test_retrieval_payload_artifact_inventory_reports_bad_references(tmp_path):
+    good_path = tmp_path / "payload_artifacts" / "bad-ref.json"
+    good_path.parent.mkdir(parents=True, exist_ok=True)
+    good_path.write_text(
+        json.dumps(
+            {
+                "schema": RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
+                "artifact_kind": "provider_result_payload",
+                "status": "stored",
+                "payload_field": "provider_result",
+            }
+        ),
+        encoding="utf-8",
+    )
+    references = [
+        {
+            "artifact_kind": "provider_result_payload",
+            "status": "stored",
+            "path": "payload_artifacts/bad-ref.json",
+            "sha256": "0" * 64,
+            "bytes": 999,
+            "payload_field": "provider_result",
+        },
+        {
+            "artifact_kind": "source_content_payload",
+            "status": "stored",
+            "path": "payload_artifacts/missing.json",
+            "sha256": "1" * 64,
+        },
+        {
+            "artifact_kind": "source_content_payload",
+            "status": "stored",
+            "path": "../escape.json",
+            "sha256": "2" * 64,
+        },
+    ]
+
+    inventory = retrieval_payload_artifact_inventory(references, tmp_path)
+    records = {record["path"]: record for record in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["payload_artifacts/bad-ref.json"]["status"] == "hash_mismatch"
+    assert "payload_artifact_hash_mismatch" in records[
+        "payload_artifacts/bad-ref.json"
+    ]["issues"]
+    assert "payload_artifact_bytes_mismatch" in records[
+        "payload_artifacts/bad-ref.json"
+    ]["issues"]
+    assert records["payload_artifacts/missing.json"]["status"] == "missing_file"
+    assert records["../escape.json"]["status"] == "unsafe_path"
 
 
 def test_cache_snapshot_persists_redacted_provider_result_snapshot(tmp_path):

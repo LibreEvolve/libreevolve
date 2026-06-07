@@ -34,6 +34,9 @@ RETRIEVAL_TRUST_POLICY = "untrusted_evidence_v1"
 RETRIEVAL_QUERY_POLICY = "best_program_code_metrics_v1"
 RETRIEVAL_CACHE_SCHEMA = "deep_research_cache_v1"
 RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA = "libreevolve.retrieval_payload_artifact.v1"
+RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA = (
+    "libreevolve.retrieval_payload_artifact_inventory.v1"
+)
 RETRIEVAL_PAYLOAD_ARTIFACT_POLICY_SCHEMA = (
     "libreevolve.retrieval_payload_artifact_policy.v1"
 )
@@ -2359,6 +2362,242 @@ def _payload_artifact_metadata(artifact_dir: Path) -> dict:
         if artifacts
         else "",
     }
+
+
+def retrieval_payload_artifact_inventory(
+    payload_artifacts: object,
+    artifact_root: str | Path,
+) -> dict:
+    """Verify retrieval payload sidecar references under an artifact root."""
+    references, source_schema, extraction_issues = _payload_artifact_inventory_references(
+        payload_artifacts
+    )
+    root = Path(artifact_root)
+    records = [
+        _payload_artifact_inventory_record(reference, root)
+        for reference in references
+    ]
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    missing_count = sum(1 for record in records if record["status"] == "missing_file")
+    mismatch_count = sum(
+        1
+        for record in records
+        if record["status"]
+        in {
+            "hash_mismatch",
+            "bytes_mismatch",
+            "schema_mismatch",
+            "metadata_mismatch",
+        }
+    )
+    invalid_count = sum(
+        1
+        for record in records
+        if record["status"] in {"invalid_artifact", "unsafe_path", "read_error"}
+    )
+    issues = list(extraction_issues)
+    if not records and not extraction_issues:
+        issues.append(
+            {
+                "code": "empty_payload_artifact_inventory",
+                "message": "no retrieval payload artifact references were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA,
+        "payload_artifact_schema": RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
+        "source_schema": source_schema,
+        "artifact_root_policy": "safe_relative_payload_artifact_paths_under_artifact_root",
+        "artifact_root_name": root.name,
+        "artifact_count": len(records),
+        "verified_count": verified_count,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and missing_count == 0
+            and mismatch_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "artifacts": records,
+    }
+
+
+def _payload_artifact_inventory_references(
+    payload_artifacts: object,
+) -> tuple[list[object], object, list[dict]]:
+    if isinstance(payload_artifacts, dict):
+        references = payload_artifacts.get("payload_artifacts")
+        if isinstance(references, list):
+            return (
+                list(references),
+                payload_artifacts.get("schema"),
+                [],
+            )
+        return (
+            [],
+            payload_artifacts.get("schema"),
+            [
+                {
+                    "code": "invalid_payload_artifacts",
+                    "message": "payload_artifacts must be a non-empty list",
+                }
+            ],
+        )
+    if isinstance(payload_artifacts, list):
+        return (
+            list(payload_artifacts),
+            None,
+            [],
+        )
+    return (
+        [],
+        None,
+        [
+            {
+                "code": "invalid_payload_artifacts",
+                "message": "payload artifact inventory input must be a list or metadata object",
+            }
+        ],
+    )
+
+
+def _payload_artifact_inventory_record(reference: object, root: Path) -> dict:
+    if not isinstance(reference, dict):
+        return {
+            "artifact_kind": "unknown",
+            "path": "",
+            "status": "invalid_artifact",
+            "issues": ["invalid_artifact"],
+        }
+    raw_path = reference.get("path", reference.get("file"))
+    expected_sha = reference.get("sha256")
+    expected_bytes = reference.get("bytes")
+    record: dict[str, object] = {
+        "artifact_kind": reference.get("artifact_kind")
+        if isinstance(reference.get("artifact_kind"), str)
+        else "unknown",
+        "path": raw_path if isinstance(raw_path, str) else "",
+        "payload_field": reference.get("payload_field")
+        if isinstance(reference.get("payload_field"), str)
+        else None,
+        "expected_status": reference.get("status")
+        if isinstance(reference.get("status"), str)
+        else None,
+        "expected_sha256": expected_sha if isinstance(expected_sha, str) else "",
+        "expected_bytes": expected_bytes
+        if isinstance(expected_bytes, int) and not isinstance(expected_bytes, bool)
+        else None,
+        "status": "verified",
+        "issues": [],
+    }
+    path_obj = Path(raw_path) if isinstance(raw_path, str) else None
+    if (
+        path_obj is None
+        or not raw_path
+        or path_obj.is_absolute()
+        or raw_path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_payload_artifact_path")
+        return record
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / path_obj).resolve(strict=False)
+    except OSError:
+        record["status"] = "unsafe_path"
+        record["issues"].append("invalid_payload_artifact_path")
+        return record
+    if not resolved_path.is_relative_to(resolved_root):
+        record["status"] = "unsafe_path"
+        record["issues"].append("payload_artifact_path_outside_root")
+        return record
+    if not resolved_path.exists():
+        record["status"] = "missing_file"
+        record["issues"].append("missing_payload_artifact_file")
+        return record
+    if not resolved_path.is_file() or resolved_path.is_symlink():
+        record["status"] = "unsafe_path"
+        record["issues"].append("payload_artifact_path_not_regular_file")
+        return record
+    try:
+        data = resolved_path.read_bytes()
+    except OSError as exc:
+        record["status"] = "read_error"
+        record["issues"].append("payload_artifact_read_error")
+        record["error"] = _provider_error_text(exc)
+        return record
+    actual_sha = hashlib.sha256(data).hexdigest()
+    record["actual_sha256"] = actual_sha
+    record["actual_bytes"] = len(data)
+    if isinstance(expected_sha, str) and expected_sha and actual_sha != expected_sha:
+        record["status"] = "hash_mismatch"
+        record["issues"].append("payload_artifact_hash_mismatch")
+    if (
+        isinstance(expected_bytes, int)
+        and not isinstance(expected_bytes, bool)
+        and len(data) != expected_bytes
+    ):
+        if record["status"] == "verified":
+            record["status"] = "bytes_mismatch"
+        record["issues"].append("payload_artifact_bytes_mismatch")
+    artifact = _decode_payload_artifact_for_inventory(data, record)
+    if artifact is None:
+        return record
+    _compare_payload_artifact_metadata(reference, artifact, record)
+    return record
+
+
+def _decode_payload_artifact_for_inventory(data: bytes, record: dict) -> dict | None:
+    try:
+        artifact = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        record["status"] = "invalid_artifact"
+        record["issues"].append("invalid_payload_artifact_json")
+        return None
+    if not isinstance(artifact, dict):
+        record["status"] = "invalid_artifact"
+        record["issues"].append("invalid_payload_artifact_shape")
+        return None
+    if artifact.get("schema") != RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA:
+        if record["status"] == "verified":
+            record["status"] = "schema_mismatch"
+        record["issues"].append("payload_artifact_schema_mismatch")
+    return artifact
+
+
+def _compare_payload_artifact_metadata(
+    reference: dict,
+    artifact: dict,
+    record: dict,
+) -> None:
+    fields = (
+        "artifact_kind",
+        "status",
+        "payload_field",
+        "provider_rank",
+        "raw_sha256",
+        "stored_sha256",
+        "raw_chars",
+        "stored_chars",
+        "stored_bytes",
+        "redacted",
+        "retention_policy",
+    )
+    for field in fields:
+        if field not in reference:
+            continue
+        if reference.get(field) != artifact.get(field):
+            if record["status"] == "verified":
+                record["status"] = "metadata_mismatch"
+            record["issues"].append(f"payload_artifact_{field}_mismatch")
 
 
 def _payload_artifact_summary(file_name: str, data: bytes) -> dict:

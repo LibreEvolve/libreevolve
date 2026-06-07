@@ -1031,12 +1031,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     secret-redacted provider payloads and retained source-content payloads that
     fit a 64,000-byte per-artifact budget; oversized payloads become
     metadata-only omitted artifacts, and plugin artifact metadata reports
-    provider-result snapshot and payload-artifact counts and hashes. Retained
-    sources and event metadata now include
-    `libreevolve.retrieval_source_content_trust_policy.v1`, which classifies
-    redacted sidecar, metadata-only oversized sidecar, bounded snapshot,
-    hash-only, and missing content evidence, plus replayable-evidence counts and
-    record hashes. Query events now also include
+    provider-result snapshot and payload-artifact counts and hashes.
+    `libreevolve.retrieval_payload_artifact_inventory.v1` now verifies event
+    or plugin-metadata sidecar references against an artifact root, including
+    safe relative paths, file existence, SHA-256 hashes, byte counts, artifact
+    schema, selected sidecar metadata, aggregate missing/mismatch/invalid
+    counts, and a stable records hash. Retained sources and event metadata now
+    include `libreevolve.retrieval_source_content_trust_policy.v1`, which
+    classifies redacted sidecar, metadata-only oversized sidecar, bounded
+    snapshot, hash-only, and missing content evidence, plus replayable-evidence
+    counts and record hashes. Query events now also include
     `libreevolve.retrieval_evidence_boundary_policy.v1`, which explicitly
     records that raw provider/source payloads, TLS certificate chains, and
     semantic verification are outside the current retained-evidence boundary,
@@ -1072,4 +1076,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     deterministic query-overlap ranking, semantic source-content verification
     beyond lexical grounding, and
     replayable redirect/TLS decision evidence before
-    claiming DeepEvolve-style retrieval is reproducible and audit-grade.
+    claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
+    remaining paper gap is not retrieval payload sidecar inventory
+    verification.

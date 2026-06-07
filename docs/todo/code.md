@@ -487,10 +487,15 @@ Primary evidence:
     `payload_artifacts/` for full secret-redacted provider payloads and retained
     source-content payloads that fit a 64,000-byte per-artifact budget; oversized
     payloads become metadata-only omitted artifacts, and `hash_only`/`off`
-    record sidecar suppression. It still does not store unbounded raw provider
-    payload artifacts, unbounded source-content artifacts, learned/external
-    semantic ranking scores beyond deterministic query overlap and lexical
-    grounding, or a
+    record sidecar suppression.
+    `libreevolve.retrieval_payload_artifact_inventory.v1` now verifies event
+    or plugin-metadata sidecar references against an artifact root, including
+    safe relative paths, file existence, SHA-256 hashes, byte counts, artifact
+    schema, selected sidecar metadata, aggregate missing/mismatch/invalid
+    counts, and a stable records hash. It still does not store unbounded raw
+    provider payload artifacts, unbounded source-content artifacts,
+    learned/external semantic ranking scores beyond deterministic query
+    overlap and lexical grounding, or a
     DeepEvolve-style hypothesis refinement/debug loop.
   - Required result: persist replayable source-content artifacts beyond bounded
     retained-source snapshots and retention-budgeted redacted sidecars; add
@@ -505,7 +510,8 @@ Primary evidence:
     summarization, bounded provider-result snapshots, bounded source-content
     snapshots, retention-budgeted redacted payload sidecars, active-context
     hashes, query grounding, lexical grounding records, audit-only relevance
-    scores, or retained source order/hash metadata.
+    scores, retained source order/hash metadata, or sidecar inventory
+    verification.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.
   - Spec evidence: external literature/retrieval context can directly shape
@@ -517,7 +523,11 @@ Primary evidence:
     records bounded transport status plus provider payload byte/hash metadata.
     Cache-backed runs persist bounded/redacted provider-result snapshots,
     retention-budgeted redacted payload sidecars, and manifest-visible cache
-    snapshot summaries. Retrieval events include
+    snapshot summaries. `libreevolve.retrieval_payload_artifact_inventory.v1`
+    verifies event or plugin-metadata sidecar references under an artifact
+    root, including safe relative paths, file hashes, byte counts, sidecar
+    schema, selected sidecar metadata, and aggregate inventory status.
+    Retrieval events include
     `libreevolve.retrieval_transport_policy.v1`, which classifies HTTPS request
     state, redirects, HTTP status class, payload hash presence, oversized
     responses, missing custom-provider transport, and TLS/certificate-looking
@@ -559,7 +569,7 @@ Primary evidence:
     provider-result snapshots, query-overlap audit scores, request URL
     redaction, active-context hashes, redacted source-content trust policy, or
     evidence-boundary/context-audit policy records with lexical grounding
-    aggregates.
+    aggregates or sidecar inventory verification.
 
 ## Evaluation
 

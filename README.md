@@ -2616,7 +2616,13 @@ retention allows payload text, DeepResearch also writes
 secret-redacted provider payload and retained source-content payloads that fit a
 64,000-byte artifact budget; oversized payloads are represented by
 metadata-only omitted artifacts. Retrieval events, cache snapshots, and plugin
-artifact metadata link those sidecars by path and SHA-256. Retained source rows
+artifact metadata link those sidecars by path and SHA-256.
+`retrieval_payload_artifact_inventory()` emits
+`libreevolve.retrieval_payload_artifact_inventory.v1` to verify those event or
+plugin-metadata sidecar references against an artifact root, including safe
+relative paths, file existence, SHA-256 hashes, byte counts, artifact schema,
+selected sidecar metadata, per-record statuses, aggregate
+missing/mismatch/invalid counts, and a stable records hash. Retained source rows
 also carry `libreevolve.retrieval_source_content_trust_policy.v1`, which
 classifies each source as verified redacted sidecar evidence, metadata-only
 oversized sidecar evidence, bounded snapshot-only evidence, hash-only evidence,

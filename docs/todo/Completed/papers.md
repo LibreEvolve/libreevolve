@@ -10037,3 +10037,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     runtime cancellation artifacts remain unimplemented.
   - Verification: focused cancellation-policy tests cover valid inventories
     and missing, mismatched, and unsafe cancellation artifact references.
+
+- [x] Add paper-visible retrieval payload sidecar inventory verification.
+  - Paper evidence: retrieval-driven debugging/refinement treats external
+    knowledge as part of the experimental input, so provider/source payload
+    evidence should be auditable from concrete retained artifacts.
+  - Status: `libreevolve.retrieval_payload_artifact_inventory.v1` now verifies
+    DeepResearch event or plugin-metadata payload sidecar references under a
+    safe artifact root. Sidecars are checked for safe paths, existence,
+    SHA-256 hashes, byte counts, payload-artifact schema, selected sidecar
+    metadata, and aggregate inventory status.
+  - Remaining paper gap: this is retention-budgeted redacted sidecar
+    verification only; unbounded raw provider/source payload retention,
+    semantic source verification, learned/external retrieval ranking, and
+    replayable redirect/TLS evidence remain unimplemented.
+  - Verification: focused DeepResearch tests cover valid sidecar inventories
+    and missing, mismatched, and unsafe sidecar references.

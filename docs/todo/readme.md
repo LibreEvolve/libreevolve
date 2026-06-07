@@ -93,6 +93,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     together so README neither underclaims the current report and inventory
     contracts nor overclaims AlphaEvolve-style confirmed result evidence.
 
+- [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
+  benchmark-grade anti-gaming fixtures.
+  - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target
+    suites whose reported improvements cannot be explained by hardcoded cases,
+    shortcut access to reference answers, artifact spoofing, or local smoke
+    validator quirks.
+  - Current evidence: README now says
+    `libreevolve.benchmark_hardening.v1` validates protected signals, shortcut
+    threats, detector strategy, negative fixtures, and hashed hardening
+    artifacts; it also says the artifact inventory proves named anti-gaming
+    evidence files exist, not that a real benchmark runner generated them.
+    Matching roadmap/paper/code TODOs distinguish the checked matrix smoke
+    hardening bundle, which preserves `alphaevolve_comparable: false`, from
+    still-missing benchmark-grade tensor/geometric/compiler/systems fixtures
+    with real randomized or exhaustive anti-gaming evidence.
+  - Required result: when real target-family benchmark runners emit
+    benchmark-grade hardening reports, negative fixtures, detector logs, and
+    artifact inventories, update README, ROADMAP, papers index, and code/paper
+    TODO entries together so README neither underclaims the checked smoke
+    hardening evidence nor overclaims AlphaEvolve-comparable benchmark
+    hardening.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

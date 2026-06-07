@@ -1099,14 +1099,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     reports together with their artifact inventory, requiring matching
     benchmark, candidate, domain, report schema, inventory status, record hash,
     and zero missing/mismatch/invalid evidence before accepting bundled
-    AlphaEvolve readiness.
+    AlphaEvolve readiness. `libreevolve.systems_evidence_bundle.v1` now wraps
+    embedded systems report and inventory records with stable embedded-record
+    hashes, inventory-record hash linkage, benchmark/candidate/domain identity
+    checks, and readiness consistency validation.
   - Required result: connect compiler, hardware, kernel, scheduling, or systems
     fixtures to this report format, implement real unseen evaluation cases and
     randomized/reference-correctness checks, and emit report artifacts that
     distinguish loop feedback from held-out, deployment, and certification
     evidence. The remaining paper gap is producing those evidence files from
-    real fixture runs, not verifying the declared files or bundle consistency
-    once a report names them.
+    real fixture runs, not verifying the declared files, report/inventory
+    consistency, or evidence-bundle consistency once a report names them.
 
 ## Paper-Inspired Feature Claims Needing Correction
 

@@ -1717,6 +1717,11 @@ or independent certification.
 with its artifact inventory, including matching benchmark, candidate, domain,
 report schema, record hash, and zero missing/mismatch/invalid records before
 treating the bundle as AlphaEvolve-ready.
+`libreevolve.systems_evidence_bundle.v1` is the portable wrapper for those
+records: it embeds the systems report and artifact inventory, records stable
+SHA-256 hashes for each embedded object plus the inventory records hash, checks
+benchmark/candidate/domain identity across the bundle, report, and inventory,
+and requires bundle readiness to match report/inventory readiness.
 `libreevolve.paper_result_certification_artifact_inventory.v1` verifies both
 `evidence` and `artifacts` records in paper-result certification reports
 against concrete files under the artifact root. The inventory checks safe

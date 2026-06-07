@@ -11,6 +11,7 @@ from typing import Any
 
 SYSTEMS_RESULT_SCHEMA = "libreevolve.systems_result_report.v1"
 SYSTEMS_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.systems_result_artifact_inventory.v1"
+SYSTEMS_EVIDENCE_BUNDLE_SCHEMA = "libreevolve.systems_evidence_bundle.v1"
 BENCHMARK_DOMAINS = frozenset({"compiler", "hardware", "kernel", "scheduling", "systems"})
 GATE_NAMES = frozenset({"optimization", "heldout", "reference_correctness"})
 GATE_STATUSES = frozenset({"passed", "failed", "not_checked", "not_applicable"})
@@ -128,6 +129,72 @@ def validate_systems_evidence_bundle(
     )
 
 
+def validate_systems_evidence_bundle_record(
+    bundle: object | str | Path,
+) -> SystemsEvidenceBundleValidation:
+    """Validate a portable systems evidence bundle record."""
+    data, read_issues = _load_bundle(bundle)
+    if read_issues:
+        return SystemsEvidenceBundleValidation(
+            ok=False,
+            benchmark_id=None,
+            report_ok=False,
+            inventory_ok=False,
+            alphaevolve_ready=False,
+            issues=read_issues,
+        )
+    assert isinstance(data, dict)
+    issues: list[SystemsResultIssue] = []
+    if data.get("schema") != SYSTEMS_EVIDENCE_BUNDLE_SCHEMA:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_bundle_schema",
+                "unsupported systems evidence bundle schema",
+            )
+        )
+    report = data.get("report")
+    inventory = data.get("inventory")
+    if not isinstance(report, dict):
+        issues.append(
+            SystemsResultIssue("invalid_bundle_report", "bundle report must be an object")
+        )
+        report = {}
+    if not isinstance(inventory, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_bundle_inventory",
+                "bundle inventory must be an object",
+            )
+        )
+        inventory = {}
+    embedded_validation = validate_systems_evidence_bundle(report, inventory)
+    issues.extend(embedded_validation.issues)
+    benchmark_id = embedded_validation.benchmark_id
+    _validate_bundle_identity(data, report, inventory, issues)
+    _validate_bundle_hashes(data, report, inventory, issues)
+    alphaevolve_ready = (
+        embedded_validation.alphaevolve_ready
+        and data.get("alphaevolve_ready") is True
+        and not issues
+    )
+    if data.get("alphaevolve_ready") is not embedded_validation.alphaevolve_ready:
+        issues.append(
+            SystemsResultIssue(
+                "bundle_ready_mismatch",
+                "bundle alphaevolve_ready must match embedded report/inventory readiness",
+            )
+        )
+        alphaevolve_ready = False
+    return SystemsEvidenceBundleValidation(
+        ok=not issues,
+        benchmark_id=benchmark_id,
+        report_ok=embedded_validation.report_ok,
+        inventory_ok=embedded_validation.inventory_ok,
+        alphaevolve_ready=alphaevolve_ready and not issues,
+        issues=issues,
+    )
+
+
 def render_systems_result_summary(report: dict[str, Any]) -> str:
     validation = validate_systems_result_report(report)
     status = "ok" if validation.ok else "invalid"
@@ -241,6 +308,116 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [SystemsResultIssue("invalid_shape", "systems result report must be a JSON object")]
+
+
+def _load_bundle(bundle: object | str | Path) -> tuple[dict[str, Any] | None, list[SystemsResultIssue]]:
+    if isinstance(bundle, dict):
+        return dict(bundle), []
+    if isinstance(bundle, (str, Path)):
+        path = Path(bundle)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [
+                SystemsResultIssue(
+                    "read_error",
+                    f"failed to read systems evidence bundle: {exc}",
+                )
+            ]
+        except json.JSONDecodeError as exc:
+            return None, [
+                SystemsResultIssue(
+                    "invalid_json",
+                    f"invalid systems evidence bundle JSON: {exc.msg}",
+                )
+            ]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [
+        SystemsResultIssue(
+            "invalid_shape",
+            "systems evidence bundle must be a JSON object",
+        )
+    ]
+
+
+def _validate_bundle_identity(
+    bundle: dict[str, Any],
+    report: dict[str, Any],
+    inventory: dict[str, Any],
+    issues: list[SystemsResultIssue],
+) -> None:
+    for field in ("benchmark_id", "candidate_id", "domain"):
+        expected = report.get(field)
+        if isinstance(expected, str) and bundle.get(field) != expected:
+            issues.append(
+                SystemsResultIssue(
+                    f"bundle_{field}_mismatch",
+                    f"bundle {field} must match embedded systems report",
+                )
+            )
+        if isinstance(expected, str) and inventory.get(field) != expected:
+            issues.append(
+                SystemsResultIssue(
+                    f"bundle_inventory_{field}_mismatch",
+                    f"embedded inventory {field} must match systems report",
+                )
+            )
+
+
+def _validate_bundle_hashes(
+    bundle: dict[str, Any],
+    report: dict[str, Any],
+    inventory: dict[str, Any],
+    issues: list[SystemsResultIssue],
+) -> None:
+    _validate_embedded_hash(
+        bundle,
+        "report_sha256",
+        report,
+        "bundle_report_hash_mismatch",
+        "bundle report_sha256 must match embedded report",
+        issues,
+    )
+    _validate_embedded_hash(
+        bundle,
+        "inventory_sha256",
+        inventory,
+        "bundle_inventory_hash_mismatch",
+        "bundle inventory_sha256 must match embedded inventory",
+        issues,
+    )
+    if bundle.get("inventory_records_sha256") != inventory.get("records_sha256"):
+        issues.append(
+            SystemsResultIssue(
+                "bundle_inventory_records_hash_mismatch",
+                "bundle inventory_records_sha256 must match embedded inventory records_sha256",
+            )
+        )
+
+
+def _validate_embedded_hash(
+    bundle: dict[str, Any],
+    field: str,
+    value: dict[str, Any],
+    mismatch_code: str,
+    message: str,
+    issues: list[SystemsResultIssue],
+) -> None:
+    expected = bundle.get(field)
+    if not isinstance(expected, str) or _SHA256_RE.fullmatch(expected) is None:
+        issues.append(
+            SystemsResultIssue(
+                f"invalid_{field}",
+                f"bundle {field} must be a lowercase SHA-256 hex digest",
+            )
+        )
+        return
+    actual = hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    if expected != actual:
+        issues.append(SystemsResultIssue(mismatch_code, message))
 
 
 def _validate_systems_inventory(

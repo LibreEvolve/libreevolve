@@ -3,10 +3,12 @@ import json
 
 from libreevolve.problems.benchmarks.systems_results import (
     SYSTEMS_ARTIFACT_INVENTORY_SCHEMA,
+    SYSTEMS_EVIDENCE_BUNDLE_SCHEMA,
     SYSTEMS_RESULT_SCHEMA,
     render_systems_result_summary,
     systems_result_artifact_inventory,
     validate_systems_evidence_bundle,
+    validate_systems_evidence_bundle_record,
     validate_systems_result_report,
 )
 
@@ -73,6 +75,30 @@ def _write_systems_files(report: dict, root) -> None:
         artifact["bytes"] = len(raw)
 
 
+def _payload_hash(value: dict) -> str:
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _valid_bundle(tmp_path) -> dict:
+    report = _valid_report()
+    _write_systems_files(report, tmp_path)
+    inventory = systems_result_artifact_inventory(report, tmp_path)
+    return {
+        "schema": SYSTEMS_EVIDENCE_BUNDLE_SCHEMA,
+        "benchmark_id": report["benchmark_id"],
+        "candidate_id": report["candidate_id"],
+        "domain": report["domain"],
+        "alphaevolve_ready": True,
+        "report_sha256": _payload_hash(report),
+        "inventory_sha256": _payload_hash(inventory),
+        "inventory_records_sha256": inventory["records_sha256"],
+        "report": report,
+        "inventory": inventory,
+    }
+
+
 def test_systems_result_report_validates_heldout_and_reference_gates():
     validation = validate_systems_result_report(_valid_report())
 
@@ -130,6 +156,33 @@ def test_systems_evidence_bundle_validates_report_and_inventory(tmp_path):
     assert validation.inventory_ok is True
     assert validation.alphaevolve_ready is True
     assert validation.issues == []
+
+
+def test_systems_evidence_bundle_record_validates_embedded_hashes(tmp_path):
+    bundle = _valid_bundle(tmp_path)
+
+    validation = validate_systems_evidence_bundle_record(bundle)
+
+    assert validation.ok is True
+    assert validation.benchmark_id == "flashattention_ir_micro"
+    assert validation.report_ok is True
+    assert validation.inventory_ok is True
+    assert validation.alphaevolve_ready is True
+    assert validation.issues == []
+
+
+def test_systems_evidence_bundle_record_rejects_tampering(tmp_path):
+    bundle = _valid_bundle(tmp_path)
+    bundle["report"]["candidate_id"] = "program-tampered"
+
+    validation = validate_systems_evidence_bundle_record(bundle)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "inventory_candidate_id_mismatch" in codes
+    assert "bundle_candidate_id_mismatch" in codes
+    assert "bundle_report_hash_mismatch" in codes
 
 
 def test_systems_evidence_bundle_rejects_tampered_inventory(tmp_path):

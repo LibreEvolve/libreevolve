@@ -568,6 +568,13 @@ Primary evidence:
     learned/external semantic ranking scores beyond deterministic query
     overlap and lexical grounding, or a
     DeepEvolve-style hypothesis refinement/debug loop.
+    `runtime.retrieval.evidence_coverage` now records
+    `libreevolve.retrieval_evidence_coverage.v1` run-level counts for
+    transport, payload-artifact, source-content, grounding, ranking,
+    evidence-boundary, and context-audit policy coverage, with
+    `libreevolve.retrieval_evidence_coverage_validation.v1` rejecting raw
+    provider/source payload, semantic-verification, learned-ranking, TLS-replay,
+    and full-replay overclaims.
   - Required result: persist replayable source-content artifacts beyond bounded
     retained-source snapshots and retention-budgeted redacted sidecars; add
     learned or externally scored semantic ranking/selection provenance beyond
@@ -582,8 +589,9 @@ Primary evidence:
     snapshots, retention-budgeted redacted payload sidecars, active-context
     hashes, query grounding, lexical grounding records, audit-only relevance
     scores, retained source order/hash metadata, sidecar inventory
-    verification, deterministic ranking-provenance validation, or bounded
-    semantic-boundary overclaim auditing.
+    verification, deterministic ranking-provenance validation, bounded
+    semantic-boundary overclaim auditing, or run-level retrieval evidence
+    coverage validation.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.
   - Spec evidence: external literature/retrieval context can directly shape
@@ -641,6 +649,11 @@ Primary evidence:
     non-semantic evidence boundary and fail records that claim semantic
     verification, full replay readiness, raw payload retention, retained TLS
     certificate chains, or authoritative prompt context.
+    `libreevolve.retrieval_evidence_coverage.v1` now records manifest-level
+    coverage counts for retained retrieval evidence surfaces and
+    `libreevolve.retrieval_evidence_coverage_validation.v1` rejects raw payload,
+    semantic-verification, learned-ranking, TLS-replay, and full-replay
+    overclaims.
   - Required result: add unbounded raw provider-payload persistence, full
     source-content artifacts beyond the redacted byte-budgeted sidecars,
     replayable source-content verification, retained transport/TLS
@@ -650,7 +663,8 @@ Primary evidence:
     redaction, active-context hashes, redacted source-content trust policy, or
     evidence-boundary/context-audit policy records with lexical grounding
     aggregates, sidecar inventory verification, deterministic
-    ranking-provenance validation, or semantic-boundary overclaim auditing.
+    ranking-provenance validation, semantic-boundary overclaim auditing, or
+    run-level retrieval evidence coverage validation.
 
 ## Evaluation
 

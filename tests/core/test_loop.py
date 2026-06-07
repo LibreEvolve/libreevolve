@@ -29,6 +29,8 @@ from libreevolve.core.loop import (
     PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
+    RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA,
+    RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
     RuntimeLineageReplayPolicyError,
     RuntimeLLMSchedulerStateError,
@@ -37,6 +39,7 @@ from libreevolve.core.loop import (
     evolve,
     validate_prompt_context_policy_coverage,
     validate_prompt_section_packing_coverage,
+    validate_retrieval_evidence_coverage,
     validate_controller_state_snapshot,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
@@ -8719,6 +8722,12 @@ def test_retrieval_metadata_without_prompt_text_is_summarized_as_provenance_only
     assert "PLUGIN CONTEXT" not in records[-1]["metadata"]["prompt"]
     assert manifest["runtime"]["retrieval"]["events"] == 1
     assert manifest["runtime"]["retrieval"]["event_summaries"][0]["provider"] == "metadata_only"
+    coverage = manifest["runtime"]["retrieval"]["evidence_coverage"]
+    assert coverage["schema"] == RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA
+    assert coverage["status"] == "event_count_only"
+    assert coverage["event_count"] == 1
+    assert coverage["source_count"] == 0
+    assert coverage["validation"]["ok"] is True
 
 
 def test_loop_rejects_non_text_plugin_prompt_context():
@@ -9411,6 +9420,38 @@ def test_manifest_summarizes_retrieval_events():
         "final_host": "example.test",
         "redirected": False,
     }
+    coverage = retrieval["evidence_coverage"]
+    assert coverage["schema"] == RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA
+    assert coverage["status"] == "bounded_metadata_or_snapshot_evidence"
+    assert coverage["event_count"] == 1
+    assert coverage["ok_event_count"] == 1
+    assert coverage["source_count"] == 2
+    assert coverage["transport_policy_count"] == 1
+    assert coverage["payload_artifact_policy_count"] == 1
+    assert coverage["source_grounding_policy_count"] == 1
+    assert coverage["source_content_trust_policy_count"] == 1
+    assert coverage["source_ranking_provenance_count"] == 1
+    assert coverage["evidence_boundary_policy_count"] == 1
+    assert coverage["context_audit_policy_count"] == 1
+    assert coverage["raw_provider_payload_retained"] is False
+    assert coverage["raw_source_payload_retained"] is False
+    assert coverage["semantic_source_verification_ready"] is False
+    assert coverage["learned_ranking_ready"] is False
+    assert coverage["tls_decision_replay_ready"] is False
+    assert coverage["full_retrieval_replay_ready"] is False
+    assert coverage["validation"]["schema"] == (
+        RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA
+    )
+    assert coverage["validation"]["ok"] is True
+    overclaim = copy.deepcopy(coverage)
+    overclaim["semantic_source_verification_ready"] = True
+    overclaim.pop("validation")
+    invalid = validate_retrieval_evidence_coverage(overclaim)
+    assert invalid["ok"] is False
+    assert any(
+        issue["code"] == "semantic_source_verification_overclaim"
+        for issue in invalid["issues"]
+    )
     [artifact] = manifest["runtime"]["plugin_artifacts"]
     metadata = artifact["metadata"]
     assert artifact["plugin"] == "DeepResearchPlugin"

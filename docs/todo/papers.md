@@ -1222,6 +1222,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-semantic evidence boundary and reports overclaims of semantic
     verification, full replay readiness, raw provider/source payload retention,
     TLS certificate-chain retention, or authoritative prompt context.
+    `runtime.retrieval.evidence_coverage` now records
+    `libreevolve.retrieval_evidence_coverage.v1` run-level coverage counts for
+    retained retrieval evidence surfaces and
+    `libreevolve.retrieval_evidence_coverage_validation.v1` rejects raw
+    provider/source payload, semantic-verification, learned-ranking,
+    TLS-replay, and full-replay overclaims.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,
@@ -1235,4 +1241,5 @@ directory and using the AlphaEvolve paper as the primary specification.
     claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
     remaining paper gap is not retrieval payload sidecar inventory
     verification, deterministic retained-source ranking-provenance
-    validation, or semantic-boundary overclaim auditing.
+    validation, semantic-boundary overclaim auditing, or run-level retrieval
+    evidence coverage validation.

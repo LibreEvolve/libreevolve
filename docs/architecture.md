@@ -652,10 +652,14 @@ presence, oversized payloads, missing custom-provider transport, and
 TLS/certificate-looking failures. A semantic-boundary audit helper verifies
 retrieval events, plugin metadata, or cache snapshots do not overclaim semantic
 verification, full replay readiness, raw provider/source payload retention, TLS
-certificate-chain retention, or authoritative prompt context. It still does not
-persist full provider/source payloads, semantic source-content trust
-verification, richer ranking scores, or a systematic debug/refinement loop.
-Completed manifests include bounded `runtime.retrieval` summaries.
+certificate-chain retention, or authoritative prompt context. Completed
+manifests include bounded `runtime.retrieval` summaries plus
+`libreevolve.retrieval_evidence_coverage.v1`, a run-level count of which
+retrieval evidence surfaces were present and a validation record that rejects
+raw-payload, semantic-verification, learned-ranking, TLS-replay, and full-replay
+overclaims. It still does not persist full provider/source payloads, semantic
+source-content trust verification, richer ranking scores, or a systematic
+debug/refinement loop.
 
 The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
 always injects the same guidance block. Candidate metadata can attribute that

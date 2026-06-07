@@ -122,6 +122,12 @@ PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA = (
 PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA = (
     "libreevolve.prompt_context_policy_coverage_validation.v1"
 )
+RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA = (
+    "libreevolve.retrieval_evidence_coverage.v1"
+)
+RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA = (
+    "libreevolve.retrieval_evidence_coverage_validation.v1"
+)
 _MAX_PLUGIN_METADATA_KEY_CHARS = 160
 _MAX_PLUGIN_METADATA_STRING_CHARS = 4096
 _MAX_PLUGIN_METADATA_DEPTH = 20
@@ -6247,9 +6253,254 @@ def _has_unicode_format_control(value: str) -> bool:
     return any(unicodedata.category(ch) == "Cf" for ch in value)
 
 
+_RETRIEVAL_EVIDENCE_LIMITATIONS = (
+    "bounded_redacted_payload_artifacts_not_unbounded_raw_payloads",
+    "lexical_grounding_not_semantic_verification",
+    "query_overlap_not_learned_semantic_ranking",
+    "transport_status_without_tls_certificate_chain_replay",
+    "retrieval_context_is_untrusted_non_authoritative_prompt_evidence",
+)
+_RETRIEVAL_EVIDENCE_OVERCLAIM_FIELDS = {
+    "raw_provider_payload_retained": "raw_provider_payload_overclaim",
+    "raw_source_payload_retained": "raw_source_payload_overclaim",
+    "semantic_source_verification_ready": "semantic_source_verification_overclaim",
+    "learned_ranking_ready": "learned_ranking_overclaim",
+    "tls_decision_replay_ready": "tls_decision_replay_overclaim",
+    "full_retrieval_replay_ready": "full_retrieval_replay_overclaim",
+}
+_RETRIEVAL_EVIDENCE_COUNT_FIELDS = (
+    "event_count",
+    "ok_event_count",
+    "empty_event_count",
+    "error_event_count",
+    "source_count",
+    "transport_policy_count",
+    "payload_artifact_policy_count",
+    "payload_artifact_reference_count",
+    "stored_payload_artifact_count",
+    "source_content_snapshot_count",
+    "source_content_trust_policy_count",
+    "replayable_source_count",
+    "source_grounding_policy_count",
+    "lexically_grounded_source_count",
+    "source_ranking_provenance_count",
+    "evidence_boundary_policy_count",
+    "context_audit_policy_count",
+    "bounded_context_audit_ready_count",
+)
+
+
+def _non_negative_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return 0
+    return value
+
+
+def _count_retrieval_sources(event: Mapping[str, object]) -> int:
+    sources = event.get("sources")
+    if not isinstance(sources, list):
+        return 0
+    return sum(1 for source in sources if isinstance(source, dict))
+
+
+def _count_source_content_snapshots(event: Mapping[str, object]) -> int:
+    sources = event.get("sources")
+    if not isinstance(sources, list):
+        return 0
+    return sum(
+        1
+        for source in sources
+        if isinstance(source, dict)
+        and isinstance(source.get("content_snapshot"), dict)
+    )
+
+
+def _retrieval_evidence_coverage(events: list[dict]) -> dict:
+    event_count = len(events)
+    ok_event_count = sum(1 for event in events if event.get("status") == "ok")
+    empty_event_count = sum(1 for event in events if event.get("status") == "empty")
+    error_event_count = sum(1 for event in events if event.get("status") == "error")
+    source_count = sum(_count_retrieval_sources(event) for event in events)
+    payload_artifact_policy_count = sum(
+        1 for event in events if isinstance(event.get("payload_artifact_policy"), dict)
+    )
+    payload_artifact_reference_count = sum(
+        len(event.get("payload_artifacts"))
+        for event in events
+        if isinstance(event.get("payload_artifacts"), list)
+    )
+    stored_payload_artifact_count = sum(
+        _non_negative_int(event["payload_artifact_policy"].get("stored_artifacts"))
+        for event in events
+        if isinstance(event.get("payload_artifact_policy"), dict)
+    )
+    source_content_snapshot_count = sum(
+        _count_source_content_snapshots(event) for event in events
+    )
+    source_content_trust_policy_count = sum(
+        1
+        for event in events
+        if isinstance(event.get("source_content_trust_policy"), dict)
+    )
+    replayable_source_count = sum(
+        _non_negative_int(
+            event["source_content_trust_policy"].get("replayable_source_count")
+        )
+        for event in events
+        if isinstance(event.get("source_content_trust_policy"), dict)
+    )
+    source_grounding_policy_count = sum(
+        1 for event in events if isinstance(event.get("source_grounding_policy"), dict)
+    )
+    lexically_grounded_source_count = sum(
+        _non_negative_int(
+            event["source_grounding_policy"].get("lexically_grounded_source_count")
+        )
+        for event in events
+        if isinstance(event.get("source_grounding_policy"), dict)
+    )
+    source_ranking_provenance_count = sum(
+        1 for event in events if isinstance(event.get("source_ranking"), dict)
+    )
+    evidence_boundary_policy_count = sum(
+        1
+        for event in events
+        if isinstance(event.get("evidence_boundary_policy"), dict)
+    )
+    context_audit_policy_count = sum(
+        1 for event in events if isinstance(event.get("context_audit_policy"), dict)
+    )
+    bounded_context_audit_ready_count = sum(
+        1
+        for event in events
+        if isinstance(event.get("context_audit_policy"), dict)
+        and event["context_audit_policy"].get("bounded_context_audit_ready") is True
+    )
+    transport_policy_count = sum(
+        1 for event in events if isinstance(event.get("transport_policy"), dict)
+    )
+    if bounded_context_audit_ready_count or replayable_source_count:
+        status = "bounded_replay_evidence"
+    elif (
+        transport_policy_count
+        or source_content_trust_policy_count
+        or source_content_snapshot_count
+        or source_ranking_provenance_count
+        or payload_artifact_policy_count
+    ):
+        status = "bounded_metadata_or_snapshot_evidence"
+    else:
+        status = "event_count_only"
+    record = {
+        "schema": RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA,
+        "status": status,
+        "event_count": event_count,
+        "ok_event_count": ok_event_count,
+        "empty_event_count": empty_event_count,
+        "error_event_count": error_event_count,
+        "source_count": source_count,
+        "transport_policy_count": transport_policy_count,
+        "payload_artifact_policy_count": payload_artifact_policy_count,
+        "payload_artifact_reference_count": payload_artifact_reference_count,
+        "stored_payload_artifact_count": stored_payload_artifact_count,
+        "source_content_snapshot_count": source_content_snapshot_count,
+        "source_content_trust_policy_count": source_content_trust_policy_count,
+        "replayable_source_count": replayable_source_count,
+        "source_grounding_policy_count": source_grounding_policy_count,
+        "lexically_grounded_source_count": lexically_grounded_source_count,
+        "source_ranking_provenance_count": source_ranking_provenance_count,
+        "evidence_boundary_policy_count": evidence_boundary_policy_count,
+        "context_audit_policy_count": context_audit_policy_count,
+        "bounded_context_audit_ready_count": bounded_context_audit_ready_count,
+        "raw_provider_payload_retained": False,
+        "raw_source_payload_retained": False,
+        "semantic_source_verification_ready": False,
+        "learned_ranking_ready": False,
+        "tls_decision_replay_ready": False,
+        "full_retrieval_replay_ready": False,
+        "limitations": list(_RETRIEVAL_EVIDENCE_LIMITATIONS),
+    }
+    record["validation"] = validate_retrieval_evidence_coverage(record)
+    return record
+
+
+def validate_retrieval_evidence_coverage(record: object) -> dict:
+    """Validate run-level retrieval evidence coverage without overclaiming replay."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(record, dict):
+        return {
+            "schema": RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA,
+            "ok": False,
+            "coverage_schema": None,
+            "event_count": 0,
+            "source_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_record",
+                    "message": "retrieval evidence coverage must be an object",
+                }
+            ],
+        }
+    if record.get("schema") != RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA:
+        issues.append(
+            {
+                "code": "schema_mismatch",
+                "message": "retrieval evidence coverage schema is unsupported",
+            }
+        )
+    for field in _RETRIEVAL_EVIDENCE_COUNT_FIELDS:
+        value = record.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    for field, code in _RETRIEVAL_EVIDENCE_OVERCLAIM_FIELDS.items():
+        value = record.get(field)
+        if value is not False:
+            issues.append(
+                {
+                    "code": code,
+                    "message": f"{field} must remain false until evidence is retained",
+                }
+            )
+    limitations = record.get("limitations")
+    if not isinstance(limitations, list):
+        limitations = []
+        issues.append(
+            {
+                "code": "invalid_limitations",
+                "message": "limitations must list the evidence boundary",
+            }
+        )
+    missing = [
+        limitation
+        for limitation in _RETRIEVAL_EVIDENCE_LIMITATIONS
+        if limitation not in limitations
+    ]
+    for limitation in missing:
+        issues.append(
+            {
+                "code": "missing_limitation",
+                "message": f"missing limitation: {limitation}",
+            }
+        )
+    return {
+        "schema": RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA,
+        "ok": not issues,
+        "coverage_schema": record.get("schema"),
+        "event_count": _non_negative_int(record.get("event_count")),
+        "source_count": _non_negative_int(record.get("source_count")),
+        "issues": issues,
+    }
+
+
 def _retrieval_manifest_summary(programs: list[Program]) -> dict:
     events: dict[tuple, dict] = {}
     by_plugin: dict[str, dict] = {}
+    coverage_events: list[dict] = []
     for program in programs:
         metadata = program.metadata if isinstance(program.metadata, dict) else {}
         plugin_context = metadata.get("plugin_context")
@@ -6268,7 +6519,7 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
             for event in retrieval_events:
                 if not isinstance(event, dict):
                     continue
-                key = (
+                event_key = (
                     plugin_name,
                     event.get("query"),
                     event.get("timestamp"),
@@ -6276,7 +6527,7 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
                     event.get("synthesis_sha256"),
                     event.get("error"),
                 )
-                if key in events:
+                if event_key in events:
                     continue
                 summary = {
                     "plugin": plugin_name,
@@ -6304,6 +6555,18 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
                     summary["error"] = event.get("error")
                 if event.get("error_type"):
                     summary["error_type"] = event.get("error_type")
+                for evidence_key in (
+                    "transport_policy",
+                    "payload_artifact_policy",
+                    "source_ranking",
+                    "source_grounding_policy",
+                    "source_content_trust_policy",
+                    "evidence_boundary_policy",
+                    "context_audit_policy",
+                ):
+                    value = event.get(evidence_key)
+                    if isinstance(value, dict):
+                        summary[evidence_key] = value
                 transport = event.get("transport")
                 if isinstance(transport, dict):
                     transport_summary: dict = {
@@ -6333,7 +6596,8 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
                     if "redirected" in transport:
                         transport_summary["redirected"] = bool(transport.get("redirected"))
                     summary["transport"] = transport_summary
-                events[key] = summary
+                events[event_key] = summary
+                coverage_events.append(event)
                 plugin_summary = by_plugin.setdefault(
                     plugin_name,
                     {
@@ -6354,6 +6618,7 @@ def _retrieval_manifest_summary(programs: list[Program]) -> dict:
         "events": len(events),
         "by_plugin": by_plugin,
         "event_summaries": list(events.values())[-20:],
+        "evidence_coverage": _retrieval_evidence_coverage(coverage_events),
     }
 
 

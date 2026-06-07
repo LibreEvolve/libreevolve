@@ -868,8 +868,15 @@ previous valid `manifest.json` remains in place and `manifest_invalid.jsonl`
 records a diagnostic quarantine row.
 If retrieval plugins emitted candidate metadata, `runtime.retrieval` records a
 bounded run-level summary with total deduplicated retrieval events, per-plugin
-status/source counts, and compact event summaries. It intentionally omits full
-source payloads.
+status/source counts, compact event summaries, and
+`libreevolve.retrieval_evidence_coverage.v1` counts for retained transport,
+payload-artifact, source-content, grounding, ranking, evidence-boundary, and
+context-audit policy surfaces. Its validation record,
+`libreevolve.retrieval_evidence_coverage_validation.v1`, keeps raw provider
+payload retention, raw source payload retention, semantic source verification,
+learned ranking, TLS decision replay, and full retrieval replay marked false
+unless stronger retained evidence exists. It intentionally omits full source
+payloads.
 `max_llm_calls` caps logical LLM `generate()` invocations. A zero cap evaluates
 seeds without constructing providers, and positive caps are checked
 cooperatively before mutation, critique, feedback, and meta-prompt calls.
@@ -1676,6 +1683,12 @@ evidence with explicit `BEGIN_UNTRUSTED_RETRIEVAL_EVIDENCE` /
 `END_UNTRUSTED_RETRIEVAL_EVIDENCE` delimiters. Candidate history and
 run-level retrieval summaries record the trust policy, prompt-boundary policy,
 and `authoritative: false` for successful retrieval context.
+`runtime.retrieval.evidence_coverage` aggregates the event-level evidence
+surfaces into run-level counts and records the remaining boundary explicitly:
+bounded redacted payload artifacts are not unbounded raw payloads, lexical
+grounding is not semantic verification, query-overlap ranking is not learned
+semantic ranking, transport status is not TLS certificate-chain replay, and
+retrieval context remains untrusted prompt evidence.
 These retrieval records are best-effort provenance, not audit-grade source
 integrity evidence: unbounded raw provider payloads, learned or externally
 scored semantic ranking, semantic source-content verification beyond lexical

@@ -1102,9 +1102,9 @@ Primary evidence:
     `validate_llm_provider_diagnostics_summary()` now validates
     `libreevolve.llm_provider_diagnostics.v1` runtime summaries for
     schema/policy/status/source, retained-history scope, backend-record hash
-    integrity, non-negative counters, backend-count and call-count consistency,
-    required limitation statements, and the current no-live-pricing/no-raw-
-    payload replay boundary.
+    integrity, non-negative counters, backend-count, total/backend aggregate
+    count and retention-counter consistency, required limitation statements,
+    and the current no-live-pricing/no-raw-payload replay boundary.
     `max_llm_provider_attempts` now consumes retained adapter retry telemetry
     as a live after-call stop input; `max_llm_tokens`,
     `max_llm_cost_microusd`, and `max_llm_seconds` do the same for

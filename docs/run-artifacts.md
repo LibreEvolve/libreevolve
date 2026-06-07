@@ -1000,9 +1000,10 @@ stores bounded scalar diagnostics instead of full provider-native payloads, and
 treats configured cost rates as estimates rather than live provider pricing.
 `validate_llm_provider_diagnostics_summary()` checks the manifest summary
 contract, including schema/policy/status, retained-history scope,
-backend-record hash integrity, non-negative counters, backend-count and
-call-count consistency, required limitation statements, and the current
-no-live-pricing/no-raw-payload replay boundary.
+backend-record hash integrity, non-negative counters, backend-count,
+total/backend aggregate count and retention-counter consistency, required
+limitation statements, and the current no-live-pricing/no-raw-payload replay
+boundary.
 When a backend spec or direct backend metadata provides
 `prompt_max_estimated_tokens`, the ensemble applies that backend/model
 heuristic prompt-token cap together with any global cap before provider calls.

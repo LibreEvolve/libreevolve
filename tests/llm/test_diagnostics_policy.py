@@ -115,3 +115,18 @@ def test_llm_provider_diagnostics_summary_rejects_count_and_hash_mismatches():
     assert "invalid_backend_diagnostic_keys_key" in codes
     assert "invalid_backend_diagnostic_keys_count" in codes
     assert "records_sha256_mismatch" in codes
+
+
+def test_llm_provider_diagnostics_summary_rejects_total_backend_aggregate_drift():
+    summary = copy.deepcopy(_summary())
+    summary["totals"]["usage_record_count"] += 1
+    summary["totals"]["provider_response_retention_modes"] = {
+        "unexpected": 1,
+    }
+
+    validation = validate_llm_provider_diagnostics_summary(summary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "usage_record_count_mismatch" in codes
+    assert "provider_response_retention_modes_mismatch" in codes

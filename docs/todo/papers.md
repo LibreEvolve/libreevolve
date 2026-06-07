@@ -177,9 +177,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     service/API-version, or account-availability discovery.
     `validate_llm_provider_diagnostics_summary()` now validates the provider
     diagnostics summary contract, including record-hash integrity,
-    non-negative counters, backend-count and call-count consistency, required
-    limitation statements, and the no-live-pricing/no-raw-payload replay
-    boundary. The budget report contract
+    non-negative counters, backend-count, total/backend aggregate count and
+    retention-counter consistency, required limitation statements, and the
+    no-live-pricing/no-raw-payload replay boundary. The budget report contract
     now rejects restored-state claims that lack persisted resume-state
     evidence. Focused ensemble tests now cover fake provider usage counts and
     adapter retry diagnostics for mutation, critique, feedback, and

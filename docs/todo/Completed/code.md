@@ -15284,3 +15284,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused LLM budget-report tests cover valid paper-budget
     bundles and tampered inventory with mismatched run id and missing-record
     counters.
+
+- [x] Add provider diagnostics aggregate consistency validation.
+  - Spec evidence: AlphaEvolve-style provider diagnostics must be internally
+    auditable, so retained call-history summaries should not allow aggregate
+    totals to drift away from their backend records.
+  - Status: `validate_llm_provider_diagnostics_summary()` now verifies that
+    total count fields and retained response/error counter summaries match the
+    summed backend diagnostic records, in addition to schema, policy,
+    retention-limit, records-hash, and no-live-pricing/no-raw-payload
+    boundary checks.
+  - Remaining gap: this validates bounded retained diagnostics summaries; it
+    does not add full raw provider payload persistence/replay, remote
+    provider-side default capture, live pricing capture, or one-command
+    provider-output replay.
+  - Verification: focused provider diagnostics policy and ensemble tests cover
+    valid summaries plus aggregate count/counter drift.

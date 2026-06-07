@@ -150,21 +150,7 @@ def validate_llm_provider_diagnostics_summary(
     _validate_no_raw_payload_claims(data, issues)
     _validate_live_pricing_boundary(totals, backends, issues)
     if totals is not None:
-        call_count = totals.get("call_count")
-        if isinstance(call_count, int) and not isinstance(call_count, bool):
-            backend_calls = sum(
-                item.get("calls", 0)
-                for item in backends
-                if isinstance(item.get("calls"), int)
-                and not isinstance(item.get("calls"), bool)
-            )
-            if call_count != backend_calls:
-                issues.append(
-                    LLMProviderDiagnosticsIssue(
-                        "call_count_mismatch",
-                        "total call_count must equal summed backend calls",
-                    )
-                )
+        _validate_totals_match_backends(totals, backends, issues)
     return LLMProviderDiagnosticsValidation(
         ok=not issues,
         snapshot_ready=not issues,
@@ -355,7 +341,72 @@ def _validate_records_hash(
                 "records_sha256_mismatch",
                 "records_sha256 must match the backend record payload",
             )
-        )
+            )
+
+
+def _validate_totals_match_backends(
+    totals: dict[str, Any],
+    backends: list[dict[str, Any]],
+    issues: list[LLMProviderDiagnosticsIssue],
+) -> None:
+    field_pairs = {"call_count": "calls"}
+    field_pairs.update(
+        {
+            field: field
+            for field in _TOTAL_COUNT_FIELDS
+            if field != "call_count"
+        }
+    )
+    for total_field, backend_field in field_pairs.items():
+        total = totals.get(total_field)
+        if isinstance(total, bool) or not isinstance(total, int):
+            continue
+        backend_total = 0
+        comparable = True
+        for item in backends:
+            value = item.get(backend_field)
+            if isinstance(value, bool) or not isinstance(value, int):
+                comparable = False
+                break
+            backend_total += value
+        if comparable and total != backend_total:
+            issues.append(
+                LLMProviderDiagnosticsIssue(
+                    f"{total_field}_mismatch",
+                    f"totals.{total_field} must equal summed backend {backend_field}",
+                )
+            )
+
+    for field in _COUNTER_FIELDS[:4]:
+        counter = totals.get(field)
+        if not isinstance(counter, dict):
+            continue
+        backend_counter: dict[str, int] = {}
+        comparable = True
+        for item in backends:
+            value = item.get(field)
+            if not isinstance(value, dict):
+                comparable = False
+                break
+            for key, count in value.items():
+                if (
+                    not isinstance(key, str)
+                    or isinstance(count, bool)
+                    or not isinstance(count, int)
+                    or count < 0
+                ):
+                    comparable = False
+                    break
+                backend_counter[key] = backend_counter.get(key, 0) + count
+            if not comparable:
+                break
+        if comparable and dict(sorted(counter.items())) != dict(sorted(backend_counter.items())):
+            issues.append(
+                LLMProviderDiagnosticsIssue(
+                    f"{field}_mismatch",
+                    f"totals.{field} must equal summed backend {field}",
+                )
+            )
 
 
 def _validate_limitations(

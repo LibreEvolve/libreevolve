@@ -268,8 +268,11 @@ explicitly excludes LLM provider outputs, plugin internal randomness, and
 validator subprocess randomness from that restore contract. Archive
 cursor/counter snapshots can be loaded similarly
 with `--restore-archive-cursor-from-manifest path/to/manifest.json`; that path
-restores island assignment counters only, not MAP-Elites cells, elite lists, or
-controller state.
+restores only the compact island assignment counters. Full archive restore is
+available with `--restore-archive-from-manifest path/to/manifest.json`, which
+combines the manifest archive snapshot with checked accepted-history rows to
+restore MAP-Elites cells and elite lists. Ordered migration-event replay and
+controller state remain outside that restore contract.
 Dependency records redact secret-like requirement specs and names, preserve raw
 dependency identity through `name_hash`, and mark `name_redacted`; when a
 dependency name is redacted, installed-version lookup is suppressed and the

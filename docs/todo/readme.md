@@ -169,7 +169,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now says full archive cell/island contents can be
     restored from manifest snapshots plus checked accepted-history rows, while
     ordered migration-event replay remains audit-only rather than a MAP-Elites
-    restore engine.
+    restore engine. Both the early runtime-provenance section and the archive
+    section now distinguish cursor-only restore from
+    `--restore-archive-from-manifest` full archive bundle restore.
   - Required result: when ordered migration-event replay or async
     controller/pending-work resume lands, update README archive sections,
     roadmap, papers index, and code/paper TODO entries together so they do not

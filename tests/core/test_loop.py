@@ -2711,6 +2711,85 @@ def test_loop_includes_plugin_emitted_declared_objective_metric_in_selection_sco
     assert plugin_archive["programs"][0]["normalized_metric"] == 0.25
 
 
+def test_loop_includes_final_fitness_sourced_objective_metric_after_plugins():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    problem = Problem(
+        name="t",
+        task_description="final score objective",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {
+                "name": "final_quality",
+                "bounds": [0.0, 1.0],
+                "source": "final_fitness",
+            },
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1"],
+        problem_dir=d,
+    )
+
+    class PenalizeFinalFitness:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def build_extra_context(self, parent, inspirations): return ""
+        def on_evaluated(self, program, score):
+            return 0.4
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[PenalizeFinalFitness()],
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+
+    assert child["fitness"] == 0.4
+    assert child["metrics"]["final_quality"] == 0.4
+    assert child["metadata"]["score_composition"]["final_fitness"] == 0.4
+    assert child["metadata"]["normalized_metrics"] == {
+        "final_quality": 0.4,
+        "score": 1.0,
+    }
+    assert child["metadata"]["selection_score"] == pytest.approx(0.7)
+    assert child["metadata"]["archive_admission"]["objective_vector"] == {
+        "policy": "normalized_declared_metric_vector_v1",
+        "normalized_metrics": {"final_quality": 0.4, "score": 1.0},
+        "selection_policy": {
+            "type": "mean_normalized_declared_metrics",
+            "metrics": ["score", "final_quality"],
+            "primary_metric": "score",
+        },
+    }
+
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    assert manifest["problem"]["objective_schema"]["metrics"][1]["source"] == (
+        "final_fitness"
+    )
+    metric_archives = manifest["runtime"]["history"]["objective_metric_archives"]
+    final_archive = next(
+        archive
+        for archive in metric_archives["archives"]
+        if archive["metric"] == "final_quality"
+    )
+    assert final_archive["programs"][0]["program_id"] == records[0]["id"]
+    assert final_archive["programs"][1]["program_id"] == child["id"]
+    assert final_archive["programs"][1]["normalized_metric"] == 0.4
+
+
 def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     tmpdir = tempfile.mkdtemp()
     d = Path(tempfile.mkdtemp())

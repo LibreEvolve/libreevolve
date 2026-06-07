@@ -4,14 +4,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document declared final-fitness objective metrics.
+  - Status: README, problem-format, configuration, plugin, architecture, and
+    paper-index docs now describe non-primary `source: final_fitness` metrics,
+    explain that validators must not return them, and state that they are
+    synthesized from the candidate's final composed fitness after plugin score
+    hooks run.
+  - Remaining README gap: Pareto/frontier archive replacement and
+    lineage-aware resurfacing remain open.
+  - Verification: docs were updated alongside focused loader/loop tests for
+    final-fitness objective metrics.
+
 - [x] Document declared plugin-sourced objective metrics.
   - Status: README, problem-format, configuration, plugin, and architecture
     docs now describe non-primary `source: plugin` metrics, explain that
     validators must not return them, and state that plugin hooks can fill them
     as validated metric side effects that participate in declared objective
     normalization and `selection_score`.
-  - Remaining README gap: plugin-adjusted top-level fitness is still a scalar
-    composition path, not a declared objective policy.
+  - Remaining README gap: Pareto/frontier archive replacement and
+    lineage-aware resurfacing remain open.
   - Verification: docs were updated alongside focused loader/loop tests for
     plugin-sourced objective metrics.
 

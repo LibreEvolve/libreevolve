@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Allow declared final-fitness objective metrics.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
+    optimizing multiple user-provided scores; plugin-adjusted final score can
+    now be included as one declared objective dimension when configured.
+  - Status: non-primary metrics can now declare `source: final_fitness`.
+    LibreEvolve synthesizes those metrics from the candidate's final composed
+    fitness after plugin score hooks run, and includes them in normalized
+    objective vectors, selection score, archive-admission objective-vector
+    audit records, metric leaders, metric archives, and complete-vector
+    frontier views.
+  - Remaining paper gap: Pareto/frontier archive replacement plus queryable
+    lineage-aware resurfacing remain open.
+  - Verification: focused loader and loop tests cover schema validation,
+    post-plugin final-fitness objective metrics, selection-score
+    participation, objective vectors, and metric archive manifest output.
+
 - [x] Allow declared plugin-sourced objective metrics.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
     optimizing multiple user-provided scores and using varied high-performing
@@ -15,10 +31,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     the resulting values participate in normalized objective vectors,
     selection score, archive-admission objective-vector audit records, metric
     leaders, metric archives, and complete-vector frontier views.
-  - Remaining paper gap: plugin-adjusted top-level fitness still remains a
-    scalar score-composition path rather than a declared objective policy, and
-    Pareto/frontier archive replacement plus queryable lineage-aware
-    resurfacing remain open.
+  - Remaining paper gap: Pareto/frontier archive replacement plus queryable
+    lineage-aware resurfacing remain open.
   - Verification: focused loader and loop tests cover schema validation,
     plugin-filled objective metrics, selection-score participation, objective
     vectors, and metric archive manifest output.

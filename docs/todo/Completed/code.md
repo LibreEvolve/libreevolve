@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Allow declared final-fitness objective metrics.
+  - Spec evidence: AlphaEvolve-style multi-score search should allow
+    plugin-adjusted top-level fitness to be connected to declared objective
+    semantics when desired.
+  - Status: non-primary problem metrics now accept `source: final_fitness`.
+    The metric-policy annotation synthesizes those metrics from
+    `Program.fitness`, including after plugin score hooks update the final
+    composed score. The synthesized metric is persisted in `program.metrics`
+    and participates in `metadata.normalized_metrics`,
+    `metadata.selection_score`, archive-admission objective vectors, metric
+    leaders, metric archives, and complete-vector frontier views.
+  - Remaining gap: this is still scalar composition plus declared objective
+    projection, not Pareto/frontier archive replacement or queryable
+    lineage-aware resurfacing.
+  - Verification: focused loader and loop tests cover final-fitness source
+    schema acceptance/rejection, primary-metric source restrictions,
+    post-plugin synthesized metrics, selection-score participation,
+    objective-vector persistence, and metric archive manifest output.
+
 - [x] Allow declared plugin-sourced objective metrics.
   - Spec evidence: AlphaEvolve-style multi-score search should connect
     plugin-emitted metrics to declared objective semantics when desired,
@@ -15,9 +34,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     metrics then enter `metadata.normalized_metrics`, `metadata.selection_score`,
     archive-admission objective vectors, metric leaders, metric archives, and
     frontier sampling when complete declared vectors are available.
-  - Remaining gap: plugin-adjusted top-level fitness is still scalar
-    composition, not a declared objective policy, and Pareto/frontier archive
-    replacement remains open.
+  - Remaining gap: Pareto/frontier archive replacement and queryable
+    lineage-aware resurfacing remain open.
   - Verification: focused loader and loop tests cover plugin-source schema
     acceptance/rejection, primary-metric source restrictions, plugin-filled
     normalized metrics, selection-score participation, objective-vector

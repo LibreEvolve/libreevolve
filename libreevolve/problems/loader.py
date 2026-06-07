@@ -233,10 +233,10 @@ def _normalize_metric_schema(
             primary_names.append(name)
 
         source = metric.get("source", "evaluator")
-        if source not in {"evaluator", "feedback", "plugin"}:
+        if source not in {"evaluator", "feedback", "plugin", "final_fitness"}:
             raise ValueError(
                 f"metrics.yaml in {problem_dir}: metric {name!r} source must be "
-                "'evaluator', 'feedback', or 'plugin'"
+                "'evaluator', 'feedback', 'plugin', or 'final_fitness'"
             )
         if primary_value and source != "evaluator":
             raise ValueError(

@@ -799,10 +799,12 @@ or above a maximum threshold can be retried until a passing attempt is selected
 or retry budget is exhausted. `metric_thresholds` maps declared metric names to
 `min` and/or `max` finite numeric bounds. Problem metrics default to
 `source: evaluator`, meaning validators must return them. Non-primary metrics
-may use `source: feedback` or `source: plugin`; those names are omitted from
-evaluator-required metric checks. Feedback-sourced metrics can be filled by
-`llm_feedback` graders with `objective_metric: true`; plugin-sourced metrics
-can be filled by plugin hooks as validated metric side effects.
+may use `source: feedback`, `source: plugin`, or `source: final_fitness`; those
+names are omitted from evaluator-required metric checks. Feedback-sourced
+metrics can be filled by `llm_feedback` graders with `objective_metric: true`;
+plugin-sourced metrics can be filled by plugin hooks as validated metric side
+effects; final-fitness metrics are synthesized from the candidate's final
+composed fitness after plugin score hooks run.
 `metric_aggregation` maps metric
 names to `mean`, `min`, `max`, `last`, `all`, `any`, or a quantile mapping
 such as `{policy: quantile, q: 0.9}`. Numeric metrics use `mean` by default,

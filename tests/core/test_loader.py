@@ -2468,6 +2468,11 @@ def test_problem_metric_schema_supports_non_evaluator_sourced_secondary_metrics(
                     "bounds": [0.0, 10.0],
                     "source": "plugin",
                 },
+                {
+                    "name": "final_quality",
+                    "bounds": [0.0, 1.0],
+                    "source": "final_fitness",
+                },
             ],
             primary_metric="score",
             primary_bounds=(0.0, 1.0),
@@ -2479,6 +2484,7 @@ def test_problem_metric_schema_supports_non_evaluator_sourced_secondary_metrics(
         assert problem.metric("score")["source"] == "evaluator"
         assert problem.metric("review_latency_ms")["source"] == "feedback"
         assert problem.metric("plugin_quality")["source"] == "plugin"
+        assert problem.metric("final_quality")["source"] == "final_fitness"
         assert problem.objective_schema()["metrics"][1] == {
             "name": "review_latency_ms",
             "direction": "minimize",
@@ -2492,6 +2498,14 @@ def test_problem_metric_schema_supports_non_evaluator_sourced_secondary_metrics(
             "direction": "maximize",
             "bounds": [0.0, 10.0],
             "source": "plugin",
+            "weight": 1.0,
+            "primary": False,
+        }
+        assert problem.objective_schema()["metrics"][3] == {
+            "name": "final_quality",
+            "direction": "maximize",
+            "bounds": [0.0, 1.0],
+            "source": "final_fitness",
             "weight": 1.0,
             "primary": False,
         }
@@ -2509,12 +2523,16 @@ def test_problem_metric_schema_supports_non_evaluator_sourced_secondary_metrics(
             "primary metric .* source 'evaluator'",
         ),
         (
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": "final_fitness"},
+            "primary metric .* source 'evaluator'",
+        ),
+        (
             {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": "grader"},
-            "source must be 'evaluator', 'feedback', or 'plugin'",
+            "source must be 'evaluator', 'feedback', 'plugin', or 'final_fitness'",
         ),
         (
             {"name": "score", "primary": True, "bounds": [0.0, 1.0], "source": 7},
-            "source must be 'evaluator', 'feedback', or 'plugin'",
+            "source must be 'evaluator', 'feedback', 'plugin', or 'final_fitness'",
         ),
     ],
 )

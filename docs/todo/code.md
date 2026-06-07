@@ -624,18 +624,19 @@ Primary evidence:
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter
     `normalized_metrics`, metric-leader/frontier sampling, metric archive
-    views, and `selection_score`; undeclared plugin-added metrics remain
-    ordinary metrics without declared objective semantics. Backend reward,
+    views, and `selection_score`. Declared non-primary `source: final_fitness`
+    metrics are synthesized from the candidate's final composed fitness after
+    plugin score hooks run, so plugin-adjusted top-level fitness can be included
+    in the declared objective vector when desired; undeclared plugin-added
+    metrics remain ordinary metrics without declared objective semantics. Backend reward,
     admission thresholds, and some parent/inspiration paths still use scalar
     final fitness, and Pareto/frontier behavior is still a sampling surface
-    rather than an archive replacement policy. There is still no declared
-    plugin-adjusted-fitness objective policy or metric-specific MAP-Elites
-    replacement policy.
+    rather than an archive replacement policy. There is still no metric-specific
+    MAP-Elites replacement policy.
   - Required result: represent full metric vectors, choose target metrics,
-    support Pareto/frontier archive replacement, connect
-    plugin-adjusted top-level fitness to declared objective semantics when
-    desired, and make metric-targeted sampling/archive behavior part of that
-    policy instead of a standalone heuristic.
+    support Pareto/frontier archive replacement, and make metric-targeted
+    sampling/archive behavior part of that policy instead of a standalone
+    heuristic.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

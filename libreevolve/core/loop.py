@@ -5008,9 +5008,20 @@ def _annotate_metric_policy(program: Program, problem: Problem) -> None:
     weights: dict[str, float] = {}
     for metric in problem.metrics:
         name = metric.get("name")
-        if not isinstance(name, str) or name not in program.metrics:
+        if not isinstance(name, str):
             continue
-        value = program.metrics[name]
+        if metric.get("source") == "final_fitness":
+            value = program.fitness
+            if not (
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(float(value))
+            ):
+                program.metrics[name] = float(value)
+        elif name in program.metrics:
+            value = program.metrics[name]
+        else:
+            continue
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             continue
         numeric = float(value)

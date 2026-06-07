@@ -116,7 +116,9 @@ Important details:
   hooks run before the final metric-policy annotation, so a valid plugin-added
   metric can affect archive ranking when the problem declares that non-primary
   metric with `source: plugin`; undeclared plugin metrics remain ordinary
-  persisted metrics without declared objective semantics.
+  persisted metrics without declared objective semantics. A non-primary metric
+  declared with `source: final_fitness` can also include the plugin-adjusted
+  final score in the declared objective vector.
 - plugin score adjustments are recorded under `metadata.score_composition`,
   including per-plugin before/after scores, metric additions/changes, invalid
   score rejections, and whether final top-level fitness diverges from

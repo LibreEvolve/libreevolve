@@ -482,8 +482,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     packing decisions for omitted optional sections. Direct `PromptSampler`
     callers can now provide a manifest-safe provider token counter so the
     packer uses exact counts under `max_prompt_estimated_tokens` and records
-    provider-token totals/counter provenance, but built-in provider tokenizer
-    discovery and selected-backend tokenizer wiring are still absent from the
+    provider-token totals/counter provenance.
+    `validate_prompt_section_budget_report()` now validates persisted
+    `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
+    section counts, required/optional totals, section hash shape, packing
+    decisions, cap-fit claims, and provider-counter boundary fields, but
+    built-in provider tokenizer discovery and selected-backend tokenizer wiring
+    are still absent from the
     normal evolution path. Backend specs and backend metadata can now carry
     `context_window_tokens` plus optional `reserved_output_tokens`; the
     ensemble subtracts the reserve, applies the derived heuristic prompt-token
@@ -491,7 +496,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     derived capacity in call telemetry.
   - Required result: add configurable/full validator-metadata prompt policy
     and automatic selected-backend provider-token section-priority packing
-    across evaluator, feedback, artifact, and context prompt sections.
+    across evaluator, feedback, artifact, and context prompt sections. The
+    remaining paper gap is not persisted section-budget validation.
 
 - [ ] Model migration replay and controller state for one-command archive
   resume.

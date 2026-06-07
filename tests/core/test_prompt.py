@@ -11,8 +11,10 @@ from libreevolve.core.prompt import (
     PromptSampler,
     PromptTemplateError,
     PROMPT_CONTEXT_POLICY_SCHEMA,
+    PROMPT_SECTION_BUDGET_SCHEMA,
     validate_configured_prompt_template_semantics,
     validate_prompt_context_policy,
+    validate_prompt_section_budget_report,
     validate_prompt_template,
 )
 from libreevolve.population.program import Program
@@ -6914,6 +6916,44 @@ def test_prompt_sampler_packs_to_estimated_token_budget_before_final_cap():
     assert budget["packing_status"] == "packed_optional_sections"
 
 
+def test_prompt_section_budget_report_validates_heuristic_packing_metadata():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+        context_files={"long.md": "A" * 1000},
+    )
+    parent = Program(code="x=1", fitness=0.0)
+    sampler = PromptSampler(max_prompt_chars=260)
+    template = "Task: {task}\nContext:\n{context}\nExtra:\n{extra_context}\n"
+
+    sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="B" * 800,
+        template=template,
+    )
+
+    validation = validate_prompt_section_budget_report(
+        sampler.last_metadata["section_budget"]
+    )
+
+    assert validation["schema"] == PROMPT_SECTION_BUDGET_SCHEMA
+    assert validation["ok"] is True
+    assert validation["section_budget_ready"] is True
+    assert validation["provider_token_counter_ready"] is False
+    assert validation["section_count"] == len(
+        sampler.last_metadata["section_budget"]["sections"]
+    )
+    assert validation["issues"] == []
+
+
 def test_prompt_sampler_packs_with_provider_token_counter():
     problem = Problem(
         name="demo",
@@ -6970,6 +7010,83 @@ def test_prompt_sampler_packs_with_provider_token_counter():
     sections = {item["name"]: item for item in budget["sections"]}
     assert sections["context"]["provider_tokens"] > 0
     assert sections["extra_context"]["provider_tokens"] > 0
+
+
+def test_prompt_section_budget_report_validates_provider_token_counter_metadata():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+        context_files={"long.md": " ".join(f"ctx{i}" for i in range(40))},
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    def provider_counter(text: str) -> int:
+        return len(text.split())
+
+    sampler = PromptSampler(
+        max_prompt_estimated_tokens=30,
+        prompt_token_counter=provider_counter,
+        prompt_token_counter_name="fixture-wordpiece",
+    )
+    template = "Task: {task}\nContext:\n{context}\nExtra:\n{extra_context}\n"
+
+    sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context=" ".join(f"extra{i}" for i in range(40)),
+        template=template,
+    )
+
+    validation = validate_prompt_section_budget_report(
+        sampler.last_metadata["section_budget"]
+    )
+
+    assert validation["ok"] is True
+    assert validation["provider_token_counter_ready"] is True
+    assert validation["issues"] == []
+
+
+def test_prompt_section_budget_report_rejects_malformed_records():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+    sampler = PromptSampler(max_prompt_chars=10_000)
+    sampler.build(parent, [], problem, extra_context="")
+    budget = dict(sampler.last_metadata["section_budget"])
+    sections = [dict(section) for section in budget["sections"]]
+    sections[0]["sha256"] = "bad"
+    sections[0]["required"] = not sections[0]["required"]
+    budget["sections"] = sections
+    budget["section_count"] = 999
+    budget["required_section_chars"] = 999
+    budget["packing"] = dict(budget["packing"])
+    budget["packing"]["policy"] = "changed"
+
+    validation = validate_prompt_section_budget_report(budget)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["ok"] is False
+    assert validation["section_budget_ready"] is False
+    assert "invalid_section_sha256" in codes
+    assert "section_required_mismatch" in codes
+    assert "section_count_mismatch" in codes
+    assert "required_section_chars_mismatch" in codes
+    assert "packing_policy_mismatch" in codes
 
 
 def test_prompt_sampler_rejects_invalid_provider_token_counter_result():

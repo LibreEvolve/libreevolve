@@ -44,7 +44,11 @@ Primary evidence:
     `provider_tokens_*` totals, and per-decision exact token counts while the
     default path remains heuristic. Generated program history,
     failed-generation records, manifests, scheduler state, and LLM call history
-    persist these diagnostics. LLM call telemetry and runtime accounting
+    persist these diagnostics.
+    `validate_prompt_section_budget_report()` now validates persisted
+    `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
+    section counts, required/optional totals, section hash shape, packing
+    decisions, cap-fit claims, and provider-counter boundary fields. LLM call telemetry and runtime accounting
     aggregate provider-reported token counts when adapters expose them, and
     `runtime.llm_budget_report` validates observed logical-call, retry,
     adapter-attempt, token, cost, wall-clock, and resume-state shapes while
@@ -78,7 +82,9 @@ Primary evidence:
     plugin context, evaluator feedback, and failure memory, persist complete
     budget/resume state for token/provider-cost limits, and add tests for
     provider-specific oversized workspaces/context/plugins/inspirations/failure
-    memory under configured backend/model context-window budgets.
+    memory under configured backend/model context-window budgets. The remaining
+    gap is automatic selected-backend tokenizer discovery/wiring and complete
+    provider-cost restoration, not validating persisted section-budget records.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

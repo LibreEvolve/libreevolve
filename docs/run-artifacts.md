@@ -2511,6 +2511,10 @@ priorities, hashes, character counts, estimated tokens, required/optional
 totals, template overhead, a `required_sections_fit` flag, and
 `packing.decisions` for omitted optional sections. Its policy is
 `deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap`;
+`validate_prompt_section_budget_report()` checks persisted section-budget
+records for schema/policy shape, section counts, required/optional totals,
+section hash shape, packing decisions, cap-fit claims, and provider-counter
+boundary fields.
 without a provider token counter it remains character-budget packing with
 heuristic token estimates. Direct callers can pass a manifest-safe
 `prompt_token_counter` to `PromptSampler`; in that mode section packing uses

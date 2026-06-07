@@ -15105,3 +15105,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused DeepResearch tests cover verified event and cache
     snapshot ranking provenance plus bad hashes, malformed source lists, and
     invalid event records.
+
+- [x] Add prompt section-budget report validation.
+  - Spec evidence: AlphaEvolve-style long-context prompt construction needs
+    deterministic packing evidence that can be audited after a run, especially
+    when optional context is omitted before backend calls.
+  - Status: `validate_prompt_section_budget_report()` now validates persisted
+    `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
+    section counts, required/optional totals, section hash shape, packing
+    decisions, cap-fit claims, and provider-counter boundary fields.
+  - Remaining gap: this validates existing prompt packing records; automatic
+    selected-backend tokenizer discovery/wiring, provider-specific exact
+    pre-call fitting in the normal evolution path, and complete provider-cost
+    restoration remain open.
+  - Verification: focused prompt tests cover valid heuristic section packing,
+    valid provider-counter packing, and malformed persisted section-budget
+    records.

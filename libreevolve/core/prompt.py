@@ -92,6 +92,10 @@ _VALIDATOR_METADATA_SPECIAL_KEYS = frozenset(
 )
 PROMPT_ARTIFACT_CONTENT_MODES = {"excerpt", "bounded_file", "off"}
 PROMPT_CONTEXT_POLICY_SCHEMA = "libreevolve.prompt_context_policy.v1"
+PROMPT_SECTION_BUDGET_SCHEMA = "libreevolve.prompt_section_budget.v1"
+PROMPT_SECTION_BUDGET_POLICY = (
+    "deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap"
+)
 _MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS = 20
 _MAX_PLUGIN_CONTEXT_ALLOWLIST_LABEL_CHARS = 200
 PROMPT_CONTEXT_POLICY_DISABLED_SECTIONS = frozenset(
@@ -5679,10 +5683,10 @@ def _prompt_section_budget_report(
     required_with_overhead = required_chars + template_overhead_chars
     packing = dict(packing_metadata or {})
     report = {
-        "schema": "libreevolve.prompt_section_budget.v1",
+        "schema": PROMPT_SECTION_BUDGET_SCHEMA,
         "policy": packing.get(
             "policy",
-            "deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap",
+            PROMPT_SECTION_BUDGET_POLICY,
         ),
         "section_priority_source": (
             "prompt_context_policy"
@@ -5734,6 +5738,481 @@ def _prompt_section_budget_report(
     else:
         report["token_count_policy"] = "heuristic_chars_per_token"
     return report
+
+
+def validate_prompt_section_budget_report(report: object) -> dict:
+    """Validate persisted prompt-section packing evidence."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": PROMPT_SECTION_BUDGET_SCHEMA,
+            "ok": False,
+            "section_budget_ready": False,
+            "provider_token_counter_ready": False,
+            "section_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "prompt section budget report must be an object",
+                }
+            ],
+        }
+    if report.get("schema") != PROMPT_SECTION_BUDGET_SCHEMA:
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported prompt section budget schema",
+            }
+        )
+    if report.get("policy") != PROMPT_SECTION_BUDGET_POLICY:
+        issues.append(
+            {
+                "code": "invalid_policy",
+                "message": "unsupported prompt section budget policy",
+            }
+        )
+    sections = _validate_prompt_section_budget_sections(report, issues)
+    _validate_prompt_section_budget_totals(report, sections, issues)
+    _validate_prompt_section_budget_caps(report, issues)
+    _validate_prompt_section_budget_packing(report, sections, issues)
+    provider_ready = _validate_prompt_section_provider_counter(report, sections, issues)
+    return {
+        "schema": PROMPT_SECTION_BUDGET_SCHEMA,
+        "ok": not issues,
+        "section_budget_ready": not issues,
+        "provider_token_counter_ready": provider_ready and not issues,
+        "section_count": len(sections),
+        "issues": issues,
+    }
+
+
+def _validate_prompt_section_budget_sections(
+    report: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> list[Mapping[str, object]]:
+    sections = report.get("sections")
+    if not isinstance(sections, list):
+        issues.append(
+            {
+                "code": "invalid_sections",
+                "message": "sections must be a list",
+            }
+        )
+        return []
+    normalized: list[Mapping[str, object]] = []
+    seen: set[str] = set()
+    for index, section in enumerate(sections):
+        if not isinstance(section, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_section",
+                    "message": f"sections[{index}] must be an object",
+                }
+            )
+            continue
+        normalized.append(section)
+        name = section.get("name")
+        if not isinstance(name, str) or name not in PROMPT_TEMPLATE_FIELDS:
+            issues.append(
+                {
+                    "code": "invalid_section_name",
+                    "message": f"sections[{index}].name is unsupported",
+                }
+            )
+        elif name in seen:
+            issues.append(
+                {
+                    "code": "duplicate_section_name",
+                    "message": f"section {name!r} appears more than once",
+                }
+            )
+        else:
+            seen.add(name)
+        required = section.get("required")
+        if not isinstance(required, bool):
+            issues.append(
+                {
+                    "code": "invalid_section_required",
+                    "message": f"sections[{index}].required must be boolean",
+                }
+            )
+        elif isinstance(name, str) and name in PROMPT_TEMPLATE_FIELDS:
+            expected_required = name in ALPHAEVOLVE_REQUIRED_PROMPT_CHANNELS
+            if required is not expected_required:
+                issues.append(
+                    {
+                        "code": "section_required_mismatch",
+                        "message": f"sections[{index}].required does not match channel policy",
+                    }
+                )
+        for field in (
+            "priority",
+            "occurrences",
+            "chars",
+            "estimated_tokens",
+            "rendered_estimate_chars",
+        ):
+            if not _is_nonnegative_int(section.get(field)):
+                issues.append(
+                    {
+                        "code": f"invalid_section_{field}",
+                        "message": f"sections[{index}].{field} must be a non-negative integer",
+                    }
+                )
+        chars = section.get("chars")
+        occurrences = section.get("occurrences")
+        rendered_estimate = section.get("rendered_estimate_chars")
+        if (
+            _is_nonnegative_int(chars)
+            and _is_nonnegative_int(occurrences)
+            and _is_nonnegative_int(rendered_estimate)
+            and rendered_estimate != chars * occurrences
+        ):
+            issues.append(
+                {
+                    "code": "section_rendered_estimate_mismatch",
+                    "message": f"sections[{index}].rendered_estimate_chars must equal chars * occurrences",
+                }
+            )
+        if not _is_hex_64(section.get("sha256")):
+            issues.append(
+                {
+                    "code": "invalid_section_sha256",
+                    "message": f"sections[{index}].sha256 must be a SHA-256 hex digest",
+                }
+            )
+        if "provider_tokens" in section and not _is_nonnegative_int(
+            section.get("provider_tokens")
+        ):
+            issues.append(
+                {
+                    "code": "invalid_section_provider_tokens",
+                    "message": f"sections[{index}].provider_tokens must be a non-negative integer",
+                }
+            )
+    section_count = report.get("section_count")
+    if not _is_nonnegative_int(section_count) or section_count != len(normalized):
+        issues.append(
+            {
+                "code": "section_count_mismatch",
+                "message": "section_count must match sections length",
+            }
+        )
+    return normalized
+
+
+def _validate_prompt_section_budget_totals(
+    report: Mapping[str, object],
+    sections: list[Mapping[str, object]],
+    issues: list[dict[str, str]],
+) -> None:
+    for field in (
+        "rendered_chars_before_cap",
+        "estimated_tokens_before_cap",
+        "template_overhead_chars",
+        "required_section_chars",
+        "optional_section_chars",
+    ):
+        if not _is_nonnegative_int(report.get(field)):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    required_chars = sum(
+        int(section.get("rendered_estimate_chars", 0))
+        for section in sections
+        if section.get("required") is True
+        and _is_nonnegative_int(section.get("rendered_estimate_chars"))
+    )
+    optional_chars = sum(
+        int(section.get("rendered_estimate_chars", 0))
+        for section in sections
+        if section.get("required") is False
+        and _is_nonnegative_int(section.get("rendered_estimate_chars"))
+    )
+    if report.get("required_section_chars") != required_chars:
+        issues.append(
+            {
+                "code": "required_section_chars_mismatch",
+                "message": "required_section_chars must equal summed required sections",
+            }
+        )
+    if report.get("optional_section_chars") != optional_chars:
+        issues.append(
+            {
+                "code": "optional_section_chars_mismatch",
+                "message": "optional_section_chars must equal summed optional sections",
+            }
+        )
+    rendered = report.get("rendered_chars_before_cap")
+    overhead = report.get("template_overhead_chars")
+    if _is_nonnegative_int(rendered) and _is_nonnegative_int(overhead):
+        if rendered < required_chars + optional_chars:
+            issues.append(
+                {
+                    "code": "rendered_chars_below_section_total",
+                    "message": "rendered_chars_before_cap must cover rendered sections",
+                }
+            )
+        if overhead != rendered - required_chars - optional_chars:
+            issues.append(
+                {
+                    "code": "template_overhead_chars_mismatch",
+                    "message": "template_overhead_chars must match rendered chars minus section totals",
+                }
+            )
+
+
+def _validate_prompt_section_budget_caps(
+    report: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> None:
+    max_chars = report.get("max_chars")
+    if max_chars is not None and not _is_nonnegative_int(max_chars):
+        issues.append(
+            {"code": "invalid_max_chars", "message": "max_chars must be null or non-negative"}
+        )
+    configured_max_chars = report.get("configured_max_chars")
+    if configured_max_chars is not None and not _is_nonnegative_int(configured_max_chars):
+        issues.append(
+            {
+                "code": "invalid_configured_max_chars",
+                "message": "configured_max_chars must be null or non-negative",
+            }
+        )
+    max_estimated_tokens = report.get("max_estimated_tokens")
+    if max_estimated_tokens is not None and not _is_nonnegative_int(max_estimated_tokens):
+        issues.append(
+            {
+                "code": "invalid_max_estimated_tokens",
+                "message": "max_estimated_tokens must be null or non-negative",
+            }
+        )
+    required_fit = report.get("required_sections_fit")
+    if not isinstance(required_fit, bool):
+        issues.append(
+            {
+                "code": "invalid_required_sections_fit",
+                "message": "required_sections_fit must be boolean",
+            }
+        )
+    elif _is_nonnegative_int(max_chars):
+        required_chars = report.get("required_section_chars")
+        overhead_chars = report.get("template_overhead_chars")
+        if not _is_nonnegative_int(required_chars) or not _is_nonnegative_int(
+            overhead_chars
+        ):
+            return
+        required_with_overhead = int(required_chars) + int(overhead_chars)
+        if required_fit != (required_with_overhead <= int(max_chars)):
+            issues.append(
+                {
+                    "code": "required_sections_fit_mismatch",
+                    "message": "required_sections_fit must match required sections plus template overhead",
+                }
+            )
+
+
+def _validate_prompt_section_budget_packing(
+    report: Mapping[str, object],
+    sections: list[Mapping[str, object]],
+    issues: list[dict[str, str]],
+) -> None:
+    packing = report.get("packing")
+    if not isinstance(packing, Mapping):
+        issues.append(
+            {"code": "invalid_packing", "message": "packing must be an object"}
+        )
+        return
+    if packing.get("policy") != report.get("policy"):
+        issues.append(
+            {
+                "code": "packing_policy_mismatch",
+                "message": "packing.policy must match report policy",
+            }
+        )
+    if packing.get("packing_status") != report.get("packing_status"):
+        issues.append(
+            {
+                "code": "packing_status_mismatch",
+                "message": "packing.packing_status must match report packing_status",
+            }
+        )
+    if not isinstance(packing.get("packed"), bool):
+        issues.append(
+            {"code": "invalid_packing_packed", "message": "packing.packed must be boolean"}
+        )
+    decisions = packing.get("decisions")
+    if not isinstance(decisions, list):
+        issues.append(
+            {
+                "code": "invalid_packing_decisions",
+                "message": "packing.decisions must be a list",
+            }
+        )
+        return
+    section_names = {
+        section.get("name")
+        for section in sections
+        if isinstance(section.get("name"), str)
+    }
+    for index, decision in enumerate(decisions):
+        if not isinstance(decision, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_packing_decision",
+                    "message": f"packing.decisions[{index}] must be an object",
+                }
+            )
+            continue
+        name = decision.get("name")
+        if name not in section_names:
+            issues.append(
+                {
+                    "code": "packing_decision_unknown_section",
+                    "message": f"packing.decisions[{index}].name must match a section",
+                }
+            )
+        if name in ALPHAEVOLVE_REQUIRED_PROMPT_CHANNELS:
+            issues.append(
+                {
+                    "code": "packing_decision_omits_required_section",
+                    "message": f"packing.decisions[{index}] must not omit a required channel",
+                }
+            )
+        if decision.get("action") != "omit_optional_section":
+            issues.append(
+                {
+                    "code": "invalid_packing_decision_action",
+                    "message": f"packing.decisions[{index}].action is unsupported",
+                }
+            )
+        for field in (
+            "priority",
+            "original_chars",
+            "rendered_chars_after",
+            "estimated_tokens_after",
+            "replacement_chars",
+        ):
+            if not _is_nonnegative_int(decision.get(field)):
+                issues.append(
+                    {
+                        "code": f"invalid_packing_decision_{field}",
+                        "message": f"packing.decisions[{index}].{field} must be a non-negative integer",
+                    }
+                )
+        for field in ("original_sha256", "replacement_sha256"):
+            if not _is_hex_64(decision.get(field)):
+                issues.append(
+                    {
+                        "code": f"invalid_packing_decision_{field}",
+                        "message": f"packing.decisions[{index}].{field} must be a SHA-256 hex digest",
+                    }
+                )
+        if "provider_tokens_after" in decision and not _is_nonnegative_int(
+            decision.get("provider_tokens_after")
+        ):
+            issues.append(
+                {
+                    "code": "invalid_packing_decision_provider_tokens_after",
+                    "message": f"packing.decisions[{index}].provider_tokens_after must be a non-negative integer",
+                }
+            )
+
+
+def _validate_prompt_section_provider_counter(
+    report: Mapping[str, object],
+    sections: list[Mapping[str, object]],
+    issues: list[dict[str, str]],
+) -> bool:
+    policy = report.get("token_count_policy")
+    if policy == "heuristic_chars_per_token":
+        return False
+    if policy != "provider_token_counter":
+        issues.append(
+            {
+                "code": "invalid_token_count_policy",
+                "message": "token_count_policy must be heuristic_chars_per_token or provider_token_counter",
+            }
+        )
+        return False
+    counter = report.get("provider_token_counter")
+    if not isinstance(counter, str) or not counter.strip() or redact_sensitive_text(counter) != counter:
+        issues.append(
+            {
+                "code": "invalid_provider_token_counter",
+                "message": "provider_token_counter must be non-empty safe text",
+            }
+        )
+    for field in ("provider_tokens_before_cap",):
+        if not _is_nonnegative_int(report.get(field)):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    token_limit = report.get("provider_tokens_limit")
+    if token_limit is not None and not _is_nonnegative_int(token_limit):
+        issues.append(
+            {
+                "code": "invalid_provider_tokens_limit",
+                "message": "provider_tokens_limit must be null or non-negative",
+            }
+        )
+    token_fit = report.get("provider_tokens_fit")
+    if not isinstance(token_fit, bool):
+        issues.append(
+            {
+                "code": "invalid_provider_tokens_fit",
+                "message": "provider_tokens_fit must be boolean",
+            }
+        )
+    elif _is_nonnegative_int(token_limit) and _is_nonnegative_int(
+        report.get("provider_tokens_before_cap")
+    ):
+        expected = int(report["provider_tokens_before_cap"]) <= int(token_limit)
+        if token_fit != expected:
+            issues.append(
+                {
+                    "code": "provider_tokens_fit_mismatch",
+                    "message": "provider_tokens_fit must match provider token count and limit",
+                }
+            )
+    if any("provider_tokens" not in section for section in sections):
+        issues.append(
+            {
+                "code": "missing_section_provider_tokens",
+                "message": "provider token reports must include per-section token counts",
+            }
+        )
+    packing = report.get("packing")
+    if isinstance(packing, Mapping):
+        if packing.get("token_count_policy") != "provider_token_counter":
+            issues.append(
+                {
+                    "code": "packing_token_count_policy_mismatch",
+                    "message": "provider token reports require packing token_count_policy",
+                }
+            )
+        if packing.get("provider_token_counter") != counter:
+            issues.append(
+                {
+                    "code": "packing_provider_token_counter_mismatch",
+                    "message": "packing provider_token_counter must match report",
+                }
+            )
+    return True
+
+
+def _is_nonnegative_int(value: object) -> bool:
+    return not isinstance(value, bool) and isinstance(value, int) and value >= 0
+
+
+def _is_hex_64(value: object) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
 
 
 def prompt_template_field_occurrences(template: str) -> dict[str, int]:

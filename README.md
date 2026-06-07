@@ -717,7 +717,10 @@ the same deterministic section packer. Mutation prompt diagnostics now also
 include `section_budget`, a hash/count-only per-placeholder report with section
 priorities, estimated token counts, required/optional section totals, template
 overhead, and whether required sections fit the effective cap before final
-truncation. When the uncapped prompt is too large, `PromptSampler`
+truncation. `validate_prompt_section_budget_report()` validates persisted
+`libreevolve.prompt_section_budget.v1` records for schema/policy shape,
+section counts, required/optional totals, section hash shape, packing
+decisions, cap-fit claims, and provider-counter boundary fields. When the uncapped prompt is too large, `PromptSampler`
 deterministically omits oversized optional string sections by priority before
 applying the final cap, leaving required channels intact and recording the
 packing decisions. The same configured character/estimated-token prompt caps

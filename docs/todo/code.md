@@ -1303,6 +1303,12 @@ Primary evidence:
     certification linkage that cannot contradict readiness claims; and an
     `alphaevolve_ready` gate that fails unless held-out and correctness gates
     are passed or explicitly documented as not applicable.
+    The readiness contract is still domain-agnostic: a report can mark
+    `reference_correctness` or `heldout` as `not_applicable` with a rationale,
+    and the validator does not yet require randomized reference-code checks for
+    kernel/compiler-style domains, unseen workload gates for scheduling, or
+    hardware/deployment/expert confirmation gates for domains where the
+    AlphaEvolve paper required those evidence types.
     `libreevolve.systems_result_artifact_inventory.v1` now verifies declared
     systems report artifacts against concrete files under an explicit artifact
     root, checking safe relative paths, existence, SHA-256 hashes, and byte
@@ -1316,11 +1322,13 @@ Primary evidence:
   - Required result: connect real compiler, hardware, kernel, scheduling, or
     systems benchmark fixtures to the report contract and implement the actual
     held-out/generalization case sets, randomized/reference-correctness checks,
-    and deployment or certification evidence. The remaining gap is generating
-    real gate artifacts from those fixtures, not verifying declared artifact
-    files once a systems report names them or checking certification
-    report/inventory consistency, systems report/inventory consistency, or
-    systems evidence bundle consistency once those records exist.
+    domain-specific not-applicable rules, and deployment or certification
+    evidence. The remaining gap is generating real gate artifacts from those
+    fixtures and enforcing domain-specific evidence requirements, not verifying
+    declared artifact files once a systems report names them or checking
+    certification report/inventory consistency, systems report/inventory
+    consistency, or systems evidence bundle consistency once those records
+    exist.
 
 ## LLM Ensemble
 

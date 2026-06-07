@@ -192,12 +192,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     availability, not unseen workloads, reference-code checks, deployment
     evidence, or independent certification. Matching paper/code TODOs still
     require real verifier scripts, reviewer/deployment provenance, systems
-    fixtures, held-out case sets, and randomized/reference-correctness checks.
+    fixtures, held-out case sets, randomized/reference-correctness checks, and
+    domain-specific rules for when a held-out or reference-correctness gate may
+    be marked `not_applicable`.
   - Required result: when benchmark runs emit real certification reports,
     deployment/reviewer evidence, held-out systems reports, or reference-code
-    checks, update README, ROADMAP, papers index, and code/paper TODO entries
-    together so README neither underclaims the current report and inventory
-    contracts nor overclaims AlphaEvolve-style confirmed result evidence.
+    checks, and when systems reports enforce domain-specific readiness gates,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README neither underclaims the current report and inventory contracts
+    nor overclaims AlphaEvolve-style confirmed result evidence.
 
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.

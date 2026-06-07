@@ -839,6 +839,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and code/paper TODO entries together so they neither underclaim smoke
     hardening evidence nor overclaim AlphaEvolve-comparable benchmarks.
 
+- [ ] Keep systems-result roadmap wording scoped to domain-agnostic report
+      validation versus domain-specific readiness gates.
+  - Spec evidence: AlphaEvolve Section 3.3 used different external evidence by
+    domain: unseen workloads and deployment measurements for scheduling,
+    held-out kernel-shape evaluation, randomized reference-code checks for
+    FlashAttention IR edits, and expert confirmation for final changes.
+  - Current evidence: `libreevolve.systems_result_report.v1` validates
+    optimization, held-out, and reference-correctness gates plus artifact
+    references, and can reject readiness when required passed-gate artifacts are
+    missing. Its readiness rule still accepts documented `not_applicable`
+    held-out or reference-correctness gates without domain-specific policy, so
+    the report contract does not yet enforce when kernel/compiler/hardware/
+    scheduling claims must include reference-code, held-out, deployment, or
+    expert-confirmation evidence.
+  - Required result: when systems fixtures or report validators add
+    domain-specific readiness policies for `not_applicable` gates and required
+    evidence types, update the roadmap, README, papers index, and code/paper
+    TODO entries together so roadmap wording neither underclaims current report
+    validation nor overclaims AlphaEvolve-style systems evidence.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

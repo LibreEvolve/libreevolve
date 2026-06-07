@@ -967,18 +967,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current ablation report contract nor overclaims repeatable
     AlphaEvolve-grade benchmark execution.
 
-- [ ] Keep critique-reviewer roadmap wording scoped to synchronous reviewer
-  pools versus AlphaEvolve-grade reviewer orchestration.
+- [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
+      valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated
-    signal, explicit budget policy, and robust provider isolation beyond a
-    sequential mutation-replacement filter.
-  - Current evidence: `critique_reviewers` configures bounded synchronous
-    reviewer pools with manifest-safe roles, first/last-valid aggregation,
-    retained reviewer-pool metadata, selected-reviewer provenance, and existing
-    role routing/budget telemetry for reviewer roles such as
-    `critique:correctness`.
+    reviewer signals, explicit budget/reliability evidence, async or parallel
+    reviewer overlap where useful, and provider isolation strong enough to
+    audit reviewer effects separately from ordinary mutation generation.
+  - Current evidence: `ROADMAP.md` asks to extend synchronous configurable
+    critique reviewer pools, role routing, and first/last-valid aggregation
+    toward async overlap, calibrated scoring, stronger provider isolation, and
+    reviewer-specific runtime artifacts. README and code TODO evidence show
+    current `critique_reviewers` accepts manifest-safe reviewer specs with
+    optional prompts and role labels such as `critique:correctness`; existing
+    role backend routing, role budgets, and reward-accounting telemetry can
+    apply to those roles; the loop runs a bounded synchronous reviewer pool;
+    `critique_aggregation_policy` selects `first_valid` or `last_valid`
+    revised mutations; and retained `metadata.critique.reviewer_pool` records
+    reviewer status, parser diagnostics, backend indices, selected reviewer,
+    and selection provenance. Reviewer calls are still sequential,
+    replacement-only, and chosen by first/last valid mutation rather than
+    calibrated reviewer score or benchmarked reviewer reliability.
   - Required result: when async reviewer overlap, calibrated reviewer scoring,
-    per-reviewer provider isolation, or richer reviewer-specific failure
-    artifacts land, update the roadmap, README, papers index, and code/paper
-    TODO entries together so they neither underclaim current synchronous
-    reviewer pools nor overclaim AlphaEvolve-grade critique orchestration.
+    reviewer-pool ablation reports, stronger per-reviewer provider isolation,
+    or richer reviewer-specific timeout/failure artifacts land, update the
+    roadmap, README, papers index, and code/paper TODO entries together so
+    roadmap wording neither underclaims current synchronous reviewer-pool
+    metadata nor overclaims AlphaEvolve-grade critique orchestration.

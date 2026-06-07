@@ -36,6 +36,7 @@ from libreevolve.core.candidate import (
 )
 from libreevolve.core.database import (
     ProgramDatabase,
+    archive_event_replay_audit,
     load_archive_restore_bundle,
     validate_seed_source_record,
 )
@@ -3643,6 +3644,7 @@ def _bounded_redacted_text(text: str, max_chars: int) -> str:
 def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudget) -> dict:
     history_exists = (run_dir / "history.jsonl").exists()
     programs_logged = len(db.all_programs())
+    archive_state = db.archive_state_snapshot()
     summary = {
         "programs_logged": programs_logged,
         "history_partially_written": history_exists,
@@ -3654,7 +3656,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "lineage_index": db.lineage_index_snapshot(),
         "descriptor_index": db.descriptor_index_snapshot(),
         "feedback_index": db.feedback_index_snapshot(),
-        "archive_state": db.archive_state_snapshot(),
+        "archive_state": archive_state,
+        "archive_event_replay_audit": archive_event_replay_audit(
+            run_dir / "archive_events.jsonl",
+            archive_state,
+        ),
     }
     if summary["no_candidates_evaluated"]:
         absence_reason = _no_candidate_absence_reason(budget)

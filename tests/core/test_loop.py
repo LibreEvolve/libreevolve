@@ -1112,6 +1112,12 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert archive_state["islands"][0]["occupied_cell_count"] == 1
     assert archive_state["islands"][1]["occupied_cell_count"] == 0
     assert archive_state["islands"][2]["occupied_cell_count"] == 0
+    replay_audit = manifest["runtime"]["history"]["archive_event_replay_audit"]
+    assert replay_audit["schema"] == "libreevolve.archive_event_replay_audit.v1"
+    assert replay_audit["status"] == "archive_events_absent"
+    assert replay_audit["audit_only"] is True
+    assert replay_audit["replay_engine_supported"] is False
+    assert replay_audit["event_count"] == 0
 
 
 def test_completed_runtime_persists_llm_scheduler_state_snapshot():

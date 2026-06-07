@@ -10326,3 +10326,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still distinguish this from hard SDK
     cancellation and timeout-specific stop policies.
   - Verification: focused loop tests cover the manifest policy evidence.
+
+- [x] Document archive-event replay audit.
+  - Evidence: README, architecture, run-artifact, and todo docs needed to
+    distinguish the new audit-only migration replay evidence from full archive
+    restore behavior.
+  - Status: docs now describe
+    `runtime.history.archive_event_replay_audit`, its comparison against
+    `archive_contents`, and its audit-only limitation.
+  - Remaining documentation gap: docs still correctly leave full migration
+    event restore and controller/pending-work replay open.
+  - Verification: focused database and loop tests cover the manifest field.

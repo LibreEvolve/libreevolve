@@ -14387,3 +14387,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     async controller work.
   - Verification: focused loop tests cover valid default cancellation-policy
     records and configured timeout-quarantine rules.
+
+- [x] Add archive-event replay reconciliation evidence.
+  - Spec evidence: AlphaEvolve-style resumed searches need migration placement
+    rows to be auditable against current island/archive state rather than only
+    validated as standalone JSONL.
+  - Status: `archive_event_replay_audit()` validates `archive_events.jsonl`,
+    replays final admitted migration placements per target island/cell, and
+    compares that partial event-derived view with
+    `runtime.history.archive_state.archive_contents`. Final manifests persist
+    the result under `runtime.history.archive_event_replay_audit`.
+  - Remaining gap: this is audit-only reconciliation, not a full migration
+    event restore engine or controller/pending-work replay surface.
+  - Verification: focused database tests cover verified, superseded/missing,
+    absent-stream, and invalid admitted-without-cell cases; loop tests cover
+    manifest persistence.

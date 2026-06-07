@@ -86,6 +86,7 @@ _MAX_CONTEXT_PROVENANCE_DEPTH = 30
 _MAX_CONTEXT_PROVENANCE_JSON_CHARS = 200_000
 _MAX_SEED_SOURCE_STRING_CHARS = 1024
 _MAX_ARCHIVE_EVENT_REASON_CHARS = 128
+_MAX_ARCHIVE_REPLAY_MISMATCHES = 25
 _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
 _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
 _MAX_SCORE_INDEX_PROGRAMS = 50
@@ -853,6 +854,107 @@ def load_archive_event_records(path: str | Path) -> list[dict]:
     return records
 
 
+def archive_event_replay_audit(
+    path: str | Path,
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    """Replay migration placement events enough to audit final archive contents."""
+    event_path = Path(path)
+    if not event_path.exists():
+        return _archive_event_replay_absent_audit(archive_state_snapshot)
+    return audit_archive_event_records(
+        load_archive_event_records(event_path),
+        archive_state_snapshot,
+    )
+
+
+def audit_archive_event_records(
+    records: list[dict],
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    snapshot = validate_archive_state_snapshot(archive_state_snapshot)
+    snapshot_cells = _archive_snapshot_cell_map(snapshot)
+    if snapshot_cells is None:
+        return {
+            "schema": "libreevolve.archive_event_replay_audit.v1",
+            "status": "archive_contents_missing",
+            "audit_only": True,
+            "replay_engine_supported": False,
+            "event_count": len(records),
+            "admitted_event_count": sum(1 for record in records if record["admitted"]),
+            "skipped_event_count": sum(1 for record in records if not record["admitted"]),
+            "final_replayed_placement_count": 0,
+            "matched_placement_count": 0,
+            "superseded_or_missing_count": 0,
+            "mismatches": [],
+            "mismatch_retention_limit": _MAX_ARCHIVE_REPLAY_MISMATCHES,
+            "limitations": _archive_event_replay_audit_limitations(),
+        }
+    final_placements: dict[tuple[int, tuple[int, ...]], dict] = {}
+    admitted = 0
+    skipped = 0
+    for index, record in enumerate(records):
+        if not record["admitted"]:
+            skipped += 1
+            continue
+        admitted += 1
+        target_island = record["target_island"]
+        if target_island >= snapshot["n_islands"]:
+            raise ArchiveEventRestoreError(
+                "archive event replay target_island exceeds archive state n_islands "
+                f"at event index {index}"
+            )
+        cell = record["cell"]
+        if cell is None:
+            raise ArchiveEventRestoreError(
+                "archive event replay admitted migration row must include cell "
+                f"at event index {index}"
+            )
+        final_placements[(target_island, tuple(cell))] = {
+            "program_id": record["program_id"],
+            "migration_sequence": record["migration_sequence"],
+            "selection_score": record["selection_score"],
+        }
+    mismatches = []
+    matched = 0
+    for (island_id, cell), expected in sorted(final_placements.items()):
+        actual = snapshot_cells.get((island_id, cell))
+        if actual == expected["program_id"]:
+            matched += 1
+            continue
+        if len(mismatches) < _MAX_ARCHIVE_REPLAY_MISMATCHES:
+            mismatches.append(
+                {
+                    "island_id": island_id,
+                    "cell": list(cell),
+                    "expected_program_id": expected["program_id"],
+                    "actual_program_id": actual,
+                    "migration_sequence": expected["migration_sequence"],
+                    "reason": "migration_placement_not_current_in_archive_contents",
+                }
+            )
+    status = "no_migration_placements"
+    if final_placements and not mismatches:
+        status = "verified_against_archive_contents"
+    elif final_placements:
+        status = "superseded_or_missing_migration_placements"
+    return {
+        "schema": "libreevolve.archive_event_replay_audit.v1",
+        "status": status,
+        "audit_only": True,
+        "replay_engine_supported": False,
+        "event_count": len(records),
+        "admitted_event_count": admitted,
+        "skipped_event_count": skipped,
+        "final_replayed_placement_count": len(final_placements),
+        "matched_placement_count": matched,
+        "superseded_or_missing_count": len(final_placements) - matched,
+        "mismatches": mismatches,
+        "mismatch_retention_limit": _MAX_ARCHIVE_REPLAY_MISMATCHES,
+        "limitations": _archive_event_replay_audit_limitations(),
+    }
+
+
 def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
     """Load and validate runtime.history.archive_state from manifest.json."""
     try:
@@ -1072,7 +1174,7 @@ def _default_archive_migration_replay_policy(migration_sequence: int) -> dict:
         "replay_engine_supported": False,
         "archive_contents_restore_covers_current_placements": True,
         "limitations": [
-            "migration_event_order_not_replayed",
+            "migration_event_order_not_applied_as_restore_engine",
             "migration_skip_events_not_reconstructed",
             "controller_pending_work_not_restored",
         ],
@@ -1277,6 +1379,51 @@ def _validate_archive_contents_snapshot(value: object, n_islands: int) -> dict:
         "restore_status": value["restore_status"],
         "islands": restored,
     }
+
+
+def _archive_event_replay_absent_audit(
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    validate_archive_state_snapshot(archive_state_snapshot)
+    return {
+        "schema": "libreevolve.archive_event_replay_audit.v1",
+        "status": "archive_events_absent",
+        "audit_only": True,
+        "replay_engine_supported": False,
+        "event_count": 0,
+        "admitted_event_count": 0,
+        "skipped_event_count": 0,
+        "final_replayed_placement_count": 0,
+        "matched_placement_count": 0,
+        "superseded_or_missing_count": 0,
+        "mismatches": [],
+        "mismatch_retention_limit": _MAX_ARCHIVE_REPLAY_MISMATCHES,
+        "limitations": _archive_event_replay_audit_limitations(),
+    }
+
+
+def _archive_snapshot_cell_map(
+    snapshot: dict,
+) -> dict[tuple[int, tuple[int, ...]], str] | None:
+    contents = snapshot.get("archive_contents")
+    if not isinstance(contents, dict):
+        return None
+    cells: dict[tuple[int, tuple[int, ...]], str] = {}
+    for island in contents["islands"]:
+        island_id = island["island_id"]
+        archive = island["archive"]
+        for cell_record in archive.get("cells", []):
+            cells[(island_id, tuple(cell_record["cell"]))] = cell_record["program_id"]
+    return cells
+
+
+def _archive_event_replay_audit_limitations() -> list[str]:
+    return [
+        "audit_replays_migration_rows_only_not_normal_archive_admissions",
+        "audit_does_not_restore_controller_pending_work",
+        "superseded_non_migration_cell_replacements_report_as_mismatches",
+        "archive_contents_snapshot_remains_restore_source",
+    ]
 
 
 def _validate_archive_event_record(
@@ -3529,7 +3676,7 @@ def _startup_manifest_payload(
                     "map_elites_cells",
                     "elite_archives",
                 ],
-                "migration_event_replay": "not_applied_as_restore_engine",
+                "migration_event_replay": "audit_only_not_restore_engine",
             },
             "archive_cursor_restore": archive_cursor_restore,
         },

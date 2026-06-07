@@ -713,12 +713,18 @@ Primary evidence:
     runtime_archive_programs_by_id=...)`. CLI runs can now restore only the
     cursor/counter subset with `--restore-archive-cursor-from-manifest` or the
     full archive cells/elites bundle with `--restore-archive-from-manifest`.
-    Remaining gap: `archive_events.jsonl` is still not applied as a migration
-    replay engine.
+    Runtime manifests now also include
+    `runtime.history.archive_event_replay_audit`, which validates
+    `archive_events.jsonl`, replays the final admitted migration placement per
+    target island/cell, and compares that audit-only partial event view against
+    `archive_contents`, reporting verified or superseded/missing placements.
+    Remaining gap: `archive_events.jsonl` is still not applied as a full
+    migration restore engine.
   - Required result: implement an ordered `archive_events.jsonl` replay engine
-    or explicit branch/reconciliation model for migration rows, prove replayed
-    placements match the archive-content snapshot or fail with actionable
-    diagnostics, and add restore/replay tests covering migration ordering,
+    or extend the current audit-only reconciliation model into a restore
+    branch, prove replayed placements match the archive-content snapshot or
+    fail with actionable diagnostics across normal admission replacement
+    cases, and add restore/replay tests covering migration ordering,
     replacement, duplicate-placement, and descriptor-policy mismatches.
 
 - [ ] Add controller and pending-work resume state for archive restores.

@@ -9602,3 +9602,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     timeout-specific stop enforcement, or async controller cancellation.
   - Verification: focused loop tests cover valid default and configured
     timeout-quarantine policy records.
+
+- [x] Add paper-visible migration replay audit evidence.
+  - Paper evidence: AlphaEvolve-style island migration and resume claims need
+    persisted placement events to reconcile with final archive state.
+  - Status: completed runtime manifests now persist
+    `runtime.history.archive_event_replay_audit`, an audit-only replay of final
+    admitted migration placements compared against archive-content snapshots.
+  - Remaining paper gap: this does not make migration events the restore
+    engine and does not restore controller or pending worker state.
+  - Verification: focused database and loop tests cover the audit helper and
+    manifest field.

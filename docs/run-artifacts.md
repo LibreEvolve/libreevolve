@@ -1242,6 +1242,13 @@ reference ids, and archive configuration, plus
 `status: not_applied_as_restore_engine`,
 `replay_engine_supported: false`, and that archive-content restore covers
 current migrated placements without replaying migration event order.
+`runtime.history.archive_event_replay_audit` separately validates
+`archive_events.jsonl`, replays the last admitted migration placement per
+target island/cell, and compares that partial event-derived view with
+`archive_contents`. Its statuses distinguish absent streams, no migration
+placements, verified placements, and superseded or missing placements. The
+audit is not a restore engine because normal archive admissions and controller
+pending work are not reconstructed from migration rows.
 The descriptor model explicitly records dynamic TF-IDF diversity references
 and the no-rebin policy
 `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`;
@@ -1260,7 +1267,7 @@ Startup manifests also record `policies.archive_identity.resume_status:
 manifest_archive_state_restore_supported`, list the restored archive surfaces
 (`round_robin_cursor`, `archive_sequence_counters`, `map_elites_cells`, and
 `elite_archives`), and explicitly mark `migration_event_replay:
-not_applied_as_restore_engine`.
+audit_only_not_restore_engine`.
 `evolve(..., runtime_archive_state_snapshot=...)` passes this validated
 snapshot into the run database for cursor restore. Supplying
 `runtime_archive_programs_by_id` as well restores the persisted MAP-Elites

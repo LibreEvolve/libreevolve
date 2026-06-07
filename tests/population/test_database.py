@@ -18,6 +18,8 @@ from libreevolve.core.database import (
     ArchiveEventRestoreError,
     ArchiveStateRestoreError,
     HistoryRestoreError,
+    archive_event_replay_audit,
+    audit_archive_event_records,
     load_archive_restore_bundle,
     ProgramDatabase as _ProgramDatabase,
     load_archive_event_records,
@@ -3129,7 +3131,7 @@ def test_manifest_written():
             "map_elites_cells",
             "elite_archives",
         ],
-        "migration_event_replay": "not_applied_as_restore_engine",
+        "migration_event_replay": "audit_only_not_restore_engine",
     }
     assert manifest["policies"]["openai_api_mode"] == {
         "policy": "explicit_or_auto_openai_api_mode",
@@ -4462,6 +4464,61 @@ def _archive_state_snapshot() -> dict:
     }
 
 
+def _archive_state_snapshot_with_contents(
+    *,
+    island0_cells: list[dict] | None = None,
+    island1_cells: list[dict] | None = None,
+) -> dict:
+    snapshot = _archive_state_snapshot()
+    snapshot["resume_status"] = "snapshot_persisted_cursor_and_full_archive_restore_supported"
+    snapshot["archive_contents"] = {
+        "schema": "libreevolve.island_archive_contents.v1",
+        "restore_status": "snapshot_persisted_full_archive_restore_supported",
+        "islands": [
+            {"island_id": 0, "archive": _map_elites_snapshot(island0_cells or [])},
+            {"island_id": 1, "archive": _map_elites_snapshot(island1_cells or [])},
+        ],
+    }
+    return snapshot
+
+
+def _map_elites_snapshot(cells: list[dict]) -> dict:
+    return {
+        "schema": "libreevolve.map_elites_state.v1",
+        "bins": 10,
+        "elite_archive_size": 50,
+        "perf_bounds": [0.0, 1.0],
+        "complexity_max_chars": 100000,
+        "descriptor_axes": ["performance", "complexity", "diversity"],
+        "cells": cells,
+        "elite_program_ids": [cell["program_id"] for cell in cells],
+        "descriptor_policy": {
+            "schema": "libreevolve.map_elites_descriptor_policy.v1",
+            "axes": ["performance", "complexity", "diversity"],
+            "performance": "selection_score_normalized_by_fixed_perf_bounds",
+            "complexity": "workspace_descriptor_chars_clamped_to_configured_bound",
+            "diversity": "tfidf_char_ngram_distance_to_current_elite_archive",
+            "metric": "normalized_metrics_axis_else_raw_metric_clamped_to_unit_interval",
+            "evaluation_metadata": "numeric_evaluation_metadata_path_clamped_to_unit_interval",
+            "candidate_metadata": "numeric_candidate_metadata_path_clamped_to_unit_interval",
+            "diversity_reference_program_ids": [],
+            "diversity_update_policy": "reference_updates_after_search_state_change",
+            "rebin_policy": "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots",
+        },
+        "descriptor_model": {
+            "schema": "libreevolve.map_elites_descriptor_model.v1",
+            "revision": 0,
+            "revision_policy": "increments_on_search_state_change",
+            "axes": ["performance", "complexity", "diversity"],
+            "performance_bounds": [0.0, 1.0],
+            "complexity_max_chars": 100000,
+            "diversity_reference_program_ids": [],
+            "dynamic_diversity_reference": True,
+            "rebin_policy": "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots",
+        },
+    }
+
+
 def _archive_event_row(program_id: str = "p1", **extra) -> dict:
     row = {
         "schema_version": ARTIFACT_SCHEMA_VERSION,
@@ -4722,6 +4779,84 @@ def test_load_archive_event_records_rejects_malformed_cell(tmp_path):
 
     with pytest.raises(ArchiveEventRestoreError, match=r"cell\[1\]"):
         load_archive_event_records(events)
+
+
+def test_archive_event_replay_audit_verifies_current_migration_placements(tmp_path):
+    events = tmp_path / "archive_events.jsonl"
+    _write_archive_events(
+        events,
+        [
+            _archive_event_row("p1", migration_sequence=1),
+            _archive_event_row("p2", migration_sequence=2, cell=[3, 2, 1]),
+        ],
+    )
+    snapshot = _archive_state_snapshot_with_contents(
+        island1_cells=[
+            {"cell": [0, 1, 2], "program_id": "p1", "selection_score": 0.5},
+            {"cell": [3, 2, 1], "program_id": "p2", "selection_score": 0.5},
+        ],
+    )
+
+    audit = archive_event_replay_audit(events, snapshot)
+
+    assert audit["schema"] == "libreevolve.archive_event_replay_audit.v1"
+    assert audit["status"] == "verified_against_archive_contents"
+    assert audit["audit_only"] is True
+    assert audit["replay_engine_supported"] is False
+    assert audit["event_count"] == 2
+    assert audit["admitted_event_count"] == 2
+    assert audit["final_replayed_placement_count"] == 2
+    assert audit["matched_placement_count"] == 2
+    assert audit["superseded_or_missing_count"] == 0
+    assert audit["mismatches"] == []
+
+
+def test_archive_event_replay_audit_reports_superseded_migration_placement():
+    snapshot = _archive_state_snapshot_with_contents(
+        island1_cells=[
+            {"cell": [0, 1, 2], "program_id": "replacement", "selection_score": 0.9},
+        ],
+    )
+
+    audit = audit_archive_event_records([_archive_event_row("p1")], snapshot)
+
+    assert audit["status"] == "superseded_or_missing_migration_placements"
+    assert audit["matched_placement_count"] == 0
+    assert audit["superseded_or_missing_count"] == 1
+    assert audit["mismatches"] == [
+        {
+            "island_id": 1,
+            "cell": [0, 1, 2],
+            "expected_program_id": "p1",
+            "actual_program_id": "replacement",
+            "migration_sequence": 1,
+            "reason": "migration_placement_not_current_in_archive_contents",
+        }
+    ]
+
+
+def test_archive_event_replay_audit_reports_absent_stream(tmp_path):
+    audit = archive_event_replay_audit(
+        tmp_path / "archive_events.jsonl",
+        _archive_state_snapshot_with_contents(),
+    )
+
+    assert audit["status"] == "archive_events_absent"
+    assert audit["event_count"] == 0
+    assert audit["limitations"] == [
+        "audit_replays_migration_rows_only_not_normal_archive_admissions",
+        "audit_does_not_restore_controller_pending_work",
+        "superseded_non_migration_cell_replacements_report_as_mismatches",
+        "archive_contents_snapshot_remains_restore_source",
+    ]
+
+
+def test_archive_event_replay_audit_rejects_admitted_event_without_cell():
+    with pytest.raises(ArchiveEventRestoreError, match="must include cell"):
+        audit_archive_event_records(
+            [_archive_event_row("p1", cell=None)],
+            _archive_state_snapshot_with_contents(),
+        )
 
 
 def test_load_accepted_history_index_accepts_current_and_legacy_schema_rows(tmp_path):

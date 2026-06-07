@@ -673,6 +673,12 @@ archive configuration, plus `migration_replay`, which validates that migration
 events are not applied as a restore engine and that archive-content restore
 covers current migrated placements. `load_runtime_archive_state_snapshot()`
 validates the manifest snapshot before resume use.
+Final manifests also include `runtime.history.archive_event_replay_audit`, an
+audit-only reconciliation that validates `archive_events.jsonl`, replays the
+last admitted migration placement per target island/cell, and compares those
+placements with `archive_contents`. Normal archive admissions are still not
+reconstructed from migration rows, so `archive_contents` remains the restore
+source.
 `IslandModel.restore_cursor_state()` can apply the cursor/counter subset directly, while
 `IslandModel.restore_archive_state()` restores cells and elites when supplied
 with checked `Program` snapshots. `load_archive_restore_bundle()` builds those
@@ -686,10 +692,10 @@ during construction. `evolve()` exposes cursor restore through
 manifest plus sibling `history.jsonl`. Startup manifests record
 `policies.archive_identity.resume_status:
 manifest_archive_state_restore_supported`, the restored archive surfaces, and
-`migration_event_replay: not_applied_as_restore_engine`. `archive_events.jsonl` persists
+`migration_event_replay: audit_only_not_restore_engine`. `archive_events.jsonl` persists
 versioned migration placement events, and `load_archive_event_records()`
-validates that stream as migration audit data. Migration event-order replay and
-controller/pending-work restore remain open.
+validates that stream as migration audit data. Full migration event-order
+restore and controller/pending-work restore remain open.
 `history.jsonl` logs candidates, but it is not a serialized archive checkpoint
 or MAP-Elites event stream.
 Candidate records do include `metadata.archive_admission` events that state

@@ -883,7 +883,7 @@ def _migration_replay_policy(migration_sequence: int) -> dict:
         "replay_engine_supported": False,
         "archive_contents_restore_covers_current_placements": True,
         "limitations": [
-            "migration_event_order_not_replayed",
+            "migration_event_order_not_applied_as_restore_engine",
             "migration_skip_events_not_reconstructed",
             "controller_pending_work_not_restored",
         ],

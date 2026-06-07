@@ -1180,6 +1180,11 @@ per-island MAP-Elites cell/elite snapshots under `archive_contents`.
 Archive-state snapshots also carry `migration_replay`, a validated policy that
 marks migration events as `not_applied_as_restore_engine` while confirming that
 `archive_contents` restores the current migrated placements.
+Final manifests also include `runtime.history.archive_event_replay_audit`,
+which validates and replays the final admitted migration placement rows enough
+to compare them with `archive_contents`. This is audit evidence only:
+normal archive admissions are not reconstructed from `archive_events.jsonl`,
+and `archive_contents` remains the restore source.
 `load_runtime_archive_state_snapshot()` can validate it from `manifest.json`
 before resume use. `IslandModel.restore_cursor_state()` can apply only the
 compact cursor/counter portion, while `IslandModel.restore_archive_state()` can
@@ -1196,8 +1201,8 @@ checked cursor/counter state before run-directory preparation, or
 manifest/history bundle. Startup manifests also record
 `policies.archive_identity.resume_status:
 manifest_archive_state_restore_supported`, the restored archive surfaces, and
-`migration_event_replay: not_applied_as_restore_engine`. Migration event-order
-replay and controller/pending-work restore remain open.
+`migration_event_replay: audit_only_not_restore_engine`. Full migration
+event-order restore and controller/pending-work restore remain open.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

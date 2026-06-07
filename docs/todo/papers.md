@@ -443,16 +443,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     `policies.archive_identity.resume_status` now advertises
     `manifest_archive_state_restore_supported`, lists restored archive
     surfaces, and explicitly marks migration-event replay as
-    `not_applied_as_restore_engine`. Focused database tests prove full archive
+    `audit_only_not_restore_engine`. Focused database tests prove full archive
     restore uses the restored round-robin cursor for the next admission.
     Archive snapshots now include validated `migration_replay` metadata that
     states migration events are not replayed as a restore engine, archive
     contents cover current migrated placements, and controller pending work is
-    not restored. The validators reject replay-engine overclaims.
+    not restored. Final manifests now include
+    `runtime.history.archive_event_replay_audit`, which validates migration
+    rows, replays final admitted migration placements, and compares that
+    audit-only partial event view with `archive_contents`. The validators
+    reject replay-engine overclaims.
   - Current gap: cursor and archive-content restore are implemented, but
-    migration placement rows are not replayed as an ordered restore engine, and
-    controller/pending-work state is still absent from one-command resumed
-    experiment traces.
+    migration placement rows are reconciled only as audit evidence rather than
+    replayed as an ordered restore engine, and controller/pending-work state is
+    still absent from one-command resumed experiment traces.
   - Required result: apply or explicitly model migration-event replay, add
     controller/pending-work resume state, and add paper-visible resume/replay
     tests covering below-threshold, non-admitted, elite-only, and

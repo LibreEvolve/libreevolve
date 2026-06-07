@@ -586,6 +586,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     they neither underclaim current role routing and budget maps nor overclaim
     AlphaEvolve-style per-role scheduling.
 
+- [ ] Keep UCB scheduler roadmap wording scoped to heuristic backend routing.
+  - Spec evidence: canonical UCB1 claims require bounded reward assumptions and
+    regret-analysis conditions, while AlphaEvolve-style backend scheduling also
+    needs experiment-level breadth/depth/cost/latency evidence before it can be
+    treated as a faithful scheduler rather than a local routing heuristic.
+  - Current evidence: `ROADMAP.md` asks to normalize/document UCB rewards
+    against bounded assumptions or rename the current policy as a heuristic.
+    Code and paper-index evidence already describe `LLMEnsemble` as a
+    heuristic UCB-style router over caller-provided/archive-admitted valid
+    fitness-improvement rewards, not a canonical regret-analyzed UCB1
+    implementation or MadEvolve reproduction. README labels the ensemble as
+    heuristic backend routing, and focused tests cover high-reward preference,
+    superior-arm convergence, `throughput_depth` metadata selection,
+    per-selection min/max metadata normalization, pull-once initialization, and
+    call telemetry that marks selection scope as a global backend bandit with
+    shared selection and configurable role reward accounting. These tests do
+    not prove regret bounds, calibrated reward scaling across heterogeneous
+    tasks, experiment-level scheduler traces, or equal-budget breadth/depth/
+    cost/latency comparisons.
+  - Required result: when canonical UCB1 assumptions, calibrated reward
+    normalization, experiment-level scheduler reports, or AlphaEvolve-style
+    breadth/depth/cost/latency validation lands, update the roadmap, README,
+    papers index, and code/paper TODO entries together so wording neither
+    underclaims current heuristic routing nor overclaims regret-analyzed or
+    paper-faithful scheduler behavior.
+
 - [ ] Keep the async/resumable-runtime roadmap wording scoped to compatible
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed

@@ -1808,6 +1808,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     not verifying declared report artifacts, validating the checked bundle
     wrapper, or emitting one checked Strassen baseline once those files exist.
 
+- [ ] Track best-known-rank citation provenance for Appendix A comparisons.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 presents matrix
+    targets with a `best known [reference]` column, and Appendix A Table 3
+    extends the matrix target-suite rank comparisons.
+  - Current evidence: the checked Appendix A matrix registry records
+    best-known rank numbers, AlphaEvolve ranks, outcomes, and exact-algorithm
+    flags, and matrix reports can validate target identities and dimensions
+    against that registry. The paper-facing evidence does not yet preserve the
+    cited prior-work source for each best-known baseline rank, source
+    page/table, reference id, source artifact digest, finite-field or
+    characteristic caveat, or baseline-source field in generated result
+    reports.
+  - Required result: add paper-facing baseline-rank provenance before using
+    Appendix A best-known-rank comparisons as fully traceable evidence:
+    per-target cited-source metadata, manifest/companion-artifact validation,
+    report-visible baseline-source fields, and docs that distinguish cited
+    prior baselines from LibreEvolve-generated constructions.
+
 - [ ] Track AlphaEvolve companion Colab as paper source evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
     discovered algorithms and new mathematical results are available at the

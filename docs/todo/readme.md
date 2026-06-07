@@ -334,6 +334,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims the checked Strassen baseline nor overclaims
     AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README Appendix A best-known-rank wording scoped until baseline
+      citation provenance exists.
+  - Spec evidence: AlphaEvolve Table 2 reports matrix targets using a
+    `best known [reference]` baseline-rank column, and Appendix A Table 3
+    extends the best-known-rank comparison table.
+  - Current evidence: README describes the Appendix A registry as target,
+    dimension, rank, and outcome metadata for validating matrix result reports.
+    It does not document a per-target prior-work citation/source record for
+    each best-known rank, reference id, paper/source location, applicability
+    caveat, source digest, or report-visible baseline-source field.
+  - Required result: when Appendix A best-known-rank citation provenance lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes stored best-known rank values from traceable cited
+    baseline evidence.
+
 - [ ] Keep README Appendix A target-suite wording scoped to registry coverage
       versus curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes

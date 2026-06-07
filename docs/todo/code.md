@@ -1753,6 +1753,24 @@ Primary evidence:
     result reports and from the Figure 8 loss-function-only ablation until an
     executed matrix runner proves the baseline-to-evolved-program path.
 
+- [ ] Add best-known-rank citation provenance for Appendix A matrix baselines.
+  - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a
+    `best known [reference]` column, and Appendix A Table 3 extends those
+    best-known-rank comparisons across the matrix target suite.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
+    records target ids, dimensions, best-known rank values, AlphaEvolve ranks,
+    outcomes, and exact-algorithm flags, and reports reject unknown target ids
+    and dimension mismatches. The registry does not store which cited prior
+    work supports each best-known rank, the bibliography/reference id, source
+    page/table location, finite-field or characteristic caveats, companion
+    artifact links, or a digestible source record for baseline-rank claims.
+  - Required result: extend the Appendix A registry or companion metadata with
+    per-target prior-baseline citation provenance and validation: reference id,
+    source artifact/page/table, applicability caveats, and report-visible
+    baseline-source fields. Keep this distinct from target-suite curation,
+    tensor/decomposition construction artifacts, and baseline solver-component
+    provenance.
+
 - [ ] Add Appendix A matrix target-suite curation provenance.
   - Spec evidence: AlphaEvolve Appendix A says the 54 matrix multiplication
     sizes were chosen roughly from sizes where 2 <= m,n <= 5 with a reasonable

@@ -1354,6 +1354,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes target-identity coverage from paper-faithful target-suite
     curation evidence.
 
+- [ ] Keep Appendix A matrix-baseline roadmap wording scoped until
+      best-known-rank citation provenance exists.
+  - Spec evidence: AlphaEvolve Table 2 includes a `best known [reference]`
+    baseline-rank column for matrix targets, and Appendix A Table 3 extends
+    best-known-rank comparisons across the reported matrix target suite.
+  - Current evidence: roadmap/README/paper-index status points to the checked
+    Appendix A registry and matrix report validation. That registry stores
+    best-known rank values, AlphaEvolve ranks, outcomes, and exact-algorithm
+    flags, but not per-target cited prior-work sources, bibliography reference
+    ids, source page/table locations, finite-field or characteristic caveats,
+    source digests, or report-visible baseline-source metadata.
+  - Required result: when best-known-rank citation provenance lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap text
+    distinguishes rank-value registry coverage from traceable prior-baseline
+    evidence.
+
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.
   - Spec evidence: AlphaEvolve Section 3.1 describes prompting for

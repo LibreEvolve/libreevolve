@@ -374,7 +374,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Require README wording to distinguish generic
     `No meta prompt evolution` labels from executed prompt-history and
     call-ledger evidence that meta-prompt and prompt-mutation surfaces were
-    disabled only for that ablation. Require README wording to distinguish
+    disabled only for that ablation, with a frozen human-authored prompt
+    identity/source/revision/context policy recorded for the human-prompter
+    comparator. Require README wording to distinguish
     generic
     ablation-result schemas from
     Figure 8-equivalent matrix/kissing target-family reports with validated

@@ -584,7 +584,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     call-ledger proof that meta-prompt calls, prompt-template mutations, and
     prompt-program lineage updates were disabled for the ablation while the
     full-system baseline had meta-prompt evolution enabled and mutable prompt
-    variants. The
+    variants. Also require the paper-facing result bundle to identify the
+    frozen human-authored prompt source, revision, and context policy used for
+    the human-prompter comparator, because Figure 8 motivates the ablation as
+    testing whether meta prompts can surpass a human prompter rather than only
+    whether a local meta-prompt role was toggled off. The
     remaining ablation and calibration gap is executing and
     emitting real reports from runnable variants over the Figure 8 matrix and
     kissing-number target families, with curve summaries that expose

@@ -2080,7 +2080,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     small/base model and no large-model route. Ensure the
     `No meta prompt evolution` harness records prompt-history, call-ledger, and
     prompt-program lineage evidence proving meta-prompt evolution was disabled
-    for the ablation and enabled for the full-system comparator. Ensure the
+    for the ablation and enabled for the full-system comparator, plus the
+    frozen human-authored prompt identity, source, revision, and context policy
+    used for the human-prompter comparator. Ensure the
     `No full-file evolution` harness records the
     loss-function target scope, fixed tensor-search components, and report
     evidence before claiming parity with Figure 8. Also require ablation

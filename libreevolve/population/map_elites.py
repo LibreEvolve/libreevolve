@@ -47,6 +47,9 @@ class MAPElites:
         self._complexity_max_chars: int = complexity_max_chars
         self._descriptor_axes: tuple[str, str, str] = descriptor_axes
         self._metric_order: tuple[str, ...] = metric_order
+        self._metric_cell_elites: dict[str, dict[tuple[int, int, int], Program]] = {
+            metric: {} for metric in self._metric_order
+        }
         self._elite: list[Program] = []
         self._pareto_elite: list[Program] = []
         self._elite_size = elite_archive_size
@@ -127,6 +130,9 @@ class MAPElites:
             "pareto_frontier_replaced_ids": [],
             "pareto_frontier_reason": "not_evaluated",
             "pareto_frontier_size": 0,
+            "metric_cell_retained": False,
+            "metric_cell_replacements": [],
+            "metric_cell_reason": "not_evaluated",
         }
         selection_score = _selection_score(program)
         event["selection_score"] = selection_score if math.isfinite(selection_score) else None
@@ -157,6 +163,8 @@ class MAPElites:
         event["displaced_elite_ids"] = [
             program_id for program_id in before_trim_ids[self._elite_size :]
         ]
+        metric_cell_event = self._retain_metric_cells(program, cell)
+        event.update(metric_cell_event)
         pareto_event = self._retain_pareto_frontier(program)
         event.update(pareto_event)
         event["cell_admitted"] = event["entered_cell"]
@@ -164,6 +172,7 @@ class MAPElites:
         event["search_state_changed"] = (
             event["cell_admitted"]
             or event["elite_retained"]
+            or event["metric_cell_retained"]
             or event["pareto_frontier_retained"]
             or bool(event["pareto_frontier_replaced_ids"])
         )
@@ -179,8 +188,74 @@ class MAPElites:
             event["reason"] = "elite_only"
         elif event["pareto_frontier_retained"]:
             event["reason"] = "pareto_frontier_only"
+        elif event["metric_cell_retained"]:
+            event["reason"] = "metric_cell_only"
         else:
             event["reason"] = "not_improving_cell"
+        return event
+
+    def _retain_metric_cells(
+        self,
+        program: Program,
+        cell: tuple[int, int, int],
+    ) -> dict:
+        event = {
+            "metric_cell_retained": False,
+            "metric_cell_replacements": [],
+            "metric_cell_reason": "no_declared_objective_metrics",
+        }
+        vector = _objective_vector(program, self._metric_order)
+        if vector is None:
+            if self._metric_order:
+                event["metric_cell_reason"] = "incomplete_objective_vector"
+            return event
+        replacements = []
+        for metric in self._metric_order:
+            metric_cells = self._metric_cell_elites.setdefault(metric, {})
+            previous = metric_cells.get(cell)
+            previous_vector = (
+                _objective_vector(previous, self._metric_order)
+                if previous is not None
+                else None
+            )
+            previous_value = (
+                previous_vector.get(metric)
+                if isinstance(previous_vector, dict)
+                else None
+            )
+            candidate_key = (vector[metric], *_selection_key(program))
+            previous_key = (
+                (float(previous_value), *_selection_key(previous))
+                if previous is not None and _is_finite_real(previous_value)
+                else None
+            )
+            replaced = previous_key is None or candidate_key > previous_key
+            if replaced:
+                metric_cells[cell] = program
+            replacements.append(
+                {
+                    "metric": metric,
+                    "cell": list(cell),
+                    "retained": replaced,
+                    "candidate_value": vector[metric],
+                    "previous_occupant_id": previous.id if previous else None,
+                    "previous_value": (
+                        float(previous_value)
+                        if _is_finite_real(previous_value)
+                        else None
+                    ),
+                    "cell_replaced": previous is not None and replaced,
+                }
+            )
+        event["metric_cell_replacements"] = replacements
+        event["metric_cell_retained"] = any(
+            record["retained"] for record in replacements
+        )
+        event["metric_cell_reason"] = (
+            "metric_cell_retained"
+            if event["metric_cell_retained"]
+            else "not_improving_metric_cell"
+        )
         return event
 
     def _retain_pareto_frontier(self, program: Program) -> dict:
@@ -254,6 +329,13 @@ class MAPElites:
     def pareto_frontier_archive(self) -> list[Program]:
         return list(self._pareto_elite)
 
+    def metric_cell_archive(self) -> list[Program]:
+        pool: dict[str, Program] = {}
+        for metric in self._metric_order:
+            for program in self._metric_cell_elites.get(metric, {}).values():
+                pool.setdefault(program.id, program)
+        return list(pool.values())
+
     def state_snapshot(self) -> dict:
         return {
             "schema": "libreevolve.map_elites_state.v1",
@@ -277,6 +359,28 @@ class MAPElites:
             "pareto_frontier_program_ids": [
                 program.id for program in self._pareto_elite
             ],
+            "metric_cell_archives": [
+                {
+                    "metric": metric,
+                    "cells": [
+                        {
+                            "cell": list(cell),
+                            "program_id": program.id,
+                            "metric_value": _json_finite_metric_value(
+                                program,
+                                metric,
+                                self._metric_order,
+                            ),
+                            "selection_score": _json_finite_selection_score(program),
+                        }
+                        for cell, program in sorted(
+                            self._metric_cell_elites.get(metric, {}).items(),
+                            key=lambda item: (item[0], item[1].id),
+                        )
+                    ],
+                }
+                for metric in self._metric_order
+            ],
             "objective_archive_policy": {
                 "schema": "libreevolve.map_elites_objective_archive_policy.v1",
                 "status": "bounded_non_dominated_archive_retention",
@@ -286,10 +390,10 @@ class MAPElites:
                 "bound": self._elite_size,
                 "trim_policy": "crowding_distance_then_selection_score_then_fitness",
                 "sampling_policy": (
-                    "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
+                    "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool"
                 ),
                 "cell_replacement_policy": (
-                    "map_elites_cells_still_replace_by_scalar_selection_key"
+                    "scalar_primary_cells_plus_metric_specific_cell_overlays"
                 ),
             },
             "descriptor_policy": {
@@ -359,15 +463,33 @@ class MAPElites:
                     f"{program_id!r}"
                 )
             pareto_elite.append(programs_by_id[program_id])
+        metric_cell_elites: dict[str, dict[tuple[int, int, int], Program]] = {
+            metric: {} for metric in self._metric_order
+        }
+        for archive_record in restored["metric_cell_archives"]:
+            metric = archive_record["metric"]
+            for cell_record in archive_record["cells"]:
+                program_id = cell_record["program_id"]
+                if program_id not in programs_by_id:
+                    raise ValueError(
+                        "MAP-Elites snapshot metric cell references missing program id "
+                        f"{program_id!r}"
+                    )
+                cell = tuple(cell_record["cell"])
+                metric_cell_elites[metric][cell] = programs_by_id[program_id]
         self._grid = grid
         self._elite = elite
         self._pareto_elite = pareto_elite
+        self._metric_cell_elites = metric_cell_elites
         self._descriptor_model_revision = restored["descriptor_model"]["revision"]
         return {
             "status": "map_elites_state_restored",
             "occupied_cell_count": len(self._grid),
             "elite_count": len(self._elite),
             "pareto_frontier_count": len(self._pareto_elite),
+            "metric_cell_archive_count": sum(
+                len(cells) for cells in self._metric_cell_elites.values()
+            ),
         }
 
 
@@ -388,6 +510,18 @@ def _selection_key(program: Program) -> tuple[float, float]:
 def _json_finite_selection_score(program: Program) -> float | None:
     value = _selection_score(program)
     return value if math.isfinite(value) else None
+
+
+def _json_finite_metric_value(
+    program: Program,
+    metric: str,
+    metric_order: tuple[str, ...],
+) -> float | None:
+    vector = _objective_vector(program, metric_order)
+    if not isinstance(vector, dict):
+        return None
+    value = vector.get(metric)
+    return float(value) if _is_finite_real(value) else None
 
 
 def _is_finite_real(value: object) -> bool:
@@ -662,6 +796,7 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     }
     optional = {
         "pareto_frontier_program_ids",
+        "metric_cell_archives",
         "objective_archive_policy",
     }
     missing = required - set(snapshot)
@@ -717,6 +852,10 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
         archive,
         pareto_frontier_program_ids,
     )
+    metric_cell_archives = _validate_metric_cell_archives(
+        snapshot.get("metric_cell_archives", []),
+        archive,
+    )
     if not isinstance(
         descriptor_policy.get("diversity_reference_program_ids"),
         list,
@@ -741,8 +880,114 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
         "cells": cells,
         "elite_program_ids": elite_program_ids,
         "pareto_frontier_program_ids": pareto_frontier_program_ids,
+        "metric_cell_archives": metric_cell_archives,
         "descriptor_model": descriptor_model,
     }
+
+
+def _validate_metric_cell_archives(value: object, archive: MAPElites) -> list[dict]:
+    if value is None:
+        value = []
+    if not isinstance(value, list):
+        raise ValueError("MAP-Elites snapshot metric_cell_archives must be a list")
+    by_metric: dict[str, dict] = {}
+    for index, record in enumerate(value):
+        if not isinstance(record, dict):
+            raise ValueError(
+                f"MAP-Elites snapshot metric_cell_archives[{index}] must be an object"
+            )
+        required = {"metric", "cells"}
+        missing = required - set(record)
+        if missing:
+            raise ValueError(
+                "MAP-Elites snapshot metric_cell_archives record missing fields: "
+                f"{sorted(missing)}"
+            )
+        unsupported = set(record) - required
+        if unsupported:
+            raise ValueError(
+                "MAP-Elites snapshot metric_cell_archives record has unsupported fields: "
+                f"{sorted(unsupported)}"
+            )
+        metric = record["metric"]
+        if metric not in archive._metric_order:
+            raise ValueError(
+                "MAP-Elites snapshot metric_cell_archives metric must match archive"
+            )
+        if metric in by_metric:
+            raise ValueError(
+                "MAP-Elites snapshot metric_cell_archives must not duplicate metrics"
+            )
+        cells = _validate_metric_cell_archive_cells(
+            record["cells"],
+            archive.bins,
+            f"metric_cell_archives[{index}].cells",
+        )
+        if len(cells) > archive.bins ** 3:
+            raise ValueError(
+                "MAP-Elites snapshot metric_cell_archives exceeds possible cell count"
+            )
+        by_metric[metric] = {"metric": metric, "cells": cells}
+    for metric in archive._metric_order:
+        by_metric.setdefault(metric, {"metric": metric, "cells": []})
+    if not archive._metric_order and by_metric:
+        raise ValueError(
+            "MAP-Elites snapshot metric_cell_archives requires configured metric_order"
+        )
+    return [by_metric[metric] for metric in archive._metric_order]
+
+
+def _validate_metric_cell_archive_cells(
+    value: object,
+    bins: int,
+    label: str,
+) -> list[dict]:
+    if not isinstance(value, list):
+        raise ValueError(f"MAP-Elites snapshot {label} must be a list")
+    cells = []
+    seen: set[tuple[int, int, int]] = set()
+    for index, record in enumerate(value):
+        if not isinstance(record, dict):
+            raise ValueError(f"MAP-Elites snapshot {label}[{index}] must be an object")
+        required = {"cell", "program_id", "metric_value", "selection_score"}
+        missing = required - set(record)
+        if missing:
+            raise ValueError(
+                f"MAP-Elites snapshot {label}[{index}] missing fields: {sorted(missing)}"
+            )
+        unsupported = set(record) - required
+        if unsupported:
+            raise ValueError(
+                "MAP-Elites snapshot "
+                f"{label}[{index}] has unsupported fields: {sorted(unsupported)}"
+            )
+        cell = _validate_map_elites_cell(record["cell"], bins, index)
+        if tuple(cell) in seen:
+            raise ValueError(f"MAP-Elites snapshot {label} has duplicate cells")
+        seen.add(tuple(cell))
+        program_id = record["program_id"]
+        validate_program_identity(program_id)
+        metric_value = record["metric_value"]
+        if not _is_finite_real(metric_value) or not 0.0 <= float(metric_value) <= 1.0:
+            raise ValueError(
+                f"MAP-Elites snapshot {label}[{index}].metric_value must be in [0, 1]"
+            )
+        selection_score = record["selection_score"]
+        if selection_score is not None and not _is_finite_real(selection_score):
+            raise ValueError(
+                f"MAP-Elites snapshot {label}[{index}].selection_score must be finite or null"
+            )
+        cells.append(
+            {
+                "cell": cell,
+                "program_id": program_id,
+                "metric_value": float(metric_value),
+                "selection_score": (
+                    float(selection_score) if selection_score is not None else None
+                ),
+            }
+        )
+    return cells
 
 
 def _validate_objective_archive_policy(
@@ -811,17 +1056,17 @@ def _validate_objective_archive_policy(
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.trim_policy is unsupported"
         )
-    if (
-        value["sampling_policy"]
-        != "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
-    ):
+    if value["sampling_policy"] not in {
+        "eligible_for_metric_and_frontier_sampling_via_island_retained_pool",
+        "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool",
+    }:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.sampling_policy is unsupported"
         )
-    if (
-        value["cell_replacement_policy"]
-        != "map_elites_cells_still_replace_by_scalar_selection_key"
-    ):
+    if value["cell_replacement_policy"] not in {
+        "map_elites_cells_still_replace_by_scalar_selection_key",
+        "scalar_primary_cells_plus_metric_specific_cell_overlays",
+    }:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.cell_replacement_policy is unsupported"
         )

@@ -14753,3 +14753,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused DeepResearch tests cover default arXiv bounded
     snapshot evidence, unauditable custom string retrieval, and custom HTTPS
     transport plus replayable redacted source payload artifacts.
+
+- [x] Add metric-specific MAP-Elites cell overlays.
+  - Spec evidence: AlphaEvolve can optimize multiple user-provided scores, so
+    archive state should retain programs that excel under individual objective
+    metrics rather than only a scalar blended score.
+  - Status: each MAP-Elites archive now keeps `metric_cell_archives`, a
+    per-declared-metric descriptor-cell overlay that retains the best program
+    by normalized metric value for each cell. Metric-cell-only admissions are
+    search-state changes, persist/restore through archive snapshots, and feed
+    island metric/frontier retained pools.
+  - Remaining gap: the primary MAP-Elites grid still uses scalar selection
+    score, Pareto dominance does not replace the primary grid, and durable
+    database-backed multi-objective resurfacing remains open.
+  - Verification: focused MAP-Elites, island, database, and loop tests cover
+    retention, snapshot/restore validation, retained-pool inclusion, and
+    manifest validation.

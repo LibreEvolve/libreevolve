@@ -610,12 +610,14 @@ def test_run_can_restore_archive_cursor_snapshot_from_manifest(tmp_path):
                 "occupied_cell_count": 1,
                 "elite_count": 1,
                 "pareto_frontier_count": 0,
+                "metric_cell_archive_count": 0,
             },
             {
                 "island_id": 1,
                 "occupied_cell_count": 1,
                 "elite_count": 1,
                 "pareto_frontier_count": 0,
+                "metric_cell_archive_count": 0,
             },
         ],
         "migration_replay": {

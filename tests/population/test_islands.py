@@ -190,12 +190,14 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
         {
             "island_id": 1,
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
     ]
 
@@ -259,6 +261,7 @@ def test_restore_archive_state_rehydrates_cells_and_elites():
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
         {
             "island_id": 1,
@@ -266,6 +269,7 @@ def test_restore_archive_state_rehydrates_cells_and_elites():
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
     ]
     assert restored.best().id == first.id

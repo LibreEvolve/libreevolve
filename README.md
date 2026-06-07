@@ -1241,14 +1241,15 @@ Declared numeric metrics are normalized through `metrics.yaml` into
 MAP-Elites replacement and exploit/best sampling. The default is an
 equal-weight mean; optional finite non-negative metric `weight` values in
 `metrics.yaml` switch the policy to a weighted normalized declared-metric
-score. This is a documented scalar policy, not a Pareto or metric-specific
-archive policy yet. Final manifests
+score. The primary MAP-Elites cell grid still uses that scalar selection key,
+but each archive also keeps declared-metric cell overlays that retain the best
+program seen for each complete normalized objective metric in each descriptor
+cell. Final manifests
 also include `runtime.history.objective_frontier`, a bounded diagnostic Pareto
 frontier over complete declared normalized metric vectors, so non-dominated
 metric tradeoffs are visible. The `frontier` parent/inspiration sampling
 strategy can surface non-dominated retained programs from the same declared
-objective metric semantics, but archive replacement remains scalar rather than
-Pareto-specific. Final manifests also include
+objective metric semantics. Final manifests also include
 `runtime.history.objective_metric_leaders`, a diagnostic best-program view for
 each declared normalized metric, and
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
@@ -1289,8 +1290,9 @@ Inspiration `mixed` is a deterministic priority cascade:
 metric leaders, novelty-ranked candidates, selection-score leaders, then random
 fill for any remaining slots.
 Metric, frontier, lineage, novelty, recency, selection, and mixed strategies sample from retained
-archive state, including auxiliary elite-only programs; `explore` parent
-sampling and random inspiration sampling remain occupied-cell sampling.
+archive state, including auxiliary elite-only, Pareto-only, and metric-cell-only
+programs; `explore` parent sampling and random inspiration sampling remain
+occupied-cell sampling.
 Recency uses a monotonic in-memory archive sequence before generation and score
 tie-breaks; accepted history records persist that sequence in
 `metadata.archive_sequence` and `metadata.archive_admission.archive_sequence`

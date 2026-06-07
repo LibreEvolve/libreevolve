@@ -206,6 +206,9 @@ class IslandModel:
                         "pareto_frontier_count": len(
                             island.pareto_frontier_archive()
                         ),
+                        "metric_cell_archive_count": len(
+                            island.metric_cell_archive()
+                        ),
                     }
                     for island_id, island in enumerate(self.islands)
                 ],
@@ -404,6 +407,7 @@ class IslandModel:
                 island.occupied_cells()
                 + island.elite_archive()
                 + island.pareto_frontier_archive()
+                + island.metric_cell_archive()
             ):
                 if program.id not in exclude_ids:
                     pool.setdefault(program.id, program)
@@ -664,9 +668,14 @@ def _is_valid_normalized_metric(value: object) -> bool:
 
 
 def _island_program_ids(island: MAPElites) -> set[str]:
+    programs = (
+        island.occupied_cells()
+        + island.elite_archive()
+        + island.metric_cell_archive()
+    )
     return {
         program.id
-        for program in island.occupied_cells() + island.elite_archive()
+        for program in programs
     }
 
 

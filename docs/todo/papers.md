@@ -376,7 +376,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-dominated Pareto archive over complete declared normalized metric
     vectors, persist/restore Pareto frontier program ids and the objective
     archive policy, and allow island metric/frontier retained pools to sample
-    Pareto-only programs that lost scalar cell/elite placement. Runtime
+    Pareto-only programs that lost scalar cell/elite placement. MAP-Elites
+    archives now also persist/restore `metric_cell_archives`, per-declared
+    objective metric descriptor-cell overlays that retain best programs by each
+    normalized metric and feed metric/frontier retained pools, so programs can
+    survive for excelling in a specific metric even when they lose scalar
+    primary-cell placement. Runtime
     manifests now include `runtime.history.resurfacing_index`, a bounded
     deterministic rank-fusion view over score, metric, frontier, lineage,
     descriptor, and feedback indexes, and `ProgramDatabase.resurface_candidates()`
@@ -386,8 +391,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence
     and feeds hypothesis records into `resurfacing_index`. This remains a
     heuristic rather than a paper-faithful multi-score database policy:
-    MAP-Elites cell replacement is still scalar, metric-specific cell
-    replacement is not implemented, and durable queryable multi-objective
+    primary MAP-Elites cell replacement is still scalar, Pareto/frontier
+    dominance does not replace the primary grid, and durable queryable multi-objective
     resurfacing across persisted database tables, embeddings, cross-run failure
     and hypothesis indexes, full artifact-content indexes, full lineage
     subgraphs, and schema migrations remains open. `runtime.history.artifact_index`

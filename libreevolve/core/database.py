@@ -1338,7 +1338,7 @@ def _validate_archive_island_summaries(value: object, n_islands: int) -> list[di
                 f"archive state snapshot islands[{index}] must be an object"
             )
         required = {"island_id", "occupied_cell_count", "elite_count"}
-        optional = {"pareto_frontier_count"}
+        optional = {"pareto_frontier_count", "metric_cell_archive_count"}
         missing = required - set(island)
         if missing:
             raise ArchiveStateRestoreError(
@@ -1372,6 +1372,10 @@ def _validate_archive_island_summaries(value: object, n_islands: int) -> list[di
                 "pareto_frontier_count": _validate_snapshot_non_negative_int(
                     island.get("pareto_frontier_count", 0),
                     f"islands[{index}].pareto_frontier_count",
+                ),
+                "metric_cell_archive_count": _validate_snapshot_non_negative_int(
+                    island.get("metric_cell_archive_count", 0),
+                    f"islands[{index}].metric_cell_archive_count",
                 ),
             }
         )

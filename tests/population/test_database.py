@@ -1817,12 +1817,14 @@ def test_archive_state_snapshot_exposes_island_cursor_for_runtime_manifest():
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
         {
             "island_id": 1,
             "occupied_cell_count": 1,
             "elite_count": 1,
             "pareto_frontier_count": 0,
+            "metric_cell_archive_count": 0,
         },
     ]
 
@@ -4889,12 +4891,14 @@ def _archive_state_snapshot() -> dict:
                 "occupied_cell_count": 1,
                 "elite_count": 2,
                 "pareto_frontier_count": 0,
+                "metric_cell_archive_count": 0,
             },
             {
                 "island_id": 1,
                 "occupied_cell_count": 0,
                 "elite_count": 0,
                 "pareto_frontier_count": 0,
+                "metric_cell_archive_count": 0,
             },
         ],
     }

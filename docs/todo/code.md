@@ -701,15 +701,19 @@ Primary evidence:
     vectors, records Pareto-only admission telemetry, persists/restores
     `pareto_frontier_program_ids` plus an `objective_archive_policy`, and
     includes those Pareto-retained programs in island metric/frontier retained
-    pools. Backend reward, admission thresholds, and some parent/inspiration
-    paths still use scalar final fitness, and MAP-Elites cell replacement still
-    uses scalar selection score rather than Pareto/frontier dominance. There is
-    still no metric-specific MAP-Elites replacement policy or durable queryable
-    multi-objective database resurfacing.
+    pools. Each MAP-Elites archive now also persists/restores
+    `metric_cell_archives`, per-declared-metric descriptor-cell overlays that
+    retain the best program per complete normalized objective metric in each
+    descriptor cell, record metric-cell admission telemetry, and include
+    metric-cell-only programs in island metric/frontier retained pools. Backend
+    reward, admission thresholds, and some parent/inspiration paths still use
+    scalar final fitness, and the primary MAP-Elites cell grid still uses
+    scalar selection score rather than Pareto/frontier dominance. Durable
+    queryable multi-objective database resurfacing remains absent.
   - Required result: represent full metric vectors, choose target metrics,
-    support Pareto/frontier archive replacement, and make metric-targeted
-    sampling/archive behavior part of that policy instead of a standalone
-    heuristic.
+    support Pareto/frontier primary archive replacement, and make durable
+    metric-targeted resurfacing queryable across the database rather than only
+    through bounded in-memory/archive snapshot overlays.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and

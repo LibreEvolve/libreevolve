@@ -247,6 +247,50 @@ def test_pareto_frontier_retains_non_dominated_non_scalar_elite():
     assert archive.pareto_frontier_archive() == [latency, accuracy]
 
 
+def test_metric_cell_archive_retains_per_metric_cell_replacements():
+    archive = MAPElites(
+        bins=1,
+        elite_archive_size=1,
+        metric_order=["accuracy", "latency"],
+    )
+    accuracy = _po("accuracy", 0.9, {"accuracy": 0.95, "latency": 0.10})
+    latency = _po("latency", 0.1, {"accuracy": 0.10, "latency": 0.95})
+    archive.add(accuracy)
+
+    event = archive.add(latency)
+
+    assert event["entered_cell"] is False
+    assert event["entered_elite"] is False
+    assert event["metric_cell_retained"] is True
+    assert event["metric_cell_reason"] == "metric_cell_retained"
+    assert event["reason"] == "metric_cell_only"
+    assert event["admitted"] is True
+    assert event["search_state_changed"] is True
+    assert event["metric_cell_replacements"] == [
+        {
+            "metric": "accuracy",
+            "cell": [0, 0, 0],
+            "retained": False,
+            "candidate_value": 0.1,
+            "previous_occupant_id": accuracy.id,
+            "previous_value": 0.95,
+            "cell_replaced": False,
+        },
+        {
+            "metric": "latency",
+            "cell": [0, 0, 0],
+            "retained": True,
+            "candidate_value": 0.95,
+            "previous_occupant_id": accuracy.id,
+            "previous_value": 0.1,
+            "cell_replaced": True,
+        },
+    ]
+    assert archive.occupied_cells() == [accuracy]
+    assert archive.elite_archive() == [accuracy]
+    assert archive.metric_cell_archive() == [accuracy, latency]
+
+
 def test_state_snapshot_restores_cells_and_elite_archive():
     source = MAPElites(
         bins=1,
@@ -282,6 +326,30 @@ def test_state_snapshot_restores_cells_and_elite_archive():
     ]
     assert snapshot["elite_program_ids"] == [occupied.id, elite_only.id]
     assert snapshot["pareto_frontier_program_ids"] == [occupied.id, elite_only.id]
+    assert snapshot["metric_cell_archives"] == [
+        {
+            "metric": "accuracy",
+            "cells": [
+                {
+                    "cell": [0, 0, 0],
+                    "program_id": occupied.id,
+                    "metric_value": 0.8,
+                    "selection_score": 0.9,
+                }
+            ],
+        },
+        {
+            "metric": "latency",
+            "cells": [
+                {
+                    "cell": [0, 0, 0],
+                    "program_id": elite_only.id,
+                    "metric_value": 0.9,
+                    "selection_score": 0.1,
+                }
+            ],
+        },
+    ]
     assert snapshot["objective_archive_policy"] == {
         "schema": "libreevolve.map_elites_objective_archive_policy.v1",
         "status": "bounded_non_dominated_archive_retention",
@@ -291,10 +359,10 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         "bound": 2,
         "trim_policy": "crowding_distance_then_selection_score_then_fitness",
         "sampling_policy": (
-            "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
+            "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool"
         ),
         "cell_replacement_policy": (
-            "map_elites_cells_still_replace_by_scalar_selection_key"
+            "scalar_primary_cells_plus_metric_specific_cell_overlays"
         ),
     }
     assert snapshot["descriptor_policy"]["rebin_policy"] == (
@@ -318,11 +386,13 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         "occupied_cell_count": 1,
         "elite_count": 2,
         "pareto_frontier_count": 2,
+        "metric_cell_archive_count": 2,
     }
     assert restored.best() is occupied
     assert restored.occupied_cells() == [occupied]
     assert restored.elite_archive() == [occupied, elite_only]
     assert restored.pareto_frontier_archive() == [occupied, elite_only]
+    assert restored.metric_cell_archive() == [occupied, elite_only]
 
 
 def test_restore_state_snapshot_rejects_missing_program_reference():
@@ -332,6 +402,25 @@ def test_restore_state_snapshot_rejects_missing_program_reference():
 
     with pytest.raises(ValueError, match="missing program id"):
         MAPElites().restore_state_snapshot(source.state_snapshot(), {})
+
+
+def test_restore_state_snapshot_rejects_missing_metric_cell_program_reference():
+    source = MAPElites(
+        bins=1,
+        elite_archive_size=1,
+        metric_order=["accuracy"],
+    )
+    program = _po("x=1", 0.5, {"accuracy": 0.7})
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["metric_cell_archives"][0]["cells"][0]["program_id"] = "missing"
+
+    with pytest.raises(ValueError, match="metric cell references missing program id"):
+        MAPElites(
+            bins=1,
+            elite_archive_size=1,
+            metric_order=["accuracy"],
+        ).restore_state_snapshot(snapshot, {program.id: program})
 
 
 def test_descriptor_model_revision_only_advances_on_search_state_change():

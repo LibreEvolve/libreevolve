@@ -1906,8 +1906,12 @@ text. Diversity uses adaptive TF-IDF character n-grams up to length 4 against
 the current capped elite corpus. Existing cells are not rebinned when that
 diversity reference corpus changes. `objective_archive_policy` records the
 bounded non-dominated Pareto retention policy, declared metric order, complete
-normalized-vector requirement, and the fact that MAP-Elites cell replacement
-still uses scalar selection score rather than Pareto dominance.
+normalized-vector requirement, metric-cell sampling eligibility, and the
+metric-specific cell-overlay policy. `metric_cell_archives` records, for each
+declared objective metric, the best retained program in each descriptor cell by
+that normalized metric value with program id, cell, metric value, and selection
+score. The primary MAP-Elites cell grid still uses scalar selection score
+rather than Pareto dominance.
 Rejected non-admitted candidates also leave the island assignment cursor on the
 same island for the next retained archive-state change. The final runtime
 archive-state snapshot records that cursor for inspection and restore. Full

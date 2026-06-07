@@ -9926,3 +9926,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused DeepResearch tests cover default arXiv bounded
     snapshot evidence, unauditable custom string retrieval, and custom HTTPS
     transport plus replayable redacted source payload artifacts.
+
+- [x] Add paper-visible metric-specific archive overlays.
+  - Paper evidence: multi-score optimization needs retained programs that
+    excel under individual objectives, not only a scalar blended archive score.
+  - Status: MAP-Elites state now records `metric_cell_archives`, per-declared
+    objective metric descriptor-cell overlays with the best retained program
+    by normalized metric value per cell. Metric-cell-only programs enter the
+    retained pool used by metric/frontier sampling and are persisted/restored
+    through archive snapshots.
+  - Remaining paper gap: primary MAP-Elites cell replacement is still scalar,
+    Pareto/frontier dominance does not replace the primary grid, and durable
+    queryable multi-objective database resurfacing remains open.
+  - Verification: focused MAP-Elites, island, database, and loop tests cover
+    retention, snapshot/restore validation, retained-pool inclusion, and
+    manifest validation.

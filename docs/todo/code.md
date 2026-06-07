@@ -37,16 +37,21 @@ Primary evidence:
     `libreevolve.prompt_section_budget.v1` include deterministic
     per-placeholder priorities, hashes, character counts, heuristic estimated
     tokens, required/optional totals, template overhead, required-section fit
-    status, and packing status. Generated program history, failed-generation
-    records, manifests, scheduler state, and LLM call history persist these
-    diagnostics. LLM call telemetry and runtime accounting aggregate
-    provider-reported token counts when adapters expose them, and
+    status, and packing status. Direct `PromptSampler` callers can now provide
+    a manifest-safe `prompt_token_counter`; in that mode the section packer
+    uses exact provider-token counts for `max_prompt_estimated_tokens`, records
+    `token_count_policy: "provider_token_counter"`, `provider_token_counter`,
+    `provider_tokens_*` totals, and per-decision exact token counts while the
+    default path remains heuristic. Generated program history,
+    failed-generation records, manifests, scheduler state, and LLM call history
+    persist these diagnostics. LLM call telemetry and runtime accounting
+    aggregate provider-reported token counts when adapters expose them, and
     `runtime.llm_budget_report` validates observed logical-call, retry,
     adapter-attempt, token, cost, wall-clock, and resume-state shapes while
-    marking `paper_budget_ready: false`. The packer is still driven by
-    character counts and heuristic token estimates, not provider tokenizers;
-    provider usage is observed after calls rather than used for exact
-    provider-token pre-call fitting.
+    marking `paper_budget_ready: false`. Built-in provider tokenizer discovery
+    and selected-backend tokenizer wiring are still absent; provider usage is
+    observed after calls rather than used automatically for exact provider-token
+    pre-call fitting.
     `cost_usd` is now populated from configured
     `backend_metadata.cost_usd_per_million_tokens` when provider usage exposes
     `total_tokens`, and `RunBudget` now enforces logical LLM calls plus a
@@ -67,13 +72,13 @@ Primary evidence:
     records the window, reserve, and derived capacity in call telemetry. If a
     backend spec omits `reserved_output_tokens` but sets `max_tokens`, the
     output-token cap is used as the reserve.
-  - Required result: add configurable backend/model context-window budgets,
-    provider-specific tokenizer integration, exact provider-token
-    section-priority fitting over parent code, inspirations, explicit context,
-    plugin context, evaluator feedback, and failure memory, persisted
-    budget/resume state for token/provider-cost limits, and tests for
+  - Required result: wire backend/provider tokenizer discovery into the
+    mutation/critique/feedback/meta-prompt path, make selected-backend exact
+    token counters automatic for parent code, inspirations, explicit context,
+    plugin context, evaluator feedback, and failure memory, persist complete
+    budget/resume state for token/provider-cost limits, and add tests for
     provider-specific oversized workspaces/context/plugins/inspirations/failure
-    memory.
+    memory under configured backend/model context-window budgets.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

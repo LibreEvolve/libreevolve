@@ -1416,7 +1416,10 @@ Backend specs can also set `prompt_max_estimated_tokens` as a local heuristic
 model/context-window cap. `LLMEnsemble` combines the global
 `prompt_max_estimated_tokens` cap with eligible backend caps before provider
 calls and records the effective, configured, and selected-backend caps in call
-telemetry. This still uses `ceil(chars / 4)` estimates, not provider tokenizers.
+telemetry. Direct `PromptSampler` callers can provide a manifest-safe
+`prompt_token_counter` to pack optional prompt sections against exact provider
+token counts before final prompt retention; built-in provider tokenizer
+discovery and selected-backend tokenizer wiring are still not automatic.
 Malformed provider outputs are failed calls, not successful proposals: empty,
 non-text, oversized, refusal, and tool-call-only responses are categorized in
 call telemetry before mutation parsing or candidate admission can see them.

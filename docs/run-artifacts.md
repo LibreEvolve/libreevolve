@@ -2228,7 +2228,10 @@ SHA-256 suffixes for stable comparison. The same metadata also records
 redaction/truncation flags, and the enforced template character limit. The
 prompt-visible evidence block contains reward policy, selected prompt
 statistics, latest candidate outcome, prompt-arm summaries, and recent failure
-summaries. The current template section sent to the meta-prompt backend is
+summaries. The prompt-visible evidence block is bounded to 6000 characters so
+the context-policy capability summary and required top-level evidence section
+names remain prompt-visible as the capability list grows. The current template
+section sent to the meta-prompt backend is
 secret-redacted and capped, with a separate placeholder list rendered before
 it so truncation does not hide the required format fields.
 Meta-prompt provider output remains backward compatible with plain revised
@@ -2365,8 +2368,15 @@ priorities, hashes, character counts, estimated tokens, required/optional
 totals, template overhead, a `required_sections_fit` flag, and
 `packing.decisions` for omitted optional sections. Its policy is
 `deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap`;
-it is still character-budget packing with heuristic token estimates, not
-provider-token context-window fitting.
+without a provider token counter it remains character-budget packing with
+heuristic token estimates. Direct callers can pass a manifest-safe
+`prompt_token_counter` to `PromptSampler`; in that mode section packing uses
+the counter to enforce `max_prompt_estimated_tokens` before final prompt
+retention, records `token_count_policy: "provider_token_counter"`,
+`provider_token_counter`, exact `provider_tokens_*` totals on the
+section-budget report, and exact token counts on packing decisions. Built-in
+provider/backend tokenizer discovery and selected-backend tokenizer wiring are
+not automatic yet.
 The configured `prompt_max_chars` and `prompt_max_estimated_tokens` values are
 also enforced at the `LLMEnsemble.generate()` boundary before backend selection
 for all ensemble roles. Oversized ensemble prompts therefore do not produce

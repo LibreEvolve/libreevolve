@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add provider-token counter hook for prompt section packing.
+  - Spec evidence: AlphaEvolve-style long-context prompt construction needs
+    deterministic packing against the selected model's token budget, not only
+    rendered character counts.
+  - Status: `PromptSampler` now accepts a manifest-safe
+    `prompt_token_counter`/`prompt_token_counter_name` for direct callers. When
+    configured, section-priority packing uses the counter to enforce
+    `max_prompt_estimated_tokens`, records
+    `token_count_policy: "provider_token_counter"`, exact
+    `provider_tokens_*` totals, the counter label, and exact token counts on
+    packing decisions and section-budget records.
+  - Remaining gap: built-in provider tokenizer discovery and selected-backend
+    tokenizer wiring are not automatic in the normal evolution path, and full
+    token/provider-cost resume state remains tracked in the active prompt
+    budget TODO.
+  - Verification: focused prompt tests cover exact-token optional-section
+    packing and invalid token-counter results.
+
 - [x] Add runtime LLM provider diagnostics aggregate.
   - Spec evidence: AlphaEvolve-scale search needs attributable provider
     usage, retry, cost-estimate, and diagnostics evidence instead of only

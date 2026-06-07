@@ -426,16 +426,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     `section_budget` with deterministic per-placeholder priorities, hashes,
     character counts, estimated tokens, required/optional totals, template
     overhead, required-section fit status, and heuristic character/token-budget
-    packing decisions for omitted optional sections, but it is still
-    heuristic packing/fallback truncation rather than provider-token
-    context-window fitting. Backend specs and backend metadata can now carry
+    packing decisions for omitted optional sections. Direct `PromptSampler`
+    callers can now provide a manifest-safe provider token counter so the
+    packer uses exact counts under `max_prompt_estimated_tokens` and records
+    provider-token totals/counter provenance, but built-in provider tokenizer
+    discovery and selected-backend tokenizer wiring are still absent from the
+    normal evolution path. Backend specs and backend metadata can now carry
     `context_window_tokens` plus optional `reserved_output_tokens`; the
     ensemble subtracts the reserve, applies the derived heuristic prompt-token
     capacity before provider calls, and records the window, reserve, and
     derived capacity in call telemetry.
   - Required result: add configurable/full validator-metadata prompt policy
-    and deterministic provider-token section-priority packing across
-    evaluator, feedback, artifact, and context prompt sections.
+    and automatic selected-backend provider-token section-priority packing
+    across evaluator, feedback, artifact, and context prompt sections.
 
 - [ ] Model migration replay and controller state for one-command archive
   resume.

@@ -6805,6 +6805,85 @@ def test_prompt_sampler_packs_to_estimated_token_budget_before_final_cap():
     assert budget["packing_status"] == "packed_optional_sections"
 
 
+def test_prompt_sampler_packs_with_provider_token_counter():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+        context_files={"long.md": " ".join(f"ctx{i}" for i in range(40))},
+    )
+    parent = Program(code="x=1", fitness=0.0)
+
+    def provider_counter(text: str) -> int:
+        return len(text.split())
+
+    sampler = PromptSampler(
+        max_prompt_estimated_tokens=30,
+        prompt_token_counter=provider_counter,
+        prompt_token_counter_name="fixture-wordpiece",
+    )
+    template = "Task: {task}\nContext:\n{context}\nExtra:\n{extra_context}\n"
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context=" ".join(f"extra{i}" for i in range(40)),
+        template=template,
+    )
+
+    assert provider_counter(prompt) <= 30
+    assert sampler.last_metadata["provider_tokens"] == provider_counter(prompt)
+    assert sampler.last_metadata["provider_token_counter"] == "fixture-wordpiece"
+    assert sampler.last_metadata["truncated"] is False
+    budget = sampler.last_metadata["section_budget"]
+    assert budget["token_count_policy"] == "provider_token_counter"
+    assert budget["provider_token_counter"] == "fixture-wordpiece"
+    assert budget["provider_tokens_limit"] == 30
+    assert budget["provider_tokens_fit"] is True
+    assert budget["max_chars"] is None
+    assert budget["packing_status"] == "packed_optional_sections"
+    assert budget["packing"]["token_count_policy"] == "provider_token_counter"
+    assert budget["packing"]["provider_tokens_after_packing"] <= 30
+    assert [item["name"] for item in budget["packing"]["decisions"]] == [
+        "extra_context",
+        "context",
+    ]
+    assert all(
+        "provider_tokens_after" in item
+        for item in budget["packing"]["decisions"]
+    )
+    sections = {item["name"]: item for item in budget["sections"]}
+    assert sections["context"]["provider_tokens"] > 0
+    assert sections["extra_context"]["provider_tokens"] > 0
+
+
+def test_prompt_sampler_rejects_invalid_provider_token_counter_result():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(code="x=1", fitness=0.0)
+    sampler = PromptSampler(
+        max_prompt_estimated_tokens=5,
+        prompt_token_counter=lambda text: -1,
+    )
+
+    with pytest.raises(PromptTemplateError, match="non-negative integer"):
+        sampler.build(parent, [], problem, extra_context="")
+
+
 def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
     problem = Problem(
         name="demo",

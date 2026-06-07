@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add provider-token counter evidence for prompt section packing.
+  - Paper evidence: AlphaEvolve prompt construction is model-context-budgeted;
+    useful long-context replay evidence needs token-aware prompt packing
+    diagnostics, not only character counts.
+  - Status: direct `PromptSampler` callers can now pass a provider token
+    counter and manifest-safe counter name. Section-priority packing then uses
+    exact token counts under `max_prompt_estimated_tokens` and persists
+    provider-token totals/counter provenance in prompt diagnostics and
+    `libreevolve.prompt_section_budget.v1` records.
+  - Remaining paper gap: this is a direct-call primitive, not automatic
+    selected-backend tokenizer discovery/wiring for the normal evolution path
+    or a complete provider-token/cost resume contract.
+  - Verification: focused prompt tests cover exact token-counter packing and
+    fail-closed invalid counter results.
+
 - [x] Add paper-visible runtime LLM provider diagnostics aggregate.
   - Paper evidence: AlphaEvolve-style compute budgeting and provider
     orchestration require auditable evidence for which backend/API mode

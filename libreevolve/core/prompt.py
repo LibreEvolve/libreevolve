@@ -7,7 +7,7 @@ import random
 import re
 import string
 import unicodedata
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -470,6 +470,8 @@ class PromptSampler:
     artifact_content_max_chars: int = DEFAULT_PROMPT_ARTIFACT_CONTENT_MAX_CHARS
     prompt_format_options: dict[str, list[dict[str, object]]] = field(default_factory=dict)
     prompt_variant_semantic_policy: str = "compatibility"
+    prompt_token_counter: Callable[[str], int] | None = None
+    prompt_token_counter_name: str = "provider"
     last_metadata: dict = field(default_factory=dict, init=False)
     last_context_text: str = field(default="", init=False)
 
@@ -484,6 +486,12 @@ class PromptSampler:
         )
         self.prompt_variant_semantic_policy = validate_prompt_variant_semantic_policy(
             self.prompt_variant_semantic_policy
+        )
+        self.prompt_token_counter = validate_prompt_token_counter(
+            self.prompt_token_counter
+        )
+        self.prompt_token_counter_name = validate_prompt_token_counter_name(
+            self.prompt_token_counter_name
         )
         self.max_prompt_chars = validate_prompt_max_chars(self.max_prompt_chars)
         self.max_prompt_estimated_tokens = validate_prompt_max_estimated_tokens(
@@ -994,12 +1002,16 @@ class PromptSampler:
         effective_max_chars = _effective_prompt_max_chars(
             self.max_prompt_chars,
             self.max_prompt_estimated_tokens,
+            exact_token_counter_configured=self.prompt_token_counter is not None,
         )
         render_values, packing_metadata = _pack_prompt_sections(
             variant,
             render_values,
             rendered_chars=len(unpacked_rendered),
             max_chars=effective_max_chars,
+            max_tokens=self.max_prompt_estimated_tokens,
+            token_counter=self.prompt_token_counter,
+            token_counter_name=self.prompt_token_counter_name,
             section_priorities=prompt_context_policy["section_priorities"],
         )
         rendered = variant.format(**render_values)
@@ -1010,10 +1022,18 @@ class PromptSampler:
             max_chars=effective_max_chars,
             configured_max_chars=self.max_prompt_chars,
             max_estimated_tokens=self.max_prompt_estimated_tokens,
+            token_counter=self.prompt_token_counter,
+            token_counter_name=self.prompt_token_counter_name,
             packing_metadata=packing_metadata,
             section_priorities=prompt_context_policy["section_priorities"],
         )
         rendered, metadata = apply_prompt_budget(rendered, effective_max_chars)
+        if self.prompt_token_counter is not None:
+            metadata["provider_tokens"] = _count_prompt_tokens(
+                rendered,
+                self.prompt_token_counter,
+            )
+            metadata["provider_token_counter"] = self.prompt_token_counter_name
         metadata.update(context_metadata)
         metadata["prompt_context_policy"] = context_policy_metadata
         metadata["failure_memory_policy"] = _failure_memory_policy_metadata(
@@ -1184,10 +1204,39 @@ def validate_prompt_max_estimated_tokens(value: object) -> int | None:
     return value
 
 
+def validate_prompt_token_counter(
+    value: object,
+) -> Callable[[str], int] | None:
+    if value is None:
+        return None
+    if not callable(value):
+        raise PromptTemplateError("prompt_token_counter must be callable or None")
+    return value
+
+
+def validate_prompt_token_counter_name(value: object) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise PromptTemplateError(
+            "prompt_token_counter_name must be a non-empty manifest-safe label"
+        )
+    label = value.strip()
+    if len(label) > 80 or re.fullmatch(r"[A-Za-z0-9_.:/@+-]+", label) is None:
+        raise PromptTemplateError(
+            "prompt_token_counter_name must be a non-empty manifest-safe label"
+        )
+    if redact_sensitive_text(label) != label:
+        raise PromptTemplateError("prompt_token_counter_name must not look secret-like")
+    return label
+
+
 def _effective_prompt_max_chars(
     max_chars: int | None,
     max_estimated_tokens: int | None,
+    *,
+    exact_token_counter_configured: bool = False,
 ) -> int | None:
+    if exact_token_counter_configured:
+        return max_chars
     token_chars = max_estimated_tokens * 4 if max_estimated_tokens is not None else None
     candidates = [value for value in (max_chars, token_chars) if value is not None]
     if not candidates:
@@ -5102,13 +5151,20 @@ def _pack_prompt_sections(
     *,
     rendered_chars: int,
     max_chars: int | None,
+    max_tokens: int | None = None,
+    token_counter: Callable[[str], int] | None = None,
+    token_counter_name: str = "provider",
     section_priorities: Mapping[str, int] | None = None,
 ) -> tuple[dict[str, object], dict]:
     fields = prompt_template_field_occurrences(template)
     priorities = _effective_section_priorities(section_priorities)
     metadata = {
         "policy": "deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap",
-        "packing_status": "not_configured" if max_chars is None else "within_budget",
+        "packing_status": (
+            "not_configured"
+            if max_chars is None and (max_tokens is None or token_counter is None)
+            else "within_budget"
+        ),
         "rendered_chars_before_packing": rendered_chars,
         "estimated_tokens_before_packing": _estimate_prompt_tokens(rendered_chars),
         "rendered_chars_after_packing": rendered_chars,
@@ -5116,7 +5172,30 @@ def _pack_prompt_sections(
         "packed": False,
         "decisions": [],
     }
-    if max_chars is None or rendered_chars <= max_chars:
+    rendered_prompt = template.format(**values)
+    if token_counter is not None:
+        metadata.update(
+            {
+                "token_count_policy": "provider_token_counter",
+                "provider_token_counter": token_counter_name,
+                "provider_tokens_before_packing": _count_prompt_tokens(
+                    rendered_prompt,
+                    token_counter,
+                ),
+                "provider_tokens_after_packing": _count_prompt_tokens(
+                    rendered_prompt,
+                    token_counter,
+                ),
+            }
+        )
+    else:
+        metadata["token_count_policy"] = "heuristic_chars_per_token"
+    if _rendered_prompt_within_budget(
+        rendered_prompt,
+        max_chars=max_chars,
+        max_tokens=max_tokens,
+        token_counter=token_counter,
+    ):
         return dict(values), metadata
 
     packed_values = dict(values)
@@ -5141,6 +5220,11 @@ def _pack_prompt_sections(
             continue
         packed_values[field_name] = marker
         candidate = template.format(**packed_values)
+        provider_tokens_after = (
+            _count_prompt_tokens(candidate, token_counter)
+            if token_counter is not None
+            else None
+        )
         decision = {
             "name": field_name,
             "priority": _prompt_section_priority(field_name, priorities),
@@ -5152,8 +5236,15 @@ def _pack_prompt_sections(
             "replacement_chars": len(marker),
             "replacement_sha256": hashlib.sha256(marker.encode("utf-8")).hexdigest(),
         }
+        if provider_tokens_after is not None:
+            decision["provider_tokens_after"] = provider_tokens_after
         decisions.append(decision)
-        if len(candidate) <= max_chars:
+        if _rendered_prompt_within_budget(
+            candidate,
+            max_chars=max_chars,
+            max_tokens=max_tokens,
+            token_counter=token_counter,
+        ):
             metadata.update(
                 {
                     "packing_status": "packed_optional_sections",
@@ -5165,6 +5256,8 @@ def _pack_prompt_sections(
                     "decisions": decisions,
                 }
             )
+            if provider_tokens_after is not None:
+                metadata["provider_tokens_after_packing"] = provider_tokens_after
             return packed_values, metadata
 
     packed_rendered = template.format(**packed_values)
@@ -5173,9 +5266,21 @@ def _pack_prompt_sections(
         packed_values,
         rendered_chars=len(packed_rendered),
     )
+    provider_tokens_after = (
+        _count_prompt_tokens(packed_rendered, token_counter)
+        if token_counter is not None
+        else None
+    )
     status = (
         "required_sections_exceed_budget"
-        if required_with_overhead > max_chars
+        if (
+            (max_chars is not None and required_with_overhead > max_chars)
+            or (
+                max_tokens is not None
+                and provider_tokens_after is not None
+                and provider_tokens_after > max_tokens
+            )
+        )
         else "packed_optional_sections_still_over_budget"
     )
     metadata.update(
@@ -5189,7 +5294,38 @@ def _pack_prompt_sections(
             "decisions": decisions,
         }
     )
+    if provider_tokens_after is not None:
+        metadata["provider_tokens_after_packing"] = provider_tokens_after
     return packed_values, metadata
+
+
+def _rendered_prompt_within_budget(
+    prompt: str,
+    *,
+    max_chars: int | None,
+    max_tokens: int | None,
+    token_counter: Callable[[str], int] | None,
+) -> bool:
+    if max_chars is not None and len(prompt) > max_chars:
+        return False
+    if max_tokens is not None and token_counter is not None:
+        return _count_prompt_tokens(prompt, token_counter) <= max_tokens
+    return True
+
+
+def _count_prompt_tokens(
+    prompt: str,
+    token_counter: Callable[[str], int],
+) -> int:
+    try:
+        value = token_counter(prompt)
+    except Exception as exc:
+        raise PromptTemplateError("prompt_token_counter failed") from exc
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise PromptTemplateError(
+            "prompt_token_counter must return a non-negative integer"
+        )
+    return value
 
 
 def _prompt_section_packing_marker(
@@ -5230,6 +5366,8 @@ def _prompt_section_budget_report(
     max_chars: int | None,
     configured_max_chars: int | None = None,
     max_estimated_tokens: int | None = None,
+    token_counter: Callable[[str], int] | None = None,
+    token_counter_name: str = "provider",
     packing_metadata: Mapping[str, object] | None = None,
     section_priorities: Mapping[str, int] | None = None,
 ) -> dict:
@@ -5265,6 +5403,11 @@ def _prompt_section_budget_report(
                 "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
             }
         )
+        if token_counter is not None:
+            sections[-1]["provider_tokens"] = _count_prompt_tokens(
+                text,
+                token_counter,
+            )
     template_overhead_chars = max(0, rendered_chars - accounted_chars)
     effective_max_estimated_tokens = (
         max_estimated_tokens
@@ -5275,7 +5418,7 @@ def _prompt_section_budget_report(
     )
     required_with_overhead = required_chars + template_overhead_chars
     packing = dict(packing_metadata or {})
-    return {
+    report = {
         "schema": "libreevolve.prompt_section_budget.v1",
         "policy": packing.get(
             "policy",
@@ -5309,6 +5452,28 @@ def _prompt_section_budget_report(
         "section_count": len(sections),
         "sections": sections,
     }
+    if token_counter is not None:
+        rendered_prompt = template.format(**values)
+        report.update(
+            {
+                "token_count_policy": "provider_token_counter",
+                "provider_token_counter": token_counter_name,
+                "provider_tokens_before_cap": _count_prompt_tokens(
+                    rendered_prompt,
+                    token_counter,
+                ),
+                "provider_tokens_limit": max_estimated_tokens,
+                "provider_tokens_fit": (
+                    True
+                    if max_estimated_tokens is None
+                    else _count_prompt_tokens(rendered_prompt, token_counter)
+                    <= max_estimated_tokens
+                ),
+            }
+        )
+    else:
+        report["token_count_policy"] = "heuristic_chars_per_token"
+    return report
 
 
 def prompt_template_field_occurrences(template: str) -> dict[str, int]:

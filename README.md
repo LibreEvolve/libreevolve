@@ -2978,6 +2978,11 @@ budget consistency, consistent budget unit/limit across each seed's fraction
 curve and across all variants/seeds for each target, passed component
 assertions, and hashed curve artifacts. It validates report shape only; it does
 not run ablation experiments or add token/cost/accelerator budget stops.
+`libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
+ablation report artifacts under an explicit artifact root, checking safe
+relative paths, existence, SHA-256 hashes, and byte counts for variant reports,
+curve summaries, raw records, and plots. It proves artifact availability for a
+report, not that the ablation experiment was executed.
 Paper-facing LLM budget audits use `libreevolve.llm_budget_report.v1` in
 `libreevolve/llm/budget_report.py`; the contract validates per-role logical
 call, retry-attempt, adapter-attempt, token, cost, and wall-clock limits and

@@ -9992,3 +9992,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     review evidence.
   - Verification: focused certification tests cover valid inventories and
     missing, mismatched, and unsafe evidence/artifact references.
+
+- [x] Add paper-visible ablation artifact inventory verification.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 8 reports ablation
+    curves over equal compute-budget fractions, so paper-visible reports need
+    concrete result artifacts for curve summaries, raw records, variant
+    outputs, and plots.
+  - Status: `libreevolve.alphaevolve_ablation_artifact_inventory.v1` now
+    verifies declared ablation artifacts under a safe artifact root. Variant
+    reports, curve summaries, raw records, and plot artifacts are checked for
+    safe paths, existence, SHA-256 hashes, byte counts, and aggregate inventory
+    status.
+  - Remaining paper gap: this is ablation result-file verification only; no
+    benchmark runner currently executes real Figure 8-style equal-budget
+    ablation experiments or emits those validated reports for real targets.
+  - Verification: focused ablation-result tests cover valid inventories and
+    missing, mismatched, and unsafe artifact references.

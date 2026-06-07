@@ -1,9 +1,12 @@
+import hashlib
 import json
 
 from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
 from libreevolve.problems.benchmarks.ablation_results import (
+    ABLATION_ARTIFACT_INVENTORY_SCHEMA,
     ABLATION_RESULT_SCHEMA,
     REQUIRED_BUDGET_FRACTIONS,
+    ablation_result_artifact_inventory,
     render_ablation_result_summary,
     validate_ablation_result_report,
 )
@@ -70,6 +73,83 @@ def test_ablation_result_report_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.equal_budget_ready is True
+
+
+def test_ablation_result_artifact_inventory_verifies_declared_files(tmp_path):
+    report = _valid_report()
+    report["artifacts"].append(
+        {
+            "kind": "raw_records",
+            "path": "ablations/hello_world/raw_records.jsonl",
+            "sha256": "b" * 64,
+            "bytes": 2048,
+        }
+    )
+    for artifact in report["artifacts"]:
+        path = tmp_path / artifact["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        raw = f"{artifact['kind']} artifact".encode("utf-8")
+        path.write_bytes(raw)
+        artifact["sha256"] = hashlib.sha256(raw).hexdigest()
+        artifact["bytes"] = len(raw)
+
+    inventory = ablation_result_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == ABLATION_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["report_schema"] == ABLATION_RESULT_SCHEMA
+    assert inventory["budget_axis"] == "fraction_of_equal_compute_budget"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 2
+    assert inventory["verified_count"] == 2
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert {record["status"] for record in inventory["artifacts"]} == {
+        "verified"
+    }
+    assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+
+
+def test_ablation_result_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    report = _valid_report()
+    report["artifacts"].extend(
+        [
+            {
+                "kind": "raw_records",
+                "path": "missing/raw_records.jsonl",
+                "sha256": "b" * 64,
+                "bytes": 2048,
+            },
+            {
+                "kind": "plot",
+                "path": "../escape-plot.png",
+                "sha256": "c" * 64,
+                "bytes": 1024,
+            },
+        ]
+    )
+    first = report["artifacts"][0]
+    first_path = tmp_path / first["path"]
+    first_path.parent.mkdir(parents=True, exist_ok=True)
+    first_path.write_text("wrong", encoding="utf-8")
+    first["sha256"] = "d" * 64
+    first["bytes"] = 999
+
+    inventory = ablation_result_artifact_inventory(report, tmp_path)
+    records = {artifact["kind"]: artifact for artifact in inventory["artifacts"]}
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records["curve_summary"]["status"] == "hash_mismatch"
+    assert "artifact_hash_mismatch" in records["curve_summary"]["issues"]
+    assert "artifact_bytes_mismatch" in records["curve_summary"]["issues"]
+    assert records["raw_records"]["status"] == "missing_file"
+    assert records["plot"]["status"] == "unsafe_path"
 
 
 def test_ablation_result_report_requires_all_variants_seeds_and_fractions():

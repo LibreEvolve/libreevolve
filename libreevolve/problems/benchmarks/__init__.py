@@ -1,5 +1,12 @@
 """Benchmark registry metadata."""
 
+from libreevolve.problems.benchmarks.ablation_results import (
+    ABLATION_ARTIFACT_INVENTORY_SCHEMA,
+    ABLATION_RESULT_SCHEMA,
+    ablation_result_artifact_inventory,
+    render_ablation_result_summary,
+    validate_ablation_result_report,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     EXPECTED_TARGET_COUNT,
     REGISTRY_SCHEMA as APPENDIX_A_MATRIX_REGISTRY_SCHEMA,
@@ -39,6 +46,8 @@ from libreevolve.problems.benchmarks.systems_results import (
 )
 
 __all__ = [
+    "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
+    "ABLATION_RESULT_SCHEMA",
     "APPENDIX_A_MATRIX_REGISTRY_SCHEMA",
     "APPENDIX_A_MATRIX_TARGET_SUITE",
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
@@ -49,17 +58,20 @@ __all__ = [
     "PAPER_CERTIFICATION_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
+    "ablation_result_artifact_inventory",
     "certification_artifact_inventory",
     "example_benchmark_scope_records",
     "matrix_result_artifact_inventory",
     "matrix_target_by_id",
     "matrix_target_records",
+    "render_ablation_result_summary",
     "render_appendix_a_matrix_registry_summary",
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
     "render_matrix_result_summary",
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
+    "validate_ablation_result_report",
     "validate_appendix_a_matrix_registry",
     "validate_example_benchmark_scope",
     "validate_matrix_result_report",

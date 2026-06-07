@@ -1633,6 +1633,13 @@ relative paths, file existence, SHA-256 hashes, byte counts, per-record
 statuses, and aggregate missing/mismatch/invalid counts. It is evidence-file
 verification, not a substitute for an independent verifier script, deployment
 measurement, or human review.
+`libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
+ablation report artifacts against concrete files under an explicit artifact
+root. Variant reports, curve summaries, raw records, and plot artifacts must
+resolve safely under that root, exist as files, and match their reported
+SHA-256 hashes and byte counts. The inventory verifies result artifacts; it
+does not execute Figure 8 ablation runs or prove equal-budget experiment
+coverage by itself.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

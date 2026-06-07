@@ -45,8 +45,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     targets, exactly three seeds, required equal-budget fractions, finite
     scores, consumed-budget/fraction consistency, consistent budget unit/limit
     per seed curve and across all variants/seeds for each target, passed
-    component assertions, and hashed curve artifacts, but no benchmark script
-    emits those reports yet.
+    component assertions, and hashed curve artifacts.
+    `libreevolve.alphaevolve_ablation_artifact_inventory.v1` now verifies
+    declared ablation report artifacts under an explicit artifact root,
+    checking safe relative paths, existence, SHA-256 hashes, byte counts,
+    per-artifact statuses, and aggregate missing/mismatch/invalid counts. No
+    benchmark script emits those reports yet.
     Evaluator subprocess-attempt, configured-stage sample, retry, timeout, and
     sample/stage budget-exhaustion counters now persist in evaluation
     accounting and runtime manifests, and optional run-wide limits can stop on
@@ -103,7 +107,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     connect hard cancellation semantics to runtime behavior beyond the current
     configured provider request timeout, ensemble `llm_call_timeout_sec`, and
     remaining-runtime wait deadlines, and add benchmark scripts that emit
-    equal-budget ablation reports for real targets.
+    equal-budget ablation reports for real targets. The remaining ablation gap
+    is executing and emitting real equal-budget reports, not validating the
+    declared result artifacts once a report names them.
 
 - [ ] Connect LLM budget-report contracts to live enforcement and restored
   consumption.

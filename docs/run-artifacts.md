@@ -1156,12 +1156,18 @@ Important behavior:
   database or semantic failure-similarity index.
 - `runtime.history.resurfacing_index` stores a bounded deterministic
   rank-fusion view over the score, objective-frontier, metric, lineage,
-  descriptor, and feedback indexes. Records deduplicate by program id and
+  descriptor, feedback, and hypothesis indexes. Records deduplicate by program id and
   include source ranks/contributions, lineage root, selection score, fitness,
   archive-admission summary, and available objective evidence. This makes
   resurfacing decisions manifest-visible, but it is still rebuilt from current
   history records and is not a persisted database table, embedding search
   engine, or schema-migration layer.
+- `runtime.history.hypothesis_index` stores bounded proposal
+  idea/rationale/hypothesis summaries for valid programs with captured
+  proposal metadata. Text fields are redacted, hashed, and capped before
+  manifest persistence. This makes proposal-hypothesis evidence queryable from
+  run artifacts, but it is not a cross-run hypothesis database or semantic
+  hypothesis search layer.
 - optional critique metadata is stored under `metadata.critique`
 - optional proposal idea/rationale/hypothesis sections are stored under
   `metadata.proposal` when `capture_proposal_metadata` is enabled; when critique

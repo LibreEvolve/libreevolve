@@ -800,6 +800,79 @@ def test_resurfacing_index_snapshot_fuses_queryable_program_sources(tmp_path):
     ]
 
 
+def test_hypothesis_index_snapshot_reports_captured_proposals(tmp_path):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    strong = Program(
+        id="strong-hypothesis",
+        code="x = 1\n",
+        fitness=0.9,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.9,
+            "proposal": {
+                "idea": "Use a tile cache.",
+                "rationale": "Reduce duplicate products.",
+                "hypothesis": "Tile cache improves matrix rank search.",
+            },
+        },
+    )
+    weak = Program(
+        id="weak-hypothesis",
+        code="x = 2\n",
+        fitness=0.2,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": 0.2,
+            "proposal": {
+                "hypothesis": "Try a slower fallback.",
+            },
+        },
+    )
+    invalid = Program(
+        id="invalid-hypothesis",
+        code="x = 3\n",
+        fitness=1.0,
+        evaluation={"is_valid": False},
+        metadata={
+            "selection_score": 1.0,
+            "proposal": {
+                "hypothesis": "Invalid candidates stay out of the index.",
+            },
+        },
+    )
+    for candidate in (weak, invalid, strong):
+        db.log(candidate)
+
+    snapshot = db.hypothesis_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.hypothesis_index.v1"
+    assert snapshot["policy"] == "top_valid_programs_with_proposal_hypothesis_metadata"
+    assert snapshot["program_count_considered"] == 2
+    assert [program["program_id"] for program in snapshot["programs"]] == [
+        strong.id,
+        weak.id,
+    ]
+    assert snapshot["programs"][0]["proposal"]["hypothesis"] == {
+        "policy": "bounded_redacted_proposal_text_v1",
+        "chars": 39,
+        "sha256": hashlib.sha256(
+            b"Tile cache improves matrix rank search."
+        ).hexdigest(),
+        "preview": "Tile cache improves matrix rank search.",
+        "preview_chars": 39,
+        "truncated": False,
+        "redacted": False,
+    }
+    resurfacing = db.resurfacing_index_snapshot()
+    surfaced = {
+        record["program_id"]: record for record in resurfacing["programs"]
+    }
+    assert {
+        source["source"] for source in surfaced[strong.id]["sources"]
+    } >= {"score", "hypothesis"}
+    assert invalid.id not in surfaced
+
+
 def test_resurface_candidates_returns_defensive_ranked_programs(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     top = Program(

@@ -98,6 +98,8 @@ _MAX_FEEDBACK_INDEX_TEXT_CHARS = 200
 _MAX_RESURFACING_INDEX_PROGRAMS = 50
 _MAX_FAILURE_INDEX_FINGERPRINTS = 50
 _MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT = 5
+_MAX_HYPOTHESIS_INDEX_PROGRAMS = 50
+_MAX_HYPOTHESIS_INDEX_TEXT_CHARS = 300
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -694,6 +696,12 @@ class ProgramDatabase:
             self._failure_records,
             fingerprint_limit=_MAX_FAILURE_INDEX_FINGERPRINTS,
             records_per_fingerprint_limit=_MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT,
+        )
+
+    def hypothesis_index_snapshot(self) -> dict:
+        return _hypothesis_index_snapshot(
+            self._all,
+            limit=_MAX_HYPOTHESIS_INDEX_PROGRAMS,
         )
 
     def resurface_candidates(
@@ -2797,13 +2805,17 @@ def _resurfacing_index_snapshot(
             if record.get("evaluation_is_valid") is True:
                 add_source("feedback", str(grader_name), rank, record, 0.6)
 
+    hypothesis = _hypothesis_index_snapshot(programs, limit=limit)
+    for rank, record in enumerate(hypothesis["programs"]):
+        add_source("hypothesis", "proposal_hypothesis", rank, record, 0.55)
+
     ranked = sorted(records.values(), key=_resurfacing_index_sort_key)
     retained = ranked[:limit]
     return {
         "schema": "libreevolve.resurfacing_index.v1",
         "policy": (
             "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
-            "descriptor_feedback_indexes"
+            "descriptor_feedback_hypothesis_indexes"
         ),
         "metric_order": [
             name for name in metric_order if isinstance(name, str) and name
@@ -3056,6 +3068,95 @@ def _failure_index_fingerprint_sort_key(record: dict) -> tuple:
         -int(record.get("max_repetition_count", 1)),
         -int(record.get("occurrence_count", 0)),
         str(record.get("fingerprint_sha256", "")),
+    )
+
+
+def _hypothesis_index_snapshot(
+    programs: list[Program],
+    *,
+    limit: int,
+) -> dict:
+    candidates = [
+        record
+        for program in programs
+        if (record := _hypothesis_index_program(program)) is not None
+    ]
+    candidates.sort(key=_hypothesis_index_sort_key)
+    retained = candidates[:limit]
+    return {
+        "schema": "libreevolve.hypothesis_index.v1",
+        "policy": "top_valid_programs_with_proposal_hypothesis_metadata",
+        "program_count_considered": len(candidates),
+        "retained_count": len(retained),
+        "retention_limit": limit,
+        "programs": retained,
+        "limitations": [
+            "runtime_manifest_hypothesis_index_not_cross_run_database_table",
+            "bounded_redacted_text_summaries_not_full_text_search",
+            "requires_captured_proposal_metadata",
+            "rebuilt_from_current_runtime_history_records",
+        ],
+    }
+
+
+def _hypothesis_index_program(program: Program) -> dict | None:
+    if program.evaluation.get("is_valid") is not True:
+        return None
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    proposal = metadata.get("proposal")
+    if not isinstance(proposal, Mapping):
+        return None
+    text_fields = {}
+    for field in ("hypothesis", "idea", "rationale"):
+        value = proposal.get(field)
+        if isinstance(value, str) and value:
+            text_fields[field] = _hypothesis_index_text_summary(value)
+    if not text_fields:
+        return None
+    record: dict[str, object] = {
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+        "proposal": text_fields,
+    }
+    admission = _history_safe_archive_admission_summary(program)
+    if admission:
+        record["archive_admission"] = admission
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    else:
+        normalized_metrics = _history_safe_normalized_metrics(program)
+        if normalized_metrics:
+            record["normalized_metrics"] = normalized_metrics
+    return record
+
+
+def _hypothesis_index_text_summary(value: str) -> dict:
+    redacted = redact_sensitive_text(value)
+    return {
+        "policy": "bounded_redacted_proposal_text_v1",
+        "chars": len(value),
+        "sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
+        "preview": redacted[:_MAX_HYPOTHESIS_INDEX_TEXT_CHARS],
+        "preview_chars": min(len(redacted), _MAX_HYPOTHESIS_INDEX_TEXT_CHARS),
+        "truncated": len(redacted) > _MAX_HYPOTHESIS_INDEX_TEXT_CHARS,
+        "redacted": redacted != value,
+    }
+
+
+def _hypothesis_index_sort_key(record: dict) -> tuple:
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    generation = record.get("generation")
+    program_id = record.get("program_id")
+    return (
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
+        -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
     )
 
 

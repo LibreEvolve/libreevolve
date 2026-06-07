@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add a runtime hypothesis index for captured proposal metadata.
+  - Spec evidence: AlphaEvolve-style program databases should resurface useful
+    prior ideas and hypotheses, not only final scores or archive cells.
+  - Status: `ProgramDatabase.hypothesis_index_snapshot()` now emits
+    `libreevolve.hypothesis_index.v1`, a bounded manifest-visible index of
+    valid programs with captured proposal idea/rationale/hypothesis metadata.
+    Text fields are redacted, hashed, and capped before persistence.
+    `runtime.history.hypothesis_index` persists the view, and
+    `runtime.history.resurfacing_index` includes hypothesis records as a
+    deterministic rank-fusion source.
+  - Remaining gap: this is a bounded runtime view, not a cross-run semantic
+    hypothesis database, learned retrieval layer, or schema-migration engine.
+  - Verification: focused database tests cover captured proposal indexing,
+    invalid-program exclusion, text hashes/previews, and resurfacing source
+    integration; the loop runtime-history test covers manifest schema
+    persistence.
+
 - [x] Add a runtime failure index grouped by failure fingerprint.
   - Spec evidence: AlphaEvolve-style resurfacing should use negative evidence
     and repeated failure modes, not only successful archive entries.

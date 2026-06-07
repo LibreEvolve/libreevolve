@@ -688,18 +688,21 @@ Primary evidence:
     bounded `resurfacing_index` rank-fusion view in runtime manifests, exposes
     `resurface_candidates()` for defensive ranked snapshots from those same
     sources, persists `runtime.history.failure_index` grouped by failure
-    fingerprint/repetition evidence, and can restore cells/elites from a
-    manifest plus accepted history bundle. However, these are still append-only
-    logs plus an in-memory archive and manifest-visible rebuilt indexes, not a
-    persisted query/index database. There is no durable index over full metric
-    vectors, feedback embeddings/full-text ranking, cross-run failure
-    fingerprints, full lineage subgraphs, hypotheses, artifacts, retrieval
-    context, or novelty; the resurfacing index is deterministic rank fusion
-    over bounded current-history views, and `load_accepted_history_index()`
-    remains an id map for restore/query scaffolding rather than a ranked
-    cross-run database. The compact `show` path intentionally rejects mixed
-    legacy/current history schemas with a line-numbered diagnostic instead of
-    migrating them into one compatible database view.
+    fingerprint/repetition evidence, persists `runtime.history.hypothesis_index`
+    for bounded redacted proposal idea/rationale/hypothesis summaries, includes
+    hypothesis evidence in `resurfacing_index`, and can restore cells/elites
+    from a manifest plus accepted history bundle. However, these are still
+    append-only logs plus an in-memory archive and manifest-visible rebuilt
+    indexes, not a persisted query/index database. There is no durable index
+    over full metric vectors, feedback embeddings/full-text ranking, cross-run
+    failure fingerprints, full lineage subgraphs, semantic/cross-run
+    hypotheses, artifacts, retrieval context, or novelty; the resurfacing index
+    is deterministic rank fusion over bounded current-history views, and
+    `load_accepted_history_index()` remains an id map for restore/query
+    scaffolding rather than a ranked cross-run database. The compact `show`
+    path intentionally rejects mixed legacy/current history schemas with a
+    line-numbered diagnostic instead of migrating them into one compatible
+    database view.
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, ranked views by
     score/metric/diversity/feedback/lineage/failure/hypothesis/artifact

@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add a runtime hypothesis index for captured proposal metadata.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
+    program database that resurfaces prior programs and ideas as inspirations
+    for future LLM proposals.
+  - Status: final runtime manifests now include
+    `runtime.history.hypothesis_index`, a bounded redacted/hash-backed view of
+    proposal idea, rationale, and hypothesis text for valid programs with
+    captured proposal metadata. Hypothesis records now also participate in the
+    runtime resurfacing rank-fusion index.
+  - Remaining paper gap: this does not yet provide cross-run semantic
+    hypothesis retrieval, learned idea ranking, or a full durable program
+    database.
+  - Verification: focused database and loop tests cover captured proposal
+    indexing, invalid-program exclusion, resurfacing integration, and manifest
+    schema persistence.
+
 - [x] Add a runtime failure index grouped by failure fingerprint.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes a
     program database that resurfaces prior attempts; failed proposals and

@@ -1461,8 +1461,9 @@ are rejected rather than persisted. Backend specs can
 set `cost_usd_per_million_tokens`; when provider usage exposes
 `total_tokens`, call telemetry records an estimated cost and role accounting
 accumulates `cost_microusd` for runtime budget reports. Live provider
-pricing/default capture, provider-output replay, and async/pending-work budget
-composition remain backend-provenance work. Synchronous
+pricing/default-rate capture beyond configured estimates, provider-output
+replay, and async/pending-work budget composition remain backend-provenance
+work. Synchronous
 provider-attempt/token/configured-cost/latency stops and full-runtime budget
 replay are already covered by runtime budget snapshots and controller-budget
 events.
@@ -1564,7 +1565,7 @@ that the estimate is not live provider pricing. Each call also records
 missing configured rate or missing provider token total. Omitted rates keep cost
 usage at zero and do not imply free provider calls. `max_llm_cost_microusd` can
 stop runs from that configured estimate, but LibreEvolve still does not fetch
-live provider pricing.
+live provider pricing or provider default rates.
 Built-in OpenAI, Anthropic, and Ollama backend specs also accept positive
 `timeout_sec`, which is forwarded to provider client construction as a request
 timeout. Run-level `llm_call_timeout_sec` adds an ensemble deadline around

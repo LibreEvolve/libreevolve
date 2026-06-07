@@ -17,13 +17,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README now documents live synchronous
     provider-attempt/token/configured-cost/latency stops, restorable runtime
     budget snapshots, `controller_budget_events.jsonl` replay, and
-    full-runtime restore validation, while still marking live provider pricing,
-    provider-output replay, and async/pending-work budget composition as open.
+    full-runtime restore validation, while still marking live provider
+    pricing/default-rate capture beyond configured estimates, provider-output
+    replay, and async/pending-work budget composition as open.
   - Required result: once provider-output replay, async/pending-work budget
-    composition, or live pricing/default capture land, update the README and
-    matching code/paper TODO entries together so the README neither underclaims
-    current synchronous budget replay nor overclaims full AlphaEvolve-style
-    replay.
+    composition, or live pricing/default-rate capture beyond configured
+    estimates land, update the README and matching code/paper TODO entries
+    together so the README neither underclaims current synchronous budget
+    replay nor overclaims full AlphaEvolve-style replay.
 
 - [ ] Keep README archive restore claims scoped to current archive-content
   restore.

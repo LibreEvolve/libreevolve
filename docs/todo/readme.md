@@ -136,6 +136,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     together so README neither underclaims the report and inventory contracts
     nor overclaims executed AlphaEvolve-style calibration evidence.
 
+- [ ] Keep README provider-cancellation wording scoped to timeout policy and
+  observation evidence versus live hard cancellation.
+  - Spec evidence: AlphaEvolve-scale runs need bounded provider latency,
+    attributable stop behavior, and cancellation semantics that prevent stalled
+    model calls from blocking long budgeted experiments.
+  - Current evidence: README now says
+    `libreevolve.provider_cancellation_policy.v1` validates provider
+    request-timeout, ensemble-deadline, runtime-deadline, and hard-cancel
+    policy rules by role, including artifact requirements and hard-cancel
+    readiness gated on cancellation-record evidence. It also says runtime
+    manifests currently scope provider timeout/deadline rules to active LLM
+    role surfaces and attach scheduler-derived timeout/quarantine observations,
+    but that this is policy and observation evidence only. The README further
+    says provider SDK hard cancellation and timeout-driven stop enforcement
+    remain runtime work, and that artifact inventory proves named cancellation
+    evidence files exist rather than proving in-flight SDK calls can be
+    hard-cancelled.
+  - Required result: when live provider SDK cancellation, timeout-driven
+    stop-run behavior, richer timeout/cancellation artifacts, or cross-run
+    quarantine/resume proof lands, update README, ROADMAP, papers index, and
+    code/paper TODO entries together so README neither underclaims current
+    timeout-policy evidence nor overclaims AlphaEvolve-style hard cancellation.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

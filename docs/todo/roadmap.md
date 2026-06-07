@@ -706,6 +706,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
+- [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
+      expected artifacts.
+  - Spec evidence: AlphaEvolve-style benchmark evidence needs repeatable
+    target-family runs with saved outputs, validator/certifier artifacts,
+    target/SOTA baselines, and expected report files, not only smoke examples
+    or schema validators for reports that may exist later.
+  - Current evidence: `ROADMAP.md` lists "Add one non-toy benchmark run
+    fixture with expected artifacts" as a good first follow-up. Current code
+    and docs provide smoke fixtures (`hello_world`, `sorting`,
+    `workspace_math`, `matrix_multiplication`, and `circle_packing`),
+    Appendix A/B registries, benchmark hardening/report contracts, systems and
+    certification report contracts, ablation report contracts, and one checked
+    Strassen baseline bundle. Those surfaces validate scope, schemas, and
+    declared artifact availability, but they do not yet provide a non-toy
+    benchmark run fixture whose command produces expected benchmark artifacts
+    from an actual repeated-seed target run.
+  - Required result: when the first non-toy benchmark fixture lands, update the
+    roadmap, README, papers index, and code/paper TODO entries together with
+    the runnable command, expected artifact paths, verifier/report contracts,
+    target/SOTA baseline, seed/budget policy, and evidence that the fixture is
+    not merely a smoke example or predeclared static artifact bundle.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

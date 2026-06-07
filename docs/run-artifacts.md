@@ -2577,8 +2577,13 @@ heuristic token estimates. Direct callers can pass a manifest-safe
 the counter to enforce `max_prompt_estimated_tokens` before final prompt
 retention, records `token_count_policy: "provider_token_counter"`,
 `provider_token_counter`, exact `provider_tokens_*` totals on the
-section-budget report, and exact token counts on packing decisions. Built-in
-provider/backend tokenizer discovery and selected-backend tokenizer wiring are
+section-budget report, and exact token counts on packing decisions. The
+evolution loop records `prompt_token_counter_capability` with schema
+`libreevolve.prompt_token_counter_capability.v1` for mutation prompts. When all
+eligible mutation backends share a locally available OpenAI `tiktoken` counter,
+that counter is wired into `PromptSampler`; otherwise the record explains why
+the mutation prompt remained on heuristic estimates. Full provider/backend
+tokenizer discovery and selected-backend tokenizer wiring for all roles are
 not automatic yet.
 The configured `prompt_max_chars` and `prompt_max_estimated_tokens` values are
 also enforced at the `LLMEnsemble.generate()` boundary before backend selection

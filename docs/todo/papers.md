@@ -517,14 +517,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     packing decisions for omitted optional sections. Direct `PromptSampler`
     callers can now provide a manifest-safe provider token counter so the
     packer uses exact counts under `max_prompt_estimated_tokens` and records
-    provider-token totals/counter provenance.
+    provider-token totals/counter provenance. The normal mutation path now
+    discovers a common eligible-backend counter before constructing
+    `PromptSampler`; this currently enables automatic exact counting only when
+    every eligible mutation backend can use a locally installed OpenAI
+    `tiktoken` counter, and otherwise persists
+    `libreevolve.prompt_token_counter_capability.v1` diagnostics with the
+    precise unavailable reason.
     `validate_prompt_section_budget_report()` now validates persisted
     `libreevolve.prompt_section_budget.v1` records for schema/policy shape,
     section counts, required/optional totals, section hash shape, packing
-    decisions, cap-fit claims, and provider-counter boundary fields, but
-    built-in provider tokenizer discovery and selected-backend tokenizer wiring
-    are still absent from the
-    normal evolution path. Backend specs and backend metadata can now carry
+    decisions, cap-fit claims, and provider-counter boundary fields, but full
+    selected-backend tokenizer wiring across all provider families and prompt
+    roles is still absent from the normal evolution path. Backend specs and
+    backend metadata can now carry
     `context_window_tokens` plus optional `reserved_output_tokens`; the
     ensemble subtracts the reserve, applies the derived heuristic prompt-token
     capacity before provider calls, and records the window, reserve, and

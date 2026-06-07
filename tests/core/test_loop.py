@@ -6675,6 +6675,66 @@ def test_loop_applies_prompt_estimated_token_budget_before_llm_and_logs_diagnost
     assert manifest["config"]["prompt_max_estimated_tokens"] == 175
 
 
+def test_loop_wires_discovered_provider_token_counter_into_prompt_diagnostics():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.context_files = {
+        "notes.txt": " ".join(f"context{i}" for i in range(40)),
+    }
+    llm = _TelemetryLLM()
+    capability = {
+        "schema": "libreevolve.prompt_token_counter_capability.v1",
+        "policy": "eligible_backend_common_provider_counter_optional_dependency_v1",
+        "role": "mutation",
+        "status": "ready",
+        "reason": "common_provider_counter_available",
+        "counter_name": "fixture:wordpiece",
+        "eligible_backend_indices": [0],
+        "selection_scope": "backend_metadata_role_match_when_available",
+        "backends": [
+            {
+                "backend_idx": 0,
+                "type": "openai",
+                "model": "gpt-4o-mini",
+                "status": "ready",
+                "source": "fixture",
+                "counter_name": "fixture:wordpiece",
+                "reason": "available",
+            }
+        ],
+    }
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=llm),
+        patch(
+            "libreevolve.core.loop.discover_prompt_token_counter",
+            return_value=(lambda text: len(text.split()), capability),
+        ),
+    ):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                prompt_max_estimated_tokens=40,
+                backends=[{"type": "openai", "model": "gpt-4o-mini"}],
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [json.loads(l) for l in (run_dir / "history.jsonl").read_text().splitlines()]
+    diagnostics = records[-1]["metadata"]["prompt_diagnostics"]
+    section_budget = diagnostics["section_budget"]
+
+    assert diagnostics["prompt_token_counter_capability"] == capability
+    assert diagnostics["provider_token_counter"] == "fixture:wordpiece"
+    assert diagnostics["provider_tokens"] == len(llm.calls[0]["prompt"].split())
+    assert section_budget["token_count_policy"] == "provider_token_counter"
+    assert section_budget["provider_token_counter"] == "fixture:wordpiece"
+    assert section_budget["provider_tokens_limit"] == 40
+
+
 def test_loop_logs_stochastic_prompt_format_selection_metadata():
     tmpdir = tempfile.mkdtemp()
     with patch("libreevolve.core.loop.build_llm", return_value=_llm()):

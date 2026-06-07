@@ -42,7 +42,15 @@ Primary evidence:
     uses exact provider-token counts for `max_prompt_estimated_tokens`, records
     `token_count_policy: "provider_token_counter"`, `provider_token_counter`,
     `provider_tokens_*` totals, and per-decision exact token counts while the
-    default path remains heuristic. Generated program history,
+    default path remains heuristic. The evolution loop now attempts mutation
+    prompt-counter discovery across the eligible mutation backends before
+    constructing `PromptSampler`: when every eligible backend shares a locally
+    available OpenAI `tiktoken` counter, mutation prompt section packing uses
+    that counter automatically; otherwise prompt diagnostics persist
+    `prompt_token_counter_capability` with schema
+    `libreevolve.prompt_token_counter_capability.v1` and the exact unavailable
+    reason, such as a missing optional dependency or a provider with no local
+    tokenizer registered. Generated program history,
     failed-generation records, manifests, scheduler state, and LLM call history
     persist these diagnostics.
     `validate_prompt_section_budget_report()` now validates persisted
@@ -54,9 +62,11 @@ Primary evidence:
     adapter-attempt, token, cost, wall-clock, and resume-state shapes while
     marking `paper_budget_ready: false`. `validate_llm_budget_evidence_bundle()`
     now checks LLM budget reports together with matching resume artifact
-    inventory before accepting bundled paper-budget readiness. Built-in provider tokenizer discovery
-    and selected-backend tokenizer wiring are still absent; provider usage is
-    observed after calls rather than used automatically for exact provider-token
+    inventory before accepting bundled paper-budget readiness. Provider-token
+    discovery is still limited to optional local OpenAI `tiktoken` counters on
+    mutation prompts; selected-backend tokenizer wiring across critique,
+    feedback, and meta-prompt roles is still absent, and provider usage is
+    observed after calls rather than universally used for exact provider-token
     pre-call fitting.
     `cost_usd` is now populated from configured
     `backend_metadata.cost_usd_per_million_tokens` when provider usage exposes
@@ -85,9 +95,10 @@ Primary evidence:
     budget/resume state for token/provider-cost limits, and add tests for
     provider-specific oversized workspaces/context/plugins/inspirations/failure
     memory under configured backend/model context-window budgets. The remaining
-    gap is automatic selected-backend tokenizer discovery/wiring and complete
-    provider-cost restoration, not validating persisted section-budget records
-    or LLM budget report/resume-artifact bundle consistency.
+    gap is automatic selected-backend tokenizer discovery/wiring for all prompt
+    roles and complete provider-cost restoration, not mutation-path optional
+    OpenAI counter discovery, validating persisted section-budget records, or
+    LLM budget report/resume-artifact bundle consistency.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

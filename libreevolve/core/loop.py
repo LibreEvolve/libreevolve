@@ -91,6 +91,7 @@ from libreevolve.llm.budget_report import (
     LLM_BUDGET_REPORT_SCHEMA,
     validate_llm_budget_report,
 )
+from libreevolve.llm.tokenization import discover_prompt_token_counter
 from libreevolve.plugins.base import PluginBase
 from libreevolve.plugins.registry import (
     configured_plugin_labels,
@@ -792,6 +793,13 @@ def evolve(
             stdin_file=config.evaluator_stdin_file,
             validator_network_policy=config.validator_network_policy,
         )
+        prompt_token_counter, prompt_token_counter_capability = (
+            discover_prompt_token_counter(
+                config.backends,
+                role="mutation",
+                role_backend_indices=config.llm_role_backend_indices,
+            )
+        )
         prompt_sampler = PromptSampler(
             config.prompt_variants,
             run_rng,
@@ -803,6 +811,10 @@ def evolve(
             artifact_content_max_chars=config.prompt_artifact_content_max_chars,
             prompt_format_options=config.prompt_format_options,
             prompt_variant_semantic_policy=config.prompt_variant_semantic_policy,
+            prompt_token_counter=prompt_token_counter,
+            prompt_token_counter_name=(
+                prompt_token_counter_capability.get("counter_name") or "provider"
+            ),
         )
         phase = "initializing_prompt_database"
         prompt_db = PromptDatabase(
@@ -1029,6 +1041,9 @@ def evolve(
                 mutation_mode=config.mutation_mode,
                 capture_proposal_metadata=proposal_metadata_enabled,
                 context_policy=prompt_program.context_policy,
+            )
+            prompt_sampler.last_metadata["prompt_token_counter_capability"] = dict(
+                prompt_token_counter_capability
             )
 
             if llm is None:

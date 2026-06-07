@@ -782,6 +782,9 @@ priorities used by the deterministic prompt packer. It can also select a safe
 rendered mutation-format instructions without accepting arbitrary instruction
 text. `mutation_instruction_include_example` can keep or remove the built-in
 mutation-format example block while preserving the core format rules, and a
+`validate_meta_prompt_context_policy_capabilities()` check verifies that the
+meta-prompt-visible `libreevolve.meta_prompt_context_policy_capabilities.v1`
+map exactly covers the current structured prompt-context policy fields. A
 nullable `parent_code_max_chars` cap can bound or suppress the required
 parent-code channel while `parent_code_paths` selects and orders safe mutable
 parent-workspace files before rendering. `parent_code_required_terms` and

@@ -124,8 +124,16 @@ _MAX_PLUGIN_SIDE_EFFECT_ERROR_CHARS = 500
 _MAX_DIRECT_INLINE_SEED_CHARS = 1_000_000
 _MAX_CRITIQUE_RETAINED_PROMPT_CHARS = 6000
 _MAX_CRITIQUE_RETAINED_MUTATION_CHARS = 4000
+META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA = (
+    "libreevolve.meta_prompt_context_policy_capabilities.v1"
+)
+_META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS = (
+    "channel_controls",
+    "feedback_selection",
+    "sampling_and_context",
+)
 _META_PROMPT_CONTEXT_POLICY_CAPABILITIES = {
-    "schema": "libreevolve.meta_prompt_context_policy_capabilities.v1",
+    "schema": META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     "channel_controls": (
         "disabled_sections,section_priorities,mutation_instruction_variant,"
         "mutation_instruction_include_example,proposal_metadata_enabled,"
@@ -199,6 +207,7 @@ _META_PROMPT_CONTEXT_POLICY_CAPABILITIES = {
         "plugin_context_max_chars_by_label"
     ),
 }
+_META_PROMPT_CONTEXT_POLICY_CAPABILITY_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 _PLUGIN_FAILURE_ATTR = "_libreevolve_plugin_failure"
 _PLUGIN_ARTIFACT_FAILURE_ATTR = "_libreevolve_plugin_artifact_failure"
 _RNG_RESUME_STATUS_LEGACY_NOT_WIRED = "snapshot_persisted_restore_not_wired_into_evolve"
@@ -6119,6 +6128,9 @@ def _build_meta_prompt_mutation_request(
     recent_failures: list[dict],
     config: Config,
 ) -> tuple[str, dict]:
+    context_policy_capabilities = validate_meta_prompt_context_policy_capabilities(
+        _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
+    )
     evidence = {
         "reward_policy": {
             "mode": config.prompt_reward_mode,
@@ -6129,9 +6141,7 @@ def _build_meta_prompt_mutation_request(
         },
         "latest_candidate": _candidate_evidence(program, parent, prompt_reward),
         "selected_prompt": _prompt_program_evidence(prompt_program, selected=True),
-        "context_policy_capabilities": copy.deepcopy(
-            _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
-        ),
+        "context_policy_capabilities": context_policy_capabilities,
         "prompt_program_summaries": [
             _prompt_program_evidence(candidate, selected=candidate.id == prompt_program.id)
             for candidate in sorted(
@@ -6400,6 +6410,84 @@ def _build_meta_prompt_mutation_request(
         f"{safe_template}"
     )
     return mutation_prompt, context_metadata
+
+
+def validate_meta_prompt_context_policy_capabilities(capabilities: object) -> dict:
+    """Validate the meta-prompt-visible structured context-policy capability map."""
+    if not isinstance(capabilities, dict):
+        raise ValueError("meta-prompt context policy capabilities must be an object")
+    required = {"schema", *_META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS}
+    missing = required - set(capabilities)
+    if missing:
+        raise ValueError(
+            f"meta-prompt context policy capabilities missing fields: {sorted(missing)}"
+        )
+    unsupported = set(capabilities) - required
+    if unsupported:
+        raise ValueError(
+            "meta-prompt context policy capabilities has unsupported fields: "
+            f"{sorted(unsupported)}"
+        )
+    if capabilities["schema"] != META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA:
+        raise ValueError("meta-prompt context policy capabilities schema is unsupported")
+    policy_fields = set(validate_prompt_context_policy({})) - {"schema"}
+    advertised_fields: set[str] = set()
+    normalized = {"schema": capabilities["schema"]}
+    for section in _META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS:
+        fields = _validate_meta_prompt_context_policy_capability_section(
+            capabilities[section],
+            section,
+        )
+        duplicates = advertised_fields.intersection(fields)
+        if duplicates:
+            raise ValueError(
+                "meta-prompt context policy capabilities duplicate fields: "
+                f"{sorted(duplicates)}"
+            )
+        advertised_fields.update(fields)
+        normalized[section] = ",".join(fields)
+    missing_policy_fields = policy_fields - advertised_fields
+    if missing_policy_fields:
+        raise ValueError(
+            "meta-prompt context policy capabilities omit prompt policy fields: "
+            f"{sorted(missing_policy_fields)}"
+        )
+    unsupported_policy_fields = advertised_fields - policy_fields
+    if unsupported_policy_fields:
+        raise ValueError(
+            "meta-prompt context policy capabilities advertise unsupported fields: "
+            f"{sorted(unsupported_policy_fields)}"
+        )
+    return normalized
+
+
+def _validate_meta_prompt_context_policy_capability_section(
+    value: object,
+    section: str,
+) -> list[str]:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            f"meta-prompt context policy capabilities {section} must be text"
+        )
+    fields = value.split(",")
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for field in fields:
+        if field != field.strip() or not field:
+            raise ValueError(
+                f"meta-prompt context policy capabilities {section} has malformed field"
+            )
+        if _META_PROMPT_CONTEXT_POLICY_CAPABILITY_RE.fullmatch(field) is None:
+            raise ValueError(
+                f"meta-prompt context policy capabilities {section} has unsafe field"
+            )
+        if field in seen:
+            raise ValueError(
+                f"meta-prompt context policy capabilities {section} repeats field"
+            )
+        seen.add(field)
+        normalized.append(field)
+    return normalized
 
 
 def _retained_meta_prompt_evidence(

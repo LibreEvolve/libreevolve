@@ -575,6 +575,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     mutation-instruction variants for rendered mutation-format guidance.
     `mutation_instruction_include_example` can keep or remove the built-in
     mutation-format example block while preserving the core format rules. It
+    now validates the meta-prompt-visible
+    `libreevolve.meta_prompt_context_policy_capabilities.v1` map against the
+    actual `libreevolve.prompt_context_policy.v1` keys before rendering
+    evidence, rejecting duplicate, missing, malformed, or unsupported
+    advertised fields. It
     can also set `parent_code_paths` to select/order safe mutable
     parent-workspace files, `parent_code_required_terms` and
     `parent_code_excluded_terms` to filter them by safe path/content terms, and

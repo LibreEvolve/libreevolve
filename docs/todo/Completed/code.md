@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Validate meta-prompt context-policy capability coverage.
+  - Spec evidence: AlphaEvolve-style prompt evolution should mutate
+    structured context controls from an advertised capability surface that
+    matches the actual prompt policy schema.
+  - Status: `validate_meta_prompt_context_policy_capabilities()` now validates
+    `libreevolve.meta_prompt_context_policy_capabilities.v1` before
+    meta-prompt evidence rendering. It checks schema, required capability
+    sections, malformed fields, duplicate fields across sections, unsupported
+    advertised fields, and exact coverage of the current
+    `libreevolve.prompt_context_policy.v1` keys.
+  - Remaining gap: this validates the capability surface exposed to
+    meta-prompt mutation; it is not learned semantic context planning,
+    provider-aware prompt allocation, or a guarantee that evolved policies
+    improve across tasks.
+  - Verification: focused loop tests cover exact current policy-field
+    coverage plus missing, unsupported, duplicate, and malformed capability
+    records.
+
 - [x] Validate archive-event replay audit summaries.
   - Spec evidence: AlphaEvolve-style resumed searches need migration event
     replay evidence that is checkable without overstating audit-only

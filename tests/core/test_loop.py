@@ -29,7 +29,9 @@ from libreevolve.core.loop import (
     controller_state_artifact_inventory,
     evolve,
     VALID_THRESHOLD,
+    META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
+    _META_PROMPT_CONTEXT_POLICY_CAPABILITIES,
     _meta_prompt_metrics,
     _meta_prompt_safe_value,
     load_runtime_budget_state_snapshot,
@@ -47,10 +49,11 @@ from libreevolve.core.loop import (
     validate_runtime_rng_state_snapshot,
     validate_runtime_lineage_replay_policy,
     validate_runtime_llm_scheduler_state_snapshot,
+    validate_meta_prompt_context_policy_capabilities,
     _select_critique_mutation,
 )
 from libreevolve.core.meta_prompt import PromptDatabase, PromptProgram
-from libreevolve.core.prompt import DEFAULT_TEMPLATE
+from libreevolve.core.prompt import DEFAULT_TEMPLATE, validate_prompt_context_policy
 from libreevolve.llm.ensemble import LLMEnsemble, LLM_PROVIDER_DIAGNOSTICS_SCHEMA
 from libreevolve.llm.budget_report import (
     LLM_BUDGET_REPORT_SCHEMA,
@@ -9970,6 +9973,59 @@ def test_meta_prompt_evolution_conditions_mutation_on_performance_evidence():
         "prompt_program_summaries",
         "recent_failures",
     ]
+
+
+def test_meta_prompt_context_policy_capabilities_validate_current_policy_schema():
+    capabilities = validate_meta_prompt_context_policy_capabilities(
+        _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
+    )
+
+    assert capabilities["schema"] == META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA
+    advertised = set()
+    for section in (
+        "channel_controls",
+        "feedback_selection",
+        "sampling_and_context",
+    ):
+        fields = capabilities[section].split(",")
+        assert fields == sorted(fields, key=fields.index)
+        advertised.update(fields)
+    assert advertised == set(validate_prompt_context_policy({})) - {"schema"}
+
+
+def test_meta_prompt_context_policy_capabilities_reject_missing_policy_field():
+    capabilities = json.loads(json.dumps(_META_PROMPT_CONTEXT_POLICY_CAPABILITIES))
+    capabilities["channel_controls"] = capabilities["channel_controls"].replace(
+        "disabled_sections,",
+        "",
+    )
+
+    with pytest.raises(ValueError, match="omit prompt policy fields"):
+        validate_meta_prompt_context_policy_capabilities(capabilities)
+
+
+def test_meta_prompt_context_policy_capabilities_reject_unsupported_policy_field():
+    capabilities = json.loads(json.dumps(_META_PROMPT_CONTEXT_POLICY_CAPABILITIES))
+    capabilities["sampling_and_context"] += ",unsupported_field"
+
+    with pytest.raises(ValueError, match="unsupported fields"):
+        validate_meta_prompt_context_policy_capabilities(capabilities)
+
+
+def test_meta_prompt_context_policy_capabilities_reject_duplicate_field():
+    capabilities = json.loads(json.dumps(_META_PROMPT_CONTEXT_POLICY_CAPABILITIES))
+    capabilities["sampling_and_context"] += ",disabled_sections"
+
+    with pytest.raises(ValueError, match="duplicate fields"):
+        validate_meta_prompt_context_policy_capabilities(capabilities)
+
+
+def test_meta_prompt_context_policy_capabilities_reject_malformed_section():
+    capabilities = json.loads(json.dumps(_META_PROMPT_CONTEXT_POLICY_CAPABILITIES))
+    capabilities["feedback_selection"] = "feedback_sections, bad"
+
+    with pytest.raises(ValueError, match="malformed field"):
+        validate_meta_prompt_context_policy_capabilities(capabilities)
 
 
 def test_meta_prompt_mutation_request_redacts_and_bounds_current_template():

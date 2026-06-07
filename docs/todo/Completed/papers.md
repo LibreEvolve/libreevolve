@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible validation for meta-prompt context-policy capabilities.
+  - Paper evidence: AlphaEvolve prompt evolution includes prompt/context
+    improvement, so the structured controls exposed to meta-prompt mutation
+    should match the implemented prompt policy schema.
+  - Status: `validate_meta_prompt_context_policy_capabilities()` now validates
+    `libreevolve.meta_prompt_context_policy_capabilities.v1` before it is
+    rendered as meta-prompt evidence. It checks schema, required sections,
+    malformed fields, duplicate fields, unsupported fields, and exact coverage
+    of the current `libreevolve.prompt_context_policy.v1` keys.
+  - Remaining paper gap: this makes the advertised capability surface
+    auditable, but does not provide semantic context-policy search,
+    provider-aware allocation, or cross-task proof that evolved policies
+    improve prompts.
+  - Verification: focused loop tests cover exact field coverage and malformed,
+    missing, duplicate, and unsupported advertised fields.
+
 - [x] Add paper-visible validation for archive-event replay audits.
   - Paper evidence: AlphaEvolve-style island-model resume needs migration
     placement evidence that can be audited while clearly separating final

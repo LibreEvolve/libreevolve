@@ -2045,6 +2045,11 @@ used by prompt packing, and select the safe enum-valued
 `mutation_instruction_variant` used to render mutation-format instructions.
 `mutation_instruction_include_example` can keep or remove the built-in
 mutation-format example block while preserving the core format rules.
+`validate_meta_prompt_context_policy_capabilities()` checks the
+`libreevolve.meta_prompt_context_policy_capabilities.v1` map before it is
+shown to meta-prompt mutation calls, verifying schema, section shape,
+duplicate detection, and exact coverage of the current
+`libreevolve.prompt_context_policy.v1` fields.
 `parent_code_paths` can select and order safe mutable parent-workspace files,
 recording requested, rendered, omitted, and missing file paths while retaining
 static-file provenance. `parent_code_required_terms` and

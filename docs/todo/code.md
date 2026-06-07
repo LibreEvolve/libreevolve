@@ -98,6 +98,11 @@ Primary evidence:
     `minimal`, or `exploratory`) for rendered mutation-format instructions.
     `mutation_instruction_include_example` can keep or remove the built-in
     mutation-format example block while preserving the core format rules.
+    `validate_meta_prompt_context_policy_capabilities()` now validates the
+    meta-prompt-visible `libreevolve.meta_prompt_context_policy_capabilities.v1`
+    map before evidence rendering, checking schema, section shape, duplicate
+    fields, unsupported fields, and exact coverage of the current
+    `libreevolve.prompt_context_policy.v1` keys.
     `parent_code_paths` can select and order safe mutable parent-workspace
     files before required `{parent_code}` rendering, `parent_code_required_terms`
     and `parent_code_excluded_terms` can filter those parent files by safe

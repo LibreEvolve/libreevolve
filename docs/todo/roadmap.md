@@ -606,6 +606,34 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     index, and code/paper TODO entries together so they neither underclaim the
     current compatible restore bundle nor overclaim AlphaEvolve-style replay.
 
+- [ ] Keep controller-state roadmap wording scoped to terminal drained
+      snapshots versus async queue checkpoints.
+  - Spec evidence: AlphaEvolve-style long-running controllers need resumable
+    queue, worker, pending-evaluation, and partially completed generation
+    state; a terminal no-pending-work snapshot is useful audit evidence but is
+    not a mid-generation or async controller checkpoint.
+  - Current evidence: completed manifests now include
+    `runtime.history.controller_state` with schema
+    `libreevolve.controller_state.v1`, status
+    `terminal_synchronous_controller_drained`, resume scope
+    `terminal_drained_state_only`, zero queued/running proposals and
+    evaluations, zero in-flight LLM calls, zero pending archive admissions, a
+    `controller_budget_events.jsonl` stream summary, and embedded
+    `libreevolve.controller_state_validation.v1` diagnostics that reject
+    pending-work or async/full-replay overclaims. README, code TODO, and paper
+    TODO evidence also show `controller_state_artifact_inventory()` verifies
+    that terminal event stream against the manifest artifact record and disk
+    file. This does not persist queued/running async workers, in-flight
+    provider outputs, evaluator-worker state, pending archive admissions,
+    partially completed generation state, or deterministic mid-generation
+    controller resume ledgers.
+  - Required result: when async controller queues, pending-work checkpoints,
+    mid-generation resume, evaluator-worker state, provider-output replay, or
+    deterministic controller resume ledgers land, update the roadmap, README,
+    papers index, and code/paper TODO entries together so roadmap wording
+    neither underclaims current terminal controller-state validation nor
+    overclaims AlphaEvolve-grade controller resume.
+
 - [ ] Keep workspace-resume follow-up wording scoped to export artifacts versus
       resumable candidate state.
   - Spec evidence: AlphaEvolve-style workspace/codebase resume should restore

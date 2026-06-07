@@ -2064,6 +2064,26 @@ Primary evidence:
     before claiming parity with AlphaEvolve's Figure 4/Figure 9 matrix search
     workflow.
 
+- [ ] Add Appendix A Figure 9a-9c magnified matrix-diff exhibit provenance.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a to 9c present the
+    magnified version of Figure 4's left panel: a three-part source/diff
+    exhibit for the 4x4 matrix search program that discovers the rank-48
+    decomposition, including optimizer, initialization, noise, loss,
+    discretization, and `hyper` sweep edits.
+  - Current evidence: separate TODOs require Figure 4 exhibit provenance and
+    Figure 9 sweep-space metadata. They do not record Figure 9a/9b/9c as
+    appendix exhibit panels with stable panel IDs, page/caption locations,
+    exact line-span coverage, source/diff excerpt artifacts and hashes,
+    continuation ordering across the three panels, OCR/rendered-text
+    validation, or links from each panel to the same matrix target, sweep
+    metadata, exactness certificate, and companion notebook/source evidence.
+  - Required result: add Figure 9 exhibit metadata and validators with
+    figure/panel IDs, source PDF page and caption locations, ordered panel
+    continuity, exact code/diff line-span artifacts, rendered image/text
+    artifact hashes, target/result-row mappings, sweep-field links, and docs
+    that distinguish reproduced Appendix A magnified-diff exhibits from
+    Figure 4 main-text evidence and generic sweep-space provenance.
+
 - [ ] Add Figure 4 matrix-discovery exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix
     multiplication discovery exhibit: a concrete evolved 4x4

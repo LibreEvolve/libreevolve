@@ -1650,6 +1650,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     final result artifacts from AlphaEvolve-style matrix search-program
     provenance.
 
+- [ ] Keep Appendix A Figure 9 roadmap wording scoped until magnified-diff
+      exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are a three-part
+    magnified source/diff exhibit for the 4x4 matrix program from Figure 4,
+    showing the ordered code changes that discover the rank-48 decomposition.
+  - Current evidence: roadmap status can point to matrix result contracts,
+    Appendix A registry coverage, Figure 4 exhibit gaps, and sweep-space
+    provenance gaps. It does not require Figure 9a/9b/9c panel metadata,
+    page/caption locations, exact line-span artifacts, source/diff hashes,
+    rendered/OCR text validation, continuation ordering, or links from each
+    panel to matrix rows, sweep metadata, exactness certificates, and companion
+    paper/source evidence.
+  - Required result: when Appendix A Figure 9 exhibit provenance lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap wording
+    distinguishes reproduced appendix magnified-diff panels from Figure 4
+    main-text exhibit evidence and generic sweep-space provenance.
+
 - [ ] Keep matrix roadmap wording scoped to final reports until
       baseline-component provenance exists.
   - Spec evidence: AlphaEvolve Section 3.1 starts matrix-decomposition search

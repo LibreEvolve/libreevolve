@@ -526,6 +526,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matrix artifacts alone prove AlphaEvolve Figure 4/Figure 9 search-program
     parity.
 
+- [ ] Keep README Appendix A Figure 9 wording scoped until magnified-diff
+      exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are the three-panel
+    magnified source/diff version of Figure 4's matrix program, showing the
+    rank-48 4x4 search-program changes across ordered code excerpts.
+  - Current evidence: README can document matrix result reports, Appendix A
+    registry coverage, Figure 4 exhibit gaps, and Figure 9 sweep-space gaps.
+    It does not document Figure 9a/9b/9c panel IDs, PDF page/caption locations,
+    exact code line spans, source/diff excerpt artifact hashes, rendered/OCR
+    text validation, panel continuity, or links from the appendix panels to
+    matrix target rows, sweep metadata, exactness certificates, and companion
+    source evidence.
+  - Required result: when Appendix A Figure 9 magnified-diff exhibit
+    provenance lands, update README, ROADMAP, papers index, and matching TODOs
+    so README distinguishes reproduced appendix source/diff panels from
+    Figure 4 main-text exhibit evidence and generic sweep-space provenance.
+
 - [ ] Keep README Figure 4 matrix-exhibit wording scoped until exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 4 is the main-text matrix discovery

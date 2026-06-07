@@ -2171,6 +2171,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
     tensor-decomposition search workflow.
 
+- [ ] Track Appendix A Figure 9a-9c magnified matrix-diff exhibits as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says Figures 9a
+    to 9c are the magnified version of Figure 4's left panel and show the
+    program that discovers a rank-48 decomposition for multiplying two 4x4
+    matrices, split across three source/diff panels.
+  - Current gap: paper-facing TODOs cover the main Figure 4 exhibit and the
+    Figure 9 sweep-space workflow, but they do not require Figure 9a/9b/9c
+    exhibit records: panel IDs, PDF page/caption locations, exact code line
+    spans, source/diff excerpt artifacts and hashes, rendered/OCR text
+    validation, ordered continuity across the three panels, or links from each
+    panel to matrix target rows, sweep metadata, certificates, and companion
+    notebook/source evidence.
+  - Required result: add paper-facing Figure 9 exhibit records and validation
+    for each panel, including figure/panel id, source location, ordered
+    line-span coverage, exact source/diff artifact hashes, rendered visual/text
+    hashes, target/result-row mapping, sweep-field linkage, certificate/notebook
+    links, and README/ROADMAP wording that separates reproduced Appendix A
+    magnified-diff exhibits from Figure 4 main-text evidence and generic
+    sweep-space provenance.
+
 - [ ] Track Figure 4 matrix-discovery exhibit provenance as paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 4 presents the
     main-text matrix multiplication discovery exhibit, including a concrete

@@ -3103,9 +3103,12 @@ absent explicit context, prior-program/inspiration context, failure feedback,
 and plugin context. It also does not prove the `Small base LLM only` condition
 with backend metadata and call-ledger evidence that every mutation-generation
 call used one configured small/base-capable model with no large-model routing
-or fallback. It validates report shape only; it does not run ablation
-experiments or add accelerator/async-worker budget stops beyond the current
-live provider-token and configured-cost LLM budget surfaces.
+or fallback. It also does not prove the `No meta prompt evolution` condition
+with prompt-history, call-ledger, and prompt-program lineage evidence that
+meta-prompt calls and prompt-template mutations were disabled for the ablation
+but enabled in the full-system comparator. It validates report shape only; it
+does not run ablation experiments or add accelerator/async-worker budget stops
+beyond the current live provider-token and configured-cost LLM budget surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
 ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,

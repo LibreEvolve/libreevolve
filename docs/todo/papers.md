@@ -404,7 +404,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     that every mutation-generation call used one configured small/base-capable
     model with no large-model backend eligibility, fallback, critique, or
     router leakage, rather than relying on declarative `single_backend`,
-    `backend_count`, or `backend_capability_tier` labels. The
+    `backend_count`, or `backend_capability_tier` labels. For the
+    `No meta prompt evolution` variant, require executed prompt-history and
+    call-ledger proof that meta-prompt calls, prompt-template mutations, and
+    prompt-program lineage updates were disabled for the ablation while the
+    full-system baseline had meta-prompt evolution enabled and mutable prompt
+    variants. The
     remaining ablation and calibration gap is executing and
     emitting real reports from runnable variants over the Figure 8 matrix and
     kissing-number target families, with curve summaries that expose

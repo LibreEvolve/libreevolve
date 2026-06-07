@@ -1354,6 +1354,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     For `Small base LLM only`, the current registry does not prove every
     mutation-generation call used exactly one small/base-capable backend with
     no large-model routing, fallback, critique, or ensemble leakage.
+    For `No meta prompt evolution`, the current registry does not prove that
+    meta-prompt role calls, prompt-template mutations, and prompt-program
+    lineage updates were absent in the ablation while present or eligible in
+    the full-system comparator.
     For `No full-file evolution`, the current registry also does not encode
     AlphaEvolve's tensor-decomposition-specific loss-function-only restriction;
     broad single-file/diff/no-create-delete labels are not the same as proving
@@ -1379,6 +1383,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `Small base LLM only` harness records backend metadata, eligibility, and
     call-ledger evidence proving every relevant generation call used a single
     small/base model and no large-model route. Ensure the
+    `No meta prompt evolution` harness records prompt-history, call-ledger, and
+    prompt-program lineage evidence proving meta-prompt evolution was disabled
+    for the ablation and enabled for the full-system comparator. Ensure the
     `No full-file evolution` harness records the
     loss-function target scope, fixed tensor-search components, and report
     evidence before claiming parity with Figure 8. Also require ablation

@@ -227,6 +227,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `Small base LLM only` setup where every mutation-generation call uses only
     one configured small/base-capable model and has no large-model eligibility,
     fallback, critique, or router leakage. It also does not yet prove the
+    `No meta prompt evolution` setup where meta-prompt calls, prompt-template
+    mutations, and prompt-program lineage updates are absent in the ablated run
+    but enabled in the full-system comparator. It also does not yet prove the
     paper-specific `No full-file evolution` setup where only the tensor
     decomposition loss function is evolved; generic single-file/diff/no-topology
     labels should not be described as equivalent to that ablation.
@@ -252,6 +255,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `Small base LLM only` labels from executed backend telemetry proving a
     single small/base model actually handled every relevant generation call.
     Require README wording to distinguish generic
+    `No meta prompt evolution` labels from executed prompt-history and
+    call-ledger evidence that meta-prompt and prompt-mutation surfaces were
+    disabled only for that ablation. Require README wording to distinguish
+    generic
     ablation-result schemas from
     Figure 8-equivalent matrix/kissing target-family reports with validated
     target-metric identity/direction/normalization and mean/standard-deviation

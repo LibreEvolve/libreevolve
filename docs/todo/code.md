@@ -1980,7 +1980,11 @@ Primary evidence:
     definition-only registry labels. For `Small base LLM only`, add executable
     backend policy and call-ledger checks proving all mutation-generation calls
     use exactly one configured small/base-capable model and never route or fall
-    back to large-model backends during the ablation.
+    back to large-model backends during the ablation. For `No meta prompt
+    evolution`, add runner checks proving no `meta_prompt` role calls,
+    prompt-template mutations, or mutated prompt-program lineage entries occur
+    in the ablated run, and that the full-system comparator keeps those
+    surfaces enabled.
 
 - [ ] Bind the `No full-file evolution` ablation to loss-function-only
       tensor-decomposition controls.

@@ -495,9 +495,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     and CLI tests cover `--max-generations 0` with an OpenAI backend and no
     provider credentials.
     Dotenv/provider environment precedence is now isolated from import:
-    `libreevolve.cli` imports do not load `.env`, `show` remains history-only,
-    and the `run` command loads `.env` with `override=True` during provider
-    setup while recording non-secret source metadata in the run manifest.
+    `libreevolve.cli` imports do not load `.env`, `show` remains provider-free
+    while selecting candidates from streamed history and reading bounded
+    manifest runtime/export status, and the `run` command loads `.env` with
+    `override=True` during provider setup while recording non-secret source
+    metadata in the run manifest.
     The backend preflight guarantee is now a core runtime invariant for
     mutation-capable runs: direct `evolve()` constructs configured backend
     clients before run-directory preparation, and tests prove missing OpenAI

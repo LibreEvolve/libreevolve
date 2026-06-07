@@ -55,6 +55,9 @@ LibreEvolve has:
   `best_workspace/` artifacts; startup manifests retain configured absolute
   `log_dir` roots as a placeholder plus SHA-256 metadata rather than raw local
   paths
+- explicit v1 run-artifact schema metadata on `manifest.json` and current
+  JSONL streams, with legacy history rows still readable for `show` and restore
+  helpers
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

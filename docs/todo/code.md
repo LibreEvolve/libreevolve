@@ -937,7 +937,12 @@ Primary evidence:
     `runtime.history.artifact_index` for bounded evaluator-artifact path/hash,
     redaction, skipped-file, stage, and content-excerpt evidence, includes valid
     artifact-bearing candidates in `resurfacing_index`, and can restore
-    cells/elites from a manifest plus accepted history bundle.
+    cells/elites from a manifest plus accepted history bundle. Current
+    `manifest.json` files carry top-level `schema_version` and
+    `artifact_schema` metadata, and current `history.jsonl`,
+    `failure_history.jsonl`, `archive_events.jsonl`, `llm_calls.jsonl`,
+    `prompt_history.jsonl`, and `controller_budget_events.jsonl` rows carry
+    `schema_version` plus `record_schema`.
     `validate_resurfacing_index_summary()` now validates
     `libreevolve.resurfacing_index.v1` records for schema/policy, required
     limitation statements, source-count and retained-count consistency,
@@ -963,7 +968,8 @@ Primary evidence:
   - Required result: store rich candidate/evaluation records with queryable
     persisted dimensions, reproducible sampling policies, durable ranked views
     by score/metric/diversity/feedback/lineage/failure/hypothesis/artifact
-    evidence, versioned schema-migration rules for legacy/current run records,
+    evidence, schema-versioned migration/compatibility rules for legacy/current
+    run records,
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.
 

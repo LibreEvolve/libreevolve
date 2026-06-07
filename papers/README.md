@@ -361,11 +361,16 @@ evidence, bounded accelerator runtime hint/probe evidence, and audit-only
 policy evidence rather than complete reproduction evidence.
 
 AlphaEvolve artifact-schema note: current `manifest.json` and JSONL run
-streams are strict local machine-readable formats, but they do not carry
-explicit schema-version, artifact-schema, or record-compatibility markers yet.
-Treat the documented run layout as current-format guidance rather than a
-stable resumable database contract until schema versions and migration rules
-are implemented.
+streams are strict local machine-readable formats with explicit v1 schema
+metadata. `manifest.json` carries top-level `schema_version` and
+`artifact_schema` fields, and current `history.jsonl`, `failure_history.jsonl`,
+`archive_events.jsonl`, `llm_calls.jsonl`, `prompt_history.jsonl`, and
+`controller_budget_events.jsonl` rows carry `schema_version` plus
+`record_schema`. Legacy histories without those fields remain readable for
+`show` and accepted-history restore helpers, but the remaining AlphaEvolve gap
+is stable resumable database compatibility: versioned migration rules,
+branching/upgrade policy, and tests proving old and current run artifacts can
+be safely rebuilt into durable query/resume views.
 
 AlphaEvolve best-export note: CLI runs now append a post-`evolve()` manifest
 record under `runtime.best_artifact_export` after best-artifact export

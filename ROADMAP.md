@@ -223,9 +223,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend configured reward-accounted role selection into separate per-role
   scheduler state, reward signals, quotas, and budget policy for mutation
   generation, critique, feedback grading, and meta-prompt mutation calls.
-- Extend current run-scoped call telemetry beyond provider usage, request ids,
-  finish reasons, and adapter-internal retry summaries to include raw provider
-  diagnostics, provider costs, and token/cost budget stop policy.
+- Extend current run-scoped call telemetry beyond provider usage, configured
+  cost estimates, request ids, finish reasons, adapter-internal retry
+  summaries, and token/cost/latency budget stops to include raw provider
+  diagnostics, live provider pricing/cost capture, and richer budget-event
+  evidence.
 - Add role-specific provider-failure handling for mutation, critique,
   feedback, and meta-prompt calls, including quarantine/penalty policy beyond
   the current normalized timeout/rate-limit/transport/status categories and

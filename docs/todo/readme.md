@@ -95,6 +95,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims current synchronous budget replay and provider
     failure-policy evidence nor overclaims full AlphaEvolve-style replay.
 
+- [ ] Keep README environment-provenance claims scoped to bounded audit
+  evidence.
+  - Spec evidence: AlphaEvolve-scale experimental results should be
+    reproducible against the evaluator environment, including external build
+    steps, package sources, accelerator runtime, and compute-budget evidence.
+  - Current evidence: README now documents selected project/build metadata,
+    known lockfile hashes, installed-distribution metadata, bounded/redacted
+    `pip freeze` and `pip config` evidence, NumPy config hashes, provider SDK
+    versions, and bounded accelerator environment/driver probe hints. It also
+    states that the policy is audit-only and excludes complete install-source
+    interpretation, broader non-project build provenance, private package
+    source identity/authentication resolution, remote package artifact
+    verification, live provider service/default capture, and accelerator
+    budget/accounting evidence.
+  - Required result: once replayable external-build records, package-source
+    resolution policy, remote artifact verification, accelerator budget
+    accounting, or environment restore/check validators land, update README,
+    roadmap, papers index, and code/paper TODO entries together so the README
+    neither underclaims current bounded environment evidence nor overclaims a
+    reproducible AlphaEvolve-grade runtime environment.
+
 - [ ] Keep README archive restore claims scoped to current archive-content
   restore.
   - Spec evidence: AlphaEvolve-style long-running evolutionary search needs

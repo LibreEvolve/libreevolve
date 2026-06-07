@@ -90,6 +90,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     index, and code/paper TODO entries together so they neither underclaim the
     current compatible restore bundle nor overclaim AlphaEvolve-style replay.
 
+- [ ] Keep environment-provenance roadmap wording scoped to bounded audit
+  evidence versus replayable build/package/accelerator state.
+  - Spec evidence: AlphaEvolve-scale experiments need environment evidence
+    strong enough to reproduce evaluator execution, package resolution,
+    accelerator runtime, and compute-budget accounting across long runs.
+  - Current evidence: the roadmap now says current bounded environment
+    provenance should be extended into complete install-source interpretation,
+    external build execution/options/environment records, non-project build
+    metadata policy, private package-source resolution, live provider
+    service/default capture, and accelerator budget/accounting semantics.
+  - Required result: when external-build/package-source/accelerator replay
+    evidence lands, update the roadmap, README, papers index, and code/paper
+    TODO entries together so they neither underclaim the current audit-only
+    manifest records nor overclaim replayable AlphaEvolve-grade environment
+    reproduction.
+
 - [ ] Keep the provider cancellation roadmap item aligned with current timeout
   policy coverage.
   - Spec evidence: AlphaEvolve-scale provider orchestration needs bounded model

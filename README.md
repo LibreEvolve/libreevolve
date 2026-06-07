@@ -238,7 +238,9 @@ NumPy config summary, built-in LLM provider SDK-version summary, and bounded
 accelerator runtime hint/probe summary, not a complete build-provenance record,
 complete private package-index interpretation policy beyond redacted config evidence,
 live provider service/API-version capture, provider cost or remote provider-side default
-capture, or accelerator budget/accounting record.
+capture, accelerator budget/accounting record, or restore-checked proof that a
+future evaluator runtime can replay the original build/package/hardware
+boundary.
 The effective config retains prompt-bearing fields through a redacted,
 truncated, hash-backed manifest policy. `prompt_variants`,
 `prompt_format_options` alternative text, `critique_prompt`, and

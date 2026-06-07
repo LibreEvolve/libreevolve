@@ -385,7 +385,9 @@ package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
 tag and source/install metadata, NumPy config summary, provider SDK-version
 evidence, bounded accelerator runtime hint/probe evidence, and audit-only
-policy evidence rather than complete reproduction evidence.
+policy evidence rather than complete reproduction evidence or restore-checked
+proof that a later evaluator runtime can replay the original
+build/package/hardware boundary.
 
 AlphaEvolve artifact-schema note: current `manifest.json` and JSONL run
 streams are strict local machine-readable formats with explicit v1 schema

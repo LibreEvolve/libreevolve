@@ -1572,6 +1572,37 @@ Primary evidence:
     provenance without overclaiming full private-index or remote artifact
     verification.
 
+- [ ] Add replayable external build, package-source, and accelerator environment evidence.
+  - Spec evidence: AlphaEvolve-scale experiments should be reproducible across
+    long-running evaluator environments, including external build steps,
+    package sources, hardware/runtime state, and accelerator-backed execution
+    budgets.
+  - Current evidence: runtime manifests record selected PEP 621 and
+    `[build-system]` metadata, declared dependency and installed-distribution
+    name/version snapshots, bounded parsed `WHEEL` metadata, redacted/
+    hash-backed `direct_url.json`, `INSTALLER`, hash-only `RECORD`, known
+    project-root lockfile hashes, bounded/redacted `pip freeze` and
+    `pip config` evidence, NumPy config hashes, provider SDK versions, and
+    bounded accelerator environment/driver probe hints. The
+    `environment_reproducibility_policy` deliberately marks the result
+    `audit_only_not_complete_replay_environment` and lists unsupported
+    complete install-source interpretation, broader non-project build
+    provenance, private package-source identity/authentication resolution,
+    remote artifact verification, live provider service/default capture, and
+    accelerator budget/accounting semantics.
+  - Remaining gap: the current records are bounded audit evidence, not a
+    replayable environment contract. They do not capture external build
+    commands/options/environment, non-project build metadata, transitive
+    package-source resolution semantics, private-index identity/authentication
+    policy, remote package artifact hashes, accelerator lease/accounting
+    state, or a restore/check procedure that proves a later evaluator runtime
+    can reproduce the original build/package/hardware boundary.
+  - Required result: add versioned external-build and package-source
+    provenance records, private-source redaction/authentication semantics,
+    remote artifact verification or explicit exclusion policy, accelerator
+    runtime plus budget-accounting records, and a restore/check validator that
+    distinguishes bounded audit hints from replayable environment proof.
+
 - [ ] Add unified full-resume orchestration and controller replay.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
     for large computation budgets.

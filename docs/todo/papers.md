@@ -58,6 +58,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
+- [ ] Add replayable evaluator environment, package-source, and accelerator
+  provenance.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.
+  - Requirement: AlphaEvolve-style evaluator results should be attributable to
+    a reproducible runtime environment, including build execution, package
+    source resolution, accelerator/runtime state, and budget-accounting
+    evidence for hardware-backed or distributed evaluation.
+  - Partial status: LibreEvolve manifests record selected project/build
+    metadata, declared dependency and installed-distribution snapshots,
+    bounded `WHEEL`/`direct_url.json`/`INSTALLER`/`RECORD` evidence,
+    known-lockfile hashes, bounded/redacted `pip freeze` and `pip config`
+    snapshots, NumPy config hashes, provider SDK versions, and bounded
+    accelerator environment/driver probe hints. The
+    `environment_reproducibility_policy` is explicitly audit-only and lists
+    unsupported complete install-source interpretation, broader non-project
+    build provenance, private package-source identity/authentication
+    resolution, remote package artifact verification, live provider
+    service/default capture, and accelerator budget/accounting semantics.
+  - Current gap: these records do not form a replayable environment contract:
+    external build commands/options/environment, non-project build metadata,
+    transitive package-source resolution, private-index policy, remote package
+    artifact hashes, accelerator lease/accounting state, and restore/check
+    validation remain absent.
+  - Required result: add versioned external-build/package-source/accelerator
+    provenance schemas plus restore/check validators and paper-facing evidence
+    that clearly separates bounded audit hints from reproducible evaluator
+    environment proof.
+
 - [ ] Stable behavior descriptor models and archive rebin semantics.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.3 and 2.4.
   - Requirement: a quality-diversity archive should use task-meaningful

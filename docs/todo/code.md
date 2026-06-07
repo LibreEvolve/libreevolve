@@ -950,9 +950,9 @@ Primary evidence:
     emit real LLM feedback calibration reports for reviewer/task suites rather
     than only validating declared calibration evidence.
 
-- [ ] Replace the current thin JSONL facade with an evolutionary database
-  capable of resurfacing ideas by score, metric, diversity, feedback, and
-  lineage.
+- [ ] Replace bounded run-local resurfacing indexes with a durable
+  evolutionary database capable of resurfacing ideas by score, metric,
+  diversity, feedback, and lineage.
   - Spec evidence: AlphaEvolve's program database optimally resurfaces
     previously explored ideas and balances exploration and exploitation.
   - Current evidence: `ProgramDatabase` is richer than the original thin JSONL

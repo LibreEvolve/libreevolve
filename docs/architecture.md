@@ -446,6 +446,14 @@ per-label caps can bound rendered plugin context before aggregate prompt
 packing. Accepted prompt history records
 include `context_policy` and `context_policy_sha256`, replay checks policy
 hashes, and score/penalty rows cannot silently alter the policy.
+Runtime manifests also record `runtime.prompt_context_policy_coverage` with
+schema `libreevolve.prompt_context_policy_coverage.v1`. That record hashes and
+counts the current meta-prompt-visible policy fields, validates them against
+the `libreevolve.meta_prompt_context_policy_capabilities.v1` map and
+`libreevolve.prompt_context_policy.v1` schema, and keeps
+`alphaevolve_context_policy_complete` false while listing unsupported
+retrieval/summarization, learned semantic ranking, and deeper context-control
+surfaces.
 Meta-prompt responses may remain plain revised template text or return a
 strict JSON object with `template` and optional `context_policy`. That request
 includes a
@@ -489,7 +497,7 @@ feedback/context field allowlists, inspiration sampling/count/render caps, and
 deterministic local context-source ordering, and whether plugin prompt-context
 generation runs for a prompt arm, but not
 retrieval/summarization algorithms, context-source manifests, plugin-internal
-state, or learned evaluator-field extraction.
+state, learned semantic context ranking, or learned evaluator-field extraction.
 
 ## Evaluation
 

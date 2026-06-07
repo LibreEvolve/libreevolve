@@ -926,7 +926,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     JSON object with a revised `template` plus optional `context_policy`; and
     meta-prompt mutation requests now include a compact context-policy
     capability manifest plus per-prompt non-default context-policy previews in
-    the bounded redacted prompt-performance evidence.
+    the bounded redacted prompt-performance evidence. Final manifests now
+    include `runtime.prompt_context_policy_coverage` with schema
+    `libreevolve.prompt_context_policy_coverage.v1` and embedded validation
+    against the current policy schema/capability map, while keeping
+    `alphaevolve_context_policy_complete` false and listing unsupported
+    retrieval/summarization, learned ranking, and semantic context-selection
+    surfaces.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
     code: plugin context shaping beyond enable/disable, allowlist, ordering,
     caps, truncation, parent-metric selection/caps, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,
@@ -961,7 +967,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     parent-code file selection, term filtering, deterministic ordering, render-count limiting, and per-file content capping, and truncation-mode selection so meta-prompt evolution
     can safely alter source selection, retrieval/summarization, inspiration and
     feedback field policy, and additional instruction/context controls while preserving
-    safe template rendering and auditability.
+    safe template rendering and auditability. The remaining paper gap is not
+    manifest-visible validation of the current meta-prompt-tunable context
+    policy surface.
 
 ## Local Paper Corpus Issues
 

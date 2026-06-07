@@ -823,6 +823,14 @@ capabilities for static roles, and an embedded
 keeps automatic provider-token section packing scoped to the mutation
 `PromptSampler` path and marks critique, feedback, and meta-prompt builders as
 missing section-packing coverage.
+`runtime.prompt_context_policy_coverage` records the current
+meta-prompt-visible structured context-policy surface with schema
+`libreevolve.prompt_context_policy_coverage.v1`. Its embedded
+`libreevolve.prompt_context_policy_coverage_validation.v1` result checks the
+field count/hash against the validated prompt-context-policy schema and keeps
+full AlphaEvolve context-policy completeness false while listing unsupported
+retrieval/summarization, learned ranking, and semantic context-selection
+surfaces.
 Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
 synchronous controller with zero queued/running proposals, evaluations,

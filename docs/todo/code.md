@@ -429,7 +429,15 @@ Primary evidence:
     non-default context-policy previews, and a bounded current-template
     preview. Focused tests assert that meta-prompt evidence includes current
     context-policy values and the tunable policy surface under the redacted
-    prompt-evidence cap. However, the policy currently controls only optional channel
+    prompt-evidence cap. Final manifests now include
+    `runtime.prompt_context_policy_coverage` with schema
+    `libreevolve.prompt_context_policy_coverage.v1` and embedded
+    `libreevolve.prompt_context_policy_coverage_validation.v1`, which verifies
+    the current tunable field count/hash against
+    `libreevolve.meta_prompt_context_policy_capabilities.v1`, records
+    context-policy mutation and replay-hash support, and rejects full
+    AlphaEvolve context-policy completeness overclaims.
+    However, the policy currently controls only optional channel
     disabling, section-priority overrides, mutation-instruction variants,
     parent-metric selection/caps, and
     parent-feedback subsection selection, stochastic prompt-format weights, and
@@ -491,7 +499,9 @@ Primary evidence:
     fields, and timeout-cleanup fields;
     and test that those richer context-policy fields preserve
     template placeholder validation, deterministic replay, prompt diagnostics,
-    and retention/redaction guarantees.
+    and retention/redaction guarantees. The remaining gap is not
+    manifest-visible coverage validation of the current meta-prompt-tunable
+    policy surface.
 
 - [ ] Persist full retrieval payload artifacts and learned ranking provenance.
   - Spec evidence: AlphaEvolve-style prompt context can include relevant

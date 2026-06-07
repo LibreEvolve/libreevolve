@@ -25,6 +25,8 @@ from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
     CONTROLLER_STATE_VALIDATION_SCHEMA,
     FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
+    PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA,
+    PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_SCHEMA,
     PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
@@ -33,6 +35,7 @@ from libreevolve.core.loop import (
     RuntimeRngStateError,
     controller_state_artifact_inventory,
     evolve,
+    validate_prompt_context_policy_coverage,
     validate_prompt_section_packing_coverage,
     validate_controller_state_snapshot,
     VALID_THRESHOLD,
@@ -10276,6 +10279,56 @@ def test_meta_prompt_context_policy_capabilities_validate_current_policy_schema(
         assert fields == sorted(fields, key=fields.index)
         advertised.update(fields)
     assert advertised == set(validate_prompt_context_policy({})) - {"schema"}
+
+
+def test_runtime_prompt_context_policy_coverage_scopes_alphaevolve_completeness():
+    tmpdir = tempfile.mkdtemp()
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    coverage = manifest["runtime"]["prompt_context_policy_coverage"]
+
+    assert coverage["schema"] == PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA
+    assert coverage["capabilities_schema"] == META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA
+    assert coverage["context_policy_schema"] == (
+        "libreevolve.prompt_context_policy.v1"
+    )
+    assert coverage["tunable_field_count"] == (
+        len(validate_prompt_context_policy({})) - 1
+    )
+    assert len(coverage["tunable_fields_sha256"]) == 64
+    assert coverage["meta_prompt_mutation_accepts_context_policy"] is True
+    assert coverage["prompt_history_replay_validates_context_policy_hash"] is True
+    assert coverage["alphaevolve_context_policy_complete"] is False
+    assert "retrieval_summarization_policy" in coverage["unsupported_surfaces"]
+    assert "semantic_source_selection_policy" in coverage["unsupported_surfaces"]
+
+    validation = coverage["validation"]
+    assert validation["schema"] == PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA
+    assert validation["coverage_schema"] == PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA
+    assert validation["ok"] is True
+    assert validation["alphaevolve_context_policy_complete"] is False
+    assert validation["tunable_field_count"] == coverage["tunable_field_count"]
+    assert validation["unsupported_surface_count"] == len(
+        coverage["unsupported_surfaces"]
+    )
+
+    overclaim = copy.deepcopy(coverage)
+    overclaim["alphaevolve_context_policy_complete"] = True
+    overclaim.pop("validation")
+
+    invalid = validate_prompt_context_policy_coverage(overclaim)
+
+    assert invalid["ok"] is False
+    assert any(
+        issue["code"] == "context_policy_completion_overclaim"
+        for issue in invalid["issues"]
+    )
 
 
 def test_meta_prompt_context_policy_capabilities_reject_missing_policy_field():

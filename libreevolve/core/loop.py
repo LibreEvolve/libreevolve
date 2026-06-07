@@ -116,6 +116,12 @@ PROMPT_SECTION_PACKING_COVERAGE_SCHEMA = (
 PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA = (
     "libreevolve.prompt_section_packing_coverage_validation.v1"
 )
+PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA = (
+    "libreevolve.prompt_context_policy_coverage.v1"
+)
+PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA = (
+    "libreevolve.prompt_context_policy_coverage_validation.v1"
+)
 _MAX_PLUGIN_METADATA_KEY_CHARS = 160
 _MAX_PLUGIN_METADATA_STRING_CHARS = 4096
 _MAX_PLUGIN_METADATA_DEPTH = 20
@@ -1769,6 +1775,9 @@ def _attach_runtime_summaries(
     runtime["prompt_section_packing"] = _runtime_prompt_section_packing_coverage(
         config
     )
+    runtime["prompt_context_policy_coverage"] = (
+        _runtime_prompt_context_policy_coverage()
+    )
     runtime["lineage_replay_policy"] = _runtime_lineage_replay_policy()
     runtime["provider_cancellation_policy"] = _runtime_provider_cancellation_policy(
         config,
@@ -2241,6 +2250,234 @@ def _runtime_prompt_section_packing_coverage(config: Config) -> dict:
     }
     record["validation"] = validate_prompt_section_packing_coverage(record)
     return record
+
+
+def _runtime_prompt_context_policy_coverage() -> dict:
+    capabilities = validate_meta_prompt_context_policy_capabilities(
+        _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
+    )
+    sections = []
+    all_fields: list[str] = []
+    for section_name in _META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS:
+        fields = _context_policy_capability_fields(capabilities[section_name])
+        all_fields.extend(fields)
+        sections.append(
+            {
+                "name": section_name,
+                "field_count": len(fields),
+                "fields_sha256": hashlib.sha256(
+                    ",".join(fields).encode("utf-8")
+                ).hexdigest(),
+            }
+        )
+    record = {
+        "schema": PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA,
+        "policy": "meta_prompt_visible_context_policy_surface_v1",
+        "capabilities_schema": capabilities["schema"],
+        "context_policy_schema": validate_prompt_context_policy({})["schema"],
+        "tunable_field_count": len(all_fields),
+        "tunable_fields_sha256": hashlib.sha256(
+            ",".join(sorted(all_fields)).encode("utf-8")
+        ).hexdigest(),
+        "sections": sections,
+        "meta_prompt_mutation_accepts_context_policy": True,
+        "prompt_history_replay_validates_context_policy_hash": True,
+        "alphaevolve_context_policy_complete": False,
+        "unsupported_surfaces": [
+            "retrieval_summarization_policy",
+            "learned_or_external_semantic_ranking_policy",
+            "deep_retrieval_debug_refinement_loop",
+            "non_promptsampler_prompt_builder_section_policy",
+            "semantic_source_selection_policy",
+        ],
+        "limitations": [
+            "coverage_tracks_current_validated_policy_schema_not_full_alphaevolve_context_control",
+            "retrieval_and_summarization_policy_remain_fixed_code_or_config_paths",
+            "semantic_context_selection_is_not_meta_prompt_evolved",
+        ],
+    }
+    record["validation"] = validate_prompt_context_policy_coverage(record)
+    return record
+
+
+def validate_prompt_context_policy_coverage(record: object) -> dict:
+    """Validate meta-prompt-visible context-policy coverage without overclaiming."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(record, Mapping):
+        return {
+            "schema": PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA,
+            "coverage_schema": None,
+            "ok": False,
+            "alphaevolve_context_policy_complete": False,
+            "tunable_field_count": 0,
+            "unsupported_surface_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "prompt context-policy coverage must be an object",
+                }
+            ],
+        }
+    if record.get("schema") != PROMPT_CONTEXT_POLICY_COVERAGE_SCHEMA:
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported prompt context-policy coverage schema",
+            }
+        )
+    if record.get("policy") != "meta_prompt_visible_context_policy_surface_v1":
+        issues.append(
+            {
+                "code": "invalid_policy",
+                "message": "unsupported prompt context-policy coverage policy",
+            }
+        )
+    expected_capabilities = validate_meta_prompt_context_policy_capabilities(
+        _META_PROMPT_CONTEXT_POLICY_CAPABILITIES
+    )
+    expected_fields: list[str] = []
+    expected_sections = []
+    for section_name in _META_PROMPT_CONTEXT_POLICY_CAPABILITY_SECTIONS:
+        fields = _context_policy_capability_fields(expected_capabilities[section_name])
+        expected_fields.extend(fields)
+        expected_sections.append(
+            {
+                "name": section_name,
+                "field_count": len(fields),
+                "fields_sha256": hashlib.sha256(
+                    ",".join(fields).encode("utf-8")
+                ).hexdigest(),
+            }
+        )
+    expected_hash = hashlib.sha256(
+        ",".join(sorted(expected_fields)).encode("utf-8")
+    ).hexdigest()
+    if record.get("capabilities_schema") != META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA:
+        issues.append(
+            {
+                "code": "capabilities_schema_mismatch",
+                "message": "capabilities_schema must match meta-prompt capability schema",
+            }
+        )
+    if record.get("context_policy_schema") != validate_prompt_context_policy({})["schema"]:
+        issues.append(
+            {
+                "code": "context_policy_schema_mismatch",
+                "message": "context_policy_schema must match prompt context policy schema",
+            }
+        )
+    if record.get("tunable_field_count") != len(expected_fields):
+        issues.append(
+            {
+                "code": "tunable_field_count_mismatch",
+                "message": "tunable field count must match validated policy fields",
+            }
+        )
+    if record.get("tunable_fields_sha256") != expected_hash:
+        issues.append(
+            {
+                "code": "tunable_fields_hash_mismatch",
+                "message": "tunable field hash must match validated policy fields",
+            }
+        )
+    if record.get("sections") != expected_sections:
+        issues.append(
+            {
+                "code": "sections_mismatch",
+                "message": "sections must match current meta-prompt capability sections",
+            }
+        )
+    if record.get("meta_prompt_mutation_accepts_context_policy") is not True:
+        issues.append(
+            {
+                "code": "context_policy_mutation_not_marked_supported",
+                "message": "coverage must record context_policy mutation support",
+            }
+        )
+    if record.get("prompt_history_replay_validates_context_policy_hash") is not True:
+        issues.append(
+            {
+                "code": "context_policy_replay_hash_not_marked_supported",
+                "message": "coverage must record prompt history context-policy hash validation",
+            }
+        )
+    if record.get("alphaevolve_context_policy_complete") is not False:
+        issues.append(
+            {
+                "code": "context_policy_completion_overclaim",
+                "message": "current context-policy coverage must not claim full AlphaEvolve completeness",
+            }
+        )
+    unsupported = record.get("unsupported_surfaces")
+    required_unsupported = {
+        "retrieval_summarization_policy",
+        "learned_or_external_semantic_ranking_policy",
+        "deep_retrieval_debug_refinement_loop",
+        "non_promptsampler_prompt_builder_section_policy",
+        "semantic_source_selection_policy",
+    }
+    if not isinstance(unsupported, list) or not all(
+        isinstance(item, str) for item in unsupported
+    ):
+        issues.append(
+            {
+                "code": "invalid_unsupported_surfaces",
+                "message": "unsupported_surfaces must be a list of strings",
+            }
+        )
+        unsupported_count = 0
+    else:
+        unsupported_count = len(unsupported)
+        for item in sorted(required_unsupported - set(unsupported)):
+            issues.append(
+                {
+                    "code": "missing_unsupported_surface",
+                    "message": f"missing unsupported context-policy surface {item}",
+                }
+            )
+    limitations = record.get("limitations")
+    required_limitations = {
+        "coverage_tracks_current_validated_policy_schema_not_full_alphaevolve_context_control",
+        "retrieval_and_summarization_policy_remain_fixed_code_or_config_paths",
+        "semantic_context_selection_is_not_meta_prompt_evolved",
+    }
+    if not isinstance(limitations, list) or not all(
+        isinstance(item, str) for item in limitations
+    ):
+        issues.append(
+            {
+                "code": "invalid_limitations",
+                "message": "limitations must be a list of strings",
+            }
+        )
+    else:
+        for item in sorted(required_limitations - set(limitations)):
+            issues.append(
+                {
+                    "code": "missing_limitation",
+                    "message": f"missing context-policy limitation {item}",
+                }
+            )
+    return {
+        "schema": PROMPT_CONTEXT_POLICY_COVERAGE_VALIDATION_SCHEMA,
+        "coverage_schema": (
+            record.get("schema") if isinstance(record.get("schema"), str) else None
+        ),
+        "ok": not issues,
+        "alphaevolve_context_policy_complete": False,
+        "tunable_field_count": (
+            record.get("tunable_field_count")
+            if isinstance(record.get("tunable_field_count"), int)
+            and not isinstance(record.get("tunable_field_count"), bool)
+            else 0
+        ),
+        "unsupported_surface_count": unsupported_count,
+        "issues": issues,
+    }
+
+
+def _context_policy_capability_fields(value: str) -> list[str]:
+    return [field for field in value.split(",") if field]
 
 
 def _prompt_section_packing_role_record(

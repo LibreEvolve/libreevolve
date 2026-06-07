@@ -3056,6 +3056,10 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts.
+The Appendix A registry is target/outcome coverage, not a curation ledger: it
+does not yet record the paper's target-selection rule, canonical sorted
+representative policy under tensor axis symmetries, omitted symmetry-equivalent
+targets, p-cutoff rationale, or included/excluded target justifications.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

@@ -1658,6 +1658,24 @@ Primary evidence:
     validating the checked bundle wrapper, or emitting the one checked Strassen
     baseline once those files exist.
 
+- [ ] Add Appendix A matrix target-suite curation provenance.
+  - Spec evidence: AlphaEvolve Appendix A says the 54 matrix multiplication
+    sizes were chosen roughly from sizes where 2 <= m,n <= 5 with a reasonable
+    cutoff for p, and that tensor symmetries make axis permutations equivalent,
+    so the paper focuses on sorted sizes m <= n <= p.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
+    records the 54 target ids, dimensions, best-known ranks, AlphaEvolve ranks,
+    outcomes, and exact-algorithm flags. It does not record the target-suite
+    curation policy, canonical sorted-representative rule, symmetry-equivalent
+    omitted targets, source/rationale for the p cutoff, or inclusion/exclusion
+    rationale for targets outside the rough cutoff heuristic.
+  - Required result: extend the Appendix A registry or companion report with
+    target-suite curation metadata: selection rule, canonical representative
+    under matrix-tensor axis symmetries, omitted-equivalent target ledger,
+    cutoff/source rationale, and explicit included/excluded target records.
+    Keep this distinct from target tensor/decomposition artifacts and from the
+    larger-target resource-frontier/OOM evidence.
+
 - [ ] Add matrix scaling resource-frontier evidence for larger target claims.
   - Spec evidence: AlphaEvolve Appendix A says sizes beyond the reported
     matrix table were difficult because running discovered programs on larger

@@ -1752,6 +1752,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     not verifying declared report artifacts, validating the checked bundle
     wrapper, or emitting one checked Strassen baseline once those files exist.
 
+- [ ] Track Appendix A matrix target-suite curation provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the 54
+    matrix sizes were chosen roughly from dimensions with 2 <= m,n <= 5 and a
+    reasonable cutoff for p, and that symmetries of the matrix multiplication
+    tensor make axis permutations equivalent, so the reported suite focuses on
+    sorted sizes m <= n <= p.
+  - Current gap: the Appendix A registry records the 54 reported target ids,
+    dimensions, ranks, and outcomes, but it does not preserve the paper's
+    target-suite selection rule, canonical sorted-representative policy,
+    omitted symmetry-equivalent targets, p-cutoff/source rationale, or why
+    targets outside the rough rank/size heuristic are included or excluded.
+  - Required result: add paper-facing curation records for the Appendix A
+    matrix suite: selection criteria, symmetry class/canonical representative,
+    omitted-equivalent target ledger, cutoff rationale, and included/excluded
+    target justifications. Keep this separate from construction artifacts and
+    from larger-target resource-frontier/OOM evidence.
+
 - [ ] Track matrix target-scaling resource frontier and OOM evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the authors
     often ran out of memory when trying discovered programs on sizes beyond

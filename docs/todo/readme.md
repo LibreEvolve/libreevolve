@@ -319,6 +319,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims the checked Strassen baseline nor overclaims
     AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README Appendix A target-suite wording scoped to registry coverage
+      versus curation provenance.
+  - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes
+    were chosen roughly from dimensions with 2 <= m,n <= 5 and a cutoff for p,
+    and that axis-permutation symmetries make equivalent algorithms, so the
+    paper focuses on sorted sizes.
+  - Current evidence: README says the matrix report checks `target_id` and
+    `dimensions` against the 54-row Appendix A Table 3 registry. It does not
+    document target-suite curation metadata: the selection rule, sorted
+    representative policy, omitted symmetry-equivalent targets, cutoff
+    rationale, or included/excluded target justifications.
+  - Required result: when Appendix A registry/report metadata captures
+    target-suite curation and symmetry-equivalence provenance, update README,
+    ROADMAP, papers index, and matching TODOs so README does not imply the
+    54-row registry alone proves full paper-faithful suite construction.
+
 - [ ] Keep README matrix-scaling wording scoped until resource-frontier
       reports exist.
   - Spec evidence: AlphaEvolve Appendix A notes that runs on matrix sizes

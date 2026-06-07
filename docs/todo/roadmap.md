@@ -1276,6 +1276,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
+- [ ] Keep Appendix A matrix-suite roadmap wording scoped to target identities
+      versus curation provenance.
+  - Spec evidence: AlphaEvolve Appendix A says the 54 reported matrix sizes
+    were chosen roughly from dimensions with 2 <= m,n <= 5 and a reasonable
+    cutoff for p, while tensor symmetries make axis permutations equivalent and
+    motivate sorted target representatives.
+  - Current evidence: roadmap/README/paper-index status points to the checked
+    54-target Appendix A registry. That registry records target identities,
+    dimensions, ranks, and outcomes, but not the selection rule,
+    symmetry-class/canonical-representative policy, omitted equivalent targets,
+    cutoff rationale, or included/excluded target justifications.
+  - Required result: when Appendix A matrix curation metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap text
+    distinguishes target-identity coverage from paper-faithful target-suite
+    curation evidence.
+
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.
   - Spec evidence: AlphaEvolve Section 3.1 describes prompting for

@@ -361,6 +361,10 @@ is not yet an AlphaEvolve reproduction.
   superseded/current status, update note, attribution, and verifier/Colab
   artifact linkage for revised results such as the uncertainty-inequality
   bound.
+- Add Appendix A matrix target-suite curation provenance before treating the
+  54-row registry as paper-faithful suite evidence: target-selection rule,
+  canonical sorted representatives under tensor symmetries, omitted equivalent
+  targets, cutoff rationale, and included/excluded target justifications.
 - Add matrix target-scaling resource-frontier reports before claiming larger
   Appendix A extensions: attempted target sizes, seed counts, accelerator/GPU
   memory profile, OOM or resource-exhaustion diagnostics, and exclusion

@@ -724,6 +724,10 @@ Implemented:
   `appendix_a_matrix_registry.py` adds the 54 AlphaEvolve Appendix A Table 3
   target identities and dimensions, and matrix reports for
   `alphaevolve_appendix_a` must match that registry.
+  The registry is not yet a target-suite curation ledger: it does not record
+  the paper's rough size-selection rule, canonical sorted representative
+  policy under tensor axis symmetries, omitted symmetry-equivalent targets,
+  p-cutoff rationale, or included/excluded target justifications.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. It still does not provide discovered

@@ -774,8 +774,13 @@ Implemented:
   downstream synthesis-tool confirmation. For compiler-generated IR tasks, it
   does not yet require per-edit randomized reference-check traces, reference
   implementation hashes, input-generator provenance, numerical tolerance
-  policy, kernel versus pre/postprocessing attribution, or final expert
-  all-input signoff scope.
+  policy, kernel versus pre/postprocessing attribution, final expert all-input
+  signoff scope, or calibrated result-claim records mapping finite metrics to
+  AlphaEvolve Section 3.3 magnitudes such as scheduling resource-recovery
+  percentages, kernel speedups and training-time reductions, RTL PPA deltas,
+  or compiler kernel/pre/postprocessing speedups with explicit units,
+  denominators, baselines, aggregation windows, and runtime/deployment/
+  synthesis context.
 - Self-improvement/distillation evidence: not implemented. AlphaEvolve's
   Discussion describes practical discoveries that can improve its own
   infrastructure and future base LLMs, plus possible distillation of

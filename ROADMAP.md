@@ -370,6 +370,12 @@ is not yet an AlphaEvolve reproduction.
   held-out/generalization, and reference-correctness gates plus artifacts that
   distinguish loop feedback from generalization, deployment, or independent
   certification evidence.
+- Add claim-calibrated metric records for systems reports before treating
+  finite metrics as reproduced AlphaEvolve Section 3.3 result magnitudes:
+  metric units, denominators, baselines, aggregation windows, deployment or
+  runtime/synthesis context, and explicit mapping to scheduling resource
+  recovery, kernel/training-time speedups, RTL PPA deltas, and compiler
+  kernel/pre/postprocessing speedups.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

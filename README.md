@@ -3098,6 +3098,12 @@ domain-specific evidence for mission-critical deployment suitability, such as
 interpretable heuristic structure, debuggability/operator review,
 predictability checks, rollout-risk evidence, and comparison against less
 interpretable learned-policy baselines.
+The generic finite-metrics requirement is also not a calibrated
+result-claim schema: reports do not yet require metric units, denominators,
+baselines, aggregation windows, runtime/deployment/synthesis context, or
+explicit mapping to AlphaEvolve Section 3.3 magnitudes such as resource
+recovery percentages, kernel speedups, training-time reductions, RTL PPA
+deltas, or compiler pre/postprocessing speedups.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

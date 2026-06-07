@@ -1788,6 +1788,32 @@ Primary evidence:
     consistency, or systems evidence bundle consistency once those records
     exist.
 
+- [ ] Add Section 3.3 result-claim calibration fields for systems reports.
+  - Spec evidence: AlphaEvolve Section 3.3 reports concrete production result
+    magnitudes, including about 0.7% fleet-wide compute resources recovered for
+    Borg scheduling, 23% average kernel speedup and 1% Gemini training-time
+    reduction for Pallas/Gemini kernels, power/area objectives for TPU RTL, and
+    32% kernel plus 15% pre/postprocessing speedups for FlashAttention
+    compiler IR.
+  - Current evidence: `libreevolve.systems_result_report.v1` requires finite
+    numeric metrics inside optimization, held-out, and reference-correctness
+    gates, and nearby TODOs require domain-specific evidence for scheduling,
+    kernel, hardware, and compiler reports. The schema does not require a
+    report to declare metric units, baseline denominator, before/after window,
+    aggregation method, deployment or accelerator/runtime context, target
+    published claim id, or whether a metric is the reported result magnitude
+    versus only a local validator signal.
+  - Required result: add claim-calibrated systems report fields and validators
+    that map metrics to published Section 3.3-style claims: resource-recovery
+    percentages with fleet/workload denominators and deployment windows;
+    kernel speedups and training-time reductions with baseline heuristic,
+    shape split, accelerator/runtime, and aggregation provenance; RTL
+    power/area/PPA deltas with synthesis flow and correctness signoff; and
+    compiler kernel/pre/postprocessing speedups with target configuration,
+    tolerance, randomized-reference provenance, and abstraction-level
+    attribution. Until then, finite systems metrics should not be treated as
+    reproducible AlphaEvolve result-magnitude evidence.
+
 - [ ] Add scheduling ranking-only safety provenance for Borg-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the discovered Borg
     scheduling heuristic outputs a priority score for machines that Borg has

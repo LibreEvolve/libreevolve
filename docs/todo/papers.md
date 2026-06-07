@@ -1908,6 +1908,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifying the declared files, report/inventory consistency, or
     evidence-bundle consistency once a report names them.
 
+- [ ] Record Section 3.3 result-claim metric calibration for systems reports.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 reports specific
+    claim magnitudes and units for engineering outcomes: Borg scheduling
+    recovered about 0.7% fleet-wide compute resources, Gemini/Pallas kernels
+    achieved 23% average kernel speedup and 1% Gemini training-time reduction,
+    hardware RTL optimization targeted power and area, and FlashAttention IR
+    changes delivered 32% kernel and 15% pre/postprocessing speedups.
+  - Current gap: current paper/status wording and
+    `libreevolve.systems_result_report.v1` can require finite metrics, case
+    hashes, artifacts, and domain readiness evidence, but they do not require
+    paper-facing records that identify which finite metric is the published
+    claim, what unit and denominator it uses, which baseline and before/after
+    window it compares against, how repeated measurements are aggregated, or
+    what deployment/runtime/synthesis context makes the value comparable to
+    the AlphaEvolve claim.
+  - Required result: add paper-facing claim calibration records for systems
+    results before treating finite metrics as reproduced Section 3.3 outcomes:
+    scheduling resource-recovery denominator/window; kernel speedup and
+    training-time reduction baseline/runtime/shape-split aggregation; RTL
+    power/area/PPA units and synthesis flow; and compiler kernel versus
+    pre/postprocessing speedup attribution with randomized-reference and
+    tolerance provenance.
+
 - [ ] Track self-improvement and distillation evidence for Discussion claims.
   - Paper evidence: AlphaEvolve's Discussion says practical discoveries can
     improve its own infrastructure and future base LLMs, while distilling

@@ -1128,6 +1128,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so roadmap wording neither underclaims current report
     validation nor overclaims AlphaEvolve-style systems evidence.
 
+- [ ] Keep systems-result roadmap wording scoped to finite metrics versus
+      claim-calibrated result reports.
+  - Spec evidence: AlphaEvolve Section 3.3 reports concrete result magnitudes
+    with domain-specific units and baselines: Borg fleet-wide resource
+    recovery, Gemini/Pallas kernel speedups and training-time reduction,
+    hardware power/area objectives, and FlashAttention kernel plus
+    pre/postprocessing speedups.
+  - Current evidence: roadmap systems-result wording says
+    `libreevolve.systems_result_report.v1` validates finite metrics and
+    separates optimization, held-out, and reference-correctness gates. It does
+    not yet require metric-unit, denominator, baseline, aggregation,
+    before/after window, runtime/deployment/synthesis context, or a mapping
+    from a report metric to a published AlphaEvolve Section 3.3 claim.
+  - Required result: when systems fixtures or report validators add
+    claim-calibrated metric records for scheduling, kernel, hardware, and
+    compiler result magnitudes, update ROADMAP, README, papers index, and
+    code/paper TODOs so roadmap text distinguishes generic finite metrics from
+    reproducible AlphaEvolve result-claim evidence.
+
 - [ ] Keep scheduling roadmap wording scoped to generic systems reports until
       ranking-only feasibility evidence exists.
   - Spec evidence: AlphaEvolve's Borg scheduling heuristic only scores

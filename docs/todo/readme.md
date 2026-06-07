@@ -414,6 +414,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README neither underclaims the current report and inventory contracts
     nor overclaims AlphaEvolve-style confirmed result evidence.
 
+- [ ] Keep README systems-metric wording scoped to finite report metrics versus
+      calibrated Section 3.3 result claims.
+  - Spec evidence: AlphaEvolve Section 3.3 reports concrete systems outcomes
+    with units and comparison context, including scheduling resource recovery,
+    Pallas/Gemini speedups and training-time reduction, hardware power/area
+    objectives, and FlashAttention kernel plus pre/postprocessing speedups.
+  - Current evidence: README documents that
+    `libreevolve.systems_result_report.v1` requires finite metrics in
+    optimization, held-out, and reference-correctness gates. It does not yet
+    say those finite metrics must carry published-claim ids, units,
+    denominators, baselines, aggregation rules, before/after windows, or
+    deployment/runtime/synthesis context needed to compare them with
+    AlphaEvolve Section 3.3 values.
+  - Required result: once systems reports validate claim-calibrated metric
+    records for scheduling, kernel, hardware, and compiler domains, update
+    README, ROADMAP, papers index, and matching TODOs so README does not imply
+    generic finite gate metrics reproduce AlphaEvolve result magnitudes.
+
 - [ ] Keep README scheduling wording scoped to generic systems reports until
       ranking-only safety provenance exists.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling

@@ -2744,10 +2744,10 @@ scored semantic ranking beyond deterministic query-overlap ranking, true semanti
 source-content verification, or a systematic DeepEvolve-style debug/refinement loop. This is
 best-effort retrieval
 provenance, not audit-grade source integrity: transport/failure handling is
-classified in bounded event metadata, but run records cannot prove exactly which
-provider payloads were available beyond the cache snapshots and bounded
-hashes/metadata that were retained, and no replayable transport/TLS decision
-tree is persisted.
+classified in bounded event metadata, retained under-budget payloads can be
+checked through secret-redacted sidecar artifacts and inventory hashes, but run
+records still cannot prove unbounded raw provider/source payload availability,
+semantic source correctness, or a replayable transport/TLS decision tree.
 If the
 current best candidate has non-finite or nonnumeric fitness,
 DeepResearch records a skipped retrieval event with

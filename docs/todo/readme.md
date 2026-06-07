@@ -140,6 +140,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims current synchronous budget replay and provider
     failure-policy evidence nor overclaims full AlphaEvolve-style replay.
 
+- [ ] Keep README DeepResearch retrieval evidence scoped to bounded redacted
+  sidecars and non-semantic provenance.
+  - Spec evidence: retrieval-driven AlphaEvolve-style runs should identify the
+    external knowledge injected into prompts while distinguishing replayable
+    retained artifacts from unbounded raw provider/source availability, TLS
+    transport replay, and semantic source correctness.
+  - Current evidence: README now documents
+    `libreevolve.retrieval_payload_artifact.v1` sidecars,
+    `libreevolve.retrieval_payload_artifact_inventory.v1`,
+    `libreevolve.retrieval_source_ranking_provenance.v1`,
+    `libreevolve.retrieval_source_content_trust_policy.v1`,
+    `libreevolve.retrieval_evidence_boundary_policy.v1`, and
+    `libreevolve.retrieval_context_audit_policy.v1`. It states that retained
+    under-budget payloads can be checked through secret-redacted sidecar
+    artifacts and inventory hashes, while unbounded raw payload availability,
+    semantic source correctness, and replayable transport/TLS decision evidence
+    remain open.
+  - Required result: when retrieval payload retention, learned/external source
+    ranking, semantic verification, or transport/TLS replay evidence changes,
+    update README, code TODOs, and paper TODOs together so the README neither
+    underclaims bounded redacted sidecar replay nor overclaims DeepEvolve-grade
+    auditability.
+
 - [ ] Keep README environment-provenance claims scoped to bounded audit
   evidence.
   - Spec evidence: AlphaEvolve-scale experimental results should be

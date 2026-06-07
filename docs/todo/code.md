@@ -213,6 +213,28 @@ Primary evidence:
     for a large multi-function or multi-file codebase before README, ROADMAP,
     or paper-index wording claims AlphaEvolve Table 1 code-scale parity.
 
+- [ ] Add Table 1 capability-comparison exhibit provenance.
+  - Spec evidence: AlphaEvolve Table 1 is a compact comparison of FunSearch
+    and AlphaEvolve capabilities and typical behavior, with rows for function
+    versus file/codebase evolution, code length, programming languages,
+    evaluation duration/parallelism/accelerators, LLM sample counts, model
+    scale, prompt context/feedback, and single versus multiple metrics.
+  - Current evidence: code TODOs already track many individual Table 1 row
+    gaps, including codebase-scale benchmarks, arbitrary-language runners,
+    evaluator workload/budget provenance, sample-efficiency reports,
+    Google/Gemini model-mix parity, rich prompt context, and multi-objective
+    archive policy. They do not require Table 1 itself to be represented as a
+    paper-facing exhibit with stable row ids, source PDF/caption location,
+    row-to-gap mappings, implemented/partial/missing status per row, rendered
+    table artifact hashes, or validation that README/ROADMAP summaries do not
+    flatten the comparison into one broad capability claim.
+  - Required result: add Table 1 exhibit metadata and validators with a stable
+    table id, row ids/order, FunSearch/AlphaEvolve comparison text, source
+    page/caption location, row-to-code/report/TODO mappings, implementation
+    status for each capability row, rendered artifact paths/hashes, and docs
+    that distinguish table-exhibit reproduction from satisfying each Table 1
+    behavioral capability.
+
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.
   - Spec evidence: AlphaEvolve's Discussion says the system made practical

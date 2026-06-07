@@ -341,6 +341,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     score progress before treating current workspace support as AlphaEvolve
     Table 1 code-scale parity.
 
+- [ ] Track Table 1 capability-comparison exhibit provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 1 compares FunSearch
+    and AlphaEvolve across capability and behavior rows: function/file
+    evolution, code length, programming language scope, evaluator duration and
+    accelerator/parallelism support, LLM sample counts, model scale, prompt
+    context and feedback, and single versus multiple metrics.
+  - Current gap: paper TODOs already split out several Table 1 row claims such
+    as code-scale behavior, sample efficiency, model mix, rich context,
+    evaluator workload, and multi-metric optimization. They do not preserve
+    Table 1 as a table exhibit with stable table/row ids, source page/caption
+    location, exact comparison text, row ordering, row-to-implementation
+    status, row-to-TODO/report mappings, rendered table artifact hashes, or
+    validation that docs do not treat partial row coverage as full Table 1
+    parity.
+  - Required result: add paper-facing Table 1 exhibit records with row ids,
+    FunSearch/AlphaEvolve comparison text, source location, per-row status and
+    evidence links, rendered artifact paths/hashes, and README/ROADMAP wording
+    that separates reproducing the Table 1 comparison artifact from satisfying
+    the individual behavioral capability rows.
+
 - [ ] Track evaluator workload provenance for inner-search and ML-training
       evaluators.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.

@@ -226,6 +226,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evaluator budget, and quality-progress results that justify any
     AlphaEvolve Table 1 code-scale comparison.
 
+- [ ] Keep README Table 1 wording scoped until capability-table exhibit
+      provenance exists.
+  - Spec evidence: AlphaEvolve Table 1 is a row-by-row FunSearch versus
+    AlphaEvolve comparison covering code scale, language scope, evaluator
+    duration/parallelism/accelerators, sample counts, model scale, prompt
+    context/feedback, and single versus multiple metrics.
+  - Current evidence: README has a high-level gap table and detailed sections
+    for several Table 1-related capabilities, but it does not document a
+    Table 1 exhibit record with stable row ids, exact comparison text, source
+    PDF/caption location, row-to-gap mappings, rendered artifact hashes, or
+    row-level implementation status.
+  - Required result: when Table 1 exhibit provenance lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README can
+    distinguish the reproduced capability-comparison table from the separate
+    work needed to satisfy each Table 1 capability row.
+
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be

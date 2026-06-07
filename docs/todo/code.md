@@ -15,1105 +15,580 @@ Primary evidence:
 - Current implementation in `libreevolve/core`, `libreevolve/population`,
   `libreevolve/problems`, `libreevolve/llm`, and `libreevolve/plugins`.
 
-## Problem and Code Representation
-
-- [x] Add AlphaEvolve-style evolve-block markers.
-  - Spec evidence: AlphaEvolve supports blocks marked with
-    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while the surrounding
-    code acts as a skeleton.
-  - Current evidence: `libreevolve/core/candidate.py` parses evolve-block
-    markers and constrains mutations to marked regions within single-file and
-    workspace candidates.
-  - Status: implemented in `libreevolve/core/candidate.py`; one or more marked
-    regions are parsed and skeleton code is preserved during mutation when
-    markers are well-formed.
-  - Required result: problem loading should support one or more marked
-    evolvable regions, preserve non-evolved skeleton code, and apply mutations
-    only where configured.
-
-- [x] Reject malformed evolve-block marker structures during mutation.
-  - Spec evidence: AlphaEvolve's task API relies on marked evolvable blocks
-    inside a skeleton; an invalid marker layout should not change which code is
-    evolvable without an explicit diagnostic.
-  - Current evidence: `validate_evolve_blocks()` checks marker pairing,
-    nesting, block-name syntax, duplicate block names, orphan end markers, and
-    malformed end markers before mutation. `apply_candidate_mutation()` fails
-    closed with `malformed_evolve_blocks:<reason>`, and workspace mutation
-    prefixes the target path in the diagnostic.
-  - Status: implemented at mutation-application time, with tests for missing
-    end markers, orphan end markers, nested blocks, duplicate names, invalid
-    names, anonymous block naming, and malformed target files in workspaces.
-    Problem loading still does not prevalidate seed files before the first
-    evaluation/mutation path sees them.
-  - Required result: validate marker pairing, nesting, names, and duplicate
-    block identities during problem load or mutation application; reject or
-    quarantine malformed candidates with explicit errors; add tests for missing
-    end markers, orphan end markers, nested blocks, duplicate names, and mixed
-    valid/invalid files in workspaces.
-
-- [x] Support multi-component and multi-file codebase evolution.
-  - Spec evidence: AlphaEvolve evolves large code pieces spanning multiple
-    functions and components and can evolve an entire code file/codebase.
-  - Current evidence: `CandidateWorkspace` represents text file sets,
-    `Program.files` stores candidate files, loader accepts seed directories,
-    file-section mutations route edits across files, and the evaluator
-    materializes the whole workspace for validators.
-  - Status: basic local workspace evolution is implemented and covered by
-    tests. Remaining limitations: Python syntax validation only, no arbitrary
-    language runners/build systems, and `best.py` is still a primary-file
-    convenience artifact. Candidate paths reject traversal, drive-letter, and
-    colon-component paths before materialization.
-  - Required result: represent a candidate as a project/file set, apply diffs
-    across marked files/components, and pass the whole candidate workspace to
-    `evaluate`.
-
-- [ ] Reject missing declared primary files instead of silently reassigning
-  candidate identity.
-  - Spec evidence: AlphaEvolve-style codebase candidates need a faithful
-    representation of which component/file is the primary render/evaluation
-    view. A corrupted archive record, plugin-generated workspace, or future
-    resume checkpoint should not silently change that identity.
-  - Current evidence: `CandidateWorkspace.__post_init__()` normalizes
-    `primary_file`, but if it is not present in `files`, it silently assigns
-    `sorted(self.files)[0]`. A local proof constructed
-    `CandidateWorkspace(files={"helper.py": "x=1\n"}, primary_file="missing.py")`
-    and received `primary_file == "helper.py"` with no error.
-    File-section `PRIMARY missing.py` is rejected, so the lower-level
-    constructor is less strict than mutation-time topology changes.
-  - Required result: reject missing explicit primary files at workspace
-    construction/load/deserialize boundaries, or require callers to opt into a
-    documented fallback mode; add tests for loader seeds, `from_dict()`/history
-    replay, topology changes, and empty workspace defaults.
-
-- [x] Unify file-section path parsing with workspace path normalization.
-  - Spec evidence: AlphaEvolve can evolve existing code files/codebases, where
-    ordinary repository filenames may contain hyphens, spaces, generated-file
-    suffixes, or other characters not represented by the current parser.
-  - Current evidence: `_FILE_SECTION_PATTERN` captures the full file-section
-    header line and `apply_workspace_mutation()` validates it through
-    `normalize_candidate_path()`. File sections now accept nested paths,
-    hyphens, spaces, Unicode filename characters, and Windows-style
-    backslashes when the normalized path is safe; empty paths and unsafe
-    normalized paths are rejected explicitly.
-  - Status: implemented for current `<<<FILE ... >>>FILE` envelopes, with
-    tests for hyphenated, spaced, nested, backslash-normalized, Unicode, colon,
-    and empty file-section paths.
-  - Required result: use one validated relative-path grammar for loader,
-    prompt envelopes, mutation parsing, normalization, and diagnostics; reject
-    unsafe paths explicitly; add tests for hyphenated, spaced, nested,
-    backslash, Unicode/normalization, and malformed file-section paths.
-
-- [ ] Reject leading-slash POSIX absolute candidate paths instead of
-  reinterpreting them as relative paths.
-  - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful,
-    explicit file-set representation. A mutation or seed path that appears
-    absolute should be rejected with diagnostics rather than silently rewritten
-    to a different relative path.
-  - Current evidence: `normalize_candidate_path()` calls `.lstrip("/")`, so
-    `/abs.py` normalizes to `abs.py` and `//pkg/mod.py` normalizes to
-    `pkg/mod.py`. A local proof applying `<<<FILE /new.py ... >>>FILE` in
-    `full` mode returned `err=None` and created candidate file `new.py`.
-    Windows drive-letter paths and traversal paths are rejected, but
-    POSIX-style absolute inputs are not.
-  - Required result: reject leading-slash absolute candidate paths in loader,
-    file-section mutations, primary-file changes, moves/renames, and
-    materialization helpers; add tests proving absolute POSIX-style paths fail
-    without partial application.
-
-- [x] Detect normalized-path and host-filesystem path collisions.
-  - Spec evidence: AlphaEvolve-style codebase evolution needs a faithful
-    candidate file set. Two logical candidate files should not silently collapse
-    in memory or overwrite each other when validators materialize the
-    workspace.
-  - Current evidence: `normalize_candidate_path()` normalizes candidate paths
-    to Unicode NFC after slash normalization. `CandidateWorkspace.__post_init__()`
-    rejects raw file keys that normalize to the same candidate-relative path,
-    including `pkg\\helper.py` versus `pkg/helper.py` and composed/decomposed
-    Unicode names. `_load_initial_workspaces()` now inherits that policy for
-    seed directories. `CandidateWorkspace.materialize()` preflights
-    case-folded host paths before writing any file; tests prove `Readme.md`
-    and `README.md` collisions fail without partial materialization.
-    Duplicate edit sections for the same `<<<FILE path ...>>>` target fail
-    with `path:duplicate_file_section`. Ambiguous edit/delete, edit/move,
-    duplicate move-target, and chained move sequences fail before partial
-    application instead of silently dropping a candidate file.
-  - Status: implemented with candidate, loader, mutation, and materialization
-    regression tests.
-
-- [ ] Convert host-filesystem materialization collisions into structured
-  candidate failures instead of run aborts.
-  - Spec evidence: AlphaEvolve-style codebase evolution should evaluate and
-    log invalid generated code without crashing the whole evolutionary loop.
-    A candidate file-set that cannot be materialized on the host filesystem is
-    a rejected candidate, not an infrastructure failure.
-  - Current evidence: `CandidateWorkspace.__post_init__()` rejects logical
-    normalized-path duplicates, but case-folded host-path collisions such as
-    `Readme.md` plus `README.md` are detected only inside
-    `CandidateWorkspace.materialize()`. `CascadeEvaluator.evaluate()` and
-    CLI `best_workspace` export do not catch that `ValueError`, so a mutated
-    workspace with a host collision can abort the run before
-    `failure_history.jsonl`, `history.jsonl`, or archive-admission metadata
-    records the rejected candidate.
-  - Required result: preflight the final workspace for host materialization
-    collisions before evaluation/logging/export, or catch materialization
-    errors and return a structured invalid `EvaluationResult`; add tests for
-    case-only collisions and other host-specific materialization failures in
-    mutation, evaluator, failure-history, and best-workspace export paths.
-
-- [x] Detect malformed or ignored mutation envelopes.
-  - Spec evidence: AlphaEvolve-style codebase mutation should make every
-    intended edit either apply or fail with a diagnostic; silently dropping an
-    LLM-proposed file/block section can corrupt the audit trail and hide
-    partial candidate changes.
-  - Current evidence: `apply_workspace_mutation()` validates file-section
-    envelopes before parsing sections, and multi-block full replacement
-    validates block-section envelopes before applying replacements. Unmatched,
-    orphaned, nested, empty-name, invalid-name, and unsafe-path sections fail
-    before partial edits are applied.
-  - Status: implemented for current `<<<FILE ... >>>FILE` and
-    `<<<BLOCK ... >>>BLOCK` envelopes, with tests proving mixed valid plus
-    malformed sections do not apply partial candidate changes.
-  - Required result: parse mutation envelopes as a whole document, reject or
-    record unmatched `<<<FILE`/`>>>FILE` and `<<<BLOCK`/`>>>BLOCK` spans,
-    surface diagnostics for unsupported names/paths, and add tests for mixed
-    valid plus malformed sections so intended edits cannot disappear silently.
-
-- [x] Reject duplicate block sections in multi-block full replacement.
-  - Spec evidence: AlphaEvolve-style skeleton preservation needs every
-    evolvable block edit to be unambiguous. Multiple edits for the same named
-    block should either be rejected or represented explicitly in a typed
-    mutation record.
-  - Previous evidence: `_apply_full_replacement()` stored parsed
-    `<<<BLOCK name ... >>>BLOCK` sections in a dict, so a duplicate name
-    silently overwrites the earlier body. A local proof with two `<<<BLOCK a`
-    sections returned `err=None` and applied only the later `x = 99` body.
-  - Status: implemented. Duplicate block-section names now fail closed with
-    `malformed_block_sections:duplicate_name` before applying a multi-block
-    full replacement.
-  - Validation: `tests/core/test_candidate.py` covers duplicate block-section
-    rejection and proves the original candidate is unchanged.
-
-- [x] Support file deletion and rename/move operations in workspace mutations.
-  - Spec evidence: AlphaEvolve can evolve whole files/codebases, not only edit
-    text inside a fixed set of files. Real codebase evolution may need removing
-    obsolete files, renaming modules, or moving components while preserving
-    imports and validator expectations.
-  - Status: implemented. `apply_workspace_mutation()` supports
-    `<<<FILE DELETE path ... >>>FILE`, `<<<FILE MOVE old -> new ... >>>FILE`,
-    `<<<FILE RENAME old -> new ... >>>FILE`, and
-    `<<<FILE PRIMARY path ... >>>FILE`, while preserving existing
-    `<<<FILE path ... >>>FILE` edit/create behavior.
-  - Evidence: tests cover deleting helper files, moving/renaming modules,
-    primary-file changes, missing sources, target collisions, unsafe targets,
-    and no partial apply on topology errors. Topology changes persist through
-    existing `Program.files`, `primary_file`, `history.jsonl`, and
-    `best_workspace/` logging/export paths.
-
-- [ ] Reject ambiguous duplicate primary-file topology operations.
-  - Spec evidence: AlphaEvolve-style codebase candidates should have an
-    unambiguous entrypoint or primary evolved file. Multiple primary-file
-    reassignment commands in one mutation should be rejected or represented as
-    an explicit ordered operation list, not resolved by parser accident.
-  - Current evidence: `apply_workspace_mutation()` skips `PRIMARY` operations
-    in `_find_section_path_conflict()`. A local proof with two file sections,
-    `<<<FILE PRIMARY alt.py ... >>>FILE` followed by
-    `<<<FILE PRIMARY third.py ... >>>FILE`, returned `err=None` and set the
-    candidate `primary_file` to `third.py`, silently discarding the earlier
-    primary intent.
-  - Required result: reject multiple `PRIMARY` topology sections in a single
-    workspace mutation with an explicit diagnostic before partial application;
-    add tests proving the original workspace primary is unchanged.
-
-- [x] Make materialized workspace execution import- and cwd-faithful.
-  - Spec evidence: AlphaEvolve can evolve whole files/codebases, so evaluators
-    should be able to exercise a candidate as a normal project with local
-    imports and relative data paths.
-  - Current evidence: `CascadeEvaluator._run_subprocess()` materializes the
-    candidate into a temporary `candidate/` directory, runs the validator
-    subprocess with that directory as `cwd`, passes it as `workspace_path`, and
-    adds it to `sys.path`. Tests cover candidate package imports and relative
-    candidate file reads without validator-managed path edits.
-  - Status: implemented for local Python workspace execution. Remaining
-    divergence: this is not a container/build-system runner, environment
-    isolation and artifact collection are still open, and non-Python
-    workspaces remain out of scope.
-  - Required result: define and test the workspace execution contract
-    (`cwd`, `PYTHONPATH`/`sys.path`, environment, package entrypoints, and
-    relative artifact paths); make project-local imports and relative file
-    access work by default where appropriate, or document the deliberate
-    validator-managed divergence.
-
-- [x] Make problem-local evaluator imports package-faithful.
-  - Spec evidence: AlphaEvolve task setup can include evaluator code and
-    problem-specific test logic. Reproducible evaluation should support
-    ordinary multi-file validator modules, not only a single self-contained
-    `validate.py`.
-  - Current evidence: `_RUNNER` adds `validate_path.parent` to `sys.path`
-    before loading the validator file, so sibling helper modules beside
-    `validate.py` can be imported. Tests cover a problem-local `scoring.py`
-    helper imported by `validate.py`.
-  - Status: implemented for sibling helper imports beside validator entrypoint
-    files. Remaining divergence: problem directory is not `cwd`, package-style
-    validator module loading is not a first-class API, and evaluator code/data
-    hashes are not in manifests yet.
-  - Required result: define evaluator import semantics for `validate.py`,
-    stage validators, sibling helper modules, packages, and relative data
-    files; set `cwd`/`PYTHONPATH` or use an explicit module/package loader as
-    documented; include evaluator code hashes in manifests; and add tests for
-    problem-local helper imports, package validators, relative data files, and
-    failure diagnostics.
-
-- [x] Add language-agnostic candidate support or narrow the claim to Python.
-  - Spec evidence: AlphaEvolve is described as being able to evolve code in any
-    language.
-  - Current evidence: `CascadeEvaluator.evaluate()` calls Python `compile()`
-    and imports Python `validate.py` (`libreevolve/core/evaluator.py:31-38`).
-  - Status: README, architecture, problem format, and roadmap now state the
-    current Python-only/local-workspace scope as a deliberate divergence.
-  - Required result: either introduce pluggable language runners and validators
-    or document Python-only scope as a deliberate divergence.
-
-- [x] Add direct full-code/full-block replacement mode in addition to diffs.
-  - Spec evidence: AlphaEvolve can be configured to ask for a complete code
-    block when a rewrite is more appropriate than a small modification.
-  - Current evidence: `Config.mutation_mode` and CLI `--mutation-mode` support
-    `diff` and `full`; generation now calls `apply_candidate_mutation()`.
-  - Status: implemented as `Config.mutation_mode` and CLI `--mutation-mode`,
-    with `diff` and `full` modes covered by tests.
-  - Required result: add a per-problem/per-run mutation mode for full block,
-    full file, or diff-based edits, with validator coverage for each mode.
-
-- [x] Make prompt instructions mutation-mode aware.
-  - Spec evidence: AlphaEvolve can be configured to ask the LLM for a full
-    code block instead of SEARCH/REPLACE diffs; the prompt must match the
-    configured parser/application mode for that run.
-  - Current evidence: `PromptSampler.build()` accepts `mutation_mode`, exposes
-    `{mutation_mode}` and `{mutation_instructions}` to templates, and the
-    default template renders diff instructions for `diff` mode and full-file /
-    full-block replacement instructions for `full` mode. `evolve()` passes
-    `config.mutation_mode` into prompt construction and stores the mode in
-    candidate metadata.
-  - Status: implemented for the current `diff` and `full` modes, with tests
-    covering direct prompt rendering, custom template compatibility, and loop
-    persistence of full-mode prompt instructions.
-  - Required result: render mode-specific mutation instructions and examples
-    for `diff`, full-file, full-block, and multi-file full replacement modes;
-    include the active mode in prompt metadata/history; add tests proving the
-    default prompt changes when `mutation_mode` is `full` while preserving
-    backward-compatible custom templates.
-
-- [x] Add AlphaEvolve canonical SEARCH/REPLACE diff marker compatibility.
-  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 use
-    `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE` blocks.
-  - Status: implemented in `libreevolve/core/diff.py` via
-    `parse_diff_blocks()`, which accepts both canonical AlphaEvolve fences and
-    compact local fences. Tests cover low-level diff application, evolve-block
-    restriction, mixed-format document order, and multi-file file-section
-    routing for canonical blocks.
-  - Required result: keep both formats backward-compatible in prompt docs,
-    parser/apply logic, and mutation tests.
-
-- [x] Make paper-inspired plugins consume canonical mutation formats.
-  - Spec evidence: AlphaEvolve uses canonical SEARCH/REPLACE blocks, and
-    plugin analyses that infer guidance from mutations should share the same
-    parser contract as candidate mutation application.
-  - Current evidence: `CausalPlugin._detect_factors()` now calls the shared
-    `parse_diff_blocks()` parser, so compact local fences and canonical
-    AlphaEvolve fences are classified through the same mutation parsing
-    contract as candidate application. Empty or unparseable mutation text now
-    uses a deterministic fallback factor instead of random factor guidance.
-  - Status: implemented for the CausalEvolve-inspired plugin; an audit found
-    no other built-in plugin directly parsing SEARCH/REPLACE blocks.
-  - Required result: route plugin mutation analysis through
-    `parse_diff_blocks()` or a shared mutation AST, add CausalPlugin tests for
-    compact and canonical diffs, preserve deterministic fallback semantics,
-    and audit other plugins for raw diff-format assumptions.
-
-- [ ] Capture proposal ideas/rationale separately from patch application.
-  - Spec evidence: AlphaEvolve Figure 3 asks the LLM to "suggest a new idea"
-    and describe each change with SEARCH/REPLACE blocks; its process uses LLMs
-    to generate, critique, and evolve a pool of algorithms.
-  - Current evidence: `capture_proposal_metadata` can ask the model for short
-    `IDEA`, `RATIONALE`, and `HYPOTHESIS` sections before the patch.
-    `extract_proposal_metadata()` parses bounded fields from mutation responses,
-    patch extraction remains compatible with rationale-plus-diff and diff-only
-    responses, and candidate history stores the parsed fields under
-    `metadata.proposal`. The prompt renderer surfaces bounded proposal
-    summaries for selected parent and inspiration programs. Tests cover parser
-    extraction, prompt instructions, config validation, manifest logging, loop
-    history, and parent/inspiration prompt rendering.
-  - Remaining gap: proposal metadata is not yet scored, searched, critiqued
-    independently, or used as an indexed retrieval signal for choosing parent/
-    inspiration candidates.
-  - Required result: allow and parse bounded proposal rationale/idea sections
-    when configured, store them in candidate metadata, render useful prior
-    ideas in prompts, and keep patch extraction robust for both rationale plus
-    diff and diff-only compatibility modes.
-
-- [x] Export complete best workspaces, not only the primary file.
-  - Spec evidence: AlphaEvolve can evolve entire code files/codebases, so the
-    output artifact must preserve all evolved components.
-  - Current evidence: `libreevolve/cli.py` writes `best.py` as a primary-file
-    compatibility view and materializes `best.workspace()` to
-    `runs/<name>/best_workspace/`. CLI tests cover multi-file best-workspace
-    export.
-  - Status: implemented for text-file candidate workspaces. Remaining
-    divergence: run-directory collision semantics are fail/overwrite rather
-    than resume, and binary/static non-text artifacts are not first-class
-    candidate members.
-  - Required result: write a reproducible `best_workspace/` or archive with all
-    candidate files, preserve `best.py` only as a compatibility convenience,
-    and document/export this artifact in tests and run docs.
-
-- [ ] Support problem-defined candidate abstraction modes or document the
-  narrower code-file abstraction.
-  - Spec evidence: AlphaEvolve Section 2.1 describes flexible solution
-    abstractions, including raw solution strings, constructor functions,
-    bespoke search algorithms, and co-evolved intermediate solutions plus
-    search procedures.
-  - Current evidence: `CandidateWorkspace` models candidates as local text file
-    sets with a primary Python code view; validators can interpret code however
-    they want, but the framework has no first-class representation for paired
-    solution/search artifacts, non-code solution objects, or problem-defined
-    candidate serializers.
-  - Required result: either add a problem API for candidate abstraction modes,
-    rendering, mutation, materialization, and validation, or clearly document
-    that LibreEvolve currently evolves code file sets only.
-
-- [ ] Define non-text artifact handling for workspace/codebase candidates.
-  - Spec evidence: AlphaEvolve can operate on existing codebases and systems
-    code where supporting assets, generated artifacts, fixtures, and binary
-    inputs may be part of the runnable project.
-  - Current evidence: `_load_initial_workspaces()` reads every non-hidden,
-    non-`__pycache__` file in a seed directory with `read_text(encoding="utf-8")`.
-    `CandidateWorkspace` stores `dict[str, str]`, prompt rendering assumes text,
-    and `materialize()` writes text files. Binary or non-UTF-8 seed artifacts
-    can fail problem load or cannot be represented without lossy conversion.
-  - Required result: define text-vs-binary candidate artifact policy, support
-    copied static assets or encoded artifacts where needed, record artifact
-    hashes/provenance, and test binary fixture, large fixture, and generated
-    artifact behavior.
-
 ## Prompt Sampling and Context
 
-- [x] Replace the simple prompt builder with a configurable prompt sampler.
-  - Spec evidence: AlphaEvolve prompt sampling supports long contexts,
-    previous solutions, system instructions, explicit context, stochastic
-    formatting, rendered evaluation results, and meta-prompt evolution.
-  - Current evidence: `build_prompt()` delegates to
-    `libreevolve/core/prompt.py::PromptSampler`, which supports configurable
-    templates, explicit context files, evaluator feedback, inspirations,
-    plugin context, and recent failed/rejected mutation records.
-  - Status: implemented in `libreevolve/core/prompt.py` with configurable
-    templates, problem context files, inspirations, metrics, evaluator feedback,
-    plugin context, and recent failed/rejected mutation records.
-  - Required result: introduce prompt templates, stochastic template choices,
-    user-provided context files, and structured prompt sections.
-
-- [ ] Implement AlphaEvolve-style stochastic formatting controls.
-  - Spec evidence: AlphaEvolve Section 2.2 describes template placeholders with
-    human-provided alternatives instantiated using probability distributions
-    from a separate config file.
-  - Current evidence: `PromptSampler` selects among whole prompt templates with
-    a seeded RNG, but it does not parse placeholder alternatives or probability
-    distributions inside templates/config.
-  - Required result: add a deterministic stochastic-formatting schema,
-    probability validation, seeded sampling tests, and docs that distinguish it
-    from whole-template variants.
-
-- [x] Include basic rendered evaluation stage summaries in prompts.
-  - Spec evidence: AlphaEvolve prompts can include a program, the result of
-    executing that program, and scores assigned by `evaluate`.
-  - Current evidence: evaluator returns `EvaluationResult`; `Program` stores
-    `metrics` and `evaluation`; `PromptSampler` renders the last three stage
-    names, pass/fail states, scores, and errors.
-  - Status: implemented as compact stage-summary rendering. Full evaluator
-    output rendering remains open below.
-  - Required result: return an evaluation result object, store it with the
-    program, and render basic stage status/score/error feedback in future
-    prompts.
-
-- [ ] Render richer evaluator outputs and feedback records in prompts.
-  - Spec evidence: AlphaEvolve prompt context can include the result of
-    executing a program, program outputs, and scores so future proposals can
-    learn from prior behavior.
-  - Current evidence: `EvaluationResult` stores stdout, stderr, errors,
-    metadata, and stage outcomes, and LLM feedback graders store response
-    provenance. `PromptSampler._render_feedback()` now renders bounded,
-    redacted parent-feedback sections for stage status, stdout/stderr,
-    retry/sample attempts, evaluator artifact paths and hash prefixes, and LLM
-    grader feedback. It still does not retrieve artifact file contents, render
-    full validator metadata, or enforce a global prompt-size budget across all
-    sections.
-  - Required result: add bounded prompt rendering for evaluator stdout/stderr,
-    validator feedback, artifacts, sample-level stage diagnostics, and LLM
-    grader summaries, with redaction/truncation rules and tests proving prompts
-    contain the intended evidence without exceeding configured budgets.
-
-- [ ] Add global prompt budget and context-window accounting.
+- [ ] Add provider-token prompt section fitting and restored token/cost budget state.
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts and
     configurable prompt construction; practical long-context evolution needs
     deterministic packing so parent code, inspirations, evaluator feedback,
     explicit context, plugin context, and failure memory fit the selected LLM.
-  - Current evidence: `PromptSampler.build()` formats the selected template
-    with full rendered context, parent files, inspirations, plugin context, and
-    recent failures. Only individual problem context files are character-bounded
-    by `_summarize_context_text()`; parent/inspiration workspaces, plugin
-    output, feedback sections, and the final rendered prompt have no global
-    token/character budget, truncation policy, priority order, or prompt-size
-    metadata in history/manifests.
-  - Required result: add configurable prompt budgets per backend/run, a
-    deterministic section-priority packing policy, token estimation or provider
-    usage accounting, prompt-size diagnostics in history, tests for oversized
-    workspaces/context/plugins/inspirations, and clear behavior when required
-    sections cannot fit.
+  - Current evidence: `prompt_max_chars` provides an optional run-level
+    rendered-prompt character cap before LLM calls, `prompt_max_estimated_tokens`
+    provides an optional heuristic estimated-token cap using
+    `ceil(rendered_chars / 4)`, and `LLMEnsemble` enforces both caps before
+    scheduler/backend selection for mutation, critique, feedback, meta-prompt,
+    registry-created, and custom backend roles. `PromptSampler` now
+    deterministically omits oversized optional string prompt sections by
+    priority before the effective final cap, leaves required AlphaEvolve
+    channels intact, and records the packing decisions in
+    `section_budget.packing` under policy
+    `deterministic_section_priority_packing_heuristic_token_estimates_final_prompt_cap`.
+    `section_budget` diagnostics with schema
+    `libreevolve.prompt_section_budget.v1` include deterministic
+    per-placeholder priorities, hashes, character counts, heuristic estimated
+    tokens, required/optional totals, template overhead, required-section fit
+    status, and packing status. Generated program history, failed-generation
+    records, manifests, scheduler state, and LLM call history persist these
+    diagnostics. LLM call telemetry and runtime accounting aggregate
+    provider-reported token counts when adapters expose them, and
+    `runtime.llm_budget_report` validates observed logical-call, retry,
+    adapter-attempt, token, cost, wall-clock, and resume-state shapes while
+    marking `paper_budget_ready: false`. The packer is still driven by
+    character counts and heuristic token estimates, not provider tokenizers;
+    provider usage is observed after calls rather than used for exact
+    provider-token pre-call fitting.
+    `cost_usd` is now populated from configured
+    `backend_metadata.cost_usd_per_million_tokens` when provider usage exposes
+    `total_tokens`, and `RunBudget` now enforces logical LLM calls plus a
+    post-call `max_llm_provider_attempts` cap, a provider-reported
+    `max_llm_tokens` cap, and a configured estimated `max_llm_cost_microusd`
+    cap. Direct `evolve()` calls and CLI `--restore-budget-from-manifest` now
+    apply prior runtime budget snapshots before new work, so restored
+    provider-attempt, token, configured-cost, latency, and wall-clock usage can
+    stop resumed runs through the same live checks.
+    Backend specs and direct backend metadata can now include
+    `prompt_max_estimated_tokens`; the ensemble applies the minimum applicable
+    global/eligible-backend heuristic prompt-token cap before provider calls and
+    records effective/global/backend caps in call telemetry.
+  - Required result: add configurable backend/model context-window budgets,
+    provider-specific tokenizer integration, exact provider-token
+    section-priority fitting over parent code, inspirations, explicit context,
+    plugin context, evaluator feedback, and failure memory, persisted
+    budget/resume state for token/provider-cost limits, and tests for
+    provider-specific oversized workspaces/context/plugins/inspirations/failure
+    memory.
 
-- [ ] Add prompt/history redaction and context data-retention controls.
-  - Spec evidence: AlphaEvolve-style task setup can include existing codebases,
-    evaluator outputs, explicit context files, and literature. When those
-    sources are sent to external LLMs and stored for future database sampling,
-    the experiment needs explicit data-retention, redaction, and audit
-    boundaries.
-  - Current evidence: `PromptSampler._render_context()` renders problem
-    context text directly, `_render_program_files()` renders full parent and
-    inspiration file contents, `evolve()` stores the rendered mutation prompt
-    under `Program.metadata["prompt"]`, stores critique prompts under
-    `metadata.critique.prompt`, and `ProgramDatabase.log()` writes metadata
-    verbatim to `history.jsonl`. `build_critique_prompt()` embeds the full
-    original prompt. Basic secret redaction exists only for LLM feedback
-    workspace rendering in `libreevolve/core/feedback.py`; mutation prompts,
-    critique prompts, plugin context, explicit context files, failure mutation
-    text, and persisted run history are not redacted or covered by a retention
-    policy.
-  - Required result: define per-role prompt logging modes
-    (full/redacted/hash-only/off), apply shared secret redaction to mutation,
-    critique, feedback, plugin, and context prompt sections before provider
-    calls and/or before persistence as configured, record redaction metadata
-    and hashes, document data-retention defaults, and add tests proving
-    secret-like values in seeds/context/plugin text do not appear in persisted
-    artifacts when redaction is enabled.
-
-- [x] Make failed/rejected mutation memory complete and queryable.
-  - Spec evidence: AlphaEvolve prompt context and database are built around
-    past trials, ideas, evaluation results, and feedback, including enough
-    history to avoid repeating unproductive proposals.
-  - Status: implemented. `ProgramDatabase.log_failure()` writes
-    `failure_history.jsonl` records and mirrors the same bounded failure record
-    into candidate metadata. The loop logs every post-plugin candidate with
-    `fitness < VALID_THRESHOLD`, including malformed/no-op/search-miss diffs
-    that leave code unchanged and workspace failures that modify only
-    non-primary files.
-  - Evidence: failure records include mutation text, diff error, parent id,
-    changed file paths, file deltas, evaluator diagnostics, and repetition
-    counts. `PromptSampler` renders bounded structured failure summaries in
-    later prompts. Tests cover malformed diff persistence, next-prompt failure
-    rendering, queryable failure-history records, repetition counts, and
-    non-primary-file workspace failures.
-
-- [ ] Record invalid seed evaluations in failure memory or a seed-diagnostic
-  stream.
-  - Spec evidence: AlphaEvolve's database preserves past trials, scores,
-    outputs, and feedback so the evolutionary loop can reason about failed
-    ideas and startup state. Invalid initial candidates are evaluated program
-    states, not invisible setup details.
-  - Current evidence: the seed population path in `evolve()` evaluates seeds,
-    calls `db.admit()` and `db.log()`, but never calls `db.log_failure()` for
-    evaluator-invalid or below-threshold seeds. A local proof with a single
-    seed whose validator returned `{"score": -1.0, "is_valid": false}` wrote
-    only `history.jsonl`, `manifest.json`, and `prompt_history.jsonl`; no
-    `failure_history.jsonl` was created, no LLM call occurred, and the run
-    ended with `stop_reason: "no_parent"`.
-  - Required result: persist invalid/rejected seed diagnostics in
-    `failure_history.jsonl` or a clearly named seed-diagnostic artifact,
-    include evaluator stdout/stderr/error and admission reason, and add tests
-    for all-invalid seed populations and mixed valid/invalid seeds.
-
-- [x] Implement meta-prompt evolution.
-  - Spec evidence: AlphaEvolve co-evolves prompt instructions/context in a
-    separate database analogous to solution programs and ablates "No meta
-    prompt evolution" as a reduced system.
-  - Current evidence: `PromptDatabase` stores prompt templates as prompt
-    programs with lineage, selection, scoring, mutation, and append-only
-    `prompt_history.jsonl`. The loop records `prompt_program_id` per candidate
-    and can optionally ask the active LLM to mutate the prompt template at
-    `meta_prompt_interval`.
-  - Status: implemented as a local prompt-program database and optional
-    interval-based LLM template mutation. Remaining hardening: richer prompt
-    fitness and ablation reporting.
-  - Required result: create a prompt-program representation, mutation path,
-    scoring/selection policy, and integration into `build_prompt()`.
-
-- [ ] Evolve prompt context policy, not only full prompt templates.
+- [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
     not just swapping one complete prompt string for another.
-  - Current evidence: `PromptDatabase` stores and mutates only template text.
-    `PromptSampler` renders explicit context files, plugin context,
-    inspirations, failure memory, evaluator feedback, and mutation-mode
-    instructions through fixed code paths. Meta-prompt mutation cannot change
-    context-file selection, retrieval/summarization policy, section budgets,
-    placeholder distributions, failure-memory policy, or which evaluator
-    feedback fields are included.
-  - Required result: define prompt-program state that can own context
-    selection/rendering policy as structured data, persist that policy and
-    lineage, allow safe LLM or configured mutations of those knobs, and test
-    that prompt evolution can change context behavior without breaking
-    template placeholder validation.
+  - Current evidence: `PromptDatabase` now stores selected, scored,
+    lineage-bearing prompt programs; prompt history records contain
+    deterministic ids, template hashes, reward/penalty events, validated safe
+    metadata, and meta-prompt mutation context. Configured and LLM-mutated
+    templates are validated against the `PromptSampler` placeholder schema,
+    strict AlphaEvolve template policy is available for configured seeds, and
+    evolved children cannot drop placeholders used by their selected parent.
+    Prompt programs now also persist validated
+    `libreevolve.prompt_context_policy.v1` policy state separate from template
+    text. `PromptSampler` applies that policy to disable optional rendered
+    prompt channels, override deterministic section-packing priorities, and
+    select a safe enum-valued `mutation_instruction_variant` (`default`,
+    `minimal`, or `exploratory`) for rendered mutation-format instructions.
+    `mutation_instruction_include_example` can keep or remove the built-in
+    mutation-format example block while preserving the core format rules.
+    `proposal_metadata_enabled` can override whether proposal metadata
+    instructions and downstream parsing run for that prompt arm while `null`
+    preserves the run-level `capture_proposal_metadata` setting.
+    It can also select rendered parent-feedback subsections with
+    `feedback_sections`, including stage summaries, execution output,
+    validator diagnostics/artifacts, program outputs, proposal metadata, and
+    LLM grader feedback, and `feedback_section_order` can deterministically
+    reorder those selected/rendered parent-feedback subsections while appending
+    unspecified sections in default order. `feedback_section_max_chars_by_name`
+    can suppress or cap individual rendered feedback subsections before the
+    aggregate feedback cap. `inspiration_strategy` can override upstream
+    inspiration sampling strategy for that prompt program using the same safe
+    strategy enum as config. `inspiration_sample_count` can override the
+    upstream sampled inspiration count before plugin context and prompt
+    rendering, separately from the rendered inspiration cap.
+    `inspiration_required_metric` can filter the upstream inspiration pool to
+    programs carrying a manifest-safe metric name before plugin context and
+    prompt rendering. `inspiration_excluded_metrics` can filter out upstream
+    inspirations carrying any listed manifest-safe metric names before plugin
+    context and prompt rendering. `inspiration_fitness_threshold` can filter
+    upstream inspirations by finite fitness min/max bounds before plugin
+    context and prompt rendering. `inspiration_metric_thresholds` can filter the upstream
+    inspiration pool to programs whose numeric metric values satisfy safe
+    min/max bounds before plugin context and prompt rendering.
+    `inspiration_metric_ranking` can rank the upstream inspiration pool by a
+    numeric metric in maximize/minimize order before final selection, and
+    generated-candidate metadata records whether the strategy and requested
+    count came from config or prompt context policy plus required-metric and
+    threshold/ranking pool, match, filtered, ranked, and selected counts. `llm_feedback_fields`
+    can further select rendered safe LLM-grader fields within that section, and
+    `llm_feedback_max_chars_by_field` can cap or suppress those selected
+    LLM-grader fields before rendering, and
+    `proposal_fields` can select rendered safe proposal metadata fields, and
+    `proposal_max_chars_by_field` can cap or suppress those proposal fields
+    before rendering, and
+    `stage_summary_fields` can select rendered safe stage-summary fields
+    within stage-summary feedback, and `stage_summary_max_chars_by_field` can
+    cap or suppress those stage-summary fields before rendering, and
+    `execution_output_fields` can select rendered safe execution-output fields
+    within execution-output feedback and stage-summary IO lines, and
+    `execution_output_max_chars_by_field` can cap or suppress rendered
+    `stdout`, `stderr`, and `error` text independently before those fields are
+    included, and
+    `sample_retry_fields` can select rendered safe sample/retry diagnostic
+    fields, and `sample_retry_max_chars_by_field` can cap or suppress selected
+    sample/retry diagnostic text fields before rendering, and
+    `program_output_fields` can select rendered safe program-output fields
+    within program-output feedback, and `program_output_max_chars_by_field` can
+    cap or suppress selected program-output text fields before rendering, and
+    `validator_artifact_fields` can select rendered safe validator-artifact
+    fields, and `validator_artifact_max_chars_by_field` can cap or suppress
+    selected validator-artifact text fields before rendering, and `validator_artifact_content_fields` can select nested bounded
+    artifact-content fields, and `validator_artifact_content_mode`,
+    `validator_artifact_content_max_bytes`, and
+    `validator_artifact_content_max_chars` can override artifact-content
+    rendering policy and caps, and `validator_skipped_artifact_fields` can select
+    rendered safe skipped-artifact fields, and
+    `validator_skipped_artifact_max_chars_by_field` can cap or suppress selected
+    skipped-artifact text fields before rendering, and
+    `validator_diagnostic_groups` can select rendered bounded validator
+    diagnostic groups inside validator diagnostics, and
+    `validator_metadata_keys` can select safe keys inside the validator
+    metadata summary. `validator_metadata_limit` can cap or suppress the
+    number of metadata-summary items before rendering.
+    `validator_metadata_max_chars_by_key` can cap or
+    suppress selected validator metadata summary values before rendering.
+    `evaluator_workspace_fields` can select safe evaluated workspace
+    provenance fields, including primary file, file count, and bounded file
+    list, and `evaluator_workspace_max_chars_by_field` can cap or suppress
+    selected workspace fields before rendering.
+    `syntax_error_fields` can select safe fields inside
+    syntax-error diagnostics, and `syntax_error_max_chars_by_field` can cap or
+    suppress selected syntax-error text fields before rendering, and
+    `metric_bound_fields` can select safe fields
+    inside metric-bound diagnostics, and `metric_bound_max_chars_by_field` can
+    cap or suppress selected metric-bound text fields before rendering.
+    `configured_stage_check_fields` can select
+    safe fields inside configured-stage check diagnostics, and
+    `configured_stage_check_max_chars_by_field` can cap or suppress selected
+    configured-stage text fields before rendering.
+    `stage_metric_threshold_fields` and `artifact_output_check_fields` can
+    select nested safe fields inside configured-stage metric-threshold and
+    artifact-output checks, and `stage_metric_threshold_max_chars_by_field` can
+    cap or suppress selected nested metric-threshold text fields before
+    rendering. `artifact_output_check_max_chars_by_field` can cap or suppress
+    selected nested artifact-output check text fields before rendering.
+    `malformed_metric_fields` can select safe fields inside malformed-metric
+    diagnostics, and `malformed_metric_max_chars_by_field` can cap or suppress
+    selected malformed-metric text fields before rendering.
+    `metric_aggregation_fields` can select safe fields inside
+    metric-aggregation diagnostics, and
+    `metric_aggregation_max_chars_by_field` can cap or suppress selected
+    metric-aggregation text fields before rendering.
+    `synthetic_metric_fields` can select safe fields inside synthetic
+    failure-metric diagnostics, and `synthetic_metric_max_chars_by_field` can
+    cap or suppress selected synthetic metric text fields before rendering.
+    `materialization_error_fields` can select safe fields inside
+    materialization-error diagnostics, and
+    `materialization_error_max_chars_by_field` can cap or suppress selected
+    materialization-error text fields before rendering.
+    `validator_boundary_fields` can select
+    safe fields inside validator-boundary diagnostics.
+    `validator_boundary_max_chars_by_field` can cap or suppress selected
+    validator-boundary text fields before rendering.
+    `validator_resource_limit_fields` can select nested safe resource-limit
+    fields inside validator-boundary diagnostics, and
+    `validator_resource_limit_max_chars_by_field` can cap or suppress selected
+    nested resource-limit text fields before rendering.
+    `validator_budget_fields` can select stage/sample budget diagnostic fields
+    inside execution diagnostics, and
+    `validator_budget_max_chars_by_field` can cap or suppress selected budget
+    fields before rendering.
+    `validator_env_fields` can select value-free validator environment
+    diagnostic fields, and `validator_env_max_chars_by_field` can cap or
+    suppress selected environment fields before rendering.
+    `execution_diagnostic_groups` can select safe execution-diagnostic
+    subgroups before subgroup field allowlists are applied.
+    `validator_stdin_fields`
+    can select safe fields inside validator-stdin diagnostics, and
+    `validator_stdin_max_chars_by_field` can cap or suppress selected
+    validator-stdin text fields before rendering.
+    `diagnostic_output_fields` can select safe fields inside diagnostic-output
+    diagnostics, and `diagnostic_output_max_chars_by_field` can cap or
+    suppress selected diagnostic-output text fields before rendering.
+    `timeout_cleanup_fields` can select safe fields inside
+    timeout-cleanup diagnostics, and
+    `timeout_cleanup_max_chars_by_field` can cap or suppress selected
+    timeout-cleanup text fields before rendering.
+    `prompt_format_weights` can override configured
+    stochastic prompt-format alternative weights for safe configured markers.
+    `context_source_paths` can select and order loaded local context sources
+    by safe problem-relative path while recording missing and omitted paths.
+    `context_source_max_chars` can cap rendered text for each selected local
+    context source and records original, rendered, and omitted character counts
+    per source. `context_source_truncation` can choose deterministic `head` or
+    `head_tail` retention under that per-source cap.
+    `context_source_order_policy` can keep selected source order or rank
+    selected local context sources by deterministic task-term overlap against
+    rendered source text while recording scores, query source, query-term
+    hash/count, configured query terms when present, and a ranking hash.
+    `context_source_ranking_terms` can provide explicit safe ranking terms
+    instead of deriving them from the task description.
+    `context_source_required_terms` can keep only sources whose
+    loaded content contains every listed safe term, and
+    `context_source_excluded_terms` can omit sources whose loaded content
+    contains any listed safe term before ranking and limiting; diagnostics
+    record required/excluded terms, omitted paths, match/filter counts, and a
+    selection hash. `context_source_limit` can cap how many ordered local
+    context sources render after path selection and ranking, including
+    suppressing them with a zero limit, and records pre-limit order, omitted
+    paths, selected count, omitted count, and a selection hash.
+    `recent_failure_limit` can cap rendered recent failure-memory records,
+    including suppressing that block with a zero limit, and records available,
+    rendered, and omitted counts. `recent_failure_selection_policy` can choose
+    `recent`, `oldest`, `lowest_score`, or `highest_repetition` retained
+    failure-memory records before that render cap is applied, and records selector/selection
+    semantics. `recent_failure_required_errors` can filter retained
+    failure-memory records by exact safe `error` or `diff_error` labels before
+    selection and limiting, and records required labels, match count, filtered
+    count, and policy. `recent_failure_excluded_errors` can omit retained
+    failure-memory records carrying exact safe `error` or `diff_error` labels
+    before score filtering, selection, and limiting, and records excluded
+    labels, filtered count, and policy. `recent_failure_required_changed_files`
+    can filter retained failure-memory by safe exact `changed_files` paths
+    before score filtering, selection, and limiting, and records required
+    paths, match count, filtered count, and policy.
+    `recent_failure_excluded_changed_files` can omit retained failure-memory
+    carrying safe exact `changed_files` paths before score filtering,
+    selection, and limiting, and records excluded paths, filtered count, and
+    policy. `recent_failure_required_stage_names` can filter retained
+    failure-memory by safe exact evaluation stage names, and
+    `recent_failure_excluded_stage_names` can omit retained failure-memory
+    carrying safe exact evaluation stage names before repetition/score
+    filtering, selection, and limiting; diagnostics record required/excluded
+    stage names, match counts, filtered counts, and policies.
+    `recent_failure_required_terms` and `recent_failure_excluded_terms` can
+    filter retained failure-memory by safe text terms in the failure evidence
+    before repetition/score filtering, selection, and limiting, recording
+    configured terms, match/filter counts, and policies when configured.
+    `recent_failure_repetition_threshold` can filter retained
+    failure-memory by integer `repetition_count` `min`/`max` bounds before
+    score filtering, selection, and limiting, and records normalized bounds,
+    match count, filtered count, and policy. `recent_failure_score_threshold` can filter retained
+    failure-memory by finite score `min`/`max` bounds before selection and
+    limiting, and records normalized bounds, match count, filtered count, and
+    policy. `recent_failure_max_chars_by_field` can cap or suppress selected
+    recent failure-memory fields before rendering.
+    `inspiration_limit` can cap rendered selected
+    inspirations, including suppressing all inspiration rendering with a zero
+    limit, and records available, rendered, and omitted counts.
+    `extra_context_max_chars` can cap already validated/redacted plugin
+    `extra_context` text and records input, rendered, and omitted character
+    counts. `plugin_context_enabled: false` can suppress plugin
+    `build_extra_context()` and `prompt_context_metadata()` calls for a
+    selected prompt arm while recording disabled per-plugin provenance.
+    `plugin_context_allowlist` can select which plugin identity labels may run
+    prompt-context hooks for that prompt arm; non-selected plugins are skipped
+    before hook execution and receive deterministic per-plugin provenance.
+    `plugin_context_excluded_labels` can omit selected plugin identity labels
+    before prompt-context hooks run, recording
+    `excluded_by_prompt_context_labels` visibility and the configured label
+    policy.
+    `plugin_context_order` can reorder selected plugin prompt-context sections
+    by safe plugin identity labels before aggregate prompt packing.
+    `plugin_context_required_terms` and `plugin_context_excluded_terms` can
+    filter bounded plugin context text by safe terms before prompt visibility,
+    recording selected status, missing required terms, matched excluded terms,
+    and a selection hash.
+    `plugin_context_ranking_terms` can rank prompt-visible plugin context
+    sections by deterministic term overlap before render-count limiting,
+    recording configured ranking terms, term hash/count, score, rank, previous
+    rank, candidate count, and ranking hash.
+    `plugin_context_limit` can cap how many ordered plugin context sections
+    become prompt-visible after allowlist, term filtering, and ordering,
+    recording source limit, pre-limit count, selected/omitted counts, rank,
+    selected status, and a selection hash.
+    `plugin_context_max_chars` can globally cap each plugin context section
+    before prompt visibility, recording the global policy cap, per-label cap,
+    effective cap, original character count, and prompt truncation status.
+    `plugin_context_max_chars_by_label` can cap rendered plugin prompt-context
+    text by plugin identity label before aggregate `extra_context_max_chars`
+    prompt packing applies.
+    Generated-candidate prompt diagnostics record the policy hash, selected
+    instruction variant, selected inspiration strategy and sample-count
+    overrides, selected feedback sections, feedback-section order, and
+    per-section feedback caps, selected LLM-grader
+    feedback fields, selected proposal fields, selected stage-summary fields, selected execution-output
+    fields, selected sample/retry
+    diagnostic fields and caps, selected program-output fields and caps, selected
+    validator-artifact fields and caps, selected artifact-content nested fields,
+    selected artifact-content policy overrides,
+    selected skipped-artifact fields,
+    selected validator diagnostic groups, selected validator
+    metadata keys, selected syntax-error fields, selected metric-bound fields,
+    selected configured-stage check fields, selected configured-stage nested
+    fields, selected malformed-metric fields,
+    selected metric-aggregation fields, selected synthetic metric fields,
+    selected materialization error fields,
+    selected validator-boundary fields,
+    selected validator budget fields,
+    selected validator resource-limit fields,
+    selected execution-diagnostic subgroups, selected validator-stdin fields,
+    selected diagnostic-output fields,
+    selected timeout-cleanup fields, prompt-format weight
+    overrides, context source selection, term filters, render-count caps,
+    content caps, truncation policy, and ordering policy,
+    recent failure-memory selection and text-term filtering, and inspiration selection, plugin extra-context
+    cap diagnostics, plugin-context generation, allowlist, excluded-label policy, term filters, ranking terms, render-count limits, global plugin caps, and per-plugin cap
+    policy, and replacement hashes; prompt history persists
+    `context_policy` plus
+    `context_policy_sha256`, replay validates policy hashes and immutable
+    score/penalty policy state, and meta-prompt provider output can return a
+    strict JSON object with a revised `template` plus optional
+    `context_policy`.
+    Meta-prompt mutation requests include bounded redacted prompt-performance
+    evidence, prompt-program summaries, recent failure evidence, the current
+    placeholder list, a compact context-policy capability manifest, per-prompt
+    non-default context-policy previews, and a bounded current-template
+    preview. Focused tests assert that meta-prompt evidence includes current
+    context-policy values and the tunable policy surface under the redacted
+    prompt-evidence cap. However, the policy currently controls only optional channel
+    disabling, section-priority overrides, mutation-instruction variants, and
+    parent-feedback subsection selection, stochastic prompt-format weights, and
+    local context source selection/term-filtering/ranking/render-count, recent failure-memory selection/rendering, upstream inspiration sampling
+    plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin context ordering, and coarse
+    plugin prompt-context generation enablement.
+    `PromptSampler` still obtains plugin
+    context text shape and retrieval/summarization behavior through fixed code/config
+    paths.
+    Meta-prompt mutation still cannot change retrieval/summarization policy,
+    upstream inspiration selection policy beyond strategy, sampled count,
+    required/excluded-metric filtering, fitness-threshold filtering, metric-threshold filtering, metric ranking, and rendered count,
+    or deeper per-field policy inside selected validator diagnostic groups
+    beyond metadata-summary key selection, syntax-error field selection,
+    proposal field selection,
+    stage-summary field selection,
+    execution-output field selection,
+    sample/retry diagnostic field selection,
+    program-output field selection,
+    validator-artifact field selection,
+    artifact-content nested field selection,
+    artifact-content policy override selection,
+    skipped-artifact field selection,
+    evaluator-path field selection,
+    evaluator-dependency field selection,
+    evaluator-stage field selection,
+    metric-bound field selection, configured-stage check field selection,
+    configured-stage nested field selection,
+    malformed-metric field selection, materialization-error field selection,
+    metric-aggregation field selection,
+    synthetic metric field selection,
+    execution-diagnostic subgroup selection, validator-boundary field
+    selection, validator budget field selection, validator resource-limit field
+    selection, validator-stdin field selection, diagnostic-output field
+    selection, execution-output, sample/retry, program-output, and validator-artifact field caps,
+    and timeout-cleanup field selection.
+  - Required result: extend prompt-program context policy beyond optional
+    channel disabling and priority overrides so safe configured or LLM
+    mutations can change retrieval/summarization, plugin-context shaping beyond
+    enable/disable/allowlist/order/per-plugin caps, upstream inspiration selection beyond
+    strategy/sample-count/required-metric-filter/excluded-metric-filter/fitness-threshold-filter/metric-ranking/render-count, context-source policy beyond exact path selection, safe required/excluded term filtering, task-term ranking, per-source char caps, truncation, and render-count, failure-memory selection beyond exact required/excluded error-label, required/excluded changed-file, required/excluded stage-name, repetition-count, and finite-score filtering plus recent/oldest/lowest-score/highest-repetition retained records, and deeper per-field evaluator-feedback controls beyond
+    validator metadata summary keys, syntax-error fields, proposal fields, stage-summary fields,
+    execution-output fields and caps, sample/retry diagnostic fields and caps, program-output fields and caps, metric-bound fields,
+    validator-artifact fields and caps, artifact-content nested fields,
+    artifact-content policy overrides,
+    skipped-artifact fields,
+    evaluator-path fields,
+    evaluator-dependency fields,
+    evaluator-stage fields,
+    configured-stage check fields, configured-stage
+    nested fields, malformed-metric fields, materialization-error fields,
+    synthetic metric fields, validator resource-limit fields, and metric-aggregation fields,
+    execution-diagnostic subgroups,
+    validator-boundary fields, validator-budget fields, validator-stdin fields, diagnostic-output
+    fields, and timeout-cleanup fields;
+    and test that those richer context-policy fields preserve
+    template placeholder validation, deterministic replay, prompt diagnostics,
+    and retention/redaction guarantees.
 
-- [x] Define prompt-program reward normalization and selection policy.
-  - Spec evidence: AlphaEvolve treats meta-prompt evolution as a system
-    component that can be ablated, so prompt-program fitness should be
-    reproducible, comparable across runs, and separate enough from candidate
-    scoring to support prompt-lineage analysis.
-  - Current evidence: `Config` now exposes `prompt_reward_mode`
-    (`absolute` final composed child score or `improvement` over parent score),
-    `prompt_reward_bounds`, and `prompt_explore_coeff`. `PromptDatabase`
-    normalizes raw prompt rewards to `0..1`, clamps out-of-range values, uses
-    the configured exploration coefficient in selection, and records reward
-    telemetry under `program.metadata.last_prompt_reward`. `evolve()` records
-    parent score, final candidate score, and prompt reward policy in
-    `prompt_history.jsonl`; `manifest.json` includes the effective policy.
-    Tests cover negative/out-of-range rewards, plugin-adjusted scores,
-    multiple metrics, deterministic selection with zero exploration, and
-    improvement-mode telemetry.
-  - Status: implemented for a documented bounded scalar prompt-reward policy.
-    Broader experiment ablation reporting remains tracked with compute-budget
-    and run-manifest work.
-
-- [x] Validate configured and mutated prompt templates before use.
-  - Spec evidence: AlphaEvolve's prompt evolution must keep prompts usable by
-    the evolutionary loop; malformed seed or evolved instructions should not
-    break future generations.
-  - Current evidence: `validate_prompt_template()` defines the allowed
-    `PromptSampler` placeholder schema and requires `{task}` as the minimal
-    configured/evolved template anchor. `Config.validate()` rejects malformed
-    configured `prompt_variants` at startup. `PromptDatabase.__init__()`
-    validates seed prompt programs, and `PromptDatabase.mutate()` validates LLM
-    meta-prompt outputs before insertion. Rejected prompt mutations are written
-    to `prompt_history_invalid.jsonl`, the parent prompt program receives a
-    penalty event in `prompt_history.jsonl`, and the invalid template is not
-    added to the prompt population. `PromptSampler.build()` also validates the
-    selected template before formatting as a final guard.
-  - Status: implemented with tests for unknown placeholders, malformed braces,
-    empty placeholders, attribute/index placeholders, missing required fields,
-    invalid configured variants, invalid configured prompt database seeds, and
-    invalid LLM-mutated prompt templates in the evolution loop.
-
-- [ ] Enforce semantic placeholder retention for meta-prompt mutations.
-  - Spec evidence: AlphaEvolve's prompt evolution should improve the
-    evolutionary loop, not silently remove the code, feedback, inspiration, or
-    mutation-format channels needed to generate valid candidates.
-  - Current evidence: the meta-prompt mutation instruction says "Keep all
-    existing Python format placeholders intact," but
-    `validate_prompt_template()` requires only `{task}`. A local proof mutated
-    `DEFAULT_TEMPLATE` to `Task only: {task}` with `PromptDatabase.mutate()`;
-    the child prompt was accepted, did not contain `{parent_code}` or
-    `{mutation_instructions}`, and the prompt database grew to two programs.
-  - Required result: define required placeholder sets by role or compatibility
-    level, reject or quarantine evolved templates that drop required prompt
-    channels, and add tests proving meta-prompt mutation cannot remove parent
-    code, mutation instructions, or other configured mandatory sections unless
-    an explicit degraded template mode is selected.
-
-- [x] Add first-class literature/context ingestion.
-  - Spec evidence: AlphaEvolve supports explicit context such as instructions,
-    equations, code snippets, and relevant literature, including PDF files.
-  - Current evidence: `load_problem()` reads problem-local `.txt`, `.md`,
-    `.py`, and `.pdf` files from `context/`; text/code files are direct,
-    PDFs are extracted with `pypdf`, long context is deterministically bounded,
-    and `PromptSampler` renders source headers. `DeepResearchPlugin` remains a
-    separate arXiv-search plugin, not the local literature ingestion path.
-  - Status: implemented for deterministic local context ingestion and PDF text
-    extraction with documented limits. Remaining hardening: semantic
-    summarization/ranking for very large corpora.
-  - Required result: allow problem-local context files, PDFs, equations, and
-    code snippets to be selected, summarized, and rendered deterministically.
-
-- [x] Add context-source manifests, recursive selection, and provenance.
-  - Spec evidence: AlphaEvolve task setup can include explicit instructions,
-    equations, code snippets, and literature; reproducible runs need to know
-    exactly which context sources and excerpts were available to the prompt
-    sampler.
-  - Current evidence: `_load_context_files()` now walks `context/`
-    recursively, honors optional `context.yaml` `include`, `exclude`, and
-    `max_chars_per_source` fields, keys content by relative source path, and
-    records per-source hashes, byte counts, original/rendered character counts,
-    truncation spans, extraction status, and PDF page ranges where available.
-    `PromptSampler` renders citation-style context headers with hash prefixes,
-    excerpt spans, and extraction status. `ProgramDatabase._write_manifest()`
-    persists `problem.context_sources` for run provenance. Tests cover nested
-    context directories, duplicate basenames, changed source hashes, PDF
-    no-text and extraction-failure metadata, manifest provenance, and prompt
-    citation rendering.
-  - Status: implemented for deterministic recursive local context provenance.
-    Remaining context scale work is tracked separately under prompt budget and
-    summarization/ranking tasks.
-
-- [ ] Persist context selection policy and skipped-source diagnostics.
-  - Spec evidence: AlphaEvolve-style prompt sampling can depend on explicit
-    task context and literature; reproducible runs need to know not only which
-    sources were rendered, but also the selection policy that made other
-    candidate context files invisible.
-  - Current evidence: `_load_context_manifest()` reads optional
-    `context.yaml` / `context.yml` `include`, `exclude`, and
-    `max_chars_per_source`, and `_select_context_paths()` uses those rules, but
-    `Problem.context_sources` and `manifest.json` contain only selected source
-    records. A local proof with `include: ["keep.md"]` and
-    `exclude: ["skip.md"]` persisted only `keep.md`; the manifest did not
-    include the context manifest file hash, include/exclude patterns, skipped
-    files, unsupported-extension files, or excluded-source diagnostics. A
-    second proof used a typo key `includes: ["missing/*.md"]`; load succeeded,
-    selected `keep.md`, and emitted no diagnostic that the intended include
-    policy was ignored.
-  - Required result: record context manifest provenance, effective selection
-    rules, selected/skipped/excluded source counts and reasons, unsupported
-    manifest keys or typo diagnostics, and the `context.yaml` file hash in
-    `manifest.json`; add tests that changing include/exclude rules or excluded
-    context files changes the relevant provenance.
-
-- [x] Persist live retrieval/plugin context provenance.
-  - Spec evidence: AlphaEvolve-style prompt sampling can include relevant
-    literature and external context, but reproducible experiments need the
-    source, query, retrieval time, selected excerpts, and failures that shaped
-    a prompt.
-  - Current evidence: `DeepResearchPlugin.on_generation_start()` derives a live
-    query from the current best fitness and records bounded retrieval events in
-    `metadata.plugin_context[].metadata.retrieval_events`, including provider,
-    query, generation, best id/fitness, timestamp, status, result length,
-    synthesis hash, source IDs/URLs, source timestamps/authors, summary hashes,
-    error text, and structured error types such as `network_error`,
-    `parse_error`, and `provider_exception` when available.
-    `arxiv_search_result()` preserves those source/error fields for the default
-    arXiv provider, while `arxiv_search()` remains a string-only compatibility
-    wrapper. Retrieval state still does not include full result payloads,
-    source-content hashes, ranking provenance, prompt history entries, or
-    plugin artifacts. Completed manifests now include `runtime.retrieval` with
-    deduplicated event counts, per-plugin status/source counts, and compact
-    event summaries.
-  - Status: implemented for bounded retrieval-event provenance, prompt-visible
-    URL citations, error classification, candidate history records, and
-    run-manifest summaries. Full payload/ranking artifact retention remains a
-    separate hardening gap.
-  - Required result: store retrieval events with provider, query, generation,
-    parent/best ids, result IDs/URLs, timestamps, selected snippets, failures,
-    and hashes; render citations in prompt context; include plugin retrieval
-    artifacts or summaries in run manifests; and test successful, empty,
-    malformed, and failed retrieval paths.
-
-- [ ] Persist full retrieval payload artifacts and ranking provenance.
+- [ ] Persist full retrieval payload artifacts and learned ranking provenance.
   - Spec evidence: AlphaEvolve-style prompt context can include relevant
     literature and external context; reproducible experiments need to know not
     only which compact snippets were injected but also how sources were ranked
     and what source content was available at the time.
   - Current evidence: `DeepResearchPlugin` records bounded retrieval events and
-    `runtime.retrieval` summaries, but it does not store full provider
-    payloads, source-content hashes, ranking scores/ordering policy, or
-    retrieval artifacts under the run directory.
-  - Required result: persist bounded or redacted retrieval artifacts with
-    provider payload hashes, source-content hashes, ranking/selection metadata,
-    retention limits, and manifest links; add tests for successful, empty,
-    malformed, and failed retrieval artifact paths.
+    `runtime.retrieval` summaries. When a cache directory is configured, cache
+    snapshots are written under the run directory and
+    `run_artifacts_metadata()` reports snapshot count, file names, byte counts,
+    per-file hashes, retention cap, skipped/read-error counts, bounded
+    provider-result snapshot counts/hashes, and an aggregate hash. Retained
+    sources include one-based retained rank, provider rank, source
+    identity/content hashes, redacted URL transport expectations, and an
+    aggregate ranking hash linked to the prompt-visible synthesis hash.
+    Retained source rows with summary/content text include bounded/redacted
+    `libreevolve.retrieval_source_content_snapshot.v1` snapshots with raw and
+    stored hashes. Retained source rows also include
+    `query_term_overlap_audit_v1` relevance scores based on deterministic query
+    term/source text overlap. The default
+    `source_ranking_policy="provider_order_retained_v1"` keeps provider order
+    and marks relevance as audit-only. Opt-in
+    `source_ranking_policy="query_overlap_score_desc_v1"` reorders retained
+    sources by query-overlap score with provider rank as a tie-breaker; events,
+    active prompt context, and cache snapshots record the policy, ranking hash,
+    score hash, and `relevance_affects_order: true`. It also records
+    `libreevolve.deep_research_active_context.v1` metadata for the exact active
+    retrieval context injected into a candidate prompt, including
+    generation/event index, synthesis/raw-result hashes, query hash, cache
+    fields, retained-source ranking hash fields, and transport-policy status.
+    Retrieval query inputs include bounded task-description, explicit-context,
+    recent failure-history, local paper manifest title/id, best-program
+    fitness/metric/code/file, and recent proposal-hypothesis terms. Retrieval
+    events and cache snapshots retain bounded/redacted
+    `libreevolve.retrieval_provider_result_snapshot.v1` provider-result
+    snapshots with raw and stored hashes. When a cache directory is configured
+    and retention mode allows text, live retrieval writes
+    `libreevolve.retrieval_payload_artifact.v1` sidecars under
+    `payload_artifacts/` for full secret-redacted provider payloads and retained
+    source-content payloads that fit a 64,000-byte per-artifact budget; oversized
+    payloads become metadata-only omitted artifacts, and `hash_only`/`off`
+    record sidecar suppression. It still does not store unbounded raw provider
+    payload artifacts, unbounded source-content artifacts, learned/external
+    semantic ranking scores beyond deterministic query overlap, or a
+    DeepEvolve-style hypothesis refinement/debug loop.
+  - Required result: persist replayable source-content artifacts beyond bounded
+    retained-source snapshots and retention-budgeted redacted sidecars; add
+    learned or externally scored semantic ranking/selection provenance beyond
+    deterministic query-overlap ranking; link those artifacts from
+    candidate metadata, cache snapshots, and run manifests; and add tests for
+    successful, empty, malformed, oversized, and failed retrieval artifact
+    paths. The remaining gap is unbounded raw provider/source payload
+    persistence, semantic source-content verification, learned/external ranking, and
+    DeepEvolve-style hypothesis refinement/debug loops, not cache-snapshot
+    summarization, bounded provider-result snapshots, bounded source-content
+    snapshots, retention-budgeted redacted payload sidecars, active-context
+    hashes, query grounding, audit-only relevance scores, or retained source
+    order/hash metadata.
 
-- [ ] Attribute plugin prompt guidance and strategy choices.
-  - Spec evidence: AlphaEvolve-style prompt assembly and paper-inspired
-    plugins should make it possible to audit which prompt/context components
-    influenced a candidate, especially when a plugin claims a specific search
-    strategy such as ImprovEvolve's generate/improve/perturb loop.
-  - Current evidence: `evolve()` stores `metadata.plugin_context` entries with
-    plugin class/module, parent id, inspiration ids, rendered context text,
-    character count, SHA-256 hash, and emitted-context flag for each plugin.
-    `ModularPlugin.build_extra_context()` still always returns the same static
-    `generate_config`/`improve`/`perturb` guidance and does not choose,
-    execute, or log an ImprovEvolve operation for the candidate. Plugin
-    versions/configs and retrieval result provenance are not included in this
-    context record.
-  - Required result: record per-plugin prompt-context events with plugin name,
-    version/config, rendered text hash, parent/inspiration ids, and any chosen
-    strategy or operation; for modular/ImprovEvolve-inspired guidance, either
-    enforce and log generate/improve/perturb execution or label and test it as
-    static prompt-only guidance.
-
-- [ ] Replace context truncation with deterministic summarization/ranking for
-  large literature corpora.
-  - Spec evidence: AlphaEvolve Section 2.2 allows relevant literature, such as
-    PDF files, as explicit context; for large corpora this requires selection
-    and compression rather than simply dropping the tail.
-  - Current evidence: `load_problem()` extracts `.pdf` text with `pypdf` and
-    `_summarize_context_text()` keeps the first 6000 characters. This is
-    deterministic, but it is not semantic summarization or relevance ranking.
-  - Required result: add deterministic source selection and summarization
-    metadata, preserve citations/source names in prompts, and test long
-    multi-file context behavior.
+- [ ] Add semantic retrieval verification and replayable full-source evidence.
+  - Spec evidence: external literature/retrieval context can directly shape
+    candidate mutations, so AlphaEvolve-style prompt provenance should include
+    trustworthy source transport and enough content integrity to audit what was
+    injected.
+  - Current evidence: the default arXiv provider uses HTTPS, validates query
+    inputs, reads responses with a 1,000,000-byte cap before XML parsing, and
+    records bounded transport status plus provider payload byte/hash metadata.
+    Cache-backed runs persist bounded/redacted provider-result snapshots,
+    retention-budgeted redacted payload sidecars, and manifest-visible cache
+    snapshot summaries. Retrieval events include
+    `libreevolve.retrieval_transport_policy.v1`, which classifies HTTPS request
+    state, redirects, HTTP status class, payload hash presence, oversized
+    responses, missing custom-provider transport, and TLS/certificate-looking
+    failures as audit-grade, degraded, or unauditable. Request URLs are stored
+    as redacted/hash-backed summaries instead of raw URLs. Retained sources
+    carry `retained_source_integrity_v1` identity/content hashes, URL transport
+    expectations, provider/retained rank, bounded source-content snapshots, and
+    source-ranking hashes linked to active prompt context. Opt-in
+    `query_overlap_score_desc_v1` can make deterministic query-overlap scores
+    affect retained source order. Retained sources now also carry
+    `libreevolve.retrieval_source_content_trust_policy.v1`, classifying
+    redacted payload sidecars, metadata-only oversized sidecars, bounded
+    snapshots, hash-only evidence, and missing evidence; event-level trust
+    policy records replayable-evidence counts and record hashes. Semantic
+    integrity still remains limited to retained-source hashes, deterministic
+    query-overlap scores, and redacted/hash-backed artifact evidence; transport
+    policies explicitly list `tls_certificate_chain_not_retained` and either
+    `semantic_content_integrity_not_verified` or
+    `semantic_content_integrity_bounded_to_redacted_payload_artifacts`. Query
+    events also include
+    `libreevolve.retrieval_evidence_boundary_policy.v1`, explicitly documenting
+    that raw provider/source payloads, TLS certificate chains, and semantic
+    verification are outside the current retained-evidence boundary while
+    linking payload-artifact, source-content, and transport evidence states.
+  - Required result: add tests proving default and
+    custom providers either supply enough replayable evidence or are marked
+    degraded/unauditable before their context is treated as auditable. The
+    remaining gap is unbounded raw provider-payload persistence, full
+    source-content artifacts beyond the redacted byte-budgeted sidecars,
+    replayable source-content verification, retained transport/TLS
+    decision evidence, and stronger semantic source verification, not basic
+    transport classification, bounded retained-source snapshots, bounded
+    provider-result snapshots, query-overlap audit scores, request URL
+    redaction, active-context hashes, redacted source-content trust policy, or
+    evidence-boundary policy records.
 
 ## Evaluation
 
-- [x] Enforce evaluator scalar outputs against declared metrics.
-  - Spec evidence: AlphaEvolve task specification requires `evaluate` to
-    return a dictionary of scalar evaluation metrics, and those metrics drive
-    database selection, prompting, and multi-score optimization.
-  - Current evidence: `load_problem()` now rejects missing metric names,
-    duplicate names, invalid `direction` values, multiple primaries, and
-    malformed/non-finite/non-increasing bounds for all declared metrics, and
-    unsupported metric schema fields. `CascadeEvaluator._run_subprocess()`
-    validates the last stdout JSON object against `metrics.yaml`: declared
-    metrics must be present, undeclared metrics are rejected, `is_valid` must
-    be boolean, and every non-`is_valid` metric must be finite numeric.
-  - Status: implemented with loader and evaluator tests for unsupported schema
-    fields, missing secondary outputs, non-scalar values, NaN/Infinity, and
-    undeclared metrics. Multi-objective use of those metric vectors remains
-    tracked separately.
-
-- [ ] Treat `is_valid` as a reserved validity flag, not an optimizable primary
-  metric.
-  - Spec evidence: AlphaEvolve's evaluator returns scalar metrics used for
-    scoring, while validity/pass-fail behavior is a separate gate in the
-    evolutionary loop. A boolean validity flag should not be the primary
-    optimization objective.
-  - Current evidence: `_validate_metric_schema()` does not reserve
-    `is_valid`. A local proof with `metrics.yaml` declaring
-    `name: is_valid` and `primary: true` loads successfully, sets
-    `Problem.primary_metric == "is_valid"`, and `fitness_from_metrics()` maps
-    `True` to normalized fitness `1.0`.
-  - Required result: reject `is_valid` as a declared primary metric, or remove
-    it from the declared metric schema entirely and keep it as a required
-    boolean evaluator field; add loader/evaluator tests for the reserved-name
-    policy.
-
-- [x] Reject degenerate or inverted metric bounds.
-  - Spec evidence: AlphaEvolve-style scoring depends on meaningful scalar
-    metrics and comparable score normalization; local `metrics.yaml` bounds
-    become part of primary fitness, archive performance coordinates, and future
-    metric-vector policy.
-  - Previous evidence: `_validate_metric_schema()` checked that bounds are a
-    finite numeric pair, but it accepts `[1.0, 1.0]` and inverted ranges such
-    as `[10.0, 0.0]`. `Problem.normalize_metric()` returns `0.5` for a
-    zero-width range and otherwise computes with the negative range, producing
-    plausible-looking normalized scores from an invalid schema.
-  - Status: implemented. `metrics.yaml` bounds must now be finite, strictly
-    increasing `[lo, hi]` pairs at problem-load time, so primary fitness and
-    MAP-Elites performance normalization cannot inherit zero-width or inverted
-    metric ranges.
-  - Validation: loader tests cover zero-width and inverted metric bounds.
-
-- [x] Enforce strict finite JSON serialization for run records.
-  - Spec evidence: AlphaEvolve's program database is a machine-readable store
-    of candidates, metrics, outputs, and feedback; downstream selection,
-    replay, and analysis require valid finite scalar records.
-  - Current evidence: `ProgramDatabase.log()`, `PromptDatabase._write()`,
-    `ProgramDatabase._write_manifest()`, and `TTTRLPlugin._maybe_train()` now
-    use strict JSON helpers with `allow_nan=False`. Invalid append records are
-    not written to the primary stream; a diagnostic entry is written to
-    `history_invalid.jsonl`, `prompt_history_invalid.jsonl`, or
-    `grpo_data_invalid.jsonl`.
-  - Status: implemented with tests for non-finite candidate fitness,
-    non-finite prompt rewards with rollback, and non-finite GRPO export
-    records. Broader queryable database/resume work remains tracked separately.
-
-- [x] Give failure-history writes their own quarantine stream.
-  - Spec evidence: AlphaEvolve-style run records should be machine-readable and
-    stream-specific enough to audit which artifact failed to serialize without
-    conflating candidate and failure-memory records.
-  - Status: implemented. `ProgramDatabase.log_failure()` now uses
-    `failure_history_invalid.jsonl` as a stream-specific quarantine path, while
-    candidate-history append failures continue to use `history_invalid.jsonl`.
-  - Validation: database tests prove invalid failure-history records are
-    quarantined separately and do not create `history_invalid.jsonl`.
-
-- [ ] Harden run-history read paths and `show` diagnostics for malformed JSONL.
-  - Spec evidence: AlphaEvolve-style experiment stores need to be inspectable
-    after long runs; a single corrupt history record should produce a clear
-    diagnostic or quarantine/report path, not an unhandled CLI exception.
-  - Current evidence: write paths use strict JSONL helpers, but
-    `libreevolve.cli.show()` reads `history.jsonl` with a raw
-    `[json.loads(line) ...]` list comprehension. A local proof wrote one valid
-    record followed by `not-json`; `CliRunner().invoke(cli, ["show", run])`
-    exited with `JSONDecodeError` and printed no user-facing output. A second
-    proof wrote a modern record with
-    `metadata.archive_admission.admitted: true` but no `evaluation`; `show`
-    printed `Selection: archive-admitted valid` because
-    `_is_archive_admitted_valid()` defaults missing `evaluation.is_valid` to
-    `True`.
-  - Required result: add a strict JSONL reader or `show`-specific parse
-    diagnostics with file/line context, decide whether to skip/quarantine bad
-    rows or fail with a normalized `ClickException`, require explicit validity
-    evidence for current archive-aware histories, and test malformed, empty,
-    partially valid, missing-evaluation, and legacy history files.
-
-- [x] Expand the local configurable cascade into AlphaEvolve-grade evaluation
-  cascades.
-  - Spec evidence: AlphaEvolve supports ensembles of test cases of increasing
-    difficulty, moving candidates to later stages only if earlier stages are
-    promising.
-  - Current evidence: `Config.eval_stages` supports local staged validators
-    with distinct `validate_path` entrypoints, per-stage timeout and
-    `min_score` thresholds, seeded samples, retries, stage context, and
-    aggregated numeric metrics. It does not yet support distributed evaluator
-    nodes or rich artifact collection beyond stdout/stderr.
-  - Status: implemented for local AlphaEvolve-style hypothesis-test cascades;
-    distributed/parallel evaluator workers remain a separate runtime item.
-  - Required result: support configured stages, per-stage thresholds, sample
-    sizes, retry/random-seed policies, and separate metrics per stage.
-
-- [x] Aggregate syntax diagnostics across workspace files.
-  - Spec evidence: AlphaEvolve-style codebase evolution needs actionable
-    evaluator feedback for whole candidates, not only the first failing
-    component encountered by a cheap prefilter.
-  - Status: implemented. The syntax prefilter collects every Python
-    `SyntaxError` across workspace `.py` files, returns an aggregate stage
-    error string, and stores structured `metadata.syntax_errors` records with
-    file path, line, offset, message, and summary. Non-Python text files are
-    intentionally skipped by this Python-only syntax pass.
-  - Validation: evaluator tests cover multiple invalid files, mixed
-    valid/invalid files, and non-Python files.
-  - Remaining prompt gap: `PromptSampler` still renders only compact recent
-    stage summaries instead of dedicated syntax-diagnostic sections.
-
-- [ ] Add metric-specific stage thresholds and explicit aggregation policies.
-  - Spec evidence: AlphaEvolve evaluation cascades can use task-specific test
-    ensembles of increasing difficulty, where pass/fail decisions may depend
-    on different metrics, outputs, or sample distributions at each stage.
-  - Current evidence: `eval_stages[].min_score` is a single threshold on
-    normalized primary fitness. `_aggregate_metrics()` averages numeric metrics,
-    `all()`s boolean metrics, and uses the last non-numeric value; this policy
-    is hard-coded and does not let a stage require per-metric thresholds,
-    quantiles, all-samples-pass, artifact checks, or custom aggregators. A local
-    proof with a minimize primary metric `runtime` over two seeded samples
-    returning `0.0` and `10.0` produced aggregated `runtime=5.0` and
-    `fitness=0.5`; there is no stage config to choose worst-case runtime,
-    require every seed to pass a latency threshold, or preserve per-sample
-    score composition as the stage decision.
-  - Required result: add configured stage pass criteria by metric name,
-    direction, bound, sample aggregation policy, and artifact/output checks;
-    document defaults and test average/min/max/quantile/all-pass behavior.
-
-- [x] Preserve retry-attempt outcomes in evaluation records.
-  - Spec evidence: AlphaEvolve-style expensive evaluation depends on
-    reproducible evidence about which tests, samples, retries, outputs, and
-    failures led to accepting or rejecting a candidate.
-  - Status: implemented for structured evaluation records and history.
-    `_run_sample_with_retries()` now records `metadata.attempts` with attempt
-    index, pass/fail, fitness, metrics, stdout, stderr, error, elapsed time,
-    stage context, and per-stage diagnostics. The first valid attempt still
-    determines pass decisions; all-fail retries return the final failed attempt
-    while retaining all earlier attempts.
-  - Validation: evaluator tests cover fail-then-pass, pass-first, and all-fail
-    retry paths.
-  - Remaining prompt gap: `PromptSampler` still renders only compact recent
-    stage summaries rather than bounded retry-attempt details.
-
-- [x] Capture validator-generated artifacts before temporary workspaces are
-  deleted.
-  - Spec evidence: AlphaEvolve stores programs with evaluation outputs, and
-    benchmark-style tasks such as packing, scheduling, and kernels often need
-    construction files, plots, traces, logs, or compiled artifacts to inspect
-    and compare results.
-  - Status: implemented as opt-in candidate-workspace artifact copy-out.
-    `Config` now exposes `evaluator_artifact_include`,
-    `evaluator_artifact_exclude`, `evaluator_artifact_max_files`, and
-    `evaluator_artifact_max_bytes`, plus default-on
-    `evaluator_artifact_redact_secrets`, with per-stage overrides via
-    `artifact_include`, `artifact_exclude`, `artifact_max_files`, and
-    `artifact_max_bytes`, and `artifact_redact_secrets`. Matching files are
-    copied to `runs/<run>/evaluator_artifacts/<collection_id>/...` before the
-    temporary workspace is deleted. Evaluation metadata records effective
-    patterns, limits, skipped files, copied file paths, source/stored byte
-    counts, SHA-256 hashes of stored content, redaction status, stage name,
-    sample index, and attempt. Tests prove validator-created files are copied,
-    bounded, hashed, retained after subprocess cleanup, can use stage-specific
-    artifact policy, and redact secret-like text artifacts by default with an
-    explicit stage opt-out.
-  - Remaining gap: files outside the candidate workspace are not collected, and
-    richer artifact schemas remain future work.
-
-- [ ] Harden evaluator artifact copy-out path and size enforcement.
-  - Spec evidence: AlphaEvolve-style evaluator outputs are experiment evidence,
-    so artifact collection should be reproducible, bounded, and confined to the
-    intended evaluation workspace.
-  - Current evidence: `_matching_artifact_paths()` walks `cand_root.rglob("*")`
-    and accepts paths where `Path.is_file()` is true, while
-    `_collect_evaluator_artifacts()` later calls `path.read_bytes()` before
-    applying `artifact_max_bytes`. On platforms where symlinks are available,
-    `is_file()` / `read_bytes()` follow file symlinks unless explicitly guarded,
-    so a validator-created link inside the candidate workspace can copy bytes
-    from a target outside that workspace into `evaluator_artifacts/`. The local
-    Windows account could not create the proof symlink (`WinError 1314`), but
-    the code has no resolved-target containment check, no symlink skip reason,
-    and no non-following file test. Large matching files are also read fully
-    into memory before max-byte rejection, redaction, hashing, or copy-out.
-  - Required result: resolve or lstat artifact candidates without following
-    unsafe links; reject or record symlink/path-escape artifacts with explicit
-    skip reasons; enforce per-file and total byte limits before unbounded reads
-    by streaming or prechecking file sizes; and add tests for symlink escapes
-    where supported, oversized artifact behavior, and skip metadata.
-
-- [x] Validate evaluator-stage numeric fields before running cascades.
-  - Spec evidence: AlphaEvolve-style cascades are explicit experiment
-    configuration; invalid stage budgets, sample counts, retry counts, and
-    thresholds should fail before evaluation with reproducible diagnostics.
-  - Current evidence: `Config.validate()` now rejects non-positive
-    `eval_stages[].samples`, negative retries, non-positive timeouts,
-    nonnumeric `min_score`, unsupported stage fields, non-list `seeds`, and
-    explicit `samples`/`seeds` length mismatches. `evolve()` and the CLI call
-    `config.validate()` before building the evaluator or archiving seeds.
-  - Status: implemented with config tests proving bad stage configs fail at
-    construction/startup rather than during candidate evaluation.
-
-- [x] Validate evolution and population numeric config ranges.
-  - Spec evidence: AlphaEvolve-style experiments depend on explicit,
-    reproducible population and budget settings; invalid archive/sampling
-    parameters should fail before the run mutates or evaluates programs.
-  - Current evidence: `Config.validate()` now rejects negative
-    `max_generations`, negative `num_inspirations`, non-positive
-    `eval_timeout_sec`, `explore_ratio` outside `[0, 1]`, zero islands,
-    negative migration intervals, `migration_ratio` outside `[0, 1]`,
-    non-positive MAP-Elites bins, non-positive elite archive sizes, and
-    negative ensemble exploration coefficients.
-  - Status: implemented with top-level config range tests. Broader run-wide
-    budget counters remain tracked separately.
-
-- [x] Define zero-ratio migration semantics.
-  - Spec evidence: AlphaEvolve-style population settings should have
-    reproducible, unsurprising semantics; disabling or reducing migration is an
-    experimental control.
-  - Previous evidence: `Config.validate()` accepted `migration_ratio=0.0`, but
-    `IslandModel.migrate()` computes `n = max(1, ceil(len(elites) *
-    migration_ratio))`. A local proof with `migration_ratio=0.0` and migration
-    enabled still copied one elite to the next island.
-  - Status: implemented. `migration_ratio=0.0` now selects no migrants, while
-    positive ratios still round up to at least one migrant when an island has
-    elites. `migration_interval=0` remains the scheduled-migration disable
-    switch.
-  - Validation: island tests cover zero-ratio no-migrant behavior; existing
-    migration tests cover positive ratios and scheduled migration intervals.
-
-- [x] Preserve full evaluator feedback, not just scalar fitness.
-  - Spec evidence: AlphaEvolve stores solutions with evaluation results,
-    scores, and program outputs attached.
-  - Current evidence: `ProgramDatabase.log()` writes raw metrics and structured
-    evaluation results, including stage outcomes and process diagnostics.
-  - Status: implemented in `EvaluationResult` and `history.jsonl` records.
-  - Required result: persist raw metrics dicts, stage outcomes, stdout/stderr,
-    error causes, elapsed time, and validator-provided feedback.
-
-- [x] Add LLM-generated feedback as an optional evaluation signal.
-  - Spec evidence: AlphaEvolve can grade hard-to-code properties, such as
-    simplicity, using separate LLM calls and either add scores or discard
-    solutions.
-  - Current evidence: `Config.llm_feedback` runs optional LLM graders after
-    local evaluation; `libreevolve/core/feedback.py` parses grader responses,
-    logs backend provenance and raw responses, adds feedback metrics, composes
-    weighted fitness, and supports discard rules.
-  - Status: implemented as a synchronous optional feedback pass. Remaining
-    limitations: no parallel reviewer workers, no calibrated grader ensemble,
-    and no ablation harness.
-  - Required result: add optional feedback graders with clear provenance,
-    score-composition rules, and archive/log visibility.
-
-- [x] Render full workspace context to LLM feedback graders.
-  - Spec evidence: AlphaEvolve can evolve whole files/codebases and use LLM
-    graders for properties that are difficult to encode locally; those graders
-    must see the relevant candidate components to judge codebase-level
-    properties.
-  - Status: implemented. `_build_feedback_prompt()` renders `[WORKSPACE]`
-    sections from deterministically sorted candidate files, marks the primary
-    file, includes path headers and fenced content, applies basic secret
-    redaction, enforces per-file and whole-workspace character budgets with
-    truncation notices, and includes compact evaluator diagnostics under
-    `[EVALUATION]`.
-  - Evidence: `tests/core/test_feedback.py` covers non-primary file rendering,
-    evaluator stdout visibility, secret redaction, and oversized-workspace
-    truncation.
-
-- [x] Isolate malformed or failing LLM feedback graders.
-  - Spec evidence: AlphaEvolve treats LLM-generated feedback as an optional
-    evaluation/scoring signal; grader failures should be diagnosable evaluation
-    outcomes, not unstructured run crashes or silent misclassifications.
-  - Current evidence: `apply_llm_feedback()` now catches provider exceptions,
-    malformed response scores, non-finite response scores, and non-boolean
-    discard values as `llm_feedback_failed` records under
-    `evaluation.metadata.llm_feedback`; failed graders are ignored for
-    score/validity composition. `Config.validate()` rejects invalid grader
-    schema fields before startup.
-  - Status: implemented with tests for backend errors, malformed response
-    scores, string discard values, and non-finite response values. Richer
-    configurable retry/penalty/discard policies remain future work.
-
-- [ ] Add configurable LLM feedback failure policies.
-  - Spec evidence: AlphaEvolve-style optional feedback should support explicit
-    experiment policy for how failed reviewer/grader calls affect selection and
-    diagnostics.
-  - Current evidence: failed feedback graders are currently isolated with one
-    hard-coded policy: record failure metadata and ignore the failed grader for
-    score and validity. There is no config option for retry, penalize, discard,
-    stop-run, or fallback-reviewer behavior.
-  - Required result: add a feedback failure-policy config schema, implement
-    retry/penalty/discard/ignore behavior as configured, record policy decisions
-    in history, and test each policy.
-
-- [ ] Calibrate LLM feedback scores against metric schema and fitness
-  composition.
-  - Spec evidence: AlphaEvolve treats evaluation outputs as scalar metrics and
-    can add LLM-graded properties to the score dictionary; those scores should
-    remain comparable and usable by database/prompt selection.
-  - Current evidence: `apply_llm_feedback()` accepts undeclared grader metrics,
-    converts `score` directly to `float`, and adds `weight * score` directly to
-    normalized fitness without checking metric direction, bounds, finite range,
-    or whether the grader score should be part of primary fitness. It also does
-    not reject metric-name collisions: a local proof with evaluator
-    `metrics={"score": 0.8, "is_valid": true}` and a feedback grader configured
-    as `metric: score` changed `updated.metrics["score"]` to the grader score
-    `0.1` while leaving `updated.fitness == 0.8`. After feedback,
-    `_annotate_metric_policy()` recomputes `metadata.selection_score` only from
-    declared `metrics.yaml` metrics, so LLM feedback-adjusted fitness usually
-    affects prompt reward/top-level fitness but not MAP-Elites replacement or
-    exploit sampling except as a tie-breaker; colliding feedback metrics can
-    also corrupt the declared metric vector used for selection.
-  - Required result: define feedback metric schemas, normalize or bound grader
-    outputs, reject or namespace collisions with declared evaluator metrics and
-    reserved fields, decide whether and how feedback participates in archive
-    selection, preserve raw grader scores separately from composed fitness, and
-    add tests for out-of-range, non-finite, minimizing, archive-selection,
-    metric-collision, and discard-only feedback signals.
-
-- [ ] Implement parallel/asynchronous evaluation.
+- [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its
     pipeline is optimized for throughput.
-  - Current evidence: `evolve()` is synchronous and handles one LLM call and
-    one subprocess evaluation at a time (`libreevolve/core/loop.py:62-104`).
-  - Required result: introduce an async controller, concurrent LLM samplers,
-    evaluator workers, bounded queues, and deterministic run accounting.
+  - Current evidence: `evolve()` is still a single synchronous proposal loop:
+    it iterates `proposals_per_generation` sequentially, samples parents,
+    builds one prompt, performs one mutation LLM call, applies one candidate
+    mutation, and calls `CascadeEvaluator.evaluate()` directly before logging
+    and archive admission. Generated candidates record
+    `metadata.proposal_batch.policy == "sequential"`. `CascadeEvaluator`
+    remains a local staged subprocess evaluator, not distributed workers, and
+    `RunBudget` explicitly tracks synchronous local consumption; controller
+    budget-state validators exist only for future async/resume events.
+  - Required result: introduce an async controller with concurrent LLM
+    samplers, evaluator workers, bounded queues, deterministic worker ids,
+    deterministic result merge/admission order, concurrency-safe database,
+    archive, prompt, plugin, and budget mutation, and replayable controller
+    state for queued/running/completed work.
 
-- [ ] Support expensive evaluations and compute budgets.
+- [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on
     a single new solution when evaluation is parallelized.
-  - Current evidence: `eval_timeout_sec` defaults to 60 seconds and one
-    subprocess (`libreevolve/core/config.py`, `libreevolve/core/evaluator.py`).
-    `RunBudget` now tracks local `max_evaluations`,
-    `max_evaluator_seconds`, and `max_runtime_seconds` limits, but these are
-    synchronous local counters rather than parallel worker, accelerator, or
-    resumable expensive-evaluation controls.
-  - Required result: add wall-clock, sample, accelerator, and per-stage budget
-    controls, plus resumable evaluation state.
+  - Current evidence: local compute controls are now broader than the original
+    60-second single-subprocess default: `Config` exposes `max_evaluations`,
+    `max_evaluator_seconds`, detailed subprocess/sample/retry/timeout and
+    budget-exhaustion caps, `max_runtime_seconds`, and logical
+    `max_llm_calls`; configured evaluator stages support `timeout_sec`,
+    `samples`, `retries`, `max_sample_seconds`, and `max_stage_seconds`.
+    `RunBudget` records local seed/candidate evaluations, elapsed evaluator
+    seconds, detailed evaluator counters, LLM calls, and generation counters;
+    controller budget schemas can validate future async/resume events, and
+    replayable `llm_call` controller events can now restore provider-attempt,
+    token, configured-cost, LLM-latency, and role-scoped LLM usage counters.
+    These remain cooperative local counters and preflight validators, not a
+    unified compute-hour/resource budget for long-running worker or accelerator jobs.
+  - Required result: add a unified expensive-evaluation budget model that can
+    account for per-candidate compute-hours, worker/accelerator leases,
+    CPU/memory/GPU quotas, token/cost/provider-attempt spend where evaluator
+    feedback uses models, queued/running/completed long-evaluation state,
+    checkpoint/resume of partially completed expensive evaluations, and
+    paper-grade equal-budget reporting; preserve the existing synchronous
+    wall-clock/sample/stage budget tests as the local fallback contract.
 
-- [ ] Add run-wide compute budget accounting and stop criteria.
+- [ ] Add accelerator and worker budget stops plus budget resume state.
   - Spec evidence: AlphaEvolve Section 2.6 frames the system around maximizing
     useful ideas evaluated under an overall computation budget, and Section 4
     ablations report performance by fraction of the compute budget.
-  - Current evidence: `Config` exposes `max_generations`, `max_evaluations`,
-    `max_evaluator_seconds`, `max_runtime_seconds`, and per-validator
-    timeouts. `RunBudget` stops the synchronous loop deterministically on
-    exhausted local evaluation/evaluator-second/wall-clock budgets, each
-    candidate record stores `metadata.budget`, and completed runs update
-    `manifest.json` with consumed budget and structured stop reason. The loop
-    still has no LLM-call, token, cost, stage-sample, retry, accelerator, or
-    async worker budget counters. A local all-invalid-seed proof also records
-    `generations_started: 1` with `stop_reason: "no_parent"` even though no
-    parent was sampled and no mutation/evaluation generation work occurred.
-  - Required result: add a budget schema, deterministic counters for LLM
-    calls/tokens/cost/evaluator elapsed time/stage samples/retries, structured
-    stop reasons, manifest/history budget summaries, and tests that budget
-    exhaustion stops runs reproducibly, including no-parent startup stops
-    before generation counters are incremented.
+  - Current evidence: implemented live stop criteria are still local:
+    `RunBudget` enforces generation, seed/candidate evaluation,
+    evaluator-second, detailed evaluator-counter, wall-clock, `max_llm_calls`,
+    `max_llm_provider_attempts`, `max_llm_tokens`, and
+    `max_llm_cost_microusd`, and `max_llm_seconds` limits.
+    `_generate_with_budget()` clamps
+    ensemble retry/fallback attempts to the remaining logical-call budget and
+    records the actual attempt delta. It also records provider adapter attempts
+    from retained LLM call telemetry, provider-reported token totals, and
+    configured estimated micro-USD cost, then stops before the next LLM call
+    when those caps are exhausted. Candidate rows and final manifests persist
+    consumed budget snapshots and structured stop reasons.
+    LLM role accounting
+    aggregates provider-reported token totals when available, and final
+    manifests emit `runtime.llm_budget_report` with observed per-role logical
+    calls, retry attempts, adapter/provider attempts, provider tokens, cost
+    placeholders, scheduler-resume hashes, and self-validation. That report is
+    still `paper_budget_ready: false` because accelerator and async-worker
+    limits are absent and full controller resume wiring is still absent, but
+    validated controller `llm_call` events can replay provider-attempt,
+    token/cost, latency, and matching role counters into `RunBudget`, and
+    prior manifest runtime budget snapshots can now be applied to live resumed
+    runs before seed/generation work.
+  - Required result: enforce accelerator, async worker/queue, and equal-budget
+    limits as first-class
+    live stop criteria with config/manifest schema, per-role/per-worker
+    accounting, deterministic pre-call/pre-dispatch checks, post-call
+    consumption updates, scheduler/controller resume state, and tests for
+    exhausted limits before and after candidate generation and optional
+    critique/feedback/meta-prompt calls.
 
 ## Metrics and Evolution Database
 
@@ -1122,254 +597,216 @@ Primary evidence:
     use diverse high-performing programs under different definitions of "good"
     in prompts.
   - Current evidence: evaluator/database/program records preserve metric
-    vectors, primary fitness honors direction/bounds, and declared numeric
-    metrics are normalized into `metadata.normalized_metrics` plus an
-    equal-weight `metadata.selection_score`. MAP-Elites replacement, elite
-    ranking, and exploit/best sampling use that score with final fitness as a
-    tie-break. Backend reward, admission thresholds, and many parent/inspiration
-    paths still use scalar final fitness, and there is no Pareto/frontier,
-    configurable weighting, or metric-specific archive.
+    vectors, primary fitness honors direction/bounds, declared numeric
+    metrics are normalized into `metadata.normalized_metrics`, and optional
+    finite non-negative per-metric `weight` values in `metrics.yaml` can drive
+    a weighted `metadata.selection_score` instead of the default equal-weight
+    mean. MAP-Elites replacement, elite ranking, and exploit/best sampling use
+    that score with final fitness as a tie-break. Archive admission metadata and migration event rows now attach
+    an `objective_vector` audit record with finite normalized metrics and the
+    scalar selection policy, including weights when configured, when those
+    metrics are available, and `show`
+    validates and summarizes selected archive objective vectors for terminal
+    inspection. Runtime manifests now include
+    `runtime.history.objective_frontier`, a bounded diagnostic Pareto frontier
+    over complete declared normalized metric vectors, plus
+    `runtime.history.objective_metric_leaders`, a diagnostic best-program view
+    for each declared normalized metric. Metric-leader parent and
+    inspiration sampling can surface secondary-metric leaders, and generated candidates now persist
+    `metadata.parent_selection` and `metadata.inspiration_selection` provenance,
+    including metric target/program pairs for metric inspiration policies.
+    Plugin score composition is logged separately and can change final fitness,
+    but undeclared plugin-added metrics do not enter `normalized_metrics`,
+    metric-leader sampling, or `selection_score`. Backend reward, admission
+    thresholds, and some parent/inspiration paths still use scalar final
+    fitness, and the Pareto frontier and metric-leader view are diagnostic
+    rather than archive, sampling, or replacement policies. There is still no
+    declared plugin-score objective policy or metric-specific archive.
   - Required result: represent full metric vectors, choose target metrics,
-    support Pareto/frontier or score-composition policies, and sample
-    inspirations by metric-specific excellence.
-
-- [x] Honor `metrics.yaml` direction and bounds for primary fitness and archive
-  performance.
-  - Spec evidence: AlphaEvolve's metrics are maximized by convention; the local
-    problem format adds `direction` and `bounds`, so the implementation must
-    either honor them or remove the claim.
-  - Current evidence: `Problem.normalize_metric()` honors direction and bounds;
-    evaluator fitness is normalized; `ProgramDatabase` and `IslandModel` pass
-    normalized performance bounds into `MAPElites`.
-  - Status: implemented via `Problem.normalize_metric()` and normalized archive
-    performance cells for the primary metric; non-[0, 1] and minimize primary
-    metrics have tests.
-  - Required result: normalize metrics through declared bounds and directions,
-    pass bounds into population archives, and test non-[0, 1] metrics.
-
-- [ ] Honor metric direction/bounds for secondary metrics, feedback metrics,
-  and future multi-objective policies.
-  - Spec evidence: AlphaEvolve supports optimizing multiple scalar metrics,
-    and all metrics used for selection, prompting, or feedback composition need
-    consistent semantics.
-  - Current evidence: secondary metrics are preserved raw in `Program.metrics`
-    and `history.jsonl`; declared numeric secondary metrics are normalized into
-    `metadata.normalized_metrics` and affect the equal-weight archive
-    `selection_score`. `apply_llm_feedback()` still adds grader scores and
-    `weight * score` directly to normalized fitness without checking declared
-    bounds/directions or normalizing the feedback metric.
-  - Required result: validate every declared metric against schema, normalize
-    metric vectors when they affect selection/prompting/archive policy,
-    define feedback metric schemas, and test minimize/out-of-range/non-finite
-    secondary and feedback metrics.
-
-- [ ] Make MAP-Elites descriptors workspace-aware.
-  - Spec evidence: AlphaEvolve can evolve whole files/codebases, and
-    MAP-Elites-style quality-diversity search should map the candidate being
-    evolved, not just a compatibility projection of one primary file.
-  - Current evidence: `MAPElites._norm_complexity()` and `_diversity()` accept
-    `code: str`; `_cell()` passes `Program.code`, which is the primary-file
-    compatibility view. For multi-file candidates, helper modules, generated
-    support files, and non-primary evolved components do not affect complexity
-    or TF-IDF diversity cells, and `sample_diverse()` can treat candidates with
-    very different workspaces as equivalent if their primary files match.
-  - Required result: define workspace-level descriptor inputs, such as
-    canonicalized file paths plus contents and evaluator-provided behavior
-    descriptors; compute complexity/diversity over the full candidate or
-    configured descriptor set; persist descriptor values; and add tests where
-    non-primary file changes alter archive cells and inspiration sampling.
-
-- [ ] Stabilize MAP-Elites descriptor normalization and rebinning semantics.
-  - Spec evidence: MAP-Elites illuminates a behavior space whose dimensions
-    are meaningful across the archive. Descriptor coordinates should be
-    reproducible, comparable across runs, and not silently invalidated by later
-    candidates.
-  - Current evidence: `MAPElites._norm_complexity()` updates
-    `self._max_complexity` while computing the candidate cell, so a later
-    longer program changes the normalization denominator for future candidates
-    without recomputing or moving programs already stored in `_grid`.
-    `_diversity()` computes distance against the current capped elite list, so
-    diversity coordinates also depend on current archive contents rather than
-    a persisted descriptor model. `history.jsonl` records per-candidate
-    descriptor values after admission, but the archive does not persist the
-    normalization state or rebin cells when descriptor scales change.
-  - Required result: define fixed descriptor bounds, evaluator-provided
-    behavior descriptors, or an explicit dynamic-normalization/rebinning
-    policy; persist descriptor normalization state in run artifacts; add tests
-    proving that candidate insertion order either does not change existing
-    cells or triggers a documented rebin/snapshot event.
+    support Pareto/frontier sampling/archive, connect
+    plugin-adjusted fitness or plugin-emitted metrics to declared objective
+    semantics when desired, and make metric-targeted sampling/archive behavior
+    part of that policy instead of a standalone heuristic.
 
 - [ ] Replace the current thin JSONL facade with an evolutionary database
   capable of resurfacing ideas by score, metric, diversity, feedback, and
   lineage.
   - Spec evidence: AlphaEvolve's program database optimally resurfaces
     previously explored ideas and balances exploration and exploitation.
-  - Current evidence: `ProgramDatabase` delegates to `IslandModel`, logs JSONL,
-    and has no query/index layer beyond `sample`, `sample_diverse`, and `best`
-    (`libreevolve/core/database.py:13-47`).
+  - Current evidence: `ProgramDatabase` is richer than the original thin JSONL
+    facade: it validates strict accepted/failure/archive/LLM JSONL streams,
+    records structured archive-admission outcomes, keeps defensive in-memory
+    program snapshots, logs queryable failure records with repetition
+    fingerprints, exposes recent failure and hypothesis context for
+    DeepResearch, delegates metric/novelty/recency/selection/random sampling to
+    `IslandModel`, persists compact and full archive-state snapshots, validates
+    archive-event streams, and can restore cells/elites from a manifest plus
+    accepted history bundle. However, these are still append-only logs plus an
+    in-memory archive, not a persisted query/index database. There is no durable
+    index over score, metric vectors, diversity descriptors, feedback text,
+    failure fingerprints, lineage subgraphs, hypotheses, artifacts, retrieval
+    context, or novelty; `load_accepted_history_index()` is an id map for
+    restore/query scaffolding, not a ranked resurfacing database. The compact
+    `show` path intentionally rejects mixed legacy/current history schemas with
+    a line-numbered diagnostic instead of migrating them into one compatible
+    database view.
   - Required result: store rich candidate/evaluation records with queryable
-    dimensions and reproducible sampling policies.
+    persisted dimensions, reproducible sampling policies, ranked views by
+    score/metric/diversity/feedback/lineage/failure/hypothesis/artifact
+    evidence, versioned schema-migration rules for legacy/current run records,
+    and tests proving resurfacing decisions can be rebuilt from run artifacts
+    rather than only from the live in-memory `IslandModel`.
 
-- [ ] Persist archive cell/island state and migration events.
+- [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs
     requires knowing which programs occupied which archive cells and how
     migration changed island populations.
   - Current evidence: `ProgramDatabase.log()` writes candidate records to
-    `history.jsonl`, but `MAPElites._grid`, `_elite`, `_max_complexity`,
-    per-cell coordinates, diversity values, island assignment, and migration
-    events are kept only in memory. `ProgramDatabase.maybe_migrate()` mutates
-    islands without writing a history event, and `manifest.json` records only
-    population configuration, not archive state.
-  - Required result: persist archive snapshots or event logs containing island
-    ids, MAP-Elites cell coordinates/descriptors, cell replacements, elite
-    archive contents, migration source/destination/events, and normalization
-    state; add tests that a run's archive state can be inspected and eventually
-    resumed from persisted artifacts.
+    `history.jsonl`, `ProgramDatabase.maybe_migrate()` writes versioned
+    migration placement rows to `archive_events.jsonl`, and final manifests
+    persist a compact `runtime.history.archive_state` snapshot with the island
+    cursor, sequence counters, archive sequence by program id, and per-island
+    occupancy/elite counts. `load_runtime_archive_state_snapshot()` validates
+    that compact manifest field for future resume use, including cursor bounds,
+    manifest-safe program ids, and per-island count records.
+    `load_archive_event_records()` validates `archive_events.jsonl` as a
+    checked migration audit stream, including sequence ordering, canonical-id
+    policy, manifest-safe program ids, island ids, cells, and selection scores.
+    `MAPElites.state_snapshot()` now persists per-island occupied cells,
+    elite-program ids, descriptor policy metadata, and archive configuration
+    under `runtime.history.archive_state.archive_contents`.
+    `IslandModel.restore_archive_state()` restores those cells/elites when
+    supplied with checked `Program` snapshots, and
+    `load_archive_restore_bundle()` combines `manifest.json` with
+    `history.jsonl` to produce the bundle accepted by `ProgramDatabase(...,
+    archive_state_snapshot=..., archive_programs_by_id=...)` and by
+    `evolve(..., runtime_archive_state_snapshot=...,
+    runtime_archive_programs_by_id=...)`. CLI runs can now restore only the
+    cursor/counter subset with `--restore-archive-cursor-from-manifest` or the
+    full archive cells/elites bundle with `--restore-archive-from-manifest`.
+    Remaining gap: `archive_events.jsonl` is still not applied as a migration
+    replay engine.
+  - Required result: implement an ordered `archive_events.jsonl` replay engine
+    or explicit branch/reconciliation model for migration rows, prove replayed
+    placements match the archive-content snapshot or fail with actionable
+    diagnostics, and add restore/replay tests covering migration ordering,
+    replacement, duplicate-placement, and descriptor-policy mismatches.
 
-- [x] Persist archive admission outcomes per program.
-  - Spec evidence: AlphaEvolve's database stores explored programs with scores
-    and enough evolutionary state to resurface useful ideas; auditing a run
-    should distinguish evaluated-but-rejected candidates from candidates that
-    entered an archive cell or elite list.
-  - Status: implemented. `MAPElites.add()` and `IslandModel.add()` return
-    structured admission events, and `ProgramDatabase.admit()` records
-    below-threshold rejection without mutating the archive. `evolve()` stores
-    the event under `metadata.archive_admission` before writing
-    `history.jsonl`.
-  - Evidence: archive admission records include admitted/rejected status,
-    threshold, island id, cell coordinates/descriptors, previous occupant id,
-    cell replacement status, elite-list entry, and displaced elite ids. Tests
-    cover below-threshold rejection, valid archive entry, lower-fitness
-    nonreplacement, cell replacement, elite displacement, island assignment, and
-    seed/child history records.
-
-- [ ] Separate MAP-Elites cell admission from auxiliary elite-list retention.
-  - Spec evidence: MAP-Elites archives are behavior-cell maps; AlphaEvolve-style
-    database records should make clear whether a candidate changed the search
-    state used for diversity/resurfacing or was only retained in a secondary
-    ranking list.
-  - Current evidence: `MAPElites.add()` appends every finite program to
-    `_elite`, trims by selection score, and then sets
-    `event["admitted"] = event["entered_cell"] or event["entered_elite"]`.
-    A local proof with `MAPElites(bins=1, elite_archive_size=50)` added a
-    `fitness=0.9` program, then a same-cell `fitness=0.1` program; the second
-    event was `admitted=True`, `reason="elite_only"`, and
-    `entered_cell=False`, while the grid occupant remained the first program.
-    `libreevolve show` filters current histories using only
-    `archive_admission.admitted` plus validity, so "archive-admitted" can mean
-    auxiliary elite-list retention rather than MAP-Elites cell entry.
-  - Required result: rename or split admission fields, for example
-    `cell_admitted`, `elite_retained`, and `search_state_changed`; make CLI and
-    run docs report the distinction; define whether parent/inspiration sampling
-    should draw from cell occupants, auxiliary elites, or both; and add tests
-    proving non-cell-retained candidates are not mislabeled as MAP-Elites cell
-    entries.
-
-- [x] Review and improve parent/inspiration sampling.
-  - Spec evidence: AlphaEvolve samples parent programs and inspirations from a
-    database using an evolutionary algorithm inspired by MAP-Elites and island
-    populations.
-  - Status: implemented for the first in-memory archive layer.
-    `parent_selection_strategy` supports `mixed`, `exploit`, `explore`,
-    `metric`, `novelty`, and `recency`; `inspiration_strategy` supports
-    `mixed`, `random`, `selection`, `metric`, `novelty`, and `recency`.
-    Both strategy fields are accepted in `config.yaml` and exposed as CLI
-    overrides.
-    `evolve()` passes the selected parent id as an inspiration exclusion,
-    `sample_diverse()` accepts `exclude_ids` and `strategy`, and island-level
-    inspiration pools deduplicate migrated copies by `Program.id`. Tests cover
-    config validation, CLI override precedence, metric-leader sampling,
-    novelty/recency strategies, MAP-Elites exclusion, migrated duplicate
-    collapse, and loop-level parent-as-inspiration avoidance.
-  - Remaining gap: this is still in-memory archive sampling, not a queryable
-    database over persisted score, metric, diversity, feedback, lineage,
-    novelty, and reproducible sampling indexes.
-
-- [ ] Improve run inspection and archive diagnostics.
-  - Spec evidence: AlphaEvolve's evolutionary database attaches scores and
-    outputs to programs so explored ideas can be inspected and resurfaced.
-  - Current evidence: `libreevolve show` now detects current histories with
-    `metadata.archive_admission`, selects only archive-admitted records whose
-    evaluation is valid, ranks them by archive selection score with final
-    fitness as a tie-break, prints its selection mode, and prints selected
-    metrics plus archive selection score, island id, cell coordinates, and
-    descriptor values when present. It preserves a legacy highest-fitness
-    fallback for old history fixtures that lack archive metadata. It still
-    prints only the selected primary-file code and does not expose full file
-    sets, stage failures, prompt lineage, feedback records, or parent/child
-    lineage.
-  - Required result: extend `show` and/or machine-readable summaries with
-    stage diagnostics, full-workspace pointers, lineage, prompt ids, archive
-    diagnostics, and failure statistics; keep tests where an invalid or
-    non-admitted high-fitness row is not reported as the archived best.
+- [ ] Add controller and pending-work resume state for archive restores.
+  - Spec evidence: AlphaEvolve-style evolutionary databases should make
+    population-state updates auditable and reproducible; a candidate that does
+    not enter the archive should not silently change future island assignment
+    unless that is an intentional search policy.
+  - Current evidence: retained-state-change behavior is explicit: island
+    assignment advances only when `event["search_state_changed"]` is true, and
+    compact/full archive-state restore now exists. Final manifests persist
+    `runtime.history.archive_state` with cursor/counter state, full
+    `archive_contents` cell/elite snapshots, and a validated
+    `migration_replay` policy that marks migration events as
+    `not_applied_as_restore_engine`. `load_runtime_archive_state_snapshot()`,
+    `load_archive_restore_bundle()`, `IslandModel.restore_cursor_state()`,
+    `IslandModel.restore_archive_state()`, `ProgramDatabase(...,
+    archive_state_snapshot=..., archive_programs_by_id=...)`, direct
+    `evolve()`, and CLI flags can restore cursor-only or full archive
+    cell/elite state before new seed/candidate admission. Startup manifests
+    record `policies.archive_cursor_restore` and
+    `policies.archive_identity.resume_status` so restored surfaces and
+    unsupported migration replay are visible.
+  - Remaining gap: migration event-order replay is tracked separately by the
+    archive-event replay TODO. Controller state and pending/in-flight work are
+    still absent from the restore surface: no queued/running proposal records,
+    evaluator-worker state, in-flight LLM calls, pending archive admissions,
+    partially completed generation state, or deterministic controller resume
+    ledger is persisted or restored.
+  - Required result: add controller/pending-work resume state and extend
+    end-to-end resume tests across below-threshold, non-admitted, elite-only,
+    in-flight generation/evaluation, and cell-replacement cases.
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Harden AlphaEvolve-style benchmark validators against toy shortcuts.
+- [ ] Connect benchmark-grade fixtures to hardening and scope reports.
   - Spec evidence: AlphaEvolve's matrix-multiplication work searches tensor
     decompositions, measures rank over target families and randomized seeds,
     and verifies exactness; its packing work reports concrete best
     constructions and compares progress under ablations.
-  - Current evidence: `matrix_multiplication` is a 2x2 Python function example
-    scored by counting AST `*` nodes across three deterministic cases, not a
-    rank-decomposition search or operation-instrumented benchmark. The packing
-    validator checks fixed-26 circle feasibility and sum of radii, but there is
-    no benchmark runner that records best construction artifacts, target
-    thresholds, repeated seeds, or equal-budget comparisons.
-  - Required result: add stronger validators or clearly separate smoke examples
-    from benchmark fixtures; include anti-gaming tests, expected artifact
-    schemas, repeated-seed evaluation, target/SOTA baselines, and benchmark
-    reports suitable for comparing AlphaEvolve-alignment features.
+  - Current evidence: `matrix_multiplication` is a 2x2 Python function example,
+    not a rank-decomposition search or operation-instrumented benchmark. Its
+    smoke validator now counts AST `*` nodes only inside `matmul2`, expands the
+    deterministic integer case set, and rejects known import/library
+    delegation, module-level dead-code counter, and fixed-three-case lookup
+    shortcuts. The packing validator checks fixed-26 circle feasibility and sum
+    of radii, but there is no benchmark runner that records best construction
+    artifacts, target thresholds, repeated seeds, or equal-budget comparisons.
+    `libreevolve.benchmark_hardening.v1` now defines and tests an anti-gaming
+    report contract with protected signals, shortcut threat categories,
+    detector strategies, required links from each shortcut threat to known
+    protected signals, passed negative fixtures, safe artifact paths/hashes,
+    and benchmark-readiness gating that requires a passed negative fixture for
+    every declared shortcut threat. `libreevolve.example_benchmark_scope.v1`
+    now machine-classifies the shipped `hello_world`, `sorting`,
+    `workspace_math`, `matrix_multiplication`, and `circle_packing` examples as
+    smoke-only and not AlphaEvolve-comparable, preventing those fixtures from
+    being counted as benchmark evidence by accident.
+  - Required result: connect benchmark-grade fixtures beyond smoke validators
+    to `libreevolve.benchmark_hardening.v1` and
+    `libreevolve.example_benchmark_scope.v1`; emit expected artifact schemas,
+    repeated-seed evaluation, target/SOTA baselines, benchmark reports suitable
+    for comparing AlphaEvolve-alignment features, and real anti-gaming
+    fixtures for benchmark-grade operation/rank discovery.
+
+- [ ] Add matrix tensor benchmark result artifacts and per-seed hit-rate
+  reporting.
+  - Spec evidence: AlphaEvolve Section 3.1 and Appendix A evaluate low-rank
+    tensor decomposition targets with multiple random seeds, report the best
+    rank plus the fraction of seeds that achieved it, and publish exact
+    integer or half-integer algorithms for the target suite.
+  - Current evidence: the checked-in `matrix_multiplication` example is a
+    three-case `matmul2` smoke validator with no tensor target suite, seed
+    accounting, coefficient-domain certificate, or exportable exact algorithm
+    artifact. `libreevolve.problems.benchmarks.matrix_results` now defines and
+    tests a benchmark-level result schema with target identity, dimensions,
+    seed count, best rank, hit fraction, exactness/certificate status,
+    coefficient domain, explicit AlphaEvolve-comparable claim policy,
+    per-seed results, artifact paths/hashes,
+    consistency checks tying top-level best rank and hit counts to per-seed
+    ranks/flags, and summary-report rendering. Exploratory `rational` and
+    `float` coefficient-domain reports remain valid only when
+    `alphaevolve_comparable` is false; AlphaEvolve-comparable claims require
+    integer or half-integer coefficients, verified exactness, exact per-seed
+    rows, and algorithm/certificate/notebook artifacts.
+  - Required result: connect a real tensor-decomposition target suite and exact
+    algorithm/certificate artifacts to the result schema; keep the existing
+    Python smoke example clearly outside AlphaEvolve-comparison evidence until
+    it emits validated tensor-result reports.
+
+- [ ] Add held-out evaluation splits and reference-correctness records to
+  systems benchmarks.
+  - Spec evidence: AlphaEvolve's engineering applications do not rely only on
+    the same evaluator signal used during search. Section 3.3 reports unseen
+    workload/capacity tests for scheduling, train/evaluation input-shape splits
+    for kernel tiling heuristics, randomized reference-code checks for
+    FlashAttention IR edits, and separate deployment or expert confirmation.
+  - Current evidence: current examples are smoke-style local validators, and
+    open benchmark TODOs cover stronger matrix/packing fixtures and broad
+    compiler/hardware/systems coverage decisions. The
+    `libreevolve.paper_result_certification.v1` contract can distinguish local
+    validator records from independent certification evidence.
+    `libreevolve.systems_result_report.v1` now defines and tests a systems
+    report contract with named optimization, held-out, and
+    reference-correctness gates; case-set hashes; sample counts/seeds; finite
+    metrics; artifact kinds matching passed ready gates; optional
+    certification linkage that cannot contradict readiness claims; and an
+    `alphaevolve_ready` gate that fails unless held-out and correctness gates
+    are passed or explicitly documented as not applicable.
+  - Required result: connect real compiler, hardware, kernel, scheduling, or
+    systems benchmark fixtures to the report contract and implement the actual
+    held-out/generalization case sets, randomized/reference-correctness checks,
+    and deployment or certification evidence.
 
 ## LLM Ensemble
 
-- [ ] Add a custom LLM backend registry or plugin interface.
-  - Spec evidence: AlphaEvolve's task setup includes a choice of existing or
-    custom LLMs, and the system is described as model-agnostic.
-  - Current evidence: `build_llm()` in `libreevolve/llm/ensemble.py` hard-codes
-    backend type strings for `anthropic`, `openai`, and `ollama`; adding a new
-    provider requires editing source code and constructor-key allowlists rather
-    than declaring a backend module/class in `config.yaml`.
-  - Required result: add a backend registry or plugin loading mechanism with
-    validated backend specs, constructor/config schemas, provenance in
-    manifests, docs, and tests for a custom in-repo or problem-local backend.
-
-- [ ] Separate backend accounting for mutation, critique, feedback, and
-  meta-prompt calls.
-  - Spec evidence: AlphaEvolve's LLM ensemble is used to generate candidates
-    for an evolutionary loop optimized for throughput and quality; scheduler
-    feedback should correspond to the role and outcome of each LLM call.
-  - Current evidence: every `llm.generate()` increments `LLMEnsemble.counts`,
-    including critique, LLM feedback, and meta-prompt mutation calls, but only
-    the original mutation `backend_idx` receives `record_reward()`. Mutation
-    candidates now log `metadata.backend_idx`; normalized call telemetry also
-    records `role` for mutation, critique, feedback, and meta-prompt calls.
-    Auxiliary calls still affect routing state as apparent no-reward pulls, and
-    the scheduler state is not persisted as resumable bandit state.
-  - Required result: track call role/provenance, define reward or no-reward
-    accounting per role, persist bandit state in run artifacts, and add tests
-    proving critique/feedback/meta-prompt calls do not distort mutation routing.
-
-- [ ] Validate and bound backend reward updates before they enter scheduler
-  state.
-  - Spec evidence: AlphaEvolve-style model scheduling should use comparable,
-    bounded reward signals so backend selection remains stable over long runs
-    and auxiliary roles cannot poison mutation routing.
-  - Current evidence: `LLMEnsemble.record_reward()` directly adds the supplied
-    value to `wins[idx]` with no finite-number or non-negative check. A local
-    proof called `record_reward(0, nan)`, `record_reward(0, inf)`, and
-    `record_reward(0, -5.0)`; the ensemble retained those values and continued
-    selecting/generating with corrupted or negative reward state. The main
-    loop currently passes `max(0.0, score - parent.fitness)`, but the scheduler
-    API itself does not enforce the contract and persisted/resumable bandit
-    state would have no guardrail.
-  - Required result: validate backend reward inputs as finite bounded values,
-    normalize to the documented reward range, reject or quarantine invalid
-    updates, and add tests for non-finite, negative, and out-of-range rewards
-    plus restored/resumed scheduler state.
-
-- [ ] Persist normalized LLM call telemetry and provider response provenance.
+- [ ] Add provider cost/raw diagnostics and live budget policy.
   - Spec evidence: AlphaEvolve's scheduler and compute-budget framing depend on
     LLM throughput, cost, latency, and quality; reproducible experiments need
     per-call evidence for which model/API call produced which proposal or
@@ -1381,478 +818,271 @@ Primary evidence:
     failure metadata, and scheduler counts before/after the call. Successful
     mutation/critique calls are attached to candidate metadata, feedback calls
     to feedback records, and meta-prompt calls to prompt-history metadata.
-    OpenAI, Anthropic, and Ollama adapters still discard provider response ids,
-    usage/token counts, finish reasons, adapter-internal retry counts, raw
-    provider diagnostics, and request parameters. There is no separate
-    run-scoped LLM call log yet.
-  - Required result: introduce a call result/telemetry object, record role,
-    backend spec, model, API mode, prompt size, output size, usage tokens,
-    latency, retries, finish reason, request/response ids, raw-provider
-    diagnostics, and failure metadata; persist it in history or a separate call
-    log; update scheduler/budget accounting from this telemetry; add tests with
-    fake provider usage for mutation, critique, feedback, and meta-prompt calls.
+    `llm_calls.jsonl` now provides a strict run-scoped LLM call/reward log.
+    OpenAI, Anthropic, and Ollama adapters expose safe provider usage counts,
+    finish reasons, request ids, and response ids when SDK responses provide
+    them; the built-in adapters also expose `adapter_retry` telemetry with
+    their configured `provider_max_retries`, provider-attempt count, failed
+    attempt count, and safe exception type labels, plus bounded
+    `provider_diagnostics` telemetry for scalar provider-native fields such as
+    OpenAI system fingerprints, Anthropic message model/type labels, and
+    Ollama duration counters when available. String diagnostics are
+    secret-redacted, capped at 200 retained characters, and paired with raw
+    SHA-256/count metadata; nested provider payloads are rejected before
+    persistence, and strict ledger replay rejects malformed diagnostics
+    envelopes. Built-in adapters now also
+    expose `backend_defaults` telemetry with LibreEvolve's local output-token
+    cap, provider internal retry cap, configured request timeout or `null`,
+    API mode, and OpenAI reasoning/API-mode policy when relevant.
+    `LLMEnsemble` validates and records those fields in call telemetry.
+    Failed calls now also include
+    `provider_failure_category` for provider-response validation failures,
+    timeouts, rate limits, transport errors, provider client/server status
+    errors, and unknown failures; failed SDK exceptions with safe HTTP-style
+    `status_code` attributes also record `provider_status_code`. Final
+    manifests now expose role-accounting/token summaries through compact
+    `runtime.llm_accounting` totals and self-validated
+    `runtime.llm_budget_report` instances now retain per-call
+    provider-internal retry details from bounded LLM call history when
+    available. Focused ensemble tests now cover fake provider usage counts and
+    adapter retry diagnostics for `mutation`, `critique`, `feedback:<name>`,
+    and `meta_prompt` roles. Backend specs and direct backend metadata now
+    accept positive `cost_usd_per_million_tokens`; when sanitized provider
+    usage includes `total_tokens`, call telemetry records
+    `cost_estimate`, scheduler role accounting accumulates `cost_microusd`,
+    and runtime LLM budget reports render aggregate `cost_usd`. Cost-estimate
+    records now explicitly identify configured backend metadata as the pricing
+    source, provider usage metadata as the token-count source, and mark the
+    estimate as not live provider pricing. Each LLM call also records
+    `cost_estimate_status`, including strict not-estimated reasons for missing
+    configured rates or missing/invalid provider token totals.
+    `max_llm_provider_attempts` now consumes retained adapter retry telemetry
+    as a live after-call stop input; `max_llm_tokens`,
+    `max_llm_cost_microusd`, and `max_llm_seconds` do the same for
+    provider-reported token totals, configured estimated cost, and retained LLM
+    call latency. Remaining gaps
+    are remote provider-side defaults and live pricing capture,
+    provider-specific diagnostics beyond bounded scalar retained metadata, and
+    full one-command restoration of
+    replayable provider-attempt/token/cost/latency controller events.
+  - Required result: add bounded raw/provider-specific
+    diagnostic retention, remote provider-side default/pricing capture, and
+    full restored provider-usage budget policy that consumes the existing safe
+    usage, retry, status, controller-event, ledger, and runtime budget-report
+    telemetry.
 
-- [ ] Add LLM provider failure retry, fallback, and quarantine policy.
-  - Spec evidence: AlphaEvolve runs an LLM/evaluator pipeline optimized for
-    long-running throughput. Provider failures, rate limits, invalid responses,
-    and transient transport errors need deterministic accounting and retry or
-    fallback behavior so one failed call does not corrupt scheduler state or
-    crash unrelated run progress.
-  - Current evidence: `LLMEnsemble.generate()` now supports `llm_max_retries`
-    and `llm_fallback`. Failed attempts are recorded in normalized call
-    telemetry with retry/fallback attempt indexes, `will_retry`, and
-    `will_fallback`; exhausted failed backends are excluded for the current
-    fallback call; successful fallback returns normally without incrementing the
-    failed backend's pull count. Config validation, CLI overrides, and ensemble
-    tests cover retry, fallback, and disabled-fallback behavior. The concrete
-    OpenAI, Anthropic, and Ollama adapters still also retry internally three
-    times with exponential backoff before surfacing an exception, regardless of
-    `llm_max_retries`.
-  - Remaining gap: `evolve()` still lets an exhausted mutation-call exception
-    abort before candidate/evaluation logging, and exhausted critique, feedback,
-    or meta-prompt exceptions can still abort after useful work has already
-    completed. Failures are not classified by timeout/rate-limit/transport
-    semantics, provider penalties are not applied, adapter-internal retries are
-    neither configurable nor counted against run budgets, and there is no
-    role-specific quarantine policy.
-  - Required result: define per-role LLM failure policy with bounded retries,
-    timeout/rate-limit classification, optional backend fallback, scheduler
-    accounting for failed attempts, unified adapter/ensemble retry semantics,
-    structured call/error logs, candidate-level quarantine where appropriate,
-    and tests for mutation, critique, feedback, and meta-prompt provider
-    failures.
+- [ ] Enforce adapter retry/token/cost/wall-clock budgets live.
+  - Spec evidence: AlphaEvolve-style LLM scheduling is compute-budgeted; retry
+    knobs should not allow an effectively unbounded number of provider calls
+    outside token-budget/cost/time/accounting controls.
+  - Current evidence: `llm_max_retries` is now capped to the inclusive range
+    `0..10` at both `Config` validation and direct `LLMEnsemble`
+    construction, with focused config/ensemble/CLI coverage for accepted and
+    rejected values. Built-in provider adapters now separately cap internal
+    retries with `provider_max_retries` and record `adapter_retry` attempts.
+    `max_llm_calls` now caps live `LLMEnsemble` attempt spending across
+    original, retry, and fallback attempts: the loop clamps
+    `LLMEnsemble.max_call_attempts` to the remaining call budget and records
+    the actual retained call-history attempt delta into runtime/candidate
+    budget snapshots.
+    `libreevolve.llm_budget_report.v1` now defines and tests a report contract
+    for role-specific logical-call, retry-attempt, adapter-attempt,
+    token/cost/wall-clock limits and usage, provider-internal retry caps, and
+    persisted resume-state hashes. Final runtime reports now include retained
+    per-call adapter retry details from LLM call history and state when those
+    details are bounded by call-history retention.
+    `max_llm_provider_attempts` now records those adapter-internal attempts
+    into `RunBudget` and stops before the next LLM call when the cap is
+    exhausted. `max_llm_tokens` and `max_llm_cost_microusd` now stop before the
+    next LLM call after provider usage or configured cost estimates consume the
+    cap. `max_llm_seconds` and `llm_role_seconds_limits` now consume retained
+    call `latency_sec` telemetry and stop before the next global or matching-role
+    LLM call when latency caps are exhausted. Controller budget `llm_call`
+    events can now validate and replay role-tagged provider attempts, tokens,
+    configured cost, and latency seconds into `RunBudget`, so restored event
+    streams can trip the same live stop checks after replay. Live synchronous
+    budget deltas are now emitted to `controller_budget_events.jsonl` as
+    contiguous rows for seed evaluations, generation starts, LLM calls,
+    candidate evaluations, generation completions, and final stop reasons; LLM
+    rows carry role-tagged provider attempts, tokens, configured cost, and
+    latency when retained call telemetry exposes those values. Full-runtime
+    restore now replays those rows, verifies their non-wall-clock consumed
+    counters against the manifest budget snapshot, and passes the checked
+    budget snapshot through the unified `evolve()` restore entrypoint.
+  - Remaining gap: the replayed controller budget stream is not yet composed
+    with queued/running async worker state, pending-work restore, provider-output
+    replay, or separate budget-stop manifests for replay-only exhaustion
+    scenarios beyond the manifest stop snapshot.
+  - Required result: connect replayed budget state to future async
+    worker/pending-work controller state, provider-output replay, and
+    budget-stop packaging for restored controller work.
 
-- [ ] Add provider-call timeouts and cancellation to LLM runtime budgets.
+- [ ] Add hard provider cancellation and timeout quarantine policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
     provider latency and stalled model calls must be bounded and attributable to
     the run budget rather than blocking the controller indefinitely.
-  - Current evidence: `RunBudget` checks `max_runtime_seconds` only before a
-    generation/evaluation boundary. `LLMEnsemble.generate()` calls
-    `backend.generate(prompt)` synchronously, and the OpenAI, Anthropic, and
-    Ollama adapters construct provider clients/calls without a LibreEvolve
-    request timeout, cancellation token, or per-role deadline. A hung or very
-    slow mutation, critique, feedback, or meta-prompt call can therefore exceed
-    `max_runtime_seconds` before the budget is checked again; the elapsed time
-    is visible only after the call returns and is not a distinct stop reason or
-    timeout artifact.
-  - Required result: add configurable LLM request timeouts/deadlines per backend
-    or role; propagate remaining run budget into provider calls where possible;
-    classify provider timeouts separately from other transport errors; record
-    timeout/cancellation metadata in call logs; and add tests proving a slow
-    backend cannot block past the configured budget without a structured
-    failure record.
-
-- [ ] Make OpenAI API routing explicit and validate reasoning-model options.
-  - Spec evidence: AlphaEvolve's task setup includes LLM choices and
-    configurations; backend behavior must be reproducible and match configured
-    model capabilities.
-  - Current evidence: `OpenAIBackend.generate()` selects Chat Completions unless
-    `reasoning_effort` is set, and selects Responses only when that field is
-    non-empty. Documentation previously implied reasoning models use Responses
-    broadly, but the adapter does not detect reasoning-capable model names,
-    validate supported reasoning values, choose `store`/statefulness policy, or
-    persist API-mode provenance per call.
-  - Required result: add an explicit `api_mode` or model-capability policy,
-    validate OpenAI model/parameter combinations before a run, record API mode
-    in call metadata/manifests, and test Chat Completions vs Responses routing.
-
-- [x] Model AlphaEvolve's throughput/depth ensemble strategy explicitly.
-  - Spec evidence: AlphaEvolve combines Gemini Flash for breadth with Gemini
-    Pro for occasional deeper, higher-quality suggestions.
-  - Current evidence: `LLMEnsemble` supports default `ucb1` and experimental
-    `throughput_depth` scheduling metadata (`cost`, `latency`, `depth`, `role`).
-    The policy is still heuristic and not a faithful reproduction of the
-    AlphaEvolve production scheduler.
-  - Status: implemented as an experimental `throughput_depth` ensemble strategy
-    using backend `cost`, `latency`, and `depth` metadata. This remains a
-    heuristic, not a reproduction of AlphaEvolve's production scheduler.
-  - Required result: add scheduling modes that can allocate proposal volume by
-    cost/latency/capability, not only reward.
-
-- [ ] Make backend role metadata operational or document it as descriptive.
-  - Spec evidence: AlphaEvolve's LLM ensemble separates breadth-oriented fast
-    generation from deeper higher-quality suggestions. If local backend specs
-    expose roles such as `breadth` and `depth`, those roles should influence
-    scheduling or be clearly marked as labels.
-  - Current evidence: `Config._validate_backends()` accepts a string `role`,
-    `build_llm()` stores it in `backend_metadata`, and docs show `role:
-    breadth` / `role: depth` examples. `LLMEnsemble._throughput_depth_select()`
-    reads only `cost`, `latency`, and `depth`; it ignores `role`, and the
-    default `ucb1` strategy ignores all backend metadata. There is no policy
-    that reserves proposal volume for breadth models, escalates selected
-    candidates to depth models, or routes critique/feedback/meta-prompt calls
-    by role.
-  - Required result: either make `role` operational through explicit per-role
-    scheduling quotas/routing rules and tests, or document it as descriptive
-    manifest metadata only; add tests proving the chosen role semantics.
-
-- [x] Add critique/review generation stage.
-  - Spec evidence: the AlphaEvolve paper describes using LLMs to generate,
-    critique, and evolve a pool of algorithms.
-  - Current evidence: `Config.critique_enabled` triggers an optional LLM
-    critique/revision call before mutation application; the loop logs the
-    original diff, revised diff, critique prompt, and backend index in
-    candidate metadata.
-  - Status: implemented as an optional synchronous self-revision pass. It is
-    not yet a pool of independent critics or async reviewers.
-  - Required result: support optional critique, self-revision, or reviewer
-    passes before evaluation.
-
-- [x] Validate critique revisions before replacing the original mutation.
-  - Spec evidence: critique should improve candidate quality, not silently
-    discard an otherwise applicable generated mutation.
-  - Previous gap: `evolve()` replaced the generated mutation with the critique
-    response unconditionally, so a malformed critique response could turn a
-    valid mutation into `no_diff_blocks` or another parser error.
-  - Status: implemented. The loop previews the revised mutation with
-    `apply_workspace_mutation()`, falls back to the original mutation when the
-    revision is malformed and the original applies cleanly, and records
-    `selected_diff`, `accepted_revision`, parser diagnostics, and fallback
-    reason in `metadata.critique`.
-  - Validation: `tests/core/test_loop.py` covers accepted critique revisions
-    and malformed critique fallback.
-
-- [ ] Extend critique from single self-revision to configurable reviewer pools.
-  - Spec evidence: AlphaEvolve describes using a set of LLMs to generate,
-    critique, and evolve a pool of algorithms, and its system is optimized for
-    throughput with separate LLM samplers/evaluators.
-  - Current evidence: `evolve()` can make one synchronous critique call after
-    the mutation response. There is no reviewer pool, no independent critique
-    selection policy, no agreement/disagreement logging, no critique score, and
-    no async overlap with generation or evaluation.
-  - Required result: add configurable reviewer roles/backends, provenance,
-    score or accept/reject/revise policies, prompt/log visibility, and tests
-    that critique behavior does not corrupt mutation backend accounting.
+  - Current evidence: built-in OpenAI, Anthropic, and Ollama backend specs now
+    accept positive `timeout_sec` and forward it into SDK/client construction
+    as a provider request timeout. `llm_call_timeout_sec` now adds an
+    ensemble-level deadline around each backend `generate()` attempt,
+    including custom backends. Slow calls are recorded as
+    `ProviderCallTimeoutError` with `provider_failure_category: timeout`,
+    role-accounting timeout counters, call-timeout metadata, and normal
+    retry/fallback eligibility. `RunBudget` still checks
+    `max_runtime_seconds` before generation/evaluation boundaries, and
+    `_generate_with_budget()` now clamps deadline-aware `LLMEnsemble` calls to
+    the remaining wall-clock runtime budget before each attempt. Exhausted
+    mutation timeouts now produce generated failure-history rows with retained
+    timeout call telemetry and can continue later generations when budget
+    remains. There is still no live hard provider cancellation token or
+    cross-role timeout-driven quarantine/stop policy.
+    `libreevolve.provider_cancellation_policy.v1` now
+    defines and tests a policy/report contract for provider request timeouts,
+    ensemble wait deadlines, runtime deadlines, hard cancellation rules,
+    role-scoped budget actions, artifact requirements, required
+    artifact-kind linkage, hard-cancel readiness gated on `cancellation_record`
+    artifact evidence, and hashed cancellation artifacts. Completed and aborted
+    manifests now include a validated `runtime.provider_cancellation_policy`
+    record declaring the current provider timeout, ensemble deadline, runtime
+    deadline actions, and matching timeout/budget-stop artifact kinds with
+    `hard_cancel_ready: false`.
+    Provider-request-timeout and ensemble-deadline rules are now scoped to the
+    loop's active LLM role surfaces: `mutation`, `critique`, `feedback:*`, and
+    `meta_prompt`.
+  - Required result: connect the existing timeout/cancellation policy contract
+    to live in-flight provider SDK cancellation, turn timeout categories into
+    role-specific stop/quarantine runtime policy, and add tests that
+    runtime-budget exhaustion produces role-specific structured
+    timeout/cancellation artifacts beyond the currently covered mutation
+    timeout failure-history path.
 
 ## Runtime, Reproducibility, and Safety
 
-- [ ] Validate configuration schema and backend specs instead of silently
-  ignoring mistakes.
-  - Spec evidence: AlphaEvolve task setup includes prompt templates,
-    configurations, LLM choices, and evaluator settings; reproducible runs need
-    configuration mistakes to fail early with clear diagnostics.
-  - Current evidence: `_build_config()` now rejects unknown `config.yaml` keys,
-    empty CLI backend models fail backend-spec validation, config-file
-    `mutation_mode` and `ensemble_strategy` are enum-validated, backend specs
-    are checked for supported keys/types/models/metadata, and evaluator-stage
-    numeric fields and LLM feedback grader specs are validated before a run
-    starts. Malformed YAML and non-mapping top-level `config.yaml` files now
-    fail as path-aware `ConfigError` startup diagnostics. Remaining gaps:
-    `meta_prompt_evolution` and `critique_enabled` are not type-checked as
-    booleans; a local proof with `Config(meta_prompt_evolution="false")` and
-    `Config(critique_enabled="false")` accepted both values as strings, which
-    are truthy at runtime. Plugin-specific configuration schemas do not exist,
-    and model/API capability validation is not implemented. CLI
-    `--reasoning-effort` now applies to OpenAI backends loaded from
-    `config.yaml` or `--backends`, and is ignored for non-OpenAI backends.
-  - Required result: add plugin config schemas, document or fix remaining CLI
-    override semantics, validate every boolean runtime switch, add
-    model/API-mode compatibility validation where feasible, and test malformed
-    nested config cases beyond backend/stage/feedback metadata.
-
-- [ ] Fix CLI/config override semantics and document precedence with tests.
-  - Spec evidence: AlphaEvolve-style task setup depends on explicit,
-    reproducible configuration for LLM choices, prompt behavior, evaluator
-    settings, and run metadata.
-  - Current evidence: `_build_config()` loads `problem_name` from
-    `config.yaml`, then unconditionally overwrites it with `problem.name`;
-    only `--run-name` changes the output directory.
-  - Partial status: OpenAI reasoning options now override consistently for
-    both config-file and CLI-specified OpenAI backends, do not attach to
-    non-OpenAI backends, and are covered by CLI tests. Parent and inspiration
-    sampling strategies are also exposed as CLI overrides with precedence
-    tests. LLM retry/fallback controls are exposed as CLI overrides with
-    precedence tests.
-  - Required result: define and test remaining field-by-field precedence for
-    defaults, config files, and CLI options; make ignored overrides explicit;
-    and reflect effective values in `manifest.json`.
-
-- [ ] Constrain run artifact paths to the configured log root.
-  - Spec evidence: AlphaEvolve-style long-running experiments need reliable
-    run directories, overwrite boundaries, and provenance for all emitted
-    artifacts. A run name should identify a subdirectory, not rewrite the
-    artifact root.
-  - Current evidence: `ProgramDatabase`, `PromptDatabase`, evaluator artifact
-    paths, plugin artifact paths, and CLI best-artifact export all use
-    `Path(config.log_dir) / config.problem_name` without normalizing and
-    checking containment. A local proof with `log_dir=<tmp>/runs` and
-    `problem_name="../escaped"` wrote `manifest.json` under `<tmp>/escaped`;
-    `<tmp>/runs` was never created.
-  - Required result: validate `problem_name` / `--run-name` as a safe relative
-    path component or resolve the final run directory and reject escapes from
-    `log_dir`; add tests for `../`, absolute paths, drive-letter paths, and
-    overwrite behavior so known-artifact cleanup cannot target outside the run
-    root.
-
-- [ ] Add resumable runs.
+- [ ] Add unified full-resume orchestration and controller replay.
   - Spec evidence: AlphaEvolve is a long-running autonomous pipeline optimized
     for large computation budgets.
-  - Current evidence: runs append to `history.jsonl`, but `evolve()` always
-    starts from seeds and does not resume archive/controller state.
-  - Required result: persist and reload population/database state, backend bandit
-    state, prompt database state, and pending evaluations.
+  - Current evidence: runs append to `history.jsonl`; `PromptDatabase` replays
+    checked `prompt_history.jsonl`; final manifests persist framework RNG,
+    LLM scheduler, and archive cursor/content snapshots; direct `evolve()` and
+    CLI runs can restore validated runtime RNG, LLM scheduler, archive cursor,
+    and full archive contents from manifests/history bundles. `load_full_resume_bundle()`
+    and CLI `--restore-runtime-from-manifest` now validate and compose the
+    currently compatible surfaces together: runtime RNG, LLM scheduler, full
+    archive contents, budget counters, and the sibling controller budget event
+    stream as checked replay input. Archive restore explicitly covers current
+    cell/elite placements without replaying migration events as an ordered
+    restore engine. Remaining gaps are no provider-output replay, no controller
+    queue or pending-evaluation state, no migration-event replay engine, and
+    no end-to-end resumed trace proving parent/inspiration/prompt/archive/
+    controller continuity.
+  - Required result: add one direct and CLI resume entrypoint that validates
+    and composes population/database state, backend bandit state, prompt
+    database state, RNG state, provider-output boundaries, migration replay or
+    explicit non-replay policy, and pending controller/evaluation work, with an
+    end-to-end resumed trace proving parent/inspiration/prompt/archive/
+    controller continuity.
 
-- [x] Define run-directory collision and append semantics.
-  - Spec evidence: AlphaEvolve-style experiments need reproducible run identity,
-    clean provenance, and intentional resume behavior for long-running runs.
-  - Status: implemented. `Config` now has a UUID4 `run_id` and explicit
-    `run_collision_policy` with validated `fail` and `overwrite` modes. CLI
-    startup and `ProgramDatabase` both preflight known run artifacts; the
-    default fails before appending to `history.jsonl`/`prompt_history.jsonl` or
-    rewriting `manifest.json`, while `--overwrite` /
-    `run_collision_policy: overwrite` removes only known run artifacts
-    (`history*.jsonl`, `failure_history*.jsonl`, `prompt_history*.jsonl`,
-    their invalid-record quarantine streams, `manifest.json`, `best.py`,
-    `best_workspace/`, `evaluator_artifacts/`, and `plugin_artifacts/`) before
-    the new run.
-    `manifest.json` records `run_id` and the effective collision policy.
-  - Verified by: `tests/test_cli.py`, `tests/population/test_database.py`, and
-    `tests/core/test_config.py` cover CLI preflight, overwrite cleanup,
-    manifest metadata, and config validation.
-  - Remaining divergence: true resume, parent-run relationships, deterministic
-    lineage ids, archive/controller reload, and evaluator-code provenance are
-    tracked separately.
-
-- [ ] Make seeded replay and persisted lineage identifiers reproducible.
+- [ ] Define lineage replay contract for direct UUIDs and provider boundaries.
   - Spec evidence: AlphaEvolve compares systems over long computation budgets,
     ablations, and repeated seeds, so local stochastic choices and persisted
     lineage records must be reproducible enough to replay or diff experiments.
-  - Current evidence: `evolve()` seeds Python's global `random` module and
-    constructs `PromptSampler` with `random.Random(config.seed)`, but
-    `evolve()` always passes `template=prompt_program.template`, so the
-    sampler's seeded variant RNG is bypassed for configured variants.
-    `PromptDatabase` seeds templates as `PromptProgram`s with UUID4 ids and
-    selects untried programs by sorting those ids, so initial prompt-variant
-    order can differ across repeated runs. `Program.id` and `PromptProgram.id`
-    are also generated with `uuid4()`. The history and `prompt_history.jsonl`
-    lineage ids therefore differ across repeated runs even when local sampling
-    choices and fake LLM responses are otherwise deterministic. Provider/model
-    nondeterminism is also not recorded as part of a replay contract.
-  - Required result: define deterministic run/candidate/prompt id policy for
-    seeded local replay and a deterministic prompt-variant order policy
-    (config-order, seeded shuffle, or bandit initialization), or explicitly
-    mark UUID-based identity and UUID-ordered variants as non-replayable;
-    persist RNG state and provider nondeterminism boundaries where needed; add
-    tests that repeated deterministic runs produce stable lineage ids, prompt
-    ids, prompt variant sequence, archive sampling, and manifest replay
-    metadata.
+  - Current evidence: `evolve()` now owns a run-local RNG instead of reseeding
+    Python's global `random` module. `PromptDatabase` selects untried
+    configured seed templates in config order and restored prompt histories in
+    replayed event order. Database-created prompt ids are deterministic for
+    configured seed templates and prompt mutations. Loop-created seed and
+    generated candidate ids are deterministic from seed/workspace order, parent
+    id, prompt id, mutation hash, workspace hash, and generation coordinates.
+    Direct `Program()` construction still defaults to `uuid4()`. LLM call ids
+    are deterministic for matching ordered call streams because they include
+    call sequence, backend/role/attempt coordinates, and prompt hash while
+    preserving distinct ids for repeated identical calls inside one stream.
+    Runtime manifests now persist and can restore checked run-local RNG
+    snapshots, and full archive contents can be restored from
+    manifest/history bundles. Completed and aborted runtime manifests now
+    persist `runtime.lineage_replay_policy` with schema
+    `libreevolve.lineage_replay_policy.v1`; it declares loop-created candidate
+    ids, database-created prompt ids, and ordered LLM call ids as deterministic
+    for matching streams, explicitly excludes direct `Program()` and direct
+    `PromptProgram()` UUID4 defaults from the replay contract, and states that
+    provider/model outputs are not replayed or proven identical by call ids.
+    `load_runtime_lineage_replay_policy_snapshot()` now validates that policy,
+    and `load_full_resume_bundle()` includes the checked policy/provider-output
+    non-replay boundary in its composed restore metadata. There is still no
+    end-to-end full replay trace that composes ids, RNG, archive, controller,
+    and provider boundaries.
+  - Required result: compose deterministic prompt/candidate/call ids with full
+    resume orchestration, provider-output capture or explicit non-replay in the
+    resumed trace, and end-to-end resumed-run tests proving stable parent,
+    prompt, call, archive-sampling, controller, and manifest replay metadata.
 
-- [x] Add structured run metadata.
-  - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
-    choices, evaluator stages, compute budgets, and configurations.
-  - Current evidence: `manifest.json` records effective local config, backend
-    roster, Git state when available, `libreevolve/` source-tree hashes,
-    problem-tree hashes, direct evaluator entrypoint hashes, and plugin module
-    file hashes. It does not yet include validated plugin specs/constructor
-    parameters, aggregate emitted-artifact hashes, or resumable controller
-    state.
-  - Status: implemented for run-start configuration and source/problem/plugin
-    module provenance. Plugin spec schemas, emitted-artifact aggregation, and
-    resume/controller state remain separate hardening.
-  - Required result: write a manifest with effective config, code version,
-    problem hash, evaluator stages, backend specs, plugin specs, seed, and
-    budget.
+- [ ] Compose framework RNG restore with resumed-trace replay.
+  - Spec evidence: AlphaEvolve-style runs should be reproducible without
+    perturbing an embedding application's randomness or allowing plugins and
+    library code to consume the framework's scheduler RNG implicitly.
+  - Current evidence: `evolve()` now owns a run-local `random.Random` from
+    `Config.seed` and threads it through loop parent selection, prompt-template
+    sampling, `ProgramDatabase`, `IslandModel`, and MAP-Elites random sampling
+    without perturbing caller global RNG state. Completed and aborted runtime
+    manifests persist checked `runtime.rng` snapshots with schema
+    `python.random.mt19937.v1`, configured seed, JSON-safe state payload,
+    `state_sha256`, and the `random.Random.setstate` restore entrypoint.
+    `load_runtime_rng_state_snapshot()` and
+    `restore_runtime_rng_state_snapshot()` validate schema, field sets, state
+    hashes, and restorability; direct `evolve()` callers can pass
+    `runtime_rng_state_snapshot`; and CLI runs can pass
+    `--restore-rng-from-manifest` with seed-mismatch rejection before
+    run-directory preparation. `runtime.rng.replay_boundary` now declares
+    framework-owned RNG surfaces covered by restore and explicit exclusions for
+    LLM provider outputs, plugin internal randomness, and validator subprocess
+    randomness, while validation normalizes older boundaryless snapshots.
+    `load_full_resume_bundle()` now exposes that validated boundary as
+    `runtime_rng_replay_boundary` beside the restored RNG snapshot and lineage
+    replay policy.
+  - Remaining gap: full run replay still lacks provider output replay,
+    plugin-owned RNG capture, controller/pending-work state restore,
+    lineage-id replay, and end-to-end parent/inspiration/prompt/island/
+    MAP-Elites replay tests across resumed runs.
+  - Required result: compose the validated RNG restore boundary with the
+    unified resume/replay entrypoint, define provider-output and plugin-owned
+    RNG capture or exclusion semantics for that entrypoint, and test
+    parent-selection, inspiration-sampling, prompt-selection, island-sampling,
+    and MAP-Elites sampling continuity across an end-to-end resumed trace.
 
-- [ ] Refresh committed example runs to the current artifact schema.
-  - Spec evidence: AlphaEvolve-style result inspection should make evaluated
-    programs, prompts, manifests, and best artifacts reproducible from saved
-    run outputs.
-  - Current evidence: current CLI runs write `manifest.json`,
-    `prompt_history.jsonl`, `failure_history.jsonl` when failures occur,
-    `best.py`, and `best_workspace/`, but the committed
-    `examples/runs/hello_world_ensemble` and `examples/runs/sorting_ttt_rl`
-    fixtures contain only `history.jsonl` and `best.py`. They cannot exercise
-    current manifest, prompt-history, failure-history, or full-workspace
-    artifact inspection.
-  - Required result: regenerate or migrate curated examples with the current
-    artifact layout, or keep them explicitly labeled as legacy history-only
-    fixtures; add smoke/tests that example artifacts match the documented run
-    contract.
 
-- [ ] Add code/problem/plugin hashes and artifact hashes to the run manifest.
-  - Spec evidence: AlphaEvolve experiments depend on prompt templates, LLM
-    choices, evaluator code, problem context, and compute budget; reproducing a
-    run requires identifying the exact code/problem state.
-  - Current evidence: `ProgramDatabase._write_manifest()` records effective
-    config values, context hashes, direct validator hashes, Git commit and
-    dirty-worktree state when available, `libreevolve/` source-tree hashes,
-    problem file hashes, and plugin module implementation hashes. Tests cover
-    problem hash changes and manifest provenance wiring. It still does not
-    record validated plugin specs/constructor parameters or aggregate hashes
-    for artifacts emitted after startup; evaluator artifact hashes are stored
-    in per-evaluation history metadata.
-  - Required result: include reproducibility hashes/version metadata in
-    `manifest.json`, document which files are covered, and add tests that a
-    changed problem file changes the manifest hash.
-
-- [ ] Add a plugin registry, configuration schema, and plugin provenance.
-  - Spec evidence: AlphaEvolve-style task setup depends on explicit
-    configuration and reproducible extension behavior; paper-inspired plugins
-    should be clearly scoped and configurable without source edits.
-  - Current evidence: `_load_plugins()` hard-codes four CLI aliases and creates
-    plugins with default constructors. Problem-local `config.yaml` can list
-    names only; it cannot pass plugin options such as search cadence, output
-    path, prompt text, or provider function. Run manifests store plugin names
-    but not plugin versions, constructor parameters, paper-inspiration scope, or
-    emitted plugin artifacts.
-  - Required result: add a plugin registry or entry-point interface, validate
-    per-plugin config schemas, record plugin specs/provenance/artifacts in
-    manifests, and test configured plugin behavior without editing the CLI.
-
-- [ ] Isolate plugin hook failures with structured plugin-failure metadata.
-  - Spec evidence: paper-inspired plugins are optional extension behavior around
-    the core evolutionary loop; AlphaEvolve-style long runs should not lose a
-    candidate or run manifest because a retrieval, guidance, score, or export
-    hook throws unexpectedly.
-  - Current evidence: `evolve()` calls `plugin.on_generation_start()`,
-    `_build_plugin_context()` calls `plugin.build_extra_context()` and
-    `prompt_context_metadata()`, `_apply_plugin_scores()` calls
-    `plugin.on_evaluated()`, and the generation tail calls
-    `plugin.on_generation_end()` without exception isolation. A local proof
-    using a `PluginBase` subclass whose `build_extra_context()` raises
-    `RuntimeError("plugin context failed")` aborts `evolve()` with that
-    exception before mutation/evaluation logging. Built-in `DeepResearchPlugin`
-    catches provider exceptions internally, but the loop has no general
-    plugin-hook failure policy.
-  - Required result: define per-hook failure policy (ignore-and-record,
-    candidate quarantine, score penalty, or run abort), record plugin name,
-    hook, generation, candidate/parent ids, exception type/message, and whether
-    the run continued; add tests for failures in `on_generation_start`,
-    `build_extra_context`, `prompt_context_metadata`, `on_evaluated`,
-    `run_artifacts_metadata`, and `on_generation_end`.
-
-- [x] Persist plugin score-composition provenance.
-  - Spec evidence: AlphaEvolve stores programs with evaluation scores and
-    outputs attached; when local extension hooks change fitness, the database
-    must preserve how the final selection score was produced.
-  - Status: implemented. `evolve()` records `metadata.score_composition` with
-    evaluator fitness, optional feedback-adjusted fitness, initial/final
-    top-level fitness, per-plugin before/after/delta values, metric additions
-    and changes, invalid plugin-score rejections, and divergence from raw
-    evaluator fitness.
-  - Evidence: tests cover multiple plugins, metric additions, non-finite plugin
-    scores being rejected, final score preservation, and raw
-    `evaluation.fitness` remaining visible.
-
-- [ ] Validate plugin-added metrics and metadata before history logging.
-  - Spec evidence: AlphaEvolve-style program databases depend on finite,
-    machine-readable metric vectors and structured metadata. Plugins can enrich
-    candidates, but extension side effects should not corrupt the core history
-    stream after evaluation work has completed.
-  - Current evidence: `_apply_plugin_scores()` validates a plugin's returned
-    score, but it allows plugin mutations to `program.metrics` and
-    `program.metadata` to flow through unchecked. A local proof used an
-    `on_evaluated()` hook that set `program.metrics["plugin_bad"] = inf` and
-    returned the original score. `evolve()` then raised `StrictJsonlError`
-    while writing `history.jsonl`; `history_invalid.jsonl` contained the
-    rejected record with non-finite paths under `metrics`, `evaluation.metrics`,
-    and `evaluation.stages[1].metrics`.
-  - Required result: define a plugin side-effect schema for added metrics and
-    metadata, reject or quarantine non-finite/non-JSON values before archive
-    admission and history logging, record plugin name/hook/error in structured
-    metadata, and add tests for plugin-added non-finite metrics,
-    non-serializable metadata, and successful finite metric additions.
-
-- [x] Keep evaluator validity separate from plugin-adjusted fitness.
-  - Spec evidence: AlphaEvolve's program database is populated by evaluated
-    solutions whose quality and validity are determined by user-provided
-    evaluators. Extensions may add scoring signals, but they should not
-    accidentally override evaluator invalidity without an explicit policy.
-  - Status: implemented. Archive admission checks `evaluation.is_valid` before
-    threshold/cell insertion and records `reason=invalid_evaluation` with
-    `evaluation_is_valid=false` when a plugin raises an invalid candidate above
-    `VALID_THRESHOLD`.
-  - Evidence: tests cover a plugin boosting an invalid candidate, a plugin
-    penalizing a valid candidate below threshold, non-finite plugin scores, and
-    validity-aware archive admission records.
-
-- [ ] Define plugin training-data reward and artifact semantics.
-  - Spec evidence: AlphaEvolve-style and ThetaEvolve-style experiments require
-    reproducible training/evaluation artifacts with clear reward definitions;
-    reward shaping should be explicit, not an implicit side effect.
-  - Current evidence: `TTTRLPlugin.on_evaluated()` stores prompt, response,
-    `raw_score`, clipped `reward = max(0.0, raw_score)`, and
-    `reward_policy`. CLI-loaded `ttt_rl` writes under
-    `runs/<run-name>/plugin_artifacts/ttt_rl/`, and completed manifests include
-    `runtime.plugin_artifacts` entries with reward policy, queued/pending/
-    exported counts, path, hash, bytes, and quarantine path. Direct in-code
-    construction can still pass a custom `log_dir`. The exporter tracks a
-    per-instance cursor so repeated flushes do not duplicate JSONL rows.
-    Remaining gaps: no actual GRPO/RL training, no checkpoint metadata, and no
-    resume behavior.
-  - Required result: define raw-score vs shaped-reward export fields, document
-    clipping/penalty behavior, scope plugin datasets under run artifacts or
-    record global artifact provenance, include hashes/counts in manifests, and
-    add tests for negative scores, repeated flushes, run scoping, and resume
-    behavior.
-
-- [ ] Improve isolation beyond a temporary Python subprocess.
+- [ ] Define validator container, filesystem-capability, and resource-limit policy.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,
     potentially with expensive or hardware-backed execution.
-  - Current evidence: validator subprocesses run with the current Python
-    interpreter and local filesystem access (`libreevolve/core/evaluator.py`).
-  - Required result: add configurable sandbox/container/working-directory
-    isolation, resource limits, and artifact collection.
-
-- [x] Clean up validator process trees on timeout.
-  - Spec evidence: AlphaEvolve-style automated evaluation needs bounded,
-    reproducible execution. A timeout should terminate not only the immediate
-    validator runner but also subprocesses spawned by validator code.
-  - Status: implemented for evaluator timeouts. `CascadeEvaluator` now launches
-    validators as a killable process tree (`taskkill /T /F` on Windows and
-    process-group `SIGKILL` on POSIX), returns redacted stdout/stderr on
-    timeout where available, and records `timeout_cleanup` metadata. Tests
-    prove a validator-spawned delayed child cannot outlive the evaluation
-    timeout and write a marker after timeout.
-  - Remaining gap: this is not a container, network sandbox, memory/CPU limit,
-    or general cleanup policy for successful validators that intentionally
-    leave detached work behind.
-
-- [ ] Isolate validator environment, secrets, and network access.
-  - Spec evidence: AlphaEvolve evaluates generated code at scale, so evaluator
-    execution boundaries must be explicit and reproducible. Generated or
-    user-supplied validators should not implicitly inherit unrelated host
-    secrets or network capability when runs load provider credentials.
-  - Partial status: validator subprocesses now receive an explicit minimal
-    environment instead of inheriting the parent process environment. Optional
-    `validator_env_allowlist` names can opt variables into validators, metadata
-    records provided keys and allowlist names without values, and persisted
-    stdout/stderr is passed through basic secret-pattern redaction. Tests prove
-    `OPENAI_API_KEY` is hidden by default and that explicit opt-in variables
-    are visible.
-  - Remaining gap: there is still no network egress policy, container sandbox,
-    or stronger resource isolation for validator code.
-  - Required result: define and enforce validator network expectations and
-    sandbox/resource policy, with tests proving the intended boundary.
-
-- [ ] Validate and constrain configured evaluator paths.
-  - Spec evidence: AlphaEvolve task setup depends on explicit evaluator
-    definitions and reproducible provenance for evaluation code.
-  - Partial status: `_resolve_validate_path()` now requires stage validators to
-    resolve to problem-local `.py` files before execution. Missing paths,
-    directories, non-Python files, relative/absolute outside-root paths, and
-    symlinks that resolve outside the problem directory are rejected. Absolute
-    paths are allowed only when they resolve inside the problem directory.
-    `manifest.json` now records direct evaluator entrypoints with resolved
-    path, problem-relative path, SHA-256 hash, byte count, source type, and
-    configured stage usage metadata. Tests cover default and configured-stage
-    hash stability plus loop/database manifest wiring.
-  - Remaining gap: transitive evaluator helper/data provenance, package-style
-    validator entrypoints, and relative evaluator data policy are not defined
-    or hashed in `manifest.json`.
-  - Required result: define evaluator helper/data provenance and add tests for
-    helper/data hash stability and package-style evaluator semantics.
-
-- [x] Remove wording that implies the validator subprocess is a security
-  sandbox.
-  - Spec evidence: AlphaEvolve evaluates generated code, so local docs must be
-    precise about execution safety boundaries.
-  - Current evidence: README and evaluator comments referred to an "isolated"
-    subprocess even though validators execute under the current interpreter
-    with local filesystem access and only temporary workspace/process
-    separation.
-  - Status: README, AGENTS.md, and evaluator comments now call this a temporary
-    local subprocess/process separation, while the sandbox/resource-limit work
-    remains open above.
-  - Required result: avoid using "isolated" or "sandboxed" for the current
-    evaluator until real sandbox/resource controls exist.
+  - Current evidence: validator execution is intentionally process separation,
+    not a security sandbox. Candidates are materialized into a temporary
+    candidate root and validators run with `cwd` set there; validators receive
+    an explicit minimal/allowlisted environment; stage/sample wall-clock
+    budgets bound attempts; timeout cleanup uses process groups or Windows
+    kill-on-close job objects plus process-tree termination; problem-local
+    helper/data access is limited to declared entrypoint, companion, and data
+    provenance; copied evaluator artifacts are bounded, hashed, optionally
+    redacted, and link-aware; and `evaluation.metadata.validator_boundary`
+    explicitly declares local subprocess execution, unsupported
+    sandbox/container, candidate-root plus declared-problem-file filesystem
+    policy, validator network mode, Python-socket-denial metadata when
+    configured, wall-clock-only timeout limits, unsupported
+    CPU/memory/GPU/disk/process-count limits, and the current
+    minimal-environment/redacted-output secret boundary. Startup manifests now
+    also persist
+    `policies.validator_execution` with schema
+    `libreevolve.validator_execution_policy.v1`, repeating the configured
+    local-subprocess boundary, filesystem scope, network mode, wall-clock-only
+    limit policy, unsupported CPU/memory/GPU/disk/process-count quotas,
+    secret boundary, and the per-evaluation metadata field that carries the
+    attempt-level boundary.
+  - Remaining gap: there is still no configurable container/security sandbox,
+    no OS/container-grade network egress sandbox, no proof that native
+    extensions, subprocesses, or alternate runtimes cannot connect out, no
+    filesystem capability model beyond candidate-root execution plus
+    problem-local provenance/artifact/data declarations, no CPU, memory, GPU,
+    disk, or process-count quotas, no network-mediated provider-secret
+    boundary audit, and no resumable distributed evaluator worker state.
+  - Required result: define and enforce configurable sandbox/container,
+    filesystem capability, OS/container network capability, and resource-limit
+    policy for validators, with manifest-visible evidence and tests proving the
+    intended boundary.

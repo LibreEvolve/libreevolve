@@ -1,7 +1,51 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import math
+import os
+import re
+import unicodedata
+from pathlib import Path
 from uuid import uuid4
+
+from libreevolve.core.candidate import (
+    DEFAULT_MAX_CANDIDATE_FILE_CHARS,
+    DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES,
+    DEFAULT_MAX_CANDIDATE_TOTAL_CHARS,
+    DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES,
+    DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES,
+    MUTATION_MODES,
+)
+from libreevolve.core.redaction import redact_sensitive_text
+from libreevolve.llm.openai_compat import (
+    validate_openai_api_mode,
+    validate_openai_reasoning_effort_for_model,
+)
+from libreevolve.llm.client_context import validate_backend_client_context
+from libreevolve.llm.request_params import (
+    REQUEST_PARAMETER_FIELDS,
+    validate_backend_request_parameters,
+)
+from libreevolve.llm.prompt_roles import validate_prompt_role_policy
+from libreevolve.llm.provider_retry import validate_provider_max_retries
+from libreevolve.population.program import validate_program_metrics
+
+_WINDOWS_RESERVED_NAMES = {
+    "CON",
+    "PRN",
+    "AUX",
+    "NUL",
+    *(f"COM{i}" for i in range(1, 10)),
+    *(f"LPT{i}" for i in range(1, 10)),
+}
+MAX_LLM_RETRIES = 10
+MAX_LLM_CALL_ATTEMPTS = 32
+MAX_EVAL_STAGE_RETRIES = 10
+MAX_EVALUATOR_STDIN_CHARS = 100_000
+MAX_LLM_FEEDBACK_FAILURE_RETRIES = 3
+_CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
+    r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
+)
+_CUSTOM_BACKEND_KWARG_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]{0,127}")
 
 
 class ConfigError(ValueError):
@@ -13,21 +57,50 @@ class Config:
     max_generations:        int   = 1000
     max_evaluations:        int | None = None
     max_evaluator_seconds:  float | None = None
+    max_evaluator_subprocess_attempts: int | None = None
+    max_evaluator_stage_samples: int | None = None
+    max_evaluator_retry_attempts: int | None = None
+    max_evaluator_timeouts: int | None = None
+    max_evaluator_sample_budget_exhaustions: int | None = None
+    max_evaluator_stage_budget_exhaustions: int | None = None
     max_runtime_seconds:    float | None = None
+    proposals_per_generation: int = 1
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
     validator_env_allowlist: list[str] = field(default_factory=list)
+    validator_network_policy: str = "host"
     evaluator_artifact_include: list[str] = field(default_factory=list)
     evaluator_artifact_exclude: list[str] = field(default_factory=list)
     evaluator_artifact_max_files: int = 20
     evaluator_artifact_max_bytes: int = 1_000_000
     evaluator_artifact_redact_secrets: bool = True
+    evaluator_data_include: list[str] = field(default_factory=list)
+    evaluator_data_exclude: list[str] = field(default_factory=list)
+    evaluator_output_max_chars: int = 20_000
+    evaluator_stdin_text: str | None = None
+    evaluator_stdin_file: str | None = None
     explore_ratio:          float = 0.3
     parent_selection_strategy: str = "mixed"
     inspiration_strategy:   str = "mixed"
     mutation_mode:          str   = "diff"
+    max_candidate_workspace_files: int = DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES
+    max_candidate_file_chars: int = DEFAULT_MAX_CANDIDATE_FILE_CHARS
+    max_candidate_total_chars: int = DEFAULT_MAX_CANDIDATE_TOTAL_CHARS
+    max_candidate_static_file_bytes: int = DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES
+    max_candidate_total_static_bytes: int = DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES
     eval_stages:            list[dict] = field(default_factory=list)
     prompt_variants:        list[str] = field(default_factory=list)
+    prompt_variant_semantic_policy: str = "alphaevolve"
+    prompt_format_options:  dict = field(default_factory=dict)
+    prompt_max_chars:       int | None = None
+    prompt_max_estimated_tokens: int | None = None
+    prompt_artifact_content_mode: str = "excerpt"
+    prompt_artifact_content_max_bytes: int = 4096
+    prompt_artifact_content_max_chars: int = 1000
+    mutation_prompt_retention_mode: str = "redacted"
+    explicit_context_retention_mode: str = "redacted"
+    meta_prompt_evidence_retention_mode: str = "hash_only"
+    quarantine_snapshot_retention_mode: str = "redacted"
     meta_prompt_evolution:  bool  = False
     meta_prompt_interval:   int   = 25
     prompt_reward_mode:     str   = "absolute"
@@ -35,13 +108,22 @@ class Config:
     prompt_explore_coeff:   float = 1.0
     critique_enabled:       bool  = False
     critique_prompt:        str   = ""
+    critique_reviewers:     list[dict] = field(default_factory=list)
+    critique_aggregation_policy: str = "first_valid"
     llm_feedback:           list[dict] = field(default_factory=list)
     capture_proposal_metadata: bool = False
+    critique_retention_mode: str = "redacted"
+    feedback_retention_mode: str = "redacted"
+    plugin_context_retention_mode: str = "redacted"
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25
     migration_ratio:        float = 0.10
     map_elites_bins:        int   = 10
+    map_elites_complexity_max_chars: int = 100_000
+    map_elites_descriptor_axes: list[str] = field(
+        default_factory=lambda: ["performance", "complexity", "diversity"]
+    )
     elite_archive_size:     int   = 50
     # LLM
     backends:               list[dict] = field(default_factory=lambda: [
@@ -50,9 +132,29 @@ class Config:
     ensemble_explore_coeff: float = 1.0
     ensemble_strategy:      str   = "ucb1"
     llm_max_retries:        int   = 0
+    llm_max_call_attempts:  int   = MAX_LLM_CALL_ATTEMPTS
     llm_fallback:           bool  = True
+    llm_max_response_chars: int   = 100_000
+    llm_call_history_max:   int   = 500
+    llm_call_timeout_sec:   float | None = None
+    provider_response_retention_mode: str = "hash_only"
+    provider_error_retention_mode: str = "redacted"
+    max_llm_calls:          int | None = None
+    max_llm_provider_attempts: int | None = None
+    max_llm_tokens:         int | None = None
+    max_llm_cost_microusd:  int | None = None
+    max_llm_seconds:        float | None = None
+    llm_role_call_limits:   dict[str, int] = field(default_factory=dict)
+    llm_role_provider_attempt_limits: dict[str, int] = field(default_factory=dict)
+    llm_role_token_limits:  dict[str, int] = field(default_factory=dict)
+    llm_role_cost_microusd_limits: dict[str, int] = field(default_factory=dict)
+    llm_role_seconds_limits: dict[str, float] = field(default_factory=dict)
+    llm_reward_accounted_roles: list[str] = field(default_factory=lambda: ["mutation"])
+    llm_role_backend_indices: dict[str, list[int]] = field(default_factory=dict)
+    llm_role_failure_quarantine_after: dict[str, int] = field(default_factory=dict)
+    llm_prompt_roles:       dict  = field(default_factory=dict)
     # Plugins
-    plugins:                list[str] = field(default_factory=list)
+    plugins:                list[str | dict] = field(default_factory=list)
     # Logging
     log_dir:                str   = "runs/"
     problem_name:           str   = "unnamed"
@@ -67,15 +169,62 @@ class Config:
         _require_int("max_generations", self.max_generations, minimum=0)
         _require_optional_int("max_evaluations", self.max_evaluations, minimum=0)
         _require_optional_positive_number("max_evaluator_seconds", self.max_evaluator_seconds)
+        _require_optional_int(
+            "max_evaluator_subprocess_attempts",
+            self.max_evaluator_subprocess_attempts,
+            minimum=0,
+        )
+        _require_optional_int(
+            "max_evaluator_stage_samples",
+            self.max_evaluator_stage_samples,
+            minimum=0,
+        )
+        _require_optional_int(
+            "max_evaluator_retry_attempts",
+            self.max_evaluator_retry_attempts,
+            minimum=0,
+        )
+        _require_optional_int(
+            "max_evaluator_timeouts",
+            self.max_evaluator_timeouts,
+            minimum=0,
+        )
+        _require_optional_int(
+            "max_evaluator_sample_budget_exhaustions",
+            self.max_evaluator_sample_budget_exhaustions,
+            minimum=0,
+        )
+        _require_optional_int(
+            "max_evaluator_stage_budget_exhaustions",
+            self.max_evaluator_stage_budget_exhaustions,
+            minimum=0,
+        )
         _require_optional_positive_number("max_runtime_seconds", self.max_runtime_seconds)
+        _require_int("proposals_per_generation", self.proposals_per_generation, minimum=1)
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)
-        _validate_string_list("validator_env_allowlist", self.validator_env_allowlist)
-        _validate_string_list("evaluator_artifact_include", self.evaluator_artifact_include)
-        _validate_string_list("evaluator_artifact_exclude", self.evaluator_artifact_exclude)
+        self.validator_network_policy = _validate_validator_network_policy(
+            self.validator_network_policy
+        )
+        self.validator_env_allowlist = canonicalize_env_var_allowlist(
+            "validator_env_allowlist",
+            self.validator_env_allowlist,
+        )
+        _validate_artifact_glob_list("evaluator_artifact_include", self.evaluator_artifact_include)
+        _validate_artifact_glob_list("evaluator_artifact_exclude", self.evaluator_artifact_exclude)
+        _validate_artifact_glob_list("evaluator_data_include", self.evaluator_data_include)
+        _validate_artifact_glob_list("evaluator_data_exclude", self.evaluator_data_exclude)
         _require_int("evaluator_artifact_max_files", self.evaluator_artifact_max_files, minimum=0)
         _require_int("evaluator_artifact_max_bytes", self.evaluator_artifact_max_bytes, minimum=0)
         _require_bool("evaluator_artifact_redact_secrets", self.evaluator_artifact_redact_secrets)
+        _require_int("evaluator_output_max_chars", self.evaluator_output_max_chars, minimum=0)
+        _validate_evaluator_stdin_text("evaluator_stdin_text", self.evaluator_stdin_text)
+        _validate_evaluator_stdin_file("evaluator_stdin_file", self.evaluator_stdin_file)
+        _validate_evaluator_stdin_source_exclusive(
+            "evaluator_stdin",
+            self.evaluator_stdin_text,
+            self.evaluator_stdin_file,
+        )
         _require_probability("explore_ratio", self.explore_ratio)
         _require_enum(
             "parent_selection_strategy",
@@ -87,34 +236,207 @@ class Config:
             self.inspiration_strategy,
             {"mixed", "random", "selection", "metric", "novelty", "recency"},
         )
-        _require_enum("mutation_mode", self.mutation_mode, {"diff", "full"})
+        _require_enum("mutation_mode", self.mutation_mode, MUTATION_MODES)
+        _require_int(
+            "max_candidate_workspace_files",
+            self.max_candidate_workspace_files,
+            minimum=1,
+        )
+        _require_int("max_candidate_file_chars", self.max_candidate_file_chars, minimum=0)
+        _require_int("max_candidate_total_chars", self.max_candidate_total_chars, minimum=0)
+        _require_int(
+            "max_candidate_static_file_bytes",
+            self.max_candidate_static_file_bytes,
+            minimum=0,
+        )
+        _require_int(
+            "max_candidate_total_static_bytes",
+            self.max_candidate_total_static_bytes,
+            minimum=0,
+        )
+        _require_bool("meta_prompt_evolution", self.meta_prompt_evolution)
         _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
         _require_enum("prompt_reward_mode", self.prompt_reward_mode, {"absolute", "improvement"})
         _validate_prompt_reward_bounds(self.prompt_reward_bounds)
         _require_nonnegative_number("prompt_explore_coeff", self.prompt_explore_coeff)
+        _require_bool("critique_enabled", self.critique_enabled)
+        _require_string("critique_prompt", self.critique_prompt, allow_empty=True)
+        self.critique_reviewers = _validate_critique_reviewers(
+            self.critique_reviewers
+        )
+        _require_enum(
+            "critique_aggregation_policy",
+            self.critique_aggregation_policy,
+            {"first_valid", "last_valid"},
+        )
         _require_int("n_islands", self.n_islands, minimum=1)
         _require_int("migration_interval", self.migration_interval, minimum=0)
         _require_probability("migration_ratio", self.migration_ratio)
         _require_int("map_elites_bins", self.map_elites_bins, minimum=1)
+        _require_int(
+            "map_elites_complexity_max_chars",
+            self.map_elites_complexity_max_chars,
+            minimum=1,
+        )
+        self.map_elites_descriptor_axes = _validate_map_elites_descriptor_axes(
+            self.map_elites_descriptor_axes
+        )
         _require_int("elite_archive_size", self.elite_archive_size, minimum=1)
         _require_nonnegative_number("ensemble_explore_coeff", self.ensemble_explore_coeff)
         _require_enum("ensemble_strategy", self.ensemble_strategy, {"ucb1", "throughput_depth"})
         _require_int("llm_max_retries", self.llm_max_retries, minimum=0)
+        if self.llm_max_retries > MAX_LLM_RETRIES:
+            raise ConfigError(f"llm_max_retries must be <= {MAX_LLM_RETRIES}")
+        _require_int("llm_max_call_attempts", self.llm_max_call_attempts, minimum=1)
+        if self.llm_max_call_attempts > MAX_LLM_CALL_ATTEMPTS:
+            raise ConfigError(
+                f"llm_max_call_attempts must be <= {MAX_LLM_CALL_ATTEMPTS}"
+            )
         _require_bool("llm_fallback", self.llm_fallback)
+        _require_int("llm_max_response_chars", self.llm_max_response_chars, minimum=1)
+        _require_int("llm_call_history_max", self.llm_call_history_max, minimum=1)
+        _require_optional_positive_number("llm_call_timeout_sec", self.llm_call_timeout_sec)
+        _require_enum(
+            "provider_response_retention_mode",
+            self.provider_response_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "provider_error_retention_mode",
+            self.provider_error_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_optional_int("max_llm_calls", self.max_llm_calls, minimum=0)
+        _require_optional_int(
+            "max_llm_provider_attempts",
+            self.max_llm_provider_attempts,
+            minimum=0,
+        )
+        _require_optional_int("max_llm_tokens", self.max_llm_tokens, minimum=0)
+        _require_optional_int(
+            "max_llm_cost_microusd",
+            self.max_llm_cost_microusd,
+            minimum=0,
+        )
+        if self.max_llm_seconds is not None:
+            _require_nonnegative_number("max_llm_seconds", self.max_llm_seconds)
+        self.llm_role_call_limits = _validate_llm_role_call_limits(
+            self.llm_role_call_limits
+        )
+        self.llm_role_provider_attempt_limits = _validate_llm_role_budget_limits(
+            self.llm_role_provider_attempt_limits,
+            field="llm_role_provider_attempt_limits",
+        )
+        self.llm_role_token_limits = _validate_llm_role_budget_limits(
+            self.llm_role_token_limits,
+            field="llm_role_token_limits",
+        )
+        self.llm_role_cost_microusd_limits = _validate_llm_role_budget_limits(
+            self.llm_role_cost_microusd_limits,
+            field="llm_role_cost_microusd_limits",
+        )
+        self.llm_role_seconds_limits = _validate_llm_role_seconds_limits(
+            self.llm_role_seconds_limits
+        )
+        self.llm_reward_accounted_roles = _validate_llm_reward_accounted_roles(
+            self.llm_reward_accounted_roles
+        )
+        self.llm_prompt_roles = _validate_llm_prompt_roles(self.llm_prompt_roles)
         _validate_eval_stages(self.eval_stages)
         _validate_backends(self.backends)
+        self.llm_role_backend_indices = _validate_llm_role_backend_indices(
+            self.llm_role_backend_indices,
+            backend_count=len(self.backends),
+        )
+        self.llm_role_failure_quarantine_after = (
+            _validate_llm_role_failure_quarantine_after(
+                self.llm_role_failure_quarantine_after
+            )
+        )
         if not isinstance(self.prompt_variants, list) or not all(
             isinstance(item, str) for item in self.prompt_variants
         ):
             raise ConfigError("prompt_variants must be a list of strings")
-        _validate_prompt_variants(self.prompt_variants)
+        self.prompt_variant_semantic_policy = _validate_prompt_variant_semantic_policy(
+            self.prompt_variant_semantic_policy
+        )
+        self.prompt_format_options = _validate_prompt_format_options(
+            self.prompt_format_options
+        )
+        _validate_prompt_variants(
+            self.prompt_variants,
+            self.prompt_format_options,
+            semantic_policy=self.prompt_variant_semantic_policy,
+        )
+        _require_optional_int("prompt_max_chars", self.prompt_max_chars, minimum=1)
+        _require_optional_int(
+            "prompt_max_estimated_tokens",
+            self.prompt_max_estimated_tokens,
+            minimum=1,
+        )
+        _require_enum(
+            "prompt_artifact_content_mode",
+            self.prompt_artifact_content_mode,
+            {"excerpt", "bounded_file", "off"},
+        )
+        _require_int(
+            "prompt_artifact_content_max_bytes",
+            self.prompt_artifact_content_max_bytes,
+            minimum=1,
+        )
+        _require_int(
+            "prompt_artifact_content_max_chars",
+            self.prompt_artifact_content_max_chars,
+            minimum=1,
+        )
+        _require_enum(
+            "mutation_prompt_retention_mode",
+            self.mutation_prompt_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "explicit_context_retention_mode",
+            self.explicit_context_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "meta_prompt_evidence_retention_mode",
+            self.meta_prompt_evidence_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "quarantine_snapshot_retention_mode",
+            self.quarantine_snapshot_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
         _validate_llm_feedback(self.llm_feedback)
         _require_bool("capture_proposal_metadata", self.capture_proposal_metadata)
-        if not isinstance(self.plugins, list) or not all(isinstance(item, str) for item in self.plugins):
-            raise ConfigError("plugins must be a list of strings")
-        if not isinstance(self.run_id, str) or not self.run_id.strip():
-            raise ConfigError("run_id must be a non-empty string")
+        _require_enum(
+            "critique_retention_mode",
+            self.critique_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "feedback_retention_mode",
+            self.feedback_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        _require_enum(
+            "plugin_context_retention_mode",
+            self.plugin_context_retention_mode,
+            {"full", "redacted", "hash_only", "off"},
+        )
+        self.plugins = _validate_plugin_config_specs(self.plugins)
+        self.log_dir = _normalize_path_string("log_dir", self.log_dir)
+        self.problem_name = _require_run_name_component("problem_name", self.problem_name)
+        _require_integer("seed", self.seed)
+        self.run_id = _require_safe_identifier("run_id", self.run_id)
         _require_enum("run_collision_policy", self.run_collision_policy, {"fail", "overwrite"})
+
+
+def _require_integer(name: str, value: object) -> None:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ConfigError(f"{name} must be an integer")
 
 
 def _require_int(name: str, value: object, minimum: int) -> None:
@@ -167,26 +489,446 @@ def _require_bool(name: str, value: object) -> None:
         raise ConfigError(f"{name} must be boolean")
 
 
-def _validate_string_list(name: str, value: object) -> None:
+def _require_string(name: str, value: object, *, allow_empty: bool = False) -> str:
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be a string")
+    if not allow_empty and not value.strip():
+        raise ConfigError(f"{name} must be a non-empty string")
+    return value
+
+
+def _validate_evaluator_stdin_text(name: str, value: object) -> None:
+    if value is None:
+        return
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be a string or null")
+    if len(value) > MAX_EVALUATOR_STDIN_CHARS:
+        raise ConfigError(
+            f"{name} must be <= {MAX_EVALUATOR_STDIN_CHARS} characters"
+        )
+
+
+def _validate_evaluator_stdin_file(name: str, value: object) -> None:
+    if value is None:
+        return
+    _require_string(name, value)
+
+
+def _validate_evaluator_stdin_source_exclusive(
+    name: str,
+    stdin_text: object,
+    stdin_file: object,
+) -> None:
+    if stdin_text is not None and stdin_file is not None:
+        raise ConfigError(f"{name} must not set both stdin_text and stdin_file")
+
+
+def _normalize_path_string(name: str, value: object) -> str:
+    if not isinstance(value, (str, os.PathLike)):
+        raise ConfigError(f"{name} must be a non-empty path string")
+    path = os.fspath(value)
+    if not isinstance(path, str) or not path.strip():
+        raise ConfigError(f"{name} must be a non-empty path string")
+    if name == "log_dir":
+        _validate_log_dir_path(path)
+    return path
+
+
+def _validate_log_dir_path(path: str) -> None:
+    normalized = unicodedata.normalize("NFC", path)
+    if normalized != path:
+        raise ConfigError("log_dir must be a path-safe log directory")
+    if path != path.strip():
+        raise ConfigError("log_dir must be a path-safe log directory")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in path):
+        raise ConfigError("log_dir must be a path-safe log directory")
+    if any(unicodedata.category(ch) == "Cf" for ch in path):
+        raise ConfigError("log_dir must be a display-safe log directory")
+    parsed = Path(path)
+    anchor = parsed.anchor
+    for part in parsed.parts:
+        if part == anchor:
+            continue
+        _validate_log_dir_component(part)
+
+
+def _validate_log_dir_component(part: str) -> None:
+    if part in {"", ".", ".."}:
+        raise ConfigError("log_dir must be a path-safe log directory")
+    if part != part.strip() or part.endswith("."):
+        raise ConfigError("log_dir must be a path-safe log directory")
+    if any(ch in part for ch in '<>:"|?*'):
+        raise ConfigError("log_dir must be a path-safe log directory")
+    stem = part.split(".", 1)[0].upper()
+    if stem in _WINDOWS_RESERVED_NAMES:
+        raise ConfigError("log_dir must be a path-safe log directory")
+
+
+def _require_run_name_component(name: str, value: object) -> str:
+    run_name = _require_string(name, value)
+    if redact_sensitive_text(run_name) != run_name:
+        raise ConfigError(f"{name} must be a secret-safe run-name component")
+    normalized = unicodedata.normalize("NFC", run_name)
+    if normalized != run_name:
+        raise ConfigError(f"{name} must be a safe run-name component")
+    if run_name != run_name.strip() or run_name.endswith("."):
+        raise ConfigError(f"{name} must be a safe run-name component")
+    if run_name in {".", ".."} or "/" in run_name or "\\" in run_name:
+        raise ConfigError(f"{name} must be a safe run-name component")
+    if any(ch in run_name for ch in '<>:"|?*') or any(ord(ch) < 32 or ord(ch) == 127 for ch in run_name):
+        raise ConfigError(f"{name} must be a safe run-name component")
+    if any(unicodedata.category(ch) == "Cf" for ch in run_name):
+        raise ConfigError(f"{name} must be a safe run-name component")
+    stem = run_name.split(".", 1)[0].upper()
+    if stem in _WINDOWS_RESERVED_NAMES:
+        raise ConfigError(f"{name} must be a safe run-name component")
+    return run_name
+
+
+def _require_safe_identifier(name: str, value: object) -> str:
+    identifier = _require_string(name, value)
+    if redact_sensitive_text(identifier) != identifier:
+        raise ConfigError(f"{name} must be a manifest-safe identifier")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", identifier) is None:
+        raise ConfigError(f"{name} must be a manifest-safe identifier")
+    return identifier
+
+
+def _require_plugin_label(name: str, value: object) -> str:
+    label = _require_string(name, value)
+    if redact_sensitive_text(label) != label:
+        raise ConfigError(f"{name} must be a manifest-safe plugin label")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", label) is None:
+        raise ConfigError(f"{name} must be a manifest-safe plugin label")
+    return label
+
+
+def _validate_plugin_config_specs(value: object) -> list[str | dict]:
+    if not isinstance(value, list):
+        raise ConfigError("plugins must be a list of plugin labels or plugin spec mappings")
+    normalized: list[str | dict] = []
+    for index, plugin in enumerate(value):
+        path = f"plugins[{index}]"
+        if isinstance(plugin, str):
+            normalized.append(_require_plugin_label(path, plugin))
+            continue
+        if not isinstance(plugin, dict):
+            raise ConfigError(f"{path} must be a plugin label or plugin spec mapping")
+        spec = _validate_plugin_config_spec(path, plugin)
+        normalized.append(spec)
+    _validate_plugin_registry_specs(normalized)
+    return normalized
+
+
+def _validate_plugin_config_spec(path: str, value: dict) -> dict:
+    allowed = {"name", "options"}
+    unknown = sorted(str(key) for key in value if key not in allowed)
+    if unknown:
+        raise ConfigError(f"{path} has unknown key(s): {unknown}")
+    if "name" not in value:
+        raise ConfigError(f"{path}.name is required")
+    name = _require_plugin_label(f"{path}.name", value["name"])
+    options = value.get("options", {})
+    if not isinstance(options, dict):
+        raise ConfigError(f"{path}.options must be a mapping")
+    normalized_options: dict[str, object] = {}
+    for key, option_value in options.items():
+        option_key = _require_plugin_option_key(f"{path}.options", key)
+        normalized_options[option_key] = _validate_plugin_option_value(
+            f"{path}.options.{option_key}",
+            option_value,
+        )
+    return {"name": name, "options": normalized_options}
+
+
+def _validate_plugin_registry_specs(specs: list[str | dict]) -> None:
+    from libreevolve.plugins.registry import validate_plugin_specs
+
+    try:
+        validate_plugin_specs(specs)
+    except ValueError as exc:
+        raise ConfigError(str(exc)) from exc
+
+
+def _require_plugin_option_key(path: str, value: object) -> str:
+    key = _require_string(f"{path} key", value)
+    if redact_sensitive_text(key) != key:
+        raise ConfigError(f"{path} keys must be manifest-safe plugin option names")
+    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{0,127}", key) is None:
+        raise ConfigError(f"{path} keys must be manifest-safe plugin option names")
+    return key
+
+
+def _validate_plugin_option_value(path: str, value: object) -> object:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        if isinstance(value, str) and redact_sensitive_text(value) != value:
+            raise ConfigError(f"{path} must not contain secret-like text")
+        if isinstance(value, float) and not math.isfinite(value):
+            raise ConfigError(f"{path} must be finite")
+        return value
+    if isinstance(value, list):
+        return [
+            _validate_plugin_option_value(f"{path}[{index}]", item)
+            for index, item in enumerate(value)
+        ]
+    if isinstance(value, dict):
+        normalized: dict[str, object] = {}
+        for key, nested_value in value.items():
+            nested_key = _require_plugin_option_key(path, key)
+            normalized[nested_key] = _validate_plugin_option_value(
+                f"{path}.{nested_key}",
+                nested_value,
+            )
+        return normalized
+    raise ConfigError(f"{path} must be a scalar, list, or mapping")
+
+
+def _require_model_identifier(name: str, value: object) -> str:
+    model = _require_string(name, value)
+    if redact_sensitive_text(model) != model:
+        raise ConfigError(f"{name} must be a manifest-safe model identifier")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}", model) is None:
+        raise ConfigError(f"{name} must be a manifest-safe model identifier")
+    return model
+
+
+def _require_stage_label(name: str, value: object) -> str:
+    label = _require_string(name, value)
+    if redact_sensitive_text(label) != label:
+        raise ConfigError(f"{name} must be a manifest-safe stage label")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", label) is None:
+        raise ConfigError(f"{name} must be a manifest-safe stage label")
+    return label
+
+
+def _require_role_label(name: str, value: object) -> str:
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be a string")
+    label = value
+    if redact_sensitive_text(label) != label:
+        raise ConfigError(f"{name} must be a manifest-safe role label")
+    if re.fullmatch(r"(?!.*::)(?!.*:$)[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}", label) is None:
+        raise ConfigError(f"{name} must be a manifest-safe role label")
+    return label
+
+
+def _require_feedback_label(name: str, value: object) -> str:
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be a string")
+    label = value
+    if redact_sensitive_text(label) != label:
+        raise ConfigError(f"{name} must be a manifest-safe feedback label")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", label) is None:
+        raise ConfigError(f"{name} must be a manifest-safe feedback label")
+    return label
+
+
+def _require_feedback_metric_label(name: str, value: object) -> str:
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be a string")
+    try:
+        validate_program_metrics({value: 0.0})
+    except ValueError as exc:
+        raise ConfigError(f"{name} must be a manifest-safe metric name") from exc
+    return value
+
+
+def canonicalize_env_var_allowlist(name: str, value: object) -> list[str]:
     if not isinstance(value, list):
         raise ConfigError(f"{name} must be a list of strings")
+    canonical: list[str] = []
+    seen: set[str] = set()
     for item in value:
-        if not isinstance(item, str) or not item.strip() or "=" in item:
-            raise ConfigError(f"{name} must be a list of non-empty environment variable names")
+        if not isinstance(item, str):
+            raise ConfigError(f"{name} must be a list of environment variable names")
+        env_name = item.strip().upper()
+        if re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", env_name) is None:
+            raise ConfigError(f"{name} must be a list of manifest-safe environment variable names")
+        if env_name not in seen:
+            seen.add(env_name)
+            canonical.append(env_name)
+    return canonical
+
+
+def _validate_artifact_glob_list(name: str, value: object) -> None:
+    if not isinstance(value, list):
+        raise ConfigError(f"{name} must be a list of glob patterns")
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            raise ConfigError(f"{name} must be a list of non-empty glob patterns")
+        if item != item.strip():
+            raise ConfigError(f"{name} must be a list of path-safe glob patterns")
+        if _has_unicode_format_control(item):
+            raise ConfigError(f"{name} must be a list of display-safe glob patterns")
+        if redact_sensitive_text(item) != item:
+            raise ConfigError(f"{name} must be a list of manifest-safe glob patterns")
+        _validate_artifact_glob_path(name, item)
+
+
+def _validate_artifact_glob_path(name: str, pattern: str) -> None:
+    if "\\" in pattern:
+        raise ConfigError(f"{name} must be a list of path-safe glob patterns")
+    if pattern.startswith("/"):
+        raise ConfigError(f"{name} must be a list of path-safe glob patterns")
+    if re.match(r"^[A-Za-z]:", pattern):
+        raise ConfigError(f"{name} must be a list of path-safe glob patterns")
+    parts = pattern.split("/")
+    if any(part in {"", ".", ".."} for part in parts):
+        raise ConfigError(f"{name} must be a list of path-safe glob patterns")
+
+
+def _require_json_scalar(name: str, value: object) -> None:
+    if value is None:
+        return
+    if isinstance(value, str):
+        if redact_sensitive_text(value) != value:
+            raise ConfigError(f"{name} must be a share-safe scalar seed")
+        return
+    if isinstance(value, bool):
+        raise ConfigError(f"{name} must be a JSON-safe scalar seed")
+    if isinstance(value, (int, float)) and math.isfinite(float(value)):
+        return
+    raise ConfigError(f"{name} must be a JSON-safe scalar seed")
+
+
+def _require_custom_backend_class_path(name: str, value: object) -> str:
+    if not isinstance(value, str):
+        raise ConfigError(f"{name} must be an import path string")
+    if redact_sensitive_text(value) != value:
+        raise ConfigError(f"{name} must be a manifest-safe import path")
+    if _CUSTOM_BACKEND_CLASS_PATH_RE.fullmatch(value) is None:
+        raise ConfigError(f"{name} must use module.path:ClassName import syntax")
+    return value
+
+
+def _validate_custom_backend_kwargs(name: str, value: object) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{name} must be a mapping")
+    for key, item in value.items():
+        if not isinstance(key, str) or _CUSTOM_BACKEND_KWARG_RE.fullmatch(key) is None:
+            raise ConfigError(f"{name} keys must be manifest-safe keyword labels")
+        if redact_sensitive_text(key) != key:
+            raise ConfigError(f"{name} keys must be manifest-safe keyword labels")
+        if key in {"model", "max_tokens"}:
+            raise ConfigError(f"{name}.{key} must be configured as a top-level backend field")
+        _validate_json_safe_config_value(f"{name}.{key}", item)
+
+
+def _validate_json_safe_config_value(name: str, value: object) -> None:
+    if value is None:
+        return
+    if isinstance(value, str):
+        if redact_sensitive_text(value) != value:
+            raise ConfigError(f"{name} must be JSON-safe config")
+        if _has_unicode_format_control(value):
+            raise ConfigError(f"{name} must be JSON-safe config")
+        return
+    if isinstance(value, bool):
+        return
+    if isinstance(value, int):
+        return
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ConfigError(f"{name} must be JSON-safe config")
+        return
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            _validate_json_safe_config_value(f"{name}[{index}]", item)
+        return
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if not isinstance(key, str):
+                raise ConfigError(f"{name} keys must be strings")
+            if redact_sensitive_text(key) != key or _has_unicode_format_control(key):
+                raise ConfigError(f"{name} keys must be manifest-safe labels")
+            _validate_json_safe_config_value(f"{name}.{key}", item)
+        return
+    raise ConfigError(f"{name} must be JSON-safe config")
+
+
+def _validate_validator_network_policy(value: object) -> str:
+    if not isinstance(value, str):
+        raise ConfigError("validator_network_policy must be one of: host, deny")
+    normalized = value.strip().lower()
+    if normalized not in {"host", "deny"}:
+        raise ConfigError("validator_network_policy must be one of: host, deny")
+    return normalized
+
+
+def _validate_map_elites_descriptor_axes(value: object) -> list[str]:
+    field = "map_elites_descriptor_axes"
+    if not isinstance(value, list) or len(value) != 3:
+        raise ConfigError(f"{field} must be a list of exactly three descriptor axes")
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for index, raw_axis in enumerate(value):
+        if not isinstance(raw_axis, str):
+            raise ConfigError(f"{field}[{index}] must be a descriptor axis string")
+        axis = raw_axis.strip()
+        if not axis:
+            raise ConfigError(f"{field}[{index}] must be a descriptor axis string")
+        if axis in {"performance", "complexity", "diversity"}:
+            normalized_axis = axis
+        elif axis.startswith("metric:"):
+            metric = _require_feedback_metric_label(f"{field}[{index}]", axis.split(":", 1)[1])
+            normalized_axis = f"metric:{metric}"
+        elif axis.startswith("evaluation_metadata:"):
+            path = _require_descriptor_metadata_path(
+                f"{field}[{index}]",
+                axis.split(":", 1)[1],
+            )
+            normalized_axis = f"evaluation_metadata:{path}"
+        elif axis.startswith("candidate_metadata:"):
+            path = _require_descriptor_metadata_path(
+                f"{field}[{index}]",
+                axis.split(":", 1)[1],
+            )
+            normalized_axis = f"candidate_metadata:{path}"
+        else:
+            raise ConfigError(
+                f"{field}[{index}] must be one of performance, complexity, diversity, "
+                "metric:<name>, evaluation_metadata:<path>, or candidate_metadata:<path>"
+            )
+        if normalized_axis in seen:
+            raise ConfigError(f"{field} must not contain duplicate descriptor axes")
+        seen.add(normalized_axis)
+        normalized.append(normalized_axis)
+    return normalized
+
+
+def _require_descriptor_metadata_path(name: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise ConfigError(f"{name} must be a manifest-safe metadata path")
+    parts = value.split(".")
+    if not parts:
+        raise ConfigError(f"{name} must be a manifest-safe metadata path")
+    for part in parts:
+        _require_stage_label(name, part)
+    return ".".join(parts)
 
 
 def _validate_eval_stages(stages: object) -> None:
     if not isinstance(stages, list):
         raise ConfigError("eval_stages must be a list of mappings")
+    reserved_stage_names = {"diff", "syntax", "validate"}
+    stage_names: set[str] = set(reserved_stage_names)
     for index, stage in enumerate(stages):
         label = f"eval_stages[{index}]"
         if not isinstance(stage, dict):
             raise ConfigError(f"{label} must be a mapping")
-        unsupported = sorted(set(stage) - {
+        unsupported = _unsupported_mapping_keys(label, stage, {
             "name",
             "validate_path",
             "timeout_sec",
+            "max_sample_seconds",
+            "max_stage_seconds",
             "min_score",
+            "metric_aggregation",
+            "metric_thresholds",
+            "min_artifacts",
+            "program_output_checks",
+            "require_program_output",
+            "required_artifacts",
             "samples",
             "seeds",
             "retries",
@@ -195,98 +937,551 @@ def _validate_eval_stages(stages: object) -> None:
             "artifact_max_files",
             "artifact_max_bytes",
             "artifact_redact_secrets",
+            "data_include",
+            "data_exclude",
+            "stdin_text",
+            "stdin_file",
         })
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
+        if "name" in stage:
+            name = _require_stage_label(f"{label}.name", stage["name"])
+            if name in stage_names:
+                if name in reserved_stage_names:
+                    raise ConfigError(f"{label}.name is reserved for a built-in eval stage: {name!r}")
+                raise ConfigError(f"{label}.name duplicates an earlier eval stage: {name!r}")
+            stage_names.add(name)
+        if "validate_path" in stage:
+            _require_string(f"{label}.validate_path", stage["validate_path"])
         if "timeout_sec" in stage:
             _require_positive_number(f"{label}.timeout_sec", stage["timeout_sec"])
+        if "max_sample_seconds" in stage:
+            _require_positive_number(f"{label}.max_sample_seconds", stage["max_sample_seconds"])
+        if "max_stage_seconds" in stage:
+            _require_positive_number(f"{label}.max_stage_seconds", stage["max_stage_seconds"])
         if "samples" in stage:
             _require_int(f"{label}.samples", stage["samples"], minimum=1)
         if "retries" in stage:
             _require_int(f"{label}.retries", stage["retries"], minimum=0)
+            if stage["retries"] > MAX_EVAL_STAGE_RETRIES:
+                raise ConfigError(f"{label}.retries must be <= {MAX_EVAL_STAGE_RETRIES}")
         if "min_score" in stage:
             _require_number(f"{label}.min_score", stage["min_score"])
+        if "metric_aggregation" in stage:
+            _validate_metric_aggregation(f"{label}.metric_aggregation", stage["metric_aggregation"])
+        if "metric_thresholds" in stage:
+            _validate_metric_thresholds(f"{label}.metric_thresholds", stage["metric_thresholds"])
+        if "min_artifacts" in stage:
+            _require_int(f"{label}.min_artifacts", stage["min_artifacts"], minimum=0)
+        if "require_program_output" in stage:
+            _require_bool(f"{label}.require_program_output", stage["require_program_output"])
+        if "required_artifacts" in stage:
+            _validate_artifact_glob_list(f"{label}.required_artifacts", stage["required_artifacts"])
+        if "program_output_checks" in stage:
+            _validate_program_output_checks(f"{label}.program_output_checks", stage["program_output_checks"])
         if "artifact_include" in stage:
-            _validate_string_list(f"{label}.artifact_include", stage["artifact_include"])
+            _validate_artifact_glob_list(f"{label}.artifact_include", stage["artifact_include"])
         if "artifact_exclude" in stage:
-            _validate_string_list(f"{label}.artifact_exclude", stage["artifact_exclude"])
+            _validate_artifact_glob_list(f"{label}.artifact_exclude", stage["artifact_exclude"])
         if "artifact_max_files" in stage:
             _require_int(f"{label}.artifact_max_files", stage["artifact_max_files"], minimum=0)
         if "artifact_max_bytes" in stage:
             _require_int(f"{label}.artifact_max_bytes", stage["artifact_max_bytes"], minimum=0)
         if "artifact_redact_secrets" in stage:
             _require_bool(f"{label}.artifact_redact_secrets", stage["artifact_redact_secrets"])
+        if "data_include" in stage:
+            _validate_artifact_glob_list(f"{label}.data_include", stage["data_include"])
+        if "data_exclude" in stage:
+            _validate_artifact_glob_list(f"{label}.data_exclude", stage["data_exclude"])
+        if "stdin_text" in stage:
+            _validate_evaluator_stdin_text(f"{label}.stdin_text", stage["stdin_text"])
+        if "stdin_file" in stage:
+            _validate_evaluator_stdin_file(f"{label}.stdin_file", stage["stdin_file"])
+        _validate_evaluator_stdin_source_exclusive(
+            f"{label}.stdin",
+            stage.get("stdin_text"),
+            stage.get("stdin_file"),
+        )
         if "seeds" in stage:
             if not isinstance(stage["seeds"], list):
                 raise ConfigError(f"{label}.seeds must be a list")
+            for seed_index, seed in enumerate(stage["seeds"]):
+                _require_json_scalar(f"{label}.seeds[{seed_index}]", seed)
             if "samples" in stage and stage["samples"] != len(stage["seeds"]):
                 raise ConfigError(f"{label}.samples must match the number of seeds")
+        if "name" not in stage:
+            raise ConfigError(f"{label}.name is required for configured eval stages")
+
+
+def _validate_metric_thresholds(label: str, value: object) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    for metric, spec in value.items():
+        if not isinstance(metric, str):
+            raise ConfigError(f"{label} keys must be strings")
+        try:
+            validate_program_metrics({metric: 0.0})
+        except ValueError as exc:
+            raise ConfigError(f"{label}.{metric!r} must be a manifest-safe metric name") from exc
+        metric_label = f"{label}.{metric}"
+        if not isinstance(spec, dict):
+            raise ConfigError(f"{metric_label} must be a mapping with min and/or max")
+        unsupported = _unsupported_mapping_keys(metric_label, spec, {"min", "max"})
+        if unsupported:
+            raise ConfigError(f"{metric_label} has unsupported fields {unsupported}")
+        if "min" not in spec and "max" not in spec:
+            raise ConfigError(f"{metric_label} must define min and/or max")
+        if "min" in spec:
+            _require_number(f"{metric_label}.min", spec["min"])
+        if "max" in spec:
+            _require_number(f"{metric_label}.max", spec["max"])
+        if "min" in spec and "max" in spec and float(spec["min"]) > float(spec["max"]):
+            raise ConfigError(f"{metric_label}.min must be <= max")
+
+
+def _validate_metric_aggregation(label: str, value: object) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    allowed = {"mean", "min", "max", "all", "any", "last", "quantile"}
+    for metric, policy in value.items():
+        if not isinstance(metric, str):
+            raise ConfigError(f"{label} keys must be strings")
+        try:
+            validate_program_metrics({metric: True if metric == "is_valid" else 0.0})
+        except ValueError as exc:
+            raise ConfigError(f"{label}.{metric!r} must be a manifest-safe metric name") from exc
+        if isinstance(policy, str):
+            if policy not in allowed - {"quantile"}:
+                raise ConfigError(
+                    f"{label}.{metric} must be one of {sorted(allowed - {'quantile'})} or a quantile mapping"
+                )
+            continue
+        if not isinstance(policy, dict):
+            raise ConfigError(
+                f"{label}.{metric} must be one of {sorted(allowed - {'quantile'})} or a quantile mapping"
+            )
+        metric_label = f"{label}.{metric}"
+        unsupported = _unsupported_mapping_keys(metric_label, policy, {"policy", "q"})
+        if unsupported:
+            raise ConfigError(f"{metric_label} has unsupported fields {unsupported}")
+        if policy.get("policy") != "quantile":
+            raise ConfigError(f"{metric_label}.policy must be 'quantile'")
+        if "q" not in policy:
+            raise ConfigError(f"{metric_label}.q is required for quantile aggregation")
+        q = _require_number(f"{metric_label}.q", policy["q"])
+        if q < 0.0 or q > 1.0:
+            raise ConfigError(f"{metric_label}.q must be between 0 and 1")
+
+
+def _validate_program_output_checks(label: str, value: object) -> None:
+    if not isinstance(value, list):
+        raise ConfigError(f"{label} must be a list of mappings")
+    allowed = {"path", "equals"}
+    for index, check in enumerate(value):
+        item_label = f"{label}[{index}]"
+        if not isinstance(check, dict):
+            raise ConfigError(f"{item_label} must be a mapping")
+        unsupported = _unsupported_mapping_keys(item_label, check, allowed)
+        if unsupported:
+            raise ConfigError(f"{item_label} has unsupported fields {unsupported}")
+        path = _require_string(f"{item_label}.path", check.get("path"))
+        if not re.fullmatch(r"[A-Za-z0-9_.-]+", path):
+            raise ConfigError(f"{item_label}.path must be a dotted manifest-safe path")
+        if "equals" not in check:
+            raise ConfigError(f"{item_label}.equals is required")
+        _require_output_check_scalar(f"{item_label}.equals", check["equals"])
+
+
+def _require_output_check_scalar(name: str, value: object) -> None:
+    if value is None or isinstance(value, bool):
+        return
+    if isinstance(value, str):
+        if redact_sensitive_text(value) != value:
+            raise ConfigError(f"{name} must be a share-safe scalar")
+        return
+    if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value)):
+        return
+    raise ConfigError(f"{name} must be a JSON-safe scalar")
 
 
 def _validate_backends(backends: object) -> None:
     if not isinstance(backends, list) or not backends:
         raise ConfigError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "openai", "ollama"}
-    common_keys = {"type", "model", "max_tokens", "cost", "latency", "depth", "role"}
+    allowed_types = {"anthropic", "custom", "openai", "ollama"}
+    common_keys = {
+        "type",
+        "model",
+        "max_tokens",
+        "cost",
+        "cost_usd_per_million_tokens",
+        "prompt_max_estimated_tokens",
+        "latency",
+        "depth",
+        "role",
+        *REQUEST_PARAMETER_FIELDS,
+    }
     for index, backend in enumerate(backends):
         label = f"backends[{index}]"
         if not isinstance(backend, dict):
             raise ConfigError(f"{label} must be a mapping")
+        _require_string_mapping_keys(label, backend)
         if backend.get("type") not in allowed_types:
             raise ConfigError(f"{label}.type must be one of {sorted(allowed_types)}")
-        if not isinstance(backend.get("model"), str) or not backend["model"].strip():
-            raise ConfigError(f"{label}.model must be a non-empty string")
+        _require_model_identifier(f"{label}.model", backend.get("model"))
         allowed = set(common_keys)
         if backend["type"] == "openai":
             allowed.add("reasoning_effort")
-        unsupported = sorted(set(backend) - allowed)
+            allowed.add("api_mode")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+            allowed.update({"base_url", "organization", "project"})
+        if backend["type"] == "anthropic":
+            allowed.add("base_url")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend["type"] == "ollama":
+            allowed.add("host")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend["type"] == "custom":
+            allowed.add("class_path")
+            allowed.add("kwargs")
+        unsupported = _unsupported_mapping_keys(label, backend, allowed)
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
+        if backend["type"] == "custom":
+            _require_custom_backend_class_path(f"{label}.class_path", backend.get("class_path"))
+            if "kwargs" in backend:
+                _validate_custom_backend_kwargs(f"{label}.kwargs", backend["kwargs"])
         if "max_tokens" in backend:
             _require_int(f"{label}.max_tokens", backend["max_tokens"], minimum=1)
+        if "timeout_sec" in backend:
+            _require_positive_number(f"{label}.timeout_sec", backend["timeout_sec"])
+        if "provider_max_retries" in backend:
+            try:
+                validate_provider_max_retries(
+                    backend["provider_max_retries"],
+                    field=f"{label}.provider_max_retries",
+                )
+            except ValueError as exc:
+                raise ConfigError(str(exc)) from exc
         for field_name in ("cost", "latency", "depth"):
             if field_name in backend:
                 _require_positive_number(f"{label}.{field_name}", backend[field_name])
-        if "role" in backend and not isinstance(backend["role"], str):
-            raise ConfigError(f"{label}.role must be a string")
-        if "reasoning_effort" in backend:
-            _require_enum(
-                f"{label}.reasoning_effort",
-                backend["reasoning_effort"],
-                {"low", "medium", "high", "xhigh"},
+        if "cost_usd_per_million_tokens" in backend:
+            _require_positive_number(
+                f"{label}.cost_usd_per_million_tokens",
+                backend["cost_usd_per_million_tokens"],
             )
+        if "prompt_max_estimated_tokens" in backend:
+            _require_int(
+                f"{label}.prompt_max_estimated_tokens",
+                backend["prompt_max_estimated_tokens"],
+                minimum=1,
+            )
+        if "role" in backend:
+            _require_role_label(f"{label}.role", backend["role"])
+        if "reasoning_effort" in backend:
+            try:
+                validate_openai_reasoning_effort_for_model(
+                    backend["reasoning_effort"],
+                    model=backend["model"],
+                    field=f"{label}.reasoning_effort",
+                )
+            except ValueError as exc:
+                raise ConfigError(str(exc)) from exc
+        if "api_mode" in backend:
+            try:
+                validate_openai_api_mode(
+                    backend["api_mode"],
+                    reasoning_effort=backend.get("reasoning_effort"),
+                    field=f"{label}.api_mode",
+                )
+            except ValueError as exc:
+                raise ConfigError(str(exc)) from exc
+        try:
+            validate_backend_request_parameters(backend, field_prefix=label)
+        except ValueError as exc:
+            raise ConfigError(str(exc)) from exc
+        try:
+            validate_backend_client_context(backend, field_prefix=label)
+        except ValueError as exc:
+            raise ConfigError(str(exc)) from exc
 
 
 def _validate_llm_feedback(graders: object) -> None:
     if not isinstance(graders, list):
         raise ConfigError("llm_feedback must be a list of mappings")
-    allowed = {"name", "metric", "weight", "min_score", "prompt", "include_invalid"}
+    allowed = {
+        "name",
+        "metric",
+        "objective_metric",
+        "weight",
+        "min_score",
+        "bounds",
+        "direction",
+        "prompt",
+        "include_invalid",
+        "failure_policy",
+        "failure_retries",
+        "failure_penalty",
+    }
     for index, grader in enumerate(graders):
         label = f"llm_feedback[{index}]"
         if not isinstance(grader, dict):
             raise ConfigError(f"{label} must be a mapping")
-        unsupported = sorted(set(grader) - allowed)
+        unsupported = _unsupported_mapping_keys(label, grader, allowed)
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
-        for field_name in ("name", "metric", "prompt"):
+        for field_name in ("prompt",):
             if field_name in grader and not isinstance(grader[field_name], str):
                 raise ConfigError(f"{label}.{field_name} must be a string")
+        if "name" in grader:
+            _require_feedback_label(f"{label}.name", grader["name"])
+        if "metric" in grader:
+            _require_feedback_metric_label(f"{label}.metric", grader["metric"])
+        if "objective_metric" in grader and not isinstance(grader["objective_metric"], bool):
+            raise ConfigError(f"{label}.objective_metric must be boolean")
         if "weight" in grader:
-            _require_number(f"{label}.weight", grader["weight"])
+            _require_probability(f"{label}.weight", grader["weight"])
         if "min_score" in grader:
-            _require_number(f"{label}.min_score", grader["min_score"])
+            _require_probability(f"{label}.min_score", grader["min_score"])
+        if "bounds" in grader:
+            _validate_feedback_score_bounds(f"{label}.bounds", grader["bounds"])
+        if "direction" in grader:
+            _require_enum(
+                f"{label}.direction",
+                grader["direction"],
+                {"maximize", "minimize"},
+            )
         if "include_invalid" in grader and not isinstance(grader["include_invalid"], bool):
             raise ConfigError(f"{label}.include_invalid must be boolean")
+        if "failure_policy" in grader:
+            _require_enum(
+                f"{label}.failure_policy",
+                grader["failure_policy"],
+                {"ignore", "penalize", "discard"},
+            )
+        if "failure_retries" in grader:
+            _require_int(f"{label}.failure_retries", grader["failure_retries"], minimum=0)
+            if grader["failure_retries"] > MAX_LLM_FEEDBACK_FAILURE_RETRIES:
+                raise ConfigError(
+                    f"{label}.failure_retries must be <= {MAX_LLM_FEEDBACK_FAILURE_RETRIES}"
+                )
+        if "failure_penalty" in grader:
+            _require_probability(f"{label}.failure_penalty", grader["failure_penalty"])
 
 
-def _validate_prompt_variants(variants: list[str]) -> None:
-    from libreevolve.core.prompt import PromptTemplateError, validate_prompt_template
+def _validate_feedback_score_bounds(label: str, value: object) -> None:
+    if not isinstance(value, (list, tuple)) or len(value) != 2:
+        raise ConfigError(f"{label} must be [lo, hi]")
+    lo = _require_number(f"{label}[0]", value[0])
+    hi = _require_number(f"{label}[1]", value[1])
+    if lo >= hi:
+        raise ConfigError(f"{label} must be strictly increasing [lo, hi]")
 
-    for index, template in enumerate(variants):
-        try:
-            validate_prompt_template(template)
-        except PromptTemplateError as exc:
-            raise ConfigError(f"prompt_variants[{index}]: {exc}") from exc
+
+def _validate_prompt_variants(
+    variants: list[str],
+    prompt_format_options: dict,
+    *,
+    semantic_policy: str,
+) -> None:
+    from libreevolve.core.prompt import PromptTemplateError, validate_prompt_variants
+
+    try:
+        validate_prompt_variants(
+            variants,
+            prompt_format_options=prompt_format_options,
+            semantic_policy=semantic_policy,
+        )
+    except PromptTemplateError as exc:
+        raise ConfigError(f"prompt_variants: {exc}") from exc
+
+
+def _validate_prompt_variant_semantic_policy(value: object) -> str:
+    from libreevolve.core.prompt import (
+        PromptTemplateError,
+        validate_prompt_variant_semantic_policy,
+    )
+
+    try:
+        return validate_prompt_variant_semantic_policy(value)
+    except PromptTemplateError as exc:
+        raise ConfigError(str(exc)) from exc
+
+
+def _validate_llm_prompt_roles(value: object) -> dict:
+    try:
+        return validate_prompt_role_policy(value)
+    except ValueError as exc:
+        raise ConfigError(str(exc)) from exc
+
+
+def _validate_llm_role_call_limits(value: object) -> dict[str, int]:
+    return _validate_llm_role_budget_limits(value, field="llm_role_call_limits")
+
+
+def _validate_llm_role_budget_limits(value: object, *, field: str) -> dict[str, int]:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{field} must be a mapping of role labels to integer limits")
+    normalized: dict[str, int] = {}
+    for raw_role, raw_limit in value.items():
+        role = _require_role_label(f"{field} key", raw_role)
+        if (
+            isinstance(raw_limit, bool)
+            or not isinstance(raw_limit, int)
+            or raw_limit < 0
+        ):
+            raise ConfigError(
+                f"{field}[{role!r}] must be a non-negative integer"
+            )
+        normalized[role] = raw_limit
+    return dict(sorted(normalized.items()))
+
+
+def _validate_llm_role_seconds_limits(value: object) -> dict[str, float]:
+    field = "llm_role_seconds_limits"
+    if not isinstance(value, dict):
+        raise ConfigError(f"{field} must be a mapping of role labels to second limits")
+    normalized: dict[str, float] = {}
+    for raw_role, raw_limit in value.items():
+        role = _require_role_label(f"{field} key", raw_role)
+        if isinstance(raw_limit, bool) or not isinstance(raw_limit, (int, float)):
+            raise ConfigError(f"{field}[{role!r}] must be a finite non-negative number")
+        limit = float(raw_limit)
+        if not math.isfinite(limit) or limit < 0.0:
+            raise ConfigError(f"{field}[{role!r}] must be a finite non-negative number")
+        normalized[role] = limit
+    return dict(sorted(normalized.items()))
+
+
+def _validate_llm_reward_accounted_roles(value: object) -> list[str]:
+    if not isinstance(value, list):
+        raise ConfigError("llm_reward_accounted_roles must be a list of role labels")
+    if not value:
+        raise ConfigError("llm_reward_accounted_roles must include at least one role")
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for index, item in enumerate(value):
+        role = _require_role_label(f"llm_reward_accounted_roles[{index}]", item)
+        if role not in seen:
+            seen.add(role)
+            normalized.append(role)
+    return normalized
+
+
+def _validate_llm_role_backend_indices(
+    value: object,
+    *,
+    backend_count: int,
+) -> dict[str, list[int]]:
+    field = "llm_role_backend_indices"
+    if not isinstance(value, dict):
+        raise ConfigError(f"{field} must be a mapping of role labels to backend index lists")
+    normalized: dict[str, list[int]] = {}
+    for raw_role, raw_indices in value.items():
+        role = _require_role_label(f"{field} key", raw_role)
+        if not isinstance(raw_indices, list) or not raw_indices:
+            raise ConfigError(f"{field}[{role!r}] must be a non-empty list of backend indices")
+        indices: list[int] = []
+        seen: set[int] = set()
+        for index, raw_index in enumerate(raw_indices):
+            if (
+                isinstance(raw_index, bool)
+                or not isinstance(raw_index, int)
+                or raw_index < 0
+                or raw_index >= backend_count
+            ):
+                raise ConfigError(
+                    f"{field}[{role!r}][{index}] must be a backend index between 0 and {backend_count - 1}"
+                )
+            if raw_index not in seen:
+                seen.add(raw_index)
+                indices.append(raw_index)
+        normalized[role] = indices
+    return dict(sorted(normalized.items()))
+
+
+def _validate_llm_role_failure_quarantine_after(value: object) -> dict[str, int]:
+    field = "llm_role_failure_quarantine_after"
+    if not isinstance(value, dict):
+        raise ConfigError(f"{field} must be a mapping of role labels to positive integers")
+    normalized: dict[str, int] = {}
+    for raw_role, raw_count in value.items():
+        role = _require_role_label(f"{field} key", raw_role)
+        if (
+            isinstance(raw_count, bool)
+            or not isinstance(raw_count, int)
+            or raw_count <= 0
+        ):
+            raise ConfigError(f"{field}[{role!r}] must be a positive integer")
+        normalized[role] = raw_count
+    return dict(sorted(normalized.items()))
+
+
+def _validate_critique_reviewers(value: object) -> list[dict]:
+    if not isinstance(value, list):
+        raise ConfigError("critique_reviewers must be a list of reviewer specs")
+    if len(value) > 8:
+        raise ConfigError("critique_reviewers must contain at most 8 reviewers")
+    reviewers: list[dict] = []
+    seen_names: set[str] = set()
+    seen_roles: set[str] = set()
+    for index, raw in enumerate(value):
+        if not isinstance(raw, dict):
+            raise ConfigError(f"critique_reviewers[{index}] must be a mapping")
+        unsupported = _unsupported_mapping_keys(
+            f"critique_reviewers[{index}]",
+            raw,
+            {"name", "prompt", "role"},
+        )
+        if unsupported:
+            raise ConfigError(
+                f"critique_reviewers[{index}] has unsupported fields {unsupported}"
+            )
+        raw_name = raw.get("name", f"reviewer_{index}")
+        name = _require_safe_identifier(f"critique_reviewers[{index}].name", raw_name)
+        if name in seen_names:
+            raise ConfigError(f"duplicate critique reviewer name: {name!r}")
+        seen_names.add(name)
+        prompt = raw.get("prompt", "")
+        _require_string(f"critique_reviewers[{index}].prompt", prompt, allow_empty=True)
+        raw_role = raw.get("role", f"critique:{name}")
+        role = _require_role_label(f"critique_reviewers[{index}].role", raw_role)
+        if role in seen_roles:
+            raise ConfigError(f"duplicate critique reviewer role: {role!r}")
+        seen_roles.add(role)
+        reviewers.append({"name": name, "prompt": prompt, "role": role})
+    return reviewers
+
+
+def _validate_prompt_format_options(options: object) -> dict:
+    from libreevolve.core.prompt import (
+        PromptTemplateError,
+        validate_prompt_format_options,
+    )
+
+    try:
+        return validate_prompt_format_options(options)
+    except PromptTemplateError as exc:
+        raise ConfigError(str(exc)) from exc
+
+
+def _require_string_mapping_keys(label: str, mapping: dict) -> None:
+    non_string = [key for key in mapping if not isinstance(key, str)]
+    if non_string:
+        formatted = ", ".join(sorted(repr(key) for key in non_string))
+        raise ConfigError(f"{label} keys must be strings; got {formatted}")
+
+
+def _unsupported_mapping_keys(label: str, mapping: dict, allowed: set[str]) -> list[str]:
+    _require_string_mapping_keys(label, mapping)
+    return sorted(set(mapping) - allowed)
+
+
+def _has_unicode_format_control(value: str) -> bool:
+    return any(unicodedata.category(ch) == "Cf" for ch in value)
 
 
 def _validate_prompt_reward_bounds(bounds: object) -> None:

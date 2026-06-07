@@ -7,7 +7,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 ## Tech Stack
 
 - Python 3.11+ (use `py -3.12` on this machine, not `python`)
-- Dependencies: numpy, scikit-learn, anthropic, openai, ollama, pyyaml, click, python-dotenv, pypdf
+- Dependencies: numpy, scikit-learn, anthropic, openai, ollama, pyyaml, click, python-dotenv, packaging, pypdf
 - Testing: pytest, pytest-mock
 - No framework — pure Python with dataclasses
 
@@ -15,7 +15,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 
 ```
 libreevolve/
-  core/       loop.py (evolve + build_prompt), evaluator.py, diff.py, database.py, config.py
+  core/       loop.py (evolve orchestration), prompt.py (PromptSampler), evaluator.py, diff.py, database.py, config.py
   llm/        ensemble.py (UCB-style heuristic), anthropic.py, openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
@@ -27,29 +27,40 @@ libreevolve/
 
 - `.env` file at project root for API keys (loaded via python-dotenv with override=True)
 - `runs/` directory is gitignored — contains manifest.json, history.jsonl,
-  prompt_history.jsonl, and best.py per problem
-- All validate.py files run in temporary local subprocesses, not security
-  sandboxes (exec/eval is intentional)
+  failure/quarantine JSONL streams, archive_events.jsonl, llm_calls.jsonl,
+  prompt_history.jsonl, best.py, best_workspace/, evaluator_artifacts/, and
+  plugin_artifacts/ per problem
+- Validator execution runs in temporary local subprocesses, not security
+  sandboxes; CLI startup also imports validators in-process for contract
+  preflight before evaluator timeouts/capture apply
 - SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`
-- Diff engine strips markdown fences automatically
-- VALID_THRESHOLD = 0.0: programs with score >= 0 enter the archive
-- 30% explore / 70% exploit parent sampling
+- Diff engine strips a single outer markdown fence wrapper automatically
+- VALID_THRESHOLD = 0.0 is the pre-admission eligibility gate. A valid finite
+  program with score >= 0 is passed to ProgramDatabase.admit(), but MAP-Elites
+  cell replacement/elite retention can still reject it (for example
+  reason="not_improving_cell"), and only retained/search-state entries become
+  sampling_eligible.
+- Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
+  parent-selection strategies bypass that ratio
 - Up to 5 recent in-memory failed child snippets can be shown in prompts;
   persistent/queryable failed-proposal memory remains open work
 
 ## Running Tests
 
 ```bash
-py -3.12 -m pytest tests/ -m "not integration" --tb=short    # non-integration tests (168 selected)
+py -3.12 -m pytest tests/ -m "not integration" --tb=short
 py -3.12 -m pytest tests/integration/ -m integration          # needs ANTHROPIC_API_KEY
 ```
 
 ## Running the Tool
 
 ```bash
-py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends openai:gpt-4o-mini
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"
 py -3.12 -m libreevolve show runs/hello_world
 ```
+
+Replace placeholder backend model ids with currently available provider/account
+model ids before running.
 
 ## Common Pitfalls
 
@@ -57,7 +68,7 @@ py -3.12 -m libreevolve show runs/hello_world
   otherwise the current adapter uses Chat Completions even for model strings
   that may support reasoning
 - xhigh reasoning effort can consume entire token budget on thinking — use high or increase max_output_tokens
-- Models add markdown fences around diffs — _strip_fences() handles this
+- Models add markdown fences around diffs — _strip_fences() handles one outer response wrapper
 - Models add comments that break diff matching — prompt says "No comments"
 - The seed program should be intentionally suboptimal to give evolution room to improve
 - `config.seed` is wired to random.seed() at the top of evolve()

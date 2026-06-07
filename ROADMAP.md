@@ -1,45 +1,64 @@
 # Roadmap
 
-This roadmap reflects the current codebase as of 2026-05-25 after an
+This roadmap reflects the current codebase as of 2026-05-26 after an
 AlphaEvolve-alignment pass against `papers/2506.13131__AlphaEvolve.pdf`, local
-docs, and the checked-in tests. It is a practical development plan, not a
-promise.
+docs, the paper index, and the checked-in tests. It is a practical development
+plan, not a promise.
 
 ## Current State
 
 LibreEvolve has:
 
-- Python seed programs and seed workspaces with optional
+- Python seed programs and seed workspaces with load-time-validated optional
   `# EVOLVE-BLOCK-START/END` regions
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
-  configurable full-block/full-code replacement
+  configurable full-block/full-code replacement with unknown named block
+  targets rejected before partial replacement
 - workspace file topology mutations for create/edit/delete/move/rename and
   primary-file changes
+- candidate path hardening for unsafe, ambiguous, overlong, Unicode-control,
+  reserved, and dot-prefixed generated paths
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
 - configurable local evaluator stages with distinct validator entrypoints,
-  thresholds, samples, seeds, retries, timeouts, and per-attempt history
+  thresholds, samples, validator-managed seed values, retries, timeouts, and
+  per-attempt history
 - strict scalar evaluator-output validation against `metrics.yaml`, including
-  finite, strictly increasing metric bounds
+  finite, strictly increasing non-boolean metric bounds
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
-  redaction, and timeout process-tree cleanup
+  redaction, and best-effort timeout process-tree cleanup
 - MAP-Elites plus 5-island migration
-- metric direction/bounds normalization for primary fitness
-- a prompt sampler that renders context files and compact stage feedback
+- metric direction/bounds normalization for declared evaluator metrics and
+  feedback-sourced objective metrics, averaged into archive selection score
+- a prompt sampler that renders context files, compact stage feedback,
+  proposal metadata, and prompt-size/section-budget diagnostics
+- recursive problem-local context ingestion for `.txt`, `.md`, `.py`, and
+  `.pdf` files with context-manifest include/exclude rules, source hashes,
+  extraction spans, and bounded prompt rendering
 - a local prompt-program database with prompt selection, scoring, lineage, and
-  optional interval-based LLM template mutation
+  optional interval-based LLM template mutation; configured and evolved
+  templates are validated for known placeholders, compatible format specs, and
+  parent-placeholder retention during mutation; configured prompt templates can
+  also use weighted `[[prompt:name]]` stochastic formatting markers backed by
+  `prompt_format_options`
 - optional synchronous LLM critique/revision before mutation application
 - optional LLM feedback graders with provenance, discard rules, and weighted
-  score composition
+  score composition using normalized bounded reviewer scores
 - UCB-style backend routing plus experimental throughput/depth metadata,
-  ensemble-level call telemetry, and configurable retry/fallback attempts
+  ensemble-level call telemetry with redacted/bounded provider errors, and
+  configurable retry/fallback attempts plus a local accepted-response
+  character cap
 - structured `manifest.json`, rich `history.jsonl` with candidate file sets,
-  per-candidate archive admission events, `best.py`, and `best_workspace/`
-  artifacts
+  per-candidate archive admission events, and CLI-written `best.py` /
+  `best_workspace/` artifacts; startup manifests retain configured absolute
+  `log_dir` roots as a placeholder plus SHA-256 metadata rather than raw local
+  paths
 - local run-budget stop accounting for generations, evaluations,
   evaluator-seconds, and wall-clock runtime
+- framework-owned run-local RNG isolation plus persisted `runtime.rng`
+  snapshots that direct callers and CLI runs can restore before startup
 - example problems including `hello_world`, `sorting`, `circle_packing`,
   `matrix_multiplication`, and `workspace_math`
 
@@ -51,15 +70,19 @@ is not yet an AlphaEvolve reproduction.
 ### 1. Finish candidate workspace fidelity
 
 - Add language/runner declarations or keep the Python-only divergence explicit.
-- Add problem-defined candidate abstraction hooks or keep code-file-set
-  evolution documented as a deliberate divergence.
-- Prevalidate seed evolve-block markers during problem load, not only during
-  mutation application.
-- Add richer workspace fixtures with nested packages, package-style validator
-  entrypoints, relative evaluator data, and non-Python/static artifacts.
-- Define binary/static artifact handling for candidate workspaces.
-- Detect normalized-path and host-filesystem path collisions in candidate
-  workspaces before mutation, logging, or materialization.
+- Add problem-defined candidate abstraction hooks if LibreEvolve should move
+  beyond the documented code-file-set divergence from AlphaEvolve's flexible
+  solution-abstraction API.
+- Add language-aware evolve-block marker grammars if non-Python workspace files
+  should preserve skeleton regions; the current boundary rejects marker-like
+  declarations in non-`.py` files instead of treating them as unmarked full-file
+  candidates.
+- Add richer workspace fixtures with nested packages, declared evaluator data,
+  and non-Python/static artifacts.
+- Extend binary/static candidate handling beyond bounded encoded members to
+  external copy-only static assets and raw non-encoded binary members.
+- Tighten topology-operation collision policy and structured
+  materialization-failure diagnostics for invalid generated workspaces.
 - Add migration/resume support for workspace candidates.
 
 ### 2. Strengthen multi-objective search
@@ -71,11 +94,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend the current configurable parent/inspiration sampling beyond score,
   individual metric excellence, novelty, recency, and random/mixed policies to
   include persisted feedback, lineage diversity, and queryable novelty indexes.
-- Make MAP-Elites descriptors workspace-aware instead of using only the
-  primary-file compatibility view for complexity/diversity.
-- Stabilize descriptor normalization with fixed bounds, evaluator-provided
-  behavior descriptors, or explicit rebin/snapshot semantics.
-- Expose metric-vector archive diagnostics in run artifacts and `show`.
+- Replace the remaining adaptive diversity descriptor with evaluator-provided
+  behavior descriptors, a fixed descriptor model, or explicit rebin/snapshot
+  semantics.
+- Extend the current `show` archive objective-vector summaries into future
+  metric-specific archive views.
 
 ### 3. Expand evaluation cascades
 
@@ -83,38 +106,64 @@ is not yet an AlphaEvolve reproduction.
   outside-workspace artifacts, aggregate emitted-artifact hashes, and clearer
   artifact schemas for benchmarks.
 - Extend budget accounting beyond current generation/evaluation/
-  evaluator-second/wall-clock stop reasons to LLM-call, token, cost,
-  stage-sample, retry, accelerator, and async queue budgets.
-- Add calibration/ablation reporting for LLM feedback graders.
-- Normalize and bound LLM feedback metrics before using them in score
-  composition.
+  evaluator-second/wall-clock/logical-LLM-call stop reasons to token, cost,
+  provider-attempt, LLM wall-clock, accelerator, and async queue budgets.
+  Provider-attempt, provider-token, configured-cost, and retained LLM latency
+  usage now stop live runs before the next LLM call; accelerator, async queue,
+  and restored budget consumption remain open.
+- Connect paper-facing `libreevolve.llm_budget_report.v1` audits to live
+  enforcement for persisted/restored retry-budget consumption and hard
+  cancellation semantics rather than treating the report as audit-only
+  evidence.
+- Add calibration/ablation reporting for LLM feedback graders, including
+  evidence that normalized reviewer scores remain calibrated across tasks.
 - Add configurable retry/penalty policies for LLM feedback provider or parse
   failures beyond the current ignore-and-record behavior.
+- Define a complete synthetic evaluator-failure metric-vector policy for diff,
+  syntax, timeout, subprocess, malformed-output, and stage-threshold failures;
+  current framework-generated failures can omit declared secondary metrics and
+  rely on error/stage metadata for interpretation.
 - Add a validator network egress policy and stronger sandbox/resource controls
   beyond the current minimal environment and process-tree cleanup.
-- Extend problem-local evaluator import semantics from sibling helper modules
-  to package-style validators and relative evaluator data files.
-- Preserve transitive evaluator helper/data provenance in manifests.
+- Extend evaluator provenance beyond the enforced problem-local dependency
+  policy to cover external package/native data access when that becomes part of
+  the sandbox/environment contract.
+- Preserve complete transitive environment/package provenance for evaluator
+  runtime dependencies beyond the current bounded package/version and
+  redacted/hash-backed `pip freeze` snapshots.
+- Extend current bounded environment provenance into stronger reproducibility
+  evidence: complete install-source interpretation semantics, external build
+  execution/options/environment records beyond `pyproject.toml`
+  `[build-system]` and installed `WHEEL` metadata, non-project build metadata
+  policy, live provider service/API-version capture, provider cost and
+  remote-default capture, accelerator budget/accounting semantics, and
+  remaining private package-source resolution policy.
 
 ### 4. Prompt and context work
 
-- Add stricter validation that configured and mutated prompt templates preserve
-  required placeholders and contain no malformed format fields.
-- Add AlphaEvolve-style stochastic formatting controls with weighted
-  placeholder alternatives.
+- Extend prompt-template validation beyond the current schema, dry-run format
+  checks, and parent-placeholder retention into role-specific compatibility
+  policies and prompt-program deduplication.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
-- Add context-source manifests with recursive selection, include/exclude rules,
-  source hashes, extraction diagnostics, and page/span citations.
-- Add global prompt budget/context-window accounting with deterministic
-  section-level packing and prompt-size diagnostics.
+- Extend the current rendered-prompt character cap and deterministic
+  section-budget diagnostics into backend-token-aware context-window accounting
+  with real section-level packing.
 - Add prompt/history redaction and data-retention controls for mutation,
   critique, feedback, plugin, and explicit-context prompt sections.
-- Extend current bounded evaluator-output prompt summaries with artifact
-  content retrieval, specialized aggregate syntax diagnostics, and integration
-  with global prompt-size budgeting.
-- Add a structured proposal format that can preserve an idea/rationale section
-  separately from the patch blocks while keeping raw-diff compatibility.
+- Extend current bounded evaluator-output prompt summaries with full/live
+  artifact content retrieval, specialized aggregate syntax diagnostics, and
+  integration with backend-token-aware global prompt-size budgeting.
+- Extend DeepEvolve-inspired retrieval from bounded provenance into
+  audit-grade source integrity: unbounded provider-payload/source-content
+  artifacts, learned or externally scored ranking/selection evidence beyond
+  provider order, a replayable transport/failure decision tree, and explicit
+  default-provider plus custom-provider provenance tests.
+- Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
+  preamble into a richer versioned proposal object only if needed; remaining
+  work is proposal scoring, indexed retrieval, hypothesis-refinement loops, and
+  stricter policy for which proposal fields may influence retrieval, prompting,
+  and archive resurfacing.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages, including documented prompt reward
   normalization and selection policy.
@@ -123,6 +172,9 @@ is not yet an AlphaEvolve reproduction.
 
 - Keep README, docs, paper index, and `docs/todo/*` aligned with implemented
   behavior.
+- Keep paper-manifest validation diagnostics shareable by using
+  repository-relative labels and secret-redacted exception text in text and JSON
+  output.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, and MadEvolve features as inspired unless paper behavior
   is actually implemented.
@@ -131,50 +183,69 @@ is not yet an AlphaEvolve reproduction.
 
 ### 6. Async and resumable runtime
 
-- Add a controller with bounded queues for LLM proposals and evaluator workers.
-- Persist enough archive, bandit, prompt, and pending-evaluation state to resume
-  long runs.
-- Persist MAP-Elites cell/island state, descriptor values, elite snapshots, and
-  migration events, not only candidate history records.
-- Complete run manifest hardening for validated plugin specs/constructor
-  parameters and aggregate hashes for artifacts emitted after startup. Git/code
-  state, problem hashes, direct evaluator hashes, and plugin module hashes are
-  already recorded.
-- Define seeded replay semantics for run ids, candidate ids, prompt-program ids,
-  RNG state, and provider nondeterminism boundaries.
+- Add a controller with bounded queues for LLM proposals and evaluator workers;
+  the current loop supports sequential `proposals_per_generation` batches but
+  not concurrent proposal/evaluation queues.
+- Persist enough bandit, prompt, controller, and pending-evaluation state to
+  resume long runs.
+- Extend the current restorable MAP-Elites cell/island snapshots, elite
+  snapshots, and island cursor/counter state with descriptor-value replay
+  semantics, ordered migration-event replay, controller queues, and pending-work
+  restore. Current manifests can restore cursor-only state or full archive
+  cell/elite placements from a previous manifest/history bundle, but they are
+  not a full resumed experiment trace.
+- Complete run manifest hardening for custom plugin package-registry and
+  constructor-schema attribution beyond exposed `__version__` labels, plus
+  aggregate hashes for artifacts emitted after startup.
+  Git/code state, redacted/hash-backed source/problem/Git root labels, problem
+  hashes, direct evaluator hashes, plugin module hashes, and built-in plugin
+  constructor specs are already recorded.
+- Complete seeded replay semantics for run ids, candidate ids, prompt-program
+  ids, restored archive/controller state, plugin/provider RNG boundaries, and
+  provider nondeterminism. The framework RNG snapshot can already be restored
+  for direct `evolve()` calls and CLI runs, but this is not full run resume.
 - Extend budget accounting beyond the current local synchronous generation,
-  evaluator-call, evaluator-second, wall-clock, and stop-reason counters to
-  cover concurrent evaluations, provider tokens/costs, stage sample/retry
-  totals, async queues, and equal-budget ablation reporting.
+  evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
+  configured-cost/latency, synchronous controller-budget event replay, and
+  stop-reason counters to cover concurrent evaluations, async queues,
+  pending-work restore, provider-output replay, and executed equal-budget
+  ablation reports. The named AlphaEvolve Figure 8 ablation variants are now
+  captured as a validated report contract, but the runs/curves are not
+  implemented.
 
 ### 7. Backend scheduling and critique
 
-- Add a backend registry/plugin interface for custom LLM providers, not only
-  the hard-coded OpenAI/Anthropic/Ollama constructors.
 - Normalize/document UCB rewards against bounded assumptions or rename the
   current policy as a heuristic.
-- Separate backend accounting for mutation generation, critique, feedback
-  grading, and meta-prompt mutation calls.
-- Extend current ensemble-level call telemetry with provider usage,
-  adapter-internal retry counts, request ids, finish reasons, raw provider
-  diagnostics, and a separate run-scoped call log.
+- Extend configured reward-accounted role selection into separate per-role
+  scheduler state, reward signals, quotas, and budget policy for mutation
+  generation, critique, feedback grading, and meta-prompt mutation calls.
+- Extend current run-scoped call telemetry beyond provider usage, request ids,
+  finish reasons, and adapter-internal retry summaries to include raw provider
+  diagnostics, provider costs, and token/cost budget stop policy.
 - Add role-specific provider-failure handling for mutation, critique,
-  feedback, and meta-prompt calls, including quarantine/penalty policy and
-  structured timeout/rate-limit classification.
+  feedback, and meta-prompt calls, including quarantine/penalty policy beyond
+  the current normalized timeout/rate-limit/transport/status categories and
+  role-level failure-category summaries.
+- Connect `libreevolve.provider_cancellation_policy.v1` to live provider SDK
+  cancellation, budget-affecting timeout/cancellation stop or quarantine
+  behavior across LLM roles, and persisted role-specific timeout artifacts
+  beyond the currently covered mutation timeout failure-history path.
 - Add explicit breadth/depth/cost/latency scheduling tests.
-- Make backend role metadata operational through quotas/routing, or document
-  it as descriptive manifest metadata only.
 - Extend critique/revision beyond a synchronous self-review call toward
   configurable reviewer pools.
 
 ### 8. Plugin extensibility
 
-- Move plugin registration out of the hard-coded CLI registry.
-- Allow plugin configuration through `config.yaml`.
-- Record plugin constructor parameters, paper-inspiration scope, and emitted
-  artifact paths in run manifests.
-- Extend plugin provenance beyond the current score-composition chain to cover
-  prompt-context attribution, configuration, versions, and emitted artifacts.
+- Extend the bounded `libreevolve.plugins` entry-point registry toward richer
+  package policy and direct custom-plugin schema/provenance.
+- Broaden plugin configuration schemas beyond built-in scalar/path options and
+  define policy for custom constructor introspection.
+- Record custom plugin paper-inspiration scope, package versions, and stronger
+  emitted artifact provenance in run manifests.
+- Extend plugin provenance beyond current prompt-context/configuration/artifact
+  records to cover versioned custom registry entries and richer strategy
+  choices.
 
 ## Longer Term
 
@@ -182,9 +253,28 @@ is not yet an AlphaEvolve reproduction.
 
 - Add stronger AlphaEvolve-style fixtures beyond toy examples:
   matrix-multiplication variants, kissing/circle packing extensions,
-  constructive math, and one safe scheduling/kernel microbenchmark.
+  constructive math, and one safe compiler/hardware/systems/kernel/scheduling
+  microbenchmark.
 - Separate smoke examples from benchmark fixtures, with anti-gaming validators,
   expected artifact schemas, SOTA/target baselines, and repeated-seed runs.
+  Current example seed-score classes are documented: `hello_world`,
+  `circle_packing`, and `matrix_multiplication` are optimization-pressure
+  smoke fixtures, while `sorting` is a neutral plateau/diversity fixture.
+  The matrix smoke validator now rejects known import/library delegation,
+  module-level dead-code counters, and fixed-three-case lookup shortcuts, but
+  stronger benchmark fixtures and report schemas remain planned work.
+- Connect real benchmark fixtures to `libreevolve.benchmark_hardening.v1`
+  reports emitted by actual randomized/exhaustive validators and anti-gaming
+  fixtures, including protected score/correctness/artifact signals,
+  shortcut-threat evidence, operation/rank instrumentation, and saved
+  construction artifacts.
+- Connect real compiler/hardware/kernel/scheduling fixtures to
+  `libreevolve.systems_result_report.v1`, with separate optimization,
+  held-out/generalization, and reference-correctness gates plus artifacts that
+  distinguish loop feedback from generalization, deployment, or independent
+  certification evidence.
+- Document reachable metric ranges, target/SOTA values, and normalization
+  behavior for benchmark fixtures so intended improvements remain ordered.
 - For each local domain paper, either add a benchmark, link it to an existing
   benchmark, or keep it marked background-only in `papers/README.md`.
 - Add repeatable benchmark scripts for backend, seed, prompt, and archive
@@ -203,7 +293,9 @@ is not yet an AlphaEvolve reproduction.
   run summaries, lineage, richer metrics, workspace artifacts, and failure
   statistics.
 - Add packaging/release hygiene beyond editable installs.
-- Broaden CI/interpreter coverage.
+- Re-enable or explicitly track disabled GitHub workflow state, add docs/paper
+  validation, and broaden CI/interpreter coverage without reintroducing
+  notification noise.
 
 ## Non-Goals For Now
 

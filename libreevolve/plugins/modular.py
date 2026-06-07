@@ -17,3 +17,13 @@ class ModularPlugin(PluginBase):
     """
     def build_extra_context(self, parent, inspirations) -> str:
         return _GUIDANCE
+
+    def prompt_context_metadata(self) -> dict:
+        return {
+            "paper_inspiration": "ImprovEvolve",
+            "strategy_policy": "static_prompt_only",
+            "operation_selected": "static_modular_guidance",
+            "operation_executed": False,
+            "interface_enforced": False,
+            "described_operations": ["generate_config", "improve", "perturb"],
+        }

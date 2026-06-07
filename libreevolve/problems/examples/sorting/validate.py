@@ -10,7 +10,11 @@ def evaluate(code: str) -> dict:
     random.seed(42)
     cases = [[], [1], [3,1,2], [5,3,1,4,2], [-3,0,5,-1,2], [1,1,1,2,1],
              list(range(10,0,-1)), [random.randint(-100,100) for _ in range(20)]]
-    passed = sum(1 for tc in cases if _safe(sort_list, list(tc)) == sorted(tc))
+    passed = 0
+    for tc in cases:
+        result = _safe(sort_list, list(tc))
+        if type(result) is list and result == sorted(tc):
+            passed += 1
     acc = passed / len(cases)
     return {"accuracy": acc, "is_valid": acc == 1.0}
 

@@ -15,6 +15,14 @@ CASES = [
         [[2, 0], [0, 2]],
         [[-1, 3], [4, -5]],
     ),
+    (
+        [[-3, 5], [7, -11]],
+        [[13, -17], [19, 23]],
+    ),
+    (
+        [[6, -2], [9, 4]],
+        [[-8, 1], [3, -7]],
+    ),
 ]
 
 
@@ -23,7 +31,12 @@ def evaluate(code: str) -> dict:
         tree = ast.parse(code)
     except SyntaxError:
         return _invalid()
-    count = _multiplication_count(tree)
+    if _has_forbidden_constructs(tree):
+        return _invalid()
+    fn_node = _find_matmul2_function(tree)
+    if fn_node is None:
+        return _invalid()
+    count = _multiplication_count(fn_node)
     if count <= 0:
         return _invalid()
     ns = {}
@@ -46,6 +59,27 @@ def evaluate(code: str) -> dict:
         "multiplication_count": count,
         "is_valid": True,
     }
+
+
+def _find_matmul2_function(tree: ast.AST) -> ast.FunctionDef | ast.AsyncFunctionDef | None:
+    for node in tree.body if isinstance(tree, ast.Module) else []:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == "matmul2":
+            return node
+    return None
+
+
+def _has_forbidden_constructs(tree: ast.AST) -> bool:
+    forbidden_calls = {"__import__", "eval", "exec", "compile", "open"}
+    forbidden_modules = {"numpy", "np", "torch", "jax"}
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            return True
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            if node.func.id in forbidden_calls:
+                return True
+        if isinstance(node, ast.Name) and node.id in forbidden_modules:
+            return True
+    return False
 
 
 def _multiplication_count(tree: ast.AST) -> int:

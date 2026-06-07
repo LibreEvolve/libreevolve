@@ -4,8 +4,9 @@ These histories are checked into Git as curated examples. They were kept because
 
 These are legacy history fixtures, not complete current run directories. They
 contain `history.jsonl` and `best.py`, but they do not include the modern
-artifact set such as `manifest.json`, `prompt_history.jsonl`,
-`failure_history.jsonl`, or `best_workspace/`.
+artifact set such as `manifest.json`, `archive_events.jsonl`,
+`llm_calls.jsonl`, `prompt_history.jsonl`, `failure_history.jsonl`, or
+`best_workspace/`.
 
 ## Kept examples
 

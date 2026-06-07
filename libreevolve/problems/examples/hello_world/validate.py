@@ -10,7 +10,11 @@ def evaluate(code: str) -> dict:
     if not callable(greet):
         return {"score": 0.0, "is_valid": False}
     tests = [("World", "Hello, World!"), ("Alice", "Hello, Alice!"), ("Bob", "Hello, Bob!")]
-    passed = sum(1 for n, e in tests if _safe(greet, n) == e)
+    passed = 0
+    for name, expected in tests:
+        result = _safe(greet, name)
+        if type(result) is str and result == expected:
+            passed += 1
     return {"score": passed / len(tests), "is_valid": passed == len(tests)}
 
 def _safe(fn, arg):

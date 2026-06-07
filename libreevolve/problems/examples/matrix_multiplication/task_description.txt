@@ -1,4 +1,4 @@
 Discover a correct 2x2 matrix multiplication implementation using fewer scalar multiplication operations.
 Write `matmul2(a, b) -> list[list[float]]`, where `a` and `b` are 2x2 numeric matrices.
-The validator checks exact correctness on deterministic integer cases and scores valid programs by inverse multiplication count.
+The validator checks exact correctness on deterministic integer cases, rejects import/library delegation and module-level dead-code multiplication counters, and scores valid programs by inverse multiplication count inside `matmul2`.
 Keep the public function name and return shape unchanged.

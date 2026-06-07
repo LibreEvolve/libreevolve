@@ -1,0 +1,120 @@
+{
+  "schema": "libreevolve.alphaevolve_ablation_registry.v1",
+  "source_paper_id": "2506.13131",
+  "source_section": "AlphaEvolve Section 4 / Figure 8",
+  "report_contract": {
+    "schema": "libreevolve.alphaevolve_ablation_report.v1",
+    "budget_axis": "fraction_of_equal_compute_budget",
+    "required_budget_fractions": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "seed_policy": {
+      "independent_seed_count": 3,
+      "aggregation": "mean_and_standard_deviation"
+    },
+    "target_policy": {
+      "target_set": "declared_benchmark_targets",
+      "aggregation": "mean_over_targets"
+    },
+    "required_result_fields": [
+      "variant_id",
+      "target_id",
+      "seed",
+      "budget_fraction",
+      "score",
+      "consumed_budget",
+      "component_assertions"
+    ]
+  },
+  "variants": [
+    {
+      "id": "full_system",
+      "name": "Full system",
+      "status": "definition_only",
+      "variant_role": "baseline",
+      "disable_components": [],
+      "required_config_assertions": [
+        {"field": "max_generations", "operator": "gt", "value": 0},
+        {"field": "parent_selection_strategy", "operator": "not_equals", "value": "seed_only"},
+        {"field": "mutation_mode", "operator": "in", "value": ["diff", "full"]},
+        {"field": "ensemble_min_backends", "operator": "gte", "value": 1}
+      ],
+      "paper_label": "Full",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Baseline variant for comparing component-disabled ablations."
+    },
+    {
+      "id": "no_evolution",
+      "name": "No evolution",
+      "status": "definition_only",
+      "variant_role": "ablation",
+      "disable_components": ["evolutionary_database", "parent_selection", "archive_feedback"],
+      "required_config_assertions": [
+        {"field": "max_generations", "operator": "equals", "value": 0},
+        {"field": "candidate_source", "operator": "equals", "value": "seed_or_direct_sampling_only"},
+        {"field": "archive_admission_enabled", "operator": "equals", "value": false}
+      ],
+      "paper_label": "No evolution",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Tests whether iterative evolutionary selection and archive feedback improve over non-evolutionary sampling."
+    },
+    {
+      "id": "no_context_in_prompt",
+      "name": "No context in the prompt",
+      "status": "definition_only",
+      "variant_role": "ablation",
+      "disable_components": ["parent_context", "inspiration_context", "failure_feedback_context", "plugin_context"],
+      "required_config_assertions": [
+        {"field": "num_inspirations", "operator": "equals", "value": 0},
+        {"field": "prompt_context_sections", "operator": "equals", "value": []},
+        {"field": "context_files_enabled", "operator": "equals", "value": false},
+        {"field": "plugin_context_enabled", "operator": "equals", "value": false}
+      ],
+      "paper_label": "No context in the prompt",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Tests whether prompt-visible prior programs, feedback, and external context contribute to search quality."
+    },
+    {
+      "id": "no_meta_prompt_evolution",
+      "name": "No meta prompt evolution",
+      "status": "definition_only",
+      "variant_role": "ablation",
+      "disable_components": ["meta_prompt_evolution"],
+      "required_config_assertions": [
+        {"field": "meta_prompt_evolution", "operator": "equals", "value": false},
+        {"field": "prompt_variants_mutable", "operator": "equals", "value": false}
+      ],
+      "paper_label": "No meta prompt evolution",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Tests whether evolving prompt templates improves performance over fixed prompt policy."
+    },
+    {
+      "id": "no_full_file_evolution",
+      "name": "No full-file evolution",
+      "status": "definition_only",
+      "variant_role": "ablation",
+      "disable_components": ["full_file_evolution", "workspace_topology_mutation"],
+      "required_config_assertions": [
+        {"field": "mutation_mode", "operator": "equals", "value": "diff"},
+        {"field": "candidate_workspace_mode", "operator": "equals", "value": "single_primary_file"},
+        {"field": "file_create_delete_enabled", "operator": "equals", "value": false}
+      ],
+      "paper_label": "No full-file evolution",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Tests whether whole-file or workspace-level evolution improves over localized edits."
+    },
+    {
+      "id": "small_base_llm_only",
+      "name": "Small base LLM only",
+      "status": "definition_only",
+      "variant_role": "ablation",
+      "disable_components": ["large_model_backends", "llm_ensemble_routing"],
+      "required_config_assertions": [
+        {"field": "ensemble_strategy", "operator": "equals", "value": "single_backend"},
+        {"field": "backend_count", "operator": "equals", "value": 1},
+        {"field": "backend_capability_tier", "operator": "equals", "value": "small_base"}
+      ],
+      "paper_label": "Small base LLM only",
+      "paper_citations": ["2506.13131"],
+      "rationale": "Tests whether the larger/mixed LLM ensemble contributes beyond a small base model."
+    }
+  ]
+}

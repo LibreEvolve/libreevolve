@@ -13,14 +13,14 @@ def evaluate(code: str) -> dict:
         return {"sum_radii": 0.0, "is_valid": False}
     try:
         circles = solve()
-        if not isinstance(circles, list) or len(circles) != TARGET_CIRCLES:
+        if type(circles) is not list or len(circles) != TARGET_CIRCLES:
             return {"sum_radii": 0.0, "is_valid": False}
     except Exception:
         return {"sum_radii": 0.0, "is_valid": False}
     total = 0.0
     parsed = []
     for circle in circles:
-        if not isinstance(circle, (list, tuple)) or len(circle) != 3:
+        if type(circle) not in (list, tuple) or len(circle) != 3:
             return {"sum_radii": 0.0, "is_valid": False}
         x, y, r = circle
         if not all(isinstance(v, (int, float)) and math.isfinite(v) for v in (x, y, r)):
@@ -31,6 +31,8 @@ def evaluate(code: str) -> dict:
             return {"sum_radii": 0.0, "is_valid": False}
         parsed.append((float(x), float(y), float(r)))
         total += float(r)
+    if len(parsed) != TARGET_CIRCLES:
+        return {"sum_radii": 0.0, "is_valid": False}
     for i in range(len(parsed)):
         x1, y1, r1 = parsed[i]
         for j in range(i + 1, len(parsed)):

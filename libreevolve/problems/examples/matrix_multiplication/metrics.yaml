@@ -2,11 +2,8 @@ metrics:
   - name: inverse_multiplications
     direction: maximize
     primary: true
-    bounds: [0.0, 0.2]
+    bounds: [0.0, 1.0]
   - name: multiplication_count
     direction: minimize
     primary: false
     bounds: [1.0, 12.0]
-  - name: is_valid
-    direction: maximize
-    primary: false

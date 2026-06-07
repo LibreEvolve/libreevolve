@@ -10,3 +10,14 @@ def test_includes_method_names():
 def test_deterministic():
     p = ModularPlugin()
     assert p.build_extra_context(_p(), []) == p.build_extra_context(_p(), [])
+
+def test_prompt_context_metadata_labels_static_guidance():
+    metadata = ModularPlugin().prompt_context_metadata()
+    assert metadata == {
+        "paper_inspiration": "ImprovEvolve",
+        "strategy_policy": "static_prompt_only",
+        "operation_selected": "static_modular_guidance",
+        "operation_executed": False,
+        "interface_enforced": False,
+        "described_operations": ["generate_config", "improve", "perturb"],
+    }

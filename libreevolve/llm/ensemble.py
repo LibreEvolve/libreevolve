@@ -1,18 +1,98 @@
 from __future__ import annotations
+from collections.abc import Callable, Mapping
+from copy import deepcopy
 import hashlib
+import importlib
+import json
 import math
+from pathlib import Path
+import queue
+import re
+import threading
 import time
-from uuid import uuid4
+import unicodedata
+
+from libreevolve.core.artifact_schema import (
+    ARTIFACT_SCHEMA_VERSION,
+    LLM_CALL_RECORD_SCHEMA,
+    LLM_REWARD_RECORD_SCHEMA,
+)
+from libreevolve.core.redaction import redact_sensitive_text
+from libreevolve.core.config import MAX_LLM_CALL_ATTEMPTS, MAX_LLM_RETRIES
 from libreevolve.llm.base import LLMBackend
+from libreevolve.llm.openai_compat import (
+    OPENAI_API_MODES,
+    OPENAI_REASONING_EFFORTS,
+    validate_openai_api_mode as _validate_openai_api_mode,
+    validate_openai_reasoning_effort_for_model,
+)
+from libreevolve.llm.client_context import (
+    CLIENT_CONTEXT_FIELDS,
+    validate_backend_client_context,
+    validate_client_context_label,
+    validate_endpoint_url,
+)
+from libreevolve.llm.request_params import (
+    REQUEST_PARAMETER_FIELDS,
+    validate_backend_request_parameters,
+)
+from libreevolve.llm.provider_metadata import (
+    provider_response_metadata_record,
+    validate_provider_response_metadata,
+)
+from libreevolve.llm.provider_retry import validate_provider_max_retries
+from libreevolve.llm.prompt_roles import (
+    prompt_role_policy_record,
+    validate_prompt_role_policy,
+)
+
+MAX_REWARD = 1.0
+MAX_PROVIDER_ERROR_CHARS = 500
+DEFAULT_MAX_RESPONSE_CHARS = 100_000
+DEFAULT_MAX_CALL_HISTORY = 500
+DEFAULT_MAX_PROMPT_CHARS: int | None = None
+DEFAULT_REWARD_ACCOUNTED_ROLES = ("mutation",)
+PROVIDER_RESPONSE_ERROR_CATEGORIES = {
+    "non_text",
+    "empty_text",
+    "oversized_text",
+    "refusal",
+    "tool_call_only",
+}
+PROVIDER_FAILURE_CATEGORIES = {
+    "provider_response",
+    "timeout",
+    "rate_limit",
+    "transport",
+    "provider_server_error",
+    "provider_client_error",
+    "unknown",
+}
+_CALL_ROLE_RE = re.compile(r"(?!.*::)(?!.*:$)[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
+_METADATA_KEY_RE = re.compile(r"(?!.*::)(?!.*:$)[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
+_MODEL_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}")
+_CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
+    r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
+)
+_CUSTOM_BACKEND_KWARG_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]{0,127}")
+_ENSEMBLE_STRATEGIES = {"ucb1", "throughput_depth"}
+_OPENAI_REASONING_EFFORTS = OPENAI_REASONING_EFFORTS
+_OPENAI_API_MODES = OPENAI_API_MODES
+_THROUGHPUT_DEPTH_WEIGHTS = {"depth": 0.10, "cost": -0.05, "latency": -0.05}
+_THROUGHPUT_DEPTH_NORMALIZATION = "per_selection_minmax"
+_NEUTRAL_NORMALIZED_METADATA = 0.5
+_COST_USD_PER_MILLION_TOKENS_FIELD = "cost_usd_per_million_tokens"
+_PROMPT_MAX_ESTIMATED_TOKENS_FIELD = "prompt_max_estimated_tokens"
 
 
 class LLMEnsemble:
     """UCB-style routing layer over one or more LLMBackend instances.
 
-    Sources: UCB1 (Auer, Cesa-Bianchi & Fischer, 2002), applied to LLM
-    selection per MadEvolve (arXiv:2602.15951). This implementation is a
-    heuristic adaptation over observed fitness improvements, not a canonical
-    regret-analyzed UCB1 implementation.
+    Sources: UCB1 (Auer, Cesa-Bianchi & Fischer, 2002), with adjacent
+    code-evolution scheduling inspiration. This implementation is a heuristic
+    adaptation over caller-provided reward updates, currently admission-gated
+    fitness improvements in the evolution loop, not a canonical regret-analyzed
+    UCB1 implementation or a MadEvolve reproduction.
     """
 
     def __init__(
@@ -22,112 +102,685 @@ class LLMEnsemble:
         strategy: str = "ucb1",
         backend_metadata: list[dict] | None = None,
         max_retries: int = 0,
+        max_call_attempts: int = MAX_LLM_CALL_ATTEMPTS,
         fallback: bool = True,
+        max_response_chars: int = DEFAULT_MAX_RESPONSE_CHARS,
+        max_call_history: int = DEFAULT_MAX_CALL_HISTORY,
+        call_timeout_sec: float | None = None,
+        provider_response_retention_mode: str = "hash_only",
+        provider_error_retention_mode: str = "redacted",
+        max_prompt_chars: int | None = DEFAULT_MAX_PROMPT_CHARS,
+        max_prompt_estimated_tokens: int | None = None,
+        reward_accounted_roles: list[str] | tuple[str, ...] = DEFAULT_REWARD_ACCOUNTED_ROLES,
+        max_calls_by_role: Mapping[str, int] | None = None,
+        role_backend_indices: Mapping[str, list[int] | tuple[int, ...]] | None = None,
+        role_failure_quarantine_after: Mapping[str, int] | None = None,
     ):
         if not backends:
             raise ValueError("LLMEnsemble requires at least one backend.")
-        self.backends = backends
-        self.c = explore_coeff
-        self.strategy = strategy
-        self.backend_metadata = backend_metadata or [{} for _ in backends]
-        self.max_retries = max(0, int(max_retries))
-        self.fallback = bool(fallback)
-        self.counts: list[int]   = [0]   * len(backends)
-        self.wins:   list[float] = [0.0] * len(backends)
-        self.total:  int         = 0
-        self.call_history: list[dict] = []
+        self.backends = list(backends)
+        self.c = _validate_explore_coeff(explore_coeff)
+        self.strategy = _validate_strategy(strategy)
+        self._backend_metadata = _validate_backend_metadata(backend_metadata, len(backends))
+        self.max_retries = _validate_max_retries(max_retries)
+        self.max_call_attempts = _validate_max_call_attempts(max_call_attempts)
+        self.fallback = _validate_fallback(fallback)
+        self.max_response_chars = _validate_max_response_chars(max_response_chars)
+        self.max_call_history = _validate_max_call_history(max_call_history)
+        self.call_timeout_sec = _validate_optional_call_timeout(call_timeout_sec)
+        self.provider_response_retention_mode = _validate_retention_mode(
+            provider_response_retention_mode,
+            field="provider_response_retention_mode",
+        )
+        self.provider_error_retention_mode = _validate_retention_mode(
+            provider_error_retention_mode,
+            field="provider_error_retention_mode",
+        )
+        self.max_prompt_chars = _validate_optional_max_prompt_chars(max_prompt_chars)
+        self.max_prompt_estimated_tokens = _validate_optional_max_prompt_estimated_tokens(
+            max_prompt_estimated_tokens
+        )
+        self._reward_accounted_roles = _validate_reward_accounted_roles(
+            reward_accounted_roles
+        )
+        self.max_calls_by_role = _validate_max_calls_by_role(max_calls_by_role)
+        self.role_failure_quarantine_after = _validate_role_quarantine_thresholds(
+            role_failure_quarantine_after
+        )
+        self._configured_role_backend_indices = _validate_role_backend_indices_policy(
+            role_backend_indices,
+            backend_count=len(backends),
+        )
+        self._counts: list[int] = [0] * len(backends)
+        self._wins: list[float] = [0.0] * len(backends)
+        self._total: int = 0
+        self._call_history: list[dict] = []
+        self._last_call: dict | None = None
+        self._call_history_total_records: int = 0
+        self._call_history_dropped_records: int = 0
+        self._call_record_sink: Callable[[dict], None] | None = None
+        self._unrewarded_success_call_ids: list[list[str]] = [[] for _ in backends]
+        self._rewarded_call_ids: set[str] = set()
+        self._role_accounting: dict[str, dict[str, int | float]] = {}
+        self._role_scheduler_state: dict[str, dict] = {}
+        self._logical_role_calls: dict[str, int] = {}
+        self._provider_failure_state: dict[str, dict[int, dict]] = {}
 
     def generate(self, prompt: str, role: str = "mutation") -> tuple[str, int]:
         """Returns (diff_text, backend_index)."""
-        excluded: set[int] = set()
+        role = validate_llm_call_role(role)
+        role_backend_indices = self._role_backend_indices(role)
+        effective_prompt_token_limit = self._effective_prompt_estimated_token_limit(
+            role_backend_indices
+        )
+        prompt = validate_llm_prompt(
+            prompt,
+            max_chars=self.max_prompt_chars,
+            max_estimated_tokens=effective_prompt_token_limit,
+        )
+        self._enforce_role_call_limit(role)
+        self._logical_role_calls[role] = self._logical_role_calls.get(role, 0) + 1
+        excluded: set[int] = set(self._quarantined_backend_indices(role))
         backend_attempts = len(self.backends) if self.fallback else 1
         last_exc: Exception | None = None
+        attempt_index = 0
+        reward_accounted = self._is_reward_accounted_role(role)
         for fallback_attempt in range(backend_attempts):
-            idx = self._ucb1_select(exclude=excluded)
+            if attempt_index >= self.max_call_attempts:
+                break
+            if role_backend_indices is not None and not (
+                role_backend_indices - excluded
+            ):
+                break
+            idx = self._ucb1_select(
+                exclude=excluded,
+                allowed_indices=role_backend_indices,
+                account_selection=reward_accounted,
+            )
+            if reward_accounted:
+                self._record_role_scheduler_selection(role, idx)
             backend = self.backends[idx]
             for retry_attempt in range(self.max_retries + 1):
+                if attempt_index >= self.max_call_attempts:
+                    break
                 started = time.perf_counter()
                 record = self._call_record(
                     role=role,
                     backend_idx=idx,
                     prompt=prompt,
-                    counts_before=list(self.counts),
+                    counts_before=list(self._counts),
                     retry_attempt=retry_attempt,
                     fallback_attempt=fallback_attempt,
+                    attempt_index=attempt_index,
+                    role_backend_indices=role_backend_indices,
+                    effective_prompt_token_limit=effective_prompt_token_limit,
                 )
+                attempt_index += 1
                 try:
-                    response = backend.generate(prompt)
+                    response = _call_backend_generate(
+                        backend,
+                        prompt,
+                        role=role,
+                        timeout_sec=self.call_timeout_sec,
+                    )
+                    response = _require_response_text(
+                        response,
+                        max_chars=self.max_response_chars,
+                    )
+                    output_text, output_retention = _provider_response_retention_record(
+                        response,
+                        mode=self.provider_response_retention_mode,
+                    )
                 except Exception as exc:
                     last_exc = exc
+                    error_text, error_retention = _provider_error_retention_record(
+                        exc,
+                        mode=self.provider_error_retention_mode,
+                    )
+                    provider_metadata, provider_metadata_diagnostic = (
+                        _backend_provider_response_metadata_telemetry(backend)
+                    )
+                    if provider_metadata_diagnostic:
+                        record["backend_telemetry_diagnostics"].append(
+                            provider_metadata_diagnostic
+                        )
+                    attempts_remaining = attempt_index < self.max_call_attempts
+                    will_retry = retry_attempt < self.max_retries and attempts_remaining
+                    will_fallback = (
+                        retry_attempt >= self.max_retries
+                        and self.fallback
+                        and fallback_attempt < backend_attempts - 1
+                        and attempts_remaining
+                    )
+                    if reward_accounted and not will_retry:
+                        self._counts[idx] += 1
+                        self._record_role_scheduler_count(role, idx)
+                    failure_category = _provider_failure_category(exc)
+                    failure_policy_state = self._record_provider_failure_policy_state(
+                        role=role,
+                        backend_idx=idx,
+                        category=failure_category,
+                        will_retry=will_retry,
+                        reward_accounted=reward_accounted,
+                    )
+                    cost_estimate = _provider_cost_estimate_record(
+                        record["backend_metadata"],
+                        provider_metadata.get("usage"),
+                    )
                     record.update(
                         {
                             "status": "error",
+                            "scheduler_accounting": (
+                                "rewarded" if reward_accounted else "telemetry_only"
+                            ),
                             "latency_sec": time.perf_counter() - started,
                             "error_type": exc.__class__.__name__,
-                            "error": str(exc),
-                            "counts_after": list(self.counts),
-                            "will_retry": retry_attempt < self.max_retries,
-                            "will_fallback": (
-                                retry_attempt >= self.max_retries
-                                and self.fallback
-                                and fallback_attempt < backend_attempts - 1
+                            "error": error_text,
+                            "error_retention": error_retention,
+                            "provider_failure_category": failure_category,
+                            "provider_status_code": _provider_status_code(exc),
+                            "provider_response_error": _provider_response_error_record(exc),
+                            "provider_failure_policy": _provider_failure_policy_record(
+                                role=role,
+                                category=failure_category,
+                                will_retry=will_retry,
+                                will_fallback=will_fallback,
+                                state=failure_policy_state,
                             ),
+                            "cost_estimate": cost_estimate,
+                            "cost_estimate_status": _provider_cost_estimate_status_record(
+                                record["backend_metadata"],
+                                provider_metadata.get("usage"),
+                                cost_estimate,
+                            ),
+                            **provider_metadata,
+                            "counts_after": list(self._counts),
+                            "will_retry": will_retry,
+                            "will_fallback": will_fallback,
                         }
                     )
-                    self.call_history.append(record)
+                    self._append_call_record(record)
                     continue
-                self.counts[idx] += 1
+                provider_metadata, provider_metadata_diagnostic = (
+                    _backend_provider_response_metadata_telemetry(backend)
+                )
+                if provider_metadata_diagnostic:
+                    record["backend_telemetry_diagnostics"].append(
+                        provider_metadata_diagnostic
+                    )
+                if reward_accounted:
+                    self._counts[idx] += 1
+                    self._record_role_scheduler_count(role, idx)
+                self._record_provider_success(role, idx)
+                cost_estimate = _provider_cost_estimate_record(
+                    record["backend_metadata"],
+                    provider_metadata.get("usage"),
+                )
                 record.update(
                     {
                         "status": "ok",
+                        "scheduler_accounting": (
+                            "rewarded" if reward_accounted else "telemetry_only"
+                        ),
                         "latency_sec": time.perf_counter() - started,
+                        "output": output_text,
+                        "output_retention": output_retention,
                         "output_chars": len(response),
                         "output_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
-                        "counts_after": list(self.counts),
+                        "cost_estimate": cost_estimate,
+                        "cost_estimate_status": _provider_cost_estimate_status_record(
+                            record["backend_metadata"],
+                            provider_metadata.get("usage"),
+                            cost_estimate,
+                        ),
+                        **provider_metadata,
+                        "counts_after": list(self._counts),
                         "will_retry": False,
                         "will_fallback": False,
                     }
                 )
-                self.call_history.append(record)
+                self._append_call_record(record)
+                if reward_accounted:
+                    self._unrewarded_success_call_ids[idx].append(record["id"])
+                    self._record_role_scheduler_unrewarded_success(
+                        role,
+                        idx,
+                        record["id"],
+                    )
                 return response, idx
             excluded.add(idx)
         assert last_exc is not None
         raise last_exc
 
     @property
+    def call_history(self) -> list[dict]:
+        return deepcopy(self._call_history)
+
+    @property
     def last_call(self) -> dict | None:
-        return self.call_history[-1] if self.call_history else None
+        return deepcopy(self._last_call)
 
-    def record_reward(self, idx: int, reward: float) -> None:
-        """Caller is responsible for clamping reward >= 0."""
-        self.wins[idx] += reward
+    @property
+    def call_history_retention(self) -> dict:
+        return {
+            "policy": "bounded_in_memory_window",
+            "max_records": self.max_call_history,
+            "retained_records": len(self._call_history),
+            "total_records": self._call_history_total_records,
+            "dropped_records": self._call_history_dropped_records,
+        }
 
-    def _ucb1_select(self, exclude: set[int] | None = None) -> int:
+    @property
+    def backend_metadata(self) -> list[dict]:
+        return deepcopy(self._backend_metadata)
+
+    @property
+    def counts(self) -> list[int]:
+        return list(self._counts)
+
+    @property
+    def wins(self) -> list[float]:
+        return list(self._wins)
+
+    @property
+    def total(self) -> int:
+        return self._total
+
+    @property
+    def scheduler_state(self) -> dict:
+        return {
+            "counts": list(self._counts),
+            "wins": list(self._wins),
+            "total": self._total,
+            "unrewarded_success_call_ids": deepcopy(self._unrewarded_success_call_ids),
+            "rewarded_call_ids": sorted(self._rewarded_call_ids),
+            "call_history_retention": self.call_history_retention,
+            "reward_accounting_policy": {
+                "policy": "configured_reward_accounted_roles_v1",
+                "reward_accounted_roles": sorted(self._reward_accounted_roles),
+            },
+            "role_accounting": deepcopy(self._role_accounting),
+            "role_scheduler_state": deepcopy(self._role_scheduler_state),
+            "role_call_limits": {
+                "policy": "logical_generate_call_limits_by_role_v1",
+                "max_calls_by_role": dict(self.max_calls_by_role),
+                "logical_calls_by_role": dict(sorted(self._logical_role_calls.items())),
+            },
+            "role_backend_policy": {
+                "policy": "explicit_role_backend_indices_else_backend_metadata_else_global_v1",
+                "configured_role_backend_indices": {
+                    role: list(indices)
+                    for role, indices in self._configured_role_backend_indices.items()
+                },
+                "metadata_role_backend_indices": _metadata_role_backend_indices(
+                    self._backend_metadata
+                ),
+                "fallback_policy": "use_backend_metadata_then_global_bandit_when_role_not_configured",
+            },
+            "provider_failure_policy_state": self._provider_failure_policy_state_snapshot(),
+        }
+
+    def restore_scheduler_state(self, state: object) -> None:
+        has_role_call_limits = isinstance(state, dict) and "role_call_limits" in state
+        has_provider_failure_policy_state = (
+            isinstance(state, dict) and "provider_failure_policy_state" in state
+        )
+        (
+            counts,
+            wins,
+            total,
+            unrewarded,
+            rewarded,
+            role_accounting,
+            role_scheduler_state,
+            reward_accounted_roles,
+            max_calls_by_role,
+            logical_role_calls,
+            role_failure_quarantine_after,
+            provider_failure_state,
+        ) = _validate_scheduler_state(
+            state,
+            len(self.backends),
+        )
+        self._counts = counts
+        self._wins = wins
+        self._total = total
+        self._unrewarded_success_call_ids = unrewarded
+        self._rewarded_call_ids = rewarded
+        self._role_accounting = role_accounting
+        self._role_scheduler_state = role_scheduler_state
+        self._reward_accounted_roles = reward_accounted_roles
+        if has_role_call_limits:
+            self.max_calls_by_role = max_calls_by_role
+        self._logical_role_calls = logical_role_calls
+        if has_provider_failure_policy_state:
+            self.role_failure_quarantine_after = role_failure_quarantine_after
+        self._provider_failure_state = provider_failure_state
+
+    def set_call_record_sink(self, sink: Callable[[dict], None] | None) -> None:
+        if sink is not None and not callable(sink):
+            raise ValueError("LLM call record sink must be callable or None")
+        self._call_record_sink = sink
+
+    def record_reward(self, idx: int, reward: float, call_id: str | None = None) -> None:
+        """Record a finite non-negative reward, capped to the scheduler range."""
+        _validate_scheduler_state(self.scheduler_state, len(self.backends))
+        if isinstance(idx, bool) or not isinstance(idx, int) or idx < 0 or idx >= len(self.backends):
+            raise ValueError(f"backend reward index out of range: {idx!r}")
+        if isinstance(reward, bool) or not isinstance(reward, (int, float)):
+            raise ValueError(f"backend reward must be numeric, got {reward!r}")
+        numeric = float(reward)
+        if not math.isfinite(numeric):
+            raise ValueError(f"backend reward must be finite, got {reward!r}")
+        if numeric < 0.0:
+            raise ValueError(f"backend reward must be non-negative, got {reward!r}")
+        reward_call_id = self._claim_reward_call_id(idx, call_id)
+        reward_role = self._claim_role_reward_call_id(idx, reward_call_id)
+        applied = min(numeric, MAX_REWARD)
+        self._wins[idx] += applied
+        if reward_role is not None:
+            self._role_scheduler_state[reward_role]["wins"][idx] += applied
+        for record in self._call_history:
+            if record["id"] == reward_call_id:
+                record["reward"] = applied
+                record["reward_raw"] = numeric
+                record["rewarded"] = True
+                if self._last_call is not None and self._last_call.get("id") == reward_call_id:
+                    self._last_call = deepcopy(record)
+                break
+        if self._call_record_sink is not None:
+            self._call_record_sink(
+                {
+                    "record_type": "reward",
+                    "call_id": reward_call_id,
+                    "backend_idx": idx,
+                    "reward": applied,
+                    "reward_raw": numeric,
+                    "rewarded": True,
+                }
+            )
+
+    def _append_call_record(self, record: dict) -> None:
+        record = dict(record)
+        record["sequence_id"] = self._call_history_total_records + 1
+        self._call_history_total_records += 1
+        _add_role_accounting_record(self._role_accounting, record)
+        self._last_call = deepcopy(record)
+        self._call_history.append(record)
+        if len(self._call_history) > self.max_call_history:
+            self._call_history.pop(0)
+            self._call_history_dropped_records += 1
+        if self._call_record_sink is not None:
+            self._call_record_sink(deepcopy(record))
+
+    def _enforce_role_call_limit(self, role: str) -> None:
+        limit = self.max_calls_by_role.get(role)
+        if limit is None:
+            return
+        consumed = self._logical_role_calls.get(role, 0)
+        if consumed >= limit:
+            raise LLMRoleCallLimitError(
+                f"LLM call budget exhausted before {role}: "
+                f"llm_role_call_limits[{role}]={limit}"
+            )
+
+    def _claim_reward_call_id(self, idx: int, call_id: str | None) -> str:
+        available = self._unrewarded_success_call_ids[idx]
+        if call_id is None:
+            if not available:
+                raise ValueError(f"no unrewarded successful call for backend {idx}")
+            reward_call_id = available.pop(0)
+        else:
+            if not isinstance(call_id, str) or not call_id.strip():
+                raise ValueError("reward call_id must be a non-empty string")
+            reward_call_id = call_id
+            if reward_call_id in self._rewarded_call_ids:
+                raise ValueError(f"backend call {reward_call_id!r} has already been rewarded")
+            if reward_call_id not in available:
+                matching = next(
+                    (record for record in self._call_history if record["id"] == reward_call_id),
+                    None,
+                )
+                if matching is None:
+                    raise ValueError(f"backend call {reward_call_id!r} was not found")
+                if matching["backend_idx"] != idx:
+                    raise ValueError(
+                        f"backend call {reward_call_id!r} belongs to backend {matching['backend_idx']}"
+                    )
+                if matching["status"] != "ok":
+                    raise ValueError(f"backend call {reward_call_id!r} is not a successful call")
+                raise ValueError(f"backend call {reward_call_id!r} is not rewardable")
+            available.remove(reward_call_id)
+        self._rewarded_call_ids.add(reward_call_id)
+        return reward_call_id
+
+    def _claim_role_reward_call_id(self, idx: int, call_id: str) -> str | None:
+        for role, state in self._role_scheduler_state.items():
+            available = state["unrewarded_success_call_ids"][idx]
+            if call_id not in available:
+                continue
+            available.remove(call_id)
+            state["rewarded_call_ids"].append(call_id)
+            state["rewarded_call_ids"] = sorted(set(state["rewarded_call_ids"]))
+            return role
+        return None
+
+    def _record_role_scheduler_selection(self, role: str, idx: int) -> None:
+        state = self._role_scheduler_record(role)
+        state["total"] += 1
+
+    def _record_role_scheduler_count(self, role: str, idx: int) -> None:
+        state = self._role_scheduler_record(role)
+        state["counts"][idx] += 1
+
+    def _record_role_scheduler_unrewarded_success(
+        self,
+        role: str,
+        idx: int,
+        call_id: str,
+    ) -> None:
+        state = self._role_scheduler_record(role)
+        state["unrewarded_success_call_ids"][idx].append(call_id)
+
+    def _role_scheduler_record(self, role: str) -> dict:
+        role = validate_llm_call_role(role)
+        return self._role_scheduler_state.setdefault(
+            role,
+            _empty_role_scheduler_record(len(self.backends)),
+        )
+
+    def _ucb1_select(
+        self,
+        exclude: set[int] | None = None,
+        *,
+        allowed_indices: set[int] | None = None,
+        account_selection: bool = True,
+    ) -> int:
+        _validate_scheduler_state(self.scheduler_state, len(self.backends))
         exclude = exclude or set()
-        self.total += 1
-        # Note: log(1)=0 on first call — initial exploration is guaranteed by the
-        # (score, -count) tiebreaker which prefers unexplored arms when scores tie.
+        eligible = (
+            set(range(len(self.backends)))
+            if allowed_indices is None
+            else set(allowed_indices)
+        )
+        eligible -= exclude
+        if not eligible:
+            raise ValueError("no eligible LLM backend remains for selection")
+        effective_total = self._total + 1
+        if account_selection:
+            self._total = effective_total
+        untried = [
+            i for i in range(len(self.backends))
+            if i in eligible and self._counts[i] == 0
+        ]
+        if untried:
+            return untried[0]
+
         scores = []
         for i in range(len(self.backends)):
-            if i in exclude:
+            if i not in eligible:
                 scores.append(float("-inf"))
                 continue
             scores.append(
-                (self.wins[i] / max(self.counts[i], 1))
-                + self.c * math.sqrt(math.log(self.total) / max(self.counts[i], 1))
+                (self._wins[i] / max(self._counts[i], 1))
+                + self.c * math.sqrt(math.log(effective_total) / max(self._counts[i], 1))
             )
         # Tiebreaker: prefer arms with fewer pulls (argmax breaks ties by first index,
         # so we use a tuple (score, -count) to prefer lower counts on ties)
         best_idx = 0
-        best_score = (scores[0], -self.counts[0])
+        best_score = (scores[0], -self._counts[0])
         for i in range(1, len(self.backends)):
-            current_score = (scores[i], -self.counts[i])
+            current_score = (scores[i], -self._counts[i])
             if current_score > best_score:
                 best_score = current_score
                 best_idx = i
         if self.strategy == "throughput_depth":
-            return self._throughput_depth_select(scores, exclude=exclude)
+            return self._throughput_depth_select(
+                scores,
+                exclude=set(range(len(self.backends))) - eligible,
+            )
         return best_idx
+
+    def _is_reward_accounted_role(self, role: str) -> bool:
+        return role in self._reward_accounted_roles
+
+    def _role_backend_indices(self, role: str) -> set[int] | None:
+        configured = self._configured_role_backend_indices.get(role)
+        if configured is not None:
+            return set(configured)
+        matches = {
+            index
+            for index, metadata in enumerate(self._backend_metadata)
+            if metadata.get("role") == role
+        }
+        return matches or None
+
+    def _record_provider_failure_policy_state(
+        self,
+        *,
+        role: str,
+        backend_idx: int,
+        category: str,
+        will_retry: bool,
+        reward_accounted: bool,
+    ) -> dict:
+        threshold = self.role_failure_quarantine_after.get(role)
+        if threshold is None:
+            return {
+                "quarantine_policy": "disabled",
+                "quarantine_decision": "not_quarantined_by_ensemble_policy",
+                "penalty_policy": "disabled",
+                "penalty_decision": "not_penalized_by_ensemble_policy",
+                "quarantine_threshold": None,
+                "consecutive_failures": None,
+                "backend_quarantined": False,
+            }
+        if will_retry:
+            existing = self._provider_failure_state.get(role, {}).get(backend_idx, {})
+            return {
+                "quarantine_policy": "role_backend_consecutive_failure_threshold",
+                "quarantine_decision": "not_quarantined_retry_pending",
+                "penalty_policy": "zero_reward_on_exhausted_reward_accounted_failure",
+                "penalty_decision": "not_penalized_retry_pending",
+                "quarantine_threshold": threshold,
+                "consecutive_failures": int(existing.get("consecutive_failures", 0)),
+                "backend_quarantined": bool(existing.get("quarantined", False)),
+            }
+        role_state = self._provider_failure_state.setdefault(role, {})
+        backend_state = role_state.setdefault(
+            backend_idx,
+            {
+                "backend_idx": backend_idx,
+                "total_failures": 0,
+                "consecutive_failures": 0,
+                "quarantined": False,
+                "last_failure_category": None,
+            },
+        )
+        backend_state["total_failures"] += 1
+        backend_state["consecutive_failures"] += 1
+        backend_state["last_failure_category"] = category
+        if backend_state["consecutive_failures"] >= threshold:
+            backend_state["quarantined"] = True
+            quarantine_decision = "quarantined_role_backend_after_threshold"
+        else:
+            quarantine_decision = "not_quarantined_below_role_threshold"
+        penalty_decision = (
+            "zero_reward_scheduler_penalty"
+            if reward_accounted
+            else "not_penalized_telemetry_only_role"
+        )
+        return {
+            "quarantine_policy": "role_backend_consecutive_failure_threshold",
+            "quarantine_decision": quarantine_decision,
+            "penalty_policy": "zero_reward_on_exhausted_reward_accounted_failure",
+            "penalty_decision": penalty_decision,
+            "quarantine_threshold": threshold,
+            "consecutive_failures": int(backend_state["consecutive_failures"]),
+            "backend_quarantined": bool(backend_state["quarantined"]),
+        }
+
+    def _record_provider_success(self, role: str, backend_idx: int) -> None:
+        role_state = self._provider_failure_state.get(role)
+        if role_state is None:
+            return
+        backend_state = role_state.get(backend_idx)
+        if backend_state is None:
+            return
+        backend_state["consecutive_failures"] = 0
+        backend_state["quarantined"] = False
+
+    def _quarantined_backend_indices(self, role: str) -> set[int]:
+        if role not in self.role_failure_quarantine_after:
+            return set()
+        return {
+            idx
+            for idx, state in self._provider_failure_state.get(role, {}).items()
+            if state.get("quarantined") is True
+        }
+
+    def _provider_failure_policy_state_snapshot(self) -> dict:
+        roles: dict[str, dict] = {}
+        for role, role_state in sorted(self._provider_failure_state.items()):
+            backends = []
+            for idx in sorted(role_state):
+                item = role_state[idx]
+                backends.append({
+                    "backend_idx": idx,
+                    "total_failures": int(item.get("total_failures", 0)),
+                    "consecutive_failures": int(item.get("consecutive_failures", 0)),
+                    "quarantined": bool(item.get("quarantined", False)),
+                    "last_failure_category": item.get("last_failure_category"),
+                })
+            if backends:
+                roles[role] = {"backends": backends}
+        return {
+            "schema": "libreevolve.provider_failure_policy_state.v1",
+            "policy": "role_backend_consecutive_failure_quarantine_v1",
+            "role_quarantine_after": dict(
+                sorted(self.role_failure_quarantine_after.items())
+            ),
+            "roles": roles,
+        }
+
+    def _effective_prompt_estimated_token_limit(
+        self,
+        role_backend_indices: set[int] | None,
+    ) -> int | None:
+        limits: list[int] = []
+        if self.max_prompt_estimated_tokens is not None:
+            limits.append(self.max_prompt_estimated_tokens)
+        eligible = (
+            range(len(self.backends))
+            if role_backend_indices is None
+            else sorted(role_backend_indices)
+        )
+        for idx in eligible:
+            metadata = self._backend_metadata[idx]
+            limit = metadata.get(_PROMPT_MAX_ESTIMATED_TOKENS_FIELD)
+            if limit is not None:
+                limits.append(limit)
+        return min(limits) if limits else None
 
     def _call_record(
         self,
@@ -138,35 +791,104 @@ class LLMEnsemble:
         counts_before: list[int],
         retry_attempt: int = 0,
         fallback_attempt: int = 0,
+        attempt_index: int = 0,
+        role_backend_indices: set[int] | None = None,
+        effective_prompt_token_limit: int | None = None,
     ) -> dict:
         backend = self.backends[backend_idx]
         metadata = (
-            dict(self.backend_metadata[backend_idx])
-            if backend_idx < len(self.backend_metadata)
+            deepcopy(self._backend_metadata[backend_idx])
+            if backend_idx < len(self._backend_metadata)
             else {}
         )
+        backend_name, telemetry_diagnostics = _backend_name_telemetry(backend)
+        api_mode, api_mode_diagnostic = _backend_api_mode_telemetry(backend)
+        if api_mode_diagnostic:
+            telemetry_diagnostics.append(api_mode_diagnostic)
+        request_parameters, request_parameter_diagnostic = _backend_request_parameters_telemetry(
+            backend
+        )
+        if request_parameter_diagnostic:
+            telemetry_diagnostics.append(request_parameter_diagnostic)
+        backend_defaults, backend_defaults_diagnostic = _backend_defaults_telemetry(
+            backend
+        )
+        if backend_defaults_diagnostic:
+            telemetry_diagnostics.append(backend_defaults_diagnostic)
+        client_context, client_context_diagnostic = _backend_client_context_telemetry(backend)
+        if client_context_diagnostic:
+            telemetry_diagnostics.append(client_context_diagnostic)
+        prompt_role_policy, prompt_role_policy_diagnostic = _backend_prompt_role_policy_telemetry(
+            backend,
+            role,
+        )
+        if prompt_role_policy_diagnostic:
+            telemetry_diagnostics.append(prompt_role_policy_diagnostic)
+        prompt_sha256 = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        planned_sequence_id = self._call_history_total_records + 1
         return {
-            "id": uuid4().hex,
+            "id": _deterministic_call_id(
+                sequence_id=planned_sequence_id,
+                role=role,
+                backend_idx=backend_idx,
+                prompt_sha256=prompt_sha256,
+                retry_attempt=retry_attempt,
+                fallback_attempt=fallback_attempt,
+                attempt_index=attempt_index,
+            ),
             "role": role,
             "backend_idx": backend_idx,
-            "backend_name": getattr(backend, "name", backend.__class__.__name__),
+            "backend_name": backend_name,
             "backend_metadata": metadata,
+            "backend_telemetry_diagnostics": telemetry_diagnostics,
             "strategy": self.strategy,
-            "api_mode": getattr(backend, "api_mode", None),
+            "scheduler_policy": self._scheduler_policy_record(
+                role=role,
+                role_backend_indices=role_backend_indices,
+            ),
+            "api_mode": api_mode,
+            "request_parameters": request_parameters,
+            "backend_defaults": backend_defaults,
+            "client_context": client_context,
+            "prompt_role_policy": prompt_role_policy,
+            "call_timeout_sec": self.call_timeout_sec,
+            "max_prompt_chars": self.max_prompt_chars,
+            "max_prompt_estimated_tokens": effective_prompt_token_limit,
+            "configured_max_prompt_estimated_tokens": self.max_prompt_estimated_tokens,
+            "backend_prompt_max_estimated_tokens": metadata.get(
+                _PROMPT_MAX_ESTIMATED_TOKENS_FIELD
+            ),
             "prompt_chars": len(prompt),
-            "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "prompt_estimated_tokens": _estimate_prompt_tokens(len(prompt)),
+            "prompt_sha256": prompt_sha256,
+            "output": None,
+            "output_retention": None,
             "output_chars": 0,
             "output_sha256": None,
             "usage": None,
+            "cost_estimate": None,
+            "cost_estimate_status": None,
             "finish_reason": None,
             "request_id": None,
             "response_id": None,
+            "adapter_retry": None,
+            "provider_diagnostics": None,
+            "reward": None,
+            "reward_raw": None,
+            "rewarded": False,
             "latency_sec": 0.0,
             "status": "pending",
             "error_type": None,
             "error": None,
+            "error_retention": None,
+            "provider_failure_category": None,
+            "provider_status_code": None,
+            "provider_response_error": None,
+            "provider_failure_policy": None,
             "retry_attempt": retry_attempt,
             "fallback_attempt": fallback_attempt,
+            "attempt_index": attempt_index,
+            "max_call_attempts": self.max_call_attempts,
             "will_retry": False,
             "will_fallback": False,
             "counts_before": counts_before,
@@ -183,61 +905,3377 @@ class LLMEnsemble:
         - `latency`: relative latency, lower is better
         - `depth`: relative capability/depth, higher is better
         """
-        best_idx = 0
-        best_score = float("-inf")
         exclude = exclude or set()
+        available = [i for i in range(len(self.backends)) if i not in exclude]
+        normalized = {
+            field: self._normalized_scheduler_metadata(field, available)
+            for field in _THROUGHPUT_DEPTH_WEIGHTS
+        }
+        best_idx = available[0] if available else 0
+        best_score = float("-inf")
         for i, base_score in enumerate(ucb_scores):
             if i in exclude:
                 continue
-            meta = self.backend_metadata[i] if i < len(self.backend_metadata) else {}
-            cost = float(meta.get("cost", 1.0))
-            latency = float(meta.get("latency", 1.0))
-            depth = float(meta.get("depth", 1.0))
-            score = base_score + (0.10 * depth) - (0.05 * cost) - (0.05 * latency)
+            metadata_score = sum(
+                _THROUGHPUT_DEPTH_WEIGHTS[field] * normalized[field][i]
+                for field in _THROUGHPUT_DEPTH_WEIGHTS
+            )
+            score = base_score + metadata_score
             if score > best_score:
                 best_score = score
                 best_idx = i
         return best_idx
 
+    def _normalized_scheduler_metadata(self, field: str, indexes: list[int]) -> dict[int, float]:
+        values = {
+            i: float(self._backend_metadata[i].get(field, 1.0))
+            for i in indexes
+            if i < len(self._backend_metadata)
+        }
+        if not values:
+            return {}
+        minimum = min(values.values())
+        maximum = max(values.values())
+        if maximum == minimum:
+            return {i: _NEUTRAL_NORMALIZED_METADATA for i in values}
+        span = maximum - minimum
+        return {i: (value - minimum) / span for i, value in values.items()}
+
+    def _scheduler_policy_record(
+        self,
+        *,
+        role: str | None = None,
+        role_backend_indices: set[int] | None = None,
+    ) -> dict:
+        policy = {
+            "strategy": self.strategy,
+            "selection_scope": "global_backend_bandit",
+            "role_selection_policy": "shared_selection_reward_accounting_configurable_by_role",
+            "reward_accounted_roles": sorted(self._reward_accounted_roles),
+            "explore_coeff": self.c,
+            "max_retries": self.max_retries,
+            "max_call_attempts": self.max_call_attempts,
+            "fallback": self.fallback,
+            "call_timeout_sec": self.call_timeout_sec,
+            "max_prompt_chars": self.max_prompt_chars,
+            "max_prompt_estimated_tokens": self.max_prompt_estimated_tokens,
+        }
+        if role_backend_indices is not None:
+            policy["selection_scope"] = "role_scoped_backend_bandit"
+            configured = role in self._configured_role_backend_indices
+            policy["role_selection_policy"] = (
+                "explicit_role_backend_indices"
+                if configured
+                else "backend_metadata_role_match_when_available"
+            )
+            policy["role"] = role
+            policy["role_matched_backend_indices"] = sorted(role_backend_indices)
+            policy["role_backend_policy"] = (
+                "config.llm_role_backend_indices"
+                if configured
+                else "backend_metadata.role"
+            )
+            policy["role_fallback_policy"] = (
+                "use_backend_metadata_then_global_bandit_when_role_not_configured"
+            )
+        if self.strategy == "throughput_depth":
+            policy["metadata_normalization"] = _THROUGHPUT_DEPTH_NORMALIZATION
+            policy["metadata_weights"] = dict(_THROUGHPUT_DEPTH_WEIGHTS)
+            policy["neutral_normalized_metadata"] = _NEUTRAL_NORMALIZED_METADATA
+        return policy
+
+
+class LLMCallLedgerError(ValueError):
+    """Raised when llm_calls.jsonl cannot be replayed safely."""
+
+
+class ProviderResponseError(ValueError):
+    """Raised when a provider response cannot be treated as generated text."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        category: str,
+        source: str,
+        value_type: str | None = None,
+    ) -> None:
+        if category not in PROVIDER_RESPONSE_ERROR_CATEGORIES:
+            raise ValueError(f"unsupported provider response error category: {category!r}")
+        super().__init__(message)
+        self.category = category
+        self.source = source
+        self.value_type = value_type
+
+
+class LLMRoleCallLimitError(RuntimeError):
+    """Raised when a configured logical call quota for an LLM role is exhausted."""
+
+
+class ProviderCallTimeoutError(TimeoutError):
+    """Raised when an ensemble-level backend call deadline is exceeded."""
+
+    def __init__(self, timeout_sec: float) -> None:
+        super().__init__(f"LLM backend call timed out after {timeout_sec:.6g} seconds")
+        self.timeout_sec = timeout_sec
+
+
+class _DuplicateLLMCallJsonNameError(ValueError):
+    pass
+
+
+def load_llm_call_ledger(path: str | Path, *, backend_count: int | None = None) -> dict:
+    """Validate durable LLM call/reward telemetry and return replay metadata."""
+    calls: dict[str, dict] = {}
+    rewarded_call_ids: set[str] = set()
+    role_accounting: dict[str, dict[str, int | float]] = {}
+    provider_failure_policy_summary: dict[str, dict] = {}
+    call_sequence = 0
+    reward_count = 0
+    try:
+        handle = Path(path).open("rb")
+    except OSError as exc:
+        raise LLMCallLedgerError(f"Failed to read llm_calls.jsonl: {exc}") from exc
+    with handle:
+        for line_number, raw_line in enumerate(handle, start=1):
+            try:
+                line = raw_line.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise LLMCallLedgerError(
+                    "Malformed llm_calls.jsonl at line "
+                    f"{line_number}: invalid UTF-8 ({exc.reason})"
+                ) from exc
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(
+                    line,
+                    object_pairs_hook=_reject_duplicate_llm_call_json_names,
+                )
+            except _DuplicateLLMCallJsonNameError as exc:
+                raise LLMCallLedgerError(
+                    f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+                ) from exc
+            except json.JSONDecodeError as exc:
+                raise LLMCallLedgerError(
+                    f"Malformed llm_calls.jsonl at line {line_number}: {exc.msg}"
+                ) from exc
+            if not isinstance(record, dict):
+                raise LLMCallLedgerError(
+                    f"Malformed llm_calls.jsonl at line {line_number}: expected JSON object"
+                )
+            record_type = record.get("record_type", "call")
+            if record_type == "call":
+                _validate_llm_ledger_schema(
+                    record,
+                    line_number,
+                    expected_schema=LLM_CALL_RECORD_SCHEMA,
+                )
+                call_sequence += 1
+                _validate_replayed_call_record(
+                    record,
+                    line_number,
+                    expected_sequence=call_sequence,
+                    calls=calls,
+                    backend_count=backend_count,
+                )
+                calls[record["id"]] = deepcopy(record)
+                _add_role_accounting_record(role_accounting, record)
+                _add_provider_failure_policy_summary(
+                    provider_failure_policy_summary,
+                    record,
+                )
+            elif record_type == "reward":
+                _validate_llm_ledger_schema(
+                    record,
+                    line_number,
+                    expected_schema=LLM_REWARD_RECORD_SCHEMA,
+                )
+                reward_count += 1
+                _validate_replayed_reward_record(
+                    record,
+                    line_number,
+                    calls=calls,
+                    rewarded_call_ids=rewarded_call_ids,
+                    backend_count=backend_count,
+                )
+                rewarded_call_ids.add(record["call_id"])
+            else:
+                raise LLMCallLedgerError(
+                    "Malformed llm_calls.jsonl at line "
+                    f"{line_number}: unsupported record_type {record_type!r}"
+                )
+    successful = {
+        call_id
+        for call_id, record in calls.items()
+        if record["status"] == "ok"
+    }
+    return {
+        "calls": deepcopy(calls),
+        "call_count": len(calls),
+        "reward_count": reward_count,
+        "successful_call_ids": sorted(successful),
+        "rewarded_call_ids": sorted(rewarded_call_ids),
+        "unrewarded_success_call_ids": sorted(successful - rewarded_call_ids),
+        "role_accounting": deepcopy(role_accounting),
+        "provider_failure_policy_summary": _provider_failure_policy_summary_record(
+            provider_failure_policy_summary
+        ),
+        "last_sequence_id": call_sequence,
+    }
+
+
+def _reject_duplicate_llm_call_json_names(pairs: list[tuple[str, object]]) -> dict:
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise _DuplicateLLMCallJsonNameError(
+                f"duplicate JSON object name {key!r}"
+            )
+        result[key] = value
+    return result
+
+
+def _validate_llm_ledger_schema(
+    record: dict,
+    line_number: int,
+    *,
+    expected_schema: str,
+) -> None:
+    schema_version = record.get("schema_version")
+    record_schema = record.get("record_schema")
+    if schema_version is None and record_schema is None:
+        return
+    if schema_version != ARTIFACT_SCHEMA_VERSION:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: unsupported schema_version {schema_version!r}"
+        )
+    if record_schema != expected_schema:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: unsupported record_schema {record_schema!r}"
+        )
+
+
+def _validate_replayed_call_record(
+    record: dict,
+    line_number: int,
+    *,
+    expected_sequence: int,
+    calls: dict[str, dict],
+    backend_count: int | None,
+) -> None:
+    call_id = _validate_call_ledger_id(record.get("id"), line_number, "id")
+    if call_id in calls:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: duplicate call id {call_id!r}"
+        )
+    sequence_id = record.get("sequence_id")
+    if (
+        isinstance(sequence_id, bool)
+        or not isinstance(sequence_id, int)
+        or sequence_id != expected_sequence
+    ):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: sequence_id must be {expected_sequence}"
+        )
+    backend_idx = _validate_ledger_backend_idx(
+        record.get("backend_idx"),
+        line_number,
+        backend_count=backend_count,
+    )
+    try:
+        validate_llm_call_role(record.get("role"))
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    _validate_replayed_backend_telemetry(record, line_number)
+    status = record.get("status")
+    if status not in {"ok", "error"}:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: status must be 'ok' or 'error'"
+        )
+    scheduler_accounting = _validate_scheduler_accounting(
+        record.get("scheduler_accounting", "rewarded"),
+        line_number,
+    )
+    counts_before = _validate_ledger_counter_vector(
+        record.get("counts_before"),
+        line_number,
+        "counts_before",
+        backend_count=backend_count,
+    )
+    counts_after = _validate_ledger_counter_vector(
+        record.get("counts_after"),
+        line_number,
+        "counts_after",
+        backend_count=len(counts_before),
+    )
+    expected_after = list(counts_before)
+    counted_attempt = (
+        scheduler_accounting == "rewarded"
+        and (status == "ok" or not bool(record.get("will_retry")))
+    )
+    if counted_attempt:
+        expected_after[backend_idx] += 1
+    if counts_after != expected_after:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: counts_after is inconsistent"
+        )
+    for field in ("prompt_sha256",):
+        _validate_sha256(record.get(field), line_number, field)
+    if status == "ok":
+        _validate_sha256(record.get("output_sha256"), line_number, "output_sha256")
+        if "output_retention" in record:
+            _validate_provider_response_retention_record(
+                record.get("output_retention"),
+                line_number,
+            )
+            _validate_retained_output_text(record, line_number)
+        if record.get("provider_failure_category") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call provider_failure_category must be null"
+            )
+        if record.get("provider_status_code") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call provider_status_code must be null"
+            )
+        if record.get("provider_response_error") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call provider_response_error must be null"
+            )
+        if record.get("provider_failure_policy") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call provider_failure_policy must be null"
+            )
+        if record.get("error_retention") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: ok call error_retention must be null"
+            )
+    elif record.get("output_sha256") is not None:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: error call output_sha256 must be null"
+        )
+    elif record.get("output_retention") is not None:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: error call output_retention must be null"
+        )
+    else:
+        _validate_provider_failure_category(
+            record.get("provider_failure_category"),
+            line_number,
+        )
+        _validate_provider_status_code(record.get("provider_status_code"), line_number)
+        _validate_provider_response_error_record(
+            record.get("provider_response_error"),
+            line_number,
+        )
+        _validate_provider_failure_policy_record(
+            record.get("provider_failure_policy"),
+            line_number,
+            record,
+        )
+        if "error_retention" in record:
+            _validate_provider_error_retention_record(
+                record.get("error_retention"),
+                line_number,
+            )
+
+
+def _validate_replayed_reward_record(
+    record: dict,
+    line_number: int,
+    *,
+    calls: dict[str, dict],
+    rewarded_call_ids: set[str],
+    backend_count: int | None,
+) -> None:
+    call_id = _validate_call_ledger_id(record.get("call_id"), line_number, "call_id")
+    if call_id in rewarded_call_ids:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: duplicate reward for call id {call_id!r}"
+        )
+    call = calls.get(call_id)
+    if call is None:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: reward references unknown call id {call_id!r}"
+        )
+    if call.get("status") != "ok":
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: reward references non-successful call id {call_id!r}"
+        )
+    if call.get("scheduler_accounting", "rewarded") != "rewarded":
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: reward references non-rewardable call id {call_id!r}"
+        )
+    backend_idx = _validate_ledger_backend_idx(
+        record.get("backend_idx"),
+        line_number,
+        backend_count=backend_count,
+    )
+    if backend_idx != call["backend_idx"]:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: reward backend_idx does not match call"
+        )
+    reward = _validate_ledger_reward(record.get("reward"), line_number, "reward")
+    raw_reward = _validate_ledger_reward(
+        record.get("reward_raw"),
+        line_number,
+        "reward_raw",
+        cap=False,
+    )
+    if reward > raw_reward:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: reward exceeds reward_raw"
+        )
+
+
+def _validate_call_ledger_id(value: object, line_number: int, field: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must be a non-empty string"
+        )
+    if redact_sensitive_text(value) != value:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must not contain secret-like text"
+        )
+    return value
+
+
+def _deterministic_call_id(
+    *,
+    sequence_id: int,
+    role: str,
+    backend_idx: int,
+    prompt_sha256: str,
+    retry_attempt: int,
+    fallback_attempt: int,
+    attempt_index: int,
+) -> str:
+    payload = {
+        "sequence_id": sequence_id,
+        "role": role,
+        "backend_idx": backend_idx,
+        "prompt_sha256": prompt_sha256,
+        "retry_attempt": retry_attempt,
+        "fallback_attempt": fallback_attempt,
+        "attempt_index": attempt_index,
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return f"llm-call-{hashlib.sha256(encoded).hexdigest()}"
+
+
+def _validate_ledger_backend_idx(
+    value: object, line_number: int, *, backend_count: int | None
+) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: backend_idx must be a non-negative integer"
+        )
+    if backend_count is not None and value >= backend_count:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: backend_idx out of range"
+        )
+    return value
+
+
+def _validate_ledger_counter_vector(
+    value: object,
+    line_number: int,
+    field: str,
+    *,
+    backend_count: int | None,
+) -> list[int]:
+    if not isinstance(value, list):
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must be a list"
+        )
+    if backend_count is not None and len(value) != backend_count:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} length is inconsistent"
+        )
+    counters = []
+    for index, item in enumerate(value):
+        if isinstance(item, bool) or not isinstance(item, int) or item < 0:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: {field}[{index}] must be a non-negative integer"
+            )
+        counters.append(item)
+    return counters
+
+
+def _validate_ledger_reward(
+    value: object, line_number: int, field: str, *, cap: bool = True
+) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must be numeric"
+        )
+    numeric = float(value)
+    if not math.isfinite(numeric) or numeric < 0.0:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must be finite and non-negative"
+        )
+    if cap and numeric > MAX_REWARD:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} exceeds {MAX_REWARD}"
+        )
+    return numeric
+
+
+def _validate_sha256(value: object, line_number: int, field: str) -> None:
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {field} must be a SHA-256 hex digest"
+        )
+
+
+def _validate_scheduler_accounting(value: object, line_number: int) -> str:
+    if value not in {"rewarded", "telemetry_only"}:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: scheduler_accounting is unsupported"
+        )
+    return value
+
+
+def _validate_replayed_backend_telemetry(record: dict, line_number: int) -> None:
+    backend_name = record.get("backend_name")
+    if backend_name is not None and not _is_safe_backend_name(backend_name):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_name must be a manifest-safe backend label"
+        )
+    api_mode = record.get("api_mode")
+    if api_mode is not None and not _is_safe_api_mode(api_mode):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: api_mode must be a manifest-safe API-mode label or null"
+        )
+    if "backend_metadata" in record:
+        try:
+            _validate_metadata_mapping(record["backend_metadata"], "backend_metadata")
+        except ValueError as exc:
+            raise LLMCallLedgerError(
+                f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+            ) from exc
+    try:
+        _validate_request_parameters_telemetry(
+            record.get("request_parameters", {}),
+            "request_parameters",
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    try:
+        _validate_backend_defaults_telemetry(
+            record.get("backend_defaults", {}),
+            "backend_defaults",
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    try:
+        _validate_client_context_telemetry(
+            record.get("client_context", {}),
+            "client_context",
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    try:
+        _validate_prompt_role_policy_telemetry(
+            record.get("prompt_role_policy"),
+            "prompt_role_policy",
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    try:
+        validate_provider_response_metadata(
+            {
+                "usage": record.get("usage"),
+                "finish_reason": record.get("finish_reason"),
+                "request_id": record.get("request_id"),
+                "response_id": record.get("response_id"),
+                "adapter_retry": record.get("adapter_retry"),
+                "provider_diagnostics": record.get("provider_diagnostics"),
+            },
+            "provider_response_metadata",
+            allow_raw_provider_diagnostics=False,
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    try:
+        _validate_cost_estimate_record(record.get("cost_estimate"), "cost_estimate")
+        _validate_cost_estimate_status_record(
+            record.get("cost_estimate_status"),
+            "cost_estimate_status",
+        )
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    diagnostics = record.get("backend_telemetry_diagnostics", [])
+    if not isinstance(diagnostics, list):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_telemetry_diagnostics must be a list"
+        )
+    for index, diagnostic in enumerate(diagnostics):
+        _validate_replayed_backend_telemetry_diagnostic(
+            diagnostic,
+            line_number,
+            index,
+        )
+
+
+def _validate_replayed_backend_telemetry_diagnostic(
+    diagnostic: object,
+    line_number: int,
+    index: int,
+) -> None:
+    if not isinstance(diagnostic, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_telemetry_diagnostics[{index}] must be an object"
+        )
+    allowed = {"field", "reason", "value_type", "error_type"}
+    extra = set(diagnostic) - allowed
+    if extra:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_telemetry_diagnostics[{index}] has unsupported fields"
+        )
+    field = diagnostic.get("field")
+    if field not in {
+        "backend_name",
+        "api_mode",
+        "request_parameters",
+        "backend_defaults",
+        "client_context",
+        "prompt_role_policy",
+        "provider_response_metadata",
+    }:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_telemetry_diagnostics[{index}].field is unsupported"
+        )
+    reason = diagnostic.get("reason")
+    if reason not in {"attribute_error", "unsafe_or_non_string"}:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: backend_telemetry_diagnostics[{index}].reason is unsupported"
+        )
+    for key in ("value_type", "error_type"):
+        value = diagnostic.get(key)
+        if value is not None and not _is_safe_api_mode(value):
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: backend_telemetry_diagnostics[{index}].{key} "
+                "must be manifest-safe"
+            )
+
+
+def _validate_provider_response_error_record(value: object, line_number: int) -> None:
+    if value is None:
+        return
+    if not isinstance(value, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_response_error must be an object or null"
+        )
+    allowed = {"category", "source", "value_type"}
+    extra = set(value) - allowed
+    if extra:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_response_error has unsupported fields"
+        )
+    category = value.get("category")
+    if category not in PROVIDER_RESPONSE_ERROR_CATEGORIES:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_response_error category is unsupported"
+        )
+    source = value.get("source")
+    if not _is_safe_api_mode(source):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_response_error source must be manifest-safe"
+        )
+    value_type = value.get("value_type")
+    if value_type is not None and not _is_safe_api_mode(value_type):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_response_error value_type must be manifest-safe"
+        )
+
+
+def _validate_provider_failure_policy_record(
+    value: object,
+    line_number: int,
+    record: dict,
+) -> None:
+    if not isinstance(value, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy must be an object"
+        )
+    required = {
+        "schema",
+        "scope",
+        "role",
+        "provider_failure_category",
+        "retry_decision",
+        "fallback_decision",
+        "quarantine_decision",
+        "penalty_decision",
+        "remaining_gap",
+    }
+    optional = {
+        "quarantine_policy",
+        "penalty_policy",
+        "quarantine_threshold",
+        "consecutive_failures",
+        "backend_quarantined",
+    }
+    missing = sorted(required - set(value))
+    if missing:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy missing fields: {missing}"
+        )
+    unsupported = sorted(set(value) - required - optional)
+    if unsupported:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy has unsupported fields: {unsupported}"
+        )
+    if value["schema"] != "libreevolve.provider_failure_policy.v1":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.schema is unsupported"
+        )
+    if value["scope"] != "ensemble_call_local_retry_fallback_policy":
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.scope is unsupported"
+        )
+    if value["role"] != record.get("role"):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.role is inconsistent"
+        )
+    if value["provider_failure_category"] != record.get("provider_failure_category"):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.provider_failure_category is inconsistent"
+        )
+    expected_retry = "retry" if bool(record.get("will_retry")) else "no_retry"
+    if value["retry_decision"] != expected_retry:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.retry_decision is inconsistent"
+        )
+    expected_fallback = "fallback" if bool(record.get("will_fallback")) else "no_fallback"
+    if value["fallback_decision"] != expected_fallback:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.fallback_decision is inconsistent"
+        )
+    supported_quarantine_decisions = {
+        "not_quarantined_by_ensemble_policy",
+        "not_quarantined_retry_pending",
+        "not_quarantined_below_role_threshold",
+        "quarantined_role_backend_after_threshold",
+    }
+    if value["quarantine_decision"] not in supported_quarantine_decisions:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.quarantine_decision is unsupported"
+        )
+    supported_penalty_decisions = {
+        "not_penalized_by_ensemble_policy",
+        "not_penalized_retry_pending",
+        "not_penalized_telemetry_only_role",
+        "zero_reward_scheduler_penalty",
+    }
+    if value["penalty_decision"] not in supported_penalty_decisions:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.penalty_decision is unsupported"
+        )
+    if "quarantine_policy" in value:
+        if value["quarantine_policy"] != "role_backend_consecutive_failure_threshold":
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: provider_failure_policy.quarantine_policy is unsupported"
+            )
+        if value.get("penalty_policy") != "zero_reward_on_exhausted_reward_accounted_failure":
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: provider_failure_policy.penalty_policy is unsupported"
+            )
+        threshold = value.get("quarantine_threshold")
+        failures = value.get("consecutive_failures")
+        if (
+            isinstance(threshold, bool)
+            or not isinstance(threshold, int)
+            or threshold <= 0
+        ):
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: provider_failure_policy.quarantine_threshold is invalid"
+            )
+        if (
+            isinstance(failures, bool)
+            or not isinstance(failures, int)
+            or failures < 0
+        ):
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: provider_failure_policy.consecutive_failures is invalid"
+            )
+        if not isinstance(value.get("backend_quarantined"), bool):
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: provider_failure_policy.backend_quarantined is invalid"
+            )
+    if value["remaining_gap"] not in {
+        "provider_output_replay_and_hard_cancellation_not_implemented",
+        "role_specific_quarantine_penalty_and_cross_run_resume_policy_not_implemented",
+    }:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_policy.remaining_gap is unsupported"
+        )
+
+
+def _validate_provider_error_retention_record(value: object, line_number: int) -> None:
+    if not isinstance(value, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: error_retention must be an object"
+        )
+    allowed = {
+        "retention_mode",
+        "retention_policy",
+        "sha256",
+        "chars",
+        "stored_chars",
+        "redacted",
+        "truncated",
+    }
+    if set(value) - allowed:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: error_retention has unsupported fields"
+        )
+    mode = value.get("retention_mode")
+    try:
+        _validate_retention_mode(mode, field="error_retention.retention_mode")
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    policies_by_mode = {
+        "full": "full_secret_redacted_text_with_raw_sha256",
+        "redacted": "redact_then_prefix_truncate_with_raw_sha256",
+        "hash_only": "hash_only_with_raw_sha256",
+        "off": "off_no_text_or_hash",
+    }
+    if value.get("retention_policy") != policies_by_mode[mode]:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: error_retention.retention_policy is inconsistent"
+        )
+    if mode == "off":
+        if value.get("sha256") is not None or value.get("chars") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: error_retention off must not retain hash or chars"
+            )
+    else:
+        _validate_sha256(value.get("sha256"), line_number, "error_retention.sha256")
+        _validate_ledger_nonnegative_int(
+            value.get("chars"),
+            line_number,
+            "error_retention.chars",
+        )
+    _validate_ledger_nonnegative_int(
+        value.get("stored_chars"),
+        line_number,
+        "error_retention.stored_chars",
+    )
+    if not isinstance(value.get("redacted"), bool):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: error_retention.redacted must be boolean"
+        )
+    if not isinstance(value.get("truncated"), bool):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: error_retention.truncated must be boolean"
+        )
+
+
+def _validate_provider_response_retention_record(value: object, line_number: int) -> None:
+    _validate_text_retention_record(
+        value,
+        line_number,
+        field="output_retention",
+        policies_by_mode={
+            "full": "full_secret_redacted_text_with_raw_sha256",
+            "redacted": "redact_only_with_raw_sha256",
+            "hash_only": "hash_only_with_raw_sha256",
+            "off": "off_no_text_or_hash",
+        },
+    )
+
+
+def _validate_text_retention_record(
+    value: object,
+    line_number: int,
+    *,
+    field: str,
+    policies_by_mode: dict[str, str],
+) -> None:
+    if not isinstance(value, dict):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field} must be an object"
+        )
+    allowed = {
+        "retention_mode",
+        "retention_policy",
+        "sha256",
+        "chars",
+        "stored_chars",
+        "redacted",
+        "truncated",
+    }
+    if set(value) - allowed:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field} has unsupported fields"
+        )
+    mode = value.get("retention_mode")
+    try:
+        _validate_retention_mode(mode, field=f"{field}.retention_mode")
+    except ValueError as exc:
+        raise LLMCallLedgerError(
+            f"Malformed llm_calls.jsonl at line {line_number}: {exc}"
+        ) from exc
+    if value.get("retention_policy") != policies_by_mode[mode]:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field}.retention_policy is inconsistent"
+        )
+    if mode == "off":
+        if value.get("sha256") is not None or value.get("chars") is not None:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: {field} off must not retain hash or chars"
+            )
+    else:
+        _validate_sha256(value.get("sha256"), line_number, f"{field}.sha256")
+        _validate_ledger_nonnegative_int(
+            value.get("chars"),
+            line_number,
+            f"{field}.chars",
+        )
+    _validate_ledger_nonnegative_int(
+        value.get("stored_chars"),
+        line_number,
+        f"{field}.stored_chars",
+    )
+    if not isinstance(value.get("redacted"), bool):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field}.redacted must be boolean"
+        )
+    if not isinstance(value.get("truncated"), bool):
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field}.truncated must be boolean"
+        )
+
+
+def _validate_retained_output_text(record: dict, line_number: int) -> None:
+    retention = record.get("output_retention")
+    assert isinstance(retention, dict)
+    mode = retention.get("retention_mode")
+    output = record.get("output")
+    if mode in {"full", "redacted"}:
+        if not isinstance(output, str):
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: output must be retained text for {mode} mode"
+            )
+        if redact_sensitive_text(output) != output:
+            raise LLMCallLedgerError(
+                "Malformed llm_calls.jsonl at line "
+                f"{line_number}: output must not contain secret-like text"
+            )
+    elif output is not None:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: output must be null unless output_retention stores text"
+        )
+
+
+def _validate_ledger_nonnegative_int(
+    value: object,
+    line_number: int,
+    field: str,
+) -> None:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: {field} must be a non-negative integer"
+        )
+
+
+def _validate_provider_failure_category(value: object, line_number: int) -> None:
+    if value is None:
+        return
+    if value not in PROVIDER_FAILURE_CATEGORIES:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_failure_category is unsupported"
+        )
+
+
+def _validate_provider_status_code(value: object, line_number: int) -> None:
+    if value is None:
+        return
+    if isinstance(value, bool) or not isinstance(value, int) or value < 100 or value > 599:
+        raise LLMCallLedgerError(
+            "Malformed llm_calls.jsonl at line "
+            f"{line_number}: provider_status_code must be an integer HTTP status code or null"
+        )
+
+
+def _backend_name_telemetry(backend: object) -> tuple[str, list[dict]]:
+    fallback = _safe_backend_class_name(backend)
+    try:
+        value = getattr(backend, "name")
+    except Exception as exc:
+        return fallback, [
+            {
+                "field": "backend_name",
+                "reason": "attribute_error",
+                "error_type": exc.__class__.__name__,
+            }
+        ]
+    if _is_safe_backend_name(value):
+        return value, []
+    return fallback, [
+        {
+            "field": "backend_name",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+    ]
+
+
+def _backend_request_parameters_telemetry(backend: object) -> tuple[dict, dict | None]:
+    try:
+        value = getattr(backend, "request_parameters", {})
+    except Exception as exc:
+        return {}, {
+            "field": "request_parameters",
+            "reason": "attribute_error",
+            "error_type": exc.__class__.__name__,
+        }
+    if value.__class__.__module__.startswith("unittest.mock"):
+        return {}, None
+    try:
+        return _validate_request_parameters_telemetry(value, "request_parameters"), None
+    except ValueError:
+        return {}, {
+            "field": "request_parameters",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+
+
+def _backend_defaults_telemetry(backend: object) -> tuple[dict, dict | None]:
+    try:
+        value = getattr(backend, "backend_defaults", {})
+    except Exception as exc:
+        return {}, {
+            "field": "backend_defaults",
+            "reason": "attribute_error",
+            "error_type": exc.__class__.__name__,
+        }
+    if value.__class__.__module__.startswith("unittest.mock"):
+        return {}, None
+    try:
+        return _validate_backend_defaults_telemetry(value, "backend_defaults"), None
+    except ValueError:
+        return {}, {
+            "field": "backend_defaults",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+
+
+def _backend_client_context_telemetry(backend: object) -> tuple[dict, dict | None]:
+    try:
+        value = getattr(backend, "client_context", {})
+    except Exception as exc:
+        return {}, {
+            "field": "client_context",
+            "reason": "attribute_error",
+            "error_type": exc.__class__.__name__,
+        }
+    if value.__class__.__module__.startswith("unittest.mock"):
+        return {}, None
+    try:
+        return _validate_client_context_telemetry(value, "client_context"), None
+    except ValueError:
+        return {}, {
+            "field": "client_context",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+
+
+def _backend_provider_response_metadata_telemetry(
+    backend: object,
+) -> tuple[dict, dict | None]:
+    try:
+        value = getattr(backend, "provider_response_metadata", {})
+    except Exception as exc:
+        return provider_response_metadata_record({}), {
+            "field": "provider_response_metadata",
+            "reason": "attribute_error",
+            "error_type": exc.__class__.__name__,
+        }
+    if value.__class__.__module__.startswith("unittest.mock"):
+        return provider_response_metadata_record({}), None
+    try:
+        return provider_response_metadata_record(value), None
+    except ValueError:
+        return provider_response_metadata_record({}), {
+            "field": "provider_response_metadata",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+
+
+def _provider_cost_estimate_record(
+    backend_metadata: object,
+    usage: object,
+) -> dict | None:
+    if not isinstance(backend_metadata, dict) or not isinstance(usage, dict):
+        return None
+    rate = backend_metadata.get(_COST_USD_PER_MILLION_TOKENS_FIELD)
+    total_tokens = usage.get("total_tokens")
+    if (
+        isinstance(rate, bool)
+        or not isinstance(rate, (int, float))
+        or not math.isfinite(float(rate))
+        or float(rate) <= 0.0
+        or isinstance(total_tokens, bool)
+        or not isinstance(total_tokens, int)
+        or total_tokens < 0
+    ):
+        return None
+    cost_microusd = int(round(total_tokens * float(rate)))
+    return {
+        "policy": "backend_metadata_cost_per_million_tokens_v1",
+        "source": "backend_metadata.cost_usd_per_million_tokens",
+        "pricing_source": "configured_backend_metadata",
+        "pricing_status": "configured_estimate_not_live_provider_pricing",
+        "token_count_source": "provider_response_metadata.usage.total_tokens",
+        "cost_usd_per_million_tokens": float(rate),
+        "total_tokens": total_tokens,
+        "cost_microusd": max(0, cost_microusd),
+    }
+
+
+def _provider_cost_estimate_status_record(
+    backend_metadata: object,
+    usage: object,
+    cost_estimate: object,
+) -> dict:
+    status = "estimated"
+    reason = "estimated_from_configured_rate_and_provider_total_tokens"
+    if cost_estimate is None:
+        if not isinstance(backend_metadata, dict) or (
+            _COST_USD_PER_MILLION_TOKENS_FIELD not in backend_metadata
+        ):
+            status = "not_estimated"
+            reason = "missing_configured_backend_cost_rate"
+        else:
+            rate = backend_metadata.get(_COST_USD_PER_MILLION_TOKENS_FIELD)
+            if (
+                isinstance(rate, bool)
+                or not isinstance(rate, (int, float))
+                or not math.isfinite(float(rate))
+                or float(rate) <= 0.0
+            ):
+                status = "not_estimated"
+                reason = "invalid_configured_backend_cost_rate"
+            elif not isinstance(usage, dict):
+                status = "not_estimated"
+                reason = "missing_provider_usage"
+            elif "total_tokens" not in usage:
+                status = "not_estimated"
+                reason = "missing_provider_total_tokens"
+            else:
+                total_tokens = usage.get("total_tokens")
+                if (
+                    isinstance(total_tokens, bool)
+                    or not isinstance(total_tokens, int)
+                    or total_tokens < 0
+                ):
+                    status = "not_estimated"
+                    reason = "invalid_provider_total_tokens"
+    return {
+        "policy": "backend_metadata_cost_estimate_status_v1",
+        "status": status,
+        "reason": reason,
+        "pricing_source": "configured_backend_metadata",
+        "token_count_source": "provider_response_metadata.usage.total_tokens",
+        "live_pricing_status": "not_fetched",
+    }
+
+
+def _validate_cost_estimate_record(value: object, path: str) -> dict | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping or null")
+    required = {
+        "policy",
+        "source",
+        "pricing_source",
+        "pricing_status",
+        "token_count_source",
+        "cost_usd_per_million_tokens",
+        "total_tokens",
+        "cost_microusd",
+    }
+    missing = sorted(required - set(value))
+    if missing:
+        raise ValueError(f"{path} missing fields: {missing}")
+    unsupported = sorted(set(value) - required)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    if value["policy"] != "backend_metadata_cost_per_million_tokens_v1":
+        raise ValueError(f"{path}.policy is unsupported")
+    if value["source"] != "backend_metadata.cost_usd_per_million_tokens":
+        raise ValueError(f"{path}.source is unsupported")
+    if value["pricing_source"] != "configured_backend_metadata":
+        raise ValueError(f"{path}.pricing_source is unsupported")
+    if value["pricing_status"] != "configured_estimate_not_live_provider_pricing":
+        raise ValueError(f"{path}.pricing_status is unsupported")
+    if value["token_count_source"] != "provider_response_metadata.usage.total_tokens":
+        raise ValueError(f"{path}.token_count_source is unsupported")
+    rate = value["cost_usd_per_million_tokens"]
+    if (
+        isinstance(rate, bool)
+        or not isinstance(rate, (int, float))
+        or not math.isfinite(float(rate))
+        or float(rate) <= 0.0
+    ):
+        raise ValueError(f"{path}.cost_usd_per_million_tokens must be positive")
+    total_tokens = value["total_tokens"]
+    if (
+        isinstance(total_tokens, bool)
+        or not isinstance(total_tokens, int)
+        or total_tokens < 0
+    ):
+        raise ValueError(f"{path}.total_tokens must be a non-negative integer")
+    cost_microusd = value["cost_microusd"]
+    if (
+        isinstance(cost_microusd, bool)
+        or not isinstance(cost_microusd, int)
+        or cost_microusd < 0
+    ):
+        raise ValueError(f"{path}.cost_microusd must be a non-negative integer")
+    expected = max(0, int(round(total_tokens * float(rate))))
+    if cost_microusd != expected:
+        raise ValueError(f"{path}.cost_microusd is inconsistent with token usage")
+    return {
+        "policy": value["policy"],
+        "source": value["source"],
+        "pricing_source": value["pricing_source"],
+        "pricing_status": value["pricing_status"],
+        "token_count_source": value["token_count_source"],
+        "cost_usd_per_million_tokens": float(rate),
+        "total_tokens": total_tokens,
+        "cost_microusd": cost_microusd,
+    }
+
+
+def _validate_cost_estimate_status_record(value: object, path: str) -> dict:
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    required = {
+        "policy",
+        "status",
+        "reason",
+        "pricing_source",
+        "token_count_source",
+        "live_pricing_status",
+    }
+    missing = sorted(required - set(value))
+    if missing:
+        raise ValueError(f"{path} missing fields: {missing}")
+    unsupported = sorted(set(value) - required)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    if value["policy"] != "backend_metadata_cost_estimate_status_v1":
+        raise ValueError(f"{path}.policy is unsupported")
+    if value["status"] not in {"estimated", "not_estimated"}:
+        raise ValueError(f"{path}.status is unsupported")
+    if value["reason"] not in {
+        "estimated_from_configured_rate_and_provider_total_tokens",
+        "missing_configured_backend_cost_rate",
+        "invalid_configured_backend_cost_rate",
+        "missing_provider_usage",
+        "missing_provider_total_tokens",
+        "invalid_provider_total_tokens",
+    }:
+        raise ValueError(f"{path}.reason is unsupported")
+    if value["pricing_source"] != "configured_backend_metadata":
+        raise ValueError(f"{path}.pricing_source is unsupported")
+    if value["token_count_source"] != "provider_response_metadata.usage.total_tokens":
+        raise ValueError(f"{path}.token_count_source is unsupported")
+    if value["live_pricing_status"] != "not_fetched":
+        raise ValueError(f"{path}.live_pricing_status is unsupported")
+    if value["status"] == "estimated" and (
+        value["reason"] != "estimated_from_configured_rate_and_provider_total_tokens"
+    ):
+        raise ValueError(f"{path}.reason is inconsistent with estimated status")
+    if value["status"] == "not_estimated" and (
+        value["reason"] == "estimated_from_configured_rate_and_provider_total_tokens"
+    ):
+        raise ValueError(f"{path}.reason is inconsistent with not_estimated status")
+    return {
+        "policy": value["policy"],
+        "status": value["status"],
+        "reason": value["reason"],
+        "pricing_source": value["pricing_source"],
+        "token_count_source": value["token_count_source"],
+        "live_pricing_status": value["live_pricing_status"],
+    }
+
+
+def _backend_prompt_role_policy_telemetry(
+    backend: object,
+    role: str,
+) -> tuple[dict, dict | None]:
+    getter = getattr(backend, "prompt_role_policy_for_role", None)
+    if getter is None or getter.__class__.__module__.startswith("unittest.mock"):
+        return prompt_role_policy_record({}, role), None
+    try:
+        value = getter(role)
+    except Exception as exc:
+        return prompt_role_policy_record({}, role), {
+            "field": "prompt_role_policy",
+            "reason": "attribute_error",
+            "error_type": _safe_type_name(exc),
+        }
+    try:
+        return _validate_prompt_role_policy_telemetry(value, "prompt_role_policy"), None
+    except ValueError:
+        return prompt_role_policy_record({}, role), {
+            "field": "prompt_role_policy",
+            "reason": "unsafe_or_non_string",
+            "value_type": type(value).__name__,
+        }
+
+
+def _backend_api_mode_telemetry(backend: object) -> tuple[str | None, dict | None]:
+    try:
+        value = getattr(backend, "api_mode", None)
+    except Exception as exc:
+        return None, {
+            "field": "api_mode",
+            "reason": "attribute_error",
+            "error_type": exc.__class__.__name__,
+        }
+    if value is None:
+        return None, None
+    if _is_safe_api_mode(value):
+        return value, None
+    return None, {
+        "field": "api_mode",
+        "reason": "unsafe_or_non_string",
+        "value_type": type(value).__name__,
+    }
+
+
+def _safe_backend_class_name(backend: object) -> str:
+    name = backend.__class__.__name__
+    if _is_safe_api_mode(name):
+        return name
+    return "backend"
+
+
+def _is_safe_backend_name(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and redact_sensitive_text(value) == value
+        and _MODEL_ID_RE.fullmatch(value) is not None
+    )
+
+
+def _is_safe_api_mode(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and redact_sensitive_text(value) == value
+        and _METADATA_KEY_RE.fullmatch(value) is not None
+    )
+
+
+def _provider_error_text(exc: Exception) -> str:
+    try:
+        raw = str(exc)
+    except Exception as format_exc:
+        raw = (
+            f"<exception message unavailable; __str__ raised "
+            f"{format_exc.__class__.__name__}>"
+        )
+    text = redact_sensitive_text(raw)
+    if len(text) <= MAX_PROVIDER_ERROR_CHARS:
+        return text
+    return text[:MAX_PROVIDER_ERROR_CHARS] + "...[truncated]"
+
+
+def _provider_error_retention_record(exc: Exception, *, mode: str) -> tuple[str | None, dict]:
+    mode = _validate_retention_mode(mode, field="provider_error_retention_mode")
+    try:
+        raw = str(exc)
+    except Exception as format_exc:
+        raw = (
+            f"<exception message unavailable; __str__ raised "
+            f"{format_exc.__class__.__name__}>"
+        )
+    raw_sha256 = hashlib.sha256(raw.encode("utf-8")).hexdigest()
+    if mode == "off":
+        return None, {
+            "retention_mode": mode,
+            "retention_policy": "off_no_text_or_hash",
+            "sha256": None,
+            "chars": None,
+            "stored_chars": 0,
+            "redacted": False,
+            "truncated": False,
+        }
+    redacted = redact_sensitive_text(raw)
+    if mode == "hash_only":
+        return None, {
+            "retention_mode": mode,
+            "retention_policy": "hash_only_with_raw_sha256",
+            "sha256": raw_sha256,
+            "chars": len(raw),
+            "stored_chars": 0,
+            "redacted": redacted != raw,
+            "truncated": False,
+        }
+    text = redacted
+    truncated = False
+    policy = "full_secret_redacted_text_with_raw_sha256"
+    if mode == "redacted":
+        policy = "redact_then_prefix_truncate_with_raw_sha256"
+        if len(text) > MAX_PROVIDER_ERROR_CHARS:
+            text = text[:MAX_PROVIDER_ERROR_CHARS] + "...[truncated]"
+            truncated = True
+    return text, {
+        "retention_mode": mode,
+        "retention_policy": policy,
+        "sha256": raw_sha256,
+        "chars": len(raw),
+        "stored_chars": len(text),
+        "redacted": redacted != raw,
+        "truncated": truncated,
+    }
+
+
+def _provider_response_retention_record(response: str, *, mode: str) -> tuple[str | None, dict]:
+    mode = _validate_retention_mode(mode, field="provider_response_retention_mode")
+    raw_sha256 = hashlib.sha256(response.encode("utf-8")).hexdigest()
+    if mode == "off":
+        return None, {
+            "retention_mode": mode,
+            "retention_policy": "off_no_text_or_hash",
+            "sha256": None,
+            "chars": None,
+            "stored_chars": 0,
+            "redacted": False,
+            "truncated": False,
+        }
+    redacted = redact_sensitive_text(response)
+    if mode == "hash_only":
+        return None, {
+            "retention_mode": mode,
+            "retention_policy": "hash_only_with_raw_sha256",
+            "sha256": raw_sha256,
+            "chars": len(response),
+            "stored_chars": 0,
+            "redacted": redacted != response,
+            "truncated": False,
+        }
+    return redacted, {
+        "retention_mode": mode,
+        "retention_policy": (
+            "full_secret_redacted_text_with_raw_sha256"
+            if mode == "full"
+            else "redact_only_with_raw_sha256"
+        ),
+        "sha256": raw_sha256,
+        "chars": len(response),
+        "stored_chars": len(redacted),
+        "redacted": redacted != response,
+        "truncated": False,
+    }
+
+
+def _safe_type_name(value: object) -> str:
+    return _provider_response_source_label(value.__class__.__name__)
+
+
+def _provider_failure_category(exc: Exception) -> str:
+    if isinstance(exc, ProviderResponseError):
+        return "provider_response"
+    type_name = _safe_type_name(exc).lower()
+    status_code = getattr(exc, "status_code", None)
+    if _is_timeout_exception(exc, type_name):
+        return "timeout"
+    if _is_rate_limit_exception(status_code, type_name):
+        return "rate_limit"
+    if _is_transport_exception(exc, type_name):
+        return "transport"
+    if isinstance(status_code, int) and 500 <= status_code <= 599:
+        return "provider_server_error"
+    if isinstance(status_code, int) and 400 <= status_code <= 499:
+        return "provider_client_error"
+    return "unknown"
+
+
+def _provider_failure_policy_record(
+    *,
+    role: str,
+    category: str,
+    will_retry: bool,
+    will_fallback: bool,
+    state: dict,
+) -> dict:
+    record = {
+        "schema": "libreevolve.provider_failure_policy.v1",
+        "scope": "ensemble_call_local_retry_fallback_policy",
+        "role": role,
+        "provider_failure_category": category,
+        "retry_decision": "retry" if will_retry else "no_retry",
+        "fallback_decision": "fallback" if will_fallback else "no_fallback",
+        "quarantine_decision": state["quarantine_decision"],
+        "penalty_decision": state["penalty_decision"],
+        "remaining_gap": (
+            "provider_output_replay_and_hard_cancellation_not_implemented"
+        ),
+    }
+    if state["quarantine_policy"] != "disabled":
+        record.update({
+            "quarantine_policy": state["quarantine_policy"],
+            "penalty_policy": state["penalty_policy"],
+            "quarantine_threshold": state["quarantine_threshold"],
+            "consecutive_failures": state["consecutive_failures"],
+            "backend_quarantined": state["backend_quarantined"],
+        })
+    return record
+
+
+def _provider_status_code(exc: Exception) -> int | None:
+    status_code = getattr(exc, "status_code", None)
+    if isinstance(status_code, bool) or not isinstance(status_code, int):
+        return None
+    if status_code < 100 or status_code > 599:
+        return None
+    return status_code
+
+
+def _is_timeout_exception(exc: Exception, type_name: str) -> bool:
+    return isinstance(exc, TimeoutError) or "timeout" in type_name
+
+
+def _is_rate_limit_exception(status_code: object, type_name: str) -> bool:
+    return (
+        status_code == 429
+        or "ratelimit" in type_name
+        or "rate_limit" in type_name
+        or "too_many" in type_name
+        or "toomany" in type_name
+    )
+
+
+def _is_transport_exception(exc: Exception, type_name: str) -> bool:
+    if isinstance(exc, ConnectionError):
+        return True
+    return any(
+        marker in type_name
+        for marker in (
+            "connection",
+            "connecterror",
+            "network",
+            "transport",
+            "readerror",
+            "writeerror",
+        )
+    )
+
+
+def _provider_response_error_record(exc: Exception) -> dict | None:
+    if not isinstance(exc, ProviderResponseError):
+        return None
+    record = {
+        "category": exc.category,
+        "source": _provider_response_source_label(exc.source),
+    }
+    if exc.value_type is not None:
+        record["value_type"] = _provider_response_source_label(exc.value_type)
+    return record
+
+
+def _provider_response_source_label(value: object) -> str:
+    if isinstance(value, str):
+        normalized = re.sub(r"[^A-Za-z0-9_.:-]+", "_", value.strip())
+        normalized = normalized.strip("_")
+        if _is_safe_api_mode(normalized):
+            return normalized
+    return "provider"
+
+
+def validate_llm_prompt(
+    prompt: object,
+    *,
+    max_chars: int | None = None,
+    max_estimated_tokens: int | None = None,
+) -> str:
+    if not isinstance(prompt, str):
+        raise ValueError(f"LLM prompt must be text, got {type(prompt).__name__}")
+    if not prompt.strip():
+        raise ValueError("LLM prompt must be non-empty text")
+    limit = _validate_optional_max_prompt_chars(max_chars)
+    if limit is not None and len(prompt) > limit:
+        raise ValueError(
+            f"LLM prompt exceeds max_prompt_chars ({len(prompt)} > {limit})"
+        )
+    token_limit = _validate_optional_max_prompt_estimated_tokens(max_estimated_tokens)
+    estimated_tokens = _estimate_prompt_tokens(len(prompt))
+    if token_limit is not None and estimated_tokens > token_limit:
+        raise ValueError(
+            "LLM prompt exceeds max_prompt_estimated_tokens "
+            f"({estimated_tokens} > {token_limit})"
+        )
+    return prompt
+
+
+def validate_restored_llm_prompt(
+    prompt: object,
+    *,
+    max_chars: int | None = None,
+    max_estimated_tokens: int | None = None,
+) -> str:
+    """Validate a prompt loaded from future replay/resume state."""
+    return validate_llm_prompt(
+        prompt,
+        max_chars=max_chars,
+        max_estimated_tokens=max_estimated_tokens,
+    )
+
+
+def validate_backend_model_id(model: object, *, field: str = "model") -> str:
+    if not isinstance(model, str):
+        raise ValueError(f"{field} must be a manifest-safe model identifier")
+    if redact_sensitive_text(model) != model:
+        raise ValueError(f"{field} must be a manifest-safe model identifier")
+    if _MODEL_ID_RE.fullmatch(model) is None:
+        raise ValueError(f"{field} must be a manifest-safe model identifier")
+    return model
+
+
+def validate_backend_max_tokens(max_tokens: object, *, field: str = "max_tokens") -> int:
+    if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 1:
+        raise ValueError(f"{field} must be a positive integer")
+    return max_tokens
+
+
+def validate_restored_backend_specs(backends: object) -> list[dict]:
+    """Validate backend specs loaded from future replay/resume state.
+
+    This intentionally shares the same normalization boundary as live
+    `build_llm()` construction so restored specs cannot bypass model-id,
+    token-limit, request-parameter, client-context, or custom-backend checks.
+    """
+    return deepcopy(_normalize_backend_specs(backends))
+
+
+def build_custom_backend_from_spec(spec: dict):
+    """Build a validated custom backend spec for registry and live paths."""
+    return _build_custom_backend(spec)
+
+
+def validate_openai_reasoning_effort(
+    reasoning_effort: object,
+    *,
+    model: object | None = None,
+    field: str = "reasoning_effort",
+) -> str | None:
+    return validate_openai_reasoning_effort_for_model(
+        reasoning_effort,
+        model=model,
+        field=field,
+    )
+
+
+def validate_openai_api_mode(
+    api_mode: object,
+    *,
+    reasoning_effort: object | None = None,
+    field: str = "api_mode",
+) -> str:
+    return _validate_openai_api_mode(
+        api_mode,
+        reasoning_effort=reasoning_effort,
+        field=field,
+    )
+
+
+def validate_llm_call_role(role: object) -> str:
+    if not isinstance(role, str):
+        raise ValueError(f"LLM call role must be a manifest-safe role label, got {role!r}")
+    if redact_sensitive_text(role) != role:
+        raise ValueError("LLM call role must be a manifest-safe role label")
+    if _CALL_ROLE_RE.fullmatch(role) is None:
+        raise ValueError("LLM call role must be a manifest-safe role label")
+    return role
+
+
+def _validate_strategy(strategy: object) -> str:
+    if not isinstance(strategy, str) or strategy not in _ENSEMBLE_STRATEGIES:
+        raise ValueError(f"ensemble strategy must be one of {sorted(_ENSEMBLE_STRATEGIES)}")
+    return strategy
+
+
+def _validate_explore_coeff(explore_coeff: object) -> float:
+    if isinstance(explore_coeff, bool) or not isinstance(explore_coeff, (int, float)):
+        raise ValueError("ensemble exploration coefficient must be a finite non-negative number")
+    value = float(explore_coeff)
+    if not math.isfinite(value) or value < 0.0:
+        raise ValueError("ensemble exploration coefficient must be a finite non-negative number")
+    return value
+
+
+def _validate_max_retries(max_retries: object) -> int:
+    if isinstance(max_retries, bool) or not isinstance(max_retries, int) or max_retries < 0:
+        raise ValueError("llm max_retries must be a non-negative integer")
+    if max_retries > MAX_LLM_RETRIES:
+        raise ValueError(f"llm max_retries must be <= {MAX_LLM_RETRIES}")
+    return max_retries
+
+
+def _validate_max_call_attempts(max_call_attempts: object) -> int:
+    if (
+        isinstance(max_call_attempts, bool)
+        or not isinstance(max_call_attempts, int)
+        or max_call_attempts < 1
+    ):
+        raise ValueError("llm max_call_attempts must be a positive integer")
+    if max_call_attempts > MAX_LLM_CALL_ATTEMPTS:
+        raise ValueError(
+            f"llm max_call_attempts must be <= {MAX_LLM_CALL_ATTEMPTS}"
+        )
+    return max_call_attempts
+
+
+def _validate_max_response_chars(max_response_chars: object) -> int:
+    if (
+        isinstance(max_response_chars, bool)
+        or not isinstance(max_response_chars, int)
+        or max_response_chars <= 0
+    ):
+        raise ValueError("llm max_response_chars must be a positive integer")
+    return max_response_chars
+
+
+def _validate_optional_max_prompt_chars(max_prompt_chars: object) -> int | None:
+    if max_prompt_chars is None:
+        return None
+    if (
+        isinstance(max_prompt_chars, bool)
+        or not isinstance(max_prompt_chars, int)
+        or max_prompt_chars <= 0
+    ):
+        raise ValueError("llm max_prompt_chars must be a positive integer or None")
+    return max_prompt_chars
+
+
+def _validate_optional_max_prompt_estimated_tokens(value: object) -> int | None:
+    if value is None:
+        return None
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, int)
+        or value <= 0
+    ):
+        raise ValueError(
+            "llm max_prompt_estimated_tokens must be a positive integer or None"
+        )
+    return value
+
+
+def _estimate_prompt_tokens(chars: int) -> int:
+    return max(1, math.ceil(chars / 4)) if chars > 0 else 0
+
+
+def _validate_role_backend_indices_policy(
+    value: Mapping[str, list[int] | tuple[int, ...]] | None,
+    *,
+    backend_count: int,
+) -> dict[str, tuple[int, ...]]:
+    if value is None:
+        return {}
+    if not isinstance(value, Mapping):
+        raise ValueError("llm role_backend_indices must be a mapping")
+    normalized: dict[str, tuple[int, ...]] = {}
+    for raw_role, raw_indices in value.items():
+        role = validate_llm_call_role(raw_role)
+        if not isinstance(raw_indices, (list, tuple)) or not raw_indices:
+            raise ValueError(
+                f"llm role_backend_indices[{role!r}] must be a non-empty list of backend indices"
+            )
+        indices: list[int] = []
+        seen: set[int] = set()
+        for index, raw_index in enumerate(raw_indices):
+            if (
+                isinstance(raw_index, bool)
+                or not isinstance(raw_index, int)
+                or raw_index < 0
+                or raw_index >= backend_count
+            ):
+                raise ValueError(
+                    "llm role_backend_indices"
+                    f"[{role!r}][{index}] must be a backend index between 0 and {backend_count - 1}"
+                )
+            if raw_index not in seen:
+                seen.add(raw_index)
+                indices.append(raw_index)
+        normalized[role] = tuple(indices)
+    return dict(sorted(normalized.items()))
+
+
+def _metadata_role_backend_indices(metadata: list[dict]) -> dict[str, list[int]]:
+    grouped: dict[str, list[int]] = {}
+    for index, item in enumerate(metadata):
+        role = item.get("role")
+        if isinstance(role, str):
+            grouped.setdefault(role, []).append(index)
+    return dict(sorted(grouped.items()))
+
+
+def _validate_max_call_history(max_call_history: object) -> int:
+    if (
+        isinstance(max_call_history, bool)
+        or not isinstance(max_call_history, int)
+        or max_call_history <= 0
+    ):
+        raise ValueError("llm max_call_history must be a positive integer")
+    return max_call_history
+
+
+def _validate_retention_mode(value: object, *, field: str) -> str:
+    if value not in {"full", "redacted", "hash_only", "off"}:
+        raise ValueError(
+            f"{field} must be one of ['full', 'hash_only', 'off', 'redacted']"
+        )
+    assert isinstance(value, str)
+    return value
+
+
+def _validate_optional_call_timeout(timeout_sec: object) -> float | None:
+    if timeout_sec is None:
+        return None
+    if isinstance(timeout_sec, bool) or not isinstance(timeout_sec, (int, float)):
+        raise ValueError("llm call_timeout_sec must be a positive finite number or None")
+    numeric = float(timeout_sec)
+    if not math.isfinite(numeric) or numeric <= 0.0:
+        raise ValueError("llm call_timeout_sec must be a positive finite number or None")
+    return numeric
+
+
+def validate_scheduler_state_snapshot(state: object, backend_count: int) -> None:
+    """Validate state accepted by LLMEnsemble.restore_scheduler_state()."""
+    _validate_scheduler_state(state, backend_count)
+
+
+def _validate_scheduler_state(
+    state: object,
+    backend_count: int,
+) -> tuple[
+    list[int],
+    list[float],
+    int,
+    list[list[str]],
+    set[str],
+    dict[str, dict[str, int | float]],
+    dict[str, dict],
+    set[str],
+    dict[str, int],
+    dict[str, int],
+    dict[str, int],
+    dict[str, dict[int, dict]],
+]:
+    if not isinstance(state, dict):
+        raise ValueError("scheduler state must be a mapping")
+    supported_fields = {
+        "counts",
+        "wins",
+        "total",
+        "unrewarded_success_call_ids",
+        "rewarded_call_ids",
+        "call_history_retention",
+        "reward_accounting_policy",
+        "role_accounting",
+        "role_scheduler_state",
+        "role_call_limits",
+        "role_backend_policy",
+        "provider_failure_policy_state",
+    }
+    unsupported = sorted(set(state) - supported_fields)
+    if unsupported:
+        raise ValueError(f"scheduler state has unsupported fields: {unsupported}")
+    if "counts" not in state or "wins" not in state or "total" not in state:
+        raise ValueError("scheduler state must include counts, wins, and total")
+    counts_raw = state["counts"]
+    wins_raw = state["wins"]
+    total_raw = state["total"]
+    counts = _validate_scheduler_count_vector(counts_raw, backend_count, "counts")
+    wins = _validate_scheduler_win_vector(wins_raw, backend_count, "wins")
+    if isinstance(total_raw, bool) or not isinstance(total_raw, int) or total_raw < 0:
+        raise ValueError("scheduler total must be a non-negative integer")
+    if total_raw < sum(counts):
+        raise ValueError("scheduler total must be >= the sum of backend counts")
+    unrewarded = _validate_unrewarded_call_ids(
+        state.get("unrewarded_success_call_ids"),
+        backend_count,
+    )
+    rewarded = _validate_rewarded_call_ids(state.get("rewarded_call_ids"))
+    all_unrewarded = [call_id for per_backend in unrewarded for call_id in per_backend]
+    duplicate_unrewarded = _first_duplicate(all_unrewarded)
+    if duplicate_unrewarded is not None:
+        raise ValueError(f"scheduler call id appears more than once: {duplicate_unrewarded!r}")
+    overlap = sorted(set(all_unrewarded) & rewarded)
+    if overlap:
+        raise ValueError(f"scheduler call id cannot be both rewarded and unrewarded: {overlap[0]!r}")
+    if "call_history_retention" in state:
+        _validate_call_history_retention_state(state["call_history_retention"])
+    reward_accounted_roles = _validate_reward_accounting_policy(
+        state.get("reward_accounting_policy")
+    )
+    role_accounting = _validate_role_accounting_state(state.get("role_accounting"))
+    role_scheduler_state = _validate_role_scheduler_state(
+        state.get("role_scheduler_state"),
+        backend_count,
+    )
+    max_calls_by_role, logical_role_calls = _validate_role_call_limits_state(
+        state.get("role_call_limits")
+    )
+    _validate_role_backend_policy_state(
+        state.get("role_backend_policy"),
+        backend_count=backend_count,
+    )
+    (
+        role_failure_quarantine_after,
+        provider_failure_state,
+    ) = _validate_provider_failure_policy_state(
+        state.get("provider_failure_policy_state"),
+        backend_count=backend_count,
+    )
+    return (
+        counts,
+        wins,
+        total_raw,
+        unrewarded,
+        rewarded,
+        role_accounting,
+        role_scheduler_state,
+        reward_accounted_roles,
+        max_calls_by_role,
+        logical_role_calls,
+        role_failure_quarantine_after,
+        provider_failure_state,
+    )
+
+
+def _validate_scheduler_count_vector(
+    raw: object,
+    backend_count: int,
+    field: str,
+) -> list[int]:
+    if not isinstance(raw, list) or len(raw) != backend_count:
+        raise ValueError(
+            f"scheduler {field} must contain one integer per backend"
+        )
+    counts: list[int] = []
+    for index, count in enumerate(raw):
+        if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+            raise ValueError(
+                f"scheduler {field}[{index}] must be a non-negative integer"
+            )
+        counts.append(count)
+    return counts
+
+
+def _validate_scheduler_win_vector(
+    raw: object,
+    backend_count: int,
+    field: str,
+) -> list[float]:
+    if not isinstance(raw, list) or len(raw) != backend_count:
+        raise ValueError(
+            f"scheduler {field} must contain one finite number per backend"
+        )
+    wins: list[float] = []
+    for index, win in enumerate(raw):
+        if isinstance(win, bool) or not isinstance(win, (int, float)):
+            raise ValueError(
+                f"scheduler {field}[{index}] must be a finite non-negative number"
+            )
+        numeric = float(win)
+        if not math.isfinite(numeric) or numeric < 0.0:
+            raise ValueError(
+                f"scheduler {field}[{index}] must be a finite non-negative number"
+            )
+        wins.append(numeric)
+    return wins
+
+
+def _empty_role_scheduler_record(backend_count: int) -> dict:
+    return {
+        "policy": "per_role_scheduler_audit_state_not_selection_policy",
+        "selection_policy": "backend_metadata_role_scoped_when_configured_else_global",
+        "counts": [0] * backend_count,
+        "wins": [0.0] * backend_count,
+        "total": 0,
+        "unrewarded_success_call_ids": [[] for _ in range(backend_count)],
+        "rewarded_call_ids": [],
+    }
+
+
+def _empty_role_accounting_record() -> dict[str, int | float]:
+    return {
+        "calls": 0,
+        "successes": 0,
+        "failures": 0,
+        "reward_accounted_calls": 0,
+        "telemetry_only_calls": 0,
+        "ensemble_retry_attempts": 0,
+        "ensemble_fallback_attempts": 0,
+        "provider_internal_attempts": 0,
+        "provider_internal_failed_attempts": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cost_microusd": 0,
+        "wall_clock_seconds": 0.0,
+        "provider_response_failures": 0,
+        "timeout_failures": 0,
+        "rate_limit_failures": 0,
+        "transport_failures": 0,
+        "provider_server_error_failures": 0,
+        "provider_client_error_failures": 0,
+        "unknown_failures": 0,
+    }
+
+
+def _add_role_accounting_record(
+    role_accounting: dict[str, dict[str, int | float]],
+    record: dict,
+) -> None:
+    role = validate_llm_call_role(record.get("role"))
+    summary = role_accounting.setdefault(role, _empty_role_accounting_record())
+    summary["calls"] += 1
+    if record.get("status") == "ok":
+        summary["successes"] += 1
+    else:
+        summary["failures"] += 1
+    if record.get("scheduler_accounting", "rewarded") == "rewarded":
+        summary["reward_accounted_calls"] += 1
+    else:
+        summary["telemetry_only_calls"] += 1
+    if _positive_int_record_field(record, "retry_attempt"):
+        summary["ensemble_retry_attempts"] += 1
+    if _positive_int_record_field(record, "fallback_attempt"):
+        summary["ensemble_fallback_attempts"] += 1
+    adapter_retry = record.get("adapter_retry")
+    if isinstance(adapter_retry, dict):
+        attempts = adapter_retry.get("attempts")
+        failed_attempts = adapter_retry.get("failed_attempts")
+        if isinstance(attempts, int) and not isinstance(attempts, bool) and attempts > 0:
+            summary["provider_internal_attempts"] += attempts
+        if (
+            isinstance(failed_attempts, int)
+            and not isinstance(failed_attempts, bool)
+            and failed_attempts > 0
+        ):
+            summary["provider_internal_failed_attempts"] += failed_attempts
+    usage = record.get("usage")
+    if isinstance(usage, dict):
+        for source, target in (
+            ("input_tokens", "input_tokens"),
+            ("output_tokens", "output_tokens"),
+            ("total_tokens", "total_tokens"),
+        ):
+            token_count = usage.get(source)
+            if (
+                isinstance(token_count, int)
+                and not isinstance(token_count, bool)
+                and token_count > 0
+            ):
+                summary[target] += token_count
+    cost_estimate = record.get("cost_estimate")
+    if isinstance(cost_estimate, dict):
+        cost_microusd = cost_estimate.get("cost_microusd")
+        if (
+            isinstance(cost_microusd, int)
+            and not isinstance(cost_microusd, bool)
+            and cost_microusd > 0
+        ):
+            summary["cost_microusd"] += cost_microusd
+    latency_sec = record.get("latency_sec")
+    if isinstance(latency_sec, (int, float)) and not isinstance(latency_sec, bool):
+        latency = float(latency_sec)
+        if math.isfinite(latency) and latency > 0.0:
+            summary["wall_clock_seconds"] += latency
+    provider_failure_category = record.get("provider_failure_category")
+    if isinstance(provider_failure_category, str):
+        failure_field = _provider_failure_category_role_field(provider_failure_category)
+        if failure_field is not None:
+            summary[failure_field] += 1
+
+
+def _positive_int_record_field(record: dict, field: str) -> bool:
+    value = record.get(field)
+    return isinstance(value, int) and not isinstance(value, bool) and value > 0
+
+
+def _add_provider_failure_policy_summary(
+    summary: dict[str, dict],
+    record: dict,
+) -> None:
+    policy = record.get("provider_failure_policy")
+    if record.get("status") != "error" or not isinstance(policy, dict):
+        return
+    role = validate_llm_call_role(record.get("role"))
+    role_summary = summary.setdefault(
+        role,
+        {
+            "failed_policy_records": 0,
+            "provider_failure_categories": {},
+            "retry_decisions": {},
+            "fallback_decisions": {},
+            "quarantine_decisions": {},
+            "penalty_decisions": {},
+        },
+    )
+    role_summary["failed_policy_records"] += 1
+    for source, target in (
+        ("provider_failure_category", "provider_failure_categories"),
+        ("retry_decision", "retry_decisions"),
+        ("fallback_decision", "fallback_decisions"),
+        ("quarantine_decision", "quarantine_decisions"),
+        ("penalty_decision", "penalty_decisions"),
+    ):
+        value = policy.get(source)
+        if isinstance(value, str):
+            _increment_summary_counter(role_summary[target], value)
+
+
+def _provider_failure_policy_summary_record(summary: dict[str, dict]) -> dict:
+    roles = {
+        role: {
+            "failed_policy_records": values["failed_policy_records"],
+            "provider_failure_categories": dict(
+                sorted(values["provider_failure_categories"].items())
+            ),
+            "retry_decisions": dict(sorted(values["retry_decisions"].items())),
+            "fallback_decisions": dict(sorted(values["fallback_decisions"].items())),
+            "quarantine_decisions": dict(
+                sorted(values["quarantine_decisions"].items())
+            ),
+            "penalty_decisions": dict(sorted(values["penalty_decisions"].items())),
+        }
+        for role, values in sorted(summary.items())
+    }
+    return {
+        "schema": "libreevolve.provider_failure_policy_summary.v1",
+        "scope": "llm_call_ledger_replay",
+        "roles": roles,
+        "total_failed_policy_records": sum(
+            values["failed_policy_records"] for values in roles.values()
+        ),
+        "remaining_gap": (
+            "provider_output_replay_and_hard_cancellation_not_implemented"
+        ),
+    }
+
+
+def _increment_summary_counter(counter: dict[str, int], key: str) -> None:
+    counter[key] = counter.get(key, 0) + 1
+
+
+def _provider_failure_category_role_field(category: str) -> str | None:
+    if category not in PROVIDER_FAILURE_CATEGORIES:
+        return None
+    return f"{category}_failures"
+
+
+def _validate_role_accounting_state(raw: object) -> dict[str, dict[str, int | float]]:
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler role_accounting must be a mapping")
+    normalized: dict[str, dict[str, int | float]] = {}
+    expected = set(_empty_role_accounting_record())
+    for role, value in raw.items():
+        role = validate_llm_call_role(role)
+        if not isinstance(value, dict):
+            raise ValueError(f"scheduler role_accounting[{role!r}] must be a mapping")
+        missing = sorted(expected - set(value))
+        if missing:
+            raise ValueError(
+                f"scheduler role_accounting[{role!r}] missing fields: {missing}"
+            )
+        unsupported = sorted(set(value) - expected)
+        if unsupported:
+            raise ValueError(
+                f"scheduler role_accounting[{role!r}] has unsupported fields: {unsupported}"
+            )
+        item: dict[str, int | float] = {}
+        for field in sorted(expected):
+            count = value[field]
+            if field == "wall_clock_seconds":
+                if (
+                    isinstance(count, bool)
+                    or not isinstance(count, (int, float))
+                    or not math.isfinite(float(count))
+                    or float(count) < 0.0
+                ):
+                    raise ValueError(
+                        f"scheduler role_accounting[{role!r}].{field} must be a finite non-negative number"
+                    )
+                item[field] = float(count)
+                continue
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                raise ValueError(
+                    f"scheduler role_accounting[{role!r}].{field} must be a non-negative integer"
+                )
+            item[field] = count
+        if item["successes"] + item["failures"] != item["calls"]:
+            raise ValueError(
+                f"scheduler role_accounting[{role!r}] status counts must sum to calls"
+            )
+        if (
+            item["reward_accounted_calls"] + item["telemetry_only_calls"]
+            != item["calls"]
+        ):
+            raise ValueError(
+                f"scheduler role_accounting[{role!r}] accounting counts must sum to calls"
+            )
+        normalized[role] = item
+    return normalized
+
+
+def _validate_role_scheduler_state(raw: object, backend_count: int) -> dict[str, dict]:
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler role_scheduler_state must be a mapping")
+    normalized: dict[str, dict] = {}
+    expected = set(_empty_role_scheduler_record(backend_count))
+    for role, value in raw.items():
+        role = validate_llm_call_role(role)
+        if not isinstance(value, dict):
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}] must be a mapping"
+            )
+        missing = sorted(expected - set(value))
+        if missing:
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}] missing fields: {missing}"
+            )
+        unsupported = sorted(set(value) - expected)
+        if unsupported:
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}] has unsupported fields: {unsupported}"
+            )
+        if value["policy"] != "per_role_scheduler_audit_state_not_selection_policy":
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}].policy is unsupported"
+            )
+        selection_policy = value["selection_policy"]
+        if selection_policy not in {
+            "backend_metadata_role_scoped_when_configured_else_global",
+            "global_ensemble_selection_state_is_authoritative",
+        }:
+            raise ValueError(
+                "scheduler role_scheduler_state"
+                f"[{role!r}].selection_policy is unsupported"
+            )
+        counts = _validate_scheduler_count_vector(
+            value["counts"],
+            backend_count,
+            f"role_scheduler_state[{role!r}].counts",
+        )
+        wins = _validate_scheduler_win_vector(
+            value["wins"],
+            backend_count,
+            f"role_scheduler_state[{role!r}].wins",
+        )
+        total = value["total"]
+        if isinstance(total, bool) or not isinstance(total, int) or total < 0:
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}].total must be a non-negative integer"
+            )
+        if total < sum(counts):
+            raise ValueError(
+                f"scheduler role_scheduler_state[{role!r}].total must be >= counts sum"
+            )
+        unrewarded = _validate_unrewarded_call_ids(
+            value["unrewarded_success_call_ids"],
+            backend_count,
+        )
+        rewarded = sorted(_validate_rewarded_call_ids(value["rewarded_call_ids"]))
+        all_unrewarded = [
+            call_id for per_backend in unrewarded for call_id in per_backend
+        ]
+        duplicate_unrewarded = _first_duplicate(all_unrewarded)
+        if duplicate_unrewarded is not None:
+            raise ValueError(
+                "scheduler role_scheduler_state"
+                f"[{role!r}] call id appears more than once: {duplicate_unrewarded!r}"
+            )
+        overlap = sorted(set(all_unrewarded) & set(rewarded))
+        if overlap:
+            raise ValueError(
+                "scheduler role_scheduler_state"
+                f"[{role!r}] call id cannot be both rewarded and unrewarded: {overlap[0]!r}"
+            )
+        normalized[role] = {
+            "policy": value["policy"],
+            "selection_policy": (
+                "backend_metadata_role_scoped_when_configured_else_global"
+            ),
+            "counts": counts,
+            "wins": wins,
+            "total": total,
+            "unrewarded_success_call_ids": unrewarded,
+            "rewarded_call_ids": rewarded,
+        }
+    return normalized
+
+
+def _validate_reward_accounting_policy(raw: object) -> set[str]:
+    if raw is None:
+        return set(DEFAULT_REWARD_ACCOUNTED_ROLES)
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler reward_accounting_policy must be a mapping")
+    required = {"policy", "reward_accounted_roles"}
+    missing = sorted(required - set(raw))
+    if missing:
+        raise ValueError(f"scheduler reward_accounting_policy missing fields: {missing}")
+    unsupported = sorted(set(raw) - required)
+    if unsupported:
+        raise ValueError(
+            f"scheduler reward_accounting_policy has unsupported fields: {unsupported}"
+        )
+    if raw["policy"] != "configured_reward_accounted_roles_v1":
+        raise ValueError("scheduler reward_accounting_policy policy is unsupported")
+    roles = _validate_reward_accounted_roles(raw["reward_accounted_roles"])
+    return set(roles)
+
+
+def _validate_role_call_limits_state(
+    raw: object,
+) -> tuple[dict[str, int], dict[str, int]]:
+    if raw is None:
+        return {}, {}
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler role_call_limits must be a mapping")
+    required = {"policy", "max_calls_by_role", "logical_calls_by_role"}
+    missing = sorted(required - set(raw))
+    if missing:
+        raise ValueError(f"scheduler role_call_limits missing fields: {missing}")
+    unsupported = sorted(set(raw) - required)
+    if unsupported:
+        raise ValueError(f"scheduler role_call_limits has unsupported fields: {unsupported}")
+    if raw["policy"] != "logical_generate_call_limits_by_role_v1":
+        raise ValueError("scheduler role_call_limits policy is unsupported")
+    max_calls_by_role = _validate_max_calls_by_role(raw["max_calls_by_role"])
+    logical_calls_by_role = _validate_nonnegative_call_count_mapping(
+        "scheduler role_call_limits.logical_calls_by_role",
+        raw["logical_calls_by_role"],
+    )
+    for role, consumed in logical_calls_by_role.items():
+        limit = max_calls_by_role.get(role)
+        if limit is not None and consumed > limit:
+            raise ValueError(
+                "scheduler role_call_limits logical_calls_by_role"
+                f"[{role!r}] exceeds max_calls_by_role"
+            )
+    return max_calls_by_role, logical_calls_by_role
+
+
+def _validate_role_backend_policy_state(
+    raw: object,
+    *,
+    backend_count: int,
+) -> None:
+    if raw is None:
+        return
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler role_backend_policy must be a mapping")
+    expected = {
+        "policy",
+        "configured_role_backend_indices",
+        "metadata_role_backend_indices",
+        "fallback_policy",
+    }
+    missing = sorted(expected - set(raw))
+    if missing:
+        raise ValueError(f"scheduler role_backend_policy missing fields: {missing}")
+    unsupported = sorted(set(raw) - expected)
+    if unsupported:
+        raise ValueError(f"scheduler role_backend_policy has unsupported fields: {unsupported}")
+    if raw["policy"] != "explicit_role_backend_indices_else_backend_metadata_else_global_v1":
+        raise ValueError("scheduler role_backend_policy policy is unsupported")
+    if (
+        raw["fallback_policy"]
+        != "use_backend_metadata_then_global_bandit_when_role_not_configured"
+    ):
+        raise ValueError("scheduler role_backend_policy fallback_policy is unsupported")
+    _validate_role_backend_indices_snapshot(
+        raw["configured_role_backend_indices"],
+        field="scheduler role_backend_policy.configured_role_backend_indices",
+        backend_count=backend_count,
+    )
+    _validate_role_backend_indices_snapshot(
+        raw["metadata_role_backend_indices"],
+        field="scheduler role_backend_policy.metadata_role_backend_indices",
+        backend_count=backend_count,
+    )
+
+
+def _validate_role_backend_indices_snapshot(
+    raw: object,
+    *,
+    field: str,
+    backend_count: int,
+) -> None:
+    if not isinstance(raw, dict):
+        raise ValueError(f"{field} must be a mapping")
+    for raw_role, raw_indices in raw.items():
+        role = validate_llm_call_role(raw_role)
+        if not isinstance(raw_indices, list):
+            raise ValueError(f"{field}[{role!r}] must be a list")
+        seen: set[int] = set()
+        for index, raw_index in enumerate(raw_indices):
+            if (
+                isinstance(raw_index, bool)
+                or not isinstance(raw_index, int)
+                or raw_index < 0
+                or raw_index >= backend_count
+            ):
+                raise ValueError(
+                    f"{field}[{role!r}][{index}] must be a backend index between 0 and {backend_count - 1}"
+                )
+            if raw_index in seen:
+                raise ValueError(
+                    f"{field}[{role!r}] contains duplicate backend index {raw_index}"
+                )
+            seen.add(raw_index)
+
+
+def _validate_provider_failure_policy_state(
+    raw: object,
+    *,
+    backend_count: int,
+) -> tuple[dict[str, int], dict[str, dict[int, dict]]]:
+    if raw is None:
+        return {}, {}
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler provider_failure_policy_state must be a mapping")
+    expected = {"schema", "policy", "role_quarantine_after", "roles"}
+    missing = sorted(expected - set(raw))
+    if missing:
+        raise ValueError(
+            f"scheduler provider_failure_policy_state missing fields: {missing}"
+        )
+    unsupported = sorted(set(raw) - expected)
+    if unsupported:
+        raise ValueError(
+            f"scheduler provider_failure_policy_state has unsupported fields: {unsupported}"
+        )
+    if raw["schema"] != "libreevolve.provider_failure_policy_state.v1":
+        raise ValueError("scheduler provider_failure_policy_state schema is unsupported")
+    if raw["policy"] != "role_backend_consecutive_failure_quarantine_v1":
+        raise ValueError("scheduler provider_failure_policy_state policy is unsupported")
+    thresholds = _validate_role_quarantine_thresholds(raw["role_quarantine_after"])
+    roles = raw["roles"]
+    if not isinstance(roles, dict):
+        raise ValueError("scheduler provider_failure_policy_state.roles must be a mapping")
+    normalized: dict[str, dict[int, dict]] = {}
+    for raw_role, raw_role_state in roles.items():
+        role = validate_llm_call_role(raw_role)
+        if role not in thresholds:
+            raise ValueError(
+                "scheduler provider_failure_policy_state role has no quarantine threshold"
+            )
+        if not isinstance(raw_role_state, dict):
+            raise ValueError(
+                f"scheduler provider_failure_policy_state.roles[{role!r}] must be a mapping"
+            )
+        if set(raw_role_state) != {"backends"}:
+            raise ValueError(
+                f"scheduler provider_failure_policy_state.roles[{role!r}] has unsupported fields"
+            )
+        backends = raw_role_state["backends"]
+        if not isinstance(backends, list):
+            raise ValueError(
+                f"scheduler provider_failure_policy_state.roles[{role!r}].backends must be a list"
+            )
+        role_records: dict[int, dict] = {}
+        for index, item in enumerate(backends):
+            if not isinstance(item, dict):
+                raise ValueError(
+                    "scheduler provider_failure_policy_state"
+                    f".roles[{role!r}].backends[{index}] must be a mapping"
+                )
+            expected_item = {
+                "backend_idx",
+                "total_failures",
+                "consecutive_failures",
+                "quarantined",
+                "last_failure_category",
+            }
+            missing_item = sorted(expected_item - set(item))
+            if missing_item:
+                raise ValueError(
+                    "scheduler provider_failure_policy_state"
+                    f".roles[{role!r}].backends[{index}] missing fields: {missing_item}"
+                )
+            unsupported_item = sorted(set(item) - expected_item)
+            if unsupported_item:
+                raise ValueError(
+                    "scheduler provider_failure_policy_state"
+                    f".roles[{role!r}].backends[{index}] has unsupported fields: "
+                    f"{unsupported_item}"
+                )
+            backend_idx = item["backend_idx"]
+            if (
+                isinstance(backend_idx, bool)
+                or not isinstance(backend_idx, int)
+                or backend_idx < 0
+                or backend_idx >= backend_count
+            ):
+                raise ValueError(
+                    "scheduler provider_failure_policy_state backend_idx is invalid"
+                )
+            if backend_idx in role_records:
+                raise ValueError(
+                    "scheduler provider_failure_policy_state backend_idx appears more than once"
+                )
+            total_failures = item["total_failures"]
+            consecutive_failures = item["consecutive_failures"]
+            if (
+                isinstance(total_failures, bool)
+                or not isinstance(total_failures, int)
+                or total_failures < 0
+            ):
+                raise ValueError(
+                    "scheduler provider_failure_policy_state total_failures is invalid"
+                )
+            if (
+                isinstance(consecutive_failures, bool)
+                or not isinstance(consecutive_failures, int)
+                or consecutive_failures < 0
+                or consecutive_failures > total_failures
+            ):
+                raise ValueError(
+                    "scheduler provider_failure_policy_state consecutive_failures is invalid"
+                )
+            if not isinstance(item["quarantined"], bool):
+                raise ValueError(
+                    "scheduler provider_failure_policy_state quarantined is invalid"
+                )
+            category = item["last_failure_category"]
+            if category is not None and category not in PROVIDER_FAILURE_CATEGORIES:
+                raise ValueError(
+                    "scheduler provider_failure_policy_state last_failure_category is invalid"
+                )
+            role_records[backend_idx] = {
+                "backend_idx": backend_idx,
+                "total_failures": total_failures,
+                "consecutive_failures": consecutive_failures,
+                "quarantined": item["quarantined"],
+                "last_failure_category": category,
+            }
+        if role_records:
+            normalized[role] = role_records
+    return thresholds, normalized
+
+
+def _validate_max_calls_by_role(raw: object) -> dict[str, int]:
+    if raw is None:
+        return {}
+    return _validate_nonnegative_call_count_mapping(
+        "llm max_calls_by_role",
+        raw,
+    )
+
+
+def _validate_role_quarantine_thresholds(raw: object) -> dict[str, int]:
+    if raw is None:
+        return {}
+    if not isinstance(raw, Mapping):
+        raise ValueError(
+            "llm role_failure_quarantine_after must be a mapping of role labels to integer thresholds"
+        )
+    normalized: dict[str, int] = {}
+    for raw_role, raw_count in raw.items():
+        role = validate_llm_call_role(raw_role)
+        if (
+            isinstance(raw_count, bool)
+            or not isinstance(raw_count, int)
+            or raw_count <= 0
+        ):
+            raise ValueError(
+                f"llm role_failure_quarantine_after[{role!r}] must be a positive integer"
+            )
+        normalized[role] = raw_count
+    return dict(sorted(normalized.items()))
+
+
+def _validate_nonnegative_call_count_mapping(
+    field: str,
+    raw: object,
+) -> dict[str, int]:
+    if not isinstance(raw, Mapping):
+        raise ValueError(f"{field} must be a mapping of role labels to integer limits")
+    normalized: dict[str, int] = {}
+    for raw_role, raw_count in raw.items():
+        role = validate_llm_call_role(raw_role)
+        if (
+            isinstance(raw_count, bool)
+            or not isinstance(raw_count, int)
+            or raw_count < 0
+        ):
+            raise ValueError(f"{field}[{role!r}] must be a non-negative integer")
+        normalized[role] = raw_count
+    return dict(sorted(normalized.items()))
+
+
+def _validate_reward_accounted_roles(raw: object) -> tuple[str, ...]:
+    if not isinstance(raw, (list, tuple)):
+        raise ValueError("llm reward_accounted_roles must be a list of role labels")
+    if not raw:
+        raise ValueError("llm reward_accounted_roles must include at least one role")
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for item in raw:
+        role = validate_llm_call_role(item)
+        if role not in seen:
+            seen.add(role)
+            normalized.append(role)
+    return tuple(normalized)
+
+
+def _validate_call_history_retention_state(raw: object) -> None:
+    if not isinstance(raw, dict):
+        raise ValueError("scheduler call_history_retention must be a mapping")
+    required = {
+        "policy",
+        "max_records",
+        "retained_records",
+        "total_records",
+        "dropped_records",
+    }
+    missing = sorted(required - set(raw))
+    if missing:
+        raise ValueError(f"scheduler call_history_retention missing fields: {missing}")
+    unsupported = sorted(set(raw) - required)
+    if unsupported:
+        raise ValueError(f"scheduler call_history_retention has unsupported fields: {unsupported}")
+    if raw["policy"] != "bounded_in_memory_window":
+        raise ValueError("scheduler call_history_retention policy is unsupported")
+    max_records = _validate_retention_counter("max_records", raw["max_records"], minimum=1)
+    retained_records = _validate_retention_counter("retained_records", raw["retained_records"])
+    total_records = _validate_retention_counter("total_records", raw["total_records"])
+    dropped_records = _validate_retention_counter("dropped_records", raw["dropped_records"])
+    if retained_records > max_records:
+        raise ValueError("scheduler call_history_retention retained_records exceeds max_records")
+    if dropped_records > total_records:
+        raise ValueError("scheduler call_history_retention dropped_records exceeds total_records")
+
+
+def _validate_retention_counter(name: str, raw: object, *, minimum: int = 0) -> int:
+    if isinstance(raw, bool) or not isinstance(raw, int) or raw < minimum:
+        raise ValueError(f"scheduler call_history_retention {name} must be an integer >= {minimum}")
+    return raw
+
+
+def _validate_unrewarded_call_ids(raw: object, backend_count: int) -> list[list[str]]:
+    if raw is None:
+        return [[] for _ in range(backend_count)]
+    if not isinstance(raw, list) or len(raw) != backend_count:
+        raise ValueError("scheduler unrewarded_success_call_ids must contain one list per backend")
+    normalized: list[list[str]] = []
+    for backend_idx, call_ids in enumerate(raw):
+        if not isinstance(call_ids, list):
+            raise ValueError(
+                f"scheduler unrewarded_success_call_ids[{backend_idx}] must be a list"
+            )
+        normalized.append(
+            [
+                _validate_scheduler_call_id(
+                    call_id,
+                    f"scheduler unrewarded_success_call_ids[{backend_idx}]",
+                )
+                for call_id in call_ids
+            ]
+        )
+    return normalized
+
+
+def _validate_rewarded_call_ids(raw: object) -> set[str]:
+    if raw is None:
+        return set()
+    if not isinstance(raw, list):
+        raise ValueError("scheduler rewarded_call_ids must be a list")
+    normalized = [
+        _validate_scheduler_call_id(call_id, "scheduler rewarded_call_ids")
+        for call_id in raw
+    ]
+    duplicate = _first_duplicate(normalized)
+    if duplicate is not None:
+        raise ValueError(f"scheduler call id appears more than once: {duplicate!r}")
+    return set(normalized)
+
+
+def _validate_scheduler_call_id(raw: object, field: str) -> str:
+    if not isinstance(raw, str) or not raw.strip():
+        raise ValueError(f"{field} must contain non-empty call ids")
+    return raw
+
+
+def _first_duplicate(values: list[str]) -> str | None:
+    seen: set[str] = set()
+    for value in values:
+        if value in seen:
+            return value
+        seen.add(value)
+    return None
+
+
+def _validate_fallback(fallback: object) -> bool:
+    if not isinstance(fallback, bool):
+        raise ValueError("llm fallback must be boolean")
+    return fallback
+
+
+def _validate_backend_metadata(metadata: object, backend_count: int) -> list[dict]:
+    if metadata is None:
+        return [{} for _ in range(backend_count)]
+    if not isinstance(metadata, list):
+        raise ValueError("backend_metadata must be a list of mappings")
+    if len(metadata) != backend_count:
+        raise ValueError("backend_metadata must contain one mapping per backend")
+    normalized: list[dict] = []
+    for index, item in enumerate(metadata):
+        if not isinstance(item, dict):
+            raise ValueError(f"backend_metadata[{index}] must be a mapping")
+        normalized.append(_validate_metadata_mapping(item, f"backend_metadata[{index}]"))
+    return normalized
+
+
+def _validate_metadata_mapping(mapping: dict, path: str) -> dict:
+    normalized: dict = {}
+    for key, value in mapping.items():
+        key = _validate_metadata_key(key, path)
+        if key in {"cost", "latency", "depth", _COST_USD_PER_MILLION_TOKENS_FIELD}:
+            normalized[key] = _validate_positive_metadata_number(f"{path}.{key}", value)
+        elif key == _PROMPT_MAX_ESTIMATED_TOKENS_FIELD:
+            normalized[key] = validate_backend_max_tokens(value, field=f"{path}.{key}")
+        elif key == "role":
+            normalized[key] = validate_llm_call_role(value)
+        else:
+            normalized[key] = _validate_json_safe_metadata_value(value, f"{path}.{key}")
+    return normalized
+
+
+def _validate_request_parameters_telemetry(value: object, path: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    supported = REQUEST_PARAMETER_FIELDS
+    unsupported = sorted(set(value) - supported)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    normalized = validate_backend_request_parameters(
+        {"type": "ollama", **value},
+        field_prefix=path,
+    )
+    return normalized
+
+
+def _validate_backend_defaults_telemetry(value: object, path: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    if not value:
+        return {}
+    supported = {
+        "policy",
+        "max_tokens",
+        "provider_max_retries",
+        "timeout_sec",
+        "api_mode",
+        "api_mode_policy",
+        "reasoning_effort",
+    }
+    unsupported = sorted(set(value) - supported)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    if value.get("policy") != "effective_backend_generation_defaults_v1":
+        raise ValueError(f"{path}.policy is unsupported")
+    normalized: dict[str, object] = {
+        "policy": value["policy"],
+        "max_tokens": validate_backend_max_tokens(
+            value.get("max_tokens"),
+            field=f"{path}.max_tokens",
+        ),
+        "provider_max_retries": validate_provider_max_retries(
+            value.get("provider_max_retries"),
+            field=f"{path}.provider_max_retries",
+        ),
+    }
+    timeout = value.get("timeout_sec")
+    if timeout is None:
+        normalized["timeout_sec"] = None
+    else:
+        normalized["timeout_sec"] = _validate_positive_metadata_number(
+            f"{path}.timeout_sec",
+            timeout,
+        )
+    for field in ("api_mode", "api_mode_policy", "reasoning_effort"):
+        item = value.get(field)
+        if item is None:
+            normalized[field] = None
+        elif _is_safe_api_mode(item):
+            normalized[field] = item
+        else:
+            raise ValueError(f"{path}.{field} must be a manifest-safe label or null")
+    return normalized
+
+
+def _validate_client_context_telemetry(value: object, path: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    unsupported = sorted(set(value) - CLIENT_CONTEXT_FIELDS)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    normalized: dict = {}
+    if "base_url" in value:
+        normalized["base_url"] = validate_endpoint_url(value["base_url"], field=f"{path}.base_url")
+    if "host" in value:
+        normalized["host"] = validate_endpoint_url(value["host"], field=f"{path}.host")
+    for key in ("organization", "project"):
+        if key in value:
+            normalized[key] = validate_client_context_label(value[key], field=f"{path}.{key}")
+    return normalized
+
+
+def _validate_prompt_role_policy_telemetry(value: object, path: str) -> dict:
+    if value is None:
+        return prompt_role_policy_record({}, "mutation")
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    allowed = {
+        "policy",
+        "matched_role",
+        "message_roles",
+        "instruction_fields",
+        "instruction_metadata",
+    }
+    unsupported = sorted(set(value) - allowed)
+    if unsupported:
+        raise ValueError(f"{path} has unsupported fields: {unsupported}")
+    policy = value.get("policy")
+    if policy not in {"single_user_message", "configured_structured_messages"}:
+        raise ValueError(f"{path}.policy is unsupported")
+    matched_role = value.get("matched_role")
+    if matched_role is not None:
+        matched_role = validate_llm_call_role(matched_role)
+    message_roles = _validate_prompt_message_roles(
+        value.get("message_roles"),
+        f"{path}.message_roles",
+    )
+    instruction_fields = _validate_prompt_instruction_fields(
+        value.get("instruction_fields"),
+        f"{path}.instruction_fields",
+    )
+    metadata = _validate_prompt_instruction_metadata(
+        value.get("instruction_metadata", {}),
+        f"{path}.instruction_metadata",
+    )
+    if policy == "single_user_message":
+        if matched_role is not None or message_roles != ["user"] or instruction_fields or metadata:
+            raise ValueError(f"{path} single_user_message payload is inconsistent")
+    else:
+        if matched_role is None:
+            raise ValueError(f"{path}.matched_role is required for structured messages")
+        if not instruction_fields:
+            raise ValueError(f"{path}.instruction_fields must not be empty")
+        if message_roles != [*instruction_fields, "user"]:
+            raise ValueError(f"{path}.message_roles must match instruction fields plus user")
+        if set(metadata) != set(instruction_fields):
+            raise ValueError(f"{path}.instruction_metadata must match instruction fields")
+    return {
+        "policy": policy,
+        "matched_role": matched_role,
+        "message_roles": message_roles,
+        "instruction_fields": instruction_fields,
+        "instruction_metadata": metadata,
+    }
+
+
+def _validate_prompt_message_roles(value: object, path: str) -> list[str]:
+    if not isinstance(value, list):
+        raise ValueError(f"{path} must be a list")
+    allowed = {"system", "developer", "user"}
+    normalized: list[str] = []
+    for index, item in enumerate(value):
+        if item not in allowed:
+            raise ValueError(f"{path}[{index}] is unsupported")
+        normalized.append(item)
+    if normalized.count("user") != 1 or normalized[-1] != "user":
+        raise ValueError(f"{path} must end with exactly one user role")
+    return normalized
+
+
+def _validate_prompt_instruction_fields(value: object, path: str) -> list[str]:
+    if not isinstance(value, list):
+        raise ValueError(f"{path} must be a list")
+    allowed = {"system", "developer"}
+    normalized: list[str] = []
+    for index, item in enumerate(value):
+        if item not in allowed:
+            raise ValueError(f"{path}[{index}] is unsupported")
+        if item in normalized:
+            raise ValueError(f"{path} must not contain duplicate fields")
+        normalized.append(item)
+    if normalized != [field for field in ("system", "developer") if field in normalized]:
+        raise ValueError(f"{path} must preserve system/developer order")
+    return normalized
+
+
+def _validate_prompt_instruction_metadata(value: object, path: str) -> dict:
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must be a mapping")
+    normalized: dict = {}
+    for key, item in value.items():
+        if key not in {"system", "developer"}:
+            raise ValueError(f"{path} keys are unsupported")
+        if not isinstance(item, dict):
+            raise ValueError(f"{path}.{key} must be a mapping")
+        unsupported = sorted(set(item) - {"chars", "sha256", "redacted"})
+        if unsupported:
+            raise ValueError(f"{path}.{key} has unsupported fields: {unsupported}")
+        chars = item.get("chars")
+        if isinstance(chars, bool) or not isinstance(chars, int) or chars <= 0:
+            raise ValueError(f"{path}.{key}.chars must be a positive integer")
+        sha256 = item.get("sha256")
+        if not isinstance(sha256, str) or re.fullmatch(r"[0-9a-f]{64}", sha256) is None:
+            raise ValueError(f"{path}.{key}.sha256 must be a SHA-256 hex digest")
+        redacted = item.get("redacted")
+        if not isinstance(redacted, bool):
+            raise ValueError(f"{path}.{key}.redacted must be boolean")
+        normalized[key] = {"chars": chars, "sha256": sha256, "redacted": redacted}
+    return normalized
+
+
+def _validate_metadata_key(key: object, path: str) -> str:
+    if not isinstance(key, str) or not key:
+        raise ValueError(f"{path} keys must be non-empty strings")
+    if redact_sensitive_text(key) != key:
+        raise ValueError(f"{path} keys must be manifest-safe metadata labels")
+    if _METADATA_KEY_RE.fullmatch(key) is None:
+        raise ValueError(f"{path} keys must be manifest-safe metadata labels")
+    return key
+
+
+def _validate_positive_metadata_number(path: str, value: object) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"{path} must be a finite positive number")
+    numeric = float(value)
+    if not math.isfinite(numeric) or numeric <= 0.0:
+        raise ValueError(f"{path} must be a finite positive number")
+    return numeric
+
+
+def _validate_json_safe_metadata_value(value: object, path: str) -> object:
+    if value is None or isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        if redact_sensitive_text(value) != value:
+            raise ValueError(f"{path} must not contain secret-like text")
+        return value
+    if isinstance(value, int) and not isinstance(value, bool):
+        return value
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError(f"{path} must be finite")
+        return value
+    if isinstance(value, list):
+        return [
+            _validate_json_safe_metadata_value(item, f"{path}[{index}]")
+            for index, item in enumerate(value)
+        ]
+    if isinstance(value, dict):
+        return _validate_metadata_mapping(value, path)
+    raise ValueError(f"{path} must be JSON-safe metadata")
+
+
+def validate_llm_response_text(
+    response: object,
+    *,
+    source: str = "LLM backend",
+    max_chars: int | None = DEFAULT_MAX_RESPONSE_CHARS,
+) -> str:
+    if not isinstance(response, str):
+        raise ProviderResponseError(
+            f"{source} returned non-text output: {type(response).__name__}",
+            category="non_text",
+            source=source,
+            value_type=type(response).__name__,
+        )
+    if not response.strip():
+        raise ProviderResponseError(
+            f"{source} returned empty output",
+            category="empty_text",
+            source=source,
+        )
+    if max_chars is not None:
+        limit = _validate_max_response_chars(max_chars)
+        if len(response) > limit:
+            raise ProviderResponseError(
+                f"{source} response exceeded maximum accepted size: "
+                f"{len(response)} chars > {limit}",
+                category="oversized_text",
+                source=source,
+            )
+    return response
+
+
+def _require_response_text(
+    response: object,
+    *,
+    max_chars: int = DEFAULT_MAX_RESPONSE_CHARS,
+) -> str:
+    return validate_llm_response_text(response, max_chars=max_chars)
+
+
+def _call_backend_generate(
+    backend: LLMBackend,
+    prompt: str,
+    *,
+    role: str,
+    timeout_sec: float | None,
+) -> object:
+    if timeout_sec is None:
+        return backend.generate(prompt, role=role)
+
+    result_queue: queue.Queue[tuple[str, object]] = queue.Queue(maxsize=1)
+
+    def run_call() -> None:
+        try:
+            result_queue.put(("ok", backend.generate(prompt, role=role)))
+        except Exception as exc:
+            result_queue.put(("error", exc))
+
+    worker = threading.Thread(
+        target=run_call,
+        name="libreevolve-llm-call",
+        daemon=True,
+    )
+    worker.start()
+    try:
+        status, payload = result_queue.get(timeout=timeout_sec)
+    except queue.Empty as exc:
+        raise ProviderCallTimeoutError(timeout_sec) from exc
+    if status == "error":
+        assert isinstance(payload, Exception)
+        raise payload
+    return payload
+
 
 def build_llm(config) -> LLMEnsemble:
     """Instantiate LLMEnsemble from config.backends."""
-    def _get_backend_cls(t: str):
-        if t == "anthropic":
-            from libreevolve.llm.anthropic import AnthropicBackend
-            return AnthropicBackend
-        if t == "openai":
-            from libreevolve.llm.openai import OpenAIBackend
-            return OpenAIBackend
-        if t == "ollama":
-            from libreevolve.llm.ollama import OllamaBackend
-            return OllamaBackend
-        raise ValueError(f"Unknown backend type {t!r}. Valid: ['anthropic', 'openai', 'ollama']")
-    backends = []
-    ctor_keys = {
-        "anthropic": {"model", "max_tokens"},
-        "openai": {"model", "max_tokens", "reasoning_effort"},
-        "ollama": {"model", "max_tokens"},
-    }
-    for s in config.backends:
-        t = s["type"]
-        cls = _get_backend_cls(t)
-        allowed = ctor_keys[t]
-        backends.append(cls(**{k: v for k, v in s.items() if k in allowed}))
-    metadata = [
-        {
-            "cost": s.get("cost", 1.0),
-            "latency": s.get("latency", 1.0),
-            "depth": s.get("depth", 1.0),
-            "role": s.get("role", "general"),
-        }
-        for s in config.backends
-    ]
+    prompt_roles = validate_prompt_role_policy(
+        getattr(config, "llm_prompt_roles", {}),
+        field="llm_prompt_roles",
+    )
+    from libreevolve.llm.backend_registry import build_registry_backends
+
+    backends, metadata = build_registry_backends(
+        config.backends,
+        prompt_roles=prompt_roles,
+    )
     return LLMEnsemble(
         backends,
         explore_coeff=config.ensemble_explore_coeff,
         strategy=config.ensemble_strategy,
         backend_metadata=metadata,
         max_retries=config.llm_max_retries,
+        max_call_attempts=config.llm_max_call_attempts,
         fallback=config.llm_fallback,
+        max_response_chars=config.llm_max_response_chars,
+        max_call_history=config.llm_call_history_max,
+        call_timeout_sec=config.llm_call_timeout_sec,
+        provider_response_retention_mode=config.provider_response_retention_mode,
+        provider_error_retention_mode=config.provider_error_retention_mode,
+        max_prompt_chars=config.prompt_max_chars,
+        max_prompt_estimated_tokens=config.prompt_max_estimated_tokens,
+        reward_accounted_roles=config.llm_reward_accounted_roles,
+        max_calls_by_role=config.llm_role_call_limits,
+        role_backend_indices=config.llm_role_backend_indices,
+        role_failure_quarantine_after=config.llm_role_failure_quarantine_after,
     )
+
+
+def _normalize_backend_specs(backends: object) -> list[dict]:
+    if not isinstance(backends, list) or not backends:
+        raise ValueError("backends must be a non-empty list of mappings")
+    allowed_types = {"anthropic", "custom", "openai", "ollama"}
+    common_keys = {
+        "type",
+        "model",
+        "max_tokens",
+        "cost",
+        _COST_USD_PER_MILLION_TOKENS_FIELD,
+        _PROMPT_MAX_ESTIMATED_TOKENS_FIELD,
+        "latency",
+        "depth",
+        "role",
+        *REQUEST_PARAMETER_FIELDS,
+    }
+    normalized: list[dict] = []
+    for index, spec in enumerate(backends):
+        label = f"backends[{index}]"
+        if not isinstance(spec, dict):
+            raise ValueError(f"{label} must be a mapping")
+        if not all(isinstance(key, str) for key in spec):
+            raise ValueError(f"{label} keys must be strings")
+        backend_type = spec.get("type")
+        if backend_type not in allowed_types:
+            raise ValueError(f"{label}.type must be one of {sorted(allowed_types)}")
+        allowed = set(common_keys)
+        if backend_type == "openai":
+            allowed.add("reasoning_effort")
+            allowed.add("api_mode")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+            allowed.update({"base_url", "organization", "project"})
+        if backend_type == "anthropic":
+            allowed.add("base_url")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend_type == "ollama":
+            allowed.add("host")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend_type == "custom":
+            allowed.add("class_path")
+            allowed.add("kwargs")
+        unsupported = sorted(set(spec) - allowed)
+        if unsupported:
+            raise ValueError(f"{label} has unsupported fields {unsupported}")
+        item = {
+            "type": backend_type,
+            "model": validate_backend_model_id(spec.get("model"), field=f"{label}.model"),
+        }
+        if "max_tokens" in spec:
+            item["max_tokens"] = validate_backend_max_tokens(
+                spec["max_tokens"],
+                field=f"{label}.max_tokens",
+            )
+        if "timeout_sec" in spec:
+            item["timeout_sec"] = _validate_positive_metadata_number(
+                f"{label}.timeout_sec",
+                spec["timeout_sec"],
+            )
+        if "provider_max_retries" in spec:
+            item["provider_max_retries"] = validate_provider_max_retries(
+                spec["provider_max_retries"],
+                field=f"{label}.provider_max_retries",
+            )
+        if backend_type == "custom":
+            item["class_path"] = validate_custom_backend_class_path(
+                spec.get("class_path"),
+                field=f"{label}.class_path",
+            )
+            if "kwargs" in spec:
+                item["kwargs"] = validate_custom_backend_kwargs(
+                    spec["kwargs"],
+                    field=f"{label}.kwargs",
+                )
+        for field_name in ("cost", "latency", "depth"):
+            if field_name in spec:
+                item[field_name] = _validate_positive_metadata_number(
+                    f"{label}.{field_name}",
+                    spec[field_name],
+                )
+        if _COST_USD_PER_MILLION_TOKENS_FIELD in spec:
+            item[_COST_USD_PER_MILLION_TOKENS_FIELD] = (
+                _validate_positive_metadata_number(
+                    f"{label}.{_COST_USD_PER_MILLION_TOKENS_FIELD}",
+                    spec[_COST_USD_PER_MILLION_TOKENS_FIELD],
+                )
+            )
+        if _PROMPT_MAX_ESTIMATED_TOKENS_FIELD in spec:
+            item[_PROMPT_MAX_ESTIMATED_TOKENS_FIELD] = validate_backend_max_tokens(
+                spec[_PROMPT_MAX_ESTIMATED_TOKENS_FIELD],
+                field=f"{label}.{_PROMPT_MAX_ESTIMATED_TOKENS_FIELD}",
+            )
+        if "role" in spec:
+            item["role"] = validate_llm_call_role(spec["role"])
+        if "reasoning_effort" in spec:
+            item["reasoning_effort"] = validate_openai_reasoning_effort(
+                spec["reasoning_effort"],
+                model=item["model"],
+                field=f"{label}.reasoning_effort",
+            )
+        if "api_mode" in spec:
+            item["api_mode"] = validate_openai_api_mode(
+                spec["api_mode"],
+                reasoning_effort=item.get("reasoning_effort"),
+                field=f"{label}.api_mode",
+            )
+        item.update(validate_backend_request_parameters({**spec, **item}, field_prefix=label))
+        item.update(validate_backend_client_context({**spec, **item}, field_prefix=label))
+        normalized.append(item)
+    return normalized
+
+
+def validate_custom_backend_class_path(value: object, *, field: str = "class_path") -> str:
+    if not isinstance(value, str):
+        raise ValueError(f"{field} must be an import path string")
+    if redact_sensitive_text(value) != value:
+        raise ValueError(f"{field} must be a manifest-safe import path")
+    if _CUSTOM_BACKEND_CLASS_PATH_RE.fullmatch(value) is None:
+        raise ValueError(f"{field} must use module.path:ClassName import syntax")
+    return value
+
+
+def validate_custom_backend_kwargs(value: object, *, field: str = "kwargs") -> dict:
+    if not isinstance(value, dict):
+        raise ValueError(f"{field} must be a mapping")
+    normalized: dict = {}
+    for key, item in value.items():
+        if not isinstance(key, str) or _CUSTOM_BACKEND_KWARG_RE.fullmatch(key) is None:
+            raise ValueError(f"{field} keys must be manifest-safe keyword labels")
+        if redact_sensitive_text(key) != key:
+            raise ValueError(f"{field} keys must be manifest-safe keyword labels")
+        if key in {"model", "max_tokens"}:
+            raise ValueError(f"{field}.{key} must be configured as a top-level backend field")
+        normalized[key] = _validate_json_safe_config_value(item, f"{field}.{key}")
+    return normalized
+
+
+def _build_custom_backend(spec: dict) -> LLMBackend:
+    class_path = spec["class_path"]
+    module_name, _, attr_path = class_path.partition(":")
+    try:
+        module = importlib.import_module(module_name)
+        target: object = module
+        for attr in attr_path.split("."):
+            target = getattr(target, attr)
+    except Exception as exc:
+        raise ValueError(f"Could not import custom backend {class_path!r}: {exc}") from exc
+    if not callable(target):
+        raise ValueError(f"Custom backend {class_path!r} is not callable")
+    kwargs = dict(spec.get("kwargs", {}))
+    kwargs["model"] = spec["model"]
+    if "max_tokens" in spec:
+        kwargs["max_tokens"] = spec["max_tokens"]
+    try:
+        backend = target(**kwargs)
+    except Exception as exc:
+        raise ValueError(f"Could not construct custom backend {class_path!r}: {exc}") from exc
+    if not isinstance(backend, LLMBackend):
+        raise ValueError(
+            f"Custom backend {class_path!r} must implement generate(prompt, **kwargs) and name"
+        )
+    return backend
+
+
+def _validate_json_safe_config_value(value: object, field: str) -> object:
+    if value is None:
+        return None
+    if isinstance(value, str):
+        if redact_sensitive_text(value) != value or any(_is_control_or_format(char) for char in value):
+            raise ValueError(f"{field} must be JSON-safe config")
+        return value
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError(f"{field} must be JSON-safe config")
+        return value
+    if isinstance(value, list):
+        return [
+            _validate_json_safe_config_value(item, f"{field}[{index}]")
+            for index, item in enumerate(value)
+        ]
+    if isinstance(value, dict):
+        normalized: dict = {}
+        for key, item in value.items():
+            if not isinstance(key, str):
+                raise ValueError(f"{field} keys must be strings")
+            if redact_sensitive_text(key) != key or any(_is_control_or_format(char) for char in key):
+                raise ValueError(f"{field} keys must be manifest-safe labels")
+            normalized[key] = _validate_json_safe_config_value(item, f"{field}.{key}")
+        return normalized
+    raise ValueError(f"{field} must be JSON-safe config")
+
+
+def _is_control_or_format(character: str) -> bool:
+    return unicodedata.category(character).startswith("C")

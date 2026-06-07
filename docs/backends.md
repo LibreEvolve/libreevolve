@@ -1,11 +1,12 @@
 # Backends
 
-LibreEvolve supports three backend types through a common `generate(prompt) ->
-str` interface:
+LibreEvolve supports configured built-in and custom backend types through a
+common `generate(prompt, **kwargs) -> str` interface:
 
 - OpenAI
 - Anthropic
 - Ollama
+- Custom import-path backends
 
 The bandit router that selects among them is implemented in
 [`libreevolve/llm/ensemble.py`](../libreevolve/llm/ensemble.py).
@@ -13,44 +14,282 @@ The bandit router that selects among them is implemented in
 ## Selection and reward
 
 `LLMEnsemble` wraps one or more backends and chooses one backend per mutation
-attempt using a UCB-style heuristic over observed fitness improvements. It is
-not a canonical UCB1 implementation; reward-normalization gaps are tracked in
-[`docs/todo/papers.md`](todo/papers.md).
+attempt using a UCB-style heuristic over archive-admitted valid fitness
+improvements. It is not a canonical UCB1 implementation; canonical regret
+assumptions are explicitly out of scope unless the scheduler is promoted beyond
+heuristic routing.
 
 Current behavior:
 
 - `generate(prompt, role=...)` returns both the raw backend response and the
   backend index
-- the scheduler's global `total` counter advances before the backend call, but
-  the selected backend's `counts` entry advances only after a successful
-  response
-- rewards are recorded only after evaluation
-- the evolution loop clamps reward to `max(0.0, score - parent.fitness)`
-- critique, feedback-grader, and meta-prompt calls currently share this same
-  selection/count state even though only candidate mutation calls receive an
-  improvement reward
+- mutation calls are reward-accounted scheduler pulls: the scheduler's global
+  `total` counter advances before mutation backend selection, and the selected
+  backend's `counts` entry advances after either a successful response or the
+  final exhausted failed attempt for that selected backend; retry attempts
+  before exhaustion do not separately increment `counts`
+- critique, feedback-grader, and meta-prompt calls are telemetry-only by
+  default. They are routed with the current scheduler state and recorded in
+  call telemetry, but they do not advance `total`, do not increment backend
+  `counts`, and cannot be rewarded through `record_reward()`.
+- rewards are recorded only after evaluation and archive-admission decisions
+- the evolution loop records zero reward for invalid, below-threshold, or
+  feedback-discarded candidates and otherwise clamps reward to
+  `max(0.0, child.fitness - parent.fitness)`
+- the ensemble reward boundary accepts only non-negative finite numeric rewards
+  for valid backend indexes, caps each update to `1.0`, and links each reward
+  to exactly one successful backend call id; duplicate, missing, failed-call,
+  wrong-backend, and already-rewarded call ids are rejected
+- `record_reward(idx, reward)` without an explicit call id consumes the oldest
+  unrewarded successful call for that backend, while the evolution loop passes
+  the mutation call id captured on the generated candidate
 - `LLMEnsemble.call_history` records normalized call telemetry: role, backend,
-  backend metadata, strategy, API mode, prompt/output sizes and hashes,
-  latency, status, error fields, and counts before/after the call
-- successful mutation, critique, feedback, and meta-prompt calls are attached
-  to the relevant candidate/prompt metadata in run artifacts
-- provider usage tokens, retry counts inside adapters, request/response ids,
-  finish reasons, and raw provider diagnostics are still unavailable and stored
-  as `null`
+  backend metadata, strategy, scheduler policy, scheduler accounting mode, API
+  mode, normalized request parameters, normalized built-in adapter defaults,
+  normalized client context,
+  prompt/output sizes and hashes, latency, status, redacted/bounded error
+  fields, and counts before/after the call
+- each call's `scheduler_policy` explicitly records that backend selection is
+  still a shared `global_backend_bandit` policy, while reward accounting is
+  configurable by role through sorted `reward_accounted_roles`
+- call-history `id` values are deterministic identifiers for linking in-run
+  reward events; they are derived from the ordered call span,
+  backend/role/attempt coordinates, and prompt hash, so matching deterministic
+  call streams produce matching ids while repeated calls inside one stream
+  remain distinct
+- `LLMEnsemble.call_history` is a bounded retained in-memory window controlled
+  by `llm_call_history_max` / `--llm-call-history-max` with default `500`;
+  `LLMEnsemble.call_history_retention` reports policy, max records, retained
+  records, total records observed, and dropped records
+- `LLMEnsemble.backend_metadata`, `LLMEnsemble.counts`,
+  `LLMEnsemble.wins`, `LLMEnsemble.scheduler_state`, and
+  `LLMEnsemble.call_history` expose defensive copies; callers cannot corrupt
+  live scheduler metadata or counters by mutating returned containers
+- `load_llm_call_ledger()` validates durable `llm_calls.jsonl` call/reward
+  streams for call sequence continuity, duplicate call ids, reward rows linked
+  to known successful calls, backend consistency, backend name/API-mode
+  telemetry safety, request-parameter/backend-default/client-context telemetry safety, backend
+  metadata/diagnostic shape, scheduler-accounting mode, and scheduler counter shape before returning
+  replay metadata, including a derived role-accounting summary for successful,
+  failed, retry, fallback, adapter-internal provider attempts, and
+  provider-reported token totals by role, plus per-role provider-failure
+  category counts
+- `LLMEnsemble.restore_scheduler_state()` is the supported direct restore path
+  for bandit counters and validates count/win lengths, finite non-negative
+  values, total-selection type/range, count/total consistency, rewarded call
+  ids, unrewarded per-backend call ids, duplicate call ids, and
+  rewarded/unrewarded overlap before replacing live state; when retention
+  diagnostics or role-accounting counters are present, their shape and counter
+  consistency are validated
+- runtime backend object `name` and `api_mode` attributes are normalized before
+  call-history persistence; unsafe names fall back to the backend class name,
+  invalid API modes become `null`, and structured diagnostics record the reason
+  without retaining the unsafe value
+- `LLMEnsemble.generate()` validates prompt payloads and call-role labels
+  before scheduler selection. Prompts must be non-empty text, and when
+  `prompt_max_chars` or `prompt_max_estimated_tokens` is configured they must
+  fit those local character/heuristic-token caps before any backend sees them.
+  Secret-like prompt text is allowed as private run input, but raw prompt text
+  is not stored in call telemetry; records retain prompt length, estimated
+  token count, and SHA-256. Roles must match
+  `[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}`, must not end with `:`, and must not look
+  like secrets
+- the validated call role is passed to the selected backend as
+  `generate(prompt, role=role)` on every original, retry, and fallback attempt;
+  bundled adapters use the role to select any configured `llm_prompt_roles`
+  system/developer instructions, while custom protocol-compatible backends can
+  still use the role for their own request handling
+- direct `LLMEnsemble` construction validates scheduler strategy,
+  non-negative finite exploration coefficients, ensemble retry counts in the
+  inclusive range `0..10`, total ensemble call attempts in the inclusive range
+  `1..32`, boolean fallback policy, positive integer accepted-response size
+  limits, optional positive integer prompt-size limits, and one JSON-safe
+  backend-metadata mapping per backend before any call telemetry can be
+  produced
+- mutation, critique, and feedback call spans are attached to generated
+  candidate metadata, including recovered retry/fallback attempts; meta-prompt
+  calls are attached to prompt-history metadata. Config-created ensembles also
+  stream complete run-level call/reward rows to `llm_calls.jsonl`; the
+  candidate and prompt embeds are role-local references into that telemetry.
+- built-in adapters copy safe provider usage counts, request/response ids, and
+  finish reasons into call telemetry when SDK responses provide them; omitted
+  or unsupported provider metadata remains `null`
+- built-in adapters expose `backend_defaults` with LibreEvolve's effective
+  local output-token cap, provider internal retry cap, configured request
+  timeout or `null`, API mode, and OpenAI reasoning/API-mode policy when
+  relevant; remote provider-side SDK defaults and pricing are not inferred
+- raw provider diagnostics, provider-cost accounting, and token/cost budget
+  stop policy are still unavailable
+- `llm_reward_accounted_roles` controls which validated call roles advance the
+  ensemble scheduler counters and can be rewarded. The default is
+  `["mutation"]`, so critique, feedback, and meta-prompt calls remain
+  telemetry-only unless explicitly configured otherwise. Scheduler snapshots
+  expose the effective `reward_accounting_policy`.
+- `llm_role_backend_indices` can route a validated call role to an explicit
+  backend-index lane before scheduler selection. Roles without an explicit
+  route can still use backend metadata `role` lanes; roles without either route
+  keep the global backend bandit path. Call telemetry records the selected
+  route source in `scheduler_policy`, and scheduler snapshots retain a
+  `role_backend_policy` audit record.
+- `llm_role_failure_quarantine_after` can opt a role into deterministic
+  provider-failure quarantine after a configured number of consecutive
+  exhausted failures for the same backend. Quarantined backends are excluded for
+  that role on later logical calls, failed rewarded-role calls record an
+  explicit zero-reward scheduler penalty, and scheduler snapshots retain
+  `provider_failure_policy_state` so restore preserves the quarantine counters.
 - failed provider calls are recorded in ensemble telemetry with retry/fallback
-  attempt indexes; `llm_max_retries` can retry the same backend and
-  `llm_fallback` can try another backend, but exhausted mutation, critique, and
-  meta-prompt failures can still abort before a role-specific artifact is
-  flushed
+  attempt indexes and secret-pattern redaction/truncation applied to exception
+  text; `llm_max_retries` can retry the same backend, `llm_fallback` can try
+  another backend, and `llm_max_call_attempts` caps total original, retry, and
+  fallback attempts for that logical call; exhausted failed backend selections
+  count as zero-reward pulls so a recovered fallback backend can be preferred
+  after it receives reward. Exhausted mutation failures can still abort before
+  candidate/evaluation logging; exhausted critique failures fall back to the
+  original mutation with bounded failure metadata, and exhausted meta-prompt
+  failures record rejected prompt mutations instead of aborting already-logged
+  candidate work.
+- failed provider calls also record `provider_status_code` when the raised SDK
+  exception exposes a safe integer HTTP-style `status_code`; successful calls
+  and non-status failures keep that field `null`
+- `llm_max_retries` starts after the backend adapter raises. The built-in
+  OpenAI, Anthropic, and Ollama adapters have a separate
+  `provider_max_retries` cap for adapter-internal provider attempts; the
+  default is `2`, preserving one original call plus two internal retries.
+  Successful and failed call telemetry records `adapter_retry` with the
+  configured cap, provider attempts, failed attempt count, and safe exception
+  type labels. The ensemble-layer retry count is capped at `10` and total
+  ensemble call attempts are capped at `32`.
+- provider calls can be bounded at two layers. Built-in backend specs can set
+  a positive `timeout_sec`, which is forwarded as the provider SDK/client
+  request timeout where the bundled OpenAI, Anthropic, and Ollama clients
+  expose one. Run-level `llm_call_timeout_sec` adds an ensemble deadline around
+  each backend `generate()` attempt, including custom backends; timeout
+  attempts are recorded as `ProviderCallTimeoutError` with
+  `provider_failure_category: timeout` and can use the normal retry/fallback
+  path. Deadline-aware `LLMEnsemble` calls are also clamped to the remaining
+  `max_runtime_seconds` budget before each attempt starts. There is still no
+  hard provider cancellation token or role-specific timeout/quarantine policy.
+- empty, whitespace-only, non-text, oversized, refusal, or tool-call-only
+  backend response payloads are recorded as failed ensemble calls with
+  `provider_response_error` categories, normalized
+  `provider_failure_category`, nullable `provider_status_code`, and
+  retry/fallback eligibility before mutation parsing or success counters
+  advance
+- backend responses longer than `llm_max_response_chars` are also recorded as
+  failed ensemble calls before success counters, output hashes, mutation
+  parsing, prompt histories, or candidate metadata can treat the payload as an
+  accepted proposal; the default cap is `100000` characters
+- ensemble prompts longer than configured `prompt_max_chars` or heuristic
+  `prompt_max_estimated_tokens` are rejected before scheduler state, call
+  history, provider SDK payload construction, or custom backend invocation
+  changes. Direct custom-backend calls outside `LLMEnsemble` remain
+  extension-owned.
+- backend specs and direct backend metadata can set
+  `prompt_max_estimated_tokens`; when present, the ensemble applies the minimum
+  applicable global and eligible-backend heuristic token cap before provider
+  calls. This is model/context-window evidence, not provider-tokenizer-backed
+  section packing.
+- the bundled OpenAI, Anthropic, and Ollama adapters also validate direct
+  `generate(prompt)` calls with the same non-empty text prompt policy before
+  constructing provider SDK payloads
+- the bundled adapters validate extracted provider response text before
+  returning it: OpenAI Chat/Responses, Anthropic Messages, and Ollama Chat
+  missing, empty, whitespace-only, or non-text content raises a provider-labeled
+  `ProviderResponseError`; OpenAI Chat/Responses and Anthropic Messages also
+  categorize refusal/tool-call-only shapes when exposed by the provider payload
 
-This means backends are rewarded for improvement over the selected parent, not
-for absolute score, and role-specific auxiliary-call accounting remains a known
-gap even though call roles are now recorded.
+This means backends are rewarded for admitted valid improvement over the
+selected parent, not for absolute score. Role-level call/retry/fallback counts
+and provider-reported token totals are now visible in scheduler snapshots and
+ledger replay. Completed and aborted runtime manifests also expose the same
+role-accounting counters through compact `runtime.llm_accounting` totals
+alongside the active LLM call/retry/fallback, timeout, prompt, and
+accepted-output caps. Provider-failure categories are likewise summarized by
+role, while role-specific reward policy, quotas, cost budgets, token-budget
+stop policy, quarantine/penalty policy, and separate auxiliary bandit state
+remain known gaps.
 
-For `ensemble_strategy: throughput_depth`, the scheduler currently uses only
-numeric `cost`, `latency`, and `depth` metadata. The optional `role` field is
-preserved as descriptive metadata but does not create breadth/depth quotas,
-escalation rules, or role-specific routing.
+For `ensemble_strategy: throughput_depth`, the scheduler uses numeric `cost`,
+`latency`, and `depth` metadata after every non-excluded backend has been
+selected once. On each selection, selectable backend metadata is min/max
+normalized per field; equal-valued fields use neutral `0.5`. The fixed
+metadata weights are `depth: 0.10`, `cost: -0.05`, and `latency: -0.05`, so
+metadata can influence close choices without letting extreme raw values
+overwhelm a full `1.0` empirical reward difference. Call telemetry records the
+effective scheduler policy. The optional `role` field is preserved as
+descriptive metadata but does not create breadth/depth quotas, escalation
+rules, or role-specific routing. Configured role labels must be manifest-safe,
+but custom labels are not interpreted by the scheduler.
+
+Configured backend model identifiers are persisted in run manifests and call
+telemetry, so `Config` accepts only manifest-safe strings matching
+`[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` and rejects values matching shared
+secret-redaction patterns. This is a metadata-safety check, not a provider
+availability or capability check.
+
+The bundled OpenAI, Anthropic, and Ollama adapter constructors apply the same
+manifest-safe model-id grammar and require positive integer token limits for
+direct library use. OpenAI direct construction also validates `reasoning_effort`
+against the current LibreEvolve/OpenAI compatibility policy.
+
+`build_llm(config)` revalidates and copies the effective backend specs at LLM
+construction time before adapter construction, so post-validation mutation of
+`config.backends` cannot silently alter backend type, model id, token limits,
+prompt-token caps, scheduler metadata, or role labels.
+The registry facade in
+[`libreevolve/llm/backend_registry.py`](../libreevolve/llm/backend_registry.py)
+uses the same backend normalizer for registry-created provider constructors;
+`validate_backend_registry_specs()` returns a defensive normalized spec copy
+and `build_registry_backends()` constructs validated built-in or custom backend
+objects plus scheduler metadata. Registry-created objects are ordinary backend
+objects; when used through `LLMEnsemble`, they inherit the same prompt type,
+size, role, timeout, retry/fallback, and response-size boundaries.
+
+Built-in backend specs expose a small validated request-parameter surface:
+`temperature` and `top_p` for OpenAI, Anthropic, and Ollama; `stop` for
+Anthropic, Ollama, and OpenAI Chat Completions mode; and `seed` for Ollama and
+OpenAI Chat Completions mode. OpenAI Responses mode forwards only
+`temperature` and `top_p`. Omitted fields use provider SDK defaults.
+
+`llm_prompt_roles` is a run-level structured prompt-message policy keyed by
+call role. Each role can provide bounded `system` and/or `developer` text.
+When a role is configured, OpenAI Chat Completions and Responses receive those
+messages/input items before the rendered user prompt, Anthropic receives the
+provider-supported `system` field composed from the configured text, and
+Ollama receives a system message followed by the user prompt. Omitted roles
+use the default single user message/input item. Call telemetry records the
+matched role, message-role list, instruction field names, and hash/length
+metadata, not the raw configured instruction text.
+Custom backends should put provider-specific request settings in their
+JSON-safe `kwargs`; the built-in top-level request-parameter fields are
+rejected for `type: custom`.
+
+Built-in backend specs also accept positive `timeout_sec`. LibreEvolve passes
+that value to the bundled provider client constructors as a request timeout:
+OpenAI and Anthropic receive `timeout=...`; Ollama constructs an
+`ollama.Client(..., timeout=...)`, with or without a configured `host`. Custom
+backends should carry provider-specific timeout settings through their
+JSON-safe `kwargs`. Separately, run-level `llm_call_timeout_sec` wraps each
+ensemble backend attempt with a local deadline and structured timeout
+telemetry. Deadline-aware `LLMEnsemble` calls are also clamped to the remaining
+`max_runtime_seconds` budget before each attempt starts, but this is not a hard
+provider cancellation contract.
+
+Built-in backend specs also accept `provider_max_retries`, a non-negative
+adapter-internal retry cap. The default `2` preserves the historical three
+provider attempts. Custom backends should carry provider-specific retry
+settings through their JSON-safe `kwargs` and expose safe telemetry through
+`provider_response_metadata` if they want it copied into `llm_calls.jsonl`.
+
+Built-in backend specs also expose validated client-context fields when a run
+needs explicit endpoint provenance instead of provider SDK/environment
+defaults. OpenAI accepts `base_url`, `organization`, and `project`; Anthropic
+accepts `base_url`; Ollama accepts `host` and uses `ollama.Client(host=...)`
+when configured. Endpoint URLs must be `http` or `https` URLs with hosts and
+no credentials, params, query, or fragment; organization/project labels must
+be manifest-safe and non-secret. Accepted values are copied into
+`client_context` call telemetry. Omitted fields still use provider SDK
+defaults.
 
 ## OpenAI backend
 
@@ -61,28 +300,66 @@ Constructor fields:
 - `model`
 - `max_tokens`
 - `reasoning_effort`
+- `api_mode`
+- `temperature`
+- `top_p`
+- `stop` (Chat Completions mode only)
+- `seed` (Chat Completions mode only)
+- `timeout_sec`
+- `base_url`
+- `organization`
+- `project`
+- `provider_max_retries`
 
 Behavior:
 
-- if `reasoning_effort` is not set, the backend uses Chat Completions
-- if `reasoning_effort` is set, the backend uses the Responses API
-- both code paths retry up to 3 times with exponential backoff
+- `api_mode="auto"` preserves legacy routing: Chat Completions unless
+  `reasoning_effort` is set, otherwise Responses
+- `api_mode="responses"` forces the Responses API even without
+  `reasoning_effort`
+- `api_mode="chat_completions"` forces Chat Completions and is rejected when
+  `reasoning_effort` is set
+- both code paths retry up to `provider_max_retries + 1` provider attempts
+  with exponential backoff between failed attempts
+- direct calls require `prompt` to be non-empty text before SDK payload
+  construction
+- `Config` and direct construction accept `none`, `minimal`, `low`, `medium`,
+  `high`, and `xhigh` only after the local model-aware compatibility check
 - there is no automatic model-capability detection; a reasoning-capable model
-  without `reasoning_effort` still follows the Chat Completions path
+  with `api_mode` omitted or set to `auto` and without `reasoning_effort` still
+  follows the Chat Completions path
+- startup manifests record `policies.provider_capability_lookup` with
+  `local_static_validation_no_live_provider_lookup`; LibreEvolve does not query
+  live provider model registries, provider service/API versions, or account
+  availability before a run
 
 API split:
 
 - Chat Completions call:
   - `chat.completions.create(...)`
   - uses `max_completion_tokens`
+  - passes configured `temperature`, `top_p`, `stop`, and `seed` when present
+  - sends `messages=[{"role": "user", "content": prompt}]`
 - Responses call:
   - `responses.create(...)`
   - uses `max_output_tokens`
+  - passes configured `temperature` and `top_p` when present
   - passes `reasoning={"effort": ...}`
+  - sends `input=[{"role": "user", "content": prompt}]`
 
 OpenAI currently recommends Responses for new projects, and its docs describe a
 richer experience for reasoning models through Responses. LibreEvolve has not
-yet made Responses the default OpenAI path or added model/parameter validation.
+made Responses the default OpenAI path, but the route is now an explicit
+`api_mode` policy. Run manifests record configured and effective OpenAI routes
+under `policies.openai_api_mode.records[]`. LibreEvolve also validates
+configured reasoning effort against documented current values and selected
+model-family limits before provider calls. The local policy rejects known
+incompatible combinations such as `none` on known pre-`gpt-5.1` families,
+non-`high` effort on `gpt-5-pro`, and `xhigh` on unrecognized or ineligible
+families. Unknown future model ids still receive only the global effort enum
+check. This local static policy is manifest-visible under
+`policies.provider_capability_lookup` and is intentionally offline-compatible;
+live provider capability evidence remains call-time/provider-side behavior.
 
 ## Anthropic backend
 
@@ -92,12 +369,23 @@ Constructor fields:
 
 - `model`
 - `max_tokens`
+- `temperature`
+- `top_p`
+- `stop`
+- `timeout_sec`
+- `base_url`
+- `provider_max_retries`
 
 Behavior:
 
 - uses `messages.create(...)`
+- sends `messages=[{"role": "user", "content": prompt}]`
+- passes configured `temperature`, `top_p`, and `stop_sequences` when present
 - returns the first text block from `msg.content`
-- retries up to 3 times with exponential backoff
+- retries up to `provider_max_retries + 1` provider attempts with exponential
+  backoff between failed attempts
+- direct calls require `prompt` to be non-empty text before SDK payload
+  construction
 
 ## Ollama backend
 
@@ -107,12 +395,26 @@ Constructor fields:
 
 - `model`
 - `max_tokens`
+- `temperature`
+- `top_p`
+- `stop`
+- `seed`
+- `timeout_sec`
+- `host`
+- `provider_max_retries`
 
 Behavior:
 
-- uses `ollama.chat(...)`
+- uses `ollama.chat(...)` by default, or `ollama.Client(host=...).chat(...)`
+  when `host` is configured
+- sends `messages=[{"role": "user", "content": prompt}]`
 - passes `num_predict` as the output token limit
-- retries up to 3 times with exponential backoff
+- passes configured `temperature`, `top_p`, `stop`, and `seed` in `options`
+  when present
+- retries up to `provider_max_retries + 1` provider attempts with exponential
+  backoff between failed attempts
+- direct calls require `prompt` to be non-empty text before SDK payload
+  construction
 
 This backend is useful for local experimentation where API cost or offline work
 matters more than peak model quality.
@@ -127,20 +429,56 @@ ANTHROPIC_API_KEY=...
 OLLAMA_HOST=http://localhost:11434
 ```
 
-The CLI loads `.env` automatically before command execution.
+Endpoint/client context can either be inherited from provider SDKs and
+environment or configured explicitly in backend specs. OpenAI accepts
+`base_url`, `organization`, and `project`; Anthropic accepts `base_url`; Ollama
+accepts `host`. Explicit endpoint URLs are validated as safe `http`/`https`
+URLs without credentials, params, query, or fragment, and accepted values are
+recorded in manifests and copied into `client_context` call telemetry.
+
+The `run` command loads `.env` during run setup with `override=True`, before
+backend preflight, so `.env` values override same-named parent-process
+environment variables for evolution runs. Importing `libreevolve.cli` and
+running `libreevolve show` do not load `.env`. Run manifests record non-secret
+dotenv provenance under `manifest.provenance.dotenv`, including load status,
+override policy, source hash/byte count, and key names without values.
+For runs where a mutation LLM can run, startup checks required credentials for
+OpenAI (`OPENAI_API_KEY`) and Anthropic (`ANTHROPIC_API_KEY`) as non-blank
+after trimming, then constructs the configured backend clients before
+run-directory overwrite cleanup. Seed-only runs such as `--max-generations 0`
+skip provider construction.
 
 ## Adding a new backend
 
-Today, adding a provider is a source-code extension, not a config-only plugin.
-This is an AlphaEvolve-alignment gap tracked in
-[`docs/todo/code.md`](todo/code.md). To add a new provider today:
+Configured custom backends use `type: custom` plus an importable
+`class_path` in `module.path:ClassName` form. The class is constructed with
+the top-level `model`, optional `max_tokens`, and optional JSON-safe `kwargs`.
+It must return an object that satisfies the `LLMBackend` protocol:
 
-1. Implement a backend class with:
-   - `generate(prompt) -> str`
-   - `name` property
-2. Update `build_llm()` in
-   [`libreevolve/llm/ensemble.py`](../libreevolve/llm/ensemble.py) so the new
-   backend type string resolves to that class.
+- `generate(prompt, **kwargs) -> str`
+- `name` property
+
+The ensemble passes validated call roles as `generate(prompt, role=...)`, so
+custom backends should accept `**kwargs` even if they ignore the role.
+`class_path` must be manifest-safe, and `kwargs` must be JSON-safe with
+manifest-safe keyword labels. `model` and `max_tokens` are reserved top-level
+backend fields and cannot be shadowed inside `kwargs`.
+
+Example `config.yaml`:
+
+```yaml
+backends:
+  - type: custom
+    model: my-model
+    class_path: mypackage.backends:MyBackend
+    max_tokens: 4096
+    kwargs:
+      endpoint_label: local_lab
+    role: depth
+    cost: 1.0
+    latency: 1.0
+    depth: 2.0
+```
 
 Minimal skeleton:
 
@@ -157,6 +495,9 @@ class MyBackend:
     def generate(self, prompt: str, **kwargs) -> str:
         ...
 ```
+
+Adding a first-class built-in provider still requires source edits, but
+experiment-specific providers no longer require editing `build_llm()`.
 
 ## Practical guidance
 

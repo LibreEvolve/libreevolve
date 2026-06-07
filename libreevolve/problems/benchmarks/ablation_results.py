@@ -1,0 +1,269 @@
+from __future__ import annotations
+
+import json
+import math
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+from .ablation_registry import EXPECTED_VARIANT_IDS, REPORT_SCHEMA
+
+
+ABLATION_RESULT_SCHEMA = REPORT_SCHEMA
+REQUIRED_BUDGET_FRACTIONS = (0.0, 0.25, 0.5, 0.75, 1.0)
+BUDGET_UNITS = frozenset({"evaluations", "wall_clock_seconds", "llm_calls", "tokens", "cost_usd"})
+ARTIFACT_KINDS = frozenset({"variant_report", "curve_summary", "raw_records", "plot"})
+_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
+_SHA256_RE = re.compile(r"[0-9a-f]{64}")
+
+
+@dataclass(frozen=True)
+class AblationResultIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class AblationResultValidation:
+    ok: bool
+    equal_budget_ready: bool
+    target_count: int
+    record_count: int
+    issues: list[AblationResultIssue]
+
+
+def validate_ablation_result_report(report: object | str | Path) -> AblationResultValidation:
+    """Validate executed AlphaEvolve-style equal-budget ablation results."""
+    data, read_issues = _load_report(report)
+    if read_issues:
+        return AblationResultValidation(False, False, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AblationResultIssue] = []
+    if data.get("schema") != ABLATION_RESULT_SCHEMA:
+        issues.append(AblationResultIssue("invalid_schema", "unsupported ablation result schema"))
+    if data.get("budget_axis") != "fraction_of_equal_compute_budget":
+        issues.append(AblationResultIssue("invalid_budget_axis", "budget_axis must be fraction_of_equal_compute_budget"))
+    targets = data.get("targets")
+    target_ids = _validate_targets(targets, issues)
+    records = data.get("records")
+    record_count = _validate_records(records, target_ids, issues)
+    _validate_artifacts(data.get("artifacts"), issues)
+    equal_budget_ready = not issues
+    return AblationResultValidation(
+        ok=not issues,
+        equal_budget_ready=equal_budget_ready,
+        target_count=len(target_ids),
+        record_count=record_count,
+        issues=issues,
+    )
+
+
+def render_ablation_result_summary(report: dict[str, Any]) -> str:
+    validation = validate_ablation_result_report(report)
+    status = "ok" if validation.ok else "invalid"
+    ready = "yes" if validation.equal_budget_ready else "no"
+    lines = [
+        "AlphaEvolve ablation result report",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| equal_budget_ready | {ready} |",
+        f"| target_count | {validation.target_count} |",
+        f"| record_count | {validation.record_count} |",
+        f"| budget_axis | {report.get('budget_axis', '<unknown>')} |",
+        f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, list[AblationResultIssue]]:
+    if isinstance(report, dict):
+        return dict(report), []
+    if isinstance(report, (str, Path)):
+        path = Path(report)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [AblationResultIssue("read_error", f"failed to read ablation result report: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [AblationResultIssue("invalid_json", f"invalid ablation result JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [AblationResultIssue("invalid_shape", "ablation result report must be a JSON object")]
+
+
+def _validate_targets(value: object, issues: list[AblationResultIssue]) -> set[str]:
+    if not isinstance(value, list) or not value:
+        issues.append(AblationResultIssue("invalid_targets", "targets must be a non-empty list"))
+        return set()
+    seen: set[str] = set()
+    for target in value:
+        if not isinstance(target, dict):
+            issues.append(AblationResultIssue("invalid_target", "target must be an object"))
+            continue
+        target_id = target.get("target_id")
+        if not isinstance(target_id, str) or _ID_RE.fullmatch(target_id) is None:
+            issues.append(AblationResultIssue("invalid_target_id", "target_id must be stable"))
+            continue
+        if target_id in seen:
+            issues.append(AblationResultIssue("duplicate_target", "targets must be unique"))
+        seen.add(target_id)
+        if not isinstance(target.get("description"), str) or not target["description"].strip():
+            issues.append(AblationResultIssue("missing_target_description", "target description is required"))
+    return seen
+
+
+def _validate_records(value: object, target_ids: set[str], issues: list[AblationResultIssue]) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(AblationResultIssue("invalid_records", "records must be a non-empty list"))
+        return 0
+    seen: set[tuple[str, str, int, float]] = set()
+    observed: dict[tuple[str, str], set[tuple[int, float]]] = {}
+    seed_sets: dict[tuple[str, str], set[int]] = {}
+    seed_budget_specs: dict[tuple[str, str, int], tuple[str, float]] = {}
+    target_budget_specs: dict[str, tuple[str, float]] = {}
+    for record in value:
+        if not isinstance(record, dict):
+            issues.append(AblationResultIssue("invalid_record", "record must be an object"))
+            continue
+        variant_id = record.get("variant_id")
+        target_id = record.get("target_id")
+        seed = record.get("seed")
+        fraction = _budget_fraction(record.get("budget_fraction"), issues)
+        if variant_id not in EXPECTED_VARIANT_IDS:
+            issues.append(AblationResultIssue("invalid_variant_id", "record variant_id must match AlphaEvolve ablation registry"))
+        if not isinstance(target_id, str) or target_id not in target_ids:
+            issues.append(AblationResultIssue("invalid_record_target", "record target_id must be declared in targets"))
+        if isinstance(seed, bool) or not isinstance(seed, int):
+            issues.append(AblationResultIssue("invalid_seed", "seed must be an integer"))
+        if isinstance(record.get("score"), bool) or not isinstance(record.get("score"), (int, float)) or not math.isfinite(float(record.get("score"))):
+            issues.append(AblationResultIssue("invalid_score", "score must be finite"))
+        budget_spec = _validate_consumed_budget(record.get("consumed_budget"), fraction, issues)
+        _validate_component_assertions(record.get("component_assertions"), issues)
+        if isinstance(variant_id, str) and isinstance(target_id, str) and isinstance(seed, int) and fraction is not None:
+            key = (variant_id, target_id, seed, fraction)
+            if key in seen:
+                issues.append(AblationResultIssue("duplicate_record", "duplicate variant/target/seed/fraction record"))
+            seen.add(key)
+            observed.setdefault((variant_id, target_id), set()).add((seed, fraction))
+            seed_sets.setdefault((variant_id, target_id), set()).add(seed)
+            if budget_spec is not None:
+                seed_key = (variant_id, target_id, seed)
+                if seed_key in seed_budget_specs and seed_budget_specs[seed_key] != budget_spec:
+                    issues.append(AblationResultIssue("inconsistent_seed_budget", "variant/target/seed records must use one budget unit and limit"))
+                seed_budget_specs.setdefault(seed_key, budget_spec)
+                if target_id in target_budget_specs and target_budget_specs[target_id] != budget_spec:
+                    issues.append(AblationResultIssue("inconsistent_target_budget", "all variants and seeds for a target must use the same budget unit and limit"))
+                target_budget_specs.setdefault(target_id, budget_spec)
+    _validate_coverage(observed, seed_sets, target_ids, issues)
+    return len(value)
+
+
+def _budget_fraction(value: object, issues: list[AblationResultIssue]) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        issues.append(AblationResultIssue("invalid_budget_fraction", "budget_fraction must be numeric"))
+        return None
+    numeric = float(value)
+    if not math.isfinite(numeric) or not any(math.isclose(numeric, required, rel_tol=0.0, abs_tol=1e-12) for required in REQUIRED_BUDGET_FRACTIONS):
+        issues.append(AblationResultIssue("invalid_budget_fraction", "budget_fraction must match required equal-budget fractions"))
+        return None
+    return numeric
+
+
+def _validate_consumed_budget(
+    value: object,
+    fraction: float | None,
+    issues: list[AblationResultIssue],
+) -> tuple[str, float] | None:
+    if not isinstance(value, dict):
+        issues.append(AblationResultIssue("invalid_consumed_budget", "consumed_budget must be an object"))
+        return None
+    if value.get("unit") not in BUDGET_UNITS:
+        issues.append(AblationResultIssue("invalid_budget_unit", "unsupported budget unit"))
+    consumed = value.get("consumed")
+    limit = value.get("limit")
+    if isinstance(consumed, bool) or not isinstance(consumed, (int, float)) or not math.isfinite(float(consumed)) or float(consumed) < 0:
+        issues.append(AblationResultIssue("invalid_budget_consumed", "consumed budget must be finite and non-negative"))
+        return None
+    if isinstance(limit, bool) or not isinstance(limit, (int, float)) or not math.isfinite(float(limit)) or float(limit) <= 0:
+        issues.append(AblationResultIssue("invalid_budget_limit", "budget limit must be finite and positive"))
+        return None
+    if float(consumed) > float(limit):
+        issues.append(AblationResultIssue("budget_exceeds_limit", "consumed budget must be <= limit"))
+    if fraction is not None and not math.isclose(float(consumed) / float(limit), fraction, rel_tol=0.0, abs_tol=1e-9):
+        issues.append(AblationResultIssue("budget_fraction_mismatch", "consumed / limit must equal budget_fraction"))
+    unit = value.get("unit")
+    if unit in BUDGET_UNITS:
+        return unit, float(limit)
+    return None
+
+
+def _validate_component_assertions(value: object, issues: list[AblationResultIssue]) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(AblationResultIssue("invalid_component_assertions", "component_assertions must be a non-empty list"))
+        return
+    for assertion in value:
+        if not isinstance(assertion, dict):
+            issues.append(AblationResultIssue("invalid_component_assertion", "component assertion must be an object"))
+            continue
+        if not isinstance(assertion.get("field"), str) or not assertion["field"]:
+            issues.append(AblationResultIssue("invalid_component_assertion_field", "component assertion field is required"))
+        if assertion.get("passed") is not True:
+            issues.append(AblationResultIssue("component_assertion_not_passed", "component assertions must be passed"))
+
+
+def _validate_coverage(
+    observed: dict[tuple[str, str], set[tuple[int, float]]],
+    seed_sets: dict[tuple[str, str], set[int]],
+    target_ids: set[str],
+    issues: list[AblationResultIssue],
+) -> None:
+    required_fractions = set(REQUIRED_BUDGET_FRACTIONS)
+    for variant_id in EXPECTED_VARIANT_IDS:
+        for target_id in target_ids:
+            seeds = seed_sets.get((variant_id, target_id), set())
+            if len(seeds) != 3:
+                issues.append(AblationResultIssue("invalid_seed_coverage", "each variant/target must report exactly three seeds"))
+                continue
+            for seed in seeds:
+                fractions = {fraction for observed_seed, fraction in observed.get((variant_id, target_id), set()) if observed_seed == seed}
+                if fractions != required_fractions:
+                    issues.append(AblationResultIssue("invalid_budget_fraction_coverage", "each variant/target/seed must report all required budget fractions"))
+                    break
+
+
+def _validate_artifacts(value: object, issues: list[AblationResultIssue]) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(AblationResultIssue("invalid_artifacts", "artifacts must be a non-empty list"))
+        return
+    for artifact in value:
+        if not isinstance(artifact, dict):
+            issues.append(AblationResultIssue("invalid_artifact", "artifact must be an object"))
+            continue
+        if artifact.get("kind") not in ARTIFACT_KINDS:
+            issues.append(AblationResultIssue("invalid_artifact_kind", "unsupported artifact kind"))
+        _validate_file_record(artifact, "artifact", issues)
+
+
+def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[AblationResultIssue]) -> None:
+    path = record.get("path")
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        issues.append(AblationResultIssue(f"invalid_{prefix}_path", f"{prefix} path must be safe and relative"))
+    sha = record.get("sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(AblationResultIssue(f"invalid_{prefix}_hash", f"{prefix} sha256 must be a lowercase SHA-256 hex digest"))
+    byte_count = record.get("bytes")
+    if isinstance(byte_count, bool) or not isinstance(byte_count, int) or byte_count <= 0:
+        issues.append(AblationResultIssue(f"invalid_{prefix}_bytes", f"{prefix} bytes must be a positive integer"))

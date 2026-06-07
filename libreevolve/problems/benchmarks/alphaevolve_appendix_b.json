@@ -1,0 +1,163 @@
+{
+  "schema": "libreevolve.alphaevolve_appendix_b_registry.v1",
+  "source_paper_id": "2506.13131",
+  "source_section": "AlphaEvolve Appendix B",
+  "families": [
+    {
+      "id": "autocorrelation_bounds_k3",
+      "name": "Autocorrelation inequality, k=3",
+      "status": "planned",
+      "objective": {"metric": "bound_quality", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "coefficient_or_sequence_certificate", "certificate": "symbolic_or_exact_verification"},
+      "certification": "exact_or_symbolic",
+      "rationale": "Appendix B reports this as a constructive-math family; no local fixture exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "autocorrelation_bounds_k4",
+      "name": "Autocorrelation inequality, k=4",
+      "status": "planned",
+      "objective": {"metric": "bound_quality", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "coefficient_or_sequence_certificate", "certificate": "symbolic_or_exact_verification"},
+      "certification": "exact_or_symbolic",
+      "rationale": "Appendix B reports this as a constructive-math family; no local fixture exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "autocorrelation_bounds_k5",
+      "name": "Autocorrelation inequality, k=5",
+      "status": "planned",
+      "objective": {"metric": "bound_quality", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "coefficient_or_sequence_certificate", "certificate": "symbolic_or_exact_verification"},
+      "certification": "exact_or_symbolic",
+      "rationale": "Appendix B reports this as a constructive-math family; no local fixture exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "uncertainty_inequality",
+      "name": "Uncertainty inequality",
+      "status": "planned",
+      "objective": {"metric": "bound_quality", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "function_or_coefficient_certificate", "certificate": "symbolic_or_exact_verification"},
+      "certification": "exact_or_symbolic",
+      "rationale": "No local validator or certificate checker exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "erdos_minimum_overlap",
+      "name": "Erdos minimum overlap problem",
+      "status": "planned",
+      "objective": {"metric": "overlap_score", "direction": "minimize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "finite_set_construction", "certificate": "exact_overlap_verification"},
+      "certification": "exact_enumeration",
+      "rationale": "No local finite-set validator exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "sums_differences_finite_sets",
+      "name": "Sums and differences of finite sets",
+      "status": "planned",
+      "objective": {"metric": "sum_difference_ratio", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "finite_set_construction", "certificate": "exact_sum_difference_counts"},
+      "certification": "exact_enumeration",
+      "rationale": "No local finite-set construction fixture exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "regular_hexagon_packing",
+      "name": "Regular hexagon packing",
+      "status": "planned",
+      "objective": {"metric": "packing_density", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "coordinate_geometry_construction", "certificate": "non_overlap_and_container_certificate"},
+      "certification": "geometric_feasibility",
+      "rationale": "No local hexagon-packing validator or construction artifact schema exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "max_min_distance_point_sets",
+      "name": "Max/min-distance point sets",
+      "status": "planned",
+      "objective": {"metric": "distance_objective", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "point_coordinate_set", "certificate": "distance_matrix_certificate"},
+      "certification": "geometric_feasibility",
+      "rationale": "No local point-set validator exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "heilbronn_triangle",
+      "name": "Heilbronn triangle problem",
+      "status": "planned",
+      "objective": {"metric": "minimum_triangle_area", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "point_coordinate_set", "certificate": "triangle_area_certificate"},
+      "certification": "geometric_feasibility",
+      "rationale": "No local Heilbronn validator exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "heilbronn_convex_region",
+      "name": "Heilbronn convex-region variant",
+      "status": "planned",
+      "objective": {"metric": "minimum_area_or_distance", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "point_coordinate_set", "certificate": "convex_region_certificate"},
+      "certification": "geometric_feasibility",
+      "rationale": "No local convex-region Heilbronn validator exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "kissing_number_d11",
+      "name": "Kissing number in dimension 11",
+      "status": "planned",
+      "objective": {"metric": "sphere_count", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "high_dimensional_vector_set", "certificate": "pairwise_distance_certificate"},
+      "certification": "exact_or_interval_distance_check",
+      "rationale": "No local high-dimensional certificate checker exists yet.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "circle_packing_unit_square",
+      "name": "Circle packing in a unit square",
+      "status": "implemented_smoke",
+      "objective": {"metric": "packing_score", "direction": "maximize"},
+      "target_baseline": {"status": "smoke_only_no_alphaevolve_target", "value": null},
+      "fixture": "libreevolve/problems/examples/circle_packing",
+      "artifact_schema": {"construction": "circle_center_radius_list", "certificate": "container_and_pairwise_non_overlap"},
+      "certification": "local_float_feasibility_smoke",
+      "rationale": "The checked-in fixture validates a fixed 26-circle smoke task, not the full Appendix B benchmark result contract.",
+      "paper_citations": ["2506.13131"]
+    },
+    {
+      "id": "circle_packing_perimeter4_rectangle",
+      "name": "Circle packing in a perimeter-4 rectangle",
+      "status": "planned",
+      "objective": {"metric": "packing_score", "direction": "maximize"},
+      "target_baseline": {"status": "paper_result_required", "value": null},
+      "fixture": null,
+      "artifact_schema": {"construction": "circle_center_radius_list_plus_rectangle_dimensions", "certificate": "container_and_pairwise_non_overlap"},
+      "certification": "geometric_feasibility",
+      "rationale": "No local perimeter-4 rectangle packing fixture exists yet.",
+      "paper_citations": ["2506.13131"]
+    }
+  ]
+}

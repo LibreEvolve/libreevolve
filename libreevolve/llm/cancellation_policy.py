@@ -1,0 +1,258 @@
+from __future__ import annotations
+
+import json
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+from .prompt_roles import validate_prompt_role_label
+
+
+PROVIDER_CANCELLATION_POLICY_SCHEMA = "libreevolve.provider_cancellation_policy.v1"
+CANCELLATION_KINDS = frozenset({"provider_request_timeout", "ensemble_wait_deadline", "runtime_deadline", "hard_cancel"})
+BUDGET_ACTIONS = frozenset({"retry", "fallback", "quarantine", "stop_run", "telemetry_only"})
+ARTIFACT_KINDS = frozenset({"timeout_log", "cancellation_record", "budget_stop_record", "quarantine_record"})
+_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
+_ROLE_PATTERN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,125}:\*")
+_SHA256_RE = re.compile(r"[0-9a-f]{64}")
+
+
+@dataclass(frozen=True)
+class CancellationPolicyIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class CancellationPolicyValidation:
+    ok: bool
+    hard_cancel_ready: bool
+    policy_id: str | None
+    rule_count: int
+    issues: list[CancellationPolicyIssue]
+
+
+def validate_provider_cancellation_policy(policy: object | str | Path) -> CancellationPolicyValidation:
+    """Validate provider timeout/cancellation semantics for budgeted LLM runs."""
+    data, read_issues = _load_policy(policy)
+    if read_issues:
+        return CancellationPolicyValidation(False, False, None, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[CancellationPolicyIssue] = []
+    if data.get("schema") != PROVIDER_CANCELLATION_POLICY_SCHEMA:
+        issues.append(CancellationPolicyIssue("invalid_schema", "unsupported cancellation policy schema"))
+    policy_id = _id_field(data, "policy_id", issues)
+    rules = _validate_rules(data.get("rules"), issues)
+    artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    _validate_rule_artifact_requirements(rules, artifact_kinds, issues)
+    if data.get("hard_cancel_ready") is True and not _has_hard_cancel_stop_rule(rules):
+        issues.append(CancellationPolicyIssue("missing_hard_cancel_stop_rule", "hard_cancel_ready requires a hard_cancel stop_run rule"))
+    if data.get("hard_cancel_ready") is True and not _has_hard_cancel_record_rule(rules):
+        issues.append(CancellationPolicyIssue("missing_hard_cancel_record_artifact", "hard_cancel_ready requires a hard_cancel stop_run rule with cancellation_record artifact evidence"))
+    elif not isinstance(data.get("hard_cancel_ready"), bool):
+        issues.append(CancellationPolicyIssue("invalid_hard_cancel_ready", "hard_cancel_ready must be boolean"))
+    return CancellationPolicyValidation(
+        ok=not issues,
+        hard_cancel_ready=not issues and data.get("hard_cancel_ready") is True,
+        policy_id=policy_id,
+        rule_count=len(rules),
+        issues=issues,
+    )
+
+
+def render_provider_cancellation_summary(policy: dict[str, Any]) -> str:
+    validation = validate_provider_cancellation_policy(policy)
+    status = "ok" if validation.ok else "invalid"
+    ready = "yes" if validation.hard_cancel_ready else "no"
+    lines = [
+        f"Provider cancellation policy: {policy.get('policy_id', '<unknown>')}",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| hard_cancel_ready | {ready} |",
+        f"| rule_count | {validation.rule_count} |",
+        f"| artifact_count | {len(policy.get('artifacts', [])) if isinstance(policy.get('artifacts'), list) else 0} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def _load_policy(policy: object | str | Path) -> tuple[dict[str, Any] | None, list[CancellationPolicyIssue]]:
+    if isinstance(policy, dict):
+        return dict(policy), []
+    if isinstance(policy, (str, Path)):
+        path = Path(policy)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [CancellationPolicyIssue("read_error", f"failed to read cancellation policy: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [CancellationPolicyIssue("invalid_json", f"invalid cancellation policy JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [CancellationPolicyIssue("invalid_shape", "cancellation policy must be a JSON object")]
+
+
+def _id_field(data: dict[str, Any], field: str, issues: list[CancellationPolicyIssue]) -> str | None:
+    value = data.get(field)
+    if not isinstance(value, str) or _ID_RE.fullmatch(value) is None:
+        issues.append(CancellationPolicyIssue(f"invalid_{field}", f"{field} must be a stable identifier"))
+        return None
+    return value
+
+
+def _validate_rules(value: object, issues: list[CancellationPolicyIssue]) -> list[dict[str, Any]]:
+    if not isinstance(value, list) or not value:
+        issues.append(CancellationPolicyIssue("invalid_rules", "rules must be a non-empty list"))
+        return []
+    rules: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for rule in value:
+        if not isinstance(rule, dict):
+            issues.append(CancellationPolicyIssue("invalid_rule", "rule must be an object"))
+            continue
+        rule_id = rule.get("id")
+        if not isinstance(rule_id, str) or _ID_RE.fullmatch(rule_id) is None:
+            issues.append(CancellationPolicyIssue("invalid_rule_id", "rule id must be stable"))
+        elif rule_id in seen:
+            issues.append(CancellationPolicyIssue("duplicate_rule_id", "rule ids must be unique"))
+        else:
+            seen.add(rule_id)
+        if rule.get("kind") not in CANCELLATION_KINDS:
+            issues.append(CancellationPolicyIssue("invalid_rule_kind", "unsupported cancellation rule kind"))
+        role = rule.get("role")
+        if _role_scope(role, issues) is None:
+            issues.append(CancellationPolicyIssue("invalid_rule_role", "rule role must be '*', a manifest-safe role, or a manifest-safe role prefix ending in :*"))
+        actions = rule.get("budget_actions")
+        if not isinstance(actions, list) or not actions:
+            issues.append(CancellationPolicyIssue("invalid_budget_actions", "budget_actions must be a non-empty list"))
+        elif any(action not in BUDGET_ACTIONS for action in actions):
+            issues.append(CancellationPolicyIssue("invalid_budget_action", "unsupported budget action"))
+        if not isinstance(rule.get("artifact_required"), bool):
+            issues.append(CancellationPolicyIssue("invalid_artifact_required", "artifact_required must be boolean"))
+        _validate_rule_artifact_kinds(rule, issues)
+        if not isinstance(rule.get("description"), str) or not rule["description"].strip():
+            issues.append(CancellationPolicyIssue("missing_rule_description", "rule description is required"))
+        rules.append(rule)
+    return rules
+
+
+def _has_hard_cancel_stop_rule(rules: list[dict[str, Any]]) -> bool:
+    for rule in rules:
+        actions = rule.get("budget_actions")
+        if rule.get("kind") == "hard_cancel" and isinstance(actions, list) and "stop_run" in actions and rule.get("artifact_required") is True:
+            return True
+    return False
+
+
+def _has_hard_cancel_record_rule(rules: list[dict[str, Any]]) -> bool:
+    for rule in rules:
+        actions = rule.get("budget_actions")
+        artifact_kinds = rule.get("artifact_kinds")
+        if (
+            rule.get("kind") == "hard_cancel"
+            and isinstance(actions, list)
+            and "stop_run" in actions
+            and rule.get("artifact_required") is True
+            and isinstance(artifact_kinds, list)
+            and "cancellation_record" in artifact_kinds
+        ):
+            return True
+    return False
+
+
+def _validate_rule_artifact_kinds(rule: dict[str, Any], issues: list[CancellationPolicyIssue]) -> None:
+    value = rule.get("artifact_kinds")
+    if value is None:
+        if rule.get("artifact_required") is True:
+            issues.append(CancellationPolicyIssue("missing_rule_artifact_kinds", "artifact_required rules must declare artifact_kinds"))
+        return
+    if not isinstance(value, list) or not value:
+        issues.append(CancellationPolicyIssue("invalid_rule_artifact_kinds", "artifact_kinds must be a non-empty list"))
+        return
+    seen: set[str] = set()
+    for kind in value:
+        if kind not in ARTIFACT_KINDS:
+            issues.append(CancellationPolicyIssue("invalid_rule_artifact_kind", "unsupported rule artifact kind"))
+        elif kind in seen:
+            issues.append(CancellationPolicyIssue("duplicate_rule_artifact_kind", "rule artifact_kinds must be unique"))
+        else:
+            seen.add(kind)
+
+
+def _validate_rule_artifact_requirements(
+    rules: list[dict[str, Any]],
+    artifact_kinds: set[str],
+    issues: list[CancellationPolicyIssue],
+) -> None:
+    for rule in rules:
+        if rule.get("artifact_required") is not True:
+            continue
+        required = rule.get("artifact_kinds")
+        if not isinstance(required, list):
+            continue
+        missing = [
+            kind for kind in required
+            if kind in ARTIFACT_KINDS and kind not in artifact_kinds
+        ]
+        if missing:
+            issues.append(CancellationPolicyIssue("missing_required_artifact_kind", "artifact_required rule artifact_kinds must be present in artifacts"))
+
+
+def _validate_artifacts(value: object, issues: list[CancellationPolicyIssue]) -> set[str]:
+    kinds: set[str] = set()
+    if not isinstance(value, list) or not value:
+        issues.append(CancellationPolicyIssue("invalid_artifacts", "artifacts must be a non-empty list"))
+        return kinds
+    for artifact in value:
+        if not isinstance(artifact, dict):
+            issues.append(CancellationPolicyIssue("invalid_artifact", "artifact must be an object"))
+            continue
+        if artifact.get("kind") not in ARTIFACT_KINDS:
+            issues.append(CancellationPolicyIssue("invalid_artifact_kind", "unsupported artifact kind"))
+        else:
+            kinds.add(artifact["kind"])
+        _validate_file_record(artifact, "artifact", issues)
+    return kinds
+
+
+def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[CancellationPolicyIssue]) -> None:
+    path = record.get("path")
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        issues.append(CancellationPolicyIssue(f"invalid_{prefix}_path", f"{prefix} path must be safe and relative"))
+    sha = record.get("sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(CancellationPolicyIssue(f"invalid_{prefix}_hash", f"{prefix} sha256 must be a lowercase SHA-256 hex digest"))
+    byte_count = record.get("bytes")
+    if isinstance(byte_count, bool) or not isinstance(byte_count, int) or byte_count <= 0:
+        issues.append(CancellationPolicyIssue(f"invalid_{prefix}_bytes", f"{prefix} bytes must be a positive integer"))
+
+
+def _role(value: object, issues: list[CancellationPolicyIssue]) -> str | None:
+    try:
+        return validate_prompt_role_label(value, field="role")
+    except ValueError:
+        return None
+
+
+def _role_scope(value: object, issues: list[CancellationPolicyIssue]) -> str | None:
+    if value == "*":
+        return value
+    if isinstance(value, str) and _ROLE_PATTERN_RE.fullmatch(value) is not None:
+        try:
+            validate_prompt_role_label(value[:-2], field="role")
+        except ValueError:
+            return None
+        return value
+    return _role(value, issues)

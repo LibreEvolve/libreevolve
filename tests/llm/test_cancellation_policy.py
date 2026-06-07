@@ -1,0 +1,168 @@
+import json
+
+from libreevolve.llm.cancellation_policy import (
+    PROVIDER_CANCELLATION_POLICY_SCHEMA,
+    render_provider_cancellation_summary,
+    validate_provider_cancellation_policy,
+)
+
+
+def _valid_policy() -> dict:
+    return {
+        "schema": PROVIDER_CANCELLATION_POLICY_SCHEMA,
+        "policy_id": "default_llm_timeout_policy",
+        "hard_cancel_ready": True,
+        "rules": [
+            {
+                "id": "provider_request_timeout_mutation",
+                "kind": "provider_request_timeout",
+                "role": "mutation",
+                "budget_actions": ["retry", "fallback"],
+                "artifact_required": True,
+                "artifact_kinds": ["timeout_log"],
+                "description": "Provider SDK request timeout can retry or fall back.",
+            },
+            {
+                "id": "ensemble_wait_deadline_feedback",
+                "kind": "ensemble_wait_deadline",
+                "role": "feedback:*",
+                "budget_actions": ["retry", "fallback", "quarantine"],
+                "artifact_required": True,
+                "artifact_kinds": ["timeout_log"],
+                "description": "Local ensemble wait deadline creates structured timeout evidence.",
+            },
+            {
+                "id": "hard_cancel_stop",
+                "kind": "hard_cancel",
+                "role": "*",
+                "budget_actions": ["stop_run"],
+                "artifact_required": True,
+                "artifact_kinds": ["cancellation_record"],
+                "description": "Hard cancellation stops the run and records the cancellation artifact.",
+            },
+        ],
+        "artifacts": [
+            {
+                "kind": "timeout_log",
+                "path": "llm/calls.jsonl",
+                "sha256": "b" * 64,
+                "bytes": 4096,
+            },
+            {
+                "kind": "cancellation_record",
+                "path": "llm/cancellation/default_policy.json",
+                "sha256": "a" * 64,
+                "bytes": 2048,
+            }
+        ],
+    }
+
+
+def test_provider_cancellation_policy_validates_hard_cancel_ready_policy():
+    validation = validate_provider_cancellation_policy(_valid_policy())
+
+    assert validation.ok is True
+    assert validation.hard_cancel_ready is True
+    assert validation.policy_id == "default_llm_timeout_policy"
+    assert validation.rule_count == 3
+    assert validation.issues == []
+
+
+def test_provider_cancellation_policy_loads_json_file(tmp_path):
+    path = tmp_path / "cancellation_policy.json"
+    path.write_text(json.dumps(_valid_policy()), encoding="utf-8")
+
+    validation = validate_provider_cancellation_policy(path)
+
+    assert validation.ok is True
+    assert validation.hard_cancel_ready is True
+
+
+def test_hard_cancel_ready_requires_stop_rule_with_artifact():
+    policy = _valid_policy()
+    policy["rules"] = policy["rules"][:-1]
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.hard_cancel_ready is False
+    assert "missing_hard_cancel_stop_rule" in codes
+
+
+def test_hard_cancel_ready_requires_cancellation_record_artifact():
+    policy = _valid_policy()
+    policy["rules"][2]["artifact_kinds"] = ["timeout_log"]
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.hard_cancel_ready is False
+    assert "missing_hard_cancel_record_artifact" in codes
+
+
+def test_artifact_required_rules_must_declare_matching_artifact_kind():
+    policy = _valid_policy()
+    del policy["rules"][0]["artifact_kinds"]
+    policy["rules"][1]["artifact_kinds"] = ["quarantine_record"]
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_rule_artifact_kinds" in codes
+    assert "missing_required_artifact_kind" in codes
+
+
+def test_provider_cancellation_policy_rejects_bad_rules_and_actions():
+    policy = _valid_policy()
+    policy["rules"][0]["kind"] = "not-a-kind"
+    policy["rules"][0]["role"] = "bad role"
+    policy["rules"][0]["budget_actions"] = ["retry", "not-an-action"]
+    policy["rules"][0]["artifact_required"] = "yes"
+    policy["rules"][0]["artifact_kinds"] = ["not-a-kind"]
+    policy["rules"][0]["description"] = ""
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_rule_kind" in codes
+    assert "invalid_rule_role" in codes
+    assert "invalid_budget_action" in codes
+    assert "invalid_artifact_required" in codes
+    assert "invalid_rule_artifact_kind" in codes
+    assert "missing_rule_description" in codes
+
+
+def test_provider_cancellation_policy_accepts_safe_role_prefix_pattern():
+    policy = _valid_policy()
+    policy["rules"][0]["role"] = "feedback:*"
+
+    validation = validate_provider_cancellation_policy(policy)
+
+    assert validation.ok is True
+
+
+def test_provider_cancellation_policy_rejects_unsafe_artifacts():
+    policy = _valid_policy()
+    policy["artifacts"][0].update({"path": "C:/secret.json", "sha256": "bad", "bytes": 0})
+
+    validation = validate_provider_cancellation_policy(policy)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_artifact_path" in codes
+    assert "invalid_artifact_hash" in codes
+    assert "invalid_artifact_bytes" in codes
+
+
+def test_provider_cancellation_summary_renders_readiness():
+    summary = render_provider_cancellation_summary(_valid_policy())
+
+    assert "Provider cancellation policy: default_llm_timeout_policy" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| hard_cancel_ready | yes |" in summary
+    assert "| rule_count | 3 |" in summary
+    assert "| artifact_count | 2 |" in summary

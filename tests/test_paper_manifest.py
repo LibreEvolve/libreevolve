@@ -1,0 +1,1082 @@
+import csv
+import hashlib
+import json
+import stat
+import subprocess
+from io import BytesIO
+from types import SimpleNamespace
+from pathlib import Path
+
+from pypdf import PdfWriter
+
+import libreevolve.tools.paper_manifest as paper_manifest
+from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
+
+
+def _write_manifest(root, rows):
+    papers = root / "papers"
+    papers.mkdir(exist_ok=True)
+    (root / "README.md").write_text(
+        f"LibreEvolve is informed by a local cache of {len(rows)} papers.\n",
+        encoding="utf-8",
+    )
+    (papers / "README.md").write_text(
+        f"This directory is the paper-cache index. On the working machine it contains {len(rows)} papers.\n",
+        encoding="utf-8",
+    )
+    (papers / "download_manifest.json").write_text(
+        json.dumps(rows, indent=2),
+        encoding="utf-8",
+    )
+    with (papers / "download_manifest.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["id", "title", "url", "file", "ok", "bytes", "sha256", "message"],
+        )
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+
+
+def _write_status_table(root, row_ids):
+    rows = "\n".join(
+        f"| {row_id} | Paper {index} | Role | Status |"
+        for index, row_id in enumerate(row_ids, start=1)
+    )
+    (root / "papers" / "README.md").write_text(
+        "This directory is the paper-cache index. On the working machine it contains "
+        f"{len(row_ids)} papers.\n\n"
+        "## Implementation status\n\n"
+        "| ID | Title | Role | Current LibreEvolve status |\n"
+        "|---|---|---|---|\n"
+        f"{rows}\n",
+        encoding="utf-8",
+    )
+
+
+def _valid_pdf_bytes(extra=b""):
+    buffer = BytesIO()
+    writer = PdfWriter()
+    writer.add_blank_page(width=72, height=72)
+    writer.write(buffer)
+    return buffer.getvalue() + extra
+
+
+def _row(
+    root,
+    *,
+    row_id="2506.13131",
+    title="AlphaEvolve",
+    url="https://arxiv.org/pdf/2506.13131.pdf",
+    file="papers/2506.13131__AlphaEvolve.pdf",
+    message="downloaded",
+    ok=True,
+    content=None,
+    sha256=None,
+    bytes_value=None,
+):
+    content = _valid_pdf_bytes() if content is None else content
+    paper_path = root / file
+    paper_path.parent.mkdir(exist_ok=True)
+    paper_path.write_bytes(content)
+    return {
+        "id": row_id,
+        "title": title,
+        "url": url,
+        "file": file,
+        "ok": ok,
+        "bytes": len(content) if bytes_value is None else bytes_value,
+        "sha256": hashlib.sha256(content).hexdigest() if sha256 is None else sha256,
+        "message": message,
+    }
+
+
+def test_validate_paper_manifest_accepts_matching_local_pdf(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is True
+    assert report.row_count == 1
+    assert report.local_present_count == 1
+    assert report.availability[0].local_status == "present"
+    assert report.availability[0].download_ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks"
+    registry.mkdir(parents=True)
+    (registry / "alphaevolve_appendix_b.json").write_text(
+        json.dumps({"schema": "wrong", "families": []}),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    issue_codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "appendix_b_invalid_schema" in issue_codes
+    assert "appendix_b_missing_family" in issue_codes
+
+
+def test_validate_paper_manifest_reports_invalid_ablation_registry(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks"
+    registry.mkdir(parents=True)
+    (registry / "alphaevolve_ablations.json").write_text(
+        json.dumps({"schema": "wrong", "variants": [], "report_contract": {}}),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    issue_codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "ablation_invalid_schema" in issue_codes
+    assert "ablation_missing_variant" in issue_codes
+
+
+def test_rehydrate_paper_cache_downloads_missing_pdf_and_validates_hash(tmp_path, monkeypatch):
+    content = _valid_pdf_bytes()
+    row = _row(tmp_path, content=content)
+    (tmp_path / row["file"]).unlink()
+    _write_manifest(tmp_path, [row])
+
+    def fake_urlopen(request, timeout):
+        assert request.full_url == row["url"]
+        assert timeout == 60.0
+        response = BytesIO(content)
+        response.status = 200
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    assert report.ok is True
+    assert report.downloaded_count == 1
+    assert report.verified_existing_count == 0
+    assert report.results[0].status == "downloaded"
+    assert validate_paper_manifest(tmp_path, require_local_pdfs=True).ok is True
+
+
+def test_rehydrate_paper_cache_skips_existing_matching_pdf(tmp_path, monkeypatch):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+
+    def fail_urlopen(request, timeout):
+        raise AssertionError("matching local PDFs should not be downloaded")
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fail_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    assert report.ok is True
+    assert report.downloaded_count == 0
+    assert report.verified_existing_count == 1
+    assert report.results[0].status == "verified_existing"
+
+
+def test_rehydrate_paper_cache_force_redownloads_matching_pdf(tmp_path, monkeypatch):
+    content = _valid_pdf_bytes()
+    row = _row(tmp_path, content=content)
+    _write_manifest(tmp_path, [row])
+    calls = 0
+
+    def fake_urlopen(request, timeout):
+        nonlocal calls
+        calls += 1
+        response = BytesIO(content)
+        response.status = 200
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path, force=True)
+
+    assert report.ok is True
+    assert calls == 1
+    assert report.downloaded_count == 1
+    assert (tmp_path / row["file"]).read_bytes() == content
+
+
+def test_paper_manifest_rehydrate_json_reports_redacted_network_failure(tmp_path, monkeypatch, capsys):
+    row = _row(tmp_path)
+    (tmp_path / row["file"]).unlink()
+    _write_manifest(tmp_path, [row])
+
+    def fake_urlopen(request, timeout):
+        raise OSError("network down api_key=sk-proj_paperrehydrate_secret_1234567890")  # pragma: allowlist secret
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    exit_code = main(["--root", str(tmp_path), "--rehydrate", "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert data["failed_count"] == 1
+    assert data["results"][0]["status"] == "failed"
+    assert "[REDACTED]" in captured.out
+    assert "sk-proj_paperrehydrate_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_reports_missing_pdf_only_when_required(tmp_path):
+    row = _row(tmp_path)
+    (tmp_path / row["file"]).unlink()
+    _write_manifest(tmp_path, [row])
+
+    optional_report = validate_paper_manifest(tmp_path)
+    required_report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert optional_report.ok is True
+    assert optional_report.local_missing_count == 1
+    assert optional_report.availability[0].local_status == "missing"
+    assert required_report.ok is False
+    assert [issue.code for issue in required_report.issues] == ["missing_pdf"]
+
+
+def test_validate_paper_manifest_rejects_grouped_sha256(tmp_path):
+    grouped = "f092c8cb-d65da899-51ee6496-374da9a5-4963f903-5758c25a-c6e4625f-506df9ad"
+    row = _row(tmp_path, sha256=grouped)
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "invalid_sha256" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_csv_json_mismatch(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    text = csv_path.read_text(encoding="utf-8").replace("AlphaEvolve", "DifferentTitle", 1)
+    csv_path.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "csv_json_mismatch" in {issue.code for issue in report.issues}
+
+
+def test_paper_manifest_cli_returns_failure_for_invalid_manifest(tmp_path, capsys):
+    row = _row(tmp_path, bytes_value=1)
+    _write_manifest(tmp_path, [row])
+
+    exit_code = main(["--root", str(tmp_path), "--require-local-pdfs"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "byte_count_mismatch" in captured.out
+
+
+def test_paper_manifest_cli_reports_redacted_local_pdf_stat_error(tmp_path, monkeypatch, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    target = tmp_path / row["file"]
+    real_exists = Path.exists
+    real_stat = Path.stat
+
+    def fake_exists(path):
+        if path == target:
+            return True
+        return real_exists(path)
+
+    def fake_stat(path, *args, **kwargs):
+        if path == target:
+            raise PermissionError("cannot stat api_key=sk-proj_paperpdfstatsecret1234567890")
+        return real_stat(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "exists", fake_exists)
+    monkeypatch.setattr(Path, "stat", fake_stat)
+
+    exit_code = main(["--root", str(tmp_path), "--require-local-pdfs"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "local_pdf_stat_error" in captured.out
+    assert "papers/2506.13131__AlphaEvolve.pdf" in captured.out
+    assert "[REDACTED]" in captured.out
+    assert "sk-proj_paperpdfstatsecret1234567890" not in captured.out
+
+
+def test_paper_manifest_json_reports_redacted_local_pdf_read_error(tmp_path, monkeypatch, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    target = tmp_path / row["file"]
+    real_open = Path.open
+
+    def fake_open(path, *args, **kwargs):
+        if path == target:
+            raise PermissionError("cannot read api_key=sk-proj_paperpdfreadsecret1234567890")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", fake_open)
+
+    exit_code = main(["--root", str(tmp_path), "--require-local-pdfs", "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert data["issues"][0]["code"] == "local_pdf_read_error"
+    assert data["issues"][0]["row_id"] == "2506.13131"
+    assert "papers/2506.13131__AlphaEvolve.pdf" in data["issues"][0]["message"]
+    assert "[REDACTED]" in data["issues"][0]["message"]
+    assert "sk-proj_paperpdfreadsecret1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_reports_directory_shaped_pdf(tmp_path):
+    row = _row(tmp_path)
+    paper_path = tmp_path / row["file"]
+    paper_path.unlink()
+    paper_path.mkdir()
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert report.local_present_count == 1
+    assert report.availability[0].local_status == "present"
+    assert [issue.code for issue in report.issues] == ["local_pdf_not_file"]
+    assert report.issues[0].row_id == "2506.13131"
+
+
+def test_validate_paper_manifest_reports_git_tracked_pdf_status(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["git", "add", row["file"]], cwd=tmp_path, check=True, capture_output=True)
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert report.availability[0].git_tracked is True
+    assert "tracked_pdf" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_unsafe_pdf_paths(tmp_path):
+    rows = [
+        {
+            **_row(
+                tmp_path,
+                row_id="2506.00001",
+                file="papers/safe1.pdf",
+                url="https://arxiv.org/pdf/2506.00001.pdf",
+            ),
+            "file": "papers/CON.pdf",
+        },
+        {
+            **_row(
+                tmp_path,
+                row_id="2506.00002",
+                file="papers/safe2.pdf",
+                url="https://arxiv.org/pdf/2506.00002.pdf",
+            ),
+            "file": "papers/bad\u202egnp.pdf",
+        },
+        {
+            **_row(
+                tmp_path,
+                row_id="2506.00003",
+                file="papers/safe3.pdf",
+                url="https://arxiv.org/pdf/2506.00003.pdf",
+            ),
+            "file": "papers/.hidden.pdf",
+        },
+    ]
+    _write_manifest(tmp_path, rows)
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert [issue.code for issue in report.issues].count("invalid_file_path") == 3
+
+
+def test_validate_paper_manifest_reports_duplicate_file_targets(tmp_path):
+    row = _row(tmp_path, file="papers/shared.pdf")
+    duplicate = {
+        **row,
+        "id": "2506.99999",
+        "url": "https://arxiv.org/pdf/2506.99999.pdf",
+    }
+    _write_manifest(tmp_path, [row, duplicate])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "duplicate_file_path" in codes
+    assert "duplicate_sha256" in codes
+    assert report.local_present_count == 1
+    assert report.local_unique_file_count == 1
+
+
+def test_validate_paper_manifest_reports_duplicate_csv_ids_before_comparison(tmp_path):
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_b = _row(tmp_path, row_id="2506.00002", file="papers/b.pdf", url="https://arxiv.org/pdf/2506.00002.pdf")
+    _write_manifest(tmp_path, [row_a, row_b])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    lines = csv_path.read_text(encoding="utf-8").splitlines()
+    lines[2] = lines[2].replace("2506.00002", "2506.00001", 1)
+    csv_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "duplicate_csv_id" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_secret_like_row_ids(tmp_path, capsys):
+    secret_id = "api_key=sk-proj_paperid_secret_1234567890"
+    row = _row(tmp_path, row_id=secret_id)
+    _write_manifest(tmp_path, [row])
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert "invalid_id" in {issue["code"] for issue in data["issues"]}
+    assert "[REDACTED]" in captured.out
+    assert secret_id not in captured.out
+
+
+def test_validate_paper_manifest_checks_readme_badge_count(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        'LibreEvolve is informed by a local cache of 1 papers.\n'
+        '<img src="https://img.shields.io/badge/local%20paper%20cache-24-9E6A03" '
+        'alt="Local paper cache">\n',
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    issues = [issue for issue in report.issues if issue.code == "documented_count_conflict"]
+    assert len(issues) == 1
+    assert "README.md prose=1" in issues[0].message
+    assert "README.md badge=24" in issues[0].message
+    assert "cache of 1 papers" in issues[0].message
+
+
+def test_validate_paper_manifest_reports_conflicting_count_sources_with_paths(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "README.md").write_text(
+        "LibreEvolve is informed by a local cache of 1 papers.\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "papers" / "README.md").write_text(
+        "This directory contains 2 locally cached PDFs plus download manifests.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    issues = [issue for issue in report.issues if issue.code == "documented_count_conflict"]
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert len(issues) == 1
+    assert "README.md prose=1" in issues[0].message
+    assert "papers/README.md prose=2" in issues[0].message
+    assert "contains 2 locally cached PDFs" in issues[0].message
+    assert "documented_count_mismatch" not in codes
+
+
+def test_validate_paper_manifest_accepts_matching_multiple_count_sources(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "README.md").write_text(
+        'LibreEvolve is informed by a local cache of 1 papers.\n'
+        '<img src="https://img.shields.io/badge/local%20paper%20cache-1-9E6A03" '
+        'alt="Local paper cache">\n',
+        encoding="utf-8",
+    )
+    (tmp_path / "papers" / "README.md").write_text(
+        "This directory contains 1 locally cached PDF plus download manifests.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    codes = {issue.code for issue in report.issues}
+    assert "documented_count_conflict" not in codes
+    assert "documented_count_mismatch" not in codes
+
+
+def test_validate_paper_manifest_allows_absent_documented_counts(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "README.md").write_text("LibreEvolve paper cache.\n", encoding="utf-8")
+    (tmp_path / "papers" / "README.md").write_text("Paper cache index.\n", encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    codes = {issue.code for issue in report.issues}
+    assert "documented_count_conflict" not in codes
+    assert "documented_count_mismatch" not in codes
+
+
+def test_validate_paper_manifest_rejects_malformed_readme_badge_count(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        '<img src="https://img.shields.io/badge/local%20paper%20cache-many-9E6A03" '
+        'alt="Local paper cache">\n',
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "malformed_paper_count_badge" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_checks_cached_pdf_prose_count(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "README.md").write_text("LibreEvolve paper cache.\n", encoding="utf-8")
+    (tmp_path / "papers" / "README.md").write_text(
+        "This directory is the paper-cache index. On the working machine it "
+        "contains 24 locally cached PDFs plus download manifests.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "documented_count_mismatch" in {issue.code for issue in report.issues}
+    assert "documented paper count is 24 but manifest has 1 rows" in {
+        issue.message for issue in report.issues
+    }
+
+
+def test_validate_paper_manifest_reports_unreadable_readme_count_source(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "README.md").write_bytes(b"\xff\xfe\x00")
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    issues = [issue for issue in report.issues if issue.code == "readme_count_source_unreadable"]
+    assert report.ok is False
+    assert len(issues) == 1
+    assert issues[0].message.startswith("README.md:")
+
+
+def test_validate_paper_manifest_reports_unreadable_papers_readme_count_source(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "README.md").write_bytes(b"\xff\xfe\x00")
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    issues = [issue for issue in report.issues if issue.code == "readme_count_source_unreadable"]
+    assert report.ok is False
+    assert len(issues) == 1
+    assert issues[0].message.startswith("papers/README.md:")
+
+
+def test_validate_paper_manifest_rejects_unsafe_urls(tmp_path, capsys):
+    secret_url = "file:///C:/Users/timot/api_key=sk-proj_paperurl_secret_1234567890.pdf"
+    row = _row(tmp_path, url=secret_url)
+    _write_manifest(tmp_path, [row])
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert "invalid_url" in {issue["code"] for issue in data["issues"]}
+    assert secret_url not in captured.out
+    assert "sk-proj_paperurl_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_redacts_and_bounds_download_messages(tmp_path):
+    message = "download failed api_key=sk-proj_papermsg_secret_1234567890 " + ("x" * 5000)
+    row = _row(tmp_path, message=message)
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "unsafe_message" in codes
+    assert "message_too_long" in codes
+    assert "[REDACTED]" in report.availability[0].download_message
+    assert "sk-proj_papermsg_secret_1234567890" not in report.availability[0].download_message
+    assert len(report.availability[0].download_message) <= 512
+
+
+def test_validate_paper_manifest_rejects_unsupported_json_fields_and_csv_headers(tmp_path, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    json_path = tmp_path / "papers" / "download_manifest.json"
+    json_rows = json.loads(json_path.read_text(encoding="utf-8"))
+    json_rows[0]["api_key"] = "sk-proj_extra_json_secret_1234567890"
+    json_path.write_text(json.dumps(json_rows), encoding="utf-8")
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    text = csv_path.read_text(encoding="utf-8")
+    text = text.replace("id,title,url,file,ok,bytes,sha256,message", "id,title,url,file,ok,bytes,sha256,message,api_key")
+    text = text.replace("\ndownloaded", "\ndownloaded,sk-proj_extra_csv_secret_1234567890")
+    csv_path.write_text(text, encoding="utf-8")
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    codes = {issue["code"] for issue in data["issues"]}
+    assert exit_code == 1
+    assert "unsupported_json_field" in codes
+    assert "unsupported_csv_header" in codes
+    assert "csv_header_order" in codes
+    assert "sk-proj_extra_json_secret_1234567890" not in captured.out
+    assert "sk-proj_extra_csv_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_rejects_duplicate_json_keys(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    manifest = tmp_path / "papers" / "download_manifest.json"
+    manifest.write_text(
+        "[{"
+        '"id": "2506.13131",'
+        '"title": "AlphaEvolve",'
+        '"url": "https://arxiv.org/pdf/first.pdf",'
+        '"url": "https://arxiv.org/pdf/2506.13131.pdf",'
+        '"file": "papers/2506.13131__AlphaEvolve.pdf",'
+        '"ok": true,'
+        f'"bytes": {row["bytes"]},'
+        f'"sha256": "{row["sha256"]}",'
+        '"message": "downloaded"'
+        "}]",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "duplicate_json_key" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_reports_invalid_encoding_json_manifest(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    json_path = tmp_path / "papers" / "download_manifest.json"
+    json_path.write_bytes(b"\xff\xfe\x00")
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert report.row_count == 0
+    assert "json_manifest_unreadable" in codes
+
+
+def test_paper_manifest_cli_redacts_missing_manifest_paths(tmp_path, capsys):
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root.mkdir()
+
+    exit_code = main(["--root", str(root)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "json_manifest_unreadable" in captured.out
+    assert "csv_manifest_unreadable" in captured.out
+    assert "papers/download_manifest.json" in captured.out
+    assert "papers/download_manifest.csv" in captured.out
+    assert str(root) not in captured.out
+    assert "sk-proj_papermanifestroot_secret_1234567890" not in captured.out
+
+
+def test_paper_manifest_json_redacts_malformed_manifest_paths(tmp_path, capsys):
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root.mkdir()
+    row = _row(root)
+    _write_manifest(root, [row])
+    (root / "papers" / "download_manifest.json").write_text("{", encoding="utf-8")
+
+    exit_code = main(["--root", str(root), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    messages = [issue["message"] for issue in data["issues"]]
+    assert exit_code == 1
+    assert any(message.startswith("papers/download_manifest.json:") for message in messages)
+    assert str(root) not in captured.out
+    assert "sk-proj_papermanifestroot_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_rejects_duplicate_csv_headers(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    text = csv_path.read_text(encoding="utf-8")
+    text = text.replace("id,title,url,file,ok,bytes,sha256,message", "id,title,url,url,file,ok,bytes,sha256,message")
+    text = text.replace("AlphaEvolve,https://", "AlphaEvolve,https://arxiv.org/pdf/2506.13131.pdf,https://")
+    csv_path.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "duplicate_csv_header" in {issue.code for issue in report.issues}
+
+
+def test_paper_manifest_cli_reports_malformed_csv_quotes_in_text(tmp_path, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    csv_path.write_text(
+        "id,title,url,file,ok,bytes,sha256,message\n"
+        '"2506.13131","unterminated title\n',
+        encoding="utf-8",
+    )
+
+    exit_code = main(["--root", str(tmp_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert "csv_manifest_unreadable" in captured.out
+    assert "papers/download_manifest.csv" in captured.out
+
+
+def test_paper_manifest_cli_reports_malformed_csv_quotes_in_json(tmp_path, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    csv_path.write_text(
+        "id,title,url,file,ok,bytes,sha256,message\n"
+        '"2506.13131","unterminated title\n',
+        encoding="utf-8",
+    )
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert "csv_manifest_unreadable" in {issue["code"] for issue in data["issues"]}
+    assert any(
+        issue["message"].startswith("papers/download_manifest.csv:")
+        for issue in data["issues"]
+    )
+
+
+def test_validate_paper_manifest_reports_invalid_encoding_csv_manifest(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    csv_path = tmp_path / "papers" / "download_manifest.csv"
+    csv_path.write_bytes(b"\xff\xfe\x00")
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert report.row_count == 1
+    assert "csv_manifest_unreadable" in codes
+
+
+def test_paper_manifest_cli_reports_wrong_json_top_level_schema(tmp_path, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "download_manifest.json").write_text("{}", encoding="utf-8")
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert "json_manifest_schema" in {issue["code"] for issue in data["issues"]}
+
+
+def test_paper_manifest_cli_reports_json_row_schema_and_missing_fields(tmp_path, capsys):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "download_manifest.json").write_text(
+        json.dumps([{"id": "2506.13131"}, "not a row"]),
+        encoding="utf-8",
+    )
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    codes = {issue["code"] for issue in data["issues"]}
+    assert exit_code == 1
+    assert "missing_fields" in codes
+    assert "json_row_schema" in codes
+
+
+def test_paper_manifest_json_redacts_readme_source_exception_paths(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root.mkdir()
+    row = _row(root)
+    _write_manifest(root, [row])
+    target = root / "papers" / "README.md"
+    real_read_text = Path.read_text
+
+    def fake_read_text(path, *args, **kwargs):
+        if path == target:
+            raise OSError(f"failed opening {path}")
+        return real_read_text(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", fake_read_text)
+
+    exit_code = main(["--root", str(root), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    messages = [issue["message"] for issue in data["issues"]]
+    assert exit_code == 1
+    assert any(message == "papers/README.md: failed opening papers/README.md" for message in messages)
+    assert str(root) not in captured.out
+    assert "sk-proj_papermanifestroot_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_checks_empty_csv_headers(tmp_path):
+    papers = tmp_path / "papers"
+    papers.mkdir()
+    (tmp_path / "README.md").write_text("LibreEvolve is informed by a local cache of 0 papers.\n", encoding="utf-8")
+    (papers / "README.md").write_text("This directory contains 0 papers.\n", encoding="utf-8")
+    (papers / "download_manifest.json").write_text("[]", encoding="utf-8")
+    (papers / "download_manifest.csv").write_text("not,the,required,columns\n", encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "missing_csv_header" in codes
+    assert "unsupported_csv_header" in codes
+    assert "csv_header_order" in codes
+
+
+def test_validate_paper_manifest_rejects_secret_like_multiline_titles(tmp_path, capsys):
+    title = "api_key=sk-proj_papertitle_secret_1234567890\nSecond line"
+    row = _row(tmp_path, title=title)
+    _write_manifest(tmp_path, [row])
+
+    exit_code = main(["--root", str(tmp_path), "--json"])
+
+    captured = capsys.readouterr()
+    data = json.loads(captured.out)
+    assert exit_code == 1
+    assert "invalid_title" in {issue["code"] for issue in data["issues"]}
+    assert "sk-proj_papertitle_secret_1234567890" not in captured.out
+
+
+def test_validate_paper_manifest_accepts_matching_status_table(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_accepts_curated_root_readme_paper_summary(tmp_path):
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_b = _row(
+        tmp_path,
+        row_id="2506.00002",
+        file="papers/b.pdf",
+        url="https://arxiv.org/pdf/2506.00002.pdf",
+        content=_valid_pdf_bytes(b"\nsecond"),
+    )
+    _write_manifest(tmp_path, [row_a, row_b])
+    _write_status_table(tmp_path, [row_a["id"], row_b["id"]])
+    (tmp_path / "README.md").write_text(
+        "LibreEvolve is informed by a local cache of 2 papers.\n"
+        "<details>\n"
+        "<summary><h2>Local Paper Cache (2)</h2></summary>\n"
+        "The tables below are a curated subset for README context. "
+        "`papers/README.md` is the complete implementation-status index for all 2 manifest rows.\n"
+        f"| [Alpha](https://arxiv.org/abs/{row_a['id']}) | Core |\n"
+        "</details>\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_flags_unlabeled_incomplete_root_readme_paper_summary(tmp_path):
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_b = _row(
+        tmp_path,
+        row_id="2506.00002",
+        file="papers/b.pdf",
+        url="https://arxiv.org/pdf/2506.00002.pdf",
+        content=_valid_pdf_bytes(b"\nsecond"),
+    )
+    _write_manifest(tmp_path, [row_a, row_b])
+    _write_status_table(tmp_path, [row_a["id"], row_b["id"]])
+    (tmp_path / "README.md").write_text(
+        "LibreEvolve is informed by a local cache of 2 papers.\n"
+        "<details>\n"
+        "<summary><h2>Local Paper Cache (2)</h2></summary>\n"
+        f"| [Alpha](https://arxiv.org/abs/{row_a['id']}) | Core |\n"
+        "</details>\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    issues = [issue for issue in report.issues if issue.code == "readme_paper_summary_incomplete"]
+    assert len(issues) == 1
+    assert "lists 1 of 2 manifest ids" in issues[0].message
+
+
+def test_validate_paper_manifest_reports_missing_and_extra_status_table_rows(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, ["stale-paper-id"])
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "missing_status_table_row" in codes
+    assert "extra_status_table_row" in codes
+
+
+def test_validate_paper_manifest_reports_duplicate_status_table_rows(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"], row["id"]])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "duplicate_status_table_row" in {issue.code for issue in report.issues}
+
+
+def test_checked_in_paper_index_maps_each_manifest_id_to_todo_coverage():
+    manifest_rows = json.loads(Path("papers/download_manifest.json").read_text(encoding="utf-8"))
+    readme = Path("papers/README.md").read_text(encoding="utf-8")
+
+    section = readme.split("## TODO coverage cross-references", 1)[1].split("\n## ", 1)[0]
+    for row in manifest_rows:
+        prefix = f"| {row['id']} |"
+        matches = [line for line in section.splitlines() if line.startswith(prefix)]
+        assert len(matches) == 1
+        assert "docs/todo/" in matches[0]
+
+
+def test_checked_in_docs_scope_manifest_title_as_inventory_slug():
+    readme = Path("README.md").read_text(encoding="utf-8")
+    papers_readme = Path("papers/README.md").read_text(encoding="utf-8")
+
+    for text in (readme, papers_readme):
+        assert "Manifest `title`" in text
+        assert "inventory/display slug" in text
+        assert "not authoritative bibliographic" in text
+
+
+def test_validate_paper_manifest_rejects_non_pdf_content(tmp_path):
+    row = _row(tmp_path, content=b"not a pdf at all\n")
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "invalid_pdf_header" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_header_only_fake_pdf(tmp_path):
+    row = _row(tmp_path, content=b"%PDF-1.4\nfake\n")
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "invalid_pdf_structure" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_hashes_local_pdfs_streaming(tmp_path, monkeypatch):
+    row = _row(tmp_path, content=_valid_pdf_bytes(b"\n" + (b"x" * 2_000_000)))
+    _write_manifest(tmp_path, [row])
+
+    def fail_read_bytes(path):
+        raise AssertionError("read_bytes should not be used for paper hashing")
+
+    monkeypatch.setattr(Path, "read_bytes", fail_read_bytes)
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_rejects_failed_download_rows(tmp_path):
+    row = _row(tmp_path, ok=False, message="download failed: HTTP 500")
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert report.availability[0].download_ok is False
+    assert "download_failed" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_reports_unmanifested_local_pdfs_when_required(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "extra.pdf").write_bytes(b"%PDF-1.4\nextra\n")
+
+    optional_report = validate_paper_manifest(tmp_path)
+    required_report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert optional_report.ok is True
+    assert required_report.ok is False
+    assert "unmanifested_pdf" in {issue.code for issue in required_report.issues}
+
+
+def test_validate_paper_manifest_rejects_symlink_backed_local_pdf(tmp_path, monkeypatch):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    target = tmp_path / row["file"]
+    real_is_symlink = Path.is_symlink
+
+    def fake_is_symlink(path):
+        if path == target:
+            return True
+        return real_is_symlink(path)
+
+    monkeypatch.setattr(Path, "is_symlink", fake_is_symlink)
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "linked_pdf" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_reparse_point_local_pdf(tmp_path, monkeypatch):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    target = tmp_path / row["file"]
+    real_lstat = Path.lstat
+    monkeypatch.setattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 1024, raising=False)
+
+    def fake_lstat(path):
+        if path == target:
+            return SimpleNamespace(st_file_attributes=1024, st_mode=stat.S_IFREG | 0o644)
+        return real_lstat(path)
+
+    monkeypatch.setattr(Path, "lstat", fake_lstat)
+
+    report = validate_paper_manifest(tmp_path, require_local_pdfs=True)
+
+    assert report.ok is False
+    assert "linked_pdf" in {issue.code for issue in report.issues}

@@ -6,6 +6,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Staleness and Scope
 
+- [ ] Keep roadmap current-state framing tied to ongoing evidence rather than
+      stale snapshot dates.
+  - Spec evidence: the roadmap is part of the AlphaEvolve-alignment evidence
+    surface, so its "current codebase" framing should remain true as code,
+    README, paper-index, and TODO-ledger slices continue to change.
+  - Current evidence: `ROADMAP.md` no longer claims to reflect only the
+    codebase as of `2026-05-26`; it now describes ongoing alignment passes
+    against the AlphaEvolve paper, local docs, paper index, and checked-in
+    tests.
+  - Required result: when future roadmap passes add or retire current-state
+    claims, keep the intro and matching README/papers/TODO evidence aligned
+    with the current worktree rather than a stale dated audit snapshot.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

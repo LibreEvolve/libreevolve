@@ -1,9 +1,9 @@
 # Roadmap
 
-This roadmap reflects the current codebase as of 2026-05-26 after an
-AlphaEvolve-alignment pass against `papers/2506.13131__AlphaEvolve.pdf`, local
-docs, the paper index, and the checked-in tests. It is a practical development
-plan, not a promise.
+This roadmap reflects the current codebase after ongoing AlphaEvolve-alignment
+passes against `papers/2506.13131__AlphaEvolve.pdf`, local docs, the paper
+index, and the checked-in tests. It is a practical development plan, not a
+promise.
 
 ## Current State
 

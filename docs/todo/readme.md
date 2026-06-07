@@ -365,6 +365,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     target-metric identity/direction/normalization and mean/standard-deviation
     curves.
 
+- [ ] Keep README Figure 8 visual wording scoped until ablation-curve exhibit
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figure 8 is a two-panel ablation plot with
+    matrix tensor-decomposition curves on the left, kissing-number curves on
+    the right, compute-budget fraction on the x-axis, aggregated target metric
+    on the y-axis, named method curves, and shaded standard-deviation bands
+    from three independent seeded runs.
+  - Current evidence: README describes the ablation report contract, hashed
+    curve artifacts, and open gaps for executable harnesses, component
+    assertions, target-family coverage, and mean/std aggregation. It does not
+    document Figure 8 exhibit IDs, panel definitions, series-to-variant legend
+    mappings, axis/scale metadata, color/style/shading parameters, source
+    PDF/caption location, rendered plot artifact hashes, or links from plotted
+    visuals to exact report rows and raw seed traces.
+  - Required result: when Figure 8 exhibit provenance lands, update README,
+    ROADMAP, papers index, and matching TODOs so README distinguishes generic
+    ablation-report artifacts from reproduced paper-quality Figure 8 visual
+    evidence.
+
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.
   - Spec evidence: AlphaEvolve Appendix A reports a matrix-multiplication

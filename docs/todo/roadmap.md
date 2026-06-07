@@ -1889,6 +1889,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records before treating generic declared-target reports as
     Figure 8-equivalent.
 
+- [ ] Keep Figure 8 roadmap visual wording scoped until ablation-curve exhibit
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figure 8 presents a two-panel visual comparison
+    of ablation curves for matrix tensor decomposition and kissing-number
+    sphere packing, with compute-budget fraction on the x-axis, aggregated
+    target metric on the y-axis, named method curves, and shaded intra-target
+    standard-deviation bands over three independent seeded runs.
+  - Current evidence: roadmap/README/paper-index status can cite the ablation
+    report contract, hashed curve artifacts, and open executable-harness,
+    target-family, and aggregation gaps. They do not require a Figure 8 exhibit
+    ID, panel IDs, series/legend mappings, axis labels/scales, plot style and
+    standard-deviation band metadata, source PDF/caption location, rendered plot
+    artifact hashes, or links from the displayed visual to report rows and raw
+    seed traces.
+  - Required result: when Figure 8 visual exhibit provenance lands, update
+    ROADMAP, README, papers index, and code/paper TODOs with plot-level
+    metadata and validators so roadmap wording distinguishes generic
+    equal-budget curve artifacts from reproduced AlphaEvolve Figure 8 visual
+    evidence.
+
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
       valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

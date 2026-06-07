@@ -411,6 +411,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     calibration report, raw-record, grader-config, and plot artifacts against a
     safe artifact root. No runtime feedback-calibration fixture emits those
     reports yet.
+
     Evaluator subprocess-attempt, configured-stage sample, retry, timeout, and
     sample/stage budget-exhaustion counters now persist in evaluation
     accounting and runtime manifests, and optional run-wide limits can stop on
@@ -523,6 +524,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     cross-run quarantine/resume behavior, and richer runtime artifact
     generation, not configured in-run role/backend quarantine observations or
     verifying declared cancellation evidence files once a policy names them.
+
+- [ ] Track Figure 8 ablation-curve exhibit provenance as paper evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 8 shows two ablation
+    plots: matrix multiplication tensor decomposition and the kissing-number
+    problem. Each plot uses compute-budget fraction on the x-axis, aggregated
+    target metric on the y-axis, named full/ablated method curves, and shaded
+    intra-target standard deviation averaged over three independent seeded runs.
+  - Current gap: paper-facing ablation TODOs require executable benchmark
+    scripts, component-assertion bindings, target-family coverage,
+    per-target aggregation, and three-seed traces. They do not preserve the
+    Figure 8 visual as its own paper exhibit with stable exhibit/panel IDs,
+    series-to-variant legend mapping, axis labels/scales, color/style/shading
+    metadata, source PDF page/caption location, rendered plot artifacts and
+    hashes, or links from each plotted curve to exact report rows, raw seed
+    traces, and aggregation records.
+  - Required result: add Figure 8 exhibit records and validation: exhibit and
+    panel IDs, matrix/kissing target-family mapping, curve/legend definitions,
+    budget-fraction axis metadata, target-metric aggregation and std-band source
+    records, rendering parameters, rendered visual artifact hashes, and docs
+    wording that separates reproduced Figure 8 visual evidence from generic
+    ablation-report validation.
 
 - [ ] Connect LLM budget reports to async/pending-work resume and
   provider-output replay.

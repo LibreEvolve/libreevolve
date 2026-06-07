@@ -2620,6 +2620,27 @@ Primary evidence:
     validation that Figure 8-style reports are produced from the
     paper-relevant target families rather than arbitrary smoke targets.
 
+- [ ] Add Figure 8 ablation-curve exhibit provenance and rendered artifacts.
+  - Spec evidence: AlphaEvolve Figure 8 is a two-panel visual exhibit: matrix
+    multiplication tensor-decomposition ablations on the left, kissing-number
+    ablations on the right, compute-budget fraction on the x-axis, aggregated
+    target metric on the y-axis, named variant curves, and shaded intra-target
+    standard deviation over three independent seeded runs.
+  - Current evidence: the ablation report contract validates declared variants,
+    seeds, budget fractions, finite scores, consumed-budget consistency, hashed
+    curve artifacts, and separate TODOs require paper target-family coverage and
+    curve aggregation. No code/report schema records a Figure 8 exhibit ID,
+    two-panel layout, series-to-variant legend mapping, axis labels/scales,
+    color/style/shading metadata, source PDF/caption location, rendered plot
+    artifact path/hash, or links from the plotted visual to the exact ablation
+    report, raw seed traces, and aggregation records.
+  - Required result: add Figure 8-style exhibit metadata and validators with
+    stable exhibit and panel IDs, target-family labels, series/legend mappings,
+    axis and budget-fraction definitions, mean/std-band source records,
+    rendering parameters, visual artifact hashes, and links to ablation reports
+    and raw traces so generated curves can be distinguished from generic
+    equal-budget report artifacts.
+
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
     provider latency and stalled model calls must be bounded and attributable to

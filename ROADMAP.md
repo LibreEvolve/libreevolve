@@ -297,7 +297,9 @@ is not yet an AlphaEvolve reproduction.
   The matrix smoke validator now rejects known import/library delegation,
   module-level dead-code counters, and fixed-three-case lookup shortcuts, but
   stronger benchmark fixtures that emit the existing report contracts remain
-  planned work.
+  planned work. The matrix smoke fixture also has a scope-checked hardening
+  bundle helper that emits report, inventory, summary, and smoke-scope
+  validation evidence while preserving `alphaevolve_comparable: false`.
 - Connect real benchmark fixtures to `libreevolve.benchmark_hardening.v1`
   reports emitted by actual randomized/exhaustive validators and anti-gaming
   fixtures, including protected score/correctness/artifact signals,

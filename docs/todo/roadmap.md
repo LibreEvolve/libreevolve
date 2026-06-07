@@ -75,3 +75,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     feedback-calibration reports, update the roadmap, README, papers index, and
     code/paper TODO entries together so they neither underclaim the report
     contract nor overclaim executed calibration evidence.
+
+- [ ] Keep benchmark-hardening roadmap wording scoped to smoke evidence versus
+  benchmark-grade fixtures.
+  - Spec evidence: AlphaEvolve-style benchmark claims need repeated,
+    target-family fixtures with anti-gaming evidence, not smoke-only examples.
+  - Current evidence: the matrix smoke fixture now rejects known shortcuts and
+    has a scope-checked hardening bundle helper that emits report, inventory,
+    summary, and scope-validation files while preserving
+    `alphaevolve_comparable: false`.
+  - Required result: when tensor/geometric/compiler/systems fixtures emit
+    benchmark-grade hardening reports, update the roadmap, README, papers index,
+    and code/paper TODO entries together so they neither underclaim smoke
+    hardening evidence nor overclaim AlphaEvolve-comparable benchmarks.

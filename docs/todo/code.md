@@ -1746,7 +1746,7 @@ Primary evidence:
     and MAP-Elites sampling continuity across an end-to-end resumed trace.
 
 
-- [ ] Define validator container, filesystem-capability, and resource-limit policy.
+- [ ] Enforce validator container, filesystem-capability, and resource-limit policy.
   - Spec evidence: AlphaEvolve targets existing codebases and systems code,
     potentially with expensive or hardware-backed execution.
   - Current evidence: validator execution is intentionally process separation,

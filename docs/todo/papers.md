@@ -772,8 +772,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     role-scoped final-prompt exact token counting, and not manifest validation
     of current prompt section-packing role coverage.
 
-- [ ] Model migration replay and controller state for one-command archive
-  resume.
+- [ ] Model migration replay and async/pending-work controller resume for
+  one-command archive resume.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.5 and 2.6.
   - Requirement: island-model population state should be reproducible enough
     that resumed AlphaEvolve-style searches continue from the same assignment

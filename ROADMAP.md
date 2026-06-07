@@ -174,9 +174,9 @@ is not yet an AlphaEvolve reproduction.
   bounded manifest `runtime.history.hypothesis_index`, hypothesis-refinement
   loops, and stricter policy for which proposal fields may influence
   retrieval, prompting, and archive resurfacing.
-- Improve meta-prompt scoring beyond direct child score and add ablation
-  reporting for prompt-program lineages, including documented prompt reward
-  normalization and selection policy.
+- Improve meta-prompt scoring beyond the current absolute/improvement child
+  score reward modes and UCB-style prompt-arm selection; add calibrated reward
+  signals plus ablation reporting for prompt-program lineages.
 
 ### 5. Documentation truthfulness
 

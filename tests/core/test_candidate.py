@@ -2656,6 +2656,68 @@ def test_workspace_materialize_replaces_existing_root_with_exact_snapshot(tmp_pa
     assert not (tmp_path / "pkg" / "stale.py").exists()
 
 
+def test_workspace_materialize_backup_failure_preserves_existing_root(
+    tmp_path, monkeypatch
+):
+    from libreevolve.core import candidate as candidate_module
+
+    root = tmp_path / "workspace"
+    root.mkdir()
+    (root / "old.py").write_text("old\n", encoding="utf-8")
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    original_rename = candidate_module.Path.rename
+
+    def fail_existing_root_backup(self, target):
+        if self == root.resolve():
+            raise OSError("backup failed")
+        return original_rename(self, target)
+
+    monkeypatch.setattr(candidate_module.Path, "rename", fail_existing_root_backup)
+
+    try:
+        workspace.materialize(root)
+    except CandidateMaterializationError as exc:
+        assert "backup failed" in str(exc)
+        assert exc.reason == "materialization_existing_root_backup_failed"
+        assert exc.paths[0] == str(root.resolve())
+    else:
+        raise AssertionError("expected backup failure")
+
+    assert (root / "old.py").read_text(encoding="utf-8") == "old\n"
+    assert not (root / "main.py").exists()
+
+
+def test_workspace_materialize_swap_failure_restores_existing_root(
+    tmp_path, monkeypatch
+):
+    from libreevolve.core import candidate as candidate_module
+
+    root = tmp_path / "workspace"
+    root.mkdir()
+    (root / "old.py").write_text("old\n", encoding="utf-8")
+    workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
+    original_rename = candidate_module.Path.rename
+
+    def fail_temp_root_swap(self, target):
+        if self.name.startswith(".workspace.tmp-"):
+            raise OSError("swap failed")
+        return original_rename(self, target)
+
+    monkeypatch.setattr(candidate_module.Path, "rename", fail_temp_root_swap)
+
+    try:
+        workspace.materialize(root)
+    except CandidateMaterializationError as exc:
+        assert "swap failed" in str(exc)
+        assert exc.reason == "materialization_swap_failed"
+        assert exc.paths[1] == str(root.resolve())
+    else:
+        raise AssertionError("expected swap failure")
+
+    assert (root / "old.py").read_text(encoding="utf-8") == "old\n"
+    assert not (root / "main.py").exists()
+
+
 def test_workspace_materialize_preflight_failure_preserves_existing_root(
     tmp_path, monkeypatch
 ):

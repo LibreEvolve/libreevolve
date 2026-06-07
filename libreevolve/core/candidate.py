@@ -238,6 +238,7 @@ class CandidateWorkspace:
             targets[key] = rel
         temp_root = _make_materialization_sibling(root, "tmp")
         backup_root: Path | None = None
+        root_moved_to_backup = False
         for rel, content in files.items():
             target = safe_candidate_path(
                 temp_root,
@@ -283,14 +284,47 @@ class CandidateWorkspace:
         try:
             if root.exists():
                 backup_root = _make_materialization_sibling(root, "backup")
-                backup_root.rmdir()
-                root.rename(backup_root)
-            temp_root.rename(root)
+                try:
+                    backup_root.rmdir()
+                except OSError as exc:
+                    raise CandidateMaterializationError(
+                        "Candidate workspace backup placeholder could not be removed: "
+                        f"{backup_root}: {exc}",
+                        reason="materialization_backup_placeholder_delete_failed",
+                        paths=(str(backup_root),),
+                    ) from exc
+                try:
+                    root.rename(backup_root)
+                    root_moved_to_backup = True
+                except OSError as exc:
+                    raise CandidateMaterializationError(
+                        "Candidate workspace root could not be moved to backup: "
+                        f"{root} -> {backup_root}: {exc}",
+                        reason="materialization_existing_root_backup_failed",
+                        paths=(str(root), str(backup_root)),
+                    ) from exc
+            try:
+                temp_root.rename(root)
+            except OSError as exc:
+                raise CandidateMaterializationError(
+                    "Candidate workspace temporary root could not be swapped into place: "
+                    f"{temp_root} -> {root}: {exc}",
+                    reason="materialization_swap_failed",
+                    paths=(str(temp_root), str(root)),
+                ) from exc
         except BaseException:
-            if root.exists():
+            if root_moved_to_backup and root.exists():
                 _remove_materialization_tree(root, root.parent)
-            if backup_root is not None and backup_root.exists():
-                backup_root.rename(root)
+            if root_moved_to_backup and backup_root is not None and backup_root.exists():
+                try:
+                    backup_root.rename(root)
+                except OSError as exc:
+                    raise CandidateMaterializationError(
+                        "Candidate workspace backup could not be restored: "
+                        f"{backup_root} -> {root}: {exc}",
+                        reason="materialization_restore_failed",
+                        paths=(str(backup_root), str(root)),
+                    ) from exc
             _remove_materialization_tree(temp_root, root.parent)
             raise
         if backup_root is not None and backup_root.exists():
@@ -818,19 +852,33 @@ def _prepare_materialization_root(root: Path) -> Path:
             reason="candidate_root_not_directory",
             paths=(str(root),),
         )
-    root.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        root.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        raise CandidateMaterializationError(
+            f"Candidate workspace root parent could not be created: {root.parent}",
+            reason="candidate_root_parent_create_failed",
+            paths=(str(root.parent),),
+        ) from exc
     if root.exists():
         _reject_linked_materialization_entries(root)
     return root
 
 
 def _make_materialization_sibling(root: Path, label: str) -> Path:
-    return Path(
-        tempfile.mkdtemp(
-            prefix=f".{root.name}.{label}-",
-            dir=root.parent,
+    try:
+        return Path(
+            tempfile.mkdtemp(
+                prefix=f".{root.name}.{label}-",
+                dir=root.parent,
+            )
         )
-    )
+    except OSError as exc:
+        raise CandidateMaterializationError(
+            f"Candidate workspace {label} directory could not be created: {root.parent}",
+            reason=f"materialization_{label}_root_create_failed",
+            paths=(str(root.parent),),
+        ) from exc
 
 
 def _remove_materialization_tree(path: Path, parent: Path) -> None:
@@ -845,7 +893,14 @@ def _remove_materialization_tree(path: Path, parent: Path) -> None:
             reason="materialization_cleanup_outside_parent",
             paths=(str(path), str(parent)),
         )
-    shutil.rmtree(resolved)
+    try:
+        shutil.rmtree(resolved)
+    except OSError as exc:
+        raise CandidateMaterializationError(
+            f"Candidate workspace materialization tree could not be removed: {path}",
+            reason="materialization_cleanup_delete_failed",
+            paths=(str(path),),
+        ) from exc
 
 
 def _path_is_link(path: Path) -> bool:

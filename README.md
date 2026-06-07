@@ -2289,9 +2289,9 @@ host-path collisions. During evaluation, materialization failures such as
 case-folded host-path collisions return invalid `materialization_error`
 results with bounded redacted diagnostics. Known candidate-path collisions,
 unsafe linked roots or ancestors, linked nested root entries, file write
-failures, and static source-copy failures also record structured `reason`
-values and bounded `paths`, and can be logged in failure history instead of
-aborting the run.
+failures, backup/swap/restore/cleanup failures, and static source-copy
+failures also record structured `reason` values and bounded `paths`, and can
+be logged in failure history instead of aborting the run.
 Materialization is an exact snapshot operation for a normal target directory:
 after preflight succeeds, the candidate file set is written to a temporary
 sibling workspace and swapped into place only after all files are written.

@@ -38,25 +38,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
-- [ ] Finish invalid-workspace diagnostics for codebase-scale artifact
-  failures.
+- [ ] Tighten remaining invalid-workspace topology diagnostics for codebase-scale
+  artifact failures.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: AlphaEvolve-style tasks mutate program artifacts under
     automated evaluator feedback; generated invalid artifacts should leave
     stable, inspectable diagnostics that can steer future proposals.
   - Partial status: typed `CandidateMaterializationError` records now cover
     materialized candidate-path collisions, linked target roots or ancestors,
-    linked nested root entries, file target roots, candidate text/static write
-    failures, and static source-copy link/read/not-file/hash/byte-count
-    failures. Evaluations persist `materialization_error` metadata with bounded
-    message text plus structured `reason` and relevant bounded `paths`, and
-    prompt context policy can select/cap those fields for failure-memory
-    feedback. Topology sections are prevalidated for duplicate source/target
-    operations, non-empty command bodies, and primary-file deletion without
-    replacement.
-  - Current gap: remaining materialization failures, including cleanup/swap/
-    delete failures and any unstructured filesystem exceptions, still need
-    stable reason/path classification before LibreEvolve can claim robust
+    linked nested root entries, file target roots, parent/temp root creation,
+    candidate text/static write failures, existing-root backup failures, final
+    swap failures, backup restore failures, cleanup deletion failures, and
+    static source-copy link/read/not-file/hash/byte-count failures. Evaluations
+    persist `materialization_error` metadata with bounded message text plus
+    structured `reason` and relevant bounded `paths`, and prompt context policy
+    can select/cap those fields for failure-memory feedback. Topology sections
+    are prevalidated for duplicate source/target operations, non-empty command
+    bodies, and primary-file deletion without replacement.
+  - Current gap: topology diagnostics still need stronger handling where
+    host/case-folded move targets or generated file paths can remain ambiguous,
+    and future materialization filesystem paths must preserve the stable
+    reason/path diagnostic contract before LibreEvolve can claim robust
     codebase-scale invalid-artifact feedback.
 
 - [ ] Overall compute-budget accounting and ablation support.

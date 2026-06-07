@@ -1926,8 +1926,10 @@ record `exception_type: "CandidateMaterializationError"`, stable `reason`
 labels, and bounded relevant `paths` alongside the bounded message. Current
 typed reasons cover candidate path collisions, linked roots or ancestors,
 linked nested root entries, root file targets, text/static file write failures,
-static source-copy link/read/not-file failures, and static source-copy
-byte-count or SHA-256 mismatches.
+parent/temp root creation failures, backup placeholder deletion, existing-root
+backup, final swap, restore, cleanup deletion failures, static source-copy
+link/read/not-file failures, and static source-copy byte-count or SHA-256
+mismatches.
 Prompt-visible summaries are bounded separately.
 Use `evaluator_artifact_include` for large diagnostics that should be retained
 as separate files with hashes. Metric schemas reject boolean bounds before run

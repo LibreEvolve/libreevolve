@@ -41,15 +41,17 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
-- [ ] Finish workspace topology and materialization diagnostics beyond the
-  current typed materialization failure set.
+- [ ] Tighten remaining workspace topology collision diagnostics and keep
+  materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and
     codebases; invalid generated workspaces should produce inspectable
     evaluator feedback rather than opaque local filesystem exceptions.
   - Current evidence: `CandidateWorkspace.materialize()` now raises
     `CandidateMaterializationError` for materialized candidate-path collisions,
     linked target roots or ancestors, linked nested entries, file target roots,
-    candidate text/static write failures, and static source-copy link/read/
+    parent/temp root creation failures, candidate text/static write failures,
+    existing-root backup failures, final swap failures, backup restore
+    failures, cleanup deletion failures, and static source-copy link/read/
     not-file/hash/byte-count failures. `CascadeEvaluator` records bounded
     `evaluation.metadata.materialization_error` fields including
     `exception_type: "CandidateMaterializationError"`, stable `reason`, and
@@ -59,11 +61,10 @@ Primary evidence:
     prevalidated for duplicate topology sections, duplicate move targets,
     chained/conflicting operations, non-empty command bodies, and primary
     deletion without replacement.
-  - Required result: classify remaining materialization failures such as
-    cleanup/swap/delete failures and any unstructured filesystem exceptions
-    into stable structured reasons and bounded path fields; extend topology
-    diagnostics where host/case-folded target behavior can still be ambiguous,
-    and keep failed-candidate feedback prompt-safe.
+  - Required result: extend topology diagnostics where host/case-folded target
+    behavior can still be ambiguous, and preserve the stable
+    `CandidateMaterializationError` reason/path contract whenever new
+    materialization filesystem paths are added.
 
 ## Prompt Sampling and Context
 

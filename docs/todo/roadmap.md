@@ -2058,6 +2058,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     derived lower-bound values, payload hashes, and source links from aggregate
     Appendix B coverage.
 
+- [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon
+    packing improvements: for `n = 11`, the outer side length improves from
+    `3.943` to `3.931`, and for `n = 12`, it improves from `4.0` to `3.942`.
+    Figure 11 shows the two constructions as left/right panels.
+  - Current evidence: roadmap/README/paper-index wording can cite the broad
+    Appendix B per-result and Figure 11 visual gaps, but it does not require
+    B.7-specific parameter rows, unit-hexagon convention, outer side-length
+    convention, placement artifact hashes, containment/non-overlap
+    certificates, prior/current values, or Figure 11 panel linkage.
+  - Required result: when Appendix B.7 regular-hexagon metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish both `n` values, geometry conventions, side-length
+    improvements, certificate evidence, Figure 11 links, payload hashes, and
+    source locations from aggregate Appendix B coverage.
+
 - [ ] Keep Appendix B.9-B.10 roadmap wording scoped until Heilbronn
       minimum-area provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn

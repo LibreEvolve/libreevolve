@@ -2073,6 +2073,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     that separates the two finite-set witnesses from broad Appendix B family
     coverage.
 
+- [ ] Track Appendix B.7 regular-hexagon packing evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.7 improves two
+    regular-hexagon packing bounds: for `n = 11`, the outer regular-hexagon
+    side length improves from `3.943` to `3.931`; for `n = 12`, it improves
+    from `4.0` to `3.942`. Figure 11 maps these to left and right
+    construction panels.
+  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
+    geometric packing payloads, and Figure 11 exhibit provenance in general,
+    but they do not force B.7 reports to retain the two separate `n` rows,
+    unit-hexagon side convention, outer side-length convention, containment
+    and pairwise-disjointness certificates, prior/current values, or Figure 11
+    panel linkage.
+  - Required result: add paper/report evidence for Appendix B.7 rows: result
+    id, `n`, inner and outer hexagon geometry conventions, placement artifact
+    hash, containment certificate, non-overlap certificate, prior value/source,
+    reported side length, comparison policy, Figure 11 panel linkage, source
+    section location, and README/ROADMAP text that separates the two hexagon
+    witnesses from broad Appendix B family coverage.
+
 - [ ] Track Appendix B.9-B.10 Heilbronn minimum-area evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.9-B.10 gives
     three Heilbronn construction claims: `n = 11` points in a unit-area

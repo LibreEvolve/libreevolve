@@ -2004,6 +2004,26 @@ Primary evidence:
     lower-bound value, source section linkage, and README/ROADMAP wording that
     distinguishes the two witness sets from aggregate Appendix B coverage.
 
+- [ ] Add Appendix B.7 regular-hexagon packing provenance.
+  - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon
+    packing improvements: packing `n = 11` disjoint unit regular hexagons into
+    an outer regular hexagon improves the side length from `3.943` to `3.931`,
+    and packing `n = 12` improves the side length from `4.0` to `3.942`.
+    Figure 11 shows the two constructions as left/right panels.
+  - Current evidence: the broad Appendix B per-result TODO names regular
+    hexagon outer side lengths and Figure 11 visual provenance, but no
+    code/report schema separately records the two B.7 parameter rows, unit
+    hexagon geometry, outer-hexagon side-length convention, placement payload
+    hashes, containment/non-overlap certificates, prior values, or Figure 11
+    panel linkage. A generated report could quote one "hexagon packing"
+    improvement without proving both `n = 11` and `n = 12` constructions.
+  - Required result: add Appendix B.7-specific result rows and validators for
+    `n`, inner unit-hexagon convention, outer side-length unit, placement
+    artifact hash, containment certificate, pairwise non-overlap certificate,
+    prior value/source, reported side length, Figure 11 panel linkage, and
+    README/ROADMAP wording that distinguishes both hexagon-packing witnesses
+    from aggregate Appendix B coverage.
+
 - [ ] Add Appendix B.9-B.10 Heilbronn minimum-area provenance.
   - Spec evidence: AlphaEvolve Appendix B.9-B.10 reports three Heilbronn
     construction improvements with distinct domains and parameters: `n = 11`

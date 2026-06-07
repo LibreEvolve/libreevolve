@@ -326,12 +326,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.retrieval_payload_artifact_inventory.v1`,
     `libreevolve.retrieval_source_ranking_provenance.v1`,
     `libreevolve.retrieval_source_content_trust_policy.v1`,
-    `libreevolve.retrieval_evidence_boundary_policy.v1`, and
-    `libreevolve.retrieval_context_audit_policy.v1`. It states that retained
+    `libreevolve.retrieval_transport_policy.v1`,
+    `libreevolve.retrieval_source_grounding_policy.v1`,
+    `libreevolve.retrieval_evidence_boundary_policy.v1`,
+    `libreevolve.retrieval_context_audit_policy.v1`,
+    `libreevolve.retrieval_semantic_boundary_audit.v1`, and
+    `libreevolve.retrieval_evidence_coverage.v1`. It states that retained
     under-budget payloads can be checked through secret-redacted sidecar
-    artifacts and inventory hashes, while unbounded raw payload availability,
-    semantic source correctness, and replayable transport/TLS decision evidence
-    remain open.
+    artifacts and inventory hashes; active prompt context links to bounded
+    transport, source-content, lexical-grounding, and evidence-boundary states;
+    semantic-boundary audits and run-level coverage validation reject raw
+    payload, semantic-verification, learned-ranking, TLS-replay, full-replay,
+    and authoritative-context overclaims. Unbounded raw payload availability,
+    semantic source correctness, learned/external ranking, and replayable
+    transport/TLS decision evidence remain open.
   - Required result: when retrieval payload retention, learned/external source
     ranking, semantic verification, or transport/TLS replay evidence changes,
     update README, code TODOs, and paper TODOs together so the README neither

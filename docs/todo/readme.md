@@ -9,6 +9,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README candidate-language wording scoped to the Python-primary
+  boundary record versus real language/build runners.
+  - Spec evidence: AlphaEvolve tasks can define program artifacts and
+    evaluator interfaces over codebases and task-specific solution
+    representations, so README wording should distinguish the current local
+    Python-primary file-set boundary from full arbitrary-language or
+    problem-defined candidate abstractions.
+  - Current evidence: README documents that LibreEvolve evolves bounded UTF-8
+    code file sets rather than arbitrary problem-defined solution objects,
+    marks that as a deliberate current divergence from AlphaEvolve's flexible
+    solution-abstraction API, records `policies.candidate_language` with schema
+    `libreevolve.candidate_language_policy.v1`, and says that arbitrary
+    language/build-system runner surfaces are unsupported. README also states
+    that seed workspaces still require a Python primary compatibility file and
+    that non-Python evolve-block marker syntaxes are rejected with
+    `unsupported_evolve_block_marker_syntax` instead of being treated as
+    language-aware skeleton regions.
+  - Required result: when configured language runners, build-system runner
+    contracts, language-aware evolve-block grammars, or problem-defined
+    candidate-abstraction hooks land, update README, ROADMAP, papers index,
+    and code/paper TODO entries together so README neither underclaims the
+    current manifest-visible boundary policy nor overclaims AlphaEvolve-grade
+    arbitrary-language/codebase support.
+
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.
   - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections

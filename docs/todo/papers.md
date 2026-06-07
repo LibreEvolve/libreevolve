@@ -1258,6 +1258,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     attribution across comparable runs before claiming AlphaEvolve-grade
     meta-prompt scoring or prompt-improvement evidence.
 
+- [ ] Separate prompt-database parity from local prompt-arm selection.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 describes meta
+    prompt evolution as an additional prompt-generation step whose
+    instructions/context are co-evolved in a separate database analogous to the
+    solution programs.
+  - Current evidence: LibreEvolve has `PromptDatabase`, `prompt_history.jsonl`,
+    lineage-bearing prompt programs, UCB-style prompt selection, prompt-score
+    replay checks, and optional LLM template/context-policy mutation. The
+    current prompt database does not share the solution database's MAP-Elites
+    archive semantics, island/migration policy, descriptor/objective indexes,
+    archive-event stream, or async/pending-work resume surface.
+  - Required result: add paper-facing evidence for a prompt database policy
+    that is explicitly solution-database-equivalent, or keep prompt-program
+    claims scoped to local prompt-arm selection plus history/reward tracking
+    rather than AlphaEvolve's separate co-evolved prompt database.
+
 ## Local Paper Corpus Issues
 
 - [ ] Harden benchmark implementations beyond smoke-example fidelity.

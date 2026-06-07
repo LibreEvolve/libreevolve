@@ -213,6 +213,24 @@ Primary evidence:
     from parent/program/evaluator noise before claiming AlphaEvolve-grade
     meta-prompt scoring.
 
+- [ ] Promote the prompt-program store to a solution-database-equivalent
+      evolutionary prompt database.
+  - Spec evidence: AlphaEvolve Section 2.2 says meta-prompt evolution suggests
+    instructions and context in an additional prompt-generation step,
+    co-evolved in a separate database analogous to the solution programs.
+  - Current evidence: `PromptDatabase` is a local deterministic prompt-arm
+    store with append-only `prompt_history.jsonl`, lineage ids, UCB-style
+    selection over normalized child-score rewards, prompt-history replay, and
+    optional interval-based LLM template/context-policy mutation. It is not a
+    prompt-side analogue of `ProgramDatabase` with MAP-Elites/island retention,
+    durable prompt descriptor/objective indexes, migration/rebin semantics,
+    prompt-specific archive events, or async/controller resume state.
+  - Required result: before claiming AlphaEvolve-grade co-evolved prompt
+    databases, define the prompt database's archive/retention policy, prompt
+    descriptors/objectives, replay and migration semantics, prompt artifact
+    events, and benchmark evidence showing the prompt database behaves as more
+    than a local UCB prompt-arm selector.
+
 - [ ] Extend structured prompt context policy beyond validated current fields.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
     not just swapping one complete prompt string for another.

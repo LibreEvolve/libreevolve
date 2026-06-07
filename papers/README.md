@@ -659,7 +659,10 @@ Implemented:
   it also does not yet require Borg-style feasibility-boundary evidence that
   an evolved heuristic only ranks machines already deemed feasible by an
   external scheduler and cannot directly alter admission or placement
-  constraints.
+  constraints. For hardware, it does not yet require RTL/EDA evidence such as
+  Verilog source boundaries, synthesis/PPA metric provenance, equivalence or
+  formal verification artifacts, timing constraints, designer signoff, or
+  downstream synthesis-tool confirmation.
 - `libreevolve/problems/benchmarks/benchmark_hardening.py`: anti-gaming
   hardening report contract. It validates protected benchmark signals,
   shortcut threats, protected-signal links for each shortcut threat, detector

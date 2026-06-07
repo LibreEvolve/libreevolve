@@ -1650,6 +1650,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     deployment/simulator confirmation before claiming AlphaEvolve-comparable
     Borg-style scheduling evidence.
 
+- [ ] Record RTL/EDA verification evidence for hardware-circuit results.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes
+    optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and
+    area while preserving functionality. It says the final proposal must pass
+    robust verification, was validated by TPU designers, and was also found by
+    downstream synthesis tools.
+  - Current gap: current systems report contracts do not distinguish generic
+    hardware metrics from RTL/EDA evidence. They do not require HDL language
+    identity, synthesis or place-and-route tool provenance, PPA metric units,
+    equivalence/formal verification artifacts, timing constraints, designer
+    signoff, or downstream synthesis confirmation.
+  - Required result: add hardware-domain paper/report fields for Verilog/RTL
+    source boundaries, synthesis/PPA provenance, functional equivalence or
+    formal verification evidence, timing/power/area constraints, designer or
+    independent review signoff, and synthesis-tool confirmation before making
+    AlphaEvolve-comparable TPU-circuit optimization claims.
+
 - [ ] Keep named AlphaEvolve application-context rows background-only until
   benchmark fixtures exist.
   - Paper evidence: the local paper index includes AlphaEvolve application

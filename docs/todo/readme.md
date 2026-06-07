@@ -308,6 +308,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     index, and matching TODOs so README does not imply generic systems report
     readiness proves Borg-style scheduling safety.
 
+- [ ] Keep README hardware wording scoped to generic systems reports until
+      RTL/EDA verification evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU
+    arithmetic circuit, tracks power/area objectives, requires robust
+    functional verification, and reports TPU-designer plus downstream
+    synthesis-tool confirmation.
+  - Current evidence: README documents systems result reports and artifact
+    inventories as generic readiness/report contracts. It does not yet
+    document hardware-specific evidence for HDL source boundaries,
+    synthesis/PPA metrics, equivalence or formal verification, timing/power/
+    area constraints, designer signoff, or downstream synthesis confirmation.
+  - Required result: when RTL/EDA report metadata and validators land, update
+    README, ROADMAP, papers index, and matching TODOs so README does not imply
+    generic systems report readiness proves AlphaEvolve-style TPU-circuit
+    optimization evidence.
+
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.
   - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target

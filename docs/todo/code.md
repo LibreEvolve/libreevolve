@@ -1547,6 +1547,25 @@ Primary evidence:
     and allowed `not_applicable` reference-correctness rationale before
     treating Borg-style scheduling reports as AlphaEvolve-ready.
 
+- [ ] Add RTL/EDA verification provenance for hardware-circuit optimization.
+  - Spec evidence: AlphaEvolve Section 3.3.3 optimizes an already highly
+    optimized Verilog implementation of a TPU arithmetic circuit, with
+    objectives to reduce area and power while preserving core functionality.
+    The paper says the final proposal must pass robust verification methods,
+    was validated by TPU designers, and was independently caught later by
+    downstream synthesis tools.
+  - Current evidence: `libreevolve.systems_result_report.v1` can represent a
+    generic `hardware` domain with optimization, held-out, and
+    reference-correctness gates, but it has no RTL/EDA-specific fields for
+    source HDL language, synthesis toolchain/provenance, power/area/timing
+    metrics, equivalence or formal verification artifacts, designer-review
+    signoff, or downstream synthesis confirmation.
+  - Required result: add hardware-domain report metadata and validators for
+    Verilog/RTL source boundaries, synthesis/PPA metric provenance,
+    equivalence/formal verification evidence, timing/power/area constraints,
+    designer or independent review signoff, and downstream synthesis-tool
+    confirmation before treating hardware-circuit results as AlphaEvolve-ready.
+
 ## LLM Ensemble
 
 - [ ] Add live pricing/default-rate capture, raw provider replay, and

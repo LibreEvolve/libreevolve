@@ -980,6 +980,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap text distinguishes generic systems readiness from Borg-style
     correctness-by-construction scheduling evidence.
 
+- [ ] Keep hardware roadmap wording scoped to generic systems reports until
+      RTL/EDA verification evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization
+    for a TPU arithmetic circuit, with power/area objectives, robust
+    functional verification, TPU-designer validation, and downstream synthesis
+    confirmation.
+  - Current evidence: roadmap systems-result wording covers generic
+    optimization, held-out, reference-correctness, deployment, and
+    domain-specific readiness gaps. It does not yet require hardware-specific
+    HDL source boundaries, synthesis/PPA metric provenance, equivalence/formal
+    verification artifacts, timing constraints, designer signoff, or synthesis
+    tool confirmation.
+  - Required result: when hardware fixtures or systems report validators add
+    RTL/EDA source, synthesis, equivalence, PPA, timing, and review evidence,
+    update ROADMAP, README, papers index, and code/paper TODOs so roadmap text
+    distinguishes generic systems readiness from AlphaEvolve-style hardware
+    circuit optimization evidence.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

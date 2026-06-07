@@ -2572,6 +2572,8 @@ evaluations. Each record includes:
 - topology mutation diagnostics such as `unexpected_command_body` or
   `primary:duplicate_primary_section` when command file sections are ambiguous
   before workspace mutation
+- `host_path_collision` when generated file sections or topology move targets
+  would collide on a case-folding host before workspace mutation
 - `primary_deleted_requires_primary` when a topology mutation deletes the
   current primary file without an explicit replacement primary
 - changed file paths and file-delta kinds

@@ -59,12 +59,14 @@ Primary evidence:
     `reason`, `paths`, `exception_type`, and `message` for
     materialization-error feedback. File topology mutations are also
     prevalidated for duplicate topology sections, duplicate move targets,
-    chained/conflicting operations, non-empty command bodies, and primary
-    deletion without replacement.
-  - Required result: extend topology diagnostics where host/case-folded target
-    behavior can still be ambiguous, and preserve the stable
-    `CandidateMaterializationError` reason/path contract whenever new
-    materialization filesystem paths are added.
+    chained/conflicting operations, host/case-folded file or move-target
+    collisions, non-empty command bodies, and primary deletion without
+    replacement.
+  - Required result: extend topology diagnostics for future topology surfaces
+    such as bulk directory operations or language/build-runner generated
+    artifacts, and preserve the stable `CandidateMaterializationError`
+    reason/path contract whenever new materialization filesystem paths are
+    added.
 
 ## Prompt Sampling and Context
 

@@ -2382,6 +2382,42 @@ def test_workspace_rejects_move_to_existing_target_without_partial_apply():
     assert err == "main.py:target_exists"
 
 
+def test_workspace_rejects_casefold_file_creation_collision_without_partial_apply(
+    monkeypatch,
+):
+    from libreevolve.core import candidate as candidate_module
+
+    workspace = CandidateWorkspace(
+        files={"README.md": "upper\n", "main.py": "x = 1\n"},
+        primary_file="main.py",
+    )
+    response = "<<<FILE readme.md\nlower\n>>>FILE"
+    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
+
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+
+    assert result == workspace
+    assert err == "readme.md:host_path_collision"
+
+
+def test_workspace_rejects_casefold_move_target_collision_without_partial_apply(
+    monkeypatch,
+):
+    from libreevolve.core import candidate as candidate_module
+
+    workspace = CandidateWorkspace(
+        files={"README.md": "upper\n", "old.py": "value = 1\n"},
+        primary_file="README.md",
+    )
+    response = "<<<FILE MOVE old.py -> readme.md\n>>>FILE"
+    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
+
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+
+    assert result == workspace
+    assert err == "readme.md:host_path_collision"
+
+
 def test_workspace_rejects_duplicate_move_targets_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n", "a.py": "a = 1\n", "b.py": "b = 1\n"},
@@ -2394,6 +2430,27 @@ def test_workspace_rejects_duplicate_move_targets_without_partial_apply():
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
     assert result == workspace
     assert err == "target.py:duplicate_move_target"
+
+
+def test_workspace_rejects_casefold_duplicate_move_targets_without_partial_apply(
+    monkeypatch,
+):
+    from libreevolve.core import candidate as candidate_module
+
+    workspace = CandidateWorkspace(
+        files={"main.py": "x = 1\n", "a.py": "a = 1\n", "b.py": "b = 1\n"},
+        primary_file="main.py",
+    )
+    response = (
+        "<<<FILE MOVE a.py -> Target.py\n>>>FILE\n"
+        "<<<FILE MOVE b.py -> target.py\n>>>FILE"
+    )
+    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
+
+    result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
+
+    assert result == workspace
+    assert err == "target.py:host_path_collision"
 
 
 def test_workspace_rejects_chained_topology_without_partial_apply():

@@ -2329,8 +2329,9 @@ Duplicate edit sections for the same `<<<FILE path ...>>>` target are rejected
 before partial application. Workspace topology commands are prevalidated before
 partial application: duplicate topology sources, duplicate move targets, edits
 that collide with delete/move sources or move targets, chained move/delete
-sources, duplicate `PRIMARY` commands, and non-empty command bodies are rejected
-before the original workspace is replaced.
+sources, host/case-folded file or move-target collisions, duplicate `PRIMARY`
+commands, and non-empty command bodies are rejected before the original
+workspace is replaced.
 File/block mutation envelopes are not represented as a complete mutation AST
 yet, but unmatched, orphaned, nested, duplicate-name, empty-name, and
 invalid-name envelopes now fail before partial edits are applied. Same-line

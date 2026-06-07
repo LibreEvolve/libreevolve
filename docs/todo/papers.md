@@ -53,10 +53,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     persist `materialization_error` metadata with bounded message text plus
     structured `reason` and relevant bounded `paths`, and prompt context policy
     can select/cap those fields for failure-memory feedback. Topology sections
-    are prevalidated for duplicate source/target operations, non-empty command
-    bodies, and primary-file deletion without replacement.
-  - Current gap: topology diagnostics still need stronger handling where
-    host/case-folded move targets or generated file paths can remain ambiguous,
+    are prevalidated for duplicate source/target operations, host/case-folded
+    file or move-target collisions, non-empty command bodies, and primary-file
+    deletion without replacement.
+  - Current gap: future topology surfaces such as bulk directory operations or
+    language/build-runner generated artifacts must preserve stable diagnostics,
     and future materialization filesystem paths must preserve the stable
     reason/path diagnostic contract before LibreEvolve can claim robust
     codebase-scale invalid-artifact feedback.

@@ -1236,6 +1236,10 @@ def apply_workspace_mutation(
         return workspace, f"{workspace.primary_file}:primary_deleted_requires_primary"
     if not changed:
         return workspace, "no_valid_changes"
+    host_collision = _workspace_host_path_collision(files, tuple(static_files))
+    if host_collision is not None:
+        _existing, colliding = host_collision
+        return workspace, f"{colliding}:host_path_collision"
     marker_error = validate_workspace_evolve_blocks(files)
     if marker_error is not None:
         return workspace, marker_error
@@ -1275,6 +1279,33 @@ def _validate_static_member_mutation_policy(
                     return f"{target}:static_member_{policy}"
                 return f"{target}:static_member_llm_editing_not_supported"
     return None
+
+
+def _workspace_host_path_collision(
+    files: Mapping[str, str],
+    static_files: tuple[dict[str, str | int], ...],
+) -> tuple[str, str] | None:
+    paths = list(files)
+    paths.extend(_materializable_static_file_paths(static_files))
+    seen: dict[str, str] = {}
+    for rel_path in paths:
+        key = os.path.normcase(rel_path)
+        existing = seen.get(key)
+        if existing is not None and existing != rel_path:
+            return existing, rel_path
+        seen[key] = rel_path
+    return None
+
+
+def _materializable_static_file_paths(
+    static_files: tuple[dict[str, str | int], ...],
+) -> list[str]:
+    return [
+        str(item["path"])
+        for item in static_files
+        if isinstance(item.get("content_b64"), str)
+        or isinstance(item.get("source_copy_path"), str)
+    ]
 
 
 def validate_workspace_evolve_blocks(files: Mapping[str, str]) -> str | None:

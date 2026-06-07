@@ -137,6 +137,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
     Flash/Pro scheduling evidence.
 
+- [ ] Track Google/Gemini provider-parity evidence separately from generic
+      custom-backend extensibility.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4, "Models used".
+  - Requirement: the concrete AlphaEvolve implementation used Gemini 2.0 Flash
+    and Gemini 2.0 Pro. Paper-facing provider parity therefore needs a
+    self-describing Google/Gemini provider surface, or an explicit substitute
+    policy, not only a generic custom backend slot.
+  - Partial status: LibreEvolve has built-in OpenAI, Anthropic, and Ollama
+    adapters, configured custom import-path backends, role-backend eligibility,
+    provider usage/default telemetry for supported adapters, and backend
+    metadata that can label breadth/depth behavior.
+  - Current gap: a custom backend can wrap Gemini externally, but the paper
+    ledger has no first-class evidence for Gemini credential preflight,
+    provider-native usage/default/capability telemetry, safe provider
+    diagnostics, model-family labels, Flash/Pro lane identity, or an explicit
+    paper-level substitution rule that keeps Gemini absence distinct from
+    fast/strong scheduling experiments.
+  - Required result: add a built-in Google/Gemini adapter or versioned
+    provider-plugin/substitution contract with model-family capability
+    metadata, credential/client preflight, request/usage/default telemetry,
+    diagnostic retention policy, and report fields proving whether a run
+    reproduced or intentionally substituted AlphaEvolve's Flash/Pro provider
+    mix before claiming provider-parity evidence.
+
 - [ ] Track AlphaEvolve sample-efficiency evidence separately from call caps.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4.
   - Requirement: AlphaEvolve contrasts FunSearch-scale millions of LLM samples

@@ -127,10 +127,6 @@ is not yet an AlphaEvolve reproduction.
   runtime fixture generates those reports yet.
 - Add configurable retry/penalty policies for LLM feedback provider or parse
   failures beyond the current ignore-and-record behavior.
-- Define a complete synthetic evaluator-failure metric-vector policy for diff,
-  syntax, timeout, subprocess, malformed-output, and stage-threshold failures;
-  current framework-generated failures can omit declared secondary metrics and
-  rely on error/stage metadata for interpretation.
 - Add a validator network egress policy and stronger sandbox/resource controls
   beyond the current minimal environment and process-tree cleanup.
 - Extend evaluator provenance beyond the enforced problem-local dependency

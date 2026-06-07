@@ -2104,6 +2104,10 @@ penalty, set `is_valid=False`, and record
 names. These rows preserve metric-vector shape for history, prompts, and
 archive normalization while remaining distinguishable from real validator
 scores through `evaluation.error`, `evaluation.stages`, and failure metadata.
+Configured stage-threshold stops are not synthetic evaluator scores: they keep
+the validator's real complete declared metric vector, mark the cascade result
+invalid, and record the failed threshold checks in
+`evaluation.metadata.configured_stage_results`.
 
 Generated evaluator files can be retained when `evaluator_artifact_include`
 patterns are configured. Matching files written under the candidate workspace

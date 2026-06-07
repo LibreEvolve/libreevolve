@@ -1528,6 +1528,10 @@ metric names. Diff, syntax, timeout, subprocess, malformed-output, budget, and
 related framework-generated failure rows therefore retain metric-vector shape
 while remaining distinguishable from real validator scores through
 `evaluation.error`, `evaluation.stages`, and failure metadata.
+Configured stage-threshold stops are recorded separately: they retain the real
+validator-returned complete declared metric vector, mark the cascade result
+invalid, and store failed score, metric, or artifact checks under
+`evaluation.metadata.configured_stage_results`.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

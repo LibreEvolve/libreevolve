@@ -2262,6 +2262,8 @@ def test_configured_stage_metric_threshold_stops_candidate():
 
         assert result.is_valid is False
         assert result.error == "stage_threshold_not_met"
+        assert result.metrics == {"score": 0.9, "runtime": 7.5, "is_valid": True}
+        assert "synthetic_metrics" not in result.metadata
         stage_result = result.metadata["configured_stage_results"][0]
         assert stage_result["local_valid"] is True
         assert stage_result["threshold_passed"] is False

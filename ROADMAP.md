@@ -87,8 +87,9 @@ is not yet an AlphaEvolve reproduction.
   candidates.
 - Add richer workspace fixtures beyond the current `workspace_math` nested
   package, JSON data, and binary static seed asset smoke case.
-- Extend binary/static candidate handling beyond bounded encoded members to
-  external copy-only static assets and raw non-encoded binary members.
+- Extend binary/static candidate handling beyond the current bounded encoded
+  static members, verified copy-only static assets, and raw direct-workspace
+  byte normalization into richer binary mutation/replay policy.
 - Keep topology-operation collision policy and structured materialization-
   failure diagnostics complete as new workspace, language, and build-runner
   edge cases are introduced.

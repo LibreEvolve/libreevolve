@@ -763,14 +763,20 @@ Primary evidence:
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its
-    pipeline is optimized for throughput.
+    pipeline is optimized for throughput. Section 2.4 also ties parallel
+    evaluation to keeping new generations fast enough for the evolutionary
+    loop to apply several consecutive mutations when evaluator feedback would
+    otherwise be slow.
   - Current evidence: `evolve()` is still a single synchronous proposal loop:
     it iterates `proposals_per_generation` sequentially, samples parents,
     builds one prompt, performs one mutation LLM call, applies one candidate
     mutation, and calls `CascadeEvaluator.evaluate()` directly before logging
     and archive admission. Generated candidates record
-    `metadata.proposal_batch.policy == "sequential"`. `CascadeEvaluator`
-    remains a local staged subprocess evaluator, not distributed workers, and
+    `metadata.proposal_batch.policy == "sequential"`. Those batches are
+    evaluated sibling candidates, not an adaptive chain of unevaluated or
+    partially evaluated consecutive mutations from a slow-feedback parent.
+    `CascadeEvaluator` remains a local staged subprocess evaluator, not
+    distributed workers, and
     `RunBudget` explicitly tracks synchronous local consumption; controller
     budget-state validators exist only for future async/resume events.
     Completed manifests now embed
@@ -781,8 +787,9 @@ Primary evidence:
   - Required result: introduce an async controller with concurrent LLM
     samplers, evaluator workers, bounded queues, deterministic worker ids,
     deterministic result merge/admission order, concurrency-safe database,
-    archive, prompt, plugin, and budget mutation, and replayable controller
-    state for queued/running/completed work.
+    archive, prompt, plugin, and budget mutation, an explicit policy for
+    mutation-chain depth under slow or expensive evaluator feedback, and
+    replayable controller state for queued/running/completed work.
 
 - [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on

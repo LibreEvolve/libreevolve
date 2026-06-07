@@ -518,22 +518,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   restore boundaries.
   - Spec evidence: AlphaEvolve-scale reproduction needs compute-budgeted model
     scheduling, replayable run accounting, and enough provider evidence to
-    distinguish resumed controller state from replayed provider outputs.
+    distinguish resumed controller state from replayed provider outputs. It
+    also needs a clear boundary between sequential sibling proposal batches and
+    any future consecutive-mutation-depth policy used to keep search deep when
+    evaluator feedback is slow.
   - Current evidence: README now documents live synchronous
     provider-attempt/token/configured-cost/latency stops, restorable runtime
     budget snapshots, `controller_budget_events.jsonl` replay, and
     full-runtime restore validation. It also documents strict call-ledger
     provider-failure summaries and restorable scheduler failure-policy state,
+    and it correctly states that `proposals_per_generation` is sequential
+    batch sampling/accounting rather than parallel LLM/evaluator execution.
     while still marking live provider pricing/default-rate capture beyond
     configured estimates, provider-output/raw-payload replay, cross-run
-    provider-failure policy proof, and async/pending-work budget composition as
-    open.
+    provider-failure policy proof, async/pending-work budget composition, and
+    mutation-chain-depth policy for slow evaluator feedback as open.
   - Required result: once provider-output replay, async/pending-work budget
     composition, live pricing/default-rate capture beyond configured
-    estimates, or cross-run provider-failure quarantine/resume proof lands,
-    update the README and matching code/paper TODO entries together so the
-    README neither underclaims current synchronous budget replay and provider
-    failure-policy evidence nor overclaims full AlphaEvolve-style replay.
+    estimates, cross-run provider-failure quarantine/resume proof, or
+    consecutive-mutation-depth control lands, update the README and matching
+    code/paper TODO entries together so the README neither underclaims current
+    synchronous budget replay and provider failure-policy evidence nor
+    overclaims full AlphaEvolve-style replay.
 
 - [ ] Keep README lineage replay wording scoped to loop-owned deterministic
   ids and provider-output non-replay boundaries.

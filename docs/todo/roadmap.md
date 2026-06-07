@@ -642,8 +642,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   full-runtime restore versus full replay.
   - Spec evidence: AlphaEvolve-scale runs need reproducible resumed
     experiments, not just terminal snapshots; provider outputs, controller
-    queues, pending evaluations, migration ordering, and lineage semantics must
-    be replayable or explicitly bounded.
+    queues, pending evaluations, migration ordering, lineage semantics, and
+    any slow-feedback consecutive-mutation policy must be replayable or
+    explicitly bounded.
   - Current evidence: the roadmap now recognizes that
     `--restore-runtime-from-manifest` composes the current compatible
     synchronous restore surfaces into a checked full-runtime bundle: runtime
@@ -653,10 +654,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     queues, and pending-work resume beyond the current archive-content restore
     bundle. It also keeps full replay and end-to-end resumed-trace proof open.
   - Required result: when provider/plugin output replay, ordered
-    migration-event replay, async controller queues, pending-work restore, or
-    resumed-trace lineage proof lands, update the roadmap, README, papers
-    index, and code/paper TODO entries together so they neither underclaim the
-    current compatible restore bundle nor overclaim AlphaEvolve-style replay.
+    migration-event replay, async controller queues, pending-work restore,
+    mutation-chain-depth policy, or resumed-trace lineage proof lands, update
+    the roadmap, README, papers index, and code/paper TODO entries together so
+    they neither underclaim the current compatible restore bundle nor overclaim
+    AlphaEvolve-style replay.
 
 - [ ] Keep controller-state roadmap wording scoped to terminal drained
       snapshots versus async queue checkpoints.

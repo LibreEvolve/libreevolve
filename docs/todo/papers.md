@@ -8,7 +8,10 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
   - Requirement: expensive evaluations can be parallelized, and the whole
-    pipeline runs as an async controller with LLM samplers and evaluation nodes.
+    pipeline runs as an async controller with LLM samplers and evaluation
+    nodes. Section 2.4 also frames parallel evaluation as a way to keep
+    generation feedback fast enough for several consecutive mutations rather
+    than stalling evolutionary depth behind slow evaluator wall-clock time.
   - Partial status: `proposals_per_generation` can now create, evaluate,
     reward, and log multiple sequential sibling candidates inside one
     generation with per-proposal batch metadata and deterministic ids.
@@ -17,7 +20,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     controller boundary is terminal, synchronous, and drained rather than an
     async queue checkpoint.
   - Current gap: `evolve()` is still synchronous and evaluates one candidate at
-    a time; there are no async LLM sampler queues or parallel evaluator nodes.
+    a time; there are no async LLM sampler queues, parallel evaluator nodes, or
+    explicit mutation-chain-depth policy for expensive/slow-feedback
+    evaluations. Sequential sibling proposal batches are accounting evidence,
+    not AlphaEvolve-style throughput depth.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

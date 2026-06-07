@@ -5,9 +5,11 @@ import pytest
 
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
     matrix_result_artifact_inventory,
     render_matrix_result_summary,
+    validate_matrix_publication_bundle,
     validate_matrix_result_report,
     write_strassen_2x2_publication_bundle,
 )
@@ -290,12 +292,19 @@ def test_strassen_2x2_publication_bundle_writes_valid_artifacts(tmp_path):
     report = bundle["report"]
 
     validation = validate_matrix_result_report(report)
+    bundle_validation = validate_matrix_publication_bundle(bundle)
     inventory = bundle["inventory"]
 
-    assert bundle["schema"] == "libreevolve.matrix_publication_bundle.v1"
+    assert bundle["schema"] == MATRIX_PUBLICATION_BUNDLE_SCHEMA
     assert bundle["target_id"] == "mm_2x2x2"
     assert validation.ok is True
     assert validation.alphaevolve_comparable is True
+    assert bundle_validation.ok is True
+    assert bundle_validation.report_ok is True
+    assert bundle_validation.inventory_ok is True
+    assert bundle_validation.alphaevolve_comparable is True
+    assert bundle_validation.target_id == "mm_2x2x2"
+    assert bundle_validation.issues == []
     assert validation.best_rank == 7
     assert validation.seed_count == 3
     assert validation.hit_fraction == 1.0
@@ -318,6 +327,30 @@ def test_strassen_2x2_publication_bundle_writes_valid_artifacts(tmp_path):
     assert certificate["algorithm_sha256"] == report["artifacts"][0]["sha256"]
     report_path = tmp_path / bundle["report_path"]
     assert report_path.exists()
+
+
+def test_strassen_2x2_publication_bundle_validator_rejects_tampering(tmp_path):
+    bundle = write_strassen_2x2_publication_bundle(tmp_path, seeds=(7, 11, 13))
+    bundle["schema"] = "bad.schema"
+    bundle["target_id"] = "mm_4x4x4"
+    bundle["report_sha256"] = "0" * 64
+    bundle["inventory"]["ok"] = False
+    bundle["inventory"]["missing_count"] = 1
+
+    validation = validate_matrix_publication_bundle(bundle)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.report_ok is True
+    assert validation.inventory_ok is False
+    assert validation.alphaevolve_comparable is True
+    assert "invalid_bundle_schema" in codes
+    assert "target_id_mismatch" in codes
+    assert "inventory_target_id_mismatch" in codes
+    assert "report_hash_mismatch" in codes
+    assert "inventory_not_ok" in codes
+    assert "inventory_missing_count_mismatch" in codes
+    assert "inventory_missing_count_nonzero" in codes
 
 
 def test_strassen_2x2_publication_bundle_rejects_bad_seed_list(tmp_path):

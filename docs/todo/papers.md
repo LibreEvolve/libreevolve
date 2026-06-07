@@ -988,7 +988,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `write_strassen_2x2_publication_bundle()` now provides a concrete checked
     Strassen baseline for the registered `mm_2x2x2` target, with canonical
     algorithm, certificate, notebook, report, and artifact-inventory files and
-    exact rank-7 per-seed rows. The code still does not provide generated
+    exact rank-7 per-seed rows. `validate_matrix_publication_bundle()` now
+    checks the `libreevolve.matrix_publication_bundle.v1` wrapper, embedded
+    report, target identity, report-file hash/byte evidence, and inventory
+    consistency for that baseline. The code still does not provide generated
     notebook/export equivalents for reproducing discovered algorithms across
     the full Appendix A suite.
   - Required result: connect real matrix target tensors, exact algorithm
@@ -996,7 +999,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     links to real report instances before treating LibreEvolve matrix results
     as AlphaEvolve-comparable evidence. The remaining gap is producing those
     discovered tensor artifacts for the suite, not verifying declared report
-    artifacts or emitting one checked Strassen baseline once those files exist.
+    artifacts, validating the checked bundle wrapper, or emitting one checked
+    Strassen baseline once those files exist.
 
 - [ ] Add independent certification gates for paper-level result claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

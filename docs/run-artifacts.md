@@ -1686,6 +1686,10 @@ report, and artifact-inventory files. Its per-seed rows all achieve the
 rank-7 Strassen construction exactly, so the generated report has a 1.0
 best-rank hit fraction. Broader generated/discovered algorithm artifacts for
 the full Appendix A suite remain outside the current runner.
+`validate_matrix_publication_bundle()` validates the
+`libreevolve.matrix_publication_bundle.v1` wrapper around that export,
+including target identity, embedded report validity, report-file SHA-256 and
+byte-count evidence, and inventory consistency.
 `libreevolve.systems_result_artifact_inventory.v1` applies the same concrete
 artifact-root boundary to systems-style reports: declared metrics,
 heldout-report, reference-report, and summary artifacts must resolve safely

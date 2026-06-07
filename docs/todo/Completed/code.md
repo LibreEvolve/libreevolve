@@ -15197,3 +15197,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     resurfacing snapshots and corrupted records with policy overclaims,
     missing limitations, source-count errors, contribution mismatches, and
     ranking-order violations.
+
+- [x] Add matrix publication bundle validation.
+  - Spec evidence: AlphaEvolve matrix-result publication claims need checked
+    links between target identity, exact report contents, artifact inventory,
+    and concrete exported evidence files.
+  - Status: `validate_matrix_publication_bundle()` now validates
+    `libreevolve.matrix_publication_bundle.v1` records for wrapper schema,
+    target identity, embedded matrix-result report validity, report-file
+    SHA-256/byte evidence, inventory schema/status/counters, inventory record
+    hash consistency, and artifact-count agreement.
+  - Remaining gap: this validates the checked Strassen baseline bundle; it
+    does not generate discovered algorithms, certificates, or notebooks across
+    the full Appendix A suite.
+  - Verification: focused matrix-result tests cover the valid generated bundle
+    and a tampered bundle with schema, target, report-hash, and inventory
+    inconsistencies.

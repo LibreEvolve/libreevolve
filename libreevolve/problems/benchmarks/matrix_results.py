@@ -16,6 +16,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
+MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
@@ -87,6 +88,16 @@ class MatrixResultValidation:
     seed_count: int
     best_rank: int | None
     hit_fraction: float | None
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixPublicationBundleValidation:
+    ok: bool
+    target_id: str | None
+    report_ok: bool
+    inventory_ok: bool
+    alphaevolve_comparable: bool
     issues: list[MatrixResultIssue]
 
 
@@ -163,6 +174,117 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
         seed_count=seed_count or 0,
         best_rank=best_rank,
         hit_fraction=hit_fraction,
+        issues=issues,
+    )
+
+
+def validate_matrix_publication_bundle(
+    bundle: object | str | Path,
+) -> MatrixPublicationBundleValidation:
+    """Validate a matrix publication bundle wrapper and its embedded evidence."""
+    data, read_issues = _load_report(bundle)
+    if read_issues:
+        return MatrixPublicationBundleValidation(
+            False,
+            None,
+            False,
+            False,
+            False,
+            read_issues,
+        )
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_PUBLICATION_BUNDLE_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_bundle_schema",
+                "unsupported matrix publication bundle schema",
+            )
+        )
+    target_suite = _text_field(data, "target_suite", issues)
+    target_id = _text_field(data, "target_id", issues)
+    report = data.get("report")
+    report_validation = validate_matrix_result_report(report)
+    issues.extend(
+        MatrixResultIssue(f"report_{issue.code}", issue.message)
+        for issue in report_validation.issues
+    )
+    if isinstance(report, dict):
+        if target_suite is not None and report.get("target_suite") != target_suite:
+            issues.append(
+                MatrixResultIssue(
+                    "target_suite_mismatch",
+                    "bundle target_suite must match embedded report",
+                )
+            )
+        if target_id is not None and report.get("target_id") != target_id:
+            issues.append(
+                MatrixResultIssue(
+                    "target_id_mismatch",
+                    "bundle target_id must match embedded report",
+                )
+            )
+    artifact_root = data.get("artifact_root")
+    report_path = data.get("report_path")
+    if not isinstance(artifact_root, str) or not artifact_root.strip():
+        issues.append(
+            MatrixResultIssue(
+                "invalid_artifact_root",
+                "artifact_root must be a non-empty string",
+            )
+        )
+        root = None
+    else:
+        root = Path(artifact_root)
+    if root is not None:
+        _validate_bundle_report_file(data, root, issues)
+    elif not isinstance(report_path, str) or not report_path:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_path",
+                "report_path must be a safe relative path",
+            )
+        )
+
+    inventory = data.get("inventory")
+    inventory_ok = _validate_matrix_publication_inventory(inventory, data, issues)
+    if isinstance(inventory, dict):
+        if target_id is not None and inventory.get("target_id") != target_id:
+            inventory_ok = False
+            issues.append(
+                MatrixResultIssue(
+                    "inventory_target_id_mismatch",
+                    "inventory target_id must match bundle target_id",
+                )
+            )
+    else:
+        inventory_ok = False
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory",
+                "bundle inventory must be an object",
+            )
+    )
+    if isinstance(report, dict) and isinstance(inventory, dict):
+        artifact_count = (
+            len(report["artifacts"])
+            if isinstance(report.get("artifacts"), list)
+            else None
+        )
+        if artifact_count is not None and inventory.get("artifact_count") != artifact_count:
+            inventory_ok = False
+            issues.append(
+                MatrixResultIssue(
+                    "inventory_artifact_count_mismatch",
+                    "inventory artifact_count must match report artifacts",
+                )
+            )
+    return MatrixPublicationBundleValidation(
+        ok=not issues,
+        target_id=target_id,
+        report_ok=report_validation.ok,
+        inventory_ok=inventory_ok,
+        alphaevolve_comparable=report_validation.alphaevolve_comparable,
         issues=issues,
     )
 
@@ -271,7 +393,7 @@ def write_strassen_2x2_publication_bundle(
     report_sha, report_bytes = _write_canonical_json(report_path, report)
     inventory = matrix_result_artifact_inventory(report, root)
     return {
-        "schema": "libreevolve.matrix_publication_bundle.v1",
+        "schema": MATRIX_PUBLICATION_BUNDLE_SCHEMA,
         "target_suite": APPENDIX_A_TARGET_SUITE,
         "target_id": _STRASSEN_TARGET_ID,
         "artifact_root": str(root),
@@ -495,6 +617,264 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixResultIssue("invalid_shape", "matrix result report must be a JSON object")]
+
+
+def _validate_bundle_report_file(
+    data: dict[str, Any],
+    root: Path,
+    issues: list[MatrixResultIssue],
+) -> None:
+    report_path = _safe_relative_path(data.get("report_path"))
+    if report_path is None:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_path",
+                "report_path must be a safe relative path",
+            )
+        )
+        return
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / report_path).resolve(strict=False)
+    except OSError:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_path",
+                "report_path must be resolvable under artifact_root",
+            )
+        )
+        return
+    if not resolved_path.is_relative_to(resolved_root):
+        issues.append(
+            MatrixResultIssue(
+                "report_path_outside_root",
+                "report_path must stay under artifact_root",
+            )
+        )
+        return
+    if not resolved_path.exists():
+        issues.append(
+            MatrixResultIssue(
+                "missing_report_file",
+                "report_path must point to an existing report file",
+            )
+        )
+        return
+    if not resolved_path.is_file():
+        issues.append(
+            MatrixResultIssue(
+                "report_path_not_file",
+                "report_path must point to a file",
+            )
+        )
+        return
+    try:
+        raw = resolved_path.read_bytes()
+    except OSError as exc:
+        issues.append(
+            MatrixResultIssue(
+                "report_read_error",
+                f"failed to read report_path: {exc}",
+            )
+        )
+        return
+
+    expected_sha = data.get("report_sha256")
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if not isinstance(expected_sha, str) or _SHA256_RE.fullmatch(expected_sha) is None:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_hash",
+                "report_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif actual_sha != expected_sha:
+        issues.append(
+            MatrixResultIssue(
+                "report_hash_mismatch",
+                "report_sha256 must match the report_path file",
+            )
+        )
+
+    expected_bytes = data.get("report_bytes")
+    actual_bytes = len(raw)
+    if (
+        isinstance(expected_bytes, bool)
+        or not isinstance(expected_bytes, int)
+        or expected_bytes <= 0
+    ):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_bytes",
+                "report_bytes must be a positive integer",
+            )
+        )
+    elif actual_bytes != expected_bytes:
+        issues.append(
+            MatrixResultIssue(
+                "report_bytes_mismatch",
+                "report_bytes must match the report_path file",
+            )
+        )
+
+    try:
+        file_report = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_report_file_json",
+                "report_path must contain a JSON object matching the embedded report",
+            )
+        )
+        return
+    if file_report != data.get("report"):
+        issues.append(
+            MatrixResultIssue(
+                "report_file_mismatch",
+                "report_path JSON must match the embedded report",
+            )
+        )
+
+
+def _validate_matrix_publication_inventory(
+    inventory: object,
+    bundle: dict[str, Any],
+    issues: list[MatrixResultIssue],
+) -> bool:
+    if not isinstance(inventory, dict):
+        return False
+    issue_count = len(issues)
+    if inventory.get("schema") != MATRIX_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_schema",
+                "inventory schema must be a matrix artifact inventory",
+            )
+        )
+    if inventory.get("ok") is not True:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_not_ok",
+                "inventory must have verified all referenced artifacts",
+            )
+        )
+    if (
+        bundle.get("target_suite") is not None
+        and inventory.get("target_suite") != bundle.get("target_suite")
+    ):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_target_suite_mismatch",
+                "inventory target_suite must match bundle target_suite",
+            )
+        )
+    report = bundle.get("report")
+    if isinstance(report, dict) and inventory.get("report_schema") != report.get("schema"):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_report_schema_mismatch",
+                "inventory report_schema must match embedded report schema",
+            )
+        )
+    artifacts = inventory.get("artifacts")
+    if not isinstance(artifacts, list) or not artifacts:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_artifacts",
+                "inventory artifacts must be a non-empty list",
+            )
+        )
+        artifacts = []
+    records_payload = json.dumps(artifacts, sort_keys=True, separators=(",", ":"))
+    records_sha = inventory.get("records_sha256")
+    if not isinstance(records_sha, str) or _SHA256_RE.fullmatch(records_sha) is None:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_records_hash",
+                "inventory records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+    elif hashlib.sha256(records_payload.encode("utf-8")).hexdigest() != records_sha:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_records_hash_mismatch",
+                "inventory records_sha256 must match the artifact records",
+            )
+        )
+    expected_counts = {
+        "artifact_count": len(artifacts),
+        "verified_count": sum(
+            1
+            for record in artifacts
+            if isinstance(record, dict) and record.get("status") == "verified"
+        ),
+        "missing_count": sum(
+            1
+            for record in artifacts
+            if isinstance(record, dict) and record.get("status") == "missing_file"
+        ),
+        "mismatch_count": sum(
+            1
+            for record in artifacts
+            if isinstance(record, dict)
+            and record.get("status") in {"hash_mismatch", "bytes_mismatch"}
+        ),
+        "invalid_count": sum(
+            1
+            for record in artifacts
+            if isinstance(record, dict)
+            and record.get("status")
+            in {"invalid_artifact", "unsafe_path", "read_error"}
+        ),
+    }
+    for field, expected in expected_counts.items():
+        value = inventory.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                MatrixResultIssue(
+                    f"invalid_inventory_{field}",
+                    f"inventory {field} must be a non-negative integer",
+                )
+            )
+        elif value != expected:
+            issues.append(
+                MatrixResultIssue(
+                    f"inventory_{field}_mismatch",
+                    f"inventory {field} must match the artifact records",
+                )
+            )
+    if inventory.get("verified_count") != inventory.get("artifact_count"):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_verified_count_mismatch",
+                "inventory verified_count must equal artifact_count",
+            )
+        )
+    for field in ("missing_count", "mismatch_count", "invalid_count"):
+        if inventory.get(field) != 0:
+            issues.append(
+                MatrixResultIssue(
+                    f"inventory_{field}_nonzero",
+                    f"inventory {field} must be zero for a publication bundle",
+                )
+            )
+    if inventory.get("issues"):
+        issues.append(
+            MatrixResultIssue(
+                "inventory_has_issues",
+                "inventory issues must be empty for a publication bundle",
+            )
+        )
+    return len(issues) == issue_count
+
+
+def _safe_relative_path(value: object) -> Path | None:
+    if not isinstance(value, str) or not value:
+        return None
+    path = Path(value)
+    if path.is_absolute() or value.startswith(("/", "\\")) or ".." in path.parts:
+        return None
+    return path
 
 
 def _matrix_artifact_inventory_record(artifact: object, root: Path) -> dict[str, Any]:

@@ -1998,6 +1998,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     report-visible baseline-source fields, and docs that distinguish cited
     prior baselines from LibreEvolve-generated constructions.
 
+- [ ] Track Table 2/Table 3 matrix-rank table exhibit provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the main-text
+    selected matrix-rank comparison table, and Appendix A Table 3 is the full
+    54-target version with best-known ranks, AlphaEvolve ranks, outcome
+    coloring/summary counts, complex-valued row caveats, Colab decomposition
+    links, and the concurrent-work note for `<4, 5, 6>`.
+  - Current gap: the paper TODOs track baseline-rank citations, row notes,
+    target-suite curation, companion Colab evidence, Figure 4 exhibit
+    provenance, scalar-field caveats, tensor-rank caveats, and result
+    artifacts. They do not yet preserve Table 2/Table 3 as table exhibits with
+    stable ids, selected-row versus full-table relation, row ordering, caption
+    aggregate checks, color/outcome encoding, complex-valued annotations, note
+    linkage, source PDF/caption locations, rendered table artifact hashes, or
+    row-to-registry/report/Colab mappings.
+  - Required result: add paper-facing table exhibit records for Table 2 and
+    Appendix A Table 3: source PDF page/caption locations, table ids, row
+    ids/order, selected/full-table membership, rank values, outcome classes and
+    aggregate count validation, complex-valued and concurrent-work annotations,
+    rendered table artifacts/hashes, and links to Appendix A registry rows,
+    matrix reports/certificates, and companion source evidence.
+
 - [ ] Track Appendix A matrix row-note and concurrent-work provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
     a note that concurrent work [49] also found a rank-90 algorithm for the

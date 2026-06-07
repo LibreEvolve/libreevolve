@@ -1925,6 +1925,29 @@ Primary evidence:
     tensor/decomposition construction artifacts, and baseline solver-component
     provenance.
 
+- [ ] Add Table 2/Table 3 matrix-rank table exhibit provenance.
+  - Spec evidence: AlphaEvolve Table 2 displays selected matrix tensor-rank
+    comparisons, and Appendix A Table 3 expands this to all 54 considered
+    targets with best-known ranks, AlphaEvolve ranks, outcome coloring/summary
+    counts, complex-valued row caveats, Colab decomposition links, and the
+    concurrent-work note for `<4, 5, 6>`.
+  - Current evidence: LibreEvolve has an Appendix A matrix registry, matrix
+    report validation, best-known-rank citation TODOs, row-note/concurrent-work
+    TODOs, target-suite curation TODOs, Figure 4 exhibit TODOs, and
+    scalar-field/tensor-rank caveat TODOs. Those track row facts and algorithm
+    evidence, but no code/report schema records Table 2/Table 3 exhibit ids,
+    selected-row versus full-table membership, row ordering, caption aggregate
+    counts, color/outcome encoding, complex-valued row annotations, note
+    linkage, source PDF/caption locations, rendered table artifacts/hashes, or
+    row-to-registry/report/Colab mappings.
+  - Required result: add matrix-rank table exhibit metadata and validators with
+    stable table ids, row ids/order, selected/full-table membership,
+    source/caption locations, best-known and AlphaEvolve rank values, outcome
+    classes and aggregate count checks, complex-valued and concurrent-work
+    annotations, rendered table artifact hashes, and links to registry rows,
+    matrix reports/certificates, and companion source evidence so docs
+    distinguish table reproduction from general matrix registry validity.
+
 - [ ] Add Appendix A matrix row-note and concurrent-work provenance.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level result
     notes beyond the rank columns, including the note that concurrent work [49]

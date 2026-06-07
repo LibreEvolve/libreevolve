@@ -1501,6 +1501,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes rank-value registry coverage from traceable prior-baseline
     evidence.
 
+- [ ] Keep Table 2/Table 3 matrix-rank table roadmap wording scoped until
+      table exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Table 2 presents selected matrix tensor-rank
+    comparisons, and Appendix A Table 3 expands this to the full 54-target
+    table with caption aggregate counts, outcome coloring, complex-valued row
+    caveats, companion Colab decomposition links, and the concurrent-work note
+    for `<4, 5, 6>`.
+  - Current evidence: roadmap/README/paper-index status can point to the
+    Appendix A registry, matrix report validation, baseline-citation TODOs,
+    row-note TODOs, target-suite curation TODOs, Figure 4 exhibit TODOs,
+    scalar-field evidence gaps, and tensor-rank caveats. It does not require
+    Table 2/Table 3 exhibit ids, selected-row versus full-table membership,
+    row ordering, caption aggregate validation, color/outcome encoding,
+    source/caption locations, rendered table artifacts/hashes, or links from
+    table rows to registry, report, certificate, and companion Colab evidence.
+  - Required result: when Table 2/Table 3 matrix-rank table exhibit provenance
+    lands, update ROADMAP, README, papers index, and code/paper TODOs together
+    so roadmap wording distinguishes reproduced paper-table exhibits from
+    general Appendix A registry and matrix result-report coverage.
+
 - [ ] Keep Figure 4 matrix-exhibit roadmap wording scoped until exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix

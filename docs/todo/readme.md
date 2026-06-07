@@ -52,6 +52,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     TODO entries together so README does not imply source-path provenance is
     sufficient for AlphaEvolve-style human-seeded collaboration claims.
 
+- [ ] Keep README problem-formulation wording scoped until expert provenance
+      exists.
+  - Spec evidence: AlphaEvolve Section 3.2 reports that many mathematical
+    problems were suggested by external mathematicians who advised on how to
+    formulate them as AlphaEvolve inputs, while Section 2.1 treats task
+    definition and optional background knowledge as human-provided setup.
+  - Current evidence: README documents problem/source provenance, context file
+    selection, local paper context, and seed source identity. It does not yet
+    document benchmark metadata for expert contributor roles, problem-origin
+    records, formulation advice, evaluator/objective rationale, or parameter
+    scope decisions.
+  - Required result: when expert formulation provenance and validation lands,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README distinguishes context-source artifact tracking from
+    AlphaEvolve-style human expert problem-formulation evidence.
+
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,

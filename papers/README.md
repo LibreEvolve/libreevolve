@@ -201,6 +201,14 @@ evaluation or evolutionary approaches; LibreEvolve needs structured
 idea-origin metadata and equal-budget seed-variant evidence before making that
 class of paper claim.
 
+AlphaEvolve expert-formulation note: local context-source and problem/source
+provenance records identify artifacts and rendered prompt context, but they do
+not yet capture expert contributor roles, problem-origin notes, formulation
+advice, objective/evaluator rationale, or parameter-scope decisions. Section
+3.2 reports external mathematicians suggesting problems and advising
+formulation, so LibreEvolve needs explicit expert-formulation provenance before
+making that class of mathematical benchmark claim.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

@@ -1389,6 +1389,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     claiming AlphaEvolve-style scientific-collaboration or human-seeded matrix
     result parity.
 
+- [ ] Track expert problem-formulation provenance for mathematical benchmarks.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says most
+    mathematical discoveries came from open problems suggested by external
+    mathematicians Javier Gomez Serrano and Terence Tao, who advised on how to
+    best formulate them as AlphaEvolve inputs.
+  - Current evidence: paper-facing status records problem/source provenance,
+    local context-source selection, local paper context, retrieval grounding,
+    and seed source identity. Those are artifact and prompt-context records,
+    not paper-ready evidence of who selected a benchmark problem, what expert
+    formulation advice shaped the task, why a parameter range/objective was
+    chosen, or how that advice is linked to evaluator and report artifacts.
+  - Required result: add paper/report evidence for expert contributor roles,
+    problem-origin and formulation notes, objective/evaluator rationale,
+    parameter-scope decisions, background-knowledge linkage, and run/report
+    provenance before claiming AlphaEvolve-style expert-guided mathematical
+    discovery setup.
+
 - [ ] Track Section 3.2 incumbent-construction handoff evidence separately
       from generic benchmark artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says many

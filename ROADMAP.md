@@ -275,13 +275,14 @@ is not yet an AlphaEvolve reproduction.
   constructive math, and one safe compiler/hardware/systems/kernel/scheduling
   microbenchmark.
 - Separate smoke examples from benchmark fixtures, with anti-gaming validators,
-  expected artifact schemas, SOTA/target baselines, and repeated-seed runs.
+  fixture-emitted artifacts, SOTA/target baselines, and repeated-seed runs.
   Current example seed-score classes are documented: `hello_world`,
   `circle_packing`, and `matrix_multiplication` are optimization-pressure
   smoke fixtures, while `sorting` is a neutral plateau/diversity fixture.
   The matrix smoke validator now rejects known import/library delegation,
   module-level dead-code counters, and fixed-three-case lookup shortcuts, but
-  stronger benchmark fixtures and report schemas remain planned work.
+  stronger benchmark fixtures that emit the existing report contracts remain
+  planned work.
 - Connect real benchmark fixtures to `libreevolve.benchmark_hardening.v1`
   reports emitted by actual randomized/exhaustive validators and anti-gaming
   fixtures, including protected score/correctness/artifact signals,

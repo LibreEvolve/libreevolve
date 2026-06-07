@@ -155,6 +155,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaim current manifest summaries nor overclaim the selected-row
     `show` command.
 
+- [ ] Keep `show`/source-integrity roadmap wording scoped to compact
+      selected-row display plus streamed-row validation.
+  - Spec evidence: AlphaEvolve-scale generated-program databases need
+    whole-run source/workspace integrity summaries and durable query/report
+    surfaces, not only a best-candidate terminal display.
+  - Current evidence: `ROADMAP.md` asks to improve `show` beyond the current
+    validity/archive-aware selected-row view with runtime status,
+    lineage/prompt/evaluation/feedback/failure summaries, bounded
+    objective-vector metrics, and workspace-file display toward whole-run
+    source integrity reports, richer archive/prompt/failure drill-downs, and
+    durable query views. README and code evidence show that current `show`
+    validates streamed current and legacy source/workspace payloads for every
+    row and prints selected-row workspace files, but does not emit whole-run
+    source-hash or workspace-integrity reports.
+  - Required result: when whole-run source/workspace integrity summaries,
+    durable query/report views, richer archive/prompt/failure drill-downs, or
+    every-candidate source-hash reports land, update the roadmap, README,
+    papers index, and code/paper TODO entries together so roadmap wording
+    neither underclaims current selected-row/streamed-row validation nor
+    overclaims AlphaEvolve-grade run inspection.
+
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

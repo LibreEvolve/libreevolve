@@ -80,6 +80,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     editable/local CLI use nor overclaims verified release-distribution
     reproducibility.
 
+- [ ] Keep README `show` and run-inspection wording scoped to selected-row
+  display plus streamed-row validation.
+  - Spec evidence: AlphaEvolve-scale runs need auditable generated-program
+    databases and whole-run source/workspace integrity reports, not only a
+    compact best-candidate view.
+  - Current evidence: README documents `show` as a compact history view that
+    selects the best archive-retained valid record, prints selected-row
+    metrics, archive diagnostics, bounded run-inspection summaries, and
+    selected-row workspace files, and validates streamed current and legacy
+    history rows before printing. It also states that malformed unselected,
+    invalid, or non-admitted rows fail inspection before any best-looking row
+    is printed, with source/workspace paths, `files`, and `primary_file`
+    checked under the runtime candidate path grammar. The paper TODO still
+    requires whole-run source/workspace integrity summaries and durable
+    query/report surfaces over every candidate's source payloads, workspace
+    paths, source hashes, primary-file coherence, and display/truncation
+    policy.
+  - Required result: when whole-run source/workspace integrity reports, durable
+    run-artifact query views, richer archive/prompt/failure drill-downs, or
+    every-candidate source-hash summaries land, update README, ROADMAP, papers
+    index, and code/paper TODO entries together so README neither underclaims
+    current streamed-row validation nor overclaims AlphaEvolve-grade run
+    inspection.
+
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.
   - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections

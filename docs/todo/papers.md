@@ -65,6 +65,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluations. Sequential sibling proposal batches are accounting evidence,
     not AlphaEvolve-style throughput depth.
 
+- [ ] Track Figure 1/Figure 2 architecture-process exhibit provenance as paper
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the
+    high-level AlphaEvolve overview from human-defined problem inputs through
+    LLMs, prompt sampler, evaluator pool, and program database to an improved
+    solution. Figure 2 expands the discovery loop with `database.sample()`,
+    `prompt_sampler.build(...)`, `llm.generate(...)`, `apply_diff(...)`,
+    `evaluator.execute(...)`, and `database.add(...)`.
+  - Current gap: paper-facing TODOs cover individual behavior gaps for
+    evaluators, prompt context, LLM scheduling, async throughput, and the
+    program database. They do not preserve the Figure 1/Figure 2 diagrams as
+    paper exhibits with stable figure IDs, node/edge mappings to LibreEvolve
+    components, implemented/unsupported status per node, source PDF page and
+    caption locations, rendered diagram/text artifacts and hashes, or links
+    from each displayed controller step to run artifacts and validators.
+  - Required result: add paper-facing Figure 1/Figure 2 process-diagram records
+    and validation: figure IDs, node/edge labels, component mappings,
+    implemented/divergent status, source and rendered artifact hashes, links to
+    prompt-history, LLM-call, evaluator, candidate-history, database, and
+    controller-state evidence, plus README/ROADMAP wording that separates local
+    workflow diagrams from reproduced AlphaEvolve architecture evidence.
+
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.
   - Requirement: AlphaEvolve-style model orchestration should be able to

@@ -90,6 +90,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provenance, eval-input dataset provenance, skeleton-to-block invocation
     evidence, isolation/build policy, and score-field mapping.
 
+- [ ] Keep Figure 1/Figure 2 roadmap wording scoped until process-diagram
+      provenance exists.
+  - Spec evidence: AlphaEvolve Figure 1 shows the high-level architecture from
+    human-defined problem inputs through LLM ensemble, prompt sampler,
+    evaluator pool, and program database to an improved solution. Figure 2
+    expands the loop with database sampling, prompt construction, LLM diff
+    generation, diff application, evaluator execution, and database admission.
+  - Current evidence: ROADMAP and README describe local components and
+    synchronous workflow behavior, while other TODOs track specific gaps for
+    prompt sampling, LLM scheduling, evaluators, database memory, and async
+    controller state. They do not require Figure 1/Figure 2 exhibit IDs,
+    node/edge-to-component mappings, implemented versus unsupported status per
+    diagram node, source PDF/caption locations, rendered diagram artifacts and
+    hashes, or links from each displayed process step to current run artifacts.
+  - Required result: when Figure 1/Figure 2 architecture/process provenance
+    lands, update ROADMAP, README, papers index, and code/paper TODOs with
+    diagram-level metadata and validators so roadmap wording distinguishes
+    local workflow documentation from reproduced AlphaEvolve process-diagram
+    evidence.
+
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
       ML-training provenance exists.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can perform a

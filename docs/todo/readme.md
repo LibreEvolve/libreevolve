@@ -58,6 +58,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with `evaluate` callable provenance, eval-input datasets, skeleton/block
     coupling, isolation policy, and score-field mapping.
 
+- [ ] Keep README Figure 1/Figure 2 architecture wording scoped until
+      process-diagram provenance exists.
+  - Spec evidence: AlphaEvolve Figure 1 shows the high-level "Human defines
+    What? / AlphaEvolve figures out How?" overview with LLM ensemble, prompt
+    sampler, evaluator pool, and program database. Figure 2 expands the
+    controller loop from database sampling through prompt construction, LLM
+    generation, diff application, evaluator execution, and database admission.
+  - Current evidence: README has its own Mermaid workflow and architecture
+    sections describing seed programs, LLM mutation, cascade evaluation,
+    MAP-Elites, island migration, and backend reward. Those diagrams are useful
+    local documentation, but README does not document Figure 1/Figure 2 exhibit
+    IDs, node/edge-to-component mappings, implemented/divergent node status,
+    source PDF/caption locations, rendered diagram artifact hashes, or links
+    from each displayed step to prompt-history, LLM-call, evaluator,
+    candidate-history, database, and controller-state artifacts.
+  - Required result: when Figure 1/Figure 2 process-diagram provenance lands,
+    update README, ROADMAP, papers index, and matching TODOs so README
+    distinguishes local workflow explanation from reproduced AlphaEvolve
+    architecture/process exhibit evidence.
+
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
       ML-training provenance exists.
   - Spec evidence: AlphaEvolve Section 2.1 says an evaluator may perform a

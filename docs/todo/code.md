@@ -59,6 +59,27 @@ Primary evidence:
     distinguishes embedded AlphaEvolve-style evaluation from external
     problem-validator execution.
 
+- [ ] Add Figure 1/Figure 2 architecture-process exhibit provenance.
+  - Spec evidence: AlphaEvolve Figure 1 presents the high-level loop from human
+    "What?" inputs through LLM ensemble, prompt sampler, evaluator pool, and
+    program database to an improved solution. Figure 2 expands this into the
+    controller loop: `database.sample()`, `prompt_sampler.build(...)`,
+    `llm.generate(...)`, `apply_diff(...)`, `evaluator.execute(...)`, and
+    `database.add(...)`.
+  - Current evidence: LibreEvolve has implementation components and README
+    workflow diagrams for seed programs, prompt construction, mutation,
+    evaluation, MAP-Elites, island migration, and backend reward. Existing
+    TODOs track many underlying behavior gaps, but no code/report schema maps
+    the paper's Figure 1/Figure 2 nodes and edge labels to local components,
+    run artifacts, controller-state records, prompt/evaluator/database events,
+    source diagram locations, rendered diagram artifacts, or diagram hashes.
+  - Required result: add architecture/process exhibit metadata with stable
+    Figure 1/Figure 2 IDs, node/edge-to-component mappings, implemented versus
+    unsupported status for controller, LLM, evaluator, prompt, and database
+    surfaces, links to run artifacts that evidence each step, source/rendered
+    diagram artifact hashes, and docs validation so local workflow diagrams are
+    not mistaken for reproduced AlphaEvolve process-diagram evidence.
+
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem

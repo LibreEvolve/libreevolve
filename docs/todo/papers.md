@@ -701,7 +701,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
-- [ ] Rich prompt rendering of execution outputs and feedback.
+- [ ] Complete full validator-metadata rendering and provider-token prompt
+  packing.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.2.
   - Requirement: prompt context can include program execution results, outputs,
     and scores from previous attempts.
@@ -850,7 +851,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     cell-replacement cases. The remaining paper gap is not terminal controller
     event-stream artifact verification or terminal drained-state validation.
 
-- [ ] Context-policy side of meta-prompt evolution.
+- [ ] Extend meta-prompt context policy beyond validated current fields.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.
   - Requirement: prompt instructions and prompt context can be improved through
     meta-prompt evolution.

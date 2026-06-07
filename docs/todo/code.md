@@ -175,7 +175,7 @@ Primary evidence:
     prompt section-packing coverage validation, or LLM budget report/resume-
     artifact bundle consistency.
 
-- [ ] Evolve structured prompt context policy, not only template text.
+- [ ] Extend structured prompt context policy beyond validated current fields.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,
     not just swapping one complete prompt string for another.
   - Current evidence: `PromptDatabase` now stores selected, scored,

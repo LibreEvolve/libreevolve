@@ -470,6 +470,119 @@ def test_descriptor_index_snapshot_reports_top_archive_descriptor_programs(tmp_p
     }
 
 
+def test_feedback_index_snapshot_groups_feedback_records_by_grader(tmp_path):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+    )
+    strong = Program(
+        id="strong",
+        code="x = 1\n",
+        fitness=0.9,
+        evaluation={
+            "is_valid": True,
+            "metadata": {
+                "llm_feedback": [
+                    {
+                        "name": "simplicity",
+                        "metric": "simplicity_score",
+                        "score": 0.9,
+                        "normalized_score": 0.9,
+                        "weighted_delta": 0.18,
+                        "feedback": "clear and compact",
+                        "feedback_retention": {
+                            "policy": "redact_bound_hash_v1",
+                            "retention_mode": "redacted",
+                            "sha256": "a" * 64,
+                            "chars": 17,
+                            "stored_chars": 17,
+                            "redacted": False,
+                            "truncated": False,
+                        },
+                    }
+                ],
+            },
+        },
+        metadata={"selection_score": 0.9},
+    )
+    weak = Program(
+        id="weak",
+        code="x = 2\n",
+        fitness=0.4,
+        evaluation={
+            "is_valid": True,
+            "metadata": {
+                "llm_feedback": [
+                    {
+                        "name": "simplicity",
+                        "metric": "simplicity_score",
+                        "score": 0.2,
+                        "normalized_score": 0.2,
+                        "weighted_delta": 0.04,
+                        "discard": True,
+                        "error": "llm_feedback_discard",
+                    },
+                    {
+                        "name": "style",
+                        "metric": "style_score",
+                        "error": "llm_feedback_failed",
+                        "failure_delta": -0.1,
+                    },
+                ],
+            },
+        },
+        metadata={"selection_score": 0.4},
+    )
+    no_feedback = Program(
+        id="no-feedback",
+        code="x = 3\n",
+        fitness=1.0,
+        evaluation={"is_valid": True},
+        metadata={"selection_score": 1.0},
+    )
+    for candidate in (weak, strong, no_feedback):
+        db.log(candidate)
+
+    snapshot = db.feedback_index_snapshot()
+
+    assert snapshot["schema"] == "libreevolve.feedback_index.v1"
+    assert snapshot["policy"] == "top_program_feedback_records_by_grader"
+    assert snapshot["feedback_grader_count"] == 2
+    assert snapshot["record_count"] == 3
+    assert [grader["feedback_name"] for grader in snapshot["graders"]] == [
+        "simplicity",
+        "style",
+    ]
+    simplicity = snapshot["graders"][0]
+    assert [program["program_id"] for program in simplicity["programs"]] == [
+        strong.id,
+        weak.id,
+    ]
+    assert simplicity["programs"][0]["feedback_text"] == {
+        "policy": "bounded_redacted_feedback_preview_v1",
+        "chars": 17,
+        "sha256": hashlib.sha256(b"clear and compact").hexdigest(),
+        "preview": "clear and compact",
+        "preview_chars": 17,
+        "truncated": False,
+        "redacted": False,
+    }
+    assert simplicity["programs"][0]["retention"]["feedback_retention"] == {
+        "policy": "redact_bound_hash_v1",
+        "retention_mode": "redacted",
+        "sha256": "a" * 64,
+        "chars": 17,
+        "stored_chars": 17,
+        "redacted": False,
+        "truncated": False,
+    }
+    assert snapshot["graders"][1]["programs"][0]["error"] == "llm_feedback_failed"
+    assert no_feedback.id not in {
+        program["program_id"]
+        for grader in snapshot["graders"]
+        for program in grader["programs"]
+    }
+
+
 def test_history_records_preserve_static_file_metadata(tmp_path):
     db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
     program = Program(

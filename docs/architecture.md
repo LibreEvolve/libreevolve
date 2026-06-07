@@ -762,7 +762,8 @@ for each declared normalized metric, and `runtime.history.lineage_index`, a
 bounded best-valid-programs view grouped by root lineage. It also includes
 `runtime.history.descriptor_index`, a bounded top-program view for finite
 archive-admission descriptor values such as diversity, complexity, and
-performance. Parent and inspiration sampling can use a `frontier` strategy to
+performance, and `runtime.history.feedback_index`, a bounded feedback-record
+view grouped by LLM feedback grader. Parent and inspiration sampling can use a `frontier` strategy to
 surface non-dominated retained programs with complete declared normalized
 metric vectors, and a `lineage` strategy to cycle or render the best retained
 representative for each root lineage. Admission thresholds, archive

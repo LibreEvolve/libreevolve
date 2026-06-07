@@ -9563,3 +9563,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     embeddings, or a full replayable evolutionary database.
   - Verification: focused database and loop tests cover the descriptor index
     API and manifest persistence.
+
+- [x] Add paper-visible feedback-index manifest evidence.
+  - Paper evidence: AlphaEvolve-style search can use prior execution and
+    feedback signals in future prompts and database resurfacing, so those
+    signals should be auditable from run artifacts.
+  - Status: completed runs now persist `runtime.history.feedback_index`, a
+    bounded feedback-record view grouped by LLM feedback grader with scoring,
+    delta, discard/error, objective-metric, retention, and bounded text
+    hash/preview evidence.
+  - Remaining paper gap: this remains a diagnostic view over retained feedback
+    metadata, not feedback embeddings, full-text ranking, or replayable
+    feedback-driven sampling decisions.
+  - Verification: focused database and loop tests cover the feedback index API
+    and manifest persistence.

@@ -2933,6 +2933,17 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     feedback = child["evaluation"]["metadata"]["llm_feedback"][0]
     assert feedback["objective_metric"] is True
     assert feedback["objective_metric_schema"]["source"] == "problem_objective_schema"
+    feedback_index = (
+        json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())["runtime"][
+            "history"
+        ]["feedback_index"]
+    )
+    assert feedback_index["schema"] == "libreevolve.feedback_index.v1"
+    assert feedback_index["policy"] == "top_program_feedback_records_by_grader"
+    assert feedback_index["graders"][0]["feedback_name"] == "latency_review"
+    assert feedback_index["graders"][0]["programs"][0]["program_id"] == child["id"]
+    assert feedback_index["graders"][0]["programs"][0]["normalized_score"] == 0.75
+    assert feedback_index["graders"][0]["programs"][0]["objective_metric"] is True
 
 
 def test_evaluation_budget_stops_before_llm_mutation():

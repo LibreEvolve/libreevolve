@@ -1127,6 +1127,13 @@ Important behavior:
   selection score, fitness, and available objective evidence. Descriptor values
   are insertion-time archive coordinates, not stable learned descriptor
   normalization replay.
+- `runtime.history.feedback_index` stores bounded diagnostic feedback records
+  grouped by LLM feedback grader name. Each retained record includes program
+  id, generation, lineage root, validity, score/normalized-score/weighted-delta
+  values when finite, discard/error/objective-metric flags, retention summaries,
+  and bounded redacted feedback text hashes/previews when feedback text is
+  retained by policy. This is not a feedback embedding store or replayable
+  sampling policy.
 - optional critique metadata is stored under `metadata.critique`
 - optional proposal idea/rationale/hypothesis sections are stored under
   `metadata.proposal` when `capture_proposal_metadata` is enabled; when critique

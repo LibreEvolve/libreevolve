@@ -1233,6 +1233,10 @@ grouped by root lineage, so lineage resurfacing evidence is inspectable from
 run artifacts. `runtime.history.descriptor_index` similarly stores bounded
 top-program views for finite archive-admission descriptor values, so MAP-Elites
 diversity/complexity/performance coordinates are inspectable after the run.
+`runtime.history.feedback_index` stores bounded feedback records grouped by
+LLM feedback grader, including scores, weighted deltas, discard/error status,
+retention summaries, and bounded text hashes/previews when feedback text is
+retained.
 Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.
@@ -1267,7 +1271,8 @@ for audit/provenance, but later metadata mutations do not change live recency
 order. The sampling pool is still in-memory MAP-Elites state rather than a
 full queryable local database; `runtime.history.lineage_index` is a bounded
 diagnostic view and `runtime.history.descriptor_index` is a bounded
-descriptor-coordinate view, not replayable sampling engines.
+descriptor-coordinate view. `runtime.history.feedback_index` is a bounded
+feedback evidence view; none of these are replayable sampling engines.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

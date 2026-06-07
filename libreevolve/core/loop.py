@@ -3621,6 +3621,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "objective_metric_archives": db.objective_metric_archives_snapshot(),
         "lineage_index": db.lineage_index_snapshot(),
         "descriptor_index": db.descriptor_index_snapshot(),
+        "feedback_index": db.feedback_index_snapshot(),
         "archive_state": db.archive_state_snapshot(),
     }
     if summary["no_candidates_evaluated"]:

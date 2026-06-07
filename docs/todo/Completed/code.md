@@ -14341,3 +14341,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     decisions.
   - Verification: focused database and loop tests cover direct descriptor-index
     content and final manifest persistence.
+
+- [x] Persist a bounded feedback index in runtime history.
+  - Spec evidence: AlphaEvolve-style program databases should make evaluator
+    and feedback signals available for later resurfacing/audit, not only as
+    inline candidate metadata.
+  - Status: `ProgramDatabase.feedback_index_snapshot()` now builds
+    `libreevolve.feedback_index.v1`, grouping bounded feedback records by LLM
+    feedback grader. Final manifests persist it under
+    `runtime.history.feedback_index` with score, normalized score,
+    weighted/failure delta, discard/error/objective-metric flags, retention
+    summaries, and bounded text hash/preview evidence when retained by policy.
+  - Remaining gap: this is a diagnostic bounded view, not a full feedback
+    embedding store, full-text ranked index, or replayable sampling database.
+  - Verification: focused database and loop tests cover direct feedback-index
+    content and final manifest persistence.

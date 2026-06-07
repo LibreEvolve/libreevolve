@@ -10296,3 +10296,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still correctly distinguish this from
     stable descriptor replay or a full persisted database.
   - Verification: focused database and loop tests cover the new manifest field.
+
+- [x] Document feedback-index runtime history.
+  - Evidence: README, architecture, run-artifact, and todo docs needed to track
+    that LLM feedback records now have a bounded manifest-visible index.
+  - Status: docs now describe `runtime.history.feedback_index`, retained
+    feedback fields, retention summaries, bounded text evidence, and the
+    diagnostic-only limitation.
+  - Remaining documentation gap: docs still correctly distinguish this from
+    feedback embeddings, full-text ranking, or replayable sampling.
+  - Verification: focused database and loop tests cover the new manifest field.

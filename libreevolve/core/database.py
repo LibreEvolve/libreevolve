@@ -91,6 +91,8 @@ _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
 _MAX_LINEAGE_INDEX_ROOTS = 50
 _MAX_LINEAGE_INDEX_PROGRAMS_PER_ROOT = 5
 _MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR = 10
+_MAX_FEEDBACK_INDEX_PROGRAMS_PER_GRADER = 10
+_MAX_FEEDBACK_INDEX_TEXT_CHARS = 200
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -658,6 +660,12 @@ class ProgramDatabase:
         return _descriptor_index_snapshot(
             self._all,
             limit=_MAX_DESCRIPTOR_INDEX_PROGRAMS_PER_DESCRIPTOR,
+        )
+
+    def feedback_index_snapshot(self) -> dict:
+        return _feedback_index_snapshot(
+            self._all,
+            limit=_MAX_FEEDBACK_INDEX_PROGRAMS_PER_GRADER,
         )
 
     def _log_archive_event(self, event: dict) -> None:
@@ -2225,6 +2233,167 @@ def _descriptor_index_sort_key(record: dict) -> tuple:
         -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
         -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
         -(int(generation) if isinstance(generation, int) and not isinstance(generation, bool) else -1),
+        str(program_id) if isinstance(program_id, str) else "",
+    )
+
+
+def _feedback_index_snapshot(
+    programs: list[Program],
+    *,
+    limit: int,
+) -> dict:
+    by_grader: dict[str, list[dict]] = {}
+    for program in programs:
+        for record in _history_safe_feedback_records(program):
+            grader_name = record["feedback_name"]
+            by_grader.setdefault(grader_name, []).append(record)
+
+    graders: list[dict] = []
+    for grader_name, records in sorted(by_grader.items()):
+        records.sort(key=_feedback_index_sort_key)
+        retained = records[:limit]
+        graders.append(
+            {
+                "feedback_name": grader_name,
+                "record_count": len(records),
+                "retained_count": len(retained),
+                "retention_limit": limit,
+                "programs": retained,
+            }
+        )
+    return {
+        "schema": "libreevolve.feedback_index.v1",
+        "policy": "top_program_feedback_records_by_grader",
+        "feedback_grader_count": len(graders),
+        "record_count": sum(grader["record_count"] for grader in graders),
+        "retention_limit": limit,
+        "graders": graders,
+        "limitations": [
+            "diagnostic_feedback_index_not_sampling_replay_engine",
+            "bounded_feedback_records_grouped_by_grader",
+            "raw_feedback_text_retention_follows_feedback_retention_policy",
+            "not_a_full_persisted_feedback_embedding_or_ranking_database",
+        ],
+    }
+
+
+def _history_safe_feedback_records(program: Program) -> list[dict]:
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    metadata = evaluation.get("metadata")
+    if not isinstance(metadata, Mapping):
+        return []
+    feedback = metadata.get("llm_feedback")
+    if not isinstance(feedback, list):
+        return []
+    records = []
+    for index, item in enumerate(feedback):
+        if isinstance(item, Mapping):
+            records.append(_feedback_index_record(program, index, item))
+    return records
+
+
+def _feedback_index_record(
+    program: Program,
+    record_index: int,
+    feedback: Mapping,
+) -> dict:
+    name = feedback.get("name")
+    metric = feedback.get("metric")
+    error = feedback.get("error")
+    record: dict[str, object] = {
+        "feedback_name": name if isinstance(name, str) and name else f"feedback_{record_index}",
+        "record_index": record_index,
+        "program_id": program.id,
+        "lineage_root_id": _program_lineage_root_id(program),
+        "generation": program.generation,
+        "evaluation_is_valid": program.evaluation.get("is_valid") is True,
+        "selection_score": _history_safe_selection_score(program),
+        "fitness": float(program.fitness),
+    }
+    if isinstance(metric, str) and metric:
+        record["metric"] = metric
+    for field in (
+        "score",
+        "normalized_score",
+        "weighted_delta",
+        "failure_delta",
+    ):
+        value = feedback.get(field)
+        if _is_finite_real(value):
+            record[field] = float(value)
+    if isinstance(feedback.get("discard"), bool):
+        record["discard"] = feedback["discard"]
+    if isinstance(feedback.get("objective_metric"), bool):
+        record["objective_metric"] = feedback["objective_metric"]
+    if isinstance(error, str) and error:
+        record["error"] = error
+    feedback_text = feedback.get("feedback")
+    if isinstance(feedback_text, str) and feedback_text:
+        record["feedback_text"] = _feedback_index_text_summary(feedback_text)
+    retention = _feedback_index_retention_summary(feedback)
+    if retention:
+        record["retention"] = retention
+    objective_vector = _history_safe_objective_vector(program)
+    if objective_vector is not None:
+        record["objective_vector"] = objective_vector
+    return record
+
+
+def _feedback_index_text_summary(value: str) -> dict:
+    redacted = redact_sensitive_text(value)
+    return {
+        "policy": "bounded_redacted_feedback_preview_v1",
+        "chars": len(value),
+        "sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
+        "preview": redacted[:_MAX_FEEDBACK_INDEX_TEXT_CHARS],
+        "preview_chars": min(len(redacted), _MAX_FEEDBACK_INDEX_TEXT_CHARS),
+        "truncated": len(redacted) > _MAX_FEEDBACK_INDEX_TEXT_CHARS,
+        "redacted": redacted != value,
+    }
+
+
+def _feedback_index_retention_summary(feedback: Mapping) -> dict:
+    summary = {}
+    for field in ("feedback_retention", "raw_response_retention"):
+        retention = feedback.get(field)
+        if isinstance(retention, Mapping):
+            summary[field] = _feedback_index_retention_record(retention)
+    return summary
+
+
+def _feedback_index_retention_record(retention: Mapping) -> dict:
+    record: dict[str, object] = {}
+    for field in (
+        "policy",
+        "retention_mode",
+        "sha256",
+        "chars",
+        "stored_chars",
+        "max_chars",
+        "redacted",
+        "truncated",
+    ):
+        value = retention.get(field)
+        if isinstance(value, (str, bool, int)) and not isinstance(value, bool):
+            record[field] = value
+        elif isinstance(value, bool):
+            record[field] = value
+    return record
+
+
+def _feedback_index_sort_key(record: dict) -> tuple:
+    normalized_score = record.get("normalized_score")
+    score = record.get("score")
+    weighted_delta = record.get("weighted_delta")
+    selection_score = record.get("selection_score")
+    fitness = record.get("fitness")
+    program_id = record.get("program_id")
+    return (
+        -(float(normalized_score) if _is_finite_real(normalized_score) else float("-inf")),
+        -(float(score) if _is_finite_real(score) else float("-inf")),
+        -(float(weighted_delta) if _is_finite_real(weighted_delta) else float("-inf")),
+        -(float(selection_score) if _is_finite_real(selection_score) else float("-inf")),
+        -(float(fitness) if _is_finite_real(fitness) else float("-inf")),
         str(program_id) if isinstance(program_id, str) else "",
     )
 

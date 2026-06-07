@@ -652,13 +652,19 @@ Primary evidence:
     `normalized_metrics`, metric-leader/frontier sampling, metric archive
     views, and `selection_score`. Declared non-primary `source: final_fitness`
     metrics are synthesized from the candidate's final composed fitness after
-    plugin score hooks run, so plugin-adjusted top-level fitness can be included
-    in the declared objective vector when desired; undeclared plugin-added
-    metrics remain ordinary metrics without declared objective semantics. Backend reward,
-    admission thresholds, and some parent/inspiration paths still use scalar
-    final fitness, and Pareto/frontier behavior is still a sampling surface
-    rather than an archive replacement policy. There is still no metric-specific
-    MAP-Elites replacement policy.
+    plugin score hooks run, so plugin-adjusted top-level fitness can be
+    included in the declared objective vector when desired; undeclared
+    plugin-added metrics remain ordinary metrics without declared objective
+    semantics. Each MAP-Elites archive now also keeps a bounded
+    non-dominated retention archive over complete declared normalized metric
+    vectors, records Pareto-only admission telemetry, persists/restores
+    `pareto_frontier_program_ids` plus an `objective_archive_policy`, and
+    includes those Pareto-retained programs in island metric/frontier retained
+    pools. Backend reward, admission thresholds, and some parent/inspiration
+    paths still use scalar final fitness, and MAP-Elites cell replacement still
+    uses scalar selection score rather than Pareto/frontier dominance. There is
+    still no metric-specific MAP-Elites replacement policy or durable queryable
+    multi-objective database resurfacing.
   - Required result: represent full metric vectors, choose target metrics,
     support Pareto/frontier archive replacement, and make metric-targeted
     sampling/archive behavior part of that policy instead of a standalone

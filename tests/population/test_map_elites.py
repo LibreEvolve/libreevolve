@@ -15,6 +15,17 @@ def _pm(code="x=1", fitness=0.5, selection_score=0.5):
         metadata={"selection_score": selection_score},
     )
 
+def _po(code, fitness, metrics):
+    return Program(
+        code=code,
+        fitness=fitness,
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": fitness,
+            "normalized_metrics": metrics,
+        },
+    )
+
 def test_best_none_when_empty():
     assert MAPElites().best() is None
 
@@ -210,15 +221,51 @@ def test_elite_only_retention_is_not_cell_sampling_eligible():
     assert second not in a.sample_diverse(k=10)
 
 
+def test_pareto_frontier_retains_non_dominated_non_scalar_elite():
+    archive = MAPElites(
+        bins=1,
+        elite_archive_size=2,
+        metric_order=["accuracy", "latency"],
+    )
+    balanced = _po("balanced", 0.9, {"accuracy": 0.80, "latency": 0.80})
+    latency = _po("latency", 0.8, {"accuracy": 0.70, "latency": 0.95})
+    accuracy = _po("accuracy", 0.1, {"accuracy": 0.95, "latency": 0.70})
+    archive.add(balanced)
+    archive.add(latency)
+
+    event = archive.add(accuracy)
+
+    assert event["entered_cell"] is False
+    assert event["entered_elite"] is False
+    assert event["pareto_frontier_retained"] is True
+    assert event["pareto_frontier_reason"] == "non_dominated_objective_vector"
+    assert event["pareto_frontier_size"] == 2
+    assert event["pareto_frontier_replaced_ids"] == [balanced.id]
+    assert event["admitted"] is True
+    assert event["reason"] == "pareto_frontier_only"
+    assert archive.elite_archive() == [balanced, latency]
+    assert archive.pareto_frontier_archive() == [latency, accuracy]
+
+
 def test_state_snapshot_restores_cells_and_elite_archive():
-    source = MAPElites(bins=1, elite_archive_size=2)
+    source = MAPElites(
+        bins=1,
+        elite_archive_size=2,
+        metric_order=["accuracy", "latency"],
+    )
     occupied = _pm(code="occupied", fitness=0.9, selection_score=0.9)
+    occupied.metadata["normalized_metrics"] = {"accuracy": 0.8, "latency": 0.8}
     elite_only = _pm(code="elite_only", fitness=0.1, selection_score=0.1)
+    elite_only.metadata["normalized_metrics"] = {"accuracy": 0.1, "latency": 0.9}
     source.add(occupied)
     source.add(elite_only)
 
     snapshot = source.state_snapshot()
-    restored = MAPElites(bins=1, elite_archive_size=2)
+    restored = MAPElites(
+        bins=1,
+        elite_archive_size=2,
+        metric_order=["accuracy", "latency"],
+    )
     result = restored.restore_state_snapshot(
         snapshot,
         {occupied.id: occupied, elite_only.id: elite_only},
@@ -234,6 +281,22 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         }
     ]
     assert snapshot["elite_program_ids"] == [occupied.id, elite_only.id]
+    assert snapshot["pareto_frontier_program_ids"] == [occupied.id, elite_only.id]
+    assert snapshot["objective_archive_policy"] == {
+        "schema": "libreevolve.map_elites_objective_archive_policy.v1",
+        "status": "bounded_non_dominated_archive_retention",
+        "metric_order": ["accuracy", "latency"],
+        "candidate_vector": "complete_normalized_declared_metrics_required",
+        "dominance": "all_metrics_greater_or_equal_and_one_strictly_greater",
+        "bound": 2,
+        "trim_policy": "crowding_distance_then_selection_score_then_fitness",
+        "sampling_policy": (
+            "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
+        ),
+        "cell_replacement_policy": (
+            "map_elites_cells_still_replace_by_scalar_selection_key"
+        ),
+    }
     assert snapshot["descriptor_policy"]["rebin_policy"] == (
         "no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots"
     )
@@ -254,10 +317,12 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         "status": "map_elites_state_restored",
         "occupied_cell_count": 1,
         "elite_count": 2,
+        "pareto_frontier_count": 2,
     }
     assert restored.best() is occupied
     assert restored.occupied_cells() == [occupied]
     assert restored.elite_archive() == [occupied, elite_only]
+    assert restored.pareto_frontier_archive() == [occupied, elite_only]
 
 
 def test_restore_state_snapshot_rejects_missing_program_reference():

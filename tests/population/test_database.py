@@ -1457,8 +1457,18 @@ def test_archive_state_snapshot_exposes_island_cursor_for_runtime_manifest():
     assert snapshot["migration_replay"]["replay_engine_supported"] is False
     assert snapshot["migration_replay"]["migration_sequence"] == 0
     assert snapshot["islands"] == [
-        {"island_id": 0, "occupied_cell_count": 1, "elite_count": 1},
-        {"island_id": 1, "occupied_cell_count": 1, "elite_count": 1},
+        {
+            "island_id": 0,
+            "occupied_cell_count": 1,
+            "elite_count": 1,
+            "pareto_frontier_count": 0,
+        },
+        {
+            "island_id": 1,
+            "occupied_cell_count": 1,
+            "elite_count": 1,
+            "pareto_frontier_count": 0,
+        },
     ]
 
 
@@ -4458,8 +4468,18 @@ def _archive_state_snapshot() -> dict:
         "frontier_sample_index": 4,
         "archive_sequence_by_program_id": {"p1": 1, "p2": 3},
         "islands": [
-            {"island_id": 0, "occupied_cell_count": 1, "elite_count": 2},
-            {"island_id": 1, "occupied_cell_count": 0, "elite_count": 0},
+            {
+                "island_id": 0,
+                "occupied_cell_count": 1,
+                "elite_count": 2,
+                "pareto_frontier_count": 0,
+            },
+            {
+                "island_id": 1,
+                "occupied_cell_count": 0,
+                "elite_count": 0,
+                "pareto_frontier_count": 0,
+            },
         ],
     }
 

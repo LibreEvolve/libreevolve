@@ -62,6 +62,7 @@ class IslandModel:
                 perf_bounds=perf_bounds,
                 complexity_max_chars=config.map_elites_complexity_max_chars,
                 descriptor_axes=config.map_elites_descriptor_axes,
+                metric_order=self._metric_order,
                 rng=self._rng,
             )
             for _ in range(self.n_islands)
@@ -198,13 +199,16 @@ class IslandModel:
                 sorted(self._archive_sequences.items())
             ),
             "islands": [
-                {
-                    "island_id": island_id,
-                    "occupied_cell_count": len(island.occupied_cells()),
-                    "elite_count": len(island.elite_archive()),
-                }
-                for island_id, island in enumerate(self.islands)
-            ],
+                    {
+                        "island_id": island_id,
+                        "occupied_cell_count": len(island.occupied_cells()),
+                        "elite_count": len(island.elite_archive()),
+                        "pareto_frontier_count": len(
+                            island.pareto_frontier_archive()
+                        ),
+                    }
+                    for island_id, island in enumerate(self.islands)
+                ],
             "archive_contents": {
                 "schema": "libreevolve.island_archive_contents.v1",
                 "restore_status": ISLAND_ARCHIVE_CONTENTS_RESTORE_STATUS,
@@ -396,7 +400,11 @@ class IslandModel:
         exclude_ids = validate_exclude_ids(exclude_ids, "island exclude_ids")
         pool: dict[str, Program] = {}
         for island in self.islands:
-            for program in island.occupied_cells() + island.elite_archive():
+            for program in (
+                island.occupied_cells()
+                + island.elite_archive()
+                + island.pareto_frontier_archive()
+            ):
                 if program.id not in exclude_ids:
                     pool.setdefault(program.id, program)
         return list(pool.values())

@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add bounded Pareto archive retention to MAP-Elites.
+  - Spec evidence: AlphaEvolve-style multi-score search should preserve
+    programs that are useful under different objective tradeoffs, even when
+    they are not the scalar best candidate in a cell.
+  - Status: `MAPElites` now accepts declared `metric_order`, maintains a
+    bounded non-dominated archive over complete normalized declared metric
+    vectors, records Pareto-only admission telemetry, persists/restores
+    `pareto_frontier_program_ids` with an objective archive policy, and exposes
+    `pareto_frontier_archive()` for island retained pools. `IslandModel` passes
+    declared metric order into archives and includes Pareto-retained programs
+    in metric/frontier parent and inspiration pools.
+  - Remaining gap: MAP-Elites cell replacement still uses scalar selection
+    score, and the durable database still lacks a queryable multi-objective
+    resurfacing policy.
+  - Verification: focused MAP-Elites and island tests cover Pareto-only
+    retention, bounded frontier displacement, snapshot restore, and frontier
+    inspiration sampling from Pareto-retained programs.
+
 - [x] Allow declared final-fitness objective metrics.
   - Spec evidence: AlphaEvolve-style multi-score search should allow
     plugin-adjusted top-level fitness to be connected to declared objective

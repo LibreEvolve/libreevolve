@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add bounded Pareto archive retention to MAP-Elites.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
+    optimizing multiple user-provided scores and using programs that excel
+    under different criteria as varied inspirations.
+  - Status: MAP-Elites archives now maintain a bounded non-dominated retention
+    archive over complete declared normalized metric vectors, persist/restore
+    Pareto frontier program ids and the objective archive policy, and surface
+    Pareto-retained programs through island metric/frontier retained pools.
+  - Remaining paper gap: this does not yet make MAP-Elites cell replacement
+    metric-specific or Pareto-dominance based, and it does not provide a
+    durable queryable multi-objective program database.
+  - Verification: focused MAP-Elites and island tests cover Pareto-only
+    retention, snapshot restore, and frontier sampling from Pareto-retained
+    programs.
+
 - [x] Allow declared final-fitness objective metrics.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Section 2.4, describes
     optimizing multiple user-provided scores; plugin-adjusted final score can

@@ -1273,12 +1273,13 @@ def _validate_archive_island_summaries(value: object, n_islands: int) -> list[di
                 f"archive state snapshot islands[{index}] must be an object"
             )
         required = {"island_id", "occupied_cell_count", "elite_count"}
+        optional = {"pareto_frontier_count"}
         missing = required - set(island)
         if missing:
             raise ArchiveStateRestoreError(
                 f"archive state snapshot islands[{index}] missing fields: {sorted(missing)}"
             )
-        unsupported = set(island) - required
+        unsupported = set(island) - required - optional
         if unsupported:
             raise ArchiveStateRestoreError(
                 "archive state snapshot islands"
@@ -1302,6 +1303,10 @@ def _validate_archive_island_summaries(value: object, n_islands: int) -> list[di
                 "elite_count": _validate_snapshot_non_negative_int(
                     island["elite_count"],
                     f"islands[{index}].elite_count",
+                ),
+                "pareto_frontier_count": _validate_snapshot_non_negative_int(
+                    island.get("pareto_frontier_count", 0),
+                    f"islands[{index}].pareto_frontier_count",
                 ),
             }
         )
@@ -2791,6 +2796,9 @@ def _validate_archive_snapshot_program_references(
             if isinstance(program_id, str) and program_id not in programs_by_id:
                 missing.add(program_id)
         for program_id in archive.get("elite_program_ids", []):
+            if isinstance(program_id, str) and program_id not in programs_by_id:
+                missing.add(program_id)
+        for program_id in archive.get("pareto_frontier_program_ids", []):
             if isinstance(program_id, str) and program_id not in programs_by_id:
                 missing.add(program_id)
     if missing:

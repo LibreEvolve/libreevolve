@@ -366,8 +366,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence makes insertion-time diversity/complexity/performance coordinates
     inspectable from run artifacts, and feedback-index evidence makes
     grader-specific scores, deltas, retention summaries, and failure/discard
-    status inspectable. This remains a heuristic rather than a paper-faithful
-    multi-score database policy.
+    status inspectable. MAP-Elites archives now retain a bounded
+    non-dominated Pareto archive over complete declared normalized metric
+    vectors, persist/restore Pareto frontier program ids and the objective
+    archive policy, and allow island metric/frontier retained pools to sample
+    Pareto-only programs that lost scalar cell/elite placement. This remains a
+    heuristic rather than a paper-faithful multi-score database policy:
+    MAP-Elites cell replacement is still scalar, metric-specific cell
+    replacement is not implemented, and durable queryable multi-objective
+    resurfacing remains open.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.
 

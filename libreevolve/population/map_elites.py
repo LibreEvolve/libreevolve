@@ -26,6 +26,7 @@ class MAPElites:
         perf_bounds: tuple[float, float] = (0.0, 1.0),
         complexity_max_chars: int = 100_000,
         descriptor_axes: list[str] | tuple[str, ...] | None = None,
+        metric_order: list[str] | tuple[str, ...] | None = None,
         rng: random.Random | None = None,
     ):
         if isinstance(bins, bool) or not isinstance(bins, int) or bins < 1:
@@ -39,12 +40,15 @@ class MAPElites:
         perf_bounds = _validate_perf_bounds(perf_bounds)
         complexity_max_chars = _validate_complexity_max_chars(complexity_max_chars)
         descriptor_axes = _validate_descriptor_axes(descriptor_axes)
+        metric_order = _validate_metric_order(metric_order)
         self.bins = bins
         self._perf_min, self._perf_max = perf_bounds
         self._grid: dict[tuple[int, int, int], Program] = {}
         self._complexity_max_chars: int = complexity_max_chars
         self._descriptor_axes: tuple[str, str, str] = descriptor_axes
+        self._metric_order: tuple[str, ...] = metric_order
         self._elite: list[Program] = []
+        self._pareto_elite: list[Program] = []
         self._elite_size = elite_archive_size
         self._rng = rng if rng is not None else random.Random()
         self._descriptor_model_revision = 0
@@ -119,6 +123,10 @@ class MAPElites:
             "search_state_changed": False,
             "sampling_eligible": False,
             "displaced_elite_ids": [],
+            "pareto_frontier_retained": False,
+            "pareto_frontier_replaced_ids": [],
+            "pareto_frontier_reason": "not_evaluated",
+            "pareto_frontier_size": 0,
         }
         selection_score = _selection_score(program)
         event["selection_score"] = selection_score if math.isfinite(selection_score) else None
@@ -149,9 +157,16 @@ class MAPElites:
         event["displaced_elite_ids"] = [
             program_id for program_id in before_trim_ids[self._elite_size :]
         ]
+        pareto_event = self._retain_pareto_frontier(program)
+        event.update(pareto_event)
         event["cell_admitted"] = event["entered_cell"]
         event["elite_retained"] = event["entered_elite"]
-        event["search_state_changed"] = event["cell_admitted"] or event["elite_retained"]
+        event["search_state_changed"] = (
+            event["cell_admitted"]
+            or event["elite_retained"]
+            or event["pareto_frontier_retained"]
+            or bool(event["pareto_frontier_replaced_ids"])
+        )
         if event["search_state_changed"]:
             self._commit_descriptor_state(program)
         event["sampling_eligible"] = event["entered_cell"]
@@ -162,8 +177,61 @@ class MAPElites:
             event["reason"] = "empty_cell"
         elif event["entered_elite"]:
             event["reason"] = "elite_only"
+        elif event["pareto_frontier_retained"]:
+            event["reason"] = "pareto_frontier_only"
         else:
             event["reason"] = "not_improving_cell"
+        return event
+
+    def _retain_pareto_frontier(self, program: Program) -> dict:
+        event = {
+            "pareto_frontier_retained": False,
+            "pareto_frontier_replaced_ids": [],
+            "pareto_frontier_reason": "no_declared_objective_metrics",
+            "pareto_frontier_size": len(self._pareto_elite),
+        }
+        vector = _objective_vector(program, self._metric_order)
+        if vector is None:
+            if self._metric_order:
+                event["pareto_frontier_reason"] = "incomplete_objective_vector"
+            return event
+        records = [
+            (candidate, candidate_vector)
+            for candidate in self._pareto_elite
+            if candidate.id != program.id
+            if (candidate_vector := _objective_vector(candidate, self._metric_order))
+            is not None
+        ]
+        previous_ids = {candidate.id for candidate, _ in records}
+        if any(
+            _objective_vector_dominates(candidate_vector, vector, self._metric_order)
+            for _, candidate_vector in records
+        ):
+            event["pareto_frontier_reason"] = "dominated_objective_vector"
+            return event
+        replaced_ids = [
+            candidate.id
+            for candidate, candidate_vector in records
+            if _objective_vector_dominates(vector, candidate_vector, self._metric_order)
+        ]
+        retained = [
+            candidate for candidate, _ in records if candidate.id not in set(replaced_ids)
+        ]
+        retained.append(program)
+        retained = _trim_pareto_frontier(retained, self._metric_order, self._elite_size)
+        self._pareto_elite = retained
+        retained_ids = {candidate.id for candidate in self._pareto_elite}
+        event["pareto_frontier_retained"] = program.id in retained_ids
+        event["pareto_frontier_replaced_ids"] = sorted(
+            program_id
+            for program_id in previous_ids | set(replaced_ids)
+            if program_id not in retained_ids
+        )
+        event["pareto_frontier_size"] = len(self._pareto_elite)
+        if event["pareto_frontier_retained"]:
+            event["pareto_frontier_reason"] = "non_dominated_objective_vector"
+        else:
+            event["pareto_frontier_reason"] = "bounded_archive_trimmed_candidate"
         return event
 
     def best(self) -> Program | None:
@@ -182,6 +250,9 @@ class MAPElites:
 
     def elite_archive(self) -> list[Program]:
         return list(self._elite)
+
+    def pareto_frontier_archive(self) -> list[Program]:
+        return list(self._pareto_elite)
 
     def state_snapshot(self) -> dict:
         return {
@@ -203,6 +274,24 @@ class MAPElites:
                 )
             ],
             "elite_program_ids": [program.id for program in self._elite],
+            "pareto_frontier_program_ids": [
+                program.id for program in self._pareto_elite
+            ],
+            "objective_archive_policy": {
+                "schema": "libreevolve.map_elites_objective_archive_policy.v1",
+                "status": "bounded_non_dominated_archive_retention",
+                "metric_order": list(self._metric_order),
+                "candidate_vector": "complete_normalized_declared_metrics_required",
+                "dominance": "all_metrics_greater_or_equal_and_one_strictly_greater",
+                "bound": self._elite_size,
+                "trim_policy": "crowding_distance_then_selection_score_then_fitness",
+                "sampling_policy": (
+                    "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
+                ),
+                "cell_replacement_policy": (
+                    "map_elites_cells_still_replace_by_scalar_selection_key"
+                ),
+            },
             "descriptor_policy": {
                 "schema": "libreevolve.map_elites_descriptor_policy.v1",
                 "axes": list(self._descriptor_axes),
@@ -262,13 +351,23 @@ class MAPElites:
                     f"{program_id!r}"
                 )
             elite.append(programs_by_id[program_id])
+        pareto_elite: list[Program] = []
+        for program_id in restored["pareto_frontier_program_ids"]:
+            if program_id not in programs_by_id:
+                raise ValueError(
+                    "MAP-Elites snapshot Pareto frontier references missing program id "
+                    f"{program_id!r}"
+                )
+            pareto_elite.append(programs_by_id[program_id])
         self._grid = grid
         self._elite = elite
+        self._pareto_elite = pareto_elite
         self._descriptor_model_revision = restored["descriptor_model"]["revision"]
         return {
             "status": "map_elites_state_restored",
             "occupied_cell_count": len(self._grid),
             "elite_count": len(self._elite),
+            "pareto_frontier_count": len(self._pareto_elite),
         }
 
 
@@ -343,6 +442,31 @@ def _validate_descriptor_axes(
     return (normalized[0], normalized[1], normalized[2])
 
 
+def _validate_metric_order(value: list[str] | tuple[str, ...] | None) -> tuple[str, ...]:
+    if value is None:
+        return ()
+    if not isinstance(value, (list, tuple)):
+        raise ValueError("MAP-Elites metric_order must be a list of metric names")
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for index, name in enumerate(value):
+        if not isinstance(name, str) or not name:
+            raise ValueError(
+                f"MAP-Elites metric_order[{index}] must be a metric name string"
+            )
+        try:
+            validate_program_metrics({name: 0.0})
+        except ValueError as exc:
+            raise ValueError(
+                f"MAP-Elites metric_order[{index}] is unsupported: {name!r}"
+            ) from exc
+        if name in seen:
+            raise ValueError("MAP-Elites metric_order must not contain duplicates")
+        seen.add(name)
+        normalized.append(name)
+    return tuple(normalized)
+
+
 def _is_supported_descriptor_axis(axis: str) -> bool:
     if axis in {"performance", "complexity", "diversity"}:
         return True
@@ -408,6 +532,90 @@ def _unit_interval(value: float) -> float:
     return max(0.0, min(1.0, value))
 
 
+def _objective_vector(
+    program: Program,
+    metric_order: tuple[str, ...],
+) -> dict[str, float] | None:
+    if not metric_order:
+        return None
+    raw = program.metadata.get("normalized_metrics")
+    if not isinstance(raw, dict):
+        return None
+    vector: dict[str, float] = {}
+    for name in metric_order:
+        value = raw.get(name)
+        if not _is_finite_real(value):
+            return None
+        numeric = float(value)
+        if numeric < 0.0 or numeric > 1.0:
+            return None
+        vector[name] = numeric
+    return vector
+
+
+def _objective_vector_dominates(
+    left: dict[str, float],
+    right: dict[str, float],
+    metric_order: tuple[str, ...],
+) -> bool:
+    return all(left[name] >= right[name] for name in metric_order) and any(
+        left[name] > right[name] for name in metric_order
+    )
+
+
+def _trim_pareto_frontier(
+    candidates: list[Program],
+    metric_order: tuple[str, ...],
+    limit: int,
+) -> list[Program]:
+    if len(candidates) <= limit:
+        return sorted(candidates, key=_selection_key, reverse=True)
+    crowding = _crowding_distances(candidates, metric_order)
+    return sorted(
+        candidates,
+        key=lambda program: (
+            crowding.get(program.id, 0.0),
+            *_selection_key(program),
+        ),
+        reverse=True,
+    )[:limit]
+
+
+def _crowding_distances(
+    candidates: list[Program],
+    metric_order: tuple[str, ...],
+) -> dict[str, float]:
+    distances = {program.id: 0.0 for program in candidates}
+    vectors = {
+        program.id: _objective_vector(program, metric_order) for program in candidates
+    }
+    for metric in metric_order:
+        ordered = sorted(
+            [
+                program
+                for program in candidates
+                if vectors.get(program.id) is not None
+            ],
+            key=lambda program: vectors[program.id][metric],  # type: ignore[index]
+        )
+        if not ordered:
+            continue
+        distances[ordered[0].id] = float("inf")
+        distances[ordered[-1].id] = float("inf")
+        if len(ordered) <= 2:
+            continue
+        lo = vectors[ordered[0].id][metric]  # type: ignore[index]
+        hi = vectors[ordered[-1].id][metric]  # type: ignore[index]
+        span = hi - lo
+        if span <= 0:
+            continue
+        for index in range(1, len(ordered) - 1):
+            previous_value = vectors[ordered[index - 1].id][metric]  # type: ignore[index]
+            next_value = vectors[ordered[index + 1].id][metric]  # type: ignore[index]
+            distances[ordered[index].id] += (next_value - previous_value) / span
+    return distances
+
+
 def _fitness_rejection_reason(value: object) -> str:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return "invalid_fitness_type"
@@ -452,10 +660,14 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
         "descriptor_policy",
         "descriptor_model",
     }
+    optional = {
+        "pareto_frontier_program_ids",
+        "objective_archive_policy",
+    }
     missing = required - set(snapshot)
     if missing:
         raise ValueError(f"MAP-Elites snapshot missing fields: {sorted(missing)}")
-    unsupported = set(snapshot) - required
+    unsupported = set(snapshot) - required - optional
     if unsupported:
         raise ValueError(f"MAP-Elites snapshot has unsupported fields: {sorted(unsupported)}")
     if snapshot["schema"] != "libreevolve.map_elites_state.v1":
@@ -492,6 +704,19 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     )
     if len(elite_program_ids) > archive._elite_size:
         raise ValueError("MAP-Elites snapshot elite_program_ids exceeds configured size")
+    pareto_frontier_program_ids = _validate_snapshot_program_id_list(
+        snapshot.get("pareto_frontier_program_ids", []),
+        "pareto_frontier_program_ids",
+    )
+    if len(pareto_frontier_program_ids) > archive._elite_size:
+        raise ValueError(
+            "MAP-Elites snapshot pareto_frontier_program_ids exceeds configured size"
+        )
+    _validate_objective_archive_policy(
+        snapshot.get("objective_archive_policy"),
+        archive,
+        pareto_frontier_program_ids,
+    )
     if not isinstance(
         descriptor_policy.get("diversity_reference_program_ids"),
         list,
@@ -515,8 +740,91 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     return {
         "cells": cells,
         "elite_program_ids": elite_program_ids,
+        "pareto_frontier_program_ids": pareto_frontier_program_ids,
         "descriptor_model": descriptor_model,
     }
+
+
+def _validate_objective_archive_policy(
+    value: object,
+    archive: MAPElites,
+    pareto_frontier_program_ids: list[str],
+) -> None:
+    if value is None:
+        if pareto_frontier_program_ids:
+            raise ValueError(
+                "MAP-Elites snapshot objective_archive_policy is required with Pareto frontier ids"
+            )
+        return
+    if not isinstance(value, dict):
+        raise ValueError("MAP-Elites snapshot objective_archive_policy must be an object")
+    required = {
+        "schema",
+        "status",
+        "metric_order",
+        "candidate_vector",
+        "dominance",
+        "bound",
+        "trim_policy",
+        "sampling_policy",
+        "cell_replacement_policy",
+    }
+    missing = required - set(value)
+    if missing:
+        raise ValueError(
+            f"MAP-Elites snapshot objective_archive_policy missing fields: {sorted(missing)}"
+        )
+    unsupported = set(value) - required
+    if unsupported:
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy has unsupported fields: "
+            f"{sorted(unsupported)}"
+        )
+    if value["schema"] != "libreevolve.map_elites_objective_archive_policy.v1":
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy schema is unsupported"
+        )
+    if value["status"] != "bounded_non_dominated_archive_retention":
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.status is unsupported"
+        )
+    if _validate_metric_order(value["metric_order"]) != archive._metric_order:
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.metric_order must match archive"
+        )
+    if value["candidate_vector"] != "complete_normalized_declared_metrics_required":
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.candidate_vector is unsupported"
+        )
+    if (
+        value["dominance"]
+        != "all_metrics_greater_or_equal_and_one_strictly_greater"
+    ):
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.dominance is unsupported"
+        )
+    if value["bound"] != archive._elite_size:
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.bound must match archive"
+        )
+    if value["trim_policy"] != "crowding_distance_then_selection_score_then_fitness":
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.trim_policy is unsupported"
+        )
+    if (
+        value["sampling_policy"]
+        != "eligible_for_metric_and_frontier_sampling_via_island_retained_pool"
+    ):
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.sampling_policy is unsupported"
+        )
+    if (
+        value["cell_replacement_policy"]
+        != "map_elites_cells_still_replace_by_scalar_selection_key"
+    ):
+        raise ValueError(
+            "MAP-Elites snapshot objective_archive_policy.cell_replacement_policy is unsupported"
+        )
 
 
 def _validate_map_elites_descriptor_model(

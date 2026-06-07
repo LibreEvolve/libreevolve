@@ -175,7 +175,7 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
         "replay_engine_supported": False,
         "archive_contents_restore_covers_current_placements": True,
         "limitations": [
-            "migration_event_order_not_replayed",
+            "migration_event_order_not_applied_as_restore_engine",
             "migration_skip_events_not_reconstructed",
             "controller_pending_work_not_restored",
         ],
@@ -185,8 +185,18 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
         second.id: 2,
     }
     assert snapshot["islands"] == [
-        {"island_id": 0, "occupied_cell_count": 1, "elite_count": 1},
-        {"island_id": 1, "occupied_cell_count": 1, "elite_count": 1},
+        {
+            "island_id": 0,
+            "occupied_cell_count": 1,
+            "elite_count": 1,
+            "pareto_frontier_count": 0,
+        },
+        {
+            "island_id": 1,
+            "occupied_cell_count": 1,
+            "elite_count": 1,
+            "pareto_frontier_count": 0,
+        },
     ]
 
 
@@ -248,12 +258,14 @@ def test_restore_archive_state_rehydrates_cells_and_elites():
             "status": "map_elites_state_restored",
             "occupied_cell_count": 1,
             "elite_count": 1,
+            "pareto_frontier_count": 0,
         },
         {
             "island_id": 1,
             "status": "map_elites_state_restored",
             "occupied_cell_count": 1,
             "elite_count": 1,
+            "pareto_frontier_count": 0,
         },
     ]
     assert restored.best().id == first.id
@@ -435,6 +447,48 @@ def test_frontier_parent_sampling_cycles_non_dominated_programs():
         "selected_program_id": balanced.id,
         "frontier_index": 0,
         "frontier_size": 3,
+        "metric_order": ["accuracy", "latency"],
+    }
+
+
+def test_frontier_sampling_includes_pareto_only_archive_retention():
+    m = IslandModel(
+        Config(n_islands=1, migration_interval=5, map_elites_bins=1, elite_archive_size=2),
+        metric_order=["accuracy", "latency"],
+    )
+    balanced = _pmeta(
+        code="balanced",
+        fitness=0.90,
+        metrics={"accuracy": 0.70, "latency": 0.70},
+    )
+    latency = _pmeta(
+        code="latency",
+        fitness=0.80,
+        metrics={"accuracy": 0.70, "latency": 0.95},
+    )
+    accuracy = _pmeta(
+        code="accuracy",
+        fitness=0.10,
+        metrics={"accuracy": 0.95, "latency": 0.70},
+    )
+    m.add(balanced)
+    m.add(latency)
+    event = m.add(accuracy)
+
+    assert event["reason"] == "pareto_frontier_only"
+    assert event["pareto_frontier_retained"] is True
+    assert [program.id for program in m.sample_diverse(k=2, strategy="frontier")] == [
+        latency.id,
+        accuracy.id,
+    ]
+    assert m.last_sample_metadata() == {
+        "strategy": "frontier",
+        "sample_kind": "diverse",
+        "requested_count": 2,
+        "selected_count": 2,
+        "selected_program_ids": [latency.id, accuracy.id],
+        "excluded_count": 0,
+        "frontier_size": 2,
         "metric_order": ["accuracy", "latency"],
     }
 

@@ -1812,7 +1812,8 @@ Archive state is only partially serialized. `history.jsonl` contains evaluated
 candidates and per-candidate archive admission events, `archive_events.jsonl`
 contains versioned migration placement events, and the run manifest records
 canonical-id migration policy plus final archive cursor state and per-island
-MAP-Elites cell/elite snapshots. Those snapshots are restore inputs for
+MAP-Elites cell/elite snapshots plus bounded Pareto-frontier archive ids over
+complete declared normalized metric vectors. Those snapshots are restore inputs for
 `ProgramDatabase`, direct `evolve()` calls, and CLI runs when paired with
 checked accepted-history `Program` snapshots. They still do not provide
 restore-ready ordered migration replay, controller queues, pending-work state,
@@ -1823,7 +1824,8 @@ manifest-safe program ids, island ids, cell coordinates, and finite/null
 selection scores. It does not apply those events back into an archive.
 `metadata.archive_admission` records threshold rejection, island id, cell
 coordinates, descriptor values, previous occupant id, cell replacement status,
-elite-list entry, and displaced elite ids for each program.
+elite-list entry, displaced elite ids, and Pareto-frontier retention fields for
+each program.
 `archive_contents[].descriptor_axes`, `descriptor_policy.axes`, and
 `descriptor_model.axes` record the configured MAP-Elites descriptor axes.
 MAP-Elites defaults to performance, serialized-workspace complexity, and
@@ -1832,7 +1834,10 @@ numeric evaluator metadata, or numeric candidate metadata. Complexity uses the
 configured `map_elites_complexity_max_chars` bound over serialized workspace
 text. Diversity uses adaptive TF-IDF character n-grams up to length 4 against
 the current capped elite corpus. Existing cells are not rebinned when that
-diversity reference corpus changes.
+diversity reference corpus changes. `objective_archive_policy` records the
+bounded non-dominated Pareto retention policy, declared metric order, complete
+normalized-vector requirement, and the fact that MAP-Elites cell replacement
+still uses scalar selection score rather than Pareto dominance.
 Rejected non-admitted candidates also leave the island assignment cursor on the
 same island for the next retained archive-state change. The final runtime
 archive-state snapshot records that cursor for inspection and restore. Full

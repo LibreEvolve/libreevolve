@@ -604,6 +604,20 @@ def test_run_can_restore_archive_cursor_snapshot_from_manifest(tmp_path):
     assert r.exit_code == 0
     expected_snapshot = {
         **snapshot,
+        "islands": [
+            {
+                "island_id": 0,
+                "occupied_cell_count": 1,
+                "elite_count": 1,
+                "pareto_frontier_count": 0,
+            },
+            {
+                "island_id": 1,
+                "occupied_cell_count": 1,
+                "elite_count": 1,
+                "pareto_frontier_count": 0,
+            },
+        ],
         "migration_replay": {
             "schema": "libreevolve.island_migration_replay_policy.v1",
             "status": "not_applied_as_restore_engine",
@@ -615,7 +629,7 @@ def test_run_can_restore_archive_cursor_snapshot_from_manifest(tmp_path):
             "replay_engine_supported": False,
             "archive_contents_restore_covers_current_placements": True,
             "limitations": [
-                "migration_event_order_not_replayed",
+                "migration_event_order_not_applied_as_restore_engine",
                 "migration_skip_events_not_reconstructed",
                 "controller_pending_work_not_restored",
             ],

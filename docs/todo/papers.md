@@ -87,8 +87,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     criteria now exist, and full-runtime restore now pre-applies replayed
     provider-attempt/token/configured-cost/latency controller events to the
     restored `evolve()` budget snapshot. Accelerator budgets, async queue
-    accounting, live provider pricing capture, and executed equal-budget
-    benchmark scripts are still missing.
+    accounting, live provider pricing/default-rate capture beyond configured
+    token-cost estimates, and executed equal-budget benchmark scripts are still
+    missing.
     `libreevolve.alphaevolve_ablation_report.v1` now defines and tests an
     executed ablation-result contract for all six Figure 8 variants, declared
     targets, exactly three seeds, required equal-budget fractions, finite
@@ -169,8 +170,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     gap. Remaining budget/runtime gaps are live hard cancellation handles,
     timeout-driven stop enforcement beyond audit observations, richer
     role-specific timeout/cancellation artifacts, accelerator/worker budget
-    enforcement, live provider pricing capture, provider-output replay, and
-    async/pending-work controller restore. The remaining gap is not
+    enforcement, live provider pricing/default-rate capture beyond configured
+    token-cost estimates, provider-output replay, and async/pending-work
+    controller restore. The remaining gap is not
     remaining-runtime wait-deadline propagation, timeout call telemetry,
     mutation timeout failure-history logging, or one-command restoration of
     replayable provider-attempt/token/configured-cost/latency controller events

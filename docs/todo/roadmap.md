@@ -43,3 +43,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     update the roadmap, README, papers index, and code/paper TODO entries
     together so they neither underclaim current timeout policy evidence nor
     overclaim provider hard-cancel enforcement.
+
+- [ ] Keep provider-pricing roadmap wording scoped to configured estimates
+  versus live/default-rate capture.
+  - Spec evidence: AlphaEvolve-scale provider accounting needs cost evidence
+    that survives provider, model, and default-rate changes; configured local
+    rates are useful run policy but are not live provider pricing discovery.
+  - Current evidence: backend specs can now set
+    `cost_usd_per_million_tokens`, provider usage `total_tokens` feeds
+    configured `cost_estimate` records, runtime accounting accumulates
+    configured cost, and diagnostics explicitly mark live pricing as
+    not fetched. The roadmap now names live provider pricing/default-rate
+    capture beyond configured token-cost estimates as the remaining gap.
+  - Required result: when live provider pricing discovery, provider default
+    rate capture, or account/model-specific pricing evidence lands, update the
+    roadmap, README, papers index, and code/paper TODO entries together so they
+    neither underclaim configured cost accounting nor overclaim live pricing.

@@ -4336,6 +4336,21 @@ def test_prompt_context_policy_rejects_invalid_proposal_metadata_enabled_flag():
         validate_prompt_context_policy({"proposal_metadata_enabled": "true"})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_max_chars():
+    assert validate_prompt_context_policy({"parent_code_max_chars": 0})[
+        "parent_code_max_chars"
+    ] == 0
+    assert validate_prompt_context_policy({"parent_code_max_chars": 12})[
+        "parent_code_max_chars"
+    ] == 12
+
+    with pytest.raises(PromptTemplateError, match="parent_code_max_chars"):
+        validate_prompt_context_policy({"parent_code_max_chars": -1})
+
+    with pytest.raises(PromptTemplateError, match="parent_code_max_chars"):
+        validate_prompt_context_policy({"parent_code_max_chars": True})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -6932,6 +6947,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "prompt_context_policy": context_policy,
         "failure_memory_policy": sampler.last_metadata["failure_memory_policy"],
         "inspiration_policy": sampler.last_metadata["inspiration_policy"],
+        "parent_code_policy": sampler.last_metadata["parent_code_policy"],
         "extra_context_policy": sampler.last_metadata["extra_context_policy"],
         "section_budget": section_budget,
         "prompt_sha256": sampler.last_metadata["prompt_sha256"],
@@ -6945,6 +6961,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "mutation_instruction_variant": "default",
         "mutation_instruction_include_example": True,
         "proposal_metadata_enabled": None,
+        "parent_code_max_chars": None,
         "inspiration_strategy": None,
         "inspiration_required_metric": None,
         "inspiration_excluded_metrics": [],
@@ -8051,6 +8068,47 @@ def test_prompt_context_policy_overrides_proposal_metadata_instruction():
     assert sampler.last_metadata["prompt_context_policy"][
         "proposal_metadata_enabled"
     ] is False
+
+
+def test_prompt_context_policy_caps_required_parent_code_channel():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        code="def solve():\n    return '" + ("A" * 500) + "'\n",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={"parent_code_max_chars": 120},
+    )
+
+    assert "A" * 200 not in prompt
+    assert "...[truncated " in prompt
+    assert "SEARCH" in prompt
+    policy = sampler.last_metadata["parent_code_policy"]
+    assert policy["schema"] == "libreevolve.parent_code_policy.v1"
+    assert policy["max_chars"] == 120
+    assert policy["source"] == "prompt_context_policy"
+    assert policy["truncated"] is True
+    assert policy["original_chars"] > policy["rendered_chars"]
+    assert policy["omitted_chars"] > 0
+    assert len(policy["original_sha256"]) == 64
+    assert len(policy["rendered_sha256"]) == 64
+    assert sampler.last_metadata["prompt_context_policy"]["parent_code_max_chars"] == 120
 
 
 @pytest.mark.parametrize(

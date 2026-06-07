@@ -124,7 +124,8 @@ _META_PROMPT_CONTEXT_POLICY_CAPABILITIES = {
     "schema": "libreevolve.meta_prompt_context_policy_capabilities.v1",
     "channel_controls": (
         "disabled_sections,section_priorities,mutation_instruction_variant,"
-        "mutation_instruction_include_example,proposal_metadata_enabled"
+        "mutation_instruction_include_example,proposal_metadata_enabled,"
+        "parent_code_max_chars"
     ),
     "feedback_selection": (
         "feedback_sections,feedback_section_order,feedback_section_max_chars_by_name,"

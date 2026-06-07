@@ -582,6 +582,10 @@ class PromptSampler:
             or self.artifact_content_max_chars
         )
         self.last_context_text = context
+        parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
+            _render_program_files(parent),
+            prompt_context_policy["parent_code_max_chars"],
+        )
         render_values = {
             "task": task,
             "context": context,
@@ -765,7 +769,7 @@ class PromptSampler:
                     "timeout_cleanup_max_chars_by_field"
                 ],
             ),
-            "parent_code": _render_program_files(parent),
+            "parent_code": parent_code,
             "inspirations": _render_inspirations(
                 inspirations,
                 problem,
@@ -1056,6 +1060,7 @@ class PromptSampler:
             inspirations,
             prompt_context_policy["inspiration_limit"],
         )
+        metadata["parent_code_policy"] = parent_code_policy_metadata
         metadata["extra_context_policy"] = extra_context_policy_metadata
         metadata["section_budget"] = section_budget
         if format_metadata["enabled"]:
@@ -1279,6 +1284,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant",
         "mutation_instruction_include_example",
         "proposal_metadata_enabled",
+        "parent_code_max_chars",
         "inspiration_strategy",
         "inspiration_required_metric",
         "inspiration_excluded_metrics",
@@ -1421,6 +1427,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     proposal_metadata_enabled = _validate_prompt_context_proposal_metadata_enabled(
         value.get("proposal_metadata_enabled")
+    )
+    parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
+        value.get("parent_code_max_chars")
     )
     inspiration_strategy = _validate_prompt_context_inspiration_strategy(
         value.get("inspiration_strategy")
@@ -1885,6 +1894,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant": mutation_instruction_variant,
         "mutation_instruction_include_example": mutation_instruction_include_example,
         "proposal_metadata_enabled": proposal_metadata_enabled,
+        "parent_code_max_chars": parent_code_max_chars,
         "inspiration_strategy": inspiration_strategy,
         "inspiration_required_metric": inspiration_required_metric,
         "inspiration_excluded_metrics": inspiration_excluded_metrics,
@@ -2052,6 +2062,7 @@ def apply_prompt_context_policy(
             "mutation_instruction_include_example"
         ],
         "proposal_metadata_enabled": policy["proposal_metadata_enabled"],
+        "parent_code_max_chars": policy["parent_code_max_chars"],
         "inspiration_strategy": policy["inspiration_strategy"],
         "inspiration_required_metric": policy["inspiration_required_metric"],
         "inspiration_excluded_metrics": list(policy["inspiration_excluded_metrics"]),
@@ -2387,6 +2398,17 @@ def _validate_prompt_context_proposal_metadata_enabled(
         raise PromptTemplateError(
             "prompt context_policy.proposal_metadata_enabled "
             "must be boolean or null"
+        )
+    return value
+
+
+def _validate_prompt_context_parent_code_max_chars(value: object) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_max_chars "
+            "must be a non-negative integer or null"
         )
     return value
 
@@ -5337,6 +5359,51 @@ def _prompt_section_packing_marker(
         "[omitted by prompt section packer: "
         f"{field_name}, {original_chars} chars, prompt_max_chars={max_chars}]"
     )
+
+
+def _apply_parent_code_policy(
+    parent_code: str,
+    max_chars: int | None,
+) -> tuple[str, dict]:
+    if not isinstance(parent_code, str):
+        parent_code = str(parent_code)
+    original_chars = len(parent_code)
+    metadata = {
+        "schema": "libreevolve.parent_code_policy.v1",
+        "max_chars": max_chars,
+        "source": (
+            "prompt_context_policy"
+            if max_chars is not None
+            else "default_full_parent_workspace"
+        ),
+        "original_chars": original_chars,
+        "rendered_chars": original_chars,
+        "omitted_chars": 0,
+        "truncated": False,
+        "original_sha256": hashlib.sha256(parent_code.encode("utf-8")).hexdigest(),
+        "rendered_sha256": hashlib.sha256(parent_code.encode("utf-8")).hexdigest(),
+        "policy": "required_parent_code_channel_char_cap_v1",
+    }
+    if max_chars is None or original_chars <= max_chars:
+        return parent_code, metadata
+    if max_chars == 0:
+        rendered = (
+            "[parent code omitted by prompt context policy: "
+            f"{original_chars} chars]"
+        )
+        omitted_chars = original_chars
+    else:
+        rendered = _truncate_text(parent_code, max_chars)
+        omitted_chars = max(0, original_chars - len(rendered))
+    metadata.update(
+        {
+            "rendered_chars": len(rendered),
+            "omitted_chars": omitted_chars,
+            "truncated": True,
+            "rendered_sha256": hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
+        }
+    )
+    return rendered, metadata
 
 
 def _required_prompt_chars_with_overhead(

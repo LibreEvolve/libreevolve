@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code cap.
+  - Spec evidence: AlphaEvolve-style prompt/context evolution needs control
+    over required code/context volume, not only optional prompt channels.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts nullable
+    `parent_code_max_chars`. `PromptSampler` applies it to the required
+    `{parent_code}` channel, rendering a bounded parent workspace or an
+    explicit omission marker for `0`, and records `parent_code_policy`
+    diagnostics with schema `libreevolve.parent_code_policy.v1`, policy source,
+    configured cap, original/rendered/omitted character counts, truncation
+    status, and original/rendered SHA-256 hashes. The meta-prompt
+    context-policy capability manifest advertises the field.
+  - Remaining gap: this is a character cap on required parent-code rendering,
+    not semantic/code-aware summarization, selected-backend tokenizer wiring,
+    or full provider-token/cost budget replay.
+  - Verification: focused prompt tests cover validation, parent-code
+    capping/metadata, and canonical metadata defaults; focused loop
+    meta-prompt tests cover accepted policy JSON carrying the field.
+
 - [x] Add provider-token counter hook for prompt section packing.
   - Spec evidence: AlphaEvolve-style long-context prompt construction needs
     deterministic packing against the selected model's token budget, not only

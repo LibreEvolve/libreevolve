@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code context cap.
+  - Paper evidence: AlphaEvolve prompt context can include prior code and
+    execution-derived state; meta-prompt evolution should be able to control
+    required context volume, not only optional rendered sections.
+  - Status: prompt context policy now accepts nullable
+    `parent_code_max_chars`, and direct prompt rendering applies it to the
+    required parent-code workspace channel while preserving an explicit
+    omission marker for `0`. Prompt diagnostics persist
+    `libreevolve.parent_code_policy.v1` metadata with source, cap,
+    truncation, character counts, and hashes, and the meta-prompt capability
+    manifest exposes the field to LLM-mutated policy JSON.
+  - Remaining paper gap: this is bounded character-level parent-code control,
+    not semantic parent-workspace summarization, automatic tokenizer-budgeted
+    backend packing, or full replayable provider budget state.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add provider-token counter evidence for prompt section packing.
   - Paper evidence: AlphaEvolve prompt construction is model-context-budgeted;
     useful long-context replay evidence needs token-aware prompt packing

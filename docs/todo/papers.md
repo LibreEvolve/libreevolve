@@ -1931,6 +1931,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     validated aggregate percentages before claiming Section 3.2-style
     mathematical breadth or SOTA-improvement rates.
 
+- [ ] Track simple/random starting-construction evidence for constructive math.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says that in
+    the constructive-math cases summarized by the best-known rediscovery and
+    SOTA-improvement percentages, "the initial starting point was a simple or a
+    random construction."
+  - Current gap: paper-facing seed status preserves generation-0 source
+    identity and separately tracks strict seed validity plus human-seeded
+    matrix-result provenance. The Appendix B registry and aggregate outcome
+    TODOs still do not require per-instance starting-construction class,
+    random-generator/seed provenance, initial construction payload or hash,
+    baseline metric value, or a policy proving that prior-best/incumbent
+    constructions were not silently embedded as the starting point.
+  - Required result: add paper/report evidence for each constructive-math
+    problem instance: starting-construction class (`simple`, `random`,
+    `human_seeded`, or `prior_art_seeded`), construction artifact/hash,
+    generator and random seed where relevant, baseline value, prior-best
+    visibility/seeding policy, and aggregate validation that Section 3.2-style
+    breadth claims are supported by simple/random starts unless explicitly
+    labeled otherwise.
+
 - [ ] Track Appendix B result-version provenance for revised constants.
   - Paper evidence: Appendix B.4 reports an uncertainty-inequality construction
     with `C4 <= 0.3521`, then adds a note that after the first manuscript

@@ -1759,6 +1759,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording neither underclaims the current Appendix B family
     registry nor overclaims AlphaEvolve-style mathematical breadth evidence.
 
+- [ ] Keep constructive-math roadmap wording scoped until simple/random
+      starting-construction provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point in
+    the constructive-math cases was a simple or random construction.
+  - Current evidence: roadmap/README/paper-index wording covers seed
+    provenance, strict seed-validity gaps, human-seeded matrix caveats,
+    Appendix B family/status coverage, and aggregate constructive-math outcome
+    gaps. It does not require constructive-math report metadata for starting
+    construction class, random generator and seed, construction artifact/hash,
+    baseline metric value, or prior-best visibility/seeding policy.
+  - Required result: when constructive-math reports validate simple/random
+    starting-construction provenance, update ROADMAP, README, papers index, and
+    code/paper TODOs so roadmap wording distinguishes aggregate Appendix B
+    outcome coverage from AlphaEvolve's claim that those runs began from
+    simple or random constructions.
+
 - [ ] Keep Figure 5 roadmap wording scoped until construction-exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking

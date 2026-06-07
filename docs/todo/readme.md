@@ -884,6 +884,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes Appendix B family coverage from AlphaEvolve-style aggregate
     mathematical breadth and SOTA-rate claims.
 
+- [ ] Keep README constructive-math starting-point wording scoped until
+      simple/random construction provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.2 says the initial starting point for
+    the constructive-math cases was a simple or random construction.
+  - Current evidence: README can describe seed/source provenance, invalid
+    optimization-pressure seeds, Appendix B family/status coverage, aggregate
+    outcome gaps, and human-seeded matrix-result caveats. It does not yet
+    document constructive-math report fields that classify each initial
+    construction as simple, random, human-seeded, or prior-art-seeded, preserve
+    the construction artifact/hash and generator seed, record the baseline
+    value, or prove that aggregate Section 3.2 claims are not based on hidden
+    incumbent construction seeding.
+  - Required result: when constructive-math starting-construction provenance
+    lands, update README, ROADMAP, papers index, and code/paper TODOs together
+    so README distinguishes Appendix B family coverage and aggregate outcomes
+    from the paper's simple/random-start claim.
+
 - [ ] Keep README Figure 5 constructive-math wording scoped until exhibit
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 5 shows selected SOTA-breaking

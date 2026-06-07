@@ -1793,6 +1793,26 @@ Primary evidence:
     and validated aggregate counts/percentages before claiming AlphaEvolve-
     style breadth across dozens of mathematical problems.
 
+- [ ] Add simple/random starting-construction provenance for constructive-math
+      benchmarks.
+  - Spec evidence: AlphaEvolve Section 3.2 says that, for the broad set of
+    constructive mathematical problems where it matched or improved prior
+    bests, "the initial starting point was a simple or a random construction."
+  - Current evidence: seed provenance records safe source paths, generation-0
+    baselines, skipped seed diagnostics, and separate strict-seed/human-seeded
+    matrix TODOs. The Appendix B registry and aggregate constructive-math TODOs
+    do not record whether each constructive-math run began from a simple
+    deterministic construction or a random construction, which random seed or
+    generator produced it, its initial metric value, or whether benchmark
+    prompts/evaluators prevented hidden prior-best construction seeding.
+  - Required result: add constructive-math benchmark/report fields for
+    starting-construction class (`simple`, `random`, or explicitly
+    `human_seeded`/`prior_art_seeded` where applicable), construction payload
+    or artifact hash, generator/seed provenance, baseline metric value,
+    prior-best visibility policy, and validation that Section 3.2-style
+    aggregate claims are backed by simple/random starts rather than undocumented
+    incumbent or expert-seeded constructions.
+
 - [ ] Add Appendix B result-version provenance for revised mathematical
       constants.
   - Spec evidence: AlphaEvolve Appendix B includes result-level details that

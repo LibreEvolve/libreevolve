@@ -201,6 +201,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     paper-specific `No full-file evolution` setup where only the tensor
     decomposition loss function is evolved; generic single-file/diff/no-topology
     labels should not be described as equivalent to that ablation.
+    The report contract is also target-family generic: it validates declared
+    targets but not Figure 8's matrix tensor-decomposition and kissing-number
+    sphere-packing families, and it does not require per-target
+    mean/standard-deviation curve summaries over three independent seeds.
   - Required result: when benchmark scripts emit executed equal-budget
     ablation reports, when component assertions are bound to supported runtime
     config controls, or when accelerator/async-worker budgets land, update
@@ -208,7 +212,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims current token/configured-cost budget stops nor
     overclaims AlphaEvolve-style executed ablations. For `No full-file
     evolution`, require README wording to distinguish a real loss-function-only
-    tensor-decomposition harness from broader localized-edit settings.
+    tensor-decomposition harness from broader localized-edit settings. Require
+    README wording to distinguish generic ablation-result schemas from
+    Figure 8-equivalent matrix/kissing target-family reports with validated
+    mean and standard-deviation curves.
 
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.

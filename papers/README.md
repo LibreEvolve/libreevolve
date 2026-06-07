@@ -58,7 +58,10 @@ metadata, but it does not claim those reports have been run. Its
 `No full-file evolution` row is not yet bound to the paper's
 tensor-decomposition loss-function-only ablation; the current labels are
 definition-only component assertions, not executable proof that only the loss
-function is mutable.
+function is mutable. The report contract is also target-family generic: it
+does not require Figure 8's matrix tensor-decomposition and kissing-number
+sphere-packing target families or validate mean/standard-deviation curve
+summaries against the three independent seed traces.
 For AlphaEvolve context-ingestion status, "deterministic selection provenance"
 means path-segment-aware local context globs: `*` stays within one path
 component and `**` recursively matches zero or more components.

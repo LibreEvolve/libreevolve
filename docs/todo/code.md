@@ -1900,6 +1900,29 @@ Primary evidence:
     distinguish AlphaEvolve's localized loss-function ablation from generic
     single-file, diff-only, or no-topology-mutation runs.
 
+- [ ] Bind Figure 8 ablation reports to matrix and kissing-number target
+      families with curve-aggregation evidence.
+  - Spec evidence: AlphaEvolve Section 4/Figure 8 evaluates ablations on two
+    task families: low-rank tensor decompositions for faster matrix
+    multiplication and lower-bound constructions for kissing numbers. The
+    plotted curves average each setting over considered targets and show
+    intra-target standard deviation over three independent runs initialized
+    with different random seeds.
+  - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` validates
+    declared targets, six variant ids, three seeds, required budget fractions,
+    finite scores, consumed-budget consistency, component assertions, and
+    hashed curve artifacts. The focused tests use `hello_world` as a small
+    deterministic placeholder target, and the report schema does not require a
+    target-family label, matrix-vs-kissing coverage, per-target aggregation
+    records, intra-target standard-deviation curves, or linkage from curve
+    summaries back to target-specific seed records.
+  - Required result: extend ablation reports or generated curve artifacts with
+    target-family metadata for `matrix_tensor_decomposition` and
+    `kissing_number_sphere_packing`, per-target and cross-target aggregation
+    summaries, three-seed mean/standard-deviation traces at each budget
+    fraction, and validation that Figure 8-style reports are produced from the
+    paper-relevant target families rather than arbitrary smoke targets.
+
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
     provider latency and stalled model calls must be bounded and attributable to

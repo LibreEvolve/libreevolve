@@ -1272,6 +1272,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve's tensor-decomposition-specific loss-function-only restriction;
     broad single-file/diff/no-create-delete labels are not the same as proving
     only the loss function was mutable.
+    The current report contract is also target-family generic: tests use a
+    placeholder `hello_world` target, and neither the registry nor report
+    validator requires Figure 8's matrix tensor-decomposition and
+    kissing-number sphere-packing target families, per-target curve summaries,
+    or intra-target standard-deviation evidence over three independent seeds.
   - Required result: when runnable ablation harnesses, backend/seed/prompt/
     archive script entrypoints, component-assertion-to-config binding,
     progress-at-budget-fraction exports, or generated report bundles land,
@@ -1280,7 +1285,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     report contract nor overclaims repeatable AlphaEvolve-grade benchmark
     execution. Ensure the `No full-file evolution` harness records the
     loss-function target scope, fixed tensor-search components, and report
-    evidence before claiming parity with Figure 8.
+    evidence before claiming parity with Figure 8. Also require ablation
+    reports to identify the matrix and kissing-number target families and
+    validate mean/standard-deviation curve summaries against per-target
+    three-seed records before treating generic declared-target reports as
+    Figure 8-equivalent.
 
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
       valid mutation selection.

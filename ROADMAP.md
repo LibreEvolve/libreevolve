@@ -170,9 +170,10 @@ is not yet an AlphaEvolve reproduction.
   default-provider plus custom-provider provenance tests.
 - Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
   preamble into a richer versioned proposal object only if needed; remaining
-  work is proposal scoring, indexed retrieval, hypothesis-refinement loops, and
-  stricter policy for which proposal fields may influence retrieval, prompting,
-  and archive resurfacing.
+  work is proposal scoring, semantic proposal-index retrieval beyond the
+  bounded manifest `runtime.history.hypothesis_index`, hypothesis-refinement
+  loops, and stricter policy for which proposal fields may influence
+  retrieval, prompting, and archive resurfacing.
 - Improve meta-prompt scoring beyond direct child score and add ablation
   reporting for prompt-program lineages, including documented prompt reward
   normalization and selection policy.

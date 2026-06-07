@@ -1955,6 +1955,10 @@ term hash/count, ranked file order, scores, and a ranking hash.
 including `0` to suppress mutable parent file bodies; diagnostics record
 pre-limit order, selected/omitted file counts, omitted files, and a selection
 hash.
+`parent_code_max_chars_by_path` can cap rendered parent file bodies by safe
+candidate-relative path before the aggregate parent-code cap applies;
+diagnostics record per-file original/rendered/omitted character counts,
+truncation status, and unused cap paths.
 `parent_code_max_chars` can cap or suppress the
 required parent-code channel without removing the placeholder contract; prompt
 diagnostics record `parent_code_policy` with schema

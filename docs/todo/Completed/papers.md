@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code per-file content caps.
+  - Paper evidence: AlphaEvolve prompt context can include prior code, and
+    prompt-context evolution should be able to budget individual required code
+    files before aggregate prompt caps apply.
+  - Status: prompt context policy now accepts `parent_code_max_chars_by_path`,
+    mapping safe candidate-relative parent file paths to non-negative character
+    caps. Direct prompt rendering applies the caps to selected mutable parent
+    files and persists original/rendered/omitted character counts, truncation
+    status, applied caps, and unused cap paths under
+    `libreevolve.parent_code_policy.v1`.
+  - Remaining paper gap: this is deterministic per-file text capping, not
+    semantic parent-code compression, dependency-aware summarization, or
+    provider context allocation.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code render-count limiting.
   - Paper evidence: AlphaEvolve prompt context can include prior code, and
     prompt-context evolution should have replayable controls over how many

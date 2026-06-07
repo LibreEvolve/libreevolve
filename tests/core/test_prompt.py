@@ -4426,6 +4426,25 @@ def test_prompt_context_policy_rejects_invalid_parent_code_limit():
         validate_prompt_context_policy({"parent_code_limit": True})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_file_caps():
+    assert validate_prompt_context_policy(
+        {"parent_code_max_chars_by_path": {"main.py": 0, "pkg/helper.py": 12}}
+    )["parent_code_max_chars_by_path"] == {"main.py": 0, "pkg/helper.py": 12}
+
+    with pytest.raises(PromptTemplateError, match="parent_code_max_chars_by_path"):
+        validate_prompt_context_policy(
+            {"parent_code_max_chars_by_path": {"../escape.py": 12}}
+        )
+
+    with pytest.raises(PromptTemplateError, match="parent_code_max_chars_by_path"):
+        validate_prompt_context_policy(
+            {"parent_code_max_chars_by_path": {"main.py": -1}}
+        )
+
+    with pytest.raises(PromptTemplateError, match="parent_code_max_chars_by_path"):
+        validate_prompt_context_policy({"parent_code_max_chars_by_path": ["main.py"]})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -7042,6 +7061,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "parent_code_ranking_terms": [],
         "parent_code_order_policy": "path_order",
         "parent_code_limit": None,
+        "parent_code_max_chars_by_path": {},
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
         "inspiration_strategy": None,
@@ -8289,6 +8309,8 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "ranking_terms": [],
         "parent_code_order_policy": policy["path_policy"]["parent_code_order_policy"],
         "parent_code_limit": None,
+        "max_chars_by_path": {},
+        "unused_content_cap_paths": [],
         "pre_limit_rendered_paths": ["helper.py"],
         "rendered_paths": ["helper.py"],
         "omitted_paths": ["main.py", "unused.py"],
@@ -8305,6 +8327,7 @@ def test_prompt_context_policy_selects_parent_code_paths():
         "omitted_file_count": 2,
         "missing_file_count": 1,
         "static_file_count": 0,
+        "content_policy": policy["path_policy"]["content_policy"],
     }
     assert sampler.last_metadata["prompt_context_policy"]["parent_code_paths"] == [
         "helper.py",
@@ -8320,6 +8343,16 @@ def test_prompt_context_policy_selects_parent_code_paths():
     assert policy["path_policy"]["term_filter"]["candidate_count"] == 1
     assert policy["path_policy"]["term_filter"]["selected_count"] == 1
     assert len(policy["path_policy"]["term_filter"]["selection_sha256"]) == 64
+    assert policy["path_policy"]["content_policy"] == [
+        {
+            "path": "helper.py",
+            "max_chars": None,
+            "original_chars": len("value = 1\n"),
+            "rendered_chars": len("value = 1\n"),
+            "omitted_chars": 0,
+            "truncated": False,
+        }
+    ]
 
 
 def test_prompt_context_policy_filters_parent_code_paths_by_terms():
@@ -8574,6 +8607,80 @@ def test_prompt_context_policy_zero_parent_code_limit_omits_mutable_files():
     assert path_policy["rendered_paths"] == []
     assert path_policy["omitted_by_limit"] == ["helper.py", "main.py"]
     assert path_policy["source"] == "prompt_context_policy"
+
+
+def test_prompt_context_policy_caps_parent_code_file_content_by_path():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "main.py": "A" * 80 + "\n",
+            "helper.py": "B" * 60 + "\n",
+        },
+        primary_file="main.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_max_chars_by_path": {
+                "main.py": 20,
+                "helper.py": 0,
+                "missing.py": 5,
+            }
+        },
+    )
+
+    assert "A" * 80 not in prompt
+    assert "...[truncated " in prompt
+    assert "B" * 10 not in prompt
+    path_policy = sampler.last_metadata["parent_code_policy"]["path_policy"]
+    assert path_policy["source"] == "prompt_context_policy"
+    assert path_policy["max_chars_by_path"] == {
+        "main.py": 20,
+        "helper.py": 0,
+        "missing.py": 5,
+    }
+    assert path_policy["unused_content_cap_paths"] == ["missing.py"]
+    assert path_policy["content_policy"] == [
+        {
+            "path": "helper.py",
+            "max_chars": 0,
+            "original_chars": 61,
+            "rendered_chars": 0,
+            "omitted_chars": 61,
+            "truncated": True,
+        },
+        {
+            "path": "main.py",
+            "max_chars": 20,
+            "original_chars": 81,
+            "rendered_chars": 20,
+            "omitted_chars": 61,
+            "truncated": True,
+        },
+    ]
+    assert sampler.last_metadata["prompt_context_policy"][
+        "parent_code_max_chars_by_path"
+    ] == {
+        "main.py": 20,
+        "helper.py": 0,
+        "missing.py": 5,
+    }
 
 
 @pytest.mark.parametrize(

@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code per-file content caps.
+  - Spec evidence: AlphaEvolve-style prompt context needs budget-aware control
+    over individual required code files, not only full parent-workspace or
+    rendered-file-count caps.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts
+    `parent_code_max_chars_by_path`, a mapping from safe candidate-relative
+    parent file paths to non-negative character caps. `PromptSampler` applies
+    these caps while rendering selected mutable parent files and records
+    per-file original/rendered/omitted character counts, truncation status,
+    applied caps, and unused cap paths in parent-code diagnostics.
+  - Remaining gap: this is deterministic per-file text capping, not semantic
+    compression, dependency-aware summarization, or provider context allocation.
+  - Verification: focused prompt tests cover validation, strict file-body
+    capping, zero-length body suppression, unused cap-path diagnostics, and
+    canonical metadata defaults; focused loop meta-prompt tests cover accepted
+    policy JSON carrying the field.
+
 - [x] Add prompt context-policy parent-code render-count limit.
   - Spec evidence: AlphaEvolve-style prompt context needs budget-aware control
     over how much required code context is shown after relevance selection and

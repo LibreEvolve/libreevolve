@@ -590,6 +590,7 @@ class PromptSampler:
             ranking_terms=prompt_context_policy["parent_code_ranking_terms"],
             order_policy=prompt_context_policy["parent_code_order_policy"],
             file_limit=prompt_context_policy["parent_code_limit"],
+            max_chars_by_path=prompt_context_policy["parent_code_max_chars_by_path"],
             query_text=task,
         )
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
@@ -1302,6 +1303,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_ranking_terms",
         "parent_code_order_policy",
         "parent_code_limit",
+        "parent_code_max_chars_by_path",
         "parent_code_max_chars",
         "parent_code_truncation",
         "inspiration_strategy",
@@ -1467,6 +1469,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     parent_code_limit = _validate_prompt_context_parent_code_limit(
         value.get("parent_code_limit")
+    )
+    parent_code_max_chars_by_path = _validate_prompt_context_parent_code_max_chars_by_path(
+        value.get("parent_code_max_chars_by_path")
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
@@ -1943,6 +1948,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "parent_code_ranking_terms": parent_code_ranking_terms,
         "parent_code_order_policy": parent_code_order_policy,
         "parent_code_limit": parent_code_limit,
+        "parent_code_max_chars_by_path": parent_code_max_chars_by_path,
         "parent_code_max_chars": parent_code_max_chars,
         "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
@@ -2118,6 +2124,7 @@ def apply_prompt_context_policy(
         "parent_code_ranking_terms": list(policy["parent_code_ranking_terms"]),
         "parent_code_order_policy": policy["parent_code_order_policy"],
         "parent_code_limit": policy["parent_code_limit"],
+        "parent_code_max_chars_by_path": dict(policy["parent_code_max_chars_by_path"]),
         "parent_code_max_chars": policy["parent_code_max_chars"],
         "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
@@ -2511,6 +2518,38 @@ def _validate_prompt_context_parent_code_limit(value: object) -> int | None:
             "must be a non-negative integer or null"
         )
     return value
+
+
+def _validate_prompt_context_parent_code_max_chars_by_path(
+    value: object,
+) -> dict[str, int]:
+    if value is None:
+        return {}
+    if not isinstance(value, Mapping):
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_max_chars_by_path must be a mapping"
+        )
+    normalized: dict[str, int] = {}
+    for raw_path, raw_limit in value.items():
+        if not isinstance(raw_path, str):
+            raise PromptTemplateError(
+                "prompt context_policy.parent_code_max_chars_by_path "
+                "keys must be safe candidate-relative file paths"
+            )
+        try:
+            path = normalize_candidate_path(raw_path)
+        except ValueError as exc:
+            raise PromptTemplateError(
+                "prompt context_policy.parent_code_max_chars_by_path "
+                f"keys must be safe candidate-relative file paths: {exc}"
+            ) from exc
+        if isinstance(raw_limit, bool) or not isinstance(raw_limit, int) or raw_limit < 0:
+            raise PromptTemplateError(
+                "prompt context_policy.parent_code_max_chars_by_path "
+                "values must be non-negative integers"
+            )
+        normalized[path] = raw_limit
+    return normalized
 
 
 def _validate_prompt_context_parent_code_max_chars(value: object) -> int | None:
@@ -7058,6 +7097,7 @@ def _render_program_files_with_metadata(
     ranking_terms: object = None,
     order_policy: object = "path_order",
     file_limit: object = None,
+    max_chars_by_path: object = None,
     query_text: str = "",
 ) -> tuple[str, dict]:
     workspace = program.workspace()
@@ -7078,6 +7118,9 @@ def _render_program_files_with_metadata(
         order_policy
     )
     parent_code_limit = _validate_prompt_context_parent_code_limit(file_limit)
+    content_caps = _validate_prompt_context_parent_code_max_chars_by_path(
+        max_chars_by_path
+    )
     all_paths = sorted(workspace.files)
     if policy_paths:
         candidate_paths = [path for path in policy_paths if path in workspace.files]
@@ -7142,7 +7185,9 @@ def _render_program_files_with_metadata(
         or parent_ranking_terms
         or parent_order_policy != "path_order"
         or parent_code_limit is not None
+        or content_caps
     )
+    content_policy_records: list[dict] = []
     metadata = {
         "schema": "libreevolve.parent_code_paths.v1",
         "source": "prompt_context_policy" if policy_active else "default_all_files",
@@ -7152,6 +7197,10 @@ def _render_program_files_with_metadata(
         "ranking_terms": list(parent_ranking_terms),
         "parent_code_order_policy": parent_order_metadata,
         "parent_code_limit": parent_code_limit,
+        "max_chars_by_path": dict(content_caps),
+        "unused_content_cap_paths": [
+            path for path in sorted(content_caps) if path not in set(rendered_paths)
+        ],
         "pre_limit_rendered_paths": pre_limit_rendered_paths,
         "rendered_paths": list(rendered_paths),
         "omitted_paths": omitted_paths,
@@ -7196,10 +7245,30 @@ def _render_program_files_with_metadata(
         content = workspace.files[path]
         role = "primary" if path == workspace.primary_file else "support"
         path_text = _short(path, max_chars=160) or "unknown"
-        content_text = content if isinstance(content, str) else str(content)
+        original_content_text = content if isinstance(content, str) else str(content)
+        max_chars = content_caps.get(path)
+        if max_chars is None:
+            content_text = original_content_text
+        elif max_chars == 0:
+            content_text = ""
+        else:
+            content_text = _truncate_parent_file_content(
+                original_content_text,
+                max_chars,
+            )
+        content_policy_records.append(
+            {
+                "path": path,
+                "max_chars": max_chars,
+                "original_chars": len(original_content_text),
+                "rendered_chars": len(content_text),
+                "omitted_chars": max(0, len(original_content_text) - len(content_text)),
+                "truncated": len(content_text) < len(original_content_text),
+            }
+        )
         rendered.extend(
             [
-                f"--- FILE path={path_text} role={role} chars={len(content_text)} ---",
+                f"--- FILE path={path_text} role={role} chars={len(original_content_text)} ---",
                 "Content-JSON:",
                 json.dumps(content_text),
             ]
@@ -7214,7 +7283,18 @@ def _render_program_files_with_metadata(
             "Missing requested mutable files: "
             + json.dumps(missing_paths, sort_keys=True)
         )
+    metadata["content_policy"] = content_policy_records
     return "\n".join(rendered), metadata
+
+
+def _truncate_parent_file_content(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    notice = f"...[truncated {len(text) - max_chars} chars]"
+    if len(notice) >= max_chars:
+        return notice[:max_chars]
+    keep = max_chars - len(notice)
+    return text[:keep] + notice
 
 
 def _filter_parent_code_paths_by_terms(

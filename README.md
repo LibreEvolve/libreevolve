@@ -790,10 +790,12 @@ parent-workspace files before rendering. `parent_code_required_terms` and
 and `parent_code_ranking_terms` can provide explicit safe ranking terms.
 `parent_code_limit` can cap how many ordered mutable parent files render,
 including `0` to suppress mutable parent file bodies while retaining
-diagnostics.
+diagnostics. `parent_code_max_chars_by_path` can cap individual rendered
+parent file bodies by safe candidate-relative path before the aggregate parent
+code cap applies.
 `parent_code_truncation` chooses deterministic `head` or `head_tail` retention
 under that cap. Prompt diagnostics retain parent-code path, term, ordering,
-limit, hash, and truncation/count metadata. A
+limit, per-file content cap, hash, and truncation/count metadata. A
 nullable `proposal_metadata_enabled` override can enable or disable proposal
 metadata instructions and parsing for that prompt arm while `null` keeps the
 run-level `capture_proposal_metadata` setting. A

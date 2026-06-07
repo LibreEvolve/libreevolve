@@ -1285,9 +1285,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact rank-7 per-seed rows. `validate_matrix_publication_bundle()` now
     checks the `libreevolve.matrix_publication_bundle.v1` wrapper, embedded
     report, target identity, report-file hash/byte evidence, and inventory
-    consistency for that baseline. The code still does not provide generated
-    notebook/export equivalents for reproducing discovered algorithms across
-    the full Appendix A suite.
+    consistency for that baseline. The paper index now distinguishes that one
+    checked Strassen baseline from the still-missing generated notebook/export
+    equivalents for reproducing discovered algorithms across the full Appendix
+    A suite.
   - Required result: connect real matrix target tensors, exact algorithm
     artifacts, certificate-generation artifacts, and generated export/notebook
     links to real report instances before treating LibreEvolve matrix results

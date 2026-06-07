@@ -586,8 +586,12 @@ Implemented:
   exact per-seed rows, and algorithm/certificate/notebook artifacts.
   `appendix_a_matrix_registry.py` adds the 54 AlphaEvolve Appendix A Table 3
   target identities and dimensions, and matrix reports for
-  `alphaevolve_appendix_a` must match that registry. It still does not provide
-  tensor-decomposition algorithms, certificates, or notebook exports.
+  `alphaevolve_appendix_a` must match that registry.
+  `write_strassen_2x2_publication_bundle()` provides one checked Strassen
+  baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
+  report, and artifact inventory files. It still does not provide discovered
+  tensor-decomposition algorithms, certificates, or notebook exports across the
+  full Appendix A target suite.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

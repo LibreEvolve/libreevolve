@@ -3080,13 +3080,14 @@ byte counts. It proves the named anti-gaming evidence files exist, not that a
 real benchmark runner has generated them.
 Executed ablation curves use `libreevolve.alphaevolve_ablation_report.v1` in
 `libreevolve/problems/benchmarks/ablation_results.py`; the contract validates
-all six AlphaEvolve Figure 8 variants, declared targets, exactly three seeds
-per variant/target, required equal-budget fractions, finite scores, consumed
-budget consistency, consistent budget unit/limit across each seed's fraction
-curve and across all variants/seeds for each target, passed component
-assertions, and hashed curve artifacts. It validates report shape only; it does
-not run ablation experiments or add accelerator/async-worker budget stops beyond
-the current live provider-token and configured-cost LLM budget surfaces.
+the AlphaEvolve Figure 8 full-system baseline plus the five component
+ablations, declared targets, exactly three seeds per variant/target, required
+equal-budget fractions, finite scores, consumed budget consistency, consistent
+budget unit/limit across each seed's fraction curve and across all
+variants/seeds for each target, passed component assertions, and hashed curve
+artifacts. It validates report shape only; it does not run ablation experiments
+or add accelerator/async-worker budget stops beyond the current live
+provider-token and configured-cost LLM budget surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
 ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,

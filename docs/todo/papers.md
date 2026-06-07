@@ -211,8 +211,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     missing.
     `libreevolve.alphaevolve_ablation_report.v1` now defines and tests an
     equal-budget ablation-result report contract for reports produced by
-    executed runs: all six Figure 8 variants, declared targets, exactly three
-    seeds, required equal-budget fractions, finite scores,
+    executed runs: the Figure 8 full-system baseline plus five component
+    ablations, declared targets, exactly three seeds, required equal-budget
+    fractions, finite scores,
     consumed-budget/fraction consistency, consistent budget unit/limit per seed
     curve and across all variants/seeds for each target, passed component
     assertions, and hashed curve artifacts.

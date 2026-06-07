@@ -1570,8 +1570,10 @@ Primary evidence:
   - Required result: connect replayed budget state to future async
     worker/pending-work controller state, provider-output replay, and
     budget-stop packaging for restored controller work. Add executable
-    config/runtime bindings for every Figure 8 component assertion before any
-    ablation runner treats the current registry as runnable experiment policy.
+    config/runtime bindings for every Figure 8 component assertion and keep
+    the full-system baseline distinct from the five component-disabled
+    ablations before any ablation runner treats the current registry as
+    runnable experiment policy.
 
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so

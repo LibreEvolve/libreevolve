@@ -139,7 +139,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     budget surfaces. Code evidence includes `RunBudget.max_llm_tokens`,
     `RunBudget.max_llm_cost_microusd`, role-scoped token/cost limits, and
     controller-budget event replay into restored budget snapshots. The
-    checked-in Figure 8 registry is still `definition_only`; several
+    checked-in Figure 8 registry is still `definition_only` and should keep
+    the full-system baseline distinct from the five component-disabled
+    ablations; several
     `required_config_assertions` are intended component labels rather than
     current executable config switches, including `candidate_source`,
     `archive_admission_enabled`, `candidate_workspace_mode`,

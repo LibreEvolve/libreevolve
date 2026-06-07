@@ -612,8 +612,9 @@ Implemented:
   real benchmark runners still need to emit these reports from actual
   anti-gaming fixtures.
 - `libreevolve/problems/benchmarks/ablation_results.py`: equal-budget
-  ablation-result report contract. It validates all six AlphaEvolve Figure 8 variants,
-  declared targets, exactly three seeds, required equal-budget fractions,
+  ablation-result report contract. It validates the AlphaEvolve Figure 8
+  full-system baseline plus the five component ablations, declared targets,
+  exactly three seeds, required equal-budget fractions,
   finite scores, consumed-budget consistency, consistent budget unit/limit per
   seed curve and across all variants/seeds for each target, passed component
   assertions, and hashed curve artifacts, but no benchmark script emits these

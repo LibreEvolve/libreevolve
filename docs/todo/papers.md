@@ -1027,7 +1027,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     against the current policy schema/capability map, while keeping
     `alphaevolve_context_policy_complete` false and listing unsupported
     retrieval/summarization, learned ranking, and semantic context-selection
-    surfaces.
+    surfaces. The AlphaEvolve table now scopes the remaining prompt-context
+    gap to live/retrieval/semantic context selection and deeper per-field policy
+    beyond the current validated structured context-policy surface rather than
+    implying that structured prompt-context policy is absent.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
     code: plugin context shaping beyond enable/disable, allowlist, ordering,
     caps, truncation, parent-metric selection/caps, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,

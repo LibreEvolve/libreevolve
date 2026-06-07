@@ -10107,6 +10107,8 @@ def test_meta_prompt_evolution_accepts_context_policy_json_response():
         "mutation_instruction_variant": "exploratory",
         "mutation_instruction_include_example": False,
         "proposal_metadata_enabled": True,
+        "parent_metric_names": None,
+        "parent_metrics_max_chars_by_name": {},
         "parent_code_paths": ["main.py"],
         "parent_code_required_terms": ["solver"],
         "parent_code_excluded_terms": ["debug"],

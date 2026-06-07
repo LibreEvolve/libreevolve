@@ -111,8 +111,9 @@ is not yet an AlphaEvolve reproduction.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics.
-- Extend the current `show` archive objective-vector summaries into future
-  metric-specific archive views.
+- Extend the current selected-row `show` archive objective-vector summaries
+  and manifest-level metric archive summaries into CLI/report drill-downs for
+  metric-specific archives.
 
 ### 3. Expand evaluation cascades
 

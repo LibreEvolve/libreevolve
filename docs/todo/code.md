@@ -941,6 +941,28 @@ Primary evidence:
     score columns, and validation that `is_valid` and non-scalar attachments
     are not treated as scored AlphaEvolve metrics.
 
+- [ ] Add evaluator workload provenance for inner search and ML-training tasks.
+  - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,
+    but in more complicated cases it may run an evolved search algorithm or
+    train and evaluate a machine-learning model before returning scalar
+    metrics.
+  - Current evidence: LibreEvolve records configured evaluator paths, staged
+    validators, subprocess attempts, samples, retries, seeds, evaluator
+    budgets, artifact copy-out, problem-local dependency provenance, and
+    bounded environment/package evidence. Those records show how a local
+    validator was invoked, but they do not classify evaluator workload type or
+    preserve paper-facing evidence for an inner search/training protocol:
+    dataset identity and split, training/evaluation loop parameters, model
+    checkpoint policy, random seeds, inner search budget, produced model or
+    construction artifacts, and metric linkage to the candidate's returned
+    scores.
+  - Required result: add versioned evaluator-workload metadata and validators
+    for `simple_check`, `inner_search`, `ml_training`, and related task shapes,
+    including dataset/split hashes, training/search budget records,
+    checkpoint/artifact policy, seed/retry semantics, score-field linkage, and
+    report examples before claiming AlphaEvolve-style evaluator support for
+    evolved search algorithms or model-training workloads.
+
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its

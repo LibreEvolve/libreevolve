@@ -90,6 +90,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provenance, eval-input dataset provenance, skeleton-to-block invocation
     evidence, isolation/build policy, and score-field mapping.
 
+- [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
+      ML-training provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can perform a
+    simple property check, run an evolved search algorithm, or train and
+    evaluate a machine-learning model before returning scalar metrics.
+  - Current evidence: ROADMAP and README can cite local subprocess validators,
+    configured stages, samples, retries, seeds, budgets, artifact copy-out,
+    problem-local dependency provenance, and environment audit records. They do
+    not yet require workload-type declarations, dataset/split hashes,
+    training/search budget records, checkpoint/artifact policy, randomized
+    initialization semantics, or score-field linkage for model-training or
+    inner-search evaluators.
+  - Required result: when evaluator-workload metadata and reports land, update
+    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
+    wording distinguishes quick validators from AlphaEvolve-style evaluator
+    workloads that perform substantial search or model training.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

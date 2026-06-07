@@ -300,6 +300,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     score progress before treating current workspace support as AlphaEvolve
     Table 1 code-scale parity.
 
+- [ ] Track evaluator workload provenance for inner-search and ML-training
+      evaluators.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.
+  - Requirement: AlphaEvolve's evaluation function may run a simple property
+    check, an evolved search algorithm, or train and evaluate a
+    machine-learning model before returning scalar metrics.
+  - Partial status: LibreEvolve records evaluator entrypoint paths, configured
+    stages, samples, retries, seeds, subprocess attempts, budgets, problem-local
+    dependency provenance, copied evaluator artifacts, and bounded environment
+    evidence.
+  - Current gap: paper-facing evidence does not identify the evaluator workload
+    type or preserve the protocol needed for search/training-style evaluators:
+    dataset and split provenance, model-training configuration, checkpoint or
+    artifact policy, inner-search budget, randomized initialization policy, and
+    linkage from produced artifacts to returned scores.
+  - Required result: add report/manifest evidence for evaluator workload
+    classes such as `simple_check`, `inner_search`, and `ml_training`, with
+    dataset/split hashes, training/search budget records, checkpoint/artifact
+    linkage, seed/retry semantics, score-field mapping, and examples that keep
+    quick validators distinct from AlphaEvolve-style evaluator workloads that
+    train models or run search.
+
 - [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation

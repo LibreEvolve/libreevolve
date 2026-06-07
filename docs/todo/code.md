@@ -872,6 +872,29 @@ Primary evidence:
     mutation-chain depth under slow or expensive evaluator feedback, and
     replayable controller state for queued/running/completed work.
 
+- [ ] Add statistical hypothesis-test gates to evaluation cascades.
+  - Spec evidence: AlphaEvolve Section 2.4 describes the evaluation cascade as
+    "hypothesis testing": candidates are first evaluated on small-scale tests
+    and only promoted to harder/main test cases when earlier results are
+    sufficiently promising. Section 3.1 also evaluates tensor-decomposition
+    candidates across multiple randomized initializations, so promotion
+    evidence should support confidence in noisy or seed-dependent results.
+  - Current evidence: `CascadeEvaluator` supports ordered configured stages,
+    `min_score`, per-metric thresholds, required program-output/artifact
+    checks, samples, explicit seeds, retries, sample/stage wall-clock budgets,
+    and diagnostic records. These are deterministic threshold and aggregation
+    gates: there is no versioned statistical hypothesis-test policy,
+    confidence interval or p-value evidence, sequential-test stopping rule,
+    false-promotion/false-rejection budget, small-scale-versus-main-test
+    labeling, or promotion report that proves a candidate advanced because a
+    noisy sample set was statistically promising.
+  - Required result: add a cascade promotion policy with explicit stage roles
+    (`small_scale_filter`, `main_test`, etc.), statistical test configuration,
+    retained per-sample observations, confidence or p-value records,
+    sequential stopping diagnostics, and tests/report validation showing noisy
+    repeated-seed candidates are promoted or rejected by a hypothesis-testing
+    rule rather than only by fixed scalar thresholds.
+
 - [ ] Add unified expensive-evaluation compute budgets and resumable state.
   - Spec evidence: AlphaEvolve can spend hours or roughly 100 compute-hours on
     a single new solution when evaluation is parallelized.

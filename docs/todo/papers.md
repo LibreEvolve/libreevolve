@@ -798,6 +798,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     candidate evaluation before broad scientific-discovery or
     AI-Co-Scientist-style claims appear in paper-facing docs.
 
+- [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.
+  - Requirement: the evaluation cascade is described as hypothesis testing:
+    candidates should pass small-scale filters before main test cases only
+    when earlier results are sufficiently promising, and repeated randomized
+    initializations should provide evidence for noisy benchmark decisions.
+  - Partial status: LibreEvolve has ordered staged validators with scalar and
+    metric thresholds, samples, explicit seeds, retries, stage/sample budgets,
+    and prompt-visible diagnostics.
+  - Current gap: paper-facing evidence does not define statistical
+    hypothesis-test policies, confidence intervals, p-values, sequential
+    stopping rules, false-promotion/false-rejection budgets, or explicit
+    small-scale-versus-main-test stage roles. Current cascades can be accurate
+    threshold gates without proving AlphaEvolve-style hypothesis-testing
+    promotion semantics.
+  - Required result: add report/schema evidence for statistical cascade
+    promotion decisions, including per-sample observations, test parameters,
+    confidence or p-value outputs, sequential stopping diagnostics, and
+    promotion/rejection linkage from small-scale filters to main test cases.
+
 - [ ] Track natural-language proposal preambles separately from structured
       proposal metadata.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.

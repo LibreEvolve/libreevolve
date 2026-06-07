@@ -701,6 +701,12 @@ Implemented:
   strategies, passed negative fixtures, and hashed hardening artifacts, but
   real benchmark runners still need to emit these reports from actual
   anti-gaming fixtures.
+- Evaluation-cascade status: configured stages support deterministic scalar
+  and metric thresholds, samples, explicit seeds, retries, and stage/sample
+  budgets. They are not yet AlphaEvolve Section 2.4 hypothesis-testing
+  cascades: no report/schema records statistical test parameters, confidence
+  intervals, p-values, sequential stopping, false-promotion/false-rejection
+  budgets, or explicit small-scale-filter versus main-test promotion roles.
 - `libreevolve/problems/benchmarks/ablation_results.py`: equal-budget
   ablation-result report contract. It validates the AlphaEvolve Figure 8
   full-system baseline plus the five component ablations, declared targets,

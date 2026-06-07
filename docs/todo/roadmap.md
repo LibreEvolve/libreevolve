@@ -532,6 +532,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve coverage for manual-experiment or LLM-only idea-feedback
     workflows.
 
+- [ ] Keep evaluation-cascade roadmap wording scoped to staged thresholds until
+      statistical hypothesis-test promotion evidence lands.
+  - Spec evidence: AlphaEvolve Section 2.4 calls the cascade "hypothesis
+    testing", with small-scale evaluations filtering candidates before harder
+    main test cases, and Section 3.1 evaluates randomized tensor-decomposition
+    runs where seed-dependent evidence matters.
+  - Current evidence: `ROADMAP.md` accurately tracks configurable staged
+    validators, thresholds, samples, retries, budgets, and the need to expand
+    evaluation cascades. Current code and tests cover deterministic threshold
+    gates, per-seed samples, and budget diagnostics, but not statistical
+    promotion policies, confidence/p-value records, sequential stopping, or
+    explicit small-scale-versus-main-test stage roles.
+  - Required result: when hypothesis-test cascade policies, promotion reports,
+    and noisy repeated-seed validation land, update ROADMAP, README, papers
+    index, and code/paper TODO entries together so roadmap wording neither
+    underclaims current staged validators nor overclaims AlphaEvolve-style
+    hypothesis-testing cascades.
+
 - [ ] Keep mutation-response roadmap wording scoped to structured proposal
       metadata versus natural-language preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a

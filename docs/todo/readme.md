@@ -600,6 +600,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     underclaims the current executable-evaluator workflow nor overclaims
     manual-experiment or AI-Co-Scientist-style idea-feedback support.
 
+- [ ] Keep README cascade wording scoped to staged threshold gates until
+      statistical hypothesis-test promotion is implemented.
+  - Spec evidence: AlphaEvolve Section 2.4 presents evaluation cascades as
+    hypothesis testing: candidates are tried on small-scale tests before main
+    test cases, and only sufficiently promising candidates advance. Section
+    3.1 uses multiple randomized initializations for matrix tensor targets.
+  - Current evidence: README describes cascade evaluation, staged validators,
+    samples, retries, thresholds, stage/sample budgets, and prompt-visible
+    diagnostics. It does not yet document a statistical cascade policy with
+    confidence intervals, p-values, sequential stopping, false-promotion/
+    false-rejection budgets, or explicit small-scale/main-test stage roles.
+  - Required result: when statistical cascade promotion reports and validation
+    land, update README, ROADMAP, papers index, and code/paper TODOs so README
+    distinguishes current deterministic staged threshold gates from
+    AlphaEvolve-style hypothesis-testing cascades.
+
 - [ ] Keep README mutation-response wording scoped to structured proposal
       metadata versus natural-language preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory natural-language

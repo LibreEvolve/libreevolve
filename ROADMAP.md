@@ -138,6 +138,10 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
   runtime fixture generates those reports yet.
+- Add statistical hypothesis-test promotion policies for cascades, separating
+  current staged threshold gates from AlphaEvolve-style small-scale filters,
+  main-test promotion decisions, confidence or p-value evidence, and
+  sequential stopping diagnostics.
 - Add OS/container-grade validator network isolation and stronger
   sandbox/resource controls beyond the current Python-socket denial option,
   minimal environment, wall-clock budgets, and process-tree cleanup.

@@ -2008,6 +2008,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     revised-result history, construction-payload evidence, and text-level
     numeric claim evidence.
 
+- [ ] Keep Appendix B.8 roadmap wording scoped until squared-ratio convention
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.8 reports min max/min-distance
+    point-set results for 16 points in two dimensions and 14 points in three
+    dimensions. The published values `12.889266112` and `4.165849767` are
+    squared-ratio values, not direct max/min distance ratios.
+  - Current evidence: roadmap/README/paper-index wording can cite the broad
+    Appendix B per-result metric/value gap, but it does not require B.8-specific
+    convention labels that keep raw squared values, square-root-derived ratios,
+    dimensions, point counts, coordinate artifacts, and comparison units
+    separate.
+  - Required result: when Appendix B.8 metric-convention metadata and
+    validators land, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap claims cannot compare or quote B.8 values in the wrong unit.
+
 - [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing

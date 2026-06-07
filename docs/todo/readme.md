@@ -1071,6 +1071,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reproduction, revised-result history, construction-payload evidence, and
     text-level Appendix B numeric claim evidence.
 
+- [ ] Keep README Appendix B.8 ratio wording scoped until squared-ratio
+      convention provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.8 reports constructions for the
+    max/min pairwise-distance ratio, but the numerical values `12.889266112`
+    for 16 points in 2D and `4.165849767` for 14 points in 3D are reported
+    under a squared-ratio convention, with the geometric ratio obtained by a
+    square-root transform.
+  - Current evidence: README can point to broad Appendix B per-result
+    metric/value provenance gaps, but it does not separately warn that B.8
+    needs raw-value versus transformed-ratio labels before quoting those
+    numbers.
+  - Required result: when Appendix B.8 convention metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    labels raw squared values, derived square-root ratios, point counts,
+    dimensions, coordinate artifacts, and comparison units without conflating
+    squared and unsquared objectives.
+
 - [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
       evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing

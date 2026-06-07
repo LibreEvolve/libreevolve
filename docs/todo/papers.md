@@ -2016,6 +2016,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     separates text-level numeric claim provenance from aggregate coverage and
     figure reproduction.
 
+- [ ] Track Appendix B.8 squared-ratio convention evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 gives point-set
+    constructions for minimizing the ratio of maximum to minimum pairwise
+    distances. The values shown for 16 points in 2D and 14 points in 3D are
+    `12.889266112` and `4.165849767`, respectively, under the paper's squared
+    ratio reporting convention rather than direct square-root distance ratios.
+  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
+    metric formulas, units or bound semantics, and coordinate payloads, but they
+    do not force B.8 reports to preserve the raw paper convention separately
+    from the geometric ratio interpretation. A generated paper summary could
+    therefore compare `12.889266112` as a direct max/min distance ratio instead
+    of as a squared value.
+  - Required result: add B.8 evidence fields for raw reported value,
+    convention label, square-root-derived ratio, point count, dimension,
+    coordinate artifact linkage, comparison-unit policy, and source location;
+    update README/ROADMAP wording so claims about Appendix B.8 name the
+    squared-ratio convention explicitly.
+
 - [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593
     nonzero integral-coordinate points in dimension 11, with maximum norm

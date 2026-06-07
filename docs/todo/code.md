@@ -1943,6 +1943,25 @@ Primary evidence:
     numeric claim provenance from aggregate outcome reports and visual figure
     reproduction.
 
+- [ ] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
+  - Spec evidence: AlphaEvolve Appendix B.8 reports point-set constructions for
+    minimizing the ratio between maximum and minimum pairwise distances, but the
+    displayed values use a squared-ratio convention: 16 points in 2D report
+    `12.889266112`, and 14 points in 3D report `4.165849767`, corresponding to
+    square-root ratios for the geometric objective.
+  - Current evidence: the broad Appendix B per-result TODO requires metric
+    formulas, units, bound semantics, values, and coordinate payloads. No
+    code/report schema separately records whether the paper value is the ratio,
+    squared ratio, or transformed objective value, so generated reports could
+    quote the raw numbers as direct distance ratios or compare them against
+    baselines in the wrong unit.
+  - Required result: add Appendix B.8-specific metric-convention fields and
+    validators: raw paper value, reported-value convention
+    (`squared_max_min_ratio`), derived ratio transform, dimension/point-count
+    parameter rows, comparison-unit policy, source section/caption linkage, and
+    README/ROADMAP wording that labels both the squared value and the geometric
+    square-root ratio unambiguously.
+
 - [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
   - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing
     number lower bound from 592 to 593 by finding 593 nonzero integral-coordinate

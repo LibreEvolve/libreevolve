@@ -832,6 +832,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     boundary, redaction/provenance behavior, and distinction between safe
     proposal metadata and arbitrary unparsed prose.
 
+- [ ] Keep README prompt-example wording scoped until copy-detection
+      diagnostics exist.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program
+    context and concrete SEARCH/REPLACE examples to communicate the edit
+    contract.
+  - Current evidence: README notes that concrete diff examples reduce observed
+    placeholder-copying mistakes, but also says placeholder/example copying is
+    not rejected by a dedicated validator. Current diagnostics prove parser
+    shape, not that accepted mutations avoided copying prompt-only examples.
+  - Required result: when prompt-example inventories and copy-detection
+    diagnostics land, update README, ROADMAP, papers index, and code/paper
+    TODOs so README can distinguish useful concrete examples from
+    AlphaEvolve-style evidence that proposals edit the sampled current program
+    rather than pasted prompt scaffolding.
+
 - [ ] Keep README mutation-mode wording scoped to configured `diff`/`full`
       support versus adaptive prompting.
   - Spec evidence: AlphaEvolve Section 2.3 requests diff blocks for larger

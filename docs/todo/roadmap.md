@@ -632,6 +632,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they do not imply AlphaEvolve-style freeform rationale parsing
     already exists.
 
+- [ ] Keep prompt-example roadmap wording scoped until example-copy
+      diagnostics exist.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program
+    context and concrete SEARCH/REPLACE examples; the system should apply
+    model edits to the sampled program rather than accept copied illustrative
+    placeholders as real candidate changes.
+  - Current evidence: README says concrete diff examples reduce observed
+    placeholder-copying mistakes, while current roadmap/code evidence covers
+    parser syntax, canonical diff compatibility, and strict unconsumed-text
+    rejection. It does not yet include a versioned prompt-example inventory,
+    copied-example sentinel detection, or acceptance/report diagnostics.
+  - Required result: when example-copy diagnostics and tests land, update
+    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
+    wording separates concrete prompt examples from evidence that accepted
+    mutations are genuine edits to the current program.
+
 - [ ] Keep mutation-operator roadmap wording scoped to fixed edit surfaces
       until operator-construction evidence lands.
   - Spec evidence: AlphaEvolve Section 2.3 uses structured edit outputs, while

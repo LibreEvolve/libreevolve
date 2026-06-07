@@ -956,6 +956,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     and code TODOs explicit that LibreEvolve requires structured proposal
     metadata rather than arbitrary natural-language patch rationale.
 
+- [ ] Track prompt example-copy diagnostics separately from diff syntax
+      compatibility.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.
+  - Requirement: AlphaEvolve prompts can include concrete current-program
+    context and concrete SEARCH/REPLACE demonstrations, but accepted proposals
+    should be edits to the sampled current program rather than copied
+    illustrative prompt examples.
+  - Partial status: LibreEvolve supports canonical SEARCH/REPLACE blocks,
+    concrete prompt examples, and strict malformed-diff diagnostics.
+  - Current gap: the paper index does not yet distinguish syntactic diff
+    compatibility from evidence that prompt-only example fragments were not
+    copied into accepted candidates. README says concrete examples reduce
+    placeholder-copying mistakes, but no validator/report records prompt
+    example labels, hashes, or copy-detection outcomes.
+  - Required result: add paper-facing evidence for prompt-example inventories
+    and acceptance diagnostics that detect copied placeholder/example
+    sentinels across diff, full, and workspace mutations before treating
+    prompt-example compatibility as AlphaEvolve-style current-program editing
+    fidelity.
+
 - [ ] Track adaptive diff-versus-full mutation prompting.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
   - Requirement: AlphaEvolve asks for SEARCH/REPLACE blocks for larger

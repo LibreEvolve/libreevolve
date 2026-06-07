@@ -1346,6 +1346,25 @@ Primary evidence:
     updates that distinguish safe proposal rationale capture from arbitrary
     unparsed prose.
 
+- [ ] Add prompt example-copy diagnostics for AlphaEvolve-style concrete diff
+      examples.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete current-program
+    context and concrete SEARCH/REPLACE examples. The useful behavior is that
+    the model edits the current program, not that it copies illustrative
+    placeholder/example fragments from the prompt into a candidate patch.
+  - Current evidence: LibreEvolve prompt instructions include concrete diff
+    examples and README notes that those examples reduce observed
+    placeholder-copying mistakes, but example-copying is not rejected by a
+    dedicated validator. Current parser errors cover malformed diff/block
+    syntax and unconsumed prose, not semantic evidence that a proposal copied
+    prompt-only placeholders, toy identifiers, or example replacement text.
+  - Required result: add a versioned prompt-example inventory and candidate
+    acceptance diagnostic that hashes or labels illustrative prompt examples,
+    detects copied example-only sentinels in submitted mutations, records
+    bounded failure metadata, and tests diff/full/workspace mutation paths so
+    prompt examples can remain useful without being mistaken for valid
+    AlphaEvolve-style edits to the current program.
+
 - [ ] Add adaptive mutation-output mode selection instead of one run-wide
       `diff`/`full` contract.
   - Spec evidence: AlphaEvolve Section 2.3 says larger codebases request

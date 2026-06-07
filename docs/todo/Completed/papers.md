@@ -10201,3 +10201,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     timeout-driven stop enforcement remain unimplemented.
   - Verification: focused ensemble tests cover valid timeout cancellation
     records and replay rejection for malformed cancellation evidence.
+
+- [x] Add paper-visible controller budget replay validation for LLM usage.
+  - Paper evidence: restored AlphaEvolve-style compute budgets should prove
+    provider-attempt, token, configured-cost, and latency consumption from
+    event evidence rather than trusting a detached snapshot.
+  - Status: `validate_controller_budget_replay_state()` now replays controller
+    budget events into `RunBudget` and rejects consumed-counter or stop-reason
+    drift against the persisted snapshot, with the loop restore path using the
+    shared budget contract.
+  - Remaining paper gap: async worker/pending-work state and provider-output
+    replay are still outside the restored controller budget proof.
+  - Verification: focused budget tests cover valid LLM usage replay and
+    malformed snapshot drift.

@@ -1167,6 +1167,12 @@ Primary evidence:
     restore now replays those rows, verifies their non-wall-clock consumed
     counters against the manifest budget snapshot, and passes the checked
     budget snapshot through the unified `evolve()` restore entrypoint.
+    `validate_controller_budget_replay_state()` now makes that replay proof a
+    reusable `core.budget` contract: it validates the controller event stream,
+    reapplies provider-attempt, token, configured-cost, and latency deltas to a
+    fresh budget with matching limits, and rejects consumed-counter or
+    stop-reason drift against the persisted snapshot while treating manifest
+    `runtime_seconds` as authoritative.
   - Remaining gap: the replayed controller budget stream is not yet composed
     with queued/running async worker state, pending-work restore, provider-output
     replay, or separate budget-stop manifests for replay-only exhaustion

@@ -791,6 +791,11 @@ boundary, and the checked lineage-policy provider-output boundary. The
 controller event rows are replayed and their non-wall-clock consumed counters
 must match the manifest budget snapshot before the bundle passes that budget
 snapshot into `evolve()`.
+`validate_controller_budget_replay_state()` is the reusable replay validator
+for that contract: it validates the event stream, replays it into a fresh
+`RunBudget`, compares non-wall-clock consumed counters and stop reason against
+the persisted snapshot, and treats manifest `runtime_seconds` as authoritative
+because wall-clock time is process-local.
 The returned bundle also includes `bundle_validation` with schema
 `libreevolve.full_resume_bundle_validation.v1`; it revalidates the composed
 runtime RNG, LLM scheduler, archive restore, runtime budget, controller-budget

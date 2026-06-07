@@ -24,6 +24,7 @@ from libreevolve.core.budget import (
     BudgetSnapshotError,
     CONTROLLER_BUDGET_STATE_SCHEMA,
     RunBudget,
+    validate_controller_budget_replay_state,
     validate_controller_budget_state,
     validate_restored_budget_snapshot,
 )
@@ -2946,21 +2947,8 @@ def _load_controller_budget_events_restore_stream(path: Path) -> list[dict]:
 def _replay_controller_budget_events_to_snapshot(
     controller_budget_state: Mapping[str, object],
 ) -> dict:
-    snapshot = validate_restored_budget_snapshot(
-        controller_budget_state["snapshot"],
-    )
-    budget = _budget_for_controller_event_replay(snapshot)
-    events = controller_budget_state["events"]
-    if not isinstance(events, list):  # pragma: no cover - validated by caller.
-        raise BudgetSnapshotError("controller budget replay events must be a list")
-    for event in events:
-        apply_controller_budget_event(budget, event)
-    replayed_snapshot = budget.snapshot()
-    _validate_controller_budget_replay_matches_snapshot(
-        replayed_snapshot,
-        snapshot,
-    )
-    return snapshot
+    replay = validate_controller_budget_replay_state(dict(controller_budget_state))
+    return replay["snapshot"]
 
 
 def controller_state_artifact_inventory(
@@ -3235,69 +3223,6 @@ def _compare_controller_artifact_record(
         if record["status"] == "verified":
             record["status"] = "bytes_mismatch"
         record["issues"].append("controller_event_artifact_bytes_mismatch")
-
-
-def _budget_for_controller_event_replay(snapshot: Mapping[str, object]) -> RunBudget:
-    limits = snapshot["limits"]
-    wall_clock = snapshot["wall_clock"]
-    if not isinstance(limits, Mapping) or not isinstance(wall_clock, Mapping):
-        raise BudgetSnapshotError("controller budget replay snapshot is malformed")
-    started_at_utc = wall_clock["started_at"]
-    if not isinstance(started_at_utc, str):
-        raise BudgetSnapshotError("controller budget replay started_at is malformed")
-    return RunBudget(
-        max_generations=limits["max_generations"],
-        max_evaluations=limits["max_evaluations"],
-        max_evaluator_seconds=limits["max_evaluator_seconds"],
-        max_runtime_seconds=limits["max_runtime_seconds"],
-        started_at=0.0,
-        started_at_utc=started_at_utc,
-        max_evaluator_subprocess_attempts=limits["max_evaluator_subprocess_attempts"],
-        max_evaluator_stage_samples=limits["max_evaluator_stage_samples"],
-        max_evaluator_retry_attempts=limits["max_evaluator_retry_attempts"],
-        max_evaluator_timeouts=limits["max_evaluator_timeouts"],
-        max_evaluator_sample_budget_exhaustions=limits[
-            "max_evaluator_sample_budget_exhaustions"
-        ],
-        max_evaluator_stage_budget_exhaustions=limits[
-            "max_evaluator_stage_budget_exhaustions"
-        ],
-        max_llm_calls=limits["max_llm_calls"],
-        max_llm_provider_attempts=limits["max_llm_provider_attempts"],
-        max_llm_tokens=limits["max_llm_tokens"],
-        max_llm_cost_microusd=limits["max_llm_cost_microusd"],
-        max_llm_seconds=limits["max_llm_seconds"],
-        llm_role_provider_attempt_limits=dict(
-            limits["llm_role_provider_attempt_limits"],
-        ),
-        llm_role_token_limits=dict(limits["llm_role_token_limits"]),
-        llm_role_cost_microusd_limits=dict(
-            limits["llm_role_cost_microusd_limits"],
-        ),
-        llm_role_seconds_limits=dict(limits["llm_role_seconds_limits"]),
-    )
-
-
-def _validate_controller_budget_replay_matches_snapshot(
-    replayed_snapshot: Mapping[str, object],
-    snapshot: Mapping[str, object],
-) -> None:
-    if replayed_snapshot["limits"] != snapshot["limits"]:
-        raise BudgetSnapshotError(
-            "controller budget replay limits do not match manifest budget snapshot"
-        )
-    if replayed_snapshot["stop_reason"] != snapshot["stop_reason"]:
-        raise BudgetSnapshotError(
-            "controller budget replay stop_reason does not match manifest budget snapshot"
-        )
-    replayed_consumed = dict(replayed_snapshot["consumed"])
-    snapshot_consumed = dict(snapshot["consumed"])
-    replayed_consumed.pop("runtime_seconds", None)
-    snapshot_consumed.pop("runtime_seconds", None)
-    if replayed_consumed != snapshot_consumed:
-        raise BudgetSnapshotError(
-            "controller budget replay consumption does not match manifest budget snapshot"
-        )
 
 
 def _minimal_controller_budget_snapshot_for_event_validation() -> dict:

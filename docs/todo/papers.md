@@ -192,7 +192,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     seconds into `RunBudget`, and full-runtime restore now replays contiguous
     controller budget events, verifies non-wall-clock consumed counters against
     the manifest budget snapshot, and passes that checked budget snapshot into
-    `evolve()`.
+    `evolve()`. `validate_controller_budget_replay_state()` now exposes that
+    provider-attempt/token/configured-cost/latency replay proof as a reusable
+    budget contract and rejects snapshot drift before restored consumption is
+    trusted.
   - Current gap: runtime enforcement is still incomplete for full restored
     controller state. LLM budget deltas are replayable through validated
     controller events, and prior manifest runtime budget snapshots can now be

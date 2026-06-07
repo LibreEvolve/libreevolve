@@ -10,6 +10,7 @@ from libreevolve.core.budget import (
     RunBudget,
     apply_controller_budget_event,
     validate_controller_budget_event,
+    validate_controller_budget_replay_state,
     validate_controller_budget_state,
     validate_restored_budget_snapshot,
 )
@@ -756,6 +757,72 @@ def test_validate_controller_budget_state_validates_snapshot_and_event_sequence(
     ]
     restored["snapshot"]["consumed"]["evaluations"] = 99
     assert validate_controller_budget_state(state)["snapshot"]["consumed"]["evaluations"] == 1
+
+
+def test_validate_controller_budget_replay_state_matches_llm_usage_snapshot():
+    budget = _budget()
+    events = [
+        _controller_event("seed_evaluation", sequence=0, elapsed_sec=0.25),
+        _controller_event(
+            "llm_call",
+            sequence=1,
+            role="mutation",
+            provider_attempts=3,
+            tokens=2000,
+            cost_microusd=10000,
+            seconds=1.5,
+        ),
+        _controller_event("stop", sequence=2, stop_reason="max_llm_tokens"),
+    ]
+    for event in events:
+        apply_controller_budget_event(budget, event)
+    state = {
+        "schema": CONTROLLER_BUDGET_STATE_SCHEMA,
+        "snapshot": budget.snapshot(),
+        "events": events,
+    }
+
+    replay = validate_controller_budget_replay_state(state)
+
+    assert replay["replay"] == {
+        "status": "matched_snapshot",
+        "event_count": 3,
+        "runtime_seconds_policy": "manifest_snapshot_authoritative",
+    }
+    consumed = replay["snapshot"]["consumed"]
+    assert consumed["seed_evaluations"] == 1
+    assert consumed["llm_calls"] == 1
+    assert consumed["llm_provider_attempts"] == 3
+    assert consumed["llm_tokens"] == 2000
+    assert consumed["llm_cost_microusd"] == 10000
+    assert consumed["llm_seconds"] == 1.5
+    assert consumed["llm_provider_attempts_by_role"] == {"mutation": 3}
+    assert consumed["llm_tokens_by_role"] == {"mutation": 2000}
+    assert consumed["llm_cost_microusd_by_role"] == {"mutation": 10000}
+    assert consumed["llm_seconds_by_role"] == {"mutation": 1.5}
+
+
+def test_validate_controller_budget_replay_state_rejects_snapshot_drift():
+    budget = _budget()
+    events = [
+        _controller_event(
+            "llm_call",
+            role="mutation",
+            tokens=2000,
+        ),
+    ]
+    for event in events:
+        apply_controller_budget_event(budget, event)
+    snapshot = budget.snapshot()
+    snapshot["consumed"]["llm_tokens"] = 1999
+    state = {
+        "schema": CONTROLLER_BUDGET_STATE_SCHEMA,
+        "snapshot": snapshot,
+        "events": events,
+    }
+
+    with pytest.raises(BudgetSnapshotError, match="replay consumption"):
+        validate_controller_budget_replay_state(state)
 
 
 @pytest.mark.parametrize(

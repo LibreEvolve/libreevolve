@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 import math
 import re
 import time
@@ -647,6 +648,27 @@ def validate_controller_budget_state(state: object) -> dict:
     }
 
 
+def validate_controller_budget_replay_state(state: object) -> dict:
+    """Validate that controller budget events replay to the persisted snapshot."""
+    validated = validate_controller_budget_state(state)
+    snapshot = validated["snapshot"]
+    budget = _budget_for_controller_event_replay(snapshot)
+    for event in validated["events"]:
+        apply_controller_budget_event(budget, event)
+    replayed_snapshot = budget.snapshot()
+    _validate_controller_budget_replay_matches_snapshot(replayed_snapshot, snapshot)
+    return {
+        "schema": validated["schema"],
+        "snapshot": snapshot,
+        "events": validated["events"],
+        "replay": {
+            "status": "matched_snapshot",
+            "event_count": len(validated["events"]),
+            "runtime_seconds_policy": "manifest_snapshot_authoritative",
+        },
+    }
+
+
 def validate_controller_budget_event(event: object) -> dict:
     """Validate one durable controller budget event before counter mutation."""
     if not isinstance(event, dict):
@@ -814,6 +836,69 @@ def apply_controller_budget_event(budget: RunBudget, event: object) -> dict:
     else:  # pragma: no cover - validate_controller_budget_event guards this.
         raise BudgetSnapshotError(f"unsupported controller budget event kind {kind!r}")
     return validated
+
+
+def _budget_for_controller_event_replay(snapshot: Mapping[str, object]) -> RunBudget:
+    limits = snapshot["limits"]
+    wall_clock = snapshot["wall_clock"]
+    if not isinstance(limits, Mapping) or not isinstance(wall_clock, Mapping):
+        raise BudgetSnapshotError("controller budget replay snapshot is malformed")
+    started_at_utc = wall_clock["started_at"]
+    if not isinstance(started_at_utc, str):
+        raise BudgetSnapshotError("controller budget replay started_at is malformed")
+    return RunBudget(
+        max_generations=limits["max_generations"],
+        max_evaluations=limits["max_evaluations"],
+        max_evaluator_seconds=limits["max_evaluator_seconds"],
+        max_runtime_seconds=limits["max_runtime_seconds"],
+        started_at=0.0,
+        started_at_utc=started_at_utc,
+        max_evaluator_subprocess_attempts=limits["max_evaluator_subprocess_attempts"],
+        max_evaluator_stage_samples=limits["max_evaluator_stage_samples"],
+        max_evaluator_retry_attempts=limits["max_evaluator_retry_attempts"],
+        max_evaluator_timeouts=limits["max_evaluator_timeouts"],
+        max_evaluator_sample_budget_exhaustions=(
+            limits["max_evaluator_sample_budget_exhaustions"]
+        ),
+        max_evaluator_stage_budget_exhaustions=(
+            limits["max_evaluator_stage_budget_exhaustions"]
+        ),
+        max_llm_calls=limits["max_llm_calls"],
+        max_llm_provider_attempts=limits["max_llm_provider_attempts"],
+        max_llm_tokens=limits["max_llm_tokens"],
+        max_llm_cost_microusd=limits["max_llm_cost_microusd"],
+        max_llm_seconds=limits["max_llm_seconds"],
+        llm_role_provider_attempt_limits=dict(
+            limits["llm_role_provider_attempt_limits"]
+        ),
+        llm_role_token_limits=dict(limits["llm_role_token_limits"]),
+        llm_role_cost_microusd_limits=dict(
+            limits["llm_role_cost_microusd_limits"]
+        ),
+        llm_role_seconds_limits=dict(limits["llm_role_seconds_limits"]),
+    )
+
+
+def _validate_controller_budget_replay_matches_snapshot(
+    replayed_snapshot: Mapping[str, object],
+    snapshot: Mapping[str, object],
+) -> None:
+    if replayed_snapshot["limits"] != snapshot["limits"]:
+        raise BudgetSnapshotError(
+            "controller budget replay limits do not match budget snapshot"
+        )
+    if replayed_snapshot["stop_reason"] != snapshot["stop_reason"]:
+        raise BudgetSnapshotError(
+            "controller budget replay stop_reason does not match budget snapshot"
+        )
+    replayed_consumed = dict(replayed_snapshot["consumed"])
+    snapshot_consumed = dict(snapshot["consumed"])
+    replayed_consumed.pop("runtime_seconds", None)
+    snapshot_consumed.pop("runtime_seconds", None)
+    if replayed_consumed != snapshot_consumed:
+        raise BudgetSnapshotError(
+            "controller budget replay consumption does not match budget snapshot"
+        )
 
 
 def _validate_restored_wall_clock(value: object) -> None:

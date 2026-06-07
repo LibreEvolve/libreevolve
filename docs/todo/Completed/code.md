@@ -15331,3 +15331,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused ensemble tests cover generated timeout records,
     fallback budget actions, replay validation, and malformed cancellation
     record rejection.
+
+- [x] Add reusable controller budget replay validation for LLM usage.
+  - Spec evidence: AlphaEvolve-style budgeted search needs restored
+    provider-attempt, token, configured-cost, and latency consumption to be
+    provably consistent with persisted controller events before resumed work.
+  - Status: `validate_controller_budget_replay_state()` now validates a
+    controller budget state, replays event rows into a fresh `RunBudget`, and
+    rejects non-wall-clock consumed-counter or stop-reason drift against the
+    persisted snapshot. The loop restore path now delegates to this public
+    budget contract instead of private replay comparison code.
+  - Remaining gap: this proves synchronous controller event replay; it does
+    not compose restored consumption with async worker queues, pending work, or
+    provider-output replay.
+  - Verification: focused budget tests cover LLM provider-attempt, token,
+    configured-cost, and latency replay plus snapshot-drift rejection.

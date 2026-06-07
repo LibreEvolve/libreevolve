@@ -125,10 +125,9 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
   runtime fixture generates those reports yet.
-- Add configurable retry/penalty policies for LLM feedback provider or parse
-  failures beyond the current ignore-and-record behavior.
-- Add a validator network egress policy and stronger sandbox/resource controls
-  beyond the current minimal environment and process-tree cleanup.
+- Add OS/container-grade validator network isolation and stronger
+  sandbox/resource controls beyond the current Python-socket denial option,
+  minimal environment, wall-clock budgets, and process-tree cleanup.
 - Extend evaluator provenance beyond the enforced problem-local dependency
   policy to cover external package/native data access when that becomes part of
   the sandbox/environment contract.

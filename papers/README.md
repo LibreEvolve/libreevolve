@@ -777,9 +777,11 @@ Implemented:
   formal verification artifacts, timing constraints, designer signoff, or
   downstream synthesis-tool confirmation. For compiler-generated IR tasks, it
   does not yet require per-edit randomized reference-check traces, reference
-  implementation hashes, input-generator provenance, numerical tolerance
-  policy, kernel versus pre/postprocessing attribution, final expert all-input
-  signoff scope, or calibrated result-claim records mapping finite metrics to
+  implementation hashes, input-generator provenance, IR-origin/editability
+  constraints, compiler-generated/already-optimized baseline provenance,
+  numerical tolerance policy, kernel versus pre/postprocessing attribution,
+  final expert all-input signoff scope, or calibrated result-claim records
+  mapping finite metrics to
   AlphaEvolve Section 3.3 magnitudes such as scheduling resource-recovery
   percentages, kernel speedups and training-time reductions, RTL PPA deltas,
   or compiler kernel/pre/postprocessing speedups with explicit units,

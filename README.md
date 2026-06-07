@@ -3107,7 +3107,9 @@ result-claim schema: reports do not yet require metric units, denominators,
 baselines, aggregation windows, runtime/deployment/synthesis context, or
 explicit mapping to AlphaEvolve Section 3.3 magnitudes such as resource
 recovery percentages, kernel speedups, training-time reductions, RTL PPA
-deltas, or compiler pre/postprocessing speedups.
+deltas, or compiler pre/postprocessing speedups. Compiler-IR reports also do
+not yet identify XLA-IR origin, debugging-only versus direct-editing
+boundaries, or compiler-generated/already-optimized baseline provenance.
 `libreevolve.systems_result_artifact_inventory.v1` verifies the declared
 systems report artifacts against concrete files under an explicit artifact
 root, including safe relative paths, existence, SHA-256 hashes, and byte

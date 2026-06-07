@@ -2504,21 +2504,25 @@ Primary evidence:
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.
   - Spec evidence: AlphaEvolve Section 3.3.4 directly optimizes
     XLA-generated IR for FlashAttention plus surrounding input/output
-    processing. The paper says each modification was checked against reference
-    unmodified code on randomized inputs during optimization, and the final
-    version was rigorously confirmed by human experts for all possible inputs.
+    processing. The paper says this IR was designed for debugging rather than
+    direct developer editing, was compiler-generated and already highly
+    optimized, each modification was checked against reference unmodified code
+    on randomized inputs during optimization, and the final version was
+    rigorously confirmed by human experts for all possible inputs.
   - Current evidence: `libreevolve.systems_result_report.v1` can require a
     final `reference_correctness` gate and artifact, but it has no
     compiler-IR-specific schema for per-edit randomized reference checks,
+    IR-origin/debug-only versus direct-editing boundary metadata,
+    compiler-generated/already-optimized baseline provenance,
     abstraction-level labels for kernel versus pre/postprocessing IR edits,
     reference implementation identity, randomized input generators, numerical
     tolerance policy, or final expert-confirmation scope.
   - Required result: add compiler/kernel report metadata and validators for
     candidate-edit sequences, per-edit randomized reference-check artifacts,
-    reference implementation hashes, input-generator seeds/coverage,
-    numerical tolerance and failure policies, abstraction-level attribution,
-    and final expert/all-input signoff before treating compiler-generated IR
-    results as AlphaEvolve-ready.
+    IR provenance and editability constraints, reference implementation hashes,
+    input-generator seeds/coverage, numerical tolerance and failure policies,
+    abstraction-level attribution, and final expert/all-input signoff before
+    treating compiler-generated IR results as AlphaEvolve-ready.
 
 ## LLM Ensemble
 

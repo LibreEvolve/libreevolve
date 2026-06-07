@@ -813,17 +813,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve Section 3.3.4 checked each FlashAttention
     compiler-IR modification against reference code on randomized inputs and
     then separately had the final code confirmed by human experts for all
-    possible inputs.
+    possible inputs; the same section says the optimized XLA IR was intended
+    for debugging rather than direct developer editing and was
+    compiler-generated/already highly optimized.
   - Current evidence: README documents generic systems result reports and
     reference-correctness gates, but it does not yet describe per-edit
     randomized reference-check traces, reference implementation hashes,
-    randomized input generator provenance, numerical tolerance policy, or
+    randomized input generator provenance, IR-origin/editability boundaries,
+    compiler-generated baseline provenance, numerical tolerance policy, or
     kernel-versus-pre/postprocessing attribution.
   - Required result: once compiler/kernel report metadata captures per-edit
     reference checks, randomized input coverage, tolerance/failure policy,
-    abstraction-level attribution, and final expert signoff scope, update
-    README, ROADMAP, papers index, and matching TODOs so README does not imply
-    final reference-gate artifacts prove AlphaEvolve-style compiler-IR traces.
+    IR provenance/editability constraints, abstraction-level attribution, and
+    final expert signoff scope, update README, ROADMAP, papers index, and
+    matching TODOs so README does not imply final reference-gate artifacts
+    prove AlphaEvolve-style compiler-IR traces.
 
 - [ ] Keep README self-improvement wording scoped until infrastructure and
       distillation evidence exists.

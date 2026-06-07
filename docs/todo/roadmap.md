@@ -1519,18 +1519,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       per-edit randomized checks exist.
   - Spec evidence: AlphaEvolve Section 3.3.4 checks each FlashAttention
     compiler-IR modification against reference code on randomized inputs, then
-    separately reports final expert confirmation for all possible inputs.
+    separately reports final expert confirmation for all possible inputs. It
+    also says the XLA-generated IR was designed for debugging rather than
+    direct developer editing and was compiler-generated/already highly
+    optimized.
   - Current evidence: roadmap systems-result wording covers generic
     reference-correctness and expert-confirmation gaps, but current report
     validation does not require per-edit randomized reference-check traces,
-    input-generator provenance, numerical tolerance policy, or attribution of
-    improvements to the kernel versus pre/postprocessing IR levels.
+    input-generator provenance, IR-origin/editability constraints,
+    compiler-generated baseline provenance, numerical tolerance policy, or
+    attribution of improvements to the kernel versus pre/postprocessing IR
+    levels.
   - Required result: when compiler/kernel fixtures or report validators add
     edit-sequence reference-check artifacts, reference-code hashes,
-    randomized-input coverage, tolerance/failure policy, abstraction-level
-    attribution, and expert signoff scope, update ROADMAP, README, papers
-    index, and code/paper TODOs so roadmap text distinguishes final
-    correctness gates from AlphaEvolve-style compiler-IR optimization traces.
+    randomized-input coverage, IR provenance/editability metadata,
+    tolerance/failure policy, abstraction-level attribution, and expert
+    signoff scope, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap text distinguishes final correctness gates from
+    AlphaEvolve-style compiler-IR optimization traces.
 
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.

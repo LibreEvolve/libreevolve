@@ -141,6 +141,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code/paper TODO entries together so roadmap wording neither underclaims the
     current workflow nor overclaims full AlphaEvolve-grade CI coverage.
 
+- [ ] Keep operational config-validation roadmap wording scoped to local
+      effective-config checks.
+  - Spec evidence: AlphaEvolve-scale experiments need configuration validation
+    that catches invalid local run policy before artifacts are written while
+    keeping live provider/model API compatibility as a separate evidence
+    surface.
+  - Current evidence: `ROADMAP.md` asks to extend current config validation to
+    plugin-specific schemas and provider/model API compatibility. README and
+    code evidence show the current local boundary: CLI overrides are applied
+    before config validation, plugin labels/options and backend specs are
+    validated locally, and `ProgramDatabase` revalidates the full mutable
+    `Config` before strict manifest serialization and run-directory
+    preparation. Existing roadmap TODOs already track plugin
+    configuration-schema scope and static provider capability lookup, but live
+    provider model-registry, service/API-version, account availability, and
+    broader provider/model compatibility checks remain future work.
+  - Required result: when plugin-specific schemas expand, live provider/model
+    API compatibility checks land, or config validation gains external service
+    evidence, update the roadmap, README, papers index, and code/paper TODO
+    entries together so roadmap wording neither underclaims current local
+    effective-config validation nor overclaims live provider/API compatibility.
+
 - [ ] Keep the multi-objective roadmap item scoped to primary archive policy
       versus retained diagnostic overlays.
   - Spec evidence: AlphaEvolve-style multi-objective search should make

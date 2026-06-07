@@ -10008,3 +10008,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     ablation experiments or emits those validated reports for real targets.
   - Verification: focused ablation-result tests cover valid inventories and
     missing, mismatched, and unsafe artifact references.
+
+- [x] Add paper-visible benchmark hardening artifact inventory verification.
+  - Paper evidence: AlphaEvolve's reported benchmark discoveries depend on
+    benchmark signals that resist shortcuts, so anti-gaming evidence should be
+    concrete and auditable rather than only declared as hashes.
+  - Status: `libreevolve.benchmark_hardening_artifact_inventory.v1` now
+    verifies negative fixtures and hardening artifacts under a safe artifact
+    root. Fixture and hardening records are checked for safe paths, existence,
+    SHA-256 hashes, byte counts, and aggregate inventory status.
+  - Remaining paper gap: this is anti-gaming evidence-file verification only;
+    real benchmark runners still need to emit hardening reports from
+    randomized/exhaustive operation, rank, construction, and systems fixtures.
+  - Verification: focused benchmark-hardening tests cover valid inventories
+    and missing, mismatched, and unsafe fixture/artifact references.

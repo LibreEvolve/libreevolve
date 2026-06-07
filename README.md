@@ -2970,6 +2970,11 @@ signals it defends, passed negative fixtures, and hashed hardening artifacts.
 Smoke-level records can be valid without full coverage, but benchmark- and
 paper-claim-level records require a passed negative fixture for every declared
 shortcut threat.
+`libreevolve.benchmark_hardening_artifact_inventory.v1` verifies negative
+fixture and hardening artifact records against concrete files under an explicit
+artifact root, checking safe relative paths, existence, SHA-256 hashes, and
+byte counts. It proves the named anti-gaming evidence files exist, not that a
+real benchmark runner has generated them.
 Executed ablation curves use `libreevolve.alphaevolve_ablation_report.v1` in
 `libreevolve/problems/benchmarks/ablation_results.py`; the contract validates
 all six AlphaEvolve Figure 8 variants, declared targets, exactly three seeds

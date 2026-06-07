@@ -14894,3 +14894,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     those reports for real targets.
   - Verification: focused ablation-result tests cover fully verified artifact
     inventories plus hash/byte mismatches, missing files, and unsafe paths.
+
+- [x] Add benchmark hardening artifact inventory verification.
+  - Spec evidence: AlphaEvolve-grade benchmark claims should be backed by
+    concrete anti-gaming evidence files, including negative fixtures and
+    detector/hardening artifacts, rather than shaped path/hash fields alone.
+  - Status: `libreevolve.benchmark_hardening_artifact_inventory.v1` now
+    verifies negative fixture and hardening artifact records under an explicit
+    artifact root. The inventory checks safe relative paths, file existence,
+    SHA-256 hashes, byte counts, per-record statuses, aggregate
+    missing/mismatch/invalid counts, and a stable records hash.
+  - Remaining gap: this verifies named anti-gaming evidence files; real
+    benchmark-grade matrix, packing, and systems fixtures still need to
+    generate randomized/exhaustive hardening reports and detector artifacts.
+  - Verification: focused benchmark-hardening tests cover fully verified
+    inventories plus hash/byte mismatches, missing files, and unsafe paths.

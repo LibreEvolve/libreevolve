@@ -861,7 +861,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     curves. `libreevolve.benchmark_hardening.v1` now defines a hardening
     contract for protected signals, shortcut threats linked to protected
     signals, detector strategies, passed negative fixtures, and hashed
-    hardening artifacts, but no real benchmark runner emits those reports yet.
+    hardening artifacts.
+    `libreevolve.benchmark_hardening_artifact_inventory.v1` now verifies
+    negative fixture and hardening artifact records against concrete files
+    under an explicit artifact root, checking safe relative paths, existence,
+    SHA-256 hashes, byte counts, per-record statuses, and aggregate
+    missing/mismatch/invalid counts, but no real benchmark runner emits those
+    reports yet.
     `libreevolve.example_benchmark_scope.v1` now validates a shipped-example
     scope registry that labels `hello_world`, `sorting`, `workspace_math`,
     `matrix_multiplication`, and `circle_packing` as smoke-only and not
@@ -871,7 +877,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     add operation/rank-aware matrix benchmark validation beyond the current
     2x2 smoke checks, connect hardening reports and artifact schemas for
     geometric constructions, and create repeatable benchmark reports tied to
-    AlphaEvolve target families.
+    AlphaEvolve target families. The remaining paper gap is generating those
+    anti-gaming evidence files from real benchmark fixtures, not verifying
+    declared hardening files once a report names them.
 
 - [ ] Preserve AlphaEvolve's matrix-result publication contract.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A

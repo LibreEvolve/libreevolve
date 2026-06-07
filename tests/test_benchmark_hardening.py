@@ -1,7 +1,10 @@
+import hashlib
 import json
 
 from libreevolve.problems.benchmarks.benchmark_hardening import (
+    BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA,
     BENCHMARK_HARDENING_SCHEMA,
+    benchmark_hardening_artifact_inventory,
     render_benchmark_hardening_summary,
     validate_benchmark_hardening_report,
 )
@@ -93,6 +96,77 @@ def test_benchmark_hardening_loads_json_file(tmp_path):
 
     assert validation.ok is True
     assert validation.benchmark_ready is True
+
+
+def test_benchmark_hardening_artifact_inventory_verifies_fixture_and_artifact_files(tmp_path):
+    report = _valid_report()
+    for section in ("negative_fixtures", "artifacts"):
+        for record in report[section]:
+            path = tmp_path / record["path"]
+            path.parent.mkdir(parents=True, exist_ok=True)
+            label = record.get("kind", record.get("category", "unknown"))
+            raw = f"{section}:{label}".encode("utf-8")
+            path.write_bytes(raw)
+            record["sha256"] = hashlib.sha256(raw).hexdigest()
+            record["bytes"] = len(raw)
+
+    inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
+
+    assert inventory["schema"] == BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA
+    assert inventory["report_schema"] == BENCHMARK_HARDENING_SCHEMA
+    assert inventory["benchmark_id"] == "matrix_multiplication_smoke"
+    assert inventory["level"] == "benchmark"
+    assert inventory["artifact_root_policy"] == (
+        "safe_relative_report_paths_under_artifact_root"
+    )
+    assert inventory["ok"] is True
+    assert inventory["record_count"] == 4
+    assert inventory["verified_count"] == 4
+    assert inventory["missing_count"] == 0
+    assert inventory["mismatch_count"] == 0
+    assert inventory["invalid_count"] == 0
+    assert {record["status"] for record in inventory["records"]} == {
+        "verified"
+    }
+    assert {record["section"] for record in inventory["records"]} == {
+        "negative_fixtures",
+        "artifacts",
+    }
+
+
+def test_benchmark_hardening_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
+    report = _valid_report()
+    first = report["negative_fixtures"][0]
+    first_path = tmp_path / first["path"]
+    first_path.parent.mkdir(parents=True, exist_ok=True)
+    first_path.write_text("wrong", encoding="utf-8")
+    first["sha256"] = "b" * 64
+    first["bytes"] = 999
+    report["negative_fixtures"][1]["path"] = "missing/library-delegation.json"
+    third = report["negative_fixtures"][2]
+    third_path = tmp_path / third["path"]
+    third_path.parent.mkdir(parents=True, exist_ok=True)
+    third_raw = b"dead code counter fixture"
+    third_path.write_bytes(third_raw)
+    third["sha256"] = hashlib.sha256(third_raw).hexdigest()
+    third["bytes"] = len(third_raw)
+    report["artifacts"][0]["path"] = "../escape-hardening.json"
+
+    inventory = benchmark_hardening_artifact_inventory(report, tmp_path)
+    records = {
+        (record["section"], record["kind"]): record
+        for record in inventory["records"]
+    }
+
+    assert inventory["ok"] is False
+    assert inventory["mismatch_count"] == 1
+    assert inventory["missing_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert records[("negative_fixtures", "hardcoded_cases")]["status"] == "hash_mismatch"
+    assert "record_hash_mismatch" in records[("negative_fixtures", "hardcoded_cases")]["issues"]
+    assert "record_bytes_mismatch" in records[("negative_fixtures", "hardcoded_cases")]["issues"]
+    assert records[("negative_fixtures", "library_delegation")]["status"] == "missing_file"
+    assert records[("artifacts", "hardening_report")]["status"] == "unsafe_path"
 
 
 def test_smoke_level_can_be_valid_without_full_negative_fixture_coverage():

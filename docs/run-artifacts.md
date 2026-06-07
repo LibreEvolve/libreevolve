@@ -1640,6 +1640,12 @@ resolve safely under that root, exist as files, and match their reported
 SHA-256 hashes and byte counts. The inventory verifies result artifacts; it
 does not execute Figure 8 ablation runs or prove equal-budget experiment
 coverage by itself.
+`libreevolve.benchmark_hardening_artifact_inventory.v1` verifies benchmark
+hardening evidence files under an explicit artifact root. Negative fixtures
+and hardening artifacts must resolve safely under that root, exist as files,
+and match their reported SHA-256 hashes and byte counts. This verifies
+anti-gaming evidence files, not a real benchmark runner or randomized/
+exhaustive fixture execution.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

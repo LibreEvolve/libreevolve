@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -8,6 +9,7 @@ from typing import Any
 
 
 BENCHMARK_HARDENING_SCHEMA = "libreevolve.benchmark_hardening.v1"
+BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.benchmark_hardening_artifact_inventory.v1"
 BENCHMARK_LEVELS = frozenset({"smoke", "benchmark", "paper_claim"})
 SHORTCUT_CATEGORIES = frozenset(
     {
@@ -108,6 +110,77 @@ def render_benchmark_hardening_summary(report: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def benchmark_hardening_artifact_inventory(
+    report: object | str | Path,
+    artifact_root: str | Path,
+) -> dict[str, Any]:
+    """Verify negative-fixture and hardening artifact references under a root."""
+    data, read_issues = _load_report(report)
+    root = Path(artifact_root)
+    records: list[dict[str, Any]] = []
+    issues = [
+        {"code": issue.code, "message": issue.message}
+        for issue in read_issues
+    ]
+    if data is not None:
+        for field in ("negative_fixtures", "artifacts"):
+            values = data.get(field)
+            if isinstance(values, list):
+                for index, record in enumerate(values):
+                    records.append(_hardening_inventory_record(record, root, field, index))
+            else:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must be a non-empty list",
+                    }
+                )
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    missing_count = sum(1 for record in records if record["status"] == "missing_file")
+    mismatch_count = sum(
+        1
+        for record in records
+        if record["status"] in {"hash_mismatch", "bytes_mismatch"}
+    )
+    invalid_count = sum(
+        1
+        for record in records
+        if record["status"] in {"invalid_record", "unsafe_path", "read_error"}
+    )
+    if not records and data is not None:
+        issues.append(
+            {
+                "code": "empty_artifact_inventory",
+                "message": "no negative fixture or artifact records were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA,
+        "report_schema": data.get("schema") if isinstance(data, dict) else None,
+        "benchmark_id": data.get("benchmark_id") if isinstance(data, dict) else None,
+        "level": data.get("level") if isinstance(data, dict) else None,
+        "artifact_root_policy": "safe_relative_report_paths_under_artifact_root",
+        "artifact_root_name": root.name,
+        "record_count": len(records),
+        "verified_count": verified_count,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and missing_count == 0
+            and mismatch_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "records": records,
+    }
+
+
 def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, list[BenchmarkHardeningIssue]]:
     if isinstance(report, dict):
         return dict(report), []
@@ -122,6 +195,94 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [BenchmarkHardeningIssue("invalid_shape", "benchmark hardening report must be a JSON object")]
+
+
+def _hardening_inventory_record(
+    record: object,
+    root: Path,
+    section: str,
+    index: int,
+) -> dict[str, Any]:
+    if not isinstance(record, dict):
+        return {
+            "section": section,
+            "index": index,
+            "kind": "unknown",
+            "path": "",
+            "status": "invalid_record",
+            "issues": ["invalid_record"],
+        }
+    kind = record.get("kind")
+    if section == "negative_fixtures":
+        kind = record.get("category")
+    path = record.get("path")
+    expected_sha = record.get("sha256")
+    expected_bytes = record.get("bytes")
+    inventory: dict[str, Any] = {
+        "section": section,
+        "index": index,
+        "kind": kind if isinstance(kind, str) else "unknown",
+        "path": path if isinstance(path, str) else "",
+        "expected_sha256": expected_sha if isinstance(expected_sha, str) else "",
+        "expected_bytes": expected_bytes if isinstance(expected_bytes, int) and not isinstance(expected_bytes, bool) else None,
+        "status": "verified",
+        "issues": [],
+    }
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        inventory["status"] = "unsafe_path"
+        inventory["issues"].append("invalid_record_path")
+        return inventory
+    try:
+        resolved_root = root.resolve()
+        resolved_path = (resolved_root / path_obj).resolve(strict=False)
+    except OSError:
+        inventory["status"] = "unsafe_path"
+        inventory["issues"].append("invalid_record_path")
+        return inventory
+    if not resolved_path.is_relative_to(resolved_root):
+        inventory["status"] = "unsafe_path"
+        inventory["issues"].append("record_path_outside_root")
+        return inventory
+    if not resolved_path.exists():
+        inventory["status"] = "missing_file"
+        inventory["issues"].append("missing_record_file")
+        return inventory
+    if not resolved_path.is_file():
+        inventory["status"] = "unsafe_path"
+        inventory["issues"].append("record_path_not_file")
+        return inventory
+    try:
+        raw = resolved_path.read_bytes()
+    except OSError:
+        inventory["status"] = "read_error"
+        inventory["issues"].append("record_read_error")
+        return inventory
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    actual_bytes = len(raw)
+    inventory["actual_sha256"] = actual_sha
+    inventory["actual_bytes"] = actual_bytes
+    if not isinstance(expected_sha, str) or _SHA256_RE.fullmatch(expected_sha) is None:
+        inventory["status"] = "hash_mismatch"
+        inventory["issues"].append("invalid_expected_record_hash")
+    elif actual_sha != expected_sha:
+        inventory["status"] = "hash_mismatch"
+        inventory["issues"].append("record_hash_mismatch")
+    if isinstance(expected_bytes, bool) or not isinstance(expected_bytes, int) or expected_bytes <= 0:
+        if inventory["status"] == "verified":
+            inventory["status"] = "bytes_mismatch"
+        inventory["issues"].append("invalid_expected_record_bytes")
+    elif actual_bytes != expected_bytes:
+        if inventory["status"] == "verified":
+            inventory["status"] = "bytes_mismatch"
+        inventory["issues"].append("record_bytes_mismatch")
+    return inventory
 
 
 def _id_field(data: dict[str, Any], field: str, issues: list[BenchmarkHardeningIssue]) -> str | None:

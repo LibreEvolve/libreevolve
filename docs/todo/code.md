@@ -858,7 +858,12 @@ Primary evidence:
     detector strategies, required links from each shortcut threat to known
     protected signals, passed negative fixtures, safe artifact paths/hashes,
     and benchmark-readiness gating that requires a passed negative fixture for
-    every declared shortcut threat. `libreevolve.example_benchmark_scope.v1`
+    every declared shortcut threat.
+    `libreevolve.benchmark_hardening_artifact_inventory.v1` now verifies
+    negative fixture and hardening artifact records against concrete files
+    under an explicit artifact root, checking safe relative paths, existence,
+    SHA-256 hashes, byte counts, per-record statuses, and aggregate
+    missing/mismatch/invalid counts. `libreevolve.example_benchmark_scope.v1`
     now machine-classifies the shipped `hello_world`, `sorting`,
     `workspace_math`, `matrix_multiplication`, and `circle_packing` examples as
     smoke-only and not AlphaEvolve-comparable, preventing those fixtures from
@@ -868,7 +873,9 @@ Primary evidence:
     `libreevolve.example_benchmark_scope.v1`; emit expected artifact schemas,
     repeated-seed evaluation, target/SOTA baselines, benchmark reports suitable
     for comparing AlphaEvolve-alignment features, and real anti-gaming
-    fixtures for benchmark-grade operation/rank discovery.
+    fixtures for benchmark-grade operation/rank discovery. The remaining gap
+    is generating those benchmark-grade hardening files from real fixtures, not
+    verifying declared files once a report names them.
 
 - [ ] Add matrix tensor benchmark result artifacts and per-seed hit-rate
   reporting.

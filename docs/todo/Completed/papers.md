@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Add paper-visible parent-code file selection policy.
+  - Paper evidence: AlphaEvolve prompt context can include prior code, and
+    useful prompt-context evolution should focus required code context on
+    relevant files rather than always rendering the full workspace.
+  - Status: prompt context policy now accepts `parent_code_paths`, a safe
+    ordered parent-workspace file allowlist. Direct prompt rendering applies it
+    before parent-code caps/truncation, records requested/rendered/omitted/
+    missing paths in `libreevolve.parent_code_paths.v1` metadata nested inside
+    `libreevolve.parent_code_policy.v1`, and exposes the field in the
+    meta-prompt capability manifest.
+  - Remaining paper gap: this is deterministic exact-path selection, not
+    semantic parent-code retrieval, dependency-aware ranking, or learned source
+    relevance.
+  - Verification: focused prompt and meta-prompt loop tests cover validation,
+    rendering, diagnostics, and accepted policy JSON.
+
 - [x] Add paper-visible parent-code truncation policy.
   - Paper evidence: AlphaEvolve prompt context can include prior code; useful
     prompt-context evolution should control which parts of required code

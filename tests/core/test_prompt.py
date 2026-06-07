@@ -4363,6 +4363,18 @@ def test_prompt_context_policy_rejects_invalid_parent_code_truncation():
         validate_prompt_context_policy({"parent_code_truncation": "middle"})
 
 
+def test_prompt_context_policy_rejects_invalid_parent_code_paths():
+    assert validate_prompt_context_policy(
+        {"parent_code_paths": ["main.py", "main.py", "pkg/helper.py"]}
+    )["parent_code_paths"] == ["main.py", "pkg/helper.py"]
+
+    with pytest.raises(PromptTemplateError, match="parent_code_paths"):
+        validate_prompt_context_policy({"parent_code_paths": "../escape.py"})
+
+    with pytest.raises(PromptTemplateError, match="parent_code_paths"):
+        validate_prompt_context_policy({"parent_code_paths": "main.py"})
+
+
 def test_prompt_context_policy_rejects_invalid_inspiration_strategy():
     with pytest.raises(PromptTemplateError, match="inspiration_strategy"):
         validate_prompt_context_policy({"inspiration_strategy": "unsafe"})
@@ -6973,6 +6985,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "mutation_instruction_variant": "default",
         "mutation_instruction_include_example": True,
         "proposal_metadata_enabled": None,
+        "parent_code_paths": [],
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
         "inspiration_strategy": None,
@@ -8167,6 +8180,69 @@ def test_prompt_context_policy_uses_head_tail_parent_code_truncation():
     assert sampler.last_metadata["prompt_context_policy"][
         "parent_code_truncation"
     ] == "head_tail"
+
+
+def test_prompt_context_policy_selects_parent_code_paths():
+    problem = Problem(
+        name="demo",
+        task_description="Improve solve().",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=Path("validate.py"),
+        initial_programs=["x=1"],
+        problem_dir=Path("."),
+    )
+    parent = Program(
+        files={
+            "main.py": "from helper import value\n",
+            "helper.py": "value = 1\n",
+            "unused.py": "hidden_value = 'not rendered'\n",
+        },
+        primary_file="main.py",
+        fitness=0.0,
+    )
+    sampler = PromptSampler()
+
+    prompt = sampler.build(
+        parent,
+        [],
+        problem,
+        extra_context="",
+        template="{task}\n{parent_code}\n{mutation_instructions}",
+        context_policy={
+            "parent_code_paths": ["helper.py", "missing.py"],
+        },
+    )
+
+    assert "path=helper.py" in prompt
+    assert "value = 1" in prompt
+    assert "path=main.py" not in prompt
+    assert "from helper import value" not in prompt
+    assert "hidden_value = 'not rendered'" not in prompt
+    assert "Omitted mutable files" in prompt
+    assert "Missing requested mutable files" in prompt
+    policy = sampler.last_metadata["parent_code_policy"]
+    assert policy["source"] == "prompt_context_policy"
+    assert policy["path_policy"] == {
+        "schema": "libreevolve.parent_code_paths.v1",
+        "source": "prompt_context_policy",
+        "requested_paths": ["helper.py", "missing.py"],
+        "rendered_paths": ["helper.py"],
+        "omitted_paths": ["main.py", "unused.py"],
+        "missing_paths": ["missing.py"],
+        "order_policy": "prompt_context_policy_order",
+        "primary_file": "main.py",
+        "file_count": 3,
+        "rendered_file_count": 1,
+        "omitted_file_count": 2,
+        "missing_file_count": 1,
+        "static_file_count": 0,
+    }
+    assert sampler.last_metadata["prompt_context_policy"]["parent_code_paths"] == [
+        "helper.py",
+        "missing.py",
+    ]
 
 
 @pytest.mark.parametrize(

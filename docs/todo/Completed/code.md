@@ -4,6 +4,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt context-policy parent-code file selection.
+  - Spec evidence: AlphaEvolve-style prompt context should be able to focus
+    required code context on relevant files instead of always rendering the
+    full mutable parent workspace.
+  - Status: `libreevolve.prompt_context_policy.v1` now accepts
+    `parent_code_paths`, a deduplicated list of safe candidate-relative file
+    paths. `PromptSampler` renders only existing requested mutable parent files
+    in policy order, keeps static-file provenance visible, and records
+    requested, rendered, omitted, and missing paths in nested
+    `libreevolve.parent_code_paths.v1` metadata inside
+    `libreevolve.parent_code_policy.v1`. The meta-prompt context-policy
+    capability manifest advertises the field for LLM-mutated policy JSON.
+  - Remaining gap: this is exact path selection, not semantic/code-aware
+    parent-workspace retrieval, learned ranking, or dependency-graph-aware
+    summarization.
+  - Verification: focused prompt tests cover path validation, selected
+    rendering, omitted/missing diagnostics, and canonical metadata defaults;
+    focused loop meta-prompt tests cover accepted policy JSON carrying the
+    field.
+
 - [x] Add prompt context-policy parent-code truncation mode.
   - Spec evidence: AlphaEvolve-style prompt/context evolution needs
     deterministic control over which parts of required code context survive a

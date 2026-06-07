@@ -1941,13 +1941,16 @@ used by prompt packing, and select the safe enum-valued
 `mutation_instruction_variant` used to render mutation-format instructions.
 `mutation_instruction_include_example` can keep or remove the built-in
 mutation-format example block while preserving the core format rules.
-`parent_code_max_chars` can cap or suppress the required parent-code channel
-without removing the placeholder contract; prompt diagnostics record
-`parent_code_policy` with schema `libreevolve.parent_code_policy.v1`, policy
-source, configured cap, original/rendered/omitted character counts,
-selected `parent_code_truncation` mode (`head` or `head_tail`), truncation
-status, and original/rendered SHA-256 hashes. A cap of `0` renders an explicit
-omission marker instead of raw parent workspace text.
+`parent_code_paths` can select and order safe mutable parent-workspace files,
+recording requested, rendered, omitted, and missing file paths while retaining
+static-file provenance. `parent_code_max_chars` can cap or suppress the
+required parent-code channel without removing the placeholder contract; prompt
+diagnostics record `parent_code_policy` with schema
+`libreevolve.parent_code_policy.v1`, nested `path_policy`, policy source,
+configured cap, original/rendered/omitted character counts, selected
+`parent_code_truncation` mode (`head` or `head_tail`), truncation status, and
+original/rendered SHA-256 hashes. A cap of `0` renders an explicit omission
+marker instead of raw parent workspace text.
 `proposal_metadata_enabled` can override whether proposal metadata
 instructions and downstream parsing run for that prompt arm; `null` preserves
 the run-level `capture_proposal_metadata` setting. It can

@@ -11,7 +11,7 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from libreevolve.core.candidate import MUTATION_MODES
+from libreevolve.core.candidate import MUTATION_MODES, normalize_candidate_path
 from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.population.program import Program, validate_program_metrics
 from libreevolve.problems.loader import Problem
@@ -582,10 +582,15 @@ class PromptSampler:
             or self.artifact_content_max_chars
         )
         self.last_context_text = context
+        parent_code, parent_code_paths_metadata = _render_program_files_with_metadata(
+            parent,
+            selected_paths=prompt_context_policy["parent_code_paths"],
+        )
         parent_code, parent_code_policy_metadata = _apply_parent_code_policy(
-            _render_program_files(parent),
+            parent_code,
             prompt_context_policy["parent_code_max_chars"],
             prompt_context_policy["parent_code_truncation"],
+            path_metadata=parent_code_paths_metadata,
         )
         render_values = {
             "task": task,
@@ -1285,6 +1290,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant",
         "mutation_instruction_include_example",
         "proposal_metadata_enabled",
+        "parent_code_paths",
         "parent_code_max_chars",
         "parent_code_truncation",
         "inspiration_strategy",
@@ -1429,6 +1435,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     )
     proposal_metadata_enabled = _validate_prompt_context_proposal_metadata_enabled(
         value.get("proposal_metadata_enabled")
+    )
+    parent_code_paths = _validate_prompt_context_parent_code_paths(
+        value.get("parent_code_paths")
     )
     parent_code_max_chars = _validate_prompt_context_parent_code_max_chars(
         value.get("parent_code_max_chars")
@@ -1899,6 +1908,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "mutation_instruction_variant": mutation_instruction_variant,
         "mutation_instruction_include_example": mutation_instruction_include_example,
         "proposal_metadata_enabled": proposal_metadata_enabled,
+        "parent_code_paths": parent_code_paths,
         "parent_code_max_chars": parent_code_max_chars,
         "parent_code_truncation": parent_code_truncation,
         "inspiration_strategy": inspiration_strategy,
@@ -2068,6 +2078,7 @@ def apply_prompt_context_policy(
             "mutation_instruction_include_example"
         ],
         "proposal_metadata_enabled": policy["proposal_metadata_enabled"],
+        "parent_code_paths": list(policy["parent_code_paths"]),
         "parent_code_max_chars": policy["parent_code_max_chars"],
         "parent_code_truncation": policy["parent_code_truncation"],
         "inspiration_strategy": policy["inspiration_strategy"],
@@ -2407,6 +2418,34 @@ def _validate_prompt_context_proposal_metadata_enabled(
             "must be boolean or null"
         )
     return value
+
+
+def _validate_prompt_context_parent_code_paths(value: object) -> list[str]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise PromptTemplateError(
+            "prompt context_policy.parent_code_paths must be a list"
+        )
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for index, item in enumerate(value):
+        if not isinstance(item, str):
+            raise PromptTemplateError(
+                "prompt context_policy.parent_code_paths"
+                f"[{index}] must be a safe candidate-relative file path"
+            )
+        try:
+            path = normalize_candidate_path(item)
+        except ValueError as exc:
+            raise PromptTemplateError(
+                "prompt context_policy.parent_code_paths"
+                f"[{index}] must be a safe candidate-relative file path: {exc}"
+            ) from exc
+        if path not in seen:
+            normalized.append(path)
+            seen.add(path)
+    return normalized
 
 
 def _validate_prompt_context_parent_code_max_chars(value: object) -> int | None:
@@ -5385,19 +5424,24 @@ def _apply_parent_code_policy(
     parent_code: str,
     max_chars: int | None,
     truncation: str,
+    *,
+    path_metadata: Mapping[str, object],
 ) -> tuple[str, dict]:
     if not isinstance(parent_code, str):
         parent_code = str(parent_code)
     original_chars = len(parent_code)
+    path_policy_source = path_metadata.get("source")
+    prompt_policy_active = max_chars is not None or path_policy_source == "prompt_context_policy"
     metadata = {
         "schema": "libreevolve.parent_code_policy.v1",
         "max_chars": max_chars,
         "truncation": truncation,
         "source": (
             "prompt_context_policy"
-            if max_chars is not None
+            if prompt_policy_active
             else "default_full_parent_workspace"
         ),
+        "path_policy": dict(path_metadata),
         "original_chars": original_chars,
         "rendered_chars": original_chars,
         "omitted_chars": 0,
@@ -6936,12 +6980,50 @@ def _short_proposal_field(
 
 
 def _render_program_files(program: Program) -> str:
+    rendered, _metadata = _render_program_files_with_metadata(program)
+    return rendered
+
+
+def _render_program_files_with_metadata(
+    program: Program,
+    *,
+    selected_paths: object = None,
+) -> tuple[str, dict]:
     workspace = program.workspace()
+    policy_paths = _validate_prompt_context_parent_code_paths(selected_paths)
+    all_paths = sorted(workspace.files)
+    if policy_paths:
+        rendered_paths = [path for path in policy_paths if path in workspace.files]
+        missing_paths = [path for path in policy_paths if path not in workspace.files]
+        omitted_paths = [path for path in all_paths if path not in set(rendered_paths)]
+        order_policy = "prompt_context_policy_order"
+    else:
+        rendered_paths = all_paths
+        missing_paths = []
+        omitted_paths = []
+        order_policy = "path_sort"
+    metadata = {
+        "schema": "libreevolve.parent_code_paths.v1",
+        "source": "prompt_context_policy" if policy_paths else "default_all_files",
+        "requested_paths": list(policy_paths),
+        "rendered_paths": list(rendered_paths),
+        "omitted_paths": omitted_paths,
+        "missing_paths": missing_paths,
+        "order_policy": order_policy,
+        "primary_file": workspace.primary_file,
+        "file_count": len(workspace.files),
+        "rendered_file_count": len(rendered_paths),
+        "omitted_file_count": len(omitted_paths),
+        "missing_file_count": len(missing_paths),
+        "static_file_count": len(workspace.static_files),
+    }
     rendered = [
         "[PROGRAM WORKSPACE]",
         f"Primary file: {_short(workspace.primary_file, max_chars=160)}",
         f"File count: {len(workspace.files)}",
     ]
+    if policy_paths:
+        rendered.append(f"Rendered mutable file count: {len(rendered_paths)}")
     if workspace.static_files:
         rendered.append(f"Static file count: {len(workspace.static_files)}")
         for item in workspace.static_files:
@@ -6958,7 +7040,8 @@ def _render_program_files(program: Program) -> str:
                 rendered.append(
                     f"Static source path: {_short(str(item['source_path']), max_chars=160)}"
                 )
-    for path, content in sorted(workspace.files.items()):
+    for path in rendered_paths:
+        content = workspace.files[path]
         role = "primary" if path == workspace.primary_file else "support"
         path_text = _short(path, max_chars=160) or "unknown"
         content_text = content if isinstance(content, str) else str(content)
@@ -6969,7 +7052,17 @@ def _render_program_files(program: Program) -> str:
                 json.dumps(content_text),
             ]
         )
-    return "\n".join(rendered)
+    if omitted_paths:
+        rendered.append(
+            "Omitted mutable files: "
+            + json.dumps(omitted_paths, sort_keys=True)
+        )
+    if missing_paths:
+        rendered.append(
+            "Missing requested mutable files: "
+            + json.dumps(missing_paths, sort_keys=True)
+        )
+    return "\n".join(rendered), metadata
 
 
 def _render_feedback(

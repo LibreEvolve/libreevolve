@@ -98,11 +98,12 @@ Primary evidence:
     `minimal`, or `exploratory`) for rendered mutation-format instructions.
     `mutation_instruction_include_example` can keep or remove the built-in
     mutation-format example block while preserving the core format rules.
-    `parent_code_max_chars` can cap or suppress the required `{parent_code}`
-    channel while retaining a prompt-visible omission marker and
+    `parent_code_paths` can select and order safe mutable parent-workspace
+    files before required `{parent_code}` rendering, and `parent_code_max_chars`
+    can cap or suppress that channel while retaining a prompt-visible omission marker and
     `libreevolve.parent_code_policy.v1` diagnostics with cap, source,
-    truncation mode (`head` or `head_tail`), truncation, character-count, and
-    hash evidence.
+    nested requested/rendered/omitted/missing path policy, truncation mode
+    (`head` or `head_tail`), truncation, character-count, and hash evidence.
     `proposal_metadata_enabled` can override whether proposal metadata
     instructions and downstream parsing run for that prompt arm while `null`
     preserves the run-level `capture_proposal_metadata` setting.
@@ -403,8 +404,8 @@ Primary evidence:
     selection, execution-output, sample/retry, program-output, and validator-artifact field caps,
     and timeout-cleanup field selection.
   - Required result: extend prompt-program context policy beyond optional
-    channel disabling, priority overrides, current character caps, and
-    truncation-mode selection so safe configured or LLM mutations can change
+    channel disabling, priority overrides, current character caps, parent-code
+    file selection, and truncation-mode selection so safe configured or LLM mutations can change
     retrieval/summarization,
     plugin-context shaping beyond
     enable/disable/allowlist/order/per-plugin caps, upstream inspiration selection beyond

@@ -1080,7 +1080,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     or plugin-metadata sidecar references against an artifact root, including
     safe relative paths, file existence, SHA-256 hashes, byte counts, artifact
     schema, selected sidecar metadata, aggregate missing/mismatch/invalid
-    counts, and a stable records hash. Retained sources and event metadata now
+    counts, and a stable records hash.
+    `libreevolve.retrieval_source_ranking_provenance.v1` now verifies event,
+    metadata, or cache-snapshot retained-source ranking records by recomputing
+    selected-source and query-relevance hashes, checking retained-rank
+    sequence and source counts, and comparing synthesis hashes when retained
+    synthesis text is available. Retained sources and event metadata now
     include `libreevolve.retrieval_source_content_trust_policy.v1`, which
     classifies redacted sidecar, metadata-only oversized sidecar, bounded
     snapshot, hash-only, and missing content evidence, plus replayable-evidence
@@ -1122,4 +1127,5 @@ directory and using the AlphaEvolve paper as the primary specification.
     replayable redirect/TLS decision evidence before
     claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
     remaining paper gap is not retrieval payload sidecar inventory
-    verification.
+    verification or deterministic retained-source ranking-provenance
+    validation.

@@ -497,7 +497,12 @@ Primary evidence:
     or plugin-metadata sidecar references against an artifact root, including
     safe relative paths, file existence, SHA-256 hashes, byte counts, artifact
     schema, selected sidecar metadata, aggregate missing/mismatch/invalid
-    counts, and a stable records hash. It still does not store unbounded raw
+    counts, and a stable records hash.
+    `libreevolve.retrieval_source_ranking_provenance.v1` now verifies event,
+    metadata, or cache-snapshot retained-source ranking records by recomputing
+    selected-source and query-relevance hashes, checking retained-rank
+    sequence and source counts, and comparing synthesis hashes when retained
+    synthesis text is available. It still does not store unbounded raw
     provider payload artifacts, unbounded source-content artifacts,
     learned/external semantic ranking scores beyond deterministic query
     overlap and lexical grounding, or a
@@ -515,8 +520,8 @@ Primary evidence:
     summarization, bounded provider-result snapshots, bounded source-content
     snapshots, retention-budgeted redacted payload sidecars, active-context
     hashes, query grounding, lexical grounding records, audit-only relevance
-    scores, retained source order/hash metadata, or sidecar inventory
-    verification.
+    scores, retained source order/hash metadata, sidecar inventory
+    verification, or deterministic ranking-provenance validation.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.
   - Spec evidence: external literature/retrieval context can directly shape
@@ -542,7 +547,10 @@ Primary evidence:
     expectations, provider/retained rank, bounded source-content snapshots, and
     source-ranking hashes linked to active prompt context. Opt-in
     `query_overlap_score_desc_v1` can make deterministic query-overlap scores
-    affect retained source order. Retained sources now also carry
+    affect retained source order.
+    `libreevolve.retrieval_source_ranking_provenance.v1` verifies those
+    deterministic retained-source ranking hashes for event records and cache
+    snapshots. Retained sources now also carry
     `libreevolve.retrieval_source_content_trust_policy.v1`, classifying
     redacted payload sidecars, metadata-only oversized sidecars, bounded
     snapshots, hash-only evidence, and missing evidence; event-level trust
@@ -574,7 +582,8 @@ Primary evidence:
     provider-result snapshots, query-overlap audit scores, request URL
     redaction, active-context hashes, redacted source-content trust policy, or
     evidence-boundary/context-audit policy records with lexical grounding
-    aggregates or sidecar inventory verification.
+    aggregates, sidecar inventory verification, or deterministic
+    ranking-provenance validation.
 
 ## Evaluation
 

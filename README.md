@@ -2644,7 +2644,13 @@ artifact metadata link those sidecars by path and SHA-256.
 plugin-metadata sidecar references against an artifact root, including safe
 relative paths, file existence, SHA-256 hashes, byte counts, artifact schema,
 selected sidecar metadata, per-record statuses, aggregate
-missing/mismatch/invalid counts, and a stable records hash. Retained source rows
+missing/mismatch/invalid counts, and a stable records hash.
+`retrieval_source_ranking_provenance()` emits
+`libreevolve.retrieval_source_ranking_provenance.v1` to verify event,
+metadata, or cache-snapshot retained-source ranking records by recomputing the
+selected-source and query-relevance hashes, checking retained-rank sequence and
+source counts, and comparing synthesis hashes when retained synthesis text is
+available. Retained source rows
 also carry `libreevolve.retrieval_source_content_trust_policy.v1`, which
 classifies each source as verified redacted sidecar evidence, metadata-only
 oversized sidecar evidence, bounded snapshot-only evidence, hash-only evidence,
@@ -2676,6 +2682,8 @@ audit evidence. Set `source_ranking_policy="query_overlap_score_desc_v1"` to
 rank retained sources by query-overlap score with provider rank as a
 tie-breaker; retrieval events, active prompt context, cache snapshots, and
 runtime plugin state record the policy and whether relevance affected order.
+The ranking-provenance validator can independently check those deterministic
+retained-source hashes for event records and cache snapshots.
 Cache keys include the ranking policy so cached/offline replay cannot mix
 differently ordered source metadata for the same query. LibreEvolve does not yet persist unbounded raw provider/source
 payloads, unbounded source-content artifacts,

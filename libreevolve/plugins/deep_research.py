@@ -37,6 +37,9 @@ RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA = "libreevolve.retrieval_payload_artifact.v1"
 RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA = (
     "libreevolve.retrieval_payload_artifact_inventory.v1"
 )
+RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA = (
+    "libreevolve.retrieval_source_ranking_provenance.v1"
+)
 RETRIEVAL_PAYLOAD_ARTIFACT_POLICY_SCHEMA = (
     "libreevolve.retrieval_payload_artifact_policy.v1"
 )
@@ -2075,6 +2078,27 @@ def _source_ranking_metadata(
     *,
     ranking_policy: str,
 ) -> dict:
+    hashes = _source_ranking_hashes(sources)
+    return {
+        "policy": RETRIEVAL_SOURCE_INTEGRITY_POLICY,
+        "ranking_policy": ranking_policy,
+        "relevance_policy": RETRIEVAL_SOURCE_RELEVANCE_POLICY,
+        "relevance_applied": any(
+            isinstance(source.get("query_relevance"), dict) for source in sources
+        ),
+        "relevance_affects_order": ranking_policy
+        == RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
+        "retained_source_count": len(sources),
+        "selected_sources_sha256": hashes["selected_sources_sha256"],
+        "query_relevance_scores_sha256": hashes["query_relevance_scores_sha256"],
+        "synthesis_sha256": hashlib.sha256(
+            synthesis.encode("utf-8")
+        ).hexdigest(),
+        "prompt_link": "same_event_untrusted_retrieval_evidence",
+    }
+
+
+def _source_ranking_hashes(sources: list[dict]) -> dict:
     selected = []
     for source in sources:
         integrity = source.get("integrity")
@@ -2120,25 +2144,12 @@ def _source_ranking_metadata(
         separators=(",", ":"),
     )
     return {
-        "policy": RETRIEVAL_SOURCE_INTEGRITY_POLICY,
-        "ranking_policy": ranking_policy,
-        "relevance_policy": RETRIEVAL_SOURCE_RELEVANCE_POLICY,
-        "relevance_applied": any(
-            isinstance(source.get("query_relevance"), dict) for source in sources
-        ),
-        "relevance_affects_order": ranking_policy
-        == RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
-        "retained_source_count": len(sources),
         "selected_sources_sha256": hashlib.sha256(
             payload.encode("utf-8")
         ).hexdigest(),
         "query_relevance_scores_sha256": hashlib.sha256(
             relevance_payload.encode("utf-8")
         ).hexdigest(),
-        "synthesis_sha256": hashlib.sha256(
-            synthesis.encode("utf-8")
-        ).hexdigest(),
-        "prompt_link": "same_event_untrusted_retrieval_evidence",
     }
 
 
@@ -2427,6 +2438,205 @@ def retrieval_payload_artifact_inventory(
         "issues": issues,
         "artifacts": records,
     }
+
+
+def retrieval_source_ranking_provenance(retrieval_events: object) -> dict:
+    """Verify retained-source ranking hashes from retrieval events or snapshots."""
+    events, source_schema, extraction_issues = _source_ranking_provenance_events(
+        retrieval_events
+    )
+    records = [_source_ranking_provenance_record(event) for event in events]
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    mismatch_count = sum(
+        1 for record in records if record["status"] == "hash_mismatch"
+    )
+    invalid_count = sum(
+        1
+        for record in records
+        if record["status"] in {"invalid_record", "missing_source_ranking"}
+    )
+    issues = list(extraction_issues)
+    if not records and not extraction_issues:
+        issues.append(
+            {
+                "code": "empty_source_ranking_provenance",
+                "message": "no retrieval source-ranking records were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA,
+        "source_schema": source_schema,
+        "ranking_policies": sorted(
+            {
+                str(record["ranking_policy"])
+                for record in records
+                if isinstance(record.get("ranking_policy"), str)
+                and record.get("ranking_policy")
+            }
+        ),
+        "event_count": len(records),
+        "verified_count": verified_count,
+        "mismatch_count": mismatch_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and mismatch_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "events": records,
+    }
+
+
+def _source_ranking_provenance_events(
+    retrieval_events: object,
+) -> tuple[list[object], object, list[dict]]:
+    if isinstance(retrieval_events, dict):
+        if retrieval_events.get("schema") == RETRIEVAL_CACHE_SCHEMA:
+            metadata = retrieval_events.get("metadata")
+            if not isinstance(metadata, dict):
+                return (
+                    [],
+                    retrieval_events.get("schema"),
+                    [
+                        {
+                            "code": "invalid_cache_metadata",
+                            "message": "retrieval cache snapshot metadata must be an object",
+                        }
+                    ],
+                )
+            event = dict(metadata)
+            event.setdefault("query", retrieval_events.get("query"))
+            event.setdefault(
+                "source_ranking_policy",
+                retrieval_events.get("source_ranking_policy"),
+            )
+            event.setdefault("synthesis", retrieval_events.get("synthesis"))
+            return [event], retrieval_events.get("schema"), []
+        events = retrieval_events.get("retrieval_events")
+        if isinstance(events, list):
+            return list(events), retrieval_events.get("schema"), []
+        if "source_ranking" in retrieval_events:
+            return [retrieval_events], retrieval_events.get("schema"), []
+        return (
+            [],
+            retrieval_events.get("schema"),
+            [
+                {
+                    "code": "invalid_source_ranking_events",
+                    "message": "source-ranking provenance input must include retrieval_events or source_ranking",
+                }
+            ],
+        )
+    if isinstance(retrieval_events, list):
+        return list(retrieval_events), None, []
+    return (
+        [],
+        None,
+        [
+            {
+                "code": "invalid_source_ranking_events",
+                "message": "source-ranking provenance input must be a list or metadata object",
+            }
+        ],
+    )
+
+
+def _source_ranking_provenance_record(event: object) -> dict:
+    if not isinstance(event, dict):
+        return {
+            "status": "invalid_record",
+            "ranking_policy": None,
+            "issues": ["invalid_retrieval_event"],
+        }
+    ranking = event.get("source_ranking")
+    if not isinstance(ranking, dict):
+        return {
+            "status": "missing_source_ranking",
+            "provider": event.get("provider"),
+            "generation": event.get("generation"),
+            "event_index": event.get("event_index"),
+            "ranking_policy": event.get("source_ranking_policy"),
+            "issues": ["missing_source_ranking"],
+        }
+    sources = event.get("sources")
+    ranking_policy = ranking.get("ranking_policy") or event.get(
+        "source_ranking_policy"
+    )
+    record = {
+        "provider": event.get("provider"),
+        "generation": event.get("generation"),
+        "event_index": event.get("event_index"),
+        "ranking_policy": ranking_policy,
+        "relevance_policy": ranking.get("relevance_policy"),
+        "relevance_affects_order": ranking.get("relevance_affects_order"),
+        "retained_source_count": ranking.get("retained_source_count"),
+        "source_count": len(sources) if isinstance(sources, list) else None,
+        "expected_selected_sources_sha256": ranking.get("selected_sources_sha256", ""),
+        "expected_query_relevance_scores_sha256": ranking.get(
+            "query_relevance_scores_sha256", ""
+        ),
+        "expected_synthesis_sha256": ranking.get("synthesis_sha256", ""),
+        "event_synthesis_sha256": event.get("synthesis_sha256", ""),
+        "status": "verified",
+        "issues": [],
+    }
+    issues: list[str] = []
+    if ranking_policy not in RETRIEVAL_SOURCE_RANKING_POLICIES:
+        issues.append("unsupported_source_ranking_policy")
+    if ranking.get("policy") != RETRIEVAL_SOURCE_INTEGRITY_POLICY:
+        issues.append("source_integrity_policy_mismatch")
+    if ranking.get("relevance_policy") != RETRIEVAL_SOURCE_RELEVANCE_POLICY:
+        issues.append("source_relevance_policy_mismatch")
+    if not isinstance(sources, list):
+        issues.append("invalid_sources")
+    else:
+        if ranking.get("retained_source_count") != len(sources):
+            issues.append("retained_source_count_mismatch")
+        ranks = [source.get("rank") for source in sources if isinstance(source, dict)]
+        if ranks != list(range(1, len(sources) + 1)):
+            issues.append("retained_rank_sequence_mismatch")
+        hashes = _source_ranking_hashes(sources)
+        record["computed_selected_sources_sha256"] = hashes[
+            "selected_sources_sha256"
+        ]
+        record["computed_query_relevance_scores_sha256"] = hashes[
+            "query_relevance_scores_sha256"
+        ]
+        if (
+            ranking.get("selected_sources_sha256")
+            != hashes["selected_sources_sha256"]
+        ):
+            issues.append("selected_sources_hash_mismatch")
+        if (
+            ranking.get("query_relevance_scores_sha256")
+            != hashes["query_relevance_scores_sha256"]
+        ):
+            issues.append("query_relevance_scores_hash_mismatch")
+    synthesis = event.get("synthesis")
+    if isinstance(synthesis, str) and synthesis:
+        computed_synthesis_sha = hashlib.sha256(
+            synthesis.encode("utf-8")
+        ).hexdigest()
+        record["computed_synthesis_sha256"] = computed_synthesis_sha
+        if ranking.get("synthesis_sha256") != computed_synthesis_sha:
+            issues.append("synthesis_hash_mismatch")
+    elif (
+        isinstance(event.get("synthesis_sha256"), str)
+        and event.get("synthesis_sha256")
+        and ranking.get("synthesis_sha256") != event.get("synthesis_sha256")
+    ):
+        issues.append("event_synthesis_hash_mismatch")
+    record["issues"] = issues
+    if any(issue.endswith("_mismatch") for issue in issues):
+        record["status"] = "hash_mismatch"
+    elif issues:
+        record["status"] = "invalid_record"
+    return record
 
 
 def _payload_artifact_inventory_references(

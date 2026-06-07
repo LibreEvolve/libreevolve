@@ -15088,3 +15088,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused provider capability-policy tests cover valid static
     records, JSON-file loading, live-lookup overclaims, malformed records, and
     missing record lists.
+
+- [x] Add retrieval source-ranking provenance validation.
+  - Spec evidence: AlphaEvolve-style retrieval context can influence prompt
+    mutations, so retained-source ordering and relevance hashes should be
+    independently checkable from event and cache records.
+  - Status: `libreevolve.retrieval_source_ranking_provenance.v1` now verifies
+    DeepResearch event, metadata, or cache-snapshot source-ranking records by
+    recomputing selected-source and query-relevance hashes, checking retained
+    rank sequence and source counts, and comparing synthesis hashes when
+    retained synthesis text is available.
+  - Remaining gap: this validates deterministic provider-order and
+    query-overlap ranking provenance; unbounded raw provider/source payload
+    persistence, learned/external semantic ranking, semantic source-content
+    verification, and DeepEvolve-style refinement loops remain open.
+  - Verification: focused DeepResearch tests cover verified event and cache
+    snapshot ranking provenance plus bad hashes, malformed source lists, and
+    invalid event records.

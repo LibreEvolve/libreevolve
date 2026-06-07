@@ -13,6 +13,7 @@ from libreevolve.plugins.deep_research import (
     RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA,
     RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
     RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
+    RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA,
     RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
     RETRIEVAL_SOURCE_RELEVANCE_POLICY,
     RETRIEVAL_TRANSPORT_POLICY_SCHEMA,
@@ -20,6 +21,7 @@ from libreevolve.plugins.deep_research import (
     arxiv_search,
     arxiv_search_result,
     retrieval_payload_artifact_inventory,
+    retrieval_source_ranking_provenance,
 )
 from libreevolve.population.program import Program
 
@@ -1787,6 +1789,96 @@ def test_query_overlap_source_ranking_policy_reorders_retained_sources():
     assert active_grounding["status"] == "partially_lexically_grounded"
     assert active_grounding["lexically_grounded_source_count"] == 1
     assert active_grounding["semantic_verified"] is False
+
+
+def test_retrieval_source_ranking_provenance_verifies_event_and_cache_snapshot(tmp_path):
+    payload = {
+        "status": "ok",
+        "synthesis": "evolutionary fitness context",
+        "sources": [
+            {
+                "id": "provider-first",
+                "title": "Unrelated baseline paper",
+                "summary": "This record should stay behind.",
+            },
+            {
+                "id": "provider-second",
+                "title": "Evolutionary algorithm optimization",
+                "summary": "Fitness optimization for evolutionary programs.",
+            },
+        ],
+    }
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: payload,
+        cache_dir=tmp_path,
+        source_ranking_policy=RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
+    )
+    db = MagicMock()
+    db.best.return_value = _p()
+
+    plugin.on_generation_start(1, db)
+
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    event_provenance = retrieval_source_ranking_provenance(event)
+    assert event_provenance["schema"] == RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA
+    assert event_provenance["ok"] is True
+    assert event_provenance["event_count"] == 1
+    assert event_provenance["verified_count"] == 1
+    assert event_provenance["ranking_policies"] == [RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY]
+    [record] = event_provenance["events"]
+    assert record["status"] == "verified"
+    assert record["source_count"] == 2
+    assert record["retained_source_count"] == 2
+    assert record["computed_selected_sources_sha256"] == (
+        event["source_ranking"]["selected_sources_sha256"]
+    )
+    assert record["computed_query_relevance_scores_sha256"] == (
+        event["source_ranking"]["query_relevance_scores_sha256"]
+    )
+    assert record["event_synthesis_sha256"] == event["synthesis_sha256"]
+
+    snapshot_path = tmp_path / f"{event['cache']['key']}.json"
+    snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    snapshot_provenance = retrieval_source_ranking_provenance(snapshot)
+    assert snapshot_provenance["source_schema"] == "deep_research_cache_v1"
+    assert snapshot_provenance["ok"] is True
+    assert snapshot_provenance["verified_count"] == 1
+    assert snapshot_provenance["events"][0]["computed_synthesis_sha256"] == (
+        snapshot["metadata"]["source_ranking"]["synthesis_sha256"]
+    )
+
+
+def test_retrieval_source_ranking_provenance_reports_malformed_records():
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "ok",
+            "synthesis": "custom context",
+            "sources": [{"id": "paper", "title": "Evolutionary optimization"}],
+        }
+    )
+    db = MagicMock()
+    db.best.return_value = _p()
+    plugin.on_generation_start(1, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    bad_hash_event = json.loads(json.dumps(event))
+    bad_hash_event["source_ranking"]["selected_sources_sha256"] = "0" * 64
+    bad_shape_event = json.loads(json.dumps(event))
+    bad_shape_event["sources"] = "not-a-list"
+
+    provenance = retrieval_source_ranking_provenance(
+        [bad_hash_event, bad_shape_event, "bad"]
+    )
+
+    assert provenance["ok"] is False
+    assert provenance["event_count"] == 3
+    assert provenance["verified_count"] == 0
+    assert provenance["mismatch_count"] == 1
+    assert provenance["invalid_count"] == 2
+    statuses = [record["status"] for record in provenance["events"]]
+    assert statuses == ["hash_mismatch", "invalid_record", "invalid_record"]
+    assert "selected_sources_hash_mismatch" in provenance["events"][0]["issues"]
+    assert "invalid_sources" in provenance["events"][1]["issues"]
+    assert "invalid_retrieval_event" in provenance["events"][2]["issues"]
 
 
 def test_source_ranking_policy_is_part_of_cache_key(tmp_path):

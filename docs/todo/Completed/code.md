@@ -14828,3 +14828,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover unavailable scheduler observations
     and observed timeout/quarantine state, and cancellation-policy tests still
     validate the policy contract.
+
+- [x] Add Strassen 2x2 matrix publication artifact bundle.
+  - Spec evidence: AlphaEvolve Section 3.1 and Appendix A publish exact matrix
+    multiplication algorithms with per-seed best-rank hit-rate evidence and
+    reproducible construction artifacts.
+  - Status: `write_strassen_2x2_publication_bundle()` now writes a concrete
+    checked artifact bundle for the registered `mm_2x2x2` target under
+    `matrix/mm_2x2x2/`. The bundle includes canonical algorithm,
+    certificate, notebook, report, and artifact-inventory files; the
+    certificate verifies the symbolic 2x2 matrix-multiply tensor identity; and
+    every configured seed row records an exact rank-7 hit.
+  - Remaining gap: this is the canonical Strassen baseline for one registered
+    target, not a discovered-algorithm export runner or full Appendix A result
+    publication pipeline.
+  - Verification: focused matrix-result tests cover bundle generation,
+    exactness certificate contents, artifact inventory validation, per-seed
+    rank-hit rows, and bad seed-list rejection.

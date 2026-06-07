@@ -1,12 +1,15 @@
 import hashlib
 import json
 
+import pytest
+
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
     MATRIX_RESULT_SCHEMA,
     matrix_result_artifact_inventory,
     render_matrix_result_summary,
     validate_matrix_result_report,
+    write_strassen_2x2_publication_bundle,
 )
 
 
@@ -280,3 +283,44 @@ def test_matrix_result_summary_renders_key_publication_fields():
     assert "| alphaevolve_comparable | True |" in summary
     assert "| exactness | verified |" in summary
     assert "| artifact_count | 3 |" in summary
+
+
+def test_strassen_2x2_publication_bundle_writes_valid_artifacts(tmp_path):
+    bundle = write_strassen_2x2_publication_bundle(tmp_path, seeds=(7, 11, 13))
+    report = bundle["report"]
+
+    validation = validate_matrix_result_report(report)
+    inventory = bundle["inventory"]
+
+    assert bundle["schema"] == "libreevolve.matrix_publication_bundle.v1"
+    assert bundle["target_id"] == "mm_2x2x2"
+    assert validation.ok is True
+    assert validation.alphaevolve_comparable is True
+    assert validation.best_rank == 7
+    assert validation.seed_count == 3
+    assert validation.hit_fraction == 1.0
+    assert report["dimensions"] == [2, 2, 2]
+    assert report["coefficient_domain"] == "integer"
+    assert report["exactness_certificate"]["status"] == "verified"
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 3
+    assert inventory["verified_count"] == 3
+    assert {artifact["kind"] for artifact in inventory["artifacts"]} == {
+        "algorithm",
+        "certificate",
+        "notebook",
+    }
+    certificate_path = tmp_path / "matrix" / "mm_2x2x2" / "certificate.json"
+    certificate = json.loads(certificate_path.read_text(encoding="utf-8"))
+    assert certificate["verified"] is True
+    assert certificate["mismatch_count"] == 0
+    assert certificate["tensor_entry_count"] == 64
+    assert certificate["algorithm_sha256"] == report["artifacts"][0]["sha256"]
+    report_path = tmp_path / bundle["report_path"]
+    assert report_path.exists()
+
+
+def test_strassen_2x2_publication_bundle_rejects_bad_seed_list(tmp_path):
+    for seeds in ((), (1, 1), (True,), ("1",)):
+        with pytest.raises(ValueError, match="seeds"):
+            write_strassen_2x2_publication_bundle(tmp_path, seeds=seeds)

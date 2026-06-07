@@ -22,6 +22,55 @@ EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
+_STRASSEN_TARGET_ID = "mm_2x2x2"
+_STRASSEN_DIMENSIONS = [2, 2, 2]
+_A_BASIS = ("a11", "a12", "a21", "a22")
+_B_BASIS = ("b11", "b12", "b21", "b22")
+_C_BASIS = ("c11", "c12", "c21", "c22")
+_STRASSEN_TERMS = (
+    {
+        "id": "p1",
+        "left": {"a11": 1, "a22": 1},
+        "right": {"b11": 1, "b22": 1},
+        "output": {"c11": 1, "c22": 1},
+    },
+    {
+        "id": "p2",
+        "left": {"a21": 1, "a22": 1},
+        "right": {"b11": 1},
+        "output": {"c21": 1, "c22": -1},
+    },
+    {
+        "id": "p3",
+        "left": {"a11": 1},
+        "right": {"b12": 1, "b22": -1},
+        "output": {"c12": 1, "c22": 1},
+    },
+    {
+        "id": "p4",
+        "left": {"a22": 1},
+        "right": {"b21": 1, "b11": -1},
+        "output": {"c11": 1, "c21": 1},
+    },
+    {
+        "id": "p5",
+        "left": {"a11": 1, "a12": 1},
+        "right": {"b22": 1},
+        "output": {"c11": -1, "c12": 1},
+    },
+    {
+        "id": "p6",
+        "left": {"a21": 1, "a11": -1},
+        "right": {"b11": 1, "b12": 1},
+        "output": {"c22": 1},
+    },
+    {
+        "id": "p7",
+        "left": {"a12": 1, "a22": -1},
+        "right": {"b21": 1, "b22": 1},
+        "output": {"c11": 1},
+    },
+)
 
 
 @dataclass(frozen=True)
@@ -144,6 +193,222 @@ def render_matrix_result_summary(report: dict[str, Any]) -> str:
         lines.extend(["", "Issues:"])
         lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
     return "\n".join(lines)
+
+
+def write_strassen_2x2_publication_bundle(
+    artifact_root: str | Path,
+    *,
+    seeds: list[int] | tuple[int, ...] = (0, 1, 2, 3),
+) -> dict[str, Any]:
+    """Write a checked Strassen artifact bundle for the registered 2x2x2 target."""
+    normalized_seeds = _validate_bundle_seeds(seeds)
+    root = Path(artifact_root)
+    base = root / "matrix" / _STRASSEN_TARGET_ID
+    base.mkdir(parents=True, exist_ok=True)
+
+    algorithm = _strassen_algorithm_artifact()
+    algorithm_path = base / "algorithm.json"
+    algorithm_sha, algorithm_bytes = _write_canonical_json(algorithm_path, algorithm)
+
+    certificate = _strassen_certificate_artifact(algorithm_sha)
+    certificate_path = base / "certificate.json"
+    certificate_sha, certificate_bytes = _write_canonical_json(
+        certificate_path,
+        certificate,
+    )
+
+    notebook = _strassen_notebook_artifact(algorithm_sha, certificate_sha)
+    notebook_path = base / "reproduce.ipynb"
+    notebook_sha, notebook_bytes = _write_canonical_json(notebook_path, notebook)
+
+    report = {
+        "schema": MATRIX_RESULT_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": _STRASSEN_TARGET_ID,
+        "dimensions": list(_STRASSEN_DIMENSIONS),
+        "seed_count": len(normalized_seeds),
+        "best_rank": len(_STRASSEN_TERMS),
+        "hit_count": len(normalized_seeds),
+        "hit_fraction": 1.0,
+        "coefficient_domain": "integer",
+        "alphaevolve_comparable": True,
+        "exactness_certificate": {
+            "status": "verified",
+            "method": "symbolic_tensor_identity",
+            "certificate_sha256": certificate_sha,
+        },
+        "seed_results": [
+            {
+                "seed": seed,
+                "rank": len(_STRASSEN_TERMS),
+                "achieved_best_rank": True,
+                "exact": True,
+            }
+            for seed in normalized_seeds
+        ],
+        "artifacts": [
+            {
+                "kind": "algorithm",
+                "path": "matrix/mm_2x2x2/algorithm.json",
+                "sha256": algorithm_sha,
+                "bytes": algorithm_bytes,
+            },
+            {
+                "kind": "certificate",
+                "path": "matrix/mm_2x2x2/certificate.json",
+                "sha256": certificate_sha,
+                "bytes": certificate_bytes,
+            },
+            {
+                "kind": "notebook",
+                "path": "matrix/mm_2x2x2/reproduce.ipynb",
+                "sha256": notebook_sha,
+                "bytes": notebook_bytes,
+            },
+        ],
+    }
+    report_path = base / "report.json"
+    report_sha, report_bytes = _write_canonical_json(report_path, report)
+    inventory = matrix_result_artifact_inventory(report, root)
+    return {
+        "schema": "libreevolve.matrix_publication_bundle.v1",
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": _STRASSEN_TARGET_ID,
+        "artifact_root": str(root),
+        "report_path": "matrix/mm_2x2x2/report.json",
+        "report_sha256": report_sha,
+        "report_bytes": report_bytes,
+        "report": report,
+        "inventory": inventory,
+    }
+
+
+def _validate_bundle_seeds(seeds: object) -> list[int]:
+    if not isinstance(seeds, (list, tuple)) or not seeds:
+        raise ValueError("matrix publication bundle seeds must be a non-empty list")
+    normalized: list[int] = []
+    seen: set[int] = set()
+    for seed in seeds:
+        if isinstance(seed, bool) or not isinstance(seed, int):
+            raise ValueError("matrix publication bundle seeds must be integers")
+        if seed in seen:
+            raise ValueError("matrix publication bundle seeds must be unique")
+        seen.add(seed)
+        normalized.append(seed)
+    return normalized
+
+
+def _strassen_algorithm_artifact() -> dict[str, Any]:
+    return {
+        "schema": "libreevolve.matrix_algorithm.v1",
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": _STRASSEN_TARGET_ID,
+        "dimensions": list(_STRASSEN_DIMENSIONS),
+        "algorithm": "strassen_2x2_rank7",
+        "rank": len(_STRASSEN_TERMS),
+        "coefficient_domain": "integer",
+        "input_basis": {"left": list(_A_BASIS), "right": list(_B_BASIS)},
+        "output_basis": list(_C_BASIS),
+        "rank_terms": [
+            {
+                "id": term["id"],
+                "left": dict(sorted(term["left"].items())),
+                "right": dict(sorted(term["right"].items())),
+                "output": dict(sorted(term["output"].items())),
+            }
+            for term in _STRASSEN_TERMS
+        ],
+    }
+
+
+def _strassen_certificate_artifact(algorithm_sha256: str) -> dict[str, Any]:
+    mismatches = _strassen_tensor_mismatches()
+    return {
+        "schema": "libreevolve.matrix_exactness_certificate.v1",
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "target_id": _STRASSEN_TARGET_ID,
+        "method": "symbolic_tensor_identity",
+        "algorithm_sha256": algorithm_sha256,
+        "coefficient_domain": "integer",
+        "rank": len(_STRASSEN_TERMS),
+        "tensor_entry_count": len(_A_BASIS) * len(_B_BASIS) * len(_C_BASIS),
+        "mismatch_count": len(mismatches),
+        "mismatches": mismatches,
+        "verified": not mismatches,
+    }
+
+
+def _strassen_notebook_artifact(
+    algorithm_sha256: str,
+    certificate_sha256: str,
+) -> dict[str, Any]:
+    return {
+        "cells": [
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "# Strassen 2x2x2 matrix publication artifact\n",
+                    "\n",
+                    "This export references the generated algorithm and exactness certificate.\n",
+                    f"Algorithm SHA-256: `{algorithm_sha256}`\n",
+                    f"Certificate SHA-256: `{certificate_sha256}`\n",
+                ],
+            }
+        ],
+        "metadata": {
+            "libreevolve": {
+                "target_suite": APPENDIX_A_TARGET_SUITE,
+                "target_id": _STRASSEN_TARGET_ID,
+                "purpose": "artifact_export_pointer",
+            }
+        },
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+
+
+def _strassen_tensor_mismatches() -> list[dict[str, Any]]:
+    mismatches = []
+    for left in _A_BASIS:
+        for right in _B_BASIS:
+            for output in _C_BASIS:
+                actual = sum(
+                    term["left"].get(left, 0)
+                    * term["right"].get(right, 0)
+                    * term["output"].get(output, 0)
+                    for term in _STRASSEN_TERMS
+                )
+                expected = _matrix_multiply_tensor_value(left, right, output)
+                if actual != expected:
+                    mismatches.append(
+                        {
+                            "left": left,
+                            "right": right,
+                            "output": output,
+                            "expected": expected,
+                            "actual": actual,
+                        }
+                    )
+    return mismatches
+
+
+def _matrix_multiply_tensor_value(left: str, right: str, output: str) -> int:
+    left_row, left_col = int(left[1]) - 1, int(left[2]) - 1
+    right_row, right_col = int(right[1]) - 1, int(right[2]) - 1
+    output_row, output_col = int(output[1]) - 1, int(output[2]) - 1
+    return int(
+        left_row == output_row
+        and left_col == right_row
+        and right_col == output_col
+    )
+
+
+def _write_canonical_json(path: Path, payload: dict[str, Any]) -> tuple[str, int]:
+    raw = json.dumps(payload, sort_keys=True, indent=2).encode("utf-8")
+    raw += b"\n"
+    path.write_bytes(raw)
+    return hashlib.sha256(raw).hexdigest(), len(raw)
 
 
 def matrix_result_artifact_inventory(

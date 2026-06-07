@@ -2920,7 +2920,14 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 `alphaevolve_comparable`; exploratory `rational` and `float` coefficient-domain
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
-per-seed results, and algorithm/certificate/notebook artifacts. The checked-in
+per-seed results, and algorithm/certificate/notebook artifacts.
+`write_strassen_2x2_publication_bundle()` helper emits a concrete checked
+Strassen bundle for the registered `mm_2x2x2` target, including canonical
+algorithm, certificate, notebook, report, and artifact-inventory files with a
+1.0 per-seed rank-hit fraction. This is a reproducible baseline artifact, not
+evidence that LibreEvolve has discovered or exported the full Appendix A target
+suite.
+The checked-in
 2x2
 `matrix_multiplication` example remains a smoke fixture until a
 real tensor-decomposition benchmark emits validated algorithm, certificate,

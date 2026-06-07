@@ -15,17 +15,31 @@ from libreevolve.problems.benchmarks.example_scope import (
     render_example_benchmark_scope_summary,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.matrix_results import (
+    MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_RESULT_SCHEMA,
+    matrix_result_artifact_inventory,
+    render_matrix_result_summary,
+    validate_matrix_result_report,
+    write_strassen_2x2_publication_bundle,
+)
 
 __all__ = [
     "APPENDIX_A_MATRIX_REGISTRY_SCHEMA",
     "APPENDIX_A_MATRIX_TARGET_SUITE",
     "EXPECTED_TARGET_COUNT",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
+    "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
+    "MATRIX_RESULT_SCHEMA",
     "example_benchmark_scope_records",
+    "matrix_result_artifact_inventory",
     "matrix_target_by_id",
     "matrix_target_records",
     "render_appendix_a_matrix_registry_summary",
     "render_example_benchmark_scope_summary",
+    "render_matrix_result_summary",
     "validate_appendix_a_matrix_registry",
     "validate_example_benchmark_scope",
+    "validate_matrix_result_report",
+    "write_strassen_2x2_publication_bundle",
 ]

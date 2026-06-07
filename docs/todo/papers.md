@@ -893,15 +893,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     mismatches. `libreevolve.matrix_result_artifact_inventory.v1` now verifies
     declared algorithm/certificate/notebook artifact paths against concrete
     files under an explicit artifact root, checking safe relative paths,
-    existence, SHA-256 hashes, and byte counts. The code still does not provide
-    exact tensor algorithms or generated notebook/export equivalents for
-    reproducing discovered algorithms.
+    existence, SHA-256 hashes, and byte counts.
+    `write_strassen_2x2_publication_bundle()` now provides a concrete checked
+    Strassen baseline for the registered `mm_2x2x2` target, with canonical
+    algorithm, certificate, notebook, report, and artifact-inventory files and
+    exact rank-7 per-seed rows. The code still does not provide generated
+    notebook/export equivalents for reproducing discovered algorithms across
+    the full Appendix A suite.
   - Required result: connect real matrix target tensors, exact algorithm
     artifacts, certificate-generation artifacts, and generated export/notebook
     links to real report instances before treating LibreEvolve matrix results
     as AlphaEvolve-comparable evidence. The remaining gap is producing those
-    real tensor artifacts, not verifying declared report artifacts once they
-    exist.
+    discovered tensor artifacts for the suite, not verifying declared report
+    artifacts or emitting one checked Strassen baseline once those files exist.
 
 - [ ] Add independent certification gates for paper-level result claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

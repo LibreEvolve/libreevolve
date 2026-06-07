@@ -1612,6 +1612,13 @@ must stay safe and relative, files must exist, and actual SHA-256 hashes and
 byte counts must match the report. This inventory is publication evidence for
 report artifacts, not a tensor-decomposition algorithm generator or proof that
 the shipped smoke validator is AlphaEvolve-comparable.
+`write_strassen_2x2_publication_bundle()` writes a concrete checked baseline
+for the registered `mm_2x2x2` Appendix A target under
+`matrix/mm_2x2x2/`, including canonical algorithm, certificate, notebook,
+report, and artifact-inventory files. Its per-seed rows all achieve the
+rank-7 Strassen construction exactly, so the generated report has a 1.0
+best-rank hit fraction. Broader generated/discovered algorithm artifacts for
+the full Appendix A suite remain outside the current runner.
 
 `code` is the primary file content for backward compatibility. `files` contains
 the full candidate file set for workspace candidates. When `files` is present,

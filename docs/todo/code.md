@@ -898,13 +898,18 @@ Primary evidence:
     declared algorithm/certificate/notebook artifact references against
     concrete files under an explicit artifact root, checking safe relative
     paths, existence, SHA-256 hashes, and byte counts.
+    `write_strassen_2x2_publication_bundle()` now emits a concrete checked
+    Strassen artifact bundle for the registered `mm_2x2x2` target, including
+    canonical algorithm, certificate, notebook, report, and artifact-inventory
+    files with exact rank-7 per-seed rows and a 1.0 best-rank hit fraction.
   - Required result: connect exact tensor-decomposition algorithms,
     certificate artifacts, and notebook/export artifacts to the registered
     target suite; keep the existing Python smoke example clearly outside
     AlphaEvolve-comparison evidence until it emits validated tensor-result
-    reports. The remaining gap is generating real exact algorithms,
-    certificates, and notebook/export files for registered targets, not
-    validating the declared artifact inventory once those files exist.
+    reports. The remaining gap is generating discovered exact algorithms,
+    certificates, and notebook/export files across the registered target suite,
+    not validating declared artifact inventory or emitting the one checked
+    Strassen baseline once those files exist.
 
 - [ ] Add held-out evaluation splits and reference-correctness records to
   systems benchmarks.

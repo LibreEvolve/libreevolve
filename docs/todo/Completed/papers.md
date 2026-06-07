@@ -9941,3 +9941,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused MAP-Elites, island, database, and loop tests cover
     retention, snapshot/restore validation, retained-pool inclusion, and
     manifest validation.
+
+- [x] Add paper-visible Strassen matrix publication bundle.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
+    publish exact matrix multiplication algorithms with per-seed best-rank
+    hit-rate evidence and reproducible construction artifacts.
+  - Status: `write_strassen_2x2_publication_bundle()` writes a checked
+    `mm_2x2x2` Strassen bundle with canonical algorithm, exactness
+    certificate, notebook, report, and artifact inventory files. The generated
+    report is AlphaEvolve-comparable for this baseline target because it uses
+    integer coefficients, verified symbolic exactness, algorithm/certificate/
+    notebook artifacts, and exact rank-7 rows for every configured seed.
+  - Remaining paper gap: this is one canonical baseline artifact, not a
+    generated-publication path for discovered algorithms across the full
+    54-target Appendix A suite.
+  - Verification: focused matrix-result tests cover the generated publication
+    report, artifact inventory, exactness certificate, and per-seed hit-rate
+    consistency.

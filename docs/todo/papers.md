@@ -153,7 +153,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     reason/path diagnostic contract before LibreEvolve can claim robust
     codebase-scale invalid-artifact feedback.
 
-- [ ] Overall compute-budget accounting and ablation support.
+- [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.
   - Requirement: AlphaEvolve optimizes throughput under a fixed computation
     budget, and ablations compare performance as a function of consumed budget.

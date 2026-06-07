@@ -880,6 +880,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     persisted lineage-aware resurfacing for programs that excel under different
     metrics, including output-aware indexes for attached program outputs.
 
+- [ ] Track multiple-score prompt-diversity evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
+  - Requirement: AlphaEvolve says multiple scores can help even when one target
+    metric matters because prompts include programs with different structures
+    and logic that excel under different evaluation criteria, each representing
+    a different definition of "good".
+  - Partial status: LibreEvolve records declared metric vectors, metric leaders,
+    objective frontiers, metric-cell overlays, metric-targeted resurfacing, and
+    selected parent/inspiration target-metric provenance. Prompt context policy
+    can filter and rank inspirations by metric, and prompt histories retain
+    selected parent/inspiration ids.
+  - Current gap: the paper/status surfaces do not yet require evidence that a
+    rendered prompt intentionally contained inspirations from distinct
+    metric/objective niches, labelled each prompt-visible inspiration by the
+    metric it represents, or distinguished one-at-a-time metric-targeted
+    sampling from AlphaEvolve-style diverse-metric prompt context.
+  - Required result: add report/manifest evidence for metric-diverse prompt
+    conditioning: metric/objective labels, per-metric rank/score, inspiration
+    selection reason, prompt-history linkage, and validation that multi-score
+    benchmark runs can distinguish scalar archive sampling from prompts that
+    show different definitions of "good" at once.
+
 - [ ] Proposal scoring and semantic hypothesis retrieval.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 2.4.
   - Requirement: prior ideas and hypotheses should be reusable as searchable

@@ -26,6 +26,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes the implemented LibreEvolve validity gate from
     AlphaEvolve-comparable scored scalar metrics.
 
+- [ ] Keep README multiple-score prompt-context wording scoped until
+      metric-diverse inspiration evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.4 says multiple metrics can improve a
+    target metric by placing programs that excel under different evaluation
+    criteria into prompts, each as a different definition of "good".
+  - Current evidence: README documents declared metrics, direction/bounds
+    normalization, selection scores, objective-vector diagnostics, metric
+    overlays, metric-targeted parent/inspiration sampling, and prompt context
+    filters/ranking. It should not imply those surfaces prove that a rendered
+    prompt intentionally included a metric-diverse slate of inspirations or
+    labelled each prompt-visible program by the metric niche it represents.
+  - Required result: when metric-diverse inspiration selection lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes current metric bookkeeping and one-at-a-time metric-targeted
+    sampling from AlphaEvolve-style prompt conditioning on programs that are
+    high-performing under different metrics in the same prompt.
+
 - [ ] Keep README evaluator-entrypoint wording scoped to external validators
       until embedded `evaluate(eval_inputs)` evidence exists.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show the codebase

@@ -1547,6 +1547,27 @@ Primary evidence:
     and allowed `not_applicable` reference-correctness rationale before
     treating Borg-style scheduling reports as AlphaEvolve-ready.
 
+- [ ] Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.
+  - Spec evidence: AlphaEvolve Section 3.3.2 optimizes a Pallas tiling
+    heuristic for a Gemini matrix-multiplication kernel by minimizing actual
+    runtime on real TPU accelerators. It automatically collects realistic
+    kernel input shapes from users, uses half as optimization targets and half
+    as a held-out evaluation set, and keeps correctness by construction because
+    the evolved code changes tiling strategy rather than the underlying
+    mathematical operation.
+  - Current evidence: `libreevolve.systems_result_report.v1` can validate a
+    generic `kernel` domain with optimization and held-out gates, but it does
+    not require kernel-shape corpus provenance, train/evaluation split
+    identity, real accelerator runtime measurements, baseline expert heuristic
+    comparisons, tiling-only candidate boundaries, or correctness-by-
+    construction evidence for unchanged kernel math.
+  - Required result: add kernel-domain report metadata and validators for
+    collected input-shape corpora, deterministic train/eval split provenance,
+    accelerator/runtime measurement artifacts, baseline heuristic identity,
+    tiling-parameter output constraints, correctness-by-construction scope,
+    and deployment/readiness evidence before treating Pallas-style kernel
+    heuristic reports as AlphaEvolve-ready.
+
 - [ ] Add RTL/EDA verification provenance for hardware-circuit optimization.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes an already highly
     optimized Verilog implementation of a TPU arithmetic circuit, with

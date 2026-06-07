@@ -1650,6 +1650,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     deployment/simulator confirmation before claiming AlphaEvolve-comparable
     Borg-style scheduling evidence.
 
+- [ ] Record kernel-tiling shape-corpus evidence for Gemini/Pallas results.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 says
+    AlphaEvolve optimized Pallas matrix-multiplication tiling heuristics by
+    minimizing actual runtime on real TPU accelerators. It collected realistic
+    input shapes from kernel users, split them into training and evaluation
+    halves, compared against an expert-designed heuristic, and preserved
+    correctness by construction by changing tiling strategy rather than the
+    underlying mathematical operation.
+  - Current gap: current systems report contracts can name a `kernel` domain
+    and final held-out gate, but they do not require paper-facing input-shape
+    corpus provenance, deterministic train/eval split evidence, real
+    accelerator runtime artifacts, baseline heuristic identity, tiling-only
+    output constraints, or correctness-by-construction scope.
+  - Required result: add kernel report fields and validation for collected
+    input-shape corpora, train/eval split hashes, real accelerator runtime
+    measurements, expert-baseline comparison, tiling-parameter constraints,
+    unchanged-kernel-math evidence, and deployment/readiness provenance before
+    claiming AlphaEvolve-comparable Gemini/Pallas kernel optimization results.
+
 - [ ] Record RTL/EDA verification evidence for hardware-circuit results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes
     optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and

@@ -980,6 +980,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap text distinguishes generic systems readiness from Borg-style
     correctness-by-construction scheduling evidence.
 
+- [ ] Keep kernel roadmap wording scoped to generic systems reports until
+      Pallas shape-split/runtime evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas tiling
+    heuristics on real TPU runtime, using realistic user-collected input
+    shapes split into training and evaluation halves, while preserving
+    correctness by construction because only tiling strategy changes.
+  - Current evidence: roadmap systems-result wording covers generic held-out
+    and reference-correctness gaps, but it does not require kernel-specific
+    shape-corpus provenance, deterministic train/eval split records, real TPU
+    runtime measurement artifacts, expert-baseline comparison, or tiling-only
+    correctness boundaries.
+  - Required result: when kernel fixtures or systems report validators add
+    shape-corpus, train/eval split, accelerator-runtime, baseline-heuristic,
+    tiling-constraint, and unchanged-operation evidence, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap text distinguishes
+    generic systems readiness from AlphaEvolve-style Pallas kernel-tiling
+    evidence.
+
 - [ ] Keep hardware roadmap wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 reports Verilog RTL optimization

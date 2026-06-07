@@ -308,6 +308,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     index, and matching TODOs so README does not imply generic systems report
     readiness proves Borg-style scheduling safety.
 
+- [ ] Keep README kernel wording scoped to generic systems reports until
+      Pallas shape-split/runtime evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.2 optimizes Gemini Pallas
+    matrix-multiplication tiling heuristics on real TPU accelerators, using
+    realistic user-collected input shapes split into training and evaluation
+    halves, with correctness preserved by changing tiling strategy rather than
+    the underlying operation.
+  - Current evidence: README documents generic systems result reports and
+    held-out/reference gates, but it does not yet document kernel-specific
+    shape-corpus provenance, train/eval split hashes, accelerator runtime
+    artifacts, expert-baseline heuristic identity, tiling-only output
+    constraints, or correctness-by-construction scope.
+  - Required result: once kernel report metadata captures shape-corpus,
+    train/eval split, TPU runtime, expert-baseline comparison, tiling
+    constraints, and unchanged-operation evidence, update README, ROADMAP,
+    papers index, and matching TODOs so README does not imply generic systems
+    report readiness proves AlphaEvolve-style Pallas kernel optimization.
+
 - [ ] Keep README hardware wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU

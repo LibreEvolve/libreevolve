@@ -253,10 +253,11 @@ is not yet an AlphaEvolve reproduction.
   behavior, and persisted runtime artifacts for mutation, critique, feedback,
   and meta-prompt calls.
 - Connect `libreevolve.provider_cancellation_policy.v1` to live provider SDK
-  cancellation, budget-affecting timeout/cancellation stop or quarantine
-  behavior across LLM roles, and persisted role-specific timeout artifacts
-  beyond the currently covered timeout-policy, scheduler-observation,
-  quarantine-evidence, and mutation timeout failure-history paths.
+  cancellation, budget-affecting timeout/cancellation stop behavior across LLM
+  roles, cross-run quarantine/resume behavior, and persisted role-specific
+  timeout artifacts beyond the currently covered timeout-policy,
+  scheduler-observation, in-run quarantine-evidence, and mutation timeout
+  failure-history paths.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence.

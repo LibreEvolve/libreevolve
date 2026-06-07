@@ -169,10 +169,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     action, and explicit `unsupported_daemon_worker_may_continue` hard-cancel
     gap. Remaining budget/runtime gaps are live hard cancellation handles,
     timeout-driven stop enforcement beyond audit observations, richer
-    role-specific timeout/cancellation artifacts, accelerator/worker budget
-    enforcement, live provider pricing/default-rate capture beyond configured
-    token-cost estimates, provider-output replay, and async/pending-work
-    controller restore. The remaining gap is not
+    role-specific timeout/cancellation artifacts beyond configured in-run
+    quarantine observations, accelerator/worker budget enforcement, live
+    provider pricing/default-rate capture beyond configured token-cost
+    estimates, provider-output replay, and async/pending-work controller
+    restore. The remaining gap is not
     remaining-runtime wait-deadline propagation, timeout call telemetry,
     mutation timeout failure-history logging, or one-command restoration of
     replayable provider-attempt/token/configured-cost/latency controller events
@@ -186,10 +187,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     calibration reports for real reviewer/task suites. The remaining ablation
     and calibration gap is executing and emitting real reports, not validating
     declared result or feedback-calibration artifacts once a report names them.
-    The remaining provider
-    cancellation gap is live cancellation/stop behavior and richer runtime
-    artifact generation, not verifying declared cancellation evidence files
-    once a policy names them.
+    The remaining provider cancellation gap is live cancellation/stop behavior,
+    cross-run quarantine/resume behavior, and richer runtime artifact
+    generation, not configured in-run role/backend quarantine observations or
+    verifying declared cancellation evidence files once a policy names them.
 
 - [ ] Connect LLM budget-report contracts to live enforcement and restored
   consumption.

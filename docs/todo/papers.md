@@ -84,9 +84,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     Per-call `cost_estimate_status` records now preserve not-estimated reasons
     for missing configured rates or missing/invalid provider token totals.
     Live global token and configured-cost stop
-    criteria now exist, but accelerator budgets, async queue accounting, live
-    provider pricing capture, and complete one-command resume wiring for
-    provider-attempt/token/cost/latency accounting are still missing.
+    criteria now exist, and full-runtime restore now pre-applies replayed
+    provider-attempt/token/configured-cost/latency controller events to the
+    restored `evolve()` budget snapshot. Accelerator budgets, async queue
+    accounting, live provider pricing capture, and executed equal-budget
+    benchmark scripts are still missing.
     `libreevolve.alphaevolve_ablation_report.v1` now defines and tests an
     executed ablation-result contract for all six Figure 8 variants, declared
     targets, exactly three seeds, required equal-budget fractions, finite

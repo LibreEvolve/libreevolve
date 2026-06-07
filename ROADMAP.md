@@ -118,8 +118,9 @@ is not yet an AlphaEvolve reproduction.
   evaluator-second/wall-clock/logical-LLM-call stop reasons to token, cost,
   provider-attempt, LLM wall-clock, accelerator, and async queue budgets.
   Provider-attempt, provider-token, configured-cost, and retained LLM latency
-  usage now stop live runs before the next LLM call; accelerator, async queue,
-  and restored budget consumption remain open.
+  usage now stop live runs before the next LLM call and can be pre-applied
+  from full-runtime restore bundles; accelerator budgets, async queue budgets,
+  and pending-work/provider-output restore composition remain open.
 - Extend paper-facing `libreevolve.llm_budget_report.v1` cooperative
   enforcement snapshots to pending-work queues, provider-output replay, and hard
   cancellation semantics; provider-attempt, token, configured-cost, and retained

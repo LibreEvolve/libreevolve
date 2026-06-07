@@ -55,6 +55,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     neither underclaims current structured invalid-workspace feedback nor
     overclaims robust AlphaEvolve-grade codebase-scale diagnostics.
 
+- [ ] Keep README install and CLI wording scoped to editable/local use versus
+  release-artifact verification.
+  - Spec evidence: AlphaEvolve-style experimental artifacts should be
+    reproducible from the code and dependency environment that users actually
+    install before running long experiments; local editable setup is not the
+    same as a checked release distribution.
+  - Current evidence: README currently instructs developers to run
+    `py -3.12 -m pip install -e ".[dev]"`, invokes the CLI through
+    `py -3.12 -m libreevolve ...`, documents the `libreevolve run` and
+    `libreevolve show` command shapes, and documents runtime environment
+    provenance over `pyproject.toml`, installed package metadata, bounded
+    `WHEEL` metadata, `direct_url.json`, `INSTALLER`, hash-only `RECORD`,
+    `pip freeze`, and `pip config`. Code evidence shows `pyproject.toml`
+    declares setuptools metadata, runtime dependencies, dev extras, package
+    discovery, and a `libreevolve` console script, while the code TODO still
+    notes there is no committed wheel/sdist build check, install-from-wheel CLI
+    smoke test, package-data inclusion validation, release checklist, or
+    release-artifact provenance.
+  - Required result: when wheel/sdist build validation, isolated
+    install-from-wheel smoke tests, package-data checks, release checklists, or
+    release-artifact provenance land, update README, ROADMAP, papers index, and
+    code TODO entries together so README neither underclaims current
+    editable/local CLI use nor overclaims verified release-distribution
+    reproducibility.
+
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.
   - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections

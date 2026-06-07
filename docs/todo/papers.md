@@ -2016,6 +2016,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     separates text-level numeric claim provenance from aggregate coverage and
     figure reproduction.
 
+- [ ] Track Appendix B.1-B.3 autocorrelation step-function evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.1-B.3 gives
+    three separate autocorrelation/autoconvolution claims with different
+    constants and proof directions: a `600`-interval step function on
+    `[-1/4, 1/4]` proving `C1 <= 1.5053`, a `50`-interval step function on the
+    same domain proving `0.8962 <= C2`, and a `400`-interval step function on
+    the same domain proving `C3 <= 1.4557`.
+  - Current gap: paper-facing Appendix B TODOs require normalized result rows
+    and step-function payloads in general, but they do not force B.1-B.3
+    reports to retain the interval counts, non-negative versus signed function
+    assumptions, prior bounds, upper/lower-bound direction, or individual
+    recomputation evidence for each of the three autocorrelation witnesses.
+  - Required result: add paper/report evidence for Appendix B.1-B.3 rows:
+    result id, constant id, metric formula id, domain, interval count,
+    step-function payload hash, sign policy, prior bound and source,
+    reported/recomputed value, bound direction, source section linkage, and
+    README/ROADMAP text that keeps the three autocorrelation claims distinct
+    from broad Appendix B family coverage.
+
 - [ ] Track Appendix B.8 squared-ratio convention evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 gives point-set
     constructions for minimizing the ratio of maximum to minimum pairwise

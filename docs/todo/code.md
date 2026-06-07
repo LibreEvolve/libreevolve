@@ -1943,6 +1943,28 @@ Primary evidence:
     numeric claim provenance from aggregate outcome reports and visual figure
     reproduction.
 
+- [ ] Add Appendix B.1-B.3 autocorrelation step-function provenance.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three
+    autocorrelation/autoconvolution inequality improvements using explicit
+    step-function constructions on `[-1/4, 1/4]`: B.1 uses `600`
+    equally-spaced intervals to improve the upper bound to `C1 <= 1.5053`,
+    B.2 uses `50` equally-spaced intervals to improve the lower bound to
+    `0.8962 <= C2`, and B.3 uses `400` equally-spaced intervals to improve
+    the upper bound to `C3 <= 1.4557`.
+  - Current evidence: the broad Appendix B per-result TODO names
+    autocorrelation constants and step-function construction payloads, but no
+    code/report schema separately records the three B.1-B.3 result ids,
+    interval counts, common domain, sign/non-negativity policy, inequality
+    direction, prior bounds, step values, or recomputed constants. A generated
+    report could flatten the three claims into one generic autocorrelation
+    family row and lose which construction proves which bound direction.
+  - Required result: add Appendix B.1-B.3-specific result rows and validators
+    for interval count, domain, step-function value payload hash,
+    non-negative-versus-signed function policy, metric formula id,
+    upper/lower-bound direction, previous-best value/source, recomputed bound,
+    source section linkage, and README/ROADMAP wording that distinguishes the
+    three autocorrelation witnesses from aggregate Appendix B coverage.
+
 - [ ] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
   - Spec evidence: AlphaEvolve Appendix B.8 reports point-set constructions for
     minimizing the ratio between maximum and minimum pairwise distances, but the

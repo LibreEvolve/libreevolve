@@ -1071,6 +1071,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reproduction, revised-result history, construction-payload evidence, and
     text-level Appendix B numeric claim evidence.
 
+- [ ] Keep README Appendix B.1-B.3 autocorrelation wording scoped until
+      step-function provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.3 reports three
+    autocorrelation/autoconvolution improvements: `600` equally-spaced
+    intervals on `[-1/4, 1/4]` for `C1 <= 1.5053`, `50` intervals on the same
+    domain for `0.8962 <= C2`, and `400` intervals on the same domain for
+    `C3 <= 1.4557`.
+  - Current evidence: README can point to broad Appendix B per-result
+    metric/value and step-function payload gaps, but it does not separately
+    warn that the three autocorrelation results need distinct interval-count,
+    sign-policy, direction, prior-bound, and recomputation evidence.
+  - Required result: when Appendix B.1-B.3 autocorrelation metadata lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README names the three constants, interval counts, bound directions,
+    prior/current values, step-function payload hashes, and source links
+    without merging them into one generic autocorrelation claim.
+
 - [ ] Keep README Appendix B.8 ratio wording scoped until squared-ratio
       convention provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.8 reports constructions for the

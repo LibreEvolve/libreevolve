@@ -3037,7 +3037,12 @@ code needed to reproduce Appendix B construction claims. It is also not a
 Section 3.2 aggregate outcome ledger: LibreEvolve does not yet enumerate the
 paper's over-50 mathematical problem instances, branch taxonomy, previous-best
 references, matched/improved/failed statuses, or aggregate percentages for
-best-known rediscovery and SOTA improvement. Matrix-result
+best-known rediscovery and SOTA improvement. The registry also does not yet
+preserve Appendix B result-version provenance: for example, Appendix B.4
+reports an uncertainty-inequality bound and then notes a post-first-version
+refinement to a stronger constant. LibreEvolve does not yet store manuscript
+version, superseded/current status, update notes, attribution, or
+verifier-artifact linkage for revised mathematical constants. Matrix-result
 publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target

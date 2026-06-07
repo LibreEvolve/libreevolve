@@ -583,6 +583,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes Appendix B family coverage from AlphaEvolve-style aggregate
     mathematical breadth and SOTA-rate claims.
 
+- [ ] Keep README Appendix B result wording scoped until revised-result
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 records a result revision for the
+    uncertainty inequality: the text first reports `C4 <= 0.3521`, then notes
+    a post-first-version refinement after Henry Cohn's observation that
+    improved the reported constant to `0.3216`.
+  - Current evidence: README describes the Appendix B registry as family/status
+    coverage plus missing construction-data and verifier-code exports. It does
+    not mention result revisions, superseded constants, source manuscript
+    version, update attribution, or verifier artifacts for revised mathematical
+    values.
+  - Required result: when Appendix B result-version rows and validators land,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README does not imply the family registry is enough to reproduce current
+    AlphaEvolve Appendix B constants or accidentally mix stale and revised
+    bounds.
+
 - [ ] Keep README feedback-calibration wording scoped to report contracts
   versus executed calibration experiments.
   - Spec evidence: AlphaEvolve-style feedback and reviewer channels need

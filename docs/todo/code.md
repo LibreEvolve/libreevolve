@@ -1565,6 +1565,27 @@ Primary evidence:
     and validated aggregate counts/percentages before claiming AlphaEvolve-
     style breadth across dozens of mathematical problems.
 
+- [ ] Add Appendix B result-version provenance for revised mathematical
+      constants.
+  - Spec evidence: AlphaEvolve Appendix B includes result-level details that
+    changed across manuscript versions. In particular, the uncertainty
+    inequality section reports an initial improved bound of `C4 <= 0.3521`,
+    then notes that after the first version Henry Cohn pointed to a refined
+    approach and AlphaEvolve improved the reported constant further to
+    `0.3216`, with details in the accompanying Google Colab.
+  - Current evidence: `alphaevolve_appendix_b.json` is a family/status ledger:
+    it records the `uncertainty_inequality` family as planned with null
+    target-baseline value and generic construction/certificate artifact labels.
+    It does not represent per-result constants, manuscript revision status,
+    superseded versus current reported bounds, post-publication notes, advisor
+    attribution, or links from revised constants to verifier artifacts.
+  - Required result: add result-version metadata for Appendix B benchmark
+    rows, including paper revision/source date, reported constant or
+    construction value, superseded/current status, update note, attribution
+    where relevant, verifier/Colab artifact linkage, and validation that docs
+    do not mix first-version and updated bounds when claiming AlphaEvolve-style
+    mathematical result parity.
+
 - [ ] Add incumbent-construction handoff contracts for heuristic-search
       benchmarks.
   - Spec evidence: AlphaEvolve Section 3.2 describes evolving programs that

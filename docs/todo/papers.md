@@ -1684,6 +1684,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     validated aggregate percentages before claiming Section 3.2-style
     mathematical breadth or SOTA-improvement rates.
 
+- [ ] Track Appendix B result-version provenance for revised constants.
+  - Paper evidence: Appendix B.4 reports an uncertainty-inequality construction
+    with `C4 <= 0.3521`, then adds a note that after the first manuscript
+    version Henry Cohn identified a refined approach and AlphaEvolve improved
+    the reported constant further to `0.3216`, with details delegated to the
+    accompanying Google Colab.
+  - Current gap: paper-facing status treats Appendix B as thirteen families
+    with planned/smoke statuses and expected artifact shapes. It does not
+    distinguish first-version versus updated constants, superseded bounds,
+    post-publication notes, contributor/advisor attribution for the revision,
+    or which verifier artifact corresponds to each reported value.
+  - Required result: add paper/report evidence for result revision identity,
+    manuscript/source version, reported constant or construction value,
+    previous and superseding values, update note, attribution, and verifier/
+    Colab linkage before claiming Appendix B result parity. README, ROADMAP,
+    papers index, and code TODOs should keep Appendix B wording scoped until
+    versioned result rows prevent mixing stale and current mathematical
+    claims.
+
 - [ ] Generate AlphaEvolve-suite matrix-result publication artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
     report matrix multiplication over 54 target sizes, measure both the best

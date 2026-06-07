@@ -57,6 +57,13 @@ paper reports over 50 problems across more than five branches, with roughly
 LibreEvolve still needs per-problem/per-parameter rows, branch labels,
 previous-best references, construction/verifier links, outcome statuses, and
 validated aggregate percentages before making that class of breadth claim.
+It also does not record Appendix B result-version provenance. Appendix B.4
+first reports an uncertainty-inequality bound of `C4 <= 0.3521`, then notes
+that after the first manuscript version Henry Cohn pointed to a refined
+approach and AlphaEvolve improved the reported constant further to `0.3216`.
+Current registry rows do not distinguish first-version and updated constants,
+superseded/current status, update attribution, or verifier/Colab artifact
+linkage for revised mathematical results.
 It also checks `libreevolve/problems/benchmarks/alphaevolve_ablations.json`,
 which defines the AlphaEvolve Figure 8 ablation report contract for the full
 system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,

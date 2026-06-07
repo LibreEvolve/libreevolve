@@ -1380,6 +1380,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording neither underclaims the current Appendix B family
     registry nor overclaims AlphaEvolve-style mathematical breadth evidence.
 
+- [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
+      exists.
+  - Spec evidence: AlphaEvolve Appendix B includes result-level revision
+    history, most clearly in the uncertainty-inequality note where an initial
+    `C4 <= 0.3521` result is superseded after the first manuscript version by
+    an improved `0.3216` constant linked to a refined approach and the
+    accompanying Google Colab.
+  - Current evidence: `ROADMAP.md`, README, papers index, and the Appendix B
+    registry describe family coverage, planned/smoke status, target-baseline
+    placeholders, and missing verifier data. They do not require versioned
+    per-result values, superseded/current status, update notes, source
+    manuscript version, attribution, or artifact linkage for revised
+    mathematical constants.
+  - Required result: when Appendix B result-version provenance lands, update
+    ROADMAP, README, papers index, and code/paper TODO entries together with
+    revision-aware result rows and validation so roadmap wording cannot treat a
+    family/status registry as current AlphaEvolve Appendix B result evidence.
+
 - [ ] Keep benchmark metric-range roadmap wording scoped to documented smoke
       normalization versus real target/SOTA baselines.
   - Spec evidence: AlphaEvolve-style benchmark fixtures should make reachable

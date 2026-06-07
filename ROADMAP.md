@@ -356,6 +356,11 @@ is not yet an AlphaEvolve reproduction.
   style breadth claims: per-problem/per-parameter rows, mathematical branch
   labels, prior-best references, matched/improved/fell-behind status, and
   validated percentages for dozens-problem coverage.
+- Add Appendix B result-version provenance before quoting paper-level
+  constructive-math constants: source manuscript version, reported value,
+  superseded/current status, update note, attribution, and verifier/Colab
+  artifact linkage for revised results such as the uncertainty-inequality
+  bound.
 - Add matrix target-scaling resource-frontier reports before claiming larger
   Appendix A extensions: attempted target sizes, seed counts, accelerator/GPU
   memory profile, OOM or resource-exhaustion diagnostics, and exclusion

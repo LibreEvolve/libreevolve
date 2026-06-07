@@ -238,8 +238,8 @@ custom backend attempt and records timed-out calls as structured timeout
 failures with retry/fallback eligibility. Configurable role/backend
 consecutive-failure quarantine and zero-reward scheduler penalties now exist
 for exhausted reward-accounted failures. Cross-run provider-failure policy,
-provider-output replay, remaining-run deadline propagation, hard provider
-cancellation, and timeout-driven stop/artifact behavior remain open.
+provider-output replay, hard provider cancellation, and timeout-driven
+stop/artifact behavior remain open.
 
 AlphaEvolve prompt-archive note: `prompt_history.jsonl` records prompt-program
 selection, scoring, lineage, invalid-mutation penalties, and structured

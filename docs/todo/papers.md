@@ -167,12 +167,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     role, backend, call id, timeout seconds, retry/fallback/telemetry budget
     action, and explicit `unsupported_daemon_worker_may_continue` hard-cancel
     gap. Remaining budget/runtime gaps are live hard cancellation handles,
-    timeout-driven stop enforcement beyond audit observations, timeout call
-    records, and mutation failure-history logging, accelerator/worker budget
+    timeout-driven stop enforcement beyond audit observations, richer
+    role-specific timeout/cancellation artifacts, accelerator/worker budget
     enforcement, live provider pricing capture, provider-output replay, and
-    async/pending-work controller restore. The remaining gap is not one-command
-    restoration of replayable provider-attempt/token/configured-cost/latency
-    controller events for the current synchronous runtime bundle.
+    async/pending-work controller restore. The remaining gap is not
+    remaining-runtime wait-deadline propagation, timeout call telemetry,
+    mutation timeout failure-history logging, or one-command restoration of
+    replayable provider-attempt/token/configured-cost/latency controller events
+    for the current synchronous runtime bundle.
   - Required result: unify retry accounting across provider adapters and the
     ensemble, add accelerator/async-worker budget counters,
     connect hard cancellation semantics to runtime behavior beyond the current

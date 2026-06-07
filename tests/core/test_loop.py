@@ -25,12 +25,15 @@ from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
     CONTROLLER_STATE_VALIDATION_SCHEMA,
     FULL_RESUME_BUNDLE_VALIDATION_SCHEMA,
+    PROMPT_SECTION_PACKING_COVERAGE_SCHEMA,
+    PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
     RuntimeLineageReplayPolicyError,
     RuntimeLLMSchedulerStateError,
     RuntimeRngStateError,
     controller_state_artifact_inventory,
     evolve,
+    validate_prompt_section_packing_coverage,
     validate_controller_state_snapshot,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
@@ -6809,6 +6812,99 @@ def test_loop_wires_discovered_provider_token_counter_into_prompt_diagnostics():
     assert section_budget["token_count_policy"] == "provider_token_counter"
     assert section_budget["provider_token_counter"] == "fixture:wordpiece"
     assert section_budget["provider_tokens_limit"] == 40
+
+
+def test_runtime_prompt_section_packing_coverage_scopes_non_mutation_roles():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.context_files = {
+        "notes.txt": " ".join(f"context{i}" for i in range(20)),
+    }
+    llm = _TelemetryLLM()
+
+    def discover_counter(backends, *, role="mutation", role_backend_indices=None):
+        capability = {
+            "schema": "libreevolve.prompt_token_counter_capability.v1",
+            "policy": "eligible_backend_common_provider_counter_optional_dependency_v1",
+            "role": role,
+            "status": "ready",
+            "reason": "common_provider_counter_available",
+            "counter_name": "fixture:wordpiece",
+            "eligible_backend_indices": [0],
+            "selection_scope": "backend_metadata_role_match_when_available",
+            "backends": [
+                {
+                    "backend_idx": 0,
+                    "type": "openai",
+                    "model": "gpt-4o-mini",
+                    "status": "ready",
+                    "source": "fixture",
+                    "counter_name": "fixture:wordpiece",
+                    "reason": "available",
+                }
+            ],
+        }
+        return (lambda text: len(text.split())), capability
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=llm),
+        patch(
+            "libreevolve.core.loop.discover_prompt_token_counter",
+            side_effect=discover_counter,
+        ),
+    ):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                prompt_max_estimated_tokens=80,
+                backends=[{"type": "openai", "model": "gpt-4o-mini"}],
+            ),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    coverage = manifest["runtime"]["prompt_section_packing"]
+
+    assert coverage["schema"] == PROMPT_SECTION_PACKING_COVERAGE_SCHEMA
+    assert coverage["section_packing_roles"] == ["mutation"]
+    assert coverage["provider_token_section_packing_ready_roles"] == ["mutation"]
+    assert coverage["provider_token_section_packing_missing_roles"] == [
+        "critique",
+        "feedback:*",
+        "meta_prompt",
+    ]
+    assert coverage["automatic_provider_token_section_packing_complete"] is False
+    role_status = {
+        role["role"]: role["section_packing_status"]
+        for role in coverage["roles"]
+    }
+    assert role_status == {
+        "mutation": "supported",
+        "critique": "unsupported",
+        "feedback:*": "unsupported",
+        "meta_prompt": "unsupported",
+    }
+    validation = coverage["validation"]
+    assert validation["schema"] == PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA
+    assert validation["coverage_schema"] == PROMPT_SECTION_PACKING_COVERAGE_SCHEMA
+    assert validation["ok"] is True
+    assert validation["section_packing_role_count"] == 1
+    assert validation["ready_role_count"] == 1
+    assert validation["missing_role_count"] == 3
+
+    overclaim = copy.deepcopy(coverage)
+    overclaim["automatic_provider_token_section_packing_complete"] = True
+    overclaim.pop("validation")
+
+    invalid = validate_prompt_section_packing_coverage(overclaim)
+
+    assert invalid["ok"] is False
+    assert any(
+        issue["code"] == "section_packing_overclaim"
+        for issue in invalid["issues"]
+    )
 
 
 def test_loop_logs_stochastic_prompt_format_selection_metadata():

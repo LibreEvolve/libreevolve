@@ -814,6 +814,15 @@ with its resume artifact inventory, including matching run id, report schema,
 resume-state hash, inventory status, aggregate counts, zero
 missing/mismatch/invalid records, and inventory record-hash consistency before
 treating the bundle as paper-budget-ready.
+Runtime manifests also include `runtime.prompt_section_packing` with schema
+`libreevolve.prompt_section_packing_coverage.v1`. It records which prompt
+roles use section-level packing before the LLM call, which roles only have the
+final `LLMEnsemble.generate()` prompt-token boundary, discovered counter
+capabilities for static roles, and an embedded
+`libreevolve.prompt_section_packing_coverage_validation.v1` result. The record
+keeps automatic provider-token section packing scoped to the mutation
+`PromptSampler` path and marks critique, feedback, and meta-prompt builders as
+missing section-packing coverage.
 Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
 synchronous controller with zero queued/running proposals, evaluations,

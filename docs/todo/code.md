@@ -99,6 +99,14 @@ Primary evidence:
     records the window, reserve, and derived capacity in call telemetry. If a
     backend spec omits `reserved_output_tokens` but sets `max_tokens`, the
     output-token cap is used as the reserve.
+    Final manifests now record
+    `runtime.prompt_section_packing` with schema
+    `libreevolve.prompt_section_packing_coverage.v1` and embedded
+    `libreevolve.prompt_section_packing_coverage_validation.v1`. The record
+    identifies mutation as the only current section-packed prompt role, lists
+    critique, feedback, and meta-prompt as final-prompt-boundary-only, includes
+    static-role token-counter capability diagnostics, and rejects complete
+    provider-token section-packing overclaims.
   - Required result: make selected-backend exact token counters automatic for
     parent code, inspirations, explicit context, plugin context, evaluator
     feedback, and failure memory section-packing across all prompt roles,
@@ -109,8 +117,9 @@ Primary evidence:
     selected-backend provider-token section packing outside mutation prompts
     and complete provider-cost restoration, not mutation-path optional OpenAI
     counter discovery, final-prompt selected-backend tokenizer discovery across
-    LLM roles, validating persisted section-budget records, or LLM budget
-    report/resume-artifact bundle consistency.
+    LLM roles, validating persisted section-budget records, manifest-visible
+    prompt section-packing coverage validation, or LLM budget report/resume-
+    artifact bundle consistency.
 
 - [ ] Evolve structured prompt context policy, not only template text.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

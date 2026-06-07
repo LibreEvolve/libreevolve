@@ -110,6 +110,12 @@ CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA = (
     "libreevolve.controller_state_artifact_inventory.v1"
 )
 CONTROLLER_STATE_VALIDATION_SCHEMA = "libreevolve.controller_state_validation.v1"
+PROMPT_SECTION_PACKING_COVERAGE_SCHEMA = (
+    "libreevolve.prompt_section_packing_coverage.v1"
+)
+PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA = (
+    "libreevolve.prompt_section_packing_coverage_validation.v1"
+)
 _MAX_PLUGIN_METADATA_KEY_CHARS = 160
 _MAX_PLUGIN_METADATA_STRING_CHARS = 4096
 _MAX_PLUGIN_METADATA_DEPTH = 20
@@ -1760,6 +1766,9 @@ def _attach_runtime_summaries(
         llm=llm,
     )
     runtime["llm_provider_diagnostics"] = _runtime_llm_provider_diagnostics(llm)
+    runtime["prompt_section_packing"] = _runtime_prompt_section_packing_coverage(
+        config
+    )
     runtime["lineage_replay_policy"] = _runtime_lineage_replay_policy()
     runtime["provider_cancellation_policy"] = _runtime_provider_cancellation_policy(
         config,
@@ -2158,6 +2167,315 @@ def _runtime_llm_provider_diagnostics(llm: object | None) -> dict:
         "reason": "provider_diagnostics_summary_not_mapping",
         "summary_type": _manifest_safe_type_name(summary),
     }
+
+
+def _runtime_prompt_section_packing_coverage(config: Config) -> dict:
+    roles = [
+        _prompt_section_packing_role_record(
+            config,
+            role="mutation",
+            prompt_builder="PromptSampler.build",
+            section_packing_status="supported",
+            section_packing_boundary="pre_llm_promptsampler_optional_section_packing",
+            role_discovery="static_mutation_role",
+        ),
+        _prompt_section_packing_role_record(
+            config,
+            role="critique",
+            prompt_builder="build_critique_prompt",
+            section_packing_status="unsupported",
+            section_packing_boundary="final_prompt_boundary_only",
+            role_discovery="static_critique_role",
+        ),
+        _prompt_section_packing_role_record(
+            config,
+            role="feedback:*",
+            prompt_builder="_build_feedback_prompt",
+            section_packing_status="unsupported",
+            section_packing_boundary="final_prompt_boundary_only",
+            role_discovery="dynamic_feedback_role_names",
+            token_counter_capability=None,
+        ),
+        _prompt_section_packing_role_record(
+            config,
+            role="meta_prompt",
+            prompt_builder="_build_meta_prompt_mutation_request",
+            section_packing_status="unsupported",
+            section_packing_boundary="final_prompt_boundary_only",
+            role_discovery="static_meta_prompt_role",
+        ),
+    ]
+    ready_roles = [
+        role["role"]
+        for role in roles
+        if role["section_packing_status"] == "supported"
+        and role["provider_token_section_packing_ready"] is True
+    ]
+    missing_roles = [
+        role["role"]
+        for role in roles
+        if role["section_packing_status"] != "supported"
+        or role["provider_token_section_packing_ready"] is not True
+    ]
+    record = {
+        "schema": PROMPT_SECTION_PACKING_COVERAGE_SCHEMA,
+        "policy": "role_scoped_prompt_builder_section_packing_coverage_v1",
+        "section_packing_roles": [
+            role["role"]
+            for role in roles
+            if role["section_packing_status"] == "supported"
+        ],
+        "provider_token_section_packing_ready_roles": ready_roles,
+        "provider_token_section_packing_missing_roles": missing_roles,
+        "automatic_provider_token_section_packing_complete": False,
+        "final_prompt_token_counting_boundary": (
+            "LLMEnsemble.generate performs role-scoped final-prompt counting "
+            "when all eligible backends share a local counter"
+        ),
+        "roles": roles,
+        "limitations": [
+            "non_mutation_prompt_builders_do_not_use_promptsampler_section_packing",
+            "feedback_roles_are_dynamic_and_discovered_at_llm_generate_boundary",
+            "provider_token_section_packing_is_not_complete_for_all_prompt_roles",
+        ],
+    }
+    record["validation"] = validate_prompt_section_packing_coverage(record)
+    return record
+
+
+def _prompt_section_packing_role_record(
+    config: Config,
+    *,
+    role: str,
+    prompt_builder: str,
+    section_packing_status: str,
+    section_packing_boundary: str,
+    role_discovery: str,
+    token_counter_capability: dict | None | object = ...,
+) -> dict:
+    capability = token_counter_capability
+    if capability is ...:
+        _, capability = discover_prompt_token_counter(
+            config.backends,
+            role=role,
+            role_backend_indices=config.llm_role_backend_indices,
+        )
+    provider_ready = (
+        section_packing_status == "supported"
+        and isinstance(capability, dict)
+        and capability.get("status") == "ready"
+    )
+    return {
+        "role": role,
+        "prompt_builder": prompt_builder,
+        "role_discovery": role_discovery,
+        "section_packing_status": section_packing_status,
+        "section_packing_boundary": section_packing_boundary,
+        "provider_token_section_packing_ready": provider_ready,
+        "final_prompt_token_counting": (
+            "role_scoped_llm_generate_boundary"
+            if role != "feedback:*"
+            else "dynamic_feedback_role_llm_generate_boundary"
+        ),
+        "token_counter_capability": copy.deepcopy(capability),
+    }
+
+
+def validate_prompt_section_packing_coverage(record: object) -> dict:
+    """Validate prompt section-packing role coverage without upgrading claims."""
+    issues: list[dict[str, str]] = []
+    if not isinstance(record, Mapping):
+        return {
+            "schema": PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
+            "coverage_schema": None,
+            "ok": False,
+            "automatic_provider_token_section_packing_complete": False,
+            "section_packing_role_count": 0,
+            "ready_role_count": 0,
+            "missing_role_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "prompt section-packing coverage must be an object",
+                }
+            ],
+        }
+    if record.get("schema") != PROMPT_SECTION_PACKING_COVERAGE_SCHEMA:
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported prompt section-packing coverage schema",
+            }
+        )
+    if record.get("policy") != "role_scoped_prompt_builder_section_packing_coverage_v1":
+        issues.append(
+            {
+                "code": "invalid_policy",
+                "message": "unsupported prompt section-packing coverage policy",
+            }
+        )
+    roles = _validate_prompt_section_packing_roles(record.get("roles"), issues)
+    role_names = [role["role"] for role in roles]
+    if role_names != ["mutation", "critique", "feedback:*", "meta_prompt"]:
+        issues.append(
+            {
+                "code": "unexpected_role_coverage",
+                "message": "coverage must enumerate mutation, critique, feedback:*, and meta_prompt",
+            }
+        )
+    section_roles = [
+        role["role"]
+        for role in roles
+        if role["section_packing_status"] == "supported"
+    ]
+    ready_roles = [
+        role["role"]
+        for role in roles
+        if role["section_packing_status"] == "supported"
+        and role["provider_token_section_packing_ready"] is True
+    ]
+    missing_roles = [
+        role["role"]
+        for role in roles
+        if role["section_packing_status"] != "supported"
+        or role["provider_token_section_packing_ready"] is not True
+    ]
+    if record.get("section_packing_roles") != section_roles:
+        issues.append(
+            {
+                "code": "section_packing_roles_mismatch",
+                "message": "section_packing_roles must match supported role records",
+            }
+        )
+    if record.get("provider_token_section_packing_ready_roles") != ready_roles:
+        issues.append(
+            {
+                "code": "ready_roles_mismatch",
+                "message": "ready role list must match provider-ready section-packing records",
+            }
+        )
+    if record.get("provider_token_section_packing_missing_roles") != missing_roles:
+        issues.append(
+            {
+                "code": "missing_roles_mismatch",
+                "message": "missing role list must match unsupported or non-ready records",
+            }
+        )
+    if record.get("automatic_provider_token_section_packing_complete") is not False:
+        issues.append(
+            {
+                "code": "section_packing_overclaim",
+                "message": "current coverage must not claim complete provider-token section packing",
+            }
+        )
+    limitations = record.get("limitations")
+    required_limitations = {
+        "non_mutation_prompt_builders_do_not_use_promptsampler_section_packing",
+        "feedback_roles_are_dynamic_and_discovered_at_llm_generate_boundary",
+        "provider_token_section_packing_is_not_complete_for_all_prompt_roles",
+    }
+    if not isinstance(limitations, list) or not all(
+        isinstance(item, str) for item in limitations
+    ):
+        issues.append(
+            {
+                "code": "invalid_limitations",
+                "message": "limitations must be a list of strings",
+            }
+        )
+    else:
+        for item in sorted(required_limitations - set(limitations)):
+            issues.append(
+                {
+                    "code": "missing_limitation",
+                    "message": f"missing prompt section-packing limitation {item}",
+                }
+            )
+    return {
+        "schema": PROMPT_SECTION_PACKING_COVERAGE_VALIDATION_SCHEMA,
+        "coverage_schema": (
+            record.get("schema") if isinstance(record.get("schema"), str) else None
+        ),
+        "ok": not issues,
+        "automatic_provider_token_section_packing_complete": False,
+        "section_packing_role_count": len(section_roles),
+        "ready_role_count": len(ready_roles),
+        "missing_role_count": len(missing_roles),
+        "issues": issues,
+    }
+
+
+def _validate_prompt_section_packing_roles(
+    value: object,
+    issues: list[dict[str, str]],
+) -> list[Mapping[str, object]]:
+    if not isinstance(value, list):
+        issues.append(
+            {
+                "code": "invalid_roles",
+                "message": "roles must be a list",
+            }
+        )
+        return []
+    roles: list[Mapping[str, object]] = []
+    for index, item in enumerate(value):
+        if not isinstance(item, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_role_record",
+                    "message": f"roles[{index}] must be an object",
+                }
+            )
+            continue
+        for field in (
+            "role",
+            "prompt_builder",
+            "role_discovery",
+            "section_packing_status",
+            "section_packing_boundary",
+            "final_prompt_token_counting",
+        ):
+            if not isinstance(item.get(field), str) or not item.get(field):
+                issues.append(
+                    {
+                        "code": "invalid_role_field",
+                        "message": f"roles[{index}].{field} must be non-empty text",
+                    }
+                )
+        if item.get("section_packing_status") not in {"supported", "unsupported"}:
+            issues.append(
+                {
+                    "code": "invalid_section_packing_status",
+                    "message": "section_packing_status must be supported or unsupported",
+                }
+            )
+        if not isinstance(item.get("provider_token_section_packing_ready"), bool):
+            issues.append(
+                {
+                    "code": "invalid_provider_ready",
+                    "message": "provider_token_section_packing_ready must be boolean",
+                }
+            )
+        if (
+            item.get("section_packing_status") == "unsupported"
+            and item.get("provider_token_section_packing_ready") is True
+        ):
+            issues.append(
+                {
+                    "code": "unsupported_role_ready_overclaim",
+                    "message": "unsupported roles must not be provider section-packing ready",
+                }
+            )
+        capability = item.get("token_counter_capability")
+        if capability is not None and not isinstance(capability, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_token_counter_capability",
+                    "message": "token_counter_capability must be an object or null",
+                }
+            )
+        roles.append(item)
+    return roles
 
 
 def _runtime_llm_budget_report(

@@ -544,12 +544,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `context_window_tokens` plus optional `reserved_output_tokens`; the
     ensemble subtracts the reserve, applies the derived heuristic prompt-token
     capacity before provider calls, and records the window, reserve, and
-    derived capacity in call telemetry.
+    derived capacity in call telemetry. Final manifests now record
+    `runtime.prompt_section_packing` with schema
+    `libreevolve.prompt_section_packing_coverage.v1` and embedded validation,
+    making the mutation-only section-packing boundary and critique/feedback/
+    meta-prompt final-boundary-only roles explicit.
   - Required result: add configurable/full validator-metadata prompt policy
     and automatic selected-backend provider-token section-priority packing
     across evaluator, feedback, artifact, and context prompt sections. The
     remaining paper gap is not persisted section-budget validation or
-    role-scoped final-prompt exact token counting.
+    role-scoped final-prompt exact token counting, and not manifest validation
+    of current prompt section-packing role coverage.
 
 - [ ] Model migration replay and controller state for one-command archive
   resume.

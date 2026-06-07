@@ -286,7 +286,11 @@ hashes, character counts, estimated tokens, required/optional totals, template
 overhead, required-section fit status, configured cap sources, and packing
 decisions. Prompt section packing is still only fully automatic in the mutation
 sampler; non-mutation roles get final-prompt validation and telemetry, not
-per-section provider-token packing.
+per-section provider-token packing. Final manifests expose that boundary under
+`runtime.prompt_section_packing` with schema
+`libreevolve.prompt_section_packing_coverage.v1`; its embedded validation
+keeps `automatic_provider_token_section_packing_complete` false and lists
+mutation, critique, feedback, and meta-prompt role coverage separately.
 
 Generated candidate metadata persists mutation prompts according to
 `mutation_prompt_retention_mode`: `redacted` by default, with `full`,
@@ -858,7 +862,9 @@ counter, call telemetry also records exact provider-token counts and the
 role-scoped capability record; otherwise it records the unavailable reason and
 uses the heuristic character-derived estimate. This is still final-prompt
 fitting, not complete provider-tokenizer-backed section packing for every
-rendered prompt component.
+rendered prompt component. `runtime.prompt_section_packing` validates the
+current role coverage and identifies non-mutation prompt builders as
+final-boundary-only.
 Final runtime manifests
 record `runtime.llm_scheduler` as a JSON-finite scheduler snapshot validated
 against the `LLMEnsemble` restore contract, or as explicit `not_initialized` /

@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 from libreevolve.core.database import _provider_capability_lookup_policy
@@ -16,6 +17,11 @@ def _policy():
     )
 
 
+def _hash_records(policy: dict) -> str:
+    payload = json.dumps(policy["records"], sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
 def test_provider_capability_lookup_policy_validates_static_boundary():
     policy = _policy()
 
@@ -27,6 +33,8 @@ def test_provider_capability_lookup_policy_validates_static_boundary():
     assert validation.record_count == 2
     assert validation.issues == []
     assert policy["schema"] == PROVIDER_CAPABILITY_LOOKUP_POLICY_SCHEMA
+    assert policy["record_count"] == 2
+    assert policy["records_sha256"] == _hash_records(policy)
 
 
 def test_provider_capability_lookup_policy_loads_json_file(tmp_path):
@@ -67,6 +75,8 @@ def test_provider_capability_lookup_policy_rejects_live_lookup_overclaims():
 
 def test_provider_capability_lookup_policy_rejects_bad_records():
     policy = _policy()
+    policy["record_count"] = 3
+    policy["records_sha256"] = "0" * 64
     policy["records"][0]["backend_index"] = policy["records"][1]["backend_index"]
     policy["records"][0]["local_validation"] = []
     policy["records"][0].pop("api_mode_policy_ref")
@@ -77,6 +87,8 @@ def test_provider_capability_lookup_policy_rejects_bad_records():
     codes = {issue.code for issue in validation.issues}
 
     assert validation.ok is False
+    assert "record_count_mismatch" in codes
+    assert "records_sha256_mismatch" in codes
     assert "duplicate_backend_index" in codes
     assert "missing_required_local_validation" in codes
     assert "missing_openai_local_validation" in codes

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -18,6 +20,7 @@ _OPENAI_LOCAL_VALIDATION = {
     "openai_api_mode_enum_and_reasoning_effort_route",
     "openai_model_family_reasoning_effort_static_compatibility",
 }
+_HEX_64 = re.compile(r"^[0-9a-f]{64}$")
 
 
 @dataclass(frozen=True)
@@ -53,6 +56,26 @@ def validate_provider_capability_lookup_policy(
     _expect(data, "provider_service_api_version", "not_queried", issues)
     _expect(data, "provider_account_availability", "not_checked", issues)
     records = _validate_records(data.get("records"), issues)
+    record_count = data.get("record_count")
+    if (
+        isinstance(record_count, bool)
+        or not isinstance(record_count, int)
+        or record_count < 0
+    ):
+        issues.append(
+            ProviderCapabilityIssue(
+                "invalid_record_count",
+                "record_count must be a non-negative integer",
+            )
+        )
+    elif record_count != len(records):
+        issues.append(
+            ProviderCapabilityIssue(
+                "record_count_mismatch",
+                "record_count must match provider capability record count",
+            )
+        )
+    _validate_records_hash(data.get("records_sha256"), records, issues)
     if not isinstance(data.get("remaining_gap"), str) or not data["remaining_gap"].strip():
         issues.append(
             ProviderCapabilityIssue(
@@ -145,6 +168,30 @@ def _validate_records(
             seen_indices.add(index)
         _validate_record(item, issues)
     return records
+
+
+def _validate_records_hash(
+    value: object,
+    records: list[dict[str, Any]],
+    issues: list[ProviderCapabilityIssue],
+) -> None:
+    if not isinstance(value, str) or not _HEX_64.fullmatch(value):
+        issues.append(
+            ProviderCapabilityIssue(
+                "invalid_records_sha256",
+                "records_sha256 must be a lowercase SHA-256 hex digest",
+            )
+        )
+        return
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    expected = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    if value != expected:
+        issues.append(
+            ProviderCapabilityIssue(
+                "records_sha256_mismatch",
+                "records_sha256 must match provider capability records",
+            )
+        )
 
 
 def _validate_record(

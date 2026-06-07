@@ -1096,9 +1096,9 @@ Primary evidence:
     `validate_provider_capability_lookup_policy()` now validates
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, required local validation checks, OpenAI
-    API-mode policy linkage, offline compatibility, and explicit non-use of
-    live model-registry, service/API-version, or account-availability
-    discovery.
+    API-mode policy linkage, offline compatibility, record count/hash
+    integrity, and explicit non-use of live model-registry, service/API-version,
+    or account-availability discovery.
     `validate_llm_provider_diagnostics_summary()` now validates
     `libreevolve.llm_provider_diagnostics.v1` runtime summaries for
     schema/policy/status/source, retained-history scope, backend-record hash

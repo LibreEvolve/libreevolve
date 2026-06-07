@@ -173,8 +173,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `validate_provider_capability_lookup_policy()` now validates
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, OpenAI API-mode policy linkage, offline
-    compatibility, and explicit non-use of live model-registry,
-    service/API-version, or account-availability discovery.
+    compatibility, record count/hash integrity, and explicit non-use of live
+    model-registry, service/API-version, or account-availability discovery.
     `validate_llm_provider_diagnostics_summary()` now validates the provider
     diagnostics summary contract, including record-hash integrity,
     non-negative counters, backend-count, total/backend aggregate count and

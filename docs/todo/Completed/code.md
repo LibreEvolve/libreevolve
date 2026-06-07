@@ -15300,3 +15300,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     provider-output replay.
   - Verification: focused provider diagnostics policy and ensemble tests cover
     valid summaries plus aggregate count/counter drift.
+
+- [x] Add provider capability lookup record integrity.
+  - Spec evidence: AlphaEvolve-style provider configuration evidence should
+    make the static local lookup boundary auditable without implying live
+    provider registry, service-version, or account-availability checks.
+  - Status: manifest provider capability policies now include `record_count`
+    and `records_sha256`, and `validate_provider_capability_lookup_policy()`
+    verifies those fields alongside schema, static-only policy, OpenAI
+    API-mode linkage, local validation checks, offline compatibility, and
+    live-lookup overclaim rejection.
+  - Remaining gap: this validates local static capability evidence; it does
+    not perform live provider model-registry, service/API-version,
+    account-availability, provider-default, or live-pricing discovery.
+  - Verification: focused provider capability policy tests cover valid
+    count/hash evidence plus mismatched record count/hash records.

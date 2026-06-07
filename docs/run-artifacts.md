@@ -181,11 +181,13 @@ Metadata-only static records remain manifest-only and are not copied as bytes.
   policy
 - provider capability lookup policy under
   `policies.provider_capability_lookup`, which records local static validation
-  and explicitly states that live provider model registries, service/API
-  versions, and account availability are not queried before the run
+  plus record count/hash integrity and explicitly states that live provider
+  model registries, service/API versions, and account availability are not
+  queried before the run
 - `validate_provider_capability_lookup_policy()`, which validates that static
   lookup boundary and rejects manifest records that overclaim live registry,
-  service/API-version, or account-availability discovery
+  service/API-version, account-availability discovery, or inconsistent
+  record-count/hash evidence
 - shared redaction grammar under `policies.redaction`, including the
   versioned rule ids used by `redact_sensitive_text()`
 - ensemble strategy

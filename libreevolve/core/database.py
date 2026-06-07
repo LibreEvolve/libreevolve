@@ -5807,6 +5807,7 @@ def _provider_capability_lookup_policy(backends: list[dict]) -> dict:
             )
             record["api_mode_policy_ref"] = "policies.openai_api_mode"
         records.append(record)
+    records_payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
     return {
         "schema": "libreevolve.provider_capability_lookup_policy.v1",
         "policy": "local_static_validation_no_live_provider_lookup",
@@ -5816,6 +5817,8 @@ def _provider_capability_lookup_policy(backends: list[dict]) -> dict:
         "provider_model_registry": "not_queried",
         "provider_service_api_version": "not_queried",
         "provider_account_availability": "not_checked",
+        "record_count": len(records),
+        "records_sha256": hashlib.sha256(records_payload.encode("utf-8")).hexdigest(),
         "records": records,
         "remaining_gap": (
             "live provider model registry, service API-version, account "

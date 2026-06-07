@@ -1395,7 +1395,8 @@ Primary evidence:
     restore validation, and experiment-level reports proving that role
     selection behavior is not just shared global-bandit telemetry.
 
-- [ ] Enforce adapter retry/token/cost/wall-clock budgets live.
+- [ ] Complete hard cancellation, async/accelerator budgets, and executed
+      ablation scripts beyond current live LLM budget stops.
   - Spec evidence: AlphaEvolve-style LLM scheduling is compute-budgeted; retry
     knobs should not allow an effectively unbounded number of provider calls
     outside token-budget/cost/time/accounting controls.

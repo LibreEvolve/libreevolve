@@ -33,6 +33,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current manifest-visible boundary policy nor overclaims AlphaEvolve-grade
     arbitrary-language/codebase support.
 
+- [ ] Keep README workspace-topology diagnostics scoped to current
+  materialization and command preflight coverage.
+  - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,
+    inspectable evaluator feedback for generated invalid artifacts, especially
+    as task-defined program artifacts and workspace surfaces grow beyond the
+    current local file-set prototype.
+  - Current evidence: README documents that collision checks are still
+    incomplete while also describing rejected normalized path collisions,
+    case-folded host-path materialization preflights, structured
+    `materialization_error` evaluation results, bounded redacted diagnostics,
+    structured materialization `reason` and `paths`, exact snapshot
+    materialization, link/junction rejection, static source-copy verification,
+    and workspace topology command prevalidation for duplicate sources/targets,
+    edit/delete/move conflicts, chained operations, host/case-folded target
+    collisions, duplicate `PRIMARY` commands, and non-empty command bodies.
+  - Required result: when future topology surfaces such as bulk directory
+    operations, language/build-runner generated artifacts, external
+    materialization paths, or richer artifact runners land, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    neither underclaims current structured invalid-workspace feedback nor
+    overclaims robust AlphaEvolve-grade codebase-scale diagnostics.
+
 - [ ] Keep README provider-token prompt-packing wording scoped to implemented
   mutation and final-prompt boundaries.
   - Spec evidence: AlphaEvolve-scale prompt construction needs prompt sections

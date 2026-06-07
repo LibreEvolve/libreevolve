@@ -72,6 +72,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
+- [ ] Keep workspace-topology roadmap scope aligned with current
+      materialization diagnostics.
+  - Spec evidence: AlphaEvolve-style codebase evolution should turn invalid
+    generated artifacts into stable evaluator feedback instead of opaque local
+    filesystem failures, especially as program artifacts and runners become
+    broader than the current local workspace.
+  - Current evidence: `ROADMAP.md` currently names workspace file topology
+    mutations for create/edit/delete/move/rename and primary-file changes, and
+    its near-term workspace section asks to keep topology-operation collision
+    policy and structured materialization-failure diagnostics complete as new
+    workspace, language, and build-runner edge cases are introduced. Code and
+    paper TODO evidence already scope the implemented coverage to current
+    `CandidateMaterializationError` reason/path diagnostics, bounded
+    `materialization_error` metadata, link/junction rejection, static
+    source-copy verification, and topology command prevalidation.
+  - Required result: when future topology surfaces such as bulk directory
+    operations, language/build-runner generated artifacts, external
+    materialization paths, or richer artifact runners land, update the roadmap,
+    README, papers index, and code/paper TODO entries together so roadmap
+    wording neither underclaims current structured invalid-workspace feedback
+    nor overclaims AlphaEvolve-grade codebase-scale diagnostics.
+
 ## Missing Roadmap Items
 
 ## Existing Items That Need Tightening

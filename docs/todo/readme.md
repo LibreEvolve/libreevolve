@@ -69,6 +69,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     code/paper TODO entries together so README neither underclaims the checked
     Strassen baseline nor overclaims AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README certification and systems-result wording scoped to report
+  contracts versus executed independent evidence.
+  - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local
+    optimizer feedback, including post-deployment fleet measurements, held-out
+    kernel-shape evaluation, randomized reference-code checks, and human expert
+    confirmation for final FlashAttention changes.
+  - Current evidence: README now says
+    `libreevolve.paper_result_certification.v1` distinguishes local validator
+    records from paper-claim-ready independent certifications, and that the
+    accompanying artifact inventory proves named evidence files are present,
+    not that independent verifiers, deployment measurements, or human review
+    have been performed. README also says
+    `libreevolve.systems_result_report.v1` is a readiness/report schema only,
+    while `libreevolve.systems_result_artifact_inventory.v1` proves artifact
+    availability, not unseen workloads, reference-code checks, deployment
+    evidence, or independent certification. Matching paper/code TODOs still
+    require real verifier scripts, reviewer/deployment provenance, systems
+    fixtures, held-out case sets, and randomized/reference-correctness checks.
+  - Required result: when benchmark runs emit real certification reports,
+    deployment/reviewer evidence, held-out systems reports, or reference-code
+    checks, update README, ROADMAP, papers index, and code/paper TODO entries
+    together so README neither underclaims the current report and inventory
+    contracts nor overclaims AlphaEvolve-style confirmed result evidence.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

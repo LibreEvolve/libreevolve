@@ -266,6 +266,17 @@ def test_prompt_context_policy_records_plugin_context_max_chars():
         validate_prompt_context_policy({"plugin_context_max_chars": True})
 
 
+def test_prompt_context_policy_records_plugin_context_truncation():
+    policy = validate_prompt_context_policy(
+        {"plugin_context_truncation": "head_tail"}
+    )
+
+    assert policy["plugin_context_truncation"] == "head_tail"
+
+    with pytest.raises(PromptTemplateError, match="plugin_context_truncation"):
+        validate_prompt_context_policy({"plugin_context_truncation": "middle"})
+
+
 def test_prompt_context_policy_records_plugin_context_max_chars_by_label():
     policy = validate_prompt_context_policy(
         {
@@ -7167,6 +7178,7 @@ def test_prompt_sampler_records_non_truncated_prompt_budget_metadata():
         "plugin_context_ranking_terms": [],
         "plugin_context_limit": None,
         "plugin_context_max_chars": None,
+        "plugin_context_truncation": "head",
         "plugin_context_max_chars_by_label": {},
         "applied_disabled_sections": [],
         "policy": (

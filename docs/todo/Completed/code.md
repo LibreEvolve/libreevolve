@@ -14417,3 +14417,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     mechanism.
   - Verification: focused loop tests cover the manifest field and terminal
     pending-work counters.
+
+- [x] Add prompt-policy plugin context truncation shape.
+  - Spec evidence: AlphaEvolve-style meta-prompt evolution should be able to
+    tune prompt context shape, not only enable, disable, or cap whole context
+    channels.
+  - Status: `libreevolve.prompt_context_policy.v1` now supports
+    `plugin_context_truncation` with deterministic `head` and `head_tail`
+    modes under plugin context caps. `_build_plugin_context()` applies the
+    selected shape after redaction, records `policy_truncation`, and persists a
+    `libreevolve.plugin_context_content_policy.v1` record for each emitted
+    plugin context section. Meta-prompt capability text exposes the new field.
+  - Remaining gap: this only controls bounded plugin-context retention shape;
+    plugin retrieval/summarization logic and deeper transport policies remain
+    fixed by code/config.
+  - Verification: focused prompt and loop tests cover policy validation,
+    default diagnostics, prompt-visible head-tail retention, metadata evidence,
+    and meta-prompt exposure.

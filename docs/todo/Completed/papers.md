@@ -9626,3 +9626,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     pending worker state, and provider-output replay remain open.
   - Verification: focused loop tests cover the terminal controller-state
     manifest field.
+
+- [x] Add paper-visible plugin context truncation policy.
+  - Paper evidence: AlphaEvolve describes evolving prompt instructions and
+    context, so prompt-program policy should be able to alter how plugin
+    context is shaped before it reaches mutation prompts.
+  - Status: prompt context policy now supports `plugin_context_truncation`
+    with `head` and `head_tail` modes. Generated prompt diagnostics and
+    plugin-context metadata record the selected truncation plus a
+    `libreevolve.plugin_context_content_policy.v1` content-policy record, and
+    meta-prompt capability text exposes the knob for future mutations.
+  - Remaining paper gap: this is bounded prompt-context shaping, not evolved
+    retrieval/summarization transport or a learned source-ranking policy.
+  - Verification: focused prompt and loop tests cover validation, prompt
+    rendering, metadata persistence, and meta-prompt evidence.

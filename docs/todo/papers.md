@@ -702,6 +702,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `plugin_context_max_chars` can globally cap each plugin context section
     before prompt visibility, recording the global policy cap, per-label cap,
     effective cap, original character count, and prompt truncation status.
+    `plugin_context_truncation` can choose deterministic `head` or
+    `head_tail` retention under those plugin-context caps, and plugin-context
+    records persist the applied content policy.
     `plugin_context_max_chars_by_label` can cap rendered plugin prompt-context
     text by plugin identity label before aggregate prompt packing applies.
     Generated prompt diagnostics record the applied policy hash, selected
@@ -727,7 +730,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     overrides, context source selection, term filters, render-count caps,
     content caps, truncation policy, and ordering policy,
     recent failure-memory selection and text-term filtering, and inspiration selection, plugin extra-context
-    cap diagnostics, plugin-context generation, excluded-label policy, term filters, ranking terms, render-count limits, global plugin caps, and ordering policy, and replacement hashes;
+    cap diagnostics, plugin-context generation, excluded-label policy, term filters, ranking terms, render-count limits, global plugin caps, truncation policy, and ordering policy, and replacement hashes;
     generated-candidate metadata records required-metric inspiration filtering
     plus metric-threshold inspiration filtering with pool, matching, filtered,
     threshold-bound, ranking-policy, ranked, and selected counts;
@@ -738,7 +741,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     capability manifest plus per-prompt non-default context-policy previews in
     the bounded redacted prompt-performance evidence.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
-    code: plugin context shaping beyond enable/disable, allowlist, ordering, and caps,
+    code: plugin context shaping beyond enable/disable, allowlist, ordering, caps, and truncation,
     retrieval/summarization beyond deterministic source selection/ranking/count caps, and deeper
     per-field policy inside selected validator diagnostic groups beyond
     metadata-summary key selection, syntax-error field selection, and

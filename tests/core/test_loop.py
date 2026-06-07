@@ -7720,6 +7720,63 @@ def test_prompt_context_policy_caps_plugin_context_by_label():
     assert context_record["metadata"] == {"channel": "capped"}
 
 
+def test_prompt_context_policy_uses_head_tail_plugin_context_truncation():
+    tmpdir = tempfile.mkdtemp()
+    prompt_db = PromptDatabase(
+        Path(tmpdir) / "prompts",
+        templates=["{task}\n{parent_code}\n{extra_context}\n{mutation_instructions}"],
+    )
+    parent_prompt = prompt_db.select()
+    prompt_db.mutate(
+        parent_prompt.id,
+        parent_prompt.template,
+        generation=1,
+        context_policy={
+            "plugin_context_max_chars": 12,
+            "plugin_context_truncation": "head_tail",
+        },
+    )
+    prompt_db.record_result(parent_prompt.id, 0.0)
+
+    class HeadTailContextPlugin:
+        def on_generation_start(self, g, db): pass
+        def on_generation_end(self, g, b): pass
+        def on_evaluated(self, program, score): return score
+        def build_extra_context(self, parent, inspirations):
+            return "abcdefghij0123456789"
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=_llm()),
+        patch("libreevolve.core.loop.PromptDatabase", return_value=prompt_db),
+    ):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            plugins=[HeadTailContextPlugin()],
+        )
+
+    records = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    prompt = child["metadata"]["prompt"]
+    context_record = child["metadata"]["plugin_context"][0]
+    prompt_policy = child["metadata"]["prompt_diagnostics"]["prompt_context_policy"]
+
+    assert '"abcdef456789"' in prompt
+    assert "ghij0123" not in prompt
+    assert prompt_policy["plugin_context_truncation"] == "head_tail"
+    assert context_record["policy_truncation"] == "head_tail"
+    assert context_record["prompt_context_truncated"] is True
+    assert context_record["prompt_context_content_policy"] == {
+        "schema": "libreevolve.plugin_context_content_policy.v1",
+        "max_chars": 12,
+        "truncation": "head_tail",
+        "selection_policy": "head_tail_chars_after_redaction",
+    }
+
+
 def test_prompt_context_policy_caps_plugin_context_globally():
     tmpdir = tempfile.mkdtemp()
     prompt_db = PromptDatabase(
@@ -9667,6 +9724,7 @@ def test_meta_prompt_evolution_accepts_context_policy_json_response():
         "plugin_context_ranking_terms": ["matrix"],
         "plugin_context_limit": 1,
         "plugin_context_max_chars": 256,
+        "plugin_context_truncation": "head",
         "plugin_context_max_chars_by_label": {},
     }
     assert len(mutated_add["program"]["context_policy_sha256"]) == 64
@@ -10372,6 +10430,7 @@ def test_meta_prompt_mutation_request_exposes_plugin_context_term_filters():
             "plugin_context_ranking_terms": ["matrix"],
             "plugin_context_limit": 1,
             "plugin_context_max_chars": 256,
+            "plugin_context_truncation": "head_tail",
         },
     )
     prompt_db = PromptDatabase(tmpdir, templates=["Task: {task}"])
@@ -10401,6 +10460,7 @@ def test_meta_prompt_mutation_request_exposes_plugin_context_term_filters():
     assert '"plugin_context_ranking_terms": [' in mutation_prompt
     assert '"plugin_context_limit": 1' in mutation_prompt
     assert '"plugin_context_max_chars": 256' in mutation_prompt
+    assert '"plugin_context_truncation": "head_tail"' in mutation_prompt
     assert '"matrix"' in mutation_prompt
     assert '"debug"' in mutation_prompt
     assert '"BlockedContextPlugin"' in mutation_prompt
@@ -10410,6 +10470,7 @@ def test_meta_prompt_mutation_request_exposes_plugin_context_term_filters():
     assert "plugin_context_ranking_terms" in mutation_prompt
     assert "plugin_context_limit" in mutation_prompt
     assert "plugin_context_max_chars" in mutation_prompt
+    assert "plugin_context_truncation" in mutation_prompt
     assert "context_policy_capabilities" in context["sections"]
 
 

@@ -187,7 +187,8 @@ _META_PROMPT_CONTEXT_POLICY_CAPABILITIES = {
         "plugin_context_enabled,plugin_context_allowlist,"
         "plugin_context_excluded_labels,plugin_context_order,plugin_context_required_terms,"
         "plugin_context_excluded_terms,plugin_context_ranking_terms,plugin_context_limit,"
-        "plugin_context_max_chars,plugin_context_max_chars_by_label"
+        "plugin_context_max_chars,plugin_context_truncation,"
+        "plugin_context_max_chars_by_label"
     ),
 }
 _PLUGIN_FAILURE_ATTR = "_libreevolve_plugin_failure"
@@ -3641,6 +3642,26 @@ def _bounded_redacted_text(text: str, max_chars: int) -> str:
     return redacted[: max_chars - len(suffix)] + suffix
 
 
+def _bounded_redacted_plugin_context_text(
+    text: str,
+    max_chars: int,
+    *,
+    truncation: str,
+) -> str:
+    if truncation == "head":
+        return _bounded_redacted_text(text, max_chars)
+    redacted = redact_sensitive_text(text)
+    if len(redacted) <= max_chars:
+        return redacted
+    if max_chars <= 0:
+        return ""
+    head_chars = (max_chars + 1) // 2
+    tail_chars = max_chars - head_chars
+    if tail_chars <= 0:
+        return redacted[:head_chars]
+    return redacted[:head_chars] + redacted[-tail_chars:]
+
+
 def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudget) -> dict:
     history_exists = (run_dir / "history.jsonl").exists()
     programs_logged = len(db.all_programs())
@@ -4085,6 +4106,7 @@ def _build_plugin_context(
         "plugin_context_max_chars_by_label"
     ]
     plugin_context_max_chars = prompt_context_policy["plugin_context_max_chars"]
+    plugin_context_truncation = prompt_context_policy["plugin_context_truncation"]
     plugin_context_order = prompt_context_policy["plugin_context_order"]
     plugin_context_required_terms = prompt_context_policy[
         "plugin_context_required_terms"
@@ -4194,7 +4216,11 @@ def _build_plugin_context(
             if cap is not None
         )
         safe_text = (
-            _bounded_redacted_text(text, effective_max_chars)
+            _bounded_redacted_plugin_context_text(
+                text,
+                effective_max_chars,
+                truncation=plugin_context_truncation,
+            )
             if text and effective_max_chars > 0
             else ""
         )
@@ -4233,10 +4259,21 @@ def _build_plugin_context(
             "default_max_chars": _MAX_PLUGIN_CONTEXT_CHARS,
             "policy_global_max_chars": plugin_context_max_chars,
             "policy_max_chars": policy_max_chars,
+            "policy_truncation": plugin_context_truncation,
             "context_redacted": redacted_text != text,
             "context_truncated": retained_context["truncated"],
             "prompt_context_chars": len(prompt_context_text),
             "prompt_context_truncated": prompt_context_truncated,
+            "prompt_context_content_policy": {
+                "schema": "libreevolve.plugin_context_content_policy.v1",
+                "max_chars": effective_max_chars,
+                "truncation": plugin_context_truncation,
+                "selection_policy": (
+                    "all_redacted_plugin_context_text"
+                    if len(redacted_text) <= effective_max_chars
+                    else f"{plugin_context_truncation}_chars_after_redaction"
+                ),
+            },
             "sha256": retained_context["sha256"] or "",
             "context_retention": {
                 key: value
@@ -5921,6 +5958,8 @@ def _build_meta_prompt_mutation_request(
         "plugin_context_limit may cap how many ordered plugin context sections "
         "become prompt-visible, and context_policy."
         "plugin_context_max_chars may globally cap each plugin context section, "
+        "context_policy.plugin_context_truncation may choose head or head_tail "
+        "retention under plugin context caps, "
         "while context_policy.plugin_context_max_chars_by_label may cap plugin "
         "context text by safe plugin identity label before aggregate prompt packing. "
         "Return either the complete "

@@ -305,6 +305,9 @@ Primary evidence:
     `plugin_context_max_chars` can globally cap each plugin context section
     before prompt visibility, recording the global policy cap, per-label cap,
     effective cap, original character count, and prompt truncation status.
+    `plugin_context_truncation` can choose deterministic `head` or
+    `head_tail` retention under those plugin-context caps, and plugin-context
+    records persist the applied content policy.
     `plugin_context_max_chars_by_label` can cap rendered plugin prompt-context
     text by plugin identity label before aggregate `extra_context_max_chars`
     prompt packing applies.
@@ -333,7 +336,7 @@ Primary evidence:
     overrides, context source selection, term filters, render-count caps,
     content caps, truncation policy, and ordering policy,
     recent failure-memory selection and text-term filtering, and inspiration selection, plugin extra-context
-    cap diagnostics, plugin-context generation, allowlist, excluded-label policy, term filters, ranking terms, render-count limits, global plugin caps, and per-plugin cap
+    cap diagnostics, plugin-context generation, allowlist, excluded-label policy, term filters, ranking terms, render-count limits, global plugin caps, truncation policy, and per-plugin cap
     policy, and replacement hashes; prompt history persists
     `context_policy` plus
     `context_policy_sha256`, replay validates policy hashes and immutable
@@ -350,10 +353,10 @@ Primary evidence:
     disabling, section-priority overrides, mutation-instruction variants, and
     parent-feedback subsection selection, stochastic prompt-format weights, and
     local context source selection/term-filtering/ranking/render-count, recent failure-memory selection/rendering, upstream inspiration sampling
-    plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin context ordering, and coarse
+    plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin context ordering, plugin context cap/truncation shape, and coarse
     plugin prompt-context generation enablement.
     `PromptSampler` still obtains plugin
-    context text shape and retrieval/summarization behavior through fixed code/config
+    retrieval/summarization behavior through fixed code/config
     paths.
     Meta-prompt mutation still cannot change retrieval/summarization policy,
     upstream inspiration selection policy beyond strategy, sampled count,

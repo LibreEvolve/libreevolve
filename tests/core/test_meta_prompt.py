@@ -367,6 +367,7 @@ def test_prompt_database_persists_and_restores_context_policy(tmp_path):
         "plugin_context_ranking_terms": ["matrix"],
         "plugin_context_limit": 1,
         "plugin_context_max_chars": 256,
+        "plugin_context_truncation": "head",
         "plugin_context_max_chars_by_label": {},
     }
     child_record = child.to_dict()

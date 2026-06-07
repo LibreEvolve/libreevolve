@@ -1338,6 +1338,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "plugin_context_ranking_terms",
         "plugin_context_limit",
         "plugin_context_max_chars",
+        "plugin_context_truncation",
         "plugin_context_max_chars_by_label",
     }
     unsupported = sorted(
@@ -1820,6 +1821,9 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
     plugin_context_max_chars = _validate_prompt_context_plugin_context_max_chars(
         value.get("plugin_context_max_chars")
     )
+    plugin_context_truncation = _validate_prompt_context_plugin_context_truncation(
+        value.get("plugin_context_truncation", "head")
+    )
     plugin_context_max_chars_by_label = (
         _validate_prompt_context_plugin_context_max_chars_by_label(
             value.get("plugin_context_max_chars_by_label")
@@ -1958,6 +1962,7 @@ def validate_prompt_context_policy(value: object | None) -> dict[str, object]:
         "plugin_context_ranking_terms": plugin_context_ranking_terms,
         "plugin_context_limit": plugin_context_limit,
         "plugin_context_max_chars": plugin_context_max_chars,
+        "plugin_context_truncation": plugin_context_truncation,
         "plugin_context_max_chars_by_label": plugin_context_max_chars_by_label,
     }
 
@@ -2232,6 +2237,7 @@ def apply_prompt_context_policy(
         ),
         "plugin_context_limit": policy["plugin_context_limit"],
         "plugin_context_max_chars": policy["plugin_context_max_chars"],
+        "plugin_context_truncation": policy["plugin_context_truncation"],
         "plugin_context_max_chars_by_label": dict(
             policy["plugin_context_max_chars_by_label"]
         ),
@@ -4979,6 +4985,14 @@ def _validate_prompt_context_plugin_context_max_chars(value: object) -> int | No
             "prompt context_policy.plugin_context_max_chars must be a non-negative integer or null"
         )
     return value
+
+
+def _validate_prompt_context_plugin_context_truncation(value: object) -> str:
+    if value not in {"head", "head_tail"}:
+        raise PromptTemplateError(
+            "prompt context_policy.plugin_context_truncation must be one of: head, head_tail"
+        )
+    return str(value)
 
 
 def _validate_prompt_context_plugin_context_max_chars_by_label(

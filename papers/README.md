@@ -47,7 +47,10 @@ registry currently marks only the unit-square circle-packing fixture as
 `implemented_smoke`; all other Appendix B families are explicit planned entries
 with objective direction, target/baseline status, construction/certificate
 artifact shape, certification need, rationale, and AlphaEvolve citation
-metadata.
+metadata. Appendix B says reported construction data and verification code
+appear in an accompanying Google Colab; this registry is not that
+Colab-equivalent evidence surface and does not yet store construction-data
+exports or runnable verifier-code artifacts.
 It also checks `libreevolve/problems/benchmarks/alphaevolve_ablations.json`,
 which defines the AlphaEvolve Figure 8 ablation report contract for the full
 system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,

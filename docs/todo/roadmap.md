@@ -1158,17 +1158,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     likewise a family/status ledger: planned paper-result families keep null
     target-baseline values, and construction/certificate artifact-schema labels
     are not executable validators, reported constructions, SOTA thresholds, or
-    verifier scripts. Current surfaces are not implemented
+    verifier scripts. Appendix B says construction data and verification code
+    for all reported constructions appear in an accompanying Google Colab, and
+    the current registry has no equivalent construction-data export or runnable
+    verifier-code artifact contract. Current surfaces are not implemented
     tensor-decomposition suites, kissing-number/circle-packing benchmark
     families, constructive-math validators, or
     compiler/hardware/kernel/scheduling fixtures.
   - Required result: when real target-suite fixtures, validators, repeated-seed
     runs, target/SOTA baselines, target tensors, coefficient/certificate
-    artifacts, executable construction/certificate checks, and artifact/report
-    emitters land for matrix, constructive-math, geometric, or systems domains,
-    update the roadmap, README, papers index, and code/paper TODO entries
-    together so roadmap wording neither underclaims current registries/smoke
-    fixtures nor overclaims AlphaEvolve-scale benchmark coverage.
+    artifacts, executable construction/certificate checks, Colab-equivalent
+    construction-data and verifier-code exports, and artifact/report emitters
+    land for matrix, constructive-math, geometric, or systems domains, update
+    the roadmap, README, papers index, and code/paper TODO entries together so
+    roadmap wording neither underclaims current registries/smoke fixtures nor
+    overclaims AlphaEvolve-scale benchmark coverage.
 
 - [ ] Keep matrix roadmap wording scoped to result-report validation versus
       search-time near-integrality evidence.

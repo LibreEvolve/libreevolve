@@ -3011,7 +3011,10 @@ That registry enumerates the thirteen AlphaEvolve Appendix B constructive-math
 families, marks the checked-in unit-square circle-packing fixture as a smoke
 example only, and requires unimplemented families to carry explicit objective,
 target/baseline, construction-artifact, certification, rationale, and citation
-coverage. Matrix-result publication metadata has a separate
+coverage. It is a coverage ledger, not the paper's accompanying-Colab evidence:
+it does not yet export the reported construction data or runnable verification
+code needed to reproduce Appendix B construction claims. Matrix-result
+publication metadata has a separate
 `libreevolve.matrix_result_report.v1` contract in
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target
 identity, dimensions, seed count, best rank, hit fraction, per-seed best-rank

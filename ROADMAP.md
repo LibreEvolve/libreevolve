@@ -332,7 +332,9 @@ is not yet an AlphaEvolve reproduction.
   reports emitted by actual randomized/exhaustive validators and anti-gaming
   fixtures, including protected score/correctness/artifact signals,
   shortcut-threat evidence, operation/rank instrumentation, and saved
-  construction artifacts.
+  construction artifacts. For Appendix B-style constructive-math claims, add
+  Colab-equivalent construction-data exports and runnable verifier-code
+  artifacts rather than only family/status registry entries.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

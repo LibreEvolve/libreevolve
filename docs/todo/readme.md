@@ -446,13 +446,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     paper-result families still have null target-baseline values, and
     construction/certificate artifact-schema strings are not executable
     validators, reported constructions, SOTA thresholds, or verifier scripts.
+    AlphaEvolve Appendix B says the reported construction data and verification
+    code are available in an accompanying Google Colab; README should not imply
+    the registry has that Colab-equivalent verifier-data surface yet.
   - Required result: when real target-family benchmark runners emit
     benchmark-grade hardening reports, negative fixtures, detector logs, and
     artifact inventories, and when Appendix B families gain executable
-    construction/certificate validators plus target baselines, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    neither underclaims the checked smoke hardening evidence nor overclaims
-    AlphaEvolve-comparable benchmark hardening.
+    construction/certificate validators, target baselines, construction-data
+    exports, and verifier-code artifacts, update README, ROADMAP, papers index,
+    and code/paper TODO entries together so README neither underclaims the
+    checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
+    benchmark hardening.
 
 - [ ] Keep README constructive-math wording scoped to static context/artifacts
       versus AlphaEvolve-style incumbent handoff.

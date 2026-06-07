@@ -1416,14 +1416,18 @@ Primary evidence:
     `target_baseline.value: null`, and the `artifact_schema` construction/
     certificate strings describe expected artifact kinds rather than executable
     validators, exact construction payloads, SOTA numeric targets, or verifier
-    scripts.
+    scripts. AlphaEvolve Appendix B also states that data and verification code
+    for all reported constructions appear in the accompanying Google Colab; the
+    current registry has no equivalent construction-data export or runnable
+    verifier-code artifact contract.
   - Required result: connect benchmark-grade fixtures beyond smoke validators
     to `libreevolve.benchmark_hardening.v1` and
     `libreevolve.example_benchmark_scope.v1`; emit benchmark-grade artifact
     files, repeated-seed evaluation, target/SOTA baselines, executable
-    construction/certificate validators, benchmark reports suitable for
-    comparing AlphaEvolve-alignment features, and real anti-gaming fixtures for
-    benchmark-grade operation/rank discovery. The matrix smoke
+    construction/certificate validators, Colab-equivalent construction-data and
+    verifier-code exports for Appendix B families, benchmark reports suitable
+    for comparing AlphaEvolve-alignment features, and real anti-gaming fixtures
+    for benchmark-grade operation/rank discovery. The matrix smoke
     fixture now has `write_matrix_smoke_hardening_bundle()`, which emits
     concrete negative-fixture files, detector-log, hardening report,
     artifact inventory, summary, and smoke-scope validation evidence while

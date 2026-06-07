@@ -1474,17 +1474,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     `target_baseline.value` null, and its construction/certificate artifact
     schemas are labels for expected evidence rather than executable validators,
     reported construction payloads, SOTA numeric thresholds, or verification
-    scripts.
+    scripts. Appendix B says the data and verification code for all reported
+    constructions appear in the accompanying Google Colab, so a status ledger
+    without construction-data exports and runnable verifier-code artifacts is
+    still below the paper's publication-evidence surface.
   - Required result: distinguish smoke examples from benchmark fixtures in docs,
     add operation/rank-aware matrix benchmark validation beyond the current
     2x2 smoke checks, connect hardening reports and executable artifact/
     certificate validators for geometric and constructive-math constructions,
-    and create repeatable benchmark reports tied to AlphaEvolve target
-    families. The remaining paper gap is generating those anti-gaming evidence
-    files from benchmark-grade tensor/geometric/constructive-math fixtures, not
-    emitting matrix smoke hardening evidence, verifying declared hardening files
-    once a report names them, or preventing declared hardening evidence from
-    overriding the smoke-only scope registry.
+    add Colab-equivalent construction-data and verifier-code exports for the
+    Appendix B families, and create repeatable benchmark reports tied to
+    AlphaEvolve target families. The remaining paper gap is generating those
+    anti-gaming and verification-data evidence files from benchmark-grade
+    tensor/geometric/constructive-math fixtures, not emitting matrix smoke
+    hardening evidence, verifying declared hardening files once a report names
+    them, or preventing declared hardening evidence from overriding the
+    smoke-only scope registry.
 
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the

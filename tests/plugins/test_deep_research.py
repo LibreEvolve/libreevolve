@@ -13,6 +13,7 @@ from libreevolve.plugins.deep_research import (
     RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA,
     RETRIEVAL_PAYLOAD_ARTIFACT_SCHEMA,
     RETRIEVAL_QUERY_OVERLAP_RANKING_POLICY,
+    RETRIEVAL_SEMANTIC_BOUNDARY_AUDIT_SCHEMA,
     RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA,
     RETRIEVAL_SOURCE_GROUNDING_POLICY_SCHEMA,
     RETRIEVAL_SOURCE_RELEVANCE_POLICY,
@@ -21,6 +22,7 @@ from libreevolve.plugins.deep_research import (
     arxiv_search,
     arxiv_search_result,
     retrieval_payload_artifact_inventory,
+    retrieval_semantic_boundary_audit,
     retrieval_source_ranking_provenance,
 )
 from libreevolve.population.program import Program
@@ -1879,6 +1881,135 @@ def test_retrieval_source_ranking_provenance_reports_malformed_records():
     assert "selected_sources_hash_mismatch" in provenance["events"][0]["issues"]
     assert "invalid_sources" in provenance["events"][1]["issues"]
     assert "invalid_retrieval_event" in provenance["events"][2]["issues"]
+
+
+def test_retrieval_semantic_boundary_audit_verifies_event_and_cache_snapshot(tmp_path):
+    def search(query):
+        return {
+            "status": "ok",
+            "provider": "custom-index",
+            "query_url": "https://retrieval.example/search?q=evolution",
+            "transport": {
+                "request": {
+                    "scheme": "https",
+                    "host": "retrieval.example",
+                    "path": "/search",
+                    "sanitized_url": "https://retrieval.example/search",
+                },
+                "final": {
+                    "scheme": "https",
+                    "host": "retrieval.example",
+                    "path": "/search",
+                    "sanitized_url": "https://retrieval.example/search",
+                },
+                "redirected": False,
+                "status_code": 200,
+                "payload_sha256": "b" * 64,
+            },
+            "synthesis": "evolutionary fitness payload source",
+            "sources": [
+                {
+                    "id": "paper-1",
+                    "url": "https://retrieval.example/paper-1",
+                    "title": "Evolutionary fitness payload source",
+                    "summary": "Fitness optimization evidence for program evolution.",
+                }
+            ],
+        }
+
+    plugin = DeepResearchPlugin(search_fn=search, cache_dir=tmp_path, search_every=1)
+    db = MagicMock()
+    db.best.return_value = _p()
+
+    plugin.on_generation_start(1, db)
+
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+    event_audit = retrieval_semantic_boundary_audit(event)
+    assert event_audit["schema"] == RETRIEVAL_SEMANTIC_BOUNDARY_AUDIT_SCHEMA
+    assert event_audit["ok"] is True
+    assert event_audit["verified_count"] == 1
+    assert event_audit["overclaim_count"] == 0
+    [record] = event_audit["events"]
+    assert record["status"] == "verified"
+    assert record["transport_status"] == "audit_grade"
+    assert record["evidence_boundary_status"] == "bounded_redacted_replay_evidence"
+    assert record["context_audit_status"] == "audit_grade_bounded_replay_evidence"
+    assert record["bounded_context_audit_ready"] is True
+    assert record["full_replay_ready"] is False
+    assert record["raw_provider_payload_retained"] is False
+    assert record["raw_source_payload_retained"] is False
+    assert record["tls_certificate_chain_retained"] is False
+    assert record["semantic_verified"] is False
+    assert record["replayable_source_count"] == 1
+    assert record["lexically_grounded_source_count"] == 1
+    assert record["issues"] == []
+
+    snapshot = json.loads(
+        (tmp_path / f"{event['cache']['key']}.json").read_text(encoding="utf-8")
+    )
+    snapshot_audit = retrieval_semantic_boundary_audit(snapshot)
+    assert snapshot_audit["source_schema"] == "deep_research_cache_v1"
+    assert snapshot_audit["ok"] is True
+    assert snapshot_audit["events"][0]["status"] == "verified"
+    assert snapshot_audit["events"][0]["semantic_verified"] is False
+
+
+def test_retrieval_semantic_boundary_audit_reports_overclaims():
+    plugin = DeepResearchPlugin(
+        search_fn=lambda q: {
+            "status": "ok",
+            "synthesis": "custom context",
+            "sources": [
+                {
+                    "id": "paper",
+                    "title": "Evolutionary optimization",
+                    "summary": "Evolutionary optimization context.",
+                }
+            ],
+        }
+    )
+    db = MagicMock()
+    db.best.return_value = _p()
+    plugin.on_generation_start(1, db)
+    event = plugin.prompt_context_metadata()["retrieval_events"][-1]
+
+    overclaimed = json.loads(json.dumps(event))
+    overclaimed["context_audit_policy"]["semantic_verified"] = True
+    overclaimed["context_audit_policy"]["full_replay_ready"] = True
+    overclaimed["context_audit_policy"]["prompt_context_authoritative"] = True
+    overclaimed["evidence_boundary_policy"]["raw_payload_retention"][
+        "provider_payload_retained"
+    ] = True
+    overclaimed["evidence_boundary_policy"]["transport"][
+        "tls_certificate_chain_retained"
+    ] = True
+    overclaimed["sources"][0]["grounding_policy"]["semantic_verified"] = True
+    missing_policies = {"status": "ok", "sources": [{"title": "paper"}]}
+
+    audit = retrieval_semantic_boundary_audit(
+        [overclaimed, missing_policies, "not-an-event"]
+    )
+
+    assert audit["ok"] is False
+    assert audit["event_count"] == 3
+    assert audit["verified_count"] == 0
+    assert audit["overclaim_count"] == 1
+    assert audit["invalid_count"] == 2
+    assert audit["events"][0]["status"] == "overclaim"
+    assert audit["events"][0]["semantic_verified"] is True
+    assert audit["events"][0]["full_replay_ready"] is True
+    assert audit["events"][0]["raw_provider_payload_retained"] is True
+    assert audit["events"][0]["tls_certificate_chain_retained"] is True
+    assert audit["events"][0]["source_semantic_verified_count"] == 1
+    assert "semantic_verification_overclaimed" in audit["events"][0]["issues"]
+    assert "full_replay_ready_overclaimed" in audit["events"][0]["issues"]
+    assert "raw_provider_payload_retention_overclaimed" in audit["events"][0]["issues"]
+    assert "tls_certificate_chain_retention_overclaimed" in audit["events"][0]["issues"]
+    assert "prompt_context_authority_overclaimed" in audit["events"][0]["issues"]
+    assert audit["events"][1]["status"] == "invalid_record"
+    assert "missing_evidence_boundary_policy" in audit["events"][1]["issues"]
+    assert audit["events"][2]["status"] == "invalid_record"
+    assert "invalid_retrieval_event" in audit["events"][2]["issues"]
 
 
 def test_source_ranking_policy_is_part_of_cache_key(tmp_path):

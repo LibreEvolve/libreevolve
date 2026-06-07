@@ -40,6 +40,9 @@ RETRIEVAL_PAYLOAD_ARTIFACT_INVENTORY_SCHEMA = (
 RETRIEVAL_SOURCE_RANKING_PROVENANCE_SCHEMA = (
     "libreevolve.retrieval_source_ranking_provenance.v1"
 )
+RETRIEVAL_SEMANTIC_BOUNDARY_AUDIT_SCHEMA = (
+    "libreevolve.retrieval_semantic_boundary_audit.v1"
+)
 RETRIEVAL_PAYLOAD_ARTIFACT_POLICY_SCHEMA = (
     "libreevolve.retrieval_payload_artifact_policy.v1"
 )
@@ -2492,6 +2495,53 @@ def retrieval_source_ranking_provenance(retrieval_events: object) -> dict:
     }
 
 
+def retrieval_semantic_boundary_audit(retrieval_events: object) -> dict:
+    """Verify that retrieval provenance does not overclaim semantic replay.
+
+    DeepResearch currently preserves bounded redacted payload artifacts and
+    deterministic lexical grounding, not raw payloads, TLS certificate chains,
+    or semantic source-meaning verification. This audit makes that evidence
+    boundary machine-checkable for retrieval events, plugin metadata, and cache
+    snapshots.
+    """
+    events, source_schema, extraction_issues = _semantic_boundary_audit_events(
+        retrieval_events
+    )
+    records = [_semantic_boundary_audit_record(event) for event in events]
+    verified_count = sum(1 for record in records if record["status"] == "verified")
+    overclaim_count = sum(1 for record in records if record["status"] == "overclaim")
+    invalid_count = sum(
+        1 for record in records if record["status"] == "invalid_record"
+    )
+    issues = list(extraction_issues)
+    if not records and not extraction_issues:
+        issues.append(
+            {
+                "code": "empty_semantic_boundary_audit",
+                "message": "no retrieval semantic-boundary records were available to verify",
+            }
+        )
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema": RETRIEVAL_SEMANTIC_BOUNDARY_AUDIT_SCHEMA,
+        "source_schema": source_schema,
+        "event_count": len(records),
+        "verified_count": verified_count,
+        "overclaim_count": overclaim_count,
+        "invalid_count": invalid_count,
+        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "ok": (
+            not issues
+            and bool(records)
+            and verified_count == len(records)
+            and overclaim_count == 0
+            and invalid_count == 0
+        ),
+        "issues": issues,
+        "events": records,
+    }
+
+
 def _source_ranking_provenance_events(
     retrieval_events: object,
 ) -> tuple[list[object], object, list[dict]]:
@@ -2544,6 +2594,265 @@ def _source_ranking_provenance_events(
             }
         ],
     )
+
+
+def _semantic_boundary_audit_events(
+    retrieval_events: object,
+) -> tuple[list[object], object, list[dict]]:
+    if isinstance(retrieval_events, dict):
+        if retrieval_events.get("schema") == RETRIEVAL_CACHE_SCHEMA:
+            metadata = retrieval_events.get("metadata")
+            if not isinstance(metadata, dict):
+                return (
+                    [],
+                    retrieval_events.get("schema"),
+                    [
+                        {
+                            "code": "invalid_cache_metadata",
+                            "message": "retrieval cache snapshot metadata must be an object",
+                        }
+                    ],
+                )
+            event = dict(metadata)
+            event.setdefault("query", retrieval_events.get("query"))
+            return [event], retrieval_events.get("schema"), []
+        events = retrieval_events.get("retrieval_events")
+        if isinstance(events, list):
+            return list(events), retrieval_events.get("schema"), []
+        if (
+            "evidence_boundary_policy" in retrieval_events
+            or "context_audit_policy" in retrieval_events
+            or "source_grounding_policy" in retrieval_events
+        ):
+            return [retrieval_events], retrieval_events.get("schema"), []
+        return (
+            [],
+            retrieval_events.get("schema"),
+            [
+                {
+                    "code": "invalid_semantic_boundary_events",
+                    "message": "semantic-boundary audit input must include retrieval_events or retrieval policy fields",
+                }
+            ],
+        )
+    if isinstance(retrieval_events, list):
+        return list(retrieval_events), None, []
+    return (
+        [],
+        None,
+        [
+            {
+                "code": "invalid_semantic_boundary_events",
+                "message": "semantic-boundary audit input must be a list or metadata object",
+            }
+        ],
+    )
+
+
+def _semantic_boundary_audit_record(event: object) -> dict:
+    if not isinstance(event, dict):
+        return {
+            "status": "invalid_record",
+            "provider": None,
+            "generation": None,
+            "event_index": None,
+            "issues": ["invalid_retrieval_event"],
+        }
+
+    boundary = event.get("evidence_boundary_policy")
+    context = event.get("context_audit_policy")
+    grounding = event.get("source_grounding_policy")
+    source_trust = event.get("source_content_trust_policy")
+    transport = event.get("transport_policy")
+    if not isinstance(boundary, dict):
+        boundary = {}
+    if not isinstance(context, dict):
+        context = {}
+    if not isinstance(grounding, dict):
+        grounding = {}
+    if not isinstance(source_trust, dict):
+        source_trust = {}
+    if not isinstance(transport, dict):
+        transport = {}
+
+    raw_retention = boundary.get("raw_payload_retention")
+    if not isinstance(raw_retention, dict):
+        raw_retention = {}
+    semantic_boundary = boundary.get("semantic_verification")
+    if not isinstance(semantic_boundary, dict):
+        semantic_boundary = {}
+    sources = event.get("sources")
+    if not isinstance(sources, list):
+        sources = []
+
+    source_semantic_flags = _source_semantic_verification_flags(sources)
+    semantic_verified = any(
+        [
+            bool(semantic_boundary.get("verified")),
+            bool(context.get("semantic_verified")),
+            bool(grounding.get("semantic_verified")),
+            bool(source_trust.get("semantic_verified")),
+            bool(source_semantic_flags),
+        ]
+    )
+    raw_provider_retained = bool(raw_retention.get("provider_payload_retained"))
+    raw_source_retained = bool(raw_retention.get("source_payload_retained"))
+    tls_chain_retained = bool(
+        _nested_get(boundary, ("transport", "tls_certificate_chain_retained"))
+    )
+    full_replay_ready = bool(context.get("full_replay_ready"))
+    authoritative = bool(
+        event.get("authoritative")
+        or context.get("prompt_context_authoritative")
+    )
+
+    issues: list[str] = []
+    if "evidence_boundary_policy" not in event:
+        issues.append("missing_evidence_boundary_policy")
+    if "context_audit_policy" not in event:
+        issues.append("missing_context_audit_policy")
+    if "source_grounding_policy" not in event:
+        issues.append("missing_source_grounding_policy")
+    if "source_content_trust_policy" not in event and sources:
+        issues.append("missing_source_content_trust_policy")
+    if semantic_verified:
+        issues.append("semantic_verification_overclaimed")
+    if full_replay_ready:
+        issues.append("full_replay_ready_overclaimed")
+    if raw_provider_retained:
+        issues.append("raw_provider_payload_retention_overclaimed")
+    if raw_source_retained:
+        issues.append("raw_source_payload_retention_overclaimed")
+    if tls_chain_retained:
+        issues.append("tls_certificate_chain_retention_overclaimed")
+    if authoritative:
+        issues.append("prompt_context_authority_overclaimed")
+    if not _semantic_limitation_declared(boundary, context, grounding, source_trust):
+        issues.append("missing_semantic_verification_limitation")
+    if not _raw_payload_limitation_declared(boundary):
+        issues.append("missing_raw_payload_retention_limitation")
+    if not _tls_limitation_declared(boundary, transport):
+        issues.append("missing_tls_certificate_chain_limitation")
+
+    overclaim_codes = {
+        "semantic_verification_overclaimed",
+        "full_replay_ready_overclaimed",
+        "raw_provider_payload_retention_overclaimed",
+        "raw_source_payload_retention_overclaimed",
+        "tls_certificate_chain_retention_overclaimed",
+        "prompt_context_authority_overclaimed",
+    }
+    if any(issue in overclaim_codes for issue in issues):
+        status = "overclaim"
+    elif issues:
+        status = "invalid_record"
+    else:
+        status = "verified"
+
+    return {
+        "provider": event.get("provider"),
+        "generation": event.get("generation"),
+        "event_index": event.get("event_index"),
+        "status": status,
+        "event_status": event.get("status"),
+        "transport_status": transport.get("status", "not_available"),
+        "evidence_boundary_status": boundary.get("status", "not_available"),
+        "context_audit_status": context.get("status", "not_available"),
+        "source_content_status": source_trust.get("status", "not_available"),
+        "source_grounding_status": grounding.get("status", "not_available"),
+        "bounded_context_audit_ready": bool(
+            context.get("bounded_context_audit_ready")
+        ),
+        "full_replay_ready": full_replay_ready,
+        "raw_provider_payload_retained": raw_provider_retained,
+        "raw_source_payload_retained": raw_source_retained,
+        "tls_certificate_chain_retained": tls_chain_retained,
+        "semantic_verified": semantic_verified,
+        "source_semantic_verified_count": len(source_semantic_flags),
+        "content_evidence_count": _safe_non_negative_count(
+            source_trust.get("content_evidence_count")
+        ),
+        "replayable_source_count": _safe_non_negative_count(
+            source_trust.get("replayable_source_count")
+        ),
+        "lexically_grounded_source_count": _safe_non_negative_count(
+            grounding.get("lexically_grounded_source_count")
+        ),
+        "issues": sorted(set(issues)),
+    }
+
+
+def _source_semantic_verification_flags(sources: list[object]) -> list[dict]:
+    flags = []
+    for index, source in enumerate(sources):
+        if not isinstance(source, dict):
+            continue
+        for field in ("grounding_policy", "content_trust_policy"):
+            policy = source.get(field)
+            if isinstance(policy, dict) and bool(policy.get("semantic_verified")):
+                flags.append({"source_index": index, "field": field})
+    return flags
+
+
+def _semantic_limitation_declared(*policies: dict) -> bool:
+    return any(
+        "semantic" in value
+        or "lexical_overlap_not_semantic_verification" in value
+        for policy in policies
+        for value in _policy_string_values(policy)
+    )
+
+
+def _raw_payload_limitation_declared(boundary: dict) -> bool:
+    raw_retention = boundary.get("raw_payload_retention")
+    if isinstance(raw_retention, dict) and (
+        raw_retention.get("provider_payload_retained") is False
+        and raw_retention.get("source_payload_retained") is False
+    ):
+        return True
+    return any(
+        "raw_provider_payload" in value or "raw_payload" in value
+        for value in _policy_string_values(boundary)
+    )
+
+
+def _tls_limitation_declared(boundary: dict, transport: dict) -> bool:
+    boundary_transport = boundary.get("transport")
+    if (
+        isinstance(boundary_transport, dict)
+        and boundary_transport.get("tls_certificate_chain_retained") is False
+    ):
+        return True
+    return any(
+        "tls_certificate_chain" in value
+        for policy in (boundary, transport)
+        for value in _policy_string_values(policy)
+    )
+
+
+def _policy_string_values(value: object) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        values: list[str] = []
+        for child in value.values():
+            values.extend(_policy_string_values(child))
+        return values
+    if isinstance(value, list):
+        values = []
+        for child in value:
+            values.extend(_policy_string_values(child))
+        return values
+    return []
+
+
+def _nested_get(value: object, path: tuple[str, ...]) -> object:
+    current = value
+    for key in path:
+        if not isinstance(current, dict):
+            return None
+        current = current.get(key)
+    return current
 
 
 def _source_ranking_provenance_record(event: object) -> dict:

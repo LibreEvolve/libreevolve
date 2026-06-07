@@ -369,6 +369,12 @@ Operational note:
   policy links the current payload-artifact, source-content, and transport
   evidence states so cache snapshots can replay what was retained versus what
   remains outside the audit boundary.
+- `libreevolve.retrieval_semantic_boundary_audit.v1` verifies retrieval events,
+  plugin metadata, or cache snapshots against that boundary. It passes only
+  when records preserve the current bounded/non-semantic evidence model, and it
+  flags overclaims such as semantic verification, full replay readiness, raw
+  provider/source payload retention, TLS certificate-chain retention, or
+  authoritative prompt context.
 - retrieval events and cache snapshots retain configurable
   `libreevolve.retrieval_provider_result_snapshot.v1` provider-result
   snapshots with raw and stored hashes, original/stored character counts, and

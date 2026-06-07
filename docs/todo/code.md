@@ -527,7 +527,12 @@ Primary evidence:
     metadata, or cache-snapshot retained-source ranking records by recomputing
     selected-source and query-relevance hashes, checking retained-rank
     sequence and source counts, and comparing synthesis hashes when retained
-    synthesis text is available. It still does not store unbounded raw
+    synthesis text is available.
+    `libreevolve.retrieval_semantic_boundary_audit.v1` now verifies event,
+    metadata, or cache-snapshot retrieval evidence-boundary records and flags
+    overclaims of semantic verification, full replay readiness, raw
+    provider/source payload retention, TLS certificate-chain retention, or
+    authoritative prompt context. It still does not store unbounded raw
     provider payload artifacts, unbounded source-content artifacts,
     learned/external semantic ranking scores beyond deterministic query
     overlap and lexical grounding, or a
@@ -546,7 +551,8 @@ Primary evidence:
     snapshots, retention-budgeted redacted payload sidecars, active-context
     hashes, query grounding, lexical grounding records, audit-only relevance
     scores, retained source order/hash metadata, sidecar inventory
-    verification, or deterministic ranking-provenance validation.
+    verification, deterministic ranking-provenance validation, or bounded
+    semantic-boundary overclaim auditing.
 
 - [ ] Add semantic retrieval verification and replayable full-source evidence.
   - Spec evidence: external literature/retrieval context can directly shape
@@ -599,6 +605,11 @@ Primary evidence:
     default arXiv bounded-snapshot evidence, unauditable custom string
     retrieval, and custom HTTPS transport plus replayable redacted source
     payload artifacts.
+    `libreevolve.retrieval_semantic_boundary_audit.v1` verifies event,
+    plugin-metadata, or cache-snapshot records preserve that bounded,
+    non-semantic evidence boundary and fail records that claim semantic
+    verification, full replay readiness, raw payload retention, retained TLS
+    certificate chains, or authoritative prompt context.
   - Required result: add unbounded raw provider-payload persistence, full
     source-content artifacts beyond the redacted byte-budgeted sidecars,
     replayable source-content verification, retained transport/TLS
@@ -607,8 +618,8 @@ Primary evidence:
     provider-result snapshots, query-overlap audit scores, request URL
     redaction, active-context hashes, redacted source-content trust policy, or
     evidence-boundary/context-audit policy records with lexical grounding
-    aggregates, sidecar inventory verification, or deterministic
-    ranking-provenance validation.
+    aggregates, sidecar inventory verification, deterministic
+    ranking-provenance validation, or semantic-boundary overclaim auditing.
 
 ## Evaluation
 

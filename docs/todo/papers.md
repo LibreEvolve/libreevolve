@@ -1190,6 +1190,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     as untrusted, non-authoritative prompt context. Focused tests cover default
     arXiv bounded-snapshot evidence, unauditable custom string retrieval, and a
     custom HTTPS provider with replayable redacted source payload artifacts.
+    `libreevolve.retrieval_semantic_boundary_audit.v1` now verifies event,
+    plugin-metadata, or cache-snapshot records preserve the current bounded,
+    non-semantic evidence boundary and reports overclaims of semantic
+    verification, full replay readiness, raw provider/source payload retention,
+    TLS certificate-chain retention, or authoritative prompt context.
     Retrieval query inputs now include bounded task-description,
     explicit-context, recent failure-history, local paper manifest title/id, and
     recent proposal-hypothesis terms as well as best-program fitness, metrics,
@@ -1202,5 +1207,5 @@ directory and using the AlphaEvolve paper as the primary specification.
     replayable redirect/TLS decision evidence before
     claiming DeepEvolve-style retrieval is reproducible and audit-grade. The
     remaining paper gap is not retrieval payload sidecar inventory
-    verification or deterministic retained-source ranking-provenance
-    validation.
+    verification, deterministic retained-source ranking-provenance
+    validation, or semantic-boundary overclaim auditing.

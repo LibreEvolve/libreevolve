@@ -632,10 +632,13 @@ limits, skipped/read-error counts, and an aggregate hash. Retrieval events with
 a query include `libreevolve.retrieval_transport_policy.v1` records that
 classify HTTPS request state, redirects, HTTP status class, payload hash
 presence, oversized payloads, missing custom-provider transport, and
-TLS/certificate-looking failures. It still does not persist full
-provider/source payloads, semantic source-content trust verification, richer
-ranking scores, or a systematic debug/refinement loop. Completed manifests
-include bounded `runtime.retrieval` summaries.
+TLS/certificate-looking failures. A semantic-boundary audit helper verifies
+retrieval events, plugin metadata, or cache snapshots do not overclaim semantic
+verification, full replay readiness, raw provider/source payload retention, TLS
+certificate-chain retention, or authoritative prompt context. It still does not
+persist full provider/source payloads, semantic source-content trust
+verification, richer ranking scores, or a systematic debug/refinement loop.
+Completed manifests include bounded `runtime.retrieval` summaries.
 
 The ImprovEvolve-inspired `modular` plugin is similar prompt-only context. It
 always injects the same guidance block. Candidate metadata can attribute that

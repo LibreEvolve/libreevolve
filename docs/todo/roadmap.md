@@ -267,6 +267,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     writer coverage nor overclaims complete AlphaEvolve-grade run-artifact
     serialization.
 
+- [ ] Keep paper-manifest diagnostics roadmap wording scoped to shareable
+      cache/index validation.
+  - Spec evidence: paper-index evidence used for an AlphaEvolve-alignment
+    audit should be reproducible and safe to share, but manifest diagnostics
+    are not the same as semantic verification that a cited paper's behavior is
+    implemented.
+  - Current evidence: `ROADMAP.md` asks to keep paper-manifest validation
+    diagnostics shareable with repository-relative labels and secret-redacted
+    exception text in text and JSON output. README, `papers/README.md`, and
+    `libreevolve.tools.paper_manifest` evidence show the current validator
+    checks manifest/index shape, README/status-table consistency, safe
+    manifest paths, duplicate-key-free JSON rows, optional local PDF
+    availability/header/page/hash checks, Appendix B and ablation registries,
+    rehydrate download/hash results, row-attributed issues, repository-relative
+    labels, and redacted exception/download/read diagnostics. That makes the
+    cache/index diagnostics shareable, but it does not prove every paper was
+    semantically reviewed, that implementation-status rows are complete, or
+    that ignored local PDFs are present unless `--require-local-pdfs` is used.
+  - Required result: when paper-manifest diagnostics expand into semantic
+    paper-claim verification, full implementation-status proof, stronger
+    citation extraction, or mandatory local-PDF proof in CI, update the
+    roadmap, README, papers index, and code/paper TODO entries together so
+    roadmap wording neither underclaims current safe diagnostics nor overclaims
+    paper-implementation verification.
+
 - [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
   versus audit-grade source integrity.
   - Spec evidence: retrieval-augmented AlphaEvolve-style runs should preserve

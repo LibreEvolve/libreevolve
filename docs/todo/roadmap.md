@@ -482,6 +482,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so they neither underclaim current bounded
     hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
 
+- [ ] Keep scientific-discovery roadmap wording scoped to automated evaluators
+      versus manual-experiment or LLM-only idea-review workflows.
+  - Spec evidence: AlphaEvolve's Discussion says its main limitation is that
+    it handles problems where an automated evaluator can be devised; domains
+    requiring manual experimentation are out of scope, and LLM-provided
+    high-level idea evaluation is a possible but not optimized bridge toward
+    an implementation stage with machine feedback through code execution.
+  - Current evidence: the roadmap tracks executable validators, staged
+    evaluator feedback, optional LLM feedback graders, proposal metadata,
+    retrieval, and hypothesis-memory follow-ups. It does not yet require
+    roadmap-level scope metadata or workflow wording that separates
+    machine-gradeable evolution from manual-experiment scientific workflows or
+    AI-Co-Scientist-style pre-implementation idea review.
+  - Required result: when problem/run/report scope metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODO entries together so the
+    project neither underclaims executable evaluator support nor overclaims
+    AlphaEvolve coverage for manual-experiment or LLM-only idea-feedback
+    workflows.
+
 - [ ] Keep mutation-response roadmap wording scoped to structured proposal
       metadata versus natural-language preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a

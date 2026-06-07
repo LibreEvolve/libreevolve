@@ -1150,6 +1150,29 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
+- [ ] Add an automated-evaluator scope policy for manual-experiment and
+      LLM-only idea-feedback boundaries.
+  - Spec evidence: AlphaEvolve says automated evaluation is both an advantage
+    and a limitation: tasks requiring manual experimentation are out of scope,
+    and its Discussion says LLM-provided evaluation of ideas is possible but
+    not the optimized setting. The paper frames a future link to
+    AI-Co-Scientist-style workflows as LLM feedback on high-level ideas before
+    transitioning to an implementation stage with machine feedback through
+    code execution.
+  - Current evidence: LibreEvolve problem execution is centered on local
+    subprocess validators, staged evaluator results, optional LLM feedback
+    graders after candidate evaluation, and bounded proposal
+    `idea`/`rationale`/`hypothesis` metadata. It does not declare, validate,
+    or report whether a task is machine-gradeable, requires manual
+    experimentation, uses LLM-only idea review before code generation, or has
+    a defined transition from natural-language idea feedback into executable
+    candidate evaluation.
+  - Required result: add versioned problem/run/report scope metadata for
+    automated-evaluator availability, manual-experiment exclusion, optional
+    LLM-only idea-feedback stages, and transition criteria into executable
+    code-evaluation feedback before claiming AlphaEvolve coverage for broader
+    scientific-discovery or AI-Co-Scientist-style workflows.
+
 - [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
       preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts

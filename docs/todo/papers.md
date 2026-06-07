@@ -763,6 +763,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
+- [ ] Record AlphaEvolve's automated-evaluator scope boundary.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 context, Related Work, and
+    Discussion.
+  - Requirement: AlphaEvolve explicitly scopes its main capability to problems
+    with automated evaluators; it treats manual-experiment-heavy domains as
+    out of scope and says LLM-provided idea evaluation is possible but not its
+    optimized setting. The future bridge to AI Co-Scientist-style workflows is
+    high-level idea feedback followed by an implementation stage where code
+    execution provides machine feedback.
+  - Current gap: the paper index and TODOs describe local validators,
+    cascades, optional LLM feedback graders, proposal metadata, and
+    DeepEvolve-style retrieval, but they do not yet require a paper-facing
+    scope record that separates machine-gradeable executable evaluation from
+    manual experimentation or pre-code natural-language idea review.
+  - Required result: add benchmark/report metadata and documentation checks
+    that label automated-evaluator readiness, manual-experiment exclusion,
+    LLM-only idea-feedback stages, and transition criteria into executable
+    candidate evaluation before broad scientific-discovery or
+    AI-Co-Scientist-style claims appear in paper-facing docs.
+
 - [ ] Track natural-language proposal preambles separately from structured
       proposal metadata.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.

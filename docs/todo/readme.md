@@ -468,6 +468,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     underclaims current proposal metadata capture nor overclaims
     AlphaEvolve-grade idea memory.
 
+- [ ] Keep README scientific-discovery wording scoped to automated evaluators
+      versus manual-experiment and LLM-only idea-review workflows.
+  - Spec evidence: AlphaEvolve states that automated evaluation is a core
+    advantage and limitation: tasks requiring manual experimentation are out
+    of scope, and LLM-provided evaluation of ideas is possible but not the
+    optimized setting. The paper's future bridge is high-level idea feedback
+    before transitioning to an implementation stage with machine feedback
+    through code execution.
+  - Current evidence: README describes automated algorithm discovery, local
+    subprocess evaluators, staged validator cascades, optional LLM feedback,
+    and proposal metadata, but it does not yet state a clear AlphaEvolve scope
+    boundary for machine-gradeable tasks versus manual-experiment scientific
+    workflows or pre-code LLM-only idea review.
+  - Required result: once scope metadata/reporting exists, update README,
+    ROADMAP, papers index, and matching TODOs so public wording neither
+    underclaims the current executable-evaluator workflow nor overclaims
+    manual-experiment or AI-Co-Scientist-style idea-feedback support.
+
 - [ ] Keep README mutation-response wording scoped to structured proposal
       metadata versus natural-language preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory natural-language

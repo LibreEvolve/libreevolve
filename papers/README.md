@@ -518,6 +518,18 @@ before or after mutation sections is still rejected unless it uses those
 structured proposal fields, which is stricter than the explanatory preamble
 shown before the Figure 3(c) AlphaEvolve diff example.
 
+AlphaEvolve scope-boundary note: the paper explicitly treats automated
+evaluation as both a core advantage and a limitation, keeping tasks that require
+manual experimentation out of scope and describing LLM-provided evaluation of
+ideas as possible but not the optimized AlphaEvolve setting. LibreEvolve's
+current feedback graders run around executable candidate evaluation and its
+proposal metadata captures bounded idea/rationale/hypothesis text; there is no
+separate AI-Co-Scientist-style stage that evaluates high-level ideas before
+transitioning into code execution. Paper-facing scientific-discovery claims
+should remain scoped to machine-gradeable evaluator workflows until
+problem/run/report metadata labels manual-experiment exclusion, LLM-only idea
+feedback, and transition criteria into executable evaluation.
+
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive
 diagnostics, including malformed unselected retained rows. Its non-archive

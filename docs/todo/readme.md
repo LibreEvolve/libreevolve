@@ -138,9 +138,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     budget stops beyond the current live provider-token and configured-cost LLM
     budget surfaces. Code evidence includes `RunBudget.max_llm_tokens`,
     `RunBudget.max_llm_cost_microusd`, role-scoped token/cost limits, and
-    controller-budget event replay into restored budget snapshots.
+    controller-budget event replay into restored budget snapshots. The
+    checked-in Figure 8 registry is still `definition_only`; several
+    `required_config_assertions` are intended component labels rather than
+    current executable config switches, including `candidate_source`,
+    `archive_admission_enabled`, `candidate_workspace_mode`,
+    `file_create_delete_enabled`, `ensemble_strategy: single_backend`, and
+    `backend_capability_tier`.
   - Required result: when benchmark scripts emit executed equal-budget
-    ablation reports, or when accelerator/async-worker budgets land, update
+    ablation reports, when component assertions are bound to supported runtime
+    config controls, or when accelerator/async-worker budgets land, update
     README, ROADMAP, papers index, and code/paper TODO entries together so the
     README neither underclaims current token/configured-cost budget stops nor
     overclaims AlphaEvolve-style executed ablations.

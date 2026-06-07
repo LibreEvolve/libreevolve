@@ -199,6 +199,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     checking safe relative paths, existence, SHA-256 hashes, byte counts,
     per-artifact statuses, and aggregate missing/mismatch/invalid counts. No
     benchmark script emits those reports yet.
+    `alphaevolve_ablations.json` defines the Figure 8 variant names and
+    intended component assertions, but the registry is still
+    `definition_only`: several assertion fields are declarative labels rather
+    than executable `Config` switches, including `candidate_source`,
+    `archive_admission_enabled`, `prompt_context_sections`,
+    `candidate_workspace_mode`, `file_create_delete_enabled`,
+    `ensemble_strategy: single_backend`, and `backend_capability_tier`.
     `libreevolve.llm_feedback_calibration.v1` now defines and tests a feedback
     grader calibration-report contract with declared graders, at least two
     calibrated tasks for readiness, per-grader/task scored records, finite
@@ -284,9 +291,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     configured provider request timeout, ensemble `llm_call_timeout_sec`, and
     remaining-runtime wait deadlines, and add benchmark scripts that emit
     equal-budget ablation reports for real targets plus feedback-grader
-    calibration reports for real reviewer/task suites. The remaining ablation
-    and calibration gap is executing and emitting real reports, not validating
-    declared result or feedback-calibration artifacts once a report names them.
+    calibration reports for real reviewer/task suites. Those scripts must bind
+    Figure 8 component assertions to actual supported config/runtime controls
+    or fail when a named assertion is only declarative. The remaining ablation
+    and calibration gap is executing and emitting real reports from runnable
+    variants, not validating declared result or feedback-calibration artifacts
+    once a report names them.
     The remaining provider cancellation gap is live cancellation/stop behavior,
     cross-run quarantine/resume behavior, and richer runtime artifact
     generation, not configured in-run role/backend quarantine observations or

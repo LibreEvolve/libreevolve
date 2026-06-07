@@ -1501,10 +1501,19 @@ Primary evidence:
     with queued/running async worker state, pending-work restore, provider-output
     replay, or separate budget-stop manifests for replay-only exhaustion
     scenarios beyond the manifest stop snapshot. The remaining gap is not
-    resume-state artifact inventory verification.
+    resume-state artifact inventory verification. The checked-in Figure 8
+    ablation registry is still definition-only: several
+    `required_config_assertions` are declarative component labels rather than
+    executable `Config` fields or runtime switches, including
+    `candidate_source`, `archive_admission_enabled`,
+    `prompt_context_sections`, `candidate_workspace_mode`,
+    `file_create_delete_enabled`, `ensemble_strategy: single_backend`, and
+    `backend_capability_tier`.
   - Required result: connect replayed budget state to future async
     worker/pending-work controller state, provider-output replay, and
-    budget-stop packaging for restored controller work.
+    budget-stop packaging for restored controller work. Add executable
+    config/runtime bindings for every Figure 8 component assertion before any
+    ablation runner treats the current registry as runnable experiment policy.
 
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so

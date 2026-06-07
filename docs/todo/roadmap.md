@@ -958,16 +958,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     declared Figure 8-style report shape, exactly three seeds, required
     equal-budget fractions, finite scores, consumed-budget consistency, and
     artifact references, while `alphaevolve_ablations.json` defines the named
-    variants. Those validators do not schedule runs, enforce backend/seed/
-    prompt/archive variants, collect intermediate progress from real
-    experiments, or generate equal-budget reports from executable benchmark
-    scripts.
+    variants. Some registry `required_config_assertions` are currently
+    declarative component labels rather than runnable `Config` fields, such as
+    `candidate_source`, `archive_admission_enabled`,
+    `candidate_workspace_mode`, `file_create_delete_enabled`,
+    `ensemble_strategy: single_backend`, and `backend_capability_tier`. Those
+    validators do not schedule runs, enforce backend/seed/prompt/archive
+    variants, bind every component assertion to executable runtime controls,
+    collect intermediate progress from real experiments, or generate
+    equal-budget reports from executable benchmark scripts.
   - Required result: when runnable ablation harnesses, backend/seed/prompt/
-    archive script entrypoints, progress-at-budget-fraction exports, or
-    generated report bundles land, update the roadmap, README, papers index,
-    and code/paper TODO entries together so roadmap wording neither underclaims
-    the current ablation report contract nor overclaims repeatable
-    AlphaEvolve-grade benchmark execution.
+    archive script entrypoints, component-assertion-to-config binding,
+    progress-at-budget-fraction exports, or generated report bundles land,
+    update the roadmap, README, papers index, and code/paper TODO entries
+    together so roadmap wording neither underclaims the current ablation
+    report contract nor overclaims repeatable AlphaEvolve-grade benchmark
+    execution.
 
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
       valid mutation selection.

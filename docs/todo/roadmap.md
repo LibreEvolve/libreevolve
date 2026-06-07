@@ -945,6 +945,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording neither underclaims current registries/smoke
     fixtures nor overclaims AlphaEvolve-scale benchmark coverage.
 
+- [ ] Keep matrix roadmap wording scoped to result-report validation versus
+      search-time near-integrality evidence.
+  - Spec evidence: AlphaEvolve Section 3.1 describes prompting for
+    near-integral matrix solutions and rounding entries to the nearest integer
+    or half-integer before exactness verification.
+  - Current evidence: roadmap benchmark language points to stronger matrix
+    fixtures, Appendix A registry coverage, and report contracts that validate
+    coefficient-domain and exactness fields. Those are not yet a roadmap claim
+    that LibreEvolve injects the near-integrality instruction into matrix
+    prompts, records raw-versus-rounded coefficient diagnostics, or links those
+    diagnostics to per-seed exactness certificates during evaluator runs.
+  - Required result: when a matrix benchmark runner adds prompt/evaluator
+    evidence for near-integral coefficient generation and rounding/exactness
+    linkage, update roadmap, README, papers index, and code/paper TODO entries
+    together so roadmap text distinguishes report validation from
+    AlphaEvolve-style matrix search workflow parity.
+
 - [ ] Keep the non-toy benchmark follow-up scoped to an executed fixture with
       expected artifacts.
   - Spec evidence: AlphaEvolve-style benchmark evidence needs repeatable

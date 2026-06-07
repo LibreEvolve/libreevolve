@@ -177,6 +177,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims the checked Strassen baseline nor overclaims
     AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README matrix wording scoped to result contracts until
+      near-integrality prompt/evaluator evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.1 says the matrix prompt requested
+    near-integral solutions and the reported decompositions were rounded to
+    the nearest integer or half-integer before exactness verification.
+  - Current evidence: README describes the matrix-result report contract,
+    Appendix A registry, and checked Strassen baseline bundle, including
+    coefficient-domain and exactness restrictions for AlphaEvolve-comparable
+    reports. It does not yet document a matrix benchmark prompt/evaluator path
+    that injects the near-integrality instruction, records raw-versus-rounded
+    coefficient diagnostics, or links those diagnostics to per-seed exactness
+    certificates produced during search.
+  - Required result: when that benchmark prompt/evaluator evidence lands,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README distinguishes report-schema validation from AlphaEvolve Section
+    3.1 search-workflow parity.
+
 - [ ] Keep README certification and systems-result wording scoped to report
   contracts versus executed independent evidence.
   - Spec evidence: AlphaEvolve Section 3.3 reports confirmation beyond local

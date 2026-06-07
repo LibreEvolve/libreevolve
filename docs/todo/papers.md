@@ -1438,6 +1438,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     not verifying declared report artifacts, validating the checked bundle
     wrapper, or emitting one checked Strassen baseline once those files exist.
 
+- [ ] Track matrix near-integrality prompt/evaluator evidence separately from
+      publication-result validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 states that the
+    natural-language prompt asked AlphaEvolve to generate near-integral matrix
+    solutions, then the reported tensor-decomposition entries were rounded to
+    the nearest integer or half-integer to verify exactness. Paper-visible
+    evidence should show that this instruction and rounding/evaluation policy
+    were part of the search workflow.
+  - Current evidence: the matrix-result report contract validates declared
+    coefficient-domain fields, exactness certificates, per-seed results,
+    artifact hashes, Appendix A target identities, and the checked Strassen
+    baseline bundle. Those checks prove that a report is internally
+    consistent once produced; they do not prove that candidate prompts carried
+    the near-integrality instruction, that evaluators recorded raw-versus-
+    rounded coefficients, or that exactness certificates were generated from
+    the rounded candidate outputs during the search.
+  - Required result: add paper/report evidence fields or artifacts for the
+    matrix prompt instruction, rounding policy, raw and rounded coefficient
+    diagnostics, per-seed exactness linkage, and prompt/run provenance before
+    claiming AlphaEvolve Section 3.1 matrix-search parity.
+
 - [ ] Generate independent certification evidence for paper-level result
   claims.
   - Paper evidence: the AlphaEvolve paper distinguishes evaluator scores from

@@ -1353,6 +1353,28 @@ Primary evidence:
     validating the checked bundle wrapper, or emitting the one checked Strassen
     baseline once those files exist.
 
+- [ ] Add a matrix coefficient-domain prompt/evaluator contract for
+      near-integral decompositions.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition
+    candidates were prompted to generate near-integral solutions, and final
+    decomposition entries were rounded to the nearest integer or half-integer
+    before exactness checking. That is a search-time instruction and
+    evaluator contract, not only a publication-report field.
+  - Current evidence: `libreevolve.problems.benchmarks.matrix_results`
+    validates declared matrix-result reports after they exist, including
+    coefficient domain, exactness certificate status, per-seed exactness, and
+    AlphaEvolve-comparable restrictions. The checked-in
+    `matrix_multiplication` example remains a 2x2 scalar-count smoke fixture,
+    and the benchmark report contracts do not yet inject or persist a
+    benchmark-grade prompt instruction requiring near-integral tensor
+    decompositions, record raw-versus-rounded coefficient diagnostics, or link
+    those diagnostics to exactness certificates during evaluation.
+  - Required result: add a matrix benchmark prompt/evaluator hook that records
+    the coefficient-domain instruction, rounding policy, raw and rounded
+    coefficient-domain diagnostics, per-seed exactness linkage, and prompt/run
+    evidence before treating matrix search runs as aligned with the Section
+    3.1 near-integrality workflow.
+
 - [ ] Connect real systems fixtures to held-out and reference-correctness
   evidence.
   - Spec evidence: AlphaEvolve's engineering applications do not rely only on

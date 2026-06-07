@@ -602,7 +602,11 @@ Implemented:
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. It still does not provide discovered
   tensor-decomposition algorithms, certificates, or notebook exports across the
-  full Appendix A target suite.
+  full Appendix A target suite. It also validates matrix result metadata after
+  the report exists; it does not yet emit search-time prompt/evaluator evidence
+  that candidates were instructed to produce near-integral decompositions,
+  rounded to integer or half-integer coefficients, and linked to exactness
+  certificates as in AlphaEvolve Section 3.1.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

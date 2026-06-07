@@ -394,6 +394,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     that separates reproducing the Table 1 comparison artifact from satisfying
     the individual behavioral capability rows.
 
+- [ ] Track Figure 1 and Figure 2 process-overview exhibit provenance as
+      paper evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the
+    high-level AlphaEvolve workflow: human-provided evaluation criteria,
+    initial solution, optional background knowledge, LLM ensemble, prompt
+    sampler, evaluator pool, program database, rich context, proposals, and
+    quality scores/feedback. Figure 2 expands the discovery process with
+    user-provided initial program, evaluation code, optional configuration,
+    parent/inspiration sampling, prompt construction, diff generation, diff
+    application, evaluator execution, and database registration of promising
+    solutions.
+  - Current gap: paper TODOs track Table 1 and Figure 3+ exhibit provenance
+    plus many individual Figure 1/2 component behaviors, but they do not
+    preserve Figures 1 and 2 as their own process exhibits with stable
+    figure IDs, diagram-node labels, edge/process-flow ordering,
+    pseudocode-line mappings, source/caption locations, rendered diagram
+    artifact hashes, or row/linkage from each displayed process step to
+    implementation status and remaining TODOs.
+  - Required result: add paper-facing Figure 1/2 exhibit records with figure
+    and step IDs, exact diagram text, source page/caption locations,
+    pseudocode-line mapping for Figure 2, rendered/text artifact paths and
+    hashes, component-to-evidence/TODO links, and README/ROADMAP wording that
+    separates reproducing the paper process diagrams from implementing each
+    underlying AlphaEvolve workflow capability.
+
 - [ ] Track evaluator workload provenance for inner-search and ML-training
       evaluators.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1.

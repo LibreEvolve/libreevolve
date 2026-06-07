@@ -314,6 +314,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata and validators so roadmap wording separates paper table
     reproduction from satisfying each underlying capability row.
 
+- [ ] Keep Figure 1 and Figure 2 roadmap wording scoped until process-overview
+      exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Figure 1 gives the process-level system view
+    connecting human task inputs, LLM ensemble, prompt sampler, evaluator
+    pool, program database, rich context, proposals, and feedback. Figure 2
+    expands the discovery loop into initial-program/evaluation/config inputs
+    and controller pseudocode for sampling, prompt building, diff generation,
+    diff application, evaluator execution, and database updates.
+  - Current evidence: `ROADMAP.md`, README, papers index, and code TODOs track
+    several Figure 1/2 component gaps, but the roadmap does not require Figure
+    1 or Figure 2 to have stable figure IDs, diagram-node and edge records,
+    Figure 2 pseudocode-line mappings, source PDF/caption locations, rendered
+    artifact hashes, component-to-code/report/TODO links, or validation that
+    partial component coverage is not summarized as full process-diagram
+    parity.
+  - Required result: when Figure 1/2 process exhibit provenance lands, update
+    ROADMAP, README, papers index, and code/paper TODO entries together with
+    figure metadata, step-level status, evidence links, rendered artifact
+    hashes, and validators so roadmap wording separates paper process-diagram
+    reproduction from delivering each underlying AlphaEvolve workflow
+    capability.
+
 ## Missing Roadmap Items
 
 ## Existing Items That Need Tightening

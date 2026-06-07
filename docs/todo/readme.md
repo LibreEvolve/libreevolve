@@ -242,6 +242,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguish the reproduced capability-comparison table from the separate
     work needed to satisfy each Table 1 capability row.
 
+- [ ] Keep README Figure 1 and Figure 2 process-diagram wording scoped until
+      process-overview exhibit provenance exists.
+  - Spec evidence: AlphaEvolve Figure 1 defines the high-level process among
+    human task inputs, the LLM ensemble, prompt sampler, evaluator pool,
+    program database, rich context, proposals, and quality feedback. Figure 2
+    defines the expanded discovery-process diagram and controller pseudocode
+    for sampling parents/inspirations, building prompts, generating and
+    applying diffs, executing evaluators, and adding results to the database.
+  - Current evidence: README describes LibreEvolve's loop, ensemble,
+    evaluator, database, and diff mechanics, and related TODOs track many of
+    those behaviors separately. It does not document Figure 1/2 exhibit IDs,
+    diagram-node/edge labels, source page/caption locations, Figure 2
+    pseudocode-line mappings, rendered artifact hashes, or step-to-code/TODO
+    evidence links.
+  - Required result: when Figure 1/2 process exhibit provenance lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README can
+    explain which process-diagram steps LibreEvolve implements, which are
+    partial or missing, and why process-diagram reproduction is separate from
+    satisfying each underlying workflow capability.
+
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be

@@ -235,6 +235,29 @@ Primary evidence:
     that distinguish table-exhibit reproduction from satisfying each Table 1
     behavioral capability.
 
+- [ ] Add Figure 1 and Figure 2 process-overview exhibit provenance.
+  - Spec evidence: AlphaEvolve Figure 1 presents the high-level discovery loop
+    from human-defined task, evaluation criteria, initial solution, and
+    optional background knowledge through the LLM ensemble, prompt sampler,
+    evaluator pool, and program database. Figure 2 expands that loop into the
+    user-provided initial program/evaluation/config inputs and the controller
+    steps that sample parent programs and inspirations, build prompts, generate
+    diffs, apply diffs, execute evaluators, and register promising solutions.
+  - Current evidence: LibreEvolve has implementation and TODO coverage for
+    several individual Figure 1/2 components, including prompt construction,
+    LLM ensembles, evaluator cascades, database admission, SEARCH/REPLACE
+    diffs, and run manifests. No code/report schema preserves Figure 1 or
+    Figure 2 as paper-facing process exhibits with stable figure IDs,
+    diagram-node and edge labels, pseudocode-line mappings, source/caption
+    locations, rendered diagram artifact hashes, or links from each displayed
+    process step to concrete code, reports, and remaining TODO entries.
+  - Required result: add Figure 1/2 exhibit metadata and validators with
+    figure IDs, diagram node/edge records, pseudocode step IDs, source PDF and
+    caption locations, rendered/text artifact paths and hashes,
+    component-to-code/report/TODO mappings, and docs checks that prevent
+    README, ROADMAP, or papers-index wording from treating component-level
+    support as full reproduction of the AlphaEvolve process diagrams.
+
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.
   - Spec evidence: AlphaEvolve's Discussion says the system made practical

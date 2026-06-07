@@ -208,8 +208,10 @@ is not yet an AlphaEvolve reproduction.
   snapshots, and island cursor/counter state with descriptor-value replay
   semantics, ordered migration-event replay, controller queues, and pending-work
   restore. Current manifests can restore cursor-only state or full archive
-  cell/elite placements from a previous manifest/history bundle, but they are
-  not a full resumed experiment trace.
+  cell/elite placements from a previous manifest/history bundle, and
+  `--restore-runtime-from-manifest` composes those compatible synchronous
+  restore surfaces into a checked full-runtime bundle, but it is not a full
+  replay or resumed experiment trace.
 - Complete run manifest hardening for direct custom plugin package-registry and
   constructor-value/schema attribution beyond the current direct-instance
   signature-only policy, plus aggregate hashes for artifacts emitted after
@@ -220,7 +222,10 @@ is not yet an AlphaEvolve reproduction.
 - Complete seeded replay semantics for run ids, candidate ids, prompt-program
   ids, restored archive/controller state, plugin/provider RNG boundaries, and
   provider nondeterminism. The framework RNG snapshot can already be restored
-  for direct `evolve()` calls and CLI runs, but this is not full run resume.
+  for direct `evolve()` calls and CLI runs, and the current full-runtime bundle
+  composes it with compatible LLM scheduler, archive, budget, controller-budget,
+  and lineage-boundary checks; provider/plugin output replay, controller
+  pending-work state, and end-to-end resumed-trace proof are still open.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
   configured-cost/latency, synchronous controller-budget event replay, and

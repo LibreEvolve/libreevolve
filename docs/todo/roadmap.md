@@ -2056,9 +2056,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     For `No evolution`, the current registry does not prove that every prompt
     repeatedly feeds the same initial program with no database-selected parent,
     inspiration, previous-candidate feedback, or archive-feedback context.
-    For `No context in the prompt`, the current registry does not prove that
-    executed prompts omitted explicit context files, sampled prior-program or
-    inspiration context, recent failure feedback, and plugin context; it only
+    For `No context in the prompt`, the current registry is too broad for the
+    paper definition: AlphaEvolve describes removing explicit problem-specific
+    context, not removing the current program or evolutionary prior-program
+    context. It does not prove that executed prompts omitted explicit context
+    sources, nor does it classify local plugin/retrieval/failure sections as
+    explicit context versus core evolutionary prompt ingredients; it only
     carries definition-only component labels and declarative config assertions.
     For `Small base LLM only`, the current registry does not prove every
     mutation-generation call used exactly one small/base-capable backend with
@@ -2087,8 +2090,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence that the same initial program was used for every proposal and
     that evolutionary database feedback was absent. Ensure the
     `No context in the prompt` harness records prompt
-    history or diagnostics proving absent explicit context, parent/inspiration
-    context, recent failure feedback, and plugin context. Ensure the
+    history or diagnostics proving absent explicit context sources, a
+    paper-facing classification of local context-like sections, and separate
+    evidence for whether current-program, parent/inspiration, and
+    rendered-result sections stayed present as normal evolutionary prompt
+    ingredients. Ensure the
     `Small base LLM only` harness records backend metadata, eligibility, and
     call-ledger evidence proving every relevant generation call used a single
     small/base model and no large-model route. Ensure the

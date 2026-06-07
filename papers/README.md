@@ -77,10 +77,13 @@ definition-only component assertions, not executable proof that only the loss
 function is mutable. The `No evolution` row has no executed prompt/history
 proof that each proposal repeatedly starts from the same initial program
 without evolutionary-database parent, inspiration, previous-candidate, or
-archive-feedback context. The `No context in the prompt` row likewise has no
-executed prompt-history proof that explicit context, prior-program/inspiration
-context, failure feedback, and plugin context were absent from rendered
-prompts. The `Small base LLM only` row has no backend metadata or call-ledger
+archive-feedback context. The `No context in the prompt` row is currently too
+broad for the paper definition: AlphaEvolve describes removing explicit
+problem-specific context, not removing the current program or evolutionary
+prior-program context. The registry therefore needs executed prompt-history
+proof that explicit context sources are absent, plus a paper-faithful boundary
+that distinguishes explicit context from core evolutionary prompt ingredients.
+The `Small base LLM only` row has no backend metadata or call-ledger
 proof that every mutation-generation call used a single small/base model with
 no large-model routing or fallback. The `No meta prompt evolution` row has no
 prompt-history, call-ledger, or prompt-program lineage proof that meta-prompt

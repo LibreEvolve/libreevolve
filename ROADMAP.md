@@ -399,10 +399,12 @@ is not yet an AlphaEvolve reproduction.
   every proposal uses the same initial program and excludes evolutionary
   database parent, inspiration, previous-candidate, and archive-feedback
   context.
-- For the Figure 8 `No context in the prompt` ablation, require prompt-history
-  or prompt-diagnostic proof that explicit context, prior-program/inspiration
-  context, failure feedback, and plugin context were absent in executed runs,
-  not only definition-only registry labels.
+- For the Figure 8 `No context in the prompt` ablation, correct the current
+  over-broad registry semantics and require prompt-history or
+  prompt-diagnostic proof that explicit problem/context sources were absent,
+  while separately recording whether normal current-program,
+  prior-program/inspiration, and rendered-result prompt ingredients remained
+  present as part of the evolutionary prompt.
 - For the Figure 8 `Small base LLM only` ablation, require backend metadata and
   call-ledger proof that every mutation-generation call used one configured
   small/base-capable model with no large-model routing or fallback.

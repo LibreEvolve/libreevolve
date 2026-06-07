@@ -337,10 +337,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     registry also does not yet prove the `No evolution` setup where every
     prompt is built from the same initial program without database-selected
     parents, inspirations, previous-candidate feedback, or archive admission
-    feedback. It also does not yet prove the `No context in the prompt` setup
-    where prompt-visible explicit context, sampled prior-program/inspiration
-    context, recent failure feedback, and plugin context are actually absent in
-    executed prompt history. It also does not yet prove the
+    feedback. It also does not yet prove a paper-faithful
+    `No context in the prompt` setup: the current registry disables
+    parent/inspiration and feedback-like sections even though the paper
+    describes removing explicit problem-specific context. README wording should
+    require executed prompt-history proof that explicit context sources were
+    absent, while separately reporting which current-program,
+    parent/inspiration, rendered-result, failure, plugin, or retrieval sections
+    were treated as core evolutionary prompt ingredients versus explicit
+    context. It also does not yet prove the
     `Small base LLM only` setup where every mutation-generation call uses only
     one configured small/base-capable model and has no large-model eligibility,
     fallback, critique, or router leakage. It also does not yet prove the
@@ -367,8 +372,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evidence that the same initial program was repeatedly prompted without
     evolutionary database feedback. Require
     README wording to distinguish `No context in the prompt` registry labels
-    from executed prompt-history evidence that context sources and feedback
-    sections were absent. Require README wording to distinguish generic
+    from executed prompt-history evidence of absent explicit context sources
+    and from separate evidence about which normal evolutionary prompt sections
+    remained present. Require README wording to distinguish generic
     `Small base LLM only` labels from executed backend telemetry proving a
     single small/base model actually handled every relevant generation call.
     Require README wording to distinguish generic

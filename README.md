@@ -3151,9 +3151,12 @@ aggregation metadata for the plotted y-axis. It also does not prove the
 `No evolution` condition by checking executed prompt/history records for the
 same initial program and absent evolutionary database parent, inspiration,
 previous-candidate, and archive-feedback context. It also does not prove the
-`No context in the prompt` condition by checking executed prompt history for
-absent explicit context, prior-program/inspiration context, failure feedback,
-and plugin context. It also does not prove the `Small base LLM only` condition
+`No context in the prompt` condition with a paper-faithful explicit-context
+boundary: the current registry is broader than AlphaEvolve's description
+because it disables parent/inspiration and feedback-like context rather than
+only proving that explicit problem-specific context was absent while the normal
+evolutionary prompt ingredients were handled separately. It also does not prove
+the `Small base LLM only` condition
 with backend metadata and call-ledger evidence that every mutation-generation
 call used one configured small/base-capable model with no large-model routing
 or fallback. It also does not prove the `No meta prompt evolution` condition

@@ -570,11 +570,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     program with no database-selected parent/inspiration programs, archive
     admission feedback, or previous-candidate resurfacing, rather than relying
     on declarative `candidate_source` or `archive_admission_enabled` labels.
-    For the `No context in the prompt` variant, require executed
-    prompt-history and prompt-diagnostic proof that explicit context files,
-    sampled prior-program/inspiration context, recent failure feedback, and
-    plugin context were absent, rather than relying on the registry's
-    declarative `prompt_context_sections` and context-disabled labels. For the
+    For the `No context in the prompt` variant, correct the registry's
+    over-broad semantics: the paper describes removing explicit
+    problem-specific context, not removing the current program or evolutionary
+    prior-program context. Require executed prompt-history and
+    prompt-diagnostic proof that explicit context sources were absent, require
+    a paper-facing classification of local plugin/retrieval/failure sections
+    as explicit context or core prompt ingredients, and separately record which
+    current-program, parent, inspiration, and rendered-result sections remained
+    present so this ablation is not conflated with `No evolution`. For the
     `Small base LLM only` variant, require executed backend telemetry proving
     that every mutation-generation call used one configured small/base-capable
     model with no large-model backend eligibility, fallback, critique, or

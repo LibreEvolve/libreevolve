@@ -2799,10 +2799,14 @@ Primary evidence:
     checks proving the same initial program is repeatedly fed to the LLM and
     no generated program is selected from the evolutionary database as parent,
     inspiration, or archive-feedback context. For `No context in the prompt`,
-    add runner and prompt-history checks proving explicit context files,
-    parent/inspiration program context, recent failure feedback, and plugin
-    context are actually absent from rendered prompts, not only disabled by
-    definition-only registry labels. For `Small base LLM only`, add executable
+    correct the current over-broad registry definition: AlphaEvolve describes
+    removing explicit problem-specific context, not removing the current
+    program or evolutionary prior-program context. Add runner and
+    prompt-history checks proving explicit context sources are absent, define
+    whether local plugin/retrieval/failure sections count as explicit context,
+    and separately record which core evolutionary prompt ingredients remain
+    present so this ablation is not conflated with `No evolution`. For
+    `Small base LLM only`, add executable
     backend policy and call-ledger checks proving all mutation-generation calls
     use exactly one configured small/base-capable model and never route or fall
     back to large-model backends during the ablation. For `No meta prompt

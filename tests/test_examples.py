@@ -321,8 +321,12 @@ def test_matrix_multiplication_rejects_three_case_lookup_shortcut():
 def test_workspace_math_seed_is_valid(tmp_path):
     validate = _load_workspace_validator()
     seed_dir = WORKSPACE_EXAMPLE_DIR / "initial_programs" / "baseline"
-    for path in seed_dir.iterdir():
-        (tmp_path / path.name).write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+    for path in seed_dir.rglob("*"):
+        if not path.is_file():
+            continue
+        target = tmp_path / path.relative_to(seed_dir)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(path.read_bytes())
     code = (tmp_path / "main.py").read_text(encoding="utf-8")
 
     result = validate.evaluate(code, str(tmp_path))
@@ -330,13 +334,57 @@ def test_workspace_math_seed_is_valid(tmp_path):
     assert result == {"score": 1.0, "is_valid": True}
 
 
+def test_workspace_math_loader_records_nested_static_seed_workspace():
+    problem = load_problem(WORKSPACE_EXAMPLE_DIR)
+
+    assert len(problem.initial_workspaces) == 1
+    workspace = problem.initial_workspaces[0]
+    assert workspace.primary_file == "main.py"
+    assert set(workspace.files) == {
+        "data/config.json",
+        "main.py",
+        "pkg/__init__.py",
+        "pkg/helpers.py",
+    }
+    assert workspace.static_files == (
+        {
+            "path": "assets/offset.bin",
+            "kind": "binary",
+            "sha256": "c3afce6b353535458babb7126b512b57309862bae6c8fe361e20854270e6c5b7",
+            "bytes": 10,
+            "source_kind": "seed_workspace_file",
+            "source_path": "initial_programs/baseline/assets/offset.bin",
+            "mutation_policy": "immutable",
+            "content_b64": "/0xFU1RBVElDCg==",
+        },
+    )
+
+
+def _write_workspace_math_support_files(tmp_path: Path) -> None:
+    (tmp_path / "pkg").mkdir()
+    (tmp_path / "pkg" / "__init__.py").write_text("", encoding="utf-8")
+    (tmp_path / "pkg" / "helpers.py").write_text(
+        "import json\n"
+        "from pathlib import Path\n"
+        "def base_value():\n"
+        "    root = Path(__file__).resolve().parents[1]\n"
+        "    config = json.loads((root / 'data' / 'config.json').read_text(encoding='utf-8'))\n"
+        "    return int(config['base']) + int(config['asset_offset'])\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "config.json").write_text(
+        '{"label": "workspace_math", "base": 40, "asset_offset": 1}',
+        encoding="utf-8",
+    )
+    (tmp_path / "assets").mkdir()
+    (tmp_path / "assets" / "offset.bin").write_bytes(b"\xffLESTATIC\n")
+
+
 def test_workspace_math_rejects_direct_constant_without_helper_dependency(tmp_path):
     validate = _load_workspace_validator()
     (tmp_path / "main.py").write_text("def solve():\n    return 42\n", encoding="utf-8")
-    (tmp_path / "helpers.py").write_text(
-        "def base_value():\n    return 41\n",
-        encoding="utf-8",
-    )
+    _write_workspace_math_support_files(tmp_path)
 
     result = validate.evaluate((tmp_path / "main.py").read_text(encoding="utf-8"), str(tmp_path))
 
@@ -346,7 +394,7 @@ def test_workspace_math_rejects_direct_constant_without_helper_dependency(tmp_pa
 def test_workspace_math_rejects_equality_spoofing_result(tmp_path):
     validate = _load_workspace_validator()
     (tmp_path / "main.py").write_text(
-        "from helpers import base_value\n"
+        "from pkg.helpers import base_value\n"
         "class AlwaysEqual:\n"
         "    def __eq__(self, other): return True\n"
         "def solve():\n"
@@ -354,10 +402,7 @@ def test_workspace_math_rejects_equality_spoofing_result(tmp_path):
         "    return AlwaysEqual()\n",
         encoding="utf-8",
     )
-    (tmp_path / "helpers.py").write_text(
-        "def base_value():\n    return 41\n",
-        encoding="utf-8",
-    )
+    _write_workspace_math_support_files(tmp_path)
 
     result = validate.evaluate((tmp_path / "main.py").read_text(encoding="utf-8"), str(tmp_path))
 
@@ -367,15 +412,12 @@ def test_workspace_math_rejects_equality_spoofing_result(tmp_path):
 def test_workspace_math_rejects_float_result(tmp_path):
     validate = _load_workspace_validator()
     (tmp_path / "main.py").write_text(
-        "from helpers import base_value\n"
+        "from pkg.helpers import base_value\n"
         "def solve():\n"
         "    return float(base_value() + 1)\n",
         encoding="utf-8",
     )
-    (tmp_path / "helpers.py").write_text(
-        "def base_value():\n    return 41\n",
-        encoding="utf-8",
-    )
+    _write_workspace_math_support_files(tmp_path)
 
     result = validate.evaluate((tmp_path / "main.py").read_text(encoding="utf-8"), str(tmp_path))
 

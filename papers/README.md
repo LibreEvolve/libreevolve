@@ -527,6 +527,10 @@ Implemented:
   known import/library delegation, module-level dead-code counter, and fixed
   three-case lookup shortcuts. It is still not a tensor-rank decomposition
   benchmark.
+- `libreevolve/problems/examples/workspace_math`: multi-file workspace smoke
+  fixture with a nested Python package, declared JSON data, and a binary static
+  seed asset. Its validator checks the workspace artifact shape and exact
+  integer result while keeping the example smoke-only.
 - `libreevolve/problems/benchmarks/matrix_results.py`: AlphaEvolve-style
   matrix-result report contract. It validates target identity, dimensions,
   seed count, best rank, hit fraction, exactness-certificate status,

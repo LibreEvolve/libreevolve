@@ -1086,7 +1086,9 @@ Primary evidence:
     now machine-classifies the shipped `hello_world`, `sorting`,
     `workspace_math`, `matrix_multiplication`, and `circle_packing` examples as
     smoke-only and not AlphaEvolve-comparable, preventing those fixtures from
-    being counted as benchmark evidence by accident.
+    being counted as benchmark evidence by accident. The `workspace_math`
+    smoke fixture now exercises a nested package, declared JSON data, and a
+    binary static seed asset while preserving its smoke-only scope.
     `validate_benchmark_evidence_scope()` now cross-checks hardening reports
     against the matching scope record and optional hardening artifact inventory,
     rejecting smoke-only example promotion, paper-claim scope mismatches, and

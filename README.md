@@ -1427,7 +1427,8 @@ improvement target). Treat `sorting` as a neutral plateau/diversity fixture.
 Their smoke validators enforce concrete output-type contracts for the checked
 behavior: `hello_world` requires exact `str` greetings, `sorting` requires
 exact `list` outputs, and `workspace_math` requires exact `int` results while
-still checking helper dependency.
+checking helper dependency across a nested package, declared JSON data, and a
+binary static seed asset.
 
 ## Supported LLM Backends
 

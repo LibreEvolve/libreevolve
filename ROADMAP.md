@@ -81,8 +81,8 @@ is not yet an AlphaEvolve reproduction.
   should preserve skeleton regions; the current boundary rejects marker-like
   declarations in non-`.py` files instead of treating them as unmarked full-file
   candidates.
-- Add richer workspace fixtures with nested packages, declared evaluator data,
-  and non-Python/static artifacts.
+- Add richer workspace fixtures beyond the current `workspace_math` nested
+  package, JSON data, and binary static seed asset smoke case.
 - Extend binary/static candidate handling beyond bounded encoded members to
   external copy-only static assets and raw non-encoded binary members.
 - Keep topology-operation collision policy and structured materialization-

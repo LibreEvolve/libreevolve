@@ -1067,7 +1067,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     scope registry that labels `hello_world`, `sorting`, `workspace_math`,
     `matrix_multiplication`, and `circle_packing` as smoke-only and not
     AlphaEvolve-comparable, but it is an exclusion boundary rather than a real
-    benchmark harness. `validate_benchmark_evidence_scope()` now cross-checks
+    benchmark harness. The `workspace_math` smoke fixture now covers a nested
+    package, declared JSON data, and a binary static seed asset without making
+    benchmark claims. `validate_benchmark_evidence_scope()` now cross-checks
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim
     scope mismatches, and inconsistent inventory evidence.

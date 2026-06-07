@@ -268,10 +268,17 @@ AlphaEvolve prompt-budget note: mutation prompt diagnostics now include
 `section_budget` with schema `libreevolve.prompt_section_budget.v1`. It records
 per-placeholder priorities, hashes, character counts, estimated tokens,
 required/optional totals, template overhead, and whether required sections fit
-the configured character cap before final truncation. It also records
-deterministic heuristic character-budget packing decisions for omitted optional
-sections. This is not a provider-token section packer; real provider-token
-fitting and context-policy evolution remain open.
+before final truncation. It also records deterministic section-packing
+decisions for omitted optional sections. Direct `PromptSampler` callers can use
+a provider token counter, and the normal mutation path can discover a shared
+local OpenAI `tiktoken` counter across eligible mutation backends before
+packing sections. `LLMEnsemble.generate()` also performs role-scoped common
+counter discovery at the final prompt boundary for mutation, critique,
+feedback, meta-prompt, registry-created, and custom roles, while backend
+metadata can derive heuristic prompt-token capacity from `context_window_tokens`
+minus `reserved_output_tokens`. The remaining gap is automatic selected-backend
+provider-token section packing across all prompt roles/provider families and
+context surfaces, plus context-policy evolution.
 
 AlphaEvolve island-state note: retained archive-state changes advance the
 island round-robin assignment cursor. Non-admitted MAP-Elites attempts, such as

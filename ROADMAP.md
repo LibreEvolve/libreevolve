@@ -153,9 +153,10 @@ is not yet an AlphaEvolve reproduction.
   policies and prompt-program deduplication.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
-- Extend the current rendered-prompt character cap and deterministic
-  section-budget diagnostics into backend-token-aware context-window accounting
-  with real section-level packing.
+- Extend current prompt caps, mutation-path provider-token section packing,
+  role-scoped final-prompt token counting, and backend context-window metadata
+  into selected-backend provider-token section packing across all prompt roles
+  and context surfaces.
 - Extend current prompt/history retention controls into replay-retention
   policy and richer context-policy ownership. Mutation prompts, explicit
   context spans, critique prompts/mutations, feedback raw/parsed fields,
@@ -164,9 +165,9 @@ is not yet an AlphaEvolve reproduction.
   bounded configurable retention surfaces.
 - Integrate current evaluator-output prompt summaries, aggregate syntax
   diagnostics, and bounded run-local artifact content retrieval with
-  backend-token-aware global prompt-size budgeting. Artifact content can
-  already be reopened from copied UTF-8 evaluator artifacts under bounded,
-  redacted, run-local policy.
+  selected-backend provider-token section packing. Artifact content can already
+  be reopened from copied UTF-8 evaluator artifacts under bounded, redacted,
+  run-local policy.
 - Extend DeepEvolve-inspired retrieval from bounded provenance into
   audit-grade source integrity: unbounded provider-payload/source-content
   artifacts, learned or externally scored ranking/selection evidence beyond

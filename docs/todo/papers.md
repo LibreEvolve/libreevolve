@@ -558,7 +558,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     and keep paper-index seeded-replay claims scoped so they do not imply full
     replayability until this is true.
 
-- [ ] Multiple-score optimization.
+- [ ] Promote multiple-score overlays to primary archive optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
   - Requirement: optimize multiple user-provided scores and use programs that
     excel under different criteria as varied inspirations.

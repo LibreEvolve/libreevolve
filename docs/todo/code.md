@@ -848,7 +848,7 @@ Primary evidence:
     checks across restore, and reports that distinguish task behavior
     descriptors from local TF-IDF novelty heuristics.
 
-- [ ] Implement real multi-objective optimization.
+- [ ] Promote multi-objective overlays to primary archive optimization.
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and
     use diverse high-performing programs under different definitions of "good"
     in prompts.

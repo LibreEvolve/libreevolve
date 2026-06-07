@@ -1837,6 +1837,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     and documentation that separates appendix figure reproduction from broad
     Appendix B family coverage and main-text Figure 5 exhibit coverage.
 
+- [ ] Track kissing-number lemma certificate evidence for Appendix B.11.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.11 reports 593
+    nonzero integral-coordinate points in dimension 11, with maximum norm
+    smaller than minimum pairwise distance, and uses Lemma 1 to derive a valid
+    kissing configuration and lower bound of at least 593.
+  - Current gap: paper-facing Appendix B coverage records family/status
+    entries, expected construction/certificate artifact shapes, Colab/verifier
+    export gaps, aggregate outcomes, and construction figures. It does not
+    require the proof-grade certificate specific to the kissing-number claim:
+    point count, coordinate domain, dimension, exact norm and distance
+    inequalities, Lemma 1 applicability, transformed sphere centers,
+    tangency/non-overlap checks, or claim linkage from the point-set artifact
+    to the lower-bound statement.
+  - Required result: add paper/report evidence for Appendix B.11 with a
+    point-set artifact hash, exact coordinate and dimension metadata,
+    cardinality check, norm/distance certificate, Lemma 1 proof-step record,
+    transformed sphere-center verification, lower-bound claim id, and README/
+    ROADMAP wording that distinguishes visual construction evidence from
+    proof-grade kissing-configuration certification.
+
 - [ ] Track initial-program idea provenance for human-seeded benchmark claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 identifies the
     initial solution and optional background knowledge as user inputs, and

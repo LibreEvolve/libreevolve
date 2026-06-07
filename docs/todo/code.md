@@ -1775,6 +1775,26 @@ Primary evidence:
     reproduction from family-level registry coverage and main-text Figure 5
     exhibit coverage.
 
+- [ ] Add kissing-number lemma certificate provenance for Appendix B.11.
+  - Spec evidence: AlphaEvolve Appendix B.11 improves the dimension-11 kissing
+    number lower bound from 592 to 593 by finding 593 nonzero integral-coordinate
+    points whose maximum norm is smaller than their minimum pairwise distance,
+    then proves via Lemma 1 that scaling those points gives a valid kissing
+    configuration.
+  - Current evidence: Appendix B TODOs cover family/status registry rows,
+    construction-data/verifier exports, aggregate outcome reports, and
+    Figure 10-14 visual exhibit provenance. They do not require a
+    kissing-specific certificate that checks point count, dimension,
+    nonzero/integral coordinates, exact norm and pairwise-distance inequalities,
+    the transformation to sphere centers, non-overlap/tangency verification, or
+    linkage from those proof checks to the reported lower-bound claim.
+  - Required result: add Appendix B.11 certificate/report metadata and
+    validators for the kissing-number construction: point-set artifact hash,
+    dimension and cardinality, exact coordinate domain, norm and distance
+    bounds, Lemma 1 applicability checks, transformed sphere-center evidence,
+    lower-bound claim linkage, and docs separating a rendered construction
+    figure from proof-grade kissing-configuration verification.
+
 - [ ] Add aggregate constructive-math outcome coverage reports.
   - Spec evidence: AlphaEvolve Section 3.2 reports more than 50 mathematical
     problems across more than five branches of mathematics, with best-known

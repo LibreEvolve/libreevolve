@@ -952,6 +952,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes family/aggregate constructive-math coverage, main-text
     Figure 5 exhibits, and Appendix B reproduced figure evidence.
 
+- [ ] Keep README kissing-number wording scoped until Lemma 1 certificate
+      evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.11 derives the dimension-11 kissing
+    number lower bound of 593 from 593 nonzero integral-coordinate points plus
+    an exact norm/distance condition and Lemma 1's transformation into a valid
+    kissing configuration.
+  - Current evidence: README can describe Appendix B family/status coverage,
+    construction/verifier export gaps, aggregate outcome gaps, and visual
+    construction figure gaps. It does not yet document a kissing-specific
+    certificate with point count, dimension, coordinate domain, exact
+    norm/pairwise-distance inequalities, Lemma 1 applicability, transformed
+    sphere centers, tangency/non-overlap checks, and lower-bound claim linkage.
+  - Required result: when Appendix B.11 certificate provenance lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes visual Appendix B construction evidence from proof-grade
+    kissing-number lower-bound verification.
+
 - [ ] Keep README Appendix B result wording scoped until revised-result
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.4 records a result revision for the

@@ -1831,6 +1831,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Appendix B family coverage, main-text Figure 5 exhibits, and reproduced
     Appendix B construction figures.
 
+- [ ] Keep kissing-number roadmap wording scoped until Lemma 1 certificate
+      evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.11 proves the dimension-11 kissing
+    lower bound by checking 593 nonzero integral-coordinate points with a
+    maximum-norm versus minimum-pairwise-distance condition, then applying
+    Lemma 1 to obtain a valid kissing configuration.
+  - Current evidence: roadmap/README/paper-index wording can cite Appendix B
+    family/status coverage, construction/verifier export gaps, aggregate
+    outcome gaps, and Figure 10-14 visual exhibit gaps. It does not require a
+    kissing-specific proof certificate for cardinality, dimension, coordinate
+    domain, exact norm/distance inequalities, Lemma 1 applicability, transformed
+    sphere centers, tangency/non-overlap checks, or lower-bound claim linkage.
+  - Required result: when Appendix B.11 proof-certificate records and
+    validators land, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap wording distinguishes rendered construction/figure evidence
+    from proof-grade kissing-number lower-bound verification.
+
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.
   - Spec evidence: AlphaEvolve Appendix B includes result-level revision

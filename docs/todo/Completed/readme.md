@@ -10262,3 +10262,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     not implemented.
   - Verification: focused cancellation-policy and loop manifest tests cover
     role-prefix validation and manifest rule scope.
+
+- [x] Document lineage sampling and cursor provenance.
+  - Evidence: README, configuration, architecture, and run-artifact docs needed
+    to track the new `lineage` parent/inspiration strategy instead of listing
+    only metric/frontier/novelty/recency sampling surfaces.
+  - Status: docs now describe lineage as best-per-root retained sampling,
+    lineage-root provenance in parent/inspiration metadata, and persisted
+    `lineage_sample_index` in archive-state snapshots.
+  - Remaining documentation gap: docs still correctly mark durable queryable
+    lineage-index resurfacing as open.
+  - Verification: docs tests check the sampling strategy list and runtime
+    artifact docs are covered by focused test runs.

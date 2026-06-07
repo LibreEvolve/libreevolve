@@ -14291,3 +14291,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused Appendix A registry and matrix-result tests cover
     registry counts, target lookup, malformed target rows, and report
     target/dimension mismatches.
+
+- [x] Add lineage-aware live resurfacing strategies.
+  - Spec evidence: AlphaEvolve-style evolutionary databases should resurface
+    previously explored ideas across exploration/exploitation surfaces, and
+    lineage is one of the dimensions called out in the remaining database gap.
+  - Status: `IslandModel` now supports `lineage` parent and inspiration
+    strategies. Parent sampling cycles the best retained representative for
+    each root lineage with a persisted `lineage_sample_index`; inspiration
+    sampling renders the best available retained representative per root
+    lineage before filling by selection score. Parent and inspiration metadata
+    record lineage-root provenance, and archive-state restore validates and
+    round-trips the lineage cursor.
+  - Remaining gap: this is live in-memory lineage-aware sampling over retained
+    archive state, not a durable queryable lineage index or full evolutionary
+    database replacement.
+  - Verification: focused island, CLI/config, loop, prompt-policy, and docs
+    tests cover lineage strategy validation, cursor restore, sampling order,
+    and documentation.

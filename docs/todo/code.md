@@ -616,10 +616,13 @@ Primary evidence:
     view for each declared normalized metric. Metric-leader parent and
     inspiration sampling can surface secondary-metric leaders, `frontier`
     parent/inspiration sampling can surface non-dominated retained programs
-    with complete declared normalized metric vectors, and generated candidates now persist
+    with complete declared normalized metric vectors, `lineage`
+    parent/inspiration sampling can cycle and render the best retained
+    representative for each root lineage, and generated candidates now persist
     `metadata.parent_selection` and `metadata.inspiration_selection` provenance,
     including metric target/program pairs for metric policies and frontier
-    size/metric-order metadata for frontier policies.
+    size/metric-order metadata for frontier policies plus lineage-root metadata
+    for lineage policies.
     Plugin score composition is logged separately and can change final fitness.
     Declared non-primary `source: plugin` metrics can be filled by plugin hooks
     through validated metric side effects and then enter
@@ -650,8 +653,9 @@ Primary evidence:
     fingerprints, exposes recent failure and hypothesis context for
     DeepResearch, delegates metric/novelty/recency/selection/random sampling to
     `IslandModel`, persists compact and full archive-state snapshots, validates
-    archive-event streams, and can restore cells/elites from a manifest plus
-    accepted history bundle. However, these are still append-only logs plus an
+    archive-event streams, supports lineage-aware live sampling through
+    best-per-root retained representatives, and can restore cells/elites from a
+    manifest plus accepted history bundle. However, these are still append-only logs plus an
     in-memory archive, not a persisted query/index database. There is no durable
     index over score, metric vectors, diversity descriptors, feedback text,
     failure fingerprints, lineage subgraphs, hypotheses, artifacts, retrieval

@@ -31,6 +31,30 @@ def _pmeta(code="x=1", fitness=0.5, generation=0, metrics=None, diversity=0.0):
         },
     )
 
+def _plineage(
+    program_id,
+    *,
+    code,
+    fitness,
+    selection_score,
+    parent_id=None,
+    lineage=None,
+    generation=0,
+):
+    return Program(
+        id=program_id,
+        code=code,
+        fitness=fitness,
+        generation=generation,
+        parent_id=parent_id,
+        lineage=list(lineage or []),
+        evaluation={"is_valid": True},
+        metadata={
+            "selection_score": selection_score,
+            "archive_admission": {"descriptors": {"diversity": 0.0}},
+        },
+    )
+
 def test_best_returns_highest():
     m = _m(); m.add(_p(fitness=0.3)); m.add(_p(fitness=0.7))
     assert m.best().fitness == 0.7
@@ -140,6 +164,7 @@ def test_state_snapshot_persists_round_robin_cursor_after_non_admitted_attempt()
     assert snapshot["migration_sequence"] == 0
     assert snapshot["metric_sample_index"] == 0
     assert snapshot["frontier_sample_index"] == 0
+    assert snapshot["lineage_sample_index"] == 0
     assert snapshot["migration_replay"] == {
         "schema": ISLAND_MIGRATION_REPLAY_SCHEMA,
         "status": "not_applied_as_restore_engine",
@@ -174,6 +199,7 @@ def test_restore_cursor_state_applies_next_island_and_sequences():
     snapshot = source.state_snapshot()
     snapshot["metric_sample_index"] = 4
     snapshot["frontier_sample_index"] = 5
+    snapshot["lineage_sample_index"] = 6
 
     restored = IslandModel(Config(n_islands=2, migration_interval=5))
     result = restored.restore_cursor_state(snapshot)
@@ -188,6 +214,7 @@ def test_restore_cursor_state_applies_next_island_and_sequences():
     assert event["archive_sequence"] == snapshot["archive_sequence"] + 1
     assert restored.state_snapshot()["metric_sample_index"] == 4
     assert restored.state_snapshot()["frontier_sample_index"] == 5
+    assert restored.state_snapshot()["lineage_sample_index"] == 6
     assert restored.state_snapshot()["archive_sequence_by_program_id"][first.id] == 1
 
 
@@ -484,6 +511,138 @@ def test_frontier_sampling_falls_back_without_declared_metrics():
         stronger.id
     ]
     assert m.last_sample_metadata()["fallback_strategy"] == "selection"
+
+
+def test_lineage_parent_sampling_cycles_best_root_representatives():
+    m = IslandModel(Config(n_islands=1, migration_interval=5))
+    root_a = _plineage(
+        "root-a",
+        code="root_a",
+        fitness=0.20,
+        selection_score=0.20,
+    )
+    weak_child_a = _plineage(
+        "weak-child-a",
+        code="weak_child_a",
+        fitness=0.40,
+        selection_score=0.40,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+    )
+    best_child_a = _plineage(
+        "best-child-a",
+        code="best_child_a",
+        fitness=0.90,
+        selection_score=0.90,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+    )
+    root_b = _plineage(
+        "root-b",
+        code="root_b",
+        fitness=0.70,
+        selection_score=0.70,
+    )
+    child_b = _plineage(
+        "child-b",
+        code="child_b",
+        fitness=0.50,
+        selection_score=0.50,
+        parent_id=root_b.id,
+        lineage=[root_b.id],
+        generation=1,
+    )
+    for program in (root_a, weak_child_a, best_child_a, root_b, child_b):
+        m.add(program)
+
+    assert [m.sample("lineage").id for _ in range(3)] == [
+        best_child_a.id,
+        root_b.id,
+        best_child_a.id,
+    ]
+    assert m.last_sample_metadata() == {
+        "strategy": "lineage",
+        "selected_program_id": best_child_a.id,
+        "lineage_root_id": root_a.id,
+        "lineage_index": 0,
+        "lineage_count": 2,
+    }
+    assert m.state_snapshot()["lineage_sample_index"] == 3
+
+
+def test_lineage_inspiration_sampling_best_per_root_then_selection_fill():
+    m = IslandModel(Config(n_islands=1, migration_interval=5))
+    root_a = _plineage(
+        "root-a",
+        code="root_a",
+        fitness=0.20,
+        selection_score=0.20,
+    )
+    best_child_a = _plineage(
+        "best-child-a",
+        code="best_child_a",
+        fitness=0.90,
+        selection_score=0.90,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+    )
+    weaker_child_a = _plineage(
+        "weaker-child-a",
+        code="weaker_child_a",
+        fitness=0.60,
+        selection_score=0.60,
+        parent_id=root_a.id,
+        lineage=[root_a.id],
+        generation=1,
+    )
+    root_b = _plineage(
+        "root-b",
+        code="root_b",
+        fitness=0.70,
+        selection_score=0.70,
+    )
+    root_c = _plineage(
+        "root-c",
+        code="root_c",
+        fitness=0.40,
+        selection_score=0.40,
+    )
+    for program in (root_a, best_child_a, weaker_child_a, root_b, root_c):
+        m.add(program)
+
+    selected = m.sample_diverse(
+        k=4,
+        exclude_ids={best_child_a.id},
+        strategy="lineage",
+    )
+
+    assert [program.id for program in selected] == [
+        root_b.id,
+        weaker_child_a.id,
+        root_c.id,
+        root_a.id,
+    ]
+    assert m.last_sample_metadata() == {
+        "strategy": "lineage",
+        "sample_kind": "diverse",
+        "requested_count": 4,
+        "selected_count": 4,
+        "selected_program_ids": [
+            root_b.id,
+            weaker_child_a.id,
+            root_c.id,
+            root_a.id,
+        ],
+        "excluded_count": 1,
+        "lineages": [
+            {"lineage_root_id": root_b.id, "program_id": root_b.id},
+            {"lineage_root_id": root_a.id, "program_id": weaker_child_a.id},
+            {"lineage_root_id": root_c.id, "program_id": root_c.id},
+        ],
+    }
 
 
 def test_sample_novelty_and_recency_strategies():

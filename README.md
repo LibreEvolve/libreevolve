@@ -1232,22 +1232,26 @@ strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.
 Parent and inspiration sampling are configurable via `parent_selection_strategy`
 and `inspiration_strategy`, including metric-leader, novelty, recency,
-frontier, selection-score, random, and mixed policies. Metric-leader sampling uses the
-declared primary metric first, then the remaining `metrics.yaml` order, then
-extra normalized metrics alphabetically. Metric parent selection cycles through
-those metric targets so secondary-metric leaders can become direct parents;
-generated candidate history records persist the selected parent strategy,
-parent id, target metric when applicable, and frontier metadata when applicable
-under `metadata.parent_selection`. Inspiration
+frontier, lineage, selection-score, random, and mixed policies. Metric-leader
+sampling uses the declared primary metric first, then the remaining
+`metrics.yaml` order, then extra normalized metrics alphabetically. Metric
+parent selection cycles through those metric targets so secondary-metric
+leaders can become direct parents; `frontier` cycles non-dominated retained
+programs with complete declared metric vectors; and `lineage` cycles the best
+retained representative for each root lineage. Generated candidate history
+records persist the selected parent strategy, parent id, target metric when
+applicable, frontier metadata when applicable, and lineage-root metadata when
+applicable under `metadata.parent_selection`. Inspiration
 sampling records `metadata.inspiration_selection` with strategy, requested and
 selected counts, selected ids, metric target/program pairs for metric
-leader policies, frontier size and metric order for frontier policies, and any prompt-context-policy required-metric filter
+leader policies, frontier size and metric order for frontier policies,
+lineage-root/program pairs for lineage policies, and any prompt-context-policy required-metric filter
 or metric-threshold filter including pool size, matching count, filtered count,
 threshold bounds, ranking policy, and selected ids.
 Inspiration `mixed` is a deterministic priority cascade:
 metric leaders, novelty-ranked candidates, selection-score leaders, then random
 fill for any remaining slots.
-Metric, novelty, recency, selection, and mixed strategies sample from retained
+Metric, frontier, lineage, novelty, recency, selection, and mixed strategies sample from retained
 archive state, including auxiliary elite-only programs; `explore` parent
 sampling and random inspiration sampling remain occupied-cell sampling.
 Recency uses a monotonic in-memory archive sequence before generation and score
@@ -2686,8 +2690,8 @@ libreevolve run PROBLEM_DIR [OPTIONS]
   --mutation-mode          Mutation mode: diff or full
   --explore-ratio, -e      Probability of exploration vs exploitation (default: 0.3)
   --parent-selection-strategy
-                           Parent sampling: mixed, exploit, explore, metric, novelty, or recency
-  --inspiration-strategy   Inspiration sampling: mixed, random, selection, metric, novelty, or recency
+                           Parent sampling: mixed, exploit, explore, metric, frontier, lineage, novelty, or recency
+  --inspiration-strategy   Inspiration sampling: mixed, random, selection, metric, frontier, lineage, novelty, or recency
   --run-name               Custom name for this run (default: problem directory name)
   --restore-runtime-from-manifest
                            Restore all compatible runtime surfaces from one

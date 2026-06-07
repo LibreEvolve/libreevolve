@@ -97,11 +97,11 @@ def cli() -> None:
 @click.option("--explore-ratio", "-e", type=float, default=None,
               help="Probability of exploring (random parent) vs exploiting (best parent). Default: 0.3")
 @click.option("--parent-selection-strategy",
-              type=click.Choice(["mixed", "exploit", "explore", "metric", "frontier", "novelty", "recency"]),
+              type=click.Choice(["mixed", "exploit", "explore", "metric", "frontier", "lineage", "novelty", "recency"]),
               default=None,
               help="Parent sampling policy. Default: mixed")
 @click.option("--inspiration-strategy",
-              type=click.Choice(["mixed", "random", "selection", "metric", "frontier", "novelty", "recency"]),
+              type=click.Choice(["mixed", "random", "selection", "metric", "frontier", "lineage", "novelty", "recency"]),
               default=None,
               help="Inspiration sampling policy. Default: mixed")
 @click.option("--mutation-mode", type=click.Choice(["diff", "full"]), default=None,

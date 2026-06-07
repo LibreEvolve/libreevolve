@@ -53,6 +53,7 @@ class IslandModel:
         self._migration_sequence = 0
         self._metric_sample_index = 0
         self._frontier_sample_index = 0
+        self._lineage_sample_index = 0
         self._last_sample_metadata: dict = {}
         self.islands: list[MAPElites] = [
             MAPElites(
@@ -143,6 +144,28 @@ class IslandModel:
                 "metric_order": list(self._metric_order),
             }
             return selected
+        if strategy == "lineage":
+            representatives = _lineage_representatives(self._retained_programs())
+            if not representatives:
+                selected = self.sample("exploit")
+                self._last_sample_metadata = {
+                    "strategy": strategy,
+                    "fallback_strategy": "exploit",
+                    "selected_program_id": selected.id if selected is not None else None,
+                    "lineage_count": 0,
+                }
+                return selected
+            target_index = self._lineage_sample_index % len(representatives)
+            self._lineage_sample_index += 1
+            lineage_root_id, selected = representatives[target_index]
+            self._last_sample_metadata = {
+                "strategy": strategy,
+                "selected_program_id": selected.id,
+                "lineage_root_id": lineage_root_id,
+                "lineage_index": target_index,
+                "lineage_count": len(representatives),
+            }
+            return selected
         if strategy == "novelty":
             pool = self._retained_programs()
             selected = max(pool, key=_novelty_key) if pool else None
@@ -169,6 +192,7 @@ class IslandModel:
             "migration_sequence": self._migration_sequence,
             "metric_sample_index": self._metric_sample_index,
             "frontier_sample_index": self._frontier_sample_index,
+            "lineage_sample_index": self._lineage_sample_index,
             "migration_replay": _migration_replay_policy(self._migration_sequence),
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
@@ -202,6 +226,7 @@ class IslandModel:
         self._migration_sequence = restored["migration_sequence"]
         self._metric_sample_index = restored["metric_sample_index"]
         self._frontier_sample_index = restored["frontier_sample_index"]
+        self._lineage_sample_index = restored["lineage_sample_index"]
         self._archive_sequences = dict(restored["archive_sequence_by_program_id"])
         migration_replay = dict(restored["migration_replay"])
         self._last_sample_metadata = {}
@@ -214,6 +239,7 @@ class IslandModel:
             "migration_sequence": self._migration_sequence,
             "metric_sample_index": self._metric_sample_index,
             "frontier_sample_index": self._frontier_sample_index,
+            "lineage_sample_index": self._lineage_sample_index,
             "archive_sequence_by_program_id": dict(
                 sorted(self._archive_sequences.items())
             ),
@@ -312,6 +338,24 @@ class IslandModel:
                 exclude_ids,
                 frontier_size=len(frontier),
                 metric_order=list(self._metric_order),
+            )
+            return selected
+        if strategy == "lineage":
+            representatives = _lineage_representatives(candidates)
+            selected = _first_unique(
+                [program for _, program in representatives]
+                + sorted(candidates, key=_selection_key, reverse=True),
+                k,
+            )
+            self._record_diverse_sample_metadata(
+                strategy,
+                selected,
+                k,
+                exclude_ids,
+                lineages=[
+                    {"lineage_root_id": lineage_root_id, "program_id": program.id}
+                    for lineage_root_id, program in representatives
+                ],
             )
             return selected
         if strategy == "novelty":
@@ -501,6 +545,26 @@ def _metric_leader_entries(
                 )
             )
     return leaders
+
+
+def _lineage_representatives(candidates: list[Program]) -> list[tuple[str, Program]]:
+    by_root: dict[str, Program] = {}
+    for program in candidates:
+        root_id = _lineage_root_id(program)
+        current = by_root.get(root_id)
+        if current is None or _selection_key(program) > _selection_key(current):
+            by_root[root_id] = program
+    return sorted(
+        by_root.items(),
+        key=lambda item: _selection_key(item[1]),
+        reverse=True,
+    )
+
+
+def _lineage_root_id(program: Program) -> str:
+    if program.lineage:
+        return program.lineage[0]
+    return program.id
 
 
 def _frontier_programs(
@@ -694,6 +758,10 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         snapshot.get("frontier_sample_index", 0),
         "frontier_sample_index",
     )
+    lineage_sample_index = _validate_snapshot_non_negative_int(
+        snapshot.get("lineage_sample_index", 0),
+        "lineage_sample_index",
+    )
     archive_sequences = _validate_cursor_archive_sequences(
         snapshot.get("archive_sequence_by_program_id"),
         archive_sequence,
@@ -709,6 +777,7 @@ def _validate_cursor_state_snapshot(snapshot: object, n_islands: int) -> dict:
         "migration_sequence": migration_sequence,
         "metric_sample_index": metric_sample_index,
         "frontier_sample_index": frontier_sample_index,
+        "lineage_sample_index": lineage_sample_index,
         "archive_sequence_by_program_id": archive_sequences,
         "migration_replay": migration_replay,
     }

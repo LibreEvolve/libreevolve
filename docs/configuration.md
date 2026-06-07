@@ -146,12 +146,17 @@ from `validate.py` unless explicitly allowlisted.
   when `parent_selection_strategy` is `mixed`. Explicit parent strategies
   bypass this ratio.
 - `parent_selection_strategy` (`"mixed"`): parent sampling policy. Allowed
-  values are `mixed`, `exploit`, `explore`, `metric`, `novelty`, and `recency`.
+  values are `mixed`, `exploit`, `explore`, `metric`, `frontier`, `lineage`,
+  `novelty`, and `recency`.
 - `inspiration_strategy` (`"mixed"`): inspiration sampling policy for
   additional archive examples rendered into prompts. Allowed values are
-  `mixed`, `random`, `selection`, `metric`, `novelty`, and `recency`.
+  `mixed`, `random`, `selection`, `metric`, `frontier`, `lineage`, `novelty`,
+  and `recency`.
   Metric strategies order leaders by the declared primary metric first, then
   remaining `metrics.yaml` order, then extra normalized metrics alphabetically.
+  Frontier strategies use complete declared normalized metric vectors to
+  surface non-dominated retained programs. Lineage strategies choose the best
+  retained representative for each root lineage before cycling or filling.
   The `mixed` inspiration policy is a deterministic priority cascade:
   metric leaders, novelty-ranked candidates, selection-score leaders, then
   random fill for any remaining slots.

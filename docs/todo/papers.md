@@ -336,17 +336,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     Pareto/frontier optimization remain open because the frontier and
     metric-specific views are diagnostic and not archive replacement policies.
     Parent and inspiration sampling can now use
-    metric-leader, frontier, novelty, recency, selection-score, random, and mixed
+    metric-leader, frontier, lineage, novelty, recency, selection-score, random, and mixed
     strategies while excluding the selected parent and deduplicating migrated
-    copies by program id. Persisted/queryable feedback and lineage-aware
-    resurfacing remain open. Metric bounds are now strictly ordered before they
+    copies by program id. Persisted/queryable feedback and durable
+    lineage-index resurfacing remain open. Metric bounds are now strictly ordered before they
     can be used as policy inputs. Metric-leader parent sampling now cycles
     through primary and secondary metric targets in configured order and
     persists target-metric provenance. Metric-leader inspiration sampling now
     persists selected ids plus metric target/program pairs in generated
     candidate metadata. Frontier parent/inspiration sampling uses complete
     declared normalized metric vectors to surface non-dominated retained
-    programs and persists frontier size/metric-order provenance. This remains a heuristic rather than a paper-faithful
+    programs and persists frontier size/metric-order provenance. Lineage
+    parent/inspiration sampling uses root lineage metadata to surface the best
+    retained representative per root and persists lineage-root provenance. This remains a heuristic rather than a paper-faithful
     multi-score database policy.
   - Required result: add Pareto/frontier archive replacement and queryable
     lineage-aware resurfacing for programs that excel under different metrics.

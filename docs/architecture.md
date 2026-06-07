@@ -760,9 +760,11 @@ best-program view for each declared normalized metric. They also include
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
 for each declared normalized metric. Parent and inspiration sampling can use a
 `frontier` strategy to surface non-dominated retained programs with complete
-declared normalized metric vectors. Admission thresholds, archive replacement,
-and backend rewards still use scalar policies, and richer Pareto/frontier
-archive replacement remains open.
+declared normalized metric vectors, and a `lineage` strategy to cycle or render
+the best retained representative for each root lineage. Admission thresholds,
+archive replacement, and backend rewards still use scalar policies, and richer
+Pareto/frontier archive replacement plus persisted lineage-index resurfacing
+remain open.
 
 ## Backend selection
 

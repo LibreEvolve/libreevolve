@@ -9519,3 +9519,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused Appendix A registry and matrix-result tests cover
     registry counts, target lookup, malformed target rows, and report
     target/dimension mismatches.
+
+- [x] Add paper-visible lineage resurfacing heuristics.
+  - Paper evidence: AlphaEvolve's database is expected to resurface previously
+    explored ideas across exploration/exploitation surfaces; the open
+    multi-score/database gap specifically called out lineage-aware resurfacing.
+  - Status: LibreEvolve now exposes `lineage` parent and inspiration sampling
+    strategies that choose the best retained representative per root lineage,
+    persist a parent-sampling cursor, and record lineage-root provenance in
+    generated candidate metadata. Prompt-context policy validation accepts the
+    same inspiration strategy.
+  - Remaining paper gap: this remains a heuristic over live retained archive
+    state, not the paper-faithful persisted evolutionary database with
+    queryable lineage/feedback/metric resurfacing and replayable sampling
+    decisions.
+  - Verification: focused island, CLI/config, loop, prompt-policy, and docs
+    tests cover the lineage strategy surfaces.

@@ -51,8 +51,8 @@ def test_configuration_docs_track_sampling_strategy_fields():
         "`explore_ratio` (`0.3`)",
         "`parent_selection_strategy` (`\"mixed\"`)",
         "`inspiration_strategy` (`\"mixed\"`)",
-        "`mixed`, `exploit`, `explore`, `metric`, `novelty`, and `recency`",
-        "`mixed`, `random`, `selection`, `metric`, `novelty`, and `recency`",
+        "`mixed`, `exploit`, `explore`, `metric`, `frontier`, `lineage`",
+        "`mixed`, `random`, `selection`, `metric`, `frontier`, `lineage`",
     ):
         assert expected in text
 

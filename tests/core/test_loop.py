@@ -1049,6 +1049,8 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
     assert archive_state["archive_sequence"] == 1
     assert archive_state["migration_sequence"] == 0
     assert archive_state["metric_sample_index"] == 0
+    assert archive_state["frontier_sample_index"] == 0
+    assert archive_state["lineage_sample_index"] == 0
     assert len(archive_state["archive_sequence_by_program_id"]) == 1
     assert archive_state["islands"][0]["occupied_cell_count"] == 1
     assert archive_state["islands"][1]["occupied_cell_count"] == 0
@@ -2076,6 +2078,7 @@ def test_evolve_can_restore_archive_cursor_snapshot_into_new_run():
     assert archive_state["archive_sequence"] == 4
     assert archive_state["migration_sequence"] == 1
     assert archive_state["metric_sample_index"] == 2
+    assert archive_state["lineage_sample_index"] == 0
     assert archive_state["next_island_id"] == 0
     assert archive_state["archive_sequence_by_program_id"]["p1"] == 1
     assert archive_state["archive_sequence_by_program_id"]["p2"] == 3

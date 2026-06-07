@@ -1105,6 +1105,9 @@ Important behavior:
   inspection artifact, not the MAP-Elites replacement policy. The live
   `frontier` parent/inspiration strategy computes its own non-dominated
   retained-program pool from the same declared normalized metric semantics.
+  The live `lineage` parent/inspiration strategy computes best-per-root
+  retained representatives from program lineage metadata; it is also a
+  sampling policy rather than a persisted lineage index.
 - `runtime.history.objective_metric_leaders` stores a diagnostic
   best-program-per-declared-normalized-metric view with leader program ids,
   generations, metric values, selection scores, and available normalized
@@ -1123,7 +1126,8 @@ Important behavior:
 - inspiration sampling provenance is stored under
   `metadata.inspiration_selection`; metric leader policies include target
   metric/program pairs so metric-specific inspiration choices are auditable,
-  and frontier policies include frontier size and declared metric order
+  frontier policies include frontier size and declared metric order, and
+  lineage policies include lineage-root/program pairs
 - normalized LLM call telemetry is stored under `metadata.llm_calls` as the
   candidate-linked mutation/critique/feedback call span, including recovered
   retry or fallback attempts that led to a successful candidate
@@ -1201,6 +1205,7 @@ next island assignment. Runtime manifests persist the cursor and adjacent
 archive counters under `runtime.history.archive_state` with schema
 `libreevolve.island_state.v1`; the snapshot records `next_island_id`,
 `archive_sequence`, `migration_sequence`, `metric_sample_index`,
+`frontier_sample_index`, `lineage_sample_index`,
 `archive_sequence_by_program_id`, and compact per-island occupancy/elite
 counts. Current snapshots use `resume_status:
 "snapshot_persisted_cursor_and_full_archive_restore_supported"`; manifests with

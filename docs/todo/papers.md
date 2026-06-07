@@ -711,14 +711,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     dominance does not replace the primary grid, and durable queryable
     multi-objective resurfacing across persisted database tables, embeddings,
     cross-run failure and hypothesis indexes, full artifact-content indexes,
-    full lineage subgraphs, learned/cross-run novelty indexes, and schema
-    migrations remains open. `runtime.history.artifact_index`
+    program-output value/schema indexes, full lineage subgraphs,
+    learned/cross-run novelty indexes, and schema migrations remains open.
+    Current evaluator outputs/program outputs can be captured, redacted,
+    checked, and rendered to prompts, but they are not a durable resurfacing
+    dimension despite AlphaEvolve's database storing solutions with attached
+    evaluation results and program outputs. `runtime.history.artifact_index`
     now exposes bounded evaluator-artifact path/hash, redaction, skipped-file,
     stage, and content-excerpt evidence, and valid artifact-bearing candidates
     feed into `resurfacing_index`.
   - Required result: add Pareto/frontier archive replacement and durable
     persisted lineage-aware resurfacing for programs that excel under different
-    metrics.
+    metrics, including output-aware indexes for attached program outputs.
 
 - [ ] Proposal scoring and semantic hypothesis retrieval.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 2.4.

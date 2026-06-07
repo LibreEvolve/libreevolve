@@ -1023,6 +1023,12 @@ Primary evidence:
     redaction, skipped-file, stage, and content-excerpt evidence, includes valid
     artifact-bearing candidates in `resurfacing_index`, and can restore
     cells/elites from a manifest plus accepted history bundle. Current
+    evaluator `outputs` / `program_output` payloads are validated, redacted,
+    truncated, can be required or checked by stage policies, and can be rendered
+    as bounded prompt feedback, but they do not have a dedicated
+    `program_output_index`, output-similarity query API, or resurfacing source
+    separate from evaluator-artifact metadata.
+    Current
     `manifest.json` files carry top-level `schema_version` and
     `artifact_schema` metadata, and current `history.jsonl`,
     `failure_history.jsonl`, `archive_events.jsonl`, `llm_calls.jsonl`,
@@ -1038,8 +1044,8 @@ Primary evidence:
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,
     cross-run failure fingerprints, full lineage subgraphs, semantic/cross-run
-    hypotheses, full artifact content, retrieval context, or learned/cross-run
-    novelty; the
+    hypotheses, program-output values/schemas/similarity, full artifact
+    content, retrieval context, or learned/cross-run novelty; the
     resurfacing index is deterministic rank fusion over bounded current-history
     views, and
     `load_accepted_history_index()` remains an id map for restore/query
@@ -1060,6 +1066,10 @@ Primary evidence:
     run records,
     and tests proving resurfacing decisions can be rebuilt from persisted run
     artifacts rather than only from the live in-memory history/archive facade.
+    Include first-class program-output indexing and output-aware resurfacing so
+    AlphaEvolve-style program outputs attached to solutions are queryable
+    evolutionary evidence rather than only prompt text or stage-threshold
+    checks.
 
 - [ ] Add proposal scoring and semantic proposal-index retrieval beyond
   bounded hypothesis summaries.

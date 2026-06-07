@@ -470,15 +470,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records preserve `durable_database_ready: false` and remain append-only
     logs, an in-memory archive, and manifest-visible bounded summaries rather
     than persisted cross-run query/index tables, full metric-vector and
-    feedback/artifact-content ranking, semantic/cross-run hypothesis
-    retrieval, learned/cross-run novelty, schema migrations, or replayable
-    durable sampling policies.
+    feedback/artifact-content ranking, program-output value/schema ranking,
+    semantic/cross-run hypothesis retrieval, learned/cross-run novelty, schema
+    migrations, or replayable durable sampling policies.
   - Required result: when persisted database tables, cross-run query indexes,
     replayable ranked sampling policies, schema migration support, or
     durable full-content/semantic resurfacing lands, update the roadmap,
     README, papers index, and code/paper TODO entries together so roadmap
     wording neither underclaims current run-local resurfacing nor overclaims
-    AlphaEvolve-grade queryable database support.
+    AlphaEvolve-grade queryable database support. Treat evaluator
+    program-output indexes as part of that durable database surface, not merely
+    prompt feedback or artifact excerpts.
 
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.

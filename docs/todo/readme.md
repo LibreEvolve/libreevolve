@@ -397,6 +397,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     underclaims current proposal metadata capture nor overclaims
     AlphaEvolve-grade idea memory.
 
+- [ ] Keep README database-output claims scoped to prompt-visible output
+      capture versus queryable output indexes.
+  - Spec evidence: AlphaEvolve's evolutionary database stores generated
+    solutions with evaluation results and program outputs attached, then
+    resurfaces useful prior ideas in later generations.
+  - Current evidence: README can describe strict evaluator `outputs` /
+    `program_output` capture, redaction, truncation, stage output checks, and
+    bounded prompt-visible program-output summaries. It should not imply those
+    outputs are yet indexed as a durable database dimension or used for
+    output-similarity/query-based resurfacing.
+  - Required result: when `program_output_index` records, output-aware
+    resurfacing APIs, durable output query tables, or semantic output
+    retrieval land, update README, ROADMAP, papers index, and code/paper TODO
+    entries together so README distinguishes prompt-visible program outputs
+    from AlphaEvolve-style queryable output-attached database evidence.
+
 - [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
   - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able
     to reuse failed-proposal evidence across runs through durable, searchable,

@@ -68,7 +68,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | LLM backends | Published experiments use Gemini Flash/Pro; paper describes existing/custom LLM choices | **OpenAI, Anthropic, Ollama, and configured custom import-path backends** |
 | Population model | Closed evolutionary database inspired by MAP-Elites/island models | **Small local MAP-Elites with configurable island migration, defaulting to five islands** |
 | LLM selection | Fast/deep model scheduling described | **UCB-style heuristic plus bounded normalized throughput/depth metadata after pull-once initialization** |
-| Evaluation | User-defined evaluators, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, and optional synchronous LLM feedback** |
+| Evaluation | User-defined evaluators returning scalar metrics, optional cascades, feedback, and parallel execution | **Local subprocess evaluator with structured results, staged validator cascades, optional synchronous LLM feedback, and a reserved `is_valid` admission gate outside scored metrics** |
 | Candidate abstraction | User-chosen solution abstractions, including raw strings, constructors, bespoke search algorithms, or paired solution/search representations | **Deliberate code-file-set abstraction with a primary text file; no first-class non-code serializer or paired solution/search API yet** |
 | Extensibility | Task API, evaluators, prompt/context customization, LLM choices, evolve blocks | **Python problem format, plugins, prompt templates, evolve blocks** |
 | Local models | Published experiments use hosted Gemini models; local model use is not discussed | **Yes (Ollama)** |
@@ -2020,9 +2020,13 @@ embedding retrieval, or provider-token prompt packing.
 `evaluate(code: str, workspace_path: str, stage: dict) -> dict` returning a dict
 with string keys, every declared scalar metric, and boolean `is_valid`.
 `is_valid` is a reserved validity gate, not a `metrics.yaml` optimization
-metric. The evaluator rejects non-string result keys before JSON transport and
-rejects missing declared metrics, undeclared return keys, bad metric types,
-non-finite values, and non-boolean `is_valid`; rejected contracts record a
+metric. AlphaEvolve-facing benchmark reports still need to separate this local
+admission gate from scored scalar metric tables and document any
+minimize-to-maximize direction transforms before treating those reports as
+paper-comparable evaluator evidence. The evaluator rejects non-string result
+keys before JSON transport and rejects missing declared metrics, undeclared
+return keys, bad metric types, non-finite values, and non-boolean `is_valid`;
+rejected contracts record a
 bounded `evaluation.metadata.malformed_metrics` reason/message. The reserved
 `outputs` or `program_output` return keys may carry non-scalar evaluator
 evidence beside the declared scalar metrics. These attachments are validated as

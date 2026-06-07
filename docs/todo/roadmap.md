@@ -59,6 +59,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaim current LLM budget stops nor overclaim AlphaEvolve-grade
     accelerator/async budgeted search.
 
+- [ ] Keep roadmap evaluator-contract wording scoped to local validity gating
+      versus paper-facing scalar metrics.
+  - Spec evidence: AlphaEvolve Section 2.1 frames evaluator outputs as scalar
+    metrics maximized by convention, while the paper's example evaluator
+    returns a `dict[str, float]`.
+  - Current evidence: `ROADMAP.md` current state can accurately claim strict
+    scalar evaluator-output validation against `metrics.yaml`, but
+    LibreEvolve also requires reserved boolean `is_valid`, permits separate
+    non-scalar attachments, and supports local metric direction/bounds
+    normalization. The roadmap does not yet call out the missing
+    paper-facing report/export boundary that proves only scalar objectives are
+    counted as AlphaEvolve metrics.
+  - Required result: when paper-facing evaluator metric reports and validators
+    land, update the roadmap, README, papers index, and code/paper TODOs
+    together so roadmap wording neither underclaims current strict local
+    evaluator validation nor overclaims AlphaEvolve-comparable metric evidence.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

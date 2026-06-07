@@ -240,6 +240,14 @@ advice, objective/evaluator rationale, or parameter-scope decisions. Section
 formulation, so LibreEvolve needs explicit expert-formulation provenance before
 making that class of mathematical benchmark claim.
 
+AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
+as a local admission gate outside declared `metrics.yaml` objectives and stores
+non-scalar evaluator attachments separately, while AlphaEvolve Section 2.1 and
+Figure 3 describe evaluator outputs as scalar metric dictionaries maximized by
+convention. Paper-facing reports still need explicit metric-name, validity-gate,
+and direction-transform evidence before LibreEvolve run outputs can be treated
+as AlphaEvolve-comparable scored metric tables.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

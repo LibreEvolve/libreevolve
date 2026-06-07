@@ -5,6 +5,28 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [ ] Add paper-facing evaluator-metric evidence separate from local
+      `is_valid` admission policy.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
+  - Requirement: AlphaEvolve's evaluator maps a solution to scalar metrics,
+    metrics are maximized by convention, and the paper's Python example
+    returns `dict[str, float]`.
+  - Partial status: LibreEvolve validates structured evaluator results,
+    requires all declared scalar metrics, reserves boolean `is_valid` outside
+    `metrics.yaml`, stores non-scalar `outputs`/`program_output` attachments
+    separately, and normalizes declared metric directions/bounds for local
+    archive scoring.
+  - Current gap: benchmark and paper-result reports do not yet include an
+    explicit AlphaEvolve-facing metric contract proving which returned fields
+    are scored scalar objectives, how local minimize metrics are transformed
+    into maximized paper metrics, and that `is_valid` is only an admission
+    gate rather than a reported optimization metric.
+  - Required result: add paper-metric report fields and validators for
+    `paper_metric_names`, validity-gate source, raw and maximized score
+    columns, excluded local-control fields, and claim readiness before
+    treating LibreEvolve evaluator outputs as AlphaEvolve-comparable metric
+    evidence.
+
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
   - Requirement: expensive evaluations can be parallelized, and the whole

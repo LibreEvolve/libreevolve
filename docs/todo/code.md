@@ -864,6 +864,25 @@ Primary evidence:
 
 ## Evaluation
 
+- [ ] Add a paper-facing evaluator metric contract that separates scored
+      scalar metrics from LibreEvolve's local validity gate.
+  - Spec evidence: AlphaEvolve Section 2.1 describes an evaluation function
+    mapping a solution to scalar metrics, with metrics maximized by
+    convention; the Figure 3 example shows a Python `evaluate(eval_inputs)`
+    returning `dict[str, float]`.
+  - Current evidence: LibreEvolve's evaluator contract deliberately requires
+    every declared scalar metric plus a reserved boolean `is_valid` gate, and
+    metric direction/bounds can be normalized before archive scoring. That is
+    useful local contract hardening, but current paper-facing reports do not
+    yet prove that `is_valid`, `outputs`, `program_output`, feedback fields,
+    and direction transforms are excluded or normalized correctly when
+    presenting AlphaEvolve-comparable scalar metric tables.
+  - Required result: add a report/schema boundary for paper-facing evaluator
+    metrics, including declared `paper_metric_names`, validity-gate source,
+    maximize/minimize direction-to-maximized transforms, raw versus normalized
+    score columns, and validation that `is_valid` and non-scalar attachments
+    are not treated as scored AlphaEvolve metrics.
+
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its

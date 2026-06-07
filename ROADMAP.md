@@ -24,7 +24,8 @@ LibreEvolve has:
   thresholds, samples, validator-managed seed values, retries, timeouts, and
   per-attempt history
 - strict scalar evaluator-output validation against `metrics.yaml`, including
-  finite, strictly increasing non-boolean metric bounds
+  finite, strictly increasing non-boolean metric bounds and a reserved boolean
+  validity gate outside optimization metrics
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
@@ -105,6 +106,9 @@ is not yet an AlphaEvolve reproduction.
 
 ### 2. Strengthen multi-objective search
 
+- Add paper-facing evaluator metric reports that separate declared scored
+  scalar objectives from LibreEvolve's local `is_valid` admission gate,
+  non-scalar attachments, feedback fields, and direction-normalization policy.
 - Extend the current documented hybrid, which averages normalized declared
   metrics for archive ranking, into a first-class multi-objective policy:
   Pareto/frontier primary archive replacement, durable cross-run

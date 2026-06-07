@@ -9,6 +9,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
+- [ ] Keep README evaluator-contract wording scoped to local validity gating
+      until paper-facing scalar metric reports exist.
+  - Spec evidence: AlphaEvolve Section 2.1 describes evaluator outputs as
+    scalar metrics maximized by convention, and Figure 3 shows a Python
+    evaluator returning `dict[str, float]`.
+  - Current evidence: README correctly documents LibreEvolve's stricter local
+    contract: `evaluate()` returns every declared scalar metric plus reserved
+    boolean `is_valid`, while `outputs`/`program_output` carry non-scalar
+    evidence separately. README also documents metric direction/bounds
+    normalization for local archive scoring. It does not yet describe a
+    benchmark/report contract that strips local control fields from
+    paper-facing metric tables or shows minimize-to-maximize transforms.
+  - Required result: when paper-facing evaluator metric reports land, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes the implemented LibreEvolve validity gate from
+    AlphaEvolve-comparable scored scalar metrics.
+
 - [ ] Keep README candidate-language wording scoped to the Python-primary
   boundary record versus real language/build runners.
   - Spec evidence: AlphaEvolve tasks can define program artifacts and

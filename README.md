@@ -1437,7 +1437,10 @@ accounting and budget-report rows. `llm_role_provider_attempt_limits`,
 `llm_role_token_limits`, and `llm_role_cost_microusd_limits` add run-budget
 caps for matching roles; these stop before the next call for that role after
 adapter attempts, provider-reported tokens, or configured estimated cost
-consume the cap. `max_llm_seconds` and `llm_role_seconds_limits` similarly
+consume the cap. These role-budget maps also accept manifest-safe prefix
+scopes such as `feedback:*`; concrete calls and counters remain recorded under
+their exact roles, but matching roles share the scoped cap. `max_llm_seconds`
+and `llm_role_seconds_limits` similarly
 consume retained LLM call `latency_sec` telemetry and stop before the next LLM
 call once global or matching-role wall-clock latency caps are exhausted.
 `llm_role_failure_quarantine_after` can opt roles into deterministic
@@ -1632,7 +1635,8 @@ Backend `role` labels, when configured, are manifest-safe live routing lanes:
 matching call roles restrict selection to matching backend metadata, while
 roles with no matching backend fall back to the global bandit path.
 `llm_role_call_limits` can enforce logical call quotas for mutation,
-critique, feedback, meta-prompt, or custom roles. With
+critique, feedback, meta-prompt, or custom roles, including shared prefix
+scopes such as `feedback:*`. With
 `ensemble_strategy: throughput_depth`,
 selectable metadata is min/max normalized on each selection with fixed weights
 `depth: 0.10`, `cost: -0.05`, and `latency: -0.05`; equal-valued fields use

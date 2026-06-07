@@ -1153,6 +1153,25 @@ def test_role_call_limits_cap_logical_generate_calls():
     }
 
 
+def test_role_call_limits_support_wildcard_feedback_scope():
+    backend = _b("limited", "answer")
+    ens = LLMEnsemble([backend], max_calls_by_role={"feedback:*": 1})
+
+    assert ens.generate("review", role="feedback:quality") == ("answer", 0)
+    with pytest.raises(
+        LLMRoleCallLimitError,
+        match=r"llm_role_call_limits\[feedback:\*\]=1",
+    ):
+        ens.generate("review", role="feedback:safety")
+
+    assert backend.generate.call_count == 1
+    assert ens.scheduler_state["role_call_limits"] == {
+        "policy": "logical_generate_call_limits_by_role_v1",
+        "max_calls_by_role": {"feedback:*": 1},
+        "logical_calls_by_role": {"feedback:quality": 1},
+    }
+
+
 def test_scheduler_state_restores_role_call_limits_and_consumption():
     source = LLMEnsemble([_b("source", "answer")], max_calls_by_role={"critique": 1})
     source.generate("critique prompt", role="critique")
@@ -1718,6 +1737,19 @@ def test_restore_scheduler_state_preserves_reward_call_ledger():
                 },
             },
             "exceeds max_calls_by_role",
+        ),
+        (
+            {
+                "counts": [0],
+                "wins": [0.0],
+                "total": 0,
+                "role_call_limits": {
+                    "policy": "logical_generate_call_limits_by_role_v1",
+                    "max_calls_by_role": {"feedback:*": 1},
+                    "logical_calls_by_role": {"feedback:a": 1, "feedback:b": 1},
+                },
+            },
+            r"max_calls_by_role\['feedback:\*'\]",
         ),
     ],
 )

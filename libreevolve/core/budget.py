@@ -925,9 +925,9 @@ def _validate_restored_limits(value: object) -> None:
             elif kind == "optional_int":
                 _validate_optional_non_negative_int(value[field], f"limits.{field}")
             elif kind == "int_mapping":
-                _validate_role_counter_mapping(value[field], f"limits.{field}")
+                _validate_role_counter_limit_mapping(value[field], f"limits.{field}")
             elif kind == "number_mapping":
-                _validate_role_number_mapping(value[field], f"limits.{field}")
+                _validate_role_number_limit_mapping(value[field], f"limits.{field}")
             else:
                 _validate_optional_non_negative_number(value[field], f"limits.{field}")
         except ValueError as exc:
@@ -1076,19 +1076,19 @@ def _validate_budget_state(budget: RunBudget) -> None:
         budget.max_llm_seconds,
         "max_llm_seconds",
     )
-    _validate_role_counter_mapping(
+    _validate_role_counter_limit_mapping(
         budget.llm_role_provider_attempt_limits,
         "llm_role_provider_attempt_limits",
     )
-    _validate_role_counter_mapping(
+    _validate_role_counter_limit_mapping(
         budget.llm_role_token_limits,
         "llm_role_token_limits",
     )
-    _validate_role_counter_mapping(
+    _validate_role_counter_limit_mapping(
         budget.llm_role_cost_microusd_limits,
         "llm_role_cost_microusd_limits",
     )
-    _validate_role_number_mapping(
+    _validate_role_number_limit_mapping(
         budget.llm_role_seconds_limits,
         "llm_role_seconds_limits",
     )
@@ -1169,6 +1169,13 @@ def _validate_role_label(value: object, field: str) -> str:
     return value
 
 
+def _validate_role_scope_label(value: object, field: str) -> str:
+    if isinstance(value, str) and value.endswith(":*"):
+        _validate_role_label(value[:-2], field)
+        return value
+    return _validate_role_label(value, field)
+
+
 def _validate_role_counter_mapping(value: object, field: str) -> dict[str, int]:
     if value is None:
         return {}
@@ -1177,6 +1184,18 @@ def _validate_role_counter_mapping(value: object, field: str) -> dict[str, int]:
     normalized = {}
     for raw_role, raw_count in value.items():
         role = _validate_role_label(raw_role, f"{field} key")
+        normalized[role] = _validate_non_negative_int(raw_count, f"{field}[{role}]")
+    return dict(sorted(normalized.items()))
+
+
+def _validate_role_counter_limit_mapping(value: object, field: str) -> dict[str, int]:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{field} must be a mapping")
+    normalized = {}
+    for raw_role, raw_count in value.items():
+        role = _validate_role_scope_label(raw_role, f"{field} key")
         normalized[role] = _validate_non_negative_int(raw_count, f"{field}[{role}]")
     return dict(sorted(normalized.items()))
 
@@ -1196,12 +1215,27 @@ def _validate_role_number_mapping(value: object, field: str) -> dict[str, float]
     return dict(sorted(normalized.items()))
 
 
+def _validate_role_number_limit_mapping(value: object, field: str) -> dict[str, float]:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(f"{field} must be a mapping")
+    normalized = {}
+    for raw_role, raw_count in value.items():
+        role = _validate_role_scope_label(raw_role, f"{field} key")
+        normalized[role] = _validate_non_negative_number(
+            raw_count,
+            f"{field}[{role}]",
+        )
+    return dict(sorted(normalized.items()))
+
+
 def _role_counter_copy(value: object) -> dict[str, int]:
-    return _validate_role_counter_mapping(value, "role counter")
+    return _validate_role_counter_limit_mapping(value, "role counter")
 
 
 def _role_number_copy(value: object) -> dict[str, float]:
-    return _validate_role_number_mapping(value, "role number")
+    return _validate_role_number_limit_mapping(value, "role number")
 
 
 def _increment_role_counter(
@@ -1237,14 +1271,16 @@ def _role_budget_exhausted(
     consumed: object,
     role: str | None,
 ) -> bool:
-    if role is None:
-        return False
-    role = _validate_role_label(role, "llm role")
-    limit_map = _validate_role_counter_mapping(limits, "role limits")
-    if role not in limit_map:
-        return False
+    if role is not None:
+        role = _validate_role_label(role, "llm role")
+    limit_map = _validate_role_counter_limit_mapping(limits, "role limits")
     consumed_map = _validate_role_counter_mapping(consumed, "role consumed")
-    return consumed_map.get(role, 0) >= limit_map[role]
+    for scope, limit in limit_map.items():
+        if role is not None and not _role_scope_matches(scope, role):
+            continue
+        if _role_scope_consumed(consumed_map, scope) >= limit:
+            return True
+    return False
 
 
 def _role_number_budget_exhausted(
@@ -1252,14 +1288,28 @@ def _role_number_budget_exhausted(
     consumed: object,
     role: str | None,
 ) -> bool:
-    if role is None:
-        return False
-    role = _validate_role_label(role, "llm role")
-    limit_map = _validate_role_number_mapping(limits, "role limits")
-    if role not in limit_map:
-        return False
+    if role is not None:
+        role = _validate_role_label(role, "llm role")
+    limit_map = _validate_role_number_limit_mapping(limits, "role limits")
     consumed_map = _validate_role_number_mapping(consumed, "role consumed")
-    return consumed_map.get(role, 0.0) >= limit_map[role]
+    for scope, limit in limit_map.items():
+        if role is not None and not _role_scope_matches(scope, role):
+            continue
+        if _role_scope_consumed(consumed_map, scope) >= limit:
+            return True
+    return False
+
+
+def _role_scope_matches(scope: str, role: str) -> bool:
+    if scope.endswith(":*"):
+        return role.startswith(scope[:-1])
+    return scope == role
+
+
+def _role_scope_consumed(consumed: dict[str, int] | dict[str, float], scope: str) -> int | float:
+    if scope.endswith(":*"):
+        return sum(value for role, value in consumed.items() if _role_scope_matches(scope, role))
+    return consumed.get(scope, 0)
 
 
 def _validate_non_negative_number(value: object, field: str) -> float:

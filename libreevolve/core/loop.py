@@ -2225,14 +2225,17 @@ def _runtime_llm_budget_role_budget(
 ) -> dict:
     calls = _nonnegative_int_summary(summary.get("calls"))
     retry_limit = calls * max(0, config.llm_max_call_attempts - 1)
-    role_limit = config.llm_role_call_limits.get(role)
+    role_limit = _role_scope_limit(config.llm_role_call_limits, role)
     observed_adapter_attempts = _nonnegative_int_summary(
         summary.get("provider_internal_attempts")
     )
     observed_tokens = _nonnegative_int_summary(summary.get("total_tokens"))
     observed_cost_usd = _cost_usd_from_microusd(summary.get("cost_microusd"))
     observed_seconds = _nonnegative_number_summary(summary.get("wall_clock_seconds"))
-    role_adapter_attempt_limit = config.llm_role_provider_attempt_limits.get(role)
+    role_adapter_attempt_limit = _role_scope_limit(
+        config.llm_role_provider_attempt_limits,
+        role,
+    )
     configured_adapter_attempt_limit = (
         role_adapter_attempt_limit
         if role_adapter_attempt_limit is not None
@@ -2243,7 +2246,7 @@ def _runtime_llm_budget_role_budget(
         if configured_adapter_attempt_limit is not None
         else observed_adapter_attempts
     )
-    role_token_limit = config.llm_role_token_limits.get(role)
+    role_token_limit = _role_scope_limit(config.llm_role_token_limits, role)
     configured_token_limit = (
         role_token_limit if role_token_limit is not None else config.max_llm_tokens
     )
@@ -2252,7 +2255,10 @@ def _runtime_llm_budget_role_budget(
         if configured_token_limit is not None
         else None
     )
-    role_cost_microusd_limit = config.llm_role_cost_microusd_limits.get(role)
+    role_cost_microusd_limit = _role_scope_limit(
+        config.llm_role_cost_microusd_limits,
+        role,
+    )
     configured_cost_microusd_limit = (
         role_cost_microusd_limit
         if role_cost_microusd_limit is not None
@@ -2268,7 +2274,7 @@ def _runtime_llm_budget_role_budget(
         if configured_cost_usd_limit is not None
         else None
     )
-    role_seconds_limit = config.llm_role_seconds_limits.get(role)
+    role_seconds_limit = _role_scope_limit(config.llm_role_seconds_limits, role)
     configured_seconds_limit = (
         role_seconds_limit
         if role_seconds_limit is not None
@@ -2342,6 +2348,22 @@ def _runtime_llm_budget_role_budget(
     if seconds_limit is not None and seconds_limit > 0.0:
         record["wall_clock_limit_seconds"] = seconds_limit
     return record
+
+
+def _role_scope_limit(limits: Mapping[str, object], role: str) -> object | None:
+    matches = []
+    if role in limits:
+        matches.append(limits[role])
+    matches.extend(
+        value
+        for scope, value in limits.items()
+        if isinstance(scope, str)
+        and scope.endswith(":*")
+        and role.startswith(scope[:-1])
+    )
+    if not matches:
+        return None
+    return min(matches)
 
 
 def _runtime_llm_budget_role_usage(

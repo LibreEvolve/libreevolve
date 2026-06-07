@@ -897,7 +897,11 @@ Primary evidence:
     next LLM call after provider usage or configured cost estimates consume the
     cap. `max_llm_seconds` and `llm_role_seconds_limits` now consume retained
     call `latency_sec` telemetry and stop before the next global or matching-role
-    LLM call when latency caps are exhausted. Controller budget `llm_call`
+    LLM call when latency caps are exhausted. Role-budget limit maps now accept
+    manifest-safe prefix scopes such as `feedback:*`, and shared scoped caps are
+    enforced by summing matching exact-role logical calls, provider attempts,
+    tokens, configured cost, and retained call latency while keeping consumed
+    counters concrete. Controller budget `llm_call`
     events can now validate and replay role-tagged provider attempts, tokens,
     configured cost, and latency seconds into `RunBudget`, so restored event
     streams can trip the same live stop checks after replay. Live synchronous

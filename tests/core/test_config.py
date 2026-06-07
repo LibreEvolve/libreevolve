@@ -1021,14 +1021,34 @@ def test_accepts_llm_reward_accounted_roles():
 
 def test_accepts_llm_role_call_limits():
     config = Config(
-        llm_role_call_limits={"mutation": 3, "critique": 1, "feedback:grader": 0}
+        llm_role_call_limits={
+            "mutation": 3,
+            "critique": 1,
+            "feedback:*": 2,
+            "feedback:grader": 0,
+        }
     )
 
     assert config.llm_role_call_limits == {
         "critique": 1,
+        "feedback:*": 2,
         "feedback:grader": 0,
         "mutation": 3,
     }
+
+
+def test_accepts_wildcard_llm_role_usage_limits():
+    config = Config(
+        llm_role_provider_attempt_limits={"feedback:*": 3},
+        llm_role_token_limits={"feedback:*": 1200},
+        llm_role_cost_microusd_limits={"feedback:*": 7000},
+        llm_role_seconds_limits={"feedback:*": 3.5},
+    )
+
+    assert config.llm_role_provider_attempt_limits == {"feedback:*": 3}
+    assert config.llm_role_token_limits == {"feedback:*": 1200}
+    assert config.llm_role_cost_microusd_limits == {"feedback:*": 7000}
+    assert config.llm_role_seconds_limits == {"feedback:*": 3.5}
 
 
 def test_accepts_llm_role_backend_indices():
@@ -1069,6 +1089,7 @@ def test_accepts_llm_role_failure_quarantine_after():
     [
         ([], "llm_role_call_limits must be a mapping"),
         ({"bad role": 1}, "llm_role_call_limits key must be a manifest-safe role label"),
+        ({"feedback*": 1}, "llm_role_call_limits key must be a manifest-safe role label"),
         ({"mutation": -1}, "llm_role_call_limits\\['mutation'\\] must be a non-negative integer"),
         ({"mutation": True}, "llm_role_call_limits\\['mutation'\\] must be a non-negative integer"),
         ({"mutation": "1"}, "llm_role_call_limits\\['mutation'\\] must be a non-negative integer"),

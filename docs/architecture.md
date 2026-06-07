@@ -791,7 +791,8 @@ and rewarded/unrewarded call ids for audit and validated restore. Per-call
 `scheduler_policy` records whether selection used the global bandit, an
 explicit `llm_role_backend_indices` backend lane, or backend `role` metadata.
 Configured `llm_role_call_limits` enforce logical `generate()` call quotas by
-validated role and persist restorable `role_call_limits` consumption in
+validated role or manifest-safe prefix scope such as `feedback:*`, and persist
+restorable exact-role `role_call_limits` consumption in
 scheduler/runtime accounting. Non-mutation reward-signal semantics, live
 token/cost/provider-attempt budget stop policy,
 quarantine/penalty policy, live provider pricing/default capture, and

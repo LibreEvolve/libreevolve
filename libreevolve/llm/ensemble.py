@@ -514,14 +514,15 @@ class LLMEnsemble:
             self._call_record_sink(deepcopy(record))
 
     def _enforce_role_call_limit(self, role: str) -> None:
-        limit = self.max_calls_by_role.get(role)
-        if limit is None:
-            return
-        consumed = self._logical_role_calls.get(role, 0)
-        if consumed >= limit:
+        for scope, limit in self.max_calls_by_role.items():
+            if not _role_scope_matches(scope, role):
+                continue
+            consumed = _role_scope_consumed(self._logical_role_calls, scope)
+            if consumed < limit:
+                continue
             raise LLMRoleCallLimitError(
                 f"LLM call budget exhausted before {role}: "
-                f"llm_role_call_limits[{role}]={limit}"
+                f"llm_role_call_limits[{scope}]={limit}"
             )
 
     def _claim_reward_call_id(self, idx: int, call_id: str | None) -> str:
@@ -3338,12 +3339,12 @@ def _validate_role_call_limits_state(
         "scheduler role_call_limits.logical_calls_by_role",
         raw["logical_calls_by_role"],
     )
-    for role, consumed in logical_calls_by_role.items():
-        limit = max_calls_by_role.get(role)
-        if limit is not None and consumed > limit:
+    for scope, limit in max_calls_by_role.items():
+        consumed = _role_scope_consumed(logical_calls_by_role, scope)
+        if consumed > limit:
             raise ValueError(
                 "scheduler role_call_limits logical_calls_by_role"
-                f"[{role!r}] exceeds max_calls_by_role"
+                f" exceeds max_calls_by_role[{scope!r}]"
             )
     return max_calls_by_role, logical_calls_by_role
 
@@ -3550,7 +3551,7 @@ def _validate_provider_failure_policy_state(
 def _validate_max_calls_by_role(raw: object) -> dict[str, int]:
     if raw is None:
         return {}
-    return _validate_nonnegative_call_count_mapping(
+    return _validate_nonnegative_call_scope_mapping(
         "llm max_calls_by_role",
         raw,
     )
@@ -3595,6 +3596,44 @@ def _validate_nonnegative_call_count_mapping(
             raise ValueError(f"{field}[{role!r}] must be a non-negative integer")
         normalized[role] = raw_count
     return dict(sorted(normalized.items()))
+
+
+def _validate_nonnegative_call_scope_mapping(
+    field: str,
+    raw: object,
+) -> dict[str, int]:
+    if not isinstance(raw, Mapping):
+        raise ValueError(f"{field} must be a mapping of role labels to integer limits")
+    normalized: dict[str, int] = {}
+    for raw_role, raw_count in raw.items():
+        role = validate_llm_role_scope(raw_role)
+        if (
+            isinstance(raw_count, bool)
+            or not isinstance(raw_count, int)
+            or raw_count < 0
+        ):
+            raise ValueError(f"{field}[{role!r}] must be a non-negative integer")
+        normalized[role] = raw_count
+    return dict(sorted(normalized.items()))
+
+
+def validate_llm_role_scope(role: object) -> str:
+    if isinstance(role, str) and role.endswith(":*"):
+        validate_llm_call_role(role[:-2])
+        return role
+    return validate_llm_call_role(role)
+
+
+def _role_scope_matches(scope: str, role: str) -> bool:
+    if scope.endswith(":*"):
+        return role.startswith(scope[:-1])
+    return scope == role
+
+
+def _role_scope_consumed(consumed: Mapping[str, int], scope: str) -> int:
+    if scope.endswith(":*"):
+        return sum(value for role, value in consumed.items() if _role_scope_matches(scope, role))
+    return consumed.get(scope, 0)
 
 
 def _validate_reward_accounted_roles(raw: object) -> tuple[str, ...]:

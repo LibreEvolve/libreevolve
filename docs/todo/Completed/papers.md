@@ -9422,3 +9422,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     prompt-context selection, or a complete validator capability model.
   - Verification: focused prompt/meta-prompt/loop tests cover rendering,
     validation, parsed policy responses, and meta-prompt policy flow.
+
+- [x] Add paper-visible wildcard LLM role budget scopes.
+  - Paper evidence: AlphaEvolve-style LLM scheduling is compute-budgeted by
+    role surfaces such as mutation, critique, and feedback; feedback graders
+    need a grouped budget surface rather than only exact per-grader caps.
+  - Status: runtime LLM role budget maps now accept manifest-safe prefix scopes
+    ending in `:*`, including `feedback:*`. Logical calls, provider attempts,
+    tokens, configured cost, and retained call latency share scoped limits
+    across matching concrete roles, while manifests and budget reports continue
+    to expose exact-role consumption rows.
+  - Remaining paper gap: this is grouped live role-budget enforcement for the
+    synchronous controller, not async worker budgeting, provider-output replay,
+    live provider pricing, or hard SDK cancellation.
+  - Verification: focused config, ensemble, and loop tests cover scope
+    validation, scheduler restore rejection for over-consumed scopes, live
+    scoped budget stops, and runtime budget-report rows.

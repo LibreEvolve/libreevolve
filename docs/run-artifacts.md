@@ -937,7 +937,9 @@ They also copy `role_backend_policy`, which records explicit configured
 role-to-backend lanes, backend metadata role lanes, and the fallback policy.
 Runtime budget `limits` also include the configured per-role provider-attempt,
 token, and configured-cost maps, while `consumed` includes matching
-`*_by_role` counters.
+`*_by_role` counters. Role-budget limits may be exact roles or prefix scopes
+such as `feedback:*`; consumed counters remain exact concrete roles, and scoped
+limits are enforced by summing matching exact-role consumption.
 Role-scheduler records use
 `selection_policy: "backend_metadata_role_scoped_when_configured_else_global"`;
 older restored snapshots with the prior global-only marker are accepted and

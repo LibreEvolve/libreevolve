@@ -712,6 +712,14 @@ def _require_role_label(name: str, value: object) -> str:
     return label
 
 
+def _require_role_scope_label(name: str, value: object) -> str:
+    if isinstance(value, str) and value.endswith(":*"):
+        prefix = value[:-2]
+        _require_role_label(name, prefix)
+        return value
+    return _require_role_label(name, value)
+
+
 def _require_feedback_label(name: str, value: object) -> str:
     if not isinstance(value, str):
         raise ConfigError(f"{name} must be a string")
@@ -1327,7 +1335,7 @@ def _validate_llm_role_budget_limits(value: object, *, field: str) -> dict[str, 
         raise ConfigError(f"{field} must be a mapping of role labels to integer limits")
     normalized: dict[str, int] = {}
     for raw_role, raw_limit in value.items():
-        role = _require_role_label(f"{field} key", raw_role)
+        role = _require_role_scope_label(f"{field} key", raw_role)
         if (
             isinstance(raw_limit, bool)
             or not isinstance(raw_limit, int)
@@ -1346,7 +1354,7 @@ def _validate_llm_role_seconds_limits(value: object) -> dict[str, float]:
         raise ConfigError(f"{field} must be a mapping of role labels to second limits")
     normalized: dict[str, float] = {}
     for raw_role, raw_limit in value.items():
-        role = _require_role_label(f"{field} key", raw_role)
+        role = _require_role_scope_label(f"{field} key", raw_role)
         if isinstance(raw_limit, bool) or not isinstance(raw_limit, (int, float)):
             raise ConfigError(f"{field}[{role!r}] must be a finite non-negative number")
         limit = float(raw_limit)

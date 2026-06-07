@@ -114,8 +114,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `max_llm_tokens`, `max_llm_cost_microusd`, and `max_llm_seconds` do the
     same for token, configured-cost, and retained LLM call-latency consumption.
     Per-role seconds limits use `llm_role_seconds_limits` and are surfaced in
-    runtime budget snapshots and LLM budget-report rows. Runtime manifests now
-    persist a
+    runtime budget snapshots and LLM budget-report rows. Role-budget limit maps
+    now accept manifest-safe prefix scopes such as `feedback:*`, and shared
+    scoped caps are enforced by summing matching exact-role logical calls,
+    provider attempts, tokens, configured cost, and retained call latency while
+    keeping consumed counters concrete. Runtime manifests now persist a
     compact `runtime.llm_accounting` summary with role totals plus active
     logical-call, retry/fallback, timeout, prompt, and accepted-output caps,
     `libreevolve.llm_budget_report.v1` now defines and tests paper-index-visible

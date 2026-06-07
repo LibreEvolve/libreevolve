@@ -1785,6 +1785,72 @@ def test_runtime_llm_budget_report_uses_configured_role_call_limit():
     )
 
 
+def test_runtime_llm_budget_report_applies_wildcard_feedback_role_limits():
+    class FeedbackUsageBackend:
+        name = "usage/model"
+        api_mode = None
+        provider_response_metadata = {
+            "adapter_retry": {
+                "policy": "bounded_provider_internal_retries",
+                "max_retries": 1,
+                "attempts": 2,
+                "failed_attempts": 1,
+                "failures": [{"attempt": 0, "error_type": "TimeoutError"}],
+            },
+            "usage": {
+                "input_tokens": 400,
+                "output_tokens": 1600,
+                "total_tokens": 2000,
+            },
+        }
+
+        def generate(self, prompt, **kwargs):
+            if kwargs.get("role") == "feedback:review":
+                return '{"score": 1.0, "feedback": "ok"}'
+            return "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+
+    tmpdir = tempfile.mkdtemp()
+    llm = LLMEnsemble(
+        [FeedbackUsageBackend()],
+        backend_metadata=[{"cost_usd_per_million_tokens": 5.0}],
+        max_calls_by_role={"feedback:*": 1},
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                llm_feedback=[{"name": "review", "weight": 0.0}],
+                llm_role_call_limits={"feedback:*": 1},
+                llm_role_provider_attempt_limits={"feedback:*": 2},
+                llm_role_token_limits={"feedback:*": 2000},
+                llm_role_cost_microusd_limits={"feedback:*": 10000},
+                llm_role_seconds_limits={"feedback:*": 10.0},
+            ),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    assert manifest["config"]["llm_role_call_limits"] == {"feedback:*": 1}
+    assert manifest["runtime"]["llm_scheduler"]["state"]["role_call_limits"] == {
+        "policy": "logical_generate_call_limits_by_role_v1",
+        "max_calls_by_role": {"feedback:*": 1},
+        "logical_calls_by_role": {"feedback:review": 1, "mutation": 1},
+    }
+    report = manifest["runtime"]["llm_budget_report"]
+    feedback_budget = next(
+        row for row in report["role_budgets"] if row["role"] == "feedback:review"
+    )
+    assert feedback_budget["logical_call_limit"] == 1
+    assert feedback_budget["adapter_attempt_limit"] == 2
+    assert feedback_budget["token_limit"] == 2000
+    assert feedback_budget["cost_limit_usd"] == 0.01
+    assert feedback_budget["wall_clock_limit_seconds"] == 10.0
+    assert validate_llm_budget_report(report).ok is True
+
+
 def test_runtime_llm_scheduler_state_snapshot_validation_and_manifest_loading(tmp_path):
     backend = MagicMock()
     backend.name = "scheduler/model"
@@ -3253,6 +3319,62 @@ def test_llm_role_seconds_budget_stops_matching_role_before_next_call():
     with pytest.raises(RuntimeError, match="llm_role_seconds_limits"):
         _generate_with_budget(llm, budget, "prompt", role="critique")
     assert backend.calls == 2
+
+
+def test_llm_wildcard_role_usage_budgets_stop_matching_feedback_roles():
+    class UsageBackend:
+        name = "usage/model"
+        api_mode = None
+        provider_response_metadata = {
+            "adapter_retry": {
+                "policy": "bounded_provider_internal_retries",
+                "max_retries": 1,
+                "attempts": 2,
+                "failed_attempts": 1,
+                "failures": [{"attempt": 0, "error_type": "TimeoutError"}],
+            },
+            "usage": {
+                "input_tokens": 400,
+                "output_tokens": 1600,
+                "total_tokens": 2000,
+            },
+        }
+
+        def __init__(self):
+            self.calls = 0
+
+        def generate(self, prompt, **kwargs):
+            self.calls += 1
+            return "<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"
+
+    backend = UsageBackend()
+    llm = LLMEnsemble(
+        [backend],
+        backend_metadata=[{"cost_usd_per_million_tokens": 5.0}],
+    )
+    budget = RunBudget(
+        max_generations=2,
+        max_evaluations=None,
+        max_evaluator_seconds=None,
+        max_runtime_seconds=None,
+        started_at=time.monotonic(),
+        started_at_utc="2000-01-01T00:00:00.000Z",
+        llm_role_provider_attempt_limits={"feedback:*": 2},
+        llm_role_token_limits={"feedback:*": 2000},
+        llm_role_cost_microusd_limits={"feedback:*": 10000},
+        llm_role_seconds_limits={"feedback:*": 0.000000001},
+    )
+
+    _generate_with_budget(llm, budget, "prompt", role="feedback:quality")
+
+    assert backend.calls == 1
+    assert budget.llm_provider_attempts_by_role == {"feedback:quality": 2}
+    assert budget.llm_tokens_by_role == {"feedback:quality": 2000}
+    assert budget.llm_cost_microusd_by_role == {"feedback:quality": 10000}
+    assert budget.llm_seconds_by_role["feedback:quality"] > 0.0
+    with pytest.raises(RuntimeError, match="llm_role_provider_attempt_limits"):
+        _generate_with_budget(llm, budget, "prompt", role="feedback:safety")
+    assert backend.calls == 1
 
 
 def test_configured_llm_call_timeout_wins_when_shorter_than_runtime_budget():

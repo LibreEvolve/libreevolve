@@ -14185,3 +14185,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prompt/meta-prompt/loop tests cover validation,
     rendering, mutation-response parsing, and meta-prompt capability/preview
     flow.
+
+- [x] Add wildcard-scoped LLM role budget limits.
+  - Spec evidence: AlphaEvolve-style compute budgeting should support grouped
+    scheduler lanes such as all feedback graders, not only one exact provider
+    role label at a time.
+  - Status: LLM role budget maps now accept manifest-safe prefix scopes ending
+    in `:*`, such as `feedback:*`. `LLMEnsemble` enforces scoped logical-call
+    limits by summing matching exact-role calls, and `RunBudget` enforces
+    scoped provider-attempt, token, configured-cost, and retained-latency
+    limits while keeping consumed counters concrete. Runtime budget reports
+    apply the most restrictive matching exact or scoped limit to concrete role
+    rows.
+  - Remaining gap: this does not add async-worker budgets, provider-output
+    replay, live provider pricing, or hard SDK cancellation tokens.
+  - Verification: focused config, ensemble, and loop tests cover scope
+    validation, scheduler restore rejection for over-consumed scopes, live
+    scoped budget stops, and runtime budget-report rows.

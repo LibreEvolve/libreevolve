@@ -478,6 +478,9 @@ call telemetry alongside the global configured cap.
   before backend selection for the matching role and are persisted in scheduler
   snapshots as restorable logical role-call consumption. This is a role-specific
   logical-call cap, not a token, cost, provider-attempt, or wall-clock budget.
+  Budget maps also accept manifest-safe prefix scopes ending in `:*`, such as
+  `feedback:*`; concrete call history remains exact-role while matching roles
+  share the scoped limit.
 - `llm_role_backend_indices` (`{}`): optional mapping from manifest-safe LLM
   role labels to non-empty backend-index lists. When a call role is configured,
   the ensemble selects only from those backend indices for that role. Roles

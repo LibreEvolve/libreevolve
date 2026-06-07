@@ -1755,7 +1755,12 @@ boundary, and the `per_evaluation_metadata` value
 including schema, local subprocess execution, unsupported sandbox/container
 claims, filesystem-capability structure, network mode and denial scope,
 wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count quotas,
-and the required pointer to the per-evaluation boundary metadata.
+and the required pointer to the per-evaluation boundary metadata. The startup
+policy also names `validate_validator_boundary_consistency.v1` and the shared
+policy/boundary fields it compares. `validate_validator_boundary_consistency()`
+checks that an attempt-level `evaluation.metadata.validator_boundary` matches
+the startup policy for the execution, filesystem, network, resource, and secret
+boundary claims while still leaving `sandbox_ready: false`.
 Startup manifests also persist the effective `config.validator_network_policy` and
 `policies.validator_network`, so allowed host/deny modes and the remaining
 OS/container network-sandbox gap are visible before individual evaluation

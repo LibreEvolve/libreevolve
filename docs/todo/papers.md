@@ -264,7 +264,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     subprocess execution, unsupported sandbox/container claims,
     filesystem-capability structure, network mode and denial scope,
     wall-clock-only limits, unsupported CPU/memory/GPU/disk/process-count
-    quotas, and the required per-evaluation boundary pointer. Problem-local
+    quotas, and the required per-evaluation boundary pointer.
+    `validate_validator_boundary_consistency.v1` now checks that attempt-level
+    `evaluation.metadata.validator_boundary` records match the startup policy
+    across execution, filesystem-capability, network, resource-limit, and
+    secret-boundary claims while still marking the full sandbox unavailable.
+    Problem-local
     evaluator helper modules are imported as sibling modules beside a
     configured validator file or through package-relative imports for package
     validators; declared evaluator data files are hashed and exposed through

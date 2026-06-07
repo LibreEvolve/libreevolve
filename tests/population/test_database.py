@@ -3398,6 +3398,24 @@ def test_manifest_written():
         "secret_boundary": "minimal_environment_allowlist_with_redacted_diagnostics",
         "startup_manifest_only": True,
         "per_evaluation_metadata": "evaluation.metadata.validator_boundary",
+        "boundary_consistency_validator": (
+            "validate_validator_boundary_consistency.v1"
+        ),
+        "boundary_consistency_fields": [
+            "policy",
+            "execution",
+            "security_sandbox",
+            "container",
+            "filesystem_capability_model",
+            "filesystem_capabilities",
+            "network_policy",
+            "network_egress",
+            "network_denial",
+            "network_denial_scope",
+            "resource_limits",
+            "resource_limit_policy",
+            "secret_boundary",
+        ],
         "remaining_gap": (
             "configurable sandbox/container enforcement, OS filesystem "
             "capabilities, CPU/memory/GPU/disk/process quotas, and distributed "

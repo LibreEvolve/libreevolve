@@ -13,6 +13,24 @@ VALIDATOR_RESOURCE_LIMIT_POLICY_SCHEMA = (
     "libreevolve.validator_resource_limit_policy.v1"
 )
 VALIDATOR_NETWORK_POLICIES = {"host", "deny"}
+VALIDATOR_BOUNDARY_CONSISTENCY_VALIDATOR = (
+    "validate_validator_boundary_consistency.v1"
+)
+VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS = (
+    "policy",
+    "execution",
+    "security_sandbox",
+    "container",
+    "filesystem_capability_model",
+    "filesystem_capabilities",
+    "network_policy",
+    "network_egress",
+    "network_denial",
+    "network_denial_scope",
+    "resource_limits",
+    "resource_limit_policy",
+    "secret_boundary",
+)
 
 
 @dataclass(frozen=True)
@@ -27,6 +45,16 @@ class ValidatorPolicyValidation:
     local_boundary_ready: bool
     sandbox_ready: bool
     network_policy: str | None
+    issues: list[ValidatorPolicyIssue]
+
+
+@dataclass(frozen=True)
+class ValidatorBoundaryConsistencyValidation:
+    ok: bool
+    local_boundary_ready: bool
+    sandbox_ready: bool
+    network_policy: str | None
+    compared_fields: list[str]
     issues: list[ValidatorPolicyIssue]
 
 
@@ -57,6 +85,20 @@ def validate_validator_execution_policy(
     _validate_resource_limit_policy(data.get("resource_limit_policy"), issues)
     _expect(data, "startup_manifest_only", True, issues)
     _expect(data, "per_evaluation_metadata", "evaluation.metadata.validator_boundary", issues)
+    _expect(
+        data,
+        "boundary_consistency_validator",
+        VALIDATOR_BOUNDARY_CONSISTENCY_VALIDATOR,
+        issues,
+    )
+    fields = data.get("boundary_consistency_fields")
+    if list(VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS) != fields:
+        issues.append(
+            ValidatorPolicyIssue(
+                "invalid_boundary_consistency_fields",
+                "boundary_consistency_fields must name the shared policy/boundary fields",
+            )
+        )
     if not isinstance(data.get("remaining_gap"), str) or not data["remaining_gap"].strip():
         issues.append(
             ValidatorPolicyIssue(
@@ -74,6 +116,49 @@ def validate_validator_execution_policy(
         local_boundary_ready=not issues,
         sandbox_ready=not issues and sandbox_ready,
         network_policy=network_policy,
+        issues=issues,
+    )
+
+
+def validate_validator_boundary_consistency(
+    policy: object | str | Path,
+    boundary: object | str | Path,
+) -> ValidatorBoundaryConsistencyValidation:
+    """Validate that manifest policy and per-attempt boundary claims agree."""
+    policy_data, policy_read_issues = _load_policy(policy)
+    boundary_data, boundary_read_issues = _load_policy(boundary)
+    issues = list(policy_read_issues)
+    issues.extend(
+        ValidatorPolicyIssue(f"boundary_{issue.code}", issue.message)
+        for issue in boundary_read_issues
+    )
+    if policy_data is None or boundary_data is None:
+        return ValidatorBoundaryConsistencyValidation(
+            ok=False,
+            local_boundary_ready=False,
+            sandbox_ready=False,
+            network_policy=None,
+            compared_fields=[],
+            issues=issues,
+        )
+
+    policy_validation = validate_validator_execution_policy(policy_data)
+    issues.extend(policy_validation.issues)
+    _validate_boundary_record(boundary_data, issues)
+    for field in VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS:
+        if policy_data.get(field) != boundary_data.get(field):
+            issues.append(
+                ValidatorPolicyIssue(
+                    f"boundary_{field}_mismatch",
+                    f"boundary {field} must match validator execution policy",
+                )
+            )
+    return ValidatorBoundaryConsistencyValidation(
+        ok=not issues,
+        local_boundary_ready=not issues,
+        sandbox_ready=False,
+        network_policy=policy_validation.network_policy,
+        compared_fields=list(VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS),
         issues=issues,
     )
 
@@ -111,6 +196,44 @@ def _load_policy(
     ]
 
 
+def _validate_boundary_record(
+    boundary: dict[str, Any],
+    issues: list[ValidatorPolicyIssue],
+) -> None:
+    _expect_boundary(boundary, "policy", "local_subprocess_boundary_v1", issues)
+    _expect_boundary(boundary, "execution", "temporary_local_subprocess", issues)
+    _expect_boundary(boundary, "security_sandbox", "unsupported", issues)
+    _expect_boundary(boundary, "container", "unsupported", issues)
+    _expect_boundary(
+        boundary,
+        "filesystem_capability_model",
+        "candidate_root_plus_declared_problem_files",
+        issues,
+    )
+    _validate_filesystem_capabilities(
+        boundary.get("filesystem_capabilities"),
+        issues,
+        code_prefix="boundary_",
+    )
+    _validate_network(boundary, issues, code_prefix="boundary_")
+    _validate_resource_limits(
+        boundary.get("resource_limits"),
+        issues,
+        code_prefix="boundary_",
+    )
+    _validate_resource_limit_policy(
+        boundary.get("resource_limit_policy"),
+        issues,
+        code_prefix="boundary_",
+    )
+    _expect_boundary(
+        boundary,
+        "secret_boundary",
+        "minimal_environment_allowlist_with_redacted_diagnostics",
+        issues,
+    )
+
+
 def _expect(
     data: dict[str, Any],
     field: str,
@@ -122,6 +245,21 @@ def _expect(
             ValidatorPolicyIssue(
                 f"invalid_{field}",
                 f"{field} must be {expected!r}",
+            )
+        )
+
+
+def _expect_boundary(
+    data: dict[str, Any],
+    field: str,
+    expected: object,
+    issues: list[ValidatorPolicyIssue],
+) -> None:
+    if data.get(field) != expected:
+        issues.append(
+            ValidatorPolicyIssue(
+                f"invalid_boundary_{field}",
+                f"boundary {field} must be {expected!r}",
             )
         )
 
@@ -146,11 +284,13 @@ def _validate_filesystem_scope(
 def _validate_filesystem_capabilities(
     value: object,
     issues: list[ValidatorPolicyIssue],
+    *,
+    code_prefix: str = "",
 ) -> None:
     if not isinstance(value, dict):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_filesystem_capabilities",
+                f"{code_prefix}invalid_filesystem_capabilities",
                 "filesystem_capabilities must be an object",
             )
         )
@@ -164,7 +304,7 @@ def _validate_filesystem_capabilities(
     ):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_filesystem_cwd",
+                f"{code_prefix}invalid_filesystem_cwd",
                 "cwd capability must allow read/write/execute in candidate root",
             )
         )
@@ -176,7 +316,7 @@ def _validate_filesystem_capabilities(
     ):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_declared_problem_file_capability",
+                f"{code_prefix}invalid_declared_problem_file_capability",
                 "declared problem files must be read/execute and no-write",
             )
         )
@@ -188,7 +328,7 @@ def _validate_filesystem_capabilities(
     ):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_host_filesystem_boundary",
+                f"{code_prefix}invalid_host_filesystem_boundary",
                 "host filesystem boundary must not overclaim OS capability enforcement",
             )
         )
@@ -197,12 +337,14 @@ def _validate_filesystem_capabilities(
 def _validate_network(
     data: dict[str, Any],
     issues: list[ValidatorPolicyIssue],
+    *,
+    code_prefix: str = "",
 ) -> str | None:
     network_policy = data.get("network_policy")
     if not isinstance(network_policy, str) or network_policy not in VALIDATOR_NETWORK_POLICIES:
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_network_policy",
+                f"{code_prefix}invalid_network_policy",
                 "network_policy must be host or deny",
             )
         )
@@ -232,11 +374,13 @@ def _validate_network(
 def _validate_resource_limits(
     value: object,
     issues: list[ValidatorPolicyIssue],
+    *,
+    code_prefix: str = "",
 ) -> None:
     if not isinstance(value, dict):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_resource_limits",
+                f"{code_prefix}invalid_resource_limits",
                 "resource_limits must be an object",
             )
         )
@@ -249,11 +393,13 @@ def _validate_resource_limits(
 def _validate_resource_limit_policy(
     value: object,
     issues: list[ValidatorPolicyIssue],
+    *,
+    code_prefix: str = "",
 ) -> None:
     if not isinstance(value, dict):
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_resource_limit_policy",
+                f"{code_prefix}invalid_resource_limit_policy",
                 "resource_limit_policy must be an object",
             )
         )
@@ -265,7 +411,7 @@ def _validate_resource_limit_policy(
     if not isinstance(wall, dict) or wall.get("supported") is not True:
         issues.append(
             ValidatorPolicyIssue(
-                "invalid_wall_clock_limit_policy",
+                f"{code_prefix}invalid_wall_clock_limit_policy",
                 "wall_clock_timeout must be the only supported quota",
             )
         )
@@ -276,7 +422,7 @@ def _validate_resource_limit_policy(
         ):
             issues.append(
                 ValidatorPolicyIssue(
-                    f"invalid_{field}_limit_policy",
+                    f"{code_prefix}invalid_{field}_limit_policy",
                     f"{field} limits must be declared unsupported",
                 )
             )

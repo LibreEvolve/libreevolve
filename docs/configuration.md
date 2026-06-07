@@ -1169,6 +1169,9 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   wall-clock timeout cleanup, and unsupported CPU/memory/GPU/disk/process-count
   quotas. They are audit evidence for the local runner, not enforcement of a
   configurable container or OS resource sandbox.
+  `validate_validator_boundary_consistency.v1` compares the startup policy to
+  attempt-level `evaluation.metadata.validator_boundary` records for the shared
+  execution, filesystem, network, resource, and secret-boundary claims.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
   Identical configured variants are intentionally admitted as separate prompt

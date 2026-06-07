@@ -684,6 +684,10 @@ renders bounded validator execution metadata when available: validator
 boundary, stdin policy, diagnostic-output decode/cap/redaction metadata,
 resource-limit policy, timeout-cleanup context, configured stage threshold
 checks, metric-threshold checks, and artifact/output gate checks.
+Startup manifests record `policies.validator_execution`, including the
+`validate_validator_boundary_consistency.v1` contract for checking that
+attempt-level `evaluation.metadata.validator_boundary` records agree with the
+startup execution, filesystem, network, resource, and secret-boundary claims.
 proposal, evaluator, retry, artifact, and grader-feedback fields are rendered
 as JSON strings under typed feedback sections. Parent and inspiration
 workspaces are rendered as typed, length-counted, JSON-escaped file records

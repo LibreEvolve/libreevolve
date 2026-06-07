@@ -15140,3 +15140,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover valid full-resume bundle validation
     and edited bundle overclaims for provider-output replay, unsupported
     surfaces, and controller-budget replay event counts.
+
+- [x] Add validator policy-to-boundary consistency validation.
+  - Spec evidence: AlphaEvolve-style evaluator orchestration needs
+    manifest-visible execution boundaries whose per-attempt evidence cannot
+    drift from startup sandbox, filesystem, network, and resource-limit claims.
+  - Status: startup `policies.validator_execution` records now name
+    `validate_validator_boundary_consistency.v1` and the shared fields checked
+    against attempt-level `evaluation.metadata.validator_boundary` records.
+    `validate_validator_boundary_consistency()` validates both records and
+    rejects mismatched execution, filesystem-capability, network,
+    resource-limit, or secret-boundary claims while preserving
+    `sandbox_ready: false`.
+  - Remaining gap: this validates consistency between current local-subprocess
+    evidence records; it does not add a configurable container/security
+    sandbox, OS-enforced filesystem capabilities, OS/container network
+    isolation, CPU/memory/GPU/disk/process quotas, provider credential boundary
+    auditing, or distributed evaluator worker state.
+  - Verification: focused validator-policy tests cover valid matching
+    policy/boundary records and mismatched network, filesystem, and resource
+    claims.

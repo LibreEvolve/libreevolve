@@ -1334,7 +1334,12 @@ Primary evidence:
     sandbox/container claims, filesystem-capability structure, network mode and
     denial scope, wall-clock-only limits, unsupported CPU/memory/GPU/disk/
     process-count quotas, and the required pointer to per-evaluation boundary
-    metadata.
+    metadata. Startup policy records now also carry
+    `validate_validator_boundary_consistency.v1` plus the exact shared fields
+    used to compare manifest policy claims with attempt-level
+    `evaluation.metadata.validator_boundary`; the consistency validator checks
+    execution, filesystem-capability, network, resource-limit, and
+    secret-boundary agreement while still reporting `sandbox_ready: false`.
   - Remaining gap: there is still no configurable container/security sandbox,
     no OS/container-grade network egress sandbox, no proof that native
     extensions, subprocesses, or alternate runtimes cannot connect out, no
@@ -1342,7 +1347,8 @@ Primary evidence:
     plus problem-local provenance/artifact/data declarations, no CPU, memory,
     GPU, disk, or process-count quotas, no network-mediated provider credential
     boundary audit, and no resumable distributed evaluator worker state. The
-    remaining gap is not startup validator policy-record validation.
+    remaining gap is not startup validator policy-record validation or
+    policy-to-boundary consistency validation.
   - Required result: define and enforce configurable sandbox/container,
     filesystem capability, OS/container network capability, and resource-limit
     policy for validators, with manifest-visible evidence and tests proving the

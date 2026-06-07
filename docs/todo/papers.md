@@ -445,6 +445,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     retention-limit consistency, normalized metric ranges, non-dominated
     retained frontier records, and explicit diagnostic-not-primary-archive
     limitation statements.
+    `validate_map_elites_objective_archive_policy()` now validates
+    `libreevolve.map_elites_objective_archive_policy.v1` snapshot policy
+    records and rejects overclaims that bounded Pareto/frontier retention has
+    replaced the primary scalar MAP-Elites cell policy.
     `runtime.history.failure_index` now groups failure records by fingerprint
     with bounded repetition/latest-record evidence. `runtime.history.hypothesis_index`
     now exposes bounded redacted proposal idea/rationale/hypothesis evidence

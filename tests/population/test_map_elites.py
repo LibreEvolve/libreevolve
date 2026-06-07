@@ -1,7 +1,12 @@
 from fractions import Fraction
 
 import pytest
-from libreevolve.population.map_elites import MAPElites, _descriptor_text
+from libreevolve.population.map_elites import (
+    MAPElites,
+    MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
+    _descriptor_text,
+    validate_map_elites_objective_archive_policy,
+)
 from libreevolve.population.program import Program
 
 def _p(code="x=1", fitness=0.5):
@@ -351,7 +356,7 @@ def test_state_snapshot_restores_cells_and_elite_archive():
         },
     ]
     assert snapshot["objective_archive_policy"] == {
-        "schema": "libreevolve.map_elites_objective_archive_policy.v1",
+        "schema": MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
         "status": "bounded_non_dominated_archive_retention",
         "metric_order": ["accuracy", "latency"],
         "candidate_vector": "complete_normalized_declared_metrics_required",
@@ -421,6 +426,50 @@ def test_restore_state_snapshot_rejects_missing_metric_cell_program_reference():
             elite_archive_size=1,
             metric_order=["accuracy"],
         ).restore_state_snapshot(snapshot, {program.id: program})
+
+
+def test_objective_archive_policy_validator_accepts_snapshot_policy():
+    archive = MAPElites(metric_order=["accuracy", "latency"], elite_archive_size=3)
+    archive.add(_po("balanced", 0.7, {"accuracy": 0.7, "latency": 0.7}))
+    policy = archive.state_snapshot()["objective_archive_policy"]
+
+    validation = validate_map_elites_objective_archive_policy(
+        policy,
+        metric_order=["accuracy", "latency"],
+        elite_archive_size=3,
+    )
+
+    assert validation.ok is True
+    assert validation.archive_policy_ready is True
+    assert validation.primary_pareto_replacement_ready is False
+    assert validation.metric_order == ["accuracy", "latency"]
+    assert validation.bound == 3
+    assert validation.issues == []
+    assert policy["schema"] == MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA
+
+
+def test_objective_archive_policy_validator_rejects_primary_pareto_overclaim():
+    archive = MAPElites(metric_order=["accuracy", "latency"], elite_archive_size=3)
+    policy = archive.state_snapshot()["objective_archive_policy"]
+    policy["metric_order"] = ["accuracy"]
+    policy["bound"] = 4
+    policy["cell_replacement_policy"] = "pareto_frontier_primary_cell_replacement"
+
+    validation = validate_map_elites_objective_archive_policy(
+        policy,
+        metric_order=["accuracy", "latency"],
+        elite_archive_size=3,
+    )
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.archive_policy_ready is False
+    assert validation.primary_pareto_replacement_ready is False
+    assert validation.metric_order == ["accuracy"]
+    assert validation.bound == 4
+    assert "metric_order_mismatch" in codes
+    assert "bound_mismatch" in codes
+    assert "primary_pareto_replacement_overclaim" in codes
 
 
 def test_descriptor_model_revision_only_advances_on_search_state_change():

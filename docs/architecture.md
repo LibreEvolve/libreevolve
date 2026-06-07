@@ -782,8 +782,11 @@ surface non-dominated retained programs with complete declared normalized
 metric vectors, and a `lineage` strategy to cycle or render the best retained
 representative for each root lineage. Admission thresholds, archive
 replacement, backend rewards, and sampling replay still use scalar/live
-policies, and richer Pareto/frontier archive replacement plus a full persisted
-database index remain open.
+policies. The MAP-Elites objective archive policy is independently checkable
+with `validate_map_elites_objective_archive_policy()`, which keeps the current
+bounded retention contract separate from primary Pareto/frontier replacement.
+Richer Pareto/frontier archive replacement plus a full persisted database index
+remain open.
 
 ## Backend selection
 

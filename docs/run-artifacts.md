@@ -1164,6 +1164,11 @@ Important behavior:
   generations, metric values, selection scores, and available declared
   normalized metric vectors. This is an inspection artifact, not a MAP-Elites
   replacement policy.
+  MAP-Elites `state_snapshot()` also records
+  `libreevolve.map_elites_objective_archive_policy.v1`;
+  `validate_map_elites_objective_archive_policy()` validates that the snapshot
+  policy is bounded non-dominated/metric-cell retention and rejects primary
+  Pareto/frontier cell-replacement overclaims.
   `validate_objective_history_summary()` checks the objective history bundle
   across frontier, metric leaders, and metric archives, including schemas,
   policies, shared metric order, non-negative counters, retained-count and

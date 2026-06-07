@@ -1,6 +1,7 @@
 from __future__ import annotations
 import random
 import math
+from dataclasses import dataclass
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -10,6 +11,216 @@ from libreevolve.population.program import (
     validate_program_metrics,
 )
 from libreevolve.population.sampling import validate_exclude_ids, validate_sample_count
+
+MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA = (
+    "libreevolve.map_elites_objective_archive_policy.v1"
+)
+_OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS = {
+    "schema",
+    "status",
+    "metric_order",
+    "candidate_vector",
+    "dominance",
+    "bound",
+    "trim_policy",
+    "sampling_policy",
+    "cell_replacement_policy",
+}
+_OBJECTIVE_ARCHIVE_SAMPLING_POLICIES = {
+    "eligible_for_metric_and_frontier_sampling_via_island_retained_pool",
+    "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool",
+}
+_OBJECTIVE_ARCHIVE_CELL_REPLACEMENT_POLICIES = {
+    "map_elites_cells_still_replace_by_scalar_selection_key",
+    "scalar_primary_cells_plus_metric_specific_cell_overlays",
+}
+
+
+@dataclass(frozen=True)
+class ObjectiveArchivePolicyIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class ObjectiveArchivePolicyValidation:
+    ok: bool
+    archive_policy_ready: bool
+    primary_pareto_replacement_ready: bool
+    metric_order: list[str]
+    bound: int | None
+    issues: list[ObjectiveArchivePolicyIssue]
+
+
+def validate_map_elites_objective_archive_policy(
+    policy: object,
+    *,
+    metric_order: list[str] | tuple[str, ...] | None = None,
+    elite_archive_size: int | None = None,
+) -> ObjectiveArchivePolicyValidation:
+    """Validate the MAP-Elites objective archive policy without restoring state."""
+    issues: list[ObjectiveArchivePolicyIssue] = []
+    expected_metric_order: tuple[str, ...] | None = None
+    if metric_order is not None:
+        try:
+            expected_metric_order = _validate_metric_order(metric_order)
+        except ValueError as exc:
+            issues.append(
+                ObjectiveArchivePolicyIssue(
+                    "invalid_expected_metric_order",
+                    str(exc),
+                )
+            )
+    if elite_archive_size is not None and (
+        isinstance(elite_archive_size, bool)
+        or not isinstance(elite_archive_size, int)
+        or elite_archive_size < 1
+    ):
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_expected_elite_archive_size",
+                "elite_archive_size must be a positive integer",
+            )
+        )
+        elite_archive_size = None
+    if not isinstance(policy, dict):
+        return ObjectiveArchivePolicyValidation(
+            ok=False,
+            archive_policy_ready=False,
+            primary_pareto_replacement_ready=False,
+            metric_order=[],
+            bound=None,
+            issues=[
+                *issues,
+                ObjectiveArchivePolicyIssue(
+                    "invalid_shape",
+                    "objective archive policy must be an object",
+                ),
+            ],
+        )
+
+    missing = _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS - set(policy)
+    if missing:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "missing_fields",
+                f"objective archive policy missing fields: {sorted(missing)}",
+            )
+        )
+    unsupported = set(policy) - _OBJECTIVE_ARCHIVE_POLICY_REQUIRED_FIELDS
+    if unsupported:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "unsupported_fields",
+                f"objective archive policy has unsupported fields: {sorted(unsupported)}",
+            )
+        )
+    if policy.get("schema") != MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_schema",
+                "objective archive policy schema is unsupported",
+            )
+        )
+    if policy.get("status") != "bounded_non_dominated_archive_retention":
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_status",
+                "objective archive policy status is unsupported",
+            )
+        )
+
+    actual_metric_order: tuple[str, ...] = ()
+    try:
+        actual_metric_order = _validate_metric_order(policy.get("metric_order"))
+    except ValueError as exc:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_metric_order",
+                str(exc),
+            )
+        )
+    if (
+        expected_metric_order is not None
+        and actual_metric_order
+        and actual_metric_order != expected_metric_order
+    ):
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "metric_order_mismatch",
+                "objective archive policy metric_order must match the archive",
+            )
+        )
+    if policy.get("candidate_vector") != "complete_normalized_declared_metrics_required":
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_candidate_vector",
+                "objective archive policy candidate_vector is unsupported",
+            )
+        )
+    if (
+        policy.get("dominance")
+        != "all_metrics_greater_or_equal_and_one_strictly_greater"
+    ):
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_dominance",
+                "objective archive policy dominance is unsupported",
+            )
+        )
+    bound = policy.get("bound")
+    normalized_bound: int | None = None
+    if isinstance(bound, bool) or not isinstance(bound, int) or bound < 1:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_bound",
+                "objective archive policy bound must be a positive integer",
+            )
+        )
+    else:
+        normalized_bound = bound
+        if elite_archive_size is not None and bound != elite_archive_size:
+            issues.append(
+                ObjectiveArchivePolicyIssue(
+                    "bound_mismatch",
+                    "objective archive policy bound must match elite_archive_size",
+                )
+            )
+    if policy.get("trim_policy") != "crowding_distance_then_selection_score_then_fitness":
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_trim_policy",
+                "objective archive policy trim_policy is unsupported",
+            )
+        )
+    if policy.get("sampling_policy") not in _OBJECTIVE_ARCHIVE_SAMPLING_POLICIES:
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                "invalid_sampling_policy",
+                "objective archive policy sampling_policy is unsupported",
+            )
+        )
+    cell_policy = policy.get("cell_replacement_policy")
+    if cell_policy not in _OBJECTIVE_ARCHIVE_CELL_REPLACEMENT_POLICIES:
+        code = "invalid_cell_replacement_policy"
+        if isinstance(cell_policy, str) and (
+            "pareto" in cell_policy or "frontier" in cell_policy
+        ):
+            code = "primary_pareto_replacement_overclaim"
+        issues.append(
+            ObjectiveArchivePolicyIssue(
+                code,
+                "objective archive policy cell_replacement_policy is unsupported",
+            )
+        )
+    return ObjectiveArchivePolicyValidation(
+        ok=not issues,
+        archive_policy_ready=not issues,
+        primary_pareto_replacement_ready=False,
+        metric_order=list(actual_metric_order),
+        bound=normalized_bound,
+        issues=issues,
+    )
 
 
 class MAPElites:
@@ -382,7 +593,7 @@ class MAPElites:
                 for metric in self._metric_order
             ],
             "objective_archive_policy": {
-                "schema": "libreevolve.map_elites_objective_archive_policy.v1",
+                "schema": MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
                 "status": "bounded_non_dominated_archive_retention",
                 "metric_order": list(self._metric_order),
                 "candidate_vector": "complete_normalized_declared_metrics_required",
@@ -1025,7 +1236,7 @@ def _validate_objective_archive_policy(
             "MAP-Elites snapshot objective_archive_policy has unsupported fields: "
             f"{sorted(unsupported)}"
         )
-    if value["schema"] != "libreevolve.map_elites_objective_archive_policy.v1":
+    if value["schema"] != MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy schema is unsupported"
         )
@@ -1056,17 +1267,11 @@ def _validate_objective_archive_policy(
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.trim_policy is unsupported"
         )
-    if value["sampling_policy"] not in {
-        "eligible_for_metric_and_frontier_sampling_via_island_retained_pool",
-        "eligible_for_metric_frontier_and_metric_cell_sampling_via_island_retained_pool",
-    }:
+    if value["sampling_policy"] not in _OBJECTIVE_ARCHIVE_SAMPLING_POLICIES:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.sampling_policy is unsupported"
         )
-    if value["cell_replacement_policy"] not in {
-        "map_elites_cells_still_replace_by_scalar_selection_key",
-        "scalar_primary_cells_plus_metric_specific_cell_overlays",
-    }:
+    if value["cell_replacement_policy"] not in _OBJECTIVE_ARCHIVE_CELL_REPLACEMENT_POLICIES:
         raise ValueError(
             "MAP-Elites snapshot objective_archive_policy.cell_replacement_policy is unsupported"
         )

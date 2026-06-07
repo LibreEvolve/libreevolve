@@ -15160,3 +15160,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused validator-policy tests cover valid matching
     policy/boundary records and mismatched network, filesystem, and resource
     claims.
+
+- [x] Add MAP-Elites objective archive policy validation.
+  - Spec evidence: AlphaEvolve-style multi-score search needs audit evidence
+    that secondary Pareto/frontier retention is not being misrepresented as
+    primary archive replacement.
+  - Status: `validate_map_elites_objective_archive_policy()` now validates
+    `libreevolve.map_elites_objective_archive_policy.v1` snapshot policy
+    records for bounded non-dominated retention, complete declared normalized
+    metric-vector requirements, dominance/trim/sampling policy, metric order,
+    retention bound, scalar-primary-cell plus metric-cell overlay semantics,
+    and explicit rejection of primary Pareto/frontier replacement overclaims.
+  - Remaining gap: this validates the current objective archive policy; it
+    does not replace scalar MAP-Elites cell replacement with Pareto/frontier
+    dominance or add a durable cross-run multi-objective database.
+  - Verification: focused MAP-Elites tests cover valid snapshot policies and
+    edited policies with metric-order, bound, and primary-Pareto replacement
+    overclaims.

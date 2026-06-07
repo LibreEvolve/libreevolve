@@ -742,7 +742,13 @@ Primary evidence:
     metric archives, including schema/policy values, shared metric order,
     non-negative counters, retained-count and retention-limit consistency,
     normalized metric ranges, non-dominated retained frontier records, and
-    explicit diagnostic-not-primary-archive limitation statements. Backend
+    explicit diagnostic-not-primary-archive limitation statements.
+    `validate_map_elites_objective_archive_policy()` now validates
+    `libreevolve.map_elites_objective_archive_policy.v1` snapshot records for
+    bounded non-dominated retention, complete normalized declared-metric vector
+    requirements, dominance/trim/sampling policy, metric order, retention
+    bound, scalar-primary-cell plus metric-cell overlay semantics, and explicit
+    rejection of primary Pareto/frontier cell-replacement overclaims. Backend
     reward, admission thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
     scalar selection score rather than Pareto/frontier dominance. Durable

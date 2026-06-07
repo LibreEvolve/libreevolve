@@ -318,6 +318,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     current built-in/entry-point validation nor overclaims complete
     AlphaEvolve-grade plugin configuration contracts.
 
+- [ ] Keep plugin artifact-provenance roadmap wording scoped to manifest-safe
+      summaries versus lifecycle evidence.
+  - Spec evidence: AlphaEvolve-style extensibility needs plugin-generated
+    artifacts to be attributable, replayable, and lifecycle-aware enough that
+    prompt, score, artifact, and strategy effects can be audited across runs.
+  - Current evidence: `ROADMAP.md` asks to extend plugin provenance beyond
+    prompt-context/configuration/artifact records and manifest-safe emitted
+    artifact summaries toward stronger artifact lifecycle hashes, versioned
+    custom registry entries, and richer strategy choices. README and code
+    evidence show current `run_artifacts_metadata()` summaries are wrapped with
+    runtime-derived plugin identity, validated as bounded JSON-safe metadata,
+    recorded under `runtime.plugin_artifacts[]`, and converted into
+    `runtime.plugin_artifact_failures[]` during aborted-run finalization when
+    the hook or schema fails. Current run manifests also classify and hash the
+    known `plugin_artifacts/` directory, but plugin-specific lifecycle phases,
+    produced-file declarations, strategy decisions, and versioned custom
+    registry records are not yet a durable contract.
+  - Required result: when plugin artifact lifecycle events, per-plugin
+    produced-file manifests, strategy-choice provenance, versioned custom
+    registry entries, or replay/restore policy for plugin artifacts land,
+    update the roadmap, README, papers index, and code/paper TODO entries
+    together so roadmap wording neither underclaims current manifest-safe
+    summaries nor overclaims AlphaEvolve-grade plugin artifact provenance.
+
 - [ ] Keep proposal-memory roadmap wording scoped to bounded hypothesis
   summaries versus semantic proposal retrieval.
   - Spec evidence: AlphaEvolve-style idea memory should be able to score and

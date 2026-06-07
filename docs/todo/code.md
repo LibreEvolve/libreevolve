@@ -497,8 +497,7 @@ Primary evidence:
     parent-metric selection/caps, and
     parent-feedback subsection selection, stochastic prompt-format weights, and
     local context source selection/term-filtering/ranking/render-count, recent failure-memory selection/rendering, upstream inspiration sampling
-    plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin context ordering, plugin context cap/truncation shape, and coarse
-    plugin prompt-context generation enablement.
+    plus safe required/excluded-metric, fitness-threshold, and metric-threshold filtering/ranking, selected-inspiration, plugin extra-context rendering limits, plugin-context enable/disable, allowlist/excluded-label selection, safe term filtering, deterministic term ranking, render-count limiting, global/per-label caps, ordering, and truncation shape.
     `PromptSampler` still obtains plugin
     retrieval/summarization behavior through fixed code/config
     paths.
@@ -536,7 +535,7 @@ Primary evidence:
     truncation-mode selection so safe configured or LLM mutations can change
     retrieval/summarization,
     plugin-context shaping beyond
-    enable/disable/allowlist/order/per-plugin caps, upstream inspiration selection beyond
+    enable/disable/allowlist/excluded-label selection/order/safe term filtering/deterministic term ranking/render-count limiting/global and per-label caps/truncation, upstream inspiration selection beyond
     strategy/sample-count/required-metric-filter/excluded-metric-filter/fitness-threshold-filter/metric-ranking/render-count, context-source policy beyond exact path selection, safe required/excluded term filtering, task-term ranking, per-source char caps, truncation, and render-count, failure-memory selection beyond exact required/excluded error-label, required/excluded changed-file, required/excluded stage-name, repetition-count, and finite-score filtering plus recent/oldest/lowest-score/highest-repetition retained records, and deeper per-field evaluator-feedback controls beyond
     validator metadata summary keys, parent metric names/caps, syntax-error fields, proposal fields, stage-summary fields,
     execution-output fields and caps, sample/retry diagnostic fields and caps, program-output fields and caps, metric-bound fields,

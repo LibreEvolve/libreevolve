@@ -1159,8 +1159,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     beyond the current validated structured context-policy surface rather than
     implying that structured prompt-context policy is absent.
     Remaining context rendering is still mostly fixed in `PromptSampler` and related
-    code: plugin context shaping beyond enable/disable, allowlist, ordering,
-    caps, truncation, parent-metric selection/caps, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,
+    code: plugin context shaping beyond enable/disable, allowlist/excluded-label
+    selection, ordering, safe term filtering, deterministic term ranking,
+    render-count limiting, global/per-label caps, truncation, parent-metric selection/caps, and required parent-code file selection/term filtering/deterministic ordering/render-count limiting/per-file content capping/character capping/truncation-mode selection,
     retrieval/summarization beyond deterministic source selection/ranking/count caps, and deeper
     per-field policy inside selected validator diagnostic groups beyond
     metadata-summary key selection, parent-metric selection/caps, syntax-error field selection, and

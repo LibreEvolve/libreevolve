@@ -261,9 +261,10 @@ is not yet an AlphaEvolve reproduction.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence.
-- Extend current synchronous configurable critique reviewer pools toward async
-  reviewer overlap, calibrated reviewer scoring, stronger provider isolation,
-  and runtime artifacts for reviewer-specific timeout/failure behavior.
+- Extend current synchronous configurable critique reviewer pools, role routing,
+  and first/last-valid aggregation toward async reviewer overlap, calibrated
+  reviewer scoring, stronger provider isolation, and runtime artifacts for
+  reviewer-specific timeout/failure behavior.
 
 ### 8. Plugin extensibility
 

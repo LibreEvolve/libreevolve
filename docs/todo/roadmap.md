@@ -102,3 +102,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     update the roadmap, README, papers index, and code/paper TODO entries
     together so they neither underclaim the report contract nor overclaim
     executed ablation experiments.
+
+- [ ] Keep critique-reviewer roadmap wording scoped to synchronous reviewer
+  pools versus AlphaEvolve-grade reviewer orchestration.
+  - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated
+    signal, explicit budget policy, and robust provider isolation beyond a
+    sequential mutation-replacement filter.
+  - Current evidence: `critique_reviewers` configures bounded synchronous
+    reviewer pools with manifest-safe roles, first/last-valid aggregation,
+    retained reviewer-pool metadata, selected-reviewer provenance, and existing
+    role routing/budget telemetry for reviewer roles such as
+    `critique:correctness`.
+  - Required result: when async reviewer overlap, calibrated reviewer scoring,
+    per-reviewer provider isolation, or richer reviewer-specific failure
+    artifacts land, update the roadmap, README, papers index, and code/paper
+    TODO entries together so they neither underclaim current synchronous
+    reviewer pools nor overclaim AlphaEvolve-grade critique orchestration.

@@ -174,6 +174,26 @@ Primary evidence:
     for a large multi-function or multi-file codebase before README, ROADMAP,
     or paper-index wording claims AlphaEvolve Table 1 code-scale parity.
 
+- [ ] Add self-improvement and distillation evidence boundaries for
+      infrastructure-facing claims.
+  - Spec evidence: AlphaEvolve's Discussion says the system made practical
+    discoveries that increase the efficiency of its own infrastructure and
+    future base LLMs, and identifies distilling AlphaEvolve-augmented
+    performance into next-generation base models as a natural next step.
+  - Current evidence: LibreEvolve records provider budgets, systems report
+    schemas, benchmark/certification artifact inventories, and paper-facing
+    background rows, but it does not model infrastructure components as
+    versioned optimization targets for its own runtime, does not link an
+    evolved optimization to a measured improvement in LibreEvolve's own
+    execution path, and has no model-distillation or training-data export
+    evidence tied to evolved candidates.
+  - Required result: add explicit scope metadata and report contracts before
+    claiming AlphaEvolve-style self-improving infrastructure or base-model
+    uplift: target component identity, before/after runtime or cost metrics,
+    deployment/adoption status, rollback/safety evidence, relation to the
+    running LibreEvolve system, and, for distillation claims, dataset/export
+    provenance plus training/evaluation evidence.
+
 ## Prompt Sampling and Context
 
 - [ ] Complete provider-token prompt section fitting beyond mutation prompts

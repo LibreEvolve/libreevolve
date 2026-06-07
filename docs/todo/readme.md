@@ -502,6 +502,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README, ROADMAP, papers index, and matching TODOs so README does not imply
     final reference-gate artifacts prove AlphaEvolve-style compiler-IR traces.
 
+- [ ] Keep README self-improvement wording scoped until infrastructure and
+      distillation evidence exists.
+  - Spec evidence: AlphaEvolve's Discussion says practical discoveries can
+    improve the efficiency of its own infrastructure and future base LLMs, and
+    frames distillation of AlphaEvolve-augmented performance into base models
+    as a natural next step.
+  - Current evidence: README documents provider budgets, systems-result
+    schemas, benchmark contracts, and paper-result certification boundaries.
+    It does not describe any LibreEvolve runtime, provider, compiler,
+    evaluator, or benchmark component as an evolved optimization target for
+    the tool itself, and it has no distillation dataset, training, or
+    model-evaluation evidence derived from evolved candidates.
+  - Required result: when self-improvement reports, deployment/adoption
+    measurements, rollback/safety evidence, or distillation artifacts land,
+    update README, ROADMAP, papers index, and matching TODOs so README neither
+    underclaims concrete infrastructure improvements nor overclaims
+    AlphaEvolve-style self-improving or model-uplift capability.
+
 - [ ] Keep README benchmark-hardening wording scoped to smoke evidence versus
   benchmark-grade anti-gaming fixtures.
   - Spec evidence: AlphaEvolve-comparable benchmark claims require robust target

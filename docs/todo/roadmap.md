@@ -580,6 +580,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve coverage for manual-experiment or LLM-only idea-feedback
     workflows.
 
+- [ ] Keep self-improvement roadmap wording scoped until infrastructure and
+      distillation evidence exists.
+  - Spec evidence: AlphaEvolve's Discussion says practical discoveries can
+    improve its own infrastructure and future base LLMs, and suggests
+    distilling AlphaEvolve-augmented base-model performance into future models.
+  - Current evidence: ROADMAP.md tracks provider/runtime budgets, systems
+    benchmarks, and benchmark/report contracts, but it does not yet require
+    report evidence for optimizing LibreEvolve's own runtime or provider
+    infrastructure, nor does it define distillation data/export/training
+    evidence derived from evolved candidates.
+  - Required result: when roadmap items cover self-improving infrastructure or
+    base-model uplift, require target-component identity, before/after
+    measurements, deployment/adoption status, rollback/safety evidence,
+    provenance linking the optimized component to LibreEvolve's own execution,
+    and distillation dataset/training/evaluation artifacts where relevant.
+    Update ROADMAP, README, papers index, and code/paper TODO entries together
+    so roadmap wording treats those claims as future evidence requirements,
+    not current AlphaEvolve parity.
+
 - [ ] Keep evaluation-cascade roadmap wording scoped to staged thresholds until
       statistical hypothesis-test promotion evidence lands.
   - Spec evidence: AlphaEvolve Section 2.4 calls the cascade "hypothesis

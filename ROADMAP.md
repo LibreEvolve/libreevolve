@@ -365,6 +365,11 @@ is not yet an AlphaEvolve reproduction.
   held-out/generalization, and reference-correctness gates plus artifacts that
   distinguish loop feedback from generalization, deployment, or independent
   certification evidence.
+- Add self-improvement evidence boundaries before claiming AlphaEvolve-style
+  infrastructure or base-model uplift: component identity, before/after
+  measurements, deployment/adoption status, rollback/safety review, provenance
+  tying the candidate to LibreEvolve's own execution path, and any
+  distillation dataset/training/evaluation artifacts.
 - For scheduling fixtures, add mission-critical deployment evidence beyond
   generic systems gates: interpretable heuristic structure, debuggability and
   operator review, predictable behavior checks, rollout-risk evidence, and

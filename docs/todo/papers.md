@@ -1889,6 +1889,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifying the declared files, report/inventory consistency, or
     evidence-bundle consistency once a report names them.
 
+- [ ] Track self-improvement and distillation evidence for Discussion claims.
+  - Paper evidence: AlphaEvolve's Discussion says practical discoveries can
+    improve its own infrastructure and future base LLMs, while distilling
+    AlphaEvolve-augmented performance into the next generation of base models
+    is a natural next step.
+  - Current gap: `papers/README.md`, benchmark reports, and runtime manifests
+    do not yet identify any LibreEvolve infrastructure component as an evolved
+    optimization target, do not connect an evolved candidate to measured
+    improvements in the tool's own runtime/provider/compiler/benchmark
+    infrastructure, and do not define distillation datasets, training runs, or
+    model-evaluation artifacts derived from evolved programs.
+  - Required result: add paper-facing evidence boundaries for self-improving
+    infrastructure and model-uplift claims: component identity, optimization
+    objective, before/after measurements, deployment or adoption status,
+    rollback/safety review, provenance linking the candidate to LibreEvolve's
+    own execution path, and any distillation dataset/training/evaluation
+    artifacts. Until then, keep Discussion-style self-improvement and
+    distillation wording scoped as AlphaEvolve context rather than LibreEvolve
+    capability.
+
 - [ ] Record scheduling feasibility-boundary evidence for Borg-style results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 states that
     AlphaEvolve's scheduling heuristic scores machines after Borg has already

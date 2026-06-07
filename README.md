@@ -3099,6 +3099,14 @@ root, including safe relative paths, existence, SHA-256 hashes, and byte
 counts. It proves report artifact availability, not that unseen workloads,
 reference-code checks, deployment evidence, or independent certification have
 been generated.
+LibreEvolve also does not yet provide AlphaEvolve Discussion-style
+self-improvement evidence. No report currently identifies a LibreEvolve
+runtime, provider, evaluator, compiler, benchmark, or infrastructure component
+as an evolved optimization target for the tool itself, links an accepted
+candidate to measured before/after improvements in that execution path, or
+records deployment/adoption, rollback, and safety-review evidence. There is
+also no distillation dataset, training run, or model-evaluation artifact that
+would support claims about uplifting base models from evolved programs.
 Benchmark anti-gaming coverage uses
 `libreevolve.benchmark_hardening.v1` in
 `libreevolve/problems/benchmarks/benchmark_hardening.py`; advertised benchmark

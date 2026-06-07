@@ -2483,6 +2483,28 @@ Primary evidence:
     counts; and compare SOTA/strong-model runs with small-base or generic
     routing runs before claiming AlphaEvolve-style sample efficiency.
 
+- [ ] Add repeated-sampling baseline reports for test-time-compute uplift
+      claims.
+  - Spec evidence: AlphaEvolve's Discussion frames the system as a
+    test-time-compute agent that significantly enhances the base LLM compared
+    with repeated sampling, sustained by machine feedback and evolutionary
+    search.
+  - Current evidence: LibreEvolve records LLM call/provider/token/cost/latency
+    budgets, generated candidate ids, archive admission, and an equal-budget
+    ablation report contract with a `No evolution` variant. It does not yet
+    define a repeated-sampling baseline runner or report that fixes model,
+    prompt, seed, budget, candidate count, and evaluator settings while
+    disabling evolutionary feedback, parent/inspiration resurfacing,
+    archive-driven selection, and meta-prompt updates. The current
+    `No evolution` registry label is not enough to prove a base-LLM
+    repeated-sample comparator.
+  - Required result: add benchmark/report support for equal-budget repeated
+    base-model sampling baselines with controlled prompts/models/seeds,
+    generated/evaluated sample counts, candidate validity/admission outcomes,
+    target-progress curves, and explicit links to matching evolutionary runs
+    so test-time-compute uplift claims distinguish evolutionary feedback from
+    ordinary repeated sampling.
+
 - [ ] Promote role-scoped LLM routing from shared-bandit audit evidence to
   independent per-role scheduler policy.
   - Spec evidence: AlphaEvolve's ensemble and compute-budget framing separates

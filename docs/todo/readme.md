@@ -1430,6 +1430,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     papers index, and code/paper TODOs so README does not imply that budget
     caps or small-base labels prove AlphaEvolve-style sample efficiency.
 
+- [ ] Keep README test-time-compute wording scoped until repeated-sampling
+      baselines exist.
+  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
+    enhances base-LLM capability compared with repeated sampling, sustained by
+    machine feedback.
+  - Current evidence: README can describe budget telemetry, generated
+    candidates, archive admission, and the equal-budget ablation report
+    contract with a `No evolution` variant. It does not document controlled
+    repeated base-model sampling baselines with matched prompt/model/seed/
+    evaluator settings, disabled evolutionary feedback, disabled
+    parent/inspiration resurfacing, disabled meta-prompt updates, and
+    target-progress comparisons against matching evolutionary runs.
+  - Required result: when repeated-sampling baseline reports land, update
+    README, ROADMAP, papers index, and code/paper TODOs so README separates
+    generic LLM-call budget caps and `No evolution` labels from evidence that
+    LibreEvolve's evolutionary loop improves over equal-budget repeated
+    base-model sampling.
+
 - [ ] Keep README critique-reviewer wording scoped to synchronous first/last
   valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

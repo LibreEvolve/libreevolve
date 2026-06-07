@@ -1013,6 +1013,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap language distinguishes budget stopping from AlphaEvolve-style
     "thousands of samples suffice" evidence.
 
+- [ ] Keep test-time-compute roadmap wording scoped until repeated-sampling
+      baselines exist.
+  - Spec evidence: AlphaEvolve's Discussion says the evolutionary procedure
+    improves the base LLM compared with repeated sampling, using machine
+    feedback to sustain useful test-time compute.
+  - Current evidence: roadmap/README/paper-index status can point to LLM
+    budget telemetry, generated candidate ids, archive admission records,
+    sample-efficiency gaps, and an equal-budget ablation report contract with a
+    `No evolution` variant. Those are not yet a controlled repeated-sampling
+    comparator with matched prompt/model/seed/evaluator settings and disabled
+    evolutionary feedback, parent/inspiration resurfacing, archive-driven
+    selection, and meta-prompt updates.
+  - Required result: when repeated-sampling baseline reports land, update
+    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
+    language distinguishes ordinary budgeted LLM sampling and `No evolution`
+    labels from AlphaEvolve-style test-time-compute uplift over repeated
+    base-model sampling.
+
 - [ ] Keep provider-roadmap wording explicit about missing Google/Gemini
       first-class support.
   - Spec evidence: AlphaEvolve's concrete model ensemble uses Gemini 2.0 Flash

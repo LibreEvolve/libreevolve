@@ -151,6 +151,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     and equal-budget model-size comparisons before claiming AlphaEvolve-style
     "thousands of samples suffice" behavior.
 
+- [ ] Track repeated-sampling baselines for test-time-compute uplift claims.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Discussion.
+  - Requirement: AlphaEvolve is described as a test-time-compute agent that
+    enhances base-LLM capability compared with repeated sampling by using
+    machine feedback inside an evolutionary loop.
+  - Partial status: LibreEvolve has LLM budget telemetry, generated candidate
+    ids, admission/failure records, equal-budget ablation report schemas, and a
+    `No evolution` ablation variant label.
+  - Current gap: paper-facing reports do not define an equal-budget repeated
+    base-model sampling comparator with fixed prompt/model/seed/evaluator
+    conditions, generated/evaluated sample counts, disabled archive feedback,
+    disabled parent/inspiration resurfacing, disabled meta-prompt updates, and
+    target-progress curves linked to the matching evolutionary run.
+  - Required result: add repeated-sampling baseline report fields and
+    validation for controlled base-model sampling runs, sample counts,
+    validity/admission outcomes, target attainment, budget parity, and links
+    to evolutionary comparator runs before claiming AlphaEvolve-style
+    test-time-compute uplift over repeated sampling.
+
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3/2.4, "Models used".

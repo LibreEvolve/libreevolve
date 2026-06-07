@@ -294,6 +294,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current role-scoped backend eligibility nor overclaims AlphaEvolve-style
     role scheduling.
 
+- [ ] Keep README critique-reviewer wording scoped to synchronous first/last
+  valid mutation selection.
+  - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated
+    signal, explicit budget policy, and robust provider isolation beyond a
+    sequential mutation-replacement filter.
+  - Current evidence: README now says `critique_reviewers` runs a synchronous
+    bounded reviewer pool with manifest-safe reviewer names, optional prompts,
+    role labels such as `critique:correctness`, existing backend routing and
+    role budget telemetry, `first_valid` or `last_valid` aggregation, and
+    retained `metadata.critique.reviewer_pool.reviewers[]` records with parser
+    status and selected-reviewer provenance. Matching code/roadmap TODOs still
+    say reviewer calls are sequential, replacement-only, and selected by
+    first/last valid mutation rather than calibrated reviewer score or
+    benchmarked reviewer reliability.
+  - Required result: when async reviewer overlap, calibrated reviewer scoring,
+    reviewer-pool ablations, stronger per-reviewer provider isolation, or
+    richer reviewer-specific timeout/failure artifacts land, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    neither underclaims the current synchronous reviewer-pool metadata nor
+    overclaims AlphaEvolve-grade critique orchestration.
+
 - [ ] Keep README LLM budget/replay claims scoped to current synchronous
   restore boundaries.
   - Spec evidence: AlphaEvolve-scale reproduction needs compute-budgeted model

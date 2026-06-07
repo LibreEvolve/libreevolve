@@ -828,6 +828,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so provider claims distinguish generic extensibility from reproducing or
     deliberately substituting AlphaEvolve's Gemini Flash/Pro ensemble.
 
+- [ ] Keep README sample-efficiency claims scoped to budget telemetry until
+      proposal-count evidence exists.
+  - Spec evidence: AlphaEvolve Table 1 contrasts FunSearch's millions of LLM
+    samples with AlphaEvolve's thousands of samples, and Section 4 ties
+    performance to stronger model/full-system components under fixed compute
+    budgets.
+  - Current evidence: README documents logical LLM call caps, provider-attempt,
+    token, configured-cost, and latency stops, sequential
+    `proposals_per_generation` batches, equal-budget ablation report schemas,
+    and the `Small base LLM only` registry variant. It does not document
+    benchmark evidence that useful target progress is achieved in
+    thousands-scale generated/evaluated proposal counts.
+  - Required result: once benchmark reports track generated proposals,
+    evaluated candidates, admitted/retained candidates, target hits, and
+    score/target progress versus LLM sample budgets, update README, ROADMAP,
+    papers index, and code/paper TODOs so README does not imply that budget
+    caps or small-base labels prove AlphaEvolve-style sample efficiency.
+
 - [ ] Keep README critique-reviewer wording scoped to synchronous first/last
   valid mutation selection.
   - Spec evidence: AlphaEvolve-style critique/reviewer channels need calibrated

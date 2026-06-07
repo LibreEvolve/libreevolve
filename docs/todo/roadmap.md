@@ -776,6 +776,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current focused `throughput_depth` coverage nor overclaims
     AlphaEvolve-grade model-scheduling validation.
 
+- [ ] Keep sample-efficiency roadmap wording scoped to budget accounting
+      until proposal-count reports exist.
+  - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve can get useful results
+    with thousands of LLM samples, unlike FunSearch's millions, and Section 4
+    evaluates the impact of powerful models under fixed compute budgets.
+  - Current evidence: `ROADMAP.md` discusses local LLM call/provider/token/
+    configured-cost/latency budget accounting, equal-budget ablation report
+    contracts, fast/deep scheduler validation, and small-base-model ablation
+    labels. It does not require reports that plot target progress against
+    generated/evaluated proposal counts or validate thousands-scale sample
+    efficiency.
+  - Required result: when proposal-count efficiency reports, sample-budget
+    curves, model-size comparisons, or target-hit-per-sample summaries land,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap language distinguishes budget stopping from AlphaEvolve-style
+    "thousands of samples suffice" evidence.
+
 - [ ] Keep provider-roadmap wording explicit about missing Google/Gemini
       first-class support.
   - Spec evidence: AlphaEvolve's concrete model ensemble uses Gemini 2.0 Flash

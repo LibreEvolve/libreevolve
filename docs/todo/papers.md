@@ -67,6 +67,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     model mixes before treating LibreEvolve's ensemble as AlphaEvolve-style
     Flash/Pro scheduling evidence.
 
+- [ ] Track AlphaEvolve sample-efficiency evidence separately from call caps.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 4.
+  - Requirement: AlphaEvolve contrasts FunSearch-scale millions of LLM samples
+    with AlphaEvolve-style thousands of samples that benefit from SOTA LLMs.
+    Paper-facing reproduction claims need evidence for useful search progress
+    under bounded candidate counts, not only configurable LLM call limits or
+    provider budget telemetry.
+  - Partial status: LibreEvolve records logical LLM calls, provider attempts,
+    provider-reported token totals, configured estimated cost, latency,
+    generated candidate ids, sequential sibling proposal batches, and
+    equal-budget ablation report shapes.
+  - Current gap: no benchmark report ties final score or target attainment to
+    the number of generated/evaluated LLM proposals, compares thousands-scale
+    runs against much larger or smaller sample budgets, or separates
+    sample-efficiency gains from generic budget stopping, fast/strong routing,
+    and the `Small base LLM only` ablation label.
+  - Required result: add sample-efficiency report fields and validation for
+    generated proposals, evaluated candidates, admitted candidates, retained
+    elites, LLM-call/sample budgets, target attainment versus sample count,
+    and equal-budget model-size comparisons before claiming AlphaEvolve-style
+    "thousands of samples suffice" behavior.
+
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3/2.4, "Models used".

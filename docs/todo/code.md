@@ -1803,6 +1803,26 @@ Primary evidence:
     or intentionally substitute the paper's Flash/Pro fast/strong ensemble
     without hiding behind an opaque custom backend.
 
+- [ ] Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal
+      budgets.
+  - Spec evidence: AlphaEvolve Table 1 contrasts FunSearch using millions of
+    LLM samples with AlphaEvolve needing thousands of samples, while Section 4
+    attributes part of that efficiency to stronger LLMs and full-system
+    components.
+  - Current evidence: `RunBudget` can stop on logical LLM calls,
+    provider-attempts, provider-reported tokens, configured estimated cost,
+    latency, evaluator counts, evaluator seconds, and wall-clock runtime.
+    Generated candidates have deterministic ids, proposal-batch metadata, and
+    history rows. The ablation-result contract validates equal-budget curves
+    and includes the `Small base LLM only` variant, but it does not require
+    candidate/sample-count efficiency curves.
+  - Required result: add benchmark/report schemas and runtime summaries that
+    count generated LLM proposals, evaluated candidates, valid candidates,
+    archive-admitted candidates, retained elites, and target hits by sample
+    budget; validate score/target progress versus thousands-scale proposal
+    counts; and compare SOTA/strong-model runs with small-base or generic
+    routing runs before claiming AlphaEvolve-style sample efficiency.
+
 - [ ] Promote role-scoped LLM routing from shared-bandit audit evidence to
   independent per-role scheduler policy.
   - Spec evidence: AlphaEvolve's ensemble and compute-budget framing separates

@@ -279,6 +279,10 @@ is not yet an AlphaEvolve reproduction.
 - Extend current focused `throughput_depth` metadata tests into
   AlphaEvolve-style breadth/depth/cost/latency scheduler validation, including
   experiment-level selection traces and equal-budget report evidence.
+- Add proposal-count/sample-efficiency reports that distinguish current LLM
+  call/provider/token/configured-cost caps from AlphaEvolve Table 1 evidence
+  that useful results can be reached with thousands rather than millions of
+  LLM-generated samples.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for

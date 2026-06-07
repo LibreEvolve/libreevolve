@@ -2027,6 +2027,30 @@ Primary evidence:
     hashes, rendering parameters, held-out/deployment report links, and docs
     that distinguish exhibit reproduction from generic scheduling readiness.
 
+- [ ] Add Figure 7 Pallas tiling-problem exhibit provenance and diagram
+      artifacts.
+  - Spec evidence: AlphaEvolve Figure 7 visualizes the matrix-product tiling
+    heuristic problem for `A B = C`, with input dimensions `M`, `N`, and `P`,
+    and Section 3.3.2 explains that the heuristic chooses tile sizes while
+    accounting for accelerator shapes, memory capacity, fused operations, and
+    compiler details.
+  - Current evidence: kernel/Pallas TODOs require shape-corpus provenance,
+    train/evaluation split records, real accelerator runtime measurements,
+    expert-baseline comparisons, tiling-only candidate boundaries, and
+    correctness-by-construction evidence. No code/report schema records a
+    Figure 7 exhibit ID, matrix-shape variable definitions, tile-parameter
+    schema, accelerator/memory/fusion/compiler-context annotations, diagram
+    source data, rendered visual artifact paths/hashes, rendering parameters,
+    or links from the displayed tiling problem to the Pallas runtime and
+    shape-corpus reports.
+  - Required result: add report/inventory metadata for Figure 7-style kernel
+    exhibits: stable exhibit ID, kernel benchmark/candidate link, matrix
+    dimension and tile-parameter definitions, shape-corpus and accelerator
+    context links, diagram/JSON data plus rendered visual artifacts with
+    hashes, rendering parameters, baseline heuristic relation, and docs that
+    distinguish tiling-problem visualization from executed Pallas runtime
+    evidence.
+
 - [ ] Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes a Pallas tiling
     heuristic for a Gemini matrix-multiplication kernel by minimizing actual

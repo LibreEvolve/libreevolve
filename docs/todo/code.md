@@ -1463,7 +1463,7 @@ Primary evidence:
     worker/pending-work controller state, provider-output replay, and
     budget-stop packaging for restored controller work.
 
-- [ ] Add hard provider cancellation and timeout quarantine policy.
+- [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so
     provider latency and stalled model calls must be bounded and attributable to
     the run budget rather than blocking the controller indefinitely.

@@ -169,11 +169,13 @@ Primary evidence:
     workspaces/context/plugins/inspirations/failure memory under configured
     backend/model context-window budgets. The remaining gap is automatic
     selected-backend provider-token section packing outside mutation prompts
-    and complete provider-cost restoration, not mutation-path optional OpenAI
-    counter discovery, final-prompt selected-backend tokenizer discovery across
-    LLM roles, validating persisted section-budget records, manifest-visible
-    prompt section-packing coverage validation, or LLM budget report/resume-
-    artifact bundle consistency.
+    and budget/provider-output composition for future async or pending-work
+    resume, not mutation-path optional OpenAI counter discovery, final-prompt
+    selected-backend tokenizer discovery across LLM roles, validating persisted
+    section-budget records, manifest-visible prompt section-packing coverage
+    validation, LLM budget report/resume-artifact bundle consistency, or
+    current synchronous provider-attempt/token/configured-cost/latency
+    controller-event replay.
 
 - [ ] Extend structured prompt context policy beyond validated current fields.
   - Spec evidence: AlphaEvolve describes evolving prompt instructions/context,

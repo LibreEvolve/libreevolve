@@ -1362,6 +1362,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     real fixture runs, not verifying the declared files, report/inventory
     consistency, or evidence-bundle consistency once a report names them.
 
+- [ ] Keep named AlphaEvolve application-context rows background-only until
+  benchmark fixtures exist.
+  - Paper evidence: the local paper index includes AlphaEvolve application
+    context rows for compiler optimization, computer architecture, multi-agent
+    learning, complexity-theory/graph certification, mechanism design, and
+    workflow optimization.
+  - Current evidence: `papers/README.md` marks Magellan, ArchAgent,
+    Multiagent Learning, Hardness of Approximation, Bilateral Trade, and
+    Fault2Flow as background-only, with no compiler-heuristic runner,
+    architecture-design simulator, CFR/PSRO/game-theoretic evaluator,
+    graph/certification benchmark, bilateral-trade distribution benchmark, or
+    fault-to-workflow/human-in-the-loop multi-agent benchmark. The roadmap
+    requires each local domain paper to either gain a benchmark, link to an
+    existing benchmark, or remain background-only, and the systems report
+    contracts only validate declared reports once real fixtures emit them.
+  - Current gap: the named rows are honest inventory boundaries, not
+    AlphaEvolve-style application coverage. There are no runnable fixtures,
+    evaluator protocols, target baselines, held-out/reference gates, artifact
+    emission workflows, or report instances for those application domains.
+  - Required result: either implement and validate concrete fixtures for each
+    named application-context row, linking them to benchmark-hardening,
+    systems-result, certification, and artifact-inventory reports as
+    appropriate, or keep the rows explicitly background-only in
+    `papers/README.md` and avoid promoting them in README/ROADMAP claims.
+
 ## Paper-Inspired Feature Claims Needing Correction
 
 - [ ] Make DeepEvolve-inspired live retrieval transport audit-grade.

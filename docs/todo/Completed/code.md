@@ -14202,3 +14202,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused config, ensemble, and loop tests cover scope
     validation, scheduler restore rejection for over-consumed scopes, live
     scoped budget stops, and runtime budget-report rows.
+
+- [x] Add Appendix A matrix target registry validation.
+  - Spec evidence: AlphaEvolve Appendix A Table 3 reports a fixed 54-target
+    matrix multiplication suite with target dimensions, best-known ranks,
+    AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1` now records
+    all 54 Appendix A targets in `alphaevolve_appendix_a_matrix.json`.
+    `appendix_a_matrix_registry.py` validates target ids, sorted dimensions,
+    rank/outcome consistency, exact-algorithm flags, and the paper's 38/14/2
+    outcome counts. Matrix result reports for `alphaevolve_appendix_a` now
+    reject unknown target ids and dimension mismatches.
+  - Remaining gap: this is target-suite identity validation only; real
+    tensor-decomposition algorithms, certificate generation, and notebook
+    exports remain open.
+  - Verification: focused Appendix A registry and matrix-result tests cover
+    registry counts, target lookup, malformed target rows, and report
+    target/dimension mismatches.

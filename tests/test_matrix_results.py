@@ -119,6 +119,25 @@ def test_matrix_result_report_requires_explicit_alphaevolve_comparable_flag():
     assert "invalid_alphaevolve_comparable" in codes
 
 
+def test_matrix_result_report_validates_known_appendix_a_target_dimensions():
+    report = _valid_report()
+    report["dimensions"] = [4, 4, 5]
+
+    validation = validate_matrix_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "target_dimensions_mismatch" in codes
+
+    report = _valid_report()
+    report["target_id"] = "mm_missing"
+    validation = validate_matrix_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unknown_target_id" in codes
+
+
 def test_matrix_result_report_rejects_inconsistent_hit_fraction_and_seed_hits():
     report = _valid_report()
     report["hit_fraction"] = 0.75

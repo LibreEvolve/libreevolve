@@ -529,8 +529,11 @@ Implemented:
   consistency against per-seed records, artifact path/hash records, and an
   explicit `alphaevolve_comparable` policy that restricts paper-comparable
   claims to integer or half-integer coefficients with verified exactness,
-  exact per-seed rows, and algorithm/certificate/notebook artifacts. It still
-  does not provide the tensor-decomposition target suite or algorithms.
+  exact per-seed rows, and algorithm/certificate/notebook artifacts.
+  `appendix_a_matrix_registry.py` adds the 54 AlphaEvolve Appendix A Table 3
+  target identities and dimensions, and matrix reports for
+  `alphaevolve_appendix_a` must match that registry. It still does not provide
+  tensor-decomposition algorithms, certificates, or notebook exports.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

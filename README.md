@@ -2835,15 +2835,18 @@ coverage. Matrix-result publication metadata has a separate
 `libreevolve/problems/benchmarks/matrix_results.py`; it validates target
 identity, dimensions, seed count, best rank, hit fraction, per-seed best-rank
 records, exactness certificate status, coefficient domain, and artifact
-paths/hashes. It rejects reports whose top-level best rank or hit fraction
-does not match the per-seed rank records. Reports must explicitly set
+paths/hashes. For the known `alphaevolve_appendix_a` target suite, it checks
+`target_id` and `dimensions` against the 54-row Appendix A Table 3 registry in
+`alphaevolve_appendix_a_matrix.json`. It rejects reports whose top-level best
+rank or hit fraction does not match the per-seed rank records. Reports must explicitly set
 `alphaevolve_comparable`; exploratory `rational` and `float` coefficient-domain
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts. The checked-in
 2x2
 `matrix_multiplication` example remains a smoke fixture until a
-real tensor-decomposition target suite emits reports in that schema.
+real tensor-decomposition benchmark emits validated algorithm, certificate,
+and notebook artifacts for those targets.
 Paper-level result certification metadata uses the separate
 `libreevolve.paper_result_certification.v1` contract in
 `libreevolve/problems/benchmarks/result_certification.py`; it distinguishes

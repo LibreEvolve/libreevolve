@@ -775,10 +775,16 @@ Primary evidence:
     `alphaevolve_comparable` is false; AlphaEvolve-comparable claims require
     integer or half-integer coefficients, verified exactness, exact per-seed
     rows, and algorithm/certificate/notebook artifacts.
-  - Required result: connect a real tensor-decomposition target suite and exact
-    algorithm/certificate artifacts to the result schema; keep the existing
-    Python smoke example clearly outside AlphaEvolve-comparison evidence until
-    it emits validated tensor-result reports.
+    `libreevolve.alphaevolve_appendix_a_matrix_registry.v1` now records the 54
+    Appendix A Table 3 target identities, dimensions, best-known ranks,
+    AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
+    `alphaevolve_appendix_a` reject unknown target ids and dimension
+    mismatches.
+  - Required result: connect exact tensor-decomposition algorithms,
+    certificate artifacts, and notebook/export artifacts to the registered
+    target suite; keep the existing Python smoke example clearly outside
+    AlphaEvolve-comparison evidence until it emits validated tensor-result
+    reports.
 
 - [ ] Add held-out evaluation splits and reference-correctness records to
   systems benchmarks.

@@ -9438,3 +9438,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused config, ensemble, and loop tests cover scope
     validation, scheduler restore rejection for over-consumed scopes, live
     scoped budget stops, and runtime budget-report rows.
+
+- [x] Add paper-visible Appendix A matrix target registry.
+  - Paper evidence: AlphaEvolve Appendix A Table 3 reports 54 sorted matrix
+    multiplication target sizes with best-known rank, AlphaEvolve rank,
+    exact-algorithm status, and 38 matched, 14 surpassed, and 2 fell-behind
+    outcomes.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1` records the
+    54 target identities and Table 3 ranks/outcomes, validates the registry
+    against the paper counts, and makes `libreevolve.matrix_result_report.v1`
+    reports for `alphaevolve_appendix_a` verify `target_id` and `dimensions`
+    against the registry.
+  - Remaining paper gap: LibreEvolve still does not provide the tensor
+    decompositions, exact certificates, generated notebooks, or benchmark
+    runner needed to produce real AlphaEvolve-comparable result instances.
+  - Verification: focused Appendix A registry and matrix-result tests cover
+    registry counts, target lookup, malformed target rows, and report
+    target/dimension mismatches.

@@ -783,7 +783,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `alphaevolve_comparable` is false; AlphaEvolve-comparable claims require
     integer or half-integer coefficients, verified exactness, exact per-seed
     rows, and algorithm/certificate/notebook artifacts. The report contract
-    still does not provide the 54-target suite, exact tensor algorithms, or
+    now uses `libreevolve.alphaevolve_appendix_a_matrix_registry.v1` to record
+    the 54 Appendix A Table 3 target identities, dimensions, best-known ranks,
+    AlphaEvolve ranks, and matched/surpassed/fell-behind outcomes; reports for
+    `alphaevolve_appendix_a` reject unknown target ids and dimension
+    mismatches. The code still does not provide exact tensor algorithms or
     generated notebook/export equivalents for reproducing discovered
     algorithms.
   - Required result: connect real matrix target tensors, exact algorithm

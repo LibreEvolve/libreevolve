@@ -7,6 +7,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    TARGET_SUITE as APPENDIX_A_TARGET_SUITE,
+    matrix_target_by_id,
+)
+
 
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
@@ -44,7 +49,7 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
     if data.get("schema") != MATRIX_RESULT_SCHEMA:
         issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix result schema"))
     target_id = _text_field(data, "target_id", issues)
-    _text_field(data, "target_suite", issues)
+    target_suite = _text_field(data, "target_suite", issues)
     dimensions = data.get("dimensions")
     if not isinstance(dimensions, list) or not dimensions:
         issues.append(MatrixResultIssue("invalid_dimensions", "dimensions must be a non-empty list"))
@@ -53,6 +58,13 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
             if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
                 issues.append(MatrixResultIssue("invalid_dimensions", "dimensions must be positive integers"))
                 break
+    if (
+        target_id is not None
+        and target_suite == APPENDIX_A_TARGET_SUITE
+        and isinstance(dimensions, list)
+        and all(isinstance(value, int) and not isinstance(value, bool) for value in dimensions)
+    ):
+        _validate_known_target_dimensions(target_id, dimensions, issues)
     seed_count = _positive_int(data.get("seed_count"), "seed_count", issues)
     best_rank = _positive_int(data.get("best_rank"), "best_rank", issues)
     hit_count = _nonnegative_int(data.get("hit_count"), "hit_count", issues)
@@ -281,6 +293,29 @@ def _validate_artifacts(value: object, issues: list[MatrixResultIssue]) -> set[s
             issues.append(MatrixResultIssue("invalid_artifact_hash", "artifact sha256 must be a lowercase SHA-256 hex digest"))
         _positive_int(artifact.get("bytes"), "artifact_bytes", issues)
     return kinds
+
+
+def _validate_known_target_dimensions(
+    target_id: str,
+    dimensions: list[int],
+    issues: list[MatrixResultIssue],
+) -> None:
+    target = matrix_target_by_id(target_id)
+    if target is None:
+        issues.append(
+            MatrixResultIssue(
+                "unknown_target_id",
+                "target_id is not in the AlphaEvolve Appendix A matrix registry",
+            )
+        )
+        return
+    if target.get("dimensions") != dimensions:
+        issues.append(
+            MatrixResultIssue(
+                "target_dimensions_mismatch",
+                "dimensions must match the AlphaEvolve Appendix A matrix registry",
+            )
+        )
 
 
 def _exactness_status(value: object) -> str:

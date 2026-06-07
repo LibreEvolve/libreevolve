@@ -119,6 +119,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     neither underclaims current editable/local package metadata nor overclaims
     verified release-distribution reproducibility.
 
+- [ ] Keep GitHub Actions roadmap wording scoped to the current path-scoped
+      Linux workflow.
+  - Spec evidence: AlphaEvolve-scale engineering claims should be backed by
+    repeatable validation that covers code, docs, paper evidence, packaging,
+    and relevant supported runtime environments without surprising maintainers
+    with noisy or unsafe triggers.
+  - Current evidence: `ROADMAP.md` asks to extend the current path-scoped
+    GitHub Actions workflow beyond secret scan, Python 3.11/3.12
+    non-integration tests, optional integration tests, and documented
+    paper-manifest commands. README documents the current manual-dispatch and
+    path-scoped `push`/`pull_request` triggers. `.github/workflows/tests.yml`
+    has `secrets`, `unit`, and optional `integration` jobs on Ubuntu only, and
+    `tests/test_agents_docs.py` verifies the required path filters and job
+    names, but it does not make CI run every docs/paper-specific verifier,
+    wheel/sdist smoke, cross-platform jobs, or richer branch/notification
+    policy.
+  - Required result: when broader docs/paper validation, release-artifact
+    checks, interpreter/platform matrices, branch policy, or notification-safe
+    trigger policy lands, update the roadmap, README, papers index, and
+    code/paper TODO entries together so roadmap wording neither underclaims the
+    current workflow nor overclaims full AlphaEvolve-grade CI coverage.
+
 - [ ] Keep the multi-objective roadmap item scoped to primary archive policy
       versus retained diagnostic overlays.
   - Spec evidence: AlphaEvolve-style multi-objective search should make

@@ -2130,6 +2130,27 @@ Primary evidence:
     text/page, local PDF hash, and claim/TODO evidence links that make clear
     which source version each AlphaEvolve audit row used.
 
+- [ ] Validate paper-manifest row identity across id, URL, and local file.
+  - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
+    audit evidence. A row should not only have a safe id, URL, and filename;
+    those fields must describe the same paper source before claim audits rely
+    on the cached PDF.
+  - Current evidence: `libreevolve.tools.paper_manifest` validates row id
+    grammar, allowed HTTPS source hosts, safe `papers/<name>.pdf` paths,
+    CSV/JSON agreement, duplicate ids/files/hashes, and optional local
+    PDF byte/hash/readability. `_validate_paper_url()` currently checks host
+    safety but does not extract an arXiv id from `/pdf/<id>.pdf` or `/abs/<id>`
+    paths, compare it with the manifest `id`, or require the local filename
+    stem to carry the same source id. For non-arXiv allowed hosts or
+    foundational slug ids, there is no explicit source-identity mapping that
+    proves the URL, row id, and file label belong together.
+  - Required result: add row-identity validation that parses arXiv ids from
+    source URLs, compares URL id, manifest id, and local file stem/source-id
+    prefix, rejects mismatches, and requires explicit source-id metadata for
+    non-arXiv or slug rows. Keep this distinct from source-version metadata:
+    version pinning identifies which revision was audited, while row-identity
+    validation prevents cross-paper URL/file/id drift before version checks.
+
 - [ ] Add AlphaEvolve source-PDF license/copyright provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.

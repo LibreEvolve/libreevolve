@@ -1410,6 +1410,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     claim links, update README wording so paper-cache integrity claims
     distinguish content hash validation from source-version pinning.
 
+- [ ] Keep README paper-cache wording scoped until manifest row identity is
+      validated.
+  - Spec evidence: README points readers to the local paper cache as the source
+    ledger for paper-facing implementation status and benchmark decisions. The
+    row id, source URL, and local PDF filename need to describe the same paper
+    before README treats the cache row as reliable source evidence.
+  - Current evidence: README can accurately say the paper-manifest validator
+    checks safe row ids, allowed HTTPS source URLs, safe local PDF paths,
+    CSV/JSON agreement, duplicate file/hash rows, optional local PDF hashes,
+    and source-version TODOs. The validator does not yet parse arXiv ids from
+    source URLs, compare URL ids with manifest ids and local filename source
+    prefixes, or require explicit source-identity metadata for non-arXiv or
+    slug rows.
+  - Required result: after paper-manifest row-identity validation lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes safe manifest fields from proven source identity and
+    separates base id/URL/file consistency from later source-version pinning.
+
 - [ ] Keep README paper-cache wording scoped until source-PDF rights metadata
       is tracked.
   - Spec evidence: the local AlphaEvolve PDF header states

@@ -2145,6 +2145,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     whether they are based on the v1 PDF, a later arXiv revision, or another
     pinned source artifact.
 
+- [ ] Keep paper-source roadmap wording scoped until manifest row identity is
+      validated.
+  - Spec evidence: roadmap claims about paper-cache provenance rely on each
+    manifest row's id, URL, and local PDF label describing the same source
+    before source-version, rights, or claim evidence is attached.
+  - Current evidence: roadmap/README wording can cite safe paper-manifest ids,
+    allowed HTTPS source URLs, safe local PDF paths, local hash/readability
+    validation, and source-version TODOs. `libreevolve.tools.paper_manifest`
+    does not yet parse arXiv ids out of source URLs, compare them with row ids
+    and local filename source prefixes, or require explicit source-identity
+    mapping for non-arXiv or slug rows.
+  - Required result: once manifest row-identity validation lands, update
+    ROADMAP, README, papers index, and TODO cross-links so roadmap wording
+    distinguishes safe manifest fields from proven source identity, and
+    separates base id/URL/file consistency from later arXiv version pinning.
+
 - [ ] Keep paper-source roadmap wording scoped until source-PDF rights
       provenance is tracked.
   - Spec evidence: page 1 of the local AlphaEvolve PDF states

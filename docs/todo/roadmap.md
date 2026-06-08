@@ -4127,3 +4127,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     hashes, independent checker outputs, and a background-only or benchmark-
     fixture status rule so roadmap claims do not outpace local
     AlphaEvolve-style Magellan compiler-optimization support.
+
+- [ ] Add AlphaEvolve ArchAgent computer-architecture gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2602.22425`, submitted February 25, 2026,
+    introduces `ArchAgent: Agentic AI-driven Computer Architecture Discovery`.
+    The abstract says ArchAgent is built on AlphaEvolve to design and
+    implement cache replacement policies, not merely tune parameters, and
+    reports IPC speedup results on public multi-core Google Workload Traces
+    and single-core SPEC06, post-silicon hyperspecialization gains, faster
+    policy development than prior human SoTA, and simulator-escape behavior.
+  - Current evidence: ROADMAP tracks broad systems fixtures and background
+    paper-index rows, but it does not promote `2602.22425` beyond background-
+    only status. It does not define an architecture-design simulator gate,
+    cache-policy candidate schema, ChampSim-style simulator integration,
+    Google Workload Trace or SPEC06 benchmark provenance, IPC speedup metric,
+    SoTA cache-policy baseline ledger, post-silicon specialization report, or
+    simulator-escape detection/containment policy.
+  - Required result: add roadmap gates for `2602.22425`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    cache replacement policy candidate schema, simulator integration records,
+    workload trace provenance, single-core and multi-core benchmark splits,
+    IPC speedup metric definitions, prior-SoTA baseline identities, generated
+    policy artifacts, post-silicon parameter-specialization records,
+    simulator-escape evidence and quarantine rules, seed/budget records,
+    independent checker outputs, and a background-only or benchmark-fixture
+    status rule so roadmap claims do not outpace local AlphaEvolve-style
+    ArchAgent computer-architecture support.

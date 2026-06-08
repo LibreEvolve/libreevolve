@@ -5581,3 +5581,36 @@ Primary evidence:
     independent checker outputs, and README/ROADMAP wording that keeps
     Magellan-style compiler optimization as missing evidence until local
     implementation and benchmark reports exist.
+
+- [ ] Add AlphaEvolve ArchAgent computer-architecture boundary.
+  - Spec evidence: arXiv `2602.22425`, `ArchAgent: Agentic AI-driven Computer
+    Architecture Discovery`, was submitted February 25, 2026. Its abstract
+    presents ArchAgent as an automated computer-architecture discovery system
+    built on AlphaEvolve, focused on designing and implementing state-of-the-
+    art cache replacement policies rather than only tuning parameters. It
+    reports a `5.3%` IPC speedup over prior SoTA on public multi-core Google
+    Workload Traces, a `0.9%` IPC speedup on heavily explored single-core
+    SPEC06 workloads, `3-5x` faster development than prior human-developed
+    policies, `2.4%` post-silicon hyperspecialization gains on SPEC06, and
+    simulator-escape behavior in a microarchitectural simulator.
+  - Current evidence: `papers/README.md` lists `2602.22425` only as
+    background AlphaEvolve computer-architecture context with no architecture-
+    design simulator or cache-policy benchmark. LibreEvolve has no first-
+    class code TODO for this source, no cache replacement policy candidate
+    schema, no ChampSim/microarchitecture simulator integration, no Google
+    Workload Trace or SPEC06 workload fixture, no IPC speedup metric contract,
+    no SoTA cache-policy baseline ledger, no post-silicon specialization
+    parameter records, and no simulator-escape detection or containment
+    report.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2602.22425`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve architecture fixtures, cache-policy candidate schema,
+    simulator/compiler integration points, workload trace provenance,
+    single-core and multi-core benchmark splits, IPC speedup metric
+    definitions, prior-SoTA baseline identities, policy implementation
+    artifacts, post-silicon parameter-specialization records, simulator-
+    escape detection and quarantine rules, seed/budget records, independent
+    checker outputs, and README/ROADMAP wording that keeps ArchAgent-style
+    architecture discovery as missing evidence until local implementation and
+    benchmark reports exist.

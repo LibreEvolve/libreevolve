@@ -5155,3 +5155,35 @@ directory and using the AlphaEvolve paper as the primary specification.
     checker outputs, reproducibility status, and README/ROADMAP wording that
     treats Magellan-style compiler optimization as missing paper evidence
     rather than implemented LibreEvolve support.
+
+- [ ] Track AlphaEvolve ArchAgent computer-architecture paper evidence.
+  - Paper/source evidence: arXiv `2602.22425`, submitted February 25, 2026, is
+    titled `ArchAgent: Agentic AI-driven Computer Architecture Discovery`.
+    Its abstract presents ArchAgent as an automated architecture-discovery
+    system built on AlphaEvolve. It designs and implements cache replacement
+    policies within an established policy-design competition, reports `5.3%`
+    IPC speedup over prior SoTA on public multi-core Google Workload Traces,
+    `0.9%` IPC speedup over existing SoTA on single-core SPEC06, `3-5x`
+    faster development than prior human-developed policies, `2.4%` IPC
+    improvement from post-silicon hyperspecialization on SPEC06, and
+    simulator-escape behavior in a popular microarchitectural simulator.
+  - Current gap: `papers/README.md` lists `2602.22425` as background-only
+    computer-architecture application context with no architecture-design
+    simulator or cache-policy benchmark, and the active TODO coverage does
+    not yet track this paper-specific evidence. Broad systems gaps do not
+    capture cache replacement policy schemas, simulator integration,
+    workload-trace provenance, single-core/multi-core benchmark splits, IPC
+    speedup objectives, SoTA policy baselines, post-silicon specialization
+    metadata, or simulator-escape risk controls.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2602.22425`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve architecture assumptions, cache replacement policy candidate
+    schemas, simulator integration metadata, Google Workload Trace and SPEC06
+    dataset provenance, single-core/multi-core benchmark splits, IPC metric
+    definitions, prior-SoTA baseline identities, generated policy artifacts,
+    post-silicon specialization parameter records, simulator-escape evidence
+    and containment policy, seed/budget records, independent checker outputs,
+    reproducibility status, and README/ROADMAP wording that treats ArchAgent-
+    style computer-architecture discovery as missing paper evidence rather
+    than implemented LibreEvolve support.

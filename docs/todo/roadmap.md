@@ -2027,6 +2027,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve companion-source verification, and generated LibreEvolve
     result-export artifacts.
 
+- [ ] Keep paper-source roadmap wording scoped until AlphaEvolve PDF version
+      provenance is pinned.
+  - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as
+    `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
+  - Current evidence: roadmap/README wording can cite local PDF byte/hash
+    validation and Appendix B result-version TODOs, while the committed
+    manifests still use the floating `https://arxiv.org/pdf/2506.13131.pdf`
+    source URL and do not store source arXiv version, category, posted date,
+    expected header text, or URL-kind metadata. This leaves roadmap-level
+    source-parity claims vulnerable to a future arXiv PDF refresh changing the
+    audited source without a visible claim-ledger boundary.
+  - Required result: once paper manifests record versioned source identity and
+    validators check the expected header/page/hash, update ROADMAP, README,
+    papers index, and TODO cross-links so AlphaEvolve audit claims identify
+    whether they are based on the v1 PDF, a later arXiv revision, or another
+    pinned source artifact.
+
 - [ ] Keep roadmap wording scoped until the follow-on AlphaEvolve math paper
       and repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

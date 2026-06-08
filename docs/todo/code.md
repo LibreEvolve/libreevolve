@@ -2071,6 +2071,24 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
+- [ ] Pin AlphaEvolve source-PDF version metadata in paper manifests.
+  - Spec evidence: page 1 of the local `2506.13131__AlphaEvolve.pdf` source
+    identifies the audited paper as `arXiv:2506.13131v1 [cs.AI] 16 Jun
+    2025`.
+  - Current evidence: `papers/download_manifest.*` and
+    `libreevolve.tools.paper_manifest` preserve paper id/title, the floating
+    `https://arxiv.org/pdf/2506.13131.pdf` URL, local file path, download
+    status, byte count, SHA-256 digest, and optional PDF readability. They do
+    not record the source arXiv version/date/category extracted from the PDF
+    header, distinguish floating arXiv URLs from version-pinned source URLs,
+    or tie claim audits to a specific paper version. Existing Appendix B
+    TODOs cover revised result constants, not source-PDF identity.
+  - Required result: extend paper-manifest schema and validation for
+    versioned source identity: arXiv id, version, category, posted date,
+    source URL kind (`floating` versus `version_pinned`), expected header
+    text/page, local PDF hash, and claim/TODO evidence links that make clear
+    which source version each AlphaEvolve audit row used.
+
 - [ ] Add companion Colab/source-artifact tracking for AlphaEvolve results.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying

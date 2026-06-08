@@ -2934,6 +2934,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     results, and docs wording that separates source-artifact verification from
     LibreEvolve reproducing those results.
 
+- [ ] Track AlphaEvolve source-PDF arXiv version provenance.
+  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
+    audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
+  - Current evidence: `papers/download_manifest.csv` and
+    `papers/download_manifest.json` list `2506.13131`, the title
+    `AlphaEvolve`, a floating `https://arxiv.org/pdf/2506.13131.pdf` URL,
+    the local PDF path, byte count, SHA-256 hash, and status. The manifest and
+    paper index do not persist the paper-source version/date/category,
+    expected header text, or source URL kind, so future arXiv rehydration could
+    silently move claim audits from v1 to a later source without a ledger
+    change. Existing result-version TODOs cover Appendix B revised constants,
+    not the manuscript/PDF identity used for all AlphaEvolve claims.
+  - Required result: add paper-facing provenance rows for source PDF identity:
+    arXiv id, version, category, posted date, canonical floating and
+    version-pinned URLs where available, expected header page/text, PDF hash,
+    and claim-audit links that identify the source version behind every
+    AlphaEvolve table, figure, and appendix TODO.
+
 - [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and details on the mathematical construction problems and methods

@@ -4409,14 +4409,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     integrates expert verification, optimizes reasoning logic with an
     AlphaEvolve module, synthesizes n8n-executable workflows, and validates on
     transformer fault-diagnosis datasets with `100%` topological consistency
-    and high semantic fidelity.
+    and high semantic fidelity. The body specifies a frontend/backend
+    architecture with Vue3/Element Plus/pdfjs/xlsx/ECharts, MinerU PDF
+    extraction, MySQL/Milvus storage, LLM agents for PlantUML mind maps and
+    PASTA fault trees, OpenEvolve-linked AlphaEvolve multi-island optimization,
+    n8n workflow construction/activation, synthesized workflow verification
+    tests, and a `DL/T 722-2014` transformer DGA case study over 16
+    expert-designed cases.
   - Current evidence: ROADMAP tracks general plugins, systems benchmarks, and
     background paper-index rows, but it does not promote `2511.12916` beyond
     background-only status. It does not define a regulatory-text ingestion
     gate, PASTA fault-tree schema, expert-verification workflow, reasoning-
     logic optimization record, n8n workflow emitter, transformer fault-
     diagnosis dataset contract, topological-consistency metric, semantic-
-    fidelity metric, or operational workflow artifact policy.
+    fidelity metric, or operational workflow artifact policy. It also lacks
+    promotion gates for PlantUML intermediates, PASTA self-checks, n8n API
+    activation evidence, synthesized test-case verification loops, GPT-5 judge
+    usage, Table 1 model/baseline comparisons, average-token records, and
+    placeholder ACM metadata caveats.
   - Required result: add roadmap gates for `2511.12916`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     regulatory-source provenance, PASTA fault-tree candidate schema,
@@ -4426,7 +4436,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     fidelity metric definitions, seed/budget records, independent checker
     outputs, and a background-only or benchmark-fixture status rule so
     roadmap claims do not outpace local AlphaEvolve-style Fault2Flow
-    automation support.
+    automation support. Roadmap promotion should additionally require the
+    three-stage document-understanding/knowledge-structuring/workflow-
+    synthesis architecture, MinerU/MySQL/Milvus provenance, PlantUML and PASTA
+    artifact hashes, OpenEvolve/AlphaEvolve optimization traces, n8n activation
+    logs, synthesized verification samples and failure-refinement loops,
+    DL/T 722-2014 dataset rows, Table 1 `16/0` Fault2Flow success and baseline
+    failure rows, GPT-5 evaluator caveats, human-annotation/data-ethics
+    records, and explicit documentation that Fault2Flow is not a supported
+    LibreEvolve workflow until those local artifacts exist.
 
 - [ ] Add TTT-Discover test-time-training gates before roadmap promotion.
   - Spec evidence: arXiv `2601.16175`, submitted January 22, 2026 and last

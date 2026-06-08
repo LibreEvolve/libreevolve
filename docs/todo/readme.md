@@ -3967,14 +3967,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     extracts regulatory logic into PASTA fault trees, incorporates expert
     verification, and emits n8n-executable workflows. Its abstract reports
     transformer fault-diagnosis validation with `100%` topological consistency
-    and high semantic fidelity.
+    and high semantic fidelity. The body adds that the system parses
+    regulatory PDFs with MinerU, stores text in MySQL and embeddings in
+    Milvus, generates PlantUML mind maps, converts them into PASTA DSL, uses
+    an OpenEvolve-linked AlphaEvolve optimizer, emits n8n IF/ELSE workflows,
+    and evaluates 16 transformer DGA cases with LRM, SF, TC, E2ERC,
+    success/fail, and token metrics.
   - Current evidence: README documents general plugins, paper-cache status,
     benchmark-report contracts, and smoke fixtures. It does not mention
     `2511.12916`, parse regulatory fault-diagnosis text into PASTA fault
     trees, model expert verification states, optimize reasoning logic for
     fault workflows, emit n8n workflows, preserve transformer fault-diagnosis
     dataset provenance, or report topological-consistency and semantic-
-    fidelity metrics.
+    fidelity metrics. README also lacks source-scoped boundaries for
+    PlantUML/PASTA/n8n artifacts, MinerU/MySQL/Milvus provenance, synthesized
+    workflow verification tests, GPT-5 evaluator caveats, Table 1 model rows,
+    and placeholder ACM/conference/DOI metadata caveats.
   - Required result: if README mentions Fault2Flow, fault-to-workflow
     automation, PASTA fault trees, power-grid fault diagnosis, regulatory
     logic extraction, human-in-the-loop expert verification, n8n workflow
@@ -3984,7 +3992,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     records, workflow artifacts, dataset provenance, metric definitions,
     independent checker outputs, and benchmark reports. Avoid implying
     LibreEvolve supports AlphaEvolve-style Fault2Flow automation without those
-    artifacts.
+    artifacts. README wording should distinguish paper-reported Fault2Flow
+    results from local capability unless the repo has executable PASTA/n8n
+    workflows, PlantUML and fault-tree artifacts, human-review state logs,
+    AlphaEvolve/OpenEvolve optimization traces, synthesized test-case outputs,
+    LRM/SF/TC/E2ERC recomputation, Table 1 model/baseline rows, token ledgers,
+    human-annotation/data-ethics caveats, and publication-metadata caveats
+    recorded.
 
 - [ ] Keep README TTT-Discover test-time-training claims absent or source-
       scoped until mutable-policy benchmark evidence exists.

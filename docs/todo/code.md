@@ -5937,7 +5937,18 @@ Primary evidence:
     interface, optimizes reasoning logic using an AlphaEvolve module, and
     synthesizes verified logic into n8n-executable workflows. The abstract
     reports transformer fault-diagnosis validation with `100%` topological
-    consistency and high semantic fidelity.
+    consistency and high semantic fidelity. The paper body defines a concrete
+    pipeline: regulatory PDFs are parsed into Markdown with MinerU, stored in
+    MySQL with Milvus vector embeddings, converted by LLM agents into
+    PlantUML mind maps and PASTA DSL fault trees, optimized with an
+    AlphaEvolve/OpenEvolve-linked multi-island module, then traversed into n8n
+    IF/ELSE workflow nodes and validated using synthesized test cases. The
+    demonstration uses `DL/T 722-2014` transformer dissolved-gas-analysis
+    three-ratio logic, Qwen3-Next-80B-A3B-Instruct at temperature `0.0`, and a
+    16-case transformer dataset (9 three-ratio, 7 characteristic-gas cases).
+    Table 1 reports Fault2Flow variants with TC `1.0`, E2ERC `1.0`, success
+    `16/0`, and roughly `1800-1900` average tokens, while end-to-end baselines
+    have TC below `0.94`, E2ERC below `0.72`, and higher token usage.
   - Current evidence: `papers/README.md` lists `2511.12916` only as
     background AlphaEvolve-optimized workflow application context with no
     fault-to-workflow or human-in-the-loop multi-agent benchmark. LibreEvolve
@@ -5946,7 +5957,14 @@ Primary evidence:
     workflow emitter, no transformer fault-diagnosis dataset fixture, no
     topological-consistency or semantic-fidelity metric contract, no
     AlphaEvolve reasoning-logic optimization boundary, and no artifact policy
-    for verified operational workflows.
+    for verified operational workflows. It also lacks MinerU/PDF-to-Markdown
+    provenance, PlantUML mind-map artifacts, PASTA self-check records,
+    MySQL/Milvus storage/retrieval metadata, OpenEvolve/AlphaEvolve
+    optimization trace fields, n8n API activation records, synthesized test
+    case generation and failure-refinement logs, GPT-5-as-evaluator caveats
+    for LRM/SF, edge-set TC and path-set E2ERC calculators, token-consumption
+    ledgers, human-annotation/data-ethics records, and publication metadata
+    caveats for the placeholder ACM venue/DOI text.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2511.12916`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
@@ -5958,7 +5976,18 @@ Primary evidence:
     human-in-the-loop audit logs, seed/budget records, independent checker
     outputs, and README/ROADMAP wording that keeps Fault2Flow-style
     fault-to-workflow automation as missing evidence until local
-    implementation and benchmark reports exist.
+    implementation and benchmark reports exist. The implementation boundary
+    should additionally require the three-stage document-understanding/
+    knowledge-structuring/workflow-synthesis pipeline, Vue3/Element Plus/
+    pdfjs/xlsx/ECharts frontend artifact expectations where relevant,
+    MinerU/MySQL/Milvus backend provenance, PlantUML and PASTA intermediate
+    hashes, AlphaEvolve multi-island optimization traces, n8n node/edge/
+    workflow activation artifacts, synthesized test-case and failure-refinement
+    logs, `DL/T 722-2014` dataset rows, Table 1 model-result rows for Qwen3
+    and GPT-4.1 variants, LRM/SF/TC/E2ERC formulas, token averages,
+    data-ethics/human-annotation records, and explicit caveats separating
+    validated workflow artifacts from LLM-judged readability and
+    semantic-fidelity scores.
 
 - [ ] Add TTT-Discover test-time-training boundary against AlphaEvolve frozen
       search.

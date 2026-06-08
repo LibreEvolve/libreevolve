@@ -5493,7 +5493,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     the-loop verification interface, optimizing reasoning logic with a novel
     AlphaEvolve module, and synthesizing final verified logic into n8n-
     executable workflows. It reports transformer fault-diagnosis validation
-    with `100%` topological consistency and high semantic fidelity.
+    with `100%` topological consistency and high semantic fidelity. The PDF
+    body specifies a decoupled frontend/backend system, regulatory-PDF
+    extraction to Markdown with MinerU, MySQL plus Milvus storage, PlantUML
+    mind-map generation, PASTA fault-tree translation, OpenEvolve-linked
+    AlphaEvolve structural optimization, n8n workflow construction and
+    activation, and iterative workflow verification from synthesized test
+    samples. Its case study uses the national standard `DL/T 722-2014` for
+    dissolved-gas transformer diagnosis, focusing on three-ratio logic, and
+    evaluates 16 expert-designed transformer fault-tree cases. Table 1 reports
+    LRM, SF, TC, E2ERC, success/failure, and average-token rows for Qwen3-80B
+    and GPT-4.1 end-to-end baselines plus Qwen3-14B/32B/80B and GPT-4.1
+    Fault2Flow variants.
   - Current gap: `papers/README.md` lists `2511.12916` as background-only
     AlphaEvolve-optimized workflow application context with no fault-to-
     workflow or human-in-the-loop multi-agent benchmark, and the active TODO
@@ -5501,7 +5512,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     framework/plugin gaps do not capture regulatory-source provenance, PASTA
     fault-tree schemas, expert verification states, reasoning-logic
     optimization records, n8n workflow artifacts, transformer fault-diagnosis
-    datasets, or topology/semantic metrics.
+    datasets, or topology/semantic metrics. They also omit the paper's
+    placeholder ACM/conference/DOI metadata, frontend library stack,
+    MinerU/MySQL/Milvus backend, PlantUML intermediate format, PASTA
+    self-check status, synthesized verification samples, GPT-5 evaluator usage
+    for LRM/SF, exact TC and E2ERC formulas, token-efficiency comparison, and
+    the 16-case dataset split between three-ratio and characteristic-gas
+    methods.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2511.12916`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
@@ -5513,7 +5530,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     records, independent checker outputs, reproducibility status, and
     README/ROADMAP wording that treats Fault2Flow-style fault-to-workflow
     automation as missing paper evidence rather than implemented LibreEvolve
-    support.
+    support. Paper evidence should additionally preserve DL/T 722-2014 source
+    scope, three-ratio and characteristic-gas case counts,
+    Qwen3-Next-80B-A3B-Instruct configuration, PlantUML and PASTA intermediate
+    artifacts, AlphaEvolve/OpenEvolve multi-island optimization claims, n8n API
+    activation and verification-loop records, Table 1 values including `16/0`
+    Fault2Flow success and end-to-end baseline failures, GPT-5 judge caveats,
+    human-annotation/data-ethics records, placeholder ACM metadata caveats,
+    and source-scoped status until executable workflow artifacts are locally
+    reproduced.
 
 - [ ] Track TTT-Discover test-time-training paper evidence.
   - Paper/source evidence: arXiv `2601.16175`, submitted January 22, 2026 and

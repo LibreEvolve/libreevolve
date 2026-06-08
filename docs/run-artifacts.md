@@ -80,6 +80,21 @@ whether expert contributor roles, objective/evaluator rationale,
 parameter-scope decisions, background-knowledge linkage, and expert review or
 domain-owner signoff are present before marking expert-guided formulation
 parity claim-ready.
+Problem fixtures can also optionally include `collaborator_feedback.yaml` or
+`collaborator_feedback.yml`; direct callers can set
+`Problem.collaborator_feedback_metadata`. Startup manifest validation
+normalizes this into `problem.collaborator_feedback_metadata` with schema
+`libreevolve.collaborator_feedback_metadata.v1`, fixed cohort-role,
+event-status, claim-link, privacy, and review-status vocabularies, bounded
+non-secret feedback summaries, affected workflow areas, change-artifact links,
+validation outcomes, and reviewer labels. Completed manifests include
+`runtime.history.collaborator_feedback_provenance_report` with schema
+`libreevolve.collaborator_feedback_provenance_report.v1`. This report keeps
+external early-user/collaborator feedback separate from in-run `llm_feedback`
+graders and records whether diverse use-case cohorts, feedback event IDs,
+workflow areas, change links, validation outcomes, privacy/redaction policy,
+and collaborator review or owner signoff are present before robustness or
+versatility claims are marked claim-ready.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

@@ -331,8 +331,7 @@ Primary evidence:
     of treating the metadata schema alone as AlphaEvolve-style expert-guided
     benchmark formulation.
 
-- [ ] Add early-user and collaborator feedback provenance for robustness
-      claims.
+- [ ] Populate broad collaborator-feedback evidence for robustness claims.
   - Spec evidence: AlphaEvolve's Acknowledgements thank early users and
     collaborators for diverse use cases and insightful feedback that shaped
     the system into a more robust and versatile tool. That is a
@@ -340,22 +339,27 @@ Primary evidence:
     problem formulation, in-loop evaluator/LLM feedback, and production-domain
     owner signoff.
   - Current evidence: LibreEvolve records problem/source provenance, local
-    context sources, benchmark status rows, systems owner/reviewer TODOs, and
-    expert formulation TODOs. It does not define a report schema that records
-    early-user or collaborator feedback events, use-case taxonomy, affected
-    feature or benchmark area, resulting product/code/documentation changes,
-    validation evidence, privacy/redaction policy, or links from feedback to
-    robustness or versatility claims. Code evidence: `llm_feedback` graders are
-    configured candidate-evaluation reviewers recorded under
-    `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages,
-    feedback indexes, retention modes, and scheduler reward telemetry; those
-    records do not model external users, collaborator cohorts, feedback-event
-    lineage, or feedback-to-change review.
-  - Required result: add feedback-provenance metadata for use-case cohorts,
-    collaborator role labels, feedback event IDs, affected workflow areas,
-    change/artifact links, validation outcomes, and redaction policy before
-    README, ROADMAP, or papers-index wording claims AlphaEvolve-style
-    robustness or versatility shaped by broad collaborator feedback.
+    context sources, benchmark status rows, systems owner/reviewer TODOs,
+    expert formulation TODOs, and now optional
+    `collaborator_feedback.yaml` / direct
+    `Problem.collaborator_feedback_metadata`. Code validates fixed cohort-role,
+    event-status, claim-link, privacy, and review vocabularies, persists
+    normalized `problem.collaborator_feedback_metadata`, and emits
+    `runtime.history.collaborator_feedback_provenance_report` with readiness
+    checks for diverse use-case cohorts, feedback event ids, affected workflow
+    areas, change-artifact links, validation outcomes, privacy/redaction
+    policy, and collaborator review or owner signoff. Code still distinguishes
+    those external feedback records from in-run `llm_feedback` graders under
+    `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages, feedback
+    indexes, retention modes, and scheduler reward telemetry. Existing
+    fixtures have not yet been populated with real broad collaborator-feedback
+    records.
+  - Required result: populate representative fixtures with reviewed
+    collaborator-feedback metadata, link feedback events to actual code/docs/
+    report changes and validation outcomes, add paper-facing examples or
+    certification rows, and keep README, ROADMAP, or papers-index wording from
+    claiming AlphaEvolve-style robustness or versatility until broad
+    collaborator feedback evidence exists.
 
 - [ ] Add acknowledgement-role provenance for review, support, and practical
       application management advice.

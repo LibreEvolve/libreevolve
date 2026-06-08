@@ -2106,6 +2106,19 @@ decisions, background-knowledge linkage, and expert review or domain-owner
 signoff are present before marking AlphaEvolve-style expert-guided formulation
 parity claim-ready. Context-source provenance alone is still not treated as
 expert formulation evidence.
+Problem fixtures can also optionally add `collaborator_feedback.yaml` or
+`collaborator_feedback.yml`; direct callers can set
+`Problem.collaborator_feedback_metadata`. The manifest normalizes this to
+`problem.collaborator_feedback_metadata` with fixed vocabularies for cohort
+roles, event statuses, claim links, privacy/redaction policy, and review
+status, plus bounded non-secret text for feedback summaries, affected workflow
+areas, change-artifact links, validation outcomes, and reviewer labels.
+Completed manifests include
+`runtime.history.collaborator_feedback_provenance_report`, which keeps external
+early-user/collaborator feedback separate from in-run `llm_feedback` graders
+and reports whether diverse use-case cohorts, feedback event IDs, workflow
+areas, change links, validation outcomes, privacy policy, and review/signoff
+are present before marking robustness or versatility claims ready.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which records the
 current selected abstraction as a Python-primary code-file set, links it back

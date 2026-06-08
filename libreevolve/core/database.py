@@ -165,6 +165,9 @@ _SEED_IDEA_TEXT_MAX_CHARS = 512
 _SEED_IDEA_LABEL_MAX_CHARS = 160
 _SEED_BACKGROUND_REF_MAX_CHARS = 160
 PROBLEM_FORMULATION_METADATA_SCHEMA = "libreevolve.problem_formulation_metadata.v1"
+COLLABORATOR_FEEDBACK_METADATA_SCHEMA = (
+    "libreevolve.collaborator_feedback_metadata.v1"
+)
 _FORMULATION_ALLOWED_KEYS = {
     "problem_origin",
     "contributors",
@@ -199,6 +202,49 @@ _FORMULATION_REVIEW_STATUSES = {
 }
 _FORMULATION_TEXT_MAX_CHARS = 1024
 _FORMULATION_LABEL_MAX_CHARS = 160
+_COLLABORATOR_FEEDBACK_ALLOWED_KEYS = {
+    "cohorts",
+    "feedback_events",
+    "privacy_policy",
+    "review",
+}
+_COLLABORATOR_FEEDBACK_ROLES = {
+    "early_user",
+    "collaborator",
+    "domain_partner",
+    "application_owner",
+    "internal_reviewer",
+}
+_COLLABORATOR_FEEDBACK_EVENT_STATUSES = {
+    "collected",
+    "triaged",
+    "applied",
+    "validated",
+}
+_COLLABORATOR_FEEDBACK_CLAIM_LINKS = {
+    "robustness",
+    "versatility",
+    "usability",
+    "workflow_coverage",
+}
+_COLLABORATOR_FEEDBACK_RETENTION_POLICIES = {
+    "redacted_labels_only",
+    "private_internal",
+    "public_attributed",
+}
+_COLLABORATOR_FEEDBACK_REDACTION_POLICIES = {
+    "anonymous_labels",
+    "secret_redacted",
+    "public_names_allowed",
+}
+_COLLABORATOR_FEEDBACK_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "collaborator_reviewed",
+    "owner_signed_off",
+}
+_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS = 1024
+_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -225,6 +271,7 @@ class ProgramDatabase:
         archive_state_snapshot: Mapping[str, object] | None = None,
         archive_programs_by_id: Mapping[str, Program] | None = None,
         formulation_metadata: Mapping[str, object] | None = None,
+        collaborator_feedback_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -276,6 +323,9 @@ class ProgramDatabase:
         formulation_metadata = validate_problem_formulation_metadata(
             formulation_metadata or {}
         )
+        collaborator_feedback_metadata = validate_collaborator_feedback_metadata(
+            collaborator_feedback_metadata or {}
+        )
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -288,6 +338,7 @@ class ProgramDatabase:
             seed_skipped,
             seed_policy,
             formulation_metadata,
+            collaborator_feedback_metadata,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -5230,6 +5281,347 @@ def _normalize_formulation_text(label: str, value: object, *, max_chars: int) ->
     return redacted
 
 
+def validate_collaborator_feedback_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("collaborator_feedback_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("collaborator_feedback_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key)
+        for key in set(value) - _COLLABORATOR_FEEDBACK_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(
+            f"collaborator_feedback_metadata has unsupported fields {unsupported}"
+        )
+    normalized: dict = {
+        "schema": COLLABORATOR_FEEDBACK_METADATA_SCHEMA,
+        "status": "provided" if value else "not_provided",
+        "cohorts": [],
+        "feedback_events": [],
+        "privacy_policy": {
+            "retention": "redacted_labels_only",
+            "redaction": "anonymous_labels",
+            "notes": None,
+        },
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "cohorts" in value:
+        cohorts = value["cohorts"]
+        if not isinstance(cohorts, list):
+            raise StrictJsonlError("collaborator_feedback_metadata.cohorts must be a list")
+        normalized["cohorts"] = [
+            _normalize_collaborator_feedback_cohort(index, cohort)
+            for index, cohort in enumerate(cohorts)
+        ]
+    cohort_ids = {
+        cohort["cohort_id"]
+        for cohort in normalized["cohorts"]
+        if isinstance(cohort, Mapping) and isinstance(cohort.get("cohort_id"), str)
+    }
+    if len(cohort_ids) != len(normalized["cohorts"]):
+        raise StrictJsonlError(
+            "collaborator_feedback_metadata.cohorts must have unique cohort_id values"
+        )
+    if "feedback_events" in value:
+        events = value["feedback_events"]
+        if not isinstance(events, list):
+            raise StrictJsonlError(
+                "collaborator_feedback_metadata.feedback_events must be a list"
+            )
+        normalized["feedback_events"] = [
+            _normalize_collaborator_feedback_event(index, event, cohort_ids)
+            for index, event in enumerate(events)
+        ]
+    event_ids = {
+        event["feedback_id"]
+        for event in normalized["feedback_events"]
+        if isinstance(event, Mapping) and isinstance(event.get("feedback_id"), str)
+    }
+    if len(event_ids) != len(normalized["feedback_events"]):
+        raise StrictJsonlError(
+            "collaborator_feedback_metadata.feedback_events must have unique feedback_id values"
+        )
+    if "privacy_policy" in value:
+        normalized["privacy_policy"] = _normalize_collaborator_feedback_privacy(
+            value["privacy_policy"]
+        )
+    if "review" in value:
+        normalized["review"] = _normalize_collaborator_feedback_review(value["review"])
+    _validate_context_provenance_json_size(
+        "collaborator_feedback_metadata",
+        normalized,
+    )
+    return normalized
+
+
+def _normalize_collaborator_feedback_cohort(index: int, value: object) -> dict:
+    label = f"collaborator_feedback_metadata.cohorts[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"cohort_id", "role", "label", "use_case_area", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    role = value.get("role")
+    if not isinstance(role, str) or role not in _COLLABORATOR_FEEDBACK_ROLES:
+        raise StrictJsonlError(
+            f"{label}.role must be one of {sorted(_COLLABORATOR_FEEDBACK_ROLES)}"
+        )
+    return {
+        "cohort_id": _normalize_collaborator_feedback_token(
+            f"{label}.cohort_id",
+            value.get("cohort_id"),
+        ),
+        "role": role,
+        "label": _normalize_collaborator_feedback_text(
+            f"{label}.label",
+            value.get("label"),
+            max_chars=_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS,
+        ),
+        "use_case_area": _normalize_collaborator_feedback_text(
+            f"{label}.use_case_area",
+            value.get("use_case_area"),
+            max_chars=_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS,
+        ),
+        **(
+            {
+                "notes": _normalize_collaborator_feedback_text(
+                    f"{label}.notes",
+                    value["notes"],
+                    max_chars=_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS,
+                )
+            }
+            if "notes" in value
+            else {}
+        ),
+    }
+
+
+def _normalize_collaborator_feedback_event(
+    index: int,
+    value: object,
+    cohort_ids: set[str],
+) -> dict:
+    label = f"collaborator_feedback_metadata.feedback_events[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value)
+        - {
+            "feedback_id",
+            "cohort_id",
+            "status",
+            "summary",
+            "affected_workflow_areas",
+            "change_artifact_links",
+            "validation_outcomes",
+            "claim_links",
+        }
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    feedback_id = _normalize_collaborator_feedback_token(
+        f"{label}.feedback_id",
+        value.get("feedback_id"),
+    )
+    cohort_id = _normalize_collaborator_feedback_token(
+        f"{label}.cohort_id",
+        value.get("cohort_id"),
+    )
+    if cohort_id not in cohort_ids:
+        raise StrictJsonlError(f"{label}.cohort_id must reference a declared cohort")
+    status = value.get("status", "collected")
+    if (
+        not isinstance(status, str)
+        or status not in _COLLABORATOR_FEEDBACK_EVENT_STATUSES
+    ):
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_COLLABORATOR_FEEDBACK_EVENT_STATUSES)}"
+        )
+    claim_links = value.get("claim_links", [])
+    if not isinstance(claim_links, list):
+        raise StrictJsonlError(f"{label}.claim_links must be a list")
+    normalized_claim_links = []
+    for link_index, link in enumerate(claim_links):
+        if not isinstance(link, str) or link not in _COLLABORATOR_FEEDBACK_CLAIM_LINKS:
+            raise StrictJsonlError(
+                f"{label}.claim_links[{link_index}] must be one of "
+                f"{sorted(_COLLABORATOR_FEEDBACK_CLAIM_LINKS)}"
+            )
+        if link not in normalized_claim_links:
+            normalized_claim_links.append(link)
+    return {
+        "feedback_id": feedback_id,
+        "cohort_id": cohort_id,
+        "status": status,
+        "summary": _normalize_collaborator_feedback_text(
+            f"{label}.summary",
+            value.get("summary"),
+            max_chars=_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS,
+        ),
+        "affected_workflow_areas": _normalize_collaborator_feedback_text_list(
+            f"{label}.affected_workflow_areas",
+            value.get("affected_workflow_areas"),
+            max_chars=_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS,
+        ),
+        "change_artifact_links": _normalize_collaborator_feedback_text_list(
+            f"{label}.change_artifact_links",
+            value.get("change_artifact_links"),
+            max_chars=_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS,
+        ),
+        "validation_outcomes": _normalize_collaborator_feedback_text_list(
+            f"{label}.validation_outcomes",
+            value.get("validation_outcomes"),
+            max_chars=_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS,
+        ),
+        "claim_links": normalized_claim_links,
+    }
+
+
+def _normalize_collaborator_feedback_privacy(value: object) -> dict:
+    label = "collaborator_feedback_metadata.privacy_policy"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"retention", "redaction", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    retention = value.get("retention")
+    if (
+        not isinstance(retention, str)
+        or retention not in _COLLABORATOR_FEEDBACK_RETENTION_POLICIES
+    ):
+        raise StrictJsonlError(
+            f"{label}.retention must be one of {sorted(_COLLABORATOR_FEEDBACK_RETENTION_POLICIES)}"
+        )
+    redaction = value.get("redaction")
+    if (
+        not isinstance(redaction, str)
+        or redaction not in _COLLABORATOR_FEEDBACK_REDACTION_POLICIES
+    ):
+        raise StrictJsonlError(
+            f"{label}.redaction must be one of {sorted(_COLLABORATOR_FEEDBACK_REDACTION_POLICIES)}"
+        )
+    return {
+        "retention": retention,
+        "redaction": redaction,
+        "notes": (
+            _normalize_collaborator_feedback_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_collaborator_feedback_review(value: object) -> dict:
+    label = "collaborator_feedback_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if (
+        not isinstance(status, str)
+        or status not in _COLLABORATOR_FEEDBACK_REVIEW_STATUSES
+    ):
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_COLLABORATOR_FEEDBACK_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    reviewer_labels = _normalize_collaborator_feedback_text_list(
+        f"{label}.reviewer_labels",
+        reviewers,
+        max_chars=_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS,
+        allow_empty=True,
+    )
+    return {
+        "status": status,
+        "reviewer_labels": reviewer_labels,
+        "notes": (
+            _normalize_collaborator_feedback_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_collaborator_feedback_text_list(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+    allow_empty: bool = False,
+) -> list[str]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "a list" if allow_empty else "a non-empty list"
+        raise StrictJsonlError(f"{label} must be {requirement}")
+    normalized = []
+    for index, item in enumerate(value):
+        text = _normalize_collaborator_feedback_text(
+            f"{label}[{index}]",
+            item,
+            max_chars=max_chars,
+        )
+        if text not in normalized:
+            normalized.append(text)
+    return normalized
+
+
+def _normalize_collaborator_feedback_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > _COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS:
+        raise StrictJsonlError(
+            f"{label} must be <= {_COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS} characters"
+        )
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value):
+        raise StrictJsonlError(f"{label} must be a safe feedback metadata token")
+    return value
+
+
+def _normalize_collaborator_feedback_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
 def validate_seed_sources(value: object) -> list[dict]:
     if not isinstance(value, list):
         raise StrictJsonlError("seed_sources must be a list of mappings")
@@ -5588,6 +5980,7 @@ def _startup_manifest_payload(
     seed_skipped: list[dict],
     seed_policy: dict,
     formulation_metadata: dict,
+    collaborator_feedback_metadata: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -5736,6 +6129,7 @@ def _startup_manifest_payload(
             "seed_skipped": seed_skipped,
             "seed_policy": seed_policy,
             "formulation_metadata": formulation_metadata,
+            "collaborator_feedback_metadata": collaborator_feedback_metadata,
         },
         "policies": {
             "redaction": redaction_policy_record(),

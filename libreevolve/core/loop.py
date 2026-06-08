@@ -788,6 +788,7 @@ def evolve(
         seed_skipped=_problem_seed_skipped(problem),
         seed_policy=_problem_seed_policy(problem),
         formulation_metadata=_problem_formulation_metadata(problem),
+        collaborator_feedback_metadata=_problem_collaborator_feedback_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5154,6 +5155,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "collaborator_feedback_provenance_report": (
+            _collaborator_feedback_provenance_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -6044,6 +6050,492 @@ def validate_problem_formulation_provenance_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.problem_formulation_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _collaborator_feedback_provenance_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("collaborator_feedback_metadata")
+        if isinstance(problem.get("collaborator_feedback_metadata"), Mapping)
+        else {}
+    )
+    cohorts = (
+        metadata.get("cohorts")
+        if isinstance(metadata.get("cohorts"), list)
+        else []
+    )
+    events = (
+        metadata.get("feedback_events")
+        if isinstance(metadata.get("feedback_events"), list)
+        else []
+    )
+    privacy = (
+        metadata.get("privacy_policy")
+        if isinstance(metadata.get("privacy_policy"), Mapping)
+        else {}
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    cohort_roles = sorted(
+        {
+            cohort.get("role")
+            for cohort in cohorts
+            if isinstance(cohort, Mapping) and isinstance(cohort.get("role"), str)
+        }
+    )
+    use_case_areas = sorted(
+        {
+            cohort.get("use_case_area")
+            for cohort in cohorts
+            if isinstance(cohort, Mapping)
+            and isinstance(cohort.get("use_case_area"), str)
+        }
+    )
+    claim_links = sorted(
+        {
+            link
+            for event in events
+            if isinstance(event, Mapping)
+            for link in (
+                event.get("claim_links")
+                if isinstance(event.get("claim_links"), list)
+                else []
+            )
+            if isinstance(link, str)
+        }
+    )
+    event_status_counts: dict[str, int] = {}
+    affected_workflow_areas: set[str] = set()
+    events_with_change_links = 0
+    events_with_validation = 0
+    for event in events:
+        if not isinstance(event, Mapping):
+            continue
+        status = event.get("status")
+        if isinstance(status, str):
+            event_status_counts[status] = event_status_counts.get(status, 0) + 1
+        workflows = event.get("affected_workflow_areas")
+        if isinstance(workflows, list):
+            affected_workflow_areas.update(
+                workflow for workflow in workflows if isinstance(workflow, str)
+            )
+        if isinstance(event.get("change_artifact_links"), list) and event.get(
+            "change_artifact_links"
+        ):
+            events_with_change_links += 1
+        if isinstance(event.get("validation_outcomes"), list) and event.get(
+            "validation_outcomes"
+        ):
+            events_with_validation += 1
+    metadata_present = metadata.get("status") == "provided"
+    diverse_use_cases = len(use_case_areas) >= 2 and len(cohorts) >= 2
+    event_ids_recorded = all(
+        isinstance(event, Mapping)
+        and isinstance(event.get("feedback_id"), str)
+        and event.get("feedback_id")
+        for event in events
+    ) and bool(events)
+    workflows_recorded = all(
+        isinstance(event, Mapping)
+        and isinstance(event.get("affected_workflow_areas"), list)
+        and bool(event.get("affected_workflow_areas"))
+        for event in events
+    ) and bool(events)
+    change_links_recorded = events_with_change_links == len(events) and bool(events)
+    validation_recorded = events_with_validation == len(events) and bool(events)
+    privacy_recorded = (
+        isinstance(privacy.get("retention"), str)
+        and isinstance(privacy.get("redaction"), str)
+    )
+    reviewed = review.get("status") in {
+        "collaborator_reviewed",
+        "owner_signed_off",
+    }
+    robustness_or_versatility = bool({"robustness", "versatility"} & set(claim_links))
+    claim_ready = (
+        metadata_present
+        and diverse_use_cases
+        and event_ids_recorded
+        and workflows_recorded
+        and change_links_recorded
+        and validation_recorded
+        and privacy_recorded
+        and reviewed
+        and robustness_or_versatility
+    )
+    report = {
+        "schema": "libreevolve.collaborator_feedback_provenance_report.v1",
+        "source": "collaborator_feedback_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.collaborator_feedback_metadata",
+        "metadata_status": metadata.get("status"),
+        "cohort_count": len(cohorts),
+        "cohort_roles": cohort_roles,
+        "use_case_area_count": len(use_case_areas),
+        "use_case_areas": use_case_areas[:50],
+        "feedback_event_count": len(events),
+        "event_status_counts": event_status_counts,
+        "affected_workflow_area_count": len(affected_workflow_areas),
+        "events_with_change_artifact_links": events_with_change_links,
+        "events_with_validation_outcomes": events_with_validation,
+        "claim_links": claim_links,
+        "privacy_policy": {
+            "retention": privacy.get("retention"),
+            "redaction": privacy.get("redaction"),
+        },
+        "review_status": review.get("status"),
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata_present,
+            "diverse_use_case_cohorts": diverse_use_cases,
+            "feedback_event_ids_recorded": event_ids_recorded,
+            "affected_workflow_areas_recorded": workflows_recorded,
+            "change_artifact_links_recorded": change_links_recorded,
+            "validation_outcomes_recorded": validation_recorded,
+            "privacy_redaction_policy_recorded": privacy_recorded,
+            "collaborator_review_or_owner_signoff": reviewed,
+            "robustness_or_versatility_claim_linked": robustness_or_versatility,
+            "alphaevolve_collaborator_feedback_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("collaborator_feedback_yaml_in_problem_fixture", metadata_present),
+                    ("diverse_use_case_cohorts", diverse_use_cases),
+                    ("feedback_event_ids", event_ids_recorded),
+                    ("affected_workflow_areas", workflows_recorded),
+                    ("change_artifact_links", change_links_recorded),
+                    ("validation_outcomes", validation_recorded),
+                    ("privacy_redaction_policy", privacy_recorded),
+                    ("collaborator_review_or_owner_signoff", reviewed),
+                    (
+                        "robustness_or_versatility_claim_links",
+                        robustness_or_versatility,
+                    ),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.collaborator_feedback_metadata",
+            "optional_problem_file": "collaborator_feedback.yaml",
+            "allowed_cohort_roles": [
+                "early_user",
+                "collaborator",
+                "domain_partner",
+                "application_owner",
+                "internal_reviewer",
+            ],
+            "allowed_event_statuses": [
+                "collected",
+                "triaged",
+                "applied",
+                "validated",
+            ],
+            "allowed_claim_links": [
+                "robustness",
+                "versatility",
+                "usability",
+                "workflow_coverage",
+            ],
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "collaborator_reviewed",
+                "owner_signed_off",
+            ],
+        },
+    }
+    report["validation"] = validate_collaborator_feedback_provenance_report(report)
+    return report
+
+
+def validate_collaborator_feedback_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.collaborator_feedback_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "collaborator feedback provenance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "cohort_count",
+        "cohort_roles",
+        "use_case_area_count",
+        "use_case_areas",
+        "feedback_event_count",
+        "event_status_counts",
+        "affected_workflow_area_count",
+        "events_with_change_artifact_links",
+        "events_with_validation_outcomes",
+        "claim_links",
+        "privacy_policy",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"collaborator feedback report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.collaborator_feedback_provenance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported collaborator feedback report schema",
+            }
+        )
+    if report.get("source") != "collaborator_feedback_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported collaborator feedback report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.collaborator_feedback_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference collaborator feedback metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.collaborator_feedback_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at collaborator feedback metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    allowed_roles = {
+        "early_user",
+        "collaborator",
+        "domain_partner",
+        "application_owner",
+        "internal_reviewer",
+    }
+    roles = report.get("cohort_roles")
+    if not isinstance(roles, list) or not all(role in allowed_roles for role in roles):
+        issues.append(
+            {
+                "code": "invalid_cohort_roles",
+                "message": "cohort_roles must use supported role labels",
+            }
+        )
+        roles = []
+    allowed_claim_links = {
+        "robustness",
+        "versatility",
+        "usability",
+        "workflow_coverage",
+    }
+    claim_links = report.get("claim_links")
+    if not isinstance(claim_links, list) or not all(
+        link in allowed_claim_links for link in claim_links
+    ):
+        issues.append(
+            {
+                "code": "invalid_claim_links",
+                "message": "claim_links must use supported claim labels",
+            }
+        )
+        claim_links = []
+    for field in (
+        "cohort_count",
+        "use_case_area_count",
+        "feedback_event_count",
+        "affected_workflow_area_count",
+        "events_with_change_artifact_links",
+        "events_with_validation_outcomes",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    use_case_areas = report.get("use_case_areas")
+    if not isinstance(use_case_areas, list) or not all(
+        isinstance(item, str) and item for item in use_case_areas
+    ):
+        issues.append(
+            {
+                "code": "invalid_use_case_areas",
+                "message": "use_case_areas must be text labels",
+            }
+        )
+    status_counts = report.get("event_status_counts")
+    if not isinstance(status_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_event_status_counts",
+                "message": "event_status_counts must be an object",
+            }
+        )
+    else:
+        allowed_statuses = {"collected", "triaged", "applied", "validated"}
+        for status, count in status_counts.items():
+            if status not in allowed_statuses:
+                issues.append(
+                    {
+                        "code": "invalid_event_status",
+                        "message": "event status is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_event_status_count",
+                        "message": "event status counts must be non-negative integers",
+                    }
+                )
+    privacy = report.get("privacy_policy")
+    privacy_recorded = False
+    if not isinstance(privacy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_privacy_policy",
+                "message": "privacy_policy must be an object",
+            }
+        )
+    else:
+        privacy_recorded = isinstance(privacy.get("retention"), str) and isinstance(
+            privacy.get("redaction"), str
+        )
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "collaborator_reviewed",
+        "owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    cohort_count = report.get("cohort_count")
+    use_case_count = report.get("use_case_area_count")
+    event_count = report.get("feedback_event_count")
+    change_count = report.get("events_with_change_artifact_links")
+    validation_count = report.get("events_with_validation_outcomes")
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and isinstance(cohort_count, int)
+        and not isinstance(cohort_count, bool)
+        and cohort_count >= 2
+        and isinstance(use_case_count, int)
+        and not isinstance(use_case_count, bool)
+        and use_case_count >= 2
+        and isinstance(event_count, int)
+        and not isinstance(event_count, bool)
+        and event_count > 0
+        and isinstance(report.get("affected_workflow_area_count"), int)
+        and not isinstance(report.get("affected_workflow_area_count"), bool)
+        and report.get("affected_workflow_area_count") > 0
+        and isinstance(change_count, int)
+        and not isinstance(change_count, bool)
+        and change_count == event_count
+        and isinstance(validation_count, int)
+        and not isinstance(validation_count, bool)
+        and validation_count == event_count
+        and privacy_recorded
+        and review_status in {"collaborator_reviewed", "owner_signed_off"}
+        and bool({"robustness", "versatility"} & set(claim_links))
+    )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_collaborator_feedback_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "collaborator_feedback_parity_mismatch",
+                    "message": "collaborator feedback parity must match report readiness",
+                }
+            )
+        if readiness.get("collaborator_review_or_owner_signoff") != (
+            review_status in {"collaborator_reviewed", "owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match collaborator feedback readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "collaborator_feedback.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name collaborator_feedback.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.collaborator_feedback_provenance_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -11269,6 +11761,10 @@ def _problem_seed_policy(problem: Problem) -> dict:
 
 def _problem_formulation_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "formulation_metadata", {}) or {})
+
+
+def _problem_collaborator_feedback_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "collaborator_feedback_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

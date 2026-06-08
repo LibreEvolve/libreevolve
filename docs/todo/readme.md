@@ -353,23 +353,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README can describe the benchmark claim without implying the schema
     alone proves AlphaEvolve-style human expert problem formulation.
 
-- [ ] Keep README robustness and versatility wording scoped until early-user
-      feedback provenance exists.
+- [ ] Keep README robustness and versatility wording scoped until populated
+      collaborator-feedback evidence exists.
   - Spec evidence: AlphaEvolve's Acknowledgements say early users and
     collaborators supplied diverse use cases and insightful feedback that
     shaped the system into a more robust and versatile tool. This external
     use-case feedback is distinct from candidate-evaluation feedback,
     prompt-visible evaluator feedback, and configured LLM feedback graders.
   - Current evidence: README can describe implemented surfaces, local examples,
-    paper/status rows, expert formulation gaps, and domain-owner review gaps.
-    It does not document feedback-provenance records for early-user or
-    collaborator use cases, affected workflow areas, resulting changes,
-    validation outcomes, or privacy/redaction policy. README documents
+    paper/status rows, expert formulation gaps, domain-owner review gaps,
+    optional `collaborator_feedback.yaml` /
+    `Problem.collaborator_feedback_metadata`, normalized
+    `problem.collaborator_feedback_metadata`, and
+    `runtime.history.collaborator_feedback_provenance_report`. It now
+    distinguishes external early-user/collaborator feedback from in-run
     `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages, feedback
-    retention, feedback indexes, and feedback-sourced metrics, but those are
-    in-run reviewer/telemetry records rather than external
-    collaborator-feedback evidence.
-  - Required result: when use-case feedback provenance lands, update README,
+    retention, feedback indexes, and feedback-sourced metrics. Existing
+    fixtures do not yet carry real multi-cohort feedback records with
+    change-link and validation evidence.
+  - Required result: when representative fixtures are populated with reviewed
+    collaborator-feedback metadata and paper-facing evidence, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes local feature breadth and smoke examples from
     AlphaEvolve-style robustness or versatility claims backed by diverse

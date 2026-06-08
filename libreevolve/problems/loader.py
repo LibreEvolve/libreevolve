@@ -32,6 +32,10 @@ _MAX_CONTEXT_PROVENANCE_CHARS = 200_000
 _CONTEXT_MANIFEST_NAMES = ("context.yaml", "context.yml")
 _SEED_POLICY_MANIFEST_NAMES = ("seed_policy.yaml", "seed_policy.yml")
 _FORMULATION_METADATA_NAMES = ("formulation.yaml", "formulation.yml")
+_COLLABORATOR_FEEDBACK_METADATA_NAMES = (
+    "collaborator_feedback.yaml",
+    "collaborator_feedback.yml",
+)
 _CONTEXT_EXPLICIT_FAILURE_POLICIES = {"error", "warn"}
 _CONTEXT_EXCERPT_POLICIES = {"head", "head_tail", "term_ranked"}
 _CONTEXT_SOURCE_SELECTION_POLICIES = {"path_order", "term_ranked"}
@@ -55,6 +59,7 @@ class Problem:
     initial_workspace_skipped: list[dict] = field(default_factory=list)
     initial_workspace_policy: dict = field(default_factory=dict)
     formulation_metadata: dict = field(default_factory=dict)
+    collaborator_feedback_metadata: dict = field(default_factory=dict)
     config_source:    dict = field(
         default_factory=lambda: {"path": "config.yaml", "status": "not_loaded"}
     )
@@ -154,6 +159,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
         task_description=task,
     )
     formulation_metadata = _load_formulation_metadata(d)
+    collaborator_feedback_metadata = _load_collaborator_feedback_metadata(d)
     return Problem(name=d.name, task_description=task, metrics=metrics,
                    primary_metric=primary_metric,
                    primary_bounds=primary_bounds,
@@ -165,7 +171,8 @@ def load_problem(problem_dir: str | Path) -> Problem:
                    initial_workspace_sources=seed_sources,
                    initial_workspace_skipped=seed_skipped,
                    initial_workspace_policy=seed_policy,
-                   formulation_metadata=formulation_metadata)
+                   formulation_metadata=formulation_metadata,
+                   collaborator_feedback_metadata=collaborator_feedback_metadata)
 
 
 def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict]:
@@ -412,6 +419,48 @@ def _load_formulation_metadata(problem_dir: Path) -> dict:
         raise ValueError(f"{path}: formulation metadata must be a mapping")
     if not all(isinstance(key, str) for key in raw):
         raise ValueError(f"{path}: formulation metadata keys must be strings")
+    return dict(raw)
+
+
+def _load_collaborator_feedback_metadata(problem_dir: Path) -> dict:
+    paths = [problem_dir / name for name in _COLLABORATOR_FEEDBACK_METADATA_NAMES]
+    existing = [path for path in paths if path.exists()]
+    if not existing:
+        return {}
+    if len(existing) > 1:
+        labels = [path.name for path in existing]
+        raise ValueError(
+            f"{problem_dir}: use only one collaborator feedback metadata file from {labels}"
+        )
+    path = existing[0]
+    if _is_link(path):
+        raise ValueError(f"{path}: collaborator feedback metadata links are not supported")
+    if not path.is_file():
+        raise ValueError(f"{path}: collaborator feedback metadata must be a file")
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise ValueError(
+            f"{path}: collaborator feedback metadata could not be read: "
+            f"{redact_sensitive_text(str(exc))}"
+        ) from exc
+    except UnicodeDecodeError as exc:
+        raise ValueError(
+            f"{path}: collaborator feedback metadata must be valid UTF-8"
+        ) from exc
+    try:
+        raw = safe_load_unique(text) if text.strip() else {}
+    except yaml.YAMLError as exc:
+        raise ValueError(
+            f"{path}: invalid collaborator feedback metadata YAML: "
+            f"{redacted_yaml_error(exc)}"
+        ) from exc
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ValueError(f"{path}: collaborator feedback metadata must be a mapping")
+    if not all(isinstance(key, str) for key in raw):
+        raise ValueError(f"{path}: collaborator feedback metadata keys must be strings")
     return dict(raw)
 
 

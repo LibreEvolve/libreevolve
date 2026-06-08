@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
+    validate_collaborator_feedback_provenance_report,
     validate_initial_program_idea_provenance_report,
     validate_initial_program_validity_report,
     validate_problem_formulation_provenance_report,
@@ -5776,6 +5777,144 @@ def test_direct_problem_formulation_metadata_rejects_secret_like_text_before_man
     with pytest.raises(
         StrictJsonlError,
         match="formulation_metadata\\.formulation_notes must not contain secret-like text",
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
+
+
+def test_loaded_collaborator_feedback_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text("feedback shaped task", encoding="utf-8")
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    (problem_dir / "collaborator_feedback.yaml").write_text(
+        "cohorts:\n"
+        "  - cohort_id: workflow-users\n"
+        "    role: early_user\n"
+        "    label: workflow users\n"
+        "    use_case_area: prompt workflow\n"
+        "  - cohort_id: benchmark-partners\n"
+        "    role: collaborator\n"
+        "    label: benchmark partners\n"
+        "    use_case_area: benchmark operations\n"
+        "feedback_events:\n"
+        "  - feedback_id: fb-workflow-1\n"
+        "    cohort_id: workflow-users\n"
+        "    status: validated\n"
+        "    summary: Users reported unclear prompt artifact traceability.\n"
+        "    affected_workflow_areas:\n"
+        "      - prompt history review\n"
+        "    change_artifact_links:\n"
+        "      - docs/run-artifacts.md prompt history section\n"
+        "    validation_outcomes:\n"
+        "      - focused tests validate artifact summary fields\n"
+        "    claim_links:\n"
+        "      - robustness\n"
+        "  - feedback_id: fb-benchmark-1\n"
+        "    cohort_id: benchmark-partners\n"
+        "    status: validated\n"
+        "    summary: Partners needed clearer benchmark result boundaries.\n"
+        "    affected_workflow_areas:\n"
+        "      - benchmark report review\n"
+        "    change_artifact_links:\n"
+        "      - papers/README.md AlphaEvolve table row\n"
+        "    validation_outcomes:\n"
+        "      - paper manifest tests validate status wording\n"
+        "    claim_links:\n"
+        "      - versatility\n"
+        "privacy_policy:\n"
+        "  retention: redacted_labels_only\n"
+        "  redaction: anonymous_labels\n"
+        "review:\n"
+        "  status: collaborator_reviewed\n"
+        "  reviewer_labels:\n"
+        "    - workflow users\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["collaborator_feedback_metadata"]
+    assert metadata["schema"] == "libreevolve.collaborator_feedback_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["cohorts"][0]["cohort_id"] == "workflow-users"
+    assert metadata["feedback_events"][0]["claim_links"] == ["robustness"]
+    report = manifest["runtime"]["history"]["collaborator_feedback_provenance_report"]
+    assert report["schema"] == "libreevolve.collaborator_feedback_provenance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_collaborator_feedback_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["use_case_area_count"] == 2
+    assert report["events_with_change_artifact_links"] == 2
+    assert report["events_with_validation_outcomes"] == 2
+    assert report["claim_readiness"][
+        "alphaevolve_collaborator_feedback_parity"
+    ] is True
+
+
+def test_collaborator_feedback_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["collaborator_feedback_provenance_report"]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["validation"]["ok"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_collaborator_feedback_parity"
+    ] is False
+    assert "collaborator_feedback_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_collaborator_feedback_parity"] = True
+    validation = validate_collaborator_feedback_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "collaborator_feedback_parity_mismatch",
+    }
+
+
+def test_direct_collaborator_feedback_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.collaborator_feedback_metadata = {
+        "cohorts": [
+            {
+                "cohort_id": "users",
+                "role": "early_user",
+                "label": "users",
+                "use_case_area": "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678",
+            }
+        ]
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=(
+            "collaborator_feedback_metadata\\.cohorts\\[0\\]\\.use_case_area "
+            "must not contain secret-like text"
+        ),
     ):
         evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
 

@@ -599,28 +599,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     checks before treating prompt metric headers as AlphaEvolve-style rendered
     evaluation-result evidence.
 
-- [ ] Track early-user and collaborator feedback provenance as paper evidence.
+- [ ] Populate early-user and collaborator feedback provenance as paper
+      evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early
     users and collaborators for diverse use cases and insightful feedback,
     stating that this feedback shaped AlphaEvolve into a more robust and
     versatile tool. This is a broad external-feedback and system-shaping claim,
     separate from AlphaEvolve's machine feedback/evaluator loop.
-  - Current gap: paper/status records track local problem/source provenance,
-    expert mathematical formulation gaps, application owner/reviewer gaps, and
-    benchmark/report artifacts. They do not preserve a feedback-provenance
-    layer for early users or collaborators: use-case family, contributor role,
-    feedback event/source, affected system surface, resulting change,
-    validation evidence, privacy/redaction policy, or linkage from feedback to
-    robustness and versatility claims. Current paper-facing implementation
-    notes can describe LLM-grader feedback retention, feedback indexes,
-    feedback-sourced metrics, and calibration-report contracts; those are
-    search/evaluation telemetry, not evidence that external collaborator
-    feedback shaped the system.
-  - Required result: add paper-facing use-case feedback records with safe
-    cohort/role labels, feedback event IDs, use-case taxonomy, affected
-    workflow and artifact links, change/result validation, privacy/redaction
-    metadata, and README/ROADMAP wording that separates documented local
-    breadth from AlphaEvolve-style broad collaborator-feedback evidence.
+  - Current evidence: paper/status records track local problem/source
+    provenance, expert mathematical formulation gaps, application
+    owner/reviewer gaps, benchmark/report artifacts, optional
+    `collaborator_feedback.yaml` /
+    `Problem.collaborator_feedback_metadata`, normalized
+    `problem.collaborator_feedback_metadata`, and
+    `runtime.history.collaborator_feedback_provenance_report`. The report
+    records safe cohort/role labels, feedback event IDs, use-case areas,
+    affected workflows, change-artifact links, validation outcomes,
+    privacy/redaction policy, review/signoff state, and robustness/versatility
+    claim readiness. Current paper-facing implementation notes can also
+    describe LLM-grader feedback retention, feedback indexes,
+    feedback-sourced metrics, and calibration-report contracts as separate
+    search/evaluation telemetry. Existing fixtures still lack real populated
+    broad collaborator-feedback records and paper-facing certification
+    examples.
+  - Required result: populate representative fixtures with reviewed use-case
+    feedback records, link events to actual workflow/artifact changes and
+    validation outcomes, add paper-facing examples or certification rows, and
+    keep documented local breadth separate from AlphaEvolve-style broad
+    collaborator-feedback evidence until those records exist.
 
 - [ ] Track acknowledgement-role evidence for review, support, and practical
       application management advice.

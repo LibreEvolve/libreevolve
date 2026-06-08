@@ -326,6 +326,16 @@ parameter-scope decisions, background refs, and review/signoff state. Section
 formulation, so mathematical benchmark fixtures still need populated,
 expert-reviewed formulation metadata before making that class of paper claim.
 
+AlphaEvolve collaborator-feedback note: LibreEvolve now has optional
+`collaborator_feedback.yaml` / `Problem.collaborator_feedback_metadata` records
+plus `runtime.history.collaborator_feedback_provenance_report` for early-user
+or collaborator cohorts, feedback event ids, affected workflow areas,
+change-artifact links, validation outcomes, privacy/redaction policy, and
+review/signoff state. This is separate from in-run `llm_feedback` graders.
+AlphaEvolve's Acknowledgements say broad early-user and collaborator feedback
+shaped robustness and versatility, so paper-facing claims still need populated
+multi-cohort feedback records with reviewed validation/change evidence.
+
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema
 `libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves

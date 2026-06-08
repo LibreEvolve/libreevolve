@@ -133,6 +133,13 @@ LibreEvolve has:
   contributor roles, problem origin, formulation notes, objective/evaluator
   rationale, parameter-scope decisions, background refs, and review/signoff
   readiness
+- optional external feedback metadata under `collaborator_feedback.yaml` or
+  direct `Problem.collaborator_feedback_metadata`, normalized into
+  `problem.collaborator_feedback_metadata` and summarized by
+  `runtime.history.collaborator_feedback_provenance_report` for early-user or
+  collaborator cohorts, feedback event ids, affected workflow areas,
+  change-artifact links, validation outcomes, privacy/redaction policy, and
+  robustness/versatility claim readiness
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

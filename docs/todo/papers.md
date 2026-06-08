@@ -4165,3 +4165,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     reported latency-speedup claims, linked code/artifact availability if any,
     and TODO/README/ROADMAP wording that treats it as a missing application
     benchmark rather than existing LibreEvolve support.
+
+- [ ] Track AlphaEvolve intentmaking/sensemaking HCI paper evidence.
+  - Paper/source evidence: arXiv `2605.05921`, submitted May 7, 2026, is
+    titled `Intentmaking and Sensemaking: Human Interaction with AI-Guided
+    Mathematical Discovery`. Its abstract reports a formative user study with
+    11 expert mathematicians who used AlphaEvolve to tackle advanced problems,
+    introduces intentmaking as iterative discovery/refinement of experimental
+    goals through active system interaction, pairs it with sensemaking over
+    results, and argues for AI scientific-discovery tools as collaborative
+    instruments.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.05921`. Existing source rows cover the original
+    AlphaEvolve specification, follow-on math repositories, impact articles,
+    and application-domain papers, but not the human-interaction/user-study
+    evidence surface, intentmaking taxonomy, session-trace requirements,
+    dashboard/UI artifacts, or privacy/redaction boundaries for study data.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.05921`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve, study-design metadata, participant-count and
+    problem-domain records, intentmaking/sensemaking taxonomy, UI/session
+    artifact availability, privacy/redaction policy, and TODO/README/ROADMAP
+    wording that treats it as HCI/source evidence rather than implemented
+    LibreEvolve interaction support.

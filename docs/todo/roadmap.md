@@ -3292,3 +3292,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code/artifact availability status, and a background-only or
     benchmark-fixture status rule so roadmap claims do not outpace local FHE
     kernel support.
+
+- [ ] Add AlphaEvolve intentmaking/sensemaking HCI gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.05921`, submitted May 7, 2026, reports a
+    formative user study with 11 expert mathematicians using AlphaEvolve and
+    defines repeated intentmaking and sensemaking cycles as a workflow for
+    AI-guided mathematical discovery.
+  - Current evidence: ROADMAP tracks backend evolution, run inspection,
+    source provenance, benchmark/report contracts, and source gates for
+    impact/application papers. It does not mention `2605.05921`, define an HCI
+    source-manifest gate, or require interactive UI/session evidence before
+    promoting AlphaEvolve-style collaborative discovery workflows.
+  - Required result: add roadmap gates for `2605.05921`: paper/source
+    manifest entry, PDF/cache hash, study metadata, participant/problem
+    taxonomy, intentmaking and sensemaking event schema, UI/session artifact
+    status, goal-revision and human-intervention boundaries, privacy/redaction
+    policy, and a background-only or future-interactive-feature status rule so
+    roadmap claims do not outpace local HCI workflow support.

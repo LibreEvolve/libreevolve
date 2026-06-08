@@ -1666,18 +1666,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve's own MIT license.
 
 - [ ] Keep README bibliography wording scoped until AlphaEvolve References
-      metadata is tracked.
+      metadata is normalized.
   - Spec evidence: the AlphaEvolve PDF has a numbered References section after
     Author information, with entries through `[120]`.
-  - Current evidence: README and `papers/README.md` say the paper manifest
-    tracks local PDF cache rows and that manifest `title` fields are display
-    slugs, not authoritative bibliographic titles. README can cite selected
-    source papers and related-work rows, while active TODOs cover targeted
-    reference ids for matrix baselines and Appendix B prior sources. It does
-    not document a complete AlphaEvolve bibliography/reference table or explain
-    which cited works are locally cached, externally referenced only, or tied
-    to specific paper claims.
-  - Required result: when full References-section metadata lands, update
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_references_section.v1`, which validates the
+    AlphaEvolve References section page span, contiguous `[1]` through `[120]`
+    ids, page-by-page marker ranges, and selected source anchors against the
+    cached PDF text. README and `papers/README.md` still say manifest `title`
+    fields are display slugs, not authoritative bibliographic titles. README
+    does not document normalized author/title/venue/year fields, local-cache
+    linkage, absent-cache status, or claim-level citation provenance.
+  - Required result: when normalized References-section metadata lands, update
     README, ROADMAP, papers index, and code/paper TODOs so README distinguishes
     manifest display slugs, authoritative bibliography fields, local-cache
     linkage, absent-cache status, and targeted claim-level citation provenance.

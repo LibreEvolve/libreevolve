@@ -399,6 +399,14 @@ is not yet an AlphaEvolve reproduction.
   manifest gate validates the record against the current cached PDF text.
   Emitted paper-derived artifacts still need explicit excerpt/table/figure
   reproduction-policy rows linked to that rights evidence.
+- Keep AlphaEvolve bibliography evidence grounded in source markers:
+  `libreevolve.alphaevolve_references_section.v1` now validates that the
+  cached PDF References section spans pages 23-32, includes contiguous
+  reference ids `[1]` through `[120]`, preserves page-by-page marker ranges,
+  and contains selected source anchor phrases. The paper-manifest gate checks
+  those markers against the current cached PDF text. Normalized
+  author/title/venue/year fields, local-cache linkage, and per-claim citation
+  use categories remain open.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

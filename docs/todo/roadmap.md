@@ -2497,16 +2497,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     repository's own license.
 
 - [ ] Keep bibliography roadmap wording scoped until AlphaEvolve References
-      metadata is tracked.
+      metadata is normalized.
   - Spec evidence: the AlphaEvolve PDF includes a numbered References section
     after Author information, with entries through `[120]`.
-  - Current evidence: roadmap and README wording can cite the local paper cache,
-    selected related-work rows, Appendix A/B citation gaps, source-PDF
-    versioning, and source-rights TODOs. They do not require a complete
-    AlphaEvolve bibliography map, local-cache linkage for cited works, or docs
-    checks that distinguish authoritative reference metadata from manifest
-    display slugs and narrower claim-level citation provenance.
-  - Required result: once paper-source metadata records the full References
+  - Current evidence: roadmap and README wording now cite
+    `libreevolve.alphaevolve_references_section.v1`, which validates the
+    AlphaEvolve References section page span, contiguous `[1]` through `[120]`
+    ids, page-by-page marker ranges, and selected source anchors against the
+    cached PDF text. Normalized author/title/venue/year fields, DOI/URL/arXiv
+    metadata, local-cache linkage, absent-cache status, and claim-level
+    citation-use categories are still absent.
+  - Required result: once paper-source metadata normalizes the full References
     section, update ROADMAP, README, papers index, and TODO cross-links with
     reference id, authors/title/venue/year, DOI/URL/arXiv fields, source
     page/span, citation-use categories, local-cache or absent-cache status, and

@@ -3340,23 +3340,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     ROADMAP/papers wording that prevents paper-derived artifacts from being
     presented as publication-ready without verified source-use boundaries.
 
-- [ ] Track full AlphaEvolve References-section bibliography evidence.
+- [ ] Normalize full AlphaEvolve References-section bibliography evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
     References section after Author information, with entries through `[120]`
     covering cited works used by the abstract, method, results, related work,
     and appendices.
-  - Current gap: paper/status TODOs track selected source-reference gaps such
-    as Appendix A matrix baseline references, Appendix B prior sources,
-    related-work rows, paper-source versioning, source rights, and companion
-    artifacts. They do not preserve a complete paper-facing bibliography table
-    for AlphaEvolve itself. The committed paper manifest only stores
-    id/title/url/file/status/bytes/hash, and `papers/README.md` explicitly says
-    manifest titles are not authoritative bibliographic titles.
-  - Required result: add paper-facing bibliography provenance for the
-    AlphaEvolve References section: reference number, authors, title, venue,
-    year, DOI/URL/arXiv id where present, source page/span, citation-use
+  - Current gap: `libreevolve.alphaevolve_references_section.v1` now validates
+    the References section source inventory: pages 23-32, contiguous reference
+    ids `[1]` through `[120]`, page-by-page marker ranges, selected source
+    anchors, and a boundary that manifest display titles are not authoritative
+    bibliography metadata. The paper-manifest command validates those markers
+    against the current cached PDF text. Paper-facing normalized authors,
+    titles, venues, years, DOI/URL/arXiv fields, local-cache linkage, and
+    claim-use categories are still missing.
+  - Required result: add normalized paper-facing bibliography provenance for
+    the AlphaEvolve References section: reference number, authors, title,
+    venue, year, DOI/URL/arXiv id where present, source page/span, citation-use
     category, local-cache linkage or absent-cache status, and docs validation
-    that distinguishes full bibliography evidence from manifest display slugs
+    that distinguishes full bibliography metadata from manifest display slugs
     and narrower per-claim citation TODOs.
 
 - [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.

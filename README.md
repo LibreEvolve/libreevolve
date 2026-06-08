@@ -3162,6 +3162,15 @@ license and the companion repository's Apache/CC licensing. The standard
 paper-manifest gate validates that record against the current cached PDF text.
 Richer excerpt/table/figure reproduction policy rows for generated artifacts
 remain open.
+AlphaEvolve References-section evidence uses
+`libreevolve.alphaevolve_references_section.v1` in
+`libreevolve/problems/benchmarks/paper_bibliography.py`; the built-in record
+validates that the cached PDF References section spans pages 23-32, contains
+contiguous reference ids `[1]` through `[120]`, preserves the page-by-page
+marker ranges, and includes source anchor phrases for selected entries. The
+standard paper-manifest gate validates those markers against the current
+cached PDF text. Full author/title/venue/year normalization, local-cache
+linkage for cited works, and per-claim citation-use links remain open.
 AlphaEvolve paper artifact-role provenance uses
 `libreevolve.alphaevolve_paper_artifact_roles.v1` in
 `libreevolve/problems/benchmarks/paper_artifact_roles.py`; the built-in record

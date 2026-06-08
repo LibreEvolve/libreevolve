@@ -2952,6 +2952,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     and claim-audit links that identify the source version behind every
     AlphaEvolve table, figure, and appendix TODO.
 
+- [ ] Track AlphaEvolve source-PDF rights and license provenance.
+  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Current gap: the committed paper manifest and paper index record the local
+    PDF file, URL, byte count, SHA-256 digest, and paper status. Active TODOs
+    now require source-PDF version metadata and companion/source-artifact
+    tracking, but they do not preserve source rights metadata for the cached
+    AlphaEvolve PDF: copyright holder/year, rights statement, arXiv/license
+    terms, excerpt/reproduction policy, or distinction between LibreEvolve's
+    MIT repository license and third-party paper-source rights.
+  - Required result: add paper-facing source-rights provenance for cached PDFs:
+    rights holder, copyright year, rights statement or license identifier/text,
+    source page/header location, retrieval URL, local PDF hash, allowed
+    excerpt/reproduction policy for tables/figures/quotes, and README/ROADMAP/
+    papers wording that prevents paper-derived artifacts from being presented
+    as publication-ready without verified source-use boundaries.
+
 - [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and details on the mathematical construction problems and methods

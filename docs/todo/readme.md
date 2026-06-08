@@ -1290,6 +1290,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     claim links, update README wording so paper-cache integrity claims
     distinguish content hash validation from source-version pinning.
 
+- [ ] Keep README paper-cache wording scoped until source-PDF rights metadata
+      is tracked.
+  - Spec evidence: the local AlphaEvolve PDF header states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Current evidence: README states LibreEvolve's own MIT license and notes that
+    the project is independent from Google DeepMind, while paper-cache wording
+    describes local PDF byte/hash validation. It does not document source-PDF
+    rights metadata for cached AlphaEvolve evidence, arXiv/license terms,
+    excerpt or figure/table reproduction boundaries, or the distinction between
+    repository licensing and third-party paper-source use rights.
+  - Required result: after paper-source rights metadata lands in manifests and
+    validators, update README wording so paper-cache and paper-derived-artifact
+    claims include rights holder/year, rights statement or license id/text,
+    source page/header location, allowed excerpt/reproduction policy, and a
+    clear separation from LibreEvolve's own MIT license.
+
 - [ ] Keep README follow-on AlphaEvolve math-source wording scoped until the
       expanded paper/repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

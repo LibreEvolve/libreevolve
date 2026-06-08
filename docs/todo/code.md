@@ -2089,6 +2089,25 @@ Primary evidence:
     text/page, local PDF hash, and claim/TODO evidence links that make clear
     which source version each AlphaEvolve audit row used.
 
+- [ ] Add AlphaEvolve source-PDF license/copyright provenance.
+  - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Current evidence: `papers/download_manifest.*`,
+    `libreevolve.tools.paper_manifest`, and the new source-version TODO track
+    paper identity, floating URL, local path, byte/hash metadata, and expected
+    header/version evidence. They do not record the cached source's copyright
+    holder, copyright year, rights statement, arXiv/license terms, or
+    redistribution/use boundary for paper-derived excerpts and reproduced
+    tables/figures. The project README states LibreEvolve's own MIT license and
+    non-affiliation, but that is distinct from the rights metadata for cached
+    AlphaEvolve source PDFs.
+  - Required result: extend paper/source manifests and validators with
+    source-rights metadata: rights holder, copyright year, rights statement or
+    license id/text, source location/page, retrieval URL, excerpt/reproduction
+    use policy, and docs wording that separates LibreEvolve's repository
+    license from third-party paper-source rights before paper-derived artifacts
+    are treated as publication-ready evidence.
+
 - [ ] Add companion Colab/source-artifact tracking for AlphaEvolve results.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying

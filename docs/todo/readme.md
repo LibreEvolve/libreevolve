@@ -4129,14 +4129,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `575` equally spaced intervals and autoconvolution ratio `>= 0.901564`.
     Its abstract says this improves on DeepMind's AlphaEvolve `50`-interval
     witness with value `>= 0.8962`, and that the improved witness was found by
-    simulated annealing and gradient methods rather than LLMs.
+    simulated annealing and gradient methods rather than LLMs. The body gives
+    an exact rational certificate, a finite coefficient-list formula using
+    `L_j` convolution samples, public Python/Mathematica code, and Appendix A
+    integer coefficients obtained by scaling by `2^24` and rounding.
   - Current evidence: README documents Appendix B/autoconvolution gaps,
     constructive-math benchmark-report contracts, paper-cache status, and
     smoke fixtures. It does not mention `2506.16750`, store a 575-interval
     step-function witness, recompute the autoconvolution objective, compare
     the AlphaEvolve 50-interval baseline against the later result, preserve
     non-LLM search provenance, or define a rounding/tolerance rule for
-    `0.901564`.
+    `0.901564`. README also lacks source-scoped boundaries for the public
+    `autoconvolutionHolder` repository, `coeffBL.txt` and `Verify.nb`
+    artifacts, row-major coefficient parsing, translation/dilation support
+    normalization, Matolcsi-Vinuesa and AlphaEvolve coefficient comparisons,
+    integer-arithmetic checker provenance, and NCSU HPC/resource caveats.
   - Required result: if README mentions the improved autoconvolution example,
     the 575-interval witness, the `0.901564` value, the AlphaEvolve
     `0.8962` autoconvolution baseline, simulated annealing, gradient-based
@@ -4146,6 +4153,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     baseline comparison rows, non-LLM search provenance, independent checker
     outputs, and benchmark reports. Avoid implying LibreEvolve supports this
     post-AlphaEvolve autoconvolution improvement without those artifacts.
+    README wording should also distinguish AlphaEvolve's LLM-generated
+    50-interval witness from this later non-LLM 575-interval certificate until
+    local artifacts include exact coefficients, exact-rational/decimal checker
+    outputs, GitHub artifact hashes, and reproducible Python/Mathematica
+    verification.
 
 - [ ] Keep README post-AlphaEvolve sums-and-differences improvement claims
       absent or source-scoped until huge-set construction evidence exists.

@@ -6170,7 +6170,12 @@ Primary evidence:
     this improves on DeepMind's AlphaEvolve result, which used a nonnegative
     step function with `50` equally spaced intervals and value `>= 0.8962`,
     and that the new function was found using simulated annealing and
-    gradient-based methods rather than large language models.
+    gradient-based methods rather than large language models. The body states
+    the exact rational certificate
+    `96086089410408840289339769 / 106577013451431545242354944`, reduces the
+    continuous problem to nonnegative coefficients `v_0..v_(N-1)` and
+    convolution samples `L_j`, and gives formula `(3)` for recomputing the
+    ratio from integer coefficient lists.
   - Current evidence: `papers/README.md` lists `2506.16750` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B autoconvolution TODOs,
@@ -6179,7 +6184,15 @@ Primary evidence:
     no side-by-side AlphaEvolve `50`-interval baseline row, no simulated-
     annealing/gradient-method provenance, no exact/rounded numerical tolerance
     policy for `0.901564`, and no artifact policy that distinguishes
-    AlphaEvolve LLM-generated witnesses from later non-LLM improvements.
+    AlphaEvolve LLM-generated witnesses from later non-LLM improvements. It
+    also lacks public artifact tracking for
+    `https://github.com/zkli-math/autoconvolutionHolder`, `Inital HPC
+    code.py`, `Refine HPC code.py`, `f95.py`, `coeffBL.txt`, and `Verify.nb`,
+    plus the paper's integer-arithmetic conversion by multiplying by `2^24`
+    and rounding, Matolcsi-Vinuesa `20`-step comparison value `0.889226`,
+    AlphaEvolve coefficient-source reversal from DeepMind's notebook, and
+    normalized-autoconvolution correlation comparisons `0.996342` and
+    `0.848466`.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2506.16750`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve Appendix B
@@ -6190,7 +6203,15 @@ Primary evidence:
     simulated-annealing and gradient-search provenance, prior/current result
     comparison rows, independent checker outputs, and README/ROADMAP wording
     that keeps the post-AlphaEvolve autoconvolution improvement as missing
-    evidence until local witness artifacts and reports exist.
+    evidence until local witness artifacts and reports exist. The
+    implementation boundary should additionally require translation/dilation
+    invariance handling, support-normalization records for `[-1/4, 1/4]`,
+    `L1` equivalence checks, exact-rational and decimal result rows, GitHub
+    artifact hashes, Mathematica/Python checker parity, simulated-annealing
+    parameters (`N=23`, perturbation scales, repeat counts), gradient-upscale
+    stages `23 -> 115 -> 575`, NCSU HPC/resource provenance, and source-scoped
+    documentation that the authors say the example was found in November 2024
+    before they were aware of AlphaEvolve's result.
 
 - [ ] Add post-AlphaEvolve sums-and-differences construction boundary.
   - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets

@@ -5704,13 +5704,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     result, which used a `50`-interval nonnegative step function with value at
     least `0.8962`, and says the new function was found using simulated
     annealing and gradient-based methods instead of large language models.
+    Theorem 1 gives the exact rational value
+    `96086089410408840289339769 / 106577013451431545242354944` for
+    `f = sum_{n=0}^{574} v_n 1_[n,n+1)`, with coefficients in Appendix A.
+    Section 2 defines convolution samples `L_j` and formula `(3)`, which is
+    the direct finite checker for any coefficient list.
   - Current gap: `papers/README.md` lists `2506.16750` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
     and the active TODO coverage does not yet track this paper-specific
     evidence. Existing Appendix B.1-B.3 autoconvolution gaps cover the
     AlphaEvolve result family, but not this later 575-interval witness,
     non-LLM search provenance, objective recomputation, side-by-side
-    AlphaEvolve baseline comparison, or rounded-value/tolerance policy.
+    AlphaEvolve baseline comparison, or rounded-value/tolerance policy. They
+    also omit the public repository URL, `Inital HPC code.py`, `Refine HPC
+    code.py`, `f95.py`, `coeffBL.txt`, `Verify.nb`, Mathematica verification
+    snippet, row-major coefficient-table reading rule, referee-suggested
+    integer-arithmetic modification, NCSU HPC resource acknowledgement, and
+    comparison values against Matolcsi-Vinuesa `0.889226` and AlphaEvolve
+    `0.89628`.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2506.16750`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve Appendix B and
@@ -5721,7 +5732,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     gradient-method provenance, prior/current result rows, independent checker
     outputs, reproducibility status, and README/ROADMAP wording that treats
     this post-AlphaEvolve autoconvolution improvement as missing paper evidence
-    rather than implemented LibreEvolve support.
+    rather than implemented LibreEvolve support. Paper evidence should
+    additionally preserve the arXiv `v2`/August 10, 2025 version, the claim
+    that the example was found in November 2024 before the authors knew about
+    AlphaEvolve's example, translation/dilation invariance, support
+    normalization to `[-1/4, 1/4]`, AlphaEvolve coefficient reversal from the
+    DeepMind notebook, normalized graph/correlation comparisons, exact
+    coefficient payload hashes, and checker parity between Python and
+    Mathematica artifacts.
 
 - [ ] Track post-AlphaEvolve sums-and-differences construction paper evidence.
   - Paper/source evidence: arXiv `2505.16105`, submitted May 22, 2025, is

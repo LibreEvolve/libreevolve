@@ -1269,6 +1269,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     a reproduced bit-removal rewrite artifact from generic hardware
     correctness, PPA, designer-signoff, or downstream synthesis evidence.
 
+- [ ] Keep README Gemini-to-TPU contribution wording scoped until hardware
+      attribution evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the RTL improvement was
+    integrated into an upcoming TPU and marked "Gemini's first direct
+    contribution to TPU arithmetic circuits", achieved via AlphaEvolve.
+  - Current evidence: README can point to hardware verification gaps,
+    upcoming-TPU integration gaps, downstream synthesis-tool confirmation
+    gaps, and concrete bit-removal artifact gaps. It does not require evidence
+    for the attribution chain that makes the claim about Gemini directly
+    contributing to TPU arithmetic circuits rather than merely reporting a
+    Verilog optimization.
+  - Required result: when Gemini-to-TPU contribution metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes RTL optimization, integration, and synthesis rediscovery
+    evidence from the broader self-contribution claim involving Gemini,
+    AlphaEvolve, a specific TPU generation, and reviewed arithmetic-circuit
+    integration.
+
 - [ ] Keep README compiler-IR wording scoped to final reference gates until
       per-edit randomized checks exist.
   - Spec evidence: AlphaEvolve Section 3.3.4 checked each FlashAttention

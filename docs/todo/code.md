@@ -3878,6 +3878,25 @@ Primary evidence:
     rewrite artifact from generic RTL verification and downstream synthesis
     evidence.
 
+- [ ] Add Gemini-to-TPU self-contribution provenance for hardware results.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the TPU arithmetic-circuit
+    improvement was integrated into an upcoming TPU and represents "Gemini's
+    first direct contribution to TPU arithmetic circuits", achieved via
+    AlphaEvolve.
+  - Current evidence: hardware TODOs require RTL/EDA verification,
+    designer/synthesis signoff, upcoming-TPU integration, Verilog trust and
+    adoption evidence, and concrete bit-removal rewrite artifacts. They do
+    not require a report to preserve the attribution chain behind the
+    Gemini-to-TPU self-contribution claim.
+  - Required result: add hardware-domain report metadata for Gemini
+    contribution claims: Gemini/AlphaEvolve model-family relationship,
+    arithmetic-circuit and TPU generation identity, contribution novelty
+    basis, integration milestone, responsible hardware review/signoff roles,
+    distinction from downstream synthesis-tool rediscovery, and docs checks
+    that separate a concrete RTL optimization from the broader claim that
+    Gemini directly contributed to TPU arithmetic circuits through
+    AlphaEvolve.
+
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.
   - Spec evidence: AlphaEvolve Section 3.3.4 directly optimizes
     XLA-generated IR for FlashAttention plus surrounding input/output

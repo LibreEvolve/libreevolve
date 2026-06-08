@@ -1602,6 +1602,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap text distinguishes final correctness gates from
     AlphaEvolve-style compiler-IR optimization traces.
 
+- [ ] Keep compiler-stack roadmap wording scoped until FlashAttention context
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.3.4 describes a concrete compiler
+    stack: FlashAttention implements Transformer attention as a Pallas
+    accelerator kernel, higher-level JAX code performs input preparation and
+    output postprocessing, XLA lowers the implementation through IR stages for
+    particular hardware, and the optimized target is a high-impact inference
+    configuration on GPUs.
+  - Current evidence: roadmap systems-result wording covers generic compiler
+    readiness, reference-correctness gaps, expert signoff, and runtime speedup
+    calibration. It does not require compiler fixtures or report validators to
+    record workload/model configuration, FlashAttention/Pallas kernel identity,
+    JAX wrapper boundaries, XLA IR-stage identities, hardware target,
+    lowered-IR artifact hashes, or the memory-access/scheduling decision class
+    being optimized.
+  - Required result: when FlashAttention compiler-stack metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    text separates generic compiler-report support from the specific
+    Pallas/JAX/XLA/FlashAttention stack context used for AlphaEvolve's
+    compiler-generated IR result.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

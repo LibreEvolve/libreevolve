@@ -2822,6 +2822,30 @@ Primary evidence:
     abstraction-level attribution, and final expert/all-input signoff before
     treating compiler-generated IR results as AlphaEvolve-ready.
 
+- [ ] Add FlashAttention compiler-stack context provenance.
+  - Spec evidence: AlphaEvolve Section 3.3.4 places the optimized
+    compiler-generated code inside a specific stack: Transformer attention is
+    implemented using FlashAttention, FlashAttention is an accelerator kernel
+    in Pallas, higher-level JAX code handles input preparation and output
+    postprocessing, XLA lowers that implementation through a sequence of IRs
+    for particular hardware, and the optimization targets memory-access
+    orchestration or computation scheduling for a high-impact inference
+    configuration on GPUs.
+  - Current evidence: the compiler-IR TODO above requires edit-by-edit
+    randomized reference checks, IR-origin/editability metadata, baseline
+    provenance, and kernel-versus-pre/postprocessing attribution. It does not
+    require a systems report to preserve the surrounding stack context:
+    Transformer/attention workload identity, FlashAttention/Pallas kernel
+    identity, JAX wrapper boundaries, XLA lowering-stage identities,
+    hardware/configuration target, or the optimization decision class
+    (`memory_access_orchestration` versus `computation_scheduling`).
+  - Required result: add compiler/kernel report metadata and validators for
+    FlashAttention stack provenance: workload/model configuration, Pallas
+    kernel source identity, JAX pre/postprocessing wrapper artifacts, XLA IR
+    stage and hardware-target records, lowered-IR artifact hashes, optimization
+    decision-category labels, and docs that distinguish compiler-stack context
+    evidence from per-edit reference checks and final speedup metrics.
+
 ## LLM Ensemble
 
 - [ ] Add live pricing/default-rate capture, raw provider replay, and

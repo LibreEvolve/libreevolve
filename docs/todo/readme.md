@@ -905,6 +905,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matching TODOs so README does not imply final reference-gate artifacts
     prove AlphaEvolve-style compiler-IR traces.
 
+- [ ] Keep README compiler-stack wording scoped until FlashAttention context
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.3.4 situates the compiler task in a
+    specific stack: FlashAttention implements Transformer attention as a
+    Pallas accelerator kernel, higher-level JAX code wraps input preparation
+    and output postprocessing, XLA lowers the implementation through IR stages
+    for particular hardware, and the optimized configuration is a high-impact
+    inference workload on GPUs.
+  - Current evidence: README documents generic systems reports and notes
+    compiler-IR reference-check and speedup gaps, but it does not document the
+    stack-context evidence needed to make a compiler claim AlphaEvolve-like:
+    workload/model configuration, FlashAttention/Pallas kernel identity, JAX
+    wrapper boundaries, XLA lowering-stage identities, hardware target,
+    lowered-IR artifact hashes, or memory-orchestration versus scheduling
+    decision categories.
+  - Required result: once FlashAttention compiler-stack metadata lands, update
+    README, ROADMAP, papers index, and matching TODOs so README distinguishes
+    generic compiler readiness from the specific Pallas/JAX/XLA/FlashAttention
+    context behind AlphaEvolve's compiler-generated IR result.
+
 - [ ] Keep README self-improvement wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

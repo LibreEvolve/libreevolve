@@ -6254,9 +6254,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `rainwoodman/vmad`, and four generated report PDFs.
   - Current gap: `papers/README.md` lists `2602.15951` as background only with
     no free-parameter optimization or innovation report, and completed TODOs
-    only preserve that scoping. There is no source-specific active paper TODO
-    for MadEvolve's PDF evidence, public framework/application repositories,
-    parameter schemas, optimization budgets, differentiability requirements,
+    only preserve that scoping. There is no implemented source-specific paper
+    evidence gate for MadEvolve's PDF evidence, public framework/application
+    repositories, parameter schemas, optimization budgets, differentiability requirements,
     per-task prompts/evaluators, report sections, run statistics, model
     contribution table, compute environment, reward-hacking caveats, or
     generalization claims. Existing docs also do not distinguish the framework

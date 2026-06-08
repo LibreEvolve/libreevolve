@@ -5895,8 +5895,8 @@ Primary evidence:
     game-tree exploitability, four training games plus fourteen test games,
     and deterministic metrics.
   - Current evidence: `papers/README.md` has a background-only row for
-    `2602.16928`, but LibreEvolve has no first-class code TODO for this
-    source, no CFR or PSRO candidate interface, no imperfect-information game
+    `2602.16928`, but LibreEvolve has no implemented source-boundary gate for
+    this source, no CFR or PSRO candidate interface, no imperfect-information game
     evaluator, no OpenSpiel-style game-suite fixture, no train/generalization
     split metadata for game-theoretic algorithms, no mechanism-coupling or
     structural-complexity report, no ablation/distillation workflow that
@@ -5947,8 +5947,8 @@ Primary evidence:
     constructions and AI-discovered search code.
   - Current evidence: `papers/README.md` lists `2603.09172` only as a
     constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has no first-class code TODO for this
-    source, no Ramsey graph-construction candidate schema, no graph verifier
+    future benchmark`. LibreEvolve has no implemented source-boundary gate for
+    this source, no Ramsey graph-construction candidate schema, no graph verifier
     for `R(s,t)` lower-bound certificates, no exact-bound recovery suite, no
     matched-best-known benchmark ledger, no per-Ramsey-number result table,
     no artifact policy for witness graphs or search algorithms, and no
@@ -6005,7 +6005,7 @@ Primary evidence:
     `5`, `7`, and `{5,7,9,11,13}`.
   - Current evidence: `papers/README.md` lists `2603.06692` only as
     `Not implemented; potential future benchmark`. LibreEvolve has no
-    first-class code TODO for this source, no local-correction certificate
+    implemented source-boundary gate for this source, no local-correction certificate
     candidate schema, no graph-reconstruction evaluator, no Latin-square
     trade/involution verifier, no matroid/basis-exchange evaluator for Rota's
     Basis Conjecture, no scoring-protocol metadata for these case studies, no
@@ -6068,8 +6068,8 @@ Primary evidence:
     ratio `2.0749`; the appendix includes evaluator code.
   - Current evidence: `papers/README.md` lists `2603.08679` only as
     background AlphaEvolve mechanism-design context with no bilateral-trade
-    distribution benchmark. LibreEvolve has no first-class code TODO for this
-    source, no buyer/seller value-distribution candidate schema, no
+    distribution benchmark. LibreEvolve has no implemented source-boundary gate
+    for this source, no buyer/seller value-distribution candidate schema, no
     Random-Offerer evaluator, no first-best GFT computation, no BIC/BB
     assumption record, no ratio-verification report, no prior-counterexample
     baseline comparison, and no economic-mechanism artifact policy for
@@ -6120,7 +6120,7 @@ Primary evidence:
   - Current evidence: `papers/README.md` lists `2601.21096` only as
     background AlphaEvolve compiler-optimization context with no
     compiler-heuristic benchmark or compiler pass runner. LibreEvolve has no
-    first-class code TODO for this source, no executable C++ decision-logic
+    implemented source-boundary gate for this source, no executable C++ decision-logic
     candidate schema, no LLVM function-inlining benchmark, no register-
     allocation workload fixture, no XLA portability fixture, no macro-
     benchmark harness, no compiler integration/artifact policy, no expert-
@@ -6164,8 +6164,8 @@ Primary evidence:
     validation runs.
   - Current evidence: `papers/README.md` lists `2602.22425` only as
     background AlphaEvolve computer-architecture context with no architecture-
-    design simulator or cache-policy benchmark. LibreEvolve has no first-
-    class code TODO for this source, no cache replacement policy candidate
+    design simulator or cache-policy benchmark. LibreEvolve has no implemented
+    source-boundary gate for this source, no cache replacement policy candidate
     schema, no ChampSim/microarchitecture simulator integration, no Google
     Workload Trace or SPEC06 workload fixture, no IPC speedup metric contract,
     no SoTA cache-policy baseline ledger, no post-silicon specialization
@@ -6216,8 +6216,8 @@ Primary evidence:
   - Current evidence: `papers/README.md` lists `2511.12916` only as
     background AlphaEvolve-optimized workflow application context with no
     fault-to-workflow or human-in-the-loop multi-agent benchmark. LibreEvolve
-    has no first-class code TODO for this source, no regulatory-text to PASTA
-    fault-tree candidate schema, no expert-verification workflow, no n8n
+    has no implemented source-boundary gate for this source, no regulatory-text
+    to PASTA fault-tree candidate schema, no expert-verification workflow, no n8n
     workflow emitter, no transformer fault-diagnosis dataset fixture, no
     topological-consistency or semantic-fidelity metric contract, no
     AlphaEvolve reasoning-logic optimization boundary, and no artifact policy
@@ -6277,8 +6277,8 @@ Primary evidence:
     `32`, KL coefficient `{0.01, 0.1}`, adaptive-beta KL constraint
     `gamma = ln(2)`, and PUCT exploration coefficient `1.0`.
   - Current evidence: `papers/README.md` lists `2601.16175` only as
-    background test-time discovery context. LibreEvolve has no first-class
-    code TODO for this source, no test-time RL training loop, no mutable model
+    background test-time discovery context. LibreEvolve has no implemented
+    source-boundary gate for this source, no test-time RL training loop, no mutable model
     policy state, no Tinker/API training-run metadata, no open-model
     reproduction protocol for `gpt-oss-120b`, no continuous-reward
     cross-domain benchmark suite covering the cited math/kernel/algorithm/
@@ -6333,8 +6333,8 @@ Primary evidence:
     proves `D_m = [x_m, y_m]` with hypercube rank `m * 2^(m-1)`.
   - Current evidence: `papers/README.md` lists `2601.01235` only as a
     constructive math benchmark candidate with `Not implemented; potential
-    future benchmark`. LibreEvolve has no first-class code TODO for this
-    source, no permutation-generator candidate schema, no Bruhat order or
+    future benchmark`. LibreEvolve has no implemented source-boundary gate for
+    this source, no permutation-generator candidate schema, no Bruhat order or
     interval verifier, no poset-hypercube isomorphism checker, no dyadically
     well-distributed permutation checker, no `S_n` power-of-two benchmark
     rows, no Kazhdan-Lusztig `R`-polynomial coefficient metadata, no cluster-
@@ -6390,8 +6390,8 @@ Primary evidence:
     half-space parameters, and Farkas multipliers for non-overlap.
   - Current evidence: `papers/README.md` lists `2601.05943` only as an
     optimization benchmark comparator with no nonlinear-programming solver
-    comparison harness. LibreEvolve has no first-class code TODO for this
-    source, no NLP formulation schema for AlphaEvolve geometry/combinatorial
+    comparison harness. LibreEvolve has no implemented source-boundary gate for
+    this source, no NLP formulation schema for AlphaEvolve geometry/combinatorial
     benchmarks, no FICO Xpress or SCIP runner abstraction, no solver-version
     or license/proprietary-availability records, no result comparison table
     against AlphaEvolve/literature values, no certificate/tolerance policy for
@@ -6443,8 +6443,8 @@ Primary evidence:
   - Current evidence: `papers/README.md` lists `2506.16750` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B autoconvolution TODOs,
-    but no first-class code TODO for this source, no 575-interval witness
-    schema, no objective recomputation report for the post-AlphaEvolve value,
+    but no implemented source-boundary gate for this source, no 575-interval
+    witness schema, no objective recomputation report for the post-AlphaEvolve value,
     no side-by-side AlphaEvolve `50`-interval baseline row, no simulated-
     annealing/gradient-method provenance, no exact/rounded numerical tolerance
     policy for `0.901564`, and no artifact policy that distinguishes
@@ -6499,8 +6499,8 @@ Primary evidence:
   - Current evidence: `papers/README.md` lists `2505.16105` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
-    TODOs, but no first-class code TODO for this source, no explicit large
-    `U`-set construction schema, no `W(m, L, B)` parameter fixture, no
+    TODOs, but no implemented source-boundary gate for this source, no explicit
+    large `U`-set construction schema, no `W(m, L, B)` parameter fixture, no
     base-`2B + 1` integer-encoding checker, no compressed artifact format for
     a set with more than `10^43546` elements, no sumset/difference-set
     verifier, no max-element/q-value verifier, no `theta` recomputation
@@ -6657,8 +6657,8 @@ Primary evidence:
     database, `asyncio` DAG engine, insight stage, or concurrent units. A broad
     built-in-plugin/inspiration TODO keeps GigaEvo grouped with CodeEvolve,
     ThetaEvolve, ImprovEvolve, MadEvolve, CausalEvolve, and DeepEvolve, but
-    there is no source-specific code TODO for `2511.17592`, no local
-    equivalent of Redis program lifecycle states, no DAG stage graph/caching
+    there is no implemented source-specific code gate for `2511.17592`, no
+    local equivalent of Redis program lifecycle states, no DAG stage graph/caching
     schema, no optimistic-concurrency program archive, no Hydra-equivalent
     component composition, no GigaEvo problem-layout adapter, no LangGraph-
     style mutation operator, no bidirectional lineage analysis records, no
@@ -6708,7 +6708,7 @@ Primary evidence:
     crossover, targeted refinement, modular orchestration, and context-aware
     recombination. Broad inspiration TODOs and AlphaEvolve mutation-operator
     TODOs mention CodeEvolve or crossover generally, but there is no
-    source-specific code TODO for `2510.14150`, no prompt/solution dual fitness
+    implemented source-specific code gate for `2510.14150`, no prompt/solution dual fitness
     implementation boundary, no semantic inspiration-crossover operator, no
     meta-prompting exploration operator, no depth-refinement ancestor context
     records, no Plateau Scheduler/evolution-rate trace, no sandbox/runtime-
@@ -6757,7 +6757,7 @@ Primary evidence:
     through `ttt_rl`; there is no online RL/GRPO loop, checkpoint management,
     resume semantics, or lazy-penalty dynamics. Existing grouped inspiration
     TODOs and `TTTRLPlugin` docs keep the export boundary honest, but there is
-    no source-specific code TODO for `2511.23473`, no batch-sampled dynamic
+    no implemented source-specific code gate for `2511.23473`, no batch-sampled dynamic
     environment, no `70`/`1000`/`10000` population/archive/island scaling
     report, no lazy penalty against database-equivalent programs after comment
     removal, no early-check penalty schema (`-0.4`, `-0.3`, `-0.2`, `-0.1`),
@@ -6808,8 +6808,8 @@ Primary evidence:
     inspiration and says LibreEvolve only emits static modular prompt guidance
     with `operation_selected: static_modular_guidance` and false execution/
     enforcement flags. Existing grouped inspiration TODOs cover the general
-    approximation boundary, but there is no source-specific code TODO for
-    `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,
+    approximation boundary, but there is no implemented source-specific code
+    gate for `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,
     no basin-hopping validation runner, no inner-loop incumbent/improvement
     records, no perturbation-schedule telemetry, no GigaEvo-backed outer-loop
     compatibility report, no Gemini 3 Pro/Gemini 3 Flash Preview model-split
@@ -6854,7 +6854,7 @@ Primary evidence:
     background/domain-evolution inspiration only, and code search shows no
     MadEvolve implementation. LibreEvolve has evaluator execution,
     metric/result reports, MAP-Elites/islands, and prompt-context tunable-field
-    policy metadata, but no source-specific `2602.15951` code TODO, no
+    policy metadata, but no implemented source-specific `2602.15951` code gate, no
     parameter declaration schema, no child-vs-parent new-parameter detector, no
     budgeted inner optimizer, no JAX/vmad differentiability contract, no
     optimized-parameter source injection, no domain-task adapters for BAO,
@@ -6908,7 +6908,7 @@ Primary evidence:
     factor list over diff/full mutation text, parent-aware score deltas,
     pull-once-then-UCB-like factor selection, bounded recent history, malformed
     evidence counters, and prompt-visible recent outcome summaries. There is
-    no source-specific `2603.14575` code TODO, no POMDP/SCM belief record, no
+    no implemented source-specific `2603.14575` code gate, no POMDP/SCM belief record, no
     LLM-defined outcome-factor schema or executable factor-code validation, no
     `(factor, direction)` intervention action records, no top-factor inspiration
     sorting, no procedure-factor extractor, no treatment-effect estimates, no
@@ -6961,7 +6961,7 @@ Primary evidence:
     non-authoritative prompt wrappers. README and `papers/README.md` state that
     this is not a DeepEvolve-style hypothesis-refinement or cross-file
     debugging loop. Existing active TODOs cover retrieval transport and source
-    integrity, but there is no source-specific code TODO for `2510.06056`, no
+    integrity, but there is no implemented source-specific code gate for `2510.06056`, no
     plan/search/write proposal lifecycle, no multi-file edit delimiter schema,
     no implementation-difficulty/originality/future-potential scoring, no
     debugging-attempt budget with score-zero fallback, no reflection-agent
@@ -7009,8 +7009,8 @@ Primary evidence:
     descriptor policy/model metadata with insertion-time cell coordinates and a
     no-rebin policy. `IslandModel` adds synchronous ring migration, which is not
     the paper's default pseudocode. Existing active TODOs mention MAP-Elites
-    descriptor and archive gaps, but there is no source-specific code TODO for
-    `1504.04909`, no explicit `b(x)` feature-descriptor contract separate from
+    descriptor and archive gaps, but there is no implemented source-specific
+    code gate for `1504.04909`, no explicit `b(x)` feature-descriptor contract separate from
     current three-axis archive coordinates, no random-initialization/variation
     policy evidence, no batched/hierarchical-resolution MAP-Elites mode, no
     illumination-map report, no coverage/reliability/precision metrics, no

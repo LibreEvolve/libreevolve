@@ -3210,4 +3210,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark baselines, and report outcomes. Avoid implying LibreEvolve
     supports GenEvolve-style multimodal evolution without those artifacts.
 
+- [ ] Keep README EvoRubric self-evolving reward-rubric claims absent or
+      source-scoped until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving
+    Rubric-Driven RL for Open-Ended Generation`, proposes alternating
+    Reasoner and Rubric Generator roles under one policy, validating generated
+    criteria with a meta-verifier, zero-variance pruning, and Leave-One-Out
+    peer consensus, archiving criteria into memory, and producing dense
+    multi-objective rewards for open-ended generation.
+  - Current evidence: README documents LibreEvolve's current evaluator-first
+    workflow, scalar/structured scores, MAP-Elites retention, run artifacts,
+    and benchmark boundaries. It does not list `2605.29847`, generate dynamic
+    rubrics, validate criteria with peer consensus, archive reward criteria,
+    produce dense rubric reward vectors, or audit reward hacking in medical,
+    writing, or science generation domains.
+  - Required result: if README mentions EvoRubric, self-evolving rubrics,
+    dynamic open-ended rewards, Reasoner/Rubric-Generator co-evolution,
+    meta-verification, zero-variance pruning, Leave-One-Out peer consensus,
+    criteria memory pools, dense multi-objective rewards, or expert-prior
+    rubric expansion, keep the wording source-scoped until the paper is in
+    the manifest and local artifacts can show generated-rubric provenance,
+    verification records, consensus traces, reward vectors, reward-hacking
+    diagnostics, benchmark baselines, and report outcomes. Avoid implying
+    LibreEvolve supports EvoRubric-style reward evolution without those
+    artifacts.
+
 ## Architecture Description

@@ -4990,3 +4990,33 @@ Primary evidence:
     GenEvolve-Bench task taxonomy, baseline identities, and README/ROADMAP
     wording that keeps multimodal trajectory distillation as missing evidence
     until local implementation and reports exist.
+
+- [ ] Add EvoRubric self-evolving reward-rubric source boundary.
+  - Spec evidence: arXiv `2605.29847`, `EvoRubric: Self-Evolving
+    Rubric-Driven RL for Open-Ended Generation`, was submitted May 28, 2026.
+    Its abstract says RL has advanced LLMs in verifiable domains, but
+    open-ended generation lacks definitive rewards. Static human rubrics can
+    create policy lag, while external proprietary rubric generators are
+    expensive. EvoRubric unifies response generation and rubric generation
+    under one parameterized policy that alternates between Reasoner and Rubric
+    Generator roles, uses a meta-verifier, zero-variance pruning, and
+    Leave-One-Out peer consensus to reduce reward hacking, archives validated
+    criteria into memory, and yields dense multi-objective rewards for medical,
+    writing, and science domains.
+  - Current evidence: LibreEvolve uses explicit evaluator functions, scalar
+    or structured scores, and MAP-Elites admission/retention rather than
+    learned or self-evolving rubrics. It has no EvoRubric source row, no
+    Reasoner/Rubric-Generator role split, no generated-rubric artifact
+    storage, no meta-verifier, no zero-variance pruning, no Leave-One-Out peer
+    consensus, no rubric memory pool, no dense multi-objective reward schema,
+    and no reward-hacking audit for open-ended generation domains.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.29847`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve's evaluator/scoring contract,
+    Reasoner/Rubric-Generator role schema, generated-rubric provenance,
+    meta-verifier records, zero-variance pruning decisions, peer-consensus
+    traces, rubric memory-pool entries, dense reward-vector definitions,
+    reward-hacking diagnostics, expert-prior initialization metadata,
+    medical/writing/science benchmark taxonomy, baseline identities, and
+    README/ROADMAP wording that keeps self-evolving rubric rewards as missing
+    evidence until local implementation and reports exist.

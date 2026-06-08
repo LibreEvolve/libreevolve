@@ -4567,3 +4567,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/artifact availability if any, reproducibility status, and README/
     ROADMAP wording that treats GenEvolve as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track EvoRubric self-evolving reward-rubric paper evidence.
+  - Paper/source evidence: arXiv `2605.29847`, submitted May 28, 2026, is
+    titled `EvoRubric: Self-Evolving Rubric-Driven RL for Open-Ended
+    Generation`. Its abstract says RL has advanced LLMs in verifiable domains,
+    but open-ended generation lacks definitive rewards. Existing rubric-based
+    RL uses static human annotations, which can cause policy lag, or expensive
+    external proprietary rubric generators. EvoRubric unifies response and
+    rubric generation under a single policy that alternates between Reasoner
+    and Rubric Generator roles; validates generated criteria through a
+    meta-verifier, zero-variance pruning, and Leave-One-Out peer consensus;
+    stores validated criteria in memory; and yields dense multi-objective
+    rewards across medical, writing, and science domains.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.29847`. Existing rows cover AlphaEvolve's evaluator-driven
+    scoring, verifier-free self-play, trace diagnostics, multimodal
+    trajectory distillation, and open-ended source gates, but not
+    self-evolving rubric generation, criteria verification, peer consensus,
+    criteria memory pools, dense rubric reward vectors, expert-prior rubric
+    expansion, or reward-hacking diagnostics for open-ended generation.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.29847`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve evaluator assumptions,
+    Reasoner/Rubric-Generator role schema, generated-rubric provenance,
+    meta-verifier artifacts, zero-variance pruning records, Leave-One-Out peer
+    consensus traces, criteria memory-pool metadata, dense reward-vector
+    definitions, reward-hacking diagnostics, expert-prior initialization
+    status, medical/writing/science benchmark taxonomy, baseline identities,
+    code/artifact availability if any, reproducibility status, and README/
+    ROADMAP wording that treats EvoRubric as missing paper evidence rather
+    than implemented LibreEvolve support.

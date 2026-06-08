@@ -3625,3 +3625,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     GenEvolve-Data/GenEvolve-Bench metadata, baseline identities, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local GenEvolve-style multimodal support.
+
+- [ ] Add EvoRubric self-evolving reward-rubric gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.29847`, submitted May 28, 2026, introduces
+    EvoRubric for rubric-driven RL in open-ended generation. The abstract says
+    static human rubrics cause policy lag and external dynamic rubric
+    generators are expensive; EvoRubric instead alternates a single policy
+    between Reasoner and Rubric Generator roles, validates criteria with a
+    meta-verifier, zero-variance pruning, and Leave-One-Out peer consensus,
+    archives validated criteria into memory, and produces dense
+    multi-objective rewards.
+  - Current evidence: ROADMAP tracks explicit evaluator contracts, scoring
+    artifacts, benchmark reports, verifier-free self-evolution gates, and
+    multiple open-ended search sources. It does not mention `2605.29847`,
+    define a self-evolving rubric gate, or require local evidence before
+    promoting dynamic open-ended reward criteria beyond user-provided
+    validators and evaluator scores.
+  - Required result: add roadmap gates for `2605.29847`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata,
+    Reasoner/Rubric-Generator role schema, generated-rubric provenance,
+    meta-verifier and peer-consensus records, zero-variance pruning outcomes,
+    criteria memory-pool artifacts, dense reward-vector definitions,
+    reward-hacking diagnostics, expert-prior initialization records,
+    medical/writing/science benchmark metadata, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local EvoRubric-style reward-rubric support.

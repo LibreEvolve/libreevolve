@@ -5345,3 +5345,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     outputs, reproducibility status, and README/ROADMAP wording that treats
     this post-AlphaEvolve autoconvolution improvement as missing paper evidence
     rather than implemented LibreEvolve support.
+
+- [ ] Track post-AlphaEvolve sums-and-differences construction paper evidence.
+  - Paper/source evidence: arXiv `2505.16105`, submitted May 22, 2025, is
+    titled `Sums and differences of sets (improvement over AlphaEvolve)`. Its
+    abstract says AlphaEvolve used a set of `54265` integers to improve the
+    known lower bound from `theta = 1.14465` to `theta = 1.1584`. The paper
+    improves this to `theta = 1.173050` with an explicit `U` set containing
+    more than `10^43546` elements, and uses the free GMP library for fast
+    integer and floating-point arithmetic.
+  - Current gap: `papers/README.md` lists `2505.16105` as a constructive math
+    benchmark candidate with `Not implemented; potential future benchmark`,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Existing Appendix B sums-and-differences gaps do not capture
+    this later explicit `U` construction, compressed representation needs for
+    extremely large sets, GMP arithmetic provenance, `theta = 1.173050`
+    recomputation, or side-by-side comparison against AlphaEvolve's `54265`-
+    integer `1.1584` construction and the earlier `1.14465` bound.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2505.16105`: title/author/arXiv version/date/PDF digest, source license,
+    code/artifact URL/status, relation to AlphaEvolve Appendix B and
+    LibreEvolve sums-and-differences assumptions, explicit `U`-set
+    construction schema, huge-set compression/parametrization metadata,
+    sumset/difference-set cardinality records, max-element and set-size
+    records, `theta` formula and tolerance policy, AlphaEvolve `54265`-
+    integer `1.1584` baseline record, previous `1.14465` bound attribution,
+    GMP/version/arithmetic provenance, prior/current result rows, independent
+    checker outputs, reproducibility status, and README/ROADMAP wording that
+    treats this post-AlphaEvolve sums-and-differences improvement as missing
+    paper evidence rather than implemented LibreEvolve support.

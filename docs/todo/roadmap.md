@@ -4294,3 +4294,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, independent checker outputs, and a background-only or benchmark-
     fixture status rule so roadmap claims do not outpace local
     post-AlphaEvolve autoconvolution-improvement support.
+
+- [ ] Add post-AlphaEvolve sums-and-differences construction gates before
+      roadmap promotion.
+  - Spec evidence: arXiv `2505.16105`, submitted May 22, 2025, introduces
+    `Sums and differences of sets (improvement over AlphaEvolve)`. The
+    abstract says AlphaEvolve used a `54265`-integer set to improve the known
+    lower bound from `theta = 1.14465` to `theta = 1.1584`, while this paper
+    improves the bound to `theta = 1.173050` using an explicit `U` set with
+    more than `10^43546` elements and GMP arithmetic.
+  - Current evidence: ROADMAP tracks AlphaEvolve Appendix B sums-and-
+    differences gaps and broad constructive-math fixture needs, but it does
+    not promote `2505.16105` beyond potential-future-benchmark status. It
+    does not define a huge explicit `U`-set construction gate, compressed set
+    artifact representation, sumset/difference-set verifier, `theta`
+    recomputation report, AlphaEvolve `54265`-integer baseline comparison,
+    GMP arithmetic provenance, or documentation rule that separates
+    AlphaEvolve's LLM-generated construction from later explicit
+    improvements.
+  - Required result: add roadmap gates for `2505.16105`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    explicit `U`-set construction schema, huge-set artifact representation,
+    sumset and difference-set cardinality records, max-element and set-size
+    metadata, `theta` formula and tolerance policy, AlphaEvolve `54265`-
+    integer `1.1584` baseline value, previous `1.14465` lower-bound source,
+    GMP/version/arithmetic provenance, prior/current result rows, independent
+    checker outputs, and a background-only or benchmark-fixture status rule
+    so roadmap claims do not outpace local post-AlphaEvolve
+    sums-and-differences improvement support.

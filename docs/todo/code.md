@@ -5787,3 +5787,35 @@ Primary evidence:
     comparison rows, independent checker outputs, and README/ROADMAP wording
     that keeps the post-AlphaEvolve autoconvolution improvement as missing
     evidence until local witness artifacts and reports exist.
+
+- [ ] Add post-AlphaEvolve sums-and-differences construction boundary.
+  - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets
+    (improvement over AlphaEvolve)`, was submitted May 22, 2025. Its abstract
+    says AlphaEvolve used a set of `54265` integers to improve the lower bound
+    in the sums-and-differences problem from `theta = 1.14465` to
+    `theta = 1.1584`. It then gives an improved bound
+    `theta = 1.173050` using an explicit construction of a `U` set containing
+    more than `10^43546` elements, with GMP used for fast integer and
+    floating-point arithmetic.
+  - Current evidence: `papers/README.md` lists `2505.16105` only as a
+    constructive math benchmark candidate with `Not implemented; potential
+    future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
+    TODOs, but no first-class code TODO for this source, no explicit large
+    `U`-set construction schema, no compressed artifact format for a set with
+    more than `10^43546` elements, no sumset/difference-set verifier, no
+    `theta` recomputation report for `1.173050`, no AlphaEvolve `54265`-
+    integer `1.1584` baseline row, no GMP dependency/provenance record, and
+    no artifact policy that separates AlphaEvolve LLM-generated constructions
+    from later explicit non-LLM improvements.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2505.16105`: arXiv id/version/date/PDF hash, author, source license,
+    code/artifact availability, relation to AlphaEvolve Appendix B
+    sums-and-differences fixtures, explicit `U`-set construction schema,
+    compressed/parametric artifact representation for huge finite sets,
+    sumset and difference-set cardinality records, max-element and size
+    metadata, `theta` formula and tolerance policy, AlphaEvolve `54265`-
+    integer `1.1584` baseline, previous `1.14465` lower-bound source,
+    GMP/version/arithmetic provenance, prior/current comparison rows,
+    independent checker outputs, and README/ROADMAP wording that keeps this
+    post-AlphaEvolve sums-and-differences improvement as missing evidence
+    until local construction artifacts and reports exist.

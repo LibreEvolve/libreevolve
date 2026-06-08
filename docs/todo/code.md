@@ -2848,8 +2848,8 @@ Primary evidence:
     field. README, ROADMAP, and `papers/README.md` now describe that validator
     boundary without claiming full semantic proof. The validator also now rejects
     benchmark coverage `Implemented:` bullets that are phrased as not
-    implemented, requires those bullets to cite a local code/artifact path, and
-    it rejects
+    implemented, requires those bullets to cite a local code/artifact path and
+    state an explicit remaining scope/limitation boundary, and it rejects
     unqualified `AlphaEvolve-comparable` status-table overclaims unless the
     phrase is framed as missing, scoped, or requirement-bound evidence, and it
     rejects background-only/future-benchmark status classes that include
@@ -2879,7 +2879,7 @@ Primary evidence:
     required path presence, active-block structure checks,
     source-specific completed-evidence path checks, status-claim
     local-artifact anchors, the status-table contiguity guard, the
-    benchmark-implemented contradiction/local-artifact guards, the `AlphaEvolve-comparable`
+    benchmark-implemented contradiction/local-artifact/limitation-boundary guards, the `AlphaEvolve-comparable`
     overclaim guard, the negative-status contradiction
     guard, the background-only boundary guard, the future-benchmark boundary
     guard, the implemented-status boundary guard, the partial-status boundary

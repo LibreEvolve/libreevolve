@@ -51,6 +51,10 @@ COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
 ACTIVE_TODO_GAP_CONTEXT_RE = re.compile(r"(?m)^  - (?:Current gap|Remaining gap|Current evidence):")
 ACTIVE_TODO_REQUIRED_RESULT_RE = re.compile(r"(?m)^  - Required result:")
 BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE = re.compile(r"\bnot implemented\b", flags=re.IGNORECASE)
+BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE = re.compile(
+    r"\b(?:but|still|not|no|without|lacks?|missing|remain(?:s)? open|out of scope|smoke-only)\b",
+    flags=re.IGNORECASE,
+)
 LOCAL_ARTIFACT_PATH_RE = re.compile(
     r"`(?:libreevolve/|tests/|README\.md|ROADMAP\.md|papers/|docs/)[^`]+`"
 )
@@ -1340,6 +1344,13 @@ def _validate_benchmark_coverage_decisions(root: Path) -> list[PaperManifestIssu
                 PaperManifestIssue(
                     "benchmark_implemented_missing_local_artifact",
                     f"Implemented benchmark coverage bullet must cite a local code or artifact path: {summary}",
+                )
+            )
+        if not BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.search(block):
+            issues.append(
+                PaperManifestIssue(
+                    "benchmark_implemented_missing_limitation_boundary",
+                    f"Implemented benchmark coverage bullet must state the remaining scope or limitation: {summary}",
                 )
             )
         if not BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(block):

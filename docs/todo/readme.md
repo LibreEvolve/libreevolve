@@ -3137,4 +3137,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     report outcomes. Avoid implying LibreEvolve supports CORAL-style
     autonomous multi-agent evolution without those artifacts.
 
+- [ ] Keep README AEvo meta-editing claims absent or source-scoped until paper
+      and runtime evidence exists.
+  - Spec evidence: arXiv `2605.13821`, `Harnessing Agentic Evolution`,
+    formulates agentic evolution as an interactive environment where
+    accumulated candidates, feedback, traces, and failures are process-level
+    state. AEvo uses a meta-agent to edit the procedure or agent context that
+    controls future evolution, rather than directly proposing the next
+    candidate, and reports stronger results than several evolution baselines.
+  - Current evidence: README documents LibreEvolve's current static config,
+    CLI, prompt/run artifacts, failure streams, parent selection, archive
+    behavior, and benchmark boundaries. It does not list `2605.13821`, expose
+    process-level state, run a meta-agent, patch the controller or agent
+    context mid-run, version control-edit artifacts, diagnose drift, or report
+    AEvo-style benchmark outcomes.
+  - Required result: if README mentions AEvo, harnessed meta-editing,
+    process-level evolution state, meta-agent controller edits, procedure or
+    context patching, adaptive revision of the evolution mechanism, or
+    open-ended optimization gains from controller self-modification, keep the
+    wording source-scoped until the paper is in the manifest and local
+    artifacts can show process-state records, meta-agent actions, patch
+    provenance, rollback/versioning, drift diagnostics, budget accounting,
+    baselines, and report outcomes. Avoid implying LibreEvolve supports
+    AEvo-style meta-editing without those artifacts.
+
 ## Architecture Description

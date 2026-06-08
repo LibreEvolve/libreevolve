@@ -3550,3 +3550,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     kernel-engineering metric records, baseline identities, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local CORAL-style autonomous multi-agent support.
+
+- [ ] Add AEvo harnessed meta-editing gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.13821`, submitted May 13, 2026, introduces
+    AEvo as a harnessed meta-editing framework for agentic evolution. The
+    abstract says fixed procedures are rigid, general-purpose agents can drift
+    in long-horizon evolution, and both accumulate useful evidence that lacks
+    a stable interface for revising the mechanism that drives future
+    evolution. AEvo turns accumulated candidates, feedback, traces, and
+    failures into process-level state and lets a meta-agent edit the procedure
+    or agent context controlling future evolution, reporting a 26 relative
+    improvement over the strongest baseline and state-of-the-art performance
+    on three open-ended optimization tasks.
+  - Current evidence: ROADMAP tracks static config, parent selection, prompt
+    construction, run artifacts, benchmark contracts, and many search-source
+    gates. It does not mention `2605.13821`, define an AEvo gate, or require
+    local evidence before promoting adaptive controller self-modification or
+    meta-editing of the evolution process beyond fixed CLI/config choices.
+  - Required result: add roadmap gates for `2605.13821`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, process-level
+    state schema, accumulated evidence inventory, meta-agent observation and
+    action contracts, procedure/context patch records, control-edit
+    provenance, rollback/versioning policy, drift/stability diagnostics,
+    iteration-budget accounting, benchmark taxonomy, baseline identities, and
+    a background-only or benchmark-fixture status rule so roadmap claims do
+    not outpace local AEvo-style harnessed meta-editing support.

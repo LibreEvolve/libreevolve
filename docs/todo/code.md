@@ -4892,3 +4892,35 @@ Primary evidence:
     identities, and README/ROADMAP wording that keeps CORAL-style autonomous
     multi-agent evolution as missing evidence until local implementation and
     reports exist.
+
+- [ ] Add AEvo harnessed meta-editing source boundary.
+  - Spec evidence: arXiv `2605.13821`, `Harnessing Agentic Evolution`, was
+    submitted May 13, 2026. Its abstract frames agentic evolution as iterative
+    generation, evaluation, and feedback-guided search, but says existing
+    systems are either fixed hand-designed procedures that are modular but
+    rigid or general-purpose agents that can drift in long-horizon evolution.
+    AEvo formulates evolution as an interactive environment where accumulated
+    candidates, feedback, traces, and failures become process-level state; a
+    meta-agent observes that state and edits the procedure or agent context
+    controlling future evolution rather than directly proposing the next
+    candidate. It reports a 26 relative improvement over the strongest of
+    five evolution baselines and state-of-the-art results on three
+    open-ended optimization tasks under the same iteration budget.
+  - Current evidence: LibreEvolve records prompts, failures, history streams,
+    archives, run manifests, and static configuration, but it has no AEvo
+    source row or process-level environment state for meta-editing the
+    evolutionary controller. There is no meta-agent role, no procedure/context
+    patch schema, no state observation contract over accumulated evidence, no
+    policy for safely editing prompts/config/search mechanisms mid-run, no
+    rollback/versioning for control edits, and no benchmark separating
+    candidate-generation improvements from evolution-procedure improvements.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.13821`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve's fixed controller/config,
+    process-state schema, accumulated evidence inventory, meta-agent action
+    schema, procedure/context patch artifacts, control-edit provenance,
+    rollback/versioning policy, drift/stability diagnostics, iteration-budget
+    accounting, agentic/reasoning/open-ended benchmark taxonomy, baseline
+    identities, and README/ROADMAP wording that keeps AEvo-style harnessed
+    meta-editing as missing evidence until local implementation and reports
+    exist.

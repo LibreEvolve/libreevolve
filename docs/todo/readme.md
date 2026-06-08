@@ -1312,13 +1312,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     validators, reported constructions, SOTA thresholds, or verifier scripts.
     AlphaEvolve Appendix B says the reported construction data and verification
     code are available in an accompanying Google Colab; README should not imply
-    the registry has that Colab-equivalent verifier-data surface yet.
+    the registry has that Colab-equivalent verifier-data surface yet. The
+    shipped-example scope registry is validated in focused tests and smoke
+    hardening evidence, but README's routine paper-cache validation command
+    does not yet validate that registry directly.
   - Required result: when real target-family benchmark runners emit
     benchmark-grade hardening reports, negative fixtures, detector logs, and
     artifact inventories, and when Appendix B families gain executable
     construction/certificate validators, target baselines, construction-data
-    exports, and verifier-code artifacts, update README, ROADMAP, papers index,
-    and code/paper TODO entries together so README neither underclaims the
+    exports, and verifier-code artifacts, and when the shipped-example scope
+    registry is wired into the standard paper-facing validation gate, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README neither underclaims the
     checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
     benchmark hardening.
 

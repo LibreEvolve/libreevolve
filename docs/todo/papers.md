@@ -2234,7 +2234,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-comparable, but it is an exclusion boundary rather than a real
     benchmark harness. The `workspace_math` smoke fixture now covers a nested
     package, declared JSON data, and a binary static seed asset without making
-    benchmark claims. `validate_benchmark_evidence_scope()` now cross-checks
+    benchmark claims. The scope registry is validated in focused tests and by
+    smoke hardening evidence, but not yet by the routine paper-manifest/docs
+    validation gate that reviewers run for paper-facing evidence.
+    `validate_benchmark_evidence_scope()` now cross-checks
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim
     scope mismatches, and inconsistent inventory evidence.
@@ -2261,7 +2264,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     2x2 smoke checks, connect hardening reports and executable artifact/
     certificate validators for geometric and constructive-math constructions,
     add Colab-equivalent construction-data and verifier-code exports for the
-    Appendix B families, and create repeatable benchmark reports tied to
+    Appendix B families, validate the shipped example-scope registry in the
+    standard paper-facing gate, and create repeatable benchmark reports tied to
     AlphaEvolve target families. The remaining paper gap is generating those
     anti-gaming and verification-data evidence files from benchmark-grade
     tensor/geometric/constructive-math fixtures, not emitting matrix smoke

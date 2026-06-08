@@ -1687,11 +1687,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: the matrix smoke fixture now rejects known shortcuts and
     has a scope-checked hardening bundle helper that emits report, inventory,
     summary, and scope-validation files while preserving
-    `alphaevolve_comparable: false`.
+    `alphaevolve_comparable: false`. The shipped-example scope registry has
+    focused tests, but the standard paper-manifest/docs validation path does
+    not yet validate that registry directly.
   - Required result: when tensor/geometric/compiler/systems fixtures emit
-    benchmark-grade hardening reports, update the roadmap, README, papers index,
-    and code/paper TODO entries together so they neither underclaim smoke
-    hardening evidence nor overclaim AlphaEvolve-comparable benchmarks.
+    benchmark-grade hardening reports, and when the shipped-example scope
+    registry is wired into the standard validation gate, update the roadmap,
+    README, papers index, and code/paper TODO entries together so they neither
+    underclaim smoke hardening evidence nor overclaim AlphaEvolve-comparable
+    benchmarks.
 
 - [ ] Keep systems-result roadmap wording scoped to domain-agnostic report
       validation versus domain-specific readiness gates.

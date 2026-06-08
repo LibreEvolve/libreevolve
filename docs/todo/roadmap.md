@@ -2089,6 +2089,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes rank-value registry coverage from traceable prior-baseline
     evidence.
 
+- [ ] Keep matrix per-seed roadmap wording scoped until cascade-run provenance
+      exists.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix experiments are run
+    over multiple random seeds using the evaluation cascade, with performance
+    reported as the best rank and the fraction of seeds that achieved it.
+  - Current evidence: roadmap/README/paper-index status can point to generic
+    evaluator cascades and declared matrix result reports with per-seed rank
+    rows and hit-fraction checks. It does not yet require matrix-specific
+    execution traces showing the cascade configuration, stage thresholds,
+    per-stage rank/exactness diagnostics, pruning or early-stop reasons,
+    target/seed lineage, and aggregation from executed traces into best-rank
+    hit fractions.
+  - Required result: when matrix cascade-run provenance lands, update ROADMAP,
+    README, papers index, and code/paper TODOs together so roadmap text
+    distinguishes declared per-seed report validation from executed
+    AlphaEvolve-style matrix cascade evidence.
+
 - [ ] Keep Table 2/Table 3 matrix-rank table roadmap wording scoped until
       table exhibit provenance exists.
   - Spec evidence: AlphaEvolve Table 2 presents selected matrix tensor-rank

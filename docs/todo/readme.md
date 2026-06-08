@@ -654,6 +654,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes stored best-known rank values from traceable cited
     baseline evidence.
 
+- [ ] Keep README matrix per-seed wording scoped until cascade-run provenance
+      exists.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix experiments run over
+    multiple random seeds using the evaluation cascade, then report the best
+    rank and the fraction of seeds that reached it.
+  - Current evidence: README documents the matrix report contract's declared
+    per-seed rows, best-rank consistency checks, and hit-fraction validation,
+    plus generic cascade support elsewhere. It does not document an executed
+    matrix benchmark runner that emits target/seed-level cascade traces, stage
+    thresholds, per-stage rank/exactness diagnostics, pruning or early-stop
+    reasons, and aggregation evidence linking executed cascades to the
+    reported hit fraction.
+  - Required result: when matrix cascade-run evidence lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes post-hoc per-seed report validation from AlphaEvolve
+    Section 3.1-style repeated-seed cascade execution evidence.
+
 - [ ] Keep README Table 2/Table 3 matrix-rank table wording scoped until table
       exhibit provenance exists.
   - Spec evidence: AlphaEvolve Table 2 is the selected main-text matrix-rank

@@ -2752,6 +2752,27 @@ Primary evidence:
     result reports and from the Figure 8 loss-function-only ablation until an
     executed matrix runner proves the baseline-to-evolved-program path.
 
+- [ ] Add matrix cascade-run provenance for repeated-seed rank reports.
+  - Spec evidence: AlphaEvolve Section 3.1 says the matrix-decomposition
+    experiments run over multiple random seeds using the evaluation cascade,
+    then report the best lowest rank per target and the fraction of seeds that
+    reached that rank.
+  - Current evidence: generic evaluator cascades can run staged validators,
+    and `libreevolve.matrix_result_report.v1` can validate declared per-seed
+    rank rows after a report exists. There is no matrix benchmark runner or
+    report provenance that records the cascade configuration used for each
+    matrix target/seed, per-stage rank and exactness diagnostics, early-stop
+    or pruning decisions, candidate lineage through cascade stages, or how the
+    executed cascade traces aggregate into the published best-rank hit
+    fraction.
+  - Required result: add matrix benchmark execution records and validators for
+    target id, seed id, cascade id/version, stage labels and thresholds,
+    per-stage candidate rank/exactness/certificate status, stop reason,
+    accepted final rank, and aggregation checks tying all seed-level cascade
+    traces to the matrix result report. Keep this separate from generic
+    cascade semantics and from hand-authored matrix reports until actual
+    Section 3.1-style runs emit the evidence.
+
 - [ ] Add best-known-rank citation provenance for Appendix A matrix baselines.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a
     `best known [reference]` column, and Appendix A Table 3 extends those

@@ -2814,6 +2814,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     report-visible baseline-source fields, and docs that distinguish cited
     prior baselines from LibreEvolve-generated constructions.
 
+- [ ] Track matrix cascade-run evidence behind repeated-seed rank claims.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the matrix
+    experiments run over multiple random seeds using the evaluation cascade,
+    and paper-visible performance is the best rank plus the fraction of seeds
+    that reached it.
+  - Current gap: the paper-facing matrix report contract validates declared
+    seed rows and aggregate hit fractions, while generic cascade TODOs track
+    cascade semantics. It does not preserve matrix-specific executed cascade
+    traces: target/seed ids, cascade configuration, stage thresholds,
+    per-stage ranks and exactness diagnostics, pruning or early-stop reasons,
+    final accepted rank, or aggregation evidence linking those traces to the
+    published Table 2/Appendix A rank and hit-fraction rows.
+  - Required result: add paper/report evidence for matrix cascade runs before
+    treating per-seed matrix result reports as AlphaEvolve Section 3.1 search
+    evidence: one trace per target/seed, stage-level diagnostics and stop
+    reasons, candidate/result artifact links, and summary validation that the
+    reported best-rank and hit fraction are computed from those executed
+    cascade traces.
+
 - [ ] Track Table 2/Table 3 matrix-rank table exhibit provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the main-text

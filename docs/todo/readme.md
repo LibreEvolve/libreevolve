@@ -451,6 +451,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     separates generic local file ingestion and retrieval/plugin context from
     paper-facing explicit problem-context evidence.
 
+- [ ] Keep README primary-prompt wording scoped until instruction/target
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says the primary prompt comprises
+    sampled previously discovered solutions plus system instructions on how to
+    propose changes to a particular solution.
+  - Current evidence: README can describe prompt templates, selected
+    parent/inspiration metadata, parent-code rendering policy, prompt ids,
+    prompt-size diagnostics, and mutation-instruction variants. It does not
+    yet document a paper-facing prompt-core record that ties an instruction
+    block/version/hash to the specific target solution and sampled supporting
+    solutions for a mutation call.
+  - Required result: when primary-prompt ingredient provenance lands, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README distinguishes generic prompt rendering and template validation from
+    AlphaEvolve-style target-specific prompt instruction evidence.
+
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

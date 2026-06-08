@@ -366,6 +366,28 @@ Primary evidence:
 
 ## Prompt Sampling and Context
 
+- [ ] Add primary-prompt instruction and target-solution provenance.
+  - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt
+    comprises multiple previously discovered solutions sampled from the
+    program database plus system instructions on how to propose changes to a
+    particular solution.
+  - Current evidence: LibreEvolve records prompt templates, prompt ids,
+    selected parent and inspiration ids, parent-code rendering diagnostics,
+    mutation-instruction variants, section-budget hashes, and call telemetry.
+    These surfaces do not yet provide a paper-facing prompt-core record that
+    proves which solution was the target being edited, which previously
+    discovered solutions were supporting context, which instruction block told
+    the LLM how to modify that particular target, and whether required
+    AlphaEvolve prompt ingredients were present or intentionally omitted.
+  - Required result: add primary-prompt ingredient metadata and validators for
+    each mutation call: prompt/call id, target solution/program id, target
+    source hash, selected prior-solution ids and roles (`target`,
+    `inspiration`, `feedback_source`, or equivalent), instruction policy id,
+    instruction text hash/redaction status, mutation mode/edit-scope
+    constraints, required-channel presence/omission reasons, and README/
+    ROADMAP checks that distinguish generic prompt-template rendering from
+    AlphaEvolve-style instructions tied to a particular sampled solution.
+
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.
   - Spec evidence: AlphaEvolve Section 2.2 says users can tailor the primary

@@ -2063,6 +2063,14 @@ background context, candidate representation, and objective metrics. The bundle
 records field statuses, manifest paths, ids/hashes/counts, explicit remaining
 gaps, a deterministic `task_spec_id`, and embedded validation; it is not yet a
 standalone task-spec file with full evolvable-span and score-link evidence.
+Completed manifests additionally include
+`runtime.history.task_spec_artifact_resolution_report`, which validates those
+task-spec manifest paths and cross-links each field to runtime evidence such as
+candidate history, prompt history, LLM calls, controller-budget events,
+evaluator artifacts, and best exports. This is still partial evidence:
+evolvable component span ids, score-field-to-candidate-path links,
+embedded-only task definitions, standalone task-spec examples, and deeper
+per-id history resolution remain open.
 
 **validate.py** must define `evaluate(code: str) -> dict`,
 `evaluate(code: str, workspace_path: str) -> dict`, or

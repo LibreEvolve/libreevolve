@@ -5116,6 +5116,14 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "paper_metric_table_export": _paper_metric_table_export_report(
             paper_metric_contract
         ),
+        "task_spec_artifact_resolution_report": (
+            _task_spec_artifact_resolution_report(
+                db.startup_manifest_snapshot(),
+                run_dir,
+                programs,
+                paper_metric_contract,
+            )
+        ),
         "alphaevolve_process_exhibit_report": (
             _alphaevolve_process_exhibit_report(run_dir, programs)
         ),
@@ -5145,6 +5153,532 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _task_spec_artifact_resolution_report(
+    startup_manifest: Mapping[str, object],
+    run_dir: Path,
+    programs: list[Program],
+    paper_metric_contract: Mapping[str, object],
+) -> dict:
+    task_spec = (
+        startup_manifest.get("task_specification")
+        if isinstance(startup_manifest.get("task_specification"), Mapping)
+        else {}
+    )
+    fields = task_spec.get("fields") if isinstance(task_spec.get("fields"), Mapping) else {}
+    field_resolutions = [
+        _task_spec_field_resolution(
+            name,
+            field if isinstance(field, Mapping) else {},
+            startup_manifest,
+            run_dir,
+            programs,
+            paper_metric_contract,
+        )
+        for name, field in sorted(fields.items())
+        if isinstance(name, str)
+    ]
+    manifest_path_count = sum(
+        len(record["manifest_path_resolutions"]) for record in field_resolutions
+    )
+    manifest_path_resolved_count = sum(
+        1
+        for record in field_resolutions
+        for path in record["manifest_path_resolutions"]
+        if path.get("resolved") is True
+    )
+    artifact_link_count = sum(
+        len(record["runtime_artifact_resolutions"]) for record in field_resolutions
+    )
+    artifact_present_count = sum(
+        1
+        for record in field_resolutions
+        for artifact in record["runtime_artifact_resolutions"]
+        if artifact.get("present") is True
+    )
+    report = {
+        "schema": "libreevolve.task_spec_artifact_resolution_report.v1",
+        "source": "startup_task_specification_and_runtime_artifacts",
+        "task_spec_schema": task_spec.get("schema"),
+        "task_spec_id": task_spec.get("task_spec_id"),
+        "task_spec_validation_ok": (
+            task_spec.get("validation", {}).get("ok") is True
+            if isinstance(task_spec.get("validation"), Mapping)
+            else False
+        ),
+        "field_count": len(field_resolutions),
+        "field_resolutions": field_resolutions,
+        "manifest_path_count": manifest_path_count,
+        "manifest_path_resolved_count": manifest_path_resolved_count,
+        "artifact_link_count": artifact_link_count,
+        "artifact_present_count": artifact_present_count,
+        "program_count": len(programs),
+        "seed_program_count": sum(1 for program in programs if program.generation == 0),
+        "generated_program_count": sum(1 for program in programs if program.generation > 0),
+        "claim_ready": False,
+        "claim_readiness": {
+            "startup_bundle_validated": (
+                task_spec.get("validation", {}).get("ok") is True
+                if isinstance(task_spec.get("validation"), Mapping)
+                else False
+            ),
+            "manifest_paths_resolved": manifest_path_count > 0
+            and manifest_path_count == manifest_path_resolved_count,
+            "runtime_artifact_cross_links": artifact_link_count > 0,
+            "artifact_links_all_present": artifact_link_count > 0
+            and artifact_link_count == artifact_present_count,
+            "full_alphaevolve_task_spec_parity": False,
+            "remaining_gap": [
+                "evolvable_component_span_ids",
+                "score_field_to_candidate_path_links",
+                "embedded_only_problem_definitions",
+                "standalone_task_spec_report_examples",
+                "deep_id_resolution_into_prompt_evaluator_candidate_history",
+            ],
+        },
+    }
+    report["validation"] = validate_task_spec_artifact_resolution_report(report)
+    return report
+
+
+def _task_spec_field_resolution(
+    name: str,
+    field: Mapping[str, object],
+    startup_manifest: Mapping[str, object],
+    run_dir: Path,
+    programs: list[Program],
+    paper_metric_contract: Mapping[str, object],
+) -> dict:
+    manifest_paths = _task_spec_manifest_paths(field)
+    artifact_paths = _task_spec_artifact_paths_for_field(name)
+    runtime_artifacts = [
+        _task_spec_artifact_record(run_dir, path, _task_spec_artifact_role(name, path))
+        for path in artifact_paths
+    ]
+    record = {
+        "field": name,
+        "field_status": field.get("status"),
+        "manifest_path_resolutions": [
+            _task_spec_manifest_path_record(startup_manifest, path)
+            for path in manifest_paths
+        ],
+        "runtime_artifact_resolutions": runtime_artifacts,
+        "reference_summary": _task_spec_reference_summary(
+            name,
+            field,
+            programs,
+            paper_metric_contract,
+        ),
+        "resolution_status": "partial_runtime_cross_link",
+        "unresolved_gap": _task_spec_field_gap(name),
+    }
+    if all(path.get("resolved") is True for path in record["manifest_path_resolutions"]):
+        if runtime_artifacts:
+            record["resolution_status"] = "manifest_paths_resolved_with_runtime_links"
+        else:
+            record["resolution_status"] = "manifest_paths_resolved_only"
+    return record
+
+
+def _task_spec_manifest_paths(field: Mapping[str, object]) -> list[str]:
+    paths = []
+    for key in (
+        "manifest_path",
+        "role_routing_manifest_path",
+        "context_policy_manifest_path",
+    ):
+        value = field.get(key)
+        if isinstance(value, str) and value:
+            paths.append(value)
+    return paths
+
+
+def _task_spec_artifact_paths_for_field(field_name: str) -> list[str]:
+    return {
+        "initial_programs": ["manifest.json", "history.jsonl"],
+        "evaluation_code": [
+            "manifest.json",
+            "history.jsonl",
+            "failure_history.jsonl",
+            "evaluator_artifacts",
+        ],
+        "prompt_template_and_config": [
+            "manifest.json",
+            "prompt_history.jsonl",
+        ],
+        "llm_ensemble": [
+            "manifest.json",
+            "llm_calls.jsonl",
+            "controller_budget_events.jsonl",
+        ],
+        "background_knowledge": [
+            "manifest.json",
+            "prompt_history.jsonl",
+        ],
+        "candidate_representation": [
+            "manifest.json",
+            "history.jsonl",
+            "best.py",
+            "best_workspace",
+        ],
+        "objective_metrics": [
+            "manifest.json",
+            "history.jsonl",
+        ],
+    }.get(field_name, ["manifest.json"])
+
+
+def _task_spec_artifact_role(field_name: str, path: str) -> str:
+    return f"{field_name}:{path}"
+
+
+def _task_spec_artifact_record(run_dir: Path, path_name: str, role: str) -> dict:
+    if path_name == "manifest.json":
+        pointer = {
+            "path": path_name,
+            "present": (run_dir / path_name).exists(),
+            "kind": "file",
+            "hash_scope": "final_manifest_self_reference_deferred",
+        }
+    else:
+        pointer = _runtime_artifact_pointer(
+            run_dir / path_name,
+            path_name,
+            _resolve_path_for_scope(run_dir),
+        )
+    record = {
+        "path": path_name,
+        "role": role,
+        "present": pointer.get("present") is True,
+        "kind": pointer.get("kind"),
+    }
+    if _is_sha256_hex(pointer.get("sha256")):
+        record["sha256"] = pointer["sha256"]
+        record["hash_scope"] = pointer.get("hash_scope")
+    elif _is_sha256_hex(pointer.get("tree_hash")):
+        record["tree_hash"] = pointer["tree_hash"]
+        record["hash_scope"] = pointer.get("tree_hash_scope")
+    elif isinstance(pointer.get("hash_scope"), str):
+        record["hash_scope"] = pointer["hash_scope"]
+    if isinstance(pointer.get("bytes"), int):
+        record["bytes"] = pointer["bytes"]
+    return record
+
+
+def _task_spec_manifest_path_record(
+    manifest: Mapping[str, object],
+    path: str,
+) -> dict:
+    resolved, value = _resolve_manifest_path(manifest, path)
+    record = {
+        "path": path,
+        "resolved": resolved,
+        "value_type": _task_spec_value_type(value) if resolved else None,
+    }
+    if resolved:
+        count = _task_spec_value_count(value)
+        if count is not None:
+            record["value_count"] = count
+    return record
+
+
+def _resolve_manifest_path(manifest: Mapping[str, object], path: str) -> tuple[bool, object]:
+    current: object = manifest
+    for part in path.split("."):
+        if isinstance(current, Mapping) and part in current:
+            current = current[part]
+            continue
+        return False, None
+    return True, current
+
+
+def _task_spec_value_type(value: object) -> str:
+    if isinstance(value, Mapping):
+        return "object"
+    if isinstance(value, list):
+        return "list"
+    if isinstance(value, str):
+        return "string"
+    if isinstance(value, bool):
+        return "boolean"
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return "number"
+    if value is None:
+        return "null"
+    return "other"
+
+
+def _task_spec_value_count(value: object) -> int | None:
+    if isinstance(value, (Mapping, list)):
+        return len(value)
+    return None
+
+
+def _task_spec_reference_summary(
+    name: str,
+    field: Mapping[str, object],
+    programs: list[Program],
+    paper_metric_contract: Mapping[str, object],
+) -> dict:
+    if name == "initial_programs":
+        return {
+            "startup_reference_count": int(field.get("count", 0))
+            if isinstance(field.get("count"), int)
+            and not isinstance(field.get("count"), bool)
+            else 0,
+            "seed_program_ids": [
+                program.id for program in programs if program.generation == 0
+            ][:50],
+        }
+    if name == "evaluation_code":
+        return {
+            "entrypoint_count": int(field.get("entrypoint_count", 0))
+            if isinstance(field.get("entrypoint_count"), int)
+            and not isinstance(field.get("entrypoint_count"), bool)
+            else 0,
+            "embedded_candidate_evaluate": field.get("embedded_candidate_evaluate")
+            is True,
+            "evaluated_program_count": sum(
+                1
+                for program in programs
+                if isinstance(program.evaluation, Mapping) and program.evaluation
+            ),
+        }
+    if name == "prompt_template_and_config":
+        return {
+            "variant_count": int(field.get("variant_count", 0))
+            if isinstance(field.get("variant_count"), int)
+            and not isinstance(field.get("variant_count"), bool)
+            else 0,
+        }
+    if name == "llm_ensemble":
+        return {
+            "backend_count": int(field.get("backend_count", 0))
+            if isinstance(field.get("backend_count"), int)
+            and not isinstance(field.get("backend_count"), bool)
+            else 0,
+        }
+    if name == "background_knowledge":
+        return {
+            "context_source_count": int(field.get("context_source_count", 0))
+            if isinstance(field.get("context_source_count"), int)
+            and not isinstance(field.get("context_source_count"), bool)
+            else 0,
+        }
+    if name == "candidate_representation":
+        return {
+            "policy": field.get("policy"),
+            "primary_language": field.get("primary_language"),
+            "program_count": len(programs),
+        }
+    if name == "objective_metrics":
+        return {
+            "primary_metric": field.get("primary_metric"),
+            "metric_count": field.get("metric_count"),
+            "paper_metric_count": paper_metric_contract.get("paper_metric_count"),
+            "paper_metric_names": paper_metric_contract.get("paper_metric_names", []),
+        }
+    return {}
+
+
+def _task_spec_field_gap(field_name: str) -> list[str]:
+    common = {
+        "initial_programs": [
+            "evolvable_component_span_ids",
+            "seed_idea_origin_records",
+        ],
+        "evaluation_code": [
+            "score_field_to_candidate_path_links",
+            "embedded_only_problem_definitions",
+        ],
+        "prompt_template_and_config": [
+            "prompt_template_to_rendered_prompt_lineage",
+            "standalone_task_spec_report_examples",
+        ],
+        "llm_ensemble": [
+            "live_provider_model_registry_validation",
+            "role_specific_scheduler_ownership",
+        ],
+        "background_knowledge": [
+            "semantic_source_selection_evidence",
+            "expert_formulation_provenance",
+        ],
+        "candidate_representation": [
+            "problem_defined_candidate_abstraction_hooks",
+            "arbitrary_language_build_runner_specs",
+        ],
+        "objective_metrics": [
+            "cross_run_metric_contract_diff",
+            "score_field_to_evolved_block_mapping",
+        ],
+    }
+    return common.get(field_name, ["deep_runtime_artifact_resolution"])
+
+
+def validate_task_spec_artifact_resolution_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.task_spec_artifact_resolution_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "task spec artifact resolution report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "task_spec_schema",
+        "task_spec_id",
+        "task_spec_validation_ok",
+        "field_count",
+        "field_resolutions",
+        "manifest_path_count",
+        "manifest_path_resolved_count",
+        "artifact_link_count",
+        "artifact_present_count",
+        "program_count",
+        "seed_program_count",
+        "generated_program_count",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"task spec artifact resolution missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.task_spec_artifact_resolution_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported task spec artifact resolution schema"})
+    if report.get("source") != "startup_task_specification_and_runtime_artifacts":
+        issues.append({"code": "invalid_source", "message": "unsupported task spec artifact resolution source"})
+    if report.get("task_spec_schema") != "libreevolve.alphaevolve_task_specification_bundle.v1":
+        issues.append({"code": "invalid_task_spec_schema", "message": "task_spec_schema must reference the startup task-spec bundle"})
+    if not _is_sha256_hex(report.get("task_spec_id")):
+        issues.append({"code": "invalid_task_spec_id", "message": "task_spec_id must be a sha256 hex id"})
+    if report.get("task_spec_validation_ok") is not True:
+        issues.append({"code": "invalid_task_spec_validation", "message": "startup task-spec validation must be ok"})
+    fields = report.get("field_resolutions")
+    if not isinstance(fields, list):
+        issues.append({"code": "invalid_field_resolutions", "message": "field_resolutions must be a list"})
+        fields = []
+    expected_fields = {
+        "initial_programs",
+        "evaluation_code",
+        "prompt_template_and_config",
+        "llm_ensemble",
+        "background_knowledge",
+        "candidate_representation",
+        "objective_metrics",
+    }
+    field_names = {
+        field.get("field")
+        for field in fields
+        if isinstance(field, Mapping)
+    }
+    if field_names != expected_fields:
+        issues.append({"code": "invalid_field_set", "message": "field_resolutions must cover all task-spec fields"})
+    manifest_path_count = 0
+    manifest_path_resolved_count = 0
+    artifact_link_count = 0
+    artifact_present_count = 0
+    for field in fields:
+        if not isinstance(field, Mapping):
+            issues.append({"code": "invalid_field_resolution", "message": "field resolution records must be objects"})
+            continue
+        if field.get("field_status") not in {"present", "missing", "omitted", "unsupported", "partial"}:
+            issues.append({"code": "invalid_field_status", "message": "field_status is unsupported"})
+        paths = field.get("manifest_path_resolutions")
+        if not isinstance(paths, list) or not paths:
+            issues.append({"code": "invalid_manifest_path_resolutions", "message": "each field must resolve manifest paths"})
+            paths = []
+        manifest_path_count += len(paths)
+        for path in paths:
+            if not isinstance(path, Mapping):
+                issues.append({"code": "invalid_manifest_path_record", "message": "manifest path records must be objects"})
+                continue
+            if not isinstance(path.get("path"), str) or not path.get("path"):
+                issues.append({"code": "invalid_manifest_path", "message": "manifest path must be non-empty text"})
+            if path.get("resolved") is True:
+                manifest_path_resolved_count += 1
+            elif path.get("resolved") is not False:
+                issues.append({"code": "invalid_manifest_resolved_flag", "message": "manifest resolved flag must be boolean"})
+        artifacts = field.get("runtime_artifact_resolutions")
+        if not isinstance(artifacts, list):
+            issues.append({"code": "invalid_artifact_resolutions", "message": "runtime artifact resolutions must be a list"})
+            artifacts = []
+        artifact_link_count += len(artifacts)
+        for artifact in artifacts:
+            if not isinstance(artifact, Mapping):
+                issues.append({"code": "invalid_artifact_resolution", "message": "artifact resolution records must be objects"})
+                continue
+            if not isinstance(artifact.get("path"), str) or not artifact.get("path"):
+                issues.append({"code": "invalid_artifact_path", "message": "artifact path must be non-empty text"})
+            if not isinstance(artifact.get("role"), str) or not artifact.get("role"):
+                issues.append({"code": "invalid_artifact_role", "message": "artifact role must be non-empty text"})
+            if artifact.get("present") is True:
+                artifact_present_count += 1
+            elif artifact.get("present") is not False:
+                issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
+        if not isinstance(field.get("reference_summary"), Mapping):
+            issues.append({"code": "invalid_reference_summary", "message": "reference_summary must be an object"})
+        gaps = field.get("unresolved_gap")
+        if not isinstance(gaps, list) or not all(isinstance(gap, str) and gap for gap in gaps):
+            issues.append({"code": "invalid_unresolved_gap", "message": "unresolved_gap must be a list of labels"})
+    _validate_report_count(report, "field_count", len(fields), issues)
+    _validate_report_count(report, "manifest_path_count", manifest_path_count, issues)
+    _validate_report_count(
+        report,
+        "manifest_path_resolved_count",
+        manifest_path_resolved_count,
+        issues,
+    )
+    _validate_report_count(report, "artifact_link_count", artifact_link_count, issues)
+    _validate_report_count(report, "artifact_present_count", artifact_present_count, issues)
+    program_count = report.get("program_count")
+    seed_count = report.get("seed_program_count")
+    generated_count = report.get("generated_program_count")
+    if all(
+        isinstance(value, int) and not isinstance(value, bool) and value >= 0
+        for value in (program_count, seed_count, generated_count)
+    ):
+        if program_count != seed_count + generated_count:
+            issues.append({"code": "program_count_mismatch", "message": "program counts must balance"})
+    else:
+        issues.append({"code": "invalid_program_counts", "message": "program counts must be non-negative integers"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        if readiness.get("full_alphaevolve_task_spec_parity") is not False:
+            issues.append({"code": "task_spec_parity_overclaim", "message": "full AlphaEvolve task-spec parity must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "task spec artifact resolution must not claim full parity"})
+    return {
+        "schema": "libreevolve.task_spec_artifact_resolution_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _validate_report_count(
+    report: Mapping[str, object],
+    field: str,
+    expected: int,
+    issues: list[dict],
+) -> None:
+    value = report.get(field)
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    elif value != expected:
+        issues.append({"code": f"{field}_mismatch", "message": f"{field} does not match report records"})
 
 
 def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) -> dict:

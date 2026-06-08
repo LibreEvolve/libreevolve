@@ -249,8 +249,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that separates local workflow diagrams from full
     reproduced AlphaEvolve architecture evidence.
 
-- [ ] Track unified task-specification provenance separately from per-field
-      run metadata.
+- [ ] Extend unified task-specification provenance beyond field-level artifact
+      resolution.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 2.
   - Requirement: AlphaEvolve's task specification is a coherent user-provided
     input bundle: initial program/components to evolve, evaluation code,
@@ -266,16 +266,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     context, candidate representation, and objective metrics to manifest paths,
     with field statuses, ids/hashes/counts, explicit unsupported/incomplete
     labels, a deterministic `task_spec_id`, and embedded validation.
+    Completed manifests now also include
+    `runtime.history.task_spec_artifact_resolution_report`, validating the
+    task-spec manifest paths and linking each field to runtime artifact paths
+    for candidate history, prompt history, LLM calls, controller-budget events,
+    evaluator artifacts, and best exports.
   - Current gap: paper-facing evidence still lacks evolvable component spans,
     standalone task-spec report examples, embedded-only problem definitions,
     score-field links to candidate/evolved-block paths, and deep validation
-    that every id resolves beyond the startup manifest section into concrete
-    prompt/evaluator/candidate/history artifacts.
+    that every id resolves to exact prompt/evaluator/candidate/history records
+    rather than field-level artifact links.
   - Required result: finish paper-facing task-spec reports with evolvable-span
-    ids, evaluator score-field linkage, artifact-level cross-links,
-    embedded-only task definitions, and README/ROADMAP wording that treats the
-    current bundle as partial AlphaEvolve task-spec evidence rather than full
-    parity.
+    ids, evaluator score-field linkage, embedded-only task definitions,
+    per-id record resolution, and README/ROADMAP wording that treats the
+    current bundle plus artifact-resolution report as partial AlphaEvolve
+    task-spec evidence rather than full parity.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

@@ -659,8 +659,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording separates paper process-diagram reproduction from delivering each
     underlying AlphaEvolve workflow capability.
 
-- [ ] Keep task-specification roadmap wording scoped to the partial unified
-      AlphaEvolve input bundle.
+- [ ] Extend task-specification roadmap wording beyond field-level artifact
+      resolution.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 frame task
     specification as one user-provided input bundle: initial program/components
     to evolve, evaluation code, prompt template/configuration, LLM choices,
@@ -675,13 +675,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     prompt template/config metadata, backend choices, optional background
     context, candidate representation, and objective metrics to their manifest
     paths, plus field statuses, ids/hashes/counts, `task_spec_id`, validation,
-    and unsupported/incomplete labels. It is still a manifest-derived partial
-    artifact, not a standalone AlphaEvolve task specification with full
-    evolvable-span and score-link evidence.
-  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
-    with the landed bundle and remaining work for evolvable component spans,
-    artifact-level cross-links, embedded-only problem definitions, and score
-    linkage from evaluator outputs to candidate/evolved-block paths.
+    and unsupported/incomplete labels. Runtime manifests now also include
+    `runtime.history.task_spec_artifact_resolution_report`, which validates
+    task-spec manifest paths and links each field to runtime artifact paths for
+    candidate history, prompt history, LLM calls, controller-budget events,
+    evaluator artifacts, and best exports. It is still a manifest-derived
+    partial artifact, not a standalone AlphaEvolve task specification with full
+    evolvable-span, embedded-only definition, per-id record, and score-link
+    evidence.
+  - Required result: when evolvable component spans, embedded-only problem
+    definitions, score linkage from evaluator outputs to candidate/evolved-
+    block paths, standalone examples, and per-id prompt/evaluator/candidate/
+    history resolution land, update ROADMAP, README, papers index, and
+    code/paper TODOs together.
 
 ## Missing Roadmap Items
 

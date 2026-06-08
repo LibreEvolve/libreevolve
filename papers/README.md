@@ -386,8 +386,13 @@ initial programs, evaluator code or embedded evaluator stages, prompt
 template/config metadata, backend choices, optional background context,
 candidate representation, and objective metrics to manifest evidence. It
 records a deterministic `task_spec_id`, validation, and unsupported/incomplete
-labels, but standalone task-spec reports, evolvable-span ids, embedded-only
-problem definitions, and score-field links to evolved code paths remain open.
+labels. Completed manifests now also include
+`runtime.history.task_spec_artifact_resolution_report`, which validates the
+task-spec manifest paths and links each task-spec field to runtime artifact
+evidence such as candidate history, prompt history, LLM calls, controller
+budget events, evaluator artifacts, and best exports. Standalone task-spec
+examples, evolvable-span ids, embedded-only problem definitions, score-field
+links to evolved code paths, and deeper per-id history resolution remain open.
 
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not

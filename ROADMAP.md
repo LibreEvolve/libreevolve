@@ -101,6 +101,11 @@ LibreEvolve has:
   records that cross-link startup inputs such as seeds, evaluators, prompts,
   backends, context, candidate policy, and metrics into a partial task-spec
   bundle with validation and explicit remaining gaps
+- runtime task-spec artifact-resolution reports under
+  `runtime.history.task_spec_artifact_resolution_report`, validating
+  task-spec manifest paths and linking each field to candidate-history,
+  prompt-history, LLM-call, controller-budget, evaluator-artifact, and
+  best-export evidence while leaving evolvable-span and score-link parity open
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

@@ -45,6 +45,7 @@ from libreevolve.core.loop import (
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
+    validate_task_spec_artifact_resolution_report,
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
     validate_paper_evaluator_metric_contract,
@@ -5123,6 +5124,102 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
     validation = validate_task_specification_bundle(tampered)
     assert validation["ok"] is False
     assert validation["issues"][0]["code"] == "invalid_task_spec_id"
+
+
+def test_runtime_history_reports_task_spec_artifact_resolution():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.context_sources = [
+        {"path": "context/notes.md", "sha256": "a" * 64, "source_type": "text"}
+    ]
+    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                prompt_variants=[DEFAULT_TEMPLATE],
+                backends=[{"type": "openai", "model": "gpt-4o-mini"}],
+            ),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["task_spec_artifact_resolution_report"]
+    task_spec = manifest["task_specification"]
+
+    assert report["schema"] == "libreevolve.task_spec_artifact_resolution_report.v1"
+    assert report["task_spec_id"] == task_spec["task_spec_id"]
+    assert report["task_spec_validation_ok"] is True
+    assert report["validation"]["ok"] is True
+    assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
+    assert report["field_count"] == 7
+    assert report["manifest_path_count"] == report["manifest_path_resolved_count"]
+    assert report["artifact_link_count"] > 0
+    assert report["program_count"] == 2
+    assert report["seed_program_count"] == 1
+    assert report["generated_program_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["startup_bundle_validated"] is True
+    assert report["claim_readiness"]["manifest_paths_resolved"] is True
+    assert report["claim_readiness"]["full_alphaevolve_task_spec_parity"] is False
+
+    by_field = {record["field"]: record for record in report["field_resolutions"]}
+    assert set(by_field) == {
+        "initial_programs",
+        "evaluation_code",
+        "prompt_template_and_config",
+        "llm_ensemble",
+        "background_knowledge",
+        "candidate_representation",
+        "objective_metrics",
+    }
+    initial = by_field["initial_programs"]
+    assert initial["manifest_path_resolutions"] == [
+        {
+            "path": "problem.seed_sources",
+            "resolved": True,
+            "value_type": "list",
+            "value_count": 1,
+        }
+    ]
+    assert len(initial["reference_summary"]["seed_program_ids"]) == 1
+    assert initial["reference_summary"]["seed_program_ids"][0].startswith(
+        "candidate-seed-0-"
+    )
+    evaluator = by_field["evaluation_code"]
+    assert evaluator["reference_summary"]["entrypoint_count"] == 1
+    assert evaluator["reference_summary"]["evaluated_program_count"] == 2
+    prompt_artifacts = {
+        artifact["path"]: artifact
+        for artifact in by_field["prompt_template_and_config"][
+            "runtime_artifact_resolutions"
+        ]
+    }
+    assert prompt_artifacts["prompt_history.jsonl"]["present"] is True
+    llm_artifacts = {
+        artifact["path"]: artifact
+        for artifact in by_field["llm_ensemble"]["runtime_artifact_resolutions"]
+    }
+    assert "llm_ensemble:llm_calls.jsonl" == llm_artifacts["llm_calls.jsonl"]["role"]
+    objective = by_field["objective_metrics"]["reference_summary"]
+    assert objective["primary_metric"] == "score"
+    assert objective["paper_metric_names"] == ["score"]
+    assert "score_field_to_evolved_block_mapping" in (
+        by_field["objective_metrics"]["unresolved_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["full_alphaevolve_task_spec_parity"] = True
+    validation = validate_task_spec_artifact_resolution_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "task_spec_parity_overclaim",
+    }
 
 
 def test_invalid_seed_failure_memory_is_rendered_for_first_mutation_prompt():

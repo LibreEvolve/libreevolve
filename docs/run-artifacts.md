@@ -34,6 +34,18 @@ records field statuses, manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
 validation. It is partial AlphaEvolve task-spec evidence, not a standalone
 problem definition or full proof of evolvable-span and score-link parity.
+Completed runtime manifests also include
+`runtime.history.task_spec_artifact_resolution_report` with schema
+`libreevolve.task_spec_artifact_resolution_report.v1`. This report consumes the
+startup task-spec bundle, validates that each field's manifest paths resolve,
+and links task-spec fields to concrete runtime artifact paths such as
+`manifest.json`, `history.jsonl`, `failure_history.jsonl`, `prompt_history.jsonl`,
+`llm_calls.jsonl`, `controller_budget_events.jsonl`, `evaluator_artifacts`,
+`best.py`, and `best_workspace`. It records per-field reference summaries,
+program counts, manifest-path resolution counts, artifact-link/presence counts,
+and `claim_ready: false` gaps for evolvable span ids, score-field-to-candidate
+path links, embedded-only task definitions, standalone report examples, and
+deeper id resolution into prompt/evaluator/candidate history.
 Completed runtime manifests include
 `runtime.history.evaluation_cascade_report` when configured stages have run.
 The `libreevolve.evaluation_cascade_report.v1` summary is rebuilt from

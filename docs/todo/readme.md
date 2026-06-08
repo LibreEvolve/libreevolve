@@ -552,8 +552,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reproduction is separate from satisfying each underlying workflow
     capability.
 
-- [ ] Keep README task-specification wording scoped to the partial unified
-      AlphaEvolve input bundle.
+- [ ] Extend README task-specification wording beyond field-level artifact
+      resolution.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 define a task
     specification as the user-provided initial program/components, evaluation
     code, prompt template and configuration, choice of existing or custom
@@ -566,14 +566,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     stages, prompt template/config metadata, backend choices, optional
     background context, candidate representation, and objective metrics to
     their manifest paths. It records field statuses, ids/hashes/counts, a
-    deterministic `task_spec_id`, and unsupported/incomplete gaps. README
+    deterministic `task_spec_id`, and unsupported/incomplete gaps. README also
+    cites `runtime.history.task_spec_artifact_resolution_report`, which
+    validates task-spec manifest paths and cross-links each field to runtime
+    artifact paths for candidate history, prompt history, LLM calls,
+    controller-budget events, evaluator artifacts, and best exports. README
     should still not imply full AlphaEvolve task-spec parity because evolvable
     component spans, embedded-only problem formats, score-field-to-block
-    links, and standalone report examples remain incomplete.
-  - Required result: update README, ROADMAP, papers index, and code/paper TODOs
-    with the partial bundle and the remaining proof gaps around evolvable spans,
-    artifact-level cross-links, embedded-only problem definitions, and score
-    linkage to candidate/evolved-block paths.
+    links, standalone report examples, and per-id record resolution remain
+    incomplete.
+  - Required result: when evolvable spans, embedded-only problem definitions,
+    score linkage to candidate/evolved-block paths, standalone report examples,
+    and per-id prompt/evaluator/candidate/history resolution land, update
+    README, ROADMAP, papers index, and code/paper TODOs together.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

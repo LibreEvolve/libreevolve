@@ -165,7 +165,8 @@ Primary evidence:
     checks so local workflow diagrams are not mistaken for full reproduced
     AlphaEvolve process-diagram evidence.
 
-- [ ] Finish unified AlphaEvolve task-specification bundle provenance.
+- [ ] Extend unified AlphaEvolve task-specification reports into full
+      artifact-level parity.
   - Spec evidence: AlphaEvolve Section 2.1 is explicitly a task
     specification: the user provides the initial program/components to evolve,
     evaluation code, prompt template/configuration, choice of existing or
@@ -185,13 +186,18 @@ Primary evidence:
     ids, present/omitted/missing statuses, an explicit partial-status label,
     unsupported/incomplete gaps, a deterministic `task_spec_id`, and embedded
     validation from `validate_task_specification_bundle()`. Tests verify the
-    emitted bundle and a tampered-id failure.
+    emitted bundle and a tampered-id failure. Runtime histories now include
+    `runtime.history.task_spec_artifact_resolution_report` with schema
+    `libreevolve.task_spec_artifact_resolution_report.v1`, validating each
+    task-spec field's manifest paths and linking fields to concrete runtime
+    artifact paths such as history, failure history, prompt history, LLM calls,
+    controller-budget events, evaluator artifacts, and best exports.
   - Required result: finish evolvable component span references, score-field
     links from evaluator results to candidate/evolved-block paths,
     embedded-only problem-format support, standalone task-spec report examples,
-    and deeper validation that every referenced id resolves to a concrete
-    prompt/evaluator/candidate/history artifact rather than only to the startup
-    manifest section.
+    and deeper validation that every referenced id resolves to exact
+    prompt/evaluator/candidate/history records rather than only field-level
+    artifact paths.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

@@ -2848,8 +2848,10 @@ Primary evidence:
     unqualified `AlphaEvolve-comparable` status-table overclaims unless the
     phrase is framed as missing, scoped, or requirement-bound evidence, and it
     rejects background-only/future-benchmark status classes that include
-    positive implementation-support wording. Limited `Only` status classes
-    must now include an explicit missing/unsupported behavior boundary.
+    positive implementation-support wording. Bare `Background only` status
+    classes must now include an explicit missing/unsupported behavior boundary.
+    Limited `Only` status classes must now include an explicit
+    missing/unsupported behavior boundary.
     `Static prompt guidance exists` status classes must now also state that the
     guided operation is not executed or enforced. `Not implemented as
     described:` status classes must now also name an explicit missing or
@@ -2859,9 +2861,9 @@ Primary evidence:
     justifies it, or prove broader smoke-versus-paper-claim qualifiers beyond
     the role/status class matrix, required path presence, the
     `AlphaEvolve-comparable` overclaim guard, the negative-status contradiction
-    guard, the limited-status boundary guard, and the static-guidance
-    execution-boundary guard, and the not-implemented-as-described boundary
-    guard.
+    guard, the background-only boundary guard, the limited-status boundary
+    guard, the static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: extend the reusable paper-status-table validator with
     phrase-level evidence-link checks from semantic status/coverage phrases to
     active TODO or completed-evidence records, including broader qualifier

@@ -3618,8 +3618,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     status-table overclaims unless the phrase is framed as missing, scoped, or
     requirement-bound evidence, and it rejects background-only/future-benchmark
     status classes that include positive implementation-support wording.
-    Limited `Only` status classes must now include an explicit
-    missing/unsupported behavior boundary. `Static prompt guidance exists`
+    Bare `Background only` status classes must now include an explicit
+    missing/unsupported behavior boundary. Limited `Only` status classes must
+    now include an explicit missing/unsupported behavior boundary.
+    `Static prompt guidance exists`
     status classes must now also state that the guided operation is not
     executed or enforced. `Not implemented as described:` status classes must
     now also name an explicit missing or unsupported paper behavior. Remaining
@@ -3628,15 +3630,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     implementation record that justifies it, nor detect broader smoke-scoped
     examples being phrased as benchmark evidence beyond the role/status class
     matrix, required path presence, the `AlphaEvolve-comparable` overclaim
-    guard, the negative-status contradiction guard, the limited-status boundary
-    guard, the static-guidance execution-boundary guard, and the
-    not-implemented-as-described boundary guard.
+    guard, the negative-status contradiction guard, the background-only
+    boundary guard, the limited-status boundary guard, the static-guidance
+    execution-boundary guard, and the not-implemented-as-described boundary
+    guard.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
     current role/status class matrix and `AlphaEvolve-comparable` boundary
-    guard plus negative-status contradiction, limited-status boundary, and
-    static-guidance execution-boundary checks plus the
+    guard plus negative-status contradiction, background-only boundary,
+    limited-status boundary, and static-guidance execution-boundary checks plus the
     not-implemented-as-described boundary check. Keep this validator distinct
     from the already documented TODO coverage cross-reference checker, which
     verifies backlog pointers after the implementation-status table.

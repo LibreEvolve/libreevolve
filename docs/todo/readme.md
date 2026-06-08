@@ -1886,9 +1886,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `AlphaEvolve-comparable` status-table overclaims unless the phrase is
     framed as missing, scoped, or requirement-bound evidence, and it rejects
     background-only/future-benchmark status classes that include positive
-    implementation-support wording. Limited `Only` status classes must now
-    include an explicit missing/unsupported behavior boundary. `Static prompt
-    guidance exists` status classes must now also state that the guided
+    implementation-support wording. Bare `Background only` status classes must
+    now include an explicit missing/unsupported behavior boundary. Limited
+    `Only` status classes must now include an explicit missing/unsupported
+    behavior boundary. `Static prompt guidance exists` status classes must now
+    also state that the guided
     operation is not executed or enforced. `Not implemented as described:`
     status classes must now also name an explicit missing or unsupported paper
     behavior. Remaining README gap: the validator
@@ -1896,8 +1898,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     semantic status claim or deeply distinguish smoke-scoped examples from
     benchmark evidence beyond the role/status class matrix, required path
     presence, the `AlphaEvolve-comparable` overclaim guard, the negative-status
-    contradiction guard, the limited-status boundary guard, and the
-    static-guidance execution-boundary guard, and the
+    contradiction guard, the background-only boundary guard, the limited-status
+    boundary guard, the static-guidance execution-boundary guard, and the
     not-implemented-as-described boundary guard.
   - Required result: keep README wording scoped as phrase-level semantic
     status/coverage evidence checks are added, so public docs continue to

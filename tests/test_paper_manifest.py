@@ -1157,6 +1157,44 @@ def test_validate_paper_manifest_allows_unimplemented_future_benchmark_boundary(
     assert report.ok is True
 
 
+def test_validate_paper_manifest_reports_background_only_status_without_missing_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Domain evolution inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Background only.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_background_only_missing_boundary" in codes
+
+
+def test_validate_paper_manifest_allows_background_only_status_with_missing_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Domain evolution inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Background only; no domain-evolution benchmark.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_reports_limited_status_without_missing_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

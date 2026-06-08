@@ -5112,3 +5112,37 @@ Primary evidence:
     analysis fields, and README/ROADMAP wording that keeps human-like
     oversight and healthy-evolution claims as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add SIA harness-plus-weight self-improvement source boundary.
+  - Spec evidence: arXiv `2605.27276`, `SIA: Self Improving AI with Harness
+    & Weight Updates`, was submitted May 26, 2026. Its abstract says two
+    separate self-improvement lines currently either let a meta-agent rewrite
+    the harness or scaffold of a task-specific agent while holding model
+    weights fixed, or use test-time training to update model weights while
+    holding the harness fixed. SIA unifies those levers through a
+    Feedback-Agent that updates both the harness and the weights of a
+    task-specific agent, evaluating Chinese legal charge classification,
+    low-level GPU kernel optimization, and single-cell RNA denoising. The
+    reported gains are 56.6% on LawBench, a 91.9% runtime reduction on GPU
+    kernels, and 502% denoising improvement over the initial baseline.
+  - Current evidence: LibreEvolve can mutate bounded candidate workspaces,
+    record prompt/evaluator/failure artifacts, and export clipped
+    ThetaEvolve-style GRPO training examples, but it has no SIA source row,
+    no Feedback-Agent role that decides between harness and weight updates,
+    no editable task-agent scaffold separate from evolved candidate code, no
+    online RL/fine-tuning loop, no adapter or checkpoint lifecycle, no
+    trajectory-to-training-data promotion policy, no harness-only versus
+    harness-plus-weight ablation report, and no benchmark coverage for the
+    SIA legal, kernel, or denoising domains.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.27276`: arXiv id/version/date/PDF hash, authors, source
+    license, linked implementation URL/status, relation to AlphaEvolve and
+    LibreEvolve's fixed-backend evaluator loop, Meta-Agent/Target-Agent/
+    Feedback-Agent role schemas, editable harness component inventory,
+    harness patch provenance, model-weight update trigger records, training
+    data lineage, RL/fine-tuning configuration, adapter/checkpoint artifacts,
+    rollback/resume policy, reward/verifier sufficiency, harness-only and
+    weight-only ablation identities, LawBench/kernel/scRNA benchmark taxonomy,
+    compute and cost accounting, performance-delta records, and README/
+    ROADMAP wording that keeps harness-plus-weight self-improvement as
+    missing evidence until local implementation and reports exist.

@@ -4692,3 +4692,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     measurements, baseline identities, code/artifact availability if any,
     reproducibility status, and README/ROADMAP wording that treats ANCHOR as
     missing paper evidence rather than implemented LibreEvolve support.
+
+- [ ] Track SIA harness-plus-weight self-improvement paper evidence.
+  - Paper/source evidence: arXiv `2605.27276`, submitted May 26, 2026, is
+    titled `SIA: Self Improving AI with Harness & Weight Updates`. Its
+    abstract says AI improvement remains bottlenecked by humans who write,
+    tune, and correct both models and agent wrappers. It contrasts a
+    harness-update line, where a meta-agent rewrites tools, prompts, retry
+    logic, and search procedures while weights remain fixed, with a test-time
+    training line, where model weights are updated from task feedback while
+    the harness remains fixed. SIA proposes a Feedback-Agent loop that
+    updates both the harness and weights of a task-specific agent, evaluated
+    on Chinese legal charge classification, low-level GPU kernel
+    optimization, and single-cell RNA denoising. The abstract reports 56.6%
+    LawBench gain, 91.9% GPU-kernel runtime reduction, and 502% denoising
+    improvement over the initial baseline.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.27276`. Existing rows cover AlphaEvolve evaluator-backed
+    program search, ThetaEvolve-style clipped training-data export,
+    harnessed meta-editing, adaptive learning signals, and open-ended reward
+    gates, but not a unified loop where a Feedback-Agent chooses between
+    editable harness updates and actual model-weight updates, nor the
+    corresponding checkpoint, adapter, training-data, ablation, and benchmark
+    evidence.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.27276`: title/authors/arXiv version/date/PDF digest, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    training assumptions, Meta-Agent/Target-Agent/Feedback-Agent role schema,
+    editable-harness taxonomy, harness patch records, weight-update records,
+    training-data provenance, RL/fine-tuning configuration, adapter/
+    checkpoint artifacts, verifier/reward definitions, harness-only,
+    weight-only, and combined-loop ablation records, LawBench/kernel/scRNA
+    benchmark metadata, compute/cost accounting, performance-delta records,
+    code/artifact availability if any, reproducibility status, and README/
+    ROADMAP wording that treats SIA as missing paper evidence rather than
+    implemented LibreEvolve support.

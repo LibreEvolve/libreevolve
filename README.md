@@ -3134,6 +3134,13 @@ The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
 benchmark evidence.
+The paper-manifest validator checks source-row identity before trusting cached
+PDFs: arXiv source URLs must carry an arXiv id matching the manifest `id`, and
+local PDF filenames must begin with the manifest id before any `__` title
+suffix. Non-arXiv source rows use the same local filename source-prefix rule,
+so the UCB1 foundational slug cannot silently drift to a different file label.
+This proves base id/URL/file consistency; source-version and rights metadata
+remain separate evidence layers.
 AlphaEvolve source-PDF version evidence uses
 `libreevolve.alphaevolve_source_pdf_version.v1` in
 `libreevolve/problems/benchmarks/paper_source_versions.py`; the built-in record

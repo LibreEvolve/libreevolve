@@ -958,6 +958,12 @@ Implemented:
   the policy that paper-claim audits must identify the source version. The
   paper-manifest command validates the built-in record, but the download
   manifests still do not carry per-row version fields.
+- `libreevolve/tools/paper_manifest.py`: paper-cache row identity validation.
+  It rejects arXiv source URLs whose embedded id does not match the manifest
+  row id, rejects local PDF filenames whose source prefix does not match the
+  row id, and applies the filename-prefix rule to non-arXiv slug rows. This is
+  base source-identity validation, distinct from arXiv version pinning and
+  source-rights provenance.
 - `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
   Colab source-evidence contract. It validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

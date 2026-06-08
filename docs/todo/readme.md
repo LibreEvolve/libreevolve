@@ -1628,23 +1628,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     version-pinned claim links, update README wording so paper-cache integrity
     claims distinguish content hash validation from source-version pinning.
 
-- [ ] Keep README paper-cache wording scoped until manifest row identity is
-      validated.
+- [ ] Keep README paper-cache wording scoped until row identity is emitted in
+      claim artifacts.
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions. The
     row id, source URL, and local PDF filename need to describe the same paper
     before README treats the cache row as reliable source evidence.
-  - Current evidence: README can accurately say the paper-manifest validator
+  - Current evidence: README now states that the paper-manifest validator
     checks safe row ids, allowed HTTPS source URLs, safe local PDF paths,
     CSV/JSON agreement, duplicate file/hash rows, optional local PDF hashes,
-    and source-version TODOs. The validator does not yet parse arXiv ids from
-    source URLs, compare URL ids with manifest ids and local filename source
-    prefixes, or require explicit source-identity metadata for non-arXiv or
-    slug rows.
-  - Required result: after paper-manifest row-identity validation lands,
-    update README, ROADMAP, papers index, and code/paper TODOs together so
-    README distinguishes safe manifest fields from proven source identity and
-    separates base id/URL/file consistency from later source-version pinning.
+    arXiv URL id consistency, and local filename source-prefix consistency for
+    both arXiv and non-ArXiv slug rows. README still cannot point to emitted
+    claim artifacts that carry row-identity proof alongside table/figure/
+    appendix evidence.
+  - Required result: after row-identity evidence is emitted in paper claim
+    artifacts, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README distinguishes safe manifest fields, proven source
+    identity, and per-claim source linkage, while keeping base id/URL/file
+    consistency separate from later source-version pinning.
 
 - [ ] Keep README paper-cache wording scoped until source-PDF rights metadata
       is tracked.

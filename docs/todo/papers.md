@@ -3302,27 +3302,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     local header check status, and claim-audit links that identify the source
     version behind every AlphaEvolve table, figure, and appendix TODO.
 
-- [ ] Validate paper-manifest row identity before trusting cached PDFs.
+- [ ] Emit paper-manifest row identity evidence before claim artifacts.
   - Paper evidence: AlphaEvolve-alignment paper audits depend on the local
     paper cache preserving the correct source PDF for each paper-facing row.
     The row id, source URL, and local PDF label should agree on the source
     identity before later version, rights, citation, or claim-excerpt evidence
     is attached.
-  - Current gap: the committed manifests list `id`, `url`, and `file`, and
-    the validator checks safe row ids, allowed HTTPS hosts, safe PDF paths,
-    CSV/JSON synchronization, duplicate targets, hashes, and optional local
-    PDF integrity. It does not check that an arXiv URL's embedded paper id
-    matches the manifest id, that the local filename source prefix matches the
-    same id, or that non-arXiv/slug rows carry an explicit source-identity
-    mapping. A row could drift to a different allowed arXiv URL while retaining
-    a valid id and safe filename without the manifest-index gate flagging the
-    identity mismatch.
-  - Required result: add paper-index source-identity validation for manifest
-    rows: parse arXiv ids from source URLs, compare URL id with row id and
-    local file stem/source-id prefix, reject mismatches, and require declared
-    canonical source ids for non-arXiv or slug rows. Keep this separate from
-    arXiv version provenance, which pins a specific revision after the base
-    source identity is proven.
+  - Current gap: `libreevolve.tools.paper_manifest` now validates source-row
+    identity: arXiv source URL ids must match the manifest `id`, local PDF
+    stems must start with the manifest id before any `__` title suffix, and
+    non-arXiv slug rows use the same filename-prefix identity rule. Emitted
+    paper-facing claim artifacts still do not carry a source-identity field or
+    link that proves which validated row each table, figure, appendix claim, or
+    TODO entry used.
+  - Required result: emit paper-index source-identity evidence in claim
+    artifacts and paper ledgers: canonical source id, manifest row id, source
+    URL id where applicable, local file source prefix, validation status, and
+    links to arXiv version provenance. Keep this separate from arXiv version
+    provenance, which pins a specific revision after the base source identity
+    is proven.
 
 - [ ] Track AlphaEvolve source-PDF rights and license provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states

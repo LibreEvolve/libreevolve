@@ -2461,21 +2461,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     they are based on the v1 PDF, a later arXiv revision, or another pinned
     source artifact.
 
-- [ ] Keep paper-source roadmap wording scoped until manifest row identity is
-      validated.
+- [ ] Keep paper-source roadmap wording scoped until row identity is emitted in
+      claim artifacts.
   - Spec evidence: roadmap claims about paper-cache provenance rely on each
     manifest row's id, URL, and local PDF label describing the same source
     before source-version, rights, or claim evidence is attached.
-  - Current evidence: roadmap/README wording can cite safe paper-manifest ids,
-    allowed HTTPS source URLs, safe local PDF paths, local hash/readability
-    validation, and source-version TODOs. `libreevolve.tools.paper_manifest`
-    does not yet parse arXiv ids out of source URLs, compare them with row ids
-    and local filename source prefixes, or require explicit source-identity
-    mapping for non-arXiv or slug rows.
-  - Required result: once manifest row-identity validation lands, update
-    ROADMAP, README, papers index, and TODO cross-links so roadmap wording
-    distinguishes safe manifest fields from proven source identity, and
-    separates base id/URL/file consistency from later arXiv version pinning.
+  - Current evidence: roadmap/README wording now cites paper-manifest row-
+    identity validation: arXiv URL ids must match row ids, local PDF stems must
+    start with the row id before any `__` title suffix, and non-ArXiv slug rows
+    use the same filename-prefix identity rule. Runtime/report artifacts still
+    do not emit row-identity proof alongside table, figure, appendix, or TODO
+    claim evidence.
+  - Required result: once row-identity evidence is emitted in paper claim
+    artifacts, update ROADMAP, README, papers index, and TODO cross-links so
+    roadmap wording distinguishes safe manifest fields, proven source identity,
+    and per-claim source linkage, while separating base id/URL/file consistency
+    from later arXiv version pinning.
 
 - [ ] Keep paper-source roadmap wording scoped until source-PDF rights
       provenance is tracked.

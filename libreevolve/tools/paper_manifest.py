@@ -51,6 +51,7 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
+ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
 PAPER_FILE_NAME_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,159}\.pdf")
 README_BADGE_RE = re.compile(r"local%20paper%20cache-([A-Za-z0-9]+)(?=-|[?\"'>\s])")
 README_COUNT_RE = re.compile(
@@ -909,6 +910,12 @@ def _validate_row_schema(row: dict[str, Any], row_id: str) -> list[PaperManifest
         issues.extend(_validate_paper_title(row["title"], row_id))
     if isinstance(row.get("url"), str):
         issues.extend(_validate_paper_url(row["url"], row_id))
+    if (
+        isinstance(row.get("id"), str)
+        and isinstance(row.get("url"), str)
+        and isinstance(row.get("file"), str)
+    ):
+        issues.extend(_validate_paper_row_identity(row["id"], row["url"], row["file"], row_id))
     if isinstance(row.get("message"), str):
         issues.extend(_validate_download_message(row["message"], row_id))
     return issues
@@ -1951,6 +1958,70 @@ def _validate_paper_url(value: str, row_id: str) -> list[PaperManifestIssue]:
     ):
         return [PaperManifestIssue("invalid_url", "url must use an allowed HTTPS paper source host", row_id)]
     return []
+
+
+def _validate_paper_row_identity(
+    row_id_value: str,
+    url_value: str,
+    file_value: str,
+    row_id: str,
+) -> list[PaperManifestIssue]:
+    issues: list[PaperManifestIssue] = []
+    if _validate_paper_id(row_id_value, row_id) or not _is_safe_paper_path(file_value):
+        return issues
+    parsed = urlparse(url_value)
+    host = parsed.hostname.casefold() if parsed.hostname else ""
+    file_stem = PurePosixPath(file_value).stem
+    file_source_id = file_stem.split("__", 1)[0]
+    if file_source_id != row_id_value:
+        issues.append(
+            PaperManifestIssue(
+                "file_source_id_mismatch",
+                "local PDF filename stem must start with the manifest id before any __ title suffix",
+                row_id,
+            )
+        )
+    if host in {"arxiv.org", "www.arxiv.org"}:
+        arxiv_id = _arxiv_id_from_url_path(parsed.path)
+        if arxiv_id is None:
+            issues.append(
+                PaperManifestIssue(
+                    "missing_arxiv_url_id",
+                    "arXiv source URL path must include an arXiv id",
+                    row_id,
+                )
+            )
+            return issues
+        arxiv_base_id = arxiv_id.split("v", 1)[0]
+        if arxiv_base_id != row_id_value:
+            issues.append(
+                PaperManifestIssue(
+                    "arxiv_url_id_mismatch",
+                    "arXiv source URL id must match the manifest id",
+                    row_id,
+                )
+            )
+    elif file_source_id != row_id_value:
+        issues.append(
+            PaperManifestIssue(
+                "non_arxiv_source_identity_missing",
+                "non-arXiv source rows must use the manifest id as the local filename source prefix",
+                row_id,
+            )
+        )
+    return issues
+
+
+def _arxiv_id_from_url_path(path: str) -> str | None:
+    parts = [part for part in PurePosixPath(path).parts if part not in {"/", ""}]
+    if len(parts) < 2 or parts[0] not in {"abs", "pdf"}:
+        return None
+    candidate = parts[1]
+    if candidate.endswith(".pdf"):
+        candidate = candidate[:-4]
+    if ARXIV_ID_RE.fullmatch(candidate) is None:
+        return None
+    return candidate
 
 
 def _validate_download_message(value: str, row_id: str) -> list[PaperManifestIssue]:

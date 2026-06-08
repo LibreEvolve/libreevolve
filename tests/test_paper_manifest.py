@@ -467,9 +467,86 @@ def test_validate_paper_manifest_reports_duplicate_file_targets(tmp_path):
     assert report.local_unique_file_count == 1
 
 
+def test_validate_paper_manifest_rejects_arxiv_url_id_mismatch(tmp_path):
+    row = _row(
+        tmp_path,
+        row_id="2506.00001",
+        file="papers/2506.00001__Mismatch.pdf",
+        url="https://arxiv.org/pdf/2506.99999.pdf",
+    )
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "arxiv_url_id_mismatch" in codes
+
+
+def test_validate_paper_manifest_accepts_versioned_arxiv_url_identity(tmp_path):
+    row = _row(
+        tmp_path,
+        row_id="2506.00001",
+        file="papers/2506.00001__Versioned.pdf",
+        url="https://arxiv.org/pdf/2506.00001v2",
+    )
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_rejects_file_source_id_mismatch(tmp_path):
+    row = _row(
+        tmp_path,
+        row_id="2506.00001",
+        file="papers/2506.99999__Wrong.pdf",
+        url="https://arxiv.org/pdf/2506.00001.pdf",
+    )
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "file_source_id_mismatch" in codes
+
+
+def test_validate_paper_manifest_rejects_non_arxiv_file_source_id_mismatch(tmp_path):
+    row = _row(
+        tmp_path,
+        row_id="auer-cesa-bianchi-fischer-2002",
+        file="papers/ucb1.pdf",
+        url="https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+    )
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "file_source_id_mismatch" in codes
+    assert "non_arxiv_source_identity_missing" in codes
+
+
+def test_validate_paper_manifest_accepts_non_arxiv_slug_file_source_id(tmp_path):
+    row = _row(
+        tmp_path,
+        row_id="auer-cesa-bianchi-fischer-2002",
+        file="papers/auer-cesa-bianchi-fischer-2002__UCB1.pdf",
+        url="https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+    )
+    _write_manifest(tmp_path, [row])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_reports_duplicate_csv_ids_before_comparison(tmp_path):
-    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
-    row_b = _row(tmp_path, row_id="2506.00002", file="papers/b.pdf", url="https://arxiv.org/pdf/2506.00002.pdf")
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/2506.00001__A.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_b = _row(tmp_path, row_id="2506.00002", file="papers/2506.00002__B.pdf", url="https://arxiv.org/pdf/2506.00002.pdf")
     _write_manifest(tmp_path, [row_a, row_b])
     csv_path = tmp_path / "papers" / "download_manifest.csv"
     lines = csv_path.read_text(encoding="utf-8").splitlines()
@@ -985,11 +1062,11 @@ def test_validate_paper_manifest_accepts_matching_status_table(tmp_path):
 
 
 def test_validate_paper_manifest_accepts_curated_root_readme_paper_summary(tmp_path):
-    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/2506.00001__A.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
     row_b = _row(
         tmp_path,
         row_id="2506.00002",
-        file="papers/b.pdf",
+        file="papers/2506.00002__B.pdf",
         url="https://arxiv.org/pdf/2506.00002.pdf",
         content=_valid_pdf_bytes(b"\nsecond"),
     )
@@ -1012,11 +1089,11 @@ def test_validate_paper_manifest_accepts_curated_root_readme_paper_summary(tmp_p
 
 
 def test_validate_paper_manifest_flags_unlabeled_incomplete_root_readme_paper_summary(tmp_path):
-    row_a = _row(tmp_path, row_id="2506.00001", file="papers/a.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
+    row_a = _row(tmp_path, row_id="2506.00001", file="papers/2506.00001__A.pdf", url="https://arxiv.org/pdf/2506.00001.pdf")
     row_b = _row(
         tmp_path,
         row_id="2506.00002",
-        file="papers/b.pdf",
+        file="papers/2506.00002__B.pdf",
         url="https://arxiv.org/pdf/2506.00002.pdf",
         content=_valid_pdf_bytes(b"\nsecond"),
     )

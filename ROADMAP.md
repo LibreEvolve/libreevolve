@@ -383,6 +383,13 @@ is not yet an AlphaEvolve reproduction.
   the source version. The paper-manifest gate validates this built-in record,
   but CSV/JSON row schema fields and per-claim source-version propagation
   remain open.
+- Keep paper-cache row identity proven before version/rights evidence:
+  `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
+  contain a source id matching the manifest `id`, and that every local PDF
+  filename begins with the manifest id before any `__` title suffix. Non-arXiv
+  slug rows use the same filename source-prefix rule. This prevents base
+  id/URL/file drift while keeping arXiv source-version fields and source-rights
+  metadata as separate follow-on work.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

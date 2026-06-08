@@ -2451,26 +2451,26 @@ Primary evidence:
     links into paper-claim artifacts and TODO evidence so every AlphaEvolve
     audit row names the source version it used.
 
-- [ ] Validate paper-manifest row identity across id, URL, and local file.
+- [ ] Emit paper-manifest row identity evidence into paper artifacts.
   - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
     audit evidence. A row should not only have a safe id, URL, and filename;
     those fields must describe the same paper source before claim audits rely
     on the cached PDF.
-  - Current evidence: `libreevolve.tools.paper_manifest` validates row id
+  - Current evidence: `libreevolve.tools.paper_manifest` now validates row id
     grammar, allowed HTTPS source hosts, safe `papers/<name>.pdf` paths,
-    CSV/JSON agreement, duplicate ids/files/hashes, and optional local
-    PDF byte/hash/readability. `_validate_paper_url()` currently checks host
-    safety but does not extract an arXiv id from `/pdf/<id>.pdf` or `/abs/<id>`
-    paths, compare it with the manifest `id`, or require the local filename
-    stem to carry the same source id. For non-arXiv allowed hosts or
-    foundational slug ids, there is no explicit source-identity mapping that
-    proves the URL, row id, and file label belong together.
-  - Required result: add row-identity validation that parses arXiv ids from
-    source URLs, compares URL id, manifest id, and local file stem/source-id
-    prefix, rejects mismatches, and requires explicit source-id metadata for
-    non-arXiv or slug rows. Keep this distinct from source-version metadata:
-    version pinning identifies which revision was audited, while row-identity
-    validation prevents cross-paper URL/file/id drift before version checks.
+    CSV/JSON agreement, duplicate ids/files/hashes, optional local
+    PDF byte/hash/readability, and source-row identity. For arXiv URLs it
+    parses `/pdf/<id>`, `/pdf/<id>.pdf`, `/pdf/<id>vN`, and `/abs/<id>` style
+    paths and rejects URL ids that do not match the manifest `id`. It also
+    rejects local PDF filenames whose stem does not start with the manifest id
+    before any `__` title suffix, and applies that filename-prefix identity
+    rule to non-arXiv slug rows.
+  - Required result: propagate validated row-identity evidence into emitted
+    paper-artifact manifests or claim ledgers, with explicit source-id fields
+    and links to version/rights evidence. Keep this distinct from source-
+    version metadata: version pinning identifies which revision was audited,
+    while row-identity validation prevents cross-paper URL/file/id drift before
+    version checks.
 
 - [ ] Add AlphaEvolve source-PDF license/copyright provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states

@@ -2128,6 +2128,28 @@ Primary evidence:
     license from third-party paper-source rights before paper-derived artifacts
     are treated as publication-ready evidence.
 
+- [ ] Add AlphaEvolve References-section bibliography provenance.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
+    References section beginning after Author information and running through
+    entry `[120]`, with citations used across the abstract, method, results,
+    related work, and Appendix B.
+  - Current evidence: `papers/README.md` warns that manifest `title` values are
+    inventory/display slugs, not authoritative bibliographic titles. Active
+    TODOs capture targeted citation gaps such as matrix baseline reference ids,
+    Appendix B prior-source provenance, related-work implementation status, and
+    source-PDF version/rights metadata. They do not require a complete
+    AlphaEvolve bibliography map with reference number, title, authors, venue,
+    year, DOI/URL/arXiv id, source page/span, and claim links. As a result,
+    docs can cite selected references without proving that every paper citation
+    used by the AlphaEvolve audit is normalized and traceable.
+  - Required result: extend paper-source manifests or companion registries with
+    a full AlphaEvolve reference table: stable reference id, bibliographic
+    fields, DOI/URL/arXiv metadata, source page/span, citation-use categories,
+    local-cache linkage where present, missing-cache status where absent, and
+    validation that README/ROADMAP/papers wording distinguishes authoritative
+    bibliography metadata from manifest display slugs and targeted per-claim
+    citation TODOs.
+
 - [ ] Add companion Colab/source-artifact tracking for AlphaEvolve results.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying

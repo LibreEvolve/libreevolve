@@ -1323,6 +1323,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source page/header location, allowed excerpt/reproduction policy, and a
     clear separation from LibreEvolve's own MIT license.
 
+- [ ] Keep README bibliography wording scoped until AlphaEvolve References
+      metadata is tracked.
+  - Spec evidence: the AlphaEvolve PDF has a numbered References section after
+    Author information, with entries through `[120]`.
+  - Current evidence: README and `papers/README.md` say the paper manifest
+    tracks local PDF cache rows and that manifest `title` fields are display
+    slugs, not authoritative bibliographic titles. README can cite selected
+    source papers and related-work rows, while active TODOs cover targeted
+    reference ids for matrix baselines and Appendix B prior sources. It does
+    not document a complete AlphaEvolve bibliography/reference table or explain
+    which cited works are locally cached, externally referenced only, or tied
+    to specific paper claims.
+  - Required result: when full References-section metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs so README distinguishes
+    manifest display slugs, authoritative bibliography fields, local-cache
+    linkage, absent-cache status, and targeted claim-level citation provenance.
+
 - [ ] Keep README follow-on AlphaEvolve math-source wording scoped until the
       expanded paper/repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

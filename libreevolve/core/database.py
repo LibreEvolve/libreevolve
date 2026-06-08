@@ -5397,6 +5397,9 @@ def _startup_manifest_payload(
             "parent_selection_strategy": config.parent_selection_strategy,
             "inspiration_strategy": config.inspiration_strategy,
             "mutation_mode": config.mutation_mode,
+            "initial_program_validity_policy": (
+                config.initial_program_validity_policy
+            ),
             "max_candidate_workspace_files": config.max_candidate_workspace_files,
             "max_candidate_file_chars": config.max_candidate_file_chars,
             "max_candidate_total_chars": config.max_candidate_total_chars,
@@ -5527,6 +5530,17 @@ def _startup_manifest_payload(
                     "Initial seeds are evaluated before mutation LLMs, "
                     "feedback graders, and plugin score-composition hooks."
                 ),
+            },
+            "initial_program_validity": {
+                "policy": config.initial_program_validity_policy,
+                "permissive_baseline_behavior": (
+                    "evaluate_and_log_invalid_generation_zero_seeds"
+                ),
+                "strict_behavior": (
+                    "stop_after_seed_evaluation_when_any_seed_lacks_evaluator_"
+                    "validity_or_declared_metrics"
+                ),
+                "strict_stop_reason": "invalid_initial_programs",
             },
             "candidate_workspace_size": {
                 "policy": "reject_oversized_text_and_static_workspace",

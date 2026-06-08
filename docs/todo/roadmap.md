@@ -377,8 +377,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so roadmap text distinguishes metadata/reporting
     from AlphaEvolve-style human-seeded experiment result provenance.
 
-- [ ] Keep roadmap seed-validity wording scoped to permissive baselines versus
-      AlphaEvolve-strict complete initial programs.
+- [ ] Keep roadmap seed-validity wording scoped after strict policy/reporting.
   - Spec evidence: AlphaEvolve Section 2.1 expects the initial implementation
     inside evolvable blocks to be complete, although possibly rudimentary, and
     runnable through the supplied task skeleton/evaluator. Local PDF page 5
@@ -391,12 +390,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     seeds, logs invalid seed failures, and can complete a seed-only run with
     all seeds invalid using `stop_reason=no_valid_programs`. Current permissive
     optimization-pressure seeds are therefore not equivalent to an
-    AlphaEvolve-strict complete initial-program precondition.
-  - Required result: when a strict initial-program validity policy, benchmark
-    seed-validity report fields, and README/paper-index wording land, update
-    roadmap text so it neither rejects the current permissive examples nor
-    overclaims that invalid generation-0 baselines satisfy AlphaEvolve's
-    complete initial-implementation requirement.
+    AlphaEvolve-strict complete initial-program precondition. ROADMAP and
+    README now also document `initial_program_validity_policy:
+    alphaevolve_strict`, strict stop reason `invalid_initial_programs`, and
+    `runtime.history.initial_program_validity_report`.
+  - Required result: when strict mode is applied to benchmark fixtures and
+    complete-start evidence is published for matrix/constructive-math
+    benchmarks, update roadmap text so it neither rejects the current
+    permissive examples nor overclaims that invalid generation-0 baselines
+    satisfy AlphaEvolve's complete initial-implementation requirement.
 
 - [ ] Keep roadmap problem-formulation wording scoped to context artifacts
       until expert provenance exists.

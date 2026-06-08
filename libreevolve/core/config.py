@@ -83,6 +83,7 @@ class Config:
     parent_selection_strategy: str = "mixed"
     inspiration_strategy:   str = "mixed"
     mutation_mode:          str   = "diff"
+    initial_program_validity_policy: str = "permissive_baseline"
     max_candidate_workspace_files: int = DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES
     max_candidate_file_chars: int = DEFAULT_MAX_CANDIDATE_FILE_CHARS
     max_candidate_total_chars: int = DEFAULT_MAX_CANDIDATE_TOTAL_CHARS
@@ -255,6 +256,11 @@ class Config:
             },
         )
         _require_enum("mutation_mode", self.mutation_mode, MUTATION_MODES)
+        _require_enum(
+            "initial_program_validity_policy",
+            self.initial_program_validity_policy,
+            {"permissive_baseline", "alphaevolve_strict"},
+        )
         _require_int(
             "max_candidate_workspace_files",
             self.max_candidate_workspace_files,

@@ -1998,6 +1998,17 @@ metadata when present, reports seed variant ids, contribution roles, prior
 technique/background references, evaluator metric linkage, and keeps
 AlphaEvolve-style human-seeded benchmark parity false until equal-budget seed
 variant result tables exist.
+Seed evaluation defaults to `initial_program_validity_policy:
+permissive_baseline`, which evaluates and records invalid generation-0 seeds as
+optimization-pressure baselines. Set `initial_program_validity_policy:
+alphaevolve_strict` to require every selected seed to be evaluator-valid and
+to return all declared metrics before mutation; strict runs stop before
+mutation with `runtime.stop_reason: "invalid_initial_programs"` when any seed
+fails that complete-initial-program contract. Completed manifests include
+`runtime.history.initial_program_validity_report`, which records seed
+evaluator validity, declared metric presence, archive admission state, strict
+policy status, and whether the run is claim-ready for AlphaEvolve-style
+complete initial-program parity.
 Prompt context under `context/` follows the same problem-local boundary:
 symlinks and Windows junctions, including linked `context.yaml` manifests, are
 rejected instead of being read as context sources. Run manifests record both
@@ -3059,6 +3070,9 @@ smoke run. If every evaluated seed is invalid, the run manifest records
 `runtime.stop_reason: "no_valid_programs"`, the CLI exits with
 `Evolution produced no valid programs.`, and no `best.py` or
 `best_workspace/` export is written.
+Under `initial_program_validity_policy: alphaevolve_strict`, an invalid seed
+population stops earlier as `invalid_initial_programs` after seed diagnostics
+are written and before any mutation call is made.
 For runs where a mutation LLM can execute, configured backend clients are
 constructed before `--overwrite` cleans existing artifacts and before seed
 evaluation. The CLI also checks OpenAI and Anthropic credentials as non-blank

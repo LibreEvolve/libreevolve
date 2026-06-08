@@ -2902,13 +2902,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     `hello_world` as invalid greeting seeds used for seed-to-best optimization
     pressure. Current seed provenance and evaluator-contract records prove
     where a seed came from and how it evaluated; the runtime can also log an
-    all-invalid seed-only run as completed with `no_valid_programs`. Those
-    records do not prove that every initial implementation is a complete
-    runnable AlphaEvolve-style starting point.
-  - Required result: add paper-facing evidence and configuration/report fields
-    that distinguish strict complete/runnable initial programs from permissive
-    invalid or deliberately failing optimization-pressure seeds, require
-    strict-seed validity for AlphaEvolve-parity benchmarks, and keep seed
+    all-invalid seed-only run as completed with `no_valid_programs`. Code now
+    provides `initial_program_validity_policy: alphaevolve_strict` and
+    `runtime.history.initial_program_validity_report`, which distinguishes
+    permissive baseline runs from strict runs where all selected seeds must be
+    evaluator-valid and metric-complete before mutation.
+  - Required result: require strict-seed validity for AlphaEvolve-parity
+    benchmark fixtures, add paper-facing fixture evidence for complete/runnable
+    starts across matrix and constructive-math benchmarks, and keep seed
     failure logs from being treated as paper-ready initial-solution evidence.
 
 - [ ] Track expert problem-formulation provenance for mathematical benchmarks.

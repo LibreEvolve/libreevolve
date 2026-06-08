@@ -55,6 +55,16 @@ contribution roles, prior-technique and background-reference labels, declared
 metric linkage, and explicit `claim_ready: false` gaps for equal-budget seed
 variant result tables and human contribution review/signoff.
 Completed manifests also include
+`runtime.history.initial_program_validity_report` with schema
+`libreevolve.initial_program_validity_report.v1`. This report records the
+configured `config.initial_program_validity_policy`, generation-0 seed
+evaluator validity, declared metric presence, archive-admission state, strict
+valid/invalid counts, and whether strict AlphaEvolve-style complete initial
+program parity is claim-ready. The default `permissive_baseline` policy keeps
+invalid seeds as diagnostic baselines; `alphaevolve_strict` stops before
+mutation with `invalid_initial_programs` when any seed lacks evaluator validity
+or declared metrics.
+Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the
 selected abstraction from `policies.candidate_language`, records the current

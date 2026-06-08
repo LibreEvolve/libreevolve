@@ -50,6 +50,16 @@ def test_default_max_generations():
 def test_default_n_islands():
     assert Config().n_islands == 5
 
+def test_initial_program_validity_policy_validation():
+    assert Config().initial_program_validity_policy == "permissive_baseline"
+    assert (
+        Config(initial_program_validity_policy="alphaevolve_strict")
+        .initial_program_validity_policy
+        == "alphaevolve_strict"
+    )
+    with pytest.raises(ConfigError, match="initial_program_validity_policy"):
+        Config(initial_program_validity_policy="strict")
+
 def test_override_fields():
     c = Config(
         max_generations=50,

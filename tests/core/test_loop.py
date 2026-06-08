@@ -47,6 +47,7 @@ from libreevolve.core.loop import (
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
     validate_initial_program_idea_provenance_report,
+    validate_initial_program_validity_report,
     validate_existing_codebase_integration_report,
     validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
@@ -5007,6 +5008,115 @@ def test_zero_generation_all_invalid_seeds_report_no_valid_programs():
     ]
     assert failures[0]["record_type"] == "seed"
     assert failures[0]["admission_reason"] == "invalid_evaluation"
+
+
+def test_initial_program_validity_report_marks_permissive_invalid_seed_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        _problem("def evaluate(c): return {'score': -1.0, 'is_valid': False}"),
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["initial_program_validity_report"]
+
+    assert report["schema"] == "libreevolve.initial_program_validity_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_initial_program_validity_report(report)["ok"] is True
+    assert report["policy"]["value"] == "permissive_baseline"
+    assert report["strict_policy_enabled"] is False
+    assert report["seed_program_count"] == 1
+    assert report["evaluator_valid_seed_count"] == 0
+    assert report["declared_metric_complete_seed_count"] == 1
+    assert report["strict_valid_seed_count"] == 0
+    assert report["strict_invalid_seed_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["alphaevolve_complete_initial_program_parity"] is False
+    assert "enable_alphaevolve_strict_initial_program_policy" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    record = report["records"][0]
+    assert record["evaluator_is_valid"] is False
+    assert record["missing_declared_metrics"] == []
+    assert record["strict_initial_program_valid"] is False
+    assert record["archive_admission_reason"] == "invalid_evaluation"
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_complete_initial_program_parity"] = True
+    validation = validate_initial_program_validity_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "initial_program_parity_overclaim",
+    }
+
+
+def test_alphaevolve_strict_initial_program_policy_stops_before_mutation():
+    tmpdir = tempfile.mkdtemp()
+    llm = _llm()
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm) as build:
+        best = evolve(
+            _problem("def evaluate(c): return {'score': -1.0, 'is_valid': False}"),
+            Config(
+                max_generations=3,
+                log_dir=tmpdir,
+                problem_name="t",
+                initial_program_validity_policy="alphaevolve_strict",
+            ),
+        )
+
+    assert best is None
+    build.assert_called_once()
+    llm.generate.assert_not_called()
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    runtime = manifest["runtime"]
+    assert runtime["stop_reason"] == "invalid_initial_programs"
+    assert runtime["consumed"]["seed_evaluations"] == 1
+    assert runtime["consumed"]["candidate_evaluations"] == 0
+    assert runtime["consumed"]["generations_started"] == 0
+    assert manifest["config"]["initial_program_validity_policy"] == (
+        "alphaevolve_strict"
+    )
+    assert manifest["policies"]["initial_program_validity"]["policy"] == (
+        "alphaevolve_strict"
+    )
+    report = runtime["history"]["initial_program_validity_report"]
+    assert report["strict_policy_enabled"] is True
+    assert report["strict_invalid_seed_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["strict_stop_on_invalid_seed"] is True
+    assert validate_initial_program_validity_report(report)["ok"] is True
+
+
+def test_alphaevolve_strict_initial_program_validity_report_claim_ready():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        _problem("def evaluate(c): return {'score': 1.0, 'is_valid': True}"),
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            initial_program_validity_policy="alphaevolve_strict",
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["initial_program_validity_report"]
+
+    assert report["strict_policy_enabled"] is True
+    assert report["evaluator_valid_seed_count"] == 1
+    assert report["declared_metric_complete_seed_count"] == 1
+    assert report["strict_valid_seed_count"] == 1
+    assert report["strict_invalid_seed_count"] == 0
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"]["alphaevolve_complete_initial_program_parity"] is True
+    assert report["claim_readiness"]["remaining_gap"] == []
+    assert validate_initial_program_validity_report(report)["ok"] is True
 
 
 def test_zero_generation_mixed_seeds_keep_best_and_generation_limit_reason():

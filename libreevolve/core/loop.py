@@ -853,6 +853,7 @@ def evolve(
 
         recent_failures: list[dict] = []
         _MAX_FAILURES = 5
+        strict_seed_invalid_count = 0
 
         # Seed population (diff_error=None bypasses Tier 0)
         seed_entries = _seed_workspace_entries(problem)
@@ -894,6 +895,8 @@ def evolve(
             )
             _annotate_metric_policy(program, problem)
             admission = db.admit(program, threshold=VALID_THRESHOLD)
+            if not _seed_meets_strict_initial_program_contract(program, problem):
+                strict_seed_invalid_count += 1
             if not admission.get("admitted"):
                 failure = db.log_seed_failure(program, admission)
                 recent_failures.append(failure)
@@ -901,7 +904,14 @@ def evolve(
             db.log(program)
 
         proposal_count = config.proposals_per_generation
+        if (
+            config.initial_program_validity_policy == "alphaevolve_strict"
+            and strict_seed_invalid_count > 0
+        ):
+            budget.stop_reason = "invalid_initial_programs"
         for proposal_loop_index in range(config.max_generations * proposal_count):
+            if budget.stop_reason is not None:
+                break
             gen = proposal_loop_index // proposal_count
             proposal_index = proposal_loop_index % proposal_count
             candidate_generation = gen + 1
@@ -5132,6 +5142,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "initial_program_validity_report": (
+            _initial_program_validity_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -5296,6 +5312,361 @@ def _marker_source_artifact_placeholder() -> dict:
         "artifact_path": None,
         "sha256": None,
         "reason": "paper source screenshot_or_exact_excerpt_not_generated_in_this_report",
+    }
+
+
+def _initial_program_validity_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    objective_schema = (
+        problem.get("objective_schema")
+        if isinstance(problem.get("objective_schema"), Mapping)
+        else {}
+    )
+    declared_metrics = _declared_metric_names_from_objective_schema(objective_schema)
+    seed_programs = [
+        program
+        for program in programs
+        if isinstance(program.metadata, Mapping)
+        and program.metadata.get("candidate_type") == "seed"
+    ]
+    records = [
+        _initial_program_validity_record(program, declared_metrics)
+        for program in seed_programs
+    ]
+    retained_records = records[:50]
+    evaluator_valid_count = sum(
+        1 for record in retained_records if record["evaluator_is_valid"] is True
+    )
+    declared_metric_complete_count = sum(
+        1 for record in retained_records if not record["missing_declared_metrics"]
+    )
+    strict_valid_count = sum(
+        1 for record in retained_records if record["strict_initial_program_valid"] is True
+    )
+    invalid_count = len(retained_records) - strict_valid_count
+    policy = config.get("initial_program_validity_policy")
+    if not isinstance(policy, str):
+        policy = "permissive_baseline"
+    strict_policy_enabled = policy == "alphaevolve_strict"
+    report = {
+        "schema": "libreevolve.initial_program_validity_report.v1",
+        "source": "generation_zero_seed_evaluations",
+        "policy": {
+            "manifest_path": "config.initial_program_validity_policy",
+            "value": policy,
+            "permissive_behavior": "invalid_seeds_logged_as_generation_zero_baselines",
+            "strict_behavior": (
+                "stop_before_mutation_if_any_seed_lacks_evaluator_validity_or_"
+                "declared_metrics"
+            ),
+            "strict_stop_reason": "invalid_initial_programs",
+        },
+        "seed_program_count": len(seed_programs),
+        "record_count": len(retained_records),
+        "records": retained_records,
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "declared_metric_names": declared_metrics,
+        "evaluator_valid_seed_count": evaluator_valid_count,
+        "declared_metric_complete_seed_count": declared_metric_complete_count,
+        "strict_valid_seed_count": strict_valid_count,
+        "strict_invalid_seed_count": invalid_count,
+        "strict_policy_enabled": strict_policy_enabled,
+        "claim_ready": strict_policy_enabled and len(retained_records) > 0 and invalid_count == 0,
+        "claim_readiness": {
+            "seed_evaluation_before_mutation": True,
+            "all_seed_history_rows_present": len(seed_programs) == len(records),
+            "all_selected_seeds_evaluator_valid": (
+                len(retained_records) > 0 and evaluator_valid_count == len(retained_records)
+            ),
+            "all_selected_seeds_have_declared_metrics": (
+                len(retained_records) > 0
+                and declared_metric_complete_count == len(retained_records)
+            ),
+            "strict_policy_enabled": strict_policy_enabled,
+            "strict_stop_on_invalid_seed": strict_policy_enabled,
+            "alphaevolve_complete_initial_program_parity": (
+                strict_policy_enabled and len(retained_records) > 0 and invalid_count == 0
+            ),
+            "remaining_gap": (
+                []
+                if strict_policy_enabled and len(retained_records) > 0 and invalid_count == 0
+                else [
+                    "enable_alphaevolve_strict_initial_program_policy",
+                    "all_selected_seeds_evaluator_valid",
+                    "all_selected_seeds_have_declared_metrics",
+                    "strict_mode_stop_evidence_for_invalid_seed_fixtures",
+                ]
+            ),
+        },
+    }
+    report["validation"] = validate_initial_program_validity_report(report)
+    return report
+
+
+def _declared_metric_names_from_objective_schema(schema: Mapping[str, object]) -> list[str]:
+    metrics = schema.get("metrics")
+    if not isinstance(metrics, list):
+        return []
+    names = []
+    for metric in metrics:
+        if isinstance(metric, Mapping) and isinstance(metric.get("name"), str):
+            names.append(metric["name"])
+    return names
+
+
+def _seed_meets_strict_initial_program_contract(
+    program: Program,
+    problem: Problem,
+) -> bool:
+    metric_names = [
+        metric.get("name")
+        for metric in problem.metrics
+        if isinstance(metric, Mapping) and isinstance(metric.get("name"), str)
+    ]
+    return (
+        isinstance(program.evaluation, Mapping)
+        and program.evaluation.get("is_valid") is True
+        and all(name in program.metrics for name in metric_names)
+    )
+
+
+def _initial_program_validity_record(
+    program: Program,
+    declared_metrics: list[str],
+) -> dict:
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    admission = (
+        program.metadata.get("archive_admission")
+        if isinstance(program.metadata, Mapping)
+        and isinstance(program.metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    missing_metrics = [
+        name for name in declared_metrics if name not in program.metrics
+    ]
+    evaluator_is_valid = evaluation.get("is_valid") is True
+    strict_valid = evaluator_is_valid and not missing_metrics
+    return {
+        "program_id": program.id,
+        "seed_index": program.metadata.get("seed_index")
+        if isinstance(program.metadata, Mapping)
+        else None,
+        "seed_source_kind": program.metadata.get("seed_source_kind")
+        if isinstance(program.metadata, Mapping)
+        else None,
+        "seed_source_path": program.metadata.get("seed_source_path")
+        if isinstance(program.metadata, Mapping)
+        else None,
+        "workspace_sha256": _workspace_sha256(program.workspace()),
+        "evaluator_is_valid": evaluator_is_valid,
+        "declared_metric_names": declared_metrics,
+        "observed_metric_names": sorted(
+            name for name in program.metrics if name != "is_valid"
+        ),
+        "missing_declared_metrics": missing_metrics,
+        "strict_initial_program_valid": strict_valid,
+        "archive_admitted": admission.get("admitted"),
+        "archive_admission_reason": admission.get("reason"),
+        "sampling_eligible": admission.get("sampling_eligible"),
+    }
+
+
+def validate_initial_program_validity_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.initial_program_validity_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "initial-program validity report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "policy",
+        "seed_program_count",
+        "record_count",
+        "records",
+        "declared_metric_names",
+        "evaluator_valid_seed_count",
+        "declared_metric_complete_seed_count",
+        "strict_valid_seed_count",
+        "strict_invalid_seed_count",
+        "strict_policy_enabled",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"initial-program validity report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.initial_program_validity_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported initial-program validity report schema",
+            }
+        )
+    if report.get("source") != "generation_zero_seed_evaluations":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported initial-program validity report source",
+            }
+        )
+    policy = report.get("policy")
+    if not isinstance(policy, Mapping):
+        issues.append({"code": "invalid_policy", "message": "policy must be an object"})
+        policy_value = None
+    else:
+        policy_value = policy.get("value")
+        if policy.get("manifest_path") != "config.initial_program_validity_policy":
+            issues.append(
+                {
+                    "code": "invalid_policy_manifest_path",
+                    "message": "policy manifest path is unsupported",
+                }
+            )
+        if policy_value not in {"permissive_baseline", "alphaevolve_strict"}:
+            issues.append(
+                {
+                    "code": "invalid_policy_value",
+                    "message": "initial-program validity policy is unsupported",
+                }
+            )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "record_count", len(records), issues)
+    declared_metric_names = report.get("declared_metric_names")
+    if not isinstance(declared_metric_names, list) or not all(
+        isinstance(name, str) for name in declared_metric_names
+    ):
+        issues.append(
+            {
+                "code": "invalid_declared_metric_names",
+                "message": "declared_metric_names must be strings",
+            }
+        )
+        declared_metric_names = []
+    evaluator_valid_count = 0
+    metric_complete_count = 0
+    strict_valid_count = 0
+    for record in records:
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_record", "message": "records must be objects"})
+            continue
+        if not _is_sha256_hex(record.get("workspace_sha256")):
+            issues.append(
+                {
+                    "code": "invalid_workspace_hash",
+                    "message": "workspace_sha256 must be sha256 hex",
+                }
+            )
+        missing_metrics = record.get("missing_declared_metrics")
+        if not isinstance(missing_metrics, list) or not all(
+            isinstance(name, str) for name in missing_metrics
+        ):
+            issues.append(
+                {
+                    "code": "invalid_missing_declared_metrics",
+                    "message": "missing_declared_metrics must be strings",
+                }
+            )
+            missing_metrics = []
+        if record.get("evaluator_is_valid") is True:
+            evaluator_valid_count += 1
+        if not missing_metrics:
+            metric_complete_count += 1
+        expected_strict = record.get("evaluator_is_valid") is True and not missing_metrics
+        if record.get("strict_initial_program_valid") != expected_strict:
+            issues.append(
+                {
+                    "code": "strict_validity_mismatch",
+                    "message": "strict validity must match evaluator validity and metric presence",
+                }
+            )
+        if expected_strict:
+            strict_valid_count += 1
+    _validate_report_count(report, "evaluator_valid_seed_count", evaluator_valid_count, issues)
+    _validate_report_count(
+        report,
+        "declared_metric_complete_seed_count",
+        metric_complete_count,
+        issues,
+    )
+    _validate_report_count(report, "strict_valid_seed_count", strict_valid_count, issues)
+    _validate_report_count(
+        report,
+        "strict_invalid_seed_count",
+        len(records) - strict_valid_count,
+        issues,
+    )
+    strict_policy_enabled = policy_value == "alphaevolve_strict"
+    if report.get("strict_policy_enabled") != strict_policy_enabled:
+        issues.append(
+            {
+                "code": "strict_policy_enabled_mismatch",
+                "message": "strict_policy_enabled must match policy value",
+            }
+        )
+    expected_claim_ready = strict_policy_enabled and len(records) > 0 and strict_valid_count == len(records)
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must require strict policy and all seeds valid",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_complete_initial_program_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "initial_program_parity_overclaim",
+                    "message": "complete initial-program parity must match strict claim readiness",
+                }
+            )
+        if readiness.get("strict_policy_enabled") != strict_policy_enabled:
+            issues.append(
+                {
+                    "code": "readiness_policy_mismatch",
+                    "message": "readiness strict_policy_enabled mismatch",
+                }
+            )
+    return {
+        "schema": "libreevolve.initial_program_validity_report.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

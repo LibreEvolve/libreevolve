@@ -302,14 +302,18 @@ operator families beyond those fixed local parser surfaces, so the
 AlphaEvolve Related Work distinction from handwritten mutation/crossover
 operator sets remains an open evidence gap.
 
-AlphaEvolve initial-program validity note: current seed handling can evaluate
-and record invalid generation-0 seeds as permissive optimization-pressure
-baselines, including examples such as `hello_world`. AlphaEvolve Section 2.1
-describes the initial implementation inside evolvable blocks as complete,
-though rudimentary, and runnable through the task skeleton/evaluator. LibreEvolve
-needs an explicit strict seed-validity policy and benchmark/report evidence
-before treating every initial seed baseline as paper-faithful AlphaEvolve
-initial-solution evidence.
+AlphaEvolve initial-program validity note: current seed handling can still
+evaluate and record invalid generation-0 seeds as permissive
+optimization-pressure baselines, including examples such as `hello_world`.
+AlphaEvolve Section 2.1 describes the initial implementation inside evolvable
+blocks as complete, though rudimentary, and runnable through the task
+skeleton/evaluator. LibreEvolve now has
+`initial_program_validity_policy: alphaevolve_strict` and
+`runtime.history.initial_program_validity_report` for runs that require every
+selected seed to be evaluator-valid and to return declared metrics before
+mutation. Benchmark fixtures still need to opt into strict mode and carry
+problem-specific validity evidence before every initial seed baseline can be
+treated as paper-faithful AlphaEvolve initial-solution evidence.
 
 AlphaEvolve expert-formulation note: local context-source and problem/source
 provenance records identify artifacts and rendered prompt context, but they do

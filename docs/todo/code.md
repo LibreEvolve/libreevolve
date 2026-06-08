@@ -288,14 +288,19 @@ Primary evidence:
     `tests/core/test_loop.py::test_zero_generation_all_invalid_seeds_report_no_valid_programs`
     proves a seed-only run with every seed invalid completes with
     `stop_reason=no_valid_programs` instead of failing task setup as an
-    AlphaEvolve-strict initial-program contract violation.
-  - Required result: add an explicit problem/run policy for strict
-    AlphaEvolve-style initial-program validation, including seed evaluation
-    before mutation, required validity/declared metric presence for every
-    selected seed, all-invalid-seed failure behavior under strict mode,
-    manifest/report evidence distinguishing permissive optimization-pressure
-    seeds from strict complete seeds, and docs that do not present invalid
-    generation-0 baselines as faithful AlphaEvolve initial implementations.
+    AlphaEvolve-strict initial-program contract violation. Code now also
+    supports `initial_program_validity_policy=alphaevolve_strict`, records
+    `policies.initial_program_validity`, emits
+    `runtime.history.initial_program_validity_report`, validates seed
+    evaluator-validity and declared-metric presence, and stops strict runs
+    before mutation with `runtime.stop_reason=invalid_initial_programs` when
+    any selected seed violates that contract.
+  - Required result: apply strict mode to benchmark fixtures that make
+    AlphaEvolve-parity claims, add fixture/report evidence for complete
+    runnable starts across matrix and constructive-math benchmarks, verify
+    strict mode against multi-seed loaded problem fixtures and provider/CLI
+    startup paths, and keep permissive optimization-pressure examples clearly
+    separated from strict complete initial implementations.
 
 - [ ] Add expert problem-formulation provenance for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,

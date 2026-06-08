@@ -121,6 +121,11 @@ LibreEvolve has:
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to
   generation-0 history rows while leaving equal-budget seed-variant result
   tables and human contribution signoff open
+- configurable initial-program validity policy with
+  `runtime.history.initial_program_validity_report`, preserving permissive
+  invalid generation-0 baselines by default while `alphaevolve_strict` stops
+  before mutation with `invalid_initial_programs` when any selected seed is not
+  evaluator-valid or lacks declared metrics
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

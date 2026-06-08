@@ -32,6 +32,7 @@ STOP_REASONS = {
     "llm_role_cost_microusd_limits",
     "llm_role_seconds_limits",
     "max_runtime_seconds",
+    "invalid_initial_programs",
     "no_parent",
     "no_valid_programs",
 }

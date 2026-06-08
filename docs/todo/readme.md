@@ -308,8 +308,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     TODO entries together so README does not imply metadata alone is
     sufficient for AlphaEvolve-style human-seeded collaboration claims.
 
-- [ ] Keep README seed-validity wording scoped to permissive examples versus
-      AlphaEvolve-strict complete starts.
+- [ ] Keep README seed-validity wording scoped after strict policy/reporting.
   - Spec evidence: AlphaEvolve Section 2.1 describes the initial implementation
     as complete but rudimentary, with the task skeleton and evaluator able to
     invoke it before evolution. Local PDF page 5 says user-provided code inside
@@ -319,13 +318,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     that runs can record invalid seed baselines. Code evidence shows the seed
     loop evaluates seeds, logs rejected seeds through `log_seed_failure()`, and
     can finish a seed-only run with all seeds invalid as `no_valid_programs`.
-    That is useful prototype behavior, but it is not the same as a strict
-    AlphaEvolve initial-program contract where every selected seed is complete,
-    runnable, and validator valid before mutation begins.
-  - Required result: when strict seed-validity policy/reporting lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes permissive invalid seed baselines from benchmark claims that
-    require complete AlphaEvolve-style initial implementations.
+    README now also documents `initial_program_validity_policy:
+    alphaevolve_strict`, `runtime.stop_reason: invalid_initial_programs`, and
+    `runtime.history.initial_program_validity_report` for runs that require
+    every selected seed to be evaluator-valid and metric-complete before
+    mutation.
+  - Required result: when benchmark fixtures opt into strict mode and publish
+    fixture-level complete-start evidence, update README, ROADMAP, papers
+    index, and code/paper TODOs together so README distinguishes the available
+    strict policy/report from benchmark claims that require complete
+    AlphaEvolve-style initial implementations.
 
 - [ ] Keep README problem-formulation wording scoped until expert provenance
       exists.

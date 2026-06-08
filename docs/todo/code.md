@@ -6044,3 +6044,26 @@ Primary evidence:
     prior/current comparison rows, independent checker outputs, and README/
     ROADMAP wording that keeps this further sums-and-differences improvement
     as missing evidence until local sequence artifacts and reports exist.
+
+- [ ] Add UCB1 finite-time bandit source boundary before scheduler claims
+      become regret claims.
+  - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
+    `Finite-time Analysis of the Multiarmed Bandit Problem`, defines UCB1 for
+    independent bandit arms with reward distributions supported in `[0, 1]`
+    and proves logarithmic finite-time regret bounds. It frames regret as the
+    expected loss from not always playing the best machine.
+  - Current evidence: `papers/README.md` marks the UCB1 row as a foundational
+    bandit-policy source, and LibreEvolve implements a heuristic UCB-style
+    backend router over archive-admitted valid fitness-improvement rewards
+    with call-id attribution. Existing roadmap/code caveats already say the
+    current scheduler is not canonical regret-analyzed UCB1, but there is no
+    source-specific code gate for the local UCB1 PDF id, bounded-support
+    assumptions, iid-arm assumptions, regret definition, reward normalization
+    policy, or proof/non-proof status in scheduler telemetry.
+  - Required result: add source-boundary metadata and scheduler validation for
+    `auer-cesa-bianchi-fischer-2002`: PDF hash/source status, paper-title and
+    theorem-scope fields, arm/reward-support assumptions, reward-normalization
+    evidence, iid/stationarity disclaimer, selected-arm/index telemetry,
+    regret-report fields when applicable, and docs checks that distinguish
+    heuristic UCB-style backend routing from canonical UCB1 finite-time regret
+    guarantees.

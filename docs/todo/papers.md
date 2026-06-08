@@ -5595,3 +5595,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     status, and README/ROADMAP wording that treats this further
     post-AlphaEvolve sums-and-differences improvement as missing paper
     evidence rather than implemented LibreEvolve support.
+
+- [ ] Track UCB1 finite-time bandit paper evidence before backend-routing
+      claims imply regret guarantees.
+  - Paper/source evidence: the local
+    `auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf`
+    is `Finite-time Analysis of the Multiarmed Bandit Problem`. The paper
+    presents UCB1 for `K` arms with unknown reward distributions supported in
+    `[0, 1]`, defines regret as expected loss from not always playing the best
+    arm, and proves logarithmic finite-time regret bounds.
+  - Current gap: `papers/README.md` lists `auer-cesa-bianchi-fischer-2002` as
+    the foundational bandit-policy source for LibreEvolve's heuristic
+    UCB-style backend router, and README/ROADMAP/code wording says the router
+    is heuristic. The paper TODOs do not yet preserve this UCB1 source row as
+    a paper-facing evidence boundary with the bounded-support, iid-arm,
+    regret-definition, reward-normalization, and proof-scope assumptions
+    needed to prevent backend-routing telemetry from being read as canonical
+    UCB1 finite-time analysis.
+  - Required result: add paper-manifest and paper-index coverage for
+    `auer-cesa-bianchi-fischer-2002`: source URL/cache/hash, title/authors/
+    venue/year, source-license or mirror status, UCB1 theorem-scope metadata,
+    reward-support and iid/stationarity assumptions, regret-definition fields,
+    scheduler-linkage records, and README/ROADMAP wording that treats
+    LibreEvolve's backend scheduler as heuristic unless those assumptions and
+    regret reports are explicitly validated.

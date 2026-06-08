@@ -4509,3 +4509,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     checker outputs, and a background-only or benchmark-fixture status rule
     so roadmap claims do not outpace local further post-AlphaEvolve
     sums-and-differences sequence support.
+
+- [ ] Add UCB1 finite-time bandit gates before roadmap scheduler promotion.
+  - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
+    `Finite-time Analysis of the Multiarmed Bandit Problem`, studies the
+    exploration/exploitation dilemma for multi-armed bandits, defines regret
+    as expected loss from not always playing the best arm, and proves UCB1
+    finite-time logarithmic regret for arbitrary reward distributions with
+    support in `[0, 1]`.
+  - Current evidence: ROADMAP can describe LibreEvolve's heuristic UCB-style
+    backend routing and already warns that canonical UCB1 assumptions,
+    calibrated reward scaling, and regret bounds are not proven. The roadmap
+    does not yet tie that scheduler caveat to the local UCB1 paper source id,
+    PDF/cache hash, bounded-support and iid-arm assumptions, reward
+    normalization, selected-arm/index telemetry, or proof-scope metadata.
+  - Required result: add roadmap gates for `auer-cesa-bianchi-fischer-2002`:
+    paper/source manifest entry, PDF/cache hash, source-license or mirror
+    status, UCB1 theorem-scope fields, reward-support normalization,
+    iid/stationarity disclaimers, selected-backend/index traces, regret report
+    fields when applicable, and README/papers/code wording that keeps current
+    backend scheduling heuristic until canonical UCB1 assumptions and
+    finite-time-regret evidence are validated.

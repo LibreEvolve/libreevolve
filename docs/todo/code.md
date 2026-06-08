@@ -6067,3 +6067,33 @@ Primary evidence:
     regret-report fields when applicable, and docs checks that distinguish
     heuristic UCB-style backend routing from canonical UCB1 finite-time regret
     guarantees.
+
+- [ ] Add GigaEvo framework source boundary before inspiration claims become
+      reproduction claims.
+  - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, presents
+    an open-source AlphaEvolve-inspired framework with Redis-backed program
+    storage, an `asyncio` DAG execution engine, MAP-Elites evolution,
+    LangGraph mutation operators, generated insights, bidirectional lineage
+    tracking, declarative configuration, and AlphaEvolve benchmark
+    reproduction attempts.
+  - Current evidence: `papers/README.md` marks GigaEvo as framework
+    inspiration and explicitly says LibreEvolve has no Redis lifecycle
+    database, `asyncio` DAG engine, insight stage, or concurrent units. A broad
+    built-in-plugin/inspiration TODO keeps GigaEvo grouped with CodeEvolve,
+    ThetaEvolve, ImprovEvolve, MadEvolve, CausalEvolve, and DeepEvolve, but
+    there is no source-specific code TODO for `2511.17592`, no local
+    equivalent of Redis program lifecycle states, no DAG stage graph/caching
+    schema, no LangGraph-style mutation operator, no bidirectional lineage
+    analysis records, no GigaEvo benchmark reproduction report, and no
+    validation that README/ROADMAP wording distinguishes framework inspiration
+    from GigaEvo reproduction.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2511.17592`: arXiv version/date/PDF hash, source/license and code-URL
+    status, Redis-vs-local-storage applicability, program lifecycle state
+    schema, DAG node/edge/stage-output records, concurrency/caching telemetry,
+    insight and ancestor/descendant lineage-analysis artifacts, LangGraph or
+    equivalent mutation-operator provenance, MAP-Elites/island compatibility
+    reports, AlphaEvolve benchmark reproduction records, and docs wording that
+    keeps current LibreEvolve behavior labeled as inspiration-only until those
+    artifacts exist.

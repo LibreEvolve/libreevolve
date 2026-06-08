@@ -4530,3 +4530,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     fields when applicable, and README/papers/code wording that keeps current
     backend scheduling heuristic until canonical UCB1 assumptions and
     finite-time-regret evidence are validated.
+
+- [ ] Add GigaEvo framework gates before roadmap promotion.
+  - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, presents
+    an AlphaEvolve-inspired framework with Redis-backed evolutionary units,
+    `asyncio` DAG processing, MAP-Elites evolution, LangGraph mutation,
+    generated insights, bidirectional lineage tracking, Hydra configuration,
+    and benchmark experiments against AlphaEvolve problem families.
+  - Current evidence: ROADMAP tells readers to keep GigaEvo features labeled
+    as inspired unless the paper behavior is actually implemented, and
+    `papers/README.md` marks Redis lifecycle database, `asyncio` DAG engine,
+    insight stage, and concurrent units as absent. The roadmap does not yet
+    define `2511.17592`-specific gates for source metadata, code repository
+    status, architecture-component parity, lifecycle-state persistence,
+    DAG-stage dependency/caching evidence, lineage/insight artifacts, or
+    benchmark-reproduction reports.
+  - Required result: add roadmap gates for `2511.17592`: paper/source manifest
+    entry, PDF/cache hash, source-license and code-artifact status,
+    Redis-vs-local-storage boundary, program lifecycle state model, DAG
+    topology/stage-output/caching records, concurrency telemetry, insight and
+    ancestor/descendant lineage-analysis artifacts, mutation-operator
+    provenance, MAP-Elites/island compatibility reports, AlphaEvolve
+    benchmark reproduction rows, and README/papers/code wording that keeps
+    GigaEvo as framework inspiration until local evidence proves otherwise.

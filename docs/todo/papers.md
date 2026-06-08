@@ -5619,3 +5619,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     scheduler-linkage records, and README/ROADMAP wording that treats
     LibreEvolve's backend scheduler as heuristic unless those assumptions and
     regret reports are explicitly validated.
+
+- [ ] Track GigaEvo framework paper evidence as a source-specific boundary.
+  - Paper/source evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, describes
+    an AlphaEvolve-inspired open-source framework with Redis program storage,
+    an `asyncio` DAG execution engine, MAP-Elites quality-diversity evolution,
+    LangGraph-based mutation, insight generation, bidirectional lineage
+    tracking, flexible Hydra configuration, and reproduction experiments on
+    AlphaEvolve benchmark problems.
+  - Current gap: `papers/README.md` lists `2511.17592` as framework
+    inspiration and says Redis lifecycle database, `asyncio` DAG engine,
+    insight stage, and concurrent units are not implemented. Existing paper
+    TODOs group GigaEvo with other inspiration rows, but do not preserve the
+    GigaEvo PDF itself as a source-specific evidence boundary with
+    architecture-component rows, lifecycle-state semantics, DAG-stage
+    topology, insight/lineage artifacts, benchmark-reproduction claims, code
+    repository status, or validation that docs do not conflate grouped
+    inspiration status with GigaEvo framework parity.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2511.17592`: title/authors/arXiv version/date/PDF digest, source license,
+    linked code URL/status, architecture-component inventory, Redis program
+    lifecycle schema, DAG stage/dependency/caching metadata, insight and
+    lineage-analysis records, mutation-operator mode/source details,
+    benchmark-problem and reproduction-result rows, relation to AlphaEvolve
+    and LibreEvolve, and README/ROADMAP/code wording that keeps GigaEvo
+    framework behavior marked missing unless local implementation artifacts
+    and reports prove it.

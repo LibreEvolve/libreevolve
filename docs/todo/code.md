@@ -1984,6 +1984,28 @@ Primary evidence:
     README/ROADMAP wording that labels both the squared value and the geometric
     square-root ratio unambiguously.
 
+- [ ] Add Appendix B.8 point-set distance-certificate provenance.
+  - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
+    point-set witnesses for minimizing the max/min pairwise-distance ratio:
+    16 points in two dimensions with squared ratio `12.889266112`, improving
+    the best known squared bound `12.890`, and 14 points in three dimensions
+    with squared ratio `4.165849767`, improving the best known squared bound
+    `4.168`.
+  - Current evidence: the B.8 convention TODO above prevents quoting squared
+    values as direct ratios, and the broad Appendix B per-result TODO asks for
+    coordinate payloads in general. No code/report schema separately forces
+    B.8 witness validation: exact point count, dimension, coordinate payload
+    hash, finite-coordinate checks, all-pairs minimum and maximum distance
+    certificates, recomputed squared ratio, prior value/source comparison, or
+    Figure 12 left/right panel linkage.
+  - Required result: add Appendix B.8 witness rows and validators that record
+    point-set artifact hashes, `n`, dimension, pairwise-distance certificate
+    hashes, recomputed min distance, max distance, squared ratio and derived
+    ratio, prior best value/source, improvement direction, source
+    section/caption location, Figure 12 panel id, and docs that distinguish
+    distance-certificate evidence from the separate squared-ratio convention
+    metadata.
+
 - [ ] Add Appendix B.5 minimum-overlap step-function provenance.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos minimum-overlap
     upper bound from `C5 <= 0.380927` to `C5 <= 0.380924` using the step

@@ -2053,6 +2053,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     update README/ROADMAP wording so claims about Appendix B.8 name the
     squared-ratio convention explicitly.
 
+- [ ] Track Appendix B.8 point-set distance-certificate evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 and Figure 12
+    report two distance-ratio point-set witnesses: 16 points in 2D with
+    squared ratio `12.889266112`, improving the best known squared bound
+    `12.890`, and 14 points in 3D with squared ratio `4.165849767`, improving
+    the best known squared bound `4.168`.
+  - Current gap: paper-facing Appendix B TODOs require broad normalized result
+    rows, coordinate payloads, Figure 12 provenance, and the B.8
+    squared-ratio convention. They do not require B.8 reports to prove the
+    actual coordinate witnesses: exact point count and dimension, finite
+    coordinate payload hash, all-pairs minimum/maximum distance certificate,
+    recomputed squared ratio and derived geometric ratio, prior value/source
+    comparison, or left/right Figure 12 panel linkage.
+  - Required result: add paper/report evidence for Appendix B.8 witness rows:
+    result id, `n`, dimension, coordinate artifact hash, pairwise-distance
+    certificate hash, recomputed min and max distances, squared-ratio value,
+    square-root-derived ratio, prior best value/source, improvement direction,
+    Figure 12 panel id, source section/caption location, and README/ROADMAP
+    wording that separates witness-certification evidence from metric-unit
+    convention evidence.
+
 - [ ] Track Appendix B.5 minimum-overlap step-function evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 reports that
     the Erdos minimum-overlap constant has known bounds

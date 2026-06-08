@@ -1105,6 +1105,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     dimensions, coordinate artifacts, and comparison units without conflating
     squared and unsquared objectives.
 
+- [ ] Keep README Appendix B.8 witness wording scoped until distance
+      certificates exist.
+  - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report 16 points in
+    two dimensions achieving squared max/min-distance ratio `12.889266112`
+    versus the prior squared bound `12.890`, and 14 points in three dimensions
+    achieving squared ratio `4.165849767` versus the prior squared bound
+    `4.168`.
+  - Current evidence: README can point to broad Appendix B metric/value gaps
+    and the B.8 squared-ratio convention gap, but it does not separately warn
+    that B.8 needs coordinate payloads, exact point-count/dimension checks,
+    all-pairs min/max distance recomputation, prior-bound comparisons, and
+    Figure 12 panel links before claiming the point-set witnesses are
+    reproduced.
+  - Required result: when Appendix B.8 distance-certificate metadata lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes raw convention metadata from validated point-set
+    witness evidence with coordinate artifacts, recomputed distances,
+    prior/current squared ratios, and Figure 12 panel linkage.
+
 - [ ] Keep README Appendix B.5 minimum-overlap wording scoped until
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos

@@ -2040,6 +2040,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validators land, update ROADMAP, README, papers index, and code/paper TODOs
     so roadmap claims cannot compare or quote B.8 values in the wrong unit.
 
+- [ ] Keep Appendix B.8 roadmap wording scoped until point-set distance
+      certificates exist.
+  - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
+    max/min-distance point-set witnesses: 16 points in 2D with squared ratio
+    `12.889266112` improving prior `12.890`, and 14 points in 3D with squared
+    ratio `4.165849767` improving prior `4.168`.
+  - Current evidence: roadmap/README/paper-index wording can cite broad
+    Appendix B per-result gaps and the B.8 squared-ratio convention gap, but
+    it does not require B.8-specific coordinate payloads, exact point-count and
+    dimension validation, all-pairs min/max distance certificates, recomputed
+    squared ratios, prior-best comparisons, or Figure 12 panel linkage.
+  - Required result: when Appendix B.8 witness validators land, update ROADMAP,
+    README, papers index, and code/paper TODOs together so roadmap claims
+    separate convention-safe quoting from actual reproduced point-set
+    certificates for the 2D and 3D Figure 12 constructions.
+
 - [ ] Keep Appendix B.5 roadmap wording scoped until minimum-overlap
       step-function provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos

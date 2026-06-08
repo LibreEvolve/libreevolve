@@ -47,6 +47,10 @@ LOCAL_PAPER_CACHE_SECTION_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 TODO_COVERAGE_PATH_RE = re.compile(r"`(docs/todo/(?:Completed/)?[A-Za-z0-9_.-]+\.md)`")
+SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
+    r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
+    flags=re.IGNORECASE,
+)
 JSON_DUPLICATE_KEYS_FIELD = "__libreevolve_duplicate_keys__"
 MAX_TITLE_CHARS = 240
 MAX_DOWNLOAD_MESSAGE_CHARS = 512
@@ -77,6 +81,13 @@ ACTIVE_TODO_LEDGER_PATHS = (
     "docs/todo/roadmap.md",
     "docs/todo/readme.md",
 )
+SOURCE_SPECIFIC_TODO_TARGET_PATHS = {
+    "code": "docs/todo/code.md",
+    "paper": "docs/todo/papers.md",
+    "papers": "docs/todo/papers.md",
+    "roadmap": "docs/todo/roadmap.md",
+    "readme": "docs/todo/readme.md",
+}
 
 
 @dataclass(frozen=True)
@@ -309,6 +320,7 @@ def validate_paper_manifest(
         )
     issues.extend(_validate_root_readme_paper_summary(root_path, seen_ids))
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids))
+    issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
 
     return PaperManifestReport(
         ok=not issues,
@@ -1015,10 +1027,64 @@ def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -
     return issues
 
 
-def _open_todo_blocks_contain(text: str, needle: str) -> bool:
+def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:
+    if not manifest_ids:
+        return []
+    issues: list[PaperManifestIssue] = []
+    blocks_by_path: dict[str, list[str]] = {}
+    for relative_path in ACTIVE_TODO_LEDGER_PATHS:
+        todo_path = root / relative_path
+        if not todo_path.exists():
+            continue
+        try:
+            text = todo_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            issues.append(
+                PaperManifestIssue(
+                    "active_todo_absence_wording_unreadable",
+                    _manifest_diagnostic(todo_path, root, exc),
+                )
+            )
+            continue
+        blocks_by_path[relative_path] = _open_todo_blocks(text)
+
+    for row_id in sorted(manifest_ids):
+        row_label = _safe_manifest_label(row_id)
+        active_paths = {
+            relative_path
+            for relative_path, blocks in blocks_by_path.items()
+            if any(row_id in block for block in blocks)
+        }
+        if not active_paths:
+            continue
+        for source_path, blocks in blocks_by_path.items():
+            for block in blocks:
+                if row_id not in block:
+                    continue
+                for match in SOURCE_SPECIFIC_ABSENCE_RE.finditer(block):
+                    for target_name in match.group(1).split("/"):
+                        target_path = SOURCE_SPECIFIC_TODO_TARGET_PATHS.get(target_name.casefold())
+                        if target_path is None or target_path not in active_paths:
+                            continue
+                        issues.append(
+                            PaperManifestIssue(
+                                "stale_source_specific_absence_wording",
+                                f"{source_path} says no source-specific {target_name} TODO, "
+                                f"but {target_path} has an open TODO block for this paper id",
+                                row_label,
+                            )
+                        )
+    return issues
+
+
+def _open_todo_blocks(text: str) -> list[str]:
     starts = [match.start() for match in re.finditer(r"(?m)^- \[ \] ", text)]
     starts.append(len(text))
-    return any(needle in text[start:end] for start, end in zip(starts, starts[1:]))
+    return [text[start:end] for start, end in zip(starts, starts[1:])]
+
+
+def _open_todo_blocks_contain(text: str, needle: str) -> bool:
+    return any(needle in block for block in _open_todo_blocks(text))
 
 
 def _format_count_source(source: ReadmeCountSource) -> str:

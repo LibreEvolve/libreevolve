@@ -924,17 +924,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     map of remaining AlphaEvolve and paper-alignment work. Once source-specific
     TODOs have been created, roadmap-facing backlog diagnostics should not
     leave older entries saying that such TODO coverage is absent.
-  - Current evidence: roadmap and paper TODOs already ask for paper-index
-    cross-reference validation and stale grouped-label checks. They do not
-    require validation of the free-form current-gap prose inside active TODO
-    bodies, where source-boundary entries can retain stale phrases such as
-    "no source-specific code TODO" even after matching source-specific TODOs
-    exist in the active ledgers.
-  - Required result: when stale source-specific absence detection lands, update
-    ROADMAP, README, papers index, and code/paper TODOs with the validator
-    scope: manifest-id matching, target-ledger detection, contradictory
-    absence-phrase reporting, and rewrites that distinguish missing evidence
-    from missing TODO coverage.
+  - Current evidence: `validate_paper_manifest()` now validates free-form
+    current-gap prose inside active TODO bodies for manifest-id-scoped stale
+    absence phrases. It detects explicit `no source-specific ... TODO`
+    wording, maps code/paper/README/ROADMAP targets to the active ledgers, and
+    reports contradictions when the target ledger already has an open TODO
+    block for that paper id. Remaining roadmap gap: README/ROADMAP/paper-index
+    wording does not yet describe this validator scope, and future paraphrases
+    outside the current phrase family need additional patterns.
+  - Required result: update ROADMAP, README, papers index, and code/paper
+    TODOs with the validator scope: manifest-id matching, target-ledger
+    detection, contradictory absence-phrase reporting, and rewrites that
+    distinguish missing evidence from missing TODO coverage.
 
 - [ ] Keep implementation-status roadmap wording scoped until semantic cells
       are validated.

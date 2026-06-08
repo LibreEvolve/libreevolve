@@ -1851,16 +1851,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     internally consistent. Source-specific paper rows should not be presented
     as absent once the active ledgers contain them.
   - Current evidence: README can mention manifest validation, implementation
-    status id reconciliation, Appendix B/Figure 8 registry checks, and the
-    planned TODO coverage cross-reference validator. Those checks do not yet
-    scan free-form TODO bodies for stale source-specific absence phrases such
-    as "no source-specific code TODO" after matching code/paper/README/ROADMAP
-    source-boundary entries have been added.
-  - Required result: when stale absence-prose validation lands, update README,
-    ROADMAP, papers index, and code/paper TODOs so README distinguishes
-    verified backlog traceability from hand-maintained prose and does not imply
-    source-specific TODO coverage is missing where the remaining gap is
-    implementation, report, artifact, or evidence work.
+    status id reconciliation, Appendix B/Figure 8 registry checks, TODO
+    coverage-table validation, and the new active-TODO stale absence-prose
+    check. The check is manifest-id scoped and rejects explicit
+    `no source-specific ... TODO` wording when the matching code/paper/
+    README/ROADMAP ledger already has an open TODO block for that paper id.
+    README still does not explain this scope or the remaining limitation that
+    broader paraphrases need future pattern additions.
+  - Required result: update README, ROADMAP, papers index, and code/paper
+    TODOs so README distinguishes verified backlog traceability from
+    hand-maintained prose and does not imply source-specific TODO coverage is
+    missing where the remaining gap is implementation, report, artifact, or
+    evidence work.
 
 - [ ] Keep README implementation-status wording scoped until table semantics
       are validated.

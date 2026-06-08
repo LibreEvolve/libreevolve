@@ -1063,6 +1063,46 @@ def test_validate_paper_manifest_reports_missing_todo_coverage_row(tmp_path):
     assert "missing_todo_coverage_row" in {issue.code for issue in report.issues}
 
 
+def test_validate_paper_manifest_ignores_unscoped_absence_phrase_examples(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        code_todo.read_text(encoding="utf-8")
+        + "\n- [ ] Track generic stale-phrase validator examples.\n"
+        + "  - Current evidence: phrases such as no source-specific code TODO should be scoped.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_reports_stale_source_specific_absence_wording(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        code_todo.read_text(encoding="utf-8")
+        + f"\n- [ ] Track stale absence wording for `{row['id']}`.\n"
+        + "  - Current gap: no source-specific README TODO exists for this paper.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    issues = [issue for issue in report.issues if issue.code == "stale_source_specific_absence_wording"]
+    assert report.ok is False
+    assert len(issues) == 1
+    assert issues[0].row_id == row["id"]
+    assert "docs/todo/readme.md" in issues[0].message
+
+
 def test_checked_in_paper_index_maps_each_manifest_id_to_todo_coverage():
     manifest_rows = json.loads(Path("papers/download_manifest.json").read_text(encoding="utf-8"))
     readme = Path("papers/README.md").read_text(encoding="utf-8")

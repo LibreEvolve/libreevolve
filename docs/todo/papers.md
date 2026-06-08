@@ -5836,29 +5836,43 @@ directory and using the AlphaEvolve paper as the primary specification.
       claims imply regret guarantees.
   - Paper/source evidence: the local
     `auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf`
-    is `Finite-time Analysis of the Multiarmed Bandit Problem`. The paper
-    presents UCB1 for `K` arms with unknown reward distributions supported in
-    `[0, 1]`, defines regret as expected loss from not always playing the best
-    arm, proves logarithmic finite-time regret bounds, and gives adjacent
-    UCB2, epsilon-n-greedy, and UCB1-NORMAL variants under separate
-    assumptions.
+    is `Finite-time Analysis of the Multiarmed Bandit Problem` by Peter Auer,
+    Nicolo Cesa-Bianchi, and Paul Fischer, published in `Machine Learning`
+    `47`, pages `235-256`, in 2002; the cached PDF hash is
+    `82c8a8192bdb425fbe7662c59ee85faf47f59901f1a4999a732d04db82702a5d`.
+    The paper presents UCB1 for `K > 1` arms with unknown reward distributions
+    supported in `[0, 1]`, defines regret as expected loss from not always
+    playing the best arm, and proves logarithmic finite-time regret bounds.
+    Theorem 1 bounds regret by `8 * sum_i ln(n) / Delta_i` plus
+    `(1 + pi^2 / 3) * sum_j Delta_j`, with the suboptimal-pull bound
+    `E[T_i(n)] <= 8 ln(n) / Delta_i^2 + 1 + pi^2 / 3`. The proof uses
+    empirical reward means, play counts, Chernoff-Hoeffding bounds, and a
+    confidence-index policy; the paper later notes Theorems 1-3 do not
+    require cross-machine reward independence and only need the per-arm
+    conditional-mean condition `E[X_i,t | X_i,1, ..., X_i,t-1] = mu_i`. It
+    also gives adjacent UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and
+    UCB1-TUNED variants under separate assumptions, with UCB1-TUNED reported
+    as empirically stronger but without a proven regret bound.
   - Current gap: `papers/README.md` lists `auer-cesa-bianchi-fischer-2002` as
     the foundational bandit-policy source for LibreEvolve's heuristic
     UCB-style backend router, and README/ROADMAP/code wording says the router
     is heuristic. The paper TODOs do not yet preserve this UCB1 source row as
     a paper-facing evidence boundary with the bounded-support, iid-arm,
-    regret-definition, reward-normalization, and proof-scope assumptions
-    needed to prevent backend-routing telemetry from being read as canonical
-    UCB1 finite-time analysis. It also does not require variant-level status
-    rows showing that UCB2, epsilon-n-greedy, and UCB1-NORMAL are unsupported
-    unless separately implemented and validated.
+    conditional-mean/stationarity, regret-definition, reward-normalization,
+    theorem-constant, and proof-scope assumptions needed to prevent backend-
+    routing telemetry from being read as canonical UCB1 finite-time analysis.
+    It also does not require variant-level status rows showing that UCB2,
+    `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED are unsupported unless
+    separately implemented and validated.
   - Required result: add paper-manifest and paper-index coverage for
     `auer-cesa-bianchi-fischer-2002`: source URL/cache/hash, title/authors/
     venue/year, source-license or mirror status, UCB1 theorem-scope metadata,
-    reward-support and iid/stationarity assumptions, regret-definition fields,
-    scheduler-linkage records, variant support matrix, and README/ROADMAP
-    wording that treats LibreEvolve's backend scheduler as heuristic unless
-    those assumptions and regret reports are explicitly validated.
+    reward-support and conditional-mean/stationarity assumptions,
+    regret-definition fields, theorem-constant records, scheduler-linkage
+    records, canonical-index formula metadata, variant support matrix,
+    UCB1-TUNED no-proof status, and README/ROADMAP wording that treats
+    LibreEvolve's backend scheduler as heuristic unless those assumptions and
+    regret reports are explicitly validated.
 
 - [ ] Track GigaEvo framework paper evidence as a source-specific boundary.
   - Paper/source evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source

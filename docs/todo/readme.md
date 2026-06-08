@@ -4229,26 +4229,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README UCB-style scheduler wording scoped until UCB1 source
       assumptions and regret evidence exist.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` paper,
-    `Finite-time Analysis of the Multiarmed Bandit Problem`, analyzes UCB1
-    for independent arms with reward distributions supported in `[0, 1]`,
-    defines regret as expected loss from not always playing the best arm, and
-    proves finite-time logarithmic regret bounds using empirical reward means,
-    play counts, and a confidence-radius index.
+    `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
+    Nicolo Cesa-Bianchi, and Paul Fischer analyzes UCB1 for arms with reward
+    distributions supported in `[0, 1]`, defines regret as expected loss from
+    not always playing the best arm, and proves finite-time logarithmic regret
+    bounds using empirical reward means, play counts, and a confidence-radius
+    index. Theorem 1 bounds regret with the `8 ln(n) / Delta_i` constant and
+    the proof uses Chernoff-Hoeffding bounds; the paper notes Theorems 1-3 do
+    not need cross-machine independence and only require the per-arm
+    conditional-mean condition. UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and
+    UCB1-TUNED are separate variants, and UCB1-TUNED has no proven regret
+    bound in the paper.
   - Current evidence: README describes LibreEvolve's backend selector as
     `UCB-style` and the paper table lists UCB1 as inspiration for heuristic
     backend routing. ROADMAP/code caveats already warn against canonical UCB1
     overclaims, but README does not require a source-specific boundary for the
-    local UCB1 PDF id, reward-support assumptions, iid/stationarity
-    assumptions, reward-normalization policy, backend-as-arm stability,
-    selected-arm/index telemetry, or regret-report proof status.
+    local UCB1 PDF id/hash, reward-support assumptions,
+    conditional-mean/stationarity assumptions, reward-normalization policy,
+    backend-as-arm stability, selected-arm/index telemetry, coefficient
+    mapping from canonical UCB1 to LibreEvolve's configurable exploration
+    term, metadata-aware `throughput_depth` caveats, or regret-report proof
+    status.
   - Required result: when README discusses UCB1, UCB-style routing, backend
     bandits, or scheduler reward, keep wording source-scoped until manifests
     and reports record the UCB1 source row, bounded-reward normalization,
-    iid/stationarity disclaimer, stable backend-as-arm identity,
-    selected-backend/index telemetry, regret metrics where applicable, variant
-    unsupported status for UCB2, epsilon-n-greedy, and UCB1-NORMAL where
-    relevant, and a clear statement that heuristic backend routing is not a
-    finite-time-regret UCB1 reproduction without those assumptions.
+    conditional-mean/stationarity disclaimer, stable backend-as-arm identity,
+    selected-backend/index telemetry, exploration-coefficient mapping, regret
+    metrics where applicable, variant unsupported status for UCB2,
+    `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED where relevant, and a
+    clear statement that heuristic backend routing is not a finite-time-
+    regret UCB1 reproduction without those assumptions.
 
 - [ ] Keep README GigaEvo wording scoped until framework-parity evidence
       exists.

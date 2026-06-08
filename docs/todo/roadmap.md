@@ -4696,28 +4696,36 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add UCB1 finite-time bandit gates before roadmap scheduler promotion.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
-    `Finite-time Analysis of the Multiarmed Bandit Problem`, studies the
-    exploration/exploitation dilemma for multi-armed bandits, defines regret
-    as expected loss from not always playing the best arm, and proves UCB1
-    finite-time logarithmic regret for arbitrary reward distributions with
-    support in `[0, 1]` using play counts, empirical reward means, and a
-    confidence-radius index.
+    `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
+    Nicolo Cesa-Bianchi, and Paul Fischer studies the exploration/
+    exploitation dilemma for multi-armed bandits, defines regret as expected
+    loss from not always playing the best arm, and proves UCB1 finite-time
+    logarithmic regret for arbitrary reward distributions with support in
+    `[0, 1]` using play counts, empirical reward means, and a confidence-
+    radius index. Theorem 1 gives the `8 ln(n) / Delta_i` suboptimal-pull
+    constant and a finite-time regret bound; the paper also says Theorems 1-3
+    do not require cross-machine independence and only need a per-arm
+    conditional-mean assumption. UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and
+    UCB1-TUNED are separate variants, with UCB1-TUNED explicitly not given a
+    regret proof.
   - Current evidence: ROADMAP can describe LibreEvolve's heuristic UCB-style
     backend routing and already warns that canonical UCB1 assumptions,
     calibrated reward scaling, and regret bounds are not proven. The roadmap
     does not yet tie that scheduler caveat to the local UCB1 paper source id,
-    PDF/cache hash, bounded-support and iid-arm assumptions, reward
-    normalization, stable arm identity, selected-arm/index telemetry, or
-    proof-scope metadata.
+    PDF/cache hash, bounded-support and conditional-mean/stationarity
+    assumptions, theorem constants, reward normalization, stable arm identity,
+    selected-arm/index telemetry, coefficient mapping, role-scoped and
+    metadata-aware selection caveats, or proof-scope metadata.
   - Required result: add roadmap gates for `auer-cesa-bianchi-fischer-2002`:
     paper/source manifest entry, PDF/cache hash, source-license or mirror
     status, UCB1 theorem-scope fields, reward-support normalization,
-    stable backend-as-arm identity, iid/stationarity disclaimers,
-    selected-backend/index traces, regret report fields when applicable,
-    unsupported status for UCB2, epsilon-n-greedy, and UCB1-NORMAL, and
-    README/papers/code wording that keeps current backend scheduling heuristic
-    until canonical UCB1 assumptions and finite-time-regret evidence are
-    validated.
+    stable backend-as-arm identity, conditional-mean/stationarity disclaimers,
+    selected-backend/index traces, canonical-index and exploration-coefficient
+    mapping, regret report fields when applicable, unsupported status for
+    UCB2, `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED, proof-status
+    metadata for `throughput_depth`, and README/papers/code wording that keeps
+    current backend scheduling heuristic until canonical UCB1 assumptions and
+    finite-time-regret evidence are validated.
 
 - [ ] Add GigaEvo framework gates before roadmap promotion.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source

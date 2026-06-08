@@ -6314,30 +6314,55 @@ Primary evidence:
 - [ ] Add UCB1 finite-time bandit source boundary before scheduler claims
       become regret claims.
   - Spec evidence: the local `auer-cesa-bianchi-fischer-2002` PDF,
-    `Finite-time Analysis of the Multiarmed Bandit Problem`, defines UCB1 for
-    independent bandit arms with reward distributions supported in `[0, 1]`
-    and proves logarithmic finite-time regret bounds. It frames regret as the
-    expected loss from not always playing the best machine, initializes by
-    playing each arm once, and selects by empirical mean plus
-    `sqrt(2 ln n / n_i)`.
+    `Finite-time Analysis of the Multiarmed Bandit Problem`, by Peter Auer,
+    Nicolo Cesa-Bianchi, and Paul Fischer appeared in `Machine Learning`
+    `47`, pages `235-256`, in 2002; the cached PDF hash is
+    `82c8a8192bdb425fbe7662c59ee85faf47f59901f1a4999a732d04db82702a5d`.
+    It defines regret as the expected loss from not always playing the best
+    machine and proves UCB1 finite-time logarithmic regret for `K > 1`
+    machines with arbitrary reward distributions supported in `[0, 1]`.
+    The UCB1 index is empirical mean plus a Chernoff-Hoeffding confidence
+    term, and Theorem 1 bounds expected regret after any `n` plays by
+    `8 * sum_i ln(n) / Delta_i` plus `(1 + pi^2 / 3) * sum_j Delta_j`.
+    The proof bounds suboptimal pulls with
+    `E[T_i(n)] <= 8 ln(n) / Delta_i^2 + 1 + pi^2 / 3`, initializes by trying
+    each arm, uses play counts and empirical means, and relies on bounded
+    rewards plus conditional-mean assumptions; the paper notes Theorems 1-3
+    do not require rewards to be independent across machines and only need
+    `E[X_i,t | X_i,1, ..., X_i,t-1] = mu_i`. It also presents UCB2,
+    `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED as separate variants,
+    with UCB1-TUNED explicitly lacking a proven regret bound.
   - Current evidence: `papers/README.md` marks the UCB1 row as a foundational
     bandit-policy source, and LibreEvolve implements a heuristic UCB-style
     backend router over archive-admitted valid fitness-improvement rewards
     with call-id attribution. Existing roadmap/code caveats already say the
     current scheduler is not canonical regret-analyzed UCB1, but there is no
-    source-specific code gate for the local UCB1 PDF id, bounded-support
-    assumptions, iid-arm assumptions, regret definition, reward normalization
-    policy, stable arm identity, initialization semantics, stationary-reward
-    diagnostics, or proof/non-proof status in scheduler telemetry.
+    source-specific code gate for the local UCB1 PDF id/hash, theorem-scope
+    constants, bounded-support assumptions, conditional-mean/stationarity
+    assumptions, regret definition, reward normalization policy, stable arm
+    identity, initialization semantics, selected-index formula, exploration
+    coefficient mapping, role-scoped/backend-metadata selection caveats,
+    stationary-reward diagnostics, or proof/non-proof status in scheduler
+    telemetry. Current code in `libreevolve/llm/ensemble.py` caps rewards at
+    `MAX_REWARD = 1.0`, rejects negative rewards, records counts for
+    reward-accounted calls, selects untried eligible backends first, and uses
+    `(wins_i / counts_i) + c * sqrt(log(total) / counts_i)` with default
+    `explore_coeff = 1.0`; the optional `throughput_depth` strategy adds
+    normalized depth/cost/latency metadata, so it is further from canonical
+    UCB1 than the base heuristic.
   - Required result: add source-boundary metadata and scheduler validation for
     `auer-cesa-bianchi-fischer-2002`: PDF hash/source status, paper-title and
-    theorem-scope fields, arm/reward-support assumptions, reward-normalization
-    evidence, stable backend-as-arm identity records, initialization policy,
-    empirical-mean/confidence-radius calculation telemetry, iid/stationarity
-    disclaimer, selected-arm/index traces, regret-baseline fields when
-    applicable, unsupported flags for UCB2, epsilon-n-greedy, and
-    UCB1-NORMAL, and docs checks that distinguish heuristic UCB-style backend
-    routing from canonical UCB1 finite-time regret guarantees.
+    theorem-scope fields, arm/reward-support assumptions,
+    conditional-mean/stationarity assumptions, reward-normalization evidence,
+    stable backend-as-arm identity records, initialization policy, empirical-
+    mean/confidence-radius calculation telemetry, coefficient mapping from
+    canonical `sqrt(2 ln n / n_i)` to LibreEvolve's configurable
+    `c * sqrt(log(total) / counts_i)`, selected-arm/index traces, regret-
+    baseline fields when applicable, unsupported flags for UCB2,
+    `epsilon_n`-GREEDY, UCB1-NORMAL, and UCB1-TUNED, proof-status metadata
+    for metadata-aware `throughput_depth`, and docs checks that distinguish
+    heuristic UCB-style backend routing from canonical UCB1 finite-time regret
+    guarantees.
 
 - [ ] Add GigaEvo framework source boundary before inspiration claims become
       reproduction claims.

@@ -4501,7 +4501,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     characterizes vertices as dyadically well-distributed permutations, and
     connects maximal Bruhat-hypercube dimension to Kazhdan-Lusztig
     `R`-polynomial coefficients, frozen variables in open Richardson cluster
-    algebras, and embeddings of Bruhat graphs.
+    algebras, and embeddings of Bruhat graphs. The body proves this through
+    dyadic basic intervals, bit-reversal endpoints `x_m` and `y_m`, Ehresmann
+    Bruhat-order matrices, complementary blocks and flips, a poset isomorphism
+    `phi: D_m -> S_2^{C_m}`, and Theorem 2.21's `D_m = [x_m, y_m]` rank
+    `m * 2^(m-1)` hypercube.
   - Current evidence: ROADMAP tracks broad constructive-math and Appendix B
     fixture gaps plus background paper-index rows, but it does not promote
     `2601.01235` beyond potential-future-benchmark status. It does not define
@@ -4509,6 +4513,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     hypercube isomorphism checks, dyadic well-distribution predicates, power-
     of-two `S_n` benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-
     algebra consequence records, or finite-pattern versus proof-status gates.
+    It also lacks gates for the Section 4 search protocol: FunSearch
+    deterministic program-search baseline, AlphaEvolve generalizer-mode
+    scoring across `n = 10..50`, Gemini 2.5 Flash/Pro model-call provenance,
+    evaluated-program counts, public repository artifact status, and
+    recurrence/proof checks for `alpha(2n)=2 alpha(n)+n`.
   - Required result: add roadmap gates for `2601.01235`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     permutation candidate schema, Bruhat interval witness artifacts, poset-
@@ -4518,7 +4527,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Bruhat-graph consequence fields, finite-test/general-proof status,
     seed/budget records, independent checker outputs, and a background-only
     or benchmark-fixture status rule so roadmap claims do not outpace local
-    AlphaEvolve-style Bruhat-interval hypercube support.
+    AlphaEvolve-style Bruhat-interval hypercube support. Roadmap promotion
+    should additionally require `x_m`/`y_m` generator fixtures, Ehresmann and
+    fundamental/complementary-block verifier outputs, `d`-invariant and
+    `R`-polynomial calculators, FunSearch/AlphaEvolve prompt/evaluator/run
+    artifacts, public repo hash/status, low-discrepancy and `t`-adic
+    extension metadata, proof-status records, and documentation separating
+    finite AlphaEvolve-discovered examples from human-proved all-`m`
+    constructions.
 
 - [ ] Add global NLP solver comparator gates before roadmap promotion.
   - Spec evidence: arXiv `2601.05943`, submitted January 9, 2026, introduces

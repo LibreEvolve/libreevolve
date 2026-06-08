@@ -6061,7 +6061,12 @@ Primary evidence:
     permutations. It also links maximal Bruhat-hypercube dimension to the
     second-highest-degree coefficient of Kazhdan-Lusztig `R`-polynomials and
     obtains `n log n` lower-bound consequences for frozen variables in open
-    Richardson cluster algebras and embeddings of Bruhat graphs.
+    Richardson cluster algebras and embeddings of Bruhat graphs. The body
+    defines dyadic basic intervals and `D_m`, bit-reversal affine endpoints
+    `x_m` and `y_m`, Ehresmann matrices for Bruhat-order comparison,
+    complementary blocks `C_m`, the map `phi: D_m -> S_2^{C_m}`, local flips
+    that toggle one complementary block while changing length by `+/-1`, and
+    proves `D_m = [x_m, y_m]` with hypercube rank `m * 2^(m-1)`.
   - Current evidence: `papers/README.md` lists `2601.01235` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has no first-class code TODO for this
@@ -6071,7 +6076,15 @@ Primary evidence:
     rows, no Kazhdan-Lusztig `R`-polynomial coefficient metadata, no cluster-
     algebra/frozen-variable consequence ledger, and no artifact policy that
     separates AlphaEvolve-suggested finite patterns from human-proved general
-    theorems.
+    theorems. It also lacks the Section 4 experiment boundary: FunSearch
+    adjacent-transposition program-output evaluators, deterministic/no-random
+    prompt policy, Mistral `mistral-small-3.1-24b-instruct` run metadata,
+    AlphaEvolve generalizer-mode scoring over `n = 10..50`, Gemini 2.5
+    Flash/Pro call provenance, `3000-5000` evaluated-program counts, public
+    artifact URL `https://github.com/JSEllenberg/Bruhat-hypercubes/tree/main`,
+    `alpha(2n) = 2 alpha(n) + n` and `alpha(2^m) = m * 2^(m-1)` result checks,
+    non-functional evolved-code caveats, and log/lineage evidence separating
+    bit-reversal discovery from known low-discrepancy-sequence literature.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2601.01235`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
@@ -6083,7 +6096,15 @@ Primary evidence:
     fields, finite-test versus general-proof status, seed/budget records,
     independent checker outputs, and README/ROADMAP wording that keeps
     Bruhat-interval hypercube discovery as missing evidence until local
-    implementation and reports exist.
+    implementation and reports exist. The implementation boundary should
+    additionally require bit-string/basic-interval records, `x_m`/`y_m`
+    generators, length and inversion-count checks, Ehresmann matrix
+    inequalities, `D_m` exact-one fundamental-block checks, complementary-block
+    `phi` and flip traces, `R_{x,y}(q) = (q - 1)^(ell(y)-ell(x))` and
+    `d_{x_m,y_m}` records, `(0,m,2)`-net and optional `t`-adic generalization
+    metadata, AlphaEvolve/FunSearch prompt/evaluator/run-cost artifacts,
+    public repository hash/status, and a proof-status field distinguishing
+    finite generated examples from theorem-backed constructions.
 
 - [ ] Add global NLP solver comparator boundary for AlphaEvolve geometry
       benchmarks.

@@ -5603,7 +5603,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     vertices as dyadically well-distributed permutations, and connects the
     construction to Kazhdan-Lusztig `R`-polynomial coefficients plus lower
     bounds for frozen variables in open Richardson cluster algebras and for
-    embeddings of Bruhat graphs.
+    embeddings of Bruhat graphs. The paper body gives the actual witness
+    machinery: Definition 2.1's dyadic basic intervals and exact-one condition,
+    bit-reversal endpoints `x_m`/`y_m`, Ehresmann matrix Bruhat comparisons,
+    complementary blocks, the order-preserving map `phi` to `S_2^{C_m}`, local
+    flips, Proposition 2.20's poset isomorphism, and Theorem 2.21's
+    `D_m = [x_m, y_m]` hypercube of rank `m * 2^(m-1)`.
   - Current gap: `papers/README.md` lists `2601.01235` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
     and the active TODO coverage does not yet track this paper-specific
@@ -5612,7 +5617,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     isomorphism checks, dyadic well-distribution predicates, `S_n` power-of-
     two benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-algebra
     consequence fields, or the boundary between AlphaEvolve-suggested finite
-    evidence and human-written general proofs.
+    evidence and human-written general proofs. They also omit Section 4's
+    experimental record: FunSearch as a Python-program search over permutation
+    pairs maximizing `d_{x,y}`, adjacent-transposition output encoding,
+    deterministic prompt rule, Mistral model and roughly `$10` FunSearch cost,
+    AlphaEvolve generalizer-mode scoring over `n = 10..50`, Gemini 2.5
+    Flash/Pro calls, `3000-5000` programs and roughly `$70` public-rate cost,
+    public code/prompt/output URL, the observed recurrence
+    `alpha(2n)=2 alpha(n)+n`, and the note that the evolved program contained
+    likely unused simulated-annealing/search code.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2601.01235`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
@@ -5624,6 +5637,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     seed/budget records, independent checker outputs, reproducibility status,
     and README/ROADMAP wording that treats Bruhat-interval hypercube discovery
     as missing paper evidence rather than implemented LibreEvolve support.
+    Paper evidence should additionally preserve the PDF date/arXiv date
+    distinction, Adam Zsolt Wagner acknowledgement/contribution caveat,
+    FunSearch/AlphaEvolve prompt and evaluator text, model/cost/run-count
+    metadata, public repository artifact status, low-discrepancy `(0,m,2)`-net
+    and `t`-adic extension notes, `R`-polynomial/d-invariant formulas,
+    cluster-frozen-variable and good-embedding consequences, and source-scoped
+    proof-status caveats before any benchmark claim is promoted.
 
 - [ ] Track global NLP solver comparator paper evidence.
   - Paper/source evidence: arXiv `2601.05943`, submitted January 9, 2026, is

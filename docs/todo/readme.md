@@ -4051,14 +4051,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `O(n log n)`-dimensional hypercubes, characterizes vertices as dyadically
     well-distributed permutations, and links the result to Kazhdan-Lusztig
     `R`-polynomial coefficients and lower-bound consequences in cluster
-    algebras and Bruhat-graph embeddings.
+    algebras and Bruhat-graph embeddings. The body identifies the construction
+    as bit-reversal endpoints `x_m`/`y_m` whose interval equals the
+    dyadically well-distributed permutations `D_m`, with verification through
+    Ehresmann matrices, complementary-block flips, and a poset isomorphism to
+    a rank `m * 2^(m-1)` hypercube.
   - Current evidence: README documents constructive-math gaps, benchmark-
     report contracts, paper-cache status, and smoke fixtures. It does not
     mention `2601.01235`, define permutation generators for `S_n`, verify
     Bruhat intervals, check poset-hypercube structure, compute dyadic well-
     distribution predicates, record power-of-two benchmark rows, connect
     outputs to Kazhdan-Lusztig coefficients or cluster-algebra consequences,
-    or preserve finite-search versus general-proof status.
+    or preserve finite-search versus general-proof status. README also lacks
+    source-scoped boundaries for Section 4 AlphaEvolve/FunSearch experiment
+    provenance, public `Bruhat-hypercubes` artifact links, model/cost/run
+    metadata, bit-reversal lineage and low-discrepancy-literature caveats,
+    `R`-polynomial/d-invariant checker formulas, and PDF/arXiv metadata
+    caveats.
   - Required result: if README mentions Bruhat intervals, poset hypercubes in
     `S_n`, dyadically well-distributed permutations, AlphaEvolve-suggested
     permutation patterns, Kazhdan-Lusztig `R`-polynomials, open Richardson
@@ -4068,7 +4077,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts, hypercube verifier outputs, dyadic checker records, benchmark
     rows, proof-status fields, independent checker outputs, and benchmark
     reports. Avoid implying LibreEvolve supports AlphaEvolve-style Bruhat-
-    interval hypercube discovery without those artifacts.
+    interval hypercube discovery without those artifacts. README wording should
+    also distinguish generic constructive-math search from this paper's
+    specific `d`-invariant objective, FunSearch/AlphaEvolve generalizer-mode
+    process, bit-reversal theorem proof, public artifact verification, and
+    theorem-backed consequences.
 
 - [ ] Keep README global-NLP solver comparison claims absent or source-scoped
       until solver benchmark evidence exists.

@@ -2643,6 +2643,28 @@ Primary evidence:
     artifact links, and docs that distinguish local benchmark reports from
     AlphaEvolve-style production/domain-owner validation.
 
+- [ ] Add Borg scheduling problem-formulation provenance.
+  - Spec evidence: AlphaEvolve Section 3.3.1 frames Borg scheduling as an
+    online vector bin-packing problem with two resource dimensions: machines
+    are bins with CPU and memory capacity, pending jobs are items with CPU and
+    memory demands, stranded resources are the optimization motivation, and
+    simulator feedback comes from historical workload and capacity snapshots.
+  - Current evidence: systems reports can validate generic optimization and
+    held-out gates, while separate scheduling TODOs cover ranking-only safety,
+    mission-critical interpretability/deployment evidence, Figure 6 exhibit
+    provenance, and calibrated fleet-recovery metrics. They do not require a
+    scheduling-domain report to declare the bin/item/resource schema, units,
+    workload/capacity snapshot identities, stranded-resource objective, or
+    mapping from simulator inputs to the `required` and `free` CPU/memory
+    fields used by the heuristic.
+  - Required result: add scheduling-domain metadata and validators for the
+    Borg-style vector-bin-packing formulation: machine/bin and job/item
+    schemas, CPU/memory units and denominators, `required`/`free` feature
+    definitions, workload/capacity snapshot provenance, stranded-resource
+    objective linkage, simulator input hashes, and docs that separate
+    scheduling problem-formulation evidence from ranking-only safety,
+    deployment, and Figure 6 exhibit evidence.
+
 - [ ] Add scheduling ranking-only safety provenance for Borg-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the discovered Borg
     scheduling heuristic outputs a priority score for machines that Borg has

@@ -2830,6 +2830,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     distillation wording scoped as AlphaEvolve context rather than LibreEvolve
     capability.
 
+- [ ] Record Borg scheduling problem-formulation evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 frames Google
+    Borg scheduling as an online vector bin-packing problem: machines are bins
+    with CPU and memory capacity, pending jobs are items with CPU and memory
+    requirements, stranded resources motivate the objective, and AlphaEvolve
+    receives simulator feedback from historical workload and capacity
+    snapshots.
+  - Current gap: paper-facing systems TODOs cover generic systems reports,
+    claim-calibrated metrics, domain owners, ranking-only scheduling safety,
+    mission-critical deployment evidence, and Figure 6 exhibit provenance.
+    They do not require a scheduling report to preserve the actual problem
+    formulation: bin/item schema, resource units, historical workload/capacity
+    source identities, stranded-resource objective, simulator input hashes, or
+    the mapping from those inputs to the heuristic's `required` and `free`
+    CPU/memory features.
+  - Required result: add paper/report evidence for Borg-style scheduling
+    formulation: vector-bin-packing domain label, machine/bin and job/item
+    records, CPU/memory unit definitions and denominators, workload/capacity
+    snapshot provenance, stranded-resource objective linkage, simulator input
+    artifact hashes, and README/ROADMAP wording that separates problem
+    formulation from ranking-only safety, deployment metrics, and Figure 6
+    exhibit reproduction.
+
 - [ ] Record scheduling feasibility-boundary evidence for Borg-style results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 states that
     AlphaEvolve's scheduling heuristic scores machines after Borg has already

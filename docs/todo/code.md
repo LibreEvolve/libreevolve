@@ -100,6 +100,26 @@ Primary evidence:
     diagram artifact hashes, and docs validation so local workflow diagrams are
     not mistaken for reproduced AlphaEvolve process-diagram evidence.
 
+- [ ] Add unified AlphaEvolve task-specification bundle provenance.
+  - Spec evidence: AlphaEvolve Section 2.1 is explicitly a task
+    specification: the user provides the initial program/components to evolve,
+    evaluation code, prompt template/configuration, choice of existing or
+    custom LLMs, and optional background knowledge before the controller loop
+    begins.
+  - Current evidence: LibreEvolve manifests already record many pieces
+    separately: problem/source provenance, seed source records, evaluator
+    source hashes, redacted/hash-backed effective config fields, backend specs,
+    prompt variants, context-source diagnostics, and source-root provenance.
+    Those records are useful, but they do not form one paper-facing task-spec
+    contract that proves which exact user-provided inputs jointly defined a
+    run and how each maps to AlphaEvolve's task-spec fields.
+  - Required result: add a versioned task-spec bundle with initial program or
+    workspace ids, evolvable component spans, evaluator code/entrypoint ids,
+    prompt template/config ids, LLM choice/backend ids, optional background
+    knowledge/context ids, source hashes/redaction states, missing/unsupported
+    field diagnostics, and README/ROADMAP wording that distinguishes scattered
+    local provenance from an AlphaEvolve-style task specification artifact.
+
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem

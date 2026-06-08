@@ -461,6 +461,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reproduction from delivering each underlying AlphaEvolve workflow
     capability.
 
+- [ ] Keep task-specification roadmap wording scoped until a unified
+      AlphaEvolve input bundle exists.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 frame task
+    specification as one user-provided input bundle: initial program/components
+    to evolve, evaluation code, prompt template/configuration, LLM choices,
+    and optional background knowledge.
+  - Current evidence: `ROADMAP.md`, README, and manifests can describe
+    problem/source provenance, seed sources, evaluator sources, backend specs,
+    prompt variants, redacted/hash-backed effective config, and context-source
+    diagnostics. They do not yet require a single validated task-spec artifact
+    with AlphaEvolve field names, presence/omission status, source hashes,
+    redaction policy, and links from each input field to the run evidence it
+    controls.
+  - Required result: when task-spec bundle records land, update ROADMAP,
+    README, papers index, and code/paper TODOs with initial code/workspace
+    ids, evolvable spans, evaluator-code ids, prompt-template/config ids, LLM
+    choice ids, optional background-knowledge ids, hashes/redaction state, and
+    missing/unsupported-field diagnostics so roadmap wording separates
+    scattered local provenance from a coherent AlphaEvolve task specification.
+
 ## Missing Roadmap Items
 
 ## Existing Items That Need Tightening

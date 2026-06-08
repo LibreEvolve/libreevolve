@@ -139,6 +139,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     controller-state evidence, plus README/ROADMAP wording that separates local
     workflow diagrams from reproduced AlphaEvolve architecture evidence.
 
+- [ ] Track unified task-specification provenance separately from per-field
+      run metadata.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 2.
+  - Requirement: AlphaEvolve's task specification is a coherent user-provided
+    input bundle: initial program/components to evolve, evaluation code,
+    prompt template and configuration, choice of existing or custom LLMs, and
+    optional background knowledge.
+  - Partial status: LibreEvolve records problem/source provenance, seed source
+    rows, evaluator source hashes, backend specs, prompt variants,
+    redacted/hash-backed effective config, and context-source diagnostics.
+  - Current gap: paper-facing evidence does not yet assemble those records
+    into one validated task-spec artifact with AlphaEvolve field names,
+    source hashes, redaction status, field presence/omission diagnostics, and
+    links from each input field to the run, prompt, evaluator, and candidate
+    evidence it controls.
+  - Required result: add paper-facing task-spec bundle records with input-field
+    ids for initial code/workspace, evolvable spans, evaluator code,
+    prompt-template/config, LLM choices, and optional background knowledge;
+    include source hashes/redaction, unsupported/missing-field diagnostics, and
+    README/ROADMAP wording that separates a coherent AlphaEvolve task-spec
+    artifact from scattered local manifest provenance.
+
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.
   - Requirement: AlphaEvolve-style model orchestration should be able to

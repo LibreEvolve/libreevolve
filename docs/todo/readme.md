@@ -380,6 +380,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     partial or missing, and why process-diagram reproduction is separate from
     satisfying each underlying workflow capability.
 
+- [ ] Keep README task-specification wording scoped until a unified
+      AlphaEvolve input bundle exists.
+  - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 define a task
+    specification as the user-provided initial program/components, evaluation
+    code, prompt template and configuration, choice of existing or custom
+    LLMs, and optional background knowledge.
+  - Current evidence: README can accurately describe local problem folders,
+    seed source provenance, evaluator source hashes, prompt variants, backend
+    configuration, redacted/hash-backed effective config, and context-source
+    diagnostics. It should not imply that those scattered records already form
+    a single AlphaEvolve task-specification artifact with field-level
+    readiness, omission diagnostics, and links to run evidence.
+  - Required result: when a task-spec bundle lands, update README, ROADMAP,
+    papers index, and code/paper TODOs with initial-program/workspace ids,
+    evolvable spans, evaluator-code ids, prompt-template/config ids, backend/
+    LLM choice ids, optional background-knowledge ids, source hashes/redaction
+    status, and missing/unsupported field diagnostics.
+
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.
   - Spec evidence: AlphaEvolve-style experimental artifacts should be

@@ -6133,16 +6133,21 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track DeepEvolve deep-research/debug-loop paper evidence as a source-
       specific boundary.
   - Paper/source evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
-    Discovery by Augmenting AlphaEvolve with Deep Research`, presents
-    DeepEvolve as a workflow that combines algorithmic deep research with
-    AlphaEvolve-style selection. It defines a plan/search/write/code/evaluation/
+    Discovery by Augmenting AlphaEvolve with Deep Research`, by Gang Liu,
+    Yihan Zhu, Jie Chen, and Meng Jiang was submitted on October 7, 2025; the
+    cached PDF hash is
+    `e2f578c3b7979eb72857b1545b244405cf0fa8792bab82645e58c97cf3681f86`
+    and the PDF metadata declares CC BY 4.0. It presents DeepEvolve as a
+    workflow that combines algorithmic deep research with AlphaEvolve-style
+    selection. It defines a plan/search/write/code/evaluation/
     evolutionary-selection loop, uses external online research to generate
     proposals with pseudo-code, implements them through cross-file code edits,
     performs automatic debugging from execution feedback, stores algorithms in
     an evolutionary database for next/inspiration sampling, and evaluates nine
     tasks spanning molecular prediction, molecular translation, circle packing,
     Burgers equation, Parkinson's disease, nuclei image segmentation, Open
-    Vaccine, polymer prediction, and USP P2P.
+    Vaccine, polymer prediction, and USP P2P. The public code URL is
+    `https://github.com/liugangcode/deepevolve`.
   - Current gap: `papers/README.md` describes LibreEvolve's DeepResearch row as
     bounded retrieval context with cache/provenance surfaces, while explicitly
     excluding a DeepEvolve-style cross-file debugging/editing loop. Existing
@@ -6162,9 +6167,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     relation, Table 1 task/metric rows, Table 2 performance/runtime rows, Table
     3 debugging success-rate rows, Figure 3 originality/future-potential/
     difficulty judge records, deep-research ablation rows, 30-minute/single-GPU
-    budget evidence, and README/ROADMAP/code wording that keeps current
-    DeepResearch retrieval context marked missing for DeepEvolve execution
-    claims.
+    budget evidence, Table 4 ablation rows (`Molecule` best `0.797` without
+    deep research vs `0.815` with deep research; `Circle Packing` `2.735` vs
+    `2.981`), Appendix C user-query/hyperparameter rows, source/license
+    metadata, and README/ROADMAP/code wording that keeps current DeepResearch
+    retrieval context marked missing for DeepEvolve execution claims.
 
 - [ ] Track MAP-Elites illumination-algorithm paper evidence as a source-
       specific boundary.

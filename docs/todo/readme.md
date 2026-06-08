@@ -4476,7 +4476,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with deep research through planning, searching, writing proposals with
     pseudo-code, cross-file coding, evaluation, evolutionary selection,
     reflection checkpoints, debugging attempts, and nine benchmark tasks with
-    performance/runtime and execution-success tables.
+    performance/runtime and execution-success tables. Table 2 reports score
+    gains such as Molecular Translation `0.1885` to `0.2562`, Circle Packing
+    `0.3891` to `2.9806`, and Polymer Prediction `0.6770` to `0.7714`, while
+    Table 3 reports debugging success-rate gains such as Open Vaccine `0.130`
+    to `0.990` and Circle Packing `0.540` to `1.000`.
   - Current evidence: README says the DeepEvolve-inspired retrieval plugin
     injects best-effort arXiv/web-search summaries and explicitly states that
     it is not a full hypothesis-refinement loop, semantic literature selector,
@@ -4495,7 +4499,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     plan/search/write proposal artifacts, retrieved-source evidence,
     cross-file coding and debugging records, algorithm-description fields,
     benchmark/baseline/result rows, execution-success and ablation tables,
-    runtime/GPU budgets, and a clear distinction between bounded retrieval
+    runtime/GPU budgets, idea-quality judge records, paper license and code
+    repository status, and a clear distinction between bounded retrieval
     context and DeepEvolve execution semantics.
 
 - [ ] Keep README MAP-Elites wording scoped until illumination evidence exists.

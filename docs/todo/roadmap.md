@@ -4951,13 +4951,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Add DeepEvolve cross-file research/debug-loop gates before roadmap
       promotion.
   - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm Discovery
-    by Augmenting AlphaEvolve with Deep Research`, combines algorithmic deep
-    research and evolution through planning, searching, writing, cross-file
-    coding, evaluation, and evolutionary selection. It also adds reflection,
-    debugging attempts from execution feedback, algorithm-description records,
+    by Augmenting AlphaEvolve with Deep Research`, by Gang Liu et al. was
+    submitted on October 7, 2025 and combines algorithmic deep research and
+    evolution through planning, searching, writing, cross-file coding,
+    evaluation, and evolutionary selection. It also adds reflection, debugging
+    attempts from execution feedback, algorithm-description records,
     evolutionary database inspirations, MAP-Elites/island sampling, and
     effectiveness/runtime/debugging ablations over nine scientific benchmark
-    tasks.
+    tasks. The workflow explicitly uses a debugger template for multi-file
+    Python codebases, `DEEPEVOLVE` edit blocks, score-zero fallback after a
+    debugging budget, and 30-minute single-GPU constraints on several tasks.
   - Current evidence: ROADMAP tracks DeepEvolve-inspired retrieval only as
     bounded provenance moving toward audit-grade source integrity, README says
     the plugin is best-effort retrieval context rather than a systematic
@@ -4976,9 +4979,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and inspiration/MAP-Elites compatibility reports, Table 1 task/metric rows,
     Table 2 performance/runtime rows, Table 3 debugging success-rate rows,
     Figure 3 idea-quality judge records, deep-research ablation rows,
-    30-minute/single-GPU budget evidence, and README/papers/code wording that
-    keeps DeepEvolve as retrieval/debug-loop inspiration until local execution
-    evidence proves those semantics.
+    30-minute/single-GPU budget evidence, Table 4 deep-research ablation rows,
+    Appendix C user-query/hyperparameter records, CC BY 4.0 license and GitHub
+    repo status, and README/papers/code wording that keeps DeepEvolve as
+    retrieval/debug-loop inspiration until local execution evidence proves
+    those semantics.
 
 - [ ] Add MAP-Elites illumination-algorithm gates before roadmap promotion.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by

@@ -6675,15 +6675,22 @@ Primary evidence:
 - [ ] Add DeepEvolve cross-file research/debug-loop source boundary before
       retrieval-agent claims.
   - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
-    Discovery by Augmenting AlphaEvolve with Deep Research`, integrates
-    external deep research with algorithm evolution through six modules:
+    Discovery by Augmenting AlphaEvolve with Deep Research`, by Gang Liu,
+    Yihan Zhu, Jie Chen, and Meng Jiang was submitted on October 7, 2025; the
+    cached PDF hash is
+    `e2f578c3b7979eb72857b1545b244405cf0fa8792bab82645e58c97cf3681f86`
+    and the PDF metadata declares CC BY 4.0. It integrates external deep
+    research with algorithm evolution through six modules:
     planning research questions, web searching, writing a proposal with
     pseudo-code, coding across multiple files, evaluation, and evolutionary
     selection. The paper adds reflection checkpoints, cross-file edit
     localization, debugging attempts from execution feedback, a database with
     algorithm descriptions and inspirations, MAP-Elites/islands selection, and
     nine benchmark tasks across chemistry, mathematics, biology, materials, and
-    patents.
+    patents. The public code URL is `https://github.com/liugangcode/deepevolve`;
+    extracted links also include OpenEvolve, OpenAI/Google Deep Research pages,
+    and Kaggle/source URLs for molecular translation, Parkinson's disease,
+    nuclei image, Open Vaccine, polymer prediction, and USP P2P.
   - Current evidence: `libreevolve/plugins/deep_research.py` implements bounded
     arXiv/web-search context, query construction, cache snapshots, redacted
     payload sidecars, source-ranking provenance, lexical grounding, and
@@ -6695,7 +6702,9 @@ Primary evidence:
     no implementation-difficulty/originality/future-potential scoring, no
     debugging-attempt budget with score-zero fallback, no reflection-agent
     checkpoints, no algorithm textual description record, no nine-task
-    benchmark fixtures, and no success-rate/ablation report tied to this paper.
+    benchmark fixtures, no `DEEPEVOLVE` block reachability checks, no
+    30-minute/single-GPU budget records, and no success-rate/ablation report
+    tied to this paper.
   - Required result: add source-boundary metadata and implementation gates for
     `2510.06056`: arXiv version/date/PDF hash, code repository status,
     problem/input schema for evaluation code/data/textualization/user
@@ -6708,7 +6717,10 @@ Primary evidence:
     evolutionary database inspiration records, MAP-Elites/island compatibility,
     benchmark rows for the nine paper tasks, Table 2 performance/runtime
     values, Table 3 debugging success-rate values, deep-research ablation rows,
-    runtime/GPU budget records, and README/ROADMAP wording that keeps current
+    runtime/GPU budget records, Figure 3 LLM-as-judge originality/future-
+    potential/difficulty records, Table 4 deep-research ablation rows for
+    Molecular Prediction and Circle Packing, Appendix C user-query and
+    hyperparameter records, and README/ROADMAP wording that keeps current
     retrieval context separate from DeepEvolve execution semantics.
 
 - [ ] Add MAP-Elites illumination-algorithm source boundary before archive

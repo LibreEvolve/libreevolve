@@ -307,6 +307,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     contributor, manuscript-writing, paper-input, and corresponding-author
     records from AlphaEvolve technical capability or validation evidence.
 
+- [ ] Keep README source-affiliation wording scoped until title-page
+      affiliation metadata exists.
+  - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
+    affiliation line `Google DeepMind1` and footnotes `1See Acknowledgments and
+    Author information section.` and `*Equal contributions.`
+  - Current evidence: README states LibreEvolve is independent and not
+    affiliated with or endorsed by Google DeepMind, and active TODOs cover
+    publication-author roles plus source-PDF version/rights metadata. README
+    does not document paper-source affiliation/organization metadata, title-page
+    footnote text, author-marker mapping, or how those paper-source facts
+    differ from local project affiliation and endorsement boundaries.
+  - Required result: when title-page affiliation metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README separates
+    source-paper affiliation and equal-contribution footnotes from
+    LibreEvolve's independent project status, publication-author metadata, and
+    AlphaEvolve technical capability evidence.
+
 - [ ] Keep README system-development provenance scoped until contribution-role
       evidence exists.
   - Spec evidence: AlphaEvolve's Contributions section separately attributes

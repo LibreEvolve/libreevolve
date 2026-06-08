@@ -272,6 +272,26 @@ Primary evidence:
     README/ROADMAP wording that separates publication metadata from technical
     implementation, validation, artifact-creation, and acknowledgement roles.
 
+- [ ] Add AlphaEvolve title-page affiliation and footnote provenance.
+  - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author
+    list followed by `Google DeepMind1`, and the title-page footnotes state
+    `1See Acknowledgments and Author information section.` and `*Equal
+    contributions.`
+  - Current evidence: existing TODOs require publication-author metadata for
+    equal contributors, manuscript writers, paper-input contributors, and
+    corresponding authors. They do not separately preserve the title-page
+    affiliation/organization line, affiliation footnote, footnote marker
+    mapping from author names to equal-contribution status, or docs wording
+    that distinguishes source-paper affiliation from LibreEvolve's independent
+    non-affiliation statement.
+  - Required result: add publication-source metadata and validators for
+    title-page affiliation evidence: affiliation/organization text, marker id,
+    footnote text and page, author-to-marker mapping, source-page locator,
+    privacy/redaction policy, and README/ROADMAP wording that separates
+    paper-source affiliation/footnote provenance from local project ownership,
+    endorsement, publication-author roles, and technical implementation
+    provenance.
+
 - [ ] Add core system-development contribution provenance.
   - Spec evidence: AlphaEvolve's Contributions section attributes the initial
     system design/implementation, project vision and problem scoping, first

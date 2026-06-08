@@ -5614,3 +5614,36 @@ Primary evidence:
     checker outputs, and README/ROADMAP wording that keeps ArchAgent-style
     architecture discovery as missing evidence until local implementation and
     benchmark reports exist.
+
+- [ ] Add AlphaEvolve Fault2Flow workflow-automation boundary.
+  - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized
+    Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation`,
+    was submitted November 17, 2025. Its abstract frames power-grid fault
+    diagnosis as a manual, regulation-heavy workflow problem. Fault2Flow
+    extracts and structures regulatory logic into PASTA-formatted fault trees,
+    integrates expert knowledge through a human-in-the-loop verification
+    interface, optimizes reasoning logic using an AlphaEvolve module, and
+    synthesizes verified logic into n8n-executable workflows. The abstract
+    reports transformer fault-diagnosis validation with `100%` topological
+    consistency and high semantic fidelity.
+  - Current evidence: `papers/README.md` lists `2511.12916` only as
+    background AlphaEvolve-optimized workflow application context with no
+    fault-to-workflow or human-in-the-loop multi-agent benchmark. LibreEvolve
+    has no first-class code TODO for this source, no regulatory-text to PASTA
+    fault-tree candidate schema, no expert-verification workflow, no n8n
+    workflow emitter, no transformer fault-diagnosis dataset fixture, no
+    topological-consistency or semantic-fidelity metric contract, no
+    AlphaEvolve reasoning-logic optimization boundary, and no artifact policy
+    for verified operational workflows.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2511.12916`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve workflow/fault-diagnosis fixtures, regulatory-source
+    provenance, PASTA fault-tree candidate schema, expert-review state
+    records, reasoning-logic optimization candidate records, n8n workflow
+    artifact schema, transformer fault-diagnosis dataset provenance,
+    topological-consistency and semantic-fidelity metric definitions,
+    human-in-the-loop audit logs, seed/budget records, independent checker
+    outputs, and README/ROADMAP wording that keeps Fault2Flow-style
+    fault-to-workflow automation as missing evidence until local
+    implementation and benchmark reports exist.

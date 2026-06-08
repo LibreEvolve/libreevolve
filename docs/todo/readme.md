@@ -3724,4 +3724,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Avoid implying LibreEvolve supports AlphaEvolve-style ArchAgent computer-
     architecture discovery without those artifacts.
 
+- [ ] Keep README AlphaEvolve Fault2Flow workflow-automation claims absent or
+      source-scoped until fault-to-workflow benchmark evidence exists.
+  - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized
+    Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation`,
+    uses an AlphaEvolve module to optimize reasoning logic in a workflow that
+    extracts regulatory logic into PASTA fault trees, incorporates expert
+    verification, and emits n8n-executable workflows. Its abstract reports
+    transformer fault-diagnosis validation with `100%` topological consistency
+    and high semantic fidelity.
+  - Current evidence: README documents general plugins, paper-cache status,
+    benchmark-report contracts, and smoke fixtures. It does not mention
+    `2511.12916`, parse regulatory fault-diagnosis text into PASTA fault
+    trees, model expert verification states, optimize reasoning logic for
+    fault workflows, emit n8n workflows, preserve transformer fault-diagnosis
+    dataset provenance, or report topological-consistency and semantic-
+    fidelity metrics.
+  - Required result: if README mentions Fault2Flow, fault-to-workflow
+    automation, PASTA fault trees, power-grid fault diagnosis, regulatory
+    logic extraction, human-in-the-loop expert verification, n8n workflow
+    synthesis, AlphaEvolve-optimized reasoning logic, topological consistency,
+    or semantic fidelity, keep the wording source-scoped until local artifacts
+    can show the paper in the manifest, candidate schemas, expert-review
+    records, workflow artifacts, dataset provenance, metric definitions,
+    independent checker outputs, and benchmark reports. Avoid implying
+    LibreEvolve supports AlphaEvolve-style Fault2Flow automation without those
+    artifacts.
+
 ## Architecture Description

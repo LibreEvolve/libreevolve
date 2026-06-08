@@ -5187,3 +5187,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproducibility status, and README/ROADMAP wording that treats ArchAgent-
     style computer-architecture discovery as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track AlphaEvolve Fault2Flow workflow-automation paper evidence.
+  - Paper/source evidence: arXiv `2511.12916`, submitted November 17, 2025, is
+    titled `Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop Multi-Agent
+    System for Fault-to-Workflow Automation`. Its abstract says Fault2Flow
+    addresses power-grid fault diagnosis by extracting regulatory logic into
+    PASTA-formatted fault trees, adding expert knowledge through a human-in-
+    the-loop verification interface, optimizing reasoning logic with a novel
+    AlphaEvolve module, and synthesizing final verified logic into n8n-
+    executable workflows. It reports transformer fault-diagnosis validation
+    with `100%` topological consistency and high semantic fidelity.
+  - Current gap: `papers/README.md` lists `2511.12916` as background-only
+    AlphaEvolve-optimized workflow application context with no fault-to-
+    workflow or human-in-the-loop multi-agent benchmark, and the active TODO
+    coverage does not yet track this paper-specific evidence. Broad
+    framework/plugin gaps do not capture regulatory-source provenance, PASTA
+    fault-tree schemas, expert verification states, reasoning-logic
+    optimization records, n8n workflow artifacts, transformer fault-diagnosis
+    datasets, or topology/semantic metrics.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2511.12916`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve workflow assumptions, regulatory-text source provenance,
+    PASTA fault-tree candidate schemas, expert-review/human-in-the-loop state
+    records, reasoning-logic optimization metadata, n8n workflow artifact
+    schema, transformer fault-diagnosis dataset provenance, topological-
+    consistency and semantic-fidelity metric definitions, seed/budget
+    records, independent checker outputs, reproducibility status, and
+    README/ROADMAP wording that treats Fault2Flow-style fault-to-workflow
+    automation as missing paper evidence rather than implemented LibreEvolve
+    support.

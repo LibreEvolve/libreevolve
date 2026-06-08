@@ -4154,3 +4154,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     independent checker outputs, and a background-only or benchmark-fixture
     status rule so roadmap claims do not outpace local AlphaEvolve-style
     ArchAgent computer-architecture support.
+
+- [ ] Add AlphaEvolve Fault2Flow workflow-automation gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2511.12916`, submitted November 17, 2025,
+    introduces `Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop
+    Multi-Agent System for Fault-to-Workflow Automation`. The abstract says
+    Fault2Flow extracts regulatory logic into PASTA-formatted fault trees,
+    integrates expert verification, optimizes reasoning logic with an
+    AlphaEvolve module, synthesizes n8n-executable workflows, and validates on
+    transformer fault-diagnosis datasets with `100%` topological consistency
+    and high semantic fidelity.
+  - Current evidence: ROADMAP tracks general plugins, systems benchmarks, and
+    background paper-index rows, but it does not promote `2511.12916` beyond
+    background-only status. It does not define a regulatory-text ingestion
+    gate, PASTA fault-tree schema, expert-verification workflow, reasoning-
+    logic optimization record, n8n workflow emitter, transformer fault-
+    diagnosis dataset contract, topological-consistency metric, semantic-
+    fidelity metric, or operational workflow artifact policy.
+  - Required result: add roadmap gates for `2511.12916`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    regulatory-source provenance, PASTA fault-tree candidate schema,
+    human-in-the-loop expert-review state records, reasoning-logic
+    optimization candidate records, n8n workflow artifact schema, transformer
+    fault-diagnosis dataset provenance, topological-consistency and semantic-
+    fidelity metric definitions, seed/budget records, independent checker
+    outputs, and a background-only or benchmark-fixture status rule so
+    roadmap claims do not outpace local AlphaEvolve-style Fault2Flow
+    automation support.

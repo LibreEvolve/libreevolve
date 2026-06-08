@@ -4261,4 +4261,33 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     rows, model/seed/step provenance, and a clear distinction between fixed
     token-pattern factor guidance and CausalEvolve causal-scratchpad execution.
 
+- [ ] Keep README DeepEvolve wording scoped until cross-file research/debug
+      loop evidence exists.
+  - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm Discovery
+    by Augmenting AlphaEvolve with Deep Research`, augments algorithm evolution
+    with deep research through planning, searching, writing proposals with
+    pseudo-code, cross-file coding, evaluation, evolutionary selection,
+    reflection checkpoints, debugging attempts, and nine benchmark tasks with
+    performance/runtime and execution-success tables.
+  - Current evidence: README says the DeepEvolve-inspired retrieval plugin
+    injects best-effort arXiv/web-search summaries and explicitly states that
+    it is not a full hypothesis-refinement loop, semantic literature selector,
+    source-content verification system, or systematic DeepEvolve-style
+    debug/refinement loop. Existing README TODOs scope retrieval provenance,
+    but README does not require a `2510.06056` source-specific boundary for
+    plan/search/write artifacts, proposal pseudo-code, cross-file edit
+    localization, debugging attempts, reflection agents, algorithm-description
+    records, nine-task benchmark rows, runtime budgets, execution-success
+    ablations, or qualitative idea-scoring claims.
+  - Required result: if README mentions DeepEvolve, deep research, proposal
+    writing, cross-file code editing, automatic debugging, reflection,
+    hypothesis refinement, external research-guided evolution, or DeepEvolve
+    benchmark improvements, keep wording source-scoped until manifests and
+    reports include the `2510.06056` source row, PDF/code hashes,
+    plan/search/write proposal artifacts, retrieved-source evidence,
+    cross-file coding and debugging records, algorithm-description fields,
+    benchmark/baseline/result rows, execution-success and ablation tables,
+    runtime/GPU budgets, and a clear distinction between bounded retrieval
+    context and DeepEvolve execution semantics.
+
 ## Architecture Description

@@ -4696,3 +4696,35 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provenance, seed and step schedules, and README/papers/code wording that
     keeps CausalEvolve as causal-guidance inspiration until local evidence
     proves causal-scratchpad semantics.
+
+- [ ] Add DeepEvolve cross-file research/debug-loop gates before roadmap
+      promotion.
+  - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm Discovery
+    by Augmenting AlphaEvolve with Deep Research`, combines algorithmic deep
+    research and evolution through planning, searching, writing, cross-file
+    coding, evaluation, and evolutionary selection. It also adds reflection,
+    debugging attempts from execution feedback, algorithm-description records,
+    evolutionary database inspirations, MAP-Elites/island sampling, and
+    effectiveness/runtime/debugging ablations over nine scientific benchmark
+    tasks.
+  - Current evidence: ROADMAP tracks DeepEvolve-inspired retrieval only as
+    bounded provenance moving toward audit-grade source integrity, README says
+    the plugin is best-effort retrieval context rather than a systematic
+    DeepEvolve debug/refinement loop, and `papers/README.md` excludes cross-file
+    debugging/editing. Roadmap lacks `2510.06056`-specific gates for the
+    six-module workflow, proposal writing, cross-file coding, debugging-budget
+    execution traces, reflection checkpoints, algorithm-description metadata,
+    source/repository status, nine-task benchmark reports, runtime/GPU budgets,
+    qualitative idea-scoring records, and deep-research ablations.
+  - Required result: add roadmap gates for `2510.06056`: paper/source manifest
+    entry, PDF/cache hash, code/source status, problem/input and user-
+    instruction schemas, plan/search/write proposal records, pseudo-code
+    artifacts, retrieved-source provenance, cross-file delimiter/localization
+    policy, self-reflection and debugging attempt records, execution
+    warning/error traces, score-zero fallback semantics, evolutionary database
+    and inspiration/MAP-Elites compatibility reports, Table 1 task/metric rows,
+    Table 2 performance/runtime rows, Table 3 debugging success-rate rows,
+    Figure 3 idea-quality judge records, deep-research ablation rows,
+    30-minute/single-GPU budget evidence, and README/papers/code wording that
+    keeps DeepEvolve as retrieval/debug-loop inspiration until local execution
+    evidence proves those semantics.

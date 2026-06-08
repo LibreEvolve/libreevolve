@@ -6264,3 +6264,42 @@ Primary evidence:
     CausalPlanner(Meta), and COAT, model/runtime provenance, and README/ROADMAP
     wording that keeps current token-pattern factor guidance separate from
     CausalEvolve-style causal discovery.
+
+- [ ] Add DeepEvolve cross-file research/debug-loop source boundary before
+      retrieval-agent claims.
+  - Spec evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
+    Discovery by Augmenting AlphaEvolve with Deep Research`, integrates
+    external deep research with algorithm evolution through six modules:
+    planning research questions, web searching, writing a proposal with
+    pseudo-code, coding across multiple files, evaluation, and evolutionary
+    selection. The paper adds reflection checkpoints, cross-file edit
+    localization, debugging attempts from execution feedback, a database with
+    algorithm descriptions and inspirations, MAP-Elites/islands selection, and
+    nine benchmark tasks across chemistry, mathematics, biology, materials, and
+    patents.
+  - Current evidence: `libreevolve/plugins/deep_research.py` implements bounded
+    arXiv/web-search context, query construction, cache snapshots, redacted
+    payload sidecars, source-ranking provenance, lexical grounding, and
+    non-authoritative prompt wrappers. README and `papers/README.md` state that
+    this is not a DeepEvolve-style hypothesis-refinement or cross-file
+    debugging loop. Existing active TODOs cover retrieval transport and source
+    integrity, but there is no source-specific code TODO for `2510.06056`, no
+    plan/search/write proposal lifecycle, no multi-file edit delimiter schema,
+    no implementation-difficulty/originality/future-potential scoring, no
+    debugging-attempt budget with score-zero fallback, no reflection-agent
+    checkpoints, no algorithm textual description record, no nine-task
+    benchmark fixtures, and no success-rate/ablation report tied to this paper.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2510.06056`: arXiv version/date/PDF hash, code repository status,
+    problem/input schema for evaluation code/data/textualization/user
+    instructions, algorithm-description schema with motivation, summary,
+    pseudo-code, score, originality, future potential, and implementation
+    difficulty, plan/search/write proposal artifacts, external source
+    provenance beyond current bounded retrieval context, cross-file coding
+    region delimiters and localization records, self-reflection and debugging
+    attempt records with execution errors/warnings and fallback scoring,
+    evolutionary database inspiration records, MAP-Elites/island compatibility,
+    benchmark rows for the nine paper tasks, Table 2 performance/runtime
+    values, Table 3 debugging success-rate values, deep-research ablation rows,
+    runtime/GPU budget records, and README/ROADMAP wording that keeps current
+    retrieval context separate from DeepEvolve execution semantics.

@@ -5802,3 +5802,39 @@ directory and using the AlphaEvolve paper as the primary specification.
     Grok-4.1-fast-reasoning model provenance, environment-shift/generalization
     caveats, and README/ROADMAP/code wording that keeps local fixed regex
     factor guidance marked missing for CausalEvolve causal-scratchpad claims.
+
+- [ ] Track DeepEvolve deep-research/debug-loop paper evidence as a source-
+      specific boundary.
+  - Paper/source evidence: local arXiv `2510.06056v1`, `Scientific Algorithm
+    Discovery by Augmenting AlphaEvolve with Deep Research`, presents
+    DeepEvolve as a workflow that combines algorithmic deep research with
+    AlphaEvolve-style selection. It defines a plan/search/write/code/evaluation/
+    evolutionary-selection loop, uses external online research to generate
+    proposals with pseudo-code, implements them through cross-file code edits,
+    performs automatic debugging from execution feedback, stores algorithms in
+    an evolutionary database for next/inspiration sampling, and evaluates nine
+    tasks spanning molecular prediction, molecular translation, circle packing,
+    Burgers equation, Parkinson's disease, nuclei image segmentation, Open
+    Vaccine, polymer prediction, and USP P2P.
+  - Current gap: `papers/README.md` describes LibreEvolve's DeepResearch row as
+    bounded retrieval context with cache/provenance surfaces, while explicitly
+    excluding a DeepEvolve-style cross-file debugging/editing loop. Existing
+    active TODOs focus on transport, replay, and source-integrity evidence, but
+    do not preserve the full DeepEvolve PDF as a source-specific boundary with
+    six-module workflow semantics, algorithm-description fields, cross-file
+    coding, reflection, debugging counts, nine-task benchmarks, runtime
+    budgets, execution-success ablations, qualitative idea scoring, or
+    repository/source status.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2510.06056`: title/authors/arXiv version/date/PDF digest, source/license
+    status for `liugangcode/deepevolve`, task/input schema, textualization
+    function, user-instruction fields, plan/search/write proposal artifacts,
+    retrieved-source provenance, pseudo-code proposal schema, cross-file code
+    delimiter/localization records, reflection and debugging policies, score-
+    zero fallback semantics, evolutionary database and inspiration/MAP-Elites
+    relation, Table 1 task/metric rows, Table 2 performance/runtime rows, Table
+    3 debugging success-rate rows, Figure 3 originality/future-potential/
+    difficulty judge records, deep-research ablation rows, 30-minute/single-GPU
+    budget evidence, and README/ROADMAP/code wording that keeps current
+    DeepResearch retrieval context marked missing for DeepEvolve execution
+    claims.

@@ -3627,20 +3627,22 @@ Primary evidence:
     56 years, to achieve rank less than 49 over a characteristic-zero field,
     while distinguishing recursive Strassen rank 49 over any field and Fawzi
     et al.'s rank-47 result for the field with two elements.
-  - Current evidence: Appendix A matrix TODOs track best-known-rank citations,
-    Table 2/Table 3 exhibit provenance, target-subset scope, scalar-field
-    evidence, Figure 4/Figure 9 exhibits, and companion Colab decomposition
-    links. They do not require a single auditable headline record tying the
-    4x4 complex rank-48 claim to its historicity context, prior-algorithm
-    comparison, characteristic caveat, source locations, and docs wording.
-    Without that, README/ROADMAP/papers text can cite rank 48 or stored matrix
-    rows without proving the stronger "first improvement after 56 years" claim.
-  - Required result: add matrix-headline provenance with target id, dimensions,
-    scalar field/characteristic, reported rank, prior Strassen rank and scope,
-    finite-field Fawzi-rank caveat, bibliography reference ids, source
-    page/span locations for the abstract and Section 3.1, decomposition/
-    certificate/Colab linkage, and README/ROADMAP/papers validation that keeps
-    rank-value evidence separate from historicity and field-scope claims.
+  - Current evidence: `libreevolve.matrix_headline_historicity_evidence.v1`
+    now validates a declared headline record tying the 4x4 complex rank-48
+    claim to target id, dimensions, rank, scalar-field/characteristic scope,
+    56-year first-below-49 flags, Strassen/Fawzi prior comparisons, source
+    refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
+    and companion Colab evidence. It is still a schema contract only: local
+    matrix benchmark runners do not emit the headline JSON, source-ref
+    extraction, decomposition/certificate links, or companion-notebook digest
+    needed to prove the stronger historicity claim from concrete artifacts.
+  - Required result: emit and commit matrix-headline provenance artifacts with
+    target id, dimensions, scalar field/characteristic, reported rank, prior
+    Strassen rank and scope, finite-field Fawzi-rank caveat, bibliography
+    reference ids, source page/span locations for the abstract and Section 3.1,
+    decomposition/certificate/Colab linkage, and README/ROADMAP/papers
+    validation that keeps rank-value evidence separate from historicity and
+    field-scope claims.
 
 - [ ] Add Table 2/Table 3 matrix-rank table exhibit provenance.
   - Spec evidence: AlphaEvolve Table 2 displays selected matrix tensor-rank

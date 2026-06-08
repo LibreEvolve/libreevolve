@@ -5,6 +5,7 @@ import pytest
 
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_HEADLINE_HISTORICITY_SCHEMA,
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
@@ -12,11 +13,13 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_SWEEP_SPACE_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     matrix_result_artifact_inventory,
+    render_matrix_headline_historicity_summary,
     render_matrix_near_integrality_summary,
     render_matrix_result_summary,
     render_matrix_scalar_field_summary,
     render_matrix_sweep_space_summary,
     render_matrix_tensor_rank_summary,
+    validate_matrix_headline_historicity_evidence,
     validate_matrix_near_integrality_evidence,
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
@@ -866,3 +869,165 @@ def test_render_matrix_tensor_rank_summary_reports_shape():
     assert "| claim_count | 1 |" in summary
     assert "| tensor_decomposition_count | 1 |" in summary
     assert "| recursive_applicable_count | 1 |" in summary
+
+
+def _valid_headline_historicity_evidence() -> dict:
+    return {
+        "schema": MATRIX_HEADLINE_HISTORICITY_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "dimensions": [4, 4, 4],
+        "source_refs": [
+            {
+                "source": "AlphaEvolve abstract",
+                "page": 1,
+                "span": "abstract matrix multiplication sentence",
+                "claim": "4x4 complex-valued matrices using 48 scalar multiplications",
+            },
+            {
+                "source": "AlphaEvolve Section 3.1",
+                "page": 10,
+                "span": "matrix multiplication historicity paragraph",
+                "claim": "first method in 56 years to find rank below 49 over a characteristic-zero field",
+            },
+        ],
+        "headline_claim": {
+            "target_id": "mm_4x4x4",
+            "rank": 48,
+            "multiplication_count": 48,
+            "scalar_field": "complex",
+            "characteristic": "zero",
+            "first_characteristic_zero_rank_below_49": True,
+            "rank_below_strassen_recursive": True,
+            "finite_field_only_prior_distinguished": True,
+            "claim_text": "AlphaEvolve is the first method in 56 years to find rank below 49 over a characteristic-zero field.",
+            "source_ref": "AlphaEvolve Section 3.1 page 10",
+        },
+        "prior_comparisons": [
+            {
+                "prior_id": "strassen_recursive",
+                "rank": 49,
+                "field_scope": "any_field",
+                "characteristic_scope": "any_characteristic",
+                "recursive_applicable": True,
+                "reference_id": "95",
+            },
+            {
+                "prior_id": "fawzi_f2",
+                "rank": 47,
+                "field_scope": "finite_field_2",
+                "characteristic_scope": "positive",
+                "alphaevolve_comparable_characteristic_zero": False,
+                "reference_id": "26",
+            },
+        ],
+        "evidence_links": {
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "scalar_field_evidence_ref": "matrix/mm_4x4x4/scalar_field.json",
+            "tensor_rank_evidence_ref": "matrix/mm_4x4x4/tensor_rank.json",
+            "figure4_exhibit_ref": "exhibits/figure4_mm_4x4x4.json",
+            "figure9_exhibit_ref": "exhibits/figure9_mm_4x4x4.json",
+            "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
+        },
+    }
+
+
+def test_matrix_headline_historicity_evidence_accepts_rank48_context():
+    evidence = _valid_headline_historicity_evidence()
+
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.prior_comparison_count == 2
+    assert validation.source_ref_count == 2
+    assert validation.issues == []
+
+
+def test_matrix_headline_historicity_evidence_rejects_headline_scope_drift():
+    evidence = _valid_headline_historicity_evidence()
+    evidence["target_id"] = "mm_4x4x8"
+    evidence["dimensions"] = [4, 4, 8]
+    claim = evidence["headline_claim"]
+    claim["rank"] = 49
+    claim["multiplication_count"] = 49
+    claim["scalar_field"] = "finite_field"
+    claim["characteristic"] = "positive"
+    claim["first_characteristic_zero_rank_below_49"] = False
+    claim["rank_below_strassen_recursive"] = False
+    claim["finite_field_only_prior_distinguished"] = False
+    claim["claim_text"] = "rank 49 over a finite field"
+
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_headline_target" in codes
+    assert "invalid_headline_dimensions" in codes
+    assert "invalid_headline_rank" in codes
+    assert "invalid_multiplication_count" in codes
+    assert "invalid_headline_scalar_field" in codes
+    assert "invalid_headline_characteristic" in codes
+    assert "missing_first_characteristic_zero_rank_below_49" in codes
+    assert "missing_rank_below_strassen_recursive" in codes
+    assert "missing_finite_field_only_prior_distinguished" in codes
+    assert "missing_56_year_wording" in codes
+    assert "missing_characteristic_zero_first_wording" in codes
+
+
+def test_matrix_headline_historicity_evidence_rejects_bad_prior_context():
+    evidence = _valid_headline_historicity_evidence()
+    evidence["prior_comparisons"][0]["rank"] = 48
+    evidence["prior_comparisons"][0]["field_scope"] = "complex"
+    evidence["prior_comparisons"][0]["recursive_applicable"] = False
+    evidence["prior_comparisons"][1]["field_scope"] = "complex"
+    evidence["prior_comparisons"][1]["alphaevolve_comparable_characteristic_zero"] = True
+    evidence["prior_comparisons"][1]["reference_id"] = "95"
+
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_strassen_rank" in codes
+    assert "invalid_strassen_field_scope" in codes
+    assert "invalid_strassen_recursive_applicability" in codes
+    assert "invalid_fawzi_field_scope" in codes
+    assert "invalid_fawzi_zero_characteristic_comparability" in codes
+    assert "invalid_fawzi_reference" in codes
+
+    evidence = _valid_headline_historicity_evidence()
+    evidence["prior_comparisons"] = [evidence["prior_comparisons"][0]]
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_fawzi_prior" in codes
+
+
+def test_matrix_headline_historicity_evidence_requires_sources_and_links():
+    evidence = _valid_headline_historicity_evidence()
+    evidence["source_refs"] = [{"source": "", "page": 0, "claim": ""}]
+    evidence["headline_claim"]["source_ref"] = ""
+    evidence["evidence_links"]["matrix_result_ref"] = ""
+    del evidence["evidence_links"]["companion_colab_ref"]
+
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_source_ref_source" in codes
+    assert "invalid_source_ref_page" in codes
+    assert "missing_source_ref_claim" in codes
+    assert "missing_headline_source_ref" in codes
+    assert "missing_matrix_result_ref" in codes
+    assert "missing_companion_colab_ref" in codes
+
+
+def test_render_matrix_headline_historicity_summary_reports_shape():
+    summary = render_matrix_headline_historicity_summary(_valid_headline_historicity_evidence())
+
+    assert "Matrix headline historicity evidence" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| target_id | mm_4x4x4 |" in summary
+    assert "| prior_comparison_count | 2 |" in summary
+    assert "| source_ref_count | 2 |" in summary

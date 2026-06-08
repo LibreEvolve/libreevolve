@@ -801,6 +801,13 @@ Implemented:
   scope, recursive applicability, target-tensor links, exactness-certificate
   links, and source-note caveats for non-recursive algorithms, but no local
   matrix benchmark runner emits those target-tensor/certificate artifacts yet.
+  `libreevolve.matrix_headline_historicity_evidence.v1` validates declared
+  provenance for the `mm_4x4x4` complex rank-48 headline, including
+  characteristic-zero scope, 56-year first-below-49 wording flags, recursive
+  Strassen rank-49 comparison, finite-field-only Fawzi rank-47 caveat, source
+  refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
+  and companion Colab evidence. No local matrix benchmark runner emits those
+  headline/source/decomposition/certificate artifacts yet.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

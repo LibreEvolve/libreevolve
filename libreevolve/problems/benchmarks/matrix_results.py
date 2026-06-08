@@ -21,6 +21,7 @@ MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v
 MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
 MATRIX_SCALAR_FIELD_SCHEMA = "libreevolve.matrix_scalar_field_evidence.v1"
 MATRIX_TENSOR_RANK_SCHEMA = "libreevolve.matrix_tensor_rank_evidence.v1"
+MATRIX_HEADLINE_HISTORICITY_SCHEMA = "libreevolve.matrix_headline_historicity_evidence.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
@@ -47,6 +48,23 @@ MATRIX_ALGORITHM_KINDS = frozenset(
     {
         "matrix_multiplication_tensor_decomposition",
         "non_tensor_multiplication_algorithm",
+    }
+)
+MATRIX_HEADLINE_TARGET_ID = "mm_4x4x4"
+MATRIX_HEADLINE_DIMENSIONS = [4, 4, 4]
+MATRIX_HEADLINE_RANK = 48
+MATRIX_HEADLINE_BASELINE_RANKS = {
+    "strassen_recursive": 49,
+    "fawzi_f2": 47,
+}
+MATRIX_HEADLINE_EVIDENCE_LINK_FIELDS = frozenset(
+    {
+        "matrix_result_ref",
+        "scalar_field_evidence_ref",
+        "tensor_rank_evidence_ref",
+        "figure4_exhibit_ref",
+        "figure9_exhibit_ref",
+        "companion_colab_ref",
     }
 )
 TENSOR_CERTIFICATE_SCOPES = frozenset(
@@ -170,6 +188,15 @@ class MatrixTensorRankValidation:
     claim_count: int
     tensor_decomposition_count: int
     recursive_applicable_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixHeadlineHistoricityValidation:
+    ok: bool
+    target_id: str | None
+    prior_comparison_count: int
+    source_ref_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -513,6 +540,34 @@ def validate_matrix_tensor_rank_evidence(
     )
 
 
+def validate_matrix_headline_historicity_evidence(
+    evidence: object | str | Path,
+) -> MatrixHeadlineHistoricityValidation:
+    """Validate provenance for the 4x4 complex rank-48 historicity headline."""
+    data, read_issues = _load_report(evidence)
+    if read_issues:
+        return MatrixHeadlineHistoricityValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_HEADLINE_HISTORICITY_SCHEMA:
+        issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix headline historicity schema"))
+    target_id = _text_field(data, "target_id", issues)
+    target_suite = _text_field(data, "target_suite", issues)
+    dimensions = data.get("dimensions")
+    _validate_headline_target(target_suite, target_id, dimensions, issues)
+    source_ref_count = _validate_headline_source_refs(data.get("source_refs"), issues)
+    _validate_headline_claim(data.get("headline_claim"), target_id, issues)
+    prior_count = _validate_headline_prior_comparisons(data.get("prior_comparisons"), issues)
+    _validate_headline_evidence_links(data.get("evidence_links"), issues)
+    return MatrixHeadlineHistoricityValidation(
+        ok=not issues,
+        target_id=target_id,
+        prior_comparison_count=prior_count,
+        source_ref_count=source_ref_count,
+        issues=issues,
+    )
+
+
 def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
     validation = validate_matrix_near_integrality_evidence(evidence)
     status = "ok" if validation.ok else "invalid"
@@ -564,6 +619,25 @@ def render_matrix_tensor_rank_summary(evidence: dict[str, Any]) -> str:
         f"| claim_count | {validation.claim_count} |",
         f"| tensor_decomposition_count | {validation.tensor_decomposition_count} |",
         f"| recursive_applicable_count | {validation.recursive_applicable_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_headline_historicity_summary(evidence: dict[str, Any]) -> str:
+    validation = validate_matrix_headline_historicity_evidence(evidence)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix headline historicity evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| target_id | {validation.target_id or '<unknown>'} |",
+        f"| prior_comparison_count | {validation.prior_comparison_count} |",
+        f"| source_ref_count | {validation.source_ref_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -918,6 +992,161 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixResultIssue("invalid_shape", "matrix result report must be a JSON object")]
+
+
+def _validate_headline_target(
+    target_suite: str | None,
+    target_id: str | None,
+    dimensions: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_suite != APPENDIX_A_TARGET_SUITE:
+        issues.append(MatrixResultIssue("invalid_target_suite", "headline evidence must target AlphaEvolve Appendix A"))
+    if target_id != MATRIX_HEADLINE_TARGET_ID:
+        issues.append(MatrixResultIssue("invalid_headline_target", "headline historicity evidence must target mm_4x4x4"))
+    if dimensions != MATRIX_HEADLINE_DIMENSIONS:
+        issues.append(MatrixResultIssue("invalid_headline_dimensions", "headline historicity dimensions must be [4, 4, 4]"))
+    if target_id == MATRIX_HEADLINE_TARGET_ID and target_suite == APPENDIX_A_TARGET_SUITE:
+        _validate_known_target_dimensions(target_id, MATRIX_HEADLINE_DIMENSIONS, issues)
+
+
+def _validate_headline_source_refs(value: object, issues: list[MatrixResultIssue]) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_source_refs", "headline source_refs must be a non-empty list"))
+        return 0
+    for source_ref in value:
+        _validate_headline_source_ref(source_ref, issues)
+    return len(value)
+
+
+def _validate_headline_source_ref(value: object, issues: list[MatrixResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_source_ref", "headline source_refs entries must be objects"))
+        return
+    for field in ("source", "claim"):
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixResultIssue(f"missing_source_ref_{field}", f"source ref {field} is required"))
+    page = value.get("page")
+    if isinstance(page, bool) or not isinstance(page, int) or page <= 0:
+        issues.append(MatrixResultIssue("invalid_source_ref_page", "source ref page must be a positive integer"))
+    span = value.get("span")
+    if span is not None and (not isinstance(span, str) or not span.strip()):
+        issues.append(MatrixResultIssue("invalid_source_ref_span", "source ref span must be non-empty when present"))
+
+
+def _validate_headline_claim(
+    value: object,
+    target_id: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_headline_claim", "headline_claim must be an object"))
+        return
+    if target_id == MATRIX_HEADLINE_TARGET_ID and value.get("target_id") != MATRIX_HEADLINE_TARGET_ID:
+        issues.append(MatrixResultIssue("headline_claim_target_mismatch", "headline_claim target_id must match mm_4x4x4"))
+    rank = _positive_int(value.get("rank"), "headline_rank", issues)
+    if rank is not None and rank != MATRIX_HEADLINE_RANK:
+        issues.append(MatrixResultIssue("invalid_headline_rank", "headline rank must be 48"))
+    multiplication_count = _positive_int(value.get("multiplication_count"), "multiplication_count", issues)
+    if multiplication_count is not None and multiplication_count != MATRIX_HEADLINE_RANK:
+        issues.append(MatrixResultIssue("invalid_multiplication_count", "headline multiplication_count must be 48"))
+    if value.get("scalar_field") != "complex":
+        issues.append(MatrixResultIssue("invalid_headline_scalar_field", "headline scalar_field must be complex"))
+    if value.get("characteristic") != "zero":
+        issues.append(MatrixResultIssue("invalid_headline_characteristic", "headline characteristic must be zero"))
+    for field in (
+        "first_characteristic_zero_rank_below_49",
+        "rank_below_strassen_recursive",
+        "finite_field_only_prior_distinguished",
+    ):
+        if value.get(field) is not True:
+            issues.append(MatrixResultIssue(f"missing_{field}", f"headline claim must mark {field} true"))
+    claim_text = value.get("claim_text")
+    if not isinstance(claim_text, str) or not claim_text.strip():
+        issues.append(MatrixResultIssue("missing_claim_text", "headline claim_text is required"))
+    else:
+        lowered = claim_text.lower()
+        if "56 years" not in lowered:
+            issues.append(MatrixResultIssue("missing_56_year_wording", "headline claim_text must preserve the 56 years historicity wording"))
+        if "first" not in lowered or "characteristic-zero" not in lowered:
+            issues.append(MatrixResultIssue("missing_characteristic_zero_first_wording", "headline claim_text must preserve first characteristic-zero rank-below-49 wording"))
+    source_ref = value.get("source_ref")
+    if not isinstance(source_ref, str) or not source_ref.strip():
+        issues.append(MatrixResultIssue("missing_headline_source_ref", "headline_claim must link to a source ref"))
+
+
+def _validate_headline_prior_comparisons(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_prior_comparisons", "prior_comparisons must be a non-empty list"))
+        return 0
+    records: dict[str, dict[str, Any]] = {}
+    for record in value:
+        if not isinstance(record, dict):
+            issues.append(MatrixResultIssue("invalid_prior_comparison", "prior comparison entries must be objects"))
+            continue
+        prior_id = record.get("prior_id")
+        if not isinstance(prior_id, str) or _ID_RE.fullmatch(prior_id) is None:
+            issues.append(MatrixResultIssue("invalid_prior_id", "prior_id must be a stable identifier"))
+            continue
+        if prior_id in records:
+            issues.append(MatrixResultIssue("duplicate_prior_id", "prior comparison prior_id values must be unique"))
+        records[prior_id] = record
+    _validate_strassen_prior(records.get("strassen_recursive"), issues)
+    _validate_fawzi_prior(records.get("fawzi_f2"), issues)
+    return len(value)
+
+
+def _validate_strassen_prior(
+    record: dict[str, Any] | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if record is None:
+        issues.append(MatrixResultIssue("missing_strassen_prior", "headline evidence must compare against recursive Strassen"))
+        return
+    if record.get("rank") != MATRIX_HEADLINE_BASELINE_RANKS["strassen_recursive"]:
+        issues.append(MatrixResultIssue("invalid_strassen_rank", "recursive Strassen comparison rank must be 49"))
+    if record.get("field_scope") != "any_field":
+        issues.append(MatrixResultIssue("invalid_strassen_field_scope", "recursive Strassen field_scope must be any_field"))
+    if record.get("characteristic_scope") != "any_characteristic":
+        issues.append(MatrixResultIssue("invalid_strassen_characteristic_scope", "recursive Strassen characteristic_scope must be any_characteristic"))
+    if record.get("recursive_applicable") is not True:
+        issues.append(MatrixResultIssue("invalid_strassen_recursive_applicability", "recursive Strassen must be marked recursively applicable"))
+    if record.get("reference_id") != "95":
+        issues.append(MatrixResultIssue("invalid_strassen_reference", "recursive Strassen comparison must cite reference id 95"))
+
+
+def _validate_fawzi_prior(
+    record: dict[str, Any] | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if record is None:
+        issues.append(MatrixResultIssue("missing_fawzi_prior", "headline evidence must compare against the finite-field Fawzi result"))
+        return
+    if record.get("rank") != MATRIX_HEADLINE_BASELINE_RANKS["fawzi_f2"]:
+        issues.append(MatrixResultIssue("invalid_fawzi_rank", "Fawzi comparison rank must be 47"))
+    if record.get("field_scope") != "finite_field_2":
+        issues.append(MatrixResultIssue("invalid_fawzi_field_scope", "Fawzi comparison field_scope must be finite_field_2"))
+    if record.get("characteristic_scope") != "positive":
+        issues.append(MatrixResultIssue("invalid_fawzi_characteristic_scope", "Fawzi comparison characteristic_scope must be positive"))
+    if record.get("alphaevolve_comparable_characteristic_zero") is not False:
+        issues.append(MatrixResultIssue("invalid_fawzi_zero_characteristic_comparability", "Fawzi comparison must be marked not characteristic-zero comparable"))
+    if record.get("reference_id") != "26":
+        issues.append(MatrixResultIssue("invalid_fawzi_reference", "Fawzi comparison must cite reference id 26"))
+
+
+def _validate_headline_evidence_links(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_evidence_links", "evidence_links must be an object"))
+        return
+    for field in sorted(MATRIX_HEADLINE_EVIDENCE_LINK_FIELDS):
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixResultIssue(f"missing_{field}", f"evidence_links.{field} is required"))
 
 
 def _validate_scalar_field_source_ref(value: object, issues: list[MatrixResultIssue]) -> None:

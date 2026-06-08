@@ -3124,6 +3124,15 @@ artifact ids, artifact types, creator/assembler roles, exact initials and
 ordering, source section/page metadata, and the role source phrases. It is
 attribution evidence, not proof that local rendered figures or a companion
 notebook artifact with hashes/links exists.
+Matrix headline historicity evidence uses
+`libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
+provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,
+rank and multiplication count, characteristic-zero scope, the 56-year
+first-below-49 claim flags, recursive Strassen rank-49 comparison, finite-field
+Fawzi rank-47 caveat, source refs, and links to matrix result, scalar-field,
+tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It validates
+the declared evidence shape; local matrix benchmark runners still do not emit
+the headline record or the linked decomposition/certificate/source artifacts.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

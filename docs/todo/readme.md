@@ -926,22 +926,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source-caption/table linkage, and wording checks that separate Table 2's
     scoped main-text claim from Appendix A full-table aggregates.
 
-- [ ] Keep README matrix headline wording scoped until 4x4 rank-48
-      historicity provenance exists.
+- [ ] Keep README matrix headline wording scoped until emitted 4x4 rank-48
+      historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4
     complex matrix result as a rank-48 procedure using 48 scalar
     multiplications and the first characteristic-zero rank-below-49
     improvement after 56 years, while Section 3.1 separately notes recursive
     Strassen rank 49 over any field and Fawzi et al. rank 47 over the field
     with two elements.
-  - Current evidence: README can describe the Appendix A registry, matrix
-    report contracts, checked Strassen baseline, best-known-rank citation
-    gap, scalar-field gap, and Table 2/Table 3 exhibit gaps. It does not
-    document a source-backed headline record that proves the historicity
-    wording, distinguishes complex/characteristic-zero scope from finite-field
-    caveats, or links the abstract claim to Section 3.1, Table 2, Figure 4,
-    and companion Colab/certificate evidence.
-  - Required result: when matrix-headline historicity metadata lands, update
+  - Current evidence: README now documents
+    `libreevolve.matrix_headline_historicity_evidence.v1`, which validates a
+    declared source-backed headline record for target id, dimensions,
+    field/characteristic, rank, 56-year first-below-49 flags, Strassen/Fawzi
+    prior comparisons, source refs, and links to result, scalar-field,
+    tensor-rank, Figure 4, Figure 9, and companion Colab evidence. That
+    contract distinguishes the complex/characteristic-zero headline from the
+    finite-field caveat, but it does not prove the claim until concrete
+    emitted artifacts and source-span/decomposition/certificate links exist.
+  - Required result: when matrix-headline historicity artifacts land, update
     README, ROADMAP, papers index, and code/paper TODOs with target id,
     dimensions, field/characteristic, rank, prior-algorithm comparison,
     bibliography references, source page/spans, certificate/Colab links, and

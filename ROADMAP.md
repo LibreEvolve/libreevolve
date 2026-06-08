@@ -490,6 +490,14 @@ is not yet an AlphaEvolve reproduction.
   hashes, semantic optimizer/init/loss/sweep coverage, and links to Figure 9,
   result, sweep-space, certificate, and companion notebook evidence. Rendered
   Figure 4 artifacts and accepted-mutation lineage records remain open.
+- Keep matrix headline historicity claims scoped to declared evidence:
+  `libreevolve.matrix_headline_historicity_evidence.v1` now validates the
+  `mm_4x4x4` complex rank-48 headline against dimensions, rank, 48 scalar
+  multiplications, characteristic-zero scope, 56-year first-below-49 flags,
+  recursive Strassen rank-49 comparison, finite-field-only Fawzi rank-47 caveat,
+  source refs, and links to result, scalar-field, tensor-rank, Figure 4,
+  Figure 9, and companion Colab evidence. The runner still does not emit the
+  headline record or linked decomposition/certificate/source artifacts.
 
 ### 10. Operational maturity
 

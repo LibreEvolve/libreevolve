@@ -3192,19 +3192,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     over any field, Fawzi et al. found rank 47 only over the field with two
     elements, and AlphaEvolve is the first method in 56 years to find rank
     below 49 over a characteristic-zero field.
-  - Current gap: paper TODOs track Appendix A best-known-rank citations,
-    scalar-field evidence, Table 2/Table 3 exhibits, target-subset scope,
-    Figure 4/Figure 9 provenance, and companion Colab evidence. They do not
-    preserve the abstract/Section 3.1 headline as its own auditable claim with
-    prior-algorithm comparison, field caveat, historicity wording, and source
-    locations. A table row or scalar-field record alone would not prove the
-    "first improvement after 56 years" claim.
-  - Required result: add paper-facing matrix-headline provenance: target id,
-    dimensions, scalar field/characteristic, reported rank, Strassen baseline
-    rank and scope, finite-field Fawzi caveat, bibliography reference ids,
-    abstract and Section 3.1 page/span locations, decomposition/certificate/
-    Colab links, and validation that docs distinguish rank/certificate evidence
-    from historicity and field-scope claims.
+  - Current gap: `libreevolve.matrix_headline_historicity_evidence.v1` now
+    validates declared paper-facing matrix-headline provenance: target id,
+    dimensions, scalar field/characteristic, reported rank, 56-year
+    first-below-49 flags, Strassen/Fawzi prior comparisons, bibliography-style
+    reference ids, source refs, and links to result, scalar-field, tensor-rank,
+    Figure 4, Figure 9, and companion Colab evidence. A table row or
+    scalar-field record alone still would not prove the "first improvement
+    after 56 years" claim, and no emitted artifact currently preserves the
+    abstract/Section 3.1 source spans, decomposition/certificate links, or
+    companion-notebook digest.
+  - Required result: emit paper-facing matrix-headline provenance artifacts
+    with target id, dimensions, scalar field/characteristic, reported rank,
+    Strassen baseline rank and scope, finite-field Fawzi caveat, bibliography
+    reference ids, abstract and Section 3.1 page/span locations,
+    decomposition/certificate/Colab links, and validation that docs distinguish
+    rank/certificate evidence from historicity and field-scope claims.
 
 - [ ] Track Appendix A matrix row-note and concurrent-work provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes

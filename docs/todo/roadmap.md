@@ -2787,21 +2787,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source-caption/table linkage, and validation that keeps scoped Table 2
     outcome wording separate from full Appendix A aggregate outcomes.
 
-- [ ] Keep matrix headline roadmap wording scoped until 4x4 rank-48
-      historicity provenance exists.
+- [ ] Keep matrix headline roadmap wording scoped until emitted 4x4 rank-48
+      historicity artifacts exist.
   - Spec evidence: AlphaEvolve's abstract and Section 3.1 say AlphaEvolve
     found a procedure for multiplying two 4x4 complex-valued matrices using
     48 scalar multiplications. Section 3.1 calls it the first rank-below-49
     characteristic-zero result after 56 years, while separately describing
     recursive Strassen rank 49 over any field and Fawzi et al. rank 47 over
     the field with two elements.
-  - Current evidence: roadmap/README/paper-index status can point to Appendix
-    A registry rows, matrix report validation, best-known-rank citation gaps,
-    scalar-field gaps, Table 2/Table 3 exhibit gaps, Figure 4/Figure 9
-    provenance, and companion Colab gaps. Those do not create a
-    roadmap-facing evidence surface for the stronger historicity claim, its
-    prior-algorithm comparisons, or its field/characteristic caveats.
-  - Required result: when matrix-headline provenance lands, update ROADMAP,
+  - Current evidence: roadmap/README/paper-index status now points to
+    `libreevolve.matrix_headline_historicity_evidence.v1`, which validates a
+    declared evidence surface for the stronger historicity claim, including
+    target id, dimensions, scalar field/characteristic, rank, 56-year
+    first-below-49 flags, Strassen/Fawzi comparison scope, source refs, and
+    links to result, scalar-field, tensor-rank, Figure 4, Figure 9, and
+    companion Colab evidence. This is not yet emitted runtime/source evidence:
+    the runner still does not write headline artifacts or concrete
+    source-span/decomposition/certificate/Colab digest links.
+  - Required result: when matrix-headline artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs with target id, dimensions,
     scalar field/characteristic, reported rank, Strassen/Fawzi comparison
     scope, bibliography references, source page/span locations, certificate

@@ -1724,22 +1724,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `status_grid.png`. Current `status.json` has buckets `world_record`,
     `former_record`, `worse_than_record`, and `matched_optimal`, listing 43
     problem ids total.
-  - Current evidence: README TODOs mention the later 67-problem source set but
-    do not require wording that distinguishes complete problem-page coverage
-    from partial notebook coverage, artifact-by-artifact availability,
-    hosted-page URL/access modes, missing-notebook states, root-level status
-    artifact provenance, parsed status-bucket membership, absent-status states
-    for problem ids not listed in `status.json`, or the pinned snapshot needed
-    for a live repository. Existing coverage wording also needs to avoid
-    unverified `assets/...` status paths.
-  - Required result: after the coverage manifest exists, update README wording
-    so AlphaEvolve follow-on claims name the pinned repository snapshot,
-    distinguish all-problem-page coverage from partial notebook/artifact
-    coverage, record hosted page URLs and browser/Colab access modes, avoid
-    implying notebooks exist for every problem, and cite status artifacts such
-    as `status_grid.png`, `status.json`, or `result_distribution.png` only with
-    tracked root-level paths, hashes, parsed bucket semantics, and explicit
-    absent-status handling.
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_follow_on_problem_coverage.v1`, which validates
+    the pinned repository URL/commit/date, live-update policy, declared
+    67-problem id range, browser-page and many-but-not-all Colab access modes,
+    root-level status artifact paths/hashes for `status.json`,
+    `status_grid.png`, and `result_distribution.png`, parsed status buckets,
+    43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
+    versus observed-68 numbered HTML page boundary. README still cannot point
+    to per-problem page hashes, notebook paths/hashes or absence reasons,
+    prompt/verifier/initial/final/visualization flags, page-68 classification,
+    or emitted source-manifest rows.
+  - Required result: after per-problem source-coverage metadata lands, update
+    README so AlphaEvolve follow-on claims name hosted page URL/hash per
+    problem, partial notebook/artifact coverage, notebook absence reasons,
+    emitted status/source rows, and explicit wording that avoids implying
+    notebook or artifact coverage is complete when only problem-page and
+    status-bucket evidence is currently scoped.
 
 - [ ] Keep README follow-on problem-count wording scoped until page inventory
       is reconciled.

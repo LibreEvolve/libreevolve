@@ -28,25 +28,25 @@ EXPECTED_REPOSITORY_COMMIT = "".join(
 )
 EXPECTED_README_SHA256 = "".join(
     [
-        "2834",
-        "4ad0",
-        "7573",
-        "3037",
-        "cc4b",
-        "515c",
-        "58d1",
-        "2bc8",
-        "8afc",
-        "1d1c",
-        "d6cf",
-        "a6ae",
-        "dc74",
-        "9bf7",
-        "f499",
-        "f076",
+        "cecf",
+        "8d52",
+        "3151",
+        "ca5e",
+        "174f",
+        "306f",
+        "a52e",
+        "f804",
+        "1350",
+        "e3ac",
+        "6128",
+        "6cbb",
+        "744a",
+        "312a",
+        "029a",
+        "1543",
     ]
 )
-EXPECTED_README_BYTES = 4327
+EXPECTED_README_BYTES = 4425
 EXPECTED_DECLARED_PROBLEM_COUNT = 67
 EXPECTED_ARTIFACT_KINDS = (
     "problem_pages",
@@ -138,7 +138,7 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
                 "https://google-deepmind.github.io/"
                 "alphaevolve_repository_of_problems/problems/{n}.html"
             ),
-            "status_artifact_inventory_validated": False,
+            "status_artifact_inventory_validated": True,
         },
         "source_use": {
             "repository_software_license": "Apache-2.0",
@@ -345,14 +345,14 @@ def _validate_repository_claims(value: object, issues: list[AlphaEvolveFollowOnM
             "https://google-deepmind.github.io/"
             "alphaevolve_repository_of_problems/problems/{n}.html"
         ),
-        "status_artifact_inventory_validated": False,
+        "status_artifact_inventory_validated": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             code = f"invalid_repository_claims_{field}"
             if field == "runtime_code_available":
                 code = "runtime_code_overclaim"
-            elif field in {"per_problem_inventory_validated", "numbered_page_inventory_validated", "status_artifact_inventory_validated"}:
+            elif field in {"per_problem_inventory_validated", "numbered_page_inventory_validated"}:
                 code = f"{field}_overclaim"
             issues.append(_issue(code, f"repository_claims.{field} must match the scoped follow-on source evidence", EXPECTED_REPOSITORY_NAME))
     if tuple(value.get("notebook_artifact_kinds") or ()) != EXPECTED_ARTIFACT_KINDS:

@@ -85,7 +85,7 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     claims["numbered_page_inventory_validated"] = True
     claims["notebook_coverage"] = "all"
     claims["runtime_code_available"] = True
-    claims["status_artifact_inventory_validated"] = True
+    claims["status_artifact_inventory_validated"] = False
     claims["notebook_artifact_kinds"] = ["problem_pages"]
 
     validation = validate_alphaevolve_follow_on_math_source(recordset)
@@ -97,7 +97,7 @@ def test_validate_alphaevolve_follow_on_math_source_rejects_repository_claim_ove
     assert "numbered_page_inventory_validated_overclaim" in codes
     assert "invalid_repository_claims_notebook_coverage" in codes
     assert "runtime_code_overclaim" in codes
-    assert "status_artifact_inventory_validated_overclaim" in codes
+    assert "invalid_repository_claims_status_artifact_inventory_validated" in codes
     assert "invalid_notebook_artifact_kinds" in codes
 
 

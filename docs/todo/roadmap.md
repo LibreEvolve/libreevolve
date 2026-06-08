@@ -2554,23 +2554,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     points the distribution graphic to root-level `status_grid.png`. Current
     `status.json` has buckets `world_record`, `former_record`,
     `worse_than_record`, and `matched_optimal`, listing 43 problem ids total.
-  - Current evidence: roadmap TODOs require tracking the later paper,
-    repository ref, problem inventory, and notebook artifacts, but they do not
-    force roadmap language to separate complete problem-page coverage from
-    partial notebook/artifact coverage, to record hosted-page URL/access modes,
-    or to describe live-repository evidence as a pinned snapshot with
-    root-level status-artifact provenance. They also do not require parsed
-    status-bucket membership or explicit absent-status states for problem ids
-    not listed in `status.json`. Existing coverage wording also needs to avoid
-    unverified `assets/...` status paths.
-  - Required result: once the coverage manifest is implemented, update ROADMAP
-    milestones and evidence gates so follow-on AlphaEvolve math coverage names
-    the repository snapshot, records hosted page URLs plus page/notebook/
-    artifact availability by problem, records browser/Colab access modes,
-    includes root-level status artifact hashes and parsed status-bucket
-    membership when cited, records absent-status handling for unlisted problem
-    ids, and avoids treating a live partial-notebook repository as fully static
-    or notebook/status-complete.
+  - Current evidence: ROADMAP now documents
+    `libreevolve.alphaevolve_follow_on_problem_coverage.v1`, which validates
+    the pinned repository URL/commit/date, live-update policy, declared
+    67-problem id range, browser-page and many-but-not-all Colab access modes,
+    root-level status artifact paths/hashes for `status.json`,
+    `status_grid.png`, and `result_distribution.png`, parsed status buckets,
+    43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
+    versus observed-68 numbered HTML page boundary. ROADMAP still cannot point
+    to per-problem page hashes, notebook paths/hashes or absence reasons,
+    prompt/verifier/initial/final/visualization flags, page-68 classification,
+    or emitted source-manifest rows.
+  - Required result: once per-problem coverage rows are implemented, update
+    ROADMAP milestones and evidence gates so follow-on AlphaEvolve math
+    coverage records hosted page URLs plus page/notebook/artifact availability
+    by problem, classifies page 68, emits status/source rows, and avoids
+    treating a live partial-notebook repository as fully static or notebook/
+    artifact-complete.
 
 - [ ] Keep follow-on problem-count roadmap gates scoped until numbered-page
       inventory is reconciled.

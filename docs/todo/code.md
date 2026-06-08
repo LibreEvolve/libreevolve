@@ -2624,29 +2624,24 @@ Primary evidence:
     `status.json` and `result_distribution.png`. Current `status.json` uses
     explicit buckets `world_record`, `former_record`, `worse_than_record`, and
     `matched_optimal`, listing 43 problem ids total.
-  - Current evidence: broad follow-on source TODOs require a repository ref,
-    live-update policy, problem ids, notebook metadata, and prompt/verifier/
-    final-program presence. They do not require per-problem coverage states
-    distinguishing mandatory problem pages from partial notebook availability,
-    hosted-page URL validation, browser/Colab access modes, missing-notebook
-    reasons, artifact-presence matrices, root-level status-artifact
-    provenance, parsed status-bucket semantics, explicit handling for the
-    problem ids absent from `status.json`, or snapshot-date semantics for a
-    live repository that can change. Earlier coverage wording also used
-    unverified `assets/...` paths instead of the README's root-level status
-    artifact path.
-  - Required result: add a follow-on repository coverage manifest and
-    validators with repository URL/ref/commit/date, live-update policy, all 67
-    problem ids, hosted page URL, page path/hash, notebook path/hash or absence
-    reason, access mode (`browser_page`, `colab_notebook`, or absent),
-    artifact presence flags for prompt/verifier/initial/final/visualization/
-    analysis, root-level status artifact paths/hashes such as
-    `status_grid.png`, `status.json`, and `result_distribution.png` when used,
-    parsed status bucket membership, an explicit `unclassified` or
-    `not_listed_in_status_json` state for problem ids absent from those
-    buckets, and README/ROADMAP wording that separates complete problem-page
-    coverage from partial notebook/artifact/status coverage at a pinned
-    snapshot.
+  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
+    now validates the pinned repository URL/commit/date, live-update policy,
+    declared 67-problem id range, browser-page and many-but-not-all Colab
+    access modes, root-level `status.json`, `status_grid.png`, and
+    `result_distribution.png` paths/hashes, parsed status bucket membership,
+    43 listed ids, 24 `not_listed_in_status_json` ids, and the declared-67
+    versus observed-68 numbered HTML page boundary. The standard paper-manifest
+    gate validates the built-in coverage record. It still does not hash every
+    problem page, discover notebook paths or absence reasons, validate prompt/
+    verifier/initial/final/visualization flags per problem, classify page 68,
+    or emit those rows into paper/source manifests.
+  - Required result: extend the follow-on repository coverage manifest and
+    validators with per-problem hosted page URL and page hash, notebook
+    path/hash or absence reason, artifact presence flags for prompt/verifier/
+    initial/final/visualization/analysis, page-68 classification, emitted
+    source-manifest rows, and README/ROADMAP wording that separates complete
+    declared problem-page coverage from partial notebook/artifact/status
+    coverage at a pinned snapshot.
 
 - [ ] Reconcile follow-on numbered problem-page inventory with README count.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

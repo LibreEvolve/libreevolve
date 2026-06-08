@@ -998,6 +998,15 @@ Implemented:
   source-use licenses, and citation boundary. It is later math-source evidence,
   not the original `2506.13131` specification, not a cached PDF row, and not a
   per-problem notebook/status inventory.
+- `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
+  AlphaEvolve problem-repository coverage-state contract. It validates the
+  pinned root-level status artifacts (`status.json`, `status_grid.png`, and
+  `result_distribution.png`), parses the four explicit status buckets into 43
+  listed problem ids, preserves 24 `not_listed_in_status_json` ids, records
+  browser-page and many-but-not-all Colab access modes, and keeps the declared
+  67-problem count separate from the observed 68 numbered HTML pages. It is
+  status-artifact and bucket-membership evidence, not complete per-page or
+  per-notebook source inventory.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

@@ -3207,6 +3207,17 @@ license split, citation requirement, and live-repository snapshot policy. This
 is later math-source evidence for the original paper's Section 3.2 handoff,
 not the original `2506.13131` AlphaEvolve specification, not a local cached
 PDF row, and not proof of per-problem notebook/status coverage yet.
+Follow-on problem-repository coverage evidence uses
+`libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
+pins the same repository snapshot and validates root-level `status.json`,
+`status_grid.png`, and `result_distribution.png` hashes. It parses the
+`status.json` buckets into 43 listed problem ids, preserves the 24 problem ids
+not listed in `status.json` as `not_listed_in_status_json`, records browser
+problem-page and many-but-not-all Colab notebook access modes, and captures the
+snapshot boundary that the repository declares 67 problems while 68 numbered
+HTML pages are present. This is status-artifact and bucket-membership evidence;
+per-page hashes, notebook path/hash or absence reasons, prompt/verifier/final
+artifact flags, and classification of page 68 remain open work.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

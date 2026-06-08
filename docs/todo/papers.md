@@ -3407,26 +3407,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     `status.json` and `result_distribution.png`. Current `status.json` uses
     explicit buckets `world_record`, `former_record`, `worse_than_record`, and
     `matched_optimal`, listing 43 problem ids total.
-  - Current gap: existing paper TODOs require a repository ref and broad
-    notebook artifact metadata, but they do not preserve source-state
-    distinctions between all problem pages, partial notebook availability,
-    hosted-page URLs, browser/Colab access modes, artifact-presence variants,
-    missing-notebook reasons, root-level status-artifact provenance, and
-    live-repository snapshot dates. They also do not parse status-bucket
-    membership or preserve explicit `unclassified`/absent-status states for
-    problem ids not listed in `status.json`. Earlier coverage wording also
-    used unverified `assets/...` status paths instead of the README's
-    root-level status artifact path.
+  - Current gap: `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now
+    preserves the pinned repository URL/commit/date, live-update policy,
+    declared 67-problem id range, browser-page and many-but-not-all Colab
+    access modes, root-level status artifact paths/hashes for `status.json`,
+    `status_grid.png`, and `result_distribution.png`, parsed status bucket
+    membership, 43 listed ids, 24 `not_listed_in_status_json` ids, and the
+    declared-67 versus observed-68 numbered HTML page boundary. The standard
+    paper-manifest gate validates the built-in coverage record. Paper-facing
+    rows are still missing: no per-problem page hashes, notebook paths/hashes
+    or absence reasons, prompt/verifier/initial/final/visualization flags,
+    page-68 classification, or emitted source-manifest rows.
   - Required result: add source-manifest rows and checks for the problem
-    repository snapshot: repository URL/ref/commit/date, live-update policy,
-    all 67 problem ids, hosted page URL, page path/hash, notebook path/hash or
-    explicit absence reason, access mode, prompt/verifier/initial/final/
-    visualization/analysis presence flags, root-level status artifact paths/
-    hashes such as `status_grid.png`, `status.json`, and
-    `result_distribution.png` when used, parsed status bucket membership,
-    explicit state for problem ids absent from `status.json`, and citation
-    wording that avoids implying notebook or status coverage is complete when
-    only problem-page coverage is complete.
+    repository snapshot: hosted page URL and page hash per problem, notebook
+    path/hash or explicit absence reason, prompt/verifier/initial/final/
+    visualization/analysis presence flags, page-68 classification, emitted
+    status/source rows, and citation wording that avoids implying notebook or
+    artifact coverage is complete when only problem-page and status-bucket
+    evidence is currently scoped.
 
 - [ ] Track follow-on numbered problem-page inventory and source-count
       discrepancy.

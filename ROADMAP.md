@@ -428,6 +428,16 @@ is not yet an AlphaEvolve reproduction.
   absence, source-use licenses, and citation boundary. Cached PDF rows,
   emitted source manifests, per-problem inventory, numbered-page reconciliation,
   notebook artifact hashes, and Appendix B claim mappings remain open.
+- Keep follow-on problem-repository coverage snapshot-scoped:
+  `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
+  pinned repository status artifacts (`status.json`, `status_grid.png`, and
+  `result_distribution.png`), parses the four explicit `status.json` buckets
+  into 43 listed problem ids, preserves the 24 ids not listed in `status.json`
+  as `not_listed_in_status_json`, records browser-page and many-but-not-all
+  Colab access modes, and captures the declared-67 versus observed-68 numbered
+  HTML page boundary. Per-page hashes, notebook path/hash or absence reasons,
+  prompt/verifier/initial/final/visualization flags, and page-68
+  classification remain open.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

@@ -46,6 +46,10 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_math_source_record,
     validate_alphaevolve_follow_on_math_source,
 )
+from libreevolve.problems.benchmarks.follow_on_coverage import (
+    alphaevolve_follow_on_problem_coverage_record,
+    validate_alphaevolve_follow_on_problem_coverage,
+)
 from libreevolve.problems.benchmarks.paper_source_versions import (
     alphaevolve_source_pdf_version_record,
     validate_alphaevolve_source_pdf_version,
@@ -461,6 +465,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
@@ -793,6 +798,20 @@ def _validate_alphaevolve_follow_on_math_source_record(
             )
         )
     return issues
+
+
+def _validate_alphaevolve_follow_on_problem_coverage_record() -> list[PaperManifestIssue]:
+    report = validate_alphaevolve_follow_on_problem_coverage(
+        alphaevolve_follow_on_problem_coverage_record()
+    )
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_follow_on_problem_coverage_{issue.code}",
+            issue.message,
+            str(issue.problem_id) if issue.problem_id is not None else "2511.02864",
+        )
+        for issue in report.issues
+    ]
 
 
 def rehydrate_paper_cache(

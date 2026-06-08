@@ -4598,3 +4598,35 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/artifact availability if any, reproducibility status, and README/
     ROADMAP wording that treats EvoRubric as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track LLM-ALSO adaptive learning-signal paper evidence.
+  - Paper/source evidence: arXiv `2605.29293`, submitted May 28, 2026, is
+    titled `LLM-ALSO: LLM-Driven Adaptive Learning-Signal Optimization for
+    Multi-Agent Reinforcement Learning`. Its abstract says effective
+    training-time guidance is difficult in sparse-reward MARL, while existing
+    LLM-based learning-signal design is largely single-agent-oriented,
+    one-shot, or weakly validated for evolving cooperative training dynamics.
+    LLM-ALSO decomposes adaptation into iterative diagnosis, proposal, and
+    validation: a Critic LLM diagnoses stage-specific learning and
+    coordination failures from sparse-return metrics and compact behavior
+    evidence, a Generator LLM proposes reward-shaping configurations
+    conditioned on the diagnosis, and branch-validation feedback refines
+    candidates before updates affect the main training trajectory.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.29293`. Existing rows cover AlphaEvolve evaluator scoring,
+    plugin hooks, verifier-free self-play, self-evolving rubrics, and
+    multi-agent autonomy, but not sparse-reward cooperative MARL, adaptive
+    learning-signal diagnosis, reward-shaping configuration generation,
+    branch validation, or promotion of validated reward updates into a main
+    training trajectory.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.29293`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve reward/evaluator assumptions,
+    Critic/Generator role schema, sparse-return and compact-behavior evidence
+    metadata, stage-specific diagnosis artifacts, reward-shaping configuration
+    schema, branch-validation records, promotion criteria, main-training
+    trajectory provenance, sparse-reward cooperative MARL task taxonomy,
+    learning-efficiency metrics, baseline identities, code/artifact
+    availability if any, reproducibility status, and README/ROADMAP wording
+    that treats LLM-ALSO as missing paper evidence rather than implemented
+    LibreEvolve support.

@@ -3651,3 +3651,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     medical/writing/science benchmark metadata, baseline identities, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local EvoRubric-style reward-rubric support.
+
+- [ ] Add LLM-ALSO adaptive learning-signal gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.29293`, submitted May 28, 2026, introduces
+    LLM-ALSO for LLM-driven adaptive learning-signal optimization in
+    sparse-reward cooperative multi-agent reinforcement learning. The abstract
+    says it decomposes reward adaptation into iterative diagnosis, proposal,
+    and validation: a Critic LLM diagnoses stage-specific learning and
+    coordination failures from sparse-return metrics and compact behavior
+    evidence, a Generator LLM proposes reward-shaping configurations, and
+    branch-validation feedback refines candidates before they affect the main
+    training trajectory.
+  - Current evidence: ROADMAP tracks evaluator contracts, reward/scoring gaps,
+    plugins, verifier-free self-evolution, reward-rubric gates, and benchmark
+    reports. It does not mention `2605.29293`, define a sparse-reward MARL
+    learning-signal gate, or require local evidence before promoting adaptive
+    reward shaping beyond fixed problem validators and evaluator outputs.
+  - Required result: add roadmap gates for `2605.29293`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, Critic/Generator
+    role schema, sparse-return and compact-behavior evidence records,
+    stage-specific diagnosis artifacts, reward-shaping configuration records,
+    branch-validation traces, update-promotion criteria, main-training
+    trajectory provenance, sparse-reward cooperative MARL benchmark metadata,
+    learning-efficiency metrics, baseline identities, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    LLM-ALSO-style learning-signal support.

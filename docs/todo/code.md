@@ -5020,3 +5020,34 @@ Primary evidence:
     medical/writing/science benchmark taxonomy, baseline identities, and
     README/ROADMAP wording that keeps self-evolving rubric rewards as missing
     evidence until local implementation and reports exist.
+
+- [ ] Add LLM-ALSO adaptive learning-signal source boundary.
+  - Spec evidence: arXiv `2605.29293`, `LLM-ALSO: LLM-Driven Adaptive
+    Learning-Signal Optimization for Multi-Agent Reinforcement Learning`, was
+    submitted May 28, 2026. Its abstract says effective training-time
+    guidance is difficult in sparse-reward cooperative MARL, and existing
+    LLM-based learning-signal methods are mostly single-agent, one-shot, or
+    weakly validated against evolving training dynamics. LLM-ALSO decomposes
+    adaptation into iterative diagnosis, proposal, and validation: a Critic
+    LLM diagnoses stage-specific learning and coordination failures from
+    sparse-return metrics and compact behavior evidence; a Generator LLM
+    proposes reward-shaping configurations conditioned on the diagnosis; and
+    branch-validation feedback refines candidates before updates affect the
+    main training trajectory.
+  - Current evidence: LibreEvolve supports scalar/structured evaluator scores,
+    plugins, and run artifacts, but it has no LLM-ALSO source row, no
+    sparse-reward MARL training harness, no Critic/Generator learning-signal
+    roles, no stage-specific coordination-failure diagnosis, no
+    reward-shaping configuration artifact, no branch-validation trajectory,
+    no promotion gate for validated reward updates, and no learning-efficiency
+    report for cooperative MARL tasks.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.29293`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve evaluator/reward contracts,
+    Critic/Generator role schemas, sparse-return and compact-behavior evidence
+    records, stage-specific diagnosis artifacts, reward-shaping configuration
+    schema, branch-validation traces, update-promotion criteria, main-training
+    trajectory provenance, sparse-reward cooperative MARL task taxonomy,
+    learning-efficiency metrics, baseline identities, and README/ROADMAP
+    wording that keeps adaptive learning-signal optimization as missing
+    evidence until local implementation and reports exist.

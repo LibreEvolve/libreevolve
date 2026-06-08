@@ -3812,6 +3812,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     distillation wording scoped as AlphaEvolve context rather than LibreEvolve
     capability.
 
+- [ ] Track self-improvement feedback-loop cadence and environment-expansion
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Discussion says current
+    gains from improving AlphaEvolve's own infrastructure and future base LLMs
+    are moderate, that feedback loops for improving the next AlphaEvolve
+    version are on the order of months, and that these improvements should
+    make the value of setting up more robust-evaluator environments more
+    widely recognized.
+  - Current gap: paper-facing self-improvement TODOs require component
+    identity, before/after measurements, deployment/adoption, rollback/safety,
+    and distillation artifacts. They do not preserve cadence or return-on-
+    environment evidence: which improvement loop affected a next version, how
+    long that loop took, how moderate the gain was, or how the gain changed
+    the expected value of creating more robust evaluation environments.
+  - Required result: add paper/report evidence for self-improvement loop
+    cadence and environment expansion with loop ids, optimized component,
+    next-version target, start/end dates or elapsed months, measured gain,
+    environment setup/maintenance cost, expected and realized discovery value,
+    robust-evaluator readiness, and README/ROADMAP wording that separates
+    months-scale feedback-loop economics from generic self-improvement or
+    distillation capability.
+
 - [ ] Record Borg scheduling problem-formulation evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 frames Google
     Borg scheduling as an online vector bin-packing problem: machines are bins

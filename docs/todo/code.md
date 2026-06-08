@@ -445,6 +445,28 @@ Primary evidence:
     running LibreEvolve system, and, for distillation claims, dataset/export
     provenance plus training/evaluation evidence.
 
+- [ ] Add self-improvement feedback-loop cadence and environment ROI
+      provenance.
+  - Spec evidence: AlphaEvolve's Discussion says current gains from improving
+    its own infrastructure and future base LLMs are moderate, that feedback
+    loops for improving the next AlphaEvolve version take months, and that
+    those improvements should increase the recognized value of setting up more
+    problems/environments with robust evaluation functions.
+  - Current evidence: existing self-improvement TODOs require optimized
+    component identity, before/after measurements, deployment/adoption,
+    rollback/safety, and distillation artifacts. They do not require evidence
+    for feedback-loop cadence, compounding improvement timelines, environment
+    setup cost/value, or which new robust-evaluator environments became worth
+    creating because prior AlphaEvolve-style improvements changed the
+    economics.
+  - Required result: add report metadata for self-improvement loop cadence and
+    environment expansion: loop id, source optimization, affected next-version
+    component, start/end dates or elapsed months, measured gain magnitude,
+    setup and maintenance cost for new evaluator environments, expected and
+    realized discovery value, gating assumptions, and docs checks that keep
+    moderate/months-scale feedback-loop claims separate from generic
+    self-improvement or distillation readiness.
+
 ## Prompt Sampling and Context
 
 - [ ] Add primary-prompt instruction and target-solution provenance.

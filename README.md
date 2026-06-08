@@ -2128,6 +2128,16 @@ timeout totals, elapsed seconds, promotion rates, main-test exposure, and
 early-prune counts. It also records `claim_ready: false` until stage
 difficulty/scale labels, evaluator test-set hashes, denominator policy, and
 cost-savings evidence are added.
+Configured stages can also declare evaluator workload provenance with
+`workload: {type: simple_check|inner_search|ml_training|custom, ...}`.
+LibreEvolve validates optional dataset/split hashes, budget fields,
+checkpoint policy, artifact policy, and score-field names, passes the
+declaration to three-argument validators as `stage["workload"]`, and aggregates
+executed stage evidence under `runtime.history.evaluator_workload_report`.
+That report is a paper-facing provenance boundary, not a workload-specific
+runner: it remains `claim_ready: false` until training/search protocol
+execution, checkpoint completeness, and score-field-to-artifact checks are
+enforced.
 Configured stage `retries` are capped at `10`; the total subprocess attempts
 for a stage remain `samples * (retries + 1)` before early success/stop.
 Retries are threshold-aware when `min_score` or `metric_thresholds` is

@@ -1521,19 +1521,24 @@ Primary evidence:
   - Current evidence: LibreEvolve records configured evaluator paths, staged
     validators, subprocess attempts, samples, retries, seeds, evaluator
     budgets, artifact copy-out, problem-local dependency provenance, and
-    bounded environment/package evidence. Those records show how a local
-    validator was invoked, but they do not classify evaluator workload type or
-    preserve paper-facing evidence for an inner search/training protocol:
-    dataset identity and split, training/evaluation loop parameters, model
-    checkpoint policy, random seeds, inner search budget, produced model or
-    construction artifacts, and metric linkage to the candidate's returned
-    scores.
-  - Required result: add versioned evaluator-workload metadata and validators
-    for `simple_check`, `inner_search`, `ml_training`, and related task shapes,
-    including dataset/split hashes, training/search budget records,
-    checkpoint/artifact policy, seed/retry semantics, score-field linkage, and
-    report examples before claiming AlphaEvolve-style evaluator support for
-    evolved search algorithms or model-training workloads.
+    bounded environment/package evidence. Configured stages can now declare a
+    validated `workload` mapping for `simple_check`, `inner_search`,
+    `ml_training`, or `custom`, including optional dataset/split hashes,
+    budget fields, checkpoint/artifact policy, and score-field names.
+    Validators receive the declaration as `stage["workload"]`, and completed
+    manifests aggregate executed stage workload evidence under
+    `runtime.history.evaluator_workload_report` with `claim_ready: false`.
+  - Remaining gap: the workload declaration/report does not yet enforce a
+    training/search protocol runner, require dataset/split digests for every
+    workload, verify checkpoint completeness or produced construction
+    artifacts, validate randomized initialization semantics, or prove metric
+    linkage from produced artifacts to candidate-returned scores.
+  - Required result: extend the versioned evaluator-workload contract into
+    executable `inner_search` and `ml_training` protocols with required
+    dataset/split hashes where appropriate, training/search loop records,
+    checkpoint/artifact completeness checks, seed/retry semantics, score-field
+    linkage, and report examples before claiming AlphaEvolve-style evaluator
+    support for evolved search algorithms or model-training workloads.
 
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing

@@ -870,18 +870,22 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve records evaluator entrypoint paths, configured
     stages, samples, retries, seeds, subprocess attempts, budgets, problem-local
     dependency provenance, copied evaluator artifacts, and bounded environment
-    evidence.
-  - Current gap: paper-facing evidence does not identify the evaluator workload
-    type or preserve the protocol needed for search/training-style evaluators:
-    dataset and split provenance, model-training configuration, checkpoint or
-    artifact policy, inner-search budget, randomized initialization policy, and
-    linkage from produced artifacts to returned scores.
-  - Required result: add report/manifest evidence for evaluator workload
-    classes such as `simple_check`, `inner_search`, and `ml_training`, with
-    dataset/split hashes, training/search budget records, checkpoint/artifact
-    linkage, seed/retry semantics, score-field mapping, and examples that keep
-    quick validators distinct from AlphaEvolve-style evaluator workloads that
-    train models or run search.
+    evidence. Configured stages can now declare validated `workload` metadata
+    for `simple_check`, `inner_search`, `ml_training`, or `custom`, including
+    optional dataset/split hashes, budget fields, checkpoint/artifact policy,
+    and score-field names. Runtime manifests summarize executed stage workload
+    evidence under `runtime.history.evaluator_workload_report`.
+  - Current gap: paper-facing evidence still does not enforce the protocol
+    needed for search/training-style evaluators: required dataset/split
+    provenance by workload type, model-training configuration execution,
+    checkpoint or construction-artifact completeness, randomized initialization
+    policy, and linkage from produced artifacts to returned scores.
+  - Required result: extend report/manifest evidence into executable evaluator
+    workload contracts for `inner_search` and `ml_training`, with required
+    dataset/split hashes where appropriate, training/search loop records,
+    checkpoint/artifact linkage, seed/retry semantics, score-field mapping, and
+    examples that keep quick validators distinct from AlphaEvolve-style
+    evaluator workloads that train models or run search.
 
 - [ ] Complete accelerator/async budgets and executed ablation support.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.6 and 4.

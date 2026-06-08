@@ -5109,6 +5109,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
+        "evaluator_workload_report": _evaluator_workload_report(programs),
         "archive_state": archive_state,
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
@@ -5227,6 +5228,229 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _evaluator_workload_report(programs: list[Program]) -> dict:
+    stages: dict[str, dict] = {}
+    workload_type_counts: dict[str, int] = {}
+    configured_candidate_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        configured = metadata.get("configured_stage_results")
+        if not isinstance(configured, list):
+            continue
+        configured_candidate_count += 1
+        for stage_index, raw_stage in enumerate(configured):
+            if not isinstance(raw_stage, dict):
+                continue
+            name = str(raw_stage.get("name", f"stage_{stage_index}"))
+            workload = _configured_stage_workload(raw_stage)
+            workload_type = str(workload.get("type", "simple_check"))
+            declared = bool(workload.get("declared"))
+            workload_type_counts[workload_type] = workload_type_counts.get(workload_type, 0) + 1
+            key = f"{raw_stage.get('stage_index', stage_index)}:{name}"
+            stage = stages.setdefault(
+                key,
+                {
+                    "name": name,
+                    "stage_index": raw_stage.get("stage_index", stage_index),
+                    "workload_type": workload_type,
+                    "declaration_source": workload["source"],
+                    "declared": declared,
+                    "candidate_count": 0,
+                    "passed": 0,
+                    "failed": 0,
+                    "datasets": workload.get("datasets", []),
+                    "budget": workload.get("budget", {}),
+                    "checkpoint_policy": workload.get("checkpoint_policy", "not_declared"),
+                    "score_fields": workload.get("score_fields", []),
+                    "artifact_policy": workload.get("artifact_policy", "not_declared"),
+                    "seed_count": workload.get("seed_count", 0),
+                    "sample_count": 0,
+                    "retry_attempts": 0,
+                    "subprocess_attempts": 0,
+                    "timeout_count": 0,
+                    "candidate_ids": [],
+                },
+            )
+            stage["candidate_count"] += 1
+            stage["candidate_ids"].append(program.id)
+            if raw_stage.get("passed") is True:
+                stage["passed"] += 1
+            else:
+                stage["failed"] += 1
+            accounting = evaluation_accounting(raw_stage)
+            stage["sample_count"] += int(accounting.get("configured_stage_samples", 0))
+            stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
+            stage["subprocess_attempts"] += int(accounting.get("subprocess_attempts", 0))
+            stage["timeout_count"] += int(accounting.get("timeout_count", 0))
+    ordered_stages = [
+        _finalize_workload_stage_record(record)
+        for record in sorted(stages.values(), key=lambda item: (item["stage_index"], item["name"]))
+    ]
+    declared_workload_stage_count = sum(1 for stage in ordered_stages if stage["declared"])
+    report = {
+        "schema": "libreevolve.evaluator_workload_report.v1",
+        "source": "runtime_history_configured_stage_results",
+        "configured_candidate_count": configured_candidate_count,
+        "stage_count": len(ordered_stages),
+        "declared_workload_stage_count": declared_workload_stage_count,
+        "workload_type_counts": dict(sorted(workload_type_counts.items())),
+        "stages": ordered_stages,
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_inner_search_or_ml_training": False,
+            "reason": (
+                "stage workload metadata is preserved and aggregated, but "
+                "LibreEvolve does not yet enforce workload-specific protocol "
+                "execution, artifact completeness, or statistical linkage"
+            ),
+            "remaining_gap": [
+                "dataset_and_split_hash_enforcement",
+                "training_or_inner_search_protocol_runner",
+                "checkpoint_artifact_completeness_checks",
+                "score_field_to_artifact_validation",
+                "stochastic_re_evaluation_policy",
+            ],
+        },
+    }
+    report["validation"] = validate_evaluator_workload_report(report)
+    return report
+
+
+def _configured_stage_workload(raw_stage: dict) -> dict:
+    metadata = raw_stage.get("metadata") if isinstance(raw_stage.get("metadata"), dict) else {}
+    stage = metadata.get("stage") if isinstance(metadata.get("stage"), dict) else {}
+    workload = stage.get("workload") if isinstance(stage.get("workload"), dict) else None
+    source = "stage.workload"
+    if workload is None:
+        config = stage.get("config") if isinstance(stage.get("config"), dict) else {}
+        workload = config.get("workload") if isinstance(config.get("workload"), dict) else None
+        source = "stage.config.workload"
+    config = stage.get("config") if isinstance(stage.get("config"), dict) else {}
+    if workload is None:
+        workload = {"type": "simple_check"}
+        source = "implicit_simple_check"
+    return {
+        "type": workload.get("type", "simple_check"),
+        "source": source,
+        "declared": source != "implicit_simple_check",
+        "datasets": copy.deepcopy(workload.get("datasets", []))
+        if isinstance(workload.get("datasets"), list)
+        else [],
+        "budget": copy.deepcopy(workload.get("budget", {}))
+        if isinstance(workload.get("budget"), dict)
+        else {},
+        "checkpoint_policy": workload.get("checkpoint_policy", "not_declared"),
+        "score_fields": list(workload.get("score_fields", []))
+        if isinstance(workload.get("score_fields"), list)
+        else [],
+        "artifact_policy": workload.get("artifact_policy", "not_declared"),
+        "seed_count": len(config.get("seeds", [])) if isinstance(config.get("seeds"), list) else 0,
+    }
+
+
+def _finalize_workload_stage_record(record: dict) -> dict:
+    finalized = dict(record)
+    finalized["candidate_ids"] = finalized["candidate_ids"][:50]
+    finalized["candidate_ids_truncated"] = finalized["candidate_count"] > len(
+        finalized["candidate_ids"]
+    )
+    return finalized
+
+
+def validate_evaluator_workload_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.evaluator_workload_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "workload report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_candidate_count",
+        "stage_count",
+        "declared_workload_stage_count",
+        "workload_type_counts",
+        "stages",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"workload report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.evaluator_workload_report.v1":
+        issues.append({"code": "invalid_schema", "message": "workload report schema is unsupported"})
+    if report.get("source") != "runtime_history_configured_stage_results":
+        issues.append({"code": "invalid_source", "message": "workload report source is unsupported"})
+    stages = report.get("stages")
+    if not isinstance(stages, list):
+        issues.append({"code": "invalid_stages", "message": "workload report stages must be a list"})
+        stages = []
+    allowed_types = {"simple_check", "inner_search", "ml_training", "custom"}
+    counted = 0
+    declared = 0
+    type_counts: dict[str, int] = {}
+    for index, stage in enumerate(stages):
+        if not isinstance(stage, dict):
+            issues.append({"code": "invalid_stage", "message": f"workload stage {index} must be an object"})
+            continue
+        for field in ("name", "stage_index", "workload_type", "candidate_count", "passed", "failed"):
+            if field not in stage:
+                issues.append({"code": "missing_stage_field", "message": f"workload stage {index} missing {field}"})
+        workload_type = stage.get("workload_type")
+        if workload_type not in allowed_types:
+            issues.append({"code": "invalid_workload_type", "message": f"workload stage {index} has invalid type"})
+        candidate_count = stage.get("candidate_count")
+        if isinstance(candidate_count, int) and not isinstance(candidate_count, bool):
+            counted += candidate_count
+            type_counts[str(workload_type)] = type_counts.get(str(workload_type), 0) + candidate_count
+            passed = stage.get("passed")
+            failed = stage.get("failed")
+            if (
+                isinstance(passed, int)
+                and not isinstance(passed, bool)
+                and isinstance(failed, int)
+                and not isinstance(failed, bool)
+                and candidate_count != passed + failed
+            ):
+                issues.append({"code": "invalid_stage_counts", "message": f"workload stage {index} counts do not add up"})
+        else:
+            issues.append({"code": "invalid_candidate_count", "message": f"workload stage {index} candidate_count must be int"})
+        if stage.get("declared") is True:
+            declared += 1
+        if not isinstance(stage.get("datasets"), list):
+            issues.append({"code": "invalid_datasets", "message": f"workload stage {index} datasets must be a list"})
+        if not isinstance(stage.get("budget"), dict):
+            issues.append({"code": "invalid_budget", "message": f"workload stage {index} budget must be an object"})
+        if not isinstance(stage.get("score_fields"), list):
+            issues.append({"code": "invalid_score_fields", "message": f"workload stage {index} score_fields must be a list"})
+    if isinstance(report.get("stage_count"), int) and not isinstance(report.get("stage_count"), bool):
+        if report["stage_count"] != len(stages):
+            issues.append({"code": "invalid_stage_count", "message": "stage_count must equal stages length"})
+    else:
+        issues.append({"code": "invalid_stage_count", "message": "stage_count must be an int"})
+    declared_reported = report.get("declared_workload_stage_count")
+    if isinstance(declared_reported, int) and not isinstance(declared_reported, bool):
+        if declared_reported != declared:
+            issues.append({"code": "invalid_declared_count", "message": "declared workload count mismatch"})
+    else:
+        issues.append({"code": "invalid_declared_count", "message": "declared workload count must be an int"})
+    if isinstance(report.get("workload_type_counts"), dict):
+        if report["workload_type_counts"] != dict(sorted(type_counts.items())):
+            issues.append({"code": "invalid_type_counts", "message": "workload type counts mismatch"})
+    else:
+        issues.append({"code": "invalid_type_counts", "message": "workload_type_counts must be an object"})
+    return {
+        "schema": "libreevolve.evaluator_workload_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _finalize_cascade_stage_record(record: dict) -> dict:

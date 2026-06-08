@@ -715,6 +715,8 @@ class CascadeEvaluator:
                 ),
                 "evaluator_data": data_policy["context"],
             }
+            if "workload" in stage:
+                context["workload"] = copy.deepcopy(stage["workload"])
             if evaluator_mode == "embedded_evaluate":
                 context["eval_inputs"] = stage.get("eval_inputs", {})
             if stage_deadline.exhausted():

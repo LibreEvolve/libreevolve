@@ -342,6 +342,16 @@ eval-input provenance, but `validate.py` remains the default problem-loading
 contract and paper-facing reports still need embedded-only examples plus
 skeleton/block invocation evidence before claiming Figure 3 evaluator parity.
 
+AlphaEvolve evaluator-workload note: configured stages can now declare
+`workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,
+with validated dataset/split hashes, budget fields, checkpoint policy,
+artifact policy, and scored metric-field names. Runtime manifests summarize
+executed stage workload evidence under
+`runtime.history.evaluator_workload_report`. This is provenance for the
+Section 2.1 claim that evaluators may run inner search or train models, not yet
+proof that LibreEvolve provides workload-specific training/search runners,
+checkpoint completeness, or score-field-to-artifact verification.
+
 AlphaEvolve task-specification note: startup manifests now include
 `task_specification` with schema
 `libreevolve.alphaevolve_task_specification_bundle.v1`. The bundle cross-links

@@ -169,21 +169,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     architecture/process exhibit evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
-      ML-training provenance exists.
+      ML-training execution contracts exist.
   - Spec evidence: AlphaEvolve Section 2.1 says an evaluator may perform a
     simple property check, run an evolved search algorithm, or train and
     evaluate a machine-learning model before returning scalar metrics.
-  - Current evidence: README documents local validators, configured stages,
-    samples, retries, seeds, budgets, artifact copy-out, dependency provenance,
-    and environment audit records. It should not imply those invocation records
-    prove AlphaEvolve-style support for search/training evaluators unless
-    reports also identify workload type, dataset/split identity, training or
-    inner-search budget, checkpoint/artifact policy, randomized initialization
-    semantics, and score-field linkage.
-  - Required result: when evaluator-workload provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README distinguishes
-    quick local validator execution from evaluator workloads that train models
-    or run substantial search loops.
+  - Current evidence: README now documents `eval_stages[].workload` metadata,
+    validator-visible `stage["workload"]`, validated dataset/budget/
+    checkpoint/artifact/score-field declarations, and
+    `runtime.history.evaluator_workload_report`. It also says the report is
+    not a workload-specific runner and remains `claim_ready: false`.
+  - Required result: when executable workload-specific training/search
+    contracts land, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README distinguishes declarative workload provenance from
+    AlphaEvolve-style evaluators that actually train models or run substantial
+    search loops with artifact and score linkage.
 
 - [ ] Keep README candidate-language wording scoped to the Python-primary
   boundary record versus real language/build runners.

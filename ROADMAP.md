@@ -27,6 +27,11 @@ LibreEvolve has:
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, and explicit claim-readiness
   limitations under `runtime.history.evaluation_cascade_report`
+- evaluator-workload declarations for configured stages, including
+  `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
+  validated dataset/budget/checkpoint/score-field metadata, validator-visible
+  `stage["workload"]`, and runtime aggregation under
+  `runtime.history.evaluator_workload_report`
 - strict scalar evaluator-output validation against `metrics.yaml`, including
   finite, strictly increasing non-boolean metric bounds and a reserved boolean
   validity gate outside optimization metrics
@@ -171,6 +176,10 @@ is not yet an AlphaEvolve reproduction.
   current staged threshold gates from AlphaEvolve-style small-scale filters,
   main-test promotion decisions, confidence or p-value evidence, and
   sequential stopping diagnostics.
+- Extend evaluator-workload provenance into actual workload-specific execution
+  contracts for inner-search and ML-training tasks: dataset/split hash
+  enforcement, training/search loop runners, checkpoint completeness checks,
+  score-field-to-artifact linkage, and stochastic re-evaluation policy.
 - Add OS/container-grade validator network isolation and stronger
   sandbox/resource controls beyond the current Python-socket denial option,
   minimal environment, wall-clock budgets, and process-tree cleanup.

@@ -43,6 +43,7 @@ from libreevolve.core.loop import (
     validate_retrieval_evidence_coverage,
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
+    validate_evaluator_workload_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -3610,6 +3611,70 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert main["candidate_count"] == 1
     assert main["passed"] == 1
     assert main["failed"] == 0
+
+
+def test_runtime_history_reports_evaluator_workload_provenance():
+    tmpdir = tempfile.mkdtemp()
+    digest = "b" * 64
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    workload = stage['workload']\n"
+        "    ok = workload['type'] == 'inner_search'\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "search_stage",
+                    "workload": {
+                        "type": "inner_search",
+                        "datasets": [
+                            {
+                                "id": "packing_train",
+                                "split": "train",
+                                "sha256": digest,
+                                "rows": 8,
+                            }
+                        ],
+                        "budget": {"max_trials": 25, "max_seconds": 2.0},
+                        "checkpoint_policy": "retained_artifacts",
+                        "score_fields": ["score"],
+                        "artifact_policy": "candidate_construct_json",
+                    },
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    assert manifest["config"]["eval_stages"][0]["workload"]["type"] == "inner_search"
+    report = manifest["runtime"]["history"]["evaluator_workload_report"]
+
+    assert report["schema"] == "libreevolve.evaluator_workload_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_evaluator_workload_report(report)["ok"] is True
+    assert report["configured_candidate_count"] == 1
+    assert report["stage_count"] == 1
+    assert report["declared_workload_stage_count"] == 1
+    assert report["workload_type_counts"] == {"inner_search": 1}
+    assert report["claim_ready"] is False
+
+    stage = report["stages"][0]
+    assert stage["name"] == "search_stage"
+    assert stage["workload_type"] == "inner_search"
+    assert stage["declared"] is True
+    assert stage["candidate_count"] == 1
+    assert stage["passed"] == 1
+    assert stage["datasets"][0]["sha256"] == digest
+    assert stage["budget"]["max_trials"] == 25
+    assert stage["checkpoint_policy"] == "retained_artifacts"
+    assert stage["score_fields"] == ["score"]
 
 
 def test_evolve_records_best_artifact_export_failure_without_failing_search():

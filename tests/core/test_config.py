@@ -662,6 +662,13 @@ def test_accepts_maximum_llm_call_attempt_cap():
         ({"stdin_text": "x" * 100_001}, "stdin_text"),
         ({"stdin_file": 7}, "stdin_file"),
         ({"stdin_text": "x", "stdin_file": "input.txt"}, "must not set both"),
+        ({"workload": "inner_search"}, "workload"),
+        ({"workload": {"type": "search"}}, "workload.type"),
+        ({"workload": {"type": "inner_search", "datasets": {}}}, "datasets"),
+        ({"workload": {"type": "inner_search", "datasets": [{}]}}, "datasets\\[0\\].id"),
+        ({"workload": {"type": "inner_search", "datasets": [{"id": "train", "sha256": "bad"}]}}, "sha256"),
+        ({"workload": {"type": "inner_search", "budget": {"max_steps": -1}}}, "max_steps"),
+        ({"workload": {"type": "inner_search", "score_fields": ["score", "score"]}}, "duplicate"),
         ({"artifact_max_files": -1}, "artifact_max_files"),
         ({"artifact_max_bytes": -1}, "artifact_max_bytes"),
         ({"artifact_redact_secrets": "yes"}, "artifact_redact_secrets"),  # pragma: allowlist secret
@@ -732,6 +739,38 @@ def test_accepts_embedded_evaluate_stage_eval_inputs():
 
     assert config.eval_stages[0]["mode"] == "embedded_evaluate"
     assert config.eval_stages[0]["eval_inputs"]["cases"] == [1, 2, 3]
+
+
+def test_accepts_configured_evaluator_workload_metadata():
+    digest = "a" * 64
+    config = Config(
+        eval_stages=[
+            {
+                "name": "search_stage",
+                "workload": {
+                    "type": "inner_search",
+                    "datasets": [
+                        {
+                            "id": "packing_train",
+                            "split": "train",
+                            "sha256": digest,
+                            "rows": 12,
+                        }
+                    ],
+                    "budget": {"max_trials": 50, "max_seconds": 3.5},
+                    "checkpoint_policy": "retained_artifacts",
+                    "score_fields": ["score", "valid_count"],
+                    "artifact_policy": "candidate_writes_construct_json",
+                },
+            }
+        ]
+    )
+
+    workload = config.eval_stages[0]["workload"]
+    assert workload["type"] == "inner_search"
+    assert workload["datasets"][0]["sha256"] == digest
+    assert workload["budget"]["max_trials"] == 50
+    assert workload["score_fields"] == ["score", "valid_count"]
 
 
 @pytest.mark.parametrize(

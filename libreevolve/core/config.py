@@ -969,6 +969,7 @@ def _validate_eval_stages(stages: object) -> None:
             "data_exclude",
             "stdin_text",
             "stdin_file",
+            "workload",
         })
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
@@ -1044,6 +1045,8 @@ def _validate_eval_stages(stages: object) -> None:
             stage.get("stdin_text"),
             stage.get("stdin_file"),
         )
+        if "workload" in stage:
+            _validate_evaluator_workload(f"{label}.workload", stage["workload"])
         if "seeds" in stage:
             if not isinstance(stage["seeds"], list):
                 raise ConfigError(f"{label}.seeds must be a list")
@@ -1053,6 +1056,125 @@ def _validate_eval_stages(stages: object) -> None:
                 raise ConfigError(f"{label}.samples must match the number of seeds")
         if "name" not in stage:
             raise ConfigError(f"{label}.name is required for configured eval stages")
+
+
+def _validate_evaluator_workload(label: str, value: object) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    unsupported = _unsupported_mapping_keys(
+        label,
+        value,
+        {
+            "type",
+            "datasets",
+            "budget",
+            "checkpoint_policy",
+            "score_fields",
+            "artifact_policy",
+            "notes",
+        },
+    )
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    workload_type = value.get("type")
+    _require_enum(
+        f"{label}.type",
+        workload_type,
+        {"simple_check", "inner_search", "ml_training", "custom"},
+    )
+    if "datasets" in value:
+        _validate_evaluator_workload_datasets(f"{label}.datasets", value["datasets"])
+    if "budget" in value:
+        _validate_evaluator_workload_budget(f"{label}.budget", value["budget"])
+    if "checkpoint_policy" in value:
+        _require_enum(
+            f"{label}.checkpoint_policy",
+            value["checkpoint_policy"],
+            {"none", "not_retained", "retained_artifacts", "external"},
+        )
+    if "score_fields" in value:
+        _validate_evaluator_workload_score_fields(f"{label}.score_fields", value["score_fields"])
+    if "artifact_policy" in value:
+        _require_string(f"{label}.artifact_policy", value["artifact_policy"])
+    if "notes" in value:
+        _require_string(f"{label}.notes", value["notes"])
+
+
+def _validate_evaluator_workload_datasets(label: str, value: object) -> None:
+    if not isinstance(value, list):
+        raise ConfigError(f"{label} must be a list")
+    for index, dataset in enumerate(value):
+        item_label = f"{label}[{index}]"
+        if not isinstance(dataset, dict):
+            raise ConfigError(f"{item_label} must be a mapping")
+        unsupported = _unsupported_mapping_keys(
+            item_label,
+            dataset,
+            {"id", "split", "sha256", "source", "rows", "samples"},
+        )
+        if unsupported:
+            raise ConfigError(f"{item_label} has unsupported fields {unsupported}")
+        if "id" not in dataset:
+            raise ConfigError(f"{item_label}.id is required")
+        _require_stage_label(f"{item_label}.id", dataset["id"])
+        if "split" in dataset:
+            _require_stage_label(f"{item_label}.split", dataset["split"])
+        if "sha256" in dataset:
+            _require_sha256(f"{item_label}.sha256", dataset["sha256"])
+        if "source" in dataset:
+            _require_string(f"{item_label}.source", dataset["source"])
+        if "rows" in dataset:
+            _require_int(f"{item_label}.rows", dataset["rows"], minimum=0)
+        if "samples" in dataset:
+            _require_int(f"{item_label}.samples", dataset["samples"], minimum=0)
+
+
+def _validate_evaluator_workload_budget(label: str, value: object) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    allowed = {
+        "max_steps",
+        "max_trials",
+        "max_epochs",
+        "max_samples",
+        "max_seconds",
+        "max_train_seconds",
+        "max_eval_seconds",
+        "accelerator",
+    }
+    unsupported = _unsupported_mapping_keys(label, value, allowed)
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    for key in ("max_steps", "max_trials", "max_epochs", "max_samples"):
+        if key in value:
+            _require_int(f"{label}.{key}", value[key], minimum=0)
+    for key in ("max_seconds", "max_train_seconds", "max_eval_seconds"):
+        if key in value:
+            _require_positive_number(f"{label}.{key}", value[key])
+    if "accelerator" in value:
+        _require_string(f"{label}.accelerator", value["accelerator"])
+
+
+def _validate_evaluator_workload_score_fields(label: str, value: object) -> None:
+    if not isinstance(value, list):
+        raise ConfigError(f"{label} must be a list")
+    seen: set[str] = set()
+    for index, metric in enumerate(value):
+        if not isinstance(metric, str):
+            raise ConfigError(f"{label}[{index}] must be a manifest-safe metric name")
+        try:
+            validate_program_metrics({metric: 0.0})
+        except ValueError as exc:
+            raise ConfigError(f"{label}[{index}] must be a manifest-safe metric name") from exc
+        if metric in seen:
+            raise ConfigError(f"{label} must not contain duplicate metric names")
+        seen.add(metric)
+
+
+def _require_sha256(label: str, value: object) -> str:
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        raise ConfigError(f"{label} must be a lowercase sha256 hex digest")
+    return value
 
 
 def _validate_metric_thresholds(label: str, value: object) -> None:

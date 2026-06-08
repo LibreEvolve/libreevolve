@@ -2070,6 +2070,17 @@ policy. The top-level
 `evaluation.metadata.stage` and `evaluation.metadata.artifacts` entries remain
 the compatibility view for the selected final stage or the stage where the
 cascade stopped.
+Configured stage metadata can include a `workload` mapping with
+`type: simple_check`, `inner_search`, `ml_training`, or `custom`. The config
+validator accepts optional declared datasets with lowercase SHA-256 digests,
+budget fields, checkpoint/artifact policy strings, and manifest-safe
+`score_fields`. The declaration is persisted in sanitized stage metadata,
+passed to validators as `stage["workload"]`, retained in `manifest.json`, and
+summarized in `runtime.history.evaluator_workload_report` with per-stage
+candidate/pass/fail and work-counter totals. The report intentionally keeps
+`claim_ready: false` because LibreEvolve does not yet enforce
+workload-specific training/search runners, checkpoint completeness, or
+score-field-to-artifact linkage.
 Evaluator-returned structured program outputs are stored as first-class
 evaluation metadata when `evaluate()` returns the reserved `outputs` or
 `program_output` key beside declared scalar metrics plus boolean `is_valid`.

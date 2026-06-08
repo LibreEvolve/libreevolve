@@ -186,21 +186,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
-      ML-training provenance exists.
+      ML-training execution contracts exist.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can perform a
     simple property check, run an evolved search algorithm, or train and
     evaluate a machine-learning model before returning scalar metrics.
-  - Current evidence: ROADMAP and README can cite local subprocess validators,
-    configured stages, samples, retries, seeds, budgets, artifact copy-out,
-    problem-local dependency provenance, and environment audit records. They do
-    not yet require workload-type declarations, dataset/split hashes,
-    training/search budget records, checkpoint/artifact policy, randomized
-    initialization semantics, or score-field linkage for model-training or
-    inner-search evaluators.
-  - Required result: when evaluator-workload metadata and reports land, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    wording distinguishes quick validators from AlphaEvolve-style evaluator
-    workloads that perform substantial search or model training.
+  - Current evidence: ROADMAP now cites configured-stage workload declarations
+    for `simple_check`, `inner_search`, `ml_training`, and `custom`, validated
+    dataset/budget/checkpoint/score-field metadata, validator-visible
+    `stage["workload"]`, and aggregation under
+    `runtime.history.evaluator_workload_report`. The near-term roadmap still
+    requires workload-specific execution contracts before broader claims.
+  - Required result: when executable workload-specific training/search
+    contracts land, update ROADMAP, README, papers index, and code/paper TODOs
+    together so roadmap wording distinguishes declarative workload provenance
+    from AlphaEvolve-style evaluator workloads that actually perform
+    substantial search or model training.
 
 - [ ] Add roadmap gate for persisted validator-boundary consistency evidence.
   - Spec evidence: AlphaEvolve-scale evaluator provenance should let a reader

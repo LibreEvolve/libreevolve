@@ -861,6 +861,13 @@ Implemented:
   `No meta prompt evolution` variant records a validated lineage-unproven
   boundary for prompt-template and prompt-program mutation evidence, but no
   benchmark script emits these reports yet.
+- `libreevolve/problems/benchmarks/ablation_exhibits.py`: AlphaEvolve Figure 8
+  visual-exhibit metadata contract. It validates the stable exhibit id, the
+  matrix and kissing-number panel ids, target-family mappings, exact paper
+  legend labels including `Full method`, axis metadata, standard-deviation band
+  style declarations, rendered artifact hashes, and links to ablation report,
+  curve-summary, and raw-seed-trace artifacts. It does not render plots or
+  prove that benchmark scripts emitted those artifacts.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

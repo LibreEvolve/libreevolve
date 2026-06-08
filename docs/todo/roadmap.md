@@ -3590,28 +3590,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     run artifacts and rendered Figure 8-equivalent curve exhibits before
     treating validated report schemas as reproduced ablation evidence.
 
-- [ ] Keep Figure 8 roadmap visual wording scoped until ablation-curve exhibit
-      provenance exists.
+- [ ] Keep Figure 8 roadmap visual wording scoped until rendered ablation-curve
+      exhibits exist.
   - Spec evidence: AlphaEvolve Figure 8 presents a two-panel visual comparison
     of ablation curves for matrix tensor decomposition and kissing-number
     sphere packing, with compute-budget fraction on the x-axis, aggregated
     target metric on the y-axis, named method curves, and shaded intra-target
     standard-deviation bands over three independent seeded runs.
   - Current evidence: roadmap/README/paper-index status can cite the ablation
-    report contract, hashed curve artifacts, and open executable-harness,
-    target-family, and aggregation gaps. They do not require a Figure 8 exhibit
-    ID, panel IDs, series/legend mappings, exact paper legend labels, axis
-    labels/scales, plot style and standard-deviation band metadata, source
-    PDF/caption location, rendered plot artifact hashes, or links from the
-    displayed visual to report rows and raw seed traces. The checked-in
-    ablation registry currently labels the baseline `Full`, while Figure 8
-    labels the curve `Full method`, so roadmap status should not treat current
-    registry labels as exact paper-legend evidence.
-  - Required result: when Figure 8 visual exhibit provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODOs with plot-level
-    metadata and validators so roadmap wording distinguishes generic
-    equal-budget curve artifacts from reproduced AlphaEvolve Figure 8 visual
-    evidence, including exact legend labels such as `Full method`.
+    report contract, hashed curve artifacts, target-family/aggregation
+    validation, and `libreevolve.alphaevolve_figure8_exhibit.v1`, which
+    validates Figure 8 exhibit ID, panel IDs, series/legend mappings, exact
+    paper legend labels, axis labels/scales, plot style and standard-deviation
+    band metadata, rendered plot artifact hashes, and links from the displayed
+    visual to report, curve-summary, and raw-seed-trace artifacts.
+  - Required result: when generated Figure 8 visual exhibit records and
+    rendered artifacts land, update ROADMAP, README, papers index, and
+    code/paper TODOs so roadmap wording distinguishes validated exhibit
+    metadata from reproduced AlphaEvolve Figure 8 visual evidence tied to real
+    ablation runs.
 
 - [ ] Keep critique-reviewer roadmap wording scoped to synchronous first/last
       valid mutation selection.

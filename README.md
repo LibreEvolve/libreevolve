@@ -3192,6 +3192,13 @@ ablation report artifacts under an explicit artifact root, checking safe
 relative paths, existence, SHA-256 hashes, and byte counts for variant reports,
 curve summaries, raw records, and plots. It proves artifact availability for a
 report, not that the ablation experiment was executed.
+Figure 8 visual exhibit metadata uses
+`libreevolve.alphaevolve_figure8_exhibit.v1`; it validates the stable exhibit
+id, two panel ids, matrix/kissing target-family mapping, exact paper legend
+labels such as `Full method`, axis metadata, std-band style declarations,
+rendered artifact hashes, and links to report/curve/raw-trace artifacts. It
+does not render a plot or prove that benchmark scripts emitted the linked
+artifacts.
 LLM feedback-grader calibration reports use
 `libreevolve.llm_feedback_calibration.v1` in
 `libreevolve/llm/feedback_calibration.py`; the contract validates declared

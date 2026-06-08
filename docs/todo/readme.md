@@ -797,28 +797,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     ablation-result schemas from executed Figure 8-equivalent matrix/kissing
     target-family runs and rendered curve exhibits.
 
-- [ ] Keep README Figure 8 visual wording scoped until ablation-curve exhibit
-      provenance exists.
+- [ ] Keep README Figure 8 visual wording scoped until rendered ablation-curve
+      exhibits exist.
   - Spec evidence: AlphaEvolve Figure 8 is a two-panel ablation plot with
     matrix tensor-decomposition curves on the left, kissing-number curves on
     the right, compute-budget fraction on the x-axis, aggregated target metric
     on the y-axis, named method curves, and shaded standard-deviation bands
     from three independent seeded runs.
   - Current evidence: README describes the ablation report contract, hashed
-    curve artifacts, and open gaps for executable harnesses, component
-    assertions, target-family coverage, and mean/std aggregation. It does not
-    document Figure 8 exhibit IDs, panel definitions, series-to-variant legend
-    mappings, exact paper legend labels, axis/scale metadata,
-    color/style/shading parameters, source PDF/caption location, rendered plot
-    artifact hashes, or links from plotted visuals to exact report rows and raw
-    seed traces. The checked-in ablation registry currently uses
-    `paper_label: "Full"` for the baseline even though Figure 8 labels that
-    curve `Full method`, so README should not treat registry labels as exact
-    paper-legend provenance yet.
-  - Required result: when Figure 8 exhibit provenance lands, update README,
-    ROADMAP, papers index, and matching TODOs so README distinguishes generic
-    ablation-report artifacts from reproduced paper-quality Figure 8 visual
-    evidence, including exact legend-label provenance such as `Full method`.
+    curve artifacts, target-family/mean/std validation, and the Figure 8
+    visual-exhibit contract. The exhibit contract validates Figure 8 exhibit
+    IDs, panel definitions, series-to-variant legend mappings, exact paper
+    legend labels such as `Full method`, axis/scale metadata,
+    color/style/shading parameters, rendered plot artifact hashes, and links
+    from plotted visuals to report/curve/raw-trace artifacts.
+  - Required result: when generated Figure 8 exhibit records and rendered
+    artifacts land, update README, ROADMAP, papers index, and matching TODOs so
+    README distinguishes validated exhibit metadata from reproduced
+    paper-quality Figure 8 visual evidence tied to real ablation runs.
 
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.

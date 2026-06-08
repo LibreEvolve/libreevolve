@@ -4649,22 +4649,18 @@ Primary evidence:
     standard deviation over three independent seeded runs.
   - Current evidence: the ablation report contract validates declared variants,
     seeds, budget fractions, finite scores, consumed-budget consistency, hashed
-    curve artifacts, and separate TODOs require paper target-family coverage and
-    curve aggregation. No code/report schema records a Figure 8 exhibit ID,
-    two-panel layout, series-to-variant legend mapping, exact paper legend
-    labels, axis labels/scales, color/style/shading metadata, source
-    PDF/caption location, rendered plot artifact path/hash, or links from the
-    plotted visual to the exact ablation report, raw seed traces, and
-    aggregation records. The checked-in ablation registry also labels the
-    baseline `paper_label` as `Full`, while the Figure 8 legend says `Full
-    method`, so current registry labels are not exact paper-legend evidence.
-  - Required result: add Figure 8-style exhibit metadata and validators with
-    stable exhibit and panel IDs, target-family labels, exact paper legend
-    labels including `Full method`, series/legend mappings, axis and
-    budget-fraction definitions, mean/std-band source records, rendering
-    parameters, visual artifact hashes, and links to ablation reports and raw
-    traces so generated curves can be distinguished from generic equal-budget
-    report artifacts.
+    curve artifacts, paper target-family coverage, and curve aggregation.
+    `libreevolve.alphaevolve_figure8_exhibit.v1` now validates a stable Figure
+    8 exhibit ID, two-panel layout, series-to-variant legend mapping, exact
+    paper legend labels including `Full method`, axis labels/scales,
+    color/style/shading metadata, source caption reference, rendered plot
+    artifact path/hash, and links from the plotted visual to ablation report,
+    raw seed trace, and curve-summary artifacts.
+  - Required result: add emitted Figure 8 exhibit records and rendered visual
+    artifacts from real ablation benchmark scripts, with source PDF/caption
+    page location, concrete report/raw-trace/curve artifact hashes, rendering
+    parameters, and run links so generated curves can be distinguished from
+    generic equal-budget report artifacts.
 
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so

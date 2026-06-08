@@ -435,10 +435,12 @@ is not yet an AlphaEvolve reproduction.
   validated `paper_scope_boundary` marked not equivalent until a
   tensor-decomposition harness proves only the loss function was mutable.
 - Generate benchmark scripts that emit the validated Figure 8 target-family
-  ablation reports and rendered curve exhibits; the schema now requires
+  ablation reports and rendered curve exhibits; the report schema now requires
   comparable compute-budget fractions, target-metric identity, direction,
-  normalization, and per-target mean/std aggregation, but no real runner
-  produces those reports yet.
+  normalization, and per-target mean/std aggregation, while the Figure 8
+  exhibit schema validates panel ids, exact paper legend labels, axis/style
+  metadata, rendered artifact hashes, and report/raw-trace links. No real
+  runner produces those reports or rendered exhibit artifacts yet.
 
 ### 10. Operational maturity
 

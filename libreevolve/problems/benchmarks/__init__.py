@@ -1,5 +1,10 @@
 """Benchmark registry metadata."""
 
+from libreevolve.problems.benchmarks.ablation_exhibits import (
+    FIGURE8_EXHIBIT_SCHEMA,
+    render_figure8_exhibit_summary,
+    validate_figure8_exhibit,
+)
 from libreevolve.problems.benchmarks.ablation_results import (
     ABLATION_ARTIFACT_INVENTORY_SCHEMA,
     ABLATION_RESULT_SCHEMA,
@@ -67,6 +72,7 @@ __all__ = [
     "CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA",
     "EXPECTED_TARGET_COUNT",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
+    "FIGURE8_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
     "MATRIX_RESULT_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
@@ -84,6 +90,7 @@ __all__ = [
     "render_benchmark_hardening_summary",
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
+    "render_figure8_exhibit_summary",
     "render_matrix_result_summary",
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
@@ -93,6 +100,7 @@ __all__ = [
     "validate_benchmark_hardening_report",
     "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
+    "validate_figure8_exhibit",
     "validate_matrix_result_report",
     "validate_paper_result_certification",
     "validate_systems_evidence_bundle",

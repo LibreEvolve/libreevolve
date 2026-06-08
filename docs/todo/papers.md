@@ -1083,21 +1083,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     intra-target standard deviation averaged over three independent seeded runs.
   - Current gap: paper-facing ablation TODOs require executable benchmark
     scripts, component-assertion bindings, target-family coverage,
-    per-target aggregation, and three-seed traces. They do not preserve the
-    Figure 8 visual as its own paper exhibit with stable exhibit/panel IDs,
-    series-to-variant legend mapping, exact paper legend labels,
-    axis labels/scales, color/style/shading metadata, source PDF page/caption
-    location, rendered plot artifacts and hashes, or links from each plotted
-    curve to exact report rows, raw seed traces, and aggregation records. The
-    current ablation registry uses `paper_label: "Full"` for the baseline, but
-    Figure 8's legend labels that curve `Full method`, so the registry is not
-    yet exact legend-label provenance.
-  - Required result: add Figure 8 exhibit records and validation: exhibit and
-    panel IDs, matrix/kissing target-family mapping, exact paper legend labels
-    including `Full method`, curve/legend definitions, budget-fraction axis
-    metadata, target-metric aggregation and std-band source records, rendering
-    parameters, rendered visual artifact hashes, and docs wording that separates
-    reproduced Figure 8 visual evidence from generic ablation-report validation.
+    per-target aggregation, and three-seed traces.
+    `libreevolve.alphaevolve_figure8_exhibit.v1` now preserves the Figure 8
+    visual as its own paper exhibit metadata with stable exhibit/panel IDs,
+    matrix/kissing panel mappings, series-to-variant legend mappings, exact
+    paper legend labels including `Full method`, axis labels/scales,
+    color/style/shading metadata, source caption references, rendered plot
+    artifact hashes, and links from plotted curves to report, raw seed trace,
+    and curve-summary artifacts. It does not render a plot, verify named files
+    exist, or prove the linked artifacts came from real ablation runs.
+  - Required result: emit Figure 8 exhibit records and rendered visual artifacts
+    from runnable matrix/kissing ablation scripts, with source PDF page/caption
+    location, concrete report/raw-trace/curve artifact hashes, rendering
+    parameters, and run links so reproduced Figure 8 visual evidence remains
+    separate from generic ablation-report validation.
 
 - [ ] Connect LLM budget reports to async/pending-work resume and
   provider-output replay.

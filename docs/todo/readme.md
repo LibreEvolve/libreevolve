@@ -729,6 +729,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source-caption/table linkage, and wording checks that separate Table 2's
     scoped main-text claim from Appendix A full-table aggregates.
 
+- [ ] Keep README matrix headline wording scoped until 4x4 rank-48
+      historicity provenance exists.
+  - Spec evidence: AlphaEvolve's abstract and Section 3.1 headline the 4x4
+    complex matrix result as a rank-48 procedure using 48 scalar
+    multiplications and the first characteristic-zero rank-below-49
+    improvement after 56 years, while Section 3.1 separately notes recursive
+    Strassen rank 49 over any field and Fawzi et al. rank 47 over the field
+    with two elements.
+  - Current evidence: README can describe the Appendix A registry, matrix
+    report contracts, checked Strassen baseline, best-known-rank citation
+    gap, scalar-field gap, and Table 2/Table 3 exhibit gaps. It does not
+    document a source-backed headline record that proves the historicity
+    wording, distinguishes complex/characteristic-zero scope from finite-field
+    caveats, or links the abstract claim to Section 3.1, Table 2, Figure 4,
+    and companion Colab/certificate evidence.
+  - Required result: when matrix-headline historicity metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs with target id,
+    dimensions, field/characteristic, rank, prior-algorithm comparison,
+    bibliography references, source page/spans, certificate/Colab links, and
+    wording checks so README does not overclaim a first-improvement result
+    from rank-row metadata alone.
+
 - [ ] Keep README Appendix A row-note wording scoped until concurrent-work
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level notes,

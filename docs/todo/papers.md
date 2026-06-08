@@ -2914,6 +2914,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP validation that keeps scoped main-text claims distinct from
     full Appendix A aggregate outcomes.
 
+- [ ] Track matrix headline historicity evidence for the 4x4 complex rank-48
+      result.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` abstract reports a procedure
+    for multiplying two 4x4 complex-valued matrices using 48 scalar
+    multiplications. Section 3.1 adds that recursive Strassen gives rank 49
+    over any field, Fawzi et al. found rank 47 only over the field with two
+    elements, and AlphaEvolve is the first method in 56 years to find rank
+    below 49 over a characteristic-zero field.
+  - Current gap: paper TODOs track Appendix A best-known-rank citations,
+    scalar-field evidence, Table 2/Table 3 exhibits, target-subset scope,
+    Figure 4/Figure 9 provenance, and companion Colab evidence. They do not
+    preserve the abstract/Section 3.1 headline as its own auditable claim with
+    prior-algorithm comparison, field caveat, historicity wording, and source
+    locations. A table row or scalar-field record alone would not prove the
+    "first improvement after 56 years" claim.
+  - Required result: add paper-facing matrix-headline provenance: target id,
+    dimensions, scalar field/characteristic, reported rank, Strassen baseline
+    rank and scope, finite-field Fawzi caveat, bibliography reference ids,
+    abstract and Section 3.1 page/span locations, decomposition/certificate/
+    Colab links, and validation that docs distinguish rank/certificate evidence
+    from historicity and field-scope claims.
+
 - [ ] Track Appendix A matrix row-note and concurrent-work provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
     a note that concurrent work [49] also found a rank-90 algorithm for the

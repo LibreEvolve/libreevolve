@@ -3698,15 +3698,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     tensor make axis permutations equivalent, so the reported suite focuses on
     sorted sizes m <= n <= p.
   - Current gap: the Appendix A registry records the 54 reported target ids,
-    dimensions, ranks, and outcomes, but it does not preserve the paper's
-    target-suite selection rule, canonical sorted-representative policy,
-    omitted symmetry-equivalent targets, p-cutoff/source rationale, or why
-    targets outside the rough rank/size heuristic are included or excluded.
-  - Required result: add paper-facing curation records for the Appendix A
-    matrix suite: selection criteria, symmetry class/canonical representative,
-    omitted-equivalent target ledger, cutoff rationale, and included/excluded
-    target justifications. Keep this separate from construction artifacts and
-    from larger-target resource-frontier/OOM evidence.
+    dimensions, ranks, and outcomes.
+    `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now preserves the
+    paper-facing target-suite selection rule, canonical sorted-representative
+    policy, omitted symmetry-equivalent target ledger, unspecified p-cutoff
+    source wording, and included-target rationales for the reported suite. It
+    does not justify every possible excluded non-equivalent target outside the
+    rough rank/size heuristic.
+  - Required result: add paper-facing excluded-target justifications for
+    non-equivalent matrix sizes outside the reported suite. Keep this separate
+    from construction artifacts and from larger-target resource-frontier/OOM
+    evidence.
 
 - [ ] Track matrix target-scaling resource frontier and OOM evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says the authors

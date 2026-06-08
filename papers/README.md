@@ -55,7 +55,12 @@ The same validation command checks
 records the 54 AlphaEvolve Appendix A Table 3 matrix target identities,
 dimensions, best-known ranks, AlphaEvolve ranks, outcome categories, and
 exact-algorithm flags. That registry is target/outcome coverage, not
-construction, Colab, or target-suite curation evidence.
+construction or Colab evidence. The companion
+`libreevolve.alphaevolve_appendix_a_matrix_curation.v1` record preserves the
+paper's rough size-selection wording, sorted representative policy under
+axis-permutation symmetries, included-target rationales, and the derived
+omitted-equivalent target ledger; it does not provide target tensor,
+decomposition, Colab, or larger-target resource-frontier evidence.
 The validation command also checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json`, which records a
 coverage decision for each AlphaEvolve Appendix B constructive-math family. The
@@ -760,10 +765,13 @@ Implemented:
   `appendix_a_matrix_registry.py` adds the 54 AlphaEvolve Appendix A Table 3
   target identities and dimensions, and matrix reports for
   `alphaevolve_appendix_a` must match that registry.
-  The registry is not yet a target-suite curation ledger: it does not record
-  the paper's rough size-selection rule, canonical sorted representative
-  policy under tensor axis symmetries, omitted symmetry-equivalent targets,
-  p-cutoff rationale, or included/excluded target justifications.
+  The same module now adds
+  `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`, a target-suite
+  curation contract for the paper's rough size-selection wording, sorted
+  representative policy, axis-permutation equivalent omissions, included-target
+  rationales, and unspecified `p` cutoff. It still does not justify every
+  possible excluded non-equivalent target or provide larger-target OOM/resource
+  frontier evidence.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. It still does not provide discovered

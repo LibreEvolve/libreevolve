@@ -374,12 +374,12 @@ is not yet an AlphaEvolve reproduction.
   AlphaEvolve PDF contribution records for figure creators and companion
   Colab assemblers, but rendered figure/notebook artifact hashes, URLs,
   retrieval digests, and source-to-artifact links remain future work.
-- Add Appendix A matrix target-suite curation provenance before treating the
-  54-row registry as paper-faithful suite evidence. The standard paper-manifest
-  command now validates the registry's stored row integrity when present, but
-  still lacks the target-selection rule, canonical sorted representatives under
-  tensor symmetries, omitted equivalent targets, cutoff rationale, and
-  included/excluded target justifications.
+- Keep Appendix A matrix target-suite curation scoped to reported-suite
+  provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
+  validates the rough size-selection wording, sorted representative policy,
+  axis-permutation equivalent omissions, included-target rationales, and
+  unspecified `p` cutoff. Explicit non-equivalent excluded-target
+  justifications and larger-target resource-frontier/OOM evidence remain open.
 - Add matrix target-scaling resource-frontier reports before claiming larger
   Appendix A extensions: attempted target sizes, seed counts, accelerator/GPU
   memory profile, OOM or resource-exhaustion diagnostics, and exclusion

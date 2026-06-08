@@ -13,12 +13,16 @@ from libreevolve.problems.benchmarks.ablation_results import (
     validate_ablation_result_report,
 )
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    CURATION_SCHEMA as APPENDIX_A_MATRIX_CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
     REGISTRY_SCHEMA as APPENDIX_A_MATRIX_REGISTRY_SCHEMA,
     TARGET_SUITE as APPENDIX_A_MATRIX_TARGET_SUITE,
+    appendix_a_matrix_curation_record,
     matrix_target_by_id,
     matrix_target_records,
+    render_appendix_a_matrix_curation_summary,
     render_appendix_a_matrix_registry_summary,
+    validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_registry,
 )
 from libreevolve.problems.benchmarks.benchmark_hardening import (
@@ -70,6 +74,7 @@ from libreevolve.problems.benchmarks.systems_results import (
 __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
     "ABLATION_RESULT_SCHEMA",
+    "APPENDIX_A_MATRIX_CURATION_SCHEMA",
     "APPENDIX_A_MATRIX_REGISTRY_SCHEMA",
     "APPENDIX_A_MATRIX_TARGET_SUITE",
     "BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA",
@@ -86,6 +91,7 @@ __all__ = [
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "ablation_result_artifact_inventory",
+    "appendix_a_matrix_curation_record",
     "alphaevolve_paper_artifact_role_records",
     "benchmark_hardening_artifact_inventory",
     "certification_artifact_inventory",
@@ -94,6 +100,7 @@ __all__ = [
     "matrix_target_by_id",
     "matrix_target_records",
     "render_ablation_result_summary",
+    "render_appendix_a_matrix_curation_summary",
     "render_appendix_a_matrix_registry_summary",
     "render_benchmark_hardening_summary",
     "render_certification_summary",
@@ -104,6 +111,7 @@ __all__ = [
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
     "validate_ablation_result_report",
+    "validate_appendix_a_matrix_curation",
     "validate_appendix_a_matrix_registry",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",

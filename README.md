@@ -3062,10 +3062,15 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts.
-The Appendix A registry is target/outcome coverage, not a curation ledger: it
-does not yet record the paper's target-selection rule, canonical sorted
-representative policy under tensor axis symmetries, omitted symmetry-equivalent
-targets, p-cutoff rationale, or included/excluded target justifications.
+Appendix A matrix target-suite curation uses
+`libreevolve.alphaevolve_appendix_a_matrix_curation.v1`; the built-in record
+preserves the paper's rough `2 <= m,n <= 5` selection wording, unspecified
+reasonable `p` cutoff, sorted representative policy under matrix-tensor axis
+permutation symmetries, included-target rationales, and the derived ledger of
+omitted symmetry-equivalent target ids. It is curation provenance for the
+reported suite, not target tensor/decomposition evidence, and it still does
+not justify every possible excluded non-equivalent target or capture the
+larger-target OOM/resource frontier.
 The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable

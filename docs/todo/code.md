@@ -3713,16 +3713,16 @@ Primary evidence:
     so the paper focuses on sorted sizes m <= n <= p.
   - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
     records the 54 target ids, dimensions, best-known ranks, AlphaEvolve ranks,
-    outcomes, and exact-algorithm flags. It does not record the target-suite
-    curation policy, canonical sorted-representative rule, symmetry-equivalent
-    omitted targets, source/rationale for the p cutoff, or inclusion/exclusion
-    rationale for targets outside the rough cutoff heuristic.
-  - Required result: extend the Appendix A registry or companion report with
-    target-suite curation metadata: selection rule, canonical representative
-    under matrix-tensor axis symmetries, omitted-equivalent target ledger,
-    cutoff/source rationale, and explicit included/excluded target records.
-    Keep this distinct from target tensor/decomposition artifacts and from the
-    larger-target resource-frontier/OOM evidence.
+    outcomes, and exact-algorithm flags.
+    `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now records the
+    target-suite curation policy, paper source page, rough selection wording,
+    canonical sorted-representative rule, derived symmetry-equivalent omitted
+    target ids, unspecified `p` cutoff policy, and per-included-target
+    rationale for the reported 54 rows.
+  - Required result: add explicit justifications for excluded non-equivalent
+    targets outside the reported suite and keep this distinct from target
+    tensor/decomposition artifacts and from larger-target resource-frontier/OOM
+    evidence.
 
 - [ ] Add matrix scaling resource-frontier evidence for larger target claims.
   - Spec evidence: AlphaEvolve Appendix A says sizes beyond the reported

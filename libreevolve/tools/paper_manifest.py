@@ -28,6 +28,8 @@ from libreevolve.problems.benchmarks.ablation_registry import (
 )
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
+    appendix_a_matrix_curation_record,
+    validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_registry,
 )
 from libreevolve.problems.benchmarks.appendix_b_registry import (
@@ -460,7 +462,7 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
     if not registry_path.exists():
         return []
     report = validate_appendix_a_matrix_registry(registry_path)
-    return [
+    issues = [
         PaperManifestIssue(
             f"appendix_a_{issue.code}",
             issue.message,
@@ -468,6 +470,18 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
         )
         for issue in report.issues
     ]
+    curation_report = validate_appendix_a_matrix_curation(
+        appendix_a_matrix_curation_record(registry_path)
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"appendix_a_curation_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.target_id) if issue.target_id else None,
+        )
+        for issue in curation_report.issues
+    )
+    return issues
 
 
 def _validate_appendix_b_registry_if_present(root_path: Path) -> list[PaperManifestIssue]:

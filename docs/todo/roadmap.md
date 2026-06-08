@@ -2706,17 +2706,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cutoff for p, while tensor symmetries make axis permutations equivalent and
     motivate sorted target representatives.
   - Current evidence: roadmap/README/paper-index status points to the checked
-    54-target Appendix A registry. That registry records target identities,
-    dimensions, ranks, and outcomes, but not the selection rule,
-    symmetry-class/canonical-representative policy, omitted equivalent targets,
-    cutoff rationale, or included/excluded target justifications. Its dedicated
-    validator is now part of the standard paper-manifest validation gate
-    alongside Appendix B and ablation registry checks, but that proves stored
-    row integrity rather than paper-faithful target-suite curation.
-  - Required result: when Appendix A matrix curation metadata lands, update
+    54-target Appendix A registry and
+    `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`, which records the
+    paper's rough size-selection wording, sorted representative policy,
+    omitted axis-permutation equivalents, included-target rationales, and
+    unspecified `p` cutoff. It does not justify every possible excluded
+    non-equivalent target outside the reported suite.
+  - Required result: when excluded-target justification metadata lands, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap text
-    distinguishes target-identity integrity coverage from paper-faithful
-    target-suite curation evidence.
+    distinguishes reported-suite curation provenance from exhaustive
+    target-suite construction evidence.
 
 - [ ] Keep Appendix A matrix-baseline roadmap wording scoped until
       best-known-rank citation provenance exists.

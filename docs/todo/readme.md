@@ -972,17 +972,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and that axis-permutation symmetries make equivalent algorithms, so the
     paper focuses on sorted sizes.
   - Current evidence: README says the matrix report checks `target_id` and
-    `dimensions` against the 54-row Appendix A Table 3 registry. It does not
-    document target-suite curation metadata: the selection rule, sorted
-    representative policy, omitted symmetry-equivalent targets, cutoff
-    rationale, or included/excluded target justifications. README now states
-    that the routine paper-manifest command validates the Appendix A registry
-    when present, but that validator is integrity coverage for stored target
-    rows rather than paper-faithful curation proof.
-  - Required result: when Appendix A registry/report metadata captures
-    target-suite curation and symmetry-equivalence provenance, update README,
-    ROADMAP, papers index, and matching TODOs so README does not imply the
-    54-row registry alone proves full paper-faithful suite construction.
+    `dimensions` against the 54-row Appendix A Table 3 registry and now
+    documents `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` for
+    rough selection wording, sorted representative policy, omitted
+    symmetry-equivalent target ids, included-target rationales, and the
+    unspecified `p` cutoff. It does not document explicit justifications for
+    every possible excluded non-equivalent target outside the reported suite.
+  - Required result: when excluded-target justification metadata lands, update
+    README, ROADMAP, papers index, and matching TODOs so README does not imply
+    the curation record proves full exhaustive target-suite construction.
 
 - [ ] Keep README matrix-scaling wording scoped until resource-frontier
       reports exist.

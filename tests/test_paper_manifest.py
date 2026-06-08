@@ -752,6 +752,7 @@ def test_validate_paper_manifest_checks_appendix_a_matrix_registry_when_present(
     assert "appendix_a_invalid_target_count" in codes
     assert "appendix_a_invalid_surpassed_rank" in codes
     assert "appendix_a_missing_exact_algorithm" in codes
+    assert "appendix_a_curation_missing_included_target" in codes
 
 
 def test_validate_paper_manifest_checks_example_scope_records(monkeypatch, tmp_path):

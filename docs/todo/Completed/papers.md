@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track canonical AlphaEvolve diff-fence guidance separately from compact
+      compatibility syntax.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 and Figure 3 use
+    canonical SEARCH/REPLACE fences with `<<<<<<< SEARCH`, `=======`, and
+    `>>>>>>> REPLACE`.
+  - Status: paper-facing status can point to README, ROADMAP, prompt
+    instructions, parser tests, and `AGENTS.md` all presenting canonical
+    AlphaEvolve fences as the primary paper-spec syntax, with compact fences
+    scoped to compatibility support.
+  - Remaining gap: none for diff-fence guidance; natural-language preambles,
+    prompt-example copy detection, and multi-edit consistency remain separate
+    paper TODOs.
+  - Verification: validation for this slice reran the paper manifest, secret
+    scan, and diff checks before commit.
+
 - [x] Add paper-visible validation for meta-prompt context-policy capabilities.
   - Paper evidence: AlphaEvolve prompt evolution includes prompt/context
     improvement, so the structured controls exposed to meta-prompt mutation

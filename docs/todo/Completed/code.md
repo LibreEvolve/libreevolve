@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Align agent-facing diff-format guidance with canonical AlphaEvolve
+      fences.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define the
+    SEARCH/REPLACE edit payload with canonical seven-character fences:
+    `<<<<<<< SEARCH`, `=======`, and `>>>>>>> REPLACE`.
+  - Status: `AGENTS.md` now documents canonical AlphaEvolve fences as the
+    paper-aligned SEARCH/REPLACE format and labels compact `<<<SEARCH` /
+    `===` / `>>>REPLACE` fences as compatibility input. README, ROADMAP,
+    papers index, prompt instructions, parser tests, and the code TODO ledger
+    no longer imply that compact local syntax is the AlphaEvolve
+    specification.
+  - Remaining gap: none for agent-facing diff-format guidance; prompt-example
+    copy detection, explanatory preambles, and cross-edit consistency remain
+    separate active TODOs.
+  - Verification: parser tests already cover canonical and compact fences, and
+    validation for this slice reran the paper manifest, secret scan, and diff
+    checks before commit.
+
 - [x] Validate meta-prompt context-policy capability coverage.
   - Spec evidence: AlphaEvolve-style prompt evolution should mutate
     structured context controls from an advertised capability surface that

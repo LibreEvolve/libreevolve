@@ -33,7 +33,10 @@ libreevolve/
 - Validator execution and CLI/direct contract preflight run in temporary local
   subprocesses, not security sandboxes; validator modules are not imported in
   the parent CLI/runtime process during preflight
-- SEARCH/REPLACE diff format: `<<<SEARCH\n...\n===\n...\n>>>REPLACE`
+- SEARCH/REPLACE diff format: use canonical AlphaEvolve fences
+  `<<<<<<< SEARCH\n...\n=======\n...\n>>>>>>> REPLACE`; the compact
+  `<<<SEARCH\n...\n===\n...\n>>>REPLACE` spelling remains accepted as
+  compatibility input.
 - Diff engine strips a single outer markdown fence wrapper automatically
 - VALID_THRESHOLD = 0.0 is the pre-admission eligibility gate. A valid finite
   program with score >= 0 is passed to ProgramDatabase.admit(), but MAP-Elites

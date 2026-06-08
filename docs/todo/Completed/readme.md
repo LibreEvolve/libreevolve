@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README/AGENTS diff-format wording scoped until canonical
+      AlphaEvolve fence guidance is primary.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 show the
+    SEARCH/REPLACE payload using canonical fences: `<<<<<<< SEARCH`,
+    `=======`, and `>>>>>>> REPLACE`.
+  - Status: README already documents both compact local fences and canonical
+    AlphaEvolve fences, parser tests cover both forms, and `AGENTS.md` now
+    names canonical fences as the paper-aligned format while keeping compact
+    fences as compatibility input.
+  - Remaining gap: none for README/AGENTS diff-format wording; natural-language
+    preambles, prompt-example copy detection, and multi-edit consistency remain
+    active TODOs.
+  - Verification: validation for this slice reran the paper manifest, secret
+    scan, and diff checks before commit.
+
 - [x] Document declared final-fitness objective metrics.
   - Status: README, problem-format, configuration, plugin, architecture, and
     paper-index docs now describe non-primary `source: final_fitness` metrics,

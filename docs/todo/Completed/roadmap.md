@@ -4,6 +4,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep diff-format roadmap wording scoped until canonical AlphaEvolve
+      fence guidance is primary.
+  - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define SEARCH/REPLACE
+    blocks with canonical fences: `<<<<<<< SEARCH`, `=======`, and
+    `>>>>>>> REPLACE`.
+  - Status: ROADMAP already lists SEARCH/REPLACE mutation with canonical
+    AlphaEvolve fences, the parser accepts canonical and compact spellings,
+    and `AGENTS.md` now makes the same paper-aligned versus compatibility
+    distinction for future agents.
+  - Remaining gap: none for diff-format roadmap wording; broader mutation
+    response, prompt-example, and cross-edit consistency work remains active.
+  - Verification: validation for this slice reran the paper manifest, secret
+    scan, and diff checks before commit.
+
 - [x] Require systems roadmap ready gates to have matching artifacts.
   - Evidence: roadmap systems work needs held-out/reference gates to be backed
     by concrete report artifacts, not only status fields.

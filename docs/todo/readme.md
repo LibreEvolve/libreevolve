@@ -1882,11 +1882,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evidence paths exist under `docs/todo/Completed/` and contain completed
     checklist text. README, ROADMAP, and `papers/README.md` now describe that
     status-cell and TODO-coverage validation scope without claiming full
-    semantic proof. Remaining README gap: the validator does not yet
-    machine-check phrase-level evidence links behind each long semantic status
-    claim or deeply distinguish smoke-scoped examples from
-    AlphaEvolve-comparable benchmark evidence beyond the role/status class
-    matrix and required path presence.
+    semantic proof. The validator also now rejects unqualified
+    `AlphaEvolve-comparable` status-table overclaims unless the phrase is
+    framed as missing, scoped, or requirement-bound evidence. Remaining README
+    gap: the validator does not yet machine-check phrase-level evidence links
+    behind each long semantic status claim or deeply distinguish smoke-scoped
+    examples from benchmark evidence beyond the role/status class matrix,
+    required path presence, and this `AlphaEvolve-comparable` overclaim guard.
   - Required result: keep README wording scoped as phrase-level semantic
     status/coverage evidence checks are added, so public docs continue to
     distinguish structural/taxonomy validation from fully verified semantic

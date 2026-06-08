@@ -149,6 +149,14 @@ STATUS_TABLE_STATUSES_REQUIRING_COMPLETED_EVIDENCE = (
     "Partially implemented:",
     "Static prompt guidance exists ",
 )
+STATUS_TABLE_ALPHAEVOLVE_COMPARABLE_RE = re.compile(r"\bAlphaEvolve-comparable\b", flags=re.IGNORECASE)
+STATUS_TABLE_ALPHAEVOLVE_COMPARABLE_BOUNDARY_RE = re.compile(
+    r"\b(?:not|no|without|before claiming|requires?|remain(?:s)? open|missing|lacks?)\b"
+    r"[^.]{0,160}\bAlphaEvolve-comparable\b"
+    r"|\bAlphaEvolve-comparable\b[^.]{0,160}"
+    r"\b(?:not|no|without|requires?|remain(?:s)? open|missing|lacks?)\b",
+    flags=re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -1377,6 +1385,18 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
             PaperManifestIssue(
                 "status_table_role_status_mismatch",
                 "implementation status class is not compatible with the paper-facing role",
+                row_id,
+            )
+        )
+    if (
+        status
+        and STATUS_TABLE_ALPHAEVOLVE_COMPARABLE_RE.search(status)
+        and not STATUS_TABLE_ALPHAEVOLVE_COMPARABLE_BOUNDARY_RE.search(status)
+    ):
+        issues.append(
+            PaperManifestIssue(
+                "status_table_alphaevolve_comparable_overclaim",
+                "AlphaEvolve-comparable status claims must be framed as missing, scoped, or requirement-bound evidence",
                 row_id,
             )
         )

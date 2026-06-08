@@ -4591,14 +4591,18 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Figure 8 defines `No full-file evolution` in the
     tensor-decomposition setting as evolving only the loss function, contrasting
     that localized edit surface with full-file/codebase evolution.
-  - Current evidence: `alphaevolve_ablations.json` currently records the
-    variant as `definition_only` with broad declarative assertions such as
+  - Current evidence: `alphaevolve_ablations.json` records the variant as
+    `definition_only` with broad declarative assertions such as
     `mutation_mode: diff`, `candidate_workspace_mode: single_primary_file`,
-    and `file_create_delete_enabled: false`. Those labels are not executable
-    config fields, and they do not prove that a benchmark runner restricts
-    mutation to a named loss-function region while leaving initializer,
-    optimizer, sweep logic, certificate/export logic, and other tensor-search
-    code fixed.
+    and `file_create_delete_enabled: false`. It now also carries a validated
+    `paper_scope_boundary` that names AlphaEvolve's
+    `tensor_decomposition_loss_function_only` setup, marks the current
+    `localized_diff_single_primary_python_file_no_topology` scope as
+    `not_equivalent`, and lists the future evidence required. Those labels and
+    boundary records are not executable config fields, and they do not prove
+    that a benchmark runner restricts mutation to a named loss-function region
+    while leaving initializer, optimizer, sweep logic, certificate/export
+    logic, and other tensor-search code fixed.
   - Required result: add executable ablation-runner bindings for a
     loss-function-only tensor-decomposition variant, including target file/block
     identity, allowed mutable symbol or evolve-block scope, config/runtime

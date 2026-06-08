@@ -3238,7 +3238,10 @@ AlphaEvolve Figure 8 full-system baseline plus the five named component
 ablations. It is a report contract, not executed results: each variant records
 the intended disabled components, config assertions, three-seed aggregation
 policy, target aggregation policy, equal-budget fractions, required result
-fields, and paper citation metadata.
+fields, and paper citation metadata. The `No full-file evolution` registry row
+also has a validated `paper_scope_boundary` that keeps its current localized
+single-file diff/no-topology scope explicitly marked as not equivalent to
+AlphaEvolve's tensor-decomposition loss-function-only ablation.
 The validator's JSON report separates historical download fields from current
 local PDF presence and Git-tracked status. It also enforces safe paper ids,
 portable `papers/<name>.pdf` file names, unique normalized file targets,

@@ -938,10 +938,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `archive_admission_enabled`, `prompt_context_sections`,
     `candidate_workspace_mode`, `file_create_delete_enabled`,
     `ensemble_strategy: single_backend`, and `backend_capability_tier`.
-    The `No full-file evolution` variant is also broader than the paper's
-    tensor-decomposition ablation: AlphaEvolve restricted that alternative to
-    evolving only the loss function, while the current registry does not bind a
-    target file, evolve block, symbol, or report field proving
+    The `No full-file evolution` variant now carries a validated
+    `paper_scope_boundary` that records AlphaEvolve's tensor-decomposition
+    loss-function-only setup and marks the current localized single-file
+    diff/no-topology scope as `not_equivalent`. That boundary still does not
+    bind a target file, evolve block, symbol, or report field proving
     loss-function-only mutation.
     `libreevolve.llm_feedback_calibration.v1` now defines and tests a feedback
     grader calibration-report contract with declared graders, at least two
@@ -1032,9 +1033,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     calibration reports for real reviewer/task suites. Those scripts must bind
     Figure 8 component assertions to actual supported config/runtime controls
     or fail when a named assertion is only declarative. For the `No full-file
-    evolution` variant, require loss-function-only tensor-decomposition scope
-    evidence rather than treating generic single-file/diff/no-topology settings
-    as equivalent. For the `No evolution` variant, require executed prompt and
+    evolution` variant, keep the registry's non-equivalence boundary until a
+    runner emits loss-function-only tensor-decomposition scope evidence rather
+    than treating generic single-file/diff/no-topology settings as equivalent.
+    For the `No evolution` variant, require executed prompt and
     history proof that each candidate is generated from the same initial
     program with no database-selected parent/inspiration programs, archive
     admission feedback, or previous-candidate resurfacing, rather than relying

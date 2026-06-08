@@ -99,6 +99,17 @@
       ],
       "paper_label": "No full-file evolution",
       "paper_citations": ["2506.13131"],
+      "paper_scope_boundary": {
+        "alphaevolve_setup": "tensor_decomposition_loss_function_only",
+        "current_scope": "localized_diff_single_primary_python_file_no_topology",
+        "paper_match_status": "not_equivalent",
+        "required_future_evidence": [
+          "tensor_decomposition_benchmark_target",
+          "loss_function_only_edit_surface",
+          "executed_prompt_history",
+          "candidate_edit_surface_audit"
+        ]
+      },
       "rationale": "Tests whether whole-file or workspace-level evolution improves over localized edits."
     },
     {

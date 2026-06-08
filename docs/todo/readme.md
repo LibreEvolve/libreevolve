@@ -753,10 +753,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     fallback, critique, or router leakage. It also does not yet prove the
     `No meta prompt evolution` setup where meta-prompt calls, prompt-template
     mutations, and prompt-program lineage updates are absent in the ablated run
-    but enabled in the full-system comparator. It also does not yet prove the
-    paper-specific `No full-file evolution` setup where only the tensor
-    decomposition loss function is evolved; generic single-file/diff/no-topology
-    labels should not be described as equivalent to that ablation.
+    but enabled in the full-system comparator. The registry now records a
+    validated `No full-file evolution` non-equivalence boundary for the
+    paper-specific tensor-decomposition loss-function-only setup; generic
+    single-file/diff/no-topology labels still should not be described as
+    executable evidence for that ablation.
     The report contract is also target-family generic: it validates declared
     targets but not Figure 8's matrix tensor-decomposition and kissing-number
     sphere-packing families, and it does not require per-target
@@ -768,8 +769,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README, ROADMAP, papers index, and code/paper TODO entries together so the
     README neither underclaims current token/configured-cost budget stops nor
     overclaims AlphaEvolve-style executed ablations. For `No full-file
-    evolution`, require README wording to distinguish a real loss-function-only
-    tensor-decomposition harness from broader localized-edit settings. Require
+    evolution`, keep README wording tied to the validated non-equivalence
+    boundary until a real loss-function-only tensor-decomposition harness
+    exists. Require
     README wording to distinguish `No evolution` registry labels from executed
     evidence that the same initial program was repeatedly prompted without
     evolutionary database feedback. Require

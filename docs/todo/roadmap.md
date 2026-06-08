@@ -3542,10 +3542,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     meta-prompt role calls, prompt-template mutations, and prompt-program
     lineage updates were absent in the ablation while present or eligible in
     the full-system comparator.
-    For `No full-file evolution`, the current registry also does not encode
-    AlphaEvolve's tensor-decomposition-specific loss-function-only restriction;
-    broad single-file/diff/no-create-delete labels are not the same as proving
-    only the loss function was mutable.
+    For `No full-file evolution`, the registry now encodes a validated
+    AlphaEvolve tensor-decomposition loss-function-only non-equivalence
+    boundary; broad single-file/diff/no-create-delete labels are still not the
+    same as executable proof that only the loss function was mutable.
     The current report contract is also target-family generic: tests use a
     placeholder `hello_world` target, and neither the registry nor report
     validator requires Figure 8's matrix tensor-decomposition and
@@ -3575,9 +3575,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     for the ablation and enabled for the full-system comparator, plus the
     frozen human-authored prompt identity, source, revision, and context policy
     used for the human-prompter comparator. Ensure the
-    `No full-file evolution` harness records the
-    loss-function target scope, fixed tensor-search components, and report
-    evidence before claiming parity with Figure 8. Also require ablation
+    `No full-file evolution` harness records the loss-function target scope,
+    fixed tensor-search components, and report evidence before claiming parity
+    with Figure 8. Also require ablation
     reports to identify the matrix and kissing-number target families and
     validate target-metric identity/direction/normalization plus
     mean/standard-deviation curve summaries against per-target three-seed

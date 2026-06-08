@@ -425,6 +425,9 @@ is not yet an AlphaEvolve reproduction.
 - For the Figure 8 `No meta prompt evolution` ablation, require prompt-history,
   call-ledger, and prompt-program lineage proof that meta-prompt calls and
   prompt-template mutations were absent only in the ablated run.
+- For the Figure 8 `No full-file evolution` ablation, keep the registry's
+  validated `paper_scope_boundary` marked not equivalent until a
+  tensor-decomposition harness proves only the loss function was mutable.
 - Report benchmark progress at comparable compute-budget fractions, not only
   final generation counts, with explicit target-metric identity, direction,
   normalization, and aggregation policy for paper-facing curves.

@@ -19,6 +19,9 @@ def test_ablation_registry_enumerates_alphaevolve_figure8_variants():
     assert tuple(variant_ids) == EXPECTED_VARIANT_IDS
     assert data["report_contract"]["seed_policy"]["independent_seed_count"] == 3
     assert data["report_contract"]["budget_axis"] == "fraction_of_equal_compute_budget"
+    no_full_file = next(variant for variant in data["variants"] if variant["id"] == "no_full_file_evolution")
+    assert no_full_file["paper_scope_boundary"]["alphaevolve_setup"] == "tensor_decomposition_loss_function_only"
+    assert no_full_file["paper_scope_boundary"]["paper_match_status"] == "not_equivalent"
 
 
 def test_ablation_registry_requires_each_named_variant(tmp_path):
@@ -66,3 +69,21 @@ def test_ablation_registry_requires_report_contract_fields(tmp_path):
 
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["invalid_required_result_fields"]
+
+
+def test_ablation_registry_requires_no_full_file_scope_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    for variant in data["variants"]:
+        if variant["id"] == "no_full_file_evolution":
+            variant["paper_scope_boundary"]["paper_match_status"] = "equivalent"
+            variant["paper_scope_boundary"]["required_future_evidence"] = ["executed_prompt_history"]
+            break
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_ablation_registry(registry)
+    issue_codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_no_full_file_scope_boundary" in issue_codes
+    assert "invalid_no_full_file_future_evidence" in issue_codes

@@ -87,10 +87,11 @@ system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,
 component-disable assertions, three independent seeds, target aggregation,
 equal-budget fractions, required result fields, and AlphaEvolve citation
 metadata, but it does not claim those reports have been run. Its
-`No full-file evolution` row is not yet bound to the paper's
-tensor-decomposition loss-function-only ablation; the current labels are
-definition-only component assertions, not executable proof that only the loss
-function is mutable. The `No evolution` row has no executed prompt/history
+`No full-file evolution` row now carries a validated `paper_scope_boundary`
+that records AlphaEvolve's tensor-decomposition loss-function-only setup and
+marks the current localized single-file diff/no-topology scope as
+`not_equivalent`; that boundary is still not executable proof that only the
+loss function is mutable. The `No evolution` row has no executed prompt/history
 proof that each proposal repeatedly starts from the same initial program
 without evolutionary-database parent, inspiration, previous-candidate, or
 archive-feedback context. The `No context in the prompt` row is currently too
@@ -834,8 +835,10 @@ Implemented:
   exactly three seeds, required equal-budget fractions,
   finite scores, consumed-budget consistency, consistent budget unit/limit per
   seed curve and across all variants/seeds for each target, passed component
-  assertions, and hashed curve artifacts, but no benchmark script emits these
-  reports yet.
+  assertions, and hashed curve artifacts. The checked-in `No full-file
+  evolution` variant records a validated non-equivalence boundary against
+  AlphaEvolve's tensor-decomposition loss-function-only setup, but no
+  benchmark script emits these reports yet.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

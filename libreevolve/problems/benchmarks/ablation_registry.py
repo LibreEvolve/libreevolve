@@ -21,6 +21,17 @@ EXPECTED_VARIANT_IDS = (
 STATUSES = frozenset({"definition_only", "implemented", "reported"})
 VARIANT_ROLES = frozenset({"baseline", "ablation"})
 ASSERTION_OPERATORS = frozenset({"equals", "not_equals", "in", "gt", "gte", "lt", "lte"})
+NO_FULL_FILE_EVOLUTION_SCOPE_BOUNDARY = {
+    "alphaevolve_setup": "tensor_decomposition_loss_function_only",
+    "current_scope": "localized_diff_single_primary_python_file_no_topology",
+    "paper_match_status": "not_equivalent",
+}
+NO_FULL_FILE_EVOLUTION_REQUIRED_EVIDENCE = frozenset({
+    "tensor_decomposition_benchmark_target",
+    "loss_function_only_edit_surface",
+    "executed_prompt_history",
+    "candidate_edit_surface_audit",
+})
 REQUIRED_REPORT_FIELDS = frozenset({
     "variant_id",
     "target_id",
@@ -173,6 +184,12 @@ def _validate_variant(
     citations = variant.get("paper_citations")
     if not isinstance(citations, list) or "2506.13131" not in citations:
         issues.append(AblationRegistryIssue("missing_alphaevolve_citation", "paper_citations must include 2506.13131", variant_id))
+    if variant_id == "no_full_file_evolution":
+        _validate_no_full_file_evolution_scope_boundary(
+            variant.get("paper_scope_boundary"),
+            variant_id,
+            issues,
+        )
 
 
 def _validate_assertion(
@@ -189,6 +206,34 @@ def _validate_assertion(
         issues.append(AblationRegistryIssue("invalid_assertion_operator", "unsupported config assertion operator", variant_id))
     if "value" not in assertion:
         issues.append(AblationRegistryIssue("missing_assertion_value", "config assertion value is required", variant_id))
+
+
+def _validate_no_full_file_evolution_scope_boundary(
+    value: object,
+    variant_id: str,
+    issues: list[AblationRegistryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(AblationRegistryIssue(
+            "missing_no_full_file_scope_boundary",
+            "No full-file evolution must record its AlphaEvolve loss-function-only boundary",
+            variant_id,
+        ))
+        return
+    for field, expected in NO_FULL_FILE_EVOLUTION_SCOPE_BOUNDARY.items():
+        if value.get(field) != expected:
+            issues.append(AblationRegistryIssue(
+                "invalid_no_full_file_scope_boundary",
+                f"paper_scope_boundary.{field} must be {expected}",
+                variant_id,
+            ))
+    evidence = value.get("required_future_evidence")
+    if not isinstance(evidence, list) or set(evidence) != NO_FULL_FILE_EVOLUTION_REQUIRED_EVIDENCE:
+        issues.append(AblationRegistryIssue(
+            "invalid_no_full_file_future_evidence",
+            "No full-file evolution boundary must list the required future evidence",
+            variant_id,
+        ))
 
 
 def _variant_id(variant: object, index: int) -> str:

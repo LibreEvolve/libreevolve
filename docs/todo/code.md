@@ -2511,28 +2511,28 @@ Primary evidence:
     bibliography metadata from manifest display slugs and targeted per-claim
     citation TODOs.
 
-- [ ] Add companion Colab/source-artifact tracking for AlphaEvolve results.
+- [ ] Emit companion Colab/source-artifact records from paper-artifact workflows.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying
     `google-deepmind/alphaevolve_results` Colab notebook, and Table 2 points
     to that Colab for the matrix decompositions shown in the paper.
-  - Current evidence: `papers/download_manifest.*` and
-    `libreevolve.tools.paper_manifest` track PDF sources, byte counts,
-    SHA-256 digests, README status-table consistency, optional local PDF
-    readability, and benchmark registries. The manifest does not track
-    companion notebooks or public result repositories. Existing matrix and
-    Appendix B TODOs ask for local Colab-equivalent construction exports, but
-    they do not preserve the actual AlphaEvolve companion notebook URL,
-    retrieval status, content digest, version/commit, notebook-cell-to-claim
-    mapping, or source-artifact checks that tie local Appendix A/B evidence
-    back to the paper's public result artifact.
-  - Required result: extend paper/source-artifact manifests and validation for
-    non-PDF companion result artifacts: canonical URL/repository/ref,
-    retrieval policy, SHA-256/byte metadata, notebook readability checks,
-    claim-to-cell or claim-to-artifact mapping for matrix and Appendix B
-    results, and README/papers-index wording that distinguishes external
-    AlphaEvolve source evidence from LibreEvolve's own generated
-    Colab-equivalent exports.
+  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` in
+    `libreevolve/problems/benchmarks/companion_sources.py` now preserves the
+    official `google-deepmind/alphaevolve_results` repository URL, pinned
+    commit, retrieval policy, `mathematical_results.ipynb` raw/Colab URLs,
+    SHA-256 digest, byte count, nbformat, cell count, readability status,
+    matrix/constructive-math claim mappings, improved-results-only selection
+    policy, runtime-code absence, and companion repository rights/disclaimer
+    metadata. `papers/download_manifest.*` and
+    `libreevolve.tools.paper_manifest` still track PDF sources only; no
+    manifest row or runtime artifact emitter writes companion-source records
+    alongside local Appendix A/B evidence.
+  - Required result: connect the companion-source contract to paper/source-
+    artifact manifests or emitted evidence bundles, add optional local cache
+    validation for the pinned notebook, deepen claim-to-cell spans beyond
+    section markers, and link generated LibreEvolve Colab-equivalent exports to
+    this external AlphaEvolve source record without treating them as the same
+    artifact.
 
 - [ ] Add companion-result notebook selection-scope provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
@@ -2542,38 +2542,36 @@ Primary evidence:
     problems where AlphaEvolve matched, but did not outperform, the best known
     constructions, and states that the repository does not contain the code to
     run AlphaEvolve.
-  - Current evidence: companion Colab TODOs require URL/ref/digest,
-    notebook-readability checks, and claim-to-cell mapping, while Appendix A/B
-    TODOs require result rows and verifier/code exports. They do not require a
-    source-selection policy that distinguishes notebook-covered improved
-    results from paper-reported matched results, nor a report field that
-    explains why a paper claim may be absent from the companion notebook.
-  - Required result: add companion-artifact selection metadata and validators:
-    source repository URL/ref, notebook path, inclusion policy
-    (`outperformed_sota_only`), excluded/matched-result policy, per-claim
-    notebook coverage status, absence reason, runtime-code availability
-    boundary, license/source notes, and README/ROADMAP wording that separates
-    paper result coverage from the intentionally filtered companion notebook.
+  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1`
+    validates the official notebook's `outperformed_sota_only` inclusion rule,
+    matched-result exclusion wording, runtime-code absence phrase, and per-
+    claim improved-result-only coverage status for the built-in source record.
+    Local Appendix A/B report emitters still do not attach per-claim absence
+    reasons when a paper-reported matched result is intentionally missing from
+    the official notebook.
+  - Required result: propagate companion selection metadata into generated
+    paper-artifact reports: per-claim coverage or absence reason, distinction
+    between paper-reported matched results and companion-notebook improved
+    results, verifier-code availability, runtime-code absence, and docs checks
+    for rendered/exported claim surfaces.
 
 - [ ] Add companion-result repository rights and disclaimer provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README states
     `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,
     licenses other materials under CC-BY 4.0, includes an as-is disclaimer, and
     says the repository is not an official Google product.
-  - Current evidence: active TODOs track the cached AlphaEvolve PDF rights and
-    require generic license/source notes for companion artifacts. They do not
-    preserve the companion repository's dual software/materials license split,
-    rights holder, disclaimer text/source location, or the non-official-product
-    boundary as separate source-use evidence. Without that, generated
-    notebooks, copied verifier code, figures, or construction data could be
-    treated as if they inherit either the paper PDF rights or LibreEvolve's MIT
-    license.
-  - Required result: add source-rights metadata for companion repositories:
-    repository URL/ref, rights holder/year, software license, non-software
-    materials license, disclaimer/as-is text, official-product disclaimer,
-    artifact-type-to-license mapping, allowed reuse/reproduction policy, and
-    README/ROADMAP wording that distinguishes companion-source licensing from
-    the cached PDF rights and the local project license.
+  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1`
+    validates the companion repository URL/ref, Google LLC rights holder/year,
+    Apache-2.0 software license, CC-BY-4.0 materials license, AS-IS
+    disclaimer, non-official-product boundary, and artifact-type license
+    mapping for the built-in source record. Local generated notebooks, copied
+    verifier code, figures, and construction-data exports still do not carry
+    reuse/reproduction policy records that link back to that source-rights
+    evidence.
+  - Required result: attach companion repository rights metadata to generated
+    artifact inventories and export reports, including allowed reuse/
+    reproduction policy and checks that separate copied/adapted companion
+    software or materials from cached PDF rights and LibreEvolve's MIT license.
 
 - [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more

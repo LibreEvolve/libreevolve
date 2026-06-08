@@ -374,6 +374,16 @@ is not yet an AlphaEvolve reproduction.
   AlphaEvolve PDF contribution records for figure creators and companion
   Colab assemblers, but rendered figure/notebook artifact hashes, URLs,
   retrieval digests, and source-to-artifact links remain future work.
+- Keep companion Colab source evidence separate from local generated exports:
+  `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
+  `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`
+  raw/Colab URLs, SHA-256 digest, byte count, nbformat, cell count,
+  readability status, matrix/constructive-math claim mappings,
+  improved-results-only selection policy, matched-result exclusions,
+  AlphaEvolve runtime-code absence, and the companion repository's
+  Apache-2.0/CC-BY-4.0 license and disclaimer boundary. Local cache validation,
+  generated LibreEvolve Colab-equivalent exports, and deeper per-cell claim
+  spans remain open.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

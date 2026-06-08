@@ -3143,6 +3143,19 @@ artifact ids, artifact types, creator/assembler roles, exact initials and
 ordering, source section/page metadata, and the role source phrases. It is
 attribution evidence, not proof that local rendered figures or a companion
 notebook artifact with hashes/links exists.
+AlphaEvolve companion Colab source evidence uses
+`libreevolve.alphaevolve_companion_colab_source.v1` in
+`libreevolve/problems/benchmarks/companion_sources.py`; the built-in record
+pins `google-deepmind/alphaevolve_results` at commit
+`4226acbf237ff9ad10ba7673a2af127a2d8a5971`, records
+`mathematical_results.ipynb` with its raw URL, Colab URL, SHA-256 digest, byte
+count, nbformat, cell count, and readability status, and preserves claim
+mappings for matrix and constructive-math source evidence. It also records the
+companion repository's improved-results-only selection policy, matched-result
+exclusion, absence of AlphaEvolve runtime code, Apache-2.0 software /
+CC-BY-4.0 materials license split, AS-IS disclaimer, and non-official-product
+boundary. This is external DeepMind source evidence, not a LibreEvolve-generated
+Colab-equivalent notebook or local reproduced result export.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

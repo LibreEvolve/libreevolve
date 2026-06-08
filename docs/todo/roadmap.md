@@ -2390,21 +2390,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     overclaims AlphaEvolve-scale benchmark coverage.
 
 - [ ] Keep paper-source roadmap wording scoped until companion Colab artifacts
-      are tracked.
+      are emitted in paper workflows.
   - Spec evidence: AlphaEvolve footnote 2 and Table 2 cite an accompanying
     `google-deepmind/alphaevolve_results` Colab notebook for discovered
     algorithms, mathematical results, and matrix decompositions.
-  - Current evidence: roadmap and README text accurately describe the local
-    paper manifest as PDF-oriented, and TODOs already require local
-    Colab-equivalent Appendix A/B exports once LibreEvolve produces them. They
-    do not require a companion source-artifact manifest for the actual
-    AlphaEvolve notebook: canonical URL/repository/ref, digest/byte metadata,
-    notebook readability, cache policy, or claim-to-cell mapping.
-  - Required result: when companion paper-artifact tracking lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together so
-    roadmap wording distinguishes PDF manifest validation, external
-    AlphaEvolve companion-source verification, and generated LibreEvolve
-    result-export artifacts.
+  - Current evidence: roadmap and README now document
+    `libreevolve.alphaevolve_companion_colab_source.v1`, which validates the
+    official companion repository URL/ref, notebook URLs, digest/byte metadata,
+    nbformat/cell-count readability status, source claim mappings, selection
+    policy, runtime-code absence, and companion repository rights/disclaimer
+    boundary. The paper manifest and runtime paper-artifact workflows still do
+    not emit companion-source rows or local-cache validation.
+  - Required result: when companion paper-artifact manifest/emitter support
+    lands, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap wording distinguishes PDF manifest validation,
+    external AlphaEvolve companion-source verification, local cache status, and
+    generated LibreEvolve result-export artifacts.
 
 - [ ] Keep companion-notebook roadmap wording scoped until selection-scope
       metadata exists.
@@ -2412,12 +2413,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `mathematical_results.ipynb` notebook includes only instances where
     AlphaEvolve outperformed SOTA, excludes matched-but-not-outperformed
     constructions, and does not contain the code to run AlphaEvolve.
-  - Current evidence: roadmap/README/paper-index wording can cite companion
-    Colab source tracking and future local Colab-equivalent exports. It does
-    not require a source-selection policy or per-claim absence reason that
-    distinguishes paper-reported matched results from intentionally omitted
-    companion-notebook cells.
-  - Required result: when companion-notebook selection metadata lands, update
+  - Current evidence: roadmap/README/paper-index wording now cites the
+    companion-source contract's improved-results-only selection policy,
+    matched-result exclusion, verifier source markers, and non-availability of
+    AlphaEvolve runtime code in the companion repository. Emitted result
+    reports still lack per-claim absence reasons for paper-reported matched
+    results intentionally omitted from the official notebook.
+  - Required result: when emitted companion-selection rows land, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap language
     separates paper result coverage, official improved-result notebook
     coverage, matched-result omissions, verifier-code availability, and
@@ -2429,15 +2431,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
     licensing for other materials, an as-is disclaimer, and a statement that
     the repository is not an official Google product.
-  - Current evidence: roadmap/README/paper-index wording can cite LibreEvolve's
-    MIT license, source-PDF rights gaps, and companion Colab source tracking.
-    It does not require the companion repository's dual license, artifact-type
-    license mapping, disclaimer, or non-official-product boundary.
-  - Required result: when companion-repository rights metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap language
-    separates source-PDF rights, companion software/materials licensing,
-    generated LibreEvolve artifacts, and local ownership or endorsement
-    boundaries.
+  - Current evidence: roadmap/README/paper-index wording now cites the
+    companion-source contract's Google LLC rights holder/year, Apache-2.0
+    software license, CC-BY-4.0 materials license, artifact-type license
+    mapping, AS-IS disclaimer, and non-official-product boundary. Generated
+    LibreEvolve notebooks, copied verifier code, figures, and construction-data
+    exports still do not emit reuse/reproduction policy rows linked to those
+    source rights.
+  - Required result: when generated artifact rights rows land, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap language separates
+    source-PDF rights, companion software/materials licensing, generated
+    LibreEvolve artifacts, and local ownership or endorsement boundaries.
 
 - [ ] Keep paper-source roadmap wording scoped until AlphaEvolve PDF version
       provenance is pinned.

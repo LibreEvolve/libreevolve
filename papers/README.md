@@ -950,6 +950,15 @@ Implemented:
   creator/assembler roles, exact initials and ordering, source section/page
   metadata, and source phrases. It does not verify rendered figure files or a
   retrieved companion-notebook artifact.
+- `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
+  Colab source-evidence contract. It validates the pinned
+  `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`
+  raw/Colab URLs, SHA-256 digest, byte count, nbformat, cell count, readability
+  status, matrix and constructive-math claim mappings, the official notebook's
+  improved-results-only selection policy, matched-result exclusions, runtime
+  AlphaEvolve-code absence, and the companion repository's Apache-2.0 software /
+  CC-BY-4.0 materials licensing plus disclaimer boundary. It is external source
+  evidence, not a local generated notebook or reproduced-result export.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

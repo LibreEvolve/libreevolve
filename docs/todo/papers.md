@@ -6008,13 +6008,21 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track ImprovEvolve modular-operator paper evidence as a source-specific
       boundary.
   - Paper/source evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask
-    AlphaEvolve to Improve the Input Solution and Then Improvise`, proposes
-    evolving a class with `generate_config(seed)`, `improve(x)`, and
-    `perturb(x, sigma)` rather than a direct solution generator. It combines
-    those methods through a two-stage basin-hopping validation scheme, uses
-    GigaEvo as the outer evolutionary backbone, reports hexagon-packing and
-    second-autocorrelation results, and separates automated ImprovEvolve
-    outputs from lightly human-edited `ImprovEvolve+E` variants.
+    AlphaEvolve to Improve the Input Solution and Then Improvise`, by Alexey
+    Kravatskiy, Valentin Khrulkov, and Ivan Oseledets was submitted as arXiv
+    v1 on February 10, 2026; the cached PDF hash is
+    `8123f1b19d9ba6c891e642be28b1bd4395fff549131d2e45b619dfd28ddfe57a`.
+    The PDF metadata declares CC-BY 4.0 and the front matter includes
+    KDD 2026/ACM publication-rights language. It proposes evolving a class
+    with `generate_config(seed)`, `improve(x)`, and `perturb(x, sigma)` rather
+    than a direct solution generator. It combines those methods through a
+    two-stage basin-hopping validation scheme, uses GigaEvo as the outer
+    evolutionary backbone, reports hexagon-packing and second-autocorrelation
+    results, and separates automated ImprovEvolve outputs from lightly
+    human-edited `ImprovEvolve+E` variants. The PDF links GigaEvo at
+    `https://github.com/FusionBrainLab/gigaevo-core`, OpenEvolve, AI Studio,
+    and OpenRouter, but no ImprovEvolve-specific code URL appears in the
+    extracted links.
   - Current gap: `papers/README.md` lists `2602.10233` as modular search
     inspiration and says LibreEvolve only has static modular guidance, not an
     enforced or executed `generate_config`/`improve`/`perturb` loop. Existing
@@ -6022,17 +6030,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     preserve the ImprovEvolve PDF itself as a source-specific evidence
     boundary with interface semantics, basin-hopping validation parameters,
     GigaEvo dependency/backbone status, human-edit provenance, benchmark rows,
-    ablations, compute budgets, or result-comparison claims.
+    ablations, model/provider provenance, compute budgets, or
+    result-comparison claims.
   - Required result: add paper-manifest and paper-index coverage for
     `2602.10233`: title/authors/arXiv version/date/PDF digest, ACM/preprint
     rights metadata, linked code URL/status, class-interface schema,
     validation-scheme parameters, seed and perturbation schedules,
     monotonic-acceptance and basin-hopping records, GigaEvo relation, HEX and
-    ACI2 benchmark/baseline/result rows, human-edited variant attribution,
-    CPU/GPU timeout budgets, ablation rows, relation to LibreEvolve's
-    `ModularPlugin`, and README/ROADMAP/code wording that keeps
-    ImprovEvolve-style execution marked missing unless implementation
-    artifacts and reports prove it.
+    ACI2 benchmark/baseline/result rows, Gemini 3 Pro initial-program and
+    Gemini 3 Flash Preview evolution provenance, common evolution parameters
+    (`elites = 6`, `parents = 2`, `offspring = 10`, temperature `1`), human-
+    edited variant attribution, CPU/GPU timeout budgets, Table 1/2/3 result
+    and hyperparameter rows, Table 4 validation-scheme ablation rows,
+    relation to LibreEvolve's `ModularPlugin`, and README/ROADMAP/code wording
+    that keeps ImprovEvolve-style execution marked missing unless
+    implementation artifacts and reports prove it.
 
 - [ ] Track MadEvolve parameter-optimization paper evidence as a source-
       specific boundary.

@@ -6522,14 +6522,24 @@ Primary evidence:
 - [ ] Add ImprovEvolve modular-operator source boundary before interface
       claims.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
-    to Improve the Input Solution and Then Improvise`, reformulates
+    to Improve the Input Solution and Then Improvise`, by Alexey Kravatskiy,
+    Valentin Khrulkov, and Ivan Oseledets was submitted as arXiv v1 on
+    February 10, 2026; the cached PDF hash is
+    `8123f1b19d9ba6c891e642be28b1bd4395fff549131d2e45b619dfd28ddfe57a`.
+    The PDF metadata declares CC-BY 4.0, while the paper front matter also
+    carries KDD 2026/ACM publication-rights language. It reformulates
     AlphaEvolve-style search by evolving a class with `generate_config(seed)`,
-    `improve(x)`, and `perturb(x, sigma)` methods. The paper validates programs
-    through a two-stage basin-hopping loop with multi-seed initialization,
-    scheduled perturbation intensity, monotonic acceptance, GigaEvo as the
-    outer MAP-Elites backbone, and benchmark claims for hexagon packing and
-    the second autocorrelation inequality, including human-edited
-    `ImprovEvolve+E` variants.
+    `improve(x)`, and `perturb(x, sigma)` methods. The paper validates
+    programs through a two-stage basin-hopping loop with multi-seed
+    initialization, scheduled perturbation intensity, monotonic acceptance,
+    GigaEvo as the outer MAP-Elites backbone, and benchmark claims for hexagon
+    packing and the second autocorrelation inequality, including human-edited
+    `ImprovEvolve+E` variants. Algorithm 1 defaults to `10` initial seeds,
+    `10` iterations per round, `sigma_max = 100`, `sigma_min = 0.001`, and a
+    geometric perturbation schedule; the GigaEvo setup uses a single-island
+    MAP-Elites archive with fitness as the single behavior descriptor
+    discretized into `150` bins, `InsightsStage`, `LineageInsights`, and
+    aggregate evolutionary statistics.
   - Current evidence: `papers/README.md` marks ImprovEvolve as modular search
     inspiration and says LibreEvolve only emits static modular prompt guidance
     with `operation_selected: static_modular_guidance` and false execution/
@@ -6538,18 +6548,25 @@ Primary evidence:
     `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,
     no basin-hopping validation runner, no inner-loop incumbent/improvement
     records, no perturbation-schedule telemetry, no GigaEvo-backed outer-loop
-    compatibility report, no human-edit attribution boundary, and no
-    hexagon/ACI2 benchmark report tied to this source.
+    compatibility report, no Gemini 3 Pro/Gemini 3 Flash Preview model-split
+    provenance, no human-edit attribution boundary, and no hexagon/ACI2
+    benchmark report tied to this source.
   - Required result: add source-boundary metadata and implementation gates for
     `2602.10233`: arXiv version/date/PDF hash, ACM/preprint rights metadata,
     linked code/status if available, class-interface schema and enforcement,
     Stage A/Stage B validation runner records, seed counts, basin-hopping
     rounds, perturbation schedules, monotonic acceptance proofs, incumbent and
     improvement-delta artifacts, GigaEvo/backbone compatibility metadata,
-    human-edited variant provenance, HEX and ACI2 benchmark/baseline rows,
-    CPU/GPU and timeout budgets, ablation reports, and README/ROADMAP wording
-    that keeps current static modular prompting separate from ImprovEvolve
-    execution semantics.
+    model/provider and initial-program provenance, human-edited variant
+    provenance, HEX and ACI2 benchmark/baseline rows, Table 1 result rows
+    (`HEX 11` `3.9245` vs AlphaEvolve `3.9301`, `HEX 12` `3.9416` vs
+    AlphaEvolve `3.9419`, `ACI2` ImprovEvolve+E `0.96258` vs AlphaEvolve
+    `0.96102`), Table 2 hyperparameters (`5 min`/`20 min`, seeds `10`/`3`,
+    rounds `15`/`5`, iterations `11`/`6`), Table 3 HEX `13..30`
+    generalization rows, Table 4 Stage A/B and LLM-edit ablation rows,
+    CPU/GPU and wall-clock budget records (`~10h` HEX, `~40h` ACI2), and
+    README/ROADMAP wording that keeps current static modular prompting
+    separate from ImprovEvolve execution semantics.
 
 - [ ] Add MadEvolve parameter-optimization source boundary before domain-
       evolution claims.

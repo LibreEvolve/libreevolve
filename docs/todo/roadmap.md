@@ -4838,27 +4838,37 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add ImprovEvolve modular-operator gates before roadmap promotion.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
-    to Improve the Input Solution and Then Improvise`, replaces direct
-    solution-generation with an evolved `generate_config`/`improve`/`perturb`
-    class executed by a two-stage basin-hopping validation loop with multi-seed
-    initialization, scheduled perturbations, monotonic acceptance, GigaEvo
-    outer evolution, and HEX/ACI2 benchmark claims including `ImprovEvolve+E`.
+    to Improve the Input Solution and Then Improvise`, by Kravatskiy,
+    Khrulkov, and Oseledets was submitted as arXiv v1 on February 10, 2026 and
+    replaces direct solution-generation with an evolved
+    `generate_config`/`improve`/`perturb` class executed by a two-stage
+    basin-hopping validation loop with multi-seed initialization, scheduled
+    perturbations, monotonic acceptance, GigaEvo outer evolution, and HEX/ACI2
+    benchmark claims including `ImprovEvolve+E`. It uses Gemini 3 Pro to
+    generate/refine `5` initial programs, Gemini 3 Flash Preview through
+    OpenRouter for evolution, GigaEvo default prompts/stages, a single-island
+    MAP-Elites archive with `150` fitness bins, `elites = 6`, `parents = 2`,
+    `offspring = 10`, and CPU-parallel program execution during evolution.
   - Current evidence: ROADMAP says ImprovEvolve features remain inspired unless
     paper behavior is implemented, and `papers/README.md` scopes LibreEvolve to
     static modular guidance with false execution/enforcement flags. Roadmap
     lacks `2602.10233`-specific gates for source metadata, interface
     enforcement, validation-loop execution, perturbation schedules, inner/outer
     loop separation, human-edit provenance, GigaEvo dependency/backbone status,
-    HEX/ACI2 benchmark rows, ablations, and budget evidence.
+    model/provider provenance, HEX/ACI2 benchmark rows, ablations, and budget
+    evidence.
   - Required result: add roadmap gates for `2602.10233`: paper/source manifest
     entry, PDF/cache hash, ACM/preprint rights and linked-code status,
     `generate_config`/`improve`/`perturb` interface schema, Stage A/B runner,
     seed counts, basin-hopping rounds, perturbation schedules, monotonic
     acceptance/incremental improvement records, GigaEvo/backbone metadata,
-    human-edited variant attribution, HEX and ACI2 benchmark/baseline/result
-    rows, CPU/GPU timeout/compute budgets, ablation rows, and README/papers/
-    code wording that keeps ImprovEvolve as modular-search inspiration until
-    local execution semantics and benchmark evidence are validated.
+    Gemini/OpenRouter model provenance, human-edited variant attribution, HEX
+    and ACI2 benchmark/baseline/result rows, Table 2 hyperparameter rows,
+    Table 3 generalization rows, Table 4 Stage A/B and LLM-edit ablation rows,
+    CPU/GPU timeout/compute budgets, wall-clock budget rows (`~10h` HEX,
+    `~40h` ACI2), and README/papers/code wording that keeps ImprovEvolve as
+    modular-search inspiration until local execution semantics and benchmark
+    evidence are validated.
 
 - [ ] Add MadEvolve parameter-optimization gates before roadmap promotion.
   - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary

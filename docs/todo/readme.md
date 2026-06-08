@@ -4368,12 +4368,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README ImprovEvolve wording scoped until modular-operator execution
       evidence exists.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
-    to Improve the Input Solution and Then Improvise`, evolves a class with
-    `generate_config`, `improve`, and `perturb` methods, then executes those
-    methods through a two-stage basin-hopping validation loop with scheduled
-    perturbation intensity, monotonic acceptance, GigaEvo outer evolution, and
-    benchmark claims for hexagon packing and the second autocorrelation
-    inequality.
+    to Improve the Input Solution and Then Improvise`, by Kravatskiy,
+    Khrulkov, and Oseledets evolves a class with `generate_config`, `improve`,
+    and `perturb` methods, then executes those methods through a two-stage
+    basin-hopping validation loop with scheduled perturbation intensity,
+    monotonic acceptance, GigaEvo outer evolution, and benchmark claims for
+    hexagon packing and the second autocorrelation inequality. It reports
+    Table 1 values including `HEX 11` `3.9245` vs AlphaEvolve `3.9301`,
+    `HEX 12` `3.9416` vs AlphaEvolve `3.9419`, and human-edited ACI2
+    `0.96258` vs AlphaEvolve `0.96102`; Table 3 additionally tracks HEX
+    `13..30` generalization and human-edited variants.
   - Current evidence: README describes the ImprovEvolve-inspired modular
     plugin as static prompt guidance: it does not select, execute, or log a
     `generate_config`/`improve`/`perturb` operation, and its metadata marks
@@ -4381,7 +4385,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     paper-inspired approximations, but README does not require a `2602.10233`
     source-specific boundary for interface enforcement, basin-hopping records,
     perturbation schedules, human-edited variants, GigaEvo-backbone relation,
-    HEX/ACI2 benchmark results, ablations, or compute-budget claims.
+    HEX/ACI2 benchmark results, ablations, model/provider provenance, or
+    compute-budget claims.
   - Required result: if README mentions ImprovEvolve, modular search,
     `generate_config`, `improve`, `perturb`, basin-hopping validation,
     scheduled perturbations, `ImprovEvolve+E`, hexagon-packing improvements,
@@ -4389,8 +4394,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source-scoped until manifests and reports include the `2602.10233` source
     row, PDF/code hashes, interface schemas, executed validation-loop
     artifacts, perturbation and seed records, human-edit provenance,
-    benchmark/baseline rows, ablation and budget reports, and a clear
-    distinction between static prompt guidance and ImprovEvolve execution.
+    benchmark/baseline rows, ablation and budget reports, model/provider
+    provenance, and a clear distinction between static prompt guidance and
+    ImprovEvolve execution.
 
 - [ ] Keep README MadEvolve wording scoped until parameter-optimization and
       innovation-report evidence exists.

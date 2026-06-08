@@ -954,9 +954,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     active evidence path presence, and completed-evidence path presence for
     rows claiming partial/implemented/local-only support; completed evidence
     paths must also exist under `docs/todo/Completed/` and contain completed
-    checklist text. README, ROADMAP, and the paper index now describe this
-    validator boundary without claiming full semantic proof. The validator also
-    now rejects unqualified `AlphaEvolve-comparable` status-table overclaims
+    checklist text that names the paper id or source PDF. README, ROADMAP, and
+    the paper index now describe this validator boundary without claiming full
+    semantic proof. The validator also now rejects unqualified
+    `AlphaEvolve-comparable` status-table overclaims
     unless the phrase is framed as missing, scoped, or requirement-bound
     evidence, and it rejects background-only/future-benchmark status classes
     that include positive implementation-support wording. Bare `Background
@@ -974,9 +975,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     implemented as described:` status classes must now also name an explicit
     missing or unsupported paper behavior. Remaining
     roadmap gap: the validator does not yet link long status claims to specific
-    active/completed evidence records or deeply verify
+    active/completed evidence records at semantic phrase level or deeply verify
     smoke/partial/planned/unsupported qualifiers beyond the role/status class
-    matrix, required path presence, the `AlphaEvolve-comparable` overclaim
+    matrix, required path presence, source-specific completed-evidence path
+    checks, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the implemented-status
     boundary guard, the partial-status boundary guard, the limited-status

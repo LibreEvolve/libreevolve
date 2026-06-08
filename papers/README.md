@@ -683,30 +683,30 @@ completed-ledger files listed below.
 
 | ID | Active gap evidence | Completed/grouped evidence |
 |---|---|---|
-| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
-| 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
-| auer-cesa-bianchi-fischer-2002 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
-| 2511.17592 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2510.14150 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/readme.md` |
-| 2511.23473 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md` |
-| 2602.10233 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| auer-cesa-bianchi-fischer-2002 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2511.17592 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2510.14150 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2511.23473 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2602.10233 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | 2602.15951 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2603.14575 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2510.06056 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/roadmap.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/code.md` |
-| 2601.21096 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2602.22425 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2602.16928 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2603.09172 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2509.18057 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2603.06692 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2601.16175 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2603.08679 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2601.01235 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2511.12916 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2601.05943 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2506.16750 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2505.16105 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
-| 2506.01896 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2603.14575 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2510.06056 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2601.21096 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2602.22425 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2602.16928 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2603.09172 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2509.18057 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2603.06692 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2601.16175 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2603.08679 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2601.01235 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2511.12916 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2601.05943 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
+| 2506.16750 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2505.16105 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
+| 2506.01896 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` |  |
 
 ## Benchmark coverage decisions
 

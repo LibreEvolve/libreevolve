@@ -94,10 +94,10 @@ def _active_todo_cell(*paths):
     return "; ".join(f"`{path}`" for path in paths)
 
 
-def _write_completed_todo_ledger(root, path="docs/todo/Completed/code.md"):
+def _write_completed_todo_ledger(root, path="docs/todo/Completed/code.md", row_id="2506.13131"):
     completed_path = root / path
     completed_path.parent.mkdir(parents=True, exist_ok=True)
-    completed_path.write_text("- [x] Completed fixture evidence.\n", encoding="utf-8")
+    completed_path.write_text(f"- [x] Completed fixture evidence for `{row_id}`.\n", encoding="utf-8")
     return f"`{path}`"
 
 
@@ -1498,6 +1498,32 @@ def test_validate_paper_manifest_reports_completed_evidence_without_completed_it
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "completed_todo_coverage_without_completed_item" in codes
+
+
+def test_validate_paper_manifest_reports_completed_evidence_without_source_specific_item(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_path = tmp_path / "docs" / "todo" / "Completed" / "code.md"
+    completed_path.parent.mkdir(parents=True, exist_ok=True)
+    completed_path.write_text("- [x] Completed fixture evidence for another source.\n", encoding="utf-8")
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                "`docs/todo/Completed/code.md`",
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "completed_todo_coverage_not_source_specific" in codes
 
 
 def test_validate_paper_manifest_ignores_unscoped_absence_phrase_examples(tmp_path):

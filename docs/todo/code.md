@@ -2842,9 +2842,10 @@ Primary evidence:
     incompatible status classes, missing active evidence paths, and missing
     completed-evidence paths for rows claiming partial/implemented/local-only
     support; completed evidence paths must now also exist under
-    `docs/todo/Completed/` and contain completed checklist text. README,
-    ROADMAP, and `papers/README.md` now describe that validator boundary
-    without claiming full semantic proof. The validator also now rejects
+    `docs/todo/Completed/` and contain completed checklist text that names the
+    paper id or source PDF. README, ROADMAP, and `papers/README.md` now
+    describe that validator boundary without claiming full semantic proof. The
+    validator also now rejects
     unqualified `AlphaEvolve-comparable` status-table overclaims unless the
     phrase is framed as missing, scoped, or requirement-bound evidence, and it
     rejects background-only/future-benchmark status classes that include
@@ -2865,8 +2866,9 @@ Primary evidence:
     unsupported paper behavior.
     Remaining gap: the validator does not yet link each long status/coverage
     phrase to the specific active TODO or completed-evidence record that
-    justifies it, or prove broader smoke-versus-paper-claim qualifiers beyond
-    the role/status class matrix, required path presence, the
+    justifies its semantics, or prove broader smoke-versus-paper-claim
+    qualifiers beyond the role/status class matrix, required path presence,
+    source-specific completed-evidence path checks, the
     `AlphaEvolve-comparable` overclaim guard, the negative-status contradiction
     guard, the background-only boundary guard, the future-benchmark boundary
     guard, the implemented-status boundary guard, the partial-status boundary

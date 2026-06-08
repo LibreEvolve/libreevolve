@@ -414,7 +414,8 @@ def validate_paper_manifest(
             )
         )
     issues.extend(_validate_root_readme_paper_summary(root_path, seen_ids))
-    issues.extend(_validate_todo_coverage_table(root_path, seen_ids))
+    manifest_rows_by_id = {str(row.get("id")): row for row in json_rows if row.get("id")}
+    issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
 
     return PaperManifestReport(
@@ -960,7 +961,11 @@ def _validate_root_readme_paper_summary(root: Path, manifest_ids: set[str]) -> l
     ]
 
 
-def _validate_todo_coverage_table(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:
+def _validate_todo_coverage_table(
+    root: Path,
+    manifest_ids: set[str],
+    manifest_rows_by_id: dict[str, dict[str, Any]] | None = None,
+) -> list[PaperManifestIssue]:
     path = root / "papers" / "README.md"
     if not path.exists() or not manifest_ids:
         return []
@@ -1020,7 +1025,14 @@ def _validate_todo_coverage_table(root: Path, manifest_ids: set[str]) -> list[Pa
     for row_id in sorted(manifest_ids & set(rows)):
         active_cell, completed_cell = rows[row_id]
         issues.extend(_validate_active_todo_coverage_cell(root, row_id, active_cell))
-        issues.extend(_validate_completed_todo_coverage_cell(root, row_id, completed_cell))
+        issues.extend(
+            _validate_completed_todo_coverage_cell(
+                root,
+                row_id,
+                completed_cell,
+                (manifest_rows_by_id or {}).get(row_id),
+            )
+        )
         issues.extend(
             _validate_status_evidence_links(
                 row_id,
@@ -1108,9 +1120,15 @@ def _validate_active_todo_coverage_cell(root: Path, row_id: str, cell: str) -> l
     return issues
 
 
-def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -> list[PaperManifestIssue]:
+def _validate_completed_todo_coverage_cell(
+    root: Path,
+    row_id: str,
+    cell: str,
+    manifest_row: dict[str, Any] | None = None,
+) -> list[PaperManifestIssue]:
     issues: list[PaperManifestIssue] = []
     row_label = _safe_manifest_label(row_id)
+    source_tokens = _completed_todo_source_tokens(row_id, manifest_row)
     for relative_path in sorted(TODO_COVERAGE_PATH_RE.findall(cell)):
         if not relative_path.startswith("docs/todo/Completed/"):
             issues.append(
@@ -1150,7 +1168,27 @@ def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -
                     row_label,
                 )
             )
+            continue
+        if not _completed_todo_blocks_contain_any(text, source_tokens):
+            issues.append(
+                PaperManifestIssue(
+                    "completed_todo_coverage_not_source_specific",
+                    f"{relative_path} does not contain a completed checklist item for this paper id or source file",
+                    row_label,
+                )
+            )
     return issues
+
+
+def _completed_todo_source_tokens(row_id: str, manifest_row: dict[str, Any] | None) -> tuple[str, ...]:
+    tokens = [row_id]
+    if manifest_row is not None:
+        file_value = manifest_row.get("file")
+        if isinstance(file_value, str) and file_value:
+            tokens.append(file_value)
+            tokens.append(Path(file_value).name)
+            tokens.append(Path(file_value).stem)
+    return tuple(dict.fromkeys(tokens))
 
 
 def _validate_status_evidence_links(
@@ -1259,6 +1297,16 @@ def _open_todo_blocks(text: str) -> list[str]:
 
 def _open_todo_blocks_contain(text: str, needle: str) -> bool:
     return any(needle in block for block in _open_todo_blocks(text))
+
+
+def _completed_todo_blocks(text: str) -> list[str]:
+    starts = [match.start() for match in re.finditer(r"(?m)^- \[x\] ", text)]
+    starts.append(len(text))
+    return [text[start:end] for start, end in zip(starts, starts[1:])]
+
+
+def _completed_todo_blocks_contain_any(text: str, needles: tuple[str, ...]) -> bool:
+    return any(any(needle in block for needle in needles) for block in _completed_todo_blocks(text))
 
 
 def _format_count_source(source: ReadmeCountSource) -> str:

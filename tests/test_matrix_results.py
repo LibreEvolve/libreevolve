@@ -8,12 +8,15 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
+    MATRIX_SWEEP_SPACE_SCHEMA,
     matrix_result_artifact_inventory,
     render_matrix_near_integrality_summary,
     render_matrix_result_summary,
+    render_matrix_sweep_space_summary,
     validate_matrix_near_integrality_evidence,
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
+    validate_matrix_sweep_space_evidence,
     write_strassen_2x2_publication_bundle,
 )
 
@@ -457,3 +460,130 @@ def test_render_matrix_near_integrality_summary_reports_shape():
     assert "| target_id | mm_4x4x4 |" in summary
     assert "| candidate_count | 1 |" in summary
     assert "| coefficient_count | 4 |" in summary
+
+
+def _valid_sweep_space_evidence() -> dict:
+    return {
+        "schema": MATRIX_SWEEP_SPACE_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "source_figure": "Figures 9a-9c",
+        "local_search_evidence": True,
+        "sweep_function_name": "sweep",
+        "search_program_ref": "programs/mm_4x4x4_sweep.py",
+        "hyper_library": {
+            "name": "hyper",
+            "source": "user_provided_hyper_library",
+        },
+        "hyperparameters": [
+            {
+                "name": "learning_rate",
+                "distribution": "uniform",
+                "low": 0.001,
+                "high": 0.1,
+                "dtype": "float",
+            },
+            {
+                "name": "noise",
+                "distribution": "uniform",
+                "low": 0.0,
+                "high": 1.0,
+                "dtype": "float",
+            },
+        ],
+        "sampled_configurations": [
+            {
+                "configuration_id": "cfg_001",
+                "hyperparameters": {
+                    "learning_rate": 0.01,
+                    "noise": 0.2,
+                },
+                "loss": 1.5,
+                "rank": 49,
+                "selected": False,
+            },
+            {
+                "configuration_id": "cfg_002",
+                "hyperparameters": {
+                    "learning_rate": 0.02,
+                    "noise": 0.1,
+                },
+                "loss": 0.9,
+                "rank": 48,
+                "selected": True,
+                "exactness_certificate_ref": "certificates/cfg_002.json",
+                "final_decomposition_ref": "decompositions/cfg_002.json",
+            },
+        ],
+        "winning_configuration_id": "cfg_002",
+    }
+
+
+def test_matrix_sweep_space_evidence_accepts_figure9_hyper_records():
+    evidence = _valid_sweep_space_evidence()
+
+    validation = validate_matrix_sweep_space_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.hyperparameter_count == 2
+    assert validation.sampled_configuration_count == 2
+    assert validation.issues == []
+
+
+def test_matrix_sweep_space_evidence_rejects_missing_figure9_identity():
+    evidence = _valid_sweep_space_evidence()
+    evidence["source_figure"] = "Figure 4"
+    evidence["sweep_function_name"] = "main"
+    evidence["hyper_library"]["name"] = "config"
+    evidence["hyper_library"]["source"] = ""
+
+    validation = validate_matrix_sweep_space_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_source_figure" in codes
+    assert "invalid_sweep_function" in codes
+    assert "invalid_hyper_library_name" in codes
+    assert "missing_hyper_library_source" in codes
+
+
+def test_matrix_sweep_space_evidence_rejects_bad_ranges_and_sampled_values():
+    evidence = _valid_sweep_space_evidence()
+    evidence["hyperparameters"][0]["low"] = 0.1
+    evidence["hyperparameters"][0]["high"] = 0.1
+    del evidence["sampled_configurations"][0]["hyperparameters"]["noise"]
+    evidence["sampled_configurations"][1]["hyperparameters"]["noise"] = 1.2
+
+    validation = validate_matrix_sweep_space_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_hyperparameter_range" in codes
+    assert "missing_configuration_hyperparameter" in codes
+    assert "configuration_hyperparameter_out_of_range" in codes
+
+
+def test_matrix_sweep_space_evidence_requires_selected_winner_certificate_links():
+    evidence = _valid_sweep_space_evidence()
+    evidence["winning_configuration_id"] = "cfg_001"
+    evidence["sampled_configurations"][1]["exactness_certificate_ref"] = ""
+    del evidence["sampled_configurations"][1]["final_decomposition_ref"]
+
+    validation = validate_matrix_sweep_space_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "winning_configuration_not_selected" in codes
+    assert "missing_exactness_certificate_ref" in codes
+    assert "missing_final_decomposition_ref" in codes
+
+
+def test_render_matrix_sweep_space_summary_reports_shape():
+    summary = render_matrix_sweep_space_summary(_valid_sweep_space_evidence())
+
+    assert "Matrix sweep-space evidence" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| target_id | mm_4x4x4 |" in summary
+    assert "| hyperparameter_count | 2 |" in summary
+    assert "| sampled_configuration_count | 2 |" in summary

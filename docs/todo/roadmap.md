@@ -2890,17 +2890,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap text distinguishes AlphaEvolve paper-source OOM boundary
     evidence from local claims about larger matrix target scalability.
 
-- [ ] Keep matrix roadmap wording scoped to result artifacts until evolved
-      sweep-space provenance exists.
+- [ ] Keep matrix roadmap wording scoped until evolved sweep-space records are
+      emitted.
   - Spec evidence: AlphaEvolve Figures 9a-9c show matrix search programs
     evolving a `sweep()` function over user-provided `hyper` ranges, not just
     a final tensor-decomposition artifact.
   - Current evidence: roadmap benchmark language points to matrix result
     contracts, Appendix A registry coverage, checked Strassen artifacts, and
-    near-integrality/scalar-field follow-ups. It does not yet require
-    candidate-produced sweep-space metadata, sampled sweep configuration
-    records, per-sweep outcomes, or linkage from a selected sweep
-    configuration to the final exact certificate.
+    near-integrality/scalar-field follow-ups. It now records
+    `libreevolve.matrix_sweep_space_evidence.v1` as a declared-evidence
+    validator for `sweep` identity, user-provided `hyper` library provenance,
+    hyperparameter ranges, sampled sweep configuration records, per-sweep
+    outcomes, selected winner identity, and final
+    decomposition/exactness-certificate links. Local matrix benchmark runners
+    still do not emit those records.
   - Required result: when matrix benchmark runners persist evolved sweep
     functions, hyperparameter ranges, sampled configuration ids, per-sweep
     diagnostics, and certificate linkage, update ROADMAP, README, papers

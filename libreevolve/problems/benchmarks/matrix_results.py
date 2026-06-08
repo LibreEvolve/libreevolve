@@ -18,11 +18,15 @@ MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
+MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
 NEAR_INTEGRAL_ROUNDING_DOMAINS = frozenset({"integer", "half_integer"})
+SWEEP_SOURCE_FIGURES = frozenset({"Figures 9a-9c"})
+SWEEP_DISTRIBUTIONS = frozenset({"uniform", "log_uniform", "choice"})
+SWEEP_DTYPES = frozenset({"float", "int"})
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _STRASSEN_TARGET_ID = "mm_2x2x2"
@@ -109,6 +113,15 @@ class MatrixNearIntegralityValidation:
     target_id: str | None
     candidate_count: int
     coefficient_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixSweepSpaceValidation:
+    ok: bool
+    target_id: str | None
+    hyperparameter_count: int
+    sampled_configuration_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -334,6 +347,52 @@ def validate_matrix_near_integrality_evidence(
     )
 
 
+def validate_matrix_sweep_space_evidence(
+    evidence: object | str | Path,
+) -> MatrixSweepSpaceValidation:
+    """Validate AlphaEvolve Figure 9-style matrix sweep-space evidence."""
+    data, read_issues = _load_report(evidence)
+    if read_issues:
+        return MatrixSweepSpaceValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_SWEEP_SPACE_SCHEMA:
+        issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix sweep-space evidence schema"))
+    target_id = _text_field(data, "target_id", issues)
+    target_suite = _text_field(data, "target_suite", issues)
+    if target_id is not None and target_suite == APPENDIX_A_TARGET_SUITE:
+        if matrix_target_by_id(target_id) is None:
+            issues.append(MatrixResultIssue("unknown_appendix_a_target", "target_id is not in the AlphaEvolve Appendix A matrix registry"))
+    if data.get("source_figure") not in SWEEP_SOURCE_FIGURES:
+        issues.append(MatrixResultIssue("invalid_source_figure", "source_figure must identify AlphaEvolve Figures 9a-9c"))
+    if data.get("sweep_function_name") != "sweep":
+        issues.append(MatrixResultIssue("invalid_sweep_function", "sweep_function_name must be sweep"))
+    if not isinstance(data.get("local_search_evidence"), bool):
+        issues.append(MatrixResultIssue("invalid_local_search_evidence", "local_search_evidence must be boolean"))
+    for field in ("search_program_ref",):
+        if not isinstance(data.get(field), str) or not data[field].strip():
+            issues.append(MatrixResultIssue(f"missing_{field}", f"{field} is required"))
+    _validate_sweep_hyper_library(data.get("hyper_library"), issues)
+    hyperparameter_names, hyperparameter_specs = _validate_sweep_hyperparameters(
+        data.get("hyperparameters"),
+        issues,
+    )
+    sampled_count = _validate_sweep_configurations(
+        data.get("sampled_configurations"),
+        hyperparameter_names,
+        hyperparameter_specs,
+        data.get("winning_configuration_id"),
+        issues,
+    )
+    return MatrixSweepSpaceValidation(
+        ok=not issues,
+        target_id=target_id,
+        hyperparameter_count=len(hyperparameter_names),
+        sampled_configuration_count=sampled_count,
+        issues=issues,
+    )
+
+
 def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
     validation = validate_matrix_near_integrality_evidence(evidence)
     status = "ok" if validation.ok else "invalid"
@@ -346,6 +405,25 @@ def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
         f"| target_id | {validation.target_id or '<unknown>'} |",
         f"| candidate_count | {validation.candidate_count} |",
         f"| coefficient_count | {validation.coefficient_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_sweep_space_summary(evidence: dict[str, Any]) -> str:
+    validation = validate_matrix_sweep_space_evidence(evidence)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix sweep-space evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| target_id | {validation.target_id or '<unknown>'} |",
+        f"| hyperparameter_count | {validation.hyperparameter_count} |",
+        f"| sampled_configuration_count | {validation.sampled_configuration_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -681,6 +759,173 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixResultIssue("invalid_shape", "matrix result report must be a JSON object")]
+
+
+def _validate_sweep_hyper_library(value: object, issues: list[MatrixResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_hyper_library", "hyper_library must be an object"))
+        return
+    if value.get("name") != "hyper":
+        issues.append(MatrixResultIssue("invalid_hyper_library_name", "hyper_library.name must be hyper"))
+    source = value.get("source")
+    if not isinstance(source, str) or not source.strip():
+        issues.append(MatrixResultIssue("missing_hyper_library_source", "hyper_library.source is required"))
+
+
+def _validate_sweep_hyperparameters(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> tuple[list[str], dict[str, dict[str, Any]]]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_hyperparameters", "hyperparameters must be a non-empty list"))
+        return [], {}
+    names: list[str] = []
+    specs: dict[str, dict[str, Any]] = {}
+    seen: set[str] = set()
+    for record in value:
+        if not isinstance(record, dict):
+            issues.append(MatrixResultIssue("invalid_hyperparameter", "hyperparameter records must be objects"))
+            continue
+        name = record.get("name")
+        if not isinstance(name, str) or _ID_RE.fullmatch(name) is None:
+            issues.append(MatrixResultIssue("invalid_hyperparameter_name", "hyperparameter name must be a safe identifier"))
+            continue
+        if name in seen:
+            issues.append(MatrixResultIssue("duplicate_hyperparameter_name", "hyperparameter names must be unique"))
+            continue
+        seen.add(name)
+        names.append(name)
+        distribution = record.get("distribution")
+        if distribution not in SWEEP_DISTRIBUTIONS:
+            issues.append(MatrixResultIssue("invalid_hyperparameter_distribution", "unsupported sweep hyperparameter distribution"))
+            distribution = None
+        dtype = record.get("dtype", "float")
+        if dtype not in SWEEP_DTYPES:
+            issues.append(MatrixResultIssue("invalid_hyperparameter_dtype", "hyperparameter dtype must be float or int"))
+        spec: dict[str, Any] = {"distribution": distribution, "dtype": dtype}
+        if distribution in {"uniform", "log_uniform"}:
+            low = _finite_number(record.get("low"))
+            high = _finite_number(record.get("high"))
+            if low is None or high is None:
+                issues.append(MatrixResultIssue("invalid_hyperparameter_range", "uniform sweep hyperparameters require finite low/high values"))
+            elif low >= high:
+                issues.append(MatrixResultIssue("invalid_hyperparameter_range", "hyperparameter low must be less than high"))
+            else:
+                spec["low"] = low
+                spec["high"] = high
+        elif distribution == "choice":
+            choices = record.get("choices")
+            if not isinstance(choices, list) or not choices:
+                issues.append(MatrixResultIssue("invalid_hyperparameter_choices", "choice sweep hyperparameters require non-empty choices"))
+                choices = []
+            spec["choices"] = choices
+        specs[name] = spec
+    if names and not any(specs[name].get("distribution") == "uniform" for name in names):
+        issues.append(MatrixResultIssue("missing_hyper_uniform", "Figure 9 sweep evidence must include at least one hyper.uniform-style range"))
+    return names, specs
+
+
+def _validate_sweep_configurations(
+    value: object,
+    hyperparameter_names: list[str],
+    hyperparameter_specs: dict[str, dict[str, Any]],
+    winning_configuration_id: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_sampled_configurations", "sampled_configurations must be a non-empty list"))
+        return 0
+    if not isinstance(winning_configuration_id, str) or not winning_configuration_id.strip():
+        issues.append(MatrixResultIssue("missing_winning_configuration_id", "winning_configuration_id is required"))
+        winning_configuration_id = None
+    seen: set[str] = set()
+    selected_ids: set[str] = set()
+    sampled_ids: set[str] = set()
+    for record in value:
+        if not isinstance(record, dict):
+            issues.append(MatrixResultIssue("invalid_sampled_configuration", "sampled configuration records must be objects"))
+            continue
+        configuration_id = record.get("configuration_id")
+        if not isinstance(configuration_id, str) or _ID_RE.fullmatch(configuration_id) is None:
+            issues.append(MatrixResultIssue("invalid_configuration_id", "configuration_id must be a safe identifier"))
+        elif configuration_id in seen:
+            issues.append(MatrixResultIssue("duplicate_configuration_id", "configuration_id values must be unique"))
+        else:
+            seen.add(configuration_id)
+            sampled_ids.add(configuration_id)
+        _validate_sweep_configuration_values(
+            record.get("hyperparameters"),
+            hyperparameter_names,
+            hyperparameter_specs,
+            issues,
+        )
+        if _finite_number(record.get("loss")) is None:
+            issues.append(MatrixResultIssue("invalid_sweep_loss", "sampled configuration loss must be finite"))
+        _positive_int(record.get("rank"), "rank", issues)
+        selected = record.get("selected", False)
+        if not isinstance(selected, bool):
+            issues.append(MatrixResultIssue("invalid_selected_flag", "selected must be boolean when present"))
+            selected = False
+        if selected:
+            if isinstance(configuration_id, str):
+                selected_ids.add(configuration_id)
+            for field in ("exactness_certificate_ref", "final_decomposition_ref"):
+                if not isinstance(record.get(field), str) or not record[field].strip():
+                    issues.append(MatrixResultIssue(f"missing_{field}", f"selected sweep configuration must include {field}"))
+    if not selected_ids:
+        issues.append(MatrixResultIssue("missing_selected_configuration", "at least one sampled configuration must be selected"))
+    if isinstance(winning_configuration_id, str):
+        if winning_configuration_id not in sampled_ids:
+            issues.append(MatrixResultIssue("unknown_winning_configuration", "winning_configuration_id must match a sampled configuration"))
+        elif winning_configuration_id not in selected_ids:
+            issues.append(MatrixResultIssue("winning_configuration_not_selected", "winning_configuration_id must refer to a selected configuration"))
+    return len(value)
+
+
+def _validate_sweep_configuration_values(
+    value: object,
+    hyperparameter_names: list[str],
+    hyperparameter_specs: dict[str, dict[str, Any]],
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_configuration_hyperparameters", "sampled configuration hyperparameters must be an object"))
+        return
+    value_names = set(value)
+    missing = [name for name in hyperparameter_names if name not in value_names]
+    if missing:
+        issues.append(MatrixResultIssue("missing_configuration_hyperparameter", "sampled configuration must include every declared hyperparameter"))
+    extra = sorted(value_names - set(hyperparameter_names))
+    if extra:
+        issues.append(MatrixResultIssue("unknown_configuration_hyperparameter", "sampled configuration contains undeclared hyperparameters"))
+    for name in hyperparameter_names:
+        if name not in value:
+            continue
+        spec = hyperparameter_specs.get(name, {})
+        distribution = spec.get("distribution")
+        observed = value[name]
+        if distribution in {"uniform", "log_uniform"}:
+            numeric = _finite_number(observed)
+            if numeric is None:
+                issues.append(MatrixResultIssue("invalid_configuration_hyperparameter_value", "sampled numeric hyperparameter values must be finite"))
+                continue
+            low = spec.get("low")
+            high = spec.get("high")
+            if isinstance(low, (int, float)) and isinstance(high, (int, float)) and not (float(low) <= numeric <= float(high)):
+                issues.append(MatrixResultIssue("configuration_hyperparameter_out_of_range", "sampled hyperparameter value must be within its declared range"))
+        elif distribution == "choice":
+            choices = spec.get("choices", [])
+            if observed not in choices:
+                issues.append(MatrixResultIssue("configuration_hyperparameter_not_in_choices", "sampled choice hyperparameter value must be declared"))
+
+
+def _finite_number(value: object) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    as_float = float(value)
+    if not math.isfinite(as_float):
+        return None
+    return as_float
 
 
 def _validate_near_integrality_prompt(value: object, issues: list[MatrixResultIssue]) -> None:

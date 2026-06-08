@@ -792,11 +792,13 @@ Implemented:
   3.1, but no local matrix benchmark runner emits those records yet. Its
   coefficient-domain field also does not yet encode scalar-field provenance
   for complex-valued algorithms, field characteristic, or certificate scope for
-  exact real/complex applicability. It also does not yet preserve the evolved `sweep()` function
-  and user-provided `hyper` search-space provenance shown in AlphaEvolve
-  Figures 9a-9c, such as hyperparameter range declarations, sampled
-  configuration ids, per-sweep losses/ranks, or linkage from the winning sweep
-  configuration to the final exact decomposition certificate.
+  exact real/complex applicability. `libreevolve.matrix_sweep_space_evidence.v1`
+  now validates declared Figure 9-style sweep provenance for the evolved
+  `sweep` function, user-provided `hyper` library identity, hyperparameter
+  range declarations, sampled configuration ids, per-sweep losses/ranks, and
+  linkage from selected sweep configurations to final decomposition and
+  exactness-certificate artifacts. No local matrix benchmark runner emits
+  those sweep-space records yet.
   It also does not yet emit local Appendix A resource-frontier runs for larger
   targets: attempted sizes beyond the table, reduced-seed policies if any,
   measured accelerator/GPU memory profile, OOM/resource-exhaustion diagnostics,

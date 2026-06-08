@@ -3776,16 +3776,19 @@ Primary evidence:
     hyperparameter ranges that drive the tensor-decomposition search.
   - Current evidence: LibreEvolve records matrix result reports after a
     candidate run exists and has a 2x2 smoke fixture plus a checked Strassen
-    publication bundle. It does not define a matrix benchmark protocol for
-    candidate-produced sweep spaces, user-provided hyperparameter libraries,
-    sampled sweep configurations, per-sweep/per-seed outcomes, or provenance
-    tying evolved search-code changes to the final exact decomposition.
-  - Required result: add matrix benchmark metadata and evaluator/report
-    artifacts for evolved sweep functions, hyperparameter-range declarations,
-    sampled configuration ids, per-sweep losses/ranks/exactness diagnostics,
-    and linkage from selected sweep outcomes to final coefficient certificates
-    before claiming parity with AlphaEvolve's Figure 4/Figure 9 matrix search
-    workflow.
+    publication bundle. `libreevolve.matrix_sweep_space_evidence.v1` now
+    validates declared sweep provenance for `sweep` function identity,
+    user-provided `hyper` library identity, hyperparameter ranges, sampled
+    configurations, per-sweep losses/ranks, selected winner identity, and
+    final decomposition/exactness-certificate links. Local matrix benchmark
+    runners still do not emit those records from candidate-produced search
+    programs.
+  - Required result: add matrix benchmark prompt/evaluator hooks and emitted
+    run artifacts for evolved sweep functions, hyperparameter-range
+    declarations, sampled configuration ids, per-sweep losses/ranks/exactness
+    diagnostics, and linkage from selected sweep outcomes to final coefficient
+    certificates before claiming parity with AlphaEvolve's Figure 4/Figure 9
+    matrix search workflow.
 
 - [ ] Add Appendix A Figure 9a-9c magnified matrix-diff exhibit provenance.
   - Spec evidence: AlphaEvolve Appendix A Figures 9a to 9c present the

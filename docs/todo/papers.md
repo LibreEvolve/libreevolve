@@ -3761,16 +3761,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `sweep()` function with `hyper.uniform(...)` ranges for optimizer,
     discretization, noise, clipping, and related search parameters.
   - Current evidence: the matrix-result report contract validates finished
-    result metadata and artifact references, but it does not require
-    candidate-produced sweep-space declarations, user-provided hyper-library
-    identity, sampled configuration records, per-sweep losses/ranks, or
-    linkage from the winning sweep configuration to the published exact
-    decomposition/certificate.
-  - Required result: add paper-facing matrix benchmark artifacts for evolved
-    sweep functions, hyperparameter range provenance, sampled sweep ids,
-    per-sweep/per-seed outcomes, and final certificate linkage before treating
-    LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
-    tensor-decomposition search workflow.
+    result metadata and artifact references, and
+    `libreevolve.matrix_sweep_space_evidence.v1` now validates declared
+    sweep-space declarations, user-provided hyper-library identity, sampled
+    configuration records, per-sweep losses/ranks, selected winner identity,
+    and linkage from selected sweep configurations to final decomposition and
+    exactness-certificate artifacts. Local matrix benchmark runners still do
+    not emit those records from candidate-produced search programs.
+  - Required result: add paper-facing emitted matrix benchmark artifacts for
+    evolved sweep functions, hyperparameter range provenance, sampled sweep
+    ids, per-sweep/per-seed outcomes, and final certificate linkage before
+    treating LibreEvolve matrix runs as faithful to AlphaEvolve's Figure
+    4/Figure 9 tensor-decomposition search workflow.
 
 - [ ] Preserve the Strassen baseline bundle as pinned paper evidence.
   - Paper evidence: AlphaEvolve's matrix section and Appendix A publish exact

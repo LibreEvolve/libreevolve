@@ -1022,22 +1022,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
-- [ ] Keep README matrix wording scoped to final artifacts until sweep-space
-      provenance exists.
+- [ ] Keep README matrix wording scoped until sweep-space records are emitted.
   - Spec evidence: AlphaEvolve Figures 9a-9c show the 4x4 matrix program
     evolving a `sweep()` function that declares user-provided `hyper` ranges
     for optimizer, noise, clipping, discretization, and related search
     parameters.
   - Current evidence: README documents matrix result reports, Appendix A
     registry checks, the checked Strassen baseline bundle, and open
-    near-integrality/scalar-field gaps. It does not yet document a matrix
-    benchmark path that preserves candidate-produced sweep spaces, sampled
-    configuration ids, per-sweep outcomes, or linkage from the selected sweep
-    configuration to the final exact decomposition certificate.
-  - Required result: when sweep-space provenance lands, update README,
-    ROADMAP, papers index, and matching TODOs so README does not imply final
-    matrix artifacts alone prove AlphaEvolve Figure 4/Figure 9 search-program
-    parity.
+    near-integrality/scalar-field gaps. It now documents
+    `libreevolve.matrix_sweep_space_evidence.v1` as a declared-evidence
+    validator for candidate-produced sweep spaces, sampled configuration ids,
+    per-sweep outcomes, selected winner identity, and final
+    decomposition/exactness-certificate links. It also states that local matrix
+    benchmark runners still do not emit those records.
+  - Required result: when matrix runners emit sweep-space provenance, update
+    README, ROADMAP, papers index, and matching TODOs so README can distinguish
+    actual AlphaEvolve Figure 4/Figure 9 search-program evidence from schema
+    validation alone.
 
 - [ ] Keep README Appendix A Figure 9 wording scoped until magnified-diff
       exhibit provenance exists.

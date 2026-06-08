@@ -3070,6 +3070,14 @@ coefficient diagnostics, maximum rounding-error consistency, and links from
 rounded candidate coefficients to exactness certificates. It validates emitted
 evidence after a run records it; it does not yet make the local matrix smoke
 fixture inject that instruction or emit those diagnostics during search.
+Matrix sweep-space evidence uses
+`libreevolve.matrix_sweep_space_evidence.v1`; it validates declared Figure
+9-style search-program provenance for the `sweep` function, user-provided
+`hyper` library identity, hyperparameter ranges, sampled configuration rows
+with losses and ranks, winning configuration identity, and links from selected
+sweep configurations to final decomposition and exactness-certificate
+artifacts. It validates emitted evidence after a run records it; local matrix
+benchmark runners still do not emit those sweep-space records during search.
 Appendix A matrix target-suite curation uses
 `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`; the built-in record
 preserves the paper's rough `2 <= m,n <= 5` selection wording, unspecified

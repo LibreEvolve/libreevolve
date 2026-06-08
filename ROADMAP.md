@@ -392,6 +392,13 @@ is not yet an AlphaEvolve reproduction.
   rounding policy, raw-versus-rounded coefficient diagnostics, rounding-error
   consistency, and exactness-certificate links. Local benchmark runners still
   need to emit those records during matrix search.
+- Keep matrix sweep-space wording scoped to evidence validation rather than
+  executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
+  now validates declared `sweep` function identity, user-provided `hyper`
+  library provenance, hyperparameter ranges, sampled configuration rows with
+  losses/ranks, winning configuration identity, and final decomposition plus
+  exactness-certificate links. Local benchmark runners still need to emit
+  those records during matrix search.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

@@ -58,6 +58,12 @@ from libreevolve.problems.benchmarks.example_scope import (
     render_example_benchmark_scope_summary,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.follow_on_sources import (
+    ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
+    alphaevolve_follow_on_math_source_record,
+    render_alphaevolve_follow_on_math_source_summary,
+    validate_alphaevolve_follow_on_math_source,
+)
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
@@ -137,6 +143,7 @@ __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
     "ABLATION_RESULT_SCHEMA",
     "ALPHAEVOLVE_COMPANION_COLAB_SCHEMA",
+    "ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA",
@@ -173,6 +180,7 @@ __all__ = [
     "appendix_a_matrix_row_note_records",
     "appendix_a_matrix_subset_scope_record",
     "alphaevolve_companion_colab_source_record",
+    "alphaevolve_follow_on_math_source_record",
     "alphaevolve_paper_artifact_role_records",
     "alphaevolve_references_section_record",
     "alphaevolve_source_pdf_rights_record",
@@ -190,6 +198,7 @@ __all__ = [
     "render_appendix_a_matrix_row_note_summary",
     "render_appendix_a_matrix_subset_scope_summary",
     "render_alphaevolve_companion_colab_source_summary",
+    "render_alphaevolve_follow_on_math_source_summary",
     "render_alphaevolve_references_section_summary",
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
@@ -216,6 +225,7 @@ __all__ = [
     "validate_appendix_a_matrix_row_notes",
     "validate_appendix_a_matrix_subset_scope",
     "validate_alphaevolve_companion_colab_source",
+    "validate_alphaevolve_follow_on_math_source",
     "validate_alphaevolve_references_section",
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",

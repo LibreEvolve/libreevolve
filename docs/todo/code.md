@@ -2587,18 +2587,26 @@ Primary evidence:
     contains 67 problem descriptions plus Google Colab notebooks with prompts,
     verification code, initial programs, final evolved programs, and
     visualization or analysis code where available.
-  - Current evidence: the local paper manifests and `papers/README.md` include
-    `2506.13131` and the original companion-Colab TODO, but they do not include
-    arXiv `2511.02864`, a cached PDF/digest row, repository URL/ref/digest,
-    per-problem source inventory, notebook availability/readability checks, or
-    a mapping from the original paper's Appendix B/Section 3.2 claims to the
-    expanded 67-problem follow-on evidence.
-  - Required result: extend paper/source manifests and validators for the
-    follow-on math-scale paper and repository: arXiv id/version/date, PDF
-    cache row and SHA-256, repository canonical URL/ref/commit, live-repository
-    status policy, problem ids, notebook/prompt/verifier/final-program artifact
-    metadata, license/source notes, and README/ROADMAP wording that separates
-    the original AlphaEvolve specification from later expanded math evidence.
+  - Current evidence: `libreevolve.alphaevolve_follow_on_math_source.v1` in
+    `libreevolve/problems/benchmarks/follow_on_sources.py` now validates arXiv
+    `2511.02864v3`, title/authors/date, the pinned
+    `google-deepmind/alphaevolve_repository_of_problems` commit and README
+    digest, live-repository snapshot policy, declared 67-problem count,
+    many-but-not-all notebook coverage, artifact-kind claims, runtime-code
+    absence, repository source-use licenses, citation boundary, and the
+    separation from the original `2506.13131` AlphaEvolve specification. The
+    paper-manifest gate validates the built-in source record and rejects a
+    stale cache-boundary mismatch if a `2511.02864` manifest row appears before
+    the source record is updated. It still does not cache the follow-on PDF,
+    emit paper/source manifest rows, enumerate problem ids/pages, hash
+    notebooks, or map Appendix B claims to the 67-problem source set.
+  - Required result: extend emitted paper/source manifests for the follow-on
+    math-scale paper and repository: cached-PDF or explicit no-cache policy
+    rows, repository snapshot rows, all problem ids, notebook/prompt/verifier/
+    final-program artifact metadata, per-problem status/page inventory,
+    rights/source-use rows on generated artifacts, and claim mappings from the
+    original AlphaEvolve Section 3.2/Appendix B evidence to the later expanded
+    math repository.
 
 - [ ] Add follow-on problem-repository coverage-state provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

@@ -417,6 +417,17 @@ is not yet an AlphaEvolve reproduction.
   Apache-2.0/CC-BY-4.0 license and disclaimer boundary. Local cache validation,
   generated LibreEvolve Colab-equivalent exports, and deeper per-cell claim
   spans remain open.
+- Keep follow-on AlphaEvolve mathematical-discovery sources separate from the
+  original `2506.13131` specification: `libreevolve.alphaevolve_follow_on_math_source.v1`
+  now validates arXiv `2511.02864v3`, the 2025-12-22 revision date, the
+  `Mathematical exploration and discovery at scale` title/author surface, and
+  the pinned `google-deepmind/alphaevolve_repository_of_problems` snapshot at
+  commit `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`. It records the README
+  digest, live-repository policy, declared 67-problem count, many-but-not-all
+  notebook coverage, prompt/verifier/initial/final artifact kinds, runtime-code
+  absence, source-use licenses, and citation boundary. Cached PDF rows,
+  emitted source manifests, per-problem inventory, numbered-page reconciliation,
+  notebook artifact hashes, and Appendix B claim mappings remain open.
 - Keep Appendix A matrix target-suite curation scoped to reported-suite
   provenance: `libreevolve.alphaevolve_appendix_a_matrix_curation.v1` now
   validates the rough size-selection wording, sorted representative policy,

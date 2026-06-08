@@ -42,6 +42,10 @@ from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.follow_on_sources import (
+    alphaevolve_follow_on_math_source_record,
+    validate_alphaevolve_follow_on_math_source,
+)
 from libreevolve.problems.benchmarks.paper_source_versions import (
     alphaevolve_source_pdf_version_record,
     validate_alphaevolve_source_pdf_version,
@@ -456,6 +460,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_source_pdf_version_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
@@ -763,6 +768,30 @@ def _validate_alphaevolve_references_section_record(
                     )
                     for issue in references_report.issues
                 )
+    return issues
+
+
+def _validate_alphaevolve_follow_on_math_source_record(
+    manifest_rows_by_id: dict[str, dict[str, Any]],
+) -> list[PaperManifestIssue]:
+    record = alphaevolve_follow_on_math_source_record()
+    report = validate_alphaevolve_follow_on_math_source(record)
+    issues = [
+        PaperManifestIssue(
+            f"alphaevolve_follow_on_math_source_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.source_id) if issue.source_id else "2511.02864",
+        )
+        for issue in report.issues
+    ]
+    if "2511.02864" in manifest_rows_by_id:
+        issues.append(
+            PaperManifestIssue(
+                "alphaevolve_follow_on_math_source_manifest_cache_boundary_mismatch",
+                "Follow-on source record says arXiv 2511.02864 is not locally cached, but a manifest row exists",
+                "2511.02864",
+            )
+        )
     return issues
 
 

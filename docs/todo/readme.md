@@ -1692,15 +1692,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README says it contains 67 problem descriptions and many Colab notebooks
     with prompts, verification code, initial programs, final evolved programs,
     and visualization or analysis code.
-  - Current evidence: README can describe the local PDF cache for
-    `2506.13131`, the original companion-Colab gap, Appendix B family/status
-    coverage, and local Colab-equivalent export TODOs. It does not document
-    the later arXiv paper, repository ref, problem/notebook inventory, or how
-    those expanded sources affect claims about constructive-math completeness.
-  - Required result: when follow-on source tracking lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README separates
-    original AlphaEvolve paper parity, original companion-Colab evidence, and
-    the later 67-problem mathematical-discovery source set.
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_follow_on_math_source.v1`, which validates arXiv
+    `2511.02864v3`, `Mathematical exploration and discovery at scale`, the
+    2025-12-22 revision date, the pinned
+    `google-deepmind/alphaevolve_repository_of_problems` commit and README
+    digest, declared 67-problem count, many-but-not-all notebook coverage,
+    artifact-kind claims, runtime-code absence, live-repository policy,
+    source-use licenses, citation boundary, and the distinction between the
+    original `2506.13131` specification and later math-source evidence. README
+    still cannot point to a cached `2511.02864` PDF row, emitted source
+    manifest rows, a per-problem problem/notebook inventory, or claim mappings
+    from Appendix B to the expanded source set.
+  - Required result: when follow-on paper/source rows and per-problem
+    inventories land, update README, ROADMAP, papers index, and code/paper
+    TODOs together so README separates original AlphaEvolve paper parity,
+    original companion-Colab evidence, cached follow-on paper evidence, and the
+    later 67-problem mathematical-discovery source set without implying full
+    notebook/status coverage.
 
 - [ ] State follow-on problem-repository coverage as snapshot-scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

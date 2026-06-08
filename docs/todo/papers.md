@@ -3371,19 +3371,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     that it contains 67 problem pages and Colab notebooks for many problems,
     including prompts, verification code, initial programs, final evolved
     programs, and visualization/analysis code where appropriate.
-  - Current gap: the local `papers/` cache, download manifests, paper index,
-    and AlphaEvolve TODOs still treat `2506.13131` plus its original companion
-    Colab as the only AlphaEvolve primary-source surface. They do not preserve
-    the follow-on paper PDF/version, repository ref, problem inventory,
-    notebook availability, or mapping from original Appendix B claims to the
-    expanded 67-problem source set.
-  - Required result: add paper/source evidence rows for arXiv `2511.02864` and
-    the DeepMind problem repository: PDF URL/cache/digest, arXiv version/date,
-    repository URL/ref/commit and live-update policy, problem ids, notebook
-    artifact metadata, prompt/verifier/initial/final-program presence, license
-    notes, claim mappings to the original AlphaEvolve math results, and
-    README/ROADMAP wording that makes the original-paper versus follow-on
-    source boundary explicit.
+  - Current gap: `libreevolve.alphaevolve_follow_on_math_source.v1` now
+    preserves the follow-on paper identity, arXiv version/date, pinned DeepMind
+    repository URL/commit, README digest, live-update policy, declared 67-
+    problem count, many-but-not-all notebook coverage, prompt/verifier/
+    initial/final artifact-kind claims, runtime-code absence, source-use
+    licenses, citation boundary, and the original-paper versus follow-on
+    source boundary. The standard paper-manifest gate validates that built-in
+    record and rejects a `2511.02864` cache row until the source record is
+    updated. Paper-facing emitted rows are still missing: no cached PDF/digest
+    row, no source-manifest snapshot row, no problem inventory, no notebook
+    hash/readability matrix, and no Appendix B claim mapping to the expanded
+    67-problem source set.
+  - Required result: emit paper/source evidence rows for arXiv `2511.02864`
+    and the DeepMind problem repository: cached-PDF or explicit no-cache
+    policy, repository snapshot rows, problem ids, notebook artifact metadata,
+    prompt/verifier/initial/final-program presence, license/source-use notes on
+    generated artifacts, claim mappings to the original AlphaEvolve math
+    results, and README/ROADMAP wording that keeps the original-paper versus
+    follow-on source boundary explicit.
 
 - [ ] Track follow-on problem-repository coverage-state evidence.
   - Paper/source evidence: the

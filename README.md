@@ -3193,6 +3193,20 @@ exclusion, absence of AlphaEvolve runtime code, Apache-2.0 software /
 CC-BY-4.0 materials license split, AS-IS disclaimer, and non-official-product
 boundary. This is external DeepMind source evidence, not a LibreEvolve-generated
 Colab-equivalent notebook or local reproduced result export.
+Follow-on AlphaEvolve mathematical-discovery source evidence uses
+`libreevolve.alphaevolve_follow_on_math_source.v1` in
+`libreevolve/problems/benchmarks/follow_on_sources.py`; the built-in record
+tracks arXiv `2511.02864v3`, `Mathematical exploration and discovery at
+scale`, last revised 2025-12-22, and pins the live
+`google-deepmind/alphaevolve_repository_of_problems` repository snapshot at
+commit `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`, including README digest,
+declared 67-problem count, many-but-not-all Colab notebook coverage, prompt /
+verifier / initial / final-program artifact kinds, hosted problem-page URL
+pattern, runtime-code absence, Apache-2.0 software / CC-BY-4.0 materials
+license split, citation requirement, and live-repository snapshot policy. This
+is later math-source evidence for the original paper's Section 3.2 handoff,
+not the original `2506.13131` AlphaEvolve specification, not a local cached
+PDF row, and not proof of per-problem notebook/status coverage yet.
 Matrix headline historicity evidence uses
 `libreevolve.matrix_headline_historicity_evidence.v1`; it validates declared
 provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,

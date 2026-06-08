@@ -987,6 +987,17 @@ Implemented:
   AlphaEvolve-code absence, and the companion repository's Apache-2.0 software /
   CC-BY-4.0 materials licensing plus disclaimer boundary. It is external source
   evidence, not a local generated notebook or reproduced-result export.
+- `libreevolve/problems/benchmarks/follow_on_sources.py`: follow-on
+  AlphaEvolve mathematical-discovery source contract. It validates arXiv
+  `2511.02864v3`, `Mathematical exploration and discovery at scale`, the
+  2025-12-22 revision date, and the pinned
+  `google-deepmind/alphaevolve_repository_of_problems` snapshot at commit
+  `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`, including README digest, live
+  repository policy, declared 67-problem count, many-but-not-all notebook
+  coverage, prompt/verifier/initial/final artifact kinds, runtime-code absence,
+  source-use licenses, and citation boundary. It is later math-source evidence,
+  not the original `2506.13131` specification, not a cached PDF row, and not a
+  per-problem notebook/status inventory.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

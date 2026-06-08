@@ -2524,16 +2524,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lists 67 mathematical problems and Colab notebooks for many problems with
     prompts, verification code, initial programs, final evolved programs, and
     visualization/analysis code.
-  - Current evidence: roadmap/README/paper-index wording can cite the original
-    AlphaEvolve paper, the original companion-Colab gap, and Appendix B
-    family/status coverage. It does not require tracking the later paper's PDF
-    version, repository ref/commit, problem inventory, notebook artifacts, or
-    source mappings from original Section 3.2/Appendix B claims to the expanded
-    math-discovery evidence.
-  - Required result: when follow-on source tracking lands, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap claims distinguish
-    original AlphaEvolve specification parity from later 67-problem
-    mathematical-discovery source coverage.
+  - Current evidence: roadmap/README/paper-index wording now cites
+    `libreevolve.alphaevolve_follow_on_math_source.v1`, which validates the
+    later paper's arXiv id/version/date/title/author surface, pinned
+    repository ref/commit, README digest, live-repository policy, declared 67-
+    problem count, many-but-not-all notebook coverage, artifact-kind claims,
+    runtime-code absence, source-use licenses, citation boundary, and the
+    distinction from original `2506.13131` AlphaEvolve specification parity.
+    It still does not require a cached follow-on PDF row, emitted paper/source
+    manifest rows, problem inventory, notebook artifact hashes, or source
+    mappings from original Section 3.2/Appendix B claims to the expanded math-
+    discovery evidence.
+  - Required result: when emitted follow-on source rows and per-problem
+    inventories land, update ROADMAP, README, papers index, and code/paper
+    TODOs so roadmap claims distinguish original AlphaEvolve specification
+    parity, cached follow-on paper evidence, complete problem-page coverage,
+    partial notebook/status coverage, and later 67-problem mathematical-
+    discovery source mappings.
 
 - [ ] Scope roadmap follow-on problem-repository coverage to a pinned snapshot.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

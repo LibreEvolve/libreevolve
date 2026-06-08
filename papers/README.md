@@ -320,9 +320,11 @@ AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores
 non-scalar evaluator attachments separately, while AlphaEvolve Section 2.1 and
 Figure 3 describe evaluator outputs as scalar metric dictionaries maximized by
-convention. Paper-facing reports still need explicit metric-name, validity-gate,
-and direction-transform evidence before LibreEvolve run outputs can be treated
-as AlphaEvolve-comparable scored metric tables.
+convention. Completed manifests now include
+`runtime.history.paper_evaluator_metric_contract` with declared
+`paper_metric_names`, validity-gate exclusion, non-scalar output/feedback
+exclusions, and raw/maximized/normalized value evidence. Export-ready paper
+tables and cross-run metric-contract diffs remain future reporting work.
 
 AlphaEvolve cascade-report note: completed manifests now include
 `runtime.history.evaluation_cascade_report` with schema

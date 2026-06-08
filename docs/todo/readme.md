@@ -9,22 +9,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README evaluator-contract wording scoped to local validity gating
-      until paper-facing scalar metric reports exist.
+- [ ] Keep README evaluator-contract wording scoped until export-ready paper
+      metric tables exist.
   - Spec evidence: AlphaEvolve Section 2.1 describes evaluator outputs as
     scalar metrics maximized by convention, and Figure 3 shows a Python
     evaluator returning `dict[str, float]`.
-  - Current evidence: README correctly documents LibreEvolve's stricter local
-    contract: `evaluate()` returns every declared scalar metric plus reserved
-    boolean `is_valid`, while `outputs`/`program_output` carry non-scalar
-    evidence separately. README also documents metric direction/bounds
-    normalization for local archive scoring. It does not yet describe a
-    benchmark/report contract that strips local control fields from
-    paper-facing metric tables or shows minimize-to-maximize transforms.
-  - Required result: when paper-facing evaluator metric reports land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes the implemented LibreEvolve validity gate from
-    AlphaEvolve-comparable scored scalar metrics.
+  - Current evidence: README now documents
+    `runtime.history.paper_evaluator_metric_contract`, including declared
+    paper-facing evaluator metric names, excluded local validity/output/
+    feedback fields, raw/maximized/normalized observed values, and
+    minimize-to-maximize transforms.
+  - Required result: when export-ready paper metric tables and cross-run
+    metric-contract diff reports land, update README, ROADMAP, papers index,
+    and code/paper TODOs together so README distinguishes manifest-level metric
+    contract evidence from publication-ready AlphaEvolve-comparable tables.
 
 - [ ] Keep README multi-evaluator wording scoped until evaluator-oracle
       composition evidence exists.

@@ -35,6 +35,10 @@ LibreEvolve has:
 - strict scalar evaluator-output validation against `metrics.yaml`, including
   finite, strictly increasing non-boolean metric bounds and a reserved boolean
   validity gate outside optimization metrics
+- paper-facing evaluator metric contracts under
+  `runtime.history.paper_evaluator_metric_contract`, separating evaluator
+  scalar metrics from local validity/output/feedback fields and recording raw,
+  maximized, and normalized score evidence
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
@@ -128,9 +132,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 2. Strengthen multi-objective search
 
-- Add paper-facing evaluator metric reports that separate declared scored
-  scalar objectives from LibreEvolve's local `is_valid` admission gate,
-  non-scalar attachments, feedback fields, and direction-normalization policy.
+- Extend the current paper-facing evaluator metric contract into export-ready
+  benchmark table generation and cross-run metric-contract diff reports.
 - Extend the current documented hybrid, which averages normalized declared
   metrics for archive ranking, into a first-class multi-objective policy:
   Pareto/frontier primary archive replacement, durable cross-run

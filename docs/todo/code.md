@@ -1429,24 +1429,28 @@ Primary evidence:
 
 ## Evaluation
 
-- [ ] Add a paper-facing evaluator metric contract that separates scored
-      scalar metrics from LibreEvolve's local validity gate.
+- [ ] Extend the paper-facing evaluator metric contract into export-ready
+      benchmark tables.
   - Spec evidence: AlphaEvolve Section 2.1 describes an evaluation function
     mapping a solution to scalar metrics, with metrics maximized by
     convention; the Figure 3 example shows a Python `evaluate(eval_inputs)`
     returning `dict[str, float]`.
-  - Current evidence: LibreEvolve's evaluator contract deliberately requires
-    every declared scalar metric plus a reserved boolean `is_valid` gate, and
-    metric direction/bounds can be normalized before archive scoring. That is
-    useful local contract hardening, but current paper-facing reports do not
-    yet prove that `is_valid`, `outputs`, `program_output`, feedback fields,
-    and direction transforms are excluded or normalized correctly when
-    presenting AlphaEvolve-comparable scalar metric tables.
-  - Required result: add a report/schema boundary for paper-facing evaluator
-    metrics, including declared `paper_metric_names`, validity-gate source,
-    maximize/minimize direction-to-maximized transforms, raw versus normalized
-    score columns, and validation that `is_valid` and non-scalar attachments
-    are not treated as scored AlphaEvolve metrics.
+  - Current evidence: completed manifests now include
+    `runtime.history.paper_evaluator_metric_contract` with schema
+    `libreevolve.paper_evaluator_metric_contract.v1`. The report lists
+    declared `paper_metric_names`, separates `is_valid` as a non-scored
+    validity gate, excludes `outputs`, `program_output`,
+    `feedback_adjusted_fitness`, `llm_feedback`, and non-evaluator objective
+    metrics, records maximize/minimize direction-to-maximized transforms, and
+    preserves raw/maximized/normalized observed values with validation.
+  - Remaining gap: the contract is manifest evidence, not an export-ready
+    benchmark table or cross-run report. It does not yet generate paper-table
+    rows, compare metric contracts across runs, or attach table-ready
+    precision/rounding/display policy.
+  - Required result: add export-ready paper metric table generation and
+    cross-run metric-contract diff reports that consume
+    `paper_evaluator_metric_contract`, preserve raw/maximized/normalized score
+    columns, and make precision/rounding/display policy explicit.
 
 - [ ] Add independent evaluator-oracle composition provenance.
   - Spec evidence: AlphaEvolve's abstract says the evolutionary loop

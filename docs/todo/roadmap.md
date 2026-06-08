@@ -59,22 +59,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaim current LLM budget stops nor overclaim AlphaEvolve-grade
     accelerator/async budgeted search.
 
-- [ ] Keep roadmap evaluator-contract wording scoped to local validity gating
-      versus paper-facing scalar metrics.
+- [ ] Keep roadmap evaluator-contract wording scoped until export-ready paper
+      metric tables exist.
   - Spec evidence: AlphaEvolve Section 2.1 frames evaluator outputs as scalar
     metrics maximized by convention, while the paper's example evaluator
     returns a `dict[str, float]`.
-  - Current evidence: `ROADMAP.md` current state can accurately claim strict
-    scalar evaluator-output validation against `metrics.yaml`, but
-    LibreEvolve also requires reserved boolean `is_valid`, permits separate
-    non-scalar attachments, and supports local metric direction/bounds
-    normalization. The roadmap does not yet call out the missing
-    paper-facing report/export boundary that proves only scalar objectives are
-    counted as AlphaEvolve metrics.
-  - Required result: when paper-facing evaluator metric reports and validators
-    land, update the roadmap, README, papers index, and code/paper TODOs
-    together so roadmap wording neither underclaims current strict local
-    evaluator validation nor overclaims AlphaEvolve-comparable metric evidence.
+  - Current evidence: `ROADMAP.md` current state now cites strict scalar
+    evaluator-output validation and
+    `runtime.history.paper_evaluator_metric_contract`, which separates
+    evaluator scalar metrics from local validity/output/feedback fields and
+    records raw, maximized, and normalized score evidence. The near-term plan
+    now scopes remaining work to export-ready benchmark tables and cross-run
+    metric-contract diffs.
+  - Required result: when export-ready paper metric tables and cross-run
+    metric-contract diff reports land, update the roadmap, README, papers
+    index, and code/paper TODOs together so roadmap wording distinguishes
+    manifest-level metric contract evidence from complete AlphaEvolve-
+    comparable paper table evidence.
 
 - [ ] Keep multi-evaluator roadmap wording scoped until evaluator-oracle
       composition evidence exists.

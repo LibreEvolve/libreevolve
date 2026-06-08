@@ -5,8 +5,8 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
-- [ ] Add paper-facing evaluator-metric evidence separate from local
-      `is_valid` admission policy.
+- [ ] Extend paper-facing evaluator-metric evidence into export-ready
+      benchmark tables.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's evaluator maps a solution to scalar metrics,
     metrics are maximized by convention, and the paper's Python example
@@ -15,17 +15,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     requires all declared scalar metrics, reserves boolean `is_valid` outside
     `metrics.yaml`, stores non-scalar `outputs`/`program_output` attachments
     separately, and normalizes declared metric directions/bounds for local
-    archive scoring.
-  - Current gap: benchmark and paper-result reports do not yet include an
-    explicit AlphaEvolve-facing metric contract proving which returned fields
-    are scored scalar objectives, how local minimize metrics are transformed
-    into maximized paper metrics, and that `is_valid` is only an admission
-    gate rather than a reported optimization metric.
-  - Required result: add paper-metric report fields and validators for
-    `paper_metric_names`, validity-gate source, raw and maximized score
-    columns, excluded local-control fields, and claim readiness before
-    treating LibreEvolve evaluator outputs as AlphaEvolve-comparable metric
-    evidence.
+    archive scoring. Completed manifests now include
+    `runtime.history.paper_evaluator_metric_contract` with declared
+    `paper_metric_names`, validity-gate exclusion, raw/maximized/normalized
+    observed values, non-scalar output/feedback exclusions, and validation.
+  - Current gap: benchmark and paper-result tooling does not yet export
+    paper-table rows from that contract, compare metric contracts across runs,
+    or define precision/rounding/display policy for publication tables.
+  - Required result: add export-ready paper metric tables and cross-run
+    metric-contract diff reports that consume
+    `paper_evaluator_metric_contract` before treating LibreEvolve evaluator
+    outputs as complete AlphaEvolve-comparable table evidence.
 
 - [ ] Track independent evaluator-oracle composition evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve

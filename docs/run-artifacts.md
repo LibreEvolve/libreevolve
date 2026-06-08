@@ -1549,6 +1549,17 @@ Configured stage-threshold stops are recorded separately: they retain the real
 validator-returned complete declared metric vector, mark the cascade result
 invalid, and store failed score, metric, or artifact checks under
 `evaluation.metadata.configured_stage_results`.
+Completed manifests also include
+`runtime.history.paper_evaluator_metric_contract` with schema
+`libreevolve.paper_evaluator_metric_contract.v1`. This report is derived from
+`problem.objective_schema` plus runtime history and lists declared
+paper-facing evaluator metrics separately from feedback/plugin/final-fitness
+objective metrics. For each declared metric it records source, primary flag,
+bounds, direction, raw-to-maximized transform, normalized transform, observed
+raw values, maximized values, normalized values, and missing/non-numeric
+counts. The report explicitly excludes `is_valid`, `outputs`,
+`program_output`, `feedback_adjusted_fitness`, and `llm_feedback` from scored
+AlphaEvolve-style scalar metric tables.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

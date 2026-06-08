@@ -44,6 +44,7 @@ from libreevolve.core.loop import (
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
+    validate_paper_evaluator_metric_contract,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -3351,6 +3352,42 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert feedback_index["graders"][0]["programs"][0]["program_id"] == child["id"]
     assert feedback_index["graders"][0]["programs"][0]["normalized_score"] == 0.75
     assert feedback_index["graders"][0]["programs"][0]["objective_metric"] is True
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    contract = manifest["runtime"]["history"]["paper_evaluator_metric_contract"]
+    assert contract["schema"] == "libreevolve.paper_evaluator_metric_contract.v1"
+    assert contract["validation"]["ok"] is True
+    assert validate_paper_evaluator_metric_contract(contract)["ok"] is True
+    assert contract["claim_ready"] is True
+    assert contract["declared_metric_names"] == ["score", "review_latency_ms"]
+    assert contract["paper_metric_names"] == ["score"]
+    assert contract["paper_metric_count"] == 1
+    assert contract["excluded_declared_metrics"] == [
+        {
+            "name": "review_latency_ms",
+            "source": "feedback",
+            "reason": "declared_metric_source_feedback_not_evaluator",
+        }
+    ]
+    assert contract["validity_gate"]["field"] == "is_valid"
+    assert contract["validity_gate"]["scored_metric"] is False
+    assert contract["validity_gate"]["valid_true_count"] == 2
+    assert "is_valid" in {
+        field["field"] for field in contract["excluded_reserved_fields"]
+    }
+    assert "program_output" in {
+        field["field"] for field in contract["excluded_reserved_fields"]
+    }
+    score_metric, feedback_metric = contract["metrics"]
+    assert score_metric["paper_metric"] is True
+    assert score_metric["source"] == "evaluator"
+    assert score_metric["maximize_transform"] == "raw_value"
+    assert score_metric["observed_values"][-1]["raw_value"] == 0.4
+    assert score_metric["observed_values"][-1]["normalized_value"] == 0.4
+    assert feedback_metric["paper_metric"] is False
+    assert feedback_metric["source"] == "feedback"
+    assert feedback_metric["maximize_transform"] == "upper_bound_minus_raw_value"
+    assert feedback_metric["observed_values"][-1]["raw_value"] == 25.0
+    assert feedback_metric["observed_values"][-1]["normalized_value"] == 0.75
 
 
 def test_evaluation_budget_stops_before_llm_mutation():

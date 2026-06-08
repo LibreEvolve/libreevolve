@@ -2045,10 +2045,12 @@ standalone task-spec file with full evolvable-span and score-link evidence.
 `evaluate(code: str, workspace_path: str, stage: dict) -> dict` returning a dict
 with string keys, every declared scalar metric, and boolean `is_valid`.
 `is_valid` is a reserved validity gate, not a `metrics.yaml` optimization
-metric. AlphaEvolve-facing benchmark reports still need to separate this local
-admission gate from scored scalar metric tables and document any
-minimize-to-maximize direction transforms before treating those reports as
-paper-comparable evaluator evidence. The evaluator rejects non-string result
+metric. Completed manifests include
+`runtime.history.paper_evaluator_metric_contract`, which lists declared
+paper-facing evaluator metric names, excludes local validity/output/feedback
+fields, records raw, maximized, and normalized observed metric values, and
+documents minimize-to-maximize direction transforms for AlphaEvolve-comparable
+scalar metric evidence. The evaluator rejects non-string result
 keys before JSON transport and rejects missing declared metrics, undeclared
 return keys, bad metric types, non-finite values, and non-boolean `is_valid`;
 rejected contracts record a

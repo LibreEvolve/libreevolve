@@ -165,6 +165,7 @@ class ProgramDatabase:
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
+        self._objective_schema = copy.deepcopy(objective_schema)
         self._objective_metric_order = _metric_order_from_objective_schema(
             objective_schema
         )
@@ -258,6 +259,9 @@ class ProgramDatabase:
 
     def add(self, program: Program, threshold: float = 0.0) -> dict:
         return self.admit(program, threshold=threshold)
+
+    def objective_schema_snapshot(self) -> dict:
+        return copy.deepcopy(self._objective_schema)
 
     def log_llm_call(self, record: dict) -> None:
         normalized = {"record_type": "call", **record}

@@ -5108,6 +5108,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "failure_index": db.failure_index_snapshot(),
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
+        "paper_evaluator_metric_contract": _paper_evaluator_metric_contract_report(
+            db,
+            programs,
+        ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "archive_state": archive_state,
@@ -5228,6 +5232,363 @@ def _evaluation_cascade_report(programs: list[Program]) -> dict:
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _paper_evaluator_metric_contract_report(
+    db: ProgramDatabase,
+    programs: list[Program],
+) -> dict:
+    objective_schema = db.objective_schema_snapshot()
+    metrics = objective_schema.get("metrics", [])
+    metric_records = [
+        _paper_metric_contract_metric_record(metric, programs)
+        for metric in metrics
+        if isinstance(metric, Mapping)
+    ]
+    paper_metric_names = [
+        record["name"] for record in metric_records if record["paper_metric"] is True
+    ]
+    excluded_declared_metrics = [
+        {
+            "name": record["name"],
+            "source": record["source"],
+            "reason": f"declared_metric_source_{record['source']}_not_evaluator",
+        }
+        for record in metric_records
+        if record["paper_metric"] is False
+    ]
+    validity_gate = _paper_metric_validity_gate(programs)
+    attachments = _paper_metric_attachment_exclusions(programs)
+    report = {
+        "schema": "libreevolve.paper_evaluator_metric_contract.v1",
+        "source": "objective_schema_and_runtime_history",
+        "primary_metric": objective_schema.get("primary_metric"),
+        "declared_metric_names": [record["name"] for record in metric_records],
+        "paper_metric_names": paper_metric_names,
+        "excluded_declared_metrics": excluded_declared_metrics,
+        "metric_count": len(metric_records),
+        "paper_metric_count": len(paper_metric_names),
+        "metrics": metric_records,
+        "validity_gate": validity_gate,
+        "excluded_reserved_fields": [
+            {
+                "field": "is_valid",
+                "reason": "local_validity_gate_not_scored_metric",
+            },
+            {
+                "field": "outputs",
+                "reason": "non_scalar_program_output_attachment",
+            },
+            {
+                "field": "program_output",
+                "reason": "non_scalar_program_output_attachment",
+            },
+            {
+                "field": "feedback_adjusted_fitness",
+                "reason": "local_feedback_composition_not_evaluator_scalar_metric",
+            },
+            {
+                "field": "llm_feedback",
+                "reason": "post_evaluator_feedback_records_not_evaluator_scalar_metric",
+            },
+        ],
+        "non_scalar_attachment_summary": attachments,
+        "feedback_metric_exclusion_policy": (
+            "metrics_yaml_source_feedback_plugin_or_final_fitness_are_not_paper_evaluator_metrics"
+        ),
+        "normalization_policy": (
+            "declared_evaluator_metrics_are_transformed_to_higher_is_better_normalized_unit_scores"
+        ),
+        "claim_ready": True,
+        "claim_readiness": {
+            "alphaevolve_scalar_metric_boundary": True,
+            "remaining_gap": [
+                "paper_table_export_format",
+                "cross_run_metric_contract_diff_report",
+            ],
+        },
+    }
+    report["validation"] = validate_paper_evaluator_metric_contract(report)
+    return report
+
+
+def _paper_metric_contract_metric_record(
+    metric: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    name = str(metric.get("name"))
+    source = str(metric.get("source", "evaluator"))
+    direction = str(metric.get("direction", "maximize"))
+    bounds = metric.get("bounds")
+    lo = float(bounds[0]) if isinstance(bounds, list) and len(bounds) == 2 else 0.0
+    hi = float(bounds[1]) if isinstance(bounds, list) and len(bounds) == 2 else 1.0
+    observed, observed_count, missing_count, non_numeric_count = _paper_metric_observed_values(
+        name,
+        direction,
+        lo,
+        hi,
+        programs,
+    )
+    return {
+        "name": name,
+        "source": source,
+        "paper_metric": source == "evaluator",
+        "primary": metric.get("primary") is True,
+        "direction": direction,
+        "bounds": [lo, hi],
+        "weight": float(metric.get("weight", 1.0)),
+        "maximize_transform": (
+            "raw_value" if direction == "maximize" else "upper_bound_minus_raw_value"
+        ),
+        "normalized_transform": (
+            "(raw_value - lower_bound) / (upper_bound - lower_bound)"
+            if direction == "maximize"
+            else "(upper_bound - raw_value) / (upper_bound - lower_bound)"
+        ),
+        "raw_value_source": f"Program.metrics.{name}",
+        "normalized_value_source": f"Program.metadata.normalized_metrics.{name}",
+        "observed_count": observed_count,
+        "missing_count": missing_count,
+        "non_numeric_count": non_numeric_count,
+        "observed_values": observed,
+        "observed_values_limit": 25,
+    }
+
+
+def _paper_metric_observed_values(
+    name: str,
+    direction: str,
+    lo: float,
+    hi: float,
+    programs: list[Program],
+) -> tuple[list[dict], int, int, int]:
+    observed: list[dict] = []
+    missing_count = 0
+    non_numeric_count = 0
+    for program in programs:
+        if name not in program.metrics:
+            missing_count += 1
+            continue
+        value = program.metrics[name]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            non_numeric_count += 1
+            continue
+        numeric = float(value)
+        if not math.isfinite(numeric):
+            non_numeric_count += 1
+            continue
+        normalized = _paper_metric_normalized_value(program, name, direction, lo, hi)
+        observed.append(
+            {
+                "program_id": program.id,
+                "raw_value": numeric,
+                "maximized_value": numeric if direction == "maximize" else hi - numeric,
+                "normalized_value": normalized,
+                "is_valid": _paper_metric_program_is_valid(program),
+            }
+        )
+    return observed[:25], len(observed), missing_count, non_numeric_count
+
+
+def _paper_metric_normalized_value(
+    program: Program,
+    name: str,
+    direction: str,
+    lo: float,
+    hi: float,
+) -> float | None:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    normalized_metrics = metadata.get("normalized_metrics")
+    if isinstance(normalized_metrics, dict):
+        value = normalized_metrics.get(name)
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            numeric = float(value)
+            if math.isfinite(numeric):
+                return numeric
+    value = program.metrics.get(name)
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    numeric = float(value)
+    if not math.isfinite(numeric):
+        return None
+    rng = hi - lo
+    if rng == 0:
+        return 0.5
+    if direction == "minimize":
+        normalized = (hi - numeric) / rng
+    else:
+        normalized = (numeric - lo) / rng
+    return max(0.0, min(1.0, normalized))
+
+
+def _paper_metric_program_is_valid(program: Program) -> bool | None:
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    value = evaluation.get("is_valid")
+    if isinstance(value, bool):
+        return value
+    metrics_value = program.metrics.get("is_valid")
+    return metrics_value if isinstance(metrics_value, bool) else None
+
+
+def _paper_metric_validity_gate(programs: list[Program]) -> dict:
+    true_count = 0
+    false_count = 0
+    missing_count = 0
+    for program in programs:
+        value = _paper_metric_program_is_valid(program)
+        if value is True:
+            true_count += 1
+        elif value is False:
+            false_count += 1
+        else:
+            missing_count += 1
+    return {
+        "field": "is_valid",
+        "sources": ["evaluation.is_valid", "Program.metrics.is_valid"],
+        "scored_metric": False,
+        "valid_true_count": true_count,
+        "valid_false_count": false_count,
+        "missing_count": missing_count,
+        "admission_policy": "validity_gate_before_program_database_admission",
+    }
+
+
+def _paper_metric_attachment_exclusions(programs: list[Program]) -> dict:
+    program_output_count = 0
+    llm_feedback_count = 0
+    feedback_adjusted_fitness_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        if isinstance(metadata.get("program_outputs"), dict):
+            program_output_count += 1
+        if isinstance(metadata.get("llm_feedback"), list) and metadata["llm_feedback"]:
+            llm_feedback_count += 1
+        if "feedback_adjusted_fitness" in metadata:
+            feedback_adjusted_fitness_count += 1
+    return {
+        "program_output_attachment_count": program_output_count,
+        "llm_feedback_record_count": llm_feedback_count,
+        "feedback_adjusted_fitness_count": feedback_adjusted_fitness_count,
+        "scored_metric": False,
+    }
+
+
+def validate_paper_evaluator_metric_contract(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.paper_evaluator_metric_contract.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "paper evaluator metric contract must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "primary_metric",
+        "declared_metric_names",
+        "paper_metric_names",
+        "excluded_declared_metrics",
+        "metric_count",
+        "paper_metric_count",
+        "metrics",
+        "validity_gate",
+        "excluded_reserved_fields",
+        "non_scalar_attachment_summary",
+        "feedback_metric_exclusion_policy",
+        "normalization_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"metric contract missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.paper_evaluator_metric_contract.v1":
+        issues.append({"code": "invalid_schema", "message": "metric contract schema is unsupported"})
+    if report.get("source") != "objective_schema_and_runtime_history":
+        issues.append({"code": "invalid_source", "message": "metric contract source is unsupported"})
+    metrics = report.get("metrics")
+    if not isinstance(metrics, list):
+        issues.append({"code": "invalid_metrics", "message": "metrics must be a list"})
+        metrics = []
+    declared_names: list[str] = []
+    paper_names: list[str] = []
+    for index, metric in enumerate(metrics):
+        if not isinstance(metric, dict):
+            issues.append({"code": "invalid_metric", "message": f"metric {index} must be an object"})
+            continue
+        name = metric.get("name")
+        if not isinstance(name, str) or not name:
+            issues.append({"code": "invalid_metric_name", "message": f"metric {index} name is invalid"})
+            continue
+        declared_names.append(name)
+        if name in {"is_valid", "outputs", "program_output", "feedback_adjusted_fitness"}:
+            issues.append({"code": "reserved_metric_name", "message": f"reserved field {name} must not be a paper metric"})
+        if metric.get("paper_metric") is True:
+            paper_names.append(name)
+            if metric.get("source") != "evaluator":
+                issues.append({"code": "invalid_paper_metric_source", "message": f"paper metric {name} is not evaluator-sourced"})
+        elif metric.get("source") == "evaluator":
+            issues.append({"code": "evaluator_metric_not_paper_metric", "message": f"evaluator metric {name} must be paper-facing"})
+        if metric.get("direction") not in {"maximize", "minimize"}:
+            issues.append({"code": "invalid_direction", "message": f"metric {name} direction is invalid"})
+        bounds = metric.get("bounds")
+        if (
+            not isinstance(bounds, list)
+            or len(bounds) != 2
+            or any(isinstance(item, bool) or not isinstance(item, (int, float)) for item in bounds)
+            or not float(bounds[0]) < float(bounds[1])
+        ):
+            issues.append({"code": "invalid_bounds", "message": f"metric {name} bounds are invalid"})
+        observed = metric.get("observed_values")
+        if not isinstance(observed, list):
+            issues.append({"code": "invalid_observed_values", "message": f"metric {name} observed_values must be a list"})
+        else:
+            for value_index, observed_value in enumerate(observed):
+                if not isinstance(observed_value, dict):
+                    issues.append({"code": "invalid_observed_value", "message": f"metric {name} observed value {value_index} must be an object"})
+                    continue
+                for field in ("raw_value", "maximized_value"):
+                    value = observed_value.get(field)
+                    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+                        issues.append({"code": "invalid_observed_number", "message": f"metric {name} observed {field} must be finite"})
+                normalized = observed_value.get("normalized_value")
+                if normalized is not None and (
+                    isinstance(normalized, bool)
+                    or not isinstance(normalized, (int, float))
+                    or not math.isfinite(float(normalized))
+                    or not 0.0 <= float(normalized) <= 1.0
+                ):
+                    issues.append({"code": "invalid_normalized_value", "message": f"metric {name} normalized value must be in [0, 1]"})
+    if report.get("declared_metric_names") != declared_names:
+        issues.append({"code": "invalid_declared_names", "message": "declared_metric_names must match metrics order"})
+    if report.get("paper_metric_names") != paper_names:
+        issues.append({"code": "invalid_paper_names", "message": "paper_metric_names must match evaluator-sourced metrics"})
+    if report.get("metric_count") != len(metrics):
+        issues.append({"code": "invalid_metric_count", "message": "metric_count must match metrics length"})
+    if report.get("paper_metric_count") != len(paper_names):
+        issues.append({"code": "invalid_paper_metric_count", "message": "paper_metric_count must match paper_metric_names length"})
+    validity_gate = report.get("validity_gate")
+    if not isinstance(validity_gate, dict) or validity_gate.get("scored_metric") is not False:
+        issues.append({"code": "invalid_validity_gate", "message": "is_valid must be documented as a non-scored gate"})
+    reserved_fields = report.get("excluded_reserved_fields")
+    if not isinstance(reserved_fields, list):
+        issues.append({"code": "invalid_reserved_fields", "message": "excluded_reserved_fields must be a list"})
+    else:
+        excluded = {field.get("field") for field in reserved_fields if isinstance(field, dict)}
+        for field in ("is_valid", "outputs", "program_output", "feedback_adjusted_fitness", "llm_feedback"):
+            if field not in excluded:
+                issues.append({"code": "missing_reserved_exclusion", "message": f"{field} exclusion is missing"})
+    return {
+        "schema": "libreevolve.paper_evaluator_metric_contract.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _evaluator_workload_report(programs: list[Program]) -> dict:

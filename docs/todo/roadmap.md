@@ -576,13 +576,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve Table 1 is a row-level comparison between
     FunSearch and AlphaEvolve covering code/file scale, code length, language
     scope, evaluator duration/parallelism/accelerators, sample counts, model
-    scale, prompt context/feedback, and single versus multiple metrics.
+    scale, prompt context/feedback, and single versus multiple metrics. Local
+    PDF page 2 contains the eight rows and caption.
   - Current evidence: `ROADMAP.md`, README, papers index, and code TODOs track
     several individual Table 1 rows as separate implementation/report gaps.
     They do not require Table 1 itself to have stable table/row ids, source
-    PDF/caption location, exact comparison text, row-to-TODO/report mappings,
-    row-level status, rendered artifact hashes, or validation that partial row
-    evidence is not summarized as complete Table 1 parity.
+    PDF/caption location, exact FunSearch/AlphaEvolve comparison text,
+    row-to-TODO/report mappings, row-level status, rendered artifact hashes,
+    or validation that partial row evidence is not summarized as complete
+    Table 1 parity. The existing README comparison table is not enough because
+    it is not tied to stable source-table row records.
   - Required result: when Table 1 exhibit provenance lands, update ROADMAP,
     README, papers index, and code/paper TODO entries together with table
     metadata and validators so roadmap wording separates paper table

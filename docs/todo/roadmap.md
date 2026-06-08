@@ -962,13 +962,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     that include positive implementation-support wording. Limited `Only`
     status classes must now include an explicit missing/unsupported behavior
     boundary. `Static prompt guidance exists` status classes must now also
-    state that the guided operation is not executed or enforced. Remaining
+    state that the guided operation is not executed or enforced. `Not
+    implemented as described:` status classes must now also name an explicit
+    missing or unsupported paper behavior. Remaining
     roadmap gap: the validator does not yet link long status claims to specific
     active/completed evidence records or deeply verify
     smoke/partial/planned/unsupported qualifiers beyond the role/status class
     matrix, required path presence, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the limited-status boundary
-    guard, and the static-guidance execution-boundary guard.
+    guard, the static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: extend status validation with phrase-level links from
     status claims to active or completed evidence plus richer qualifier checks.
     Keep this distinct from the already documented TODO coverage

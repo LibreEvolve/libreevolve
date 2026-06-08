@@ -3621,19 +3621,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     Limited `Only` status classes must now include an explicit
     missing/unsupported behavior boundary. `Static prompt guidance exists`
     status classes must now also state that the guided operation is not
-    executed or enforced. Remaining paper-facing gap: the validator does not
+    executed or enforced. `Not implemented as described:` status classes must
+    now also name an explicit missing or unsupported paper behavior. Remaining
+    paper-facing gap: the validator does not
     yet link each long semantic status claim to the specific TODO or completed
     implementation record that justifies it, nor detect broader smoke-scoped
     examples being phrased as benchmark evidence beyond the role/status class
     matrix, required path presence, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the limited-status boundary
-    guard, and the static-guidance execution-boundary guard.
+    guard, the static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
     current role/status class matrix and `AlphaEvolve-comparable` boundary
     guard plus negative-status contradiction, limited-status boundary, and
-    static-guidance execution-boundary checks. Keep this validator distinct
+    static-guidance execution-boundary checks plus the
+    not-implemented-as-described boundary check. Keep this validator distinct
     from the already documented TODO coverage cross-reference checker, which
     verifies backlog pointers after the implementation-status table.
 

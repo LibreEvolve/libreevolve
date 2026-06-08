@@ -178,6 +178,7 @@ STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
     r"support\s+exists|is\s+implemented|are\s+implemented|now\s+supports|supports)\b",
     flags=re.IGNORECASE,
 )
+STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES = ("Not implemented as described:",)
 
 
 @dataclass(frozen=True)
@@ -1456,6 +1457,19 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
                 PaperManifestIssue(
                     "status_table_static_guidance_missing_execution_boundary",
                     "static-guidance status classes must state that the guided operation is not executed or enforced",
+                    row_id,
+                )
+            )
+        break
+    for prefix in STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES:
+        if not status.startswith(prefix):
+            continue
+        suffix = status[len(prefix) :]
+        if not STATUS_TABLE_LIMITATION_BOUNDARY_RE.search(suffix):
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_not_implemented_missing_boundary",
+                    "not-implemented-as-described status classes must name a missing or unsupported paper behavior",
                     row_id,
                 )
             )

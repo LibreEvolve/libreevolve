@@ -1889,13 +1889,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implementation-support wording. Limited `Only` status classes must now
     include an explicit missing/unsupported behavior boundary. `Static prompt
     guidance exists` status classes must now also state that the guided
-    operation is not executed or enforced. Remaining README gap: the validator
+    operation is not executed or enforced. `Not implemented as described:`
+    status classes must now also name an explicit missing or unsupported paper
+    behavior. Remaining README gap: the validator
     does not yet machine-check phrase-level evidence links behind each long
     semantic status claim or deeply distinguish smoke-scoped examples from
     benchmark evidence beyond the role/status class matrix, required path
     presence, the `AlphaEvolve-comparable` overclaim guard, the negative-status
     contradiction guard, the limited-status boundary guard, and the
-    static-guidance execution-boundary guard.
+    static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: keep README wording scoped as phrase-level semantic
     status/coverage evidence checks are added, so public docs continue to
     distinguish structural/taxonomy validation from fully verified semantic

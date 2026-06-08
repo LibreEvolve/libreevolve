@@ -3567,4 +3567,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying LibreEvolve supports Meta-Harness-style harness-code optimization
     without those artifacts.
 
+- [ ] Keep README AlphaEvolve MARL algorithm-discovery claims absent or
+      source-scoped until CFR/PSRO benchmark evidence exists.
+  - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning
+    Algorithms with Large Language Models`, applies AlphaEvolve to CFR and
+    PSRO game-theoretic algorithm design. Its abstract reports VAD-CFR and
+    SHOR-PSRO, an 18-game evaluation suite covering Poker, Goofspiel, Liar's
+    Dice, Blotto, and Battleship variants, and ablation/distillation into
+    WOP-CFR and PM-PSRO minimal solvers that improve generalization with lower
+    structural complexity.
+  - Current evidence: README documents LibreEvolve's Python problem format,
+    local subprocess validators, staged evaluator cascades, examples,
+    benchmark boundaries, and paper cache. It does not mention `2602.16928`,
+    provide CFR or PSRO candidate interfaces, include an imperfect-information
+    game evaluator, define game-suite train/generalization splits, compare
+    against human-designed MARL baselines, report evolved mechanism coupling,
+    or show ablation/distillation evidence for minimal generalizing solvers.
+  - Required result: if README mentions AlphaEvolve MARL discovery,
+    game-theoretic learning, CFR, PSRO, VAD-CFR, SHOR-PSRO, WOP-CFR,
+    PM-PSRO, Poker/Goofspiel/Liar's Dice/Blotto/Battleship benchmarks,
+    evolved multiagent-learning algorithms, mechanism distillation, or
+    generalized MARL solver discovery, keep the wording source-scoped until
+    local artifacts can show the paper in the manifest, candidate schemas,
+    evaluator protocols, game-suite split records, baseline identities,
+    result tables, ablation/distillation traces, structural-complexity
+    metrics, and generalization reports. Avoid implying LibreEvolve supports
+    AlphaEvolve-style MARL algorithm discovery without those artifacts.
+
 ## Architecture Description

@@ -3992,3 +3992,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TerminalBench-2 benchmark records, hand-engineered baseline identities,
     and a background-only or benchmark-fixture status rule so roadmap claims
     do not outpace local Meta-Harness-style end-to-end harness optimization.
+
+- [ ] Add AlphaEvolve MARL algorithm-discovery gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2602.16928`, submitted February 18, 2026 and last
+    revised May 7, 2026, introduces `Discovering Multiagent Learning
+    Algorithms with Large Language Models`. The abstract says AlphaEvolve is
+    deployed over CFR and PSRO design spaces, producing VAD-CFR and SHOR-PSRO,
+    evaluating them on an 18-game suite across Poker, Goofspiel, Liar's Dice,
+    Blotto, and Battleship variants, and distilling them through systematic
+    ablations into WOP-CFR and PM-PSRO minimal solvers with improved
+    generalization and reduced complexity.
+  - Current evidence: ROADMAP tracks AlphaEvolve alignment, local evaluator
+    stages, systems benchmarks, mathematical benchmark gaps, and selected
+    application-source gates. It does not promote `2602.16928` beyond the
+    background-only paper-index row, define CFR or PSRO candidate schemas,
+    require an imperfect-information game evaluator, preserve train/evaluation
+    game splits, track VAD-CFR or SHOR-PSRO mechanism provenance, require
+    mechanism-coupling ablations, or define distilled-solver handoff and
+    generalization gates for WOP-CFR and PM-PSRO.
+  - Required result: add roadmap gates for `2602.16928`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    CFR and PSRO candidate schemas, game-suite taxonomy, train/evaluation
+    split hashes, evaluator protocol and metric definitions, random-seed and
+    budget records, baseline solver identities, VAD-CFR and SHOR-PSRO result
+    tables, mechanism-coupling ablation records, structural-complexity
+    metrics, distilled WOP-CFR/PM-PSRO solver records, generalization reports,
+    and a background-only or benchmark-fixture status rule so roadmap claims
+    do not outpace local AlphaEvolve-style MARL algorithm-discovery support.

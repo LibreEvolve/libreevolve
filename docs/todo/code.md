@@ -5417,3 +5417,35 @@ Primary evidence:
     engineered baseline identities, and README/ROADMAP wording that keeps
     end-to-end harness-code optimization as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add AlphaEvolve MARL algorithm-discovery boundary for CFR and PSRO.
+  - Spec evidence: arXiv `2602.16928`, `Discovering Multiagent Learning
+    Algorithms with Large Language Models`, was submitted February 18, 2026
+    and last revised May 7, 2026. Its abstract says the authors deploy
+    AlphaEvolve to navigate two game-theoretic design spaces: counterfactual
+    regret minimization (CFR) and policy-space response oracles (PSRO). The
+    search yields VAD-CFR and SHOR-PSRO, evaluates them across an 18-game
+    suite covering Poker, Goofspiel, Liar's Dice, Blotto, and Battleship
+    variants, then ablates and distills the LLM-discovered mechanisms into
+    WOP-CFR and PM-PSRO minimal solvers for better generalization with lower
+    complexity.
+  - Current evidence: `papers/README.md` has a background-only row for
+    `2602.16928`, but LibreEvolve has no first-class code TODO for this
+    source, no CFR or PSRO candidate interface, no imperfect-information game
+    evaluator, no OpenSpiel-style game-suite fixture, no train/generalization
+    split metadata for game-theoretic algorithms, no mechanism-coupling or
+    structural-complexity report, no ablation/distillation workflow that
+    reduces discovered solvers to a minimal algorithmic core, and no VAD-CFR,
+    SHOR-PSRO, WOP-CFR, or PM-PSRO benchmark records.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2602.16928`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve evaluator APIs, CFR and PSRO candidate schemas, game-suite
+    metadata, train/evaluation game split hashes, baseline solver identities,
+    regret/exploitability or task-specific metric definitions, evaluator
+    budget and random-seed records, evolved-mechanism provenance,
+    mechanism-coupling ablation records, structural-complexity metrics,
+    distilled-solver handoff records, generalization reports for VAD-CFR,
+    SHOR-PSRO, WOP-CFR, and PM-PSRO, and README/ROADMAP wording that keeps
+    MARL/game-theoretic algorithm discovery as missing evidence until local
+    implementation and reports exist.

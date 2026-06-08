@@ -5008,3 +5008,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproducibility status, and README/ROADMAP wording that treats
     Meta-Harness as missing paper evidence rather than implemented LibreEvolve
     support.
+
+- [ ] Track AlphaEvolve MARL algorithm-discovery paper evidence.
+  - Paper/source evidence: arXiv `2602.16928`, submitted February 18, 2026
+    and last revised May 7, 2026, is titled `Discovering Multiagent Learning
+    Algorithms with Large Language Models`. Its abstract says AlphaEvolve is
+    used to search two game-theoretic algorithm families, CFR and PSRO,
+    yielding VAD-CFR and SHOR-PSRO. The paper evaluates those solvers against
+    human-designed baselines across an 18-game suite spanning Poker,
+    Goofspiel, Liar's Dice, Blotto, and Battleship variants, then uses
+    systematic ablations and distillation to identify minimal solvers WOP-CFR
+    and PM-PSRO that generalize with reduced structural complexity.
+  - Current gap: `papers/README.md` lists `2602.16928` only as
+    `Background only; no CFR/PSRO benchmark or game-theoretic evaluator`.
+    The active TODO coverage does not yet track a first-class paper/source
+    boundary for CFR/PSRO candidate schemas, imperfect-information game
+    evaluator protocols, train/generalization game splits, baseline solver
+    identities, mechanism-coupling ablations, structural complexity, or
+    distilled-solver handoff evidence.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2602.16928`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve problem/evaluator assumptions, CFR/PSRO candidate schemas,
+    game-suite taxonomy, train/evaluation split metadata, game-specific metric
+    definitions, random-seed and budget records, VAD-CFR and SHOR-PSRO result
+    tables, human-designed baseline identities, ablation and distillation
+    records, WOP-CFR and PM-PSRO generalization reports, structural-complexity
+    measures, reproducibility status, and README/ROADMAP wording that treats
+    MARL algorithm discovery as missing paper evidence rather than implemented
+    LibreEvolve support.

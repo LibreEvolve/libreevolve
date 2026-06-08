@@ -116,15 +116,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       until embedded `evaluate(eval_inputs)` support exists.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate
     codebase with an `evaluate(eval_inputs) -> dict[str, float]` function that
-    invokes the evolved skeleton.
+    invokes the evolved skeleton. Local PDF page 4 describes the user-provided
+    evaluator as a Python `evaluate` function with a fixed input/output
+    signature, and Figure 3 on page 6 says evaluators invoke the Figure 3(a)
+    `evaluate` function to score the modified program.
   - Current evidence: `ROADMAP.md` can claim configured local validators,
     staged evaluator entrypoints, direct evaluator path provenance, and
-    problem-local dependency policy. It should not imply that these external
-    validators are equivalent to a candidate-owned evaluator entrypoint.
+    problem-local dependency policy. Current code materializes candidate files
+    into a temporary workspace, imports the configured problem `validate.py`,
+    and calls that validator's `evaluate(code[, workspace[, stage]])`; metadata
+    records `validate_path` and candidate files, but not a discovered
+    candidate-owned `evaluate(eval_inputs)` callable. The `workspace_math`
+    fixture proves external validators can import candidate modules, not that
+    the candidate owns the evaluator entrypoint. It should not imply that these
+    external validators are equivalent to a candidate-owned evaluator
+    entrypoint.
   - Required result: when embedded evaluator entrypoints land, update ROADMAP,
     README, papers index, and code/paper TODOs with `evaluate` callable
     provenance, eval-input dataset provenance, skeleton-to-block invocation
-    evidence, isolation/build policy, and score-field mapping.
+    evidence, callable discovery diagnostics, isolation/build policy, and
+    score-field mapping.
 
 - [ ] Keep Figure 1/Figure 2 roadmap wording scoped until process-diagram
       provenance exists.

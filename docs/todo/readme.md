@@ -101,16 +101,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       until embedded `evaluate(eval_inputs)` evidence exists.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 show the codebase
     skeleton exposing `evaluate(eval_inputs) -> dict[str, float]`, which invokes
-    the evolved blocks and returns scores for the generated program.
+    the evolved blocks and returns scores for the generated program. Local PDF
+    page 4 describes this as a Python `evaluate` function with a fixed
+    input/output signature, and Figure 3 on page 6 says evaluators invoke the
+    Figure 3(a) `evaluate` function to obtain the proposed program's scores.
   - Current evidence: README can describe local validators, configured stages,
     direct evaluator entrypoint provenance, and candidate imports in
-    problem-local validators. It should not imply that external `validate.py`
-    execution is the same as a candidate-owned `evaluate` function wired into
-    the evolved skeleton.
+    problem-local validators. Current implementation still imports the
+    configured problem `validate.py` and calls its
+    `evaluate(code[, workspace[, stage]])` against a materialized candidate
+    workspace; metadata exposes the validator path and candidate file list, not
+    a candidate-owned `evaluate(eval_inputs)` callable. A local probe with a
+    candidate-side `def evaluate(eval_inputs)` still followed the external
+    `validate.py` result, proving README should not imply that external
+    `validate.py` execution is the same as a candidate-owned `evaluate`
+    function wired into the evolved skeleton.
   - Required result: when embedded evaluator-entrypoint support or report
     evidence lands, update README, ROADMAP, papers index, and code/paper TODOs
     with `evaluate` callable provenance, eval-input datasets, skeleton/block
-    coupling, isolation policy, and score-field mapping.
+    coupling, callable discovery diagnostics, isolation policy, and score-field
+    mapping.
 
 - [ ] Keep README Figure 1/Figure 2 architecture wording scoped until
       process-diagram provenance exists.

@@ -102,18 +102,36 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 present a
     user-provided `evaluate(eval_inputs) -> dict[str, float]` function inside
     the codebase skeleton, with evolved blocks tied together so the evaluator
-    can invoke the candidate program directly.
+    can invoke the candidate program directly. Local PDF page 4 describes this
+    as a Python function called `evaluate` with a fixed input/output signature;
+    Figure 3 on page 6 shows `def evaluate(eval_inputs) -> dict[str, float]:`
+    and states that evaluators invoke the Figure 3(a) `evaluate` function to
+    obtain scores for the modified program.
   - Current evidence: LibreEvolve runs problem-local validator entrypoints,
     usually external `validate.py` files, and records direct evaluator
     entrypoint provenance, problem-local dependency provenance, validator
-    boundary metadata, and candidate imports in local validators. This is useful
-    local validation, but it is not a first-class candidate-embedded evaluator
-    API.
+    boundary metadata, and candidate imports in local validators.
+    `libreevolve/core/evaluator.py` materializes the candidate into a temporary
+    workspace, imports the configured validator module, and calls
+    `mod.evaluate(code, workspace, stage)` / `mod.evaluate(code, workspace)` /
+    `mod.evaluate(code)` depending on validator arity; `_eval_metadata()`
+    records the validator path and candidate file list, not a candidate-owned
+    `evaluate` callable. `libreevolve/problems/loader.py` requires
+    problem-root `validate.py`, and the `workspace_math` example validator
+    imports candidate `main.py` and `pkg/helpers.py` itself through
+    `importlib`. A local probe with a candidate `main.py` defining
+    `evaluate(eval_inputs)` and an external `validate.py` returning invalid
+    still produced `domain_invalid`, `metadata_validate_path=validate.py`, and
+    `metadata_files=['main.py']`, showing the candidate function is not invoked
+    automatically. This is useful local validation, but it is not a first-class
+    candidate-embedded evaluator API.
   - Required result: add a mode or report contract for candidate-owned
-    `evaluate(eval_inputs)` functions, eval-input provenance, skeleton-to-block
-    coupling, callable import/build isolation, and paper-facing evidence that
-    distinguishes embedded AlphaEvolve-style evaluation from external
-    problem-validator execution.
+    `evaluate(eval_inputs)` functions, eval-input dataset/provenance records,
+    skeleton-to-block invocation coupling, callable import/build isolation,
+    candidate callable discovery diagnostics, result schema mapping to local
+    metrics and `is_valid`, and paper-facing evidence that distinguishes
+    embedded AlphaEvolve-style evaluation from external problem-validator
+    execution.
 
 - [ ] Add Figure 1/Figure 2 architecture-process exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level loop from human

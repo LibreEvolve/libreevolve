@@ -98,7 +98,11 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's example codebase contains an
     `evaluate(eval_inputs) -> dict[str, float]` function that invokes the
-    evolved skeleton and returns the scores for the generated program.
+    evolved skeleton and returns the scores for the generated program. In the
+    local PDF, page 4 describes the evaluator as a Python `evaluate` function
+    with a fixed input/output signature, and Figure 3 on page 6 says the
+    evaluators invoke the Figure 3(a) `evaluate` function to score the modified
+    program.
   - Partial status: LibreEvolve records structured results from problem-local
     validators, validates direct evaluator entrypoint provenance, enforces
     problem-local validator dependency policy, and can import candidate modules
@@ -106,10 +110,18 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing evidence does not show candidate-owned
     `evaluate` functions, `eval_inputs` provenance, skeleton-to-evolved-block
     invocation paths, or a clear distinction between embedded AlphaEvolve-style
-    evaluation and external `validate.py`-style problem validators.
+    evaluation and external `validate.py`-style problem validators. Current
+    runtime evidence shows the subprocess runner materializes candidate files,
+    imports the configured problem validator, and calls that validator's
+    `evaluate(code[, workspace[, stage]])`; `_eval_metadata()` records
+    `validate_path` plus candidate files, not candidate-owned callable
+    provenance. A local probe with candidate `main.py` defining
+    `evaluate(eval_inputs)` still followed the external `validate.py`
+    invalid result and reported `validate_path=validate.py`.
   - Required result: add report fields or runtime mode proving embedded
     candidate evaluator entrypoints, eval-input datasets, callable isolation,
-    and score-field mapping before treating local validator execution as
+    callable discovery diagnostics, skeleton/block invocation evidence, and
+    score-field mapping before treating local validator execution as
     AlphaEvolve Figure 3 evaluator parity.
 
 - [ ] Parallelized evaluation and asynchronous throughput.

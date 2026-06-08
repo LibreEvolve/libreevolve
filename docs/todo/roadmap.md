@@ -2110,6 +2110,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes rendered construction/figure evidence
     from proof-grade kissing-number lower-bound verification.
 
+- [ ] Keep Appendix B.12-B.13 roadmap wording scoped until circle/rectangle
+      sum-of-radii provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three packing
+    improvements: `n = 26` circles in a unit square improve the prior `2.634`
+    sum of radii to `2.635`; `n = 32` circles in a unit square improve
+    `2.936` to `2.937`; and `n = 21` circles in a perimeter-4 rectangle
+    improve `2.364` to `2.3658`.
+  - Current evidence: roadmap/README/paper-index wording can cite the checked-in
+    fixed-26 smoke fixture, the broad Appendix B per-result gap, and Figure 14
+    visual gap, but it does not require B.12-B.13-specific parameter rows,
+    container geometry/perimeter metadata, exact count, placement payload
+    hashes, containment/non-overlap certificates, prior/current values, or
+    Figure 14 panel linkage.
+  - Required result: when Appendix B.12-B.13 packing metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish all three `n`/container rows, certificates,
+    sum-of-radii values, Figure 14 links, payload hashes, and source locations
+    from the existing 26-circle smoke fixture.
+
 - [ ] Keep Appendix B roadmap wording scoped until revised-result provenance
       exists.
   - Spec evidence: AlphaEvolve Appendix B includes result-level revision

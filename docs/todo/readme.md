@@ -1175,6 +1175,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes visual Appendix B construction evidence from proof-grade
     kissing-number lower-bound verification.
 
+- [ ] Keep README Appendix B.12-B.13 circle/rectangle wording scoped until
+      sum-of-radii provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three sum-of-radii
+    improvements: `n = 26` circles in a unit square improve `2.634` to
+    `2.635`, `n = 32` circles in a unit square improve `2.936` to `2.937`, and
+    `n = 21` circles in a perimeter-4 rectangle improve `2.364` to `2.3658`.
+  - Current evidence: README documents the checked-in `circle_packing` example
+    as a fixed-26 unit-square smoke fixture, and it can point to broad
+    Appendix B per-result and Figure 14 visual gaps. It does not separately
+    warn that the full paper claim needs all three rows, container geometry,
+    exact circle counts, containment/non-overlap certificates, sum-of-radii
+    recomputation, prior/current values, and Figure 14 panel linkage.
+  - Required result: when Appendix B.12-B.13 packing metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    names all three `n`/container rows, certificates, sum-of-radii values,
+    Figure 14 panel links, and artifact hashes while keeping the 26-circle
+    smoke fixture out of full AlphaEvolve evidence claims.
+
 - [ ] Keep README Appendix B result wording scoped until revised-result
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.4 records a result revision for the

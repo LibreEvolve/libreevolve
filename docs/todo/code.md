@@ -2066,6 +2066,29 @@ Primary evidence:
     lower-bound claim linkage, and docs separating a rendered construction
     figure from proof-grade kissing-configuration verification.
 
+- [ ] Add Appendix B.12-B.13 circle/rectangle sum-of-radii provenance.
+  - Spec evidence: AlphaEvolve Appendix B.12-B.13 reports three fixed-`n`
+    sum-of-radii packing improvements: `n = 26` circles in a unit square improve
+    the SOTA from `2.634` to `2.635`, `n = 32` circles in a unit square improve
+    `2.936` to `2.937`, and `n = 21` circles in a perimeter-4 rectangle improve
+    `2.364` to `2.3658`. Figure 14 shows these as left, middle, and right
+    panels.
+  - Current evidence: the Appendix B registry marks the checked-in
+    `circle_packing` example as a fixed-26 unit-square smoke fixture and the
+    rectangle family as planned. The broad per-result and Figure 14 TODOs do
+    not separately require all three B.12-B.13 parameter rows, container
+    geometry, perimeter normalization, circle-center/radius payload hashes,
+    containment and pairwise non-overlap certificates, or prior/current
+    sum-of-radii values. A generated report could mistake the 26-circle smoke
+    fixture for full Appendix B.12-B.13 evidence.
+  - Required result: add Appendix B.12-B.13-specific result rows and validators
+    for `n`, container type (`unit_square` or `perimeter4_rectangle`),
+    container dimensions/perimeter, circle-center/radius artifact hashes,
+    exact count, containment certificate, pairwise non-overlap certificate,
+    sum-of-radii recomputation, prior value/source, reported value, Figure 14
+    panel linkage, and README/ROADMAP wording that separates the 26-circle
+    smoke fixture from full paper-claim evidence.
+
 - [ ] Add aggregate constructive-math outcome coverage reports.
   - Spec evidence: AlphaEvolve Section 3.2 reports more than 50 mathematical
     problems across more than five branches of mathematics, with best-known

@@ -5146,3 +5146,36 @@ Primary evidence:
     compute and cost accounting, performance-delta records, and README/
     ROADMAP wording that keeps harness-plus-weight self-improvement as
     missing evidence until local implementation and reports exist.
+
+- [ ] Add HarnessFix trace-grounded harness repair source boundary.
+  - Spec evidence: arXiv `2606.06324`, `From Failed Trajectories to Reliable
+    LLM Agents: Diagnosing and Repairing Harness Flaws`, was submitted June
+    4, 2026. Its abstract says LLM agents rely on harnesses for execution
+    environments, tool interfaces, context, lifecycle orchestration,
+    observability, verification, and governance, while many self-improving
+    systems modify prompts, workflows, or harnesses from final outcomes
+    without locating responsible evidence in failed trajectories. HarnessFix
+    compiles raw traces and harness code into a Harness-aware Trace
+    Intermediate Representation (HTIR), attributes failures to trajectory
+    steps and harness layers, consolidates recurring flaw records, maps them
+    to scoped repair operators, and validates patches under flaw-specific
+    repair specs to reduce target flaws without unacceptable regressions.
+  - Current evidence: LibreEvolve logs evaluator failures, quarantine rows,
+    prompt history, archive events, LLM calls, and run manifests, but it has
+    no HarnessFix source row, no normalized trace IR that links model calls,
+    tool calls, evaluator outcomes, and harness code, no harness-layer
+    taxonomy for execution/tool/context/lifecycle/observability/verification/
+    governance faults, no recurring flaw consolidation, no scoped repair
+    operator schema, no flaw-specific regression bounds, and no harness patch
+    validation loop distinct from candidate-program mutation.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2606.06324`: arXiv id/version/date/PDF hash, authors, source
+    license, relation to AlphaEvolve and LibreEvolve failure artifacts, HTIR
+    schema, raw-trace normalization records, harness-code linkage, step-level
+    provenance, ETCLOVG-style harness-layer attribution, recurring flaw
+    records, repair-operator taxonomy, generated harness patch artifacts,
+    flaw-specific validation specs, regression-bound reports, held-out task
+    evaluation, benchmark taxonomy for SWE-Bench Verified, Terminal-Bench 2.0
+    Verified, GAIA, and AppWorld, baseline identities, and README/ROADMAP
+    wording that keeps trace-grounded harness repair as missing evidence until
+    local implementation and reports exist.

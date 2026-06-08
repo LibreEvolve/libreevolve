@@ -3759,3 +3759,33 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     LawBench/kernel/scRNA benchmark records, compute/cost telemetry, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local SIA-style harness-plus-weight self-improvement support.
+
+- [ ] Add HarnessFix trace-grounded harness repair gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2606.06324`, submitted June 4, 2026, introduces
+    HarnessFix in `From Failed Trajectories to Reliable LLM Agents:
+    Diagnosing and Repairing Harness Flaws`. The abstract frames harnesses as
+    the substrate for execution environments, tool interfaces, context,
+    lifecycle orchestration, observability, verification, and governance, then
+    argues that final-outcome-only self-improvement can make broad or poorly
+    scoped harness changes. HarnessFix normalizes failed trajectories and
+    harness code into HTIR, attributes failures to responsible steps and
+    harness layers, consolidates flaw records, maps them to scoped repair
+    operators, and validates patches with regression constraints.
+  - Current evidence: ROADMAP tracks failure/quarantine streams, prompt
+    history, evaluator contracts, benchmark reports, AEvo meta-editing gates,
+    and SIA harness-plus-weight gates. It does not mention `2606.06324`,
+    define a trace-grounded harness repair gate, require HTIR-like trace
+    normalization, attribute failures to harness layers, consolidate recurring
+    flaw records, generate scoped harness repairs, or validate harness patches
+    against target-flaw reduction and unacceptable-regression bounds before
+    promoting agent reliability or harness self-repair claims.
+  - Required result: add roadmap gates for `2606.06324`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, HTIR schema,
+    raw-trace normalization, harness-code linkage, step-level provenance,
+    harness-layer attribution taxonomy, recurring flaw records, repair
+    operator definitions, harness patch/version artifacts, flaw-specific
+    validation specs, regression-bound telemetry, held-out benchmark records,
+    SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata, baseline identities, and
+    a background-only or benchmark-fixture status rule so roadmap claims do
+    not outpace local HarnessFix-style trace-grounded harness repair support.

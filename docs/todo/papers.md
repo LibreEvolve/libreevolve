@@ -4727,3 +4727,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/artifact availability if any, reproducibility status, and README/
     ROADMAP wording that treats SIA as missing paper evidence rather than
     implemented LibreEvolve support.
+
+- [ ] Track HarnessFix trace-grounded harness repair paper evidence.
+  - Paper/source evidence: arXiv `2606.06324`, submitted June 4, 2026, is
+    titled `From Failed Trajectories to Reliable LLM Agents: Diagnosing and
+    Repairing Harness Flaws`. Its abstract says agent harnesses provide
+    execution environments, tool interfaces, context, lifecycle
+    orchestration, observability, verification, and governance, but existing
+    self-improvement and automatic harness-evolution methods often make broad
+    changes from final outcomes instead of diagnosing the responsible
+    evidence in failed trajectories. HarnessFix compiles raw traces and
+    harness code into a Harness-aware Trace Intermediate Representation
+    (HTIR), attributes failures to responsible trajectory steps and harness
+    layers, consolidates recurring flaw records, maps them to scoped repair
+    operators, and validates harness patches under flaw-specific repair specs.
+    It reports 15.2% to 50.0% held-out improvements on SWE-Bench Verified,
+    Terminal-Bench 2.0 Verified, GAIA, and AppWorld.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2606.06324`. Existing rows cover AlphaEvolve evaluator-backed
+    program search, failed-proposal snippets, trace diagnostics, SIA harness
+    and weight updates, and AEvo process meta-editing, but not
+    trace-normalized harness diagnosis, HTIR, harness-layer attribution,
+    recurring flaw records, scoped repair operators, regression-bounded patch
+    validation, or held-out harness reliability reports.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2606.06324`: title/authors/arXiv version/date/PDF digest, source
+    license, relation to AlphaEvolve and LibreEvolve harness/failure
+    assumptions, HTIR schema, trace-to-harness-code linkage, step-level
+    provenance, harness-layer taxonomy, failure-attribution records,
+    recurring flaw consolidation, repair-operator definitions, harness patch
+    artifacts, flaw-specific validation specifications, unacceptable-
+    regression thresholds, held-out benchmark results, SWE-Bench/Terminal-
+    Bench/GAIA/AppWorld metadata, baseline identities, code/artifact
+    availability if any, reproducibility status, and README/ROADMAP wording
+    that treats HarnessFix as missing paper evidence rather than implemented
+    LibreEvolve support.

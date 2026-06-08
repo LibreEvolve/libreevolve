@@ -4652,3 +4652,32 @@ Primary evidence:
     README/ROADMAP wording that keeps EvoX-style adaptive meta-evolution as
     missing research evidence until local strategy evolution and benchmark
     reports exist.
+
+- [ ] Add DeltaEvolve semantic-delta context source boundary.
+  - Spec evidence: arXiv `2602.02919`, `DeltaEvolve: Accelerating Scientific
+    Discovery through Momentum-Driven Evolution`, was submitted February 2,
+    2026. Its abstract says AlphaEvolve-style LLM-driven evolutionary systems
+    rely on full-code histories that can be context-inefficient and weak as
+    evolutionary guidance. DeltaEvolve reframes evolutionary agents as an
+    Expectation-Maximization process, replaces full-code history with
+    structured semantic deltas that capture how and why modifications between
+    successive nodes affect performance, and uses a multi-level database plus
+    progressive disclosure to reduce input tokens while improving results
+    across diverse scientific tasks.
+  - Current evidence: LibreEvolve records prompts, parent programs, SEARCH/
+    REPLACE diffs, run history, and a small in-memory failed-proposal snippet
+    list, but it does not preserve semantic deltas as first-class records or
+    use them as prompt-control context. There is no delta-effect schema,
+    causal/performance attribution for successive program nodes, multi-level
+    semantic-delta memory, progressive-disclosure policy, token-savings report,
+    or benchmark comparing full-code parent context against DeltaEvolve-style
+    momentum guidance.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2602.02919`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve prompt construction,
+    semantic-delta schema, node-to-node effect attribution, performance-change
+    records, multi-level database/indexing metadata, progressive-disclosure
+    traces, token-accounting metrics, scientific-task benchmark taxonomy,
+    baseline identities, and README/ROADMAP wording that treats semantic-delta
+    momentum guidance as missing evidence until local storage, prompt assembly,
+    and benchmark artifacts exist.

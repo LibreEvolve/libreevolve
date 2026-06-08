@@ -2936,4 +2936,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying LibreEvolve supports EvoX-style meta-evolution without those
     implementation and report artifacts.
 
+- [ ] Keep README DeltaEvolve semantic-delta claims absent or source-scoped
+      until paper and benchmark evidence exists.
+  - Spec evidence: arXiv `2602.02919`, `DeltaEvolve: Accelerating Scientific
+    Discovery through Momentum-Driven Evolution`, says AlphaEvolve-style
+    systems can rely on full-code histories that are context-inefficient and
+    provide weak guidance. It proposes structured semantic deltas over
+    successive program-node modifications, a multi-level database, and
+    progressive disclosure to reduce input tokens and improve scientific-task
+    search.
+  - Current evidence: README documents prompt history, parent selection,
+    SEARCH/REPLACE diffs, run artifacts, current failure-memory limits, and
+    implementation boundaries. It does not list `2602.02919`, preserve
+    semantic-delta records, expose delta-effect attribution, maintain a
+    multi-level semantic memory, or provide token-efficiency benchmarks
+    comparing full-code context with DeltaEvolve-style momentum guidance.
+  - Required result: if README mentions DeltaEvolve, semantic deltas,
+    momentum-driven evolution, progressive disclosure, multi-level delta
+    memory, or token-reduction wins over full-code histories, keep the wording
+    source-scoped until the paper is in the manifest and local artifacts can
+    show semantic-delta schemas, node-transition provenance, prompt assembly
+    traces, token accounting, benchmark tasks, baseline identities, and
+    outcomes. Avoid implying LibreEvolve supports DeltaEvolve-style context
+    control without those implementation and report artifacts.
+
 ## Architecture Description

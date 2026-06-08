@@ -4238,3 +4238,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     token-efficiency claims, ablation evidence, code/artifact availability if
     any, and README/ROADMAP wording that treats EvoX as missing paper evidence
     rather than implemented LibreEvolve support.
+
+- [ ] Track DeltaEvolve semantic-delta context paper evidence.
+  - Paper/source evidence: arXiv `2602.02919`, submitted February 2, 2026, is
+    titled `DeltaEvolve: Accelerating Scientific Discovery through
+    Momentum-Driven Evolution`. Its abstract says AlphaEvolve and similar
+    LLM-driven evolutionary systems use full-code histories that are
+    context-inefficient and may dilute core algorithmic ideas; DeltaEvolve
+    replaces that context with structured semantic deltas explaining how and
+    why modifications between successive nodes affect performance, organized
+    through a multi-level database and progressive disclosure mechanism.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2602.02919`. Existing source rows cover AlphaEvolve,
+    prompt/history artifacts, failed-proposal snippets, EvoX adaptive strategy
+    gates, and selected application papers, but not semantic-delta memory,
+    node-transition effect attribution, progressive context disclosure, or
+    token-efficiency comparisons against full-code histories.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2602.02919`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve prompt/context policy,
+    semantic-delta schema, node-transition provenance, performance-effect
+    attribution, multi-level database/index metadata, progressive-disclosure
+    policy, token-accounting metrics, scientific-task benchmark taxonomy,
+    baseline method identities, code/artifact availability if any, and
+    README/ROADMAP wording that treats DeltaEvolve as missing paper evidence
+    rather than implemented LibreEvolve support.

@@ -3114,18 +3114,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     of the 67 mathematical problems has a problem page, while Colab notebooks
     exist for many but not all problems and may contain prompts, verification
     code, initial programs, final evolved programs, and visualization/analysis
-    code where appropriate. The README also references status and area overview
-    assets including `assets/status_grid.png` and `assets/table_by_areas.png`.
+    code where appropriate. It gives the hosted problem-page URL pattern
+    `https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html`,
+    says no installation is required, and says notebooks can be opened in
+    Google Colab while webpages can be opened in any browser. The README's
+    distribution graphic points to root-level `status_grid.png`, and the
+    repository tree also exposes root-level status artifacts such as
+    `status.json` and `result_distribution.png`.
   - Current gap: existing paper TODOs require a repository ref and broad
     notebook artifact metadata, but they do not preserve source-state
     distinctions between all problem pages, partial notebook availability,
-    artifact-presence variants, missing-notebook reasons, overview-image
-    provenance, and live-repository snapshot dates.
+    hosted-page URLs, browser/Colab access modes, artifact-presence variants,
+    missing-notebook reasons, root-level status-artifact provenance, and
+    live-repository snapshot dates. Earlier coverage wording also used
+    unverified `assets/...` status paths instead of the README's root-level
+    status artifact path.
   - Required result: add source-manifest rows and checks for the problem
     repository snapshot: repository URL/ref/commit/date, live-update policy,
-    all 67 problem ids, page path/hash, notebook path/hash or explicit absence
-    reason, prompt/verifier/initial/final/visualization/analysis presence
-    flags, overview-image paths/hashes, and citation wording that avoids
+    all 67 problem ids, hosted page URL, page path/hash, notebook path/hash or
+    explicit absence reason, access mode, prompt/verifier/initial/final/
+    visualization/analysis presence flags, root-level status artifact paths/
+    hashes such as `status_grid.png`, `status.json`, and
+    `result_distribution.png` when used, and citation wording that avoids
     implying notebook coverage is complete when only problem-page coverage is.
 
 - [ ] Track follow-on problem-repository rights, citation, and attribution.

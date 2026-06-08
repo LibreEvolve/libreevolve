@@ -1438,18 +1438,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     time, with problem pages for all 67 mathematical problems and Colab
     notebooks for many, but not all, problems. It says notebooks can include
     prompts, verification code, initial programs, final evolved programs, and
-    visualization/analysis code where appropriate, and it includes overview
-    assets such as `assets/status_grid.png` and `assets/table_by_areas.png`.
+    visualization/analysis code where appropriate. It gives a hosted
+    `problems/{n}.html` URL pattern on `google-deepmind.github.io`, says no
+    installation is required, says notebooks open in Google Colab and webpages
+    open in any browser, and points the distribution graphic to root-level
+    `status_grid.png`.
   - Current evidence: README TODOs mention the later 67-problem source set but
     do not require wording that distinguishes complete problem-page coverage
     from partial notebook coverage, artifact-by-artifact availability,
-    missing-notebook states, overview-image provenance, or the pinned snapshot
-    needed for a live repository.
+    hosted-page URL/access modes, missing-notebook states, root-level status
+    artifact provenance, or the pinned snapshot needed for a live repository.
+    Existing coverage wording also needs to avoid unverified `assets/...`
+    status paths.
   - Required result: after the coverage manifest exists, update README wording
     so AlphaEvolve follow-on claims name the pinned repository snapshot,
     distinguish all-problem-page coverage from partial notebook/artifact
-    coverage, avoid implying notebooks exist for every problem, and cite any
-    status/area overview figures only with tracked asset hashes.
+    coverage, record hosted page URLs and browser/Colab access modes, avoid
+    implying notebooks exist for every problem, and cite status artifacts such
+    as `status_grid.png`, `status.json`, or `result_distribution.png` only with
+    tracked root-level paths and hashes.
 
 - [ ] Keep README follow-on problem-repository rights and attribution scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

@@ -2260,23 +2260,32 @@ Primary evidence:
     it over time. It says the repository contains problem pages for all 67
     mathematical problems and Colab notebooks for many, but not all, problems,
     with prompts, verification code, initial programs, final evolved programs,
-    and visualization/analysis code where appropriate. It also publishes
-    status/area overview images such as `assets/status_grid.png` and
-    `assets/table_by_areas.png`.
+    and visualization/analysis code where appropriate. It gives the hosted
+    problem-page URL pattern
+    `https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html`,
+    says no installation is required, and says notebooks can be opened in
+    Google Colab while webpages can be opened in any browser. The README's
+    distribution graphic points to root-level `status_grid.png`, and the
+    repository tree also exposes root-level status artifacts such as
+    `status.json` and `result_distribution.png`.
   - Current evidence: broad follow-on source TODOs require a repository ref,
     live-update policy, problem ids, notebook metadata, and prompt/verifier/
     final-program presence. They do not require per-problem coverage states
     distinguishing mandatory problem pages from partial notebook availability,
-    missing-notebook reasons, artifact-presence matrices, overview-image
+    hosted-page URL validation, browser/Colab access modes, missing-notebook
+    reasons, artifact-presence matrices, root-level status-artifact
     provenance, or snapshot-date semantics for a live repository that can
-    change.
+    change. Earlier coverage wording also used unverified `assets/...` paths
+    instead of the README's root-level status artifact path.
   - Required result: add a follow-on repository coverage manifest and
     validators with repository URL/ref/commit/date, live-update policy, all 67
-    problem ids, page path/hash, notebook path/hash or absence reason, artifact
-    presence flags for prompt/verifier/initial/final/visualization/analysis,
-    overview-image paths/hashes, and README/ROADMAP wording that separates
-    complete problem-page coverage from partial notebook/artifact coverage at a
-    pinned snapshot.
+    problem ids, hosted page URL, page path/hash, notebook path/hash or absence
+    reason, access mode (`browser_page`, `colab_notebook`, or absent),
+    artifact presence flags for prompt/verifier/initial/final/visualization/
+    analysis, root-level status artifact paths/hashes such as
+    `status_grid.png`, `status.json`, and `result_distribution.png` when used,
+    and README/ROADMAP wording that separates complete problem-page coverage
+    from partial notebook/artifact coverage at a pinned snapshot.
 
 - [ ] Add follow-on problem-repository rights and attribution provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

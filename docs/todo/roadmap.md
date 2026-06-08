@@ -699,6 +699,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current safe diagnostics nor overclaims
     paper-implementation verification.
 
+- [ ] Keep paper-index backlog-traceability roadmap wording scoped until TODO
+      coverage cross-references are validated.
+  - Spec evidence: AlphaEvolve-alignment planning depends on every paper
+    status row being traceable to concrete active or completed backlog
+    evidence. `papers/README.md` includes a TODO coverage cross-reference
+    table for this purpose.
+  - Current evidence: roadmap/README/papers-index wording can cite manifest
+    validation, implementation-status table reconciliation, Appendix B and
+    ablation registry checks, and a checked-in test that every manifest id has
+    a cross-reference row mentioning `docs/todo/`. It does not require a
+    reusable validation rule for cross-reference row coverage, referenced path
+    existence, grouped-gap labels, active/completed target semantics, or
+    whether active targets still contain open TODO evidence.
+  - Required result: when paper-index TODO cross-reference validation lands,
+    update ROADMAP, README, papers index, and code/paper TODOs with the
+    validator scope and failure modes so roadmap wording distinguishes
+    shareable cache/status diagnostics from verified backlog traceability.
+
 - [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
   versus audit-grade source integrity.
   - Spec evidence: retrieval-augmented AlphaEvolve-style runs should preserve

@@ -1290,6 +1290,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     original AlphaEvolve paper parity, original companion-Colab evidence, and
     the later 67-problem mathematical-discovery source set.
 
+- [ ] Keep README paper-index traceability wording scoped until TODO coverage
+      cross-references are validated.
+  - Spec evidence: `papers/README.md` presents a TODO coverage
+    cross-reference table tying implementation-status rows to backlog
+    evidence. README should not imply that the paper cache has complete
+    semantic traceability to AlphaEvolve-alignment TODOs unless that map is
+    validated, not merely maintained by hand.
+  - Current evidence: README can describe paper-manifest validation,
+    implementation-status table reconciliation, Appendix B registry checks,
+    and ablation registry checks. A checked-in test lightly checks the
+    `papers/README.md` cross-reference section, but the public validation
+    command does not validate referenced TODO paths, grouped labels,
+    active/completed classifications, or active open-gap presence.
+  - Required result: when TODO coverage cross-reference validation lands,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes manifest/status-table validation from verified
+    backlog traceability for every local paper row.
+
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role metadata exists.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper figure

@@ -2117,6 +2117,28 @@ Primary evidence:
     metadata, license/source notes, and README/ROADMAP wording that separates
     the original AlphaEvolve specification from later expanded math evidence.
 
+- [ ] Add validation for paper-index TODO coverage cross-references.
+  - Spec evidence: AlphaEvolve-alignment work relies on paper-facing status
+    rows being traceable to concrete missing-behavior ledgers. The local
+    `papers/README.md` "TODO coverage cross-references" section claims to map
+    implementation-status rows to active and completed/grouped backlog
+    evidence.
+  - Current evidence: `validate_paper_manifest()` reconciles manifest rows,
+    README counts, the implementation-status table, Appendix B registry, and
+    Figure 8 ablation registry. A checked-in test confirms every manifest id
+    appears once in the TODO coverage section and mentions `docs/todo/`, but
+    no reusable validator checks the cross-reference table's row shape,
+    duplicate/extra ids, referenced path existence, active-versus-completed
+    classification, grouped-gap labels, or whether active references still map
+    to open TODO content.
+  - Required result: extend paper-manifest or paper-index validation with a
+    TODO-coverage cross-reference checker: parse the table, require exact
+    manifest-id coverage, reject duplicates/extras, validate safe existing
+    `docs/todo/` paths, classify active and completed evidence targets,
+    allow only declared grouped-gap labels, and optionally verify that active
+    evidence rows contain open backlog text. Keep docs wording clear that
+    status-table validation is not the same as verified backlog traceability.
+
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.
   - Spec evidence: the AlphaEvolve Contributions section says N.V., E.D.,

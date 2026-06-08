@@ -2923,6 +2923,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that makes the original-paper versus follow-on
     source boundary explicit.
 
+- [ ] Validate paper-index TODO coverage cross-references.
+  - Paper evidence: `papers/README.md` includes a "TODO coverage
+    cross-references" table that says each implementation-status row is tied
+    to backlog evidence, with active and completed/grouped evidence columns.
+    AlphaEvolve-alignment audits depend on this source-to-backlog chain so
+    paper status rows do not become disconnected from the TODO ledgers that
+    state missing or unsupported behavior.
+  - Current gap: checked-in tests only assert that each manifest id appears
+    once in the section and that the row mentions `docs/todo/`. The
+    `libreevolve.tools.paper_manifest` validator checks the implementation
+    status table against manifest ids, but it does not validate the TODO
+    coverage table, referenced file existence, grouped-gap labels,
+    active-versus-completed target semantics, or whether every listed active
+    evidence target still contains a matching open gap.
+  - Required result: add paper-index cross-reference validation with manifest
+    id coverage, duplicate/extra row checks, safe and existing backlog paths,
+    allowed grouped-gap labels, active/completed target classification, and
+    optional checks that active references point to open TODO text. Update
+    README/ROADMAP/code TODO wording so the paper index distinguishes
+    implementation-status validation from verified backlog traceability.
+
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of
     `2506.13131__AlphaEvolve.pdf` states that N.V., E.D., M.E., S.C., A.N.,

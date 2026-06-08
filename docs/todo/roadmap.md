@@ -450,8 +450,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve-style robustness or versatility shaped by broad collaborator
     feedback.
 
-- [ ] Keep acknowledgement-role roadmap wording scoped until review/support/
-      advice provenance exists.
+- [ ] Keep acknowledgement-role roadmap wording scoped until populated review/
+      support/advice provenance exists.
   - Spec evidence: AlphaEvolve's Acknowledgements separately thank named people
     for white-paper review, early explorations and discussions, support and
     advice, practical-application management advice, and reviewing
@@ -460,17 +460,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roles on page 22, making this a separate paper-process/governance evidence
     category.
   - Current evidence: ROADMAP and README/code evidence track expert
-    formulation, early-user feedback, systems owner/reviewer gaps, and
-    contribution-role gaps. They do not require acknowledgement-role metadata
-    for paper-process review/support/advice records or docs wording that
-    separates those roles from implementation authorship, benchmark
-    formulation, domain validation, deployment signoff, broad collaborator
-    feedback, publication-author metadata, or package/project metadata.
-  - Required result: when acknowledgement-role metadata lands, update ROADMAP,
-    README, papers index, and code/paper TODOs with role categories, affected
-    paper/application scope, source page/section, and privacy/redaction policy
-    so roadmap wording does not treat acknowledgement-process roles as
-    technical validation or system-development provenance.
+    formulation, early-user feedback, systems owner/reviewer gaps,
+    contribution-role gaps, optional `acknowledgements.yaml` /
+    `Problem.acknowledgement_metadata`, normalized
+    `problem.acknowledgement_metadata`, and
+    `runtime.history.acknowledgement_role_provenance_report` for
+    paper-process review/support/advice records. It separates those roles from
+    implementation authorship, benchmark formulation, domain validation,
+    deployment signoff, broad collaborator feedback, publication-author
+    metadata, and package/project metadata. Existing fixtures do not yet carry
+    real reviewed acknowledgement-role records.
+  - Required result: when representative fixtures carry reviewed
+    acknowledgement-role metadata and paper-facing evidence, update ROADMAP,
+    README, papers index, and code/paper TODOs together so roadmap wording
+    neither underclaims the new metadata/report surface nor overclaims
+    AlphaEvolve-style acknowledgement-role evidence.
 
 - [ ] Keep paper-author roadmap wording scoped until publication-author
       metadata exists.

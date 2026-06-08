@@ -789,6 +789,7 @@ def evolve(
         seed_policy=_problem_seed_policy(problem),
         formulation_metadata=_problem_formulation_metadata(problem),
         collaborator_feedback_metadata=_problem_collaborator_feedback_metadata(problem),
+        acknowledgement_metadata=_problem_acknowledgement_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5160,6 +5161,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "acknowledgement_role_provenance_report": (
+            _acknowledgement_role_provenance_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -6536,6 +6542,425 @@ def validate_collaborator_feedback_provenance_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.collaborator_feedback_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _acknowledgement_role_provenance_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("acknowledgement_metadata")
+        if isinstance(problem.get("acknowledgement_metadata"), Mapping)
+        else {}
+    )
+    records = (
+        metadata.get("records")
+        if isinstance(metadata.get("records"), list)
+        else []
+    )
+    privacy = (
+        metadata.get("privacy_policy")
+        if isinstance(metadata.get("privacy_policy"), Mapping)
+        else {}
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    role_counts: dict[str, int] = {}
+    scope_counts: dict[str, int] = {}
+    source_pages: set[int] = set()
+    records_with_source = 0
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        role = record.get("role_category")
+        if isinstance(role, str):
+            role_counts[role] = role_counts.get(role, 0) + 1
+        scope = record.get("scope_type")
+        if isinstance(scope, str):
+            scope_counts[scope] = scope_counts.get(scope, 0) + 1
+        page = record.get("source_page")
+        if isinstance(page, int) and not isinstance(page, bool):
+            source_pages.add(page)
+        if isinstance(record.get("source_section"), str) and isinstance(page, int):
+            records_with_source += 1
+    required_roles = {
+        "white_paper_review",
+        "early_exploration",
+        "support_advice",
+        "practical_application_management_advice",
+        "application_review",
+        "application_specific_advice",
+    }
+    role_coverage_complete = required_roles <= set(role_counts)
+    metadata_present = metadata.get("status") == "provided"
+    privacy_recorded = (
+        isinstance(privacy.get("retention"), str)
+        and isinstance(privacy.get("redaction"), str)
+    )
+    reviewed = review.get("status") in {
+        "paper_process_reviewed",
+        "owner_signed_off",
+    }
+    source_linked = bool(records) and records_with_source == len(records)
+    claim_ready = (
+        metadata_present
+        and role_coverage_complete
+        and source_linked
+        and privacy_recorded
+        and reviewed
+    )
+    report = {
+        "schema": "libreevolve.acknowledgement_role_provenance_report.v1",
+        "source": "acknowledgement_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.acknowledgement_metadata",
+        "metadata_status": metadata.get("status"),
+        "record_count": len(records),
+        "role_category_counts": role_counts,
+        "scope_type_counts": scope_counts,
+        "source_page_count": len(source_pages),
+        "source_pages": sorted(source_pages),
+        "records_with_source_locator": records_with_source,
+        "privacy_policy": {
+            "retention": privacy.get("retention"),
+            "redaction": privacy.get("redaction"),
+        },
+        "review_status": review.get("status"),
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata_present,
+            "all_acknowledgement_role_categories_recorded": role_coverage_complete,
+            "source_page_and_section_recorded": source_linked,
+            "privacy_redaction_policy_recorded": privacy_recorded,
+            "paper_process_review_or_owner_signoff": reviewed,
+            "technical_validation_boundary_separated": True,
+            "publication_author_boundary_separated": True,
+            "alphaevolve_acknowledgement_role_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("acknowledgements_yaml_in_problem_fixture", metadata_present),
+                    ("all_acknowledgement_role_categories", role_coverage_complete),
+                    ("source_page_and_section_locators", source_linked),
+                    ("privacy_redaction_policy", privacy_recorded),
+                    ("paper_process_review_or_owner_signoff", reviewed),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.acknowledgement_metadata",
+            "optional_problem_file": "acknowledgements.yaml",
+            "allowed_role_categories": [
+                "white_paper_review",
+                "early_exploration",
+                "support_advice",
+                "practical_application_management_advice",
+                "application_review",
+                "application_specific_advice",
+            ],
+            "allowed_scope_types": [
+                "white_paper",
+                "general_system",
+                "practical_application",
+                "application_specific_work",
+            ],
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "paper_process_reviewed",
+                "owner_signed_off",
+            ],
+            "boundary": (
+                "paper_process_acknowledgements_not_technical_validation_or_"
+                "publication_author_metadata"
+            ),
+        },
+    }
+    report["validation"] = validate_acknowledgement_role_provenance_report(report)
+    return report
+
+
+def validate_acknowledgement_role_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.acknowledgement_role_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "acknowledgement role provenance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "record_count",
+        "role_category_counts",
+        "scope_type_counts",
+        "source_page_count",
+        "source_pages",
+        "records_with_source_locator",
+        "privacy_policy",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"acknowledgement role report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.acknowledgement_role_provenance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported acknowledgement role report schema",
+            }
+        )
+    if report.get("source") != "acknowledgement_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported acknowledgement role report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.acknowledgement_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference acknowledgement metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.acknowledgement_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at acknowledgement metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    for field in (
+        "record_count",
+        "source_page_count",
+        "records_with_source_locator",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    allowed_roles = {
+        "white_paper_review",
+        "early_exploration",
+        "support_advice",
+        "practical_application_management_advice",
+        "application_review",
+        "application_specific_advice",
+    }
+    role_counts = report.get("role_category_counts")
+    if not isinstance(role_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_role_category_counts",
+                "message": "role_category_counts must be an object",
+            }
+        )
+        role_counts = {}
+    else:
+        for role, count in role_counts.items():
+            if role not in allowed_roles:
+                issues.append(
+                    {
+                        "code": "invalid_role_category",
+                        "message": "role category is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_role_count",
+                        "message": "role counts must be non-negative integers",
+                    }
+                )
+    allowed_scopes = {
+        "white_paper",
+        "general_system",
+        "practical_application",
+        "application_specific_work",
+    }
+    scope_counts = report.get("scope_type_counts")
+    if not isinstance(scope_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_scope_type_counts",
+                "message": "scope_type_counts must be an object",
+            }
+        )
+    else:
+        for scope, count in scope_counts.items():
+            if scope not in allowed_scopes:
+                issues.append(
+                    {
+                        "code": "invalid_scope_type",
+                        "message": "scope type is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_scope_count",
+                        "message": "scope counts must be non-negative integers",
+                    }
+                )
+    pages = report.get("source_pages")
+    if not isinstance(pages, list) or not all(
+        isinstance(page, int) and not isinstance(page, bool) and page > 0
+        for page in pages
+    ):
+        issues.append(
+            {
+                "code": "invalid_source_pages",
+                "message": "source_pages must be positive integers",
+            }
+        )
+    privacy = report.get("privacy_policy")
+    privacy_recorded = False
+    if not isinstance(privacy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_privacy_policy",
+                "message": "privacy_policy must be an object",
+            }
+        )
+    else:
+        privacy_recorded = isinstance(privacy.get("retention"), str) and isinstance(
+            privacy.get("redaction"), str
+        )
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "paper_process_reviewed",
+        "owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    record_count = report.get("record_count")
+    source_count = report.get("records_with_source_locator")
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and set(role_counts) >= allowed_roles
+        and isinstance(record_count, int)
+        and not isinstance(record_count, bool)
+        and record_count > 0
+        and isinstance(source_count, int)
+        and not isinstance(source_count, bool)
+        and source_count == record_count
+        and privacy_recorded
+        and review_status in {"paper_process_reviewed", "owner_signed_off"}
+    )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_acknowledgement_role_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "acknowledgement_role_parity_mismatch",
+                    "message": "acknowledgement role parity must match report readiness",
+                }
+            )
+        if readiness.get("paper_process_review_or_owner_signoff") != (
+            review_status in {"paper_process_reviewed", "owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+        for boundary in (
+            "technical_validation_boundary_separated",
+            "publication_author_boundary_separated",
+        ):
+            if readiness.get(boundary) is not True:
+                issues.append(
+                    {
+                        "code": "acknowledgement_boundary_overclaim",
+                        "message": "acknowledgement boundaries must remain separated",
+                    }
+                )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match acknowledgement role readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "acknowledgements.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name acknowledgements.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.acknowledgement_role_provenance_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -11765,6 +12190,10 @@ def _problem_formulation_metadata(problem: Problem) -> dict:
 
 def _problem_collaborator_feedback_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "collaborator_feedback_metadata", {}) or {})
+
+
+def _problem_acknowledgement_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "acknowledgement_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

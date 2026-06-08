@@ -140,6 +140,13 @@ LibreEvolve has:
   collaborator cohorts, feedback event ids, affected workflow areas,
   change-artifact links, validation outcomes, privacy/redaction policy, and
   robustness/versatility claim readiness
+- optional acknowledgement metadata under `acknowledgements.yaml` or direct
+  `Problem.acknowledgement_metadata`, normalized into
+  `problem.acknowledgement_metadata` and summarized by
+  `runtime.history.acknowledgement_role_provenance_report` for white-paper
+  review, early exploration, support/advice, practical-application management
+  advice, application review, application-specific advice, source locators,
+  privacy/redaction policy, and review/signoff readiness
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

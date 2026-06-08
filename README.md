@@ -2119,6 +2119,18 @@ early-user/collaborator feedback separate from in-run `llm_feedback` graders
 and reports whether diverse use-case cohorts, feedback event IDs, workflow
 areas, change links, validation outcomes, privacy policy, and review/signoff
 are present before marking robustness or versatility claims ready.
+Problem fixtures can also optionally add `acknowledgements.yaml` or
+`acknowledgements.yml`; direct callers can set
+`Problem.acknowledgement_metadata`. The manifest normalizes this to
+`problem.acknowledgement_metadata` with fixed vocabularies for acknowledgement
+role categories, scope types, privacy/redaction policy, and review status,
+plus bounded non-secret contributor labels, source page/section locators, and
+scope labels. Completed manifests include
+`runtime.history.acknowledgement_role_provenance_report`, which keeps
+white-paper review, early exploration, support/advice,
+practical-application-management advice, application review, and
+application-specific advice separate from implementation authorship,
+publication-author metadata, benchmark validation, and deployment signoff.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which records the
 current selected abstraction as a Python-primary code-file set, links it back

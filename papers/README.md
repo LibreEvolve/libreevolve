@@ -336,6 +336,17 @@ AlphaEvolve's Acknowledgements say broad early-user and collaborator feedback
 shaped robustness and versatility, so paper-facing claims still need populated
 multi-cohort feedback records with reviewed validation/change evidence.
 
+AlphaEvolve acknowledgement-role note: LibreEvolve now has optional
+`acknowledgements.yaml` / `Problem.acknowledgement_metadata` records plus
+`runtime.history.acknowledgement_role_provenance_report` for white-paper
+review, early exploration, support/advice, practical-application management
+advice, application review, application-specific advice, source locators,
+privacy/redaction policy, and review/signoff state. These are paper-process
+and governance roles, not implementation authorship, publication-author
+metadata, benchmark validation, or deployment evidence; populated reviewed
+records are still needed before making paper-facing acknowledgement parity
+claims.
+
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema
 `libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves

@@ -361,8 +361,8 @@ Primary evidence:
     claiming AlphaEvolve-style robustness or versatility until broad
     collaborator feedback evidence exists.
 
-- [ ] Add acknowledgement-role provenance for review, support, and practical
-      application management advice.
+- [ ] Populate acknowledgement-role provenance for review, support, and
+      practical application management advice.
   - Spec evidence: AlphaEvolve's Acknowledgements separately thank named
     contributors for reviewing the white paper, early explorations and
     insightful discussions, support and advice, helpful advice on managing
@@ -373,22 +373,26 @@ Primary evidence:
     expert benchmark formulation, application owner signoff, publication
     author metadata, and core implementation contributions.
   - Current evidence: LibreEvolve TODOs track early-user feedback, expert
-    formulation, systems application owner/reviewer evidence, and core
-    system-development contribution roles. Runtime/package provenance can
-    capture selected PEP 621 project metadata and installed-distribution
-    metadata, but it does not define a schema for paper-review,
-    support/advice, practical-application management advice, or
-    application-review acknowledgement records, nor a docs check that keeps
-    these softer paper-process roles separate from technical validation,
-    implementation authorship, or publication-author status.
-  - Required result: add acknowledgement-role metadata with safe contributor
-    labels, role category (`white_paper_review`, `early_exploration`,
-    `support_advice`, `practical_application_management_advice`,
-    `application_review`, `application_specific_advice`), affected paper/
-    application scope, source page/section, privacy/redaction policy, and
-    README/ROADMAP wording that separates paper-process acknowledgement
-    evidence from benchmark, deployment, validation, system-development, or
-    publication-author provenance.
+    formulation, systems application owner/reviewer evidence, core
+    system-development contribution roles, and now optional
+    `acknowledgements.yaml` / direct `Problem.acknowledgement_metadata`. Code
+    validates fixed acknowledgement role categories, scope types, privacy, and
+    review-status vocabularies, persists normalized
+    `problem.acknowledgement_metadata`, and emits
+    `runtime.history.acknowledgement_role_provenance_report` with readiness
+    checks for white-paper review, early exploration, support/advice,
+    practical-application management advice, application review,
+    application-specific advice, source page/section locators,
+    privacy/redaction policy, and paper-process review or owner signoff. The
+    report explicitly separates acknowledgement roles from technical
+    validation, benchmark formulation, deployment, system-development, and
+    publication-author provenance. Existing fixtures have not yet been
+    populated with real acknowledgement records.
+  - Required result: populate representative fixtures with reviewed
+    acknowledgement-role metadata, link records to source page/section
+    evidence, add paper-facing examples or certification rows, and keep docs
+    from treating the schema alone as AlphaEvolve-style paper-process
+    acknowledgement evidence.
 
 - [ ] Add paper author-metadata provenance for equal contributors and
       correspondence roles.

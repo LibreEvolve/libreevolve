@@ -168,6 +168,7 @@ PROBLEM_FORMULATION_METADATA_SCHEMA = "libreevolve.problem_formulation_metadata.
 COLLABORATOR_FEEDBACK_METADATA_SCHEMA = (
     "libreevolve.collaborator_feedback_metadata.v1"
 )
+ACKNOWLEDGEMENT_METADATA_SCHEMA = "libreevolve.acknowledgement_metadata.v1"
 _FORMULATION_ALLOWED_KEYS = {
     "problem_origin",
     "contributors",
@@ -245,6 +246,43 @@ _COLLABORATOR_FEEDBACK_REVIEW_STATUSES = {
 }
 _COLLABORATOR_FEEDBACK_TEXT_MAX_CHARS = 1024
 _COLLABORATOR_FEEDBACK_LABEL_MAX_CHARS = 160
+_ACKNOWLEDGEMENT_ALLOWED_KEYS = {
+    "records",
+    "privacy_policy",
+    "review",
+}
+_ACKNOWLEDGEMENT_ROLE_CATEGORIES = {
+    "white_paper_review",
+    "early_exploration",
+    "support_advice",
+    "practical_application_management_advice",
+    "application_review",
+    "application_specific_advice",
+}
+_ACKNOWLEDGEMENT_SCOPE_TYPES = {
+    "white_paper",
+    "general_system",
+    "practical_application",
+    "application_specific_work",
+}
+_ACKNOWLEDGEMENT_RETENTION_POLICIES = {
+    "redacted_labels_only",
+    "private_internal",
+    "public_attributed",
+}
+_ACKNOWLEDGEMENT_REDACTION_POLICIES = {
+    "anonymous_labels",
+    "secret_redacted",
+    "public_names_allowed",
+}
+_ACKNOWLEDGEMENT_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "paper_process_reviewed",
+    "owner_signed_off",
+}
+_ACKNOWLEDGEMENT_TEXT_MAX_CHARS = 1024
+_ACKNOWLEDGEMENT_LABEL_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -272,6 +310,7 @@ class ProgramDatabase:
         archive_programs_by_id: Mapping[str, Program] | None = None,
         formulation_metadata: Mapping[str, object] | None = None,
         collaborator_feedback_metadata: Mapping[str, object] | None = None,
+        acknowledgement_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -326,6 +365,9 @@ class ProgramDatabase:
         collaborator_feedback_metadata = validate_collaborator_feedback_metadata(
             collaborator_feedback_metadata or {}
         )
+        acknowledgement_metadata = validate_acknowledgement_metadata(
+            acknowledgement_metadata or {}
+        )
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -339,6 +381,7 @@ class ProgramDatabase:
             seed_policy,
             formulation_metadata,
             collaborator_feedback_metadata,
+            acknowledgement_metadata,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -5622,6 +5665,258 @@ def _normalize_collaborator_feedback_text(
     return redacted
 
 
+def validate_acknowledgement_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("acknowledgement_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("acknowledgement_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key) for key in set(value) - _ACKNOWLEDGEMENT_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(
+            f"acknowledgement_metadata has unsupported fields {unsupported}"
+        )
+    normalized: dict = {
+        "schema": ACKNOWLEDGEMENT_METADATA_SCHEMA,
+        "status": "provided" if value else "not_provided",
+        "records": [],
+        "privacy_policy": {
+            "retention": "redacted_labels_only",
+            "redaction": "anonymous_labels",
+            "notes": None,
+        },
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "records" in value:
+        records = value["records"]
+        if not isinstance(records, list):
+            raise StrictJsonlError("acknowledgement_metadata.records must be a list")
+        normalized["records"] = [
+            _normalize_acknowledgement_record(index, record)
+            for index, record in enumerate(records)
+        ]
+    record_ids = {
+        record["record_id"]
+        for record in normalized["records"]
+        if isinstance(record, Mapping) and isinstance(record.get("record_id"), str)
+    }
+    if len(record_ids) != len(normalized["records"]):
+        raise StrictJsonlError(
+            "acknowledgement_metadata.records must have unique record_id values"
+        )
+    if "privacy_policy" in value:
+        normalized["privacy_policy"] = _normalize_acknowledgement_privacy(
+            value["privacy_policy"]
+        )
+    if "review" in value:
+        normalized["review"] = _normalize_acknowledgement_review(value["review"])
+    _validate_context_provenance_json_size("acknowledgement_metadata", normalized)
+    return normalized
+
+
+def _normalize_acknowledgement_record(index: int, value: object) -> dict:
+    label = f"acknowledgement_metadata.records[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value)
+        - {
+            "record_id",
+            "contributor_label",
+            "role_category",
+            "scope_type",
+            "scope_label",
+            "source_page",
+            "source_section",
+            "notes",
+        }
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    role_category = value.get("role_category")
+    if not isinstance(role_category, str) or role_category not in _ACKNOWLEDGEMENT_ROLE_CATEGORIES:
+        raise StrictJsonlError(
+            f"{label}.role_category must be one of {sorted(_ACKNOWLEDGEMENT_ROLE_CATEGORIES)}"
+        )
+    scope_type = value.get("scope_type")
+    if not isinstance(scope_type, str) or scope_type not in _ACKNOWLEDGEMENT_SCOPE_TYPES:
+        raise StrictJsonlError(
+            f"{label}.scope_type must be one of {sorted(_ACKNOWLEDGEMENT_SCOPE_TYPES)}"
+        )
+    source_page = value.get("source_page")
+    if (
+        isinstance(source_page, bool)
+        or not isinstance(source_page, int)
+        or source_page <= 0
+    ):
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    record = {
+        "record_id": _normalize_acknowledgement_token(
+            f"{label}.record_id",
+            value.get("record_id"),
+        ),
+        "contributor_label": _normalize_acknowledgement_text(
+            f"{label}.contributor_label",
+            value.get("contributor_label"),
+            max_chars=_ACKNOWLEDGEMENT_LABEL_MAX_CHARS,
+        ),
+        "role_category": role_category,
+        "scope_type": scope_type,
+        "scope_label": _normalize_acknowledgement_text(
+            f"{label}.scope_label",
+            value.get("scope_label"),
+            max_chars=_ACKNOWLEDGEMENT_LABEL_MAX_CHARS,
+        ),
+        "source_page": source_page,
+        "source_section": _normalize_acknowledgement_text(
+            f"{label}.source_section",
+            value.get("source_section"),
+            max_chars=_ACKNOWLEDGEMENT_LABEL_MAX_CHARS,
+        ),
+    }
+    if "notes" in value:
+        record["notes"] = _normalize_acknowledgement_text(
+            f"{label}.notes",
+            value["notes"],
+            max_chars=_ACKNOWLEDGEMENT_TEXT_MAX_CHARS,
+        )
+    return record
+
+
+def _normalize_acknowledgement_privacy(value: object) -> dict:
+    label = "acknowledgement_metadata.privacy_policy"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"retention", "redaction", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    retention = value.get("retention")
+    if not isinstance(retention, str) or retention not in _ACKNOWLEDGEMENT_RETENTION_POLICIES:
+        raise StrictJsonlError(
+            f"{label}.retention must be one of {sorted(_ACKNOWLEDGEMENT_RETENTION_POLICIES)}"
+        )
+    redaction = value.get("redaction")
+    if not isinstance(redaction, str) or redaction not in _ACKNOWLEDGEMENT_REDACTION_POLICIES:
+        raise StrictJsonlError(
+            f"{label}.redaction must be one of {sorted(_ACKNOWLEDGEMENT_REDACTION_POLICIES)}"
+        )
+    return {
+        "retention": retention,
+        "redaction": redaction,
+        "notes": (
+            _normalize_acknowledgement_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_ACKNOWLEDGEMENT_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_acknowledgement_review(value: object) -> dict:
+    label = "acknowledgement_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if not isinstance(status, str) or status not in _ACKNOWLEDGEMENT_REVIEW_STATUSES:
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_ACKNOWLEDGEMENT_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    reviewer_labels = _normalize_acknowledgement_text_list(
+        f"{label}.reviewer_labels",
+        reviewers,
+        max_chars=_ACKNOWLEDGEMENT_LABEL_MAX_CHARS,
+        allow_empty=True,
+    )
+    return {
+        "status": status,
+        "reviewer_labels": reviewer_labels,
+        "notes": (
+            _normalize_acknowledgement_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_ACKNOWLEDGEMENT_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_acknowledgement_text_list(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+    allow_empty: bool = False,
+) -> list[str]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "a list" if allow_empty else "a non-empty list"
+        raise StrictJsonlError(f"{label} must be {requirement}")
+    normalized = []
+    for index, item in enumerate(value):
+        text = _normalize_acknowledgement_text(
+            f"{label}[{index}]",
+            item,
+            max_chars=max_chars,
+        )
+        if text not in normalized:
+            normalized.append(text)
+    return normalized
+
+
+def _normalize_acknowledgement_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > _ACKNOWLEDGEMENT_LABEL_MAX_CHARS:
+        raise StrictJsonlError(
+            f"{label} must be <= {_ACKNOWLEDGEMENT_LABEL_MAX_CHARS} characters"
+        )
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value):
+        raise StrictJsonlError(f"{label} must be a safe acknowledgement token")
+    return value
+
+
+def _normalize_acknowledgement_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
 def validate_seed_sources(value: object) -> list[dict]:
     if not isinstance(value, list):
         raise StrictJsonlError("seed_sources must be a list of mappings")
@@ -5981,6 +6276,7 @@ def _startup_manifest_payload(
     seed_policy: dict,
     formulation_metadata: dict,
     collaborator_feedback_metadata: dict,
+    acknowledgement_metadata: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -6130,6 +6426,7 @@ def _startup_manifest_payload(
             "seed_policy": seed_policy,
             "formulation_metadata": formulation_metadata,
             "collaborator_feedback_metadata": collaborator_feedback_metadata,
+            "acknowledgement_metadata": acknowledgement_metadata,
         },
         "policies": {
             "redaction": redaction_policy_record(),

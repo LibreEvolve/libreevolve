@@ -95,6 +95,19 @@ graders and records whether diverse use-case cohorts, feedback event IDs,
 workflow areas, change links, validation outcomes, privacy/redaction policy,
 and collaborator review or owner signoff are present before robustness or
 versatility claims are marked claim-ready.
+Problem fixtures can also optionally include `acknowledgements.yaml` or
+`acknowledgements.yml`; direct callers can set
+`Problem.acknowledgement_metadata`. Startup manifest validation normalizes this
+into `problem.acknowledgement_metadata` with schema
+`libreevolve.acknowledgement_metadata.v1`, fixed role-category, scope,
+privacy, and review-status vocabularies, bounded non-secret contributor
+labels, source page/section locators, and scope labels. Completed manifests
+include `runtime.history.acknowledgement_role_provenance_report` with schema
+`libreevolve.acknowledgement_role_provenance_report.v1`. This report keeps
+white-paper review, early exploration, support/advice, practical-application
+management advice, application review, and application-specific advice
+separate from technical validation, benchmark formulation, deployment signoff,
+system-development provenance, and publication-author metadata.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

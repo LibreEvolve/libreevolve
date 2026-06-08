@@ -41,6 +41,7 @@ from libreevolve.core.loop import (
     validate_prompt_context_policy_coverage,
     validate_prompt_section_packing_coverage,
     validate_retrieval_evidence_coverage,
+    validate_acknowledgement_role_provenance_report,
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
@@ -5913,6 +5914,151 @@ def test_direct_collaborator_feedback_metadata_rejects_secret_like_text_before_m
         StrictJsonlError,
         match=(
             "collaborator_feedback_metadata\\.cohorts\\[0\\]\\.use_case_area "
+            "must not contain secret-like text"
+        ),
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
+
+
+def test_loaded_acknowledgement_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text("acknowledged task", encoding="utf-8")
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    records = [
+        ("ack-white-paper", "white_paper_review", "white_paper", "AlphaEvolve paper", 21),
+        ("ack-explore", "early_exploration", "general_system", "early system work", 21),
+        ("ack-support", "support_advice", "general_system", "system support", 21),
+        (
+            "ack-management",
+            "practical_application_management_advice",
+            "practical_application",
+            "application management",
+            22,
+        ),
+        ("ack-app-review", "application_review", "application_specific_work", "application review", 22),
+        (
+            "ack-app-advice",
+            "application_specific_advice",
+            "application_specific_work",
+            "application advice",
+            22,
+        ),
+    ]
+    yaml_lines = ["records:"]
+    for record_id, role, scope_type, scope_label, page in records:
+        yaml_lines.extend(
+            [
+                f"  - record_id: {record_id}",
+                f"    contributor_label: {record_id} contributor",
+                f"    role_category: {role}",
+                f"    scope_type: {scope_type}",
+                f"    scope_label: {scope_label}",
+                f"    source_page: {page}",
+                "    source_section: AlphaEvolve acknowledgements",
+            ]
+        )
+    yaml_lines.extend(
+        [
+            "privacy_policy:",
+            "  retention: redacted_labels_only",
+            "  redaction: anonymous_labels",
+            "review:",
+            "  status: paper_process_reviewed",
+            "  reviewer_labels:",
+            "    - paper process reviewer",
+        ]
+    )
+    (problem_dir / "acknowledgements.yaml").write_text(
+        "\n".join(yaml_lines) + "\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["acknowledgement_metadata"]
+    assert metadata["schema"] == "libreevolve.acknowledgement_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["records"][0]["role_category"] == "white_paper_review"
+    report = manifest["runtime"]["history"]["acknowledgement_role_provenance_report"]
+    assert report["schema"] == "libreevolve.acknowledgement_role_provenance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_acknowledgement_role_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["record_count"] == 6
+    assert report["source_pages"] == [21, 22]
+    assert report["claim_readiness"][
+        "alphaevolve_acknowledgement_role_parity"
+    ] is True
+
+
+def test_acknowledgement_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["acknowledgement_role_provenance_report"]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["validation"]["ok"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_acknowledgement_role_parity"
+    ] is False
+    assert "acknowledgements_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_acknowledgement_role_parity"] = True
+    validation = validate_acknowledgement_role_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "acknowledgement_role_parity_mismatch",
+    }
+
+
+def test_direct_acknowledgement_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.acknowledgement_metadata = {
+        "records": [
+            {
+                "record_id": "ack-secret",
+                "contributor_label": (
+                    "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678"
+                ),
+                "role_category": "white_paper_review",
+                "scope_type": "white_paper",
+                "scope_label": "paper",
+                "source_page": 21,
+                "source_section": "Acknowledgements",
+            }
+        ]
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=(
+            "acknowledgement_metadata\\.records\\[0\\]\\.contributor_label "
             "must not contain secret-like text"
         ),
     ):

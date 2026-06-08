@@ -593,14 +593,21 @@ Primary evidence:
   - Spec evidence: AlphaEvolve's Discussion says the system made practical
     discoveries that increase the efficiency of its own infrastructure and
     future base LLMs, and identifies distilling AlphaEvolve-augmented
-    performance into next-generation base models as a natural next step.
+    performance into next-generation base models as a natural next step. Local
+    PDF page 21 contains both the distillation-next-step statement and the
+    claim that practical discoveries can increase AlphaEvolve's own
+    infrastructure/base-LLM efficiency.
   - Current evidence: LibreEvolve records provider budgets, systems report
     schemas, benchmark/certification artifact inventories, and paper-facing
     background rows, but it does not model infrastructure components as
     versioned optimization targets for its own runtime, does not link an
     evolved optimization to a measured improvement in LibreEvolve's own
-    execution path, and has no model-distillation or training-data export
-    evidence tied to evolved candidates.
+    execution path, and has no model-distillation evidence tied to evolved
+    candidates. Code evidence: `TTTRLPlugin` can export clipped-reward
+    prompt/response examples to `grpo_data.jsonl`, but its docstring explicitly
+    says it accumulates examples only and does not implement online GRPO/RL
+    training; that is not a base-model distillation dataset/training/evaluation
+    artifact.
   - Required result: add explicit scope metadata and report contracts before
     claiming AlphaEvolve-style self-improving infrastructure or base-model
     uplift: target component identity, before/after runtime or cost metrics,

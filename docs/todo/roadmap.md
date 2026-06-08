@@ -1205,11 +1205,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can
     improve its own infrastructure and future base LLMs, and suggests
     distilling AlphaEvolve-augmented base-model performance into future models.
+    Local PDF page 21 is the source for both claims.
   - Current evidence: ROADMAP.md tracks provider/runtime budgets, systems
     benchmarks, and benchmark/report contracts, but it does not yet require
     report evidence for optimizing LibreEvolve's own runtime or provider
     infrastructure, nor does it define distillation data/export/training
-    evidence derived from evolved candidates.
+    evidence derived from evolved candidates. Existing ThetaEvolve-inspired
+    training-data export is a bounded plugin artifact, not evidence of
+    base-model distillation or deployed self-improvement.
   - Required result: when roadmap items cover self-improving infrastructure or
     base-model uplift, require target-component identity, before/after
     measurements, deployment/adoption status, rollback/safety evidence,

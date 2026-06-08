@@ -3892,13 +3892,16 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: AlphaEvolve's Discussion says practical discoveries can
     improve its own infrastructure and future base LLMs, while distilling
     AlphaEvolve-augmented performance into the next generation of base models
-    is a natural next step.
+    is a natural next step. Local PDF page 21 contains these Discussion claims.
   - Current gap: `papers/README.md`, benchmark reports, and runtime manifests
     do not yet identify any LibreEvolve infrastructure component as an evolved
     optimization target, do not connect an evolved candidate to measured
     improvements in the tool's own runtime/provider/compiler/benchmark
     infrastructure, and do not define distillation datasets, training runs, or
-    model-evaluation artifacts derived from evolved programs.
+    model-evaluation artifacts derived from evolved programs. The
+    ThetaEvolve-inspired `grpo_data.jsonl` export path is a bounded
+    prompt/response/reward artifact and is explicitly not online RL training or
+    base-model distillation evidence.
   - Required result: add paper-facing evidence boundaries for self-improving
     infrastructure and model-uplift claims: component identity, optimization
     objective, before/after measurements, deployment or adoption status,

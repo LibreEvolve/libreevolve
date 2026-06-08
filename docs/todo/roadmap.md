@@ -3251,3 +3251,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap, README, papers index, and code/paper TODO entries together so
     roadmap wording neither underclaims current synchronous reviewer-pool
     metadata nor overclaims AlphaEvolve-grade critique orchestration.
+
+- [ ] Add 2026 AlphaEvolve impact-source roadmap gates before promoting new
+      domain claims.
+  - Spec evidence: Google DeepMind's May 7, 2026 article
+    `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
+    fields` reports newer official impact claims across genomics,
+    power-grid optimization, Earth AI, quantum circuits, mathematics gallery
+    examples, TPU design, cache replacement, Spanner, compiler storage, and
+    Google Cloud/customer applications.
+  - Current evidence: ROADMAP tracks original AlphaEvolve paper alignment,
+    follow-on mathematical-problem sources, selected later paper rows, and
+    local benchmark/report-contract gaps. It does not have roadmap gates for
+    treating the 2026 impact article as a distinct source, mapping its claims
+    to linked evidence, or preventing the named new domains from being
+    promoted as LibreEvolve-supported workflows without fixtures.
+  - Required result: add roadmap/source gates for the 2026 impact article:
+    URL/date/title/retrieval digest, outbound-link inventory, claim category
+    and value/unit/baseline records, evidence-state classification, public
+    gallery/UI/API attribution metadata, local-fixture support status, and
+    release-note/README boundaries that distinguish official impact reporting
+    from original specification work and from future LibreEvolve benchmark
+    implementation.

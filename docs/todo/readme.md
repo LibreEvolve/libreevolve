@@ -2833,4 +2833,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     roadmap, papers index, and code/paper TODO entries together so they do not
     underclaim archive-content restore or overclaim migration replay.
 
+- [ ] Keep README 2026 AlphaEvolve impact wording source-scoped until claim
+      provenance exists.
+  - Spec evidence: the May 7, 2026 Google DeepMind impact article says
+    AlphaEvolve is scaling across health, sustainability, research,
+    infrastructure, and commercial applications, with claims including
+    DeepConsensus, AC Optimal Power Flow, Earth AI, Willow quantum circuits,
+    public gallery examples, TPU design, cache replacement, Spanner, compiler
+    storage, and customer deployments.
+  - Current evidence: README currently documents the original AlphaEvolve
+    paper/announcement boundary, local LibreEvolve implementation status,
+    benchmark-report contracts, source repositories, and known open gaps. It
+    has no source row or claim table for the 2026 impact article and no local
+    benchmark fixtures for the named new domains or customer cases.
+  - Required result: when the 2026 impact source is added, update README with
+    explicitly scoped wording that identifies the article URL/date/title,
+    separates official impact claims from implemented LibreEvolve features,
+    points each claim to linked paper/repository/customer evidence when
+    available, and avoids implying local support for DeepConsensus, power-grid,
+    quantum, Earth AI, Spanner, compiler-storage, TPU-design, commercial, UI,
+    API, or public-gallery workflows.
+
 ## Architecture Description

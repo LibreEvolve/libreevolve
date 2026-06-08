@@ -4116,3 +4116,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     validation, semantic-boundary overclaim auditing, run-level retrieval
     evidence coverage validation, or the core full-runtime restore bundle that
     deliberately excludes provider-output replay.
+
+- [ ] Track official 2026 AlphaEvolve impact article as a separate source
+      surface.
+  - Paper/source evidence: Google DeepMind published
+    `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
+    fields` on May 7, 2026. The article describes AlphaEvolve impact after the
+    original 2025 launch and names domains and claims not covered by the
+    original white paper alone: DeepConsensus error reduction, AC Optimal Power
+    Flow feasibility improvement, Earth AI accuracy gain, Willow
+    quantum-circuit optimization, public gallery examples, next-generation TPU
+    design, cache replacement policies, Spanner write amplification, compiler
+    storage footprint, Google Cloud/customer deployments, and UI/API scaling
+    contributors.
+  - Current gap: the paper cache and TODOs track `2506.13131`, the original
+    companion Colab/repository, the May 2025 DeepMind announcement, follow-on
+    mathematical-problem sources, and selected later theoretical-CS papers.
+    They do not preserve this 2026 official impact article as a source row,
+    claim surface, outbound-link inventory, customer/deployment evidence
+    boundary, or attribution record.
+  - Required result: extend paper/source manifests with the 2026 impact
+    article URL, publication date, author/team, title, retrieval digest,
+    linked sources, claim ids and categories, values/units/baselines, evidence
+    status for each linked paper/repository/customer source, public-gallery
+    and UI/API attribution metadata, and docs checks that keep impact-article
+    claims separate from original specification, reproduced benchmark
+    evidence, and LibreEvolve feature support.

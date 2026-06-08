@@ -4518,3 +4518,34 @@ Primary evidence:
     filesystem capability, OS/container network capability, and resource-limit
     policy for validators, with manifest-visible evidence and tests proving the
     intended boundary.
+
+- [ ] Add official 2026 AlphaEvolve impact-source provenance and claim
+      boundaries.
+  - Spec evidence: the May 7, 2026 Google DeepMind article
+    `AlphaEvolve: How our Gemini-powered coding agent is scaling impact across
+    fields` says the system has broadened from the original 2025 announcement
+    into health, sustainability, research, infrastructure, and commercial
+    deployments. It reports source-specific claims such as a 30% DeepConsensus
+    variant-detection error reduction, AC Optimal Power Flow feasibility
+    rising from 14% to over 88%, Earth AI disaster-risk accuracy improving by
+    5%, Willow quantum-circuit suggestions with 10x lower error, Spanner
+    write-amplification reduction by 20%, compiler storage footprint reduction
+    by nearly 9%, and customer cases involving Klarna, Substrate, FM Logistic,
+    WPP, and Schrodinger. The article also introduces public gallery links and
+    names UI/API scaling contributors.
+  - Current evidence: existing source TODOs cover the original AlphaEvolve
+    white paper, the original May 2025 DeepMind announcement, the
+    `alphaevolve_results` notebook repository, the follow-on 67-problem
+    repository/paper/blog, and selected later theoretical-CS sources. No code
+    source manifest, claim registry, benchmark report, or paper-index status
+    row captures this 2026 impact article, its outbound links, deployment and
+    customer-claim categories, UI/API attribution, or source-specific
+    claim-value variants.
+  - Required result: add source-artifact and claim-boundary metadata for the
+    2026 impact article: canonical URL, publication date, author/team, title,
+    retrieval timestamp/hash, outbound source links, claim ids, domain
+    category, value/unit/baseline, linked paper/repository/artifact evidence
+    when available, deployment/customer/public-gallery/UI/API attribution
+    labels, unsupported-local-benchmark flags, and README/ROADMAP wording that
+    treats these as newer official impact claims rather than implemented
+    LibreEvolve behavior or original AlphaEvolve specification evidence.

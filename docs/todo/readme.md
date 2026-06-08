@@ -291,13 +291,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       AlphaEvolve-strict complete starts.
   - Spec evidence: AlphaEvolve Section 2.1 describes the initial implementation
     as complete but rudimentary, with the task skeleton and evaluator able to
-    invoke it before evolution.
+    invoke it before evolution. Local PDF page 5 says user-provided code inside
+    evolution blocks serves as the initial solution.
   - Current evidence: README documents valid/suboptimal seeds and deliberately
     invalid optimization-pressure seeds, including `hello_world`, and states
-    that runs can record invalid seed baselines. That is useful prototype
-    behavior, but it is not the same as a strict AlphaEvolve initial-program
-    contract where every selected seed is complete, runnable, and validator
-    valid before mutation begins.
+    that runs can record invalid seed baselines. Code evidence shows the seed
+    loop evaluates seeds, logs rejected seeds through `log_seed_failure()`, and
+    can finish a seed-only run with all seeds invalid as `no_valid_programs`.
+    That is useful prototype behavior, but it is not the same as a strict
+    AlphaEvolve initial-program contract where every selected seed is complete,
+    runnable, and validator valid before mutation begins.
   - Required result: when strict seed-validity policy/reporting lands, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes permissive invalid seed baselines from benchmark claims that

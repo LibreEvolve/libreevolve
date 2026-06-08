@@ -355,12 +355,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       AlphaEvolve-strict complete initial programs.
   - Spec evidence: AlphaEvolve Section 2.1 expects the initial implementation
     inside evolvable blocks to be complete, although possibly rudimentary, and
-    runnable through the supplied task skeleton/evaluator.
+    runnable through the supplied task skeleton/evaluator. Local PDF page 5
+    says user-provided code inside evolution blocks serves as the initial
+    solution, while Figure 2 on page 4 shows the initial program as an input
+    before the loop.
   - Current evidence: ROADMAP and README currently document source-safe seed
     ingestion, skipped-seed diagnostics, generation-0 baselines, and example
-    seed-score classes. The implementation evaluates seeds and logs invalid
-    seed failures, so current permissive optimization-pressure seeds are not
-    equivalent to an AlphaEvolve-strict complete initial-program precondition.
+    seed-score classes. The implementation evaluates seeds, admits valid
+    seeds, logs invalid seed failures, and can complete a seed-only run with
+    all seeds invalid using `stop_reason=no_valid_programs`. Current permissive
+    optimization-pressure seeds are therefore not equivalent to an
+    AlphaEvolve-strict complete initial-program precondition.
   - Required result: when a strict initial-program validity policy, benchmark
     seed-validity report fields, and README/paper-index wording land, update
     roadmap text so it neither rejects the current permissive examples nor

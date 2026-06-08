@@ -277,22 +277,32 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Section 2.1 says the initial implementation
     inside the evolvable code blocks should be complete, although it may be
     rudimentary, and the surrounding skeleton should let the evaluator invoke
-    it as a working program before evolution.
+    it as a working program before evolution. Local PDF page 5 says any
+    user-provided code inside evolution blocks serves as the initial solution,
+    and Figure 2 on page 4 frames the initial program as a user-provided input
+    before the discovery loop.
   - Current evidence: LibreEvolve validates seed source safety, UTF-8/text
     limits, workspace shape, Python-primary marker structure, and evaluator
     return contracts. It then evaluates each seed, admits valid seeds, and logs
-    invalid generation-0 seeds through `log_seed_failure()`. The shipped
-    examples intentionally include optimization-pressure starts such as
-    `hello_world`, whose seed is evaluator-invalid, and a run can record that
-    every evaluated seed was invalid instead of failing task setup as an
+    invalid generation-0 seeds through `log_seed_failure()`. In
+    `libreevolve/core/loop.py`, seed evaluation calls
+    `evaluator.evaluate(seed_workspace, diff_error=None)`, creates a
+    generation-0 `Program`, calls `db.admit()`, logs rejected seeds with
+    `db.log_seed_failure()`, and still writes the seed history row with
+    post-processing policy `raw_evaluator_baseline`. The shipped examples
+    intentionally include optimization-pressure starts such as `hello_world`,
+    whose seed is evaluator-invalid in `tests/test_examples.py`, and
+    `tests/core/test_loop.py::test_zero_generation_all_invalid_seeds_report_no_valid_programs`
+    proves a seed-only run with every seed invalid completes with
+    `stop_reason=no_valid_programs` instead of failing task setup as an
     AlphaEvolve-strict initial-program contract violation.
   - Required result: add an explicit problem/run policy for strict
     AlphaEvolve-style initial-program validation, including seed evaluation
     before mutation, required validity/declared metric presence for every
-    selected seed, manifest/report evidence distinguishing permissive
-    optimization-pressure seeds from strict complete seeds, and docs that do
-    not present invalid generation-0 baselines as faithful AlphaEvolve initial
-    implementations.
+    selected seed, all-invalid-seed failure behavior under strict mode,
+    manifest/report evidence distinguishing permissive optimization-pressure
+    seeds from strict complete seeds, and docs that do not present invalid
+    generation-0 baselines as faithful AlphaEvolve initial implementations.
 
 - [ ] Add expert problem-formulation provenance for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,

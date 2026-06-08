@@ -2740,14 +2740,17 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 describes the
     initial implementation inside code blocks as complete, even if
     rudimentary, with the broader skeleton used by the evaluator to run the
-    evolving solution.
+    evolving solution. In the local PDF, page 5 says user-provided code inside
+    evolution blocks serves as the initial solution, and Figure 2 on page 4
+    places the initial program before the discovery loop.
   - Current evidence: LibreEvolve can evaluate and record invalid generation-0
     seeds as failed baselines, and README explicitly names examples such as
     `hello_world` as invalid greeting seeds used for seed-to-best optimization
     pressure. Current seed provenance and evaluator-contract records prove
-    where a seed came from and how it evaluated; they do not prove that every
-    initial implementation is a complete runnable AlphaEvolve-style starting
-    point.
+    where a seed came from and how it evaluated; the runtime can also log an
+    all-invalid seed-only run as completed with `no_valid_programs`. Those
+    records do not prove that every initial implementation is a complete
+    runnable AlphaEvolve-style starting point.
   - Required result: add paper-facing evidence and configuration/report fields
     that distinguish strict complete/runnable initial programs from permissive
     invalid or deliberately failing optimization-pressure seeds, require

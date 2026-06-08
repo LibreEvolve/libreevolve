@@ -5067,3 +5067,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     outputs, reproducibility status, and README/ROADMAP wording that treats
     Ramsey-number discovery as missing paper evidence rather than implemented
     LibreEvolve support.
+
+- [ ] Track AlphaEvolve local-correction combinatorics paper evidence.
+  - Paper/source evidence: arXiv `2603.06692`, submitted March 4, 2026, is
+    titled `Evolving Local Corrections for Global Constructions in
+    Combinatorics`. Its abstract says AlphaEvolve is used as an experimental
+    engine for proposing and iteratively refining finite correcting-step
+    certificates. It studies graph reconstruction from vertex-deleted
+    subgraphs, Alon-Tarsi parity for Latin squares via sign-reversing
+    involutions built from local trades, and Rota's Basis Conjecture via local
+    exchange policies on collections of bases. It describes experimental
+    setups, scoring protocols, and search outcomes leading to concrete
+    conjectures, while explicitly not claiming proofs.
+  - Current gap: `papers/README.md` lists `2603.06692` as `Not implemented;
+    potential future benchmark`, and the active TODO coverage does not yet
+    track this paper-specific evidence. Broad constructive-math TODOs do not
+    capture local-correction certificate schemas, graph reconstruction from
+    vertex-deleted subgraphs, Latin-square local trade/involution evidence,
+    Rota basis-exchange policies, scoring protocols, explicit algorithm
+    outputs, or proof-status boundaries for generated conjectures.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2603.06692`: title/author/arXiv version/date/PDF digest, source license,
+    code/artifact URL/status, relation to AlphaEvolve and LibreEvolve
+    constructive-math assumptions, local-correction certificate schemas,
+    finite-step trace artifacts, graph/Latin-square/Rota case-study metadata,
+    scoring protocol records, seed/budget records, explicit generated
+    algorithms, structural-pattern summaries, conjecture statements,
+    proof-status and traditional-analysis handoff fields, checker/verifier
+    hooks, reproducibility status, and README/ROADMAP wording that treats
+    local-correction combinatorics as missing paper evidence rather than
+    implemented LibreEvolve support.

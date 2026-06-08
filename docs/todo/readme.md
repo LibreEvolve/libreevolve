@@ -3619,4 +3619,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and benchmark reports. Avoid implying LibreEvolve supports
     AlphaEvolve-style Ramsey-number discovery without those artifacts.
 
+- [ ] Keep README AlphaEvolve local-correction combinatorics claims absent or
+      source-scoped until certificate benchmark evidence exists.
+  - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global
+    Constructions in Combinatorics`, uses AlphaEvolve as an experimental
+    engine for finite correcting-step certificates in graph reconstruction,
+    Latin-square Alon-Tarsi parity, and Rota's Basis Conjecture. Its abstract
+    says the paper produces explicit algorithms and structural patterns for
+    later mathematical analysis, and does not claim proofs.
+  - Current evidence: README documents constructive-math coverage gaps,
+    benchmark report contracts, paper-cache status, and smoke fixtures. It
+    does not mention `2603.06692`, define local-correction certificate
+    candidates, provide graph reconstruction from vertex-deleted subgraphs,
+    Latin-square local trade/involution checks, Rota basis-exchange policy
+    fixtures, scoring protocol records, conjecture/proof-status fields, or
+    finite correcting-step trace artifacts.
+  - Required result: if README mentions Berczi local-correction
+    combinatorics, graph reconstruction, vertex-deleted subgraphs,
+    Alon-Tarsi parity, Latin-square local trades, sign-reversing involutions,
+    Rota's Basis Conjecture, local basis-exchange policies, finite
+    correcting-step certificates, AlphaEvolve-generated conjectures, or
+    explicit algorithms from `2603.06692`, keep the wording source-scoped
+    until local artifacts can show the paper in the manifest, certificate
+    schemas, case-study fixtures, scoring protocols, finite-step traces,
+    generated algorithms, checker outputs, conjecture/proof-status records,
+    and benchmark reports. Avoid implying LibreEvolve proves or implements
+    AlphaEvolve-style local-correction combinatorics without those artifacts.
+
 ## Architecture Description

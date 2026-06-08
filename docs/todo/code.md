@@ -5482,3 +5482,38 @@ Primary evidence:
     construction records, independent checker outputs, and README/ROADMAP
     wording that keeps Ramsey-number discovery as missing evidence until
     local implementation and reports exist.
+
+- [ ] Add AlphaEvolve local-correction combinatorics boundary.
+  - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global
+    Constructions in Combinatorics`, was submitted March 4, 2026. Its
+    abstract says many combinatorics problems can be reformulated as global
+    constructions reached by repeated small finite correcting steps, and uses
+    AlphaEvolve as an experimental engine to propose and iteratively refine
+    such certificates. The three case studies are reconstruction of bipartite
+    and planar graphs from vertex-deleted subgraphs, the Alon-Tarsi parity
+    problem for Latin squares via sign-reversing involutions from local
+    trades, and Rota's Basis Conjecture via local exchange policies on
+    collections of bases. The abstract frames the outputs as explicit
+    algorithms and structural patterns that may support later traditional
+    analysis, not as proofs.
+  - Current evidence: `papers/README.md` lists `2603.06692` only as
+    `Not implemented; potential future benchmark`. LibreEvolve has no
+    first-class code TODO for this source, no local-correction certificate
+    candidate schema, no graph-reconstruction evaluator, no Latin-square
+    trade/involution verifier, no matroid/basis-exchange evaluator for Rota's
+    Basis Conjecture, no scoring-protocol metadata for these case studies, no
+    outcome/conjecture ledger that separates explicit algorithms from proofs,
+    and no artifact policy for finite correcting-step traces.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2603.06692`: arXiv id/version/date/PDF hash, author, source license,
+    code/artifact availability, relation to AlphaEvolve and LibreEvolve
+    constructive-math fixtures, local-correction candidate schemas,
+    finite-step trace artifacts, graph reconstruction benchmark metadata,
+    vertex-deleted subgraph input/output schemas, Latin-square local-trade and
+    sign-reversing-involution records, Rota basis-family and local-exchange
+    policy records, scoring-protocol definitions, search budget and seed
+    records, explicit-algorithm outputs, structural-pattern summaries,
+    conjecture/proof-status fields, independent checker hooks, and README/
+    ROADMAP wording that keeps local-correction combinatorics as missing
+    evidence and avoids treating AlphaEvolve-generated conjectures as proved
+    results.

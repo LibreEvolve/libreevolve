@@ -4045,3 +4045,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     negative-result records, and a background-only or benchmark-fixture status
     rule so roadmap claims do not outpace local AlphaEvolve-style Ramsey
     discovery support.
+
+- [ ] Add AlphaEvolve local-correction combinatorics gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2603.06692`, submitted March 4, 2026, introduces
+    `Evolving Local Corrections for Global Constructions in Combinatorics`.
+    The abstract uses AlphaEvolve to propose and refine finite correcting-step
+    certificates for graph reconstruction, Latin-square Alon-Tarsi parity via
+    local trades and sign-reversing involutions, and Rota's Basis Conjecture
+    through local exchange policies. It reports experimental setups, scoring
+    protocols, and outcomes that suggest conjectures, not completed proofs.
+  - Current evidence: ROADMAP tracks broad constructive-math and benchmark
+    fixture gaps plus selected source-specific result papers. It does not
+    promote `2603.06692` beyond potential-future-benchmark status, define a
+    local-correction certificate abstraction, require finite correcting-step
+    traces, provide graph reconstruction, Latin-square trade, or Rota
+    basis-exchange fixtures, preserve scoring protocols, or distinguish
+    AlphaEvolve-suggested conjectures from verified/proved mathematical
+    results.
+  - Required result: add roadmap gates for `2603.06692`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    local-correction candidate schema, finite-step trace artifacts,
+    graph-reconstruction benchmark records, vertex-deleted subgraph schemas,
+    Latin-square local-trade and sign-reversing-involution records, Rota
+    basis-family and local-exchange-policy records, scoring protocols,
+    seed/budget records, generated-algorithm artifacts, structural-pattern
+    summaries, conjecture/proof-status fields, independent checker hooks, and
+    a background-only or benchmark-fixture status rule so roadmap claims do
+    not outpace local AlphaEvolve-style local-correction combinatorics
+    support.

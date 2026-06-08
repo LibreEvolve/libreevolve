@@ -155,6 +155,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     current manifest-visible boundary policy nor overclaims AlphaEvolve-grade
     arbitrary-language/codebase support.
 
+- [ ] Keep README evolve-block integration wording scoped until
+      minimal-marker evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.1 says evolve-block markers enable
+    integrating with existing codebases using only minimal changes by adding
+    special comments around evolvable blocks.
+  - Current evidence: README can document Python evolve-block marker syntax,
+    marker validation, fail-closed unsupported non-Python markers, workspace
+    materialization, and full-workspace export. It does not yet document
+    paper-facing evidence that an existing codebase was integrated with a
+    marker-only or minimal setup diff while preserving non-evolved skeleton
+    code and evaluator invocation.
+  - Required result: when minimal-marker integration records land, update
+    README, ROADMAP, papers index, and code/paper TODO entries together so
+    README distinguishes local marker parsing and workspace mechanics from
+    AlphaEvolve-style existing-codebase integration evidence.
+
 - [ ] Keep README candidate-abstraction wording scoped to current divergence
       until abstraction-choice evidence exists.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say users can choose

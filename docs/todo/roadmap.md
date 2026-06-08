@@ -199,6 +199,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
+- [ ] Keep evolve-block integration roadmap wording scoped until
+      minimal-marker evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the
+    system evolve multiple components in existing codebases while requiring
+    only minimal changes.
+  - Current evidence: ROADMAP, README, and papers-index wording can cite
+    Python evolve-block markers, marker validation, unsupported non-Python
+    marker diagnostics, workspace materialization, and file topology support.
+    They do not yet require evidence for a pre-existing codebase integration
+    workflow: marker-only setup diff, preserved skeleton hashes, language
+    comment syntax, evolved-block span inventory, evaluator-call continuity,
+    or setup-change counts.
+  - Required result: when existing-codebase integration metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap wording separates marker parser support from
+    AlphaEvolve-style minimal-change integration evidence.
+
 - [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
       abstraction-choice reports exist.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate

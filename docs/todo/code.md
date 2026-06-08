@@ -41,6 +41,26 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
+- [ ] Add existing-codebase minimal-marker integration provenance.
+  - Spec evidence: AlphaEvolve Section 2.1 says its input API supports evolving
+    multiple components across existing codebases with minimal changes, by
+    adding special comment markers around blocks to be evolved.
+  - Current evidence: LibreEvolve validates Python `# EVOLVE-BLOCK-START/END`
+    markers, rejects malformed or unsupported non-Python marker-like syntax,
+    materializes bounded workspaces, and records candidate-language policy
+    boundaries. Those mechanics prove marker parsing for local seed files, but
+    they do not prove an AlphaEvolve-style integration workflow for a
+    pre-existing codebase: baseline codebase identity, marker-only setup diff,
+    untouched skeleton preservation, language/comment syntax, component span
+    inventory, evaluator entrypoint continuity, or measured setup burden.
+  - Required result: add integration metadata and validators for existing
+    codebases: original codebase/artifact id, pre-marker source hashes,
+    marker-added diff summary, evolved-block span ids, unchanged skeleton
+    hashes, language/comment grammar, evaluator-call path before/after marker
+    insertion, setup-change counts, and README/ROADMAP wording that separates
+    local evolve-block parsing from paper-faithful minimal-change codebase
+    integration evidence.
+
 - [ ] Add candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 present a

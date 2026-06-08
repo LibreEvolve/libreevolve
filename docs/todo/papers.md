@@ -283,6 +283,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
 
+- [ ] Track existing-codebase minimal-marker integration evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 says the input
+    API facilitates integration with existing codebases while requiring only
+    minimal changes, simply by adding special markers as comments into the
+    code.
+  - Current gap: paper/status records can show Python evolve-block marker
+    parsing, unsupported non-Python marker diagnostics, workspace
+    materialization, and candidate-language boundaries. They do not preserve
+    evidence that a real pre-existing codebase was integrated with a
+    marker-only or minimal setup diff, that non-evolved skeleton code remained
+    unchanged, or that evaluator invocation still worked through the existing
+    codebase structure.
+  - Required result: add paper-facing integration records with original
+    codebase id, pre-marker source hashes, marker-added diff summary,
+    evolved-block span ids, skeleton-preservation hashes, language/comment
+    syntax, evaluator invocation path, setup-change counts, and wording that
+    distinguishes evolve-block parser support from AlphaEvolve-style
+    minimal-change integration evidence.
+
 - [ ] Track candidate-abstraction choice and bias evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.
   - Requirement: AlphaEvolve treats the candidate representation as a

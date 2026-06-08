@@ -2850,20 +2850,23 @@ Primary evidence:
     rejects background-only/future-benchmark status classes that include
     positive implementation-support wording. Limited `Only` status classes
     must now include an explicit missing/unsupported behavior boundary.
+    `Static prompt guidance exists` status classes must now also state that the
+    guided operation is not executed or enforced.
     Remaining gap: the validator does not yet link each long status/coverage
     phrase to the specific active TODO or completed-evidence record that
     justifies it, or prove broader smoke-versus-paper-claim qualifiers beyond
     the role/status class matrix, required path presence, the
     `AlphaEvolve-comparable` overclaim guard, the negative-status contradiction
-    guard, and the limited-status boundary guard.
+    guard, the limited-status boundary guard, and the static-guidance
+    execution-boundary guard.
   - Required result: extend the reusable paper-status-table validator with
     phrase-level evidence-link checks from semantic status/coverage phrases to
     active TODO or completed-evidence records, including broader qualifier
     checks for smoke examples presented as benchmark evidence and unsupported
-    implementation claims hidden inside otherwise negative or limited-support
-    statuses. Keep this separate from the already documented TODO-coverage
-    cross-reference validation, which tracks the later backlog-reference table
-    rather than the semantic status cells.
+    implementation claims hidden inside otherwise negative, limited-support, or
+    static-guidance statuses. Keep this separate from the already documented
+    TODO-coverage cross-reference validation, which tracks the later
+    backlog-reference table rather than the semantic status cells.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

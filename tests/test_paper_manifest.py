@@ -1195,6 +1195,44 @@ def test_validate_paper_manifest_allows_limited_status_with_missing_boundary(tmp
     assert report.ok is True
 
 
+def test_validate_paper_manifest_reports_static_guidance_without_execution_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Modular search inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Static prompt guidance exists for generate/improve/perturb operations.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_static_guidance_missing_execution_boundary" in codes
+
+
+def test_validate_paper_manifest_allows_static_guidance_execution_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Modular search inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Static prompt guidance exists for generate/improve/perturb operations with false execution/enforcement flags.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

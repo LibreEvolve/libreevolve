@@ -166,6 +166,13 @@ STATUS_TABLE_LIMITATION_BOUNDARY_RE = re.compile(
     r"\b(?:no|not|without|but|while|lacks?|missing|remain(?:s)? open|out of scope)\b",
     flags=re.IGNORECASE,
 )
+STATUS_TABLE_STATIC_GUIDANCE_PREFIXES = ("Static prompt guidance exists ",)
+STATUS_TABLE_STATIC_GUIDANCE_EXECUTION_BOUNDARY_RE = re.compile(
+    r"\bfalse\s+execution/enforcement\b"
+    r"|\b(?:no|not|without)\b[^.]{0,160}"
+    r"\b(?:executed|execution|enforced|enforcement)\b",
+    flags=re.IGNORECASE,
+)
 STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
     r"\b(?:implemented\s+(?:as|local|smoke|support)|implementation\s+exists|"
     r"support\s+exists|is\s+implemented|are\s+implemented|now\s+supports|supports)\b",
@@ -1436,6 +1443,19 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
                 PaperManifestIssue(
                     "status_table_limited_status_missing_boundary",
                     "limited-support status classes must include an explicit missing or unsupported behavior boundary",
+                    row_id,
+                )
+            )
+        break
+    for prefix in STATUS_TABLE_STATIC_GUIDANCE_PREFIXES:
+        if not status.startswith(prefix):
+            continue
+        suffix = status[len(prefix) :]
+        if not STATUS_TABLE_STATIC_GUIDANCE_EXECUTION_BOUNDARY_RE.search(suffix):
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_static_guidance_missing_execution_boundary",
+                    "static-guidance status classes must state that the guided operation is not executed or enforced",
                     row_id,
                 )
             )

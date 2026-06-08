@@ -3619,21 +3619,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     requirement-bound evidence, and it rejects background-only/future-benchmark
     status classes that include positive implementation-support wording.
     Limited `Only` status classes must now include an explicit
-    missing/unsupported behavior boundary. Remaining paper-facing gap: the
-    validator does not yet link each long semantic status claim to the specific
-    TODO or completed implementation record that justifies it, nor detect
-    broader smoke-scoped examples being phrased as benchmark evidence beyond
-    the role/status class matrix, required path presence, the
-    `AlphaEvolve-comparable` overclaim guard, the negative-status contradiction
-    guard, and the limited-status boundary guard.
+    missing/unsupported behavior boundary. `Static prompt guidance exists`
+    status classes must now also state that the guided operation is not
+    executed or enforced. Remaining paper-facing gap: the validator does not
+    yet link each long semantic status claim to the specific TODO or completed
+    implementation record that justifies it, nor detect broader smoke-scoped
+    examples being phrased as benchmark evidence beyond the role/status class
+    matrix, required path presence, the `AlphaEvolve-comparable` overclaim
+    guard, the negative-status contradiction guard, the limited-status boundary
+    guard, and the static-guidance execution-boundary guard.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
     current role/status class matrix and `AlphaEvolve-comparable` boundary
-    guard plus negative-status contradiction and limited-status boundary
-    checks. Keep this validator distinct from the already documented TODO
-    coverage cross-reference checker, which verifies backlog pointers after
-    the implementation-status table.
+    guard plus negative-status contradiction, limited-status boundary, and
+    static-guidance execution-boundary checks. Keep this validator distinct
+    from the already documented TODO coverage cross-reference checker, which
+    verifies backlog pointers after the implementation-status table.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of

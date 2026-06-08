@@ -4554,3 +4554,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provenance, MAP-Elites/island compatibility reports, AlphaEvolve
     benchmark reproduction rows, and README/papers/code wording that keeps
     GigaEvo as framework inspiration until local evidence proves otherwise.
+
+- [ ] Add CodeEvolve operator and benchmark gates before roadmap promotion.
+  - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
+    evolutionary framework for algorithmic discovery and optimization`,
+    describes islands-based genetic search, weighted LLM ensembles,
+    inspiration-based crossover, meta-prompting, depth-based targeted
+    refinement, exploration scheduling, sandboxed evaluation, MAP-Elites/CVT
+    archives, and AlphaEvolve/EoH benchmark plus quality-cost comparisons.
+  - Current evidence: ROADMAP says CodeEvolve features should remain labeled
+    as inspired unless the paper behavior is actually implemented, and
+    `papers/README.md` marks crossover, targeted refinement, modular
+    orchestration, and context-aware recombination as absent. The roadmap does
+    not yet define `2510.14150`-specific gates for source metadata, linked code
+    status, prompt/solution dual fitness, semantic crossover, meta-prompting,
+    depth-refinement context, exploration-scheduler traces, sandbox parity,
+    MAP-Elites/CVT archive behavior, benchmark rows, ablations, or
+    quality-cost comparison evidence.
+  - Required result: add roadmap gates for `2510.14150`: paper/source manifest
+    entry, PDF/cache hash, source-license and code-artifact status,
+    islands/population metadata, prompt/solution fitness records, weighted
+    ensemble and model-cost telemetry, inspiration-crossover and
+    meta-prompting artifacts, targeted-refinement ancestor context,
+    exploration-scheduler traces, sandbox runtime/memory evidence,
+    MAP-Elites/CVT archive compatibility, AlphaEvolve/EoH benchmark and
+    ablation/cost rows, and README/papers/code wording that keeps CodeEvolve
+    as agentic code-evolution inspiration until local evidence proves
+    operator and benchmark parity.

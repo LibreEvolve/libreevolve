@@ -4120,4 +4120,32 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     lineage artifacts, benchmark reproduction rows, and a clear distinction
     between LibreEvolve's current local runner and GigaEvo framework parity.
 
+- [ ] Keep README CodeEvolve wording scoped until operator and benchmark
+      evidence exists.
+  - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
+    evolutionary framework for algorithmic discovery and optimization`,
+    describes islands-based evolution with weighted LLM ensembles,
+    inspiration-based crossover, meta-prompting exploration, depth-based
+    targeted refinement, exploration scheduling, sandboxed evaluation,
+    MAP-Elites/CVT-MAP-Elites archives, and AlphaEvolve/EoH benchmark plus
+    quality-cost comparisons.
+  - Current evidence: README and `papers/README.md` mark CodeEvolve as
+    agentic code-evolution inspiration only and say crossover, targeted
+    refinement, modular orchestration, and context-aware recombination are not
+    implemented. Existing README TODOs group CodeEvolve with other
+    paper-inspired approximations, but README does not require a
+    source-specific boundary for `2510.14150`, prompt/solution fitness,
+    semantic crossover, meta-prompting exploration, depth-refinement ancestor
+    context, scheduler behavior, sandbox parity, benchmark rows, ablations, or
+    cost-comparison claims.
+  - Required result: if README mentions CodeEvolve, inspiration crossover,
+    meta-prompting, targeted refinement, modular orchestration,
+    context-aware recombination, open-weight cost comparisons, or CodeEvolve
+    benchmark results, keep wording source-scoped until manifests and reports
+    include the `2510.14150` source row, PDF/code hashes, operator artifacts,
+    scheduler traces, prompt/solution fitness metadata, sandbox/runtime-memory
+    evidence, AlphaEvolve/EoH benchmark rows, ablation/cost reports, and a
+    clear distinction between LibreEvolve's current prompt-program features
+    and CodeEvolve framework parity.
+
 ## Architecture Description

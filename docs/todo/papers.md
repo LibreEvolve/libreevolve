@@ -5646,3 +5646,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     and LibreEvolve, and README/ROADMAP/code wording that keeps GigaEvo
     framework behavior marked missing unless local implementation artifacts
     and reports prove it.
+
+- [ ] Track CodeEvolve paper evidence as a source-specific boundary.
+  - Paper/source evidence: local arXiv `2510.14150`, `CODE EVOLVE: an
+    open-source evolutionary framework for algorithmic discovery and
+    optimization`, presents an islands-based genetic algorithm with weighted
+    LLM ensembles, SEARCH/REPLACE edits, inspiration-based crossover,
+    meta-prompting, depth-based targeted refinement, exploration scheduling,
+    sandboxed evaluation, MAP-Elites/CVT-MAP-Elites archives, and
+    AlphaEvolve/EoH benchmark and cost-efficiency comparisons.
+  - Current gap: `papers/README.md` lists `2510.14150` as agentic
+    code-evolution inspiration and says CodeEvolve-style crossover, targeted
+    refinement, modular orchestration, and context-aware recombination are not
+    implemented. Existing paper TODOs group CodeEvolve with other inspiration
+    rows and mention mutation/crossover operator gaps generally, but do not
+    preserve the CodeEvolve PDF itself as a source-specific evidence boundary
+    with architecture rows, prompt/solution fitness definitions,
+    operator-level claims, scheduler semantics, sandbox requirements,
+    benchmark-result rows, ablation/cost claims, linked-code status, or
+    validation that docs avoid conflating LibreEvolve's prompt-program support
+    with CodeEvolve framework parity.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2510.14150`: title/authors/arXiv version/date/PDF digest, source license,
+    linked code URL/status, island/population and prompt/solution fitness
+    schemas, weighted ensemble and model-cost metadata, inspiration-crossover,
+    meta-prompting, depth-refinement, and exploration-scheduler records,
+    sandbox/runtime/memory-limit evidence, MAP-Elites/CVT archive metadata,
+    AlphaEvolve/EoH benchmark and ablation/cost rows, relation to LibreEvolve,
+    and README/ROADMAP/code wording that keeps CodeEvolve-specific behavior
+    marked missing unless implementation artifacts and reports prove it.

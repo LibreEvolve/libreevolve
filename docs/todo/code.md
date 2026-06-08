@@ -6097,3 +6097,34 @@ Primary evidence:
     reports, AlphaEvolve benchmark reproduction records, and docs wording that
     keeps current LibreEvolve behavior labeled as inspiration-only until those
     artifacts exist.
+
+- [ ] Add CodeEvolve source boundary before crossover/refinement claims.
+  - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
+    evolutionary framework for algorithmic discovery and optimization`,
+    describes an islands-based genetic algorithm with a weighted LLM ensemble,
+    SEARCH/REPLACE edits, inspiration-based semantic crossover,
+    meta-prompting exploration, depth-based targeted refinement,
+    exploration-rate scheduling, sandboxed evaluation with runtime and memory
+    limits, prompt/solution fitness, MAP-Elites/CVT-MAP-Elites archives, and
+    AlphaEvolve/EoH benchmark plus quality-cost comparisons.
+  - Current evidence: `papers/README.md` marks CodeEvolve as agentic
+    code-evolution inspiration and says LibreEvolve lacks CodeEvolve-style
+    crossover, targeted refinement, modular orchestration, and context-aware
+    recombination. Broad inspiration TODOs and AlphaEvolve mutation-operator
+    TODOs mention CodeEvolve or crossover generally, but there is no
+    source-specific code TODO for `2510.14150`, no prompt/solution dual fitness
+    implementation boundary, no semantic inspiration-crossover operator, no
+    meta-prompting exploration operator, no depth-refinement ancestor context
+    records, no exploration scheduler evidence, no sandbox/runtime-memory
+    parity report, and no benchmark/cost comparison artifact tied to the local
+    CodeEvolve PDF.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2510.14150`: arXiv version/date/PDF hash, linked code/release status,
+    source-license metadata, islands/population schema, prompt and solution
+    fitness records, weighted ensemble config and model-cost telemetry,
+    inspiration-crossover provenance, meta-prompting exploration artifacts,
+    depth-refinement ancestor context records, exploration-scheduler traces,
+    sandbox runtime/memory limit evidence, MAP-Elites/CVT descriptor/archive
+    compatibility, AlphaEvolve and EoH benchmark rows, ablation/cost reports,
+    and README/ROADMAP wording that keeps CodeEvolve behavior inspiration-only
+    until local artifacts prove otherwise.

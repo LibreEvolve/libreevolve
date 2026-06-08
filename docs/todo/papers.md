@@ -607,9 +607,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     deletion without replacement.
   - Current gap: future topology surfaces such as bulk directory operations or
     language/build-runner generated artifacts must preserve stable diagnostics,
-    and future materialization filesystem paths must preserve the stable
-    reason/path diagnostic contract before LibreEvolve can claim robust
-    codebase-scale invalid-artifact feedback.
+    copied static assets still need portable source-root or release-artifact
+    identity beyond local `source_copy_path` labels, and future materialization
+    filesystem paths must preserve the stable reason/path diagnostic contract
+    before LibreEvolve can claim robust codebase-scale invalid-artifact
+    feedback.
 
 - [ ] Track Table 1 code-scale benchmark evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.

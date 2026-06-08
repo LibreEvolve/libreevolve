@@ -173,10 +173,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     direct-workspace byte normalization from the still-open richer binary
     mutation/replay policy. The code path normalizes raw direct workspace bytes
     into immutable static members and verifies `source_copy_path` materialization
-    by link policy, byte count, and SHA-256.
+    by link policy, byte count, and SHA-256. That verification is still tied to
+    the configured local copy path; it does not yet define a portable
+    source-root, release-artifact, or cross-machine replay identity for copied
+    static assets.
   - Required result: when arbitrary binary mutation, non-encoded generated
-    binary deltas, binary replay, or broader artifact runners land, update the
-    roadmap, README, papers index, and code/paper TODO entries together.
+    binary deltas, binary replay, portable static-source roots, or broader
+    artifact runners land, update the roadmap, README, papers index, and
+    code/paper TODO entries together.
 
 - [ ] Keep candidate-language roadmap scope aligned with the Python-primary
       policy boundary.

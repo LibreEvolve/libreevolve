@@ -349,10 +349,14 @@ Primary evidence:
     prevalidated for duplicate topology sections, duplicate move targets,
     chained/conflicting operations, host/case-folded file or move-target
     collisions, non-empty command bodies, and primary deletion without
-    replacement.
+    replacement. Static `source_copy_path` members are checked at
+    materialization time for links, byte count, and SHA-256, but their source
+    identity is still a local path label rather than a portable manifest-rooted
+    artifact reference.
   - Required result: extend topology diagnostics for future topology surfaces
     such as bulk directory operations or language/build-runner generated
-    artifacts, and preserve the stable `CandidateMaterializationError`
+    artifacts; add a portable source-root/release-artifact policy for copied
+    static members; and preserve the stable `CandidateMaterializationError`
     reason/path contract whenever new materialization filesystem paths are
     added.
 

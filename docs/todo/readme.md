@@ -183,10 +183,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     materialization, and full-workspace export. It does not yet document
     paper-facing evidence that an existing codebase was integrated with a
     marker-only or minimal setup diff while preserving non-evolved skeleton
-    code and evaluator invocation.
+    code and evaluator invocation. Static copy-only assets are verified by
+    local `source_copy_path` hash/byte-count checks, but README wording should
+    not treat that as portable codebase/release-artifact integration until
+    source roots or artifact identities can replay across machines.
   - Required result: when minimal-marker integration records land, update
-    README, ROADMAP, papers index, and code/paper TODO entries together so
-    README distinguishes local marker parsing and workspace mechanics from
+    README, ROADMAP, papers index, and code/paper TODO entries together; when
+    portable static-source identities land, keep the same cross-document update
+    discipline so README distinguishes local marker/workspace mechanics from
     AlphaEvolve-style existing-codebase integration evidence.
 
 - [ ] Keep README marker syntax wording scoped until Figure 3 marker-variant

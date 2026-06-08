@@ -565,19 +565,22 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Author information says a
     named group contributed equally, the Contributions section identifies the
     people who wrote the paper and contributors who supplied input, and the
-    Author information section lists corresponding authors.
+    Author information section lists corresponding authors. Page 1 defines the
+    equal-contribution marker, page 22 begins Author information and
+    Contributions, and page 23 lists corresponding authors.
   - Current gap: paper/status TODOs track system-development contribution
     roles, figure/Colab creator roles, and acknowledgement review/support
     roles. They do not preserve publication-author metadata for equal
     contribution, manuscript writing, paper input, or correspondence. A paper
     provenance report could therefore conflate author metadata with technical
-    implementation, artifact creation, review, or domain-validation roles.
+    implementation, artifact creation, title-page affiliation, package/project
+    metadata, review, or domain-validation roles.
   - Required result: add paper-facing author-metadata records with safe
-    contributor labels, role category, source page/section, publication or
-    artifact scope, contact/privacy redaction policy, and README/ROADMAP
-    wording that distinguishes publication-author metadata from technical
-    system provenance, figure/notebook artifact authorship, and
-    acknowledgement roles.
+    contributor labels, role category, source page/section, title-page marker
+    linkage, publication or artifact scope, contact/privacy redaction policy,
+    and README/ROADMAP wording that distinguishes publication-author metadata
+    from technical system provenance, figure/notebook artifact authorship,
+    title-page affiliation, package metadata, and acknowledgement roles.
 
 - [ ] Track AlphaEvolve title-page affiliation and footnote evidence.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` lists the authors,

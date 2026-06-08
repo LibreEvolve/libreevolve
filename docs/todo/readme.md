@@ -374,16 +374,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       metadata exists.
   - Spec evidence: AlphaEvolve's Author information and Contributions sections
     separately record equal contributors, manuscript writers, paper-input
-    contributors, and corresponding authors.
+    contributors, and corresponding authors. The local PDF text places the
+    equal-contribution marker on page 1, Author information and Contributions
+    on page 22, and corresponding authors on page 23.
   - Current evidence: README can describe local project status, source papers,
     paper-artifact roles, acknowledgement-role gaps, and contribution-role
-    gaps. It does not document publication-author metadata or distinguish that
-    metadata from technical implementation authorship, artifact creation,
-    domain validation, or acknowledgement review/support roles.
+    gaps, plus package/project metadata provenance. It does not document
+    publication-author metadata or distinguish that metadata from technical
+    implementation authorship, artifact creation, title-page affiliation,
+    domain validation, package metadata, or acknowledgement review/support
+    roles.
   - Required result: when paper-author metadata lands, update README, ROADMAP,
     papers index, and code/paper TODOs together so README separates equal
     contributor, manuscript-writing, paper-input, and corresponding-author
-    records from AlphaEvolve technical capability or validation evidence.
+    records from AlphaEvolve technical capability, affiliation, package, or
+    validation evidence.
 
 - [ ] Keep README source-affiliation wording scoped until title-page
       affiliation metadata exists.

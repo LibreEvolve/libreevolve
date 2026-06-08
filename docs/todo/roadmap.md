@@ -442,19 +442,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       metadata exists.
   - Spec evidence: AlphaEvolve's Author information names equal contributors
     and corresponding authors, while the Contributions section identifies
-    manuscript writers and paper-input contributors.
+    manuscript writers and paper-input contributors. Page 1 defines the
+    equal-contribution marker, page 22 begins Author information and
+    Contributions, and page 23 lists corresponding authors.
   - Current evidence: ROADMAP and README/code evidence track contribution-role
     gaps, paper-artifact creator roles, acknowledgement-role gaps, and
     application owner/reviewer gaps. They do not require publication-author
     metadata for equal-contributor status, manuscript-writing roles,
     paper-input roles, or correspondence, nor docs wording that separates those
-    metadata from technical implementation, artifact creation, validation, or
-    acknowledgement evidence.
+    metadata from technical implementation, artifact creation, validation,
+    title-page affiliation, package/project metadata, or acknowledgement
+    evidence.
   - Required result: when paper-author metadata lands, update ROADMAP, README,
     papers index, and code/paper TODOs with safe contributor labels, author
-    role categories, source page/section, publication scope, and contact/
-    privacy redaction policy so roadmap wording does not conflate publication
-    metadata with AlphaEvolve technical capability provenance.
+    role categories, source page/section, title-page marker linkage,
+    publication scope, and contact/privacy redaction policy so roadmap wording
+    does not conflate publication metadata with AlphaEvolve technical
+    capability provenance.
 
 - [ ] Keep source-affiliation roadmap wording scoped until title-page
       affiliation metadata exists.

@@ -391,22 +391,27 @@ Primary evidence:
   - Spec evidence: AlphaEvolve's Author information section names equal
     contributors, identifies manuscript-writing contributors and paper-input
     contributors in the Contributions section, and lists corresponding
-    authors. These author metadata claims are distinct from technical system
-    contributions, figure/Colab artifact authorship, and acknowledgement
-    review/support roles.
+    authors. The title page also defines the equal-contribution marker, while
+    the Contributions text separates paper writing/input from implementation
+    and application work. These author metadata claims are distinct from
+    technical system contributions, figure/Colab artifact authorship,
+    title-page affiliation, and acknowledgement review/support roles.
   - Current evidence: LibreEvolve TODOs track core system-development roles,
     paper-artifact creator/assembler roles, and acknowledgement-role
-    provenance, but no schema preserves paper author metadata such as equal
+    provenance. Runtime/package provenance records selected PEP 621 project
+    metadata, installed package names/versions, WHEEL/source metadata, and
+    source hashes, but no schema preserves paper author metadata such as equal
     contributor groups, manuscript-writing roles, paper-input roles, or
     corresponding-author records. Local docs could therefore cite the paper
-    source without distinguishing artifact authorship, system authorship, and
-    publication-author/contact metadata.
+    source without distinguishing artifact authorship, system authorship,
+    package/project metadata, and publication-author/contact metadata.
   - Required result: add paper-author metadata records with safe contributor
     labels, role category (`equal_contributor`, `manuscript_writer`,
-    `paper_input`, `corresponding_author`), source page/section, applicable
-    artifact or publication scope, privacy/contact redaction policy, and
-    README/ROADMAP wording that separates publication metadata from technical
-    implementation, validation, artifact-creation, and acknowledgement roles.
+    `paper_input`, `corresponding_author`), source page/section, title-page
+    marker linkage when applicable, applicable artifact or publication scope,
+    privacy/contact redaction policy, and README/ROADMAP wording that separates
+    publication metadata from technical implementation, validation,
+    artifact-creation, affiliation, and acknowledgement roles.
 
 - [ ] Add AlphaEvolve title-page affiliation and footnote provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author

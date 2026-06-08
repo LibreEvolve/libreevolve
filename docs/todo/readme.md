@@ -1451,6 +1451,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     coverage, avoid implying notebooks exist for every problem, and cite any
     status/area overview figures only with tracked asset hashes.
 
+- [ ] Keep README follow-on problem-repository rights and attribution scoped.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README asks users of the code or data to cite `Mathematical exploration and
+    discovery at scale`, declares Google LLC copyright, Apache 2.0 licensing
+    for software, CC-BY 4.0 licensing for other materials, an as-is disclaimer,
+    and a non-official-Google-product disclaimer. It also credits Professors
+    Javier Gomez-Serrano and Terence Tao with supervision, problem selection,
+    review, analysis, and commentary, and identifies Problem 65 as originating
+    from the official IMO problems website.
+  - Current evidence: README TODOs distinguish LibreEvolve's MIT license,
+    AlphaEvolve PDF rights, the `alphaevolve_results` companion repository,
+    and the follow-on coverage snapshot. They do not require README wording for
+    the problem repository's own citation instruction, dual license,
+    artifact-type license mapping, contributor-role attribution, IMO-origin
+    note, or non-endorsement boundary.
+  - Required result: after follow-on source-use metadata exists, update README
+    so source and licensing sections separately name the pinned problem
+    repository snapshot, citation instruction, software/materials license
+    split, repository disclaimers, contributor role notes, Problem 65
+    third-party origin, and the boundary between copied source artifacts,
+    generated LibreEvolve artifacts, and local project licensing.
+
 - [ ] Keep README theoretical-CS AlphaEvolve wording scoped until
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

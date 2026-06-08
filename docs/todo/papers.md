@@ -3128,6 +3128,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     flags, overview-image paths/hashes, and citation wording that avoids
     implying notebook coverage is complete when only problem-page coverage is.
 
+- [ ] Track follow-on problem-repository rights, citation, and attribution.
+  - Paper/source evidence: the
+    `google-deepmind/alphaevolve_repository_of_problems` README says users of
+    the code or data should cite `Mathematical exploration and discovery at
+    scale`. Its license/disclaimer section declares `Copyright 2025 Google
+    LLC`, Apache 2.0 for software, CC-BY 4.0 for other materials, an as-is
+    warranty disclaimer, and that the repository is not an official Google
+    product. The same section credits Professors Javier Gomez-Serrano and
+    Terence Tao with supervision, problem selection, review, analysis, and
+    commentary, and says Problem 65 originates from the official IMO problems
+    website.
+  - Current gap: active paper TODOs require the follow-on paper/repository and
+    coverage-state manifests, but they do not preserve the problem
+    repository's specific source-use terms, citation instruction, contributor
+    role note, or third-party source-origin note. The existing companion-rights
+    TODO is specific to `alphaevolve_results`, not this later repository.
+  - Required result: add paper/source metadata for the problem repository's
+    citation and source-use boundary: repository URL/ref/commit/date,
+    citation/BibTeX fields, rights holder/year, software license, materials
+    license, license URLs, artifact-type license mapping, as-is disclaimer,
+    non-official-product disclaimer, role-attribution note, Problem 65 IMO
+    source URL, and README/ROADMAP/papers wording that distinguishes these
+    terms from the original AlphaEvolve PDF and result companion repository.
+
 - [ ] Track AlphaEvolve theoretical-CS proof-element source evidence.
   - Paper evidence: Google Research's September 30, 2025 article
     `AI as a research partner: Advancing theoretical computer science with

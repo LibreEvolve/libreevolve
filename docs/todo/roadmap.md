@@ -2185,6 +2185,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     problem, includes overview-image hashes when cited, and avoids treating a
     live partial-notebook repository as fully static or notebook-complete.
 
+- [ ] Keep follow-on problem-repository rights and attribution gates scoped.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README asks users of the code or data to cite `Mathematical exploration and
+    discovery at scale`, declares Google LLC copyright, Apache 2.0 licensing
+    for software, CC-BY 4.0 licensing for other materials, an as-is warranty
+    disclaimer, and a non-official-Google-product disclaimer. It credits
+    Professors Javier Gomez-Serrano and Terence Tao with supervision, problem
+    selection, review, analysis, and commentary, and says Problem 65 originates
+    from the official IMO problems website.
+  - Current evidence: roadmap TODOs already gate follow-on paper/repository
+    source tracking and coverage snapshots, and separate the original
+    companion-result repository rights. They do not require roadmap milestones
+    to preserve this problem repository's citation instruction, dual license,
+    artifact-type license mapping, contributor-role attribution, IMO-origin
+    note, or non-endorsement boundary before using its webpages, notebooks,
+    verifier code, data, or figures as evidence.
+  - Required result: when follow-on source-use metadata lands, update ROADMAP
+    evidence gates so problem-repository use requires repository
+    URL/ref/commit/date, citation metadata, software/materials license split,
+    disclaimer and non-official-product notes, role-attribution notes, Problem
+    65 source-origin metadata, and README/papers cross-links that distinguish
+    these terms from the original AlphaEvolve PDF, `alphaevolve_results`, and
+    LibreEvolve's own license.
+
 - [ ] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

@@ -3310,6 +3310,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that separates compiler-stack provenance from
     per-edit reference-check evidence and final runtime-speedup claims.
 
+- [ ] Record compiler-adoption path evidence for discovered optimizations.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says future
+    compiler use could involve incorporating discovered optimizations into
+    existing compilers for specific use cases, or, longer term, incorporating
+    AlphaEvolve into the compiler workflow itself.
+  - Current gap: paper-facing compiler TODOs require per-edit reference checks,
+    IR provenance, expert signoff, FlashAttention stack context, and speedup
+    attribution. They do not require a report to distinguish the paper's two
+    adoption paths: a discovered optimization transferred into a conventional
+    compiler/pass for a bounded use case versus AlphaEvolve becoming part of
+    the compiler workflow. There is no field for target compiler/pass, use-case
+    boundary, integration owner, reviewer signoff, rollout/revert state, or
+    workflow-handoff semantics.
+  - Required result: add paper/report evidence for compiler adoption paths:
+    adoption-path enum, target compiler/pass and version, optimization artifact
+    hashes, workload/use-case constraints, integration-review records,
+    deployment or rollback status, and README/ROADMAP wording that separates
+    concrete compiler optimization adoption from longer-term AlphaEvolve
+    workflow integration.
+
 - [ ] Keep named AlphaEvolve application-context rows background-only until
   benchmark fixtures exist.
   - Paper evidence: the local paper index includes AlphaEvolve application

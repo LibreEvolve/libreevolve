@@ -1018,6 +1018,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     generic compiler readiness from the specific Pallas/JAX/XLA/FlashAttention
     context behind AlphaEvolve's compiler-generated IR result.
 
+- [ ] Keep README compiler-adoption wording scoped until compiler integration
+      path evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.4 separates two compiler adoption
+    possibilities after the FlashAttention result: incorporating discovered
+    optimizations into existing compilers for specific use cases, or, longer
+    term, incorporating AlphaEvolve into the compiler workflow itself.
+  - Current evidence: README documents generic systems reports plus compiler-IR
+    reference-check, stack-context, and speedup gaps. It does not describe the
+    evidence needed before claiming a discovered optimization was incorporated
+    into an existing compiler, nor the stronger evidence needed before claiming
+    AlphaEvolve-style compiler-workflow integration: target compiler/pass,
+    bounded use case, optimization artifact, integration reviewer, rollout or
+    revert state, and workflow handoff.
+  - Required result: once compiler report metadata captures adoption path,
+    target compiler/pass identity, use-case constraints, integration and
+    rollout status, update README, ROADMAP, papers index, and matching TODOs so
+    README separates concrete compiler adoption from longer-term AlphaEvolve
+    workflow integration.
+
 - [ ] Keep README self-improvement wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

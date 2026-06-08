@@ -1757,6 +1757,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Pallas/JAX/XLA/FlashAttention stack context used for AlphaEvolve's
     compiler-generated IR result.
 
+- [ ] Keep compiler-adoption roadmap wording scoped until integration-path
+      evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.4 says discovered compiler
+    optimizations may be incorporated into existing compilers for specific use
+    cases, while the longer-term possibility is incorporating AlphaEvolve into
+    the compiler workflow itself.
+  - Current evidence: roadmap systems-result wording covers generic compiler
+    readiness, reference-correctness, expert signoff, runtime speedups, and
+    FlashAttention stack context. It does not require compiler fixtures or
+    report validators to classify whether an optimization was adopted as a
+    bounded existing-compiler change or as part of an AlphaEvolve-in-the-loop
+    compiler workflow, nor does it require target compiler/pass identity,
+    integration owner, use-case constraints, rollout/revert state, or workflow
+    handoff evidence.
+  - Required result: when compiler report metadata and validators add
+    integration-path evidence, update ROADMAP, README, papers index, and
+    code/paper TODOs so roadmap text distinguishes concrete optimization
+    adoption in existing compilers from future AlphaEvolve compiler-workflow
+    integration.
+
 - [ ] Keep representative-fixture roadmap wording scoped to registries and
       smoke examples versus real target suites.
   - Spec evidence: AlphaEvolve-style benchmark coverage should include

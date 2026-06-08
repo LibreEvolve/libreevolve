@@ -3134,6 +3134,25 @@ Primary evidence:
     decision-category labels, and docs that distinguish compiler-stack context
     evidence from per-edit reference checks and final speedup metrics.
 
+- [ ] Add compiler-adoption path provenance for discovered optimizations.
+  - Spec evidence: AlphaEvolve Section 3.3.4 says the FlashAttention result
+    opens two adoption paths: incorporating discovered optimizations into
+    existing compilers for specific use cases, and, longer term, incorporating
+    AlphaEvolve into the compiler workflow itself.
+  - Current evidence: compiler TODOs require per-edit randomized reference
+    checks, IR/debug provenance, FlashAttention stack context, speedup
+    attribution, and final expert confirmation. They do not require report or
+    artifact metadata that distinguishes a one-off discovered optimization
+    ported into an existing compiler from an AlphaEvolve-in-the-loop compiler
+    workflow, nor do they record the target compiler/pass, use-case scope,
+    integration owner, rollout/revert state, or workflow handoff boundary.
+  - Required result: add compiler-domain report metadata and validators for
+    adoption path (`existing_compiler_specific_use_case` versus
+    `alphaevolve_in_compiler_workflow`), target compiler/pass identity,
+    optimization artifact linkage, applicable workload/use-case constraints,
+    integration and reviewer signoff, rollout or revert state, and docs that
+    separate concrete compiler adoption from future workflow integration.
+
 ## LLM Ensemble
 
 - [ ] Add live pricing/default-rate capture, raw provider replay, and

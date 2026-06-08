@@ -3197,6 +3197,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     and comparison evidence before describing LibreEvolve kernel reports as
     AlphaEvolve-style automation of Pallas tiling-heuristic work.
 
+- [ ] Record Gemini self-training optimization loop evidence for Pallas
+      deployment claims.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 states that
+    the AlphaEvolve-discovered Pallas tiling heuristic was deployed in
+    production, directly enhanced Gemini training efficiency and the Gemini
+    team's research and engineering velocity, and was a novel instance where
+    Gemini, through AlphaEvolve, optimized its own training process.
+  - Current gap: paper-facing Pallas TODOs require runtime speedups, train/eval
+    shape evidence, workflow baselines, and production adoption state, while
+    a broader Discussion TODO covers generic self-improvement and distillation.
+    They do not require a Gemini-specific evidence row tying the evolved kernel
+    heuristic to the training workload of the Gemini model family, the
+    AlphaEvolve/Gemini relationship, deployment state, before/after training
+    metrics, and the self-optimization interpretation.
+  - Required result: add paper/report evidence for Gemini self-training loop
+    claims: Gemini model/training workload id, AlphaEvolve backend/model-family
+    relation, optimized Pallas kernel id, production deployment or rollout
+    state, before/after training-time and kernel-runtime measurements,
+    engineering-velocity evidence, rollback/safety status, and README/ROADMAP
+    wording that distinguishes regular kernel deployment evidence from
+    AlphaEvolve-style self-optimization of Gemini's training pipeline.
+
 - [ ] Record RTL/EDA verification evidence for hardware-circuit results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes
     optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and

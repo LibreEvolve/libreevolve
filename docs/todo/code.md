@@ -3017,6 +3017,29 @@ Primary evidence:
     distinguish AlphaEvolve-generated tiling heuristics from search-based
     autotuning and manual expert heuristics.
 
+- [ ] Add Gemini self-training optimization loop provenance for Pallas
+      deployment claims.
+  - Spec evidence: AlphaEvolve Section 3.3.2 says the Pallas tiling heuristic
+    discovered by AlphaEvolve was deployed in production, improved Gemini's
+    training efficiency, increased the Gemini team's research and engineering
+    velocity, and marked a novel case where Gemini, through AlphaEvolve,
+    optimized its own training process.
+  - Current evidence: Pallas/kernel TODOs require shape-corpus, train/eval,
+    real-TPU runtime, expert-baseline, workflow-baseline, and production
+    adoption evidence. The broad self-improvement TODO covers general
+    infrastructure/model-uplift boundaries, but no code/report schema requires
+    a Gemini-specific feedback-loop record linking the optimized Pallas kernel
+    to the training workload of the model family that powered AlphaEvolve, the
+    production deployment that changed training, and the basis for the
+    self-optimization interpretation.
+  - Required result: add kernel/domain report metadata for Gemini
+    self-training claims: model/training workload identity, AlphaEvolve backend
+    or Gemini-family relation, optimized Pallas kernel id, deployment date or
+    release state, before/after training-time and kernel-runtime evidence,
+    research-velocity or engineering-turnaround evidence, safety/rollback
+    status, and docs wording that separates ordinary kernel deployment from
+    AlphaEvolve-style self-optimization of Gemini's own training pipeline.
+
 - [ ] Add RTL/EDA verification provenance for hardware-circuit optimization.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes an already highly
     optimized Verilog implementation of a TPU arithmetic circuit, with

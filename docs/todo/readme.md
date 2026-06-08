@@ -922,6 +922,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     TODOs so README distinguishes speedup evidence from AlphaEvolve-style
     workflow automation for Pallas tiling.
 
+- [ ] Keep README Gemini self-training wording scoped until Pallas deployment
+      loop evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.2 says the deployed Pallas tiling
+    heuristic directly enhanced Gemini training efficiency and marked a novel
+    instance where Gemini, through AlphaEvolve, optimized its own training
+    process.
+  - Current evidence: README can point to Pallas shape-split/runtime gaps,
+    workflow-baseline gaps, speedup calibration gaps, and broad
+    self-improvement boundaries. It does not separately require evidence that
+    a deployed kernel optimization affected the training pipeline of the same
+    Gemini-family system that powered AlphaEvolve, or that production metrics
+    justify the self-training interpretation.
+  - Required result: when Gemini self-training loop evidence lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes ordinary Pallas kernel deployment and workflow automation
+    from AlphaEvolve-style self-optimization of Gemini's training process.
+
 - [ ] Keep README hardware wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU

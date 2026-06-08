@@ -2670,6 +2670,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     results, and docs wording that separates source-artifact verification from
     LibreEvolve reproducing those results.
 
+- [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
+    examples and details on the mathematical construction problems and methods
+    would appear in an upcoming paper. Current primary-source evidence
+    identifies that follow-on as arXiv `2511.02864`, `Mathematical exploration
+    and discovery at scale`, by Bogdan Georgiev, Javier Gomez-Serrano, Terence
+    Tao, and Adam Zsolt Wagner, with arXiv v3 dated 2025-12-22. The associated
+    `google-deepmind/alphaevolve_repository_of_problems` repository states
+    that it contains 67 problem pages and Colab notebooks for many problems,
+    including prompts, verification code, initial programs, final evolved
+    programs, and visualization/analysis code where appropriate.
+  - Current gap: the local `papers/` cache, download manifests, paper index,
+    and AlphaEvolve TODOs still treat `2506.13131` plus its original companion
+    Colab as the only AlphaEvolve primary-source surface. They do not preserve
+    the follow-on paper PDF/version, repository ref, problem inventory,
+    notebook availability, or mapping from original Appendix B claims to the
+    expanded 67-problem source set.
+  - Required result: add paper/source evidence rows for arXiv `2511.02864` and
+    the DeepMind problem repository: PDF URL/cache/digest, arXiv version/date,
+    repository URL/ref/commit and live-update policy, problem ids, notebook
+    artifact metadata, prompt/verifier/initial/final-program presence, license
+    notes, claim mappings to the original AlphaEvolve math results, and
+    README/ROADMAP wording that makes the original-paper versus follow-on
+    source boundary explicit.
+
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of
     `2506.13131__AlphaEvolve.pdf` states that N.V., E.D., M.E., S.C., A.N.,

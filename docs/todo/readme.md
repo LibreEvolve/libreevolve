@@ -1067,6 +1067,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes PDF-source validation, external AlphaEvolve Colab
     source evidence, and LibreEvolve-generated result notebooks/exports.
 
+- [ ] Keep README follow-on AlphaEvolve math-source wording scoped until the
+      expanded paper/repository are tracked.
+  - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide
+    more examples and method details for the mathematical problems. Current
+    primary-source evidence identifies arXiv `2511.02864`, `Mathematical
+    exploration and discovery at scale`, and the
+    `google-deepmind/alphaevolve_repository_of_problems` repository, whose
+    README says it contains 67 problem descriptions and many Colab notebooks
+    with prompts, verification code, initial programs, final evolved programs,
+    and visualization or analysis code.
+  - Current evidence: README can describe the local PDF cache for
+    `2506.13131`, the original companion-Colab gap, Appendix B family/status
+    coverage, and local Colab-equivalent export TODOs. It does not document
+    the later arXiv paper, repository ref, problem/notebook inventory, or how
+    those expanded sources affect claims about constructive-math completeness.
+  - Required result: when follow-on source tracking lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README separates
+    original AlphaEvolve paper parity, original companion-Colab evidence, and
+    the later 67-problem mathematical-discovery source set.
+
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role metadata exists.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper figure

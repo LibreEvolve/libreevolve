@@ -1794,6 +1794,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve companion-source verification, and generated LibreEvolve
     result-export artifacts.
 
+- [ ] Keep roadmap wording scoped until the follow-on AlphaEvolve math paper
+      and repository are tracked.
+  - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide
+    more examples and details on the constructive-math problems and methods.
+    Current primary-source evidence identifies that follow-on as arXiv
+    `2511.02864`, `Mathematical exploration and discovery at scale`, and the
+    `google-deepmind/alphaevolve_repository_of_problems` repository, which
+    lists 67 mathematical problems and Colab notebooks for many problems with
+    prompts, verification code, initial programs, final evolved programs, and
+    visualization/analysis code.
+  - Current evidence: roadmap/README/paper-index wording can cite the original
+    AlphaEvolve paper, the original companion-Colab gap, and Appendix B
+    family/status coverage. It does not require tracking the later paper's PDF
+    version, repository ref/commit, problem inventory, notebook artifacts, or
+    source mappings from original Section 3.2/Appendix B claims to the expanded
+    math-discovery evidence.
+  - Required result: when follow-on source tracking lands, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap claims distinguish
+    original AlphaEvolve specification parity from later 67-problem
+    mathematical-discovery source coverage.
+
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       provenance exists.
   - Spec evidence: AlphaEvolve's Contributions section identifies the figure

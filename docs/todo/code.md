@@ -1882,6 +1882,29 @@ Primary evidence:
     AlphaEvolve source evidence from LibreEvolve's own generated
     Colab-equivalent exports.
 
+- [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
+    examples and method details for the constructive-math problems would be
+    provided in an upcoming paper. Current primary-source evidence shows that
+    paper as arXiv `2511.02864`, `Mathematical exploration and discovery at
+    scale`, last revised as v3 on 2025-12-22, and its
+    `google-deepmind/alphaevolve_repository_of_problems` repository says it
+    contains 67 problem descriptions plus Google Colab notebooks with prompts,
+    verification code, initial programs, final evolved programs, and
+    visualization or analysis code where available.
+  - Current evidence: the local paper manifests and `papers/README.md` include
+    `2506.13131` and the original companion-Colab TODO, but they do not include
+    arXiv `2511.02864`, a cached PDF/digest row, repository URL/ref/digest,
+    per-problem source inventory, notebook availability/readability checks, or
+    a mapping from the original paper's Appendix B/Section 3.2 claims to the
+    expanded 67-problem follow-on evidence.
+  - Required result: extend paper/source manifests and validators for the
+    follow-on math-scale paper and repository: arXiv id/version/date, PDF
+    cache row and SHA-256, repository canonical URL/ref/commit, live-repository
+    status policy, problem ids, notebook/prompt/verifier/final-program artifact
+    metadata, license/source notes, and README/ROADMAP wording that separates
+    the original AlphaEvolve specification from later expanded math evidence.
+
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.
   - Spec evidence: the AlphaEvolve Contributions section says N.V., E.D.,

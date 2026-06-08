@@ -1493,6 +1493,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-example compatibility as AlphaEvolve-style current-program editing
     fidelity.
 
+- [ ] Track multi-edit semantic consistency evidence separately from prompt
+      instructions.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).
+  - Requirement: the assembled AlphaEvolve prompt tells the model to make
+    proposed SEARCH/REPLACE edits consistent with each other, including adding
+    a newly referenced config variable when another edit uses it.
+  - Partial status: LibreEvolve prompt instructions include comparable
+    consistency guidance, and mutation/evaluation records can show parse
+    errors, exact-match failures, syntax failures, evaluator failures, and
+    rejection/admission outcomes.
+  - Current gap: paper-facing evidence does not show that a multi-block
+    proposal was analyzed for cross-edit coherence before accepted-result
+    claims: newly introduced references, companion declaration/config/import
+    edits, coupled evolved-block changes, unresolved symbols, missing
+    dependency/resource edits, or evaluator failures classified as
+    consistency-breakage rather than generic validation failure.
+  - Required result: add report/schema evidence for multi-edit consistency:
+    proposal id, prompt id, changed block/file ids, introduced/reference labels
+    where analyzers exist, required companion-edit links, unresolved-reference
+    diagnostics, evaluator-failure taxonomy linkage, accepted/rejected status,
+    and README/ROADMAP wording that distinguishes prompt-only consistency
+    instructions from checked AlphaEvolve-style coherent multi-edit proposals.
+
 - [ ] Track Figure 3 supervised-learning example exhibit provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 3 presents a

@@ -994,6 +994,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording separates concrete prompt examples from evidence that accepted
     mutations are genuine edits to the current program.
 
+- [ ] Keep multi-edit consistency roadmap wording scoped until checked
+      consistency evidence exists.
+  - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep
+    SEARCH/REPLACE edits consistent with each other, including adding a new
+    config variable when another proposed edit uses it.
+  - Current evidence: `ROADMAP.md`, README, and prompt instructions can
+    describe coherent-edit guidance plus current parser, syntax, evaluator,
+    and admission checks. They do not yet require a paper-facing consistency
+    diagnostic that links multi-block edits, introduced symbols/config/imports/
+    resources, missing companion edits, unresolved references, and
+    evaluator-failure taxonomy to accepted/rejected candidate status.
+  - Required result: when multi-edit consistency reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with changed block/file ids,
+    introduced/reference labels, companion-edit links, unresolved-reference
+    diagnostics, evaluator-failure taxonomy linkage, proposal/prompt ids, and
+    accepted/rejected status so roadmap wording separates prompt-only
+    consistency instructions from checked AlphaEvolve-style coherent
+    multi-edit mutation evidence.
+
 - [ ] Keep Figure 3 roadmap wording scoped until supervised-learning example
       exhibit provenance exists.
   - Spec evidence: AlphaEvolve Figure 3 is a supervised-learning pipeline

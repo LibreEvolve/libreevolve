@@ -1915,6 +1915,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style evidence that proposals edit the sampled current program
     rather than pasted prompt scaffolding.
 
+- [ ] Keep README multi-edit consistency wording scoped until checked
+      consistency evidence exists.
+  - Spec evidence: AlphaEvolve Figure 3(b) includes a SEARCH/REPLACE prompt
+    rule requiring proposed edits to be consistent with each other, for
+    example adding a config variable when another replacement references it.
+  - Current evidence: README can say LibreEvolve prompts ask for coherent
+    edits and that parser, syntax, evaluator, and admission checks reject many
+    broken candidates. It should not imply that the system has a
+    paper-facing cross-edit consistency analyzer or report for introduced
+    symbols/config/imports/resources, missing companion edits, coupled changed
+    blocks, or unresolved references across a multi-block mutation.
+  - Required result: when multi-edit consistency diagnostics land, update
+    README, ROADMAP, papers index, and code/paper TODOs with proposal ids,
+    changed block/file ids, introduced/reference labels, companion-edit links,
+    unresolved-reference diagnostics, evaluator-failure taxonomy linkage, and
+    accepted/rejected status so README distinguishes prompt guidance from
+    AlphaEvolve-style evidence of coherent multi-edit proposals.
+
 - [ ] Keep README Figure 3 supervised-learning example wording scoped until
       exhibit provenance exists.
   - Spec evidence: AlphaEvolve Figure 3 presents a supervised-learning pipeline

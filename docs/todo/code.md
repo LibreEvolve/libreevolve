@@ -1828,6 +1828,30 @@ Primary evidence:
     prompt examples can remain useful without being mistaken for valid
     AlphaEvolve-style edits to the current program.
 
+- [ ] Add cross-edit semantic consistency diagnostics for multi-block
+      mutations.
+  - Spec evidence: AlphaEvolve Figure 3(b) tells the model to keep proposed
+    edits consistent with each other, giving the example that if one
+    replacement uses a new config variable, another replacement should add
+    that variable. This is part of the paper's SEARCH/REPLACE prompt contract,
+    not merely generic coding advice.
+  - Current evidence: `PromptSampler` includes a similar instruction, and the
+    mutation paths validate diff syntax, exact search matches, topology
+    envelopes, Python syntax, evaluator execution, and structured failure
+    records. Those checks can catch some broken candidates after application
+    or evaluation, but they do not provide a paper-facing diagnostic that a
+    multi-block proposal was checked for cross-edit consistency, introduced
+    symbol/config/dependency pairing, or intentional coupled changes across
+    evolved blocks.
+  - Required result: add versioned mutation-consistency evidence for
+    multi-block edits: introduced and referenced symbol/config/import/resource
+    labels where language support exists, changed-block dependency/co-change
+    links, unresolved-reference or missing-companion-edit diagnostics,
+    evaluator-failure taxonomy linkage, prompt/candidate ids, and README/
+    ROADMAP wording that separates current prompt-only consistency guidance
+    from AlphaEvolve-style evidence that accepted multi-edit proposals are
+    internally coherent.
+
 - [ ] Add Figure 3 supervised-learning example exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 3 is a paper-facing supervised-learning
     pipeline exhibit with three linked subfigures: the user-provided JAX/Jaxline

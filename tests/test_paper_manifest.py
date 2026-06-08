@@ -754,6 +754,20 @@ def test_validate_paper_manifest_checks_appendix_a_matrix_registry_when_present(
     assert "appendix_a_missing_exact_algorithm" in codes
 
 
+def test_validate_paper_manifest_checks_example_scope_records(monkeypatch, tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    records = paper_manifest.example_benchmark_scope_records()
+    records[0]["alphaevolve_comparable"] = True
+    monkeypatch.setattr(paper_manifest, "example_benchmark_scope_records", lambda: records)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "example_scope_smoke_marked_comparable" in codes
+
+
 def test_validate_paper_manifest_reports_invalid_encoding_json_manifest(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

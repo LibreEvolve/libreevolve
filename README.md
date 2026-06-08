@@ -3066,6 +3066,10 @@ The Appendix A registry is target/outcome coverage, not a curation ledger: it
 does not yet record the paper's target-selection rule, canonical sorted
 representative policy under tensor axis symmetries, omitted symmetry-equivalent
 targets, p-cutoff rationale, or included/excluded target justifications.
+The paper-manifest validator also checks the shipped example-scope registry,
+keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
+and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
+benchmark evidence.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

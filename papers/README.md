@@ -733,6 +733,11 @@ Implemented:
   fixture with a nested Python package, declared JSON data, and a binary static
   seed asset. Its validator checks the workspace artifact shape and exact
   integer result while keeping the example smoke-only.
+- `libreevolve/problems/benchmarks/example_scope.py`: shipped-example scope
+  registry that keeps `hello_world`, `sorting`, `workspace_math`,
+  `matrix_multiplication`, and `circle_packing` marked as smoke-only and not
+  AlphaEvolve-comparable. The standard paper-manifest validator checks these
+  records directly.
 - `libreevolve/problems/benchmarks/matrix_results.py`: AlphaEvolve-style
   matrix-result report contract. It validates target identity, dimensions,
   seed count, best rank, hit fraction, exactness-certificate status,

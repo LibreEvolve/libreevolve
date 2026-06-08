@@ -2944,9 +2944,8 @@ Primary evidence:
     being counted as benchmark evidence by accident. The `workspace_math`
     smoke fixture now exercises a nested package, declared JSON data, and a
     binary static seed asset while preserving its smoke-only scope. That scope
-    registry has unit coverage and is consumed by smoke hardening bundles, but
-    the routine paper-manifest/docs validation gate does not yet validate the
-    shipped registry directly.
+    registry has unit coverage, is consumed by smoke hardening bundles, and is
+    now validated by the routine paper-manifest gate.
     `validate_benchmark_evidence_scope()` now cross-checks hardening reports
     against the matching scope record and optional hardening artifact inventory,
     rejecting smoke-only example promotion, paper-claim scope mismatches, and
@@ -2967,17 +2966,16 @@ Primary evidence:
     construction/certificate validators, Colab-equivalent construction-data and
     verifier-code exports for Appendix B families, benchmark reports suitable
     for comparing AlphaEvolve-alignment features, real anti-gaming fixtures
-    for benchmark-grade operation/rank discovery, and a central validation gate
-    that fails when the shipped example-scope registry drifts. The matrix smoke
+    for benchmark-grade operation/rank discovery. The matrix smoke
     fixture now has `write_matrix_smoke_hardening_bundle()`, which emits
     concrete negative-fixture files, detector-log, hardening report,
     artifact inventory, summary, and smoke-scope validation evidence while
     preserving `alphaevolve_comparable: false`.
     The remaining gap is generating benchmark-grade hardening files from real
-    tensor/geometric benchmark fixtures, not emitting smoke-scope matrix
-    hardening evidence, verifying declared files once a report names them, or
-    preventing declared hardening evidence from overriding the smoke-only
-    scope registry.
+    tensor/geometric benchmark fixtures, not validating the shipped-example
+    scope registry, emitting smoke-scope matrix hardening evidence, verifying
+    declared files once a report names them, or preventing declared hardening
+    evidence from overriding the smoke-only scope registry.
 
 - [ ] Add Figure 5 construction-exhibit provenance and visual artifacts.
   - Spec evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking

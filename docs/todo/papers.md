@@ -2466,9 +2466,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-comparable, but it is an exclusion boundary rather than a real
     benchmark harness. The `workspace_math` smoke fixture now covers a nested
     package, declared JSON data, and a binary static seed asset without making
-    benchmark claims. The scope registry is validated in focused tests and by
-    smoke hardening evidence, but not yet by the routine paper-manifest/docs
-    validation gate that reviewers run for paper-facing evidence.
+    benchmark claims. The scope registry is validated in focused tests, by
+    smoke hardening evidence, and by the routine paper-manifest validation
+    gate that reviewers run for paper-facing evidence.
     `validate_benchmark_evidence_scope()` now cross-checks
     hardening reports against the matching scope record and optional hardening
     artifact inventory, rejecting smoke-only example promotion, paper-claim
@@ -2496,14 +2496,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     2x2 smoke checks, connect hardening reports and executable artifact/
     certificate validators for geometric and constructive-math constructions,
     add Colab-equivalent construction-data and verifier-code exports for the
-    Appendix B families, validate the shipped example-scope registry in the
-    standard paper-facing gate, and create repeatable benchmark reports tied to
+    Appendix B families, and create repeatable benchmark reports tied to
     AlphaEvolve target families. The remaining paper gap is generating those
     anti-gaming and verification-data evidence files from benchmark-grade
-    tensor/geometric/constructive-math fixtures, not emitting matrix smoke
-    hardening evidence, verifying declared hardening files once a report names
-    them, or preventing declared hardening evidence from overriding the
-    smoke-only scope registry.
+    tensor/geometric/constructive-math fixtures, not validating the
+    shipped-example scope registry, emitting matrix smoke hardening evidence,
+    verifying declared hardening files once a report names them, or preventing
+    declared hardening evidence from overriding the smoke-only scope registry.
 
 - [ ] Track Figure 5 construction-exhibit provenance as paper evidence.
   - Paper evidence: AlphaEvolve Figure 5 presents selected SOTA-breaking

@@ -34,6 +34,10 @@ from libreevolve.problems.benchmarks.appendix_b_registry import (
     REGISTRY_PATH as APPENDIX_B_REGISTRY_PATH,
     validate_appendix_b_registry,
 )
+from libreevolve.problems.benchmarks.example_scope import (
+    example_benchmark_scope_records,
+    validate_example_benchmark_scope,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -394,6 +398,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_a_matrix_registry_if_present(root_path))
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
+    issues.extend(_validate_example_benchmark_scope_records())
 
     if set(csv_by_id) - seen_ids:
         for row_id in sorted(set(csv_by_id) - seen_ids):
@@ -498,6 +503,17 @@ def _validate_ablation_registry_if_present(root_path: Path) -> list[PaperManifes
             f"ablation_{issue.code}",
             issue.message,
             _safe_manifest_label(issue.variant_id) if issue.variant_id else None,
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_example_benchmark_scope_records() -> list[PaperManifestIssue]:
+    report = validate_example_benchmark_scope(example_benchmark_scope_records())
+    return [
+        PaperManifestIssue(
+            f"example_scope_{issue.code}",
+            issue.message,
         )
         for issue in report.issues
     ]

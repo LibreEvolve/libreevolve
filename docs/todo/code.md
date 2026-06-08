@@ -5800,7 +5800,12 @@ Primary evidence:
     Workload Traces, a `0.9%` IPC speedup on heavily explored single-core
     SPEC06 workloads, `3-5x` faster development than prior human-developed
     policies, `2.4%` post-silicon hyperspecialization gains on SPEC06, and
-    simulator-escape behavior in a microarchitectural simulator.
+    simulator-escape behavior in a microarchitectural simulator. The system
+    implements candidate policies as C++ in ChampSim `policy.h`, compiles and
+    runs ChampSim on workload suites, uses IPC normalized to LRU, constrains
+    policies to hardware-realizable designs with a `48 KB` replacement-policy
+    state budget, and uses short simulation runs for evolution before longer
+    validation runs.
   - Current evidence: `papers/README.md` lists `2602.22425` only as
     background AlphaEvolve computer-architecture context with no architecture-
     design simulator or cache-policy benchmark. LibreEvolve has no first-
@@ -5808,20 +5813,27 @@ Primary evidence:
     schema, no ChampSim/microarchitecture simulator integration, no Google
     Workload Trace or SPEC06 workload fixture, no IPC speedup metric contract,
     no SoTA cache-policy baseline ledger, no post-silicon specialization
-    parameter records, and no simulator-escape detection or containment
-    report.
+    parameter records, no short-run versus long-run validation split, no
+    policy-mechanism ablation report, no hardware-realizability/state-budget
+    verifier, no distributed-simulation failure/retry policy, and no
+    simulator-escape detection or containment report.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2602.22425`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
     LibreEvolve architecture fixtures, cache-policy candidate schema,
-    simulator/compiler integration points, workload trace provenance,
-    single-core and multi-core benchmark splits, IPC speedup metric
-    definitions, prior-SoTA baseline identities, policy implementation
-    artifacts, post-silicon parameter-specialization records, simulator-
-    escape detection and quarantine rules, seed/budget records, independent
-    checker outputs, and README/ROADMAP wording that keeps ArchAgent-style
-    architecture discovery as missing evidence until local implementation and
-    benchmark reports exist.
+    ChampSim `policy.h` integration points, CRC-style cache/core/prefetch/
+    DRAM configuration records, workload trace provenance, single-core and
+    multi-core benchmark splits, evolution-versus-validation instruction-count
+    records, IPC speedup metric definitions, prior-SoTA baseline identities
+    including LRU, SHiP, Hawkeye, and Mockingjay where applicable, generated
+    policy implementation artifacts and mechanism labels for Policy31/61/62-
+    style reports, hardware-realizability and state-budget checks, policy
+    ablation reports, post-silicon parameter-specialization records,
+    simulator-escape tests for optimized-away assertions and invalid
+    write-bypass behavior, distributed-simulation failure/retry records,
+    seed/budget records, independent checker outputs, and README/ROADMAP
+    wording that keeps ArchAgent-style architecture discovery as missing
+    evidence until local implementation and benchmark reports exist.
 
 - [ ] Add AlphaEvolve Fault2Flow workflow-automation boundary.
   - Spec evidence: arXiv `2511.12916`, `Fault2Flow: An AlphaEvolve-Optimized

@@ -3880,13 +3880,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     improvements on public multi-core Google Workload Traces and single-core
     SPEC06 workloads, faster development than prior human-developed SoTA
     policies, post-silicon hyperspecialization gains, and simulator-escape
-    behavior.
+    behavior. The method evaluates C++ cache replacement policies in
+    ChampSim, reports IPC speedup normalized to LRU, separates short
+    evolution runs from longer validation runs, and requires hardware-
+    realizability checks.
   - Current evidence: README documents general AlphaEvolve systems gaps,
     benchmark-report contracts, paper-cache status, and smoke fixtures. It
     does not mention `2602.22425`, define cache replacement policy candidates,
     integrate a microarchitectural simulator, preserve Google Workload Trace
     or SPEC06 provenance, compare prior SoTA policies, measure IPC speedup,
-    record post-silicon specialization parameters, or flag simulator escapes.
+    record post-silicon specialization parameters, distinguish short feedback
+    simulations from validation simulations, document policy-state budgets or
+    hardware-realizability checks, preserve ablation evidence, or flag
+    simulator escapes.
   - Required result: if README mentions ArchAgent, computer architecture
     discovery, cache replacement policies, ChampSim or microarchitectural
     simulators, Google Workload Traces, SPEC06 cache benchmarks, IPC speedup,
@@ -3894,10 +3900,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     policies, or simulator escapes, keep the wording source-scoped until
     local artifacts can show the paper in the manifest, candidate schemas,
     simulator runners, workload provenance, benchmark splits, metric
-    definitions, baseline identities, generated policy artifacts, simulator-
-    escape controls, independent checker outputs, and benchmark reports.
-    Avoid implying LibreEvolve supports AlphaEvolve-style ArchAgent computer-
-    architecture discovery without those artifacts.
+    definitions, baseline identities, generated policy artifacts, CRC
+    configuration records, policy-state budget checks, short/long simulation
+    protocols, ablation reports, simulator-escape controls, independent
+    checker outputs, and benchmark reports. Avoid implying LibreEvolve
+    supports AlphaEvolve-style ArchAgent computer-architecture discovery
+    without those artifacts.
 
 - [ ] Keep README AlphaEvolve Fault2Flow workflow-automation claims absent or
       source-scoped until fault-to-workflow benchmark evidence exists.

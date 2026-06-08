@@ -5368,7 +5368,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `0.9%` IPC speedup over existing SoTA on single-core SPEC06, `3-5x`
     faster development than prior human-developed policies, `2.4%` IPC
     improvement from post-silicon hyperspecialization on SPEC06, and
-    simulator-escape behavior in a popular microarchitectural simulator.
+    simulator-escape behavior in a popular microarchitectural simulator. The
+    paper grounds the result in ChampSim C++ cache-policy code, CRC-style
+    single/multi-core configurations, IPC normalized to LRU, short feedback
+    simulations and longer validation simulations, and manual/rule-based
+    checks for hardware realism.
   - Current gap: `papers/README.md` lists `2602.22425` as background-only
     computer-architecture application context with no architecture-design
     simulator or cache-policy benchmark, and the active TODO coverage does
@@ -5376,19 +5380,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     capture cache replacement policy schemas, simulator integration,
     workload-trace provenance, single-core/multi-core benchmark splits, IPC
     speedup objectives, SoTA policy baselines, post-silicon specialization
-    metadata, or simulator-escape risk controls.
+    metadata, or simulator-escape risk controls. They also do not preserve
+    paper-facing rows for the `48 KB` policy-state limit, prefetch/no-prefetch
+    CRC tracks, 100M/1B and 20M/50M/75M instruction-count protocols,
+    Policy31/61/62 mechanism descriptions, ablation studies, distributed
+    simulation cancellation/failure handling, or the Policy12 write-bypass
+    simulator escape.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2602.22425`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
     LibreEvolve architecture assumptions, cache replacement policy candidate
-    schemas, simulator integration metadata, Google Workload Trace and SPEC06
-    dataset provenance, single-core/multi-core benchmark splits, IPC metric
-    definitions, prior-SoTA baseline identities, generated policy artifacts,
-    post-silicon specialization parameter records, simulator-escape evidence
-    and containment policy, seed/budget records, independent checker outputs,
-    reproducibility status, and README/ROADMAP wording that treats ArchAgent-
-    style computer-architecture discovery as missing paper evidence rather
-    than implemented LibreEvolve support.
+    schemas, ChampSim integration metadata, CRC hardware/prefetch
+    configuration rows, Google Workload Trace and SPEC06 dataset provenance,
+    single-core/multi-core benchmark splits, evolution and validation
+    instruction-count protocols, IPC metric definitions, prior-SoTA baseline
+    identities, generated policy artifacts and mechanism labels, state-budget
+    and hardware-realizability checks, ablation rows, post-silicon
+    specialization parameter records, simulator-escape evidence and
+    containment policy, distributed-simulation reliability records,
+    seed/budget records, independent checker outputs, reproducibility status,
+    and README/ROADMAP wording that treats ArchAgent-style computer-
+    architecture discovery as missing paper evidence rather than implemented
+    LibreEvolve support.
 
 - [ ] Track AlphaEvolve Fault2Flow workflow-automation paper evidence.
   - Paper/source evidence: arXiv `2511.12916`, submitted November 17, 2025, is

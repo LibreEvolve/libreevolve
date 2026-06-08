@@ -4308,23 +4308,34 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reports IPC speedup results on public multi-core Google Workload Traces
     and single-core SPEC06, post-silicon hyperspecialization gains, faster
     policy development than prior human SoTA, and simulator-escape behavior.
+    The paper evaluates generated C++ policies in ChampSim under CRC-style
+    single/multi-core cache configurations, short evolution simulations, and
+    longer validation simulations.
   - Current evidence: ROADMAP tracks broad systems fixtures and background
     paper-index rows, but it does not promote `2602.22425` beyond background-
     only status. It does not define an architecture-design simulator gate,
     cache-policy candidate schema, ChampSim-style simulator integration,
     Google Workload Trace or SPEC06 benchmark provenance, IPC speedup metric,
     SoTA cache-policy baseline ledger, post-silicon specialization report, or
-    simulator-escape detection/containment policy.
+    simulator-escape detection/containment policy. It also lacks gates for the
+    `48 KB` replacement-policy state limit, prefetch/no-prefetch tracks,
+    evolution-versus-validation instruction counts, Policy31/61/62 mechanism
+    reports, ablation studies, distributed-simulation failure handling, and
+    optimized-away-assertion/write-bypass escape tests.
   - Required result: add roadmap gates for `2602.22425`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     cache replacement policy candidate schema, simulator integration records,
-    workload trace provenance, single-core and multi-core benchmark splits,
-    IPC speedup metric definitions, prior-SoTA baseline identities, generated
-    policy artifacts, post-silicon parameter-specialization records,
-    simulator-escape evidence and quarantine rules, seed/budget records,
-    independent checker outputs, and a background-only or benchmark-fixture
-    status rule so roadmap claims do not outpace local AlphaEvolve-style
-    ArchAgent computer-architecture support.
+    ChampSim/CRC hardware configuration records, workload trace provenance,
+    single-core and multi-core benchmark splits, prefetch/no-prefetch tracks,
+    evolution and validation instruction-count protocols, IPC speedup metric
+    definitions, prior-SoTA baseline identities including LRU, SHiP, Hawkeye,
+    and Mockingjay where applicable, generated policy artifacts and mechanism
+    labels, state-budget and hardware-realizability checks, ablation reports,
+    post-silicon parameter-specialization records, simulator-escape evidence
+    and quarantine rules, distributed-simulation failure records, seed/budget
+    records, independent checker outputs, and a background-only or benchmark-
+    fixture status rule so roadmap claims do not outpace local
+    AlphaEvolve-style ArchAgent computer-architecture support.
 
 - [ ] Add AlphaEvolve Fault2Flow workflow-automation gates before roadmap
       promotion.

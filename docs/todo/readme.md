@@ -4540,12 +4540,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README hardness-of-approximation wording scoped until proof-element
       artifacts exist.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
-    Combinatorial Structures: Hardness of Approximation`, uses AlphaEvolve to
-    produce finite proof elements for complexity theory, including Ramanujan
-    graph witnesses, MAX-k-CUT gadgets, and metric-TSP equation gadgets. It
-    also reports AlphaEvolve-evolved verifier speedups and separates proxy
-    search scores, independent brute-force verification, human inspection, and
-    mathematical lifting/proof arguments.
+    Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
+    Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,
+    2026 with cached SHA-256
+    `32eb8c787527bf8674ec22fd08ee6e1108179e88d97300e110286270c041e842`
+    and CC BY 4.0 metadata. It uses AlphaEvolve to produce finite proof
+    elements for complexity theory, including Ramanujan graph witnesses,
+    MAX-k-CUT gadgets, and metric-TSP equation gadgets. It reports
+    AlphaEvolve-evolved verifier speedups around `10,000x`, uses judge-LLM plus
+    synthetic correctness checks plus human inspection for fast verifiers, and
+    separates proxy search scores, independent brute-force verification, human
+    inspection, and mathematical lifting/proof arguments.
   - Current evidence: README TODOs already say theoretical-CS AlphaEvolve
     wording should remain scoped until proof-element source tracking exists,
     and `papers/README.md` marks `2509.18057` as background only with no graph/
@@ -4559,10 +4564,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     certification, Ramanujan graph witnesses, proof elements, verifier speedups,
     or theorem-lifting applications, keep wording source-scoped until manifests
     and reports include the `2509.18057` source row, PDF/artifact hashes,
-    graph/gadget schemas, verifier-speed and correctness records, brute-force
-    verification outputs, theorem/proof cross-links, source/repository status,
-    human/proof-handoff attribution, and a clear distinction between generic
-    LibreEvolve evaluator validation and AlphaEvolve-discovered
-    complexity-theory proof elements.
+    graph/gadget schemas, verifier-speed and correctness records, judge-LLM and
+    human-inspection records, brute-force verification outputs, theorem/proof
+    cross-links, baseline/SOTA rows for `0.987`, `0.9649`, and `111/110`,
+    source/repository status, human/proof-handoff attribution, and a clear
+    distinction between generic LibreEvolve evaluator validation and
+    AlphaEvolve-discovered complexity-theory proof elements.
 
 ## Architecture Description

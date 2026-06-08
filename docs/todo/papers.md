@@ -6212,13 +6212,18 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track hardness-of-approximation proof-element paper evidence as a
       source-specific boundary.
   - Paper/source evidence: local arXiv `2509.18057v7`, `Reinforced Generation
-    of Combinatorial Structures: Hardness of Approximation`, reports
-    AlphaEvolve-discovered finite proof elements for three complexity-theory
-    settings: average-case certification lower bounds for random regular graph
-    MAX-CUT/MAX-Independent-Set, gadget-based NP-hardness improvements for
-    MAX-3-CUT and MAX-4-CUT, and metric-TSP hardness via a new equation
-    gadget. It distinguishes proxy scores from theorem constants, uses evolved
-    fast verifiers to search larger gadgets, and requires final brute-force
+    of Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
+    Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,
+    2026; the local cache row points to
+    `https://arxiv.org/pdf/2509.18057.pdf`, byte count `7719868`, SHA-256
+    `32eb8c787527bf8674ec22fd08ee6e1108179e88d97300e110286270c041e842`,
+    and the PDF metadata declares CC BY 4.0. It reports AlphaEvolve-discovered
+    finite proof elements for three complexity-theory settings: average-case
+    certification lower bounds for random regular graph MAX-CUT/MAX-
+    Independent-Set, gadget-based NP-hardness improvements for MAX-3-CUT and
+    MAX-4-CUT, and metric-TSP hardness via a new equation gadget. It
+    distinguishes proxy scores from theorem constants, uses evolved fast
+    verifiers to search larger gadgets, and requires final brute-force
     verification plus human/proof arguments before theorem claims.
   - Current gap: the paper index labels `2509.18057` as AlphaEvolve
     complexity-theory result context and background-only, while an active
@@ -6226,16 +6231,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     this PDF as a detailed source-specific boundary with arXiv versioning,
     result ids, graph/gadget artifact inventories, verifier-speedup evidence,
     correctness-check records, final brute-force verification, proof-lifting
-    metadata, source/repository status, or claim boundaries between finite
-    constructions and universal theorem statements.
+    metadata, extracted-link/source-repository status, or claim boundaries
+    between finite constructions and universal theorem statements.
   - Required result: add paper-manifest and paper-index coverage for
     `2509.18057`: title/authors/arXiv version/date/PDF digest, source/artifact
     availability and rights, result table for MAX-CUT, MAX-Independent-Set,
-    MAX-k-CUT, and metric TSP, Ramanujan graph witness metadata, MAX-k-CUT
-    gadget schemas, TSP equation-gadget schemas, verifier API and runtime
-    records, synthetic correctness dataset provenance, judge-LLM and human-
-    inspection attribution, final brute-force verification outputs, theorem/
-    lemma/proof appendix cross-links, baseline/SOTA comparison values, lifting
-    framework statements, and README/ROADMAP/code wording that keeps
-    complexity-theory proof-element support missing unless those artifacts are
-    locally represented and verified.
+    MAX-k-CUT, and metric TSP, Table 1 LB/UB values, Ramanujan graph witness
+    metadata for graphs up to 163 vertices, MAX-k-CUT gadget schemas and
+    Appendix C edge lists, TSP equation-gadget schemas and Appendix D edge
+    lists, verifier API and runtime records, synthetic correctness dataset
+    provenance from 20 random MAX-k-CUT models, judge-LLM and human-inspection
+    attribution, final brute-force verification outputs, theorem/lemma/proof
+    appendix cross-links, baseline/SOTA comparison values, extracted links plus
+    absence/presence of code-repository URLs, lifting-framework statements, and
+    README/ROADMAP/code wording that keeps complexity-theory proof-element
+    support missing unless those artifacts are locally represented and verified.

@@ -6776,30 +6776,43 @@ Primary evidence:
 - [ ] Add hardness-of-approximation proof-element gates before theoretical-CS
       application claims.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
-    Combinatorial Structures: Hardness of Approximation`, uses AlphaEvolve to
-    discover finite combinatorial structures for complexity-theory proofs:
-    Ramanujan graph witnesses for MAX-CUT/MAX-Independent-Set certification,
-    MAX-3-CUT and MAX-4-CUT gadget reductions from 3LIN(k), and metric-TSP
-    equation gadgets. The paper also uses AlphaEvolve to evolve faster
-    verifiers by scoring runtime plus correctness checks, reports about
-    `10,000x` verifier speedups, and states that final gadgets were verified by
-    brute-force algorithms independent of the evolved fast verifiers.
+    Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
+    Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,
+    2026; the cached PDF has 39 pages, byte count `7719868`, SHA-256
+    `32eb8c787527bf8674ec22fd08ee6e1108179e88d97300e110286270c041e842`,
+    and CC BY 4.0 metadata. It uses AlphaEvolve to discover finite
+    combinatorial structures for complexity-theory proofs: Ramanujan graph
+    witnesses for MAX-CUT/MAX-Independent-Set certification, MAX-3-CUT and
+    MAX-4-CUT gadget reductions from 3LIN(k), and metric-TSP equation gadgets.
+    It also uses AlphaEvolve to evolve faster verifiers by scoring runtime plus
+    correctness checks, reports about `10,000x` verifier speedups for final
+    MAX-k-CUT gadgets, and states that final gadgets were verified by brute-
+    force algorithms independent of the evolved fast verifiers.
   - Current evidence: `papers/README.md` marks `2509.18057` as background only
-    with no graph/certification benchmark, and existing TODOs ask for general
-    theoretical-CS proof-element source tracking. There is no source-specific
-    code gate for graph/gadget artifact schemas, witness encoding, Ramanujan
-    checks, MAX-CUT/independent-set scoring, MAX-k-CUT completeness/soundness
-    verifier contracts, TSP/MWST gadget verification, evolved-verifier runtime
-    datasets, correctness-judge records, final brute-force verification
+    with no graph/certification benchmark, while
+    `libreevolve/problems/benchmarks/result_certification.py` provides a
+    generic paper-result certification schema. Existing TODOs ask for general
+    theoretical-CS proof-element source tracking, but there is no source-
+    specific code gate for graph/gadget artifact schemas, witness encoding,
+    Ramanujan checks, MAX-CUT/independent-set scoring, MAX-k-CUT
+    completeness/soundness verifier contracts, TSP/MWST gadget verification,
+    evolved-verifier runtime datasets, synthetic correctness datasets, judge-
+    LLM records, human-inspection records, final brute-force verification
     provenance, or theorem-lifting boundaries.
   - Required result: add implementation gates for `2509.18057`: arXiv version/
     date/PDF hash, source/repository/artifact status, Ramanujan graph and
-    witness schemas, gadget edge-list/weight schemas, theorem/result ids,
-    verifier API contracts, synthetic verifier-speed dataset records,
-    correctness-check and judge-LLM records, evolved-verifier runtime telemetry,
-    independent brute-force verifier outputs, final graph/gadget inventories,
-    lifting-framework metadata linking finite structures to universal theorem
-    statements, human-inspection/proof-handoff attribution, baseline/SOTA
-    comparison rows, and README/ROADMAP wording that keeps LibreEvolve's
-    generic evaluator validation separate from AlphaEvolve-discovered
-    complexity-theory proof elements.
+    witness schemas, Table 1 bound rows (`MAX-CUT d=3/4`,
+    `MAX-IND-SET d=3/4` with LB/UB comparisons), MAX-3-CUT and MAX-4-CUT
+    gadget edge-list/weight schemas including `m=14` and `m=19` verifier-size
+    contexts, metric-TSP/MWST equation-gadget schemas (`n_aux=4`, `c(H)=s(H)=10`,
+    `111/110` hardness), theorem/result ids for Theorems 2.1, 2.2, 3.1, 3.2,
+    and 4.1, verifier API contracts, synthetic verifier-speed dataset records
+    from 20 random models with one-second average-size scoring, correctness-
+    check and judge-LLM records, evolved-verifier runtime telemetry, independent
+    brute-force verifier outputs, final graph/gadget inventories, explicit PDF
+    link extraction/source-repository status, lifting-framework metadata linking
+    finite structures to universal theorem statements, human-inspection/proof-
+    handoff attribution, baseline/SOTA comparison rows (`0.9883` to `0.987`,
+    `0.9853` gadget baseline to `0.9649`, `117/116` to `111/110`), and
+    README/ROADMAP wording that keeps LibreEvolve's generic evaluator validation
+    separate from AlphaEvolve-discovered complexity-theory proof elements.

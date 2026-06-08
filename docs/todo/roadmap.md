@@ -5023,11 +5023,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Add hardness-of-approximation proof-element gates before roadmap
       promotion.
   - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
-    Combinatorial Structures: Hardness of Approximation`, reports
-    AlphaEvolve-discovered Ramanujan graph witnesses, MAX-3-CUT/MAX-4-CUT
-    gadget reductions, metric-TSP equation gadgets, evolved faster verifier
-    code, final brute-force verification of discovered gadgets, and
-    mathematical lifting from finite structures to theorem statements.
+    Combinatorial Structures: Hardness of Approximation`, by Ansh Nagda,
+    Prabhakar Raghavan, and Abhradeep Thakurta was submitted as v7 on March 9,
+    2026 with cached SHA-256
+    `32eb8c787527bf8674ec22fd08ee6e1108179e88d97300e110286270c041e842`
+    and CC BY 4.0 metadata. It reports AlphaEvolve-discovered Ramanujan graph
+    witnesses, MAX-3-CUT/MAX-4-CUT gadget reductions, metric-TSP equation
+    gadgets, evolved faster verifier code, final brute-force verification of
+    discovered gadgets, and mathematical lifting from finite structures to
+    theorem statements.
   - Current evidence: ROADMAP has a general theoretical-CS source-tracking TODO
     and `papers/README.md` labels `2509.18057` background-only with no graph/
     certification benchmark. Roadmap lacks `2509.18057`-specific gates for
@@ -5038,11 +5042,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     status, and SOTA comparison rows.
   - Required result: add roadmap gates for `2509.18057`: paper/source manifest
     entry, PDF/cache hash, code/artifact availability, Ramanujan graph witness
-    schema, MAX-k-CUT gadget schema, TSP/MWST equation-gadget schema, verifier
-    contracts, evolved-verifier speedup reports, correctness-check dataset
-    provenance, judge-LLM and human-inspection attribution, independent
-    brute-force verifier artifacts, theorem/result/lifting metadata,
-    baseline/SOTA comparison rows, proof-handoff status, and README/papers/code
-    wording that keeps hardness-of-approximation proof-element support
-    background-only until local execution, artifact, and verification evidence
-    proves those semantics.
+    schema and Table 1 certification rows, MAX-k-CUT gadget schema with
+    Appendix C edge lists, TSP/MWST equation-gadget schema with Appendix D edge
+    lists, verifier contracts, evolved-verifier speedup reports, synthetic
+    correctness-check dataset provenance, judge-LLM and human-inspection
+    attribution, independent brute-force verifier artifacts, theorem/result/
+    lifting metadata, baseline/SOTA comparison rows for MAX-4-CUT, MAX-3-CUT,
+    and metric TSP, proof-handoff status, extracted-link/source-repository
+    status, and README/papers/code wording that keeps hardness-of-approximation
+    proof-element support background-only until local execution, artifact, and
+    verification evidence proves those semantics.

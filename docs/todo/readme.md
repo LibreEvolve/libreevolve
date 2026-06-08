@@ -1432,6 +1432,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     original AlphaEvolve paper parity, original companion-Colab evidence, and
     the later 67-problem mathematical-discovery source set.
 
+- [ ] State follow-on problem-repository coverage as snapshot-scoped.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README says the repository is live and expected to expand/improve over
+    time, with problem pages for all 67 mathematical problems and Colab
+    notebooks for many, but not all, problems. It says notebooks can include
+    prompts, verification code, initial programs, final evolved programs, and
+    visualization/analysis code where appropriate, and it includes overview
+    assets such as `assets/status_grid.png` and `assets/table_by_areas.png`.
+  - Current evidence: README TODOs mention the later 67-problem source set but
+    do not require wording that distinguishes complete problem-page coverage
+    from partial notebook coverage, artifact-by-artifact availability,
+    missing-notebook states, overview-image provenance, or the pinned snapshot
+    needed for a live repository.
+  - Required result: after the coverage manifest exists, update README wording
+    so AlphaEvolve follow-on claims name the pinned repository snapshot,
+    distinguish all-problem-page coverage from partial notebook/artifact
+    coverage, avoid implying notebooks exist for every problem, and cite any
+    status/area overview figures only with tracked asset hashes.
+
 - [ ] Keep README theoretical-CS AlphaEvolve wording scoped until
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

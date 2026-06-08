@@ -2254,6 +2254,30 @@ Primary evidence:
     metadata, license/source notes, and README/ROADMAP wording that separates
     the original AlphaEvolve specification from later expanded math evidence.
 
+- [ ] Add follow-on problem-repository coverage-state provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README describes the repository as live, with plans to expand and improve
+    it over time. It says the repository contains problem pages for all 67
+    mathematical problems and Colab notebooks for many, but not all, problems,
+    with prompts, verification code, initial programs, final evolved programs,
+    and visualization/analysis code where appropriate. It also publishes
+    status/area overview images such as `assets/status_grid.png` and
+    `assets/table_by_areas.png`.
+  - Current evidence: broad follow-on source TODOs require a repository ref,
+    live-update policy, problem ids, notebook metadata, and prompt/verifier/
+    final-program presence. They do not require per-problem coverage states
+    distinguishing mandatory problem pages from partial notebook availability,
+    missing-notebook reasons, artifact-presence matrices, overview-image
+    provenance, or snapshot-date semantics for a live repository that can
+    change.
+  - Required result: add a follow-on repository coverage manifest and
+    validators with repository URL/ref/commit/date, live-update policy, all 67
+    problem ids, page path/hash, notebook path/hash or absence reason, artifact
+    presence flags for prompt/verifier/initial/final/visualization/analysis,
+    overview-image paths/hashes, and README/ROADMAP wording that separates
+    complete problem-page coverage from partial notebook/artifact coverage at a
+    pinned snapshot.
+
 - [ ] Add AlphaEvolve theoretical-CS proof-element source tracking.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve
     theoretical-CS article and arXiv `2509.18057`, `Reinforced Generation of

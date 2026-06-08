@@ -3107,6 +3107,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that makes the original-paper versus follow-on
     source boundary explicit.
 
+- [ ] Track follow-on problem-repository coverage-state evidence.
+  - Paper/source evidence: the
+    `google-deepmind/alphaevolve_repository_of_problems` README describes a
+    live repository that will expand and improve over time. It says every one
+    of the 67 mathematical problems has a problem page, while Colab notebooks
+    exist for many but not all problems and may contain prompts, verification
+    code, initial programs, final evolved programs, and visualization/analysis
+    code where appropriate. The README also references status and area overview
+    assets including `assets/status_grid.png` and `assets/table_by_areas.png`.
+  - Current gap: existing paper TODOs require a repository ref and broad
+    notebook artifact metadata, but they do not preserve source-state
+    distinctions between all problem pages, partial notebook availability,
+    artifact-presence variants, missing-notebook reasons, overview-image
+    provenance, and live-repository snapshot dates.
+  - Required result: add source-manifest rows and checks for the problem
+    repository snapshot: repository URL/ref/commit/date, live-update policy,
+    all 67 problem ids, page path/hash, notebook path/hash or explicit absence
+    reason, prompt/verifier/initial/final/visualization/analysis presence
+    flags, overview-image paths/hashes, and citation wording that avoids
+    implying notebook coverage is complete when only problem-page coverage is.
+
 - [ ] Track AlphaEvolve theoretical-CS proof-element source evidence.
   - Paper evidence: Google Research's September 30, 2025 article
     `AI as a research partner: Advancing theoretical computer science with

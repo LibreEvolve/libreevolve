@@ -2166,6 +2166,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     original AlphaEvolve specification parity from later 67-problem
     mathematical-discovery source coverage.
 
+- [ ] Scope roadmap follow-on problem-repository coverage to a pinned snapshot.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README describes a live repository that will expand and improve over time.
+    It says there are problem pages for all 67 mathematical problems and Colab
+    notebooks for many, but not all, problems, with prompts, verification code,
+    initial programs, final evolved programs, and visualization/analysis code
+    where appropriate. It also references status and area overview assets such
+    as `assets/status_grid.png` and `assets/table_by_areas.png`.
+  - Current evidence: roadmap TODOs require tracking the later paper,
+    repository ref, problem inventory, and notebook artifacts, but they do not
+    force roadmap language to separate complete problem-page coverage from
+    partial notebook/artifact coverage or to describe live-repository evidence
+    as a pinned snapshot with overview-image provenance.
+  - Required result: once the coverage manifest is implemented, update ROADMAP
+    milestones and evidence gates so follow-on AlphaEvolve math coverage names
+    the repository snapshot, records page/notebook/artifact availability by
+    problem, includes overview-image hashes when cited, and avoids treating a
+    live partial-notebook repository as fully static or notebook-complete.
+
 - [ ] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

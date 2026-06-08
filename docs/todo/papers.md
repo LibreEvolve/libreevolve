@@ -2978,6 +2978,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     integration target, and deployment/time-to-market evidence before making
     AlphaEvolve-comparable TPU-circuit optimization claims.
 
+- [ ] Record TPU arithmetic-circuit rewrite artifact evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 says
+    AlphaEvolve optimized an already highly optimized Verilog implementation of
+    a key TPU arithmetic circuit within the matrix multiplication unit, and
+    found a simple code rewrite that removed unnecessary bits while reducing
+    area and power.
+  - Current gap: paper-facing hardware TODOs require RTL source boundaries,
+    synthesis/PPA provenance, equivalence/formal verification, TPU-designer
+    signoff, downstream synthesis confirmation, and adoption/integration
+    evidence. They do not require a paper report to preserve the concrete
+    rewrite artifact behind the claim: before/after Verilog hashes, changed
+    spans, eliminated bit or signal identities, arithmetic-circuit component
+    context, matrix-multiplication-unit context, or a semantic link from
+    removed bits to PPA and verification records.
+  - Required result: add paper/report evidence for the TPU arithmetic-circuit
+    rewrite: source and modified Verilog artifact hashes, exact diff or AST
+    span records, removed-bit inventory, component and matrix-unit identifiers,
+    rewrite-category labels, linkage from eliminated bits to functional
+    verification and PPA records, and README/ROADMAP wording that separates
+    concrete rewrite provenance from broader RTL/EDA validation evidence.
+
 - [ ] Record per-edit reference checks for compiler-generated IR results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says
     AlphaEvolve optimized XLA-generated IR for FlashAttention and surrounding

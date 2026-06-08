@@ -2799,6 +2799,27 @@ Primary evidence:
     target, and deployment/time-to-market evidence before treating
     hardware-circuit results as AlphaEvolve-ready.
 
+- [ ] Add TPU arithmetic-circuit rewrite artifact provenance.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a
+    simple code rewrite in an already highly optimized Verilog implementation
+    of a key TPU arithmetic circuit within the matrix multiplication unit, and
+    that the rewrite removed unnecessary bits while reducing area and power.
+  - Current evidence: the RTL/EDA TODO above requires HDL boundaries,
+    synthesis/PPA metrics, formal/equivalence verification, designer signoff,
+    downstream synthesis confirmation, and adoption evidence. It does not
+    require the exact candidate rewrite artifact or semantic evidence for the
+    paper's "removed unnecessary bits" claim: before/after Verilog excerpt
+    hashes, affected signal/register/bit-range identities, arithmetic-circuit
+    component id, matrix-multiplication-unit context, or a rewrite rationale
+    linking eliminated bits to the measured area/power objective.
+  - Required result: add hardware-domain report metadata and validators for
+    the TPU rewrite artifact: source and modified Verilog hashes, exact
+    changed-line or AST/diff spans, removed-bit/signal inventory, component and
+    matrix-unit context, semantic rewrite category, linkage from each removed
+    bit to verification/PPA records, and docs that distinguish the concrete
+    rewrite artifact from generic RTL verification and downstream synthesis
+    evidence.
+
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.
   - Spec evidence: AlphaEvolve Section 3.3.4 directly optimizes
     XLA-generated IR for FlashAttention plus surrounding input/output

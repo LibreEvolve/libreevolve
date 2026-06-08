@@ -1579,6 +1579,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distinguishes generic systems readiness from AlphaEvolve-style hardware
     circuit optimization evidence.
 
+- [ ] Keep hardware roadmap wording scoped until TPU bit-removal rewrite
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the hardware result was a
+    simple code rewrite in Verilog for a key TPU arithmetic circuit in the
+    matrix multiplication unit, and that it removed unnecessary bits while
+    reducing area and power.
+  - Current evidence: roadmap systems-result wording covers generic hardware
+    readiness, RTL/EDA verification, PPA metrics, designer signoff, downstream
+    synthesis, adoption, and deployment impact. It does not require hardware
+    fixtures or report validators to preserve the concrete rewrite artifact:
+    before/after Verilog hashes, changed spans, removed-bit or signal
+    inventory, arithmetic-circuit and matrix-unit identifiers, semantic
+    rewrite category, or linkage from removed bits to verification and PPA
+    evidence.
+  - Required result: when TPU arithmetic-circuit rewrite metadata and
+    validators land, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap text separates a reproduced bit-removal rewrite from generic
+    RTL verification, downstream synthesis, and hardware deployment evidence.
+
 - [ ] Keep compiler-IR roadmap wording scoped to final reference gates until
       per-edit randomized checks exist.
   - Spec evidence: AlphaEvolve Section 3.3.4 checks each FlashAttention

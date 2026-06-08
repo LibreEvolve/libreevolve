@@ -884,6 +884,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     generic systems report readiness proves AlphaEvolve-style TPU-circuit
     optimization, adoption, or deployment evidence.
 
+- [ ] Keep README hardware-rewrite wording scoped until TPU bit-removal
+      artifact evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.3 says the TPU hardware result was
+    a simple Verilog rewrite of a key arithmetic circuit in the matrix
+    multiplication unit that removed unnecessary bits while reducing area and
+    power.
+  - Current evidence: README documents generic systems reports and the broader
+    RTL/EDA verification gap, but it does not require README wording to wait
+    for concrete rewrite provenance: before/after Verilog artifact hashes,
+    changed spans, removed-bit or signal inventory, component/matrix-unit
+    identifiers, rewrite-category labels, or links from the eliminated bits to
+    PPA and verification records.
+  - Required result: once TPU arithmetic-circuit rewrite metadata lands, update
+    README, ROADMAP, papers index, and matching TODOs so README distinguishes
+    a reproduced bit-removal rewrite artifact from generic hardware
+    correctness, PPA, designer-signoff, or downstream synthesis evidence.
+
 - [ ] Keep README compiler-IR wording scoped to final reference gates until
       per-edit randomized checks exist.
   - Spec evidence: AlphaEvolve Section 3.3.4 checked each FlashAttention

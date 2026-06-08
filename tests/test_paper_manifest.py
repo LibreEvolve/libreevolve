@@ -1157,6 +1157,44 @@ def test_validate_paper_manifest_allows_unimplemented_future_benchmark_boundary(
     assert report.ok is True
 
 
+def test_validate_paper_manifest_reports_limited_status_without_missing_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Test-time training inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Only clipped-reward export exists.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_limited_status_missing_boundary" in codes
+
+
+def test_validate_paper_manifest_allows_limited_status_with_missing_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Test-time training inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Only clipped-reward export exists; no online training loop.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

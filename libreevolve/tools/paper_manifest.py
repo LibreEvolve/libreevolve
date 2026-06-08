@@ -161,6 +161,11 @@ STATUS_TABLE_NEGATIVE_IMPLEMENTATION_PREFIXES = (
     "Background only",
     "Not implemented; potential future benchmark",
 )
+STATUS_TABLE_LIMITED_STATUS_PREFIXES = ("Only ",)
+STATUS_TABLE_LIMITATION_BOUNDARY_RE = re.compile(
+    r"\b(?:no|not|without|but|while|lacks?|missing|remain(?:s)? open|out of scope)\b",
+    flags=re.IGNORECASE,
+)
 STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
     r"\b(?:implemented\s+(?:as|local|smoke|support)|implementation\s+exists|"
     r"support\s+exists|is\s+implemented|are\s+implemented|now\s+supports|supports)\b",
@@ -1418,6 +1423,19 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
                 PaperManifestIssue(
                     "status_table_negative_status_contradiction",
                     "negative or background-only status classes must not include positive implementation claims",
+                    row_id,
+                )
+            )
+        break
+    for prefix in STATUS_TABLE_LIMITED_STATUS_PREFIXES:
+        if not status.startswith(prefix):
+            continue
+        suffix = status[len(prefix) :]
+        if not STATUS_TABLE_LIMITATION_BOUNDARY_RE.search(suffix):
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_limited_status_missing_boundary",
+                    "limited-support status classes must include an explicit missing or unsupported behavior boundary",
                     row_id,
                 )
             )

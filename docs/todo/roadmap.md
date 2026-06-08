@@ -242,12 +242,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP and README can accurately claim implemented
     `diff` and configured `full` mutation modes, including full-file,
     file-section, and full-block replacement semantics. They do not yet require
-    a policy that selects the prompt/output mode per candidate or records why a
+    a policy that selects the prompt/output mode per candidate size, workspace
+    shape, edit scope, prompt arm, or prior failure mode, or records why a
     candidate received a diff versus full-rewrite contract.
   - Required result: when adaptive mutation-mode policy, telemetry, and tests
     land, update roadmap, README, papers index, and code/paper TODO entries so
-    roadmap wording neither underclaims current configured `diff`/`full`
-    support nor overclaims AlphaEvolve-style adaptive mutation prompting.
+    roadmap wording includes candidate/task-shape thresholds, per-candidate
+    mode telemetry, fallback/critique behavior, and examples proving large
+    codebase diff prompts and short-code/full-rewrite prompts are selected
+    under documented AlphaEvolve-style conditions without overclaiming current
+    configured `diff`/`full` support.
 
 - [ ] Keep roadmap seed-provenance wording scoped to source identity versus
       experiment idea provenance.

@@ -768,6 +768,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     status for any natural-language hypothesis stage before claiming
     AlphaEvolve-style distinction from AI-Co-Scientist.
 
+- [ ] Keep Related Work roadmap wording scoped until taxonomy evidence exists.
+  - Spec evidence: AlphaEvolve Related Work frames the system as
+    execution-feedback code superoptimization, compares it with pre-LLM
+    enumeration/genetic-search/Monte-Carlo/deep-RL approaches, AlphaTensor,
+    GPU-kernel and LLM-agent optimizers, AI-for-science methods, and proof
+    discovery, and distinguishes programmatic hypothesis/evaluation and
+    witness/counterexample discovery from other scientific-discovery stages.
+  - Current evidence: roadmap/README/paper-index status can cite bundled
+    papers and specific feature gaps, but it does not require a related-work
+    taxonomy that records source ids, method family, task stage, candidate
+    representation, evaluator/evidence mode, proof-versus-witness status,
+    comparison claim, or local status for each AlphaEvolve Related Work
+    category.
+  - Required result: when related-work taxonomy metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap claims
+    distinguish broad inspiration and paper availability from AlphaEvolve's
+    specific positioning as execution-feedback superoptimization and
+    programmatic scientific discovery.
+
 - [ ] Keep self-improvement roadmap wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

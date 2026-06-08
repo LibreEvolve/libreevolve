@@ -1592,6 +1592,33 @@ Primary evidence:
     candidate evaluation before claiming AlphaEvolve-style distinction from
     AI-Co-Scientist workflows.
 
+- [ ] Add AlphaEvolve Related Work taxonomy and positioning evidence.
+  - Spec evidence: AlphaEvolve Related Work frames the system as code
+    superoptimization using execution feedback, situates it against
+    enumeration, genetic search, Monte Carlo sampling, deep reinforcement
+    learning, AlphaTensor, GPU-kernel agents, LLM multi-agent approaches, and
+    broader AI-for-science systems, and says AlphaEvolve differs from most
+    scientific-discovery methods through programmatic hypothesis
+    representations and evaluation metrics. It also positions FunSearch-style
+    witness/counterexample discovery as complementary to formal and informal
+    proof search.
+  - Current evidence: LibreEvolve has a PDF manifest and paper index with
+    selected local inspiration papers plus feature-specific TODOs for
+    FunSearch, AI-Co-Scientist, CodeEvolve, DeepEvolve, and benchmark domains.
+    There is no schema or report that preserves AlphaEvolve's broader Related
+    Work taxonomy, method-family comparisons, candidate-representation modes,
+    evidence/evaluator modes, proof-versus-witness distinctions, or which
+    related-work claims are local capability, background context, or explicitly
+    unsupported.
+  - Required result: add paper/reference taxonomy metadata and validators for
+    related-work source ids, method families (`superoptimization`,
+    `llm_algorithm_discovery`, `ai_for_science`, `proof_search`,
+    `witness_discovery`, etc.), candidate representation, evaluator/evidence
+    mode, task stage, comparison claim, local implementation status, source
+    location, and README/ROADMAP wording checks so LibreEvolve does not
+    overclaim AlphaEvolve's Related Work positioning from a flat paper list or
+    isolated feature TODOs.
+
 - [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
       preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts

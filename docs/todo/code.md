@@ -5349,3 +5349,39 @@ Primary evidence:
     identities, and README/ROADMAP wording that keeps inference-time harness
     alignment claims as missing evidence until local implementation and
     reports exist.
+
+- [ ] Add Adaptive Auto-Harness open-ended task-stream boundary.
+  - Spec evidence: arXiv `2606.01770`, `Adaptive Auto-Harness: Sustained
+    Self-Improvement for Agentic System Deployment on Open-Ended Task
+    Streams`, was submitted June 1, 2026. Its abstract says existing
+    auto-harness systems optimize prompts, skills, tools, memories, and
+    supporting infrastructure from execution feedback, but are typically
+    evaluated on fixed offline benchmarks. Real deployments instead have
+    open-ended task streams with unbounded histories, heterogeneous tasks, and
+    shifting distributions; a single repeatedly and densely updated harness
+    can become brittle as accuracy peaks and then declines. Adaptive
+    Auto-Harness decomposes the oracle-harness gap into evolution loss and
+    adaptation loss, then addresses them with a stateful multi-agent evolver,
+    a harness tree with solve-time routing, and human-steering hooks when
+    history lacks the needed signal.
+  - Current evidence: LibreEvolve supports per-run artifacts, fixed problem
+    directories, MAP-Elites archives, islands, prompt history, and evaluator
+    feedback, but it has no `2606.01770` source row, no open-ended task-stream
+    abstraction, no unbounded history management across heterogeneous task
+    distributions, no evolution-loss/adaptation-loss accounting, no stateful
+    multi-agent evolver roles, no harness tree, no solve-time routing policy,
+    no human-steering hook record, and no sustained-performance report that
+    detects early peak followed by degradation.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2606.01770`: arXiv id/version/date/PDF hash, authors, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    run/problem boundaries, open-ended task-stream schema, history-growth
+    records, task heterogeneity and distribution-shift metrics, oracle-harness
+    definition, evolution-loss and adaptation-loss records, stateful multi-
+    agent evolver role schemas, cross-cycle memory records, harness tree
+    artifacts, solve-time routing traces, human-steering hook provenance,
+    targeted-steering outcomes, sustained-performance curves, degradation/
+    brittleness diagnostics, prediction-market/security-competition/event-
+    forecasting benchmark metadata, baseline identities, ablation records, and
+    README/ROADMAP wording that keeps adaptive open-ended harness deployment
+    claims as missing evidence until local implementation and reports exist.

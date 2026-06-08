@@ -4936,3 +4936,40 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/artifact availability if any, reproducibility status, and README/
     ROADMAP wording that treats inference-time trajectory alignment as
     missing paper evidence rather than implemented LibreEvolve support.
+
+- [ ] Track Adaptive Auto-Harness open-ended task-stream paper evidence.
+  - Paper/source evidence: arXiv `2606.01770`, submitted June 1, 2026, is
+    titled `Adaptive Auto-Harness: Sustained Self-Improvement for Agentic
+    System Deployment on Open-Ended Task Streams`. Its abstract says
+    auto-harness systems such as A-Evolve, GEPA, and Meta-Harness improve
+    agents by optimizing prompts, skills, tools, memories, and infrastructure
+    from execution feedback, but are usually tested on fixed offline
+    benchmarks. Open-ended deployments have growing histories, heterogeneous
+    tasks, and shifting distributions; a single densely updated harness can
+    become brittle as accuracy peaks and declines. Adaptive Auto-Harness
+    decomposes the gap to an oracle harness into evolution loss and adaptation
+    loss, and addresses those losses with a stateful multi-agent evolver, a
+    harness tree with solve-time routing, and human-steering hooks. It reports
+    gains across prediction-market, security-competition, and event-
+    forecasting streams over five auto-harness baselines.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2606.01770`. Existing rows cover AlphaEvolve search, AHE, AI
+    Harness Engineering, inference-time harness alignment, HarnessFix, RHO,
+    SIA, and harness-benefit disentanglement, but not sustained deployment on
+    open-ended task streams, history-growth management, task-wise harness
+    adaptation, harness trees, solve-time routing, evolution/adaptation loss
+    decomposition, or targeted human steering when history lacks signal.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2606.01770`: title/authors/arXiv version/date/PDF digest, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    deployment assumptions, open-ended task-stream schema, history-growth
+    records, task-heterogeneity metadata, distribution-shift metrics, oracle-
+    harness definition, evolution-loss and adaptation-loss records, stateful
+    multi-agent evolver roles, cross-cycle memory, harness tree artifacts,
+    solve-time routing records, human-steering hook provenance, targeted
+    steering outcomes, sustained-performance/degradation curves, prediction-
+    market/security-competition/event-forecasting benchmark metadata,
+    baseline identities, ablation records, code/artifact availability if any,
+    reproducibility status, and README/ROADMAP wording that treats Adaptive
+    Auto-Harness as missing paper evidence rather than implemented LibreEvolve
+    support.

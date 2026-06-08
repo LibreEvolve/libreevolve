@@ -3934,3 +3934,34 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Terminal-Bench-2 and synthetic task metadata, baseline identities, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     treat more harness structure as automatically better.
+
+- [ ] Add Adaptive Auto-Harness open-ended task-stream gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2606.01770`, submitted June 1, 2026, introduces
+    `Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System
+    Deployment on Open-Ended Task Streams`. The abstract says fixed offline
+    benchmarks miss deployment conditions where histories grow, tasks are
+    heterogeneous, and distributions shift. It warns that a single densely
+    updated harness can become brittle, decomposes the oracle-harness gap into
+    evolution loss and adaptation loss, and uses a stateful multi-agent
+    evolver, harness tree, solve-time routing, and human-steering hooks for
+    task-wise adaptation.
+  - Current evidence: ROADMAP tracks fixed problem runs, archives, prompt
+    history, evaluator contracts, islands, and several harness-evolution
+    source gates. It does not mention `2606.01770`, define open-ended
+    task-stream deployment gates, require history-growth or distribution-
+    shift evidence, separate evolution loss from adaptation loss, support a
+    harness tree, route tasks to harness variants at solve time, or record
+    human steering when historical evidence is insufficient.
+  - Required result: add roadmap gates for `2606.01770`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    open-ended task-stream schema, history-growth records, task-heterogeneity
+    and distribution-shift telemetry, oracle-harness definition, evolution-
+    loss/adaptation-loss metrics, stateful multi-agent evolver schemas,
+    cross-cycle memory, harness tree records, solve-time routing telemetry,
+    human-steering hook records, targeted-steering outcomes, sustained-
+    performance and degradation curves, prediction-market/security-
+    competition/event-forecasting benchmark records, baseline/ablation
+    identities, and a background-only or benchmark-fixture status rule so
+    roadmap claims do not outpace local Adaptive Auto-Harness-style sustained
+    deployment support.

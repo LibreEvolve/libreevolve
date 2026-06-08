@@ -44,6 +44,11 @@ from libreevolve.problems.benchmarks.example_scope import (
     render_example_benchmark_scope_summary,
     validate_example_benchmark_scope,
 )
+from libreevolve.problems.benchmarks.matrix_exhibits import (
+    FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
+    render_figure9_matrix_diff_exhibit_summary,
+    validate_figure9_matrix_diff_exhibit,
+)
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
@@ -95,6 +100,7 @@ __all__ = [
     "EXPECTED_TARGET_COUNT",
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
     "FIGURE8_EXHIBIT_SCHEMA",
+    "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
     "MATRIX_NEAR_INTEGRALITY_SCHEMA",
     "MATRIX_RESULT_SCHEMA",
@@ -121,6 +127,7 @@ __all__ = [
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
     "render_figure8_exhibit_summary",
+    "render_figure9_matrix_diff_exhibit_summary",
     "render_matrix_near_integrality_summary",
     "render_matrix_result_summary",
     "render_matrix_sweep_space_summary",
@@ -136,6 +143,7 @@ __all__ = [
     "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
     "validate_figure8_exhibit",
+    "validate_figure9_matrix_diff_exhibit",
     "validate_matrix_near_integrality_evidence",
     "validate_matrix_result_report",
     "validate_matrix_sweep_space_evidence",

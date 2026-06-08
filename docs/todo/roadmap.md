@@ -2912,7 +2912,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     provenance.
 
 - [ ] Keep Appendix A Figure 9 roadmap wording scoped until magnified-diff
-      exhibit provenance exists.
+      panel artifacts exist.
   - Spec evidence: AlphaEvolve Appendix A Figures 9a-9c are a three-part
     magnified source/diff exhibit for the 4x4 matrix program from Figure 4,
     showing the ordered code changes that discover the rank-48 decomposition,
@@ -2920,14 +2920,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     hallucination/discretization/loss-penalty, and named sweep-field
     components.
   - Current evidence: roadmap status can point to matrix result contracts,
-    Appendix A registry coverage, Figure 4 exhibit gaps, and sweep-space
-    provenance gaps. It does not require Figure 9a/9b/9c panel metadata,
-    page/caption locations, exact line-span artifacts, source/diff hashes,
-    rendered/OCR text validation, continuation ordering, semantic component
-    labels for the displayed source changes, or links from each panel to matrix
-    rows, sweep metadata, exactness certificates, and companion paper/source
-    evidence.
-  - Required result: when Appendix A Figure 9 exhibit provenance lands, update
+    Appendix A registry coverage, Figure 4 exhibit gaps, sweep-space
+    provenance gaps, and
+    `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`. The Figure 9
+    schema validates Figure 9a/9b/9c panel metadata, pages 35-37, Figure 4
+    caption linkage, exact line-span artifacts, source/diff hashes,
+    rendered/OCR text hashes, continuation ordering, semantic component labels
+    for the displayed source changes, and links from each panel to matrix rows,
+    sweep metadata, exactness certificates, and companion paper/source
+    evidence. It does not emit or check in the actual panel artifacts.
+  - Required result: when Appendix A Figure 9 panel artifacts land, update
     ROADMAP, README, papers index, and code/paper TODOs so roadmap wording
     distinguishes reproduced appendix magnified-diff panels from Figure 4
     main-text exhibit evidence, semantic change-component evidence, and generic

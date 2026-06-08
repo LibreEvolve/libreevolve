@@ -3801,21 +3801,22 @@ Primary evidence:
     hallucination and discretization losses, large-value penalties, and named
     sweep fields.
   - Current evidence: separate TODOs require Figure 4 exhibit provenance and
-    Figure 9 sweep-space metadata. They do not record Figure 9a/9b/9c as
-    appendix exhibit panels with stable panel IDs, page/caption locations,
-    exact line-span coverage, source/diff excerpt artifacts and hashes,
-    continuation ordering across the three panels, OCR/rendered-text
-    validation, semantic component labels for the shown code changes, or links
-    from each panel to the same matrix target, sweep metadata, exactness
-    certificate, and companion notebook/source evidence.
-  - Required result: add Figure 9 exhibit metadata and validators with
-    figure/panel IDs, source PDF page and caption locations, ordered panel
-    continuity, exact code/diff line-span artifacts, rendered image/text
-    artifact hashes, target/result-row mappings, semantic component inventories
-    for optimizer/init/noise/clipping/loss/discretization/sweep changes,
-    sweep-field links, and docs that distinguish reproduced Appendix A
-    magnified-diff exhibits from Figure 4 main-text evidence and generic
-    sweep-space provenance.
+    Figure 9 sweep-space metadata.
+    `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1` now validates
+    Figure 9a/9b/9c appendix panel IDs, paper pages 35-37, Figure 4 caption
+    linkage, ordered code line spans, source/diff excerpt artifact hashes,
+    rendered image/text artifact hashes, `mm_4x4x4` rank-48 target mapping,
+    semantic component labels for optimizer/init/noise/clipping/loss/
+    discretization/sweep changes, sweep-field links, and links to matrix
+    result, sweep metadata, exactness certificate, and companion notebook
+    evidence. It validates declared exhibit metadata only; no local generator
+    emits or checks in the rendered/OCR/source-diff panel artifacts.
+  - Required result: emit or commit the actual Figure 9 panel artifacts with
+    source PDF excerpt hashes, rendered image/OCR text hashes, source/diff line
+    span artifacts, and links to the corresponding matrix result, sweep-space,
+    exactness-certificate, and notebook/source records before claiming
+    reproduced Appendix A magnified-diff exhibits rather than metadata-schema
+    readiness.
 
 - [ ] Add Figure 4 matrix-discovery exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix

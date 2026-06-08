@@ -3235,6 +3235,15 @@ labels such as `Full method`, axis metadata, std-band style declarations,
 rendered artifact hashes, and links to report/curve/raw-trace artifacts. It
 does not render a plot or prove that benchmark scripts emitted the linked
 artifacts.
+Appendix A Figure 9 matrix-diff exhibit metadata uses
+`libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`; it validates the
+three magnified Figure 9a/9b/9c panel ids, paper pages 35-37, Figure 4
+caption linkage, `mm_4x4x4` rank-48 target mapping, ordered line spans,
+source-diff/rendered-image/OCR artifact hashes, semantic component coverage
+for optimizer, initialization, noise, clipping, loss, discretization, and
+sweep changes, and links to matrix result, sweep-space, certificate, and
+companion notebook/source evidence. It validates declared exhibit metadata
+once artifacts exist; it does not render or check in those appendix panels.
 LLM feedback-grader calibration reports use
 `libreevolve.llm_feedback_calibration.v1` in
 `libreevolve/llm/feedback_calibration.py`; the contract validates declared

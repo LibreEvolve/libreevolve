@@ -887,6 +887,14 @@ Implemented:
   style declarations, rendered artifact hashes, and links to ablation report,
   curve-summary, and raw-seed-trace artifacts. It does not render plots or
   prove that benchmark scripts emitted those artifacts.
+- `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve Appendix A
+  Figure 9a-9c magnified matrix-diff metadata contract. It validates the three
+  panel ids, paper pages 35-37, Figure 4 caption linkage, `mm_4x4x4` rank-48
+  target mapping, ordered line spans, source-diff/rendered-image/OCR artifact
+  hashes, semantic component coverage for optimizer, initialization, noise,
+  clipping, loss, discretization, and sweep changes, and links to matrix
+  result, sweep-space, exactness-certificate, and companion notebook evidence.
+  It does not render or commit the appendix panel artifacts.
 - `libreevolve/problems/benchmarks/paper_artifact_roles.py`: AlphaEvolve paper
   artifact-role attribution contract. It validates the PDF page 23 contribution
   records for the paper-figure creator initials and the accompanying Google

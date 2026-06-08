@@ -461,6 +461,13 @@ is not yet an AlphaEvolve reproduction.
   exhibit schema validates panel ids, exact paper legend labels, axis/style
   metadata, rendered artifact hashes, and report/raw-trace links. No real
   runner produces those reports or rendered exhibit artifacts yet.
+- Keep Appendix A Figure 9 matrix-diff exhibit claims scoped to declared
+  exhibit validation: `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`
+  now validates Figure 9a/9b/9c panel ids, pages 35-37, Figure 4 caption
+  linkage, ordered line spans, source-diff/rendered/OCR hashes, semantic
+  optimizer/init/noise/clipping/loss/discretization/sweep labels, and links to
+  result, sweep-space, certificate, and companion notebook evidence. Rendered
+  appendix panel artifacts are still not emitted or checked in.
 
 ### 10. Operational maturity
 

@@ -280,6 +280,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     overclaims AlphaEvolve-style robustness or versatility shaped by broad
     collaborator feedback.
 
+- [ ] Keep system-development roadmap wording scoped until contribution-role
+      provenance exists.
+  - Spec evidence: AlphaEvolve's Contributions section attributes core system
+    development work across initial implementation, project vision and problem
+    scoping, first benchmark iteration, final system development,
+    infrastructure maintenance, code reviews, team coordination, and
+    supervision.
+  - Current evidence: ROADMAP and README can cite local implementation status,
+    source provenance, tests, and open contribution guidance. They do not
+    require roadmap evidence for contribution-role records, development-phase
+    attribution, infrastructure ownership, benchmark-iteration ownership,
+    review responsibility, or coordination/supervision scope.
+  - Required result: when contribution-role metadata lands, update ROADMAP,
+    README, papers index, and code/paper TODOs with role labels, development
+    phase, artifact/module linkage, source page/section, and review/approval
+    scope so roadmap wording separates local implementation plans from
+    AlphaEvolve-style paper-attributed system-development provenance.
+
 - [ ] Keep workspace-topology roadmap scope aligned with current
       materialization diagnostics.
   - Spec evidence: AlphaEvolve-style codebase evolution should turn invalid

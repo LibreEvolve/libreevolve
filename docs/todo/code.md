@@ -186,6 +186,26 @@ Primary evidence:
     README, ROADMAP, or papers-index wording claims AlphaEvolve-style
     robustness or versatility shaped by broad collaborator feedback.
 
+- [ ] Add core system-development contribution provenance.
+  - Spec evidence: AlphaEvolve's Contributions section attributes the initial
+    system design/implementation, project vision and problem scoping, first
+    benchmark used for iterating on the system, final AlphaEvolve version,
+    infrastructure maintenance, majority code reviews, team coordination, and
+    research-program supervision to specific contributors and roles.
+  - Current evidence: LibreEvolve records source/build provenance, run
+    manifests, selected artifact roles for figures/notebooks, practical
+    application owner/reviewer gaps, and early-user feedback gaps. It does not
+    define a provenance layer for core system-development roles, implementation
+    phases, review ownership, infrastructure ownership, benchmark-iteration
+    ownership, or coordination/supervision boundaries.
+  - Required result: add project/system contribution metadata and validators
+    with safe role labels, development phase (`initial_design`,
+    `first_benchmark_iteration`, `final_system`, `infrastructure`,
+    `code_review`, `coordination`, `supervision`), artifact or module links,
+    source section/page, review/approval scope, and README/ROADMAP checks so
+    local docs do not imply AlphaEvolve-style development provenance from
+    generic git history or contributor listings alone.
+
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and

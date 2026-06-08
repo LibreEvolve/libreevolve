@@ -304,6 +304,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     metadata, and README/ROADMAP wording that separates documented local
     breadth from AlphaEvolve-style broad collaborator-feedback evidence.
 
+- [ ] Track core AlphaEvolve system-development contribution provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the
+    initial version of AlphaEvolve was designed and implemented by specific
+    contributors; project vision and problem scoping, first benchmark problem
+    for iterating on AlphaEvolve, final version development, infrastructure
+    maintenance, code reviews, team coordination, and research-program
+    supervision are all separately attributed.
+  - Current gap: paper/status records preserve selected application owner
+    roles, figure/Colab artifact roles, early-user feedback gaps, and general
+    source/build provenance. They do not preserve paper-facing provenance for
+    core system-development phases or responsible roles, so local docs cannot
+    distinguish implementation authorship, infrastructure maintenance,
+    benchmark-iteration ownership, review responsibility, and coordination
+    claims from generic repository history.
+  - Required result: add paper-facing contribution records for core
+    AlphaEvolve-style system development: role label, responsible person/team
+    label where safe, development phase, artifact/module/report linkage,
+    source page/section, review or approval scope, and README/ROADMAP wording
+    that separates local contributor history from paper-attributed
+    system-development provenance.
+
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2, 2.4, 2.6, and 4.

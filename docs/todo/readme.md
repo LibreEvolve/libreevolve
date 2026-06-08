@@ -226,6 +226,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style robustness or versatility claims backed by diverse
     collaborator feedback.
 
+- [ ] Keep README system-development provenance scoped until contribution-role
+      evidence exists.
+  - Spec evidence: AlphaEvolve's Contributions section separately attributes
+    system design/implementation phases, project vision and problem scoping,
+    the first benchmark used for iterating on AlphaEvolve, infrastructure
+    maintenance, code reviews, team coordination, and research-program
+    supervision.
+  - Current evidence: README can describe the current codebase, tests, runtime
+    manifests, and contributor openness, but it does not document a
+    contribution-role schema that links implementation phases, infrastructure
+    ownership, benchmark-iteration ownership, code-review responsibility, or
+    coordination/supervision roles to source sections and project artifacts.
+  - Required result: when contribution-role metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes local repository history from AlphaEvolve-style
+    system-development provenance and does not overclaim comparable
+    implementation, infrastructure, review, or coordination evidence.
+
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,

@@ -1882,8 +1882,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evidence paths exist under `docs/todo/Completed/` and contain completed
     checklist text that names the paper id or source PDF. README, ROADMAP, and
     `papers/README.md` now describe that status-cell and TODO-coverage
-    validation scope without claiming full semantic proof. The validator also
-    now rejects unqualified
+    validation scope without claiming full semantic proof. Row-specific open
+    TODO blocks must now include Current/Remaining gap or Current evidence
+    context plus a `Required result:` field. The validator also now rejects
+    unqualified
     `AlphaEvolve-comparable` status-table overclaims unless the phrase is
     framed as missing, scoped, or requirement-bound evidence, and it rejects
     background-only/future-benchmark status classes that include positive
@@ -1904,7 +1906,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     does not yet machine-check phrase-level evidence links behind each long
     semantic status claim or deeply distinguish smoke-scoped examples from
     benchmark evidence beyond the role/status class matrix, required path
-    presence, source-specific completed-evidence path checks, the
+    presence, active-block structure checks, source-specific completed-evidence path checks, the
     `AlphaEvolve-comparable` overclaim guard, the negative-status
     contradiction guard, the background-only boundary guard, the limited-status
     boundary guard, the future-benchmark boundary guard, the implemented-status

@@ -48,6 +48,8 @@ LOCAL_PAPER_CACHE_SECTION_RE = re.compile(
 )
 TODO_COVERAGE_PATH_RE = re.compile(r"`(docs/todo/(?:Completed/)?[A-Za-z0-9_.-]+\.md)`")
 COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
+ACTIVE_TODO_GAP_CONTEXT_RE = re.compile(r"(?m)^  - (?:Current gap|Remaining gap|Current evidence):")
+ACTIVE_TODO_REQUIRED_RESULT_RE = re.compile(r"(?m)^  - Required result:")
 SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
     r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
     flags=re.IGNORECASE,
@@ -1099,8 +1101,26 @@ def _validate_active_todo_coverage_cell(root: Path, row_id: str, cell: str) -> l
                 )
             )
             continue
-        if _open_todo_blocks_contain(text, row_id):
+        matching_blocks = [block for block in _open_todo_blocks(text) if row_id in block]
+        if matching_blocks:
             expected_paths.add(relative_path)
+        for block in matching_blocks:
+            if not ACTIVE_TODO_GAP_CONTEXT_RE.search(block):
+                issues.append(
+                    PaperManifestIssue(
+                        "active_todo_coverage_block_missing_gap_context",
+                        f"{relative_path} has a row-specific open TODO block without Current/Remaining gap or Current evidence context",
+                        row_label,
+                    )
+                )
+            if not ACTIVE_TODO_REQUIRED_RESULT_RE.search(block):
+                issues.append(
+                    PaperManifestIssue(
+                        "active_todo_coverage_block_missing_required_result",
+                        f"{relative_path} has a row-specific open TODO block without Required result",
+                        row_label,
+                    )
+                )
 
     if listed_paths != expected_paths:
         missing = sorted(expected_paths - listed_paths)

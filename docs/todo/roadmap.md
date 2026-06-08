@@ -956,7 +956,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     paths must also exist under `docs/todo/Completed/` and contain completed
     checklist text that names the paper id or source PDF. README, ROADMAP, and
     the paper index now describe this validator boundary without claiming full
-    semantic proof. The validator also now rejects unqualified
+    semantic proof. Row-specific open TODO blocks must now include
+    Current/Remaining gap or Current evidence context plus a `Required result:`
+    field. The validator also now rejects unqualified
     `AlphaEvolve-comparable` status-table overclaims
     unless the phrase is framed as missing, scoped, or requirement-bound
     evidence, and it rejects background-only/future-benchmark status classes
@@ -977,8 +979,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap gap: the validator does not yet link long status claims to specific
     active/completed evidence records at semantic phrase level or deeply verify
     smoke/partial/planned/unsupported qualifiers beyond the role/status class
-    matrix, required path presence, source-specific completed-evidence path
-    checks, the `AlphaEvolve-comparable` overclaim
+    matrix, required path presence, active-block structure checks,
+    source-specific completed-evidence path checks, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the implemented-status
     boundary guard, the partial-status boundary guard, the limited-status

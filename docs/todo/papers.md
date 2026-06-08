@@ -405,6 +405,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     arbitrary-codebase support. There are no configured language runners,
     build-system contracts, language-aware marker grammars, or task-defined
     candidate abstraction hooks.
+  - Required result: add configured language runners, build-system contracts,
+    language-aware marker grammars, and task-defined candidate abstraction
+    hooks before treating the current Python-primary workspace policy as
+    AlphaEvolve-grade arbitrary-codebase or arbitrary-language support.
 
 - [ ] Track existing-codebase minimal-marker integration evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 says the input
@@ -780,6 +784,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     before LibreEvolve can claim robust codebase-scale invalid-artifact
     feedback across arbitrary-language runners, build-system outputs,
     dependency manifests, or remote/containerized execution roots.
+  - Required result: add diagnostics and paper-facing validation for future
+    bulk directory operations, build-runner generated artifacts, portable static
+    asset source identities, dependency manifests, and remote/containerized
+    materialization roots while preserving stable reason/path metadata.
 
 - [ ] Track Table 1 code-scale benchmark evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.
@@ -1226,7 +1234,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     helper/data access is now governed by an enforced declared-dependency
     policy: validator imports and file reads may touch only the configured
     entrypoint, captured companion sources, or captured declared data sources.
-    Seeded replay is still incomplete, but the identity gap is narrower than
+  - Current gap: seeded replay is still incomplete, but the identity gap is narrower than
     the older paper-audit wording: loop-created seed and generated candidate
     ids are deterministic, and `PromptDatabase` creates deterministic ids for
     configured seed templates and prompt mutations. Direct `Program()` and
@@ -1422,7 +1430,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     and metric-specific views. Declared non-primary `source: final_fitness`
     metrics are synthesized from the candidate's final composed fitness after
     plugin score hooks run, so plugin-adjusted top-level fitness can be included
-    in the declared objective vector when desired. Metric-specific archive replacement and
+    in the declared objective vector when desired.
+  - Current gap: metric-specific archive replacement and
     Pareto/frontier optimization remain open because the frontier and
     metric-specific views are diagnostic and not archive replacement policies.
     Parent and inspiration sampling can now use
@@ -3614,7 +3623,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence paths must now also exist under `docs/todo/Completed/` and contain
     completed checklist text that names the paper id or source PDF. README,
     ROADMAP, and `papers/README.md` now describe that validator boundary
-    without claiming full semantic proof. The validator also now rejects
+    without claiming full semantic proof. Row-specific open TODO blocks must now
+    include Current/Remaining gap or Current evidence context plus a `Required
+    result:` field. The validator also now rejects
     unqualified `AlphaEvolve-comparable`
     status-table overclaims unless the phrase is framed as missing, scoped, or
     requirement-bound evidence, and it rejects background-only/future-benchmark
@@ -3635,7 +3646,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     yet link each long semantic status claim to the specific TODO or completed
     implementation record that justifies its semantics, nor detect broader
     smoke-scoped examples being phrased as benchmark evidence beyond the
-    role/status class matrix, required path presence, source-specific
+    role/status class matrix, required path presence, active-block structure
+    checks, source-specific
     completed-evidence path checks, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the implemented-status

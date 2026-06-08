@@ -83,7 +83,8 @@ def _write_active_todo_ledgers(root, row_id, *, paths=None):
         if relative_path in paths:
             path.write_text(
                 f"- [ ] Track source-specific gap for `{row_id}`.\n"
-                "  - Current gap: temporary test ledger entry.\n",
+                "  - Current gap: temporary test ledger entry.\n"
+                "  - Required result: keep the temporary fixture source-specific.\n",
                 encoding="utf-8",
             )
         else:
@@ -1455,6 +1456,66 @@ def test_validate_paper_manifest_reports_missing_active_status_evidence(tmp_path
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "missing_active_status_evidence" in codes
+
+
+def test_validate_paper_manifest_reports_active_todo_block_without_gap_context(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        f"- [ ] Track source-specific gap for `{row['id']}`.\n"
+        "  - Required result: keep this fixture source-specific.\n",
+        encoding="utf-8",
+    )
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "active_todo_coverage_block_missing_gap_context" in codes
+
+
+def test_validate_paper_manifest_reports_active_todo_block_without_required_result(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        f"- [ ] Track source-specific gap for `{row['id']}`.\n"
+        "  - Current gap: temporary test ledger entry.\n",
+        encoding="utf-8",
+    )
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "active_todo_coverage_block_missing_required_result" in codes
 
 
 def test_validate_paper_manifest_reports_missing_completed_status_evidence(tmp_path):

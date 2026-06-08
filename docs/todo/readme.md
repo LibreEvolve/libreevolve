@@ -560,6 +560,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     whether instructions were delivered as role-separated system/developer/user
     messages or as a serialized single prompt.
 
+- [ ] Keep README stochastic-formatting wording scoped until distribution
+  provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 describes stochastic formatting as
+    template placeholders with human-provided alternatives for increased
+    diversity, instantiated using probability distributions from a separate
+    config file.
+  - Current evidence: README can accurately document `[[prompt:name]]`
+    markers, `prompt_format_options`, weighted alternatives, run-local RNG
+    selection, repeated-marker reuse, prompt diagnostics with selection
+    indexes/weights/text hashes, and manifest-redacted option text. It does
+    not yet document a paper-facing record that normalizes and validates the
+    full probability distribution, its config-source identity, the selected
+    alternative per prompt/call, and the RNG/replay boundary.
+  - Required result: when stochastic-formatting distribution provenance lands,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    so README distinguishes implemented weighted prompt markers from
+    AlphaEvolve-style stochastic-formatting evidence with prompt/call-linked
+    probability records.
+
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

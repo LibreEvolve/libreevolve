@@ -421,6 +421,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-style target-specific prompt instructions from generic
     prompt-template compatibility.
 
+- [ ] Track stochastic prompt-format probability provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says stochastic
+    formatting uses template placeholders with human-provided alternatives for
+    increased diversity, instantiated using probability distributions from a
+    separate config file.
+  - Partial status: LibreEvolve supports weighted `[[prompt:name]]` markers,
+    validates `prompt_format_options`, samples alternatives with the run-local
+    RNG, records selection index/weight/source/text hash in prompt
+    diagnostics, and persists redacted prompt-option values plus metadata in
+    the startup manifest.
+  - Current gap: paper/status records do not yet preserve the full
+    probability distribution used for each marker, the option-set source
+    identity and hash, whether it came from a separate config file or the
+    effective inline run config, the selected alternative per prompt/call, or
+    validation that stochastic formatting provided human-authored prompt
+    diversity rather than opaque template mutation.
+  - Required result: add paper-facing stochastic-format records with prompt
+    id/call id, marker name, option set id, config source/path/hash or explicit
+    inline-source boundary, alternative indexes and normalized probabilities,
+    selected alternative hash/index, weight override source, RNG/replay
+    boundary, and claim checks before treating local `prompt_format_options`
+    as AlphaEvolve-style stochastic-formatting evidence.
+
 - [ ] Track early-user and collaborator feedback provenance as paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early
     users and collaborators for diverse use cases and insightful feedback,

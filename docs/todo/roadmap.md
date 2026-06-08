@@ -4620,30 +4620,41 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Add post-AlphaEvolve sums-and-differences construction gates before
       roadmap promotion.
   - Spec evidence: arXiv `2505.16105`, submitted May 22, 2025, introduces
-    `Sums and differences of sets (improvement over AlphaEvolve)`. The
-    abstract says AlphaEvolve used a `54265`-integer set to improve the known
-    lower bound from `theta = 1.14465` to `theta = 1.1584`, while this paper
-    improves the bound to `theta = 1.173050` using an explicit `U` set with
-    more than `10^43546` elements and GMP arithmetic.
+    `Sums and differences of sets (improvement over AlphaEvolve)` by Robert
+    Gerbicz. The abstract says AlphaEvolve used a `54265`-integer set to
+    improve the known lower bound from `theta = 1.14465` to `theta = 1.1584`,
+    while this paper improves the bound to `theta = 1.173050` using an
+    explicit `U` set with more than `10^43546` elements and GMP arithmetic.
+    The paper defines `W(m, L, B)` bounded-coordinate sets, a base-`2B + 1`
+    integer encoding, sumset/difference-set/max-element formulas, a
+    `theta = 1.162997` small-search case for `m = 80`, `L = 64`, `B = 5`,
+    and an exact-arithmetic confirmation for `m = 81411`, `L = 65536`,
+    `B = 5` with approximate reported values `|U| = 6.314107319e43546`,
+    `|U + U| = 3.208492702e61228`, `|U - U| = 6.587554451e75899`, and
+    `2 max(U) + 1 = 6.605282799e84780`. It cites GMP code and exact computed
+    values at `https://bit.ly/43mWCVC`.
   - Current evidence: ROADMAP tracks AlphaEvolve Appendix B sums-and-
     differences gaps and broad constructive-math fixture needs, but it does
     not promote `2505.16105` beyond potential-future-benchmark status. It
     does not define a huge explicit `U`-set construction gate, compressed set
-    artifact representation, sumset/difference-set verifier, `theta`
-    recomputation report, AlphaEvolve `54265`-integer baseline comparison,
-    GMP arithmetic provenance, or documentation rule that separates
-    AlphaEvolve's LLM-generated construction from later explicit
-    improvements.
+    artifact representation, `W(m, L, B)` formula fixture, base-`2B + 1`
+    encoding checker, sumset/difference-set verifier, max-element/q-value
+    verifier, `theta` recomputation report, exact-value artifact retrieval,
+    AlphaEvolve `54265`-integer baseline comparison, GMP arithmetic
+    provenance, or documentation rule that separates AlphaEvolve's
+    LLM-generated construction from later explicit improvements.
   - Required result: add roadmap gates for `2505.16105`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     explicit `U`-set construction schema, huge-set artifact representation,
-    sumset and difference-set cardinality records, max-element and set-size
-    metadata, `theta` formula and tolerance policy, AlphaEvolve `54265`-
-    integer `1.1584` baseline value, previous `1.14465` lower-bound source,
-    GMP/version/arithmetic provenance, prior/current result rows, independent
-    checker outputs, and a background-only or benchmark-fixture status rule
-    so roadmap claims do not outpace local post-AlphaEvolve
-    sums-and-differences improvement support.
+    `W(m, L, B)` inclusion-exclusion records, base-`2B + 1` encoding checks,
+    `(80, 64, 5)` and `(81411, 65536, 5)` parameter rows, sumset and
+    difference-set cardinality records, max-element/q-value and set-size
+    metadata, `theta` formula and tolerance policy, exact computed-value
+    payload hashes, AlphaEvolve `54265`-integer `1.1584` baseline value,
+    previous `1.14465` lower-bound source, GMP/version/arithmetic provenance,
+    prior/current result rows, independent checker outputs, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local post-AlphaEvolve sums-and-differences improvement support.
 
 - [ ] Add further post-AlphaEvolve sums-and-differences sequence gates before
       roadmap promotion.

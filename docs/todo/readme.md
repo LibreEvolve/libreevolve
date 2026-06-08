@@ -4162,29 +4162,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README post-AlphaEvolve sums-and-differences improvement claims
       absent or source-scoped until huge-set construction evidence exists.
   - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets
-    (improvement over AlphaEvolve)`, says AlphaEvolve improved the lower bound
-    from `theta = 1.14465` to `theta = 1.1584` using a set of `54265`
-    integers. The paper improves the bound to `theta = 1.173050` with an
-    explicit `U` set containing more than `10^43546` elements and uses GMP for
-    fast integer and floating-point arithmetic.
+    (improvement over AlphaEvolve)`, by Robert Gerbicz says AlphaEvolve
+    improved the lower bound from `theta = 1.14465` to `theta = 1.1584` using
+    a set of `54265` integers. The paper improves the bound to
+    `theta = 1.173050` with an explicit `U` set containing more than
+    `10^43546` elements and uses GMP for fast integer and floating-point
+    arithmetic. Its construction defines `W(m, L, B)`, encodes bounded
+    coordinates in base `2B + 1`, reports a `theta = 1.162997` small-search
+    case at `m = 80`, `L = 64`, `B = 5`, and confirms
+    `theta = 1.173050` for `m = 81411`, `L = 65536`, `B = 5`; the paper cites
+    GMP code and exact computed values at `https://bit.ly/43mWCVC`.
   - Current evidence: README documents Appendix B sums-and-differences gaps,
     constructive-math benchmark-report contracts, paper-cache status, and
     smoke fixtures. It does not mention `2505.16105`, store an explicit or
     compressed `U`-set construction, verify sumset/difference-set
     cardinalities, recompute `theta = 1.173050`, compare against the
     AlphaEvolve `54265`-integer `1.1584` baseline, preserve GMP arithmetic
-    provenance, or distinguish the later explicit construction from
-    AlphaEvolve's LLM-generated witness.
+    provenance, retrieve the cited exact-value artifact, preserve the
+    `W(m, L, B)` and base-`2B + 1` construction details, or distinguish the
+    later explicit construction from AlphaEvolve's LLM-generated witness.
   - Required result: if README mentions this sums-and-differences improvement,
     the `1.173050` bound, the huge `U` set, `10^43546`, the AlphaEvolve
     `54265`-integer construction, the `1.1584` or `1.14465` baselines, GMP
-    arithmetic, or `2505.16105`, keep the wording source-scoped until local
-    artifacts can show the paper in the manifest, construction payloads,
-    sumset/difference-set verification, `theta` recomputation, tolerance
-    policy, baseline comparison rows, arithmetic provenance, independent
-    checker outputs, and benchmark reports. Avoid implying LibreEvolve
-    supports this post-AlphaEvolve sums-and-differences improvement without
-    those artifacts.
+    arithmetic, `W(m, L, B)`, base-`2B + 1` encoding, the `(81411, 65536, 5)`
+    parameter triple, the cited exact-value payload, or `2505.16105`, keep the
+    wording source-scoped until local artifacts can show the paper in the
+    manifest, construction payloads, sumset/difference-set verification,
+    max-element/q-value checks, `theta` recomputation, tolerance policy,
+    baseline comparison rows, arithmetic provenance, independent checker
+    outputs, and benchmark reports. Avoid implying LibreEvolve supports this
+    post-AlphaEvolve sums-and-differences improvement without those artifacts.
 
 - [ ] Keep README further post-AlphaEvolve sums-and-differences claims absent
       or source-scoped until sequence evidence exists.

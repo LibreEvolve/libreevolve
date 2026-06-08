@@ -6215,31 +6215,47 @@ Primary evidence:
 
 - [ ] Add post-AlphaEvolve sums-and-differences construction boundary.
   - Spec evidence: arXiv `2505.16105`, `Sums and differences of sets
-    (improvement over AlphaEvolve)`, was submitted May 22, 2025. Its abstract
-    says AlphaEvolve used a set of `54265` integers to improve the lower bound
-    in the sums-and-differences problem from `theta = 1.14465` to
-    `theta = 1.1584`. It then gives an improved bound
+    (improvement over AlphaEvolve)`, by Robert Gerbicz was submitted May 22,
+    2025 as arXiv v1; the cached PDF hash is
+    `90d63d13afd7b8e15ceac25a4cef3f6b1c974a12a7893e80bd18e3ef4e16e1e8`.
+    Its abstract says AlphaEvolve used a set of `54265` integers to improve
+    the lower bound in the sums-and-differences problem from
+    `theta = 1.14465` to `theta = 1.1584`. It then gives an improved bound
     `theta = 1.173050` using an explicit construction of a `U` set containing
     more than `10^43546` elements, with GMP used for fast integer and
-    floating-point arithmetic.
+    floating-point arithmetic. The construction defines `W(m, L, B)`,
+    encodes bounded-coordinate vectors in base `2B + 1`, derives formulas for
+    `|U + U|`, `|U - U|`, and `2 max(U) + 1`, reports `theta = 1.162997` for
+    `m = 80`, `L = 64`, `B = 5`, and confirms `theta = 1.173050` for
+    `m = 81411`, `L = 65536`, `B = 5` using exact integer arithmetic in about
+    15 hours. It reports approximate values `|U| = 6.314107319e43546`,
+    `|U + U| = 3.208492702e61228`, `|U - U| = 6.587554451e75899`, and
+    `2 max(U) + 1 = 6.605282799e84780`, with GMP code and exact computed
+    values cited at `https://bit.ly/43mWCVC`.
   - Current evidence: `papers/README.md` lists `2505.16105` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
     TODOs, but no first-class code TODO for this source, no explicit large
-    `U`-set construction schema, no compressed artifact format for a set with
-    more than `10^43546` elements, no sumset/difference-set verifier, no
-    `theta` recomputation report for `1.173050`, no AlphaEvolve `54265`-
-    integer `1.1584` baseline row, no GMP dependency/provenance record, and
-    no artifact policy that separates AlphaEvolve LLM-generated constructions
-    from later explicit non-LLM improvements.
+    `U`-set construction schema, no `W(m, L, B)` parameter fixture, no
+    base-`2B + 1` integer-encoding checker, no compressed artifact format for
+    a set with more than `10^43546` elements, no sumset/difference-set
+    verifier, no max-element/q-value verifier, no `theta` recomputation
+    report for `1.173050`, no `(80, 64, 5)` small-search regression case, no
+    exact-value artifact retrieval from the cited code URL, no AlphaEvolve
+    `54265`-integer `1.1584` baseline row, no GMP dependency/provenance
+    record, and no artifact policy that separates AlphaEvolve LLM-generated
+    constructions from later explicit non-LLM improvements.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2505.16105`: arXiv id/version/date/PDF hash, author, source license,
     code/artifact availability, relation to AlphaEvolve Appendix B
-    sums-and-differences fixtures, explicit `U`-set construction schema,
-    compressed/parametric artifact representation for huge finite sets,
-    sumset and difference-set cardinality records, max-element and size
-    metadata, `theta` formula and tolerance policy, AlphaEvolve `54265`-
-    integer `1.1584` baseline, previous `1.14465` lower-bound source,
+    sums-and-differences fixtures, explicit `U(m, L, B)` construction schema,
+    `W(m, L, B)` inclusion-exclusion formula records, base-`2B + 1` injective
+    encoding checks for `W + W` and `W - W`, compressed/parametric artifact
+    representation for huge finite sets, parameter records for `(80, 64, 5)`
+    and `(81411, 65536, 5)`, sumset and difference-set cardinality records,
+    max-element/q-value and set-size metadata, `theta` formula and tolerance
+    policy, exact computed-value payload hashes, AlphaEvolve `54265`-integer
+    `1.1584` baseline, previous `1.14465` lower-bound source,
     GMP/version/arithmetic provenance, prior/current comparison rows,
     independent checker outputs, and README/ROADMAP wording that keeps this
     post-AlphaEvolve sums-and-differences improvement as missing evidence

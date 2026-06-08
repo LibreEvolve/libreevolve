@@ -5317,3 +5317,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent checker outputs, reproducibility status, and README/ROADMAP
     wording that treats global-NLP solver comparison as missing paper evidence
     rather than implemented LibreEvolve support.
+
+- [ ] Track post-AlphaEvolve autoconvolution improvement paper evidence.
+  - Paper/source evidence: arXiv `2506.16750`, submitted June 20, 2025 and
+    last revised August 10, 2025, is titled `An improved example for an
+    autoconvolution inequality`. Its abstract gives a nonnegative step
+    function with `575` equally spaced intervals whose autoconvolution ratio
+    is at least `0.901564`. It explicitly improves on DeepMind's AlphaEvolve
+    result, which used a `50`-interval nonnegative step function with value at
+    least `0.8962`, and says the new function was found using simulated
+    annealing and gradient-based methods instead of large language models.
+  - Current gap: `papers/README.md` lists `2506.16750` as a constructive math
+    benchmark candidate with `Not implemented; potential future benchmark`,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Existing Appendix B.1-B.3 autoconvolution gaps cover the
+    AlphaEvolve result family, but not this later 575-interval witness,
+    non-LLM search provenance, objective recomputation, side-by-side
+    AlphaEvolve baseline comparison, or rounded-value/tolerance policy.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2506.16750`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve Appendix B and
+    LibreEvolve autoconvolution assumptions, 575-interval step-function
+    witness schema, coefficient/value artifact hashes, convolution and norm
+    recomputation metadata, objective definition and tolerance policy,
+    AlphaEvolve 50-interval `0.8962` baseline record, simulated-annealing and
+    gradient-method provenance, prior/current result rows, independent checker
+    outputs, reproducibility status, and README/ROADMAP wording that treats
+    this post-AlphaEvolve autoconvolution improvement as missing paper evidence
+    rather than implemented LibreEvolve support.

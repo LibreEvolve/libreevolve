@@ -3834,4 +3834,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve supports global-NLP solver comparison for AlphaEvolve
     benchmarks without those artifacts.
 
+- [ ] Keep README post-AlphaEvolve autoconvolution improvement claims absent
+      or source-scoped until 575-interval witness evidence exists.
+  - Spec evidence: arXiv `2506.16750`, `An improved example for an
+    autoconvolution inequality`, reports a nonnegative step function with
+    `575` equally spaced intervals and autoconvolution ratio `>= 0.901564`.
+    Its abstract says this improves on DeepMind's AlphaEvolve `50`-interval
+    witness with value `>= 0.8962`, and that the improved witness was found by
+    simulated annealing and gradient methods rather than LLMs.
+  - Current evidence: README documents Appendix B/autoconvolution gaps,
+    constructive-math benchmark-report contracts, paper-cache status, and
+    smoke fixtures. It does not mention `2506.16750`, store a 575-interval
+    step-function witness, recompute the autoconvolution objective, compare
+    the AlphaEvolve 50-interval baseline against the later result, preserve
+    non-LLM search provenance, or define a rounding/tolerance rule for
+    `0.901564`.
+  - Required result: if README mentions the improved autoconvolution example,
+    the 575-interval witness, the `0.901564` value, the AlphaEvolve
+    `0.8962` autoconvolution baseline, simulated annealing, gradient-based
+    improvement over AlphaEvolve, or `2506.16750`, keep the wording source-
+    scoped until local artifacts can show the paper in the manifest, witness
+    payloads, convolution/norm recomputation, objective/tolerance policy,
+    baseline comparison rows, non-LLM search provenance, independent checker
+    outputs, and benchmark reports. Avoid implying LibreEvolve supports this
+    post-AlphaEvolve autoconvolution improvement without those artifacts.
+
 ## Architecture Description

@@ -5756,3 +5756,34 @@ Primary evidence:
     records, independent checker outputs, and README/ROADMAP wording that
     keeps global-NLP solver comparison as missing evidence until local solver
     harnesses and benchmark reports exist.
+
+- [ ] Add post-AlphaEvolve autoconvolution improvement boundary.
+  - Spec evidence: arXiv `2506.16750`, `An improved example for an
+    autoconvolution inequality`, was submitted June 20, 2025 and last revised
+    August 10, 2025. Its abstract gives a nonnegative step function with
+    `575` equally spaced intervals satisfying
+    `||f * f||_L2^2 / (||f * f||_Linf ||f * f||_L1) >= 0.901564`. It says
+    this improves on DeepMind's AlphaEvolve result, which used a nonnegative
+    step function with `50` equally spaced intervals and value `>= 0.8962`,
+    and that the new function was found using simulated annealing and
+    gradient-based methods rather than large language models.
+  - Current evidence: `papers/README.md` lists `2506.16750` only as a
+    constructive math benchmark candidate with `Not implemented; potential
+    future benchmark`. LibreEvolve has broad Appendix B autoconvolution TODOs,
+    but no first-class code TODO for this source, no 575-interval witness
+    schema, no objective recomputation report for the post-AlphaEvolve value,
+    no side-by-side AlphaEvolve `50`-interval baseline row, no simulated-
+    annealing/gradient-method provenance, no exact/rounded numerical tolerance
+    policy for `0.901564`, and no artifact policy that distinguishes
+    AlphaEvolve LLM-generated witnesses from later non-LLM improvements.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2506.16750`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve Appendix B
+    autoconvolution fixtures, step-function witness schema, interval count and
+    grid spacing, coefficient/value payload hashes, convolution/integral
+    recomputation records, `L2`/`Linf`/`L1` norm definitions, objective and
+    tolerance policy, AlphaEvolve `50`-interval `0.8962` baseline record,
+    simulated-annealing and gradient-search provenance, prior/current result
+    comparison rows, independent checker outputs, and README/ROADMAP wording
+    that keeps the post-AlphaEvolve autoconvolution improvement as missing
+    evidence until local witness artifacts and reports exist.

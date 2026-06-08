@@ -4268,3 +4268,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     independent checker outputs, and a background-only or benchmark-fixture
     status rule so roadmap claims do not outpace local global-NLP solver
     comparison support.
+
+- [ ] Add post-AlphaEvolve autoconvolution improvement gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2506.16750`, submitted June 20, 2025 and last
+    revised August 10, 2025, introduces `An improved example for an
+    autoconvolution inequality`. The abstract reports a nonnegative
+    `575`-interval step function with autoconvolution ratio `>= 0.901564`,
+    improving on AlphaEvolve's `50`-interval `>= 0.8962` result, and says the
+    improvement came from simulated annealing and gradient-based methods
+    rather than LLMs.
+  - Current evidence: ROADMAP tracks AlphaEvolve Appendix B autoconvolution
+    gaps and broad constructive-math fixture needs, but it does not promote
+    `2506.16750` beyond potential-future-benchmark status. It does not define
+    a 575-interval witness gate, post-AlphaEvolve baseline comparison, direct
+    recomputation of the `0.901564` objective, simulated-annealing/gradient
+    provenance records, or documentation rules that separate AlphaEvolve's
+    LLM-generated witness from later non-LLM improvements.
+  - Required result: add roadmap gates for `2506.16750`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    step-function witness schema, 575-interval payload artifacts, interval
+    grid/spacing records, autoconvolution/norm recomputation records,
+    objective and tolerance policy, AlphaEvolve 50-interval baseline value,
+    simulated-annealing and gradient-method provenance, prior/current result
+    rows, independent checker outputs, and a background-only or benchmark-
+    fixture status rule so roadmap claims do not outpace local
+    post-AlphaEvolve autoconvolution-improvement support.

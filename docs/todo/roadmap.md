@@ -3575,3 +3575,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     iteration-budget accounting, benchmark taxonomy, baseline identities, and
     a background-only or benchmark-fixture status rule so roadmap claims do
     not outpace local AEvo-style harnessed meta-editing support.
+
+- [ ] Add G-Zero verifier-free co-evolution gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.09959`, submitted May 11, 2026, introduces
+    G-Zero for open-ended generation from zero data. The abstract says
+    self-evolving LLMs struggle outside verifiable domains because proxy LLM
+    judges can cap capabilities and invite reward hacking. G-Zero replaces
+    external judges with verifier-free co-evolution: `Hint-delta` measures the
+    predictive shift from self-generated hints, a Proposer uses GRPO to target
+    Generator blind spots with queries and hints, and the Generator uses DPO
+    to internalize improvements.
+  - Current evidence: ROADMAP tracks evaluator contracts, validator
+    subprocesses, benchmark-report artifacts, reward/scoring gaps, and many
+    self-evolution source gates. It does not mention `2605.09959`, define a
+    verifier-free source gate, or require local evidence before promoting
+    open-ended self-evolution without explicit validators.
+  - Required result: add roadmap gates for `2605.09959`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, Generator/
+    Proposer role schema, Hint-delta reward records, unassisted and
+    hint-conditioned response pairs, query/hint artifact storage, GRPO/DPO
+    training traces, intrinsic-reward calibration, exploration coverage
+    reports, pseudo-label noise filtering, reward-hacking diagnostics,
+    open-ended task taxonomy, theoretical-assumption records, baseline
+    identities, and a background-only or benchmark-fixture status rule so
+    roadmap claims do not outpace local G-Zero-style verifier-free support.

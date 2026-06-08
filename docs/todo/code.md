@@ -4924,3 +4924,35 @@ Primary evidence:
     identities, and README/ROADMAP wording that keeps AEvo-style harnessed
     meta-editing as missing evidence until local implementation and reports
     exist.
+
+- [ ] Add G-Zero verifier-free co-evolution source boundary.
+  - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended
+    Generation from Zero Data`, was submitted May 11, 2026. Its abstract says
+    self-evolving LLMs perform well in verifiable domains but struggle on
+    open-ended tasks because proxy LLM judges create capability bottlenecks
+    and reward-hacking risks. G-Zero introduces a verifier-free co-evolution
+    framework with `Hint-delta`, an intrinsic reward measuring predictive
+    shift between an unassisted Generator response and a response conditioned
+    on a self-generated hint. A Proposer is trained with GRPO to target the
+    Generator's blind spots by creating queries and hints, while the Generator
+    is trained with DPO to internalize the hint-guided improvements. The
+    abstract also states a best-iterate suboptimality guarantee under
+    sufficient exploration coverage and low pseudo-label score noise.
+  - Current evidence: LibreEvolve depends on explicit user validators and
+    evaluator scores for program admission, MAP-Elites retention, and
+    benchmark reporting. It has no G-Zero source row, no verifier-free
+    open-ended task mode, no Generator/Proposer co-evolution loop, no
+    Hint-delta intrinsic reward, no self-generated hint artifacts, no GRPO/DPO
+    training interface, no exploration-coverage diagnostic, and no
+    pseudo-label noise filter or reward-hacking audit for unverifiable tasks.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.09959`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve's evaluator contract, Generator
+    and Proposer role schemas, Hint-delta computation records, unassisted vs
+    hint-conditioned response pairs, self-generated query/hint artifacts,
+    GRPO/DPO training traces, intrinsic-reward calibration, exploration
+    coverage metrics, pseudo-label noise filters, reward-hacking diagnostics,
+    open-ended task taxonomy, theoretical guarantee assumptions, baseline
+    identities, and README/ROADMAP wording that keeps verifier-free
+    co-evolution as missing evidence until local implementation and reports
+    exist.

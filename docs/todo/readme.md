@@ -3161,4 +3161,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     baselines, and report outcomes. Avoid implying LibreEvolve supports
     AEvo-style meta-editing without those artifacts.
 
+- [ ] Keep README G-Zero verifier-free self-evolution claims absent or
+      source-scoped until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2605.09959`, `G-Zero: Self-Play for Open-Ended
+    Generation from Zero Data`, says open-ended self-evolution can avoid proxy
+    LLM judges by using verifier-free co-evolution. It introduces
+    `Hint-delta`, Generator/Proposer roles, self-generated hints, GRPO
+    training for the Proposer, DPO training for the Generator, exploration
+    coverage requirements, and pseudo-label noise assumptions.
+  - Current evidence: README documents LibreEvolve's evaluator-first design,
+    validator contracts, run artifacts, archive behavior, and benchmark
+    boundaries. It does not list `2605.09959`, support verifier-free
+    open-ended tasks, compute Hint-delta rewards, train Generator/Proposer
+    models, store self-generated hints, or audit reward hacking and
+    pseudo-label noise for unverifiable domains.
+  - Required result: if README mentions G-Zero, verifier-free self-play,
+    open-ended generation without judges, intrinsic rewards, Hint-delta,
+    Generator/Proposer co-evolution, GRPO/DPO self-training, exploration
+    coverage, or reward-hacking resistance, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show role
+    schemas, response/hint pairs, intrinsic-reward records, training traces,
+    coverage/noise diagnostics, task baselines, and report outcomes. Avoid
+    implying LibreEvolve supports G-Zero-style verifier-free co-evolution
+    without those artifacts.
+
 ## Architecture Description

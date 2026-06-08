@@ -4501,3 +4501,35 @@ directory and using the AlphaEvolve paper as the primary specification.
     taxonomy, baseline identities, code/artifact availability if any,
     reproducibility status, and README/ROADMAP wording that treats AEvo as
     missing paper evidence rather than implemented LibreEvolve support.
+
+- [ ] Track G-Zero verifier-free co-evolution paper evidence.
+  - Paper/source evidence: arXiv `2605.09959`, submitted May 11, 2026, is
+    titled `G-Zero: Self-Play for Open-Ended Generation from Zero Data`. Its
+    abstract says self-evolving LLMs struggle on open-ended tasks because
+    proxy LLM judges introduce capability bottlenecks and reward hacking.
+    G-Zero introduces a verifier-free co-evolutionary framework with
+    `Hint-delta`, an intrinsic reward measuring predictive shift between a
+    Generator model's unassisted response and its response conditioned on a
+    self-generated hint. A Proposer is trained with GRPO to target Generator
+    blind spots by generating queries and hints, while the Generator is
+    trained with DPO to internalize improvements. The paper also states a
+    best-iterate suboptimality guarantee under sufficient exploration coverage
+    and low pseudo-label score noise.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.09959`. Existing rows cover AlphaEvolve's explicit
+    evaluator loop, verifier-backed tasks, cost-aware routing, AEvo
+    meta-editing, CORAL multi-agent autonomy, and trace diagnostics, but not
+    verifier-free co-evolution, Hint-delta intrinsic rewards, self-generated
+    query/hint data, GRPO/DPO self-training, exploration coverage guarantees,
+    or pseudo-label noise filtering for open-ended domains.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.09959`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve evaluator assumptions, Generator/
+    Proposer role schema, Hint-delta reward definition, unassisted vs
+    hint-conditioned response artifacts, self-generated query/hint records,
+    GRPO/DPO training metadata, intrinsic-reward calibration, exploration
+    coverage evidence, pseudo-label score-noise filters, reward-hacking
+    diagnostics, open-ended task taxonomy, theoretical guarantee assumptions,
+    baseline identities, code/artifact availability if any, reproducibility
+    status, and README/ROADMAP wording that treats G-Zero as missing paper
+    evidence rather than implemented LibreEvolve support.

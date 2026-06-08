@@ -136,23 +136,37 @@ Primary evidence:
 - [ ] Add Figure 1/Figure 2 architecture-process exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level loop from human
     "What?" inputs through LLM ensemble, prompt sampler, evaluator pool, and
-    program database to an improved solution. Figure 2 expands this into the
-    controller loop: `database.sample()`, `prompt_sampler.build(...)`,
-    `llm.generate(...)`, `apply_diff(...)`, `evaluator.execute(...)`, and
-    `database.add(...)`.
+    program database to an improved solution on local PDF page 3. Figure 2 on
+    local PDF page 4 expands this into the controller loop:
+    `database.sample()`, `prompt_sampler.build(...)`, `llm.generate(...)`,
+    `apply_diff(...)`, `evaluator.execute(...)`, and `database.add(...)`.
   - Current evidence: LibreEvolve has implementation components and README
     workflow diagrams for seed programs, prompt construction, mutation,
-    evaluation, MAP-Elites, island migration, and backend reward. Existing
-    TODOs track many underlying behavior gaps, but no code/report schema maps
-    the paper's Figure 1/Figure 2 nodes and edge labels to local components,
-    run artifacts, controller-state records, prompt/evaluator/database events,
-    source diagram locations, rendered diagram artifacts, or diagram hashes.
+    evaluation, MAP-Elites, island migration, and backend reward. In
+    `libreevolve/core/loop.py`, `evolve()` constructs `ProgramDatabase`,
+    `CascadeEvaluator`, `PromptSampler`, and `PromptDatabase`; the generation
+    loop samples parents with `db.sample()`, selects prompt programs, samples
+    inspirations with `db.sample_diverse()`, builds prompts with
+    `prompt_sampler.build()`, calls `_generate_with_budget()`, applies
+    `apply_workspace_mutation()`, evaluates with `evaluator.evaluate()`, and
+    writes admission/history through `db.admit()` and `db.log()`. Runtime
+    summaries also record a `single_process_serial_loop` controller state with
+    `terminal_synchronous_controller_drained`, and `ProgramDatabase` owns
+    `history.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
+    `controller_budget_events.jsonl`, `llm_calls.jsonl`,
+    `prompt_history.jsonl`, `manifest.json`, and best/evaluator/plugin
+    artifact paths. Existing TODOs track many underlying behavior gaps, but no
+    code/report schema maps the paper's Figure 1/Figure 2 nodes, edges, and
+    Figure 2 pseudocode lines to these local components, run artifacts,
+    controller-state records, prompt/evaluator/database events, source diagram
+    locations, rendered diagram artifacts, or diagram hashes.
   - Required result: add architecture/process exhibit metadata with stable
     Figure 1/Figure 2 IDs, node/edge-to-component mappings, implemented versus
     unsupported status for controller, LLM, evaluator, prompt, and database
-    surfaces, links to run artifacts that evidence each step, source/rendered
-    diagram artifact hashes, and docs validation so local workflow diagrams are
-    not mistaken for reproduced AlphaEvolve process-diagram evidence.
+    surfaces, Figure 2 pseudocode-line mappings, links to run artifacts that
+    evidence each step, source/rendered diagram artifact hashes, and docs
+    validation so local workflow diagrams are not mistaken for reproduced
+    AlphaEvolve process-diagram evidence.
 
 - [ ] Add unified AlphaEvolve task-specification bundle provenance.
   - Spec evidence: AlphaEvolve Section 2.1 is explicitly a task

@@ -141,16 +141,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       provenance exists.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level architecture from
     human-defined problem inputs through LLM ensemble, prompt sampler,
-    evaluator pool, and program database to an improved solution. Figure 2
-    expands the loop with database sampling, prompt construction, LLM diff
-    generation, diff application, evaluator execution, and database admission.
+    evaluator pool, and program database to an improved solution on local PDF
+    page 3. Figure 2 on page 4 expands the loop with database sampling, prompt
+    construction, LLM diff generation, diff application, evaluator execution,
+    and database admission.
   - Current evidence: ROADMAP and README describe local components and
     synchronous workflow behavior, while other TODOs track specific gaps for
     prompt sampling, LLM scheduling, evaluators, database memory, and async
-    controller state. They do not require Figure 1/Figure 2 exhibit IDs,
-    node/edge-to-component mappings, implemented versus unsupported status per
-    diagram node, source PDF/caption locations, rendered diagram artifacts and
-    hashes, or links from each displayed process step to current run artifacts.
+    controller state. Current code has a serial `evolve()` path that can be
+    mapped to Figure 2 at a high level: `db.sample()`,
+    `prompt_sampler.build()`, `_generate_with_budget()`,
+    `apply_workspace_mutation()`, `evaluator.evaluate()`, `db.admit()`, and
+    `db.log()`. Final runtime manifests also record a
+    `single_process_serial_loop` / `terminal_synchronous_controller_drained`
+    controller state and event/artifact streams for history, failures,
+    archive events, controller budget events, LLM calls, prompt history, and
+    evaluator artifacts. ROADMAP does not require Figure 1/Figure 2 exhibit
+    IDs, node/edge-to-component mappings, implemented versus unsupported status
+    per diagram node, Figure 2 pseudocode-line mappings, source PDF/caption
+    locations, rendered diagram artifacts and hashes, or links from each
+    displayed process step to current run artifacts.
   - Required result: when Figure 1/Figure 2 architecture/process provenance
     lands, update ROADMAP, README, papers index, and code/paper TODOs with
     diagram-level metadata and validators so roadmap wording distinguishes

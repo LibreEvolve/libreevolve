@@ -126,17 +126,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       process-diagram provenance exists.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level "Human defines
     What? / AlphaEvolve figures out How?" overview with LLM ensemble, prompt
-    sampler, evaluator pool, and program database. Figure 2 expands the
+    sampler, evaluator pool, and program database on local PDF page 3. Figure
+    2 on page 4 expands the
     controller loop from database sampling through prompt construction, LLM
     generation, diff application, evaluator execution, and database admission.
   - Current evidence: README has its own Mermaid workflow and architecture
     sections describing seed programs, LLM mutation, cascade evaluation,
-    MAP-Elites, island migration, and backend reward. Those diagrams are useful
-    local documentation, but README does not document Figure 1/Figure 2 exhibit
-    IDs, node/edge-to-component mappings, implemented/divergent node status,
-    source PDF/caption locations, rendered diagram artifact hashes, or links
-    from each displayed step to prompt-history, LLM-call, evaluator,
-    candidate-history, database, and controller-state artifacts.
+    MAP-Elites, island migration, and backend reward. Current implementation
+    has evidence for a serial local loop through parent sampling, inspiration
+    sampling, prompt building, LLM generation, workspace mutation, evaluator
+    execution, admission, history logging, and terminal controller-state
+    summaries, with artifacts such as `prompt_history.jsonl`,
+    `llm_calls.jsonl`, evaluator metadata, `history.jsonl`,
+    `archive_events.jsonl`, `controller_budget_events.jsonl`, and
+    `manifest.json`. Those diagrams and artifacts are useful local
+    documentation, but README does not document Figure 1/Figure 2 exhibit IDs,
+    node/edge-to-component mappings, implemented/divergent node status, Figure
+    2 pseudocode-line mappings, source PDF/caption locations, rendered diagram
+    artifact hashes, or links from each displayed step to prompt-history,
+    LLM-call, evaluator, candidate-history, database, and controller-state
+    artifacts.
   - Required result: when Figure 1/Figure 2 process-diagram provenance lands,
     update README, ROADMAP, papers index, and matching TODOs so README
     distinguishes local workflow explanation from reproduced AlphaEvolve

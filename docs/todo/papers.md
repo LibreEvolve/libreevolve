@@ -157,22 +157,29 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the
     high-level AlphaEvolve overview from human-defined problem inputs through
     LLMs, prompt sampler, evaluator pool, and program database to an improved
-    solution. Figure 2 expands the discovery loop with `database.sample()`,
-    `prompt_sampler.build(...)`, `llm.generate(...)`, `apply_diff(...)`,
-    `evaluator.execute(...)`, and `database.add(...)`.
+    solution on local PDF page 3. Figure 2 on page 4 expands the discovery
+    loop with `database.sample()`, `prompt_sampler.build(...)`,
+    `llm.generate(...)`, `apply_diff(...)`, `evaluator.execute(...)`, and
+    `database.add(...)`.
   - Current gap: paper-facing TODOs cover individual behavior gaps for
     evaluators, prompt context, LLM scheduling, async throughput, and the
-    program database. They do not preserve the Figure 1/Figure 2 diagrams as
-    paper exhibits with stable figure IDs, node/edge mappings to LibreEvolve
-    components, implemented/unsupported status per node, source PDF page and
-    caption locations, rendered diagram/text artifacts and hashes, or links
-    from each displayed controller step to run artifacts and validators.
+    program database. Current runtime artifacts can support a partial local
+    mapping because `evolve()` samples parents, builds prompts, calls the LLM,
+    applies workspace mutations, evaluates candidates, admits/logs programs,
+    and writes history, archive, LLM-call, prompt-history, controller-budget,
+    evaluator-artifact, and manifest records. They do not preserve the Figure
+    1/Figure 2 diagrams as paper exhibits with stable figure IDs, node/edge
+    mappings to LibreEvolve components, implemented/unsupported status per
+    node, Figure 2 pseudocode-line mappings, source PDF page and caption
+    locations, rendered diagram/text artifacts and hashes, or links from each
+    displayed controller step to run artifacts and validators.
   - Required result: add paper-facing Figure 1/Figure 2 process-diagram records
     and validation: figure IDs, node/edge labels, component mappings,
-    implemented/divergent status, source and rendered artifact hashes, links to
-    prompt-history, LLM-call, evaluator, candidate-history, database, and
-    controller-state evidence, plus README/ROADMAP wording that separates local
-    workflow diagrams from reproduced AlphaEvolve architecture evidence.
+    Figure 2 pseudocode-line mappings, implemented/divergent status, source and
+    rendered artifact hashes, links to prompt-history, LLM-call, evaluator,
+    candidate-history, database, and controller-state evidence, plus
+    README/ROADMAP wording that separates local workflow diagrams from
+    reproduced AlphaEvolve architecture evidence.
 
 - [ ] Track unified task-specification provenance separately from per-field
       run metadata.

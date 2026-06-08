@@ -541,19 +541,24 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements separately
     thank contributors for reviewing the white paper, early explorations and
     insightful discussions, support and advice, helpful advice on managing the
-    practical applications, and reviewing application-specific work.
+    practical applications, and reviewing application-specific work. Local PDF
+    extraction places the general paper-process acknowledgement text on page 21
+    and additional application-specific advice/review acknowledgement text on
+    page 22.
   - Current gap: paper/status records track early-user feedback, expert
     formulation, application owner/reviewer roles, and core contribution
     provenance. They do not preserve acknowledgement-role records for these
     paper-process and governance contributions, so docs could conflate paper
     review/support/advice with implementation authorship, benchmark
-    formulation, domain validation, or deployment signoff.
+    formulation, publication-author metadata, domain validation, or deployment
+    signoff. Existing package/project metadata and technical provenance records
+    also do not establish acknowledgement-process roles.
   - Required result: add paper-facing acknowledgement records with safe
     contributor labels, role category, affected white-paper or application
     scope, source page/section, privacy/redaction policy, and README/ROADMAP
     wording that distinguishes acknowledgement-process evidence from technical
-    validation, benchmark formulation, deployment, and system-development
-    provenance.
+    validation, benchmark formulation, deployment, publication-author metadata,
+    and system-development provenance.
 
 - [ ] Track paper author-metadata evidence for equal contributors and
       correspondence roles.

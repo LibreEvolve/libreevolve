@@ -362,24 +362,29 @@ Primary evidence:
   - Spec evidence: AlphaEvolve's Acknowledgements separately thank named
     contributors for reviewing the white paper, early explorations and
     insightful discussions, support and advice, helpful advice on managing
-    practical applications, and reviewing application-specific work. These are
+    practical applications, and reviewing application-specific work. Local PDF
+    extraction places the general acknowledgement categories on page 21 and
+    application-specific review/advice categories on page 22. These are
     paper-process and governance roles distinct from early-user feedback,
-    expert benchmark formulation, application owner signoff, and core
-    implementation contributions.
+    expert benchmark formulation, application owner signoff, publication
+    author metadata, and core implementation contributions.
   - Current evidence: LibreEvolve TODOs track early-user feedback, expert
     formulation, systems application owner/reviewer evidence, and core
-    system-development contribution roles. They do not define a schema for
-    paper-review, support/advice, practical-application management advice, or
+    system-development contribution roles. Runtime/package provenance can
+    capture selected PEP 621 project metadata and installed-distribution
+    metadata, but it does not define a schema for paper-review,
+    support/advice, practical-application management advice, or
     application-review acknowledgement records, nor a docs check that keeps
-    these softer paper-process roles separate from technical validation or
-    implementation authorship.
+    these softer paper-process roles separate from technical validation,
+    implementation authorship, or publication-author status.
   - Required result: add acknowledgement-role metadata with safe contributor
     labels, role category (`white_paper_review`, `early_exploration`,
     `support_advice`, `practical_application_management_advice`,
-    `application_review`), affected paper/application scope, source
-    page/section, privacy/redaction policy, and README/ROADMAP wording that
-    separates paper-process acknowledgement evidence from benchmark,
-    deployment, validation, or system-development provenance.
+    `application_review`, `application_specific_advice`), affected paper/
+    application scope, source page/section, privacy/redaction policy, and
+    README/ROADMAP wording that separates paper-process acknowledgement
+    evidence from benchmark, deployment, validation, system-development, or
+    publication-author provenance.
 
 - [ ] Add paper author-metadata provenance for equal contributors and
       correspondence roles.

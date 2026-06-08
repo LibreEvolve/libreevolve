@@ -354,18 +354,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       role evidence exists.
   - Spec evidence: AlphaEvolve's Acknowledgements separately credit white-paper
     review, early explorations and discussions, support/advice, practical
-    application management advice, and application-specific reviewing.
+    application management advice, and application-specific reviewing. PDF
+    pages 21-22 also separate general paper-process acknowledgements from
+    application-specific review/advice.
   - Current evidence: README can describe local project status, examples,
     expert formulation gaps, systems owner/reviewer gaps, early-user feedback
-    gaps, and contribution-role gaps. It does not document paper-process
-    acknowledgement records for review/support/advice roles, nor distinguish
-    those roles from implementation authorship, domain validation, deployment
-    signoff, or feedback-backed robustness claims.
+    gaps, contribution-role gaps, and package/project metadata provenance. It
+    does not document paper-process acknowledgement records for
+    review/support/advice roles, nor distinguish those roles from
+    implementation authorship, publication-author metadata, domain validation,
+    deployment signoff, or feedback-backed robustness claims.
   - Required result: when acknowledgement-role metadata lands, update README,
     ROADMAP, papers index, and code/paper TODOs together so README separates
     white-paper review, support/advice, practical-application management
-    advice, and application-review acknowledgements from technical
-    AlphaEvolve-spec evidence.
+    advice, application-specific advice, and application-review
+    acknowledgements from technical AlphaEvolve-spec evidence.
 
 - [ ] Keep README paper-author wording scoped until publication-author
       metadata exists.

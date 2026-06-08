@@ -3702,3 +3702,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     transfer reports, performance-delta records, and a background-only or
     benchmark-fixture status rule so roadmap claims do not outpace local
     MemEvolve-style memory support.
+
+- [ ] Add ANCHOR healthy-evolution oversight gates before roadmap promotion.
+  - Spec evidence: arXiv `2606.06114`, submitted June 4, 2026, introduces
+    Agent Norm Correction through Human-like Oversight and Review (ANCHOR) in
+    `Towards Healthy Evolution: Exploring the Role and Mechanisms of
+    Human-Agent Interaction in Self-Evolving Systems`. The abstract says
+    autonomous self-evolving agents can suffer capability degradation and
+    safety drift, and that simulated human supervision at different phases of
+    self-evolution can mitigate safety degradation while preserving core
+    evolutionary-objective performance. It also reports that supervising the
+    output verification phase is most effective and that increasing
+    supervision frequency yields diminishing returns.
+  - Current evidence: ROADMAP tracks evaluator contracts, failure artifacts,
+    safety-adjacent reward gates, trace diagnostics, and several open-ended
+    self-evolution source gates. It does not mention `2606.06114`, define an
+    ANCHOR gate, require human-like oversight records, track phase-specific
+    norm-correction feedback, measure safety drift during evolution, or
+    require supervision-cadence evidence before promoting healthy-evolution or
+    human-aligned self-evolution claims.
+  - Required result: add roadmap gates for `2606.06114`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, ANCHOR oversight
+    role schema, phase-specific supervision taxonomy, norm-correction
+    feedback artifacts, output-verification intervention logs, safety-drift
+    and capability-degradation metrics, objective-preservation reports,
+    supervision-frequency/cadence experiment records, coding/math/safety
+    benchmark metadata, baseline identities, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    ANCHOR-style human-like oversight support.

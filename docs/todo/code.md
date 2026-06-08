@@ -5081,3 +5081,34 @@ Primary evidence:
     performance-delta records, reproducibility status, and README/ROADMAP
     wording that keeps meta-evolving memory systems as missing evidence until
     local implementation and reports exist.
+
+- [ ] Add ANCHOR human-like oversight and norm-correction source boundary.
+  - Spec evidence: arXiv `2606.06114`, `Towards Healthy Evolution: Exploring
+    the Role and Mechanisms of Human-Agent Interaction in Self-Evolving
+    Systems`, was submitted June 4, 2026. Its abstract introduces Agent Norm
+    Correction through Human-like Oversight and Review (ANCHOR), an LLM-based
+    framework that simulates human supervision and delivers feedback at
+    several phases of self-evolution. The paper reports that limited
+    supervision mitigates safety degradation while preserving core objective
+    performance, that output-verification supervision is the most effective
+    intervention point, and that higher supervision frequency has diminishing
+    returns.
+  - Current evidence: LibreEvolve records evaluator results, prompt history,
+    failed proposals, quarantine streams, and local validity/admission
+    decisions, but it has no ANCHOR source row, no human-like oversight agent,
+    no phase-specific norm-correction interface, no safety-drift metric
+    lineage, no supervision-cadence policy, no output-verification
+    intervention record, no reflection/review artifact stream, and no
+    experiment report separating core-task performance from safety
+    degradation during self-evolution.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2606.06114`: arXiv id/version/date/PDF hash, authors, source
+    license, relation to AlphaEvolve and LibreEvolve's validator/admission
+    model, ANCHOR oversight-role schema, phase-specific intervention points,
+    norm-correction feedback artifacts, safety-drift metrics, output-
+    verification review records, supervision-frequency/cadence traces,
+    reflection/review logs, preservation-of-objective-performance reports,
+    safety benchmark taxonomy, baseline identities, diminishing-return
+    analysis fields, and README/ROADMAP wording that keeps human-like
+    oversight and healthy-evolution claims as missing evidence until local
+    implementation and reports exist.

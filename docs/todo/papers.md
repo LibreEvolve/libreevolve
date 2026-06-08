@@ -4661,3 +4661,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     if any, reproducibility status, and README/ROADMAP wording that treats
     MemEvolve as missing paper evidence rather than implemented LibreEvolve
     support.
+
+- [ ] Track ANCHOR healthy-evolution oversight paper evidence.
+  - Paper/source evidence: arXiv `2606.06114`, submitted June 4, 2026, is
+    titled `Towards Healthy Evolution: Exploring the Role and Mechanisms of
+    Human-Agent Interaction in Self-Evolving Systems`. Its abstract says
+    autonomous self-evolution can cause capability degradation and safety
+    drift, and introduces Agent Norm Correction through Human-like Oversight
+    and Review (ANCHOR), an LLM-based framework that simulates human
+    supervision across phases of self-evolution. It evaluates two
+    representative open-source self-evolving agent systems across coding,
+    mathematical reasoning, and safety, reports that limited supervision
+    mitigates safety degradation while preserving core performance, identifies
+    output-verification supervision as the strongest intervention point, and
+    finds diminishing returns from increasing supervision frequency.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2606.06114`. Existing rows cover AlphaEvolve evaluator-backed
+    search, open-ended reward/rubric sources, multi-agent autonomy, trace
+    diagnostics, and memory architecture evolution, but not human-like
+    oversight, phase-specific norm correction, safety-drift tracking,
+    output-verification interventions, supervision-frequency tradeoffs, or
+    healthy-evolution reporting for self-evolving agents.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2606.06114`: title/authors/arXiv version/date/PDF digest, source
+    license, relation to AlphaEvolve and LibreEvolve safety assumptions,
+    ANCHOR role and feedback schema, supervised phase taxonomy, norm-
+    correction artifact records, output-verification intervention evidence,
+    safety degradation metrics, coding/math/safety benchmark taxonomy,
+    supervision-frequency experiment records, objective-preservation
+    measurements, baseline identities, code/artifact availability if any,
+    reproducibility status, and README/ROADMAP wording that treats ANCHOR as
+    missing paper evidence rather than implemented LibreEvolve support.

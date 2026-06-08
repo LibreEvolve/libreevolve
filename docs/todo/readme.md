@@ -3279,4 +3279,32 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     transfer metrics, and report outcomes. Avoid implying LibreEvolve supports
     MemEvolve-style memory architecture evolution without those artifacts.
 
+- [ ] Keep README ANCHOR healthy-evolution oversight claims absent or
+      source-scoped until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2606.06114`, `Towards Healthy Evolution: Exploring
+    the Role and Mechanisms of Human-Agent Interaction in Self-Evolving
+    Systems`, introduces Agent Norm Correction through Human-like Oversight
+    and Review (ANCHOR). Its abstract frames autonomous self-evolution as a
+    safety-drift and capability-degradation risk, then reports that limited
+    simulated human supervision can mitigate safety degradation while
+    preserving core objective performance, with output verification as the
+    strongest intervention point and diminishing returns from increased
+    supervision frequency.
+  - Current evidence: README documents LibreEvolve's current evaluator-first
+    workflow, validity gates, failure/quarantine artifacts, prompt history,
+    MAP-Elites retention, and benchmark boundaries. It does not list
+    `2606.06114`, simulate human-like oversight, implement ANCHOR norm
+    correction, provide phase-specific supervision hooks, measure safety drift
+    during self-evolution, record output-verification interventions, or report
+    supervision-cadence tradeoffs.
+  - Required result: if README mentions ANCHOR, healthy evolution, human-like
+    oversight, norm correction, safety drift, capability degradation during
+    self-evolution, output-verification supervision, supervision frequency, or
+    human-aligned self-evolving agents, keep the wording source-scoped until
+    the paper is in the manifest and local artifacts can show oversight-role
+    schemas, phase-specific feedback records, safety metrics, intervention
+    logs, objective-preservation reports, cadence experiments, benchmark
+    baselines, and report outcomes. Avoid implying LibreEvolve supports
+    ANCHOR-style healthy-evolution oversight without those artifacts.
+
 ## Architecture Description

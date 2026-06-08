@@ -2235,6 +2235,25 @@ Primary evidence:
     context files or smoke artifact copy-out until a runner proves the full
     AlphaEvolve Section 3.2 handoff loop.
 
+- [ ] Add constructive-math heuristic-stage sequence provenance.
+  - Spec evidence: AlphaEvolve Section 3.2 says each evolved heuristic was
+    given a fixed time budget, for example `1000 seconds`, and the best
+    construction found by the previous best heuristic. It further says final
+    constructions often came from a sequence of different specialized
+    heuristics: early heuristics made large gains from random or simple initial
+    states, while later heuristics fine-tuned near-optimal configurations.
+  - Current evidence: existing TODOs cover simple/random starting construction
+    provenance and the single-step incumbent handoff contract. They do not yet
+    require a stage-level heuristic chain that records the exact allotted
+    budget, previous-best source, heuristic identity, produced construction,
+    improvement delta, and broad-gain versus fine-tuning role for each stage.
+  - Required result: add constructive-math benchmark/report records for
+    heuristic stage index, fixed budget seconds, incumbent construction
+    artifact/hash, candidate heuristic artifact/hash, output construction
+    artifact/hash, score before/after, improvement status, and stage role
+    classification. Keep this separate from generic runtime-budget accounting
+    until a report can prove AlphaEvolve-style multi-stage adaptive search.
+
 - [ ] Generate suite matrix tensor artifacts and per-seed hit-rate reports.
   - Spec evidence: AlphaEvolve Section 3.1 and Appendix A evaluate low-rank
     tensor decomposition targets with multiple random seeds, report the best

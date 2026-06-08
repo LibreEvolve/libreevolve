@@ -2272,6 +2272,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     heuristic output construction, verifier/certificate inputs, and improvement
     status for at least one constructive-math benchmark family.
 
+- [ ] Track Section 3.2 heuristic-stage sequence evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says the evolved
+    heuristic receives a fixed time budget, for example `1000 seconds`, and the
+    best construction from the previous best heuristic. It then says final
+    constructions were often produced by a sequence of different specialized
+    heuristics, with early stages making large gains from random/simple initial
+    states and later stages fine-tuning near-optimal configurations.
+  - Current gap: paper-facing TODOs already require single-step incumbent
+    handoff evidence, simple/random starting construction provenance, and
+    aggregate outcome rows. They do not require stage-by-stage evidence that a
+    constructive-math result came from multiple heuristic generations with
+    explicit budgets, incumbent lineage, stage roles, and per-stage improvement
+    deltas.
+  - Required result: add paper/report evidence for heuristic stage index,
+    allotted budget seconds, previous-best construction id, candidate heuristic
+    id, produced construction id, score before/after, improvement delta, stage
+    role (`early_broad_gain` or `late_fine_tuning`), and verifier links before
+    describing LibreEvolve results as AlphaEvolve-style multi-stage adaptive
+    search.
+
 - [ ] Track aggregate constructive-math breadth and outcome-rate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says
     AlphaEvolve was applied to a curated set of over 50 mathematical problems

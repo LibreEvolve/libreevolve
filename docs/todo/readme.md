@@ -1039,6 +1039,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes static problem context and post-run artifacts from
     first-class incumbent-construction benchmark handoff evidence.
 
+- [ ] Keep README constructive-math wording scoped until heuristic-stage
+      sequence evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.2 says constructive-math heuristics
+    were run with fixed time budgets such as `1000 seconds` and that final
+    constructions often resulted from a sequence of specialized heuristics:
+    early broad-gain stages from random/simple starts and later fine-tuning
+    stages near optimal configurations.
+  - Current evidence: README can describe runtime budgets, static context,
+    simple/random starting-point gaps, incumbent handoff gaps, and aggregate
+    outcome gaps. It should not imply the current reports prove a
+    stage-by-stage adaptive heuristic chain with exact per-stage budget,
+    incumbent lineage, produced construction, improvement delta, and stage role.
+  - Required result: when heuristic-stage sequence reports land, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    distinguishes one-shot heuristic handoff support from AlphaEvolve-style
+    multi-stage constructive-math search evidence.
+
 - [ ] Keep README constructive-math coverage wording scoped to Appendix B
       family status until aggregate outcome reports exist.
   - Spec evidence: AlphaEvolve Section 3.2 reports over 50 mathematical

@@ -464,20 +464,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       affiliation metadata exists.
   - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
     affiliation line `Google DeepMind1` plus footnotes `1See Acknowledgments
-    and Author information section.` and `*Equal contributions.`
+    and Author information section.` and `*Equal contributions.` It also
+    carries the source-paper rights line `© 2025 Google DeepMind. All rights
+    reserved`, which is related but separate source-rights evidence.
   - Current evidence: ROADMAP and README can cite LibreEvolve's independent
     non-affiliation statement, source-PDF version/rights TODOs, and
     publication-author metadata gaps. They do not require roadmap evidence for
     title-page affiliation/organization text, footnote marker definitions,
     author-to-marker mapping, source page/span, or docs wording that separates
     source-paper affiliation evidence from local project ownership,
-    endorsement, author metadata, and system-development provenance.
+    endorsement, author metadata, source-rights records, and system-development
+    provenance. `paper_manifest` gates validate cache rows, local PDF hashes,
+    and PDF readability, but not title-page affiliation or marker semantics.
   - Required result: when title-page affiliation provenance lands, update
     ROADMAP, README, papers index, and code/paper TODOs with affiliation text,
     marker ids, footnote text, author-marker mappings, source locator, and
-    privacy/redaction policy so roadmap wording distinguishes source-paper
-    organization metadata from LibreEvolve's affiliation and endorsement
-    boundaries.
+    privacy/redaction policy plus linkage to source-rights metadata, so roadmap
+    wording distinguishes source-paper organization metadata from LibreEvolve's
+    affiliation, licensing, and endorsement boundaries.
 
 - [ ] Keep system-development roadmap wording scoped until contribution-role
       provenance exists.

@@ -586,19 +586,25 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` lists the authors,
     then gives the source affiliation line `Google DeepMind1`. The page also
     defines footnote `1` as `See Acknowledgments and Author information
-    section.` and `*` as `Equal contributions.`
+    section.` and `*` as `Equal contributions.` The same page includes
+    `© 2025 Google DeepMind. All rights reserved`, which must be linked as
+    source-rights evidence rather than treated as local project licensing.
   - Current gap: paper/status TODOs track publication-author metadata,
     contribution roles, acknowledgement roles, and source-PDF version/rights
     metadata. They do not preserve title-page affiliation or footnote
     provenance: organization/affiliation text, marker ids, source page,
     author-to-marker mapping, or the boundary between paper-source affiliation
-    and LibreEvolve's independent/non-endorsed project status.
+    and LibreEvolve's independent/non-endorsed project status. Manifest checks
+    prove local PDF presence, hash, and readability; they do not extract or
+    validate title-page organization, marker definitions, or affiliation
+    semantics.
   - Required result: add paper-facing title-page metadata records with
     affiliation/organization text, marker ids, footnote text, source page/span,
-    author-to-marker mapping for equal-contribution markers, privacy/redaction
-    handling, and README/ROADMAP/papers wording that distinguishes source-paper
-    affiliation evidence from local project affiliation, endorsement,
-    publication-author metadata, and technical system provenance.
+    author-to-marker mapping for equal-contribution markers, source-rights
+    linkage, privacy/redaction handling, and README/ROADMAP/papers wording that
+    distinguishes source-paper affiliation evidence from local project
+    affiliation, endorsement, publication-author metadata, source-rights
+    metadata, and technical system provenance.
 
 - [ ] Track core AlphaEvolve system-development contribution provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the

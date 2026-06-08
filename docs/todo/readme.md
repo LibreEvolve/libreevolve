@@ -24,18 +24,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and code/paper TODOs together so README distinguishes manifest-level metric
     contract evidence from publication-ready AlphaEvolve-comparable tables.
 
-- [ ] Keep README multi-evaluator wording scoped until evaluator-oracle
-      composition evidence exists.
+- [ ] Keep README multi-evaluator wording scoped until independent
+      evaluator-oracle arbitration exists.
   - Spec evidence: AlphaEvolve describes feedback from one or more evaluators,
     with Section 2.4 separating a user-provided evaluation function from
     optional cascades and LLM-generated feedback.
-  - Current evidence: README can describe a local cascade validator with
-    stages/samples/thresholds and optional LLM feedback graders. It does not
-    yet document independent evaluator/oracle sources, their authority,
-    metric ownership, conflict/merge policy, or how evaluator disagreements
-    affect validity, score reporting, archive admission, and prompt feedback.
-  - Required result: when evaluator-oracle composition metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
+  - Current evidence: README now documents
+    `runtime.history.evaluator_oracle_registry` with oracle ids/types,
+    authority, input/output schema, metric ownership, failure policy, merge
+    policy, prompt-feedback linkage, runtime counts, and `claim_ready: false`
+    for independent multi-oracle arbitration.
+  - Required result: when independent evaluator-oracle authority,
+    sufficiency, and conflict-resolution policy lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes local staged validation and feedback graders from
     AlphaEvolve-style feedback from one or more independent evaluators.
 

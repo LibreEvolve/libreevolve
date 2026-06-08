@@ -44,6 +44,7 @@ from libreevolve.core.loop import (
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
+    validate_evaluator_oracle_registry,
     validate_paper_evaluator_metric_contract,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
@@ -3388,6 +3389,47 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert feedback_metric["maximize_transform"] == "upper_bound_minus_raw_value"
     assert feedback_metric["observed_values"][-1]["raw_value"] == 25.0
     assert feedback_metric["observed_values"][-1]["normalized_value"] == 0.75
+
+    oracle_registry = manifest["runtime"]["history"]["evaluator_oracle_registry"]
+    assert oracle_registry["schema"] == "libreevolve.evaluator_oracle_registry.v1"
+    assert oracle_registry["validation"]["ok"] is True
+    assert validate_evaluator_oracle_registry(oracle_registry)["ok"] is True
+    assert oracle_registry["oracle_count"] == 2
+    assert oracle_registry["claim_ready"] is False
+    assert "cross_oracle_conflict_resolution_policy" in (
+        oracle_registry["claim_readiness"]["remaining_gap"]
+    )
+    default_oracle, feedback_oracle = oracle_registry["oracles"]
+    assert default_oracle["oracle_id"] == "evaluator:default"
+    assert default_oracle["oracle_type"] == "deterministic_validator"
+    assert default_oracle["authority"] == "candidate_validity_and_metric_gate"
+    assert default_oracle["metric_ownership"] == ["score"]
+    assert default_oracle["source"]["role"] == "default"
+    assert feedback_oracle["oracle_id"] == "llm_feedback:latency_review"
+    assert feedback_oracle["oracle_type"] == "llm_judge"
+    assert feedback_oracle["metric_ownership"] == ["review_latency_ms"]
+    assert oracle_registry["metric_ownership"] == [
+        {
+            "metric": "score",
+            "source": "evaluator",
+            "primary": True,
+            "oracle_id": "evaluator:default",
+            "paper_evaluator_metric": True,
+        },
+        {
+            "metric": "review_latency_ms",
+            "source": "feedback",
+            "primary": False,
+            "oracle_id": "llm_feedback:latency_review",
+            "paper_evaluator_metric": False,
+        },
+    ]
+    assert oracle_registry["merge_policy"]["evaluator_policy"] == "single_default_validator"
+    assert oracle_registry["merge_policy"]["llm_feedback_policy"] == (
+        "synchronous_post_evaluator_feedback_graders"
+    )
+    assert oracle_registry["runtime_summary"]["evaluated_program_count"] == 2
+    assert oracle_registry["runtime_summary"]["llm_feedback_record_count"] == 1
 
 
 def test_evaluation_budget_stops_before_llm_mutation():

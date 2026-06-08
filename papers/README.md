@@ -326,6 +326,15 @@ convention. Completed manifests now include
 exclusions, and raw/maximized/normalized value evidence. Export-ready paper
 tables and cross-run metric-contract diffs remain future reporting work.
 
+AlphaEvolve evaluator-oracle note: completed manifests now include
+`runtime.history.evaluator_oracle_registry` with ids, oracle types, authority,
+input/output schema, metric ownership, failure policy, prompt-feedback linkage,
+runtime counts, and merge-policy metadata for the default validator or
+configured cascade stages plus optional LLM feedback graders. The report keeps
+`claim_ready: false` because this is a registry for the current local cascade
+and post-evaluator grader boundary, not yet proof of independent
+multi-evaluator conflict arbitration or per-oracle benchmark sufficiency.
+
 AlphaEvolve cascade-report note: completed manifests now include
 `runtime.history.evaluation_cascade_report` with schema
 `libreevolve.evaluation_cascade_report.v1`. The report aggregates configured

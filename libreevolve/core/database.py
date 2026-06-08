@@ -263,6 +263,9 @@ class ProgramDatabase:
     def objective_schema_snapshot(self) -> dict:
         return copy.deepcopy(self._objective_schema)
 
+    def startup_manifest_snapshot(self) -> dict:
+        return copy.deepcopy(self._startup_manifest)
+
     def log_llm_call(self, record: dict) -> None:
         normalized = {"record_type": "call", **record}
         record_type = normalized.get("record_type")

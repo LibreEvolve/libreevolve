@@ -1452,25 +1452,27 @@ Primary evidence:
     `paper_evaluator_metric_contract`, preserve raw/maximized/normalized score
     columns, and make precision/rounding/display policy explicit.
 
-- [ ] Add independent evaluator-oracle composition provenance.
+- [ ] Extend evaluator-oracle provenance into independent arbitration policy.
   - Spec evidence: AlphaEvolve's abstract says the evolutionary loop
     continuously receives feedback from one or more evaluators, while Section
     2.4 describes the user-provided evaluation function plus optional
     evaluation mechanisms such as cascades and LLM-generated feedback.
-  - Current evidence: LibreEvolve has one configured local `CascadeEvaluator`
-    path with optional stages/samples/thresholds and separate optional LLM
-    feedback graders. Those surfaces can produce multiple stage results and
-    feedback scores, but they do not define a paper-facing contract for
-    independent evaluator/oracle sources, their authority, merge policy, or
-    how conflicting evaluator results should affect candidate validity,
-    scoring, admission, and prompt feedback.
-  - Required result: add evaluator-oracle registry and report metadata with
-    evaluator ids, oracle type (`deterministic_validator`, `statistical_test`,
-    `reference_checker`, `llm_judge`, or equivalent), authority/role,
-    input/output schema, metric ownership, conflict/merge policy, failure
-    policy, prompt-feedback linkage, and README/ROADMAP checks that
-    distinguish independent multi-evaluator feedback from local cascade stages
-    or post-hoc LLM feedback graders.
+  - Current evidence: completed manifests now include
+    `runtime.history.evaluator_oracle_registry` with schema
+    `libreevolve.evaluator_oracle_registry.v1`. The report registers the
+    default validator or configured cascade stages plus optional LLM feedback
+    graders with evaluator ids, oracle type, authority/role, input/output
+    schema, metric ownership, failure policy, prompt-feedback linkage, runtime
+    counts, and the current merge-policy summary. It explicitly keeps
+    `claim_ready: false` for independent multi-oracle composition.
+  - Remaining gap: the registry documents current local composition but does
+    not yet provide configurable independent evaluator/oracle authority,
+    per-oracle sufficiency for benchmark claims, or cross-oracle conflict
+    arbitration beyond configured cascade order and post-hoc feedback.
+  - Required result: add independent evaluator-oracle policy with configured
+    authority, sufficiency labels, merge/conflict rules, failure handling, and
+    reference-checker/statistical-test oracle support before claiming
+    AlphaEvolve-style feedback from one or more independent evaluators.
 
 - [ ] Add execution-grounded incorrect-suggestion filtering evidence.
   - Spec evidence: AlphaEvolve's introduction says its LLM-directed evolution

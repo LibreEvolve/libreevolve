@@ -5112,6 +5112,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             db,
             programs,
         ),
+        "evaluator_oracle_registry": _evaluator_oracle_registry_report(
+            db,
+            programs,
+        ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "archive_state": archive_state,
@@ -5586,6 +5590,378 @@ def validate_paper_evaluator_metric_contract(report: object) -> dict:
                 issues.append({"code": "missing_reserved_exclusion", "message": f"{field} exclusion is missing"})
     return {
         "schema": "libreevolve.paper_evaluator_metric_contract.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _evaluator_oracle_registry_report(
+    db: ProgramDatabase,
+    programs: list[Program],
+) -> dict:
+    manifest = db.startup_manifest_snapshot()
+    config = manifest.get("config") if isinstance(manifest.get("config"), Mapping) else {}
+    problem = manifest.get("problem") if isinstance(manifest.get("problem"), Mapping) else {}
+    objective_schema = db.objective_schema_snapshot()
+    eval_stages = config.get("eval_stages") if isinstance(config.get("eval_stages"), list) else []
+    evaluator_sources = (
+        problem.get("evaluator_sources")
+        if isinstance(problem.get("evaluator_sources"), list)
+        else []
+    )
+    llm_feedback = (
+        config.get("llm_feedback")
+        if isinstance(config.get("llm_feedback"), list)
+        else []
+    )
+    oracles = _evaluator_oracle_records(
+        eval_stages,
+        evaluator_sources,
+        llm_feedback,
+        objective_schema,
+    )
+    report = {
+        "schema": "libreevolve.evaluator_oracle_registry.v1",
+        "source": "startup_manifest_and_runtime_history",
+        "oracle_count": len(oracles),
+        "oracles": oracles,
+        "metric_ownership": _evaluator_oracle_metric_ownership(
+            objective_schema,
+            llm_feedback,
+            "configured_evaluator_cascade" if eval_stages else "evaluator:default",
+        ),
+        "merge_policy": _evaluator_oracle_merge_policy(config),
+        "runtime_summary": _evaluator_oracle_runtime_summary(programs),
+        "prompt_feedback_linkage": {
+            "stage_feedback": "evaluation.stages_and_configured_stage_results_rendered_by_prompt_sampler",
+            "llm_feedback": "evaluation.metadata.llm_feedback_and_llm_feedback_stages",
+            "failure_memory": "failure_history_records_can_render_evaluator_and_stage_summaries",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "independent_multi_evaluator_oracle_composition": False,
+            "reason": (
+                "evaluator and feedback oracle identities are registered, but "
+                "LibreEvolve still uses one local cascade evaluator plus "
+                "post-hoc synchronous feedback graders rather than a general "
+                "independent multi-oracle arbitration contract"
+            ),
+            "remaining_gap": [
+                "oracle_authority_configuration",
+                "cross_oracle_conflict_resolution_policy",
+                "per_oracle_sufficiency_for_benchmark_claims",
+                "independent_reference_checker_or_statistical_test_oracles",
+            ],
+        },
+    }
+    report["validation"] = validate_evaluator_oracle_registry(report)
+    return report
+
+
+def _evaluator_oracle_records(
+    eval_stages: list,
+    evaluator_sources: list,
+    llm_feedback: list,
+    objective_schema: dict,
+) -> list[dict]:
+    records: list[dict] = []
+    if eval_stages:
+        source_by_stage = _evaluator_source_by_stage(evaluator_sources)
+        for index, raw_stage in enumerate(eval_stages):
+            if not isinstance(raw_stage, Mapping):
+                continue
+            name = str(raw_stage.get("name", f"stage_{index}"))
+            mode = str(raw_stage.get("mode", "external_validator"))
+            source = source_by_stage.get((index, name), {})
+            records.append(
+                {
+                    "oracle_id": f"stage:{name}",
+                    "oracle_type": (
+                        "candidate_embedded_evaluator"
+                        if mode == "embedded_evaluate"
+                        else "deterministic_validator"
+                    ),
+                    "role": "configured_cascade_stage",
+                    "authority": "candidate_validity_and_metric_gate",
+                    "stage_name": name,
+                    "stage_index": index,
+                    "input_schema": (
+                        "candidate_primary_module.evaluate(eval_inputs)"
+                        if mode == "embedded_evaluate"
+                        else "evaluate(code, workspace_path, stage)"
+                    ),
+                    "output_schema": "declared_metrics_plus_boolean_is_valid",
+                    "metric_ownership": _evaluator_owned_metric_names(objective_schema),
+                    "failure_policy": (
+                        "stage_failure_or_threshold_failure_stops_candidate_cascade"
+                    ),
+                    "prompt_feedback_linkage": "configured_stage_results_and_stage_summaries",
+                    "source": _evaluator_oracle_source_ref(source),
+                }
+            )
+    else:
+        source = _default_evaluator_source(evaluator_sources)
+        records.append(
+            {
+                "oracle_id": "evaluator:default",
+                "oracle_type": "deterministic_validator",
+                "role": "default_problem_validator",
+                "authority": "candidate_validity_and_metric_gate",
+                "input_schema": "evaluate(code)_or_evaluate(code, workspace_path)",
+                "output_schema": "declared_metrics_plus_boolean_is_valid",
+                "metric_ownership": _evaluator_owned_metric_names(objective_schema),
+                "failure_policy": "invalid_evaluation_blocks_database_admission",
+                "prompt_feedback_linkage": "evaluation_stages_and_execution_summary",
+                "source": _evaluator_oracle_source_ref(source),
+            }
+        )
+    for index, raw_grader in enumerate(llm_feedback):
+        if not isinstance(raw_grader, Mapping):
+            continue
+        name = str(raw_grader.get("name", f"feedback_{index}"))
+        metric = raw_grader.get("metric")
+        records.append(
+            {
+                "oracle_id": f"llm_feedback:{name}",
+                "oracle_type": "llm_judge",
+                "role": "post_evaluator_feedback_grader",
+                "authority": (
+                    "feedback_metric_and_optional_fitness_composition_not_primary_validity_gate"
+                ),
+                "input_schema": "candidate_workspace_plus_task_and_evaluator_feedback_prompt",
+                "output_schema": "finite_score_and_optional_feedback_text",
+                "metric_ownership": [metric] if isinstance(metric, str) else [],
+                "failure_policy": str(raw_grader.get("failure_policy", "discard")),
+                "prompt_feedback_linkage": "evaluation.metadata.llm_feedback",
+                "source": {
+                    "configured_feedback_index": index,
+                    "metric": metric,
+                    "objective_metric": raw_grader.get("objective_metric") is True,
+                },
+            }
+        )
+    return records
+
+
+def _evaluator_source_by_stage(evaluator_sources: list) -> dict[tuple[int, str], Mapping[str, object]]:
+    by_stage: dict[tuple[int, str], Mapping[str, object]] = {}
+    for source in evaluator_sources:
+        if not isinstance(source, Mapping):
+            continue
+        if source.get("role") != "stage":
+            continue
+        stage_index = source.get("stage_index")
+        stage_name = source.get("stage_name")
+        if (
+            isinstance(stage_index, int)
+            and not isinstance(stage_index, bool)
+            and isinstance(stage_name, str)
+        ):
+            by_stage[(stage_index, stage_name)] = source
+    return by_stage
+
+
+def _default_evaluator_source(evaluator_sources: list) -> Mapping[str, object]:
+    for source in evaluator_sources:
+        if isinstance(source, Mapping) and source.get("role") == "default":
+            return source
+    return {}
+
+
+def _evaluator_oracle_source_ref(source: Mapping[str, object]) -> dict:
+    if not source:
+        return {"status": "not_available"}
+    return {
+        "role": source.get("role"),
+        "stage_name": source.get("stage_name"),
+        "stage_index": source.get("stage_index"),
+        "relative_path": source.get("relative_path"),
+        "sha256": source.get("sha256"),
+        "source_type": source.get("source_type"),
+    }
+
+
+def _evaluator_owned_metric_names(objective_schema: Mapping[str, object]) -> list[str]:
+    metrics = objective_schema.get("metrics")
+    if not isinstance(metrics, list):
+        return []
+    names = [
+        metric.get("name")
+        for metric in metrics
+        if isinstance(metric, Mapping) and metric.get("source", "evaluator") == "evaluator"
+    ]
+    return [name for name in names if isinstance(name, str)]
+
+
+def _evaluator_oracle_metric_ownership(
+    objective_schema: Mapping[str, object],
+    llm_feedback: list,
+    evaluator_oracle_id: str,
+) -> list[dict]:
+    feedback_by_metric = {
+        grader.get("metric"): str(grader.get("name", f"feedback_{index}"))
+        for index, grader in enumerate(llm_feedback)
+        if isinstance(grader, Mapping) and isinstance(grader.get("metric"), str)
+    }
+    ownership: list[dict] = []
+    metrics = objective_schema.get("metrics")
+    if not isinstance(metrics, list):
+        return ownership
+    for metric in metrics:
+        if not isinstance(metric, Mapping) or not isinstance(metric.get("name"), str):
+            continue
+        name = metric["name"]
+        source = str(metric.get("source", "evaluator"))
+        if source == "evaluator":
+            oracle_id = evaluator_oracle_id
+        elif source == "feedback":
+            oracle_id = f"llm_feedback:{feedback_by_metric.get(name, '<unmatched>')}"
+        else:
+            oracle_id = f"{source}:not_registered_evaluator_oracle"
+        ownership.append(
+            {
+                "metric": name,
+                "source": source,
+                "primary": metric.get("primary") is True,
+                "oracle_id": oracle_id,
+                "paper_evaluator_metric": source == "evaluator",
+            }
+        )
+    return ownership
+
+
+def _evaluator_oracle_merge_policy(config: Mapping[str, object]) -> dict:
+    eval_stages = config.get("eval_stages") if isinstance(config.get("eval_stages"), list) else []
+    llm_feedback = config.get("llm_feedback") if isinstance(config.get("llm_feedback"), list) else []
+    return {
+        "schema": "libreevolve.evaluator_oracle_merge_policy.v1",
+        "evaluator_policy": (
+            "configured_stage_cascade_in_order"
+            if eval_stages
+            else "single_default_validator"
+        ),
+        "stage_stop_policy": "first_failed_stage_stops_candidate",
+        "validity_policy": "evaluator_is_valid_and_thresholds_gate_admission",
+        "llm_feedback_policy": (
+            "synchronous_post_evaluator_feedback_graders"
+            if llm_feedback
+            else "not_configured"
+        ),
+        "feedback_aggregation_policy": "weighted_delta_after_evaluator_validity",
+        "conflict_policy": (
+            "no_general_cross_oracle_conflict_arbitration_beyond_configured_order"
+        ),
+    }
+
+
+def _evaluator_oracle_runtime_summary(programs: list[Program]) -> dict:
+    evaluated_program_count = 0
+    valid_count = 0
+    invalid_count = 0
+    configured_stage_record_count = 0
+    llm_feedback_record_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        if not evaluation:
+            continue
+        evaluated_program_count += 1
+        if evaluation.get("is_valid") is True:
+            valid_count += 1
+        elif evaluation.get("is_valid") is False:
+            invalid_count += 1
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        configured = metadata.get("configured_stage_results")
+        if isinstance(configured, list):
+            configured_stage_record_count += sum(1 for item in configured if isinstance(item, dict))
+        feedback = metadata.get("llm_feedback")
+        if isinstance(feedback, list):
+            llm_feedback_record_count += sum(1 for item in feedback if isinstance(item, dict))
+    return {
+        "evaluated_program_count": evaluated_program_count,
+        "valid_count": valid_count,
+        "invalid_count": invalid_count,
+        "configured_stage_record_count": configured_stage_record_count,
+        "llm_feedback_record_count": llm_feedback_record_count,
+    }
+
+
+def validate_evaluator_oracle_registry(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.evaluator_oracle_registry.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "oracle registry must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "oracle_count",
+        "oracles",
+        "metric_ownership",
+        "merge_policy",
+        "runtime_summary",
+        "prompt_feedback_linkage",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"oracle registry missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.evaluator_oracle_registry.v1":
+        issues.append({"code": "invalid_schema", "message": "oracle registry schema is unsupported"})
+    if report.get("source") != "startup_manifest_and_runtime_history":
+        issues.append({"code": "invalid_source", "message": "oracle registry source is unsupported"})
+    oracles = report.get("oracles")
+    if not isinstance(oracles, list):
+        issues.append({"code": "invalid_oracles", "message": "oracles must be a list"})
+        oracles = []
+    allowed_types = {
+        "deterministic_validator",
+        "candidate_embedded_evaluator",
+        "statistical_test",
+        "reference_checker",
+        "llm_judge",
+    }
+    seen_ids: set[str] = set()
+    for index, oracle in enumerate(oracles):
+        if not isinstance(oracle, dict):
+            issues.append({"code": "invalid_oracle", "message": f"oracle {index} must be an object"})
+            continue
+        oracle_id = oracle.get("oracle_id")
+        if not isinstance(oracle_id, str) or not oracle_id:
+            issues.append({"code": "invalid_oracle_id", "message": f"oracle {index} id is invalid"})
+        elif oracle_id in seen_ids:
+            issues.append({"code": "duplicate_oracle_id", "message": f"oracle id {oracle_id!r} is duplicated"})
+        else:
+            seen_ids.add(oracle_id)
+        if oracle.get("oracle_type") not in allowed_types:
+            issues.append({"code": "invalid_oracle_type", "message": f"oracle {index} type is invalid"})
+        for field in ("role", "authority", "input_schema", "output_schema", "failure_policy", "prompt_feedback_linkage"):
+            if not isinstance(oracle.get(field), str) or not oracle.get(field):
+                issues.append({"code": "invalid_oracle_field", "message": f"oracle {index} {field} must be a non-empty string"})
+        if not isinstance(oracle.get("metric_ownership"), list):
+            issues.append({"code": "invalid_oracle_metric_ownership", "message": f"oracle {index} metric ownership must be a list"})
+    if report.get("oracle_count") != len(oracles):
+        issues.append({"code": "invalid_oracle_count", "message": "oracle_count must match oracles length"})
+    ownership = report.get("metric_ownership")
+    if not isinstance(ownership, list):
+        issues.append({"code": "invalid_metric_ownership", "message": "metric_ownership must be a list"})
+    else:
+        for index, item in enumerate(ownership):
+            if not isinstance(item, dict) or not isinstance(item.get("metric"), str):
+                issues.append({"code": "invalid_metric_owner", "message": f"metric ownership {index} is invalid"})
+            elif not isinstance(item.get("oracle_id"), str) or not item.get("oracle_id"):
+                issues.append({"code": "invalid_metric_owner_oracle", "message": f"metric ownership {index} oracle_id is invalid"})
+    merge_policy = report.get("merge_policy")
+    if not isinstance(merge_policy, dict) or merge_policy.get("schema") != "libreevolve.evaluator_oracle_merge_policy.v1":
+        issues.append({"code": "invalid_merge_policy", "message": "merge_policy is invalid"})
+    if not isinstance(report.get("runtime_summary"), dict):
+        issues.append({"code": "invalid_runtime_summary", "message": "runtime_summary must be an object"})
+    return {
+        "schema": "libreevolve.evaluator_oracle_registry.v1",
         "ok": not issues,
         "issues": issues,
     }

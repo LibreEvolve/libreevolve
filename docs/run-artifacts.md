@@ -1560,6 +1560,16 @@ raw values, maximized values, normalized values, and missing/non-numeric
 counts. The report explicitly excludes `is_valid`, `outputs`,
 `program_output`, `feedback_adjusted_fitness`, and `llm_feedback` from scored
 AlphaEvolve-style scalar metric tables.
+Completed manifests also include `runtime.history.evaluator_oracle_registry`
+with schema `libreevolve.evaluator_oracle_registry.v1`. This registry is
+derived from the startup manifest and runtime history. It records the default
+validator or configured cascade-stage evaluator records, optional LLM feedback
+grader records, oracle ids/types, authority strings, input/output schema,
+metric ownership, failure policy, prompt-feedback linkage, runtime counts, and
+a merge-policy summary. It intentionally keeps `claim_ready: false` for
+independent multi-evaluator/oracle composition because current behavior is a
+single local cascade plus optional post-evaluator synchronous feedback graders,
+not a general conflict-arbitrated oracle system.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

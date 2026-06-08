@@ -2066,7 +2066,15 @@ remain malformed metrics. The evaluator
 contract is preflighted before run-directory overwrite cleanup or manifest
 creation: default and staged validator files must import cleanly, expose a
 callable `evaluate`, and bind to the runner's current positional dispatch. The
-intended public call shapes are `evaluate(code)`,
+completed manifest also records `runtime.history.evaluator_oracle_registry`,
+which registers the default validator or configured cascade stages plus any
+LLM feedback graders as evaluator/oracle records with ids, oracle types, task
+authority, input/output schema, metric ownership, failure policy, merge policy,
+prompt-feedback linkage, and runtime counts. That registry is provenance for
+the current local composition boundary; it remains `claim_ready: false` for
+general independent multi-oracle arbitration because LibreEvolve still lacks
+configurable cross-oracle authority and conflict-resolution policy.
+The intended public call shapes are `evaluate(code)`,
 `evaluate(code, workspace_path)`, and `evaluate(code, workspace_path, stage)`;
 async and generator-style `evaluate` functions are rejected during startup
 preflight, as are variadic, keyword-only, and extra-parameter signatures.

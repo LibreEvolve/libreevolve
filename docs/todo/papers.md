@@ -27,23 +27,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     `paper_evaluator_metric_contract` before treating LibreEvolve evaluator
     outputs as complete AlphaEvolve-comparable table evidence.
 
-- [ ] Track independent evaluator-oracle composition evidence.
+- [ ] Track independent evaluator-oracle arbitration evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve
     iteratively improves algorithms by continuously receiving feedback from one
     or more evaluators, then Section 2.4 distinguishes the user-provided
     evaluation function from optional cascades and LLM-generated feedback.
-  - Current gap: paper/status records can show one local cascade validator,
-    configured stages/samples, and optional LLM feedback graders. They do not
-    preserve paper-facing evidence for multiple independent evaluator/oracle
-    sources, evaluator authority, metric ownership, merge/conflict rules, or
-    how evaluator disagreements affect validity, score reporting, database
-    admission, and prompt-visible feedback.
-  - Required result: add paper-facing evaluator-composition records before
-    claiming AlphaEvolve-style "one or more evaluators" feedback: evaluator
-    ids, oracle type, task authority, input/output schema, metric ownership,
-    merge/conflict policy, failure handling, prompt-feedback linkage, and
-    wording that separates independent evaluator composition from local
-    cascade stages or post-evaluation LLM graders.
+  - Partial status: completed manifests now include
+    `runtime.history.evaluator_oracle_registry` with evaluator ids, oracle
+    type, authority, input/output schema, metric ownership, failure policy,
+    prompt-feedback linkage, runtime counts, and merge-policy metadata for the
+    default validator or configured cascade stages plus optional LLM feedback
+    graders.
+  - Current gap: the registry preserves current composition evidence, but it
+    does not prove multiple independent evaluator/oracle sources, configurable
+    evaluator authority, per-oracle benchmark sufficiency, merge/conflict
+    rules, or how evaluator disagreements affect validity, score reporting,
+    database admission, and prompt-visible feedback.
+  - Required result: add independent evaluator-oracle arbitration records
+    before claiming AlphaEvolve-style "one or more evaluators" feedback:
+    configured authority, sufficiency labels, conflict policy, failure
+    handling, reference/statistical oracle support, and wording that separates
+    independent evaluator composition from local cascade stages or
+    post-evaluation LLM graders.
 
 - [ ] Track execution-grounded filtering of incorrect base-LLM suggestions.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Table 1 context.

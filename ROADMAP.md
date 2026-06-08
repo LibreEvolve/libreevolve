@@ -39,6 +39,11 @@ LibreEvolve has:
   `runtime.history.paper_evaluator_metric_contract`, separating evaluator
   scalar metrics from local validity/output/feedback fields and recording raw,
   maximized, and normalized score evidence
+- evaluator/oracle registry reports under
+  `runtime.history.evaluator_oracle_registry`, registering the default
+  validator or configured cascade stages plus LLM feedback graders with metric
+  ownership, merge policy, failure policy, prompt-feedback linkage, and an
+  explicit limitation for independent multi-oracle arbitration
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr
@@ -179,6 +184,9 @@ is not yet an AlphaEvolve reproduction.
   current staged threshold gates from AlphaEvolve-style small-scale filters,
   main-test promotion decisions, confidence or p-value evidence, and
   sequential stopping diagnostics.
+- Extend the evaluator/oracle registry into configurable independent
+  multi-oracle authority, sufficiency, and conflict-resolution policies beyond
+  the current local cascade plus optional synchronous feedback graders.
 - Extend evaluator-workload provenance into actual workload-specific execution
   contracts for inner-search and ML-training tasks: dataset/split hash
   enforcement, training/search loop runners, checkpoint completeness checks,

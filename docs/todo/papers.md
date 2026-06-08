@@ -4263,3 +4263,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     baseline method identities, code/artifact availability if any, and
     README/ROADMAP wording that treats DeltaEvolve as missing paper evidence
     rather than implemented LibreEvolve support.
+
+- [ ] Track MLEvolve long-horizon ML-engineering paper evidence.
+  - Paper/source evidence: arXiv `2606.06473`, submitted June 4, 2026, is
+    titled `MLEvolve: A Self-Evolving Framework for Automated Machine
+    Learning Algorithm Discovery`. Its abstract says long-horizon MLE agents
+    suffer from inter-branch information isolation, memoryless search, and
+    lack of hierarchical control; MLEvolve addresses this with Progressive
+    MCGS, graph-based reference edges, entropy-inspired progressive
+    scheduling, Retrospective Memory, and adaptive coding modes; and it
+    reports MLE-Bench state-of-the-art performance under a 12-hour budget plus
+    outperformance of AlphaEvolve on mathematical algorithm optimization
+    tasks. The arXiv page links code at `https://github.com/InternScience/MLEvolve`.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2606.06473`. Existing rows cover AlphaEvolve, MAP-Elites,
+    UCB/reviewer logic, prompt/history artifacts, DeltaEvolve context memory,
+    EvoX adaptive search, and selected application papers, but not MLE-Bench,
+    Progressive MCGS, cross-branch graph references, retrospective MLE memory,
+    adaptive coding modes, or long-horizon ML-engineering evaluation budgets.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2606.06473`: title/authors/arXiv version/date/PDF digest, source license,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve,
+    Progressive MCGS and graph-reference schema, entropy-schedule metadata,
+    retrospective-memory taxonomy, adaptive coding-mode artifacts, MLE-Bench
+    task/submission records, 12-hour budget and metric definitions,
+    mathematical-algorithm baseline identities, code/artifact reproducibility
+    status, and README/ROADMAP wording that treats MLEvolve as missing paper
+    evidence rather than implemented LibreEvolve support.

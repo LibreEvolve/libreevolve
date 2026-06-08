@@ -4681,3 +4681,33 @@ Primary evidence:
     baseline identities, and README/ROADMAP wording that treats semantic-delta
     momentum guidance as missing evidence until local storage, prompt assembly,
     and benchmark artifacts exist.
+
+- [ ] Add MLEvolve long-horizon ML-engineering source boundary.
+  - Spec evidence: arXiv `2606.06473`, `MLEvolve: A Self-Evolving Framework
+    for Automated Machine Learning Algorithm Discovery`, was submitted June 4,
+    2026. Its abstract presents an LLM-based self-evolving multi-agent
+    framework for end-to-end machine learning algorithm discovery, extending
+    tree search to Progressive MCGS with graph-based reference edges for
+    cross-branch information flow, shifting from exploration to exploitation
+    with an entropy-inspired progressive schedule, adding Retrospective Memory
+    with a cold-start domain knowledge base plus dynamic global memory, and
+    decoupling strategic planning from code generation with adaptive coding
+    modes. It reports MLE-Bench state-of-the-art metrics under a 12-hour
+    budget and outperformance of AlphaEvolve on mathematical algorithm
+    optimization tasks.
+  - Current evidence: LibreEvolve has MAP-Elites archives, islands, prompt
+    history, fixed mixed parent selection, and limited failed-proposal memory,
+    but no MLE-Bench task harness, Progressive Monte Carlo Graph Search,
+    graph-based cross-branch reference edges, entropy-scheduled explore/
+    exploit controller, cold-start MLE knowledge base, dynamic retrospective
+    memory, strategic-planning/code-generation mode separation, or valid
+    submission/medal-rate report artifacts.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2606.06473`: arXiv id/version/date/PDF hash, authors, source license,
+    linked code URL/status, relation to AlphaEvolve and LibreEvolve search,
+    Progressive MCGS state schema, graph-reference edge provenance,
+    entropy-schedule records, retrospective-memory schema, adaptive coding
+    mode artifacts, MLE-Bench task/submission metadata, 12-hour budget and
+    metric definitions, mathematical-algorithm baseline identities, and
+    README/ROADMAP wording that keeps MLEvolve-style long-horizon MLE support
+    as missing evidence until local harnesses and reports exist.

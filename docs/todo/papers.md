@@ -177,6 +177,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     loop or sequential sibling batches as AlphaEvolve-style parallelized
     evaluation evidence.
 
+- [ ] Track distributed-pipeline topology evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.6.
+  - Requirement: AlphaEvolve's implementation is an asynchronous pipeline made
+    of a controller, LLM samplers, and evaluation nodes; computations can run
+    concurrently, block on unfinished dependencies, and the pipeline is
+    optimized for throughput rather than individual-operation latency.
+  - Partial status: LibreEvolve persists terminal controller-state summaries
+    and controller-budget events. The current manifest state explicitly says
+    `terminal_synchronous_controller_drained`,
+    `single_process_serial_loop`, zero queued/running proposals and
+    evaluations, zero in-flight LLM calls, and limitations including
+    `synchronous_terminal_snapshot_not_async_queue_checkpoint`.
+  - Current gap: paper-facing evidence does not name distributed pipeline
+    nodes or roles, identify LLM sampler workers, identify evaluation nodes or
+    cluster/local worker ownership, record queue capacities and dependency
+    edges, preserve dispatch/completion/admission ordering, link throughput
+    decisions to budget records, or provide pending-work checkpoints. Without
+    those artifacts, the controller-state summary is negative boundary
+    evidence, not Section 2.6 topology parity.
+  - Required result: add topology-report artifacts, validators, and papers
+    index links for controller/sampler/evaluation-node ids, queue and blocking
+    dependency graphs, worker role ownership, throughput-budget linkage,
+    pending-work checkpoint state, and claim-readiness checks.
+
 - [ ] Track Figure 1/Figure 2 architecture-process exhibit provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the

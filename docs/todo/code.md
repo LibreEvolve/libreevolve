@@ -1583,6 +1583,32 @@ Primary evidence:
     mutation-chain depth under slow or expensive evaluator feedback, and
     replayable controller state for queued/running/completed work.
 
+- [ ] Add distributed-pipeline topology evidence for controller, LLM samplers,
+      and evaluation nodes.
+  - Spec evidence: AlphaEvolve Section 2.6 says the implementation is an
+    asynchronous `asyncio` pipeline where computations run concurrently and
+    block on unfinished dependencies; the pipeline specifically comprises a
+    controller, LLM samplers, and evaluation nodes, and is optimized for
+    throughput rather than any single computation's speed.
+  - Current evidence: LibreEvolve now emits
+    `runtime.history.controller_state` with schema
+    `libreevolve.controller_state.v1`, status
+    `terminal_synchronous_controller_drained`, controller model
+    `single_process_serial_loop`, zero queued/running proposals, evaluations,
+    and in-flight LLM calls, plus limitations such as
+    `synchronous_terminal_snapshot_not_async_queue_checkpoint` and
+    `no_mid_generation_resume_boundary`. That is useful negative evidence for
+    the current boundary, but it does not define pipeline-node roles, queue
+    edges, blocking dependencies, sampler/evaluator worker identities, or
+    throughput-oriented dispatch/admission telemetry.
+  - Required result: add a versioned distributed-pipeline topology artifact and
+    validator with controller id/state, LLM sampler ids and backend-role
+    ownership, evaluation-node ids and workload/cluster identity, queue names
+    and capacities, dependency/blocking edges, dispatch/completion/admission
+    ordering, throughput-budget linkage, pending-work checkpoints, and
+    README/ROADMAP checks that distinguish topology evidence from the current
+    terminal synchronous controller snapshot.
+
 - [ ] Add statistical hypothesis-test gates to evaluation cascades.
   - Spec evidence: AlphaEvolve Section 2.4 describes the evaluation cascade as
     "hypothesis testing": candidates are first evaluated on small-scale tests

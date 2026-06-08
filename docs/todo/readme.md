@@ -2941,6 +2941,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     local-or-cluster execution identity, mutation-depth impact, pending-work
     resume behavior, and equal-budget report links.
 
+- [ ] Keep README distributed-pipeline wording scoped until topology evidence
+      exists.
+  - Spec evidence: AlphaEvolve Section 2.6 describes an asynchronous pipeline
+    composed of a controller, LLM samplers, and evaluation nodes, where
+    concurrent computations block on unfinished dependencies and the system is
+    optimized for throughput under a computation budget.
+  - Current evidence: README can document `runtime.history.controller_state`,
+    controller-budget event replay, terminal drained state, and future async
+    controller/worker work. Current manifests deliberately report
+    `controller_model: single_process_serial_loop`, zero queued/running
+    proposals or evaluations, zero in-flight LLM calls, and limitations saying
+    the snapshot is not an async queue checkpoint. README should not let that
+    negative boundary evidence read as AlphaEvolve-style distributed-pipeline
+    topology.
+  - Required result: when topology artifacts land, update README, ROADMAP,
+    papers index, and code/paper TODOs with controller/sampler/evaluation-node
+    ids, queue/dependency edges, worker role ownership, throughput-budget
+    linkage, pending-work checkpoints, and validation status so README
+    separates local terminal controller evidence from reproduced Section 2.6
+    pipeline evidence.
+
 - [ ] Keep README sample-efficiency claims scoped to budget telemetry until
       proposal-count evidence exists.
   - Spec evidence: AlphaEvolve Table 1 contrasts FunSearch's millions of LLM

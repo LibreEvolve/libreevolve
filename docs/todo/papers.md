@@ -787,14 +787,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     user-provided initial program, evaluation code, optional configuration,
     parent/inspiration sampling, prompt construction, diff generation, diff
     application, evaluator execution, and database registration of promising
-    solutions.
+    solutions. Local PDF page 3 contains Figure 1 and its caption; page 4
+    contains Figure 2, its caption, and the displayed controller pseudocode
+    lines.
   - Current gap: paper TODOs track Table 1 and Figure 3+ exhibit provenance
     plus many individual Figure 1/2 component behaviors, but they do not
     preserve Figures 1 and 2 as their own process exhibits with stable
     figure IDs, diagram-node labels, edge/process-flow ordering,
-    pseudocode-line mappings, source/caption locations, rendered diagram
-    artifact hashes, or row/linkage from each displayed process step to
-    implementation status and remaining TODOs.
+    pseudocode-line mappings, exact diagram/pseudocode text, source/caption
+    locations, rendered diagram artifact hashes, or row/linkage from each
+    displayed process step to implementation status and remaining TODOs.
+    Existing component-level implementation evidence is not a paper-facing
+    exhibit record.
   - Required result: add paper-facing Figure 1/2 exhibit records with figure
     and step IDs, exact diagram text, source page/caption locations,
     pseudocode-line mapping for Figure 2, rendered/text artifact paths and

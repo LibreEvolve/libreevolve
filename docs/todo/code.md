@@ -567,14 +567,20 @@ Primary evidence:
     user-provided initial program/evaluation/config inputs and the controller
     steps that sample parent programs and inspirations, build prompts, generate
     diffs, apply diffs, execute evaluators, and register promising solutions.
+    Local PDF page 3 contains Figure 1 and its high-level overview caption;
+    page 4 contains Figure 2, its expanded-process caption, and the displayed
+    controller lines for prompt construction, LLM diff generation, diff
+    application, evaluator execution, and database update.
   - Current evidence: LibreEvolve has implementation and TODO coverage for
     several individual Figure 1/2 components, including prompt construction,
     LLM ensembles, evaluator cascades, database admission, SEARCH/REPLACE
-    diffs, and run manifests. No code/report schema preserves Figure 1 or
-    Figure 2 as paper-facing process exhibits with stable figure IDs,
-    diagram-node and edge labels, pseudocode-line mappings, source/caption
-    locations, rendered diagram artifact hashes, or links from each displayed
-    process step to concrete code, reports, and remaining TODO entries.
+    diffs, and run manifests. Earlier architecture-process TODO evidence maps
+    `evolve()` to local prompt, LLM, evaluator, database, and artifact
+    surfaces, but no code/report schema preserves Figure 1 or Figure 2 as
+    paper-facing process exhibits with stable figure IDs, diagram-node and
+    edge labels, exact diagram/pseudocode text, source/caption locations,
+    rendered diagram artifact hashes, or links from each displayed process
+    step to concrete code, reports, and remaining TODO entries.
   - Required result: add Figure 1/2 exhibit metadata and validators with
     figure IDs, diagram node/edge records, pseudocode step IDs, source PDF and
     caption locations, rendered/text artifact paths and hashes,

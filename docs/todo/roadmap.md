@@ -598,14 +598,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     pool, program database, rich context, proposals, and feedback. Figure 2
     expands the discovery loop into initial-program/evaluation/config inputs
     and controller pseudocode for sampling, prompt building, diff generation,
-    diff application, evaluator execution, and database updates.
+    diff application, evaluator execution, and database updates. Local PDF
+    pages 3-4 provide the Figure 1/2 captions and Figure 2 displayed
+    controller lines.
   - Current evidence: `ROADMAP.md`, README, papers index, and code TODOs track
     several Figure 1/2 component gaps, but the roadmap does not require Figure
     1 or Figure 2 to have stable figure IDs, diagram-node and edge records,
-    Figure 2 pseudocode-line mappings, source PDF/caption locations, rendered
-    artifact hashes, component-to-code/report/TODO links, or validation that
-    partial component coverage is not summarized as full process-diagram
-    parity.
+    Figure 2 pseudocode-line mappings, exact diagram text, source PDF/caption
+    locations, rendered artifact hashes, component-to-code/report/TODO links,
+    or validation that partial component coverage and local workflow prose are
+    not summarized as full process-diagram parity.
   - Required result: when Figure 1/2 process exhibit provenance lands, update
     ROADMAP, README, papers index, and code/paper TODO entries together with
     figure metadata, step-level status, evidence links, rendered artifact

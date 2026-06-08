@@ -511,12 +511,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     defines the expanded discovery-process diagram and controller pseudocode
     for sampling parents/inspirations, building prompts, generating and
     applying diffs, executing evaluators, and adding results to the database.
+    Local PDF page 3 carries Figure 1; page 4 carries Figure 2 and the
+    expanded-process caption.
   - Current evidence: README describes LibreEvolve's loop, ensemble,
     evaluator, database, and diff mechanics, and related TODOs track many of
     those behaviors separately. It does not document Figure 1/2 exhibit IDs,
-    diagram-node/edge labels, source page/caption locations, Figure 2
-    pseudocode-line mappings, rendered artifact hashes, or step-to-code/TODO
-    evidence links.
+    diagram-node/edge labels, exact diagram/pseudocode text, source
+    page/caption locations, Figure 2 pseudocode-line mappings, rendered
+    artifact hashes, or step-to-code/TODO evidence links. README workflow text
+    should therefore remain local documentation, not a validated reproduction
+    of the paper process diagrams.
   - Required result: when Figure 1/2 process exhibit provenance lands, update
     README, ROADMAP, papers index, and code/paper TODOs together so README can
     explain which process-diagram steps LibreEvolve implements, which are

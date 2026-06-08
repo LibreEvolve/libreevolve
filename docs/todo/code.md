@@ -6474,21 +6474,32 @@ Primary evidence:
 
 - [ ] Add ThetaEvolve test-time RL source boundary before training claims.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
-    on Open Problems`, describes an AlphaEvolve-inspired dynamic environment
-    that uses a single LLM, a large program database, batch parent/response
-    sampling, early checks, lazy penalties for unchanged or repeated programs,
-    optional reward shaping, GRPO-based RL at test time, RL-trained
-    checkpoints, and open-problem results on circle packing,
-    autocorrelation inequalities, and Hadamard matrices.
+    on Open Problems`, by Yiping Wang et al. was submitted as arXiv v1 on
+    November 28, 2025; the cached PDF hash is
+    `8e74933b2a4dddbf80a063fb88438c95b62b982a5167bbb77213ce1e3839715d`
+    and the PDF metadata declares a CC-BY 4.0 license. It describes an
+    AlphaEvolve-inspired dynamic environment using a single LLM, a much larger
+    program database, batch parent/response sampling, early checks, lazy
+    penalties for unchanged or repeated programs, optional reward shaping,
+    GRPO-based RL at test time, RL-trained checkpoints, and open-problem
+    results on circle packing, autocorrelation inequalities, and Hadamard
+    matrices. The paper's code URL is `https://github.com/ypwang61/ThetaEvolve`
+    and the runtime stack cites OpenEvolve, `slime`, SGLang/vLLM-style batched
+    inference, batch size `B = 32`, `n = 16` responses per prompt, response
+    length `16384`, rollout temperature `1.0`, and up to `16` concurrent
+    verifier programs.
   - Current evidence: `papers/README.md` marks ThetaEvolve as test-time
     training inspiration and says LibreEvolve only exports clipped-reward JSONL
     through `ttt_rl`; there is no online RL/GRPO loop, checkpoint management,
     resume semantics, or lazy-penalty dynamics. Existing grouped inspiration
     TODOs and `TTTRLPlugin` docs keep the export boundary honest, but there is
     no source-specific code TODO for `2511.23473`, no batch-sampled dynamic
-    environment, no population-size scaling report, no lazy penalty against
-    database-equivalent programs, no reward-shaping records, no GRPO training
-    run metadata, no model checkpoint provenance, no transfer/generalization
+    environment, no `70`/`1000`/`10000` population/archive/island scaling
+    report, no lazy penalty against database-equivalent programs after comment
+    removal, no early-check penalty schema (`-0.4`, `-0.3`, `-0.2`, `-0.1`),
+    no reward-shaping records, no GRPO training run metadata, no asymmetric
+    clipping/truncated-importance-sampling configuration, no model checkpoint
+    provenance, no transfer/generalization report, no SGLang/vLLM throughput
     report, and no AlphaEvolve-vs-ThetaEvolve benchmark comparison artifact.
   - Required result: add source-boundary metadata and implementation gates for
     `2511.23473`: arXiv version/date/PDF hash, linked code URL/status,
@@ -6498,9 +6509,15 @@ Primary evidence:
     generated-program sample counts, model checkpoint and adapter lifecycle
     records, inference-with-trained-checkpoint reports, task/evaluator
     compatibility notes for tolerance or typo corrections, AlphaEvolve/
-    ShinkaEvolve/OpenEvolve baseline comparisons, and README/ROADMAP wording
-    that keeps LibreEvolve's current clipped-reward export separate from
-    ThetaEvolve-style test-time learning.
+    ShinkaEvolve/OpenEvolve baseline comparisons, Table 1 CirclePacking/FACI
+    rows (`2.63598308` and `1.503133` vs AlphaEvolve `2.63586276` and
+    `1.503164`), Table 2/9 per-task `w/ RL` vs `w/o RL` rows for
+    `CirclePacking-T`, `SecondAutoCorrIneq`, `ThirdAutoCorrIneq`, and
+    `HadamardMatrix`, Table 5/6 OpenEvolve-vs-ThetaEvolve throughput rows
+    (`307.2k` programs, `63.6h` vs `5.4h`), Table 7 reward-shaping rows, Table
+    10 database-design ablation rows, checkpoint transfer reports, and
+    README/ROADMAP wording that keeps LibreEvolve's current clipped-reward
+    export separate from ThetaEvolve-style test-time learning.
 
 - [ ] Add ImprovEvolve modular-operator source boundary before interface
       claims.

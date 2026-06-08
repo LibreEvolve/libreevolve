@@ -5964,12 +5964,21 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track ThetaEvolve test-time learning paper evidence as a source-specific
       boundary.
   - Paper/source evidence: local arXiv `2511.23473`, `ThetaEvolve:
-    Test-time Learning on Open Problems`, presents an AlphaEvolve-inspired
-    dynamic environment using a single LLM, large program database, batch
-    sampling over parents and responses, early checks, lazy penalties, reward
-    shaping, optional GRPO/RL training at test time, checkpoint evaluation, and
-    benchmark claims on circle packing, autocorrelation inequalities, and
-    Hadamard matrices.
+    Test-time Learning on Open Problems`, by Yiping Wang, Shao-Rong Su,
+    Zhiyuan Zeng, Eva Xu, Liliang Ren, Xinyu Yang, Zeyi Huang, Xuehai He,
+    Luyao Ma, Baolin Peng, Hao Cheng, Pengcheng He, Weizhu Chen, Shuohang
+    Wang, Simon Shaolei Du, and Yelong Shen was submitted as arXiv v1 on
+    November 28, 2025; the cached PDF hash is
+    `8e74933b2a4dddbf80a063fb88438c95b62b982a5167bbb77213ce1e3839715d`
+    and the PDF metadata declares CC-BY 4.0. It presents an
+    AlphaEvolve-inspired dynamic environment using a single LLM, large program
+    database, batch sampling over parents and responses, early checks, lazy
+    penalties, reward shaping, optional GRPO/RL training at test time,
+    checkpoint evaluation, and benchmark claims on circle packing,
+    autocorrelation inequalities, and Hadamard matrices. It links public code
+    at `https://github.com/ypwang61/ThetaEvolve`, builds on OpenEvolve and
+    `slime`, and records batch size `B = 32`, `n = 16`, response length
+    `16384`, rollout temperature `1.0`, and `16` concurrent verifier programs.
   - Current gap: `papers/README.md` lists `2511.23473` as test-time training
     inspiration and explicitly scopes LibreEvolve to clipped-reward JSONL
     export without online RL/GRPO training, checkpointing, resume semantics, or
@@ -5978,8 +5987,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     do not preserve the ThetaEvolve PDF itself as a source-specific evidence
     boundary with dynamic-environment components, batch-sampling semantics,
     lazy-penalty/reward-shaping formulas, GRPO configuration, checkpoint
-    provenance, evaluator-compatibility caveats, benchmark rows, or
-    comparison claims.
+    provenance, evaluator-compatibility caveats, database-size/throughput
+    ablations, benchmark rows, or comparison claims.
   - Required result: add paper-manifest and paper-index coverage for
     `2511.23473`: title/authors/arXiv version/date/PDF digest, source license,
     linked code URL/status, dynamic-environment architecture rows,
@@ -5987,8 +5996,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     lazy-penalty schemas, reward-shaping parameters, GRPO/RL training
     configuration, checkpoint and inference-transfer records, generated-sample
     counts, task/evaluator caveats for tolerance and corrected typos,
-    AlphaEvolve/ShinkaEvolve/OpenEvolve baseline rows, relation to
-    LibreEvolve's `ttt_rl` export, and README/ROADMAP/code wording that keeps
+    AlphaEvolve/ShinkaEvolve/OpenEvolve baseline rows, Table 1 open-problem
+    bound rows, Table 2/9 main `w/ RL` vs `w/o RL` rows, Table 3 static/format
+    reward baseline rows, Table 4/10 database-size and database-design rows,
+    Table 5/6 pipeline/throughput rows, Table 7 reward-shaping rows, Table 8
+    timeout/reward-shaping configuration rows, relation to LibreEvolve's
+    `ttt_rl` export, and README/ROADMAP/code wording that keeps
     ThetaEvolve-style test-time learning marked missing until implementation
     artifacts and reports prove it.
 

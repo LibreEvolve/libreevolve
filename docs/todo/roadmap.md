@@ -4802,11 +4802,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add ThetaEvolve test-time learning gates before roadmap promotion.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
-    on Open Problems`, describes a dynamic program-evolution environment with
-    a single LLM, large program database, batch sampling, early checks, lazy
-    penalties, optional reward shaping, GRPO/RL training at test time,
+    on Open Problems`, by Yiping Wang et al. was submitted as arXiv v1 on
+    November 28, 2025 and describes a dynamic program-evolution environment
+    with a single LLM, large program database, batch sampling, early checks,
+    lazy penalties, optional reward shaping, GRPO/RL training at test time,
     RL-trained checkpoints, and AlphaEvolve-related open-problem benchmark
-    claims.
+    claims. It reports OpenEvolve-based evaluation with `slime` RL training,
+    `B = 32`, `n = 16`, `16384` response tokens, rollout temperature `1.0`,
+    `16` concurrent verifier programs, GRPO with asymmetric clipping
+    (`0.2`/`0.28`), learning rate `1e-6`, weight decay `0.1`, and no KL or
+    entropy regularization.
   - Current evidence: ROADMAP says ThetaEvolve features should remain labeled
     as inspired unless the paper behavior is actually implemented, and
     `papers/README.md` states that LibreEvolve has clipped-reward JSONL export
@@ -4816,7 +4821,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     dynamic-environment architecture, batch-sampling evidence,
     database-scaling reports, lazy-penalty and reward-shaping semantics,
     GRPO training telemetry, checkpoint lifecycle, transfer/generalization
-    reports, evaluator caveats, or benchmark comparisons.
+    reports, SGLang/vLLM-style throughput reports, evaluator caveats, or
+    benchmark comparisons.
   - Required result: add roadmap gates for `2511.23473`: paper/source manifest
     entry, PDF/cache hash, source-license and code-artifact status,
     single-LLM/database/batch-sampling metadata, early-check and lazy-penalty
@@ -4824,9 +4830,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     generated-sample and compute-budget telemetry, checkpoint/adaptor
     lifecycle, inference-with-trained-checkpoint and transfer reports,
     task/evaluator compatibility notes, AlphaEvolve/ShinkaEvolve/OpenEvolve
-    comparison rows, and README/papers/code wording that keeps ThetaEvolve as
-    test-time-training inspiration until local evidence proves actual
-    test-time learning support.
+    comparison rows, Table 1/2/9 main benchmark rows, Table 3 static/format
+    reward baselines, Table 4/10 database ablations, Table 5/6 pipeline
+    throughput rows, Table 7/8 reward-shaping configuration rows, and
+    README/papers/code wording that keeps ThetaEvolve as test-time-training
+    inspiration until local evidence proves actual test-time learning support.
 
 - [ ] Add ImprovEvolve modular-operator gates before roadmap promotion.
   - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve

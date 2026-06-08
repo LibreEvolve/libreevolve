@@ -324,6 +324,14 @@ convention. Paper-facing reports still need explicit metric-name, validity-gate,
 and direction-transform evidence before LibreEvolve run outputs can be treated
 as AlphaEvolve-comparable scored metric tables.
 
+AlphaEvolve embedded-evaluator note: configured stages can now opt into
+`mode: embedded_evaluate`, which imports the materialized candidate primary
+file and invokes a candidate-owned `evaluate(eval_inputs)` callable with
+JSON-safe configured inputs. Metadata records the candidate callable and
+eval-input provenance, but `validate.py` remains the default problem-loading
+contract and paper-facing reports still need embedded-only examples plus
+skeleton/block invocation evidence before claiming Figure 3 evaluator parity.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

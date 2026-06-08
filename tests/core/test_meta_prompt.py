@@ -253,6 +253,8 @@ def test_prompt_database_persists_and_restores_context_policy(tmp_path):
         "parent_code_max_chars_by_path": {},
         "parent_code_max_chars": None,
         "parent_code_truncation": "head",
+        "parent_metric_names": None,
+        "parent_metrics_max_chars_by_name": {},
         "inspiration_strategy": "metric",
         "inspiration_required_metric": "latency",
         "inspiration_excluded_metrics": ["debug_score"],

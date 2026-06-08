@@ -244,6 +244,110 @@ _RUNNER = (
     "    handle.write(payload)\n"
 )
 
+_EMBEDDED_EVALUATE_RUNNER = (
+    "import sys,json,importlib.util,inspect,os,math\n"
+    "sys.dont_write_bytecode=True\n"
+    "def _install_network_policy():\n"
+    "    _policy=os.environ.get('LIBREEVOLVE_VALIDATOR_NETWORK_POLICY','host')\n"
+    "    if _policy!='deny': return\n"
+    "    import socket as _socket\n"
+    "    def _deny(*args,**kwargs):\n"
+    "        raise OSError('candidate evaluate network egress denied by libreevolve python_socket policy')\n"
+    "    _socket.socket=_deny\n"
+    "    _socket.create_connection=_deny\n"
+    "    _socket.getaddrinfo=_deny\n"
+    "    _socket.gethostbyname=_deny\n"
+    "    _socket.gethostbyname_ex=_deny\n"
+    "    _socket.gethostbyaddr=_deny\n"
+    "    _socket.getnameinfo=_deny\n"
+    "_install_network_policy()\n"
+    "workspace=os.path.abspath(sys.argv[1])\n"
+    "primary_path=os.path.abspath(sys.argv[2])\n"
+    "stage=json.loads(sys.argv[3])\n"
+    "result_path=sys.argv[4]\n"
+    "_rng_seed=stage.get('rng_seed') if isinstance(stage,dict) else None\n"
+    "if _rng_seed is not None:\n"
+    "    import random\n"
+    "    _rng_seed=int(_rng_seed)\n"
+    "    random.seed(_rng_seed)\n"
+    "    try:\n"
+    "        import numpy as _np\n"
+    "        _np.random.seed(_rng_seed)\n"
+    "    except Exception:\n"
+    "        pass\n"
+    "def _emit(ok,result=None,error='',message=''):\n"
+    "    payload={'ok':ok}\n"
+    "    if ok: payload['result']=result\n"
+    "    else:\n"
+    "        payload['error']=error or 'candidate_evaluate_error'\n"
+    "        payload['message']=message or payload['error']\n"
+    "    with open(result_path,'w',encoding='utf-8') as handle:\n"
+    "        handle.write(json.dumps(payload,allow_nan=False))\n"
+    "os.chdir(workspace)\n"
+    "if workspace not in sys.path: sys.path.insert(0,workspace)\n"
+    "try:\n"
+    "    spec=importlib.util.spec_from_file_location('_libreevolve_candidate_embedded_evaluate',primary_path)\n"
+    "    if spec is None or spec.loader is None:\n"
+    "        _emit(False,error='candidate_import_error',message='candidate primary module could not be imported')\n"
+    "        sys.exit(0)\n"
+    "    mod=importlib.util.module_from_spec(spec)\n"
+    "    sys.modules[spec.name]=mod\n"
+    "    spec.loader.exec_module(mod)\n"
+    "    func=getattr(mod,'evaluate',None)\n"
+    "    if not callable(func):\n"
+    "        _emit(False,error='missing_candidate_evaluate',message='candidate primary module must define callable evaluate(eval_inputs)')\n"
+    "        sys.exit(0)\n"
+    "    signature=inspect.signature(func)\n"
+    "    params=list(signature.parameters.values())\n"
+    "    allowed=(inspect.Parameter.POSITIONAL_ONLY,inspect.Parameter.POSITIONAL_OR_KEYWORD)\n"
+    "    if len(params)!=1 or params[0].kind not in allowed:\n"
+    "        _emit(False,error='unsupported_candidate_evaluate_signature',message=f'candidate evaluate must have signature evaluate(eval_inputs), got {signature}')\n"
+    "        sys.exit(0)\n"
+    "    result=func(stage.get('eval_inputs',{}))\n"
+    "except Exception as exc:\n"
+    "    _emit(False,error='candidate_evaluate_error',message=f'{exc.__class__.__name__}: {exc}')\n"
+    "    sys.exit(0)\n"
+    "def _validate_json_value(value,path='$',active=None,depth=0,max_depth=100):\n"
+    "    if depth > max_depth:\n"
+    "        raise ValueError(f'JSON nesting exceeds maximum depth at {path}')\n"
+    "    if isinstance(value,float) and not math.isfinite(value):\n"
+    "        raise ValueError('Out of range float values are not JSON compliant')\n"
+    "    if isinstance(value,dict):\n"
+    "        active = set() if active is None else active\n"
+    "        obj_id=id(value)\n"
+    "        if obj_id in active:\n"
+    "            raise ValueError(f'Circular reference detected at {path}')\n"
+    "        active.add(obj_id)\n"
+    "        try:\n"
+    "            key_types=sorted({type(key).__name__ for key in value.keys() if not isinstance(key,str)})\n"
+    "            if key_types:\n"
+    "                raise TypeError('evaluator result keys must be strings; non_string_key_types='+','.join(key_types))\n"
+    "            for key,item in value.items():\n"
+    "                child = path + '.' + key.replace('\\\\','\\\\\\\\').replace('.', '\\\\.')\n"
+    "                _validate_json_value(item,child,active,depth+1,max_depth)\n"
+    "        finally:\n"
+    "            active.remove(obj_id)\n"
+    "        return\n"
+    "    if isinstance(value,tuple):\n"
+    "        raise TypeError(f'JSON value at {path} must use list, not tuple')\n"
+    "    if isinstance(value,list):\n"
+    "        active = set() if active is None else active\n"
+    "        obj_id=id(value)\n"
+    "        if obj_id in active:\n"
+    "            raise ValueError(f'Circular reference detected at {path}')\n"
+    "        active.add(obj_id)\n"
+    "        try:\n"
+    "            for index,item in enumerate(value):\n"
+    "                _validate_json_value(item,f'{path}[{index}]',active,depth+1,max_depth)\n"
+    "        finally:\n"
+    "            active.remove(obj_id)\n"
+    "try:\n"
+    "    _validate_json_value(result)\n"
+    "    _emit(True,result=result)\n"
+    "except (TypeError,ValueError) as exc:\n"
+    "    _emit(False,error='result_not_json_serializable',message=str(exc))\n"
+)
+
 _WINDOWS_VALIDATOR_BOOTSTRAP = (
     "import os,runpy,sys,time\n"
     "release=os.environ.pop('LIBREEVOLVE_VALIDATOR_RELEASE', '')\n"
@@ -572,8 +676,17 @@ class CascadeEvaluator:
     ) -> "EvaluationResult":
         timeout = float(stage.get("timeout_sec", self._timeout))
         stage_deadline = _StageDeadline.from_config(stage.get("max_stage_seconds"))
-        validate_path = self._resolve_validate_path(stage.get("validate_path"))
-        data_policy = self._data_policy(stage, validate_path)
+        evaluator_mode = str(stage.get("mode", "external_validator"))
+        validate_path = (
+            None
+            if evaluator_mode == "embedded_evaluate"
+            else self._resolve_validate_path(stage.get("validate_path"))
+        )
+        data_policy = (
+            {"context": _embedded_evaluate_data_context(stage.get("eval_inputs", {}))}
+            if evaluator_mode == "embedded_evaluate"
+            else self._data_policy(stage, validate_path)
+        )
         seeds = list(stage.get("seeds", []))
         samples = int(stage.get("samples", len(seeds) or 1))
         retries = int(stage.get("retries", 0))
@@ -593,6 +706,7 @@ class CascadeEvaluator:
                 "stage_index": stage_index,
                 "sample_index": sample_index,
                 "seed": seed,
+                "mode": evaluator_mode,
                 "config": _stage_context_config(
                     stage,
                     stdin_text,
@@ -601,6 +715,8 @@ class CascadeEvaluator:
                 ),
                 "evaluator_data": data_policy["context"],
             }
+            if evaluator_mode == "embedded_evaluate":
+                context["eval_inputs"] = stage.get("eval_inputs", {})
             if stage_deadline.exhausted():
                 results.append(
                     _stage_budget_exhausted_result(
@@ -617,6 +733,7 @@ class CascadeEvaluator:
             result = self._run_sample_with_retries(
                 workspace=workspace,
                 validate_path=validate_path,
+                evaluator_mode=evaluator_mode,
                 stage_name=f"{stage_name}[{sample_index}]" if samples > 1 else stage_name,
                 timeout_sec=timeout,
                 stage_context=context,
@@ -639,7 +756,8 @@ class CascadeEvaluator:
     def _run_sample_with_retries(
         self,
         workspace: CandidateWorkspace,
-        validate_path: Path,
+        validate_path: Path | None,
+        evaluator_mode: str,
         stage_name: str,
         timeout_sec: float,
         stage_context: dict,
@@ -709,6 +827,12 @@ class CascadeEvaluator:
                 stage_context=context,
                 stdin_text=stdin_text,
                 stdin_file=stdin_file,
+                artifact_policy=artifact_policy,
+            ) if evaluator_mode == "external_validator" else self._run_embedded_evaluate_subprocess(
+                workspace=workspace,
+                stage_name=stage_name,
+                timeout_sec=attempt_timeout,
+                stage_context=context,
                 artifact_policy=artifact_policy,
             )
             if budget_limited_by == "stage" and result.error == "timeout" and stage_deadline is not None:
@@ -1030,6 +1154,272 @@ class CascadeEvaluator:
                     metadata=metadata,
                 )
 
+    def _run_embedded_evaluate_subprocess(
+        self,
+        workspace: CandidateWorkspace,
+        stage_name: str,
+        timeout_sec: float,
+        stage_context: dict | None = None,
+        artifact_policy: dict | None = None,
+    ) -> "EvaluationResult":
+        stage_context = stage_context or {"name": stage_name, "mode": "embedded_evaluate"}
+        artifact_policy = artifact_policy or self._artifact_policy({})
+        stage_context = _stage_context_with_rng_seed(stage_context)
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runner = tmp_path / "_embedded_evaluate_runner.py"
+            result_path = tmp_path / "evaluator_result.json"
+            cand_root = tmp_path / "candidate"
+            runner.write_text(_EMBEDDED_EVALUATE_RUNNER, encoding="utf-8")
+            started = time.perf_counter()
+            try:
+                primary = workspace.materialize(cand_root)
+            except Exception as exc:
+                elapsed = time.perf_counter() - started
+                metadata = _eval_metadata(
+                    workspace,
+                    None,
+                    self._problem.problem_dir,
+                    stage_context,
+                    network_policy=self._validator_network_policy,
+                )
+                metadata["materialization_error"] = _materialization_error_metadata(exc)
+                metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
+                    self._problem, -0.2
+                )
+                metrics = _synthetic_failure_metrics(self._problem, -0.2)
+                return EvaluationResult(
+                    fitness=-0.2,
+                    metrics=metrics,
+                    is_valid=False,
+                    stages=[
+                        EvaluationStageResult(
+                            name=stage_name,
+                            passed=False,
+                            score=-0.2,
+                            metrics=metrics,
+                            error="materialization_error",
+                            elapsed_sec=elapsed,
+                        )
+                    ],
+                    error="materialization_error",
+                    elapsed_sec=elapsed,
+                    metadata=metadata,
+                )
+            validator_env = _validator_env(self._validator_env_allowlist)
+            if stage_context.get("rng_seed") is not None:
+                validator_env["PYTHONHASHSEED"] = str(stage_context["rng_seed"])
+            validator_env_meta = _validator_env_metadata(
+                validator_env, self._validator_env_allowlist
+            )
+            res = _run_validator_process(
+                [
+                    sys.executable,
+                    str(runner),
+                    str(cand_root),
+                    str(primary),
+                    json.dumps(stage_context),
+                    str(result_path),
+                ],
+                cwd=cand_root,
+                timeout_sec=timeout_sec,
+                env=validator_env,
+                stdin_text=None,
+                validator_network_policy=self._validator_network_policy,
+            )
+            stdout, stderr, diagnostic_output = _validator_output_diagnostics(
+                res.stdout,
+                res.stderr,
+                self._output_max_chars,
+                stream_decoding=res.stream_decoding,
+            )
+            artifact_metadata = _collect_evaluator_artifacts(
+                cand_root,
+                artifact_policy["dir"],
+                include=artifact_policy["include"],
+                exclude=artifact_policy["exclude"],
+                max_files=artifact_policy["max_files"],
+                max_bytes=artifact_policy["max_bytes"],
+                redact_secrets=artifact_policy["redact_secrets"],
+                stage_context=stage_context,
+            )
+            if res.timed_out:
+                elapsed = time.perf_counter() - started
+                metadata = _eval_metadata(
+                    workspace,
+                    None,
+                    self._problem.problem_dir,
+                    stage_context,
+                    validator_env_meta,
+                    network_policy=self._validator_network_policy,
+                )
+                metadata["timeout_cleanup"] = res.cleanup
+                metadata["artifacts"] = artifact_metadata
+                metadata["diagnostic_output"] = diagnostic_output
+                metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
+                    self._problem, -0.2
+                )
+                metrics = _synthetic_failure_metrics(self._problem, -0.2)
+                return EvaluationResult(
+                    fitness=-0.2,
+                    metrics=metrics,
+                    is_valid=False,
+                    stages=[
+                        EvaluationStageResult(
+                            name=stage_name,
+                            passed=False,
+                            score=-0.2,
+                            metrics=metrics,
+                            stdout=stdout,
+                            stderr=stderr,
+                            error="timeout",
+                            elapsed_sec=elapsed,
+                        )
+                    ],
+                    stdout=stdout,
+                    stderr=stderr,
+                    error="timeout",
+                    elapsed_sec=elapsed,
+                    metadata=metadata,
+                )
+            elapsed = time.perf_counter() - started
+            if res.returncode != 0:
+                metadata = _eval_metadata(
+                    workspace,
+                    None,
+                    self._problem.problem_dir,
+                    stage_context,
+                    validator_env_meta,
+                    artifact_metadata,
+                    network_policy=self._validator_network_policy,
+                )
+                metadata["diagnostic_output"] = diagnostic_output
+                metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
+                    self._problem, -0.2
+                )
+                metrics = _synthetic_failure_metrics(self._problem, -0.2)
+                return EvaluationResult(
+                    fitness=-0.2,
+                    metrics=metrics,
+                    is_valid=False,
+                    stages=[
+                        EvaluationStageResult(
+                            name=stage_name,
+                            passed=False,
+                            score=-0.2,
+                            metrics=metrics,
+                            stdout=stdout,
+                            stderr=stderr,
+                            error=f"returncode_{res.returncode}",
+                            elapsed_sec=elapsed,
+                        )
+                    ],
+                    stdout=stdout,
+                    stderr=stderr,
+                    error="subprocess_error",
+                    elapsed_sec=elapsed,
+                    metadata=metadata,
+                )
+            try:
+                raw_result = _read_evaluator_result(result_path)
+                raw_metrics, program_outputs = _split_evaluator_result(raw_result)
+                m = _validate_metrics(raw_metrics, self._problem)
+                metadata = _eval_metadata(
+                    workspace,
+                    None,
+                    self._problem.problem_dir,
+                    stage_context,
+                    validator_env_meta,
+                    artifact_metadata,
+                    network_policy=self._validator_network_policy,
+                )
+                metadata["diagnostic_output"] = diagnostic_output
+                if program_outputs is not None:
+                    metadata["program_outputs"] = program_outputs
+                _add_metric_bound_diagnostics(metadata, self._problem, m)
+                if not m.get("is_valid", False):
+                    return EvaluationResult(
+                        fitness=-0.1,
+                        metrics=m,
+                        is_valid=False,
+                        stages=[
+                            EvaluationStageResult(
+                                name=stage_name,
+                                passed=False,
+                                score=-0.1,
+                                metrics=m,
+                                stdout=stdout,
+                                stderr=stderr,
+                                error="domain_invalid",
+                                elapsed_sec=elapsed,
+                            )
+                        ],
+                        stdout=stdout,
+                        stderr=stderr,
+                        error="domain_invalid",
+                        elapsed_sec=elapsed,
+                        metadata=metadata,
+                    )
+                fitness = self._problem.fitness_from_metrics(m)
+                return EvaluationResult(
+                    fitness=fitness,
+                    metrics=m,
+                    is_valid=True,
+                    stages=[
+                        EvaluationStageResult(
+                            name=stage_name,
+                            passed=True,
+                            score=fitness,
+                            metrics=m,
+                            stdout=stdout,
+                            stderr=stderr,
+                            elapsed_sec=elapsed,
+                        )
+                    ],
+                    stdout=stdout,
+                    stderr=stderr,
+                    elapsed_sec=elapsed,
+                    metadata=metadata,
+                )
+            except (json.JSONDecodeError, ValueError, KeyError, TypeError) as exc:
+                metadata = _eval_metadata(
+                    workspace,
+                    None,
+                    self._problem.problem_dir,
+                    stage_context,
+                    validator_env_meta,
+                    artifact_metadata,
+                    network_policy=self._validator_network_policy,
+                )
+                metadata["malformed_metrics"] = _malformed_metrics_metadata(exc)
+                metadata["diagnostic_output"] = diagnostic_output
+                metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
+                    self._problem, -0.2
+                )
+                metrics = _synthetic_failure_metrics(self._problem, -0.2)
+                return EvaluationResult(
+                    fitness=-0.2,
+                    metrics=metrics,
+                    is_valid=False,
+                    stages=[
+                        EvaluationStageResult(
+                            name=stage_name,
+                            passed=False,
+                            score=-0.2,
+                            metrics=metrics,
+                            stdout=stdout,
+                            stderr=stderr,
+                            error="malformed_metrics",
+                            elapsed_sec=elapsed,
+                        )
+                    ],
+                    stdout=stdout,
+                    stderr=stderr,
+                    error="malformed_metrics",
+                    elapsed_sec=elapsed,
+                    metadata=metadata,
+                )
+
     def _resolve_validate_path(self, raw: object) -> Path:
         if raw is None:
             path = self._problem.validate_path
@@ -1081,7 +1471,7 @@ class CascadeEvaluator:
         self,
         stage_name: str,
         results: list["EvaluationResult"],
-        validate_path: Path,
+        validate_path: Path | None,
         stage: dict,
     ) -> "EvaluationResult":
         valid = all(r.is_valid for r in results)
@@ -1103,7 +1493,6 @@ class CascadeEvaluator:
         metadata = {
             "stage": stage_name,
             "sample_count": len(results),
-            **_evaluator_path_metadata(validate_path, self._problem.problem_dir),
             "metric_aggregation": aggregation_policy,
             "samples": [r.to_dict() for r in results],
             "diagnostic_output": {
@@ -1113,6 +1502,13 @@ class CascadeEvaluator:
                 "stderr": stderr_meta,
             },
         }
+        if validate_path is not None:
+            metadata.update(_evaluator_path_metadata(validate_path, self._problem.problem_dir))
+        else:
+            metadata["evaluator_mode"] = "embedded_evaluate"
+            metadata["candidate_evaluator"] = _candidate_evaluator_metadata(
+                results[0].metadata if results else {}
+            )
         _add_metric_bound_diagnostics(metadata, self._problem, metrics)
         return EvaluationResult(
             fitness=fitness,
@@ -1475,7 +1871,7 @@ def _sample_budget_metadata(deadline: _StageDeadline) -> dict:
 
 def _stage_budget_exhausted_result(
     workspace: CandidateWorkspace,
-    validate_path: Path,
+    validate_path: Path | None,
     problem: Problem,
     stage_name: str,
     stage_context: dict,
@@ -1516,7 +1912,7 @@ def _stage_budget_exhausted_result(
 
 def _sample_budget_exhausted_result(
     workspace: CandidateWorkspace,
-    validate_path: Path,
+    validate_path: Path | None,
     problem: Problem,
     stage_name: str,
     stage_context: dict,
@@ -1929,7 +2325,7 @@ def _bounded_cleanup_error(exc: BaseException) -> dict:
 
 def _eval_metadata(
     workspace: CandidateWorkspace,
-    validate_path: Path,
+    validate_path: Path | None,
     problem_dir: Path,
     stage_context: dict,
     validator_env: dict | None = None,
@@ -1937,24 +2333,73 @@ def _eval_metadata(
     network_policy: str = "host",
     stdin_metadata: dict | None = None,
 ) -> dict:
+    evaluator_mode = str(stage_context.get("mode", "external_validator"))
     metadata = {
         "primary_file": workspace.primary_file,
         "files": sorted(workspace.files),
-        **_evaluator_path_metadata(validate_path, problem_dir),
-        "evaluator_dependency_policy": _evaluator_dependency_metadata(
-            validate_path,
-            problem_dir,
-            stage_context,
-        ),
+        "evaluator_mode": evaluator_mode,
         "validator_boundary": _validator_boundary_metadata(network_policy),
         "stage": _stage_context_metadata(stage_context, problem_dir),
     }
+    if validate_path is not None:
+        metadata.update(_evaluator_path_metadata(validate_path, problem_dir))
+        metadata["evaluator_dependency_policy"] = _evaluator_dependency_metadata(
+            validate_path,
+            problem_dir,
+            stage_context,
+        )
+    else:
+        metadata["candidate_evaluator"] = {
+            "entrypoint": workspace.primary_file,
+            "callable": "evaluate",
+            "signature": "evaluate(eval_inputs)",
+            "eval_inputs": _eval_inputs_metadata(
+                stage_context.get("eval_inputs", {})
+            ),
+        }
+        metadata["evaluator_dependency_policy"] = {
+            "policy": "candidate_primary_module_embedded_evaluate_v1",
+            "allowed_scope": "materialized_candidate_workspace",
+            "problem_local_dependency_policy": "not_used",
+            "outside_problem_policy": "not_constrained_by_this_policy",
+        }
     if validator_env is not None:
         metadata["validator_env"] = validator_env
         metadata["stdin"] = stdin_metadata or _validator_stdin_metadata(None)
     if artifacts is not None:
         metadata["artifacts"] = artifacts
     return metadata
+
+
+def _candidate_evaluator_metadata(metadata: dict) -> dict:
+    candidate = metadata.get("candidate_evaluator")
+    if isinstance(candidate, dict):
+        return copy.deepcopy(candidate)
+    return {
+        "entrypoint": metadata.get("primary_file"),
+        "callable": "evaluate",
+        "signature": "evaluate(eval_inputs)",
+    }
+
+
+def _embedded_evaluate_data_context(eval_inputs: object) -> dict:
+    return {
+        "enabled": True,
+        "policy": "embedded_candidate_eval_inputs",
+        "eval_inputs": _eval_inputs_metadata(eval_inputs),
+    }
+
+
+def _eval_inputs_metadata(eval_inputs: object) -> dict:
+    payload = strict_json_dumps(eval_inputs)
+    raw = payload.encode("utf-8")
+    return {
+        "schema": "libreevolve.eval_inputs_provenance.v1",
+        "type": type(eval_inputs).__name__,
+        "json_bytes": len(raw),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "retained": False,
+    }
 
 
 def _validator_stdin_source(
@@ -2156,6 +2601,8 @@ def _stage_context_config(
     problem_dir: Path,
 ) -> dict:
     config = copy.deepcopy(stage)
+    if "eval_inputs" in config:
+        config["eval_inputs"] = _eval_inputs_metadata(config["eval_inputs"])
     if "stdin_text" in config or "stdin_file" in config:
         config.pop("stdin_text", None)
         config.pop("stdin_file", None)
@@ -2365,6 +2812,11 @@ def _stage_context_metadata(value: object, problem_dir: Path) -> object:
         for key, item in value.items():
             if key == "validate_path" and isinstance(item, (str, Path)):
                 sanitized[key] = _configured_validate_path_display(item, problem_dir)
+            elif key == "eval_inputs":
+                if isinstance(item, dict) and item.get("schema") == "libreevolve.eval_inputs_provenance.v1":
+                    sanitized[key] = copy.deepcopy(item)
+                else:
+                    sanitized[key] = _eval_inputs_metadata(item)
             else:
                 sanitized[key] = _stage_context_metadata(item, problem_dir)
         return sanitized
@@ -2760,6 +3212,8 @@ def _evaluator_entrypoint_specs(
 
     specs: list[tuple[Path, dict]] = []
     for index, stage in enumerate(stage_configs):
+        if stage.get("mode") == "embedded_evaluate":
+            continue
         raw_path = stage.get("validate_path")
         if raw_path is None:
             path = problem.validate_path

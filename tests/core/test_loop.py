@@ -5449,7 +5449,7 @@ def test_oversized_mutation_payload_is_logged_as_failed_candidate(monkeypatch):
     assert "diff_error=oversized_mutation_payload" in second_prompt
 
 
-def test_materialization_collision_is_logged_as_failed_candidate():
+def test_workspace_host_path_collision_is_logged_as_failed_candidate():
     tmpdir = tempfile.mkdtemp()
     response = (
         "<<<FILE README.md\nupper\n>>>FILE\n"
@@ -5470,17 +5470,17 @@ def test_materialization_collision_is_logged_as_failed_candidate():
     run_dir = Path(tmpdir) / "t"
     records = [json.loads(line) for line in (run_dir / "history.jsonl").read_text().splitlines()]
     child = records[-1]
-    assert child["evaluation"]["error"] == "materialization_error"
-    materialization_error = child["evaluation"]["metadata"]["materialization_error"]
-    assert materialization_error["exception_type"] == "CandidateMaterializationError"
-    assert materialization_error["reason"] == "candidate_path_collision"
-    assert materialization_error["paths"] == ["README.md", "readme.md"]
+    assert child["evaluation"]["error"] == "unknown_diff_error"
+    diff_error = child["evaluation"]["metadata"]["diff_error"]
+    assert diff_error["reason"] == "unknown_diff_error"
+    assert diff_error["detail"] == "readme.md:host_path_collision"
     assert child["metadata"]["archive_admission"]["reason"] == "invalid_evaluation"
     failure_records = [
         json.loads(line)
         for line in (run_dir / "failure_history.jsonl").read_text().splitlines()
     ]
-    assert failure_records[-1]["evaluation"]["error"] == "materialization_error"
+    assert failure_records[-1]["diff_error"] == "readme.md:host_path_collision"
+    assert failure_records[-1]["evaluation"]["error"] == "unknown_diff_error"
     assert failure_records[-1]["admission_reason"] == "invalid_evaluation"
     runtime = json.loads((run_dir / "manifest.json").read_text())["runtime"]
     assert runtime["status"] == "completed"

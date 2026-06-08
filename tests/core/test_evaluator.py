@@ -4151,6 +4151,80 @@ def test_workspace_validator_receives_materialized_files():
         shutil.rmtree(d)
 
 
+def test_embedded_evaluate_stage_calls_candidate_eval_inputs():
+    p, d = _problem(
+        "def evaluate(code):\n"
+        "    return {'score': 0.0, 'is_valid': False}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={
+            "main.py": (
+                "def evaluate(eval_inputs):\n"
+                "    values = eval_inputs['values']\n"
+                "    return {'score': sum(values) / 10.0, 'is_valid': True}\n"
+            )
+        },
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "candidate_eval",
+                    "mode": "embedded_evaluate",
+                    "eval_inputs": {"values": [2, 3, 4]},
+                }
+            ],
+        ).evaluate(workspace, None)
+
+        assert result == 0.9
+        assert result.metadata["evaluator_mode"] == "embedded_evaluate"
+        assert result.metadata["candidate_evaluator"]["entrypoint"] == "main.py"
+        assert result.metadata["candidate_evaluator"]["eval_inputs"]["retained"] is False
+        assert len(result.metadata["candidate_evaluator"]["eval_inputs"]["sha256"]) == 64
+        assert "validate_path" not in result.metadata
+    finally:
+        shutil.rmtree(d)
+
+
+def test_embedded_evaluate_stage_reports_missing_candidate_callable():
+    p, d = _problem("def evaluate(code): return {'score': 0.0, 'is_valid': False}")
+    workspace = CandidateWorkspace(files={"main.py": "x = 1\n"}, primary_file="main.py")
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[{"name": "candidate_eval", "mode": "embedded_evaluate"}],
+        ).evaluate(workspace, None)
+
+        assert result == -0.2
+        assert result.error == "malformed_metrics"
+        assert result.metadata["malformed_metrics"]["message"] == (
+            "candidate primary module must define callable evaluate(eval_inputs)"
+        )
+    finally:
+        shutil.rmtree(d)
+
+
+def test_embedded_evaluate_stage_reports_unsupported_candidate_signature():
+    p, d = _problem("def evaluate(code): return {'score': 0.0, 'is_valid': False}")
+    workspace = CandidateWorkspace(
+        files={"main.py": "def evaluate(code, workspace):\n    return {}\n"},
+        primary_file="main.py",
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[{"name": "candidate_eval", "mode": "embedded_evaluate"}],
+        ).evaluate(workspace, None)
+
+        assert result == -0.2
+        assert result.error == "malformed_metrics"
+        assert "evaluate(eval_inputs)" in result.metadata["malformed_metrics"]["message"]
+    finally:
+        shutil.rmtree(d)
+
+
 def test_workspace_imports_work_from_candidate_root_by_default():
     p, d = _problem(
         "def evaluate(code, workspace):\n"

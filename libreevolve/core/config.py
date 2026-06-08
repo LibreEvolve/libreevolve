@@ -944,7 +944,9 @@ def _validate_eval_stages(stages: object) -> None:
             raise ConfigError(f"{label} must be a mapping")
         unsupported = _unsupported_mapping_keys(label, stage, {
             "name",
+            "mode",
             "validate_path",
+            "eval_inputs",
             "timeout_sec",
             "max_sample_seconds",
             "max_stage_seconds",
@@ -970,6 +972,18 @@ def _validate_eval_stages(stages: object) -> None:
         })
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
+        mode = str(stage.get("mode", "external_validator"))
+        if "mode" in stage:
+            _require_enum(f"{label}.mode", stage["mode"], {"external_validator", "embedded_evaluate"})
+        if mode == "embedded_evaluate":
+            if "validate_path" in stage:
+                raise ConfigError(f"{label}.validate_path is not supported for embedded_evaluate stages")
+            if "stdin_text" in stage or "stdin_file" in stage:
+                raise ConfigError(f"{label}.stdin is not supported for embedded_evaluate stages")
+            if "data_include" in stage or "data_exclude" in stage:
+                raise ConfigError(f"{label}.data_include/data_exclude are not supported for embedded_evaluate stages")
+        elif "eval_inputs" in stage:
+            raise ConfigError(f"{label}.eval_inputs requires mode='embedded_evaluate'")
         if "name" in stage:
             name = _require_stage_label(f"{label}.name", stage["name"])
             if name in stage_names:
@@ -979,6 +993,8 @@ def _validate_eval_stages(stages: object) -> None:
             stage_names.add(name)
         if "validate_path" in stage:
             _require_string(f"{label}.validate_path", stage["validate_path"])
+        if "eval_inputs" in stage:
+            _validate_json_safe_config_value(f"{label}.eval_inputs", stage["eval_inputs"])
         if "timeout_sec" in stage:
             _require_positive_number(f"{label}.timeout_sec", stage["timeout_sec"])
         if "max_sample_seconds" in stage:

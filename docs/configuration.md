@@ -799,10 +799,23 @@ eval_stages:
     artifact_max_files: 5
     artifact_max_bytes: 2000000
     artifact_redact_secrets: true
+  - name: candidate_eval
+    mode: embedded_evaluate
+    timeout_sec: 10
+    eval_inputs:
+      cases: [1, 2, 3]
 backends:
   - type: openai
     model: "<openai-model-id>"
 ```
+
+Configured stages use external problem validators by default. Set
+`mode: embedded_evaluate` to import the materialized candidate primary file and
+call a candidate-owned `evaluate(eval_inputs)` function instead. `eval_inputs`
+must be JSON-safe config data; runtime metadata records its type, byte size, and
+SHA-256, not the raw object. Embedded stages currently still require the problem
+to include the normal `validate.py` file for problem loading, but they do not
+run that validator for the embedded stage.
 
 `eval_stages[].timeout_sec` is enforced per subprocess attempt: with
 `samples: 2` and `retries: 1`, each sample can run up to two validator

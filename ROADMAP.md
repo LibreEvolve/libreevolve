@@ -20,9 +20,10 @@ LibreEvolve has:
   reserved, and dot-prefixed generated paths
 - structured evaluator results with metrics, stage outcomes, diagnostics, and
   elapsed time
-- configurable local evaluator stages with distinct validator entrypoints,
-  thresholds, samples, validator-managed seed values, retries, timeouts, and
-  per-attempt history
+- configurable local evaluator stages with distinct validator entrypoints or
+  opt-in candidate-owned `evaluate(eval_inputs)` entrypoints, thresholds,
+  samples, validator-managed seed values, retries, timeouts, and per-attempt
+  history
 - strict scalar evaluator-output validation against `metrics.yaml`, including
   finite, strictly increasing non-boolean metric bounds and a reserved boolean
   validity gate outside optimization metrics

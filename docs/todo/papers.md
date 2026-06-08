@@ -130,20 +130,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     program.
   - Partial status: LibreEvolve records structured results from problem-local
     validators, validates direct evaluator entrypoint provenance, enforces
-    problem-local validator dependency policy, and can import candidate modules
-    from external validators.
-  - Current gap: paper-facing evidence does not show candidate-owned
-    `evaluate` functions, `eval_inputs` provenance, skeleton-to-evolved-block
-    invocation paths, or a clear distinction between embedded AlphaEvolve-style
-    evaluation and external `validate.py`-style problem validators. Current
-    runtime evidence shows the subprocess runner materializes candidate files,
-    imports the configured problem validator, and calls that validator's
-    `evaluate(code[, workspace[, stage]])`; `_eval_metadata()` records
-    `validate_path` plus candidate files, not candidate-owned callable
-    provenance. A local probe with candidate `main.py` defining
-    `evaluate(eval_inputs)` still followed the external `validate.py`
-    invalid result and reported `validate_path=validate.py`.
-  - Required result: add report fields or runtime mode proving embedded
+    problem-local validator dependency policy, can import candidate modules
+    from external validators, and now supports an opt-in
+    `eval_stages[].mode: embedded_evaluate` path. Embedded stages import the
+    materialized candidate primary file, discover a one-argument
+    `evaluate(eval_inputs)` callable, invoke it with JSON-safe configured
+    inputs, validate returned metrics, and record candidate callable plus
+    eval-input provenance.
+  - Current gap: paper-facing evidence still does not show an embedded-only
+    problem definition, skeleton-to-evolved-block invocation paths, stronger
+    callable isolation/build policy, or score-field mapping back to specific
+    evolved code paths. External `validate.py` remains the default problem
+    format and `load_problem()` still requires it.
+  - Required result: add paper-visible examples and reports proving embedded
     candidate evaluator entrypoints, eval-input datasets, callable isolation,
     callable discovery diagnostics, skeleton/block invocation evidence, and
     score-field mapping before treating local validator execution as

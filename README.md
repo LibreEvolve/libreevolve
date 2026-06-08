@@ -2086,6 +2086,14 @@ seeds are operational: when `stage["seed"]` is not `null`, LibreEvolve derives
 a deterministic 32-bit `stage["rng_seed"]`, sets subprocess `PYTHONHASHSEED`
 before launch, and seeds Python `random` plus NumPy before importing the
 validator module.
+Configured stages use external problem validators by default. A stage can set
+`mode: embedded_evaluate` to import the materialized candidate primary file and
+call a candidate-owned `evaluate(eval_inputs)` function instead. The optional
+`eval_inputs` stage field must be JSON-safe config data; evaluation metadata
+records the candidate callable, `evaluator_mode=embedded_evaluate`, and
+eval-input type/size/SHA-256 provenance without retaining the raw input object.
+Embedded stages still require the problem to include the normal `validate.py`
+file for loading, but that validator is not run for the embedded stage.
 For `eval_stages`, `timeout_sec` is a per-validator-subprocess-attempt timeout.
 `samples` and `retries` each create additional attempts. To bound each sample,
 set `max_sample_seconds`; to bound a whole configured stage, set

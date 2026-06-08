@@ -125,22 +125,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     page 4 describes this as a Python `evaluate` function with a fixed
     input/output signature, and Figure 3 on page 6 says evaluators invoke the
     Figure 3(a) `evaluate` function to obtain the proposed program's scores.
-  - Current evidence: README can describe local validators, configured stages,
-    direct evaluator entrypoint provenance, and candidate imports in
-    problem-local validators. Current implementation still imports the
-    configured problem `validate.py` and calls its
-    `evaluate(code[, workspace[, stage]])` against a materialized candidate
-    workspace; metadata exposes the validator path and candidate file list, not
-    a candidate-owned `evaluate(eval_inputs)` callable. A local probe with a
-    candidate-side `def evaluate(eval_inputs)` still followed the external
-    `validate.py` result, proving README should not imply that external
-    `validate.py` execution is the same as a candidate-owned `evaluate`
-    function wired into the evolved skeleton.
-  - Required result: when embedded evaluator-entrypoint support or report
-    evidence lands, update README, ROADMAP, papers index, and code/paper TODOs
-    with `evaluate` callable provenance, eval-input datasets, skeleton/block
-    coupling, callable discovery diagnostics, isolation policy, and score-field
-    mapping.
+  - Current evidence: README can now describe both external validators and the
+    opt-in configured stage mode `mode: embedded_evaluate`. In that mode
+    LibreEvolve imports the materialized candidate primary file, requires a
+    candidate-owned `evaluate(eval_inputs)` callable, invokes it with JSON-safe
+    configured inputs, maps the returned dictionary through the local metrics
+    contract, and records candidate callable plus eval-input provenance. README
+    should still not imply full Figure 3 parity because the problem loader
+    still requires `validate.py` by default and skeleton/block invocation
+    coupling is not yet evidenced.
+  - Required result: update README with the new opt-in mode, callable
+    provenance, eval-input provenance, callable discovery diagnostics, and
+    score-field mapping while preserving the remaining limitations around
+    embedded-only problem definitions and skeleton/block coupling.
 
 - [ ] Keep README Figure 1/Figure 2 architecture wording scoped until
       process-diagram provenance exists.

@@ -630,6 +630,15 @@ def test_accepts_maximum_llm_call_attempt_cap():
         ({"name": "gate\u200d"}, "safe stage label"),
         ({"validate_path": Path("validate.py")}, "validate_path"),
         ({"validate_path": ""}, "validate_path"),
+        ({"mode": "unsupported"}, "mode"),
+        ({"eval_inputs": {"case": 1}}, "eval_inputs requires"),
+        ({"mode": "embedded_evaluate", "validate_path": "validate.py"}, "validate_path"),
+        ({"mode": "embedded_evaluate", "stdin_text": "x"}, "stdin"),
+        ({"mode": "embedded_evaluate", "data_include": ["data/*.json"]}, "data_include/data_exclude"),
+        (
+            {"mode": "embedded_evaluate", "eval_inputs": {"api_key": "sk-proj_secret_1234567890"}},  # pragma: allowlist secret
+            "JSON-safe config",
+        ),
         ({"artifact_include": "*.json"}, "artifact_include"),
         ({"artifact_exclude": [""]}, "artifact_exclude"),
         ({"artifact_include": ["reports\u202e/*.json"]}, "display-safe"),
@@ -708,6 +717,21 @@ def test_accepts_configured_evaluator_stdin_file():
 
     assert config.evaluator_stdin_file == "input.txt"
     assert config.eval_stages[0]["stdin_file"] == "stage-input.txt"
+
+
+def test_accepts_embedded_evaluate_stage_eval_inputs():
+    config = Config(
+        eval_stages=[
+            {
+                "name": "candidate_eval",
+                "mode": "embedded_evaluate",
+                "eval_inputs": {"cases": [1, 2, 3], "scale": 0.5},
+            }
+        ]
+    )
+
+    assert config.eval_stages[0]["mode"] == "embedded_evaluate"
+    assert config.eval_stages[0]["eval_inputs"]["cases"] == [1, 2, 3]
 
 
 @pytest.mark.parametrize(

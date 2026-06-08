@@ -3789,3 +3789,33 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     SWE-Bench/Terminal-Bench/GAIA/AppWorld metadata, baseline identities, and
     a background-only or benchmark-fixture status rule so roadmap claims do
     not outpace local HarnessFix-style trace-grounded harness repair support.
+
+- [ ] Add RHO retrospective self-preference harness optimization gates before
+      roadmap promotion.
+  - Spec evidence: arXiv `2606.05922`, submitted June 4, 2026, introduces
+    Retrospective Harness Optimization (RHO) in `Improving LLM Agents via
+    Self-Preference over Trajectory Rollouts`. The abstract says RHO improves
+    an agent harness without ground-truth validation labels by selecting a
+    diverse coreset of challenging past-trajectory tasks, re-solving them in
+    parallel, analyzing rollouts with self-validation and self-consistency,
+    generating candidate harness updates, and selecting the most effective
+    update through pairwise self-preference.
+  - Current evidence: ROADMAP tracks run artifacts, failure/quarantine
+    streams, evaluator contracts, benchmark reports, SIA gates, HarnessFix
+    gates, and AEvo meta-editing gates. It does not mention `2606.05922`,
+    define a retrospective label-free harness optimizer gate, require
+    hard/diverse coreset selection from past trajectories, support parallel
+    re-rollout batches for harness comparison, record self-validation or
+    self-consistency analyses, rank candidate harness updates by pairwise
+    self-preference, or require long-horizon behavior-pattern evidence before
+    promoting self-supervised harness optimization claims.
+  - Required result: add roadmap gates for `2606.05922`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, past-trajectory
+    corpus schema, coreset difficulty/diversity criteria, retrospective
+    rollout batch records, parallel re-solve provenance, self-validation and
+    self-consistency evidence, candidate harness-update artifacts, pairwise
+    self-preference ranking, label-free selection policy, deployment/
+    rollback metadata, long-horizon behavior-pattern reports, SWE-Bench Pro
+    benchmark records, baseline identities, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    RHO-style retrospective harness optimization support.

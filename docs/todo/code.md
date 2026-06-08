@@ -5179,3 +5179,36 @@ Primary evidence:
     Verified, GAIA, and AppWorld, baseline identities, and README/ROADMAP
     wording that keeps trace-grounded harness repair as missing evidence until
     local implementation and reports exist.
+
+- [ ] Add RHO retrospective self-preference harness optimization boundary.
+  - Spec evidence: arXiv `2606.05922`, `Retrospective Harness Optimization:
+    Improving LLM Agents via Self-Preference over Trajectory Rollouts`, was
+    submitted June 4, 2026. Its abstract introduces Retrospective Harness
+    Optimization (RHO), a self-supervised method that improves an agent
+    harness using only past trajectories instead of ground-truth validation
+    sets. RHO selects a diverse coreset of challenging tasks from past
+    trajectories, re-solves them in parallel, analyzes the rollouts with
+    self-validation and self-consistency, generates candidate harness updates,
+    and selects the most effective update through pairwise self-preference.
+    The abstract reports a single-round SWE-Bench Pro pass-rate improvement
+    from 59% to 78% without external grading.
+  - Current evidence: LibreEvolve records run history, prompt history,
+    evaluator results, failures, quarantine streams, and best candidates, but
+    it has no RHO source row, no unlabeled past-trajectory harness optimizer,
+    no diverse hard-task coreset selection, no parallel retrospective
+    re-rollout workflow, no self-validation/self-consistency analysis
+    artifact, no pairwise self-preference harness ranking, no candidate
+    harness proposal set, and no long-horizon behavior-pattern report showing
+    sustained gains without external labels.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2606.05922`: arXiv id/version/date/PDF hash, authors, source
+    license, relation to AlphaEvolve and LibreEvolve's evaluator-grounded
+    search, past-trajectory corpus schema, challenging-task and diversity
+    coreset criteria, retrospective rollout batch records, parallel re-solve
+    provenance, self-validation and self-consistency artifacts, candidate
+    harness-update provenance, pairwise self-preference ranking records,
+    label-free selection policy, deployment/rollback policy, behavior-pattern
+    shift metrics, long-horizon session reports, SWE-Bench Pro benchmark
+    metadata, baseline identities, and README/ROADMAP wording that keeps
+    retrospective self-preference harness optimization as missing evidence
+    until local implementation and reports exist.

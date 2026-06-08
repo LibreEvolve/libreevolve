@@ -4762,3 +4762,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     availability if any, reproducibility status, and README/ROADMAP wording
     that treats HarnessFix as missing paper evidence rather than implemented
     LibreEvolve support.
+
+- [ ] Track RHO retrospective self-preference harness optimization evidence.
+  - Paper/source evidence: arXiv `2606.05922`, submitted June 4, 2026, is
+    titled `Retrospective Harness Optimization: Improving LLM Agents via
+    Self-Preference over Trajectory Rollouts`. Its abstract says continually
+    improving an agent harness is essential for adapting to new tasks, but
+    ground-truth validation labels are often unavailable in practical
+    deployments. RHO optimizes a harness using only past trajectories by
+    selecting a diverse coreset of challenging tasks, re-solving them in
+    parallel, analyzing rollouts with self-validation and self-consistency,
+    generating candidate harness updates, and selecting the best update via
+    pairwise self-preference. It reports a single optimization round improving
+    SWE-Bench Pro pass rate from 59% to 78% without external grading, and says
+    the optimized harness sustains higher accuracy in long-horizon sessions.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2606.05922`. Existing rows cover AlphaEvolve evaluator-backed
+    search, failure traces, HarnessFix trace-grounded repair, SIA harness and
+    weight updates, and AEvo process meta-editing, but not label-free
+    retrospective coreset selection, parallel re-rollouts from past
+    trajectories, self-validation/self-consistency analysis, pairwise
+    self-preference ranking, or harness deployment evidence without external
+    labels.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2606.05922`: title/authors/arXiv version/date/PDF digest, source
+    license, relation to AlphaEvolve and LibreEvolve evaluator assumptions,
+    past-trajectory corpus metadata, hard-task/diversity coreset selection,
+    retrospective rollout batch records, parallel re-solve provenance,
+    self-validation and self-consistency artifacts, candidate harness-update
+    records, pairwise self-preference comparisons, label-free selection
+    policy, deployment and rollback metadata, behavior-pattern shift reports,
+    long-horizon accuracy records, SWE-Bench Pro benchmark metadata, baseline
+    identities, code/artifact availability if any, reproducibility status, and
+    README/ROADMAP wording that treats RHO as missing paper evidence rather
+    than implemented LibreEvolve support.

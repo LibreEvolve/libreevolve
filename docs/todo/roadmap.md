@@ -163,6 +163,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording distinguishes quick validators from AlphaEvolve-style evaluator
     workloads that perform substantial search or model training.
 
+- [ ] Add roadmap gate for persisted validator-boundary consistency evidence.
+  - Spec evidence: AlphaEvolve-scale evaluator provenance should let a reader
+    verify that every saved candidate attempt used the execution boundary
+    claimed by the run manifest, not just that the manifest names a policy.
+  - Current evidence: `ROADMAP.md` tracks local subprocess validators,
+    minimal environments, wall-clock budgets, process-tree cleanup, and the
+    broader OS/container sandbox/resource-control gap. It does not yet require
+    a run-artifact validator that loads `manifest.json`, scans saved
+    evaluation metadata, and applies
+    `validate_validator_boundary_consistency()` to every
+    `evaluation.metadata.validator_boundary` record.
+  - Required result: when persisted validator-boundary consistency validation
+    lands, update ROADMAP, README, papers index, and code/paper TODO entries
+    together so roadmap wording separates the callable policy helper from a
+    history-wide artifact gate and keeps both distinct from stronger
+    sandbox/resource enforcement.
+
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.
   - Spec evidence: AlphaEvolve can operate over broader codebase and artifact

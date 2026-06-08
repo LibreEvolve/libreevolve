@@ -2193,6 +2193,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     neither underclaims the current manifest-visible boundary audit nor
     overclaims AlphaEvolve-grade execution isolation.
 
+- [ ] Keep README validator-boundary consistency wording scoped to callable
+  helper support until persisted-run validation exists.
+  - Spec evidence: README-facing AlphaEvolve alignment should distinguish
+    manifest-visible audit fields from automated verification over the run
+    artifacts used to justify discoveries.
+  - Current evidence: README says startup manifests record
+    `policies.validator_execution` and a
+    `validate_validator_boundary_consistency.v1` contract for checking that
+    attempt-level `evaluation.metadata.validator_boundary` records agree with
+    startup execution, filesystem, network, resource, and secret-boundary
+    claims. Code evidence supports the callable helper and direct tests, but
+    current runtime paths emit the records without an automated scan that
+    applies the helper to every persisted evaluation attempt.
+  - Required result: when a run-artifact validator lands, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    neither underclaims the existing manifest/helper contract nor overclaims an
+    automatic history-wide consistency gate.
+
 - [ ] Keep README and agent-facing OpenAI API-mode wording aligned with adapter
   routing.
   - Spec evidence: AlphaEvolve-style runs should make provider request

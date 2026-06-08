@@ -4600,6 +4600,30 @@ Primary evidence:
     policy for validators, with manifest-visible evidence and tests proving the
     intended boundary.
 
+- [ ] Add automated run-artifact validator-boundary consistency checks.
+  - Spec evidence: AlphaEvolve-scale evaluation provenance should make the
+    execution boundary for generated-code validators auditable from the run
+    artifacts that support accepted or rejected candidates.
+  - Current evidence: startup manifests persist
+    `policies.validator_execution`, each evaluation metadata record carries
+    `evaluation.metadata.validator_boundary`, and
+    `validate_validator_boundary_consistency()` can compare the startup policy
+    with an attempt-level boundary across execution, filesystem-capability,
+    network, resource-limit, and secret-boundary fields. The helper is covered
+    by direct validator-policy tests, while runtime code emits the policy and
+    boundary records rather than automatically invoking the helper over
+    persisted history/evaluation rows.
+  - Remaining gap: there is no run-finalization, CLI, or CI artifact validator
+    that loads `manifest.json`, scans persisted evaluation attempts, requires
+    every attempt-level `validator_boundary` record to exist, applies the
+    consistency helper, and fails missing or drifting boundary claims before a
+    run artifact bundle is treated as AlphaEvolve-grade evidence.
+  - Required result: add a manifest/history validation pass with tests for
+    missing boundary metadata, mismatched network/filesystem/resource/secret
+    fields, legacy rows, and clean current runs; wire it into the routine
+    artifact verification path without confusing this consistency gate with
+    the separate sandbox/resource-enforcement gap.
+
 - [ ] Add official 2026 AlphaEvolve impact-source provenance and claim
       boundaries.
   - Spec evidence: the May 7, 2026 Google DeepMind article

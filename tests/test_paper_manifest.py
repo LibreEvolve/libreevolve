@@ -12,7 +12,9 @@ from pypdf import PdfWriter
 import libreevolve.tools.paper_manifest as paper_manifest
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
-PARTIAL_FIXTURE_STATUS = "Partially implemented: fixture status; no full paper behavior."
+PARTIAL_FIXTURE_STATUS = (
+    "Partially implemented: `libreevolve/core/loop.py` fixture status; no full paper behavior."
+)
 
 
 def _write_manifest(root, rows):
@@ -1113,13 +1115,29 @@ def test_validate_paper_manifest_allows_scoped_alphaevolve_comparable_status_bou
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace(
         PARTIAL_FIXTURE_STATUS,
-        "Partially implemented: not AlphaEvolve-comparable until benchmark evidence exists.",
+        "Partially implemented: `libreevolve/core/loop.py` is not AlphaEvolve-comparable until benchmark evidence exists.",
     )
     status_readme.write_text(text, encoding="utf-8")
 
     report = validate_paper_manifest(tmp_path)
 
     assert report.ok is True
+
+
+def test_validate_paper_manifest_reports_supported_status_without_local_artifact(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace(PARTIAL_FIXTURE_STATUS, "Partially implemented: fixture status; no full paper behavior.")
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_supported_status_missing_local_artifact" in codes
 
 
 def test_validate_paper_manifest_reports_partial_status_without_missing_boundary(tmp_path):
@@ -1162,7 +1180,10 @@ def test_validate_paper_manifest_allows_implemented_status_with_boundary(tmp_pat
     status_readme = tmp_path / "papers" / "README.md"
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Foundational archive algorithm")
-    text = text.replace(PARTIAL_FIXTURE_STATUS, "Implemented as a local archive; richer semantics remain open.")
+    text = text.replace(
+        PARTIAL_FIXTURE_STATUS,
+        "Implemented as `libreevolve/population/map_elites.py` local archive; richer semantics remain open.",
+    )
     status_readme.write_text(text, encoding="utf-8")
 
     report = validate_paper_manifest(tmp_path)
@@ -1295,7 +1316,7 @@ def test_validate_paper_manifest_allows_limited_status_with_missing_boundary(tmp
     text = text.replace("Primary specification target", "Test-time training inspiration")
     text = text.replace(
         PARTIAL_FIXTURE_STATUS,
-        "Only clipped-reward export exists; no online training loop.",
+        "Only `libreevolve/plugins/ttt_rl.py` clipped-reward export exists; no online training loop.",
     )
     status_readme.write_text(text, encoding="utf-8")
 
@@ -1333,7 +1354,7 @@ def test_validate_paper_manifest_allows_static_guidance_execution_boundary(tmp_p
     text = text.replace("Primary specification target", "Modular search inspiration")
     text = text.replace(
         PARTIAL_FIXTURE_STATUS,
-        "Static prompt guidance exists for generate/improve/perturb operations with false execution/enforcement flags.",
+        "Static prompt guidance exists in `libreevolve/plugins/modular.py` for generate/improve/perturb operations with false execution/enforcement flags.",
     )
     status_readme.write_text(text, encoding="utf-8")
 

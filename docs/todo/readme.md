@@ -1905,11 +1905,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status classes must now also state that the guided
     operation is not executed or enforced. `Not implemented as described:`
     status classes must now also name an explicit missing or unsupported paper
-    behavior. Remaining README gap: the validator
-    does not yet machine-check phrase-level evidence links behind each long
-    semantic status claim or deeply distinguish smoke-scoped examples from
+    behavior. Implemented, partial, limited, and static-guidance support claims
+    must now also cite a local code/artifact path in the implementation-status
+    cell. Remaining README gap: the validator does not yet prove that every
+    named behavior inside each long semantic status claim is linked to
+    phrase-level evidence, or deeply distinguish smoke-scoped examples from
     benchmark evidence beyond the role/status class matrix, required path
-    presence, active-block structure checks, source-specific completed-evidence path checks, the
+    presence, active-block structure checks, source-specific completed-evidence
+    path checks, status-claim local-artifact anchors, the
     benchmark-implemented contradiction/local-artifact guards, the `AlphaEvolve-comparable`
     overclaim guard, the negative-status
     contradiction guard, the background-only boundary guard, the limited-status

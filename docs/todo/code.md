@@ -2868,11 +2868,15 @@ Primary evidence:
     guided operation is not executed or enforced. `Not implemented as
     described:` status classes must now also name an explicit missing or
     unsupported paper behavior.
-    Remaining gap: the validator does not yet link each long status/coverage
-    phrase to the specific active TODO or completed-evidence record that
-    justifies its semantics, or prove broader smoke-versus-paper-claim
-    qualifiers beyond the role/status class matrix, required path presence,
-    active-block structure checks, source-specific completed-evidence path checks, the
+    Implemented, partial, limited, and static-guidance support claims must now
+    also cite a local code/artifact path in the implementation-status cell.
+    Remaining gap: the validator does not yet prove that every named behavior
+    inside each long status/coverage phrase is linked to the specific active
+    TODO or completed-evidence record that justifies it, or prove broader
+    smoke-versus-paper-claim qualifiers beyond the role/status class matrix,
+    required path presence, active-block structure checks,
+    source-specific completed-evidence path checks, status-claim
+    local-artifact anchors, the
     benchmark-implemented contradiction/local-artifact guards, the `AlphaEvolve-comparable`
     overclaim guard, the negative-status contradiction
     guard, the background-only boundary guard, the future-benchmark boundary

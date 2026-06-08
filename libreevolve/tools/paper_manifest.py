@@ -51,9 +51,10 @@ COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
 ACTIVE_TODO_GAP_CONTEXT_RE = re.compile(r"(?m)^  - (?:Current gap|Remaining gap|Current evidence):")
 ACTIVE_TODO_REQUIRED_RESULT_RE = re.compile(r"(?m)^  - Required result:")
 BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE = re.compile(r"\bnot implemented\b", flags=re.IGNORECASE)
-BENCHMARK_IMPLEMENTED_LOCAL_ARTIFACT_RE = re.compile(
+LOCAL_ARTIFACT_PATH_RE = re.compile(
     r"`(?:libreevolve/|tests/|README\.md|ROADMAP\.md|papers/|docs/)[^`]+`"
 )
+BENCHMARK_IMPLEMENTED_LOCAL_ARTIFACT_RE = LOCAL_ARTIFACT_PATH_RE
 SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
     r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
     flags=re.IGNORECASE,
@@ -1540,6 +1541,18 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
             PaperManifestIssue(
                 "status_table_alphaevolve_comparable_overclaim",
                 "AlphaEvolve-comparable status claims must be framed as missing, scoped, or requirement-bound evidence",
+                row_id,
+            )
+        )
+    if (
+        status
+        and status.startswith(STATUS_TABLE_STATUSES_REQUIRING_COMPLETED_EVIDENCE)
+        and not LOCAL_ARTIFACT_PATH_RE.search(status)
+    ):
+        issues.append(
+            PaperManifestIssue(
+                "status_table_supported_status_missing_local_artifact",
+                "implemented, partial, limited, and static-guidance status claims must cite a local code or artifact path",
                 row_id,
             )
         )

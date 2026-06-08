@@ -2425,6 +2425,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Appendix B family coverage, aggregate constructive-math outcomes, and
     reproduced Figure 5 visual/result exhibits.
 
+- [ ] Keep Figure 5 sum-of-radii roadmap wording scoped until source-specific
+      precision provenance exists.
+  - Spec evidence: AlphaEvolve Figure 5 displays the selected sum-of-radii
+    improvement as `2.6340 -> 2.6358`, while Appendix B.12 and Figure 14 state
+    the `n = 26` unit-square circle-packing improvement as `2.634` to `2.635`.
+  - Current evidence: roadmap/README/paper-index wording can cite Figure 5
+    exhibit gaps and B.12-B.13 packing gaps, but it does not require
+    source-specific numeric strings, rounding policy, or a canonicalization
+    decision for the Figure 5 versus appendix precision difference. Current
+    wording can quote `2.635` without preserving the main-text Figure 5
+    `2.6358` display.
+  - Required result: when precision provenance lands, update ROADMAP, README,
+    papers index, and code/paper TODOs with per-source value records for
+    Figure 5, Appendix B.12, and Figure 14, including displayed strings,
+    normalized values, rounding/canonicalization policy, and safeguards against
+    conflating figure-display precision with appendix text precision.
+
 - [ ] Keep Appendix B figure roadmap wording scoped until Figures 10-14
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B displays construction figures beyond

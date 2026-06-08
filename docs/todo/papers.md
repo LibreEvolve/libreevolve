@@ -2252,6 +2252,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     documentation that separates reproduced paper exhibits from broader
     Appendix B family coverage.
 
+- [ ] Track Figure 5 versus Appendix B.12 sum-of-radii precision evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 5 displays the
+    sum-of-radii improvement as `2.6340 -> 2.6358`. Appendix B.12 and
+    Figure 14 describe the `n = 26` unit-square circle-packing improvement as
+    `2.634` to `2.635`.
+  - Current gap: paper-facing TODOs track broad Figure 5 exhibit provenance
+    and B.12-B.13 packing rows, but they do not force reports to preserve
+    source-specific numeric strings or reconcile the Figure 5 precision against
+    the appendix text/caption precision. README/ROADMAP wording currently
+    follows the Appendix B.12 `2.635` value and could lose the Figure 5
+    `2.6358` display.
+  - Required result: add paper/report evidence for this packing result with
+    per-source value records: source section/figure id, displayed previous and
+    current value strings, normalized numeric values, rounding or truncation
+    policy, chosen canonical claim value, and README/ROADMAP wording that keeps
+    Figure 5 display precision separate from Appendix B.12/Figure 14 wording.
+
 - [ ] Track Appendix B figure-level construction provenance for Figures 10-14.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B presents
     displayed construction figures beyond Figure 5: Figure 10 for Erdos

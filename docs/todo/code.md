@@ -2238,6 +2238,23 @@ Primary evidence:
     verifier/certificate links, and docs that distinguish exhibit
     reproduction from broader Appendix B family coverage.
 
+- [ ] Add Figure 5 versus Appendix B.12 sum-of-radii precision provenance.
+  - Spec evidence: AlphaEvolve Figure 5's sum-of-radii panel displays
+    `2.6340 -> 2.6358`, while Appendix B.12 text and Figure 14 describe the
+    `n = 26` unit-square circle-packing result as improving from `2.634` to
+    `2.635`.
+  - Current evidence: broad Figure 5 and Appendix B.12-B.13 TODOs require
+    exhibit/result rows and packing certificates, but current code/report
+    schemas do not require a field that preserves the exact figure-displayed
+    precision, the appendix-text precision, or a reconciliation policy between
+    the two. Existing README/ROADMAP/TODO wording names the Appendix B.12
+    value as `2.635` and could silently drop the Figure 5 `2.6358` display.
+  - Required result: add per-source numeric-value records for this result:
+    source location (`Figure 5`, `Appendix B.12`, `Figure 14`), displayed
+    value string, normalized numeric value, rounding/precision policy, selected
+    canonical report value, and docs that prevent Figure 5 visual values and
+    Appendix text values from being conflated.
+
 - [ ] Add Appendix B figure-level construction provenance for Figures 10-14.
   - Spec evidence: AlphaEvolve Appendix B includes displayed construction
     figures beyond the main-text Figure 5 summary: Figure 10 for Erdos minimum

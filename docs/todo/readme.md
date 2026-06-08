@@ -1409,6 +1409,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes family/aggregate constructive-math coverage from reproduced
     paper figures and exhibit-level visual evidence.
 
+- [ ] Keep README Figure 5 sum-of-radii value wording scoped until
+      source-specific precision provenance exists.
+  - Spec evidence: AlphaEvolve Figure 5 displays a sum-of-radii improvement
+    `2.6340 -> 2.6358`, while Appendix B.12 and Figure 14 state the `n = 26`
+    unit-square circle-packing result as `2.634` to `2.635`.
+  - Current evidence: README can point to broad Figure 5 exhibit and
+    B.12-B.13 packing TODOs, but it does not warn that the same visible result
+    currently has source-specific display precision. Existing wording follows
+    the Appendix B.12 `2.635` value and does not preserve the Figure 5
+    `2.6358` display.
+  - Required result: when source-specific precision provenance lands, update
+    README, ROADMAP, papers index, and code/paper TODOs so README records the
+    Figure 5, Appendix B.12, and Figure 14 value strings separately, explains
+    the rounding/canonicalization policy, and avoids treating `2.6358` and
+    `2.635` as interchangeable evidence.
+
 - [ ] Keep README Appendix B figure wording scoped until Figures 10-14
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B includes construction figures beyond

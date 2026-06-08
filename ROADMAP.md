@@ -126,6 +126,13 @@ LibreEvolve has:
   invalid generation-0 baselines by default while `alphaevolve_strict` stops
   before mutation with `invalid_initial_programs` when any selected seed is not
   evaluator-valid or lacks declared metrics
+- optional problem-formulation metadata under `formulation.yaml` or direct
+  `Problem.formulation_metadata`, normalized into
+  `problem.formulation_metadata` and summarized by
+  `runtime.history.problem_formulation_provenance_report` for expert
+  contributor roles, problem origin, formulation notes, objective/evaluator
+  rationale, parameter-scope decisions, background refs, and review/signoff
+  readiness
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

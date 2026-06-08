@@ -164,6 +164,41 @@ _SEED_CONTRIBUTION_ROLES = {
 _SEED_IDEA_TEXT_MAX_CHARS = 512
 _SEED_IDEA_LABEL_MAX_CHARS = 160
 _SEED_BACKGROUND_REF_MAX_CHARS = 160
+PROBLEM_FORMULATION_METADATA_SCHEMA = "libreevolve.problem_formulation_metadata.v1"
+_FORMULATION_ALLOWED_KEYS = {
+    "problem_origin",
+    "contributors",
+    "formulation_notes",
+    "objective_rationale",
+    "evaluator_rationale",
+    "parameter_scope",
+    "background_knowledge_refs",
+    "review",
+}
+_FORMULATION_ORIGINS = {
+    "unknown",
+    "benchmark_fixture",
+    "research_literature",
+    "expert_suggested",
+    "application_owner_requested",
+    "manual_demo",
+}
+_FORMULATION_CONTRIBUTOR_ROLES = {
+    "problem_suggester",
+    "formulation_advisor",
+    "objective_reviewer",
+    "evaluator_reviewer",
+    "domain_owner",
+    "implementation_author",
+}
+_FORMULATION_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "expert_reviewed",
+    "domain_owner_signed_off",
+}
+_FORMULATION_TEXT_MAX_CHARS = 1024
+_FORMULATION_LABEL_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -189,6 +224,7 @@ class ProgramDatabase:
         rng: random.Random | None = None,
         archive_state_snapshot: Mapping[str, object] | None = None,
         archive_programs_by_id: Mapping[str, Program] | None = None,
+        formulation_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -237,6 +273,9 @@ class ProgramDatabase:
         seed_sources = validate_seed_sources(seed_sources or [])
         seed_skipped = validate_seed_skipped(seed_skipped or [])
         seed_policy = validate_seed_policy(seed_policy or {})
+        formulation_metadata = validate_problem_formulation_metadata(
+            formulation_metadata or {}
+        )
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -248,6 +287,7 @@ class ProgramDatabase:
             seed_sources,
             seed_skipped,
             seed_policy,
+            formulation_metadata,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -4989,6 +5029,207 @@ def validate_seed_policy(value: object) -> dict:
     return sanitized
 
 
+def validate_problem_formulation_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("formulation_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("formulation_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key) for key in set(value) - _FORMULATION_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(
+            f"formulation_metadata has unsupported fields {unsupported}"
+        )
+    provided = bool(value)
+    normalized: dict = {
+        "schema": PROBLEM_FORMULATION_METADATA_SCHEMA,
+        "status": "provided" if provided else "not_provided",
+        "problem_origin": "unknown",
+        "contributors": [],
+        "formulation_notes": None,
+        "objective_rationale": None,
+        "evaluator_rationale": None,
+        "parameter_scope": [],
+        "background_knowledge_refs": [],
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "problem_origin" in value:
+        origin = value["problem_origin"]
+        if not isinstance(origin, str) or origin not in _FORMULATION_ORIGINS:
+            raise StrictJsonlError(
+                "formulation_metadata.problem_origin must be one of "
+                f"{sorted(_FORMULATION_ORIGINS)}"
+            )
+        normalized["problem_origin"] = origin
+    for field_name in (
+        "formulation_notes",
+        "objective_rationale",
+        "evaluator_rationale",
+    ):
+        if field_name in value:
+            normalized[field_name] = _normalize_formulation_text(
+                f"formulation_metadata.{field_name}",
+                value[field_name],
+                max_chars=_FORMULATION_TEXT_MAX_CHARS,
+            )
+    if "contributors" in value:
+        contributors = value["contributors"]
+        if not isinstance(contributors, list):
+            raise StrictJsonlError("formulation_metadata.contributors must be a list")
+        normalized["contributors"] = [
+            _normalize_formulation_contributor(index, contributor)
+            for index, contributor in enumerate(contributors)
+        ]
+    if "parameter_scope" in value:
+        parameter_scope = value["parameter_scope"]
+        if not isinstance(parameter_scope, list):
+            raise StrictJsonlError("formulation_metadata.parameter_scope must be a list")
+        normalized["parameter_scope"] = [
+            _normalize_formulation_parameter(index, parameter)
+            for index, parameter in enumerate(parameter_scope)
+        ]
+    if "background_knowledge_refs" in value:
+        refs = value["background_knowledge_refs"]
+        if not isinstance(refs, list):
+            raise StrictJsonlError(
+                "formulation_metadata.background_knowledge_refs must be a list"
+            )
+        normalized_refs = []
+        for index, ref in enumerate(refs):
+            label = _normalize_formulation_text(
+                f"formulation_metadata.background_knowledge_refs[{index}]",
+                ref,
+                max_chars=_FORMULATION_LABEL_MAX_CHARS,
+            )
+            if label not in normalized_refs:
+                normalized_refs.append(label)
+        normalized["background_knowledge_refs"] = normalized_refs
+    if "review" in value:
+        normalized["review"] = _normalize_formulation_review(value["review"])
+    _validate_context_provenance_json_size("formulation_metadata", normalized)
+    return normalized
+
+
+def _normalize_formulation_contributor(index: int, value: object) -> dict:
+    label = f"formulation_metadata.contributors[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"role", "label", "affiliation", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    role = value.get("role")
+    if not isinstance(role, str) or role not in _FORMULATION_CONTRIBUTOR_ROLES:
+        raise StrictJsonlError(
+            f"{label}.role must be one of {sorted(_FORMULATION_CONTRIBUTOR_ROLES)}"
+        )
+    record = {
+        "role": role,
+        "label": _normalize_formulation_text(
+            f"{label}.label",
+            value.get("label"),
+            max_chars=_FORMULATION_LABEL_MAX_CHARS,
+        ),
+    }
+    if "affiliation" in value:
+        record["affiliation"] = _normalize_formulation_text(
+            f"{label}.affiliation",
+            value["affiliation"],
+            max_chars=_FORMULATION_LABEL_MAX_CHARS,
+        )
+    if "notes" in value:
+        record["notes"] = _normalize_formulation_text(
+            f"{label}.notes",
+            value["notes"],
+            max_chars=_FORMULATION_TEXT_MAX_CHARS,
+        )
+    return record
+
+
+def _normalize_formulation_parameter(index: int, value: object) -> dict:
+    label = f"formulation_metadata.parameter_scope[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"name", "description", "value", "rationale"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    record = {
+        "name": _normalize_formulation_text(
+            f"{label}.name",
+            value.get("name"),
+            max_chars=_FORMULATION_LABEL_MAX_CHARS,
+        ),
+    }
+    for field_name in ("description", "value", "rationale"):
+        if field_name in value:
+            record[field_name] = _normalize_formulation_text(
+                f"{label}.{field_name}",
+                value[field_name],
+                max_chars=_FORMULATION_TEXT_MAX_CHARS,
+            )
+    return record
+
+
+def _normalize_formulation_review(value: object) -> dict:
+    label = "formulation_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if not isinstance(status, str) or status not in _FORMULATION_REVIEW_STATUSES:
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_FORMULATION_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    if not isinstance(reviewers, list):
+        raise StrictJsonlError(f"{label}.reviewer_labels must be a list")
+    reviewer_labels = []
+    for index, reviewer in enumerate(reviewers):
+        reviewer_label = _normalize_formulation_text(
+            f"{label}.reviewer_labels[{index}]",
+            reviewer,
+            max_chars=_FORMULATION_LABEL_MAX_CHARS,
+        )
+        if reviewer_label not in reviewer_labels:
+            reviewer_labels.append(reviewer_label)
+    notes = None
+    if "notes" in value:
+        notes = _normalize_formulation_text(
+            f"{label}.notes",
+            value["notes"],
+            max_chars=_FORMULATION_TEXT_MAX_CHARS,
+        )
+    return {"status": status, "reviewer_labels": reviewer_labels, "notes": notes}
+
+
+def _normalize_formulation_text(label: str, value: object, *, max_chars: int) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
 def validate_seed_sources(value: object) -> list[dict]:
     if not isinstance(value, list):
         raise StrictJsonlError("seed_sources must be a list of mappings")
@@ -5346,6 +5587,7 @@ def _startup_manifest_payload(
     seed_sources: list[dict],
     seed_skipped: list[dict],
     seed_policy: dict,
+    formulation_metadata: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -5493,6 +5735,7 @@ def _startup_manifest_payload(
             "seed_sources": seed_sources,
             "seed_skipped": seed_skipped,
             "seed_policy": seed_policy,
+            "formulation_metadata": formulation_metadata,
         },
         "policies": {
             "redaction": redaction_policy_record(),
@@ -5618,6 +5861,11 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
     seed_skipped = _manifest_list(problem.get("seed_skipped"))
     evaluator_sources = _manifest_list(problem.get("evaluator_sources"))
     context_sources = _manifest_list(problem.get("context_sources"))
+    formulation_metadata = (
+        problem.get("formulation_metadata")
+        if isinstance(problem.get("formulation_metadata"), Mapping)
+        else {}
+    )
     prompt_metadata = _manifest_list(config.get("prompt_variants_metadata"))
     backends = _manifest_list(config.get("backends"))
     candidate_language = (
@@ -5676,6 +5924,24 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
                 "ids": _context_source_refs(context_sources),
                 "context_policy_manifest_path": "problem.context_policy",
             },
+            "human_problem_formulation": {
+                "status": (
+                    "present"
+                    if formulation_metadata.get("status") == "provided"
+                    else "omitted"
+                ),
+                "manifest_path": "problem.formulation_metadata",
+                "schema": formulation_metadata.get("schema"),
+                "problem_origin": formulation_metadata.get("problem_origin"),
+                "contributor_count": len(
+                    _manifest_list(formulation_metadata.get("contributors"))
+                ),
+                "review_status": (
+                    formulation_metadata.get("review", {}).get("status")
+                    if isinstance(formulation_metadata.get("review"), Mapping)
+                    else None
+                ),
+            },
             "candidate_representation": {
                 "status": "present",
                 "manifest_path": "policies.candidate_language",
@@ -5706,6 +5972,7 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
             "arbitrary_language_build_runner_task_specs_unsupported",
             "problem_defined_candidate_abstraction_hooks_unsupported",
             "skeleton_to_evolved_block_score_linkage_not_yet_reported",
+            "expert_formulation_metadata_requires_benchmark_fixture_adoption",
         ],
     }
     bundle["task_spec_id"] = _task_specification_id(bundle)
@@ -5777,6 +6044,7 @@ def validate_task_specification_bundle(bundle: object) -> dict:
             "prompt_template_and_config",
             "llm_ensemble",
             "background_knowledge",
+            "human_problem_formulation",
             "candidate_representation",
             "objective_metrics",
         }

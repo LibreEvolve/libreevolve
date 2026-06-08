@@ -787,6 +787,7 @@ def evolve(
         seed_sources=_problem_seed_sources(problem),
         seed_skipped=_problem_seed_skipped(problem),
         seed_policy=_problem_seed_policy(problem),
+        formulation_metadata=_problem_formulation_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5148,6 +5149,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "problem_formulation_provenance_report": (
+            _problem_formulation_provenance_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -5665,6 +5671,379 @@ def validate_initial_program_validity_report(report: object) -> dict:
             )
     return {
         "schema": "libreevolve.initial_program_validity_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _problem_formulation_provenance_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    raw_metadata = (
+        problem.get("formulation_metadata")
+        if isinstance(problem.get("formulation_metadata"), Mapping)
+        else {}
+    )
+    metadata = dict(raw_metadata)
+    contributors = (
+        metadata.get("contributors")
+        if isinstance(metadata.get("contributors"), list)
+        else []
+    )
+    roles = sorted(
+        {
+            contributor.get("role")
+            for contributor in contributors
+            if isinstance(contributor, Mapping)
+            and isinstance(contributor.get("role"), str)
+        }
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    review_status = review.get("status")
+    has_expert_roles = bool(
+        {
+            "problem_suggester",
+            "formulation_advisor",
+            "objective_reviewer",
+            "evaluator_reviewer",
+            "domain_owner",
+        }
+        & set(roles)
+    )
+    objective_rationale = isinstance(metadata.get("objective_rationale"), str)
+    evaluator_rationale = isinstance(metadata.get("evaluator_rationale"), str)
+    parameter_scope = (
+        metadata.get("parameter_scope")
+        if isinstance(metadata.get("parameter_scope"), list)
+        else []
+    )
+    background_refs = (
+        metadata.get("background_knowledge_refs")
+        if isinstance(metadata.get("background_knowledge_refs"), list)
+        else []
+    )
+    expert_review = review_status in {
+        "expert_reviewed",
+        "domain_owner_signed_off",
+    }
+    claim_ready = (
+        metadata.get("status") == "provided"
+        and has_expert_roles
+        and objective_rationale
+        and evaluator_rationale
+        and bool(parameter_scope)
+        and bool(background_refs)
+        and expert_review
+    )
+    report = {
+        "schema": "libreevolve.problem_formulation_provenance_report.v1",
+        "source": "problem_formulation_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.formulation_metadata",
+        "metadata_status": metadata.get("status"),
+        "problem_origin": metadata.get("problem_origin"),
+        "contributor_count": len(contributors),
+        "contributor_roles": roles,
+        "formulation_notes_present": isinstance(
+            metadata.get("formulation_notes"), str
+        ),
+        "objective_rationale_present": objective_rationale,
+        "evaluator_rationale_present": evaluator_rationale,
+        "parameter_scope_count": len(parameter_scope),
+        "background_knowledge_ref_count": len(background_refs),
+        "review_status": review_status,
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata.get("status") == "provided",
+            "expert_contributor_roles_recorded": has_expert_roles,
+            "formulation_notes_recorded": isinstance(
+                metadata.get("formulation_notes"), str
+            ),
+            "objective_rationale_recorded": objective_rationale,
+            "evaluator_rationale_recorded": evaluator_rationale,
+            "parameter_scope_recorded": bool(parameter_scope),
+            "background_knowledge_linkage_recorded": bool(background_refs),
+            "expert_review_or_domain_owner_signoff": expert_review,
+            "alphaevolve_expert_guided_formulation_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("formulation_yaml_in_problem_fixture", metadata.get("status") == "provided"),
+                    ("expert_contributor_roles", has_expert_roles),
+                    ("formulation_notes", isinstance(metadata.get("formulation_notes"), str)),
+                    ("objective_rationale", objective_rationale),
+                    ("evaluator_rationale", evaluator_rationale),
+                    ("parameter_scope_decisions", bool(parameter_scope)),
+                    ("background_knowledge_refs", bool(background_refs)),
+                    ("expert_review_or_domain_owner_signoff", expert_review),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.formulation_metadata",
+            "optional_problem_file": "formulation.yaml",
+            "allowed_problem_origins": [
+                "unknown",
+                "benchmark_fixture",
+                "research_literature",
+                "expert_suggested",
+                "application_owner_requested",
+                "manual_demo",
+            ],
+            "allowed_contributor_roles": [
+                "problem_suggester",
+                "formulation_advisor",
+                "objective_reviewer",
+                "evaluator_reviewer",
+                "domain_owner",
+                "implementation_author",
+            ],
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "expert_reviewed",
+                "domain_owner_signed_off",
+            ],
+        },
+    }
+    report["validation"] = validate_problem_formulation_provenance_report(report)
+    return report
+
+
+def validate_problem_formulation_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.problem_formulation_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "problem formulation provenance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "problem_origin",
+        "contributor_count",
+        "contributor_roles",
+        "formulation_notes_present",
+        "objective_rationale_present",
+        "evaluator_rationale_present",
+        "parameter_scope_count",
+        "background_knowledge_ref_count",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"problem formulation report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.problem_formulation_provenance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported problem formulation report schema",
+            }
+        )
+    if report.get("source") != "problem_formulation_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported problem formulation report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.problem_formulation_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference the problem formulation metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.formulation_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at problem.formulation_metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    if report.get("problem_origin") not in {
+        "unknown",
+        "benchmark_fixture",
+        "research_literature",
+        "expert_suggested",
+        "application_owner_requested",
+        "manual_demo",
+    }:
+        issues.append(
+            {
+                "code": "invalid_problem_origin",
+                "message": "problem_origin is unsupported",
+            }
+        )
+    roles = report.get("contributor_roles")
+    allowed_roles = {
+        "problem_suggester",
+        "formulation_advisor",
+        "objective_reviewer",
+        "evaluator_reviewer",
+        "domain_owner",
+        "implementation_author",
+    }
+    if not isinstance(roles, list) or not all(role in allowed_roles for role in roles):
+        issues.append(
+            {
+                "code": "invalid_contributor_roles",
+                "message": "contributor_roles must be supported role labels",
+            }
+        )
+        roles = []
+    for field in (
+        "contributor_count",
+        "parameter_scope_count",
+        "background_knowledge_ref_count",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    for field in (
+        "formulation_notes_present",
+        "objective_rationale_present",
+        "evaluator_rationale_present",
+    ):
+        if not isinstance(report.get(field), bool):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be boolean",
+                }
+            )
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "expert_reviewed",
+        "domain_owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and bool(
+            {
+                "problem_suggester",
+                "formulation_advisor",
+                "objective_reviewer",
+                "evaluator_reviewer",
+                "domain_owner",
+            }
+            & set(roles)
+        )
+        and report.get("objective_rationale_present") is True
+        and report.get("evaluator_rationale_present") is True
+        and isinstance(report.get("parameter_scope_count"), int)
+        and not isinstance(report.get("parameter_scope_count"), bool)
+        and report.get("parameter_scope_count") > 0
+        and isinstance(report.get("background_knowledge_ref_count"), int)
+        and not isinstance(report.get("background_knowledge_ref_count"), bool)
+        and report.get("background_knowledge_ref_count") > 0
+        and review_status in {"expert_reviewed", "domain_owner_signed_off"}
+    )
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_expert_guided_formulation_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "formulation_parity_mismatch",
+                    "message": "AlphaEvolve formulation parity must match report readiness",
+                }
+            )
+        if readiness.get("expert_review_or_domain_owner_signoff") != (
+            review_status in {"expert_reviewed", "domain_owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match formulation provenance readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "formulation.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name formulation.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.problem_formulation_provenance_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -7102,6 +7481,9 @@ def _task_spec_artifact_paths_for_field(field_name: str) -> list[str]:
             "manifest.json",
             "prompt_history.jsonl",
         ],
+        "human_problem_formulation": [
+            "manifest.json",
+        ],
         "candidate_representation": [
             "manifest.json",
             "history.jsonl",
@@ -7252,6 +7634,16 @@ def _task_spec_reference_summary(
             and not isinstance(field.get("context_source_count"), bool)
             else 0,
         }
+    if name == "human_problem_formulation":
+        return {
+            "schema": field.get("schema"),
+            "problem_origin": field.get("problem_origin"),
+            "contributor_count": int(field.get("contributor_count", 0))
+            if isinstance(field.get("contributor_count"), int)
+            and not isinstance(field.get("contributor_count"), bool)
+            else 0,
+            "review_status": field.get("review_status"),
+        }
     if name == "candidate_representation":
         return {
             "policy": field.get("policy"),
@@ -7288,7 +7680,11 @@ def _task_spec_field_gap(field_name: str) -> list[str]:
         ],
         "background_knowledge": [
             "semantic_source_selection_evidence",
-            "expert_formulation_provenance",
+            "expert_formulation_review_or_signoff",
+        ],
+        "human_problem_formulation": [
+            "benchmark_fixture_metadata_adoption",
+            "expert_review_or_domain_owner_signoff",
         ],
         "candidate_representation": [
             "problem_defined_candidate_abstraction_hooks",
@@ -7361,6 +7757,7 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
         "prompt_template_and_config",
         "llm_ensemble",
         "background_knowledge",
+        "human_problem_formulation",
         "candidate_representation",
         "objective_metrics",
     }
@@ -10868,6 +11265,10 @@ def _problem_seed_skipped(problem: Problem) -> list[dict]:
 
 def _problem_seed_policy(problem: Problem) -> dict:
     return dict(getattr(problem, "initial_workspace_policy", {}) or {})
+
+
+def _problem_formulation_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "formulation_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

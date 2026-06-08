@@ -329,8 +329,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     strict policy/report from benchmark claims that require complete
     AlphaEvolve-style initial implementations.
 
-- [ ] Keep README problem-formulation wording scoped until expert provenance
-      exists.
+- [ ] Keep README problem-formulation wording scoped until benchmark fixtures
+      carry expert-reviewed metadata.
   - Spec evidence: AlphaEvolve Section 3.2 reports that many mathematical
     problems were suggested by external mathematicians who advised on how to
     formulate them as AlphaEvolve inputs, while Section 2.1 treats task
@@ -339,17 +339,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     by setting evaluation criteria, providing the initial solution, and adding
     optional background knowledge.
   - Current evidence: README documents problem/source provenance, context file
-    selection, local paper context, and seed source identity. It does not yet
-    document benchmark metadata for expert contributor roles, problem-origin
-    records, formulation advice, evaluator/objective rationale, or parameter
-    scope decisions. Code evidence records file and runtime provenance for the
-    problem tree, config, plugins, environment, and source checkout, but the
-    `Problem` schema and loader do not capture expert advisor identity,
-    formulation rationale, or review/signoff state.
-  - Required result: when expert formulation provenance and validation lands,
+    selection, local paper context, seed source identity, optional
+    `formulation.yaml` / `Problem.formulation_metadata`, normalized
+    `problem.formulation_metadata`, and
+    `runtime.history.problem_formulation_provenance_report`. It distinguishes
+    context-source artifact tracking from expert formulation evidence and says
+    claim readiness requires expert roles, rationale, parameter-scope,
+    background refs, and review/signoff. Existing benchmark fixtures do not yet
+    carry real expert-reviewed formulation records.
+  - Required result: when matrix and constructive-math benchmark fixtures are
+    populated with reviewed formulation metadata and paper-facing evidence,
     update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README distinguishes context-source artifact tracking from
-    AlphaEvolve-style human expert problem-formulation evidence.
+    so README can describe the benchmark claim without implying the schema
+    alone proves AlphaEvolve-style human expert problem formulation.
 
 - [ ] Keep README robustness and versatility wording scoped until early-user
       feedback provenance exists.

@@ -302,7 +302,7 @@ Primary evidence:
     startup paths, and keep permissive optimization-pressure examples clearly
     separated from strict complete initial implementations.
 
-- [ ] Add expert problem-formulation provenance for benchmark definitions.
+- [ ] Populate expert-reviewed problem-formulation metadata for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,
     evaluator, initial solution, and optional background knowledge as
     human-provided inputs; Figure 1 summarizes the boundary as "Human
@@ -313,21 +313,23 @@ Primary evidence:
     distinct from local context-file selection or seed source identity.
   - Current evidence: LibreEvolve records problem/source provenance, safe local
     context source labels, context-source selection/ranking/filter metadata,
-    bounded prompt context hashes, and local paper/retrieval evidence. It does
-    not define a benchmark metadata schema for expert contributor roles,
-    problem-origin records, formulation advice, mathematical parameter-scope
-    decisions, evaluator/objective rationale, expert review state, or
-    contribution visibility in benchmark reports. Code evidence: `Problem`
-    carries task text, metrics, validator path, seeds, context records, and
-    config source; `load_problem()` only requires `task_description.txt`,
-    `metrics.yaml`, `validate.py`, seeds, and optional context/seed policy; and
-    `evolve()` records `problem_provenance()`, config, plugin, environment, and
-    source provenance, not expert-formulation authority.
-  - Required result: add problem-definition metadata and validation for expert
-    advisor/contributor roles, formulation notes, objective/evaluator
-    rationale, parameter-scope decisions, background-knowledge linkage, and
-    report/run provenance with review/signoff state before claiming
-    AlphaEvolve-style expert-guided mathematical benchmark formulation.
+    bounded prompt context hashes, and local paper/retrieval evidence. Code now
+    also supports optional `formulation.yaml` / `formulation.yml` files and
+    direct `Problem.formulation_metadata`, validates fixed problem-origin,
+    contributor-role, and review-status vocabularies, persists normalized
+    `problem.formulation_metadata`, adds a `human_problem_formulation` field to
+    the startup task-spec bundle, and emits
+    `runtime.history.problem_formulation_provenance_report` with readiness
+    checks for expert roles, formulation notes, objective/evaluator rationale,
+    parameter-scope decisions, background-knowledge linkage, and expert review
+    or domain-owner signoff. Existing benchmark fixtures have not yet been
+    populated with real expert-formulation records.
+  - Required result: populate matrix and constructive-math benchmark fixtures
+    with expert-reviewed formulation metadata, link those records to evaluator
+    and report artifacts, add paper-facing examples/certification rows, and
+    keep mathematical discovery claims gated on review/signoff evidence instead
+    of treating the metadata schema alone as AlphaEvolve-style expert-guided
+    benchmark formulation.
 
 - [ ] Add early-user and collaborator feedback provenance for robustness
       claims.

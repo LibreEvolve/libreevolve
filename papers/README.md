@@ -316,12 +316,15 @@ problem-specific validity evidence before every initial seed baseline can be
 treated as paper-faithful AlphaEvolve initial-solution evidence.
 
 AlphaEvolve expert-formulation note: local context-source and problem/source
-provenance records identify artifacts and rendered prompt context, but they do
-not yet capture expert contributor roles, problem-origin notes, formulation
-advice, objective/evaluator rationale, or parameter-scope decisions. Section
+provenance records identify artifacts and rendered prompt context, and
+LibreEvolve now has optional `formulation.yaml` /
+`Problem.formulation_metadata` records plus
+`runtime.history.problem_formulation_provenance_report` for contributor roles,
+problem origin, formulation notes, objective/evaluator rationale,
+parameter-scope decisions, background refs, and review/signoff state. Section
 3.2 reports external mathematicians suggesting problems and advising
-formulation, so LibreEvolve needs explicit expert-formulation provenance before
-making that class of mathematical benchmark claim.
+formulation, so mathematical benchmark fixtures still need populated,
+expert-reviewed formulation metadata before making that class of paper claim.
 
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema

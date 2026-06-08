@@ -2081,10 +2081,11 @@ Each startup `manifest.json` also includes a partial AlphaEvolve task-spec
 bundle at `task_specification`. It cross-links the run-defining inputs already
 present elsewhere in the manifest: initial programs, evaluator code or embedded
 evaluator stages, prompt template/config metadata, backend choices, optional
-background context, candidate representation, and objective metrics. The bundle
-records field statuses, manifest paths, ids/hashes/counts, explicit remaining
-gaps, a deterministic `task_spec_id`, and embedded validation; it is not yet a
-standalone task-spec file with full evolvable-span and score-link evidence.
+background context, optional human problem-formulation metadata, candidate
+representation, and objective metrics. The bundle records field statuses,
+manifest paths, ids/hashes/counts, explicit remaining gaps, a deterministic
+`task_spec_id`, and embedded validation; it is not yet a standalone task-spec
+file with full evolvable-span and score-link evidence.
 Completed manifests additionally include
 `runtime.history.task_spec_artifact_resolution_report`, which validates those
 task-spec manifest paths and cross-links each field to runtime evidence such as
@@ -2093,6 +2094,18 @@ evaluator artifacts, and best exports. This is still partial evidence:
 evolvable component span ids, score-field-to-candidate-path links,
 embedded-only task definitions, standalone task-spec examples, and deeper
 per-id history resolution remain open.
+Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
+direct callers can set `Problem.formulation_metadata`. The manifest normalizes
+this to `problem.formulation_metadata` with fixed vocabularies for problem
+origin, contributor roles, and review status, plus bounded non-secret text for
+formulation notes, objective/evaluator rationale, parameter-scope decisions,
+background-knowledge refs, and review labels. Completed manifests include
+`runtime.history.problem_formulation_provenance_report`, which reports whether
+expert contributor roles, objective/evaluator rationale, parameter-scope
+decisions, background-knowledge linkage, and expert review or domain-owner
+signoff are present before marking AlphaEvolve-style expert-guided formulation
+parity claim-ready. Context-source provenance alone is still not treated as
+expert formulation evidence.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which records the
 current selected abstraction as a Python-primary code-file set, links it back

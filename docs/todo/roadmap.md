@@ -400,8 +400,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     permissive examples nor overclaims that invalid generation-0 baselines
     satisfy AlphaEvolve's complete initial-implementation requirement.
 
-- [ ] Keep roadmap problem-formulation wording scoped to context artifacts
-      until expert provenance exists.
+- [ ] Keep roadmap problem-formulation wording scoped until benchmark fixtures
+      carry expert-reviewed metadata.
   - Spec evidence: AlphaEvolve Section 3.2 says external mathematicians
     suggested open problems and advised on formulation, while Section 2.1 makes
     task definition and optional background knowledge explicit human inputs;
@@ -409,17 +409,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     over "how" by naming evaluation criteria, initial solution, and optional
     background knowledge as human-provided setup.
   - Current evidence: ROADMAP and README/code evidence cover local context
-    source ingestion, ranking/filtering, and source/problem provenance, but do
-    not require benchmark metadata for expert contributor roles, formulation
-    advice, objective/evaluator rationale, mathematical parameter-scope
-    decisions, or expert review/signoff state. Runtime evidence records a
-    problem tree digest, config/plugin/environment/source provenance, and
-    loader-validated task/metrics/validator/seed files; it does not identify
-    who formulated the benchmark or why the objective and search scope are
-    authoritative.
-  - Required result: when expert formulation metadata and report evidence land,
-    update roadmap, README, papers index, and code/paper TODO entries together
-    so roadmap text neither underclaims context provenance nor overclaims
+    source ingestion, ranking/filtering, source/problem provenance, optional
+    `formulation.yaml` / `Problem.formulation_metadata`, normalized
+    `problem.formulation_metadata`, a task-spec `human_problem_formulation`
+    field, and
+    `runtime.history.problem_formulation_provenance_report` for roles,
+    rationale, parameter-scope, background refs, and review/signoff readiness.
+    Runtime evidence can now identify the declared formulation metadata, but
+    existing benchmark fixtures have not yet been populated with real
+    expert-reviewed formulation records.
+  - Required result: when matrix and constructive-math benchmark fixtures carry
+    reviewed formulation metadata and paper-facing evidence, update roadmap,
+    README, papers index, and code/paper TODO entries together so roadmap text
+    neither underclaims the new provenance surface nor overclaims
     AlphaEvolve-style expert-guided benchmark formulation.
 
 - [ ] Keep robustness and versatility roadmap wording scoped until early-user

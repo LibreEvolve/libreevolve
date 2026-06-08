@@ -29,8 +29,9 @@ Startup manifests include `task_specification`, a
 `libreevolve.alphaevolve_task_specification_bundle.v1` cross-reference over the
 inputs that define the run: initial programs, evaluator code or embedded
 evaluator stages, prompt template/config metadata, backend choices, optional
-background context, candidate representation, and objective metrics. The bundle
-records field statuses, manifest paths, ids/hashes/counts, explicit
+background context, optional human problem-formulation metadata, candidate
+representation, and objective metrics. The bundle records field statuses,
+manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
 validation. It is partial AlphaEvolve task-spec evidence, not a standalone
 problem definition or full proof of evolvable-span and score-link parity.
@@ -64,6 +65,21 @@ program parity is claim-ready. The default `permissive_baseline` policy keeps
 invalid seeds as diagnostic baselines; `alphaevolve_strict` stops before
 mutation with `invalid_initial_programs` when any seed lacks evaluator validity
 or declared metrics.
+Problem fixtures can optionally include `formulation.yaml` or
+`formulation.yml`; direct callers can set `Problem.formulation_metadata`.
+Startup manifest validation normalizes this into
+`problem.formulation_metadata` with schema
+`libreevolve.problem_formulation_metadata.v1`, fixed problem-origin,
+contributor-role, and review-status vocabularies, bounded non-secret text for
+formulation notes, objective/evaluator rationale, parameter-scope decisions,
+background-knowledge references, and review/signoff labels. Completed
+manifests include
+`runtime.history.problem_formulation_provenance_report` with schema
+`libreevolve.problem_formulation_provenance_report.v1`. This report records
+whether expert contributor roles, objective/evaluator rationale,
+parameter-scope decisions, background-knowledge linkage, and expert review or
+domain-owner signoff are present before marking expert-guided formulation
+parity claim-ready.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

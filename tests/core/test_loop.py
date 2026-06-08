@@ -48,6 +48,7 @@ from libreevolve.core.loop import (
     validate_candidate_abstraction_choice_report,
     validate_initial_program_idea_provenance_report,
     validate_initial_program_validity_report,
+    validate_problem_formulation_provenance_report,
     validate_existing_codebase_integration_report,
     validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
@@ -5548,6 +5549,10 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
     }
     assert fields["background_knowledge"]["status"] == "present"
     assert fields["background_knowledge"]["context_source_count"] == 1
+    assert fields["human_problem_formulation"]["status"] == "omitted"
+    assert fields["human_problem_formulation"]["manifest_path"] == (
+        "problem.formulation_metadata"
+    )
     assert fields["candidate_representation"]["manifest_path"] == (
         "policies.candidate_language"
     )
@@ -5592,7 +5597,7 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert report["task_spec_validation_ok"] is True
     assert report["validation"]["ok"] is True
     assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
-    assert report["field_count"] == 7
+    assert report["field_count"] == 8
     assert report["manifest_path_count"] == report["manifest_path_resolved_count"]
     assert report["artifact_link_count"] > 0
     assert report["program_count"] == 2
@@ -5610,6 +5615,7 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
         "prompt_template_and_config",
         "llm_ensemble",
         "background_knowledge",
+        "human_problem_formulation",
         "candidate_representation",
         "objective_metrics",
     }
@@ -5647,6 +5653,16 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
     assert "score_field_to_evolved_block_mapping" in (
         by_field["objective_metrics"]["unresolved_gap"]
     )
+    formulation = by_field["human_problem_formulation"]
+    assert formulation["reference_summary"]["review_status"] == "not_reviewed"
+    assert formulation["manifest_path_resolutions"] == [
+        {
+            "path": "problem.formulation_metadata",
+            "resolved": True,
+            "value_type": "object",
+            "value_count": 10,
+        }
+    ]
 
     edited = copy.deepcopy(report)
     edited["claim_ready"] = True
@@ -5657,6 +5673,113 @@ def test_runtime_history_reports_task_spec_artifact_resolution():
         "claim_ready_overclaim",
         "task_spec_parity_overclaim",
     }
+
+
+def test_loaded_problem_formulation_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text("formulated task", encoding="utf-8")
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    (problem_dir / "formulation.yaml").write_text(
+        "problem_origin: expert_suggested\n"
+        "contributors:\n"
+        "  - role: formulation_advisor\n"
+        "    label: geometry advisor\n"
+        "formulation_notes: Advisor suggested the compact benchmark framing.\n"
+        "objective_rationale: Maximize score because it is the published target.\n"
+        "evaluator_rationale: The validator measures the exact objective output.\n"
+        "parameter_scope:\n"
+        "  - name: instance_size\n"
+        "    value: small deterministic fixture\n"
+        "    rationale: Keeps local tests bounded.\n"
+        "background_knowledge_refs:\n"
+        "  - papers/alphaevolve.pdf section 3.2\n"
+        "review:\n"
+        "  status: expert_reviewed\n"
+        "  reviewer_labels:\n"
+        "    - geometry advisor\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    formulation = manifest["problem"]["formulation_metadata"]
+    assert formulation["schema"] == "libreevolve.problem_formulation_metadata.v1"
+    assert formulation["status"] == "provided"
+    assert formulation["problem_origin"] == "expert_suggested"
+    assert formulation["contributors"][0]["role"] == "formulation_advisor"
+    assert manifest["task_specification"]["fields"]["human_problem_formulation"][
+        "status"
+    ] == "present"
+    report = manifest["runtime"]["history"]["problem_formulation_provenance_report"]
+    assert report["schema"] == "libreevolve.problem_formulation_provenance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_problem_formulation_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_expert_guided_formulation_parity"
+    ] is True
+    assert report["review_status"] == "expert_reviewed"
+
+
+def test_problem_formulation_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["problem_formulation_provenance_report"]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"][
+        "alphaevolve_expert_guided_formulation_parity"
+    ] is False
+    assert "formulation_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_expert_guided_formulation_parity"] = True
+    validation = validate_problem_formulation_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "formulation_parity_mismatch",
+    }
+
+
+def test_direct_problem_formulation_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.formulation_metadata = {
+        "problem_origin": "expert_suggested",
+        "formulation_notes": (
+            "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678"
+        ),
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match="formulation_metadata\\.formulation_notes must not contain secret-like text",
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
 
 
 def test_invalid_seed_failure_memory_is_rendered_for_first_mutation_prompt():

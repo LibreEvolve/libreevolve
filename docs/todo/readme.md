@@ -1422,6 +1422,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     imply formal-proof or theorem-proving support from generic evaluator
     validation or Appendix B coverage.
 
+- [ ] Keep README DeepMind-blog wording scoped until official announcement
+      source provenance exists.
+  - Spec evidence: the May 14, 2025 Google DeepMind blog article is an
+    official public AlphaEvolve announcement with scope claims, systems-result
+    summaries, white-paper and Colab links, Early Access/user-interface plans,
+    and blog-specific values or wording such as a `32.5%` FlashAttention
+    speedup and kernel-optimization effort reduced from `weeks` to days.
+  - Current evidence: README can mention the white paper, local paper cache,
+    companion-Colab gaps, Section 3.3 systems gaps, and source-rights/version
+    TODOs. It does not document the official blog URL/date/title, retrieval
+    hash, claim map, outbound source links, blog-only availability statements,
+    acknowledgement/illustration roles, or reconciliation between blog wording
+    and paper wording.
+  - Required result: when official blog-source provenance lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README separates
+    announcement-source evidence from audited white-paper specification and
+    reproduced LibreEvolve evidence, including explicit handling for
+    blog-versus-paper value variants and Early Access/UI availability claims.
+
 - [ ] Keep README paper-index traceability wording scoped until TODO coverage
       cross-references are validated.
   - Spec evidence: `papers/README.md` presents a TODO coverage

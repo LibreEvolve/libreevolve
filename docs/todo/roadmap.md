@@ -537,11 +537,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Keep roadmap code-scale wording scoped to benchmark-backed evidence.
   - Spec evidence: AlphaEvolve Table 1 says AlphaEvolve evolves entire code
     files, hundreds of lines of code, arbitrary languages, and complex
-    algorithms with multiple functions/components.
+    algorithms with multiple functions/components. Local PDF page 2 contains
+    the Table 1 code-length and file/function comparison rows, while pages
+    18-19 discuss entire-codebase evolution.
   - Current evidence: ROADMAP correctly lists current workspace mechanics:
     Python seed workspaces, file topology mutations, materialization
-    diagnostics, and the small `workspace_math` fixture. Those features do not
-    yet prove large multi-component generated-code performance.
+    diagnostics, and the small `workspace_math` fixture. Scope records mark
+    shipped examples, including `workspace_math`, as smoke fixtures with
+    `alphaevolve_comparable: False`. Those features do not yet prove large
+    multi-component generated-code performance, arbitrary-language execution,
+    or build-runner parity.
   - Required result: when large-codebase benchmarks or reports land, update
     roadmap, README, papers index, and code/paper TODO entries together so the
     roadmap separates current workspace mechanics from AlphaEvolve Table 1

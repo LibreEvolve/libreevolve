@@ -469,16 +469,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       Table 1 parity.
   - Spec evidence: AlphaEvolve Table 1 claims evolution of entire code files,
     hundreds of lines of code, any language, and complex algorithms spanning
-    multiple functions and components.
+    multiple functions and components. The local PDF places those code-scale
+    comparison rows on page 2 and later discusses entire-codebase evolution on
+    pages 18-19.
   - Current evidence: README can accurately describe Python-primary seed
     workspaces, multi-file candidates, topology mutations, materialization
     diagnostics, and `best_workspace/` export. It should not imply those
-    mechanics prove AlphaEvolve-scale large-codebase behavior.
+    mechanics prove AlphaEvolve-scale large-codebase behavior. Current
+    machine-readable example scope records mark `workspace_math` as a smoke
+    `workspace_packaging_fixture` and not AlphaEvolve-comparable.
   - Required result: when a codebase-scale benchmark/report lands, update
     README, ROADMAP, papers index, and code/paper TODO entries with the
     generated-line/component counts, cross-file dependency edit evidence,
-    evaluator budget, and quality-progress results that justify any
-    AlphaEvolve Table 1 code-scale comparison.
+    evaluator budget, quality-progress results, and language/build-runner
+    scope that justify any AlphaEvolve Table 1 code-scale comparison.
 
 - [ ] Keep README Table 1 wording scoped until capability-table exhibit
       provenance exists.

@@ -736,10 +736,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.
   - Requirement: AlphaEvolve reports evolving entire code files, hundreds of
     lines of code, any language, and complex algorithms spanning multiple
-    functions and components.
+    functions and components. Local PDF page 2 contains the Table 1 code-scale
+    rows; pages 18-19 discuss entire-codebase evolution.
   - Partial status: LibreEvolve has Python-primary workspaces, multi-file seed
     loading, file-topology mutations, materialization diagnostics, full-workspace
-    prompt/export paths, and a small multi-file smoke fixture.
+    prompt/export paths, and a small multi-file smoke fixture. The example
+    scope registry marks `workspace_math` as `alphaevolve_comparable: False`
+    with current role `workspace_packaging_fixture`, so it is evidence for
+    mechanics rather than Table 1-scale performance.
   - Current gap: there is no paper-facing benchmark or report that demonstrates
     hundreds-line generated programs, coupled multi-component edits, non-Python
     or build-runner execution, realistic codebase dependency edits, evaluator

@@ -215,20 +215,33 @@ Primary evidence:
     solutions and search algorithms. The paper explicitly notes that these
     abstraction choices introduce biases, such as constructor functions
     favoring highly symmetric solutions while customized search algorithms may
-    suit non-symmetric solutions.
+    suit non-symmetric solutions. In the local PDF, page 5 describes
+    "Flexibility in choosing the abstraction" and says different abstraction
+    levels work better for different problems; page 21 repeats that direct
+    search, constructor functions, or search algorithms come with different
+    biases.
   - Current evidence: LibreEvolve documents its current code-file-set
     candidate boundary and records unsupported problem-defined candidate
-    abstraction hooks through `libreevolve.candidate_language_policy.v1`. It
-    does not define an experiment/report schema that records which abstraction
-    was selected for a benchmark, why that abstraction matches the problem's
-    symmetry or search structure, or how alternative abstractions performed
-    under comparable budgets.
+    abstraction hooks through `libreevolve.candidate_language_policy.v1`.
+    `_candidate_language_policy()` declares
+    `python_primary_text_workspace_v1`,
+    `bounded_utf8_text_workspace_with_typed_static_members`, primary language
+    `python`, validator runner `python_subprocess_entrypoint`, and
+    `problem_defined_solution_abstractions: unsupported`; its remaining gaps
+    include `problem_defined_candidate_abstraction_hooks`.
+    `tests/population/test_database.py` asserts that manifest policy and
+    confirms `validate_candidate_language_policy()` returns
+    `language_runner_ready: False`. This documents a fixed local candidate
+    representation, but it does not define an experiment/report schema that
+    records which abstraction was selected for a benchmark, why that abstraction
+    matches the problem's symmetry or search structure, or how alternative
+    abstractions performed under comparable budgets.
   - Required result: add problem/run metadata for candidate abstraction choice,
     abstraction rationale, symmetry/structure assumptions, serializer/runner
-    linkage, paired solution/search representations when supported, and
-    benchmark reports comparing direct-solution, constructor, and
-    search-algorithm approaches before claiming AlphaEvolve-style abstraction
-    selection fidelity.
+    linkage, unsupported-abstraction diagnostics, paired solution/search
+    representations when supported, and benchmark reports comparing
+    direct-solution, constructor, and search-algorithm approaches under equal
+    budgets before claiming AlphaEvolve-style abstraction selection fidelity.
 
 - [ ] Add structured initial-program idea provenance for benchmark seeds.
   - Spec evidence: AlphaEvolve Section 2.1 says the human provides the initial

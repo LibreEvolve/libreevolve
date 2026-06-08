@@ -290,17 +290,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     abstraction as a problem-dependent experimental choice with known biases:
     direct solution search, constructor functions, bespoke search algorithms,
     or paired intermediate solution/search representations can suit different
-    problem structures.
+    problem structures. In the local PDF, page 5 names "Flexibility in choosing
+    the abstraction" and page 21 states that direct search, constructors, and
+    search algorithms bring different biases.
   - Current evidence: `ROADMAP.md` asks for problem-defined candidate
     abstraction hooks and README identifies the current code-file-set
-    abstraction boundary, but roadmap wording does not yet require benchmark
-    metadata or reports that justify the chosen abstraction or compare
-    alternative formulations under equal budgets.
+    abstraction boundary. Current manifests also record
+    `policies.candidate_language` as `python_primary_text_workspace_v1`,
+    `bounded_utf8_text_workspace_with_typed_static_members`,
+    `language_runner_ready: False`, and
+    `problem_defined_solution_abstractions: unsupported`. Roadmap wording does
+    not yet require benchmark metadata or reports that justify the chosen
+    abstraction, mark unsupported alternatives, or compare alternative
+    formulations under equal budgets.
   - Required result: when abstraction-choice metadata, rationale fields,
-    symmetry/structure labels, paired solution/search support, or
-    equal-budget abstraction-comparison reports land, update ROADMAP, README,
-    papers index, and code/paper TODOs together so roadmap language does not
-    confuse hooks with AlphaEvolve-style abstraction-selection evidence.
+    symmetry/structure labels, unsupported-abstraction diagnostics, paired
+    solution/search support, or equal-budget abstraction-comparison reports
+    land, update ROADMAP, README, papers index, and code/paper TODOs together
+    so roadmap language does not confuse hooks with AlphaEvolve-style
+    abstraction-selection evidence.
 
 - [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
       adaptive AlphaEvolve-style output contracts.

@@ -244,18 +244,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     different candidate abstractions for the same problem, and those choices
     carry biases: constructor functions can favor highly symmetric solutions,
     while customized search algorithms may work better for non-symmetric
-    solutions.
+    solutions. In the local PDF, page 5 describes flexibility in abstraction
+    choice, and page 21 reiterates that direct search, constructor functions,
+    and evolved search algorithms suit different problems because of different
+    biases.
   - Current evidence: README says LibreEvolve currently uses a deliberate
     code-file-set abstraction with a primary text file and lacks first-class
-    non-code serializers or paired solution/search APIs. It does not describe
-    benchmark metadata that records why one abstraction was selected, whether
-    the problem is symmetric/non-symmetric, or how alternative abstractions
-    performed under comparable budgets.
+    non-code serializers or paired solution/search APIs. The underlying
+    manifest policy records this as `python_primary_text_workspace_v1` with
+    `problem_defined_solution_abstractions: unsupported` and
+    `language_runner_ready: False`. It does not describe benchmark metadata
+    that records why one abstraction was selected, whether the problem is
+    symmetric/non-symmetric, which alternatives were unsupported, or how
+    alternative abstractions performed under comparable budgets.
   - Required result: when abstraction-choice metadata, benchmark rationale,
-    problem-structure labels, paired solution/search APIs, or equal-budget
-    abstraction-comparison reports land, update README, ROADMAP, papers index,
-    and code/paper TODOs so README distinguishes a documented divergence from
-    AlphaEvolve-style abstraction-selection evidence.
+    problem-structure labels, unsupported-abstraction diagnostics, paired
+    solution/search APIs, or equal-budget abstraction-comparison reports land,
+    update README, ROADMAP, papers index, and code/paper TODOs so README
+    distinguishes a documented divergence from AlphaEvolve-style
+    abstraction-selection evidence.
 
 - [ ] Keep README seed-provenance wording scoped to source identity until
       initial-program idea provenance exists.

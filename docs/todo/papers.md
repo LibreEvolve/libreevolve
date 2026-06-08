@@ -407,19 +407,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     bespoke search algorithms, or co-evolved intermediate solution/search
     pairs. The paper says these choices carry different biases, including
     constructor functions being advantageous for highly symmetric solutions and
-    customized search algorithms for non-symmetric solutions.
+    customized search algorithms for non-symmetric solutions. In the local PDF,
+    page 5 describes flexibility in choosing the abstraction and page 21 says
+    direct search, constructor functions, and search algorithms come with
+    different biases.
   - Partial status: the papers index and README state that LibreEvolve's
     current boundary is a Python-primary code-file-set abstraction and that
     flexible non-code or paired solution/search abstractions are unsupported.
+    Current manifests record this through
+    `libreevolve.candidate_language_policy.v1`: `python_primary_text_workspace_v1`,
+    bounded UTF-8 text workspace plus typed static members, primary language
+    `python`, `problem_defined_solution_abstractions: unsupported`, and
+    `language_runner_ready: False`.
   - Current gap: no paper-facing report records abstraction choice, problem
     structure rationale, symmetry assumptions, or equal-budget comparisons
     across direct-solution, constructor-function, and search-algorithm
-    formulations.
+    formulations. It also does not record unsupported alternative abstraction
+    diagnostics as part of a benchmark claim-readiness check.
   - Required result: add benchmark/report metadata for candidate abstraction
     family, rationale, expected problem bias, serializer/runner contract,
-    paired solution/search linkage, and comparable results for alternative
-    abstractions before claiming AlphaEvolve-style abstraction-selection
-    evidence.
+    unsupported alternatives, paired solution/search linkage, and comparable
+    results for alternative abstractions before claiming AlphaEvolve-style
+    abstraction-selection evidence.
 
 - [ ] Track explicit-context source roles for prompt sampling.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 lists explicit

@@ -5403,8 +5403,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     four-game training split plus fourteen-game test split.
   - Current gap: `papers/README.md` lists `2602.16928` only as
     `Background only; no CFR/PSRO benchmark or game-theoretic evaluator`.
-    The active TODO coverage does not yet track a first-class paper/source
-    boundary for CFR/PSRO candidate schemas, imperfect-information game
+    The current implementation and paper index do not yet provide a
+    first-class paper/source boundary for CFR/PSRO candidate schemas,
+    imperfect-information game
     evaluator protocols, train/generalization game splits, baseline solver
     identities, mechanism-coupling ablations, structural complexity, or
     distilled-solver handoff evidence. It also does not preserve paper-facing
@@ -5451,8 +5452,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     constructions and the AI-discovered search algorithms.
   - Current gap: `papers/README.md` lists `2603.09172` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Existing Appendix B and constructive-math gaps cover broad
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Existing Appendix B and constructive-math gaps cover broad
     family/status registries, but not Ramsey-specific graph witness schemas,
     `R(s,t)` lower-bound verifier contracts, exact-bound recovery records,
     matched-best-known result rows, or per-result prior/current attribution
@@ -5503,8 +5505,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Rota section reports Tables 4-6 for circuit-rich `F2` rank-5, rank-7, and
     variable-rank `5,7,9,11,13` benchmarks.
   - Current gap: `papers/README.md` lists `2603.06692` as `Not implemented;
-    potential future benchmark`, and the active TODO coverage does not yet
-    track this paper-specific evidence. Broad constructive-math TODOs do not
+    potential future benchmark`, but the current implementation and paper
+    index do not yet provide local source-boundary artifacts or implementation
+    evidence for this paper. Broad constructive-math TODOs do not
     capture local-correction certificate schemas, graph reconstruction from
     vertex-deleted subgraphs, Latin-square local trade/involution evidence,
     Rota basis-exchange policies, scoring protocols, explicit algorithm
@@ -5557,8 +5560,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact integer GFT computation.
   - Current gap: `papers/README.md` lists `2603.08679` as background-only
     mechanism-design context with no bilateral-trade distribution benchmark,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Broad benchmark gaps do not capture value-distribution witness
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Broad benchmark gaps do not capture value-distribution witness
     schemas, FB/RO GFT calculations, economic mechanism assumptions, ratio
     tolerance, or lower-bound baseline attribution. They also omit the fixed
     Discrete Equal Revenue buyer fixture, evolved seller-generator code
@@ -5601,8 +5605,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     incorporation.
   - Current gap: `papers/README.md` lists `2601.21096` as background-only
     compiler-optimization application context with no compiler-heuristic
-    benchmark or compiler pass runner, and the active TODO coverage does not
-    yet track this paper-specific evidence. Broad systems and compiler gaps
+    benchmark or compiler pass runner, but the current implementation and
+    paper index do not yet provide local source-boundary artifacts or
+    implementation evidence for this paper. Broad systems and compiler gaps
     do not capture Magellan's C++ decision-logic candidates, macro-benchmark
     datasets, compiler-pass integration points, binary-size and end-to-end
     performance metrics, register-allocation priority rules, XLA portability
@@ -5644,8 +5649,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     checks for hardware realism.
   - Current gap: `papers/README.md` lists `2602.22425` as background-only
     computer-architecture application context with no architecture-design
-    simulator or cache-policy benchmark, and the active TODO coverage does
-    not yet track this paper-specific evidence. Broad systems gaps do not
+    simulator or cache-policy benchmark, but the current implementation and
+    paper index do not yet provide local source-boundary artifacts or
+    implementation evidence for this paper. Broad systems gaps do not
     capture cache replacement policy schemas, simulator integration,
     workload-trace provenance, single-core/multi-core benchmark splits, IPC
     speedup objectives, SoTA policy baselines, post-silicon specialization
@@ -5695,8 +5701,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Fault2Flow variants.
   - Current gap: `papers/README.md` lists `2511.12916` as background-only
     AlphaEvolve-optimized workflow application context with no fault-to-
-    workflow or human-in-the-loop multi-agent benchmark, and the active TODO
-    coverage does not yet track this paper-specific evidence. Broad
+    workflow or human-in-the-loop multi-agent benchmark, but the current
+    implementation and paper index do not yet provide local source-boundary
+    artifacts or implementation evidence for this paper. Broad
     framework/plugin gaps do not capture regulatory-source provenance, PASTA
     fault-tree schemas, expert verification states, reasoning-logic
     optimization records, n8n workflow artifacts, transformer fault-diagnosis
@@ -5749,8 +5756,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `512` rollouts per step, LoRA rank `32`, Tinker context window `32768`,
     prompt-plus-thinking limit `26000`, Adam `4e-5`, and `gamma = ln(2)`.
   - Current gap: `papers/README.md` lists `2601.16175` as background-only
-    test-time discovery context, and the active TODO coverage does not yet
-    track this paper-specific evidence. Existing AlphaEvolve and framework
+    test-time discovery context, but the current implementation and paper
+    index do not yet provide local source-boundary artifacts or implementation
+    evidence for this paper. Existing AlphaEvolve and framework
     gaps do not capture mutable model-policy state, RL-at-test-time training
     records, Tinker run provenance, open-model checkpoint identity, continuous-
     reward task definitions, cross-domain benchmark rows, expert/organizer
@@ -5799,8 +5807,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `D_m = [x_m, y_m]` hypercube of rank `m * 2^(m-1)`.
   - Current gap: `papers/README.md` lists `2601.01235` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Broad Appendix B and constructive-math gaps do not capture
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Broad Appendix B and constructive-math gaps do not capture
     permutation generator schemas, Bruhat interval verification, hypercube
     isomorphism checks, dyadic well-distribution predicates, `S_n` power-of-
     two benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-algebra
@@ -5851,8 +5860,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     with rotation, half-space coefficients, and Farkas multipliers.
   - Current gap: `papers/README.md` lists `2601.05943` as an optimization
     benchmark comparator with no nonlinear-programming solver comparison
-    harness, and the active TODO coverage does not yet track this paper-
-    specific evidence. Broad constructive-math and benchmark gaps do not
+    harness, but the current implementation and paper index do not yet
+    provide local source-boundary artifacts or implementation evidence for
+    this paper. Broad constructive-math and benchmark gaps do not
     capture direct NLP formulation artifacts, solver identity/license
     provenance, solver-run parameters, incumbent/bound/certificate records,
     numerical tolerances, or result tables comparing Xpress/SCIP outcomes
@@ -5899,8 +5909,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     the direct finite checker for any coefficient list.
   - Current gap: `papers/README.md` lists `2506.16750` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Existing Appendix B.1-B.3 autoconvolution gaps cover the
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Existing Appendix B.1-B.3 autoconvolution gaps cover the
     AlphaEvolve result family, but not this later 575-interval witness,
     non-LLM search provenance, objective recomputation, side-by-side
     AlphaEvolve baseline comparison, or rounded-value/tolerance policy. They
@@ -5950,8 +5961,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `https://bit.ly/43mWCVC`.
   - Current gap: `papers/README.md` lists `2505.16105` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Existing Appendix B sums-and-differences gaps do not capture
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Existing Appendix B sums-and-differences gaps do not capture
     this later explicit `U` construction, compressed representation needs for
     extremely large sets, `W(m, L, B)` formula evidence, base-`2B + 1`
     injectivity evidence, the `(80, 64, 5)` small-search result, exact
@@ -5996,8 +6008,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     and a Legendre-transform objective for `I(c, B)`.
   - Current gap: `papers/README.md` lists `2506.01896` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
-    and the active TODO coverage does not yet track this paper-specific
-    evidence. Existing sums-and-differences TODOs do not capture this
+    but the current implementation and paper index do not yet provide local
+    source-boundary artifacts or implementation evidence for this paper.
+    Existing sums-and-differences TODOs do not capture this
     sequence-of-sets construction, limiting lower-bound proof artifact,
     large-deviation lemma evidence, MATLAB-code provenance, tolerance-sweep
     reproducibility, convergence/tail-bound verification, or lineage

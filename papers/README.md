@@ -804,15 +804,6 @@ Implemented:
   or compiler kernel/pre/postprocessing speedups with explicit units,
   denominators, baselines, aggregation windows, and runtime/deployment/
   synthesis context.
-- Self-improvement/distillation evidence: not implemented. AlphaEvolve's
-  Discussion describes practical discoveries that can improve its own
-  infrastructure and future base LLMs, plus possible distillation of
-  AlphaEvolve-augmented performance into next-generation base models.
-  LibreEvolve currently has no report linking an evolved candidate to measured
-  improvements in LibreEvolve's own runtime/provider/evaluator/compiler/
-  benchmark infrastructure, no deployment/adoption or rollback/safety-review
-  evidence for such a change, and no distillation dataset, training run, or
-  model-evaluation artifact derived from evolved programs.
 - `libreevolve/problems/benchmarks/benchmark_hardening.py`: anti-gaming
   hardening report contract. It validates protected benchmark signals,
   shortcut threats, protected-signal links for each shortcut threat, detector
@@ -863,3 +854,12 @@ Planned or background-only:
 - Compiler, hardware, systems, kernel, and scheduling-style AlphaEvolve targets
   are not yet represented; they need safer local fixtures before they should be
   advertised as supported.
+- Self-improvement/distillation evidence is not implemented. AlphaEvolve's
+  Discussion describes practical discoveries that can improve its own
+  infrastructure and future base LLMs, plus possible distillation of
+  AlphaEvolve-augmented performance into next-generation base models.
+  LibreEvolve currently has no report linking an evolved candidate to measured
+  improvements in LibreEvolve's own runtime/provider/evaluator/compiler/
+  benchmark infrastructure, no deployment/adoption or rollback/safety-review
+  evidence for such a change, and no distillation dataset, training run, or
+  model-evaluation artifact derived from evolved programs.

@@ -50,6 +50,7 @@ TODO_COVERAGE_PATH_RE = re.compile(r"`(docs/todo/(?:Completed/)?[A-Za-z0-9_.-]+\
 COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
 ACTIVE_TODO_GAP_CONTEXT_RE = re.compile(r"(?m)^  - (?:Current gap|Remaining gap|Current evidence):")
 ACTIVE_TODO_REQUIRED_RESULT_RE = re.compile(r"(?m)^  - Required result:")
+BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE = re.compile(r"\bnot implemented\b", flags=re.IGNORECASE)
 SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
     r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
     flags=re.IGNORECASE,
@@ -419,6 +420,7 @@ def validate_paper_manifest(
     manifest_rows_by_id = {str(row.get("id")): row for row in json_rows if row.get("id")}
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
+    issues.extend(_validate_benchmark_coverage_decisions(root_path))
 
     return PaperManifestReport(
         ok=not issues,
@@ -1309,8 +1311,45 @@ def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[P
     return issues
 
 
+def _validate_benchmark_coverage_decisions(root: Path) -> list[PaperManifestIssue]:
+    path = root / "papers" / "README.md"
+    if not path.exists():
+        return []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "benchmark_coverage_unreadable",
+                _manifest_diagnostic(path, root, exc),
+            )
+        ]
+    section = _markdown_section(text, "## Benchmark coverage decisions")
+    if section is None or "Implemented:" not in section:
+        return []
+    implemented_text = section.split("Implemented:", 1)[1].split("\nPlanned or background-only:", 1)[0]
+    issues: list[PaperManifestIssue] = []
+    for block in _markdown_bullet_blocks(implemented_text):
+        if not BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(block):
+            continue
+        summary = block.splitlines()[0].strip()
+        issues.append(
+            PaperManifestIssue(
+                "benchmark_implemented_not_implemented_contradiction",
+                f"Implemented benchmark coverage bullet is phrased as not implemented: {summary}",
+            )
+        )
+    return issues
+
+
 def _open_todo_blocks(text: str) -> list[str]:
     starts = [match.start() for match in re.finditer(r"(?m)^- \[ \] ", text)]
+    starts.append(len(text))
+    return [text[start:end] for start, end in zip(starts, starts[1:])]
+
+
+def _markdown_bullet_blocks(text: str) -> list[str]:
+    starts = [match.start() for match in re.finditer(r"(?m)^- ", text)]
     starts.append(len(text))
     return [text[start:end] for start, end in zip(starts, starts[1:])]
 

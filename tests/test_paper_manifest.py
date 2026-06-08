@@ -1627,6 +1627,48 @@ def test_validate_paper_manifest_reports_stale_source_specific_absence_wording(t
     assert "docs/todo/readme.md" in issues[0].message
 
 
+def test_validate_paper_manifest_reports_not_implemented_benchmark_under_implemented(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- Self-improvement evidence: not implemented.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Future systems fixtures are not implemented.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "benchmark_implemented_not_implemented_contradiction" in codes
+
+
+def test_validate_paper_manifest_allows_scoped_not_yet_benchmark_under_implemented(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- Matrix report contract: implemented locally, but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_checked_in_paper_index_maps_each_manifest_id_to_todo_coverage():
     manifest_rows = json.loads(Path("papers/download_manifest.json").read_text(encoding="utf-8"))
     readme = Path("papers/README.md").read_text(encoding="utf-8")

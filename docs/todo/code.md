@@ -6263,17 +6263,32 @@ Primary evidence:
 
 - [ ] Add further post-AlphaEvolve sums-and-differences sequence boundary.
   - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a
-    further improvement over AlphaEvolve`, was submitted June 2, 2025. Its
-    abstract says it improves on both DeepMind AlphaEvolve's
-    `theta = 1.1584` result and the subsequent explicit-construction result
-    `theta = 1.173050`. It constructs a sequence of `U` sets whose limit
-    establishes a new lower bound `theta = 1.173077`.
+    further improvement over AlphaEvolve`, by Fan Zheng was submitted
+    June 2, 2025 as arXiv v1; the cached PDF hash is
+    `3f04c75ccd850eb6e5c785e543f98d12446e9891399cc5246acae9335b4494c2`.
+    Its abstract says it improves on both DeepMind AlphaEvolve's
+    `theta = 1.1584` result and the subsequent `2505.16105`
+    explicit-construction result `theta = 1.173050`. It constructs a sequence
+    of `U` sets whose limit establishes a new lower bound `theta = 1.173077`.
+    The proof extends `W(m, L, B)` bounded-coordinate sets to the asymptotic
+    regime `L = floor(rm)`, uses large-deviation estimates for
+    `log |W(m, floor(rm), B)| / m`, bounds `q(U) <= (2B + 1)^m`, combines
+    lower bounds on `d(U)` with upper bounds on `s(U)`, and maximizes an
+    asymptotic expression over `B`, `r`, and `a`. The paper reports a
+    restricted MATLAB 2024b computation over `B = 3..10`, `r in (0.5, 2)`,
+    and `a in (0, min(1, 1/r))`; the winning row is `B = 5` with
+    `theta - 1 = 0.173077279785136` at tolerances `1e-8` and `1e-10`. The
+    embedded MATLAB code uses `fminbnd`, `fminunc`, `logW`, `logD`, and a
+    Legendre-transform helper for `I(c, B)`.
   - Current evidence: `papers/README.md` lists `2506.01896` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
     TODOs and a source-specific TODO for `2505.16105`, but no first-class code
     TODO for this further source, no sequence-of-sets construction schema, no
-    limiting argument artifact, no convergence/tail-bound verifier, no
+    limiting argument artifact, no large-deviation lemma checker, no
+    asymptotic `W(m, floor(rm), B)` counting metadata, no MATLAB-code
+    extraction/reimplementation harness, no tolerance-sweep regression for
+    `B = 3..10`, no convergence/tail-bound verifier, no
     `theta = 1.173077` recomputation report, no side-by-side lineage from
     AlphaEvolve `1.1584` through `2505.16105` `1.173050`, and no artifact
     policy that distinguishes finite explicit `U` witnesses from asymptotic
@@ -6282,13 +6297,19 @@ Primary evidence:
     for `2506.01896`: arXiv id/version/date/PDF hash, author, source license,
     code/artifact availability, relation to AlphaEvolve Appendix B and
     LibreEvolve sums-and-differences fixtures, sequence-of-`U` construction
-    schema, per-sequence parameter records, finite-prefix witness artifacts,
-    limiting lower-bound derivation metadata, convergence/tail-bound checks,
-    sumset/difference-set cardinality records, `theta` formula and tolerance
-    policy, AlphaEvolve `1.1584` baseline, `2505.16105` `1.173050` baseline,
-    prior/current comparison rows, independent checker outputs, and README/
-    ROADMAP wording that keeps this further sums-and-differences improvement
-    as missing evidence until local sequence artifacts and reports exist.
+    schema, per-sequence parameter records for `B`, `r`, `a`, and `m`,
+    finite-prefix witness artifacts, limiting lower-bound derivation metadata,
+    large-deviation `I(c, B)` implementation records, asymptotic
+    `W(m, floor(rm), B)` checker outputs, `q/s/d` bound derivation records,
+    MATLAB-code provenance plus an independent Python or exact-arithmetic
+    reimplementation, tolerance-sweep rows for `B = 3..10` and
+    `1e-4..1e-10`, convergence/tail-bound checks, sumset/difference-set
+    cardinality records where finite prefixes are used, `theta` formula and
+    tolerance policy, AlphaEvolve `1.1584` baseline, `2505.16105`
+    `1.173050` baseline, prior/current comparison rows, independent checker
+    outputs, and README/ROADMAP wording that keeps this further
+    sums-and-differences improvement as missing evidence until local sequence
+    artifacts and reports exist.
 
 - [ ] Add UCB1 finite-time bandit source boundary before scheduler claims
       become regret claims.

@@ -4663,20 +4663,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     The abstract says it improves on both AlphaEvolve's `theta = 1.1584` and
     the subsequent explicit-construction result `theta = 1.173050`, by
     constructing a sequence of `U` sets whose limit establishes
-    `theta = 1.173077`.
+    `theta = 1.173077`. The Fan Zheng paper uses large-deviation estimates
+    for `W(m, floor(rm), B)`, the base-`2B + 1` bounded-coordinate integer
+    construction, asymptotic bounds on `q(U)`, `s(U)`, and `d(U)`, and a
+    MATLAB 2024b tolerance sweep. It reports the restricted optimization over
+    `B = 3..10`, `r in (0.5, 2)`, and `a in (0, min(1, 1/r))`, with the best
+    row at `B = 5` and `theta - 1 = 0.173077279785136` for `1e-8` and
+    `1e-10` tolerances.
   - Current evidence: ROADMAP tracks AlphaEvolve Appendix B sums-and-
     differences gaps and now the `2505.16105` explicit-construction boundary,
     but it does not promote `2506.01896` beyond potential-future-benchmark
     status. It does not define a sequence-of-sets construction gate, finite-
     prefix artifact schema, limiting-bound derivation record, convergence/
-    tail-bound checker, lineage comparison from AlphaEvolve to `2505.16105`
-    to `2506.01896`, or documentation rule that separates finite witness
-    verification from asymptotic sequence evidence.
+    tail-bound checker, large-deviation proof-object gate, MATLAB-code
+    extraction/reimplementation gate, tolerance-sweep reproducibility gate,
+    lineage comparison from AlphaEvolve to `2505.16105` to `2506.01896`, or
+    documentation rule that separates finite witness verification from
+    asymptotic sequence evidence.
   - Required result: add roadmap gates for `2506.01896`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     sequence-of-`U` construction schema, per-parameter and finite-prefix
     artifacts, limiting lower-bound derivation metadata, convergence/tail-
-    bound checker records, sumset/difference-set cardinality records,
+    bound checker records, large-deviation `I(c, B)` records, asymptotic
+    `W(m, floor(rm), B)` count metadata, MATLAB 2024b code provenance,
+    independent reimplementation outputs, tolerance-sweep rows for
+    `B = 3..10` and `1e-4..1e-10`, sumset/difference-set cardinality records,
     `theta` formula and tolerance policy, AlphaEvolve `1.1584` baseline,
     `2505.16105` `1.173050` baseline, prior/current result rows, independent
     checker outputs, and a background-only or benchmark-fixture status rule

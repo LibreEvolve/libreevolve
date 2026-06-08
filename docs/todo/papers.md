@@ -5791,26 +5791,42 @@ directory and using the AlphaEvolve paper as the primary specification.
       evidence.
   - Paper/source evidence: arXiv `2506.01896`, submitted June 2, 2025, is
     titled `Sums and differences of sets: a further improvement over
-    AlphaEvolve`. Its abstract says it improves on DeepMind AlphaEvolve's
+    AlphaEvolve` and authored by Fan Zheng; the cached PDF hash is
+    `3f04c75ccd850eb6e5c785e543f98d12446e9891399cc5246acae9335b4494c2`.
+    Its abstract says it improves on DeepMind AlphaEvolve's
     `theta = 1.1584` and the later explicit-construction result
     `theta = 1.173050`, by constructing a sequence of `U` sets that in the
-    limit establishes `theta = 1.173077`.
+    limit establishes `theta = 1.173077`. The proof uses large-deviation
+    estimates for `W(m, floor(rm), B)`, builds the same base-`2B + 1`
+    integer-image construction as the prior sums-and-differences paper,
+    bounds `q(U)`, `s(U)`, and `d(U)` asymptotically, and maximizes a limiting
+    expression over `B`, `r`, and `a`. The numerical evidence is a MATLAB
+    2024b tolerance sweep over `B = 3..10`, `r in (0.5, 2)`, and
+    `a in (0, min(1, 1/r))`; the best row is `B = 5`, where
+    `theta - 1 = 0.173077279785136` for both `1e-8` and `1e-10` tolerances.
+    The paper embeds MATLAB code using `fminbnd`, `fminunc`, `logD`, `logW`,
+    and a Legendre-transform objective for `I(c, B)`.
   - Current gap: `papers/README.md` lists `2506.01896` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
     and the active TODO coverage does not yet track this paper-specific
     evidence. Existing sums-and-differences TODOs do not capture this
     sequence-of-sets construction, limiting lower-bound proof artifact,
-    convergence/tail-bound verification, or lineage comparison against both
-    AlphaEvolve's `1.1584` finite witness and `2505.16105`'s `1.173050`
-    explicit huge-set witness.
+    large-deviation lemma evidence, MATLAB-code provenance, tolerance-sweep
+    reproducibility, convergence/tail-bound verification, or lineage
+    comparison against both AlphaEvolve's `1.1584` finite witness and
+    `2505.16105`'s `1.173050` explicit huge-set witness.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2506.01896`: title/author/arXiv version/date/PDF digest, source license,
     code/artifact URL/status, relation to AlphaEvolve Appendix B and
     LibreEvolve sums-and-differences assumptions, sequence-of-`U` construction
-    schema, parameter records, finite-prefix artifacts, limiting-bound
-    derivation metadata, convergence/tail-bound checker records,
-    sumset/difference-set cardinality records, `theta` formula and tolerance
-    policy, AlphaEvolve `1.1584` baseline, `2505.16105` `1.173050` baseline,
+    schema, parameter records for `B`, `r`, `a`, and finite-prefix `m`,
+    finite-prefix artifacts, limiting-bound derivation metadata,
+    large-deviation `I(c, B)` records, asymptotic `W(m, floor(rm), B)` count
+    metadata, MATLAB-code extraction and independent reimplementation status,
+    tolerance-sweep rows for `B = 3..10` and `1e-4..1e-10`,
+    convergence/tail-bound checker records, sumset/difference-set cardinality
+    records for finite prefixes, `theta` formula and tolerance policy,
+    AlphaEvolve `1.1584` baseline, `2505.16105` `1.173050` baseline,
     prior/current result rows, independent checker outputs, reproducibility
     status, and README/ROADMAP wording that treats this further
     post-AlphaEvolve sums-and-differences improvement as missing paper

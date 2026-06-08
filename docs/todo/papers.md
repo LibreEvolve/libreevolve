@@ -862,16 +862,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     scripts, component-assertion bindings, target-family coverage,
     per-target aggregation, and three-seed traces. They do not preserve the
     Figure 8 visual as its own paper exhibit with stable exhibit/panel IDs,
-    series-to-variant legend mapping, axis labels/scales, color/style/shading
-    metadata, source PDF page/caption location, rendered plot artifacts and
-    hashes, or links from each plotted curve to exact report rows, raw seed
-    traces, and aggregation records.
+    series-to-variant legend mapping, exact paper legend labels,
+    axis labels/scales, color/style/shading metadata, source PDF page/caption
+    location, rendered plot artifacts and hashes, or links from each plotted
+    curve to exact report rows, raw seed traces, and aggregation records. The
+    current ablation registry uses `paper_label: "Full"` for the baseline, but
+    Figure 8's legend labels that curve `Full method`, so the registry is not
+    yet exact legend-label provenance.
   - Required result: add Figure 8 exhibit records and validation: exhibit and
-    panel IDs, matrix/kissing target-family mapping, curve/legend definitions,
-    budget-fraction axis metadata, target-metric aggregation and std-band source
-    records, rendering parameters, rendered visual artifact hashes, and docs
-    wording that separates reproduced Figure 8 visual evidence from generic
-    ablation-report validation.
+    panel IDs, matrix/kissing target-family mapping, exact paper legend labels
+    including `Full method`, curve/legend definitions, budget-fraction axis
+    metadata, target-metric aggregation and std-band source records, rendering
+    parameters, rendered visual artifact hashes, and docs wording that separates
+    reproduced Figure 8 visual evidence from generic ablation-report validation.
 
 - [ ] Connect LLM budget reports to async/pending-work resume and
   provider-output replay.

@@ -3780,16 +3780,20 @@ Primary evidence:
     seeds, budget fractions, finite scores, consumed-budget consistency, hashed
     curve artifacts, and separate TODOs require paper target-family coverage and
     curve aggregation. No code/report schema records a Figure 8 exhibit ID,
-    two-panel layout, series-to-variant legend mapping, axis labels/scales,
-    color/style/shading metadata, source PDF/caption location, rendered plot
-    artifact path/hash, or links from the plotted visual to the exact ablation
-    report, raw seed traces, and aggregation records.
+    two-panel layout, series-to-variant legend mapping, exact paper legend
+    labels, axis labels/scales, color/style/shading metadata, source
+    PDF/caption location, rendered plot artifact path/hash, or links from the
+    plotted visual to the exact ablation report, raw seed traces, and
+    aggregation records. The checked-in ablation registry also labels the
+    baseline `paper_label` as `Full`, while the Figure 8 legend says `Full
+    method`, so current registry labels are not exact paper-legend evidence.
   - Required result: add Figure 8-style exhibit metadata and validators with
-    stable exhibit and panel IDs, target-family labels, series/legend mappings,
-    axis and budget-fraction definitions, mean/std-band source records,
-    rendering parameters, visual artifact hashes, and links to ablation reports
-    and raw traces so generated curves can be distinguished from generic
-    equal-budget report artifacts.
+    stable exhibit and panel IDs, target-family labels, exact paper legend
+    labels including `Full method`, series/legend mappings, axis and
+    budget-fraction definitions, mean/std-band source records, rendering
+    parameters, visual artifact hashes, and links to ablation reports and raw
+    traces so generated curves can be distinguished from generic equal-budget
+    report artifacts.
 
 - [ ] Complete live hard provider cancellation and timeout-stop policy.
   - Spec evidence: AlphaEvolve runs long experiments under compute budgets, so

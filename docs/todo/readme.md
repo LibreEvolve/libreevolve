@@ -608,13 +608,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     curve artifacts, and open gaps for executable harnesses, component
     assertions, target-family coverage, and mean/std aggregation. It does not
     document Figure 8 exhibit IDs, panel definitions, series-to-variant legend
-    mappings, axis/scale metadata, color/style/shading parameters, source
-    PDF/caption location, rendered plot artifact hashes, or links from plotted
-    visuals to exact report rows and raw seed traces.
+    mappings, exact paper legend labels, axis/scale metadata,
+    color/style/shading parameters, source PDF/caption location, rendered plot
+    artifact hashes, or links from plotted visuals to exact report rows and raw
+    seed traces. The checked-in ablation registry currently uses
+    `paper_label: "Full"` for the baseline even though Figure 8 labels that
+    curve `Full method`, so README should not treat registry labels as exact
+    paper-legend provenance yet.
   - Required result: when Figure 8 exhibit provenance lands, update README,
     ROADMAP, papers index, and matching TODOs so README distinguishes generic
     ablation-report artifacts from reproduced paper-quality Figure 8 visual
-    evidence.
+    evidence, including exact legend-label provenance such as `Full method`.
 
 - [ ] Keep README matrix-publication wording scoped to one checked Strassen
   baseline versus full Appendix A discovery.

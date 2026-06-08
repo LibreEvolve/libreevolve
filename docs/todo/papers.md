@@ -3647,13 +3647,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     now also name an explicit missing or unsupported paper behavior.
     Implemented, partial, limited, and static-guidance support claims must now
     also cite a local code/artifact path in the implementation-status cell.
+    Implementation-status rows must now also remain one contiguous markdown
+    table before prose notes.
     Remaining paper-facing gap: the validator does not yet prove that every
     named behavior inside each long semantic status claim is linked to the
     specific TODO or completed implementation record that justifies it, nor
     detect broader smoke-scoped examples being phrased as benchmark evidence
     beyond the role/status class matrix, required path presence, active-block
     structure checks, source-specific completed-evidence path checks,
-    status-claim local-artifact anchors, the benchmark-implemented
+    status-claim local-artifact anchors, the status-table contiguity guard, the benchmark-implemented
     contradiction/local-artifact guards, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the implemented-status

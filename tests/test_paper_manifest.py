@@ -1013,6 +1013,30 @@ def test_validate_paper_manifest_reports_duplicate_status_table_rows(tmp_path):
     assert "duplicate_status_table_row" in {issue.code for issue in report.issues}
 
 
+def test_validate_paper_manifest_reports_non_contiguous_status_table_rows(tmp_path):
+    row = _row(tmp_path)
+    row_two = _row(
+        tmp_path,
+        row_id="1504.04909",
+        title="MAP-Elites",
+        file="papers/1504.04909__MAP_Elites.pdf",
+    )
+    _write_manifest(tmp_path, [row, row_two])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    status_readme.write_text(
+        status_readme.read_text(encoding="utf-8")
+        + "\nA prose status note closes the table.\n"
+        + f"| {row_two['id']} | Paper 2 | Primary specification target | {PARTIAL_FIXTURE_STATUS} |\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "status_table_non_contiguous" in {issue.code for issue in report.issues}
+
+
 def test_validate_paper_manifest_reports_status_table_header_mismatch(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

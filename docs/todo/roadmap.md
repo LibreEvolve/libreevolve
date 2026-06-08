@@ -980,13 +980,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     implemented as described:` status classes must now also name an explicit
     missing or unsupported paper behavior. Implemented, partial, limited, and
     static-guidance support claims must now also cite a local code/artifact
-    path in the implementation-status cell. Remaining roadmap gap: the
+    path in the implementation-status cell. Implementation-status rows must
+    now also remain one contiguous markdown table before prose notes. Remaining roadmap gap: the
     validator does not yet prove that every named behavior inside long status
     claims is linked to specific active/completed evidence records at semantic
     phrase level or deeply verify smoke/partial/planned/unsupported qualifiers
     beyond the role/status class matrix, required path presence, active-block
     structure checks, source-specific completed-evidence path checks,
-    status-claim local-artifact anchors, the benchmark-implemented
+    status-claim local-artifact anchors, the status-table contiguity guard, the benchmark-implemented
     contradiction/local-artifact guards, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the implemented-status

@@ -1438,14 +1438,28 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
     ids: list[str] = []
     issues: list[PaperManifestIssue] = []
     seen: set[str] = set()
+    table_closed = False
+    non_contiguous_reported = False
     for line in text.splitlines():
         if line.strip() == "## Implementation status":
             in_section = True
             continue
         if in_section and line.startswith("## "):
             break
-        if not in_section or not line.startswith("|"):
+        if not in_section:
             continue
+        if not line.startswith("|"):
+            if header_seen and ids and line.strip():
+                table_closed = True
+            continue
+        if table_closed and not non_contiguous_reported:
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_non_contiguous",
+                    "implementation status rows must be one contiguous markdown table before prose notes",
+                )
+            )
+            non_contiguous_reported = True
         cells = [cell.strip() for cell in line.strip("|").split("|")]
         if not cells:
             continue

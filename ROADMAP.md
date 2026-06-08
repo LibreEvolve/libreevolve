@@ -28,6 +28,11 @@ LibreEvolve has:
   `runtime.history.embedded_evaluator_entrypoint_report`, summarizing executed
   candidate-owned `evaluate(eval_inputs)` stages, eval-input provenance,
   dependency scope, metric names, and remaining Figure 3 parity gaps
+- AlphaEvolve Figure 1/Figure 2 process-exhibit reports under
+  `runtime.history.alphaevolve_process_exhibit_report`, preserving stable
+  figure IDs, node/edge-to-component mappings, Figure 2 pseudocode-step
+  mappings, artifact cross-links, and explicit gaps for rendered diagram
+  hashes, exact diagram text, and full process parity
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, and explicit claim-readiness
   limitations under `runtime.history.evaluation_cascade_report`

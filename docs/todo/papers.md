@@ -219,8 +219,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     dependency graphs, worker role ownership, throughput-budget linkage,
     pending-work checkpoint state, and claim-readiness checks.
 
-- [ ] Track Figure 1/Figure 2 architecture-process exhibit provenance as paper
-      evidence.
+- [ ] Extend Figure 1/Figure 2 architecture-process exhibit provenance into
+      full paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the
     high-level AlphaEvolve overview from human-defined problem inputs through
     LLMs, prompt sampler, evaluator pool, and program database to an improved
@@ -228,24 +228,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     loop with `database.sample()`, `prompt_sampler.build(...)`,
     `llm.generate(...)`, `apply_diff(...)`, `evaluator.execute(...)`, and
     `database.add(...)`.
-  - Current gap: paper-facing TODOs cover individual behavior gaps for
+  - Partial status: paper-facing TODOs cover individual behavior gaps for
     evaluators, prompt context, LLM scheduling, async throughput, and the
-    program database. Current runtime artifacts can support a partial local
-    mapping because `evolve()` samples parents, builds prompts, calls the LLM,
-    applies workspace mutations, evaluates candidates, admits/logs programs,
-    and writes history, archive, LLM-call, prompt-history, controller-budget,
-    evaluator-artifact, and manifest records. They do not preserve the Figure
-    1/Figure 2 diagrams as paper exhibits with stable figure IDs, node/edge
-    mappings to LibreEvolve components, implemented/unsupported status per
-    node, Figure 2 pseudocode-line mappings, source PDF page and caption
-    locations, rendered diagram/text artifacts and hashes, or links from each
-    displayed controller step to run artifacts and validators.
-  - Required result: add paper-facing Figure 1/Figure 2 process-diagram records
-    and validation: figure IDs, node/edge labels, component mappings,
-    Figure 2 pseudocode-line mappings, implemented/divergent status, source and
-    rendered artifact hashes, links to prompt-history, LLM-call, evaluator,
-    candidate-history, database, and controller-state evidence, plus
-    README/ROADMAP wording that separates local workflow diagrams from
+    program database. Completed manifests now preserve a partial Figure 1/2
+    process-exhibit mapping under
+    `runtime.history.alphaevolve_process_exhibit_report`: stable figure IDs,
+    node/edge mappings to LibreEvolve components, implemented/unsupported
+    status per node, Figure 2 pseudocode-step mappings, source PDF page and
+    caption locations, artifact cross-links, and validation that keeps
+    `claim_ready: false`.
+  - Current gap: paper-facing evidence still lacks rendered diagram/text
+    artifacts and hashes, exact diagram text or accessibility export, async
+    controller/sampler/evaluator topology, independent evaluator-pool
+    parallelism, artifact-level per-step validation, and component-to-TODO
+    links strong enough to treat the local mapping as full reproduced
+    AlphaEvolve architecture evidence.
+  - Required result: add paper-facing rendered/text Figure 1/Figure 2
+    artifacts, exact diagram text/accessibility export, step-level stream
+    validation, topology evidence, component-to-evidence/TODO links, and
+    README/ROADMAP wording that separates local workflow diagrams from full
     reproduced AlphaEvolve architecture evidence.
 
 - [ ] Track unified task-specification provenance separately from per-field
@@ -848,7 +849,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     that separates reproducing the Table 1 comparison artifact from satisfying
     the individual behavioral capability rows.
 
-- [ ] Track Figure 1 and Figure 2 process-overview exhibit provenance as
+- [ ] Extend Figure 1 and Figure 2 process-overview exhibit provenance as
       paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 1 shows the
     high-level AlphaEvolve workflow: human-provided evaluation criteria,
@@ -861,21 +862,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     solutions. Local PDF page 3 contains Figure 1 and its caption; page 4
     contains Figure 2, its caption, and the displayed controller pseudocode
     lines.
-  - Current gap: paper TODOs track Table 1 and Figure 3+ exhibit provenance
-    plus many individual Figure 1/2 component behaviors, but they do not
-    preserve Figures 1 and 2 as their own process exhibits with stable
-    figure IDs, diagram-node labels, edge/process-flow ordering,
-    pseudocode-line mappings, exact diagram/pseudocode text, source/caption
-    locations, rendered diagram artifact hashes, or row/linkage from each
-    displayed process step to implementation status and remaining TODOs.
-    Existing component-level implementation evidence is not a paper-facing
-    exhibit record.
-  - Required result: add paper-facing Figure 1/2 exhibit records with figure
-    and step IDs, exact diagram text, source page/caption locations,
-    pseudocode-line mapping for Figure 2, rendered/text artifact paths and
-    hashes, component-to-evidence/TODO links, and README/ROADMAP wording that
-    separates reproducing the paper process diagrams from implementing each
-    underlying AlphaEvolve workflow capability.
+  - Partial status: paper TODOs track Table 1 and Figure 3+ exhibit provenance
+    plus many individual Figure 1/2 component behaviors. Completed manifests
+    now preserve Figures 1 and 2 as process-exhibit metadata under
+    `runtime.history.alphaevolve_process_exhibit_report`, with stable figure
+    IDs, diagram-node labels, edge/process-flow ordering, Figure 2
+    pseudocode-step mappings, source/caption locations, artifact cross-links,
+    and row/linkage from each displayed process step to implementation status.
+  - Current gap: paper-facing evidence still lacks exact diagram/pseudocode
+    text or accessibility export, rendered diagram artifact hashes,
+    component-to-evidence/TODO links, and artifact-level per-step validation.
+    Existing component-level implementation evidence is still not a complete
+    reproduced paper process exhibit.
+  - Required result: add exact diagram text, rendered/text artifact paths and
+    hashes, component-to-evidence/TODO links, per-stream step validators, and
+    README/ROADMAP wording that separates reproducing the paper process
+    diagrams from implementing each underlying AlphaEvolve workflow capability.
 
 - [ ] Track evaluator workload provenance for inner-search and ML-training
       evaluators.

@@ -161,8 +161,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording can claim full Figure 3 evaluator parity without overstating the
     current opt-in report.
 
-- [ ] Keep Figure 1/Figure 2 roadmap wording scoped until process-diagram
-      provenance exists.
+- [ ] Extend Figure 1/Figure 2 roadmap wording from process mappings to full
+      diagram parity.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level architecture from
     human-defined problem inputs through LLM ensemble, prompt sampler,
     evaluator pool, and program database to an improved solution on local PDF
@@ -180,16 +180,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `single_process_serial_loop` / `terminal_synchronous_controller_drained`
     controller state and event/artifact streams for history, failures,
     archive events, controller budget events, LLM calls, prompt history, and
-    evaluator artifacts. ROADMAP does not require Figure 1/Figure 2 exhibit
-    IDs, node/edge-to-component mappings, implemented versus unsupported status
-    per diagram node, Figure 2 pseudocode-line mappings, source PDF/caption
-    locations, rendered diagram artifacts and hashes, or links from each
-    displayed process step to current run artifacts.
-  - Required result: when Figure 1/Figure 2 architecture/process provenance
-    lands, update ROADMAP, README, papers index, and code/paper TODOs with
-    diagram-level metadata and validators so roadmap wording distinguishes
-    local workflow documentation from reproduced AlphaEvolve process-diagram
-    evidence.
+    evaluator artifacts. ROADMAP now documents
+    `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
+    1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented
+    versus unsupported status per diagram node, Figure 2 pseudocode-step
+    mappings, source PDF/caption locations, artifact cross-links, and explicit
+    remaining process-parity gaps.
+  - Required result: when rendered diagram artifacts and hashes, exact diagram
+    text or accessibility export, async controller/sampler/evaluator topology,
+    independent evaluator-pool parallelism, and artifact-level per-step
+    validation land, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap wording distinguishes local workflow documentation from full
+    reproduced AlphaEvolve process-diagram evidence.
 
 - [ ] Keep evaluator-workload roadmap wording scoped until inner-search and
       ML-training execution contracts exist.
@@ -634,8 +636,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata and validators so roadmap wording separates paper table
     reproduction from satisfying each underlying capability row.
 
-- [ ] Keep Figure 1 and Figure 2 roadmap wording scoped until process-overview
-      exhibit provenance exists.
+- [ ] Extend Figure 1 and Figure 2 roadmap wording beyond the current
+      process-overview exhibit map.
   - Spec evidence: AlphaEvolve Figure 1 gives the process-level system view
     connecting human task inputs, LLM ensemble, prompt sampler, evaluator
     pool, program database, rich context, proposals, and feedback. Figure 2
@@ -645,18 +647,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     pages 3-4 provide the Figure 1/2 captions and Figure 2 displayed
     controller lines.
   - Current evidence: `ROADMAP.md`, README, papers index, and code TODOs track
-    several Figure 1/2 component gaps, but the roadmap does not require Figure
-    1 or Figure 2 to have stable figure IDs, diagram-node and edge records,
-    Figure 2 pseudocode-line mappings, exact diagram text, source PDF/caption
-    locations, rendered artifact hashes, component-to-code/report/TODO links,
-    or validation that partial component coverage and local workflow prose are
-    not summarized as full process-diagram parity.
-  - Required result: when Figure 1/2 process exhibit provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together with
-    figure metadata, step-level status, evidence links, rendered artifact
-    hashes, and validators so roadmap wording separates paper process-diagram
-    reproduction from delivering each underlying AlphaEvolve workflow
-    capability.
+    several Figure 1/2 component gaps. Completed manifests now include
+    `runtime.history.alphaevolve_process_exhibit_report` with stable figure
+    IDs, diagram-node and edge records, Figure 2 pseudocode-step mappings,
+    source PDF/caption locations, artifact cross-links, step-level status, and
+    validation that keeps full process-diagram parity false.
+  - Required result: when exact diagram text or accessibility export, rendered
+    artifact hashes, component-to-code/report/TODO links, stronger topology
+    evidence, and artifact-level per-step validators land, update ROADMAP,
+    README, papers index, and code/paper TODO entries together so roadmap
+    wording separates paper process-diagram reproduction from delivering each
+    underlying AlphaEvolve workflow capability.
 
 - [ ] Keep task-specification roadmap wording scoped to the partial unified
       AlphaEvolve input bundle.

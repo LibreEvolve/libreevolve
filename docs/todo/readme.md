@@ -143,8 +143,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     papers index, and code/paper TODOs together so README can make the stronger
     Figure 3 evaluator claim without overclaiming the current opt-in report.
 
-- [ ] Keep README Figure 1/Figure 2 architecture wording scoped until
-      process-diagram provenance exists.
+- [ ] Extend README Figure 1/Figure 2 architecture wording from process
+      mappings to full diagram parity.
   - Spec evidence: AlphaEvolve Figure 1 shows the high-level "Human defines
     What? / AlphaEvolve figures out How?" overview with LLM ensemble, prompt
     sampler, evaluator pool, and program database on local PDF page 3. Figure
@@ -160,16 +160,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     summaries, with artifacts such as `prompt_history.jsonl`,
     `llm_calls.jsonl`, evaluator metadata, `history.jsonl`,
     `archive_events.jsonl`, `controller_budget_events.jsonl`, and
-    `manifest.json`. Those diagrams and artifacts are useful local
-    documentation, but README does not document Figure 1/Figure 2 exhibit IDs,
-    node/edge-to-component mappings, implemented/divergent node status, Figure
-    2 pseudocode-line mappings, source PDF/caption locations, rendered diagram
-    artifact hashes, or links from each displayed step to prompt-history,
+    `manifest.json`. README now documents
+    `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
+    1/Figure 2 exhibit IDs, node/edge-to-component mappings, implemented/
+    divergent node status, Figure 2 pseudocode-step mappings, source
+    PDF/caption locations, and links from displayed steps to prompt-history,
     LLM-call, evaluator, candidate-history, database, and controller-state
     artifacts.
-  - Required result: when Figure 1/Figure 2 process-diagram provenance lands,
-    update README, ROADMAP, papers index, and matching TODOs so README
-    distinguishes local workflow explanation from reproduced AlphaEvolve
+  - Required result: when rendered diagram artifacts/hashes, exact diagram
+    text or accessibility export, async controller topology, independent
+    evaluator-pool parallelism, and artifact-level step validation land, update
+    README, ROADMAP, papers index, and matching TODOs so README distinguishes
+    local workflow explanation from full reproduced AlphaEvolve
     architecture/process exhibit evidence.
 
 - [ ] Keep README evaluator-workload wording scoped until inner-search and
@@ -523,8 +525,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguish the reproduced capability-comparison table from the separate
     work needed to satisfy each Table 1 capability row.
 
-- [ ] Keep README Figure 1 and Figure 2 process-diagram wording scoped until
-      process-overview exhibit provenance exists.
+- [ ] Extend README Figure 1 and Figure 2 process-diagram wording beyond the
+      current process-overview exhibit map.
   - Spec evidence: AlphaEvolve Figure 1 defines the high-level process among
     human task inputs, the LLM ensemble, prompt sampler, evaluator pool,
     program database, rich context, proposals, and quality feedback. Figure 2
@@ -535,17 +537,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     expanded-process caption.
   - Current evidence: README describes LibreEvolve's loop, ensemble,
     evaluator, database, and diff mechanics, and related TODOs track many of
-    those behaviors separately. It does not document Figure 1/2 exhibit IDs,
-    diagram-node/edge labels, exact diagram/pseudocode text, source
-    page/caption locations, Figure 2 pseudocode-line mappings, rendered
-    artifact hashes, or step-to-code/TODO evidence links. README workflow text
-    should therefore remain local documentation, not a validated reproduction
-    of the paper process diagrams.
-  - Required result: when Figure 1/2 process exhibit provenance lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README can
-    explain which process-diagram steps LibreEvolve implements, which are
-    partial or missing, and why process-diagram reproduction is separate from
-    satisfying each underlying workflow capability.
+    those behaviors separately. It now documents
+    `runtime.history.alphaevolve_process_exhibit_report`, which records Figure
+    1/2 exhibit IDs, diagram-node/edge labels, source page/caption locations,
+    Figure 2 pseudocode-step mappings, artifact cross-links, and
+    `claim_ready: false` process-parity gaps. README workflow text should
+    still remain local documentation, not a validated reproduction of the
+    paper process diagrams.
+  - Required result: when exact diagram/pseudocode text, rendered artifact
+    hashes, component-to-code/TODO evidence links, and artifact-level step
+    validation land, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README can explain which process-diagram steps LibreEvolve
+    implements, which are partial or missing, and why process-diagram
+    reproduction is separate from satisfying each underlying workflow
+    capability.
 
 - [ ] Keep README task-specification wording scoped to the partial unified
       AlphaEvolve input bundle.

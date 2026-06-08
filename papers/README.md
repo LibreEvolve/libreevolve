@@ -316,6 +316,18 @@ advice, objective/evaluator rationale, or parameter-scope decisions. Section
 formulation, so LibreEvolve needs explicit expert-formulation provenance before
 making that class of mathematical benchmark claim.
 
+AlphaEvolve process-exhibit note: completed manifests now include
+`runtime.history.alphaevolve_process_exhibit_report` with schema
+`libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves
+stable Figure 1/Figure 2 IDs, local PDF page/caption locations, process
+node/edge mappings to LibreEvolve components, Figure 2 pseudocode-step
+mappings, and run-artifact cross-links for prompt history, LLM calls,
+candidate history, evaluator artifacts, archive events, controller-budget
+events, and best exports. It remains `claim_ready: false` because rendered
+diagram artifacts and hashes, exact diagram text/accessibility export,
+async controller/sampler/evaluator topology, independent evaluator-pool
+parallelism, and artifact-level step validation remain open.
+
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores
 non-scalar evaluator attachments separately, while AlphaEvolve Section 2.1 and

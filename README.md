@@ -1276,6 +1276,14 @@ controller event stream against the manifest artifact record and disk file,
 including safe relative path checks, file existence, SHA-256, byte count,
 strict JSONL event count, last sequence/kind, per-record status, and a stable
 records hash. This is not a mid-generation or async worker queue checkpoint.
+Completed manifests also include
+`runtime.history.alphaevolve_process_exhibit_report`, which maps AlphaEvolve
+Figure 1/Figure 2 process nodes, edges, and Figure 2 displayed controller
+steps to LibreEvolve components and run-artifact paths. The report records
+source PDF page/caption locations, current single-process controller scope,
+artifact cross-links, and `claim_ready: false` limitations for rendered
+diagram hashes, exact diagram text, async controller topology, independent
+evaluator-pool parallelism, and artifact-level step validation.
 Accepted archive admissions prevalidate their strict history record before
 mutating the live MAP-Elites/island archive, and direct admission thresholds
 must be finite non-boolean numbers. Direct `ProgramDatabase.add()`/`admit()`

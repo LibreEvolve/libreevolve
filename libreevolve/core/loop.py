@@ -5116,6 +5116,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "paper_metric_table_export": _paper_metric_table_export_report(
             paper_metric_contract
         ),
+        "alphaevolve_process_exhibit_report": (
+            _alphaevolve_process_exhibit_report(run_dir, programs)
+        ),
         "evaluator_oracle_registry": _evaluator_oracle_registry_report(
             db,
             programs,
@@ -5142,6 +5145,496 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _alphaevolve_process_exhibit_report(run_dir: Path, programs: list[Program]) -> dict:
+    artifacts = _process_exhibit_artifact_evidence(run_dir)
+    artifact_paths = [artifact["path"] for artifact in artifacts]
+    figure_1_nodes = [
+        _process_node(
+            "fig1.human_problem_inputs",
+            "human-defined problem inputs",
+            "Problem, Config, task_specification",
+            "partial",
+            ["manifest.json"],
+        ),
+        _process_node(
+            "fig1.llm_ensemble",
+            "LLM ensemble",
+            "LLMEnsemble, build_llm, backend routing",
+            "implemented_sync",
+            ["llm_calls.jsonl", "manifest.json"],
+        ),
+        _process_node(
+            "fig1.prompt_sampler",
+            "prompt sampler",
+            "PromptSampler.build",
+            "implemented_sync",
+            ["prompt_history.jsonl"],
+        ),
+        _process_node(
+            "fig1.evaluator_pool",
+            "evaluator pool",
+            "CascadeEvaluator and local subprocess validators",
+            "partial",
+            ["history.jsonl", "evaluator_artifacts"],
+        ),
+        _process_node(
+            "fig1.program_database",
+            "program database",
+            "ProgramDatabase, MAP-Elites archives, history streams",
+            "implemented_sync",
+            ["history.jsonl", "archive_events.jsonl"],
+        ),
+        _process_node(
+            "fig1.improved_solution",
+            "improved solution",
+            "best.py and best_workspace exports",
+            "partial",
+            ["best.py", "best_workspace"],
+        ),
+    ]
+    figure_1_edges = [
+        _process_edge("fig1.human_problem_inputs", "fig1.llm_ensemble", "configured_problem_context"),
+        _process_edge("fig1.human_problem_inputs", "fig1.evaluator_pool", "configured_evaluation_contract"),
+        _process_edge("fig1.program_database", "fig1.prompt_sampler", "parent_and_inspiration_selection"),
+        _process_edge("fig1.prompt_sampler", "fig1.llm_ensemble", "rendered_prompt"),
+        _process_edge("fig1.llm_ensemble", "fig1.evaluator_pool", "proposed_candidate"),
+        _process_edge("fig1.evaluator_pool", "fig1.program_database", "scores_feedback_and_admission"),
+        _process_edge("fig1.program_database", "fig1.improved_solution", "best_valid_export"),
+    ]
+    figure_2_steps = [
+        _process_step(
+            "fig2.step_1_sample",
+            "database.sample()",
+            "ProgramDatabase.sample, sample_diverse, prompt-program selection",
+            "implemented_sync",
+            ["history.jsonl", "prompt_history.jsonl"],
+        ),
+        _process_step(
+            "fig2.step_2_build_prompt",
+            "prompt_sampler.build(...)",
+            "PromptSampler.build",
+            "implemented_sync",
+            ["prompt_history.jsonl"],
+        ),
+        _process_step(
+            "fig2.step_3_generate",
+            "llm.generate(...)",
+            "_generate_with_budget and LLMEnsemble.generate",
+            "implemented_sync",
+            ["llm_calls.jsonl", "controller_budget_events.jsonl"],
+        ),
+        _process_step(
+            "fig2.step_4_apply_diff",
+            "apply_diff(...)",
+            "apply_workspace_mutation",
+            "implemented_sync",
+            ["history.jsonl", "failure_history.jsonl"],
+        ),
+        _process_step(
+            "fig2.step_5_execute_evaluator",
+            "evaluator.execute(...)",
+            "CascadeEvaluator.evaluate",
+            "partial",
+            ["history.jsonl", "evaluator_artifacts"],
+        ),
+        _process_step(
+            "fig2.step_6_add_database",
+            "database.add(...)",
+            "ProgramDatabase.admit and ProgramDatabase.log",
+            "implemented_sync",
+            ["history.jsonl", "archive_events.jsonl"],
+        ),
+    ]
+    figure_2_nodes = [
+        _process_node(
+            "fig2.initial_program",
+            "initial program",
+            "problem.initial_programs and seed workspaces",
+            "implemented_sync",
+            ["history.jsonl", "manifest.json"],
+        ),
+        _process_node(
+            "fig2.prompt",
+            "prompt",
+            "PromptSampler rendered mutation prompt",
+            "implemented_sync",
+            ["prompt_history.jsonl"],
+        ),
+        _process_node(
+            "fig2.proposal",
+            "proposal",
+            "LLM SEARCH/REPLACE or full-workspace candidate proposal",
+            "implemented_sync",
+            ["llm_calls.jsonl", "history.jsonl", "failure_history.jsonl"],
+        ),
+        _process_node(
+            "fig2.evaluation",
+            "evaluation",
+            "CascadeEvaluator local evaluator result",
+            "partial",
+            ["history.jsonl", "evaluator_artifacts"],
+        ),
+        _process_node(
+            "fig2.database",
+            "database",
+            "ProgramDatabase search state and MAP-Elites archive",
+            "implemented_sync",
+            ["history.jsonl", "archive_events.jsonl"],
+        ),
+    ]
+    figure_2_edges = [
+        _process_edge("fig2.database", "fig2.prompt", "sampled_context"),
+        _process_edge("fig2.prompt", "fig2.proposal", "llm_generation_request"),
+        _process_edge("fig2.proposal", "fig2.evaluation", "candidate_after_diff_application"),
+        _process_edge("fig2.evaluation", "fig2.database", "validity_score_feedback"),
+        _process_edge("fig2.database", "fig2.database", "iterative_archive_update"),
+    ]
+    figures = [
+        {
+            "figure_id": "alphaevolve_figure_1",
+            "source": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 3,
+            "role": "high_level_process_overview",
+            "caption_location": "figure_caption_on_local_pdf_page_3",
+            "nodes": figure_1_nodes,
+            "edges": figure_1_edges,
+            "rendered_artifact": _process_rendered_artifact_placeholder(
+                "alphaevolve_figure_1"
+            ),
+        },
+        {
+            "figure_id": "alphaevolve_figure_2",
+            "source": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 4,
+            "role": "expanded_controller_loop",
+            "caption_location": "figure_caption_and_displayed_pseudocode_on_local_pdf_page_4",
+            "nodes": figure_2_nodes,
+            "edges": figure_2_edges,
+            "pseudocode_steps": figure_2_steps,
+            "rendered_artifact": _process_rendered_artifact_placeholder(
+                "alphaevolve_figure_2"
+            ),
+        },
+    ]
+    report = {
+        "schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
+        "source": "runtime_history_static_figure_mapping",
+        "runtime_scope": "single_completed_run",
+        "controller_model": "single_process_serial_loop",
+        "program_count": len(programs),
+        "figures": figures,
+        "figure_count": len(figures),
+        "node_count": sum(len(figure.get("nodes", [])) for figure in figures),
+        "edge_count": sum(len(figure.get("edges", [])) for figure in figures),
+        "pseudocode_step_count": len(figure_2_steps),
+        "artifact_evidence": artifacts,
+        "artifact_evidence_paths": artifact_paths,
+        "claim_ready": False,
+        "claim_readiness": {
+            "stable_figure_ids": True,
+            "node_edge_component_mappings": True,
+            "figure_2_pseudocode_step_mappings": True,
+            "artifact_path_cross_links": True,
+            "rendered_diagram_artifacts": False,
+            "exact_diagram_text_reproduction": False,
+            "full_alphaevolve_process_parity": False,
+            "remaining_gap": [
+                "rendered_process_diagram_artifacts_and_hashes",
+                "exact_diagram_text_or_accessibility_export",
+                "async_controller_sampler_evaluator_topology",
+                "independent_evaluator_pool_parallelism",
+                "artifact_level_step_validation_against_each_stream",
+            ],
+        },
+    }
+    report["validation"] = validate_alphaevolve_process_exhibit_report(report)
+    return report
+
+
+def _process_node(
+    node_id: str,
+    label: str,
+    local_component: str,
+    status: str,
+    evidence_paths: list[str],
+) -> dict:
+    return {
+        "node_id": node_id,
+        "label": label,
+        "local_component": local_component,
+        "status": status,
+        "evidence_paths": evidence_paths,
+    }
+
+
+def _process_edge(from_node: str, to_node: str, relationship: str) -> dict:
+    return {
+        "from": from_node,
+        "to": to_node,
+        "relationship": relationship,
+    }
+
+
+def _process_step(
+    step_id: str,
+    displayed_call: str,
+    local_component: str,
+    status: str,
+    evidence_paths: list[str],
+) -> dict:
+    return {
+        "step_id": step_id,
+        "displayed_call": displayed_call,
+        "local_component": local_component,
+        "status": status,
+        "evidence_paths": evidence_paths,
+    }
+
+
+def _process_rendered_artifact_placeholder(figure_id: str) -> dict:
+    return {
+        "figure_id": figure_id,
+        "status": "not_generated",
+        "path": None,
+        "sha256": None,
+        "reason": "source figure is mapped as manifest metadata only in this slice",
+    }
+
+
+def _process_exhibit_artifact_evidence(run_dir: Path) -> list[dict]:
+    artifact_roles = {
+        "manifest.json": ["run_manifest", "task_specification", "runtime_history"],
+        "history.jsonl": ["candidate_history", "database_add", "evaluation_results"],
+        "failure_history.jsonl": ["rejected_candidates", "diff_or_evaluation_failures"],
+        "archive_events.jsonl": ["program_database_archive_events"],
+        "controller_budget_events.jsonl": ["controller_budget_events"],
+        "llm_calls.jsonl": ["llm_generation_calls"],
+        "prompt_history.jsonl": ["prompt_sampler_outputs"],
+        "evaluator_artifacts": ["evaluator_copy_out"],
+        "best.py": ["improved_solution_export"],
+        "best_workspace": ["improved_solution_workspace_export"],
+    }
+    resolved_run_dir = _resolve_path_for_scope(run_dir)
+    records = []
+    for path_name, roles in artifact_roles.items():
+        if path_name == "manifest.json":
+            pointer = {
+                "path": path_name,
+                "present": (run_dir / path_name).exists(),
+                "kind": "file",
+                "hash_scope": "final_manifest_self_reference_deferred",
+            }
+        else:
+            pointer = _runtime_artifact_pointer(
+                run_dir / path_name,
+                path_name,
+                resolved_run_dir,
+            )
+        record = {
+            "path": path_name,
+            "roles": roles,
+            "present": pointer.get("present") is True,
+            "kind": pointer.get("kind"),
+        }
+        if _is_sha256_hex(pointer.get("sha256")):
+            record["sha256"] = pointer["sha256"]
+            record["hash_scope"] = pointer.get("hash_scope")
+        elif pointer.get("hash_scope") == "final_manifest_self_reference_deferred":
+            record["hash_scope"] = pointer["hash_scope"]
+        if isinstance(pointer.get("bytes"), int):
+            record["bytes"] = pointer["bytes"]
+        if _is_sha256_hex(pointer.get("tree_hash")):
+            record["tree_hash"] = pointer["tree_hash"]
+            record["hash_scope"] = pointer.get("tree_hash_scope")
+        records.append(record)
+    return records
+
+
+def validate_alphaevolve_process_exhibit_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "process exhibit report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "runtime_scope",
+        "controller_model",
+        "figures",
+        "figure_count",
+        "node_count",
+        "edge_count",
+        "pseudocode_step_count",
+        "artifact_evidence",
+        "artifact_evidence_paths",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"process exhibit report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.alphaevolve_process_exhibit_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported process exhibit report schema"})
+    if report.get("source") != "runtime_history_static_figure_mapping":
+        issues.append({"code": "invalid_source", "message": "unsupported process exhibit report source"})
+    if report.get("runtime_scope") != "single_completed_run":
+        issues.append({"code": "invalid_runtime_scope", "message": "runtime_scope must be single_completed_run"})
+    if report.get("controller_model") != "single_process_serial_loop":
+        issues.append({"code": "invalid_controller_model", "message": "controller model must match current runtime boundary"})
+
+    figures = report.get("figures")
+    if not isinstance(figures, list):
+        issues.append({"code": "invalid_figures", "message": "figures must be a list"})
+        figures = []
+    figure_ids = {
+        figure.get("figure_id")
+        for figure in figures
+        if isinstance(figure, Mapping)
+    }
+    expected_ids = {"alphaevolve_figure_1", "alphaevolve_figure_2"}
+    if figure_ids != expected_ids:
+        issues.append({"code": "invalid_figure_ids", "message": "figure ids must cover AlphaEvolve figures 1 and 2"})
+    nodes_seen: set[str] = set()
+    edge_count = 0
+    step_count = 0
+    for figure_index, figure in enumerate(figures):
+        if not isinstance(figure, Mapping):
+            issues.append({"code": "invalid_figure", "message": f"figure {figure_index} must be an object"})
+            continue
+        if not isinstance(figure.get("local_pdf_page"), int) or isinstance(figure.get("local_pdf_page"), bool):
+            issues.append({"code": "invalid_source_page", "message": f"figure {figure_index} local_pdf_page must be an int"})
+        nodes = figure.get("nodes")
+        if not isinstance(nodes, list) or not nodes:
+            issues.append({"code": "invalid_nodes", "message": f"figure {figure_index} must include nodes"})
+            nodes = []
+        for node in nodes:
+            if not isinstance(node, Mapping):
+                issues.append({"code": "invalid_node", "message": "node records must be objects"})
+                continue
+            node_id = node.get("node_id")
+            if not isinstance(node_id, str) or not node_id:
+                issues.append({"code": "invalid_node_id", "message": "node_id must be non-empty text"})
+                continue
+            nodes_seen.add(node_id)
+            _validate_process_status(node.get("status"), issues, "node")
+            _validate_process_evidence_paths(node.get("evidence_paths"), issues, "node")
+        edges = figure.get("edges")
+        if not isinstance(edges, list) or not edges:
+            issues.append({"code": "invalid_edges", "message": f"figure {figure_index} must include edges"})
+            edges = []
+        edge_count += len(edges)
+        for edge in edges:
+            if not isinstance(edge, Mapping):
+                issues.append({"code": "invalid_edge", "message": "edge records must be objects"})
+                continue
+            if not isinstance(edge.get("from"), str) or not isinstance(edge.get("to"), str):
+                issues.append({"code": "invalid_edge_endpoint", "message": "edge endpoints must be node ids"})
+            if not isinstance(edge.get("relationship"), str) or not edge.get("relationship"):
+                issues.append({"code": "invalid_edge_relationship", "message": "edge relationship must be non-empty text"})
+        steps = figure.get("pseudocode_steps", [])
+        if steps:
+            if not isinstance(steps, list):
+                issues.append({"code": "invalid_steps", "message": "pseudocode_steps must be a list"})
+                steps = []
+            step_count += len(steps)
+            for step in steps:
+                if not isinstance(step, Mapping):
+                    issues.append({"code": "invalid_step", "message": "pseudocode step records must be objects"})
+                    continue
+                if not isinstance(step.get("step_id"), str) or not step.get("step_id"):
+                    issues.append({"code": "invalid_step_id", "message": "step_id must be non-empty text"})
+                if not isinstance(step.get("displayed_call"), str) or not step.get("displayed_call"):
+                    issues.append({"code": "invalid_displayed_call", "message": "displayed_call must be non-empty text"})
+                _validate_process_status(step.get("status"), issues, "step")
+                _validate_process_evidence_paths(step.get("evidence_paths"), issues, "step")
+        rendered = figure.get("rendered_artifact")
+        if not isinstance(rendered, Mapping):
+            issues.append({"code": "invalid_rendered_artifact", "message": "rendered_artifact must be an object"})
+        elif rendered.get("status") != "not_generated":
+            issues.append({"code": "rendered_artifact_overclaim", "message": "rendered figure artifacts are not generated by this report"})
+
+    if isinstance(report.get("figure_count"), int) and not isinstance(report.get("figure_count"), bool):
+        if report["figure_count"] != len(figures):
+            issues.append({"code": "figure_count_mismatch", "message": "figure_count must match figures length"})
+    else:
+        issues.append({"code": "invalid_figure_count", "message": "figure_count must be an integer"})
+    if isinstance(report.get("node_count"), int) and not isinstance(report.get("node_count"), bool):
+        if report["node_count"] != len(nodes_seen):
+            issues.append({"code": "node_count_mismatch", "message": "node_count must match unique node ids"})
+    else:
+        issues.append({"code": "invalid_node_count", "message": "node_count must be an integer"})
+    if isinstance(report.get("edge_count"), int) and not isinstance(report.get("edge_count"), bool):
+        if report["edge_count"] != edge_count:
+            issues.append({"code": "edge_count_mismatch", "message": "edge_count must match edge records"})
+    else:
+        issues.append({"code": "invalid_edge_count", "message": "edge_count must be an integer"})
+    if isinstance(report.get("pseudocode_step_count"), int) and not isinstance(report.get("pseudocode_step_count"), bool):
+        if report["pseudocode_step_count"] != step_count:
+            issues.append({"code": "step_count_mismatch", "message": "pseudocode_step_count must match step records"})
+    else:
+        issues.append({"code": "invalid_step_count", "message": "pseudocode_step_count must be an integer"})
+
+    artifacts = report.get("artifact_evidence")
+    artifact_paths = report.get("artifact_evidence_paths")
+    if not isinstance(artifacts, list):
+        issues.append({"code": "invalid_artifact_evidence", "message": "artifact_evidence must be a list"})
+        artifacts = []
+    if not isinstance(artifact_paths, list) or not all(isinstance(path, str) for path in artifact_paths):
+        issues.append({"code": "invalid_artifact_paths", "message": "artifact_evidence_paths must be text paths"})
+        artifact_paths = []
+    if [artifact.get("path") for artifact in artifacts if isinstance(artifact, Mapping)] != artifact_paths:
+        issues.append({"code": "artifact_path_mismatch", "message": "artifact_evidence_paths must match artifact records"})
+    for artifact in artifacts:
+        if not isinstance(artifact, Mapping):
+            issues.append({"code": "invalid_artifact", "message": "artifact records must be objects"})
+            continue
+        if not isinstance(artifact.get("path"), str) or not artifact.get("path"):
+            issues.append({"code": "invalid_artifact_path", "message": "artifact path must be non-empty text"})
+        roles = artifact.get("roles")
+        if not isinstance(roles, list) or not all(isinstance(role, str) and role for role in roles):
+            issues.append({"code": "invalid_artifact_roles", "message": "artifact roles must be non-empty text"})
+        if not isinstance(artifact.get("present"), bool):
+            issues.append({"code": "invalid_artifact_present", "message": "artifact present must be boolean"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        if readiness.get("rendered_diagram_artifacts") is not False:
+            issues.append({"code": "rendered_diagram_overclaim", "message": "rendered diagram artifacts must remain false"})
+        if readiness.get("full_alphaevolve_process_parity") is not False:
+            issues.append({"code": "process_parity_overclaim", "message": "full AlphaEvolve process parity must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "process exhibit report must not claim full process-diagram parity"})
+    return {
+        "schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _validate_process_status(value: object, issues: list[dict], owner: str) -> None:
+    if value not in {"implemented_sync", "partial", "unsupported", "not_applicable"}:
+        issues.append({"code": "invalid_process_status", "message": f"{owner} status is unsupported"})
+
+
+def _validate_process_evidence_paths(value: object, issues: list[dict], owner: str) -> None:
+    if not isinstance(value, list) or not all(isinstance(path, str) and path for path in value):
+        issues.append({"code": "invalid_process_evidence_paths", "message": f"{owner} evidence_paths must be non-empty text"})
 
 
 def _evaluation_cascade_report(programs: list[Program]) -> dict:

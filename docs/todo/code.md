@@ -129,7 +129,8 @@ Primary evidence:
     boundary, paper-facing embedded-only examples, and provenance that links
     score fields back to specific skeleton/evolved-block paths.
 
-- [ ] Add Figure 1/Figure 2 architecture-process exhibit provenance.
+- [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
+      parity.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level loop from human
     "What?" inputs through LLM ensemble, prompt sampler, evaluator pool, and
     program database to an improved solution on local PDF page 3. Figure 2 on
@@ -151,17 +152,17 @@ Primary evidence:
     `history.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
     `controller_budget_events.jsonl`, `llm_calls.jsonl`,
     `prompt_history.jsonl`, `manifest.json`, and best/evaluator/plugin
-    artifact paths. Existing TODOs track many underlying behavior gaps, but no
-    code/report schema maps the paper's Figure 1/Figure 2 nodes, edges, and
-    Figure 2 pseudocode lines to these local components, run artifacts,
-    controller-state records, prompt/evaluator/database events, source diagram
-    locations, rendered diagram artifacts, or diagram hashes.
-  - Required result: add architecture/process exhibit metadata with stable
-    Figure 1/Figure 2 IDs, node/edge-to-component mappings, implemented versus
-    unsupported status for controller, LLM, evaluator, prompt, and database
-    surfaces, Figure 2 pseudocode-line mappings, links to run artifacts that
-    evidence each step, source/rendered diagram artifact hashes, and docs
-    validation so local workflow diagrams are not mistaken for reproduced
+    artifact paths. Completed manifests now include
+    `runtime.history.alphaevolve_process_exhibit_report` with schema
+    `libreevolve.alphaevolve_process_exhibit_report.v1`, stable Figure 1/2
+    ids, source PDF page/caption locations, node/edge-to-component mappings,
+    Figure 2 pseudocode-step mappings, artifact cross-links, and
+    `claim_ready: false` readiness gaps.
+  - Required result: add rendered/text process-diagram artifacts with hashes,
+    exact diagram text or accessibility export, async controller/sampler/
+    evaluator topology records, independent evaluator-pool parallelism
+    evidence, artifact-level per-step validation against each stream, and docs
+    checks so local workflow diagrams are not mistaken for full reproduced
     AlphaEvolve process-diagram evidence.
 
 - [ ] Finish unified AlphaEvolve task-specification bundle provenance.
@@ -544,7 +545,7 @@ Primary evidence:
     checks that distinguish table-exhibit reproduction from satisfying each
     Table 1 behavioral capability.
 
-- [ ] Add Figure 1 and Figure 2 process-overview exhibit provenance.
+- [ ] Extend Figure 1 and Figure 2 process-overview exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level discovery loop
     from human-defined task, evaluation criteria, initial solution, and
     optional background knowledge through the LLM ensemble, prompt sampler,
@@ -559,19 +560,17 @@ Primary evidence:
   - Current evidence: LibreEvolve has implementation and TODO coverage for
     several individual Figure 1/2 components, including prompt construction,
     LLM ensembles, evaluator cascades, database admission, SEARCH/REPLACE
-    diffs, and run manifests. Earlier architecture-process TODO evidence maps
-    `evolve()` to local prompt, LLM, evaluator, database, and artifact
-    surfaces, but no code/report schema preserves Figure 1 or Figure 2 as
-    paper-facing process exhibits with stable figure IDs, diagram-node and
-    edge labels, exact diagram/pseudocode text, source/caption locations,
-    rendered diagram artifact hashes, or links from each displayed process
-    step to concrete code, reports, and remaining TODO entries.
-  - Required result: add Figure 1/2 exhibit metadata and validators with
-    figure IDs, diagram node/edge records, pseudocode step IDs, source PDF and
-    caption locations, rendered/text artifact paths and hashes,
-    component-to-code/report/TODO mappings, and docs checks that prevent
-    README, ROADMAP, or papers-index wording from treating component-level
-    support as full reproduction of the AlphaEvolve process diagrams.
+    diffs, and run manifests. Completed manifests now preserve Figure 1 and
+    Figure 2 as process-exhibit metadata under
+    `runtime.history.alphaevolve_process_exhibit_report`, including stable
+    figure IDs, diagram-node and edge labels, source/caption locations,
+    Figure 2 pseudocode-step mappings, component mappings, artifact
+    cross-links, and explicit `claim_ready: false` gaps.
+  - Required result: add exact diagram/pseudocode text or accessibility export,
+    rendered/text artifact paths and hashes, component-to-code/report/TODO
+    mappings, per-stream step validation, and docs checks that prevent README,
+    ROADMAP, or papers-index wording from treating component-level support as
+    full reproduction of the AlphaEvolve process diagrams.
 
 - [ ] Add self-improvement and distillation evidence boundaries for
       infrastructure-facing claims.

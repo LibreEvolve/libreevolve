@@ -44,6 +44,7 @@ from libreevolve.core.loop import (
     validate_controller_state_snapshot,
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
+    validate_alphaevolve_process_exhibit_report,
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
     validate_paper_evaluator_metric_contract,
@@ -3692,7 +3693,7 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "        score = 1.0 if seed else 0.9\n"
         "    return {'score': score, 'is_valid': True}\n"
     )
-    llm = _llm("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
         evolve(
@@ -3736,6 +3737,81 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert main["candidate_count"] == 1
     assert main["passed"] == 1
     assert main["failed"] == 0
+
+
+def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    ok = 'x=2' in code\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    llm = _llm("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["alphaevolve_process_exhibit_report"]
+
+    assert report["schema"] == "libreevolve.alphaevolve_process_exhibit_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_alphaevolve_process_exhibit_report(report)["ok"] is True
+    assert report["figure_count"] == 2
+    assert report["pseudocode_step_count"] == 6
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["stable_figure_ids"] is True
+    assert report["claim_readiness"]["rendered_diagram_artifacts"] is False
+    assert "rendered_process_diagram_artifacts_and_hashes" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    figures = {figure["figure_id"]: figure for figure in report["figures"]}
+    assert set(figures) == {"alphaevolve_figure_1", "alphaevolve_figure_2"}
+    assert figures["alphaevolve_figure_1"]["local_pdf_page"] == 3
+    assert figures["alphaevolve_figure_2"]["local_pdf_page"] == 4
+    assert figures["alphaevolve_figure_1"]["rendered_artifact"]["status"] == (
+        "not_generated"
+    )
+
+    figure_2_steps = figures["alphaevolve_figure_2"]["pseudocode_steps"]
+    assert [step["displayed_call"] for step in figure_2_steps] == [
+        "database.sample()",
+        "prompt_sampler.build(...)",
+        "llm.generate(...)",
+        "apply_diff(...)",
+        "evaluator.execute(...)",
+        "database.add(...)",
+    ]
+    assert figure_2_steps[0]["local_component"].startswith("ProgramDatabase")
+    assert figure_2_steps[2]["evidence_paths"] == [
+        "llm_calls.jsonl",
+        "controller_budget_events.jsonl",
+    ]
+    artifact_by_path = {
+        artifact["path"]: artifact for artifact in report["artifact_evidence"]
+    }
+    assert artifact_by_path["history.jsonl"]["present"] is True
+    assert artifact_by_path["prompt_history.jsonl"]["present"] is True
+    assert "llm_generation_calls" in artifact_by_path["llm_calls.jsonl"]["roles"]
+    assert artifact_by_path["controller_budget_events.jsonl"]["present"] is True
+    assert artifact_by_path["manifest.json"]["hash_scope"] == (
+        "final_manifest_self_reference_deferred"
+    )
+    assert report["artifact_evidence_paths"] == list(artifact_by_path)
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["full_alphaevolve_process_parity"] = True
+    validation = validate_alphaevolve_process_exhibit_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "process_parity_overclaim",
+    }
 
 
 def test_runtime_history_reports_evaluator_workload_provenance():

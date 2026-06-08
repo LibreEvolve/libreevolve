@@ -1481,6 +1481,20 @@ The inventory checks safe relative path handling, file existence, SHA-256, byte
 count, strict JSONL event count, last sequence/kind, per-record status, and a
 stable records hash. It is event-stream evidence-file verification, not
 queued/running worker reconstruction.
+Completed manifests also include
+`runtime.history.alphaevolve_process_exhibit_report` with schema
+`libreevolve.alphaevolve_process_exhibit_report.v1`. This report maps
+AlphaEvolve Figure 1 and Figure 2 to local components and run artifacts: stable
+figure IDs, source PDF page/caption locations, diagram node and edge records,
+Figure 2 pseudocode-step records, and cross-links to `manifest.json`,
+`history.jsonl`, `failure_history.jsonl`, `archive_events.jsonl`,
+`controller_budget_events.jsonl`, `llm_calls.jsonl`, `prompt_history.jsonl`,
+`evaluator_artifacts`, `best.py`, and `best_workspace`. It is a manifest-level
+process-exhibit map for the current synchronous loop, not a rendered
+AlphaEvolve diagram reproduction: rendered diagram artifacts/hashes, exact
+diagram text or accessibility export, async controller/sampler/evaluator
+topology, independent evaluator-pool parallelism, and artifact-level
+per-step validation remain open.
 Retained elite-only candidates can still resurface through best/exploit,
 metric, novelty, recency, selection, mixed inspiration, and migration paths.
 They remain excluded from occupied-cell explore and random inspiration pools

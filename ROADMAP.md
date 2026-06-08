@@ -399,6 +399,13 @@ is not yet an AlphaEvolve reproduction.
   complex component domains, finite-field characteristic/order, paper complex
   target caveats, and certificate scope. Local benchmark runners still need to
   emit exact complex decomposition/certificate artifacts for those claims.
+- Keep matrix tensor-rank wording scoped to evidence validation rather than
+  emitted tensor-rank parity: `libreevolve.matrix_tensor_rank_evidence.v1` now
+  validates algorithm kind, tensor-identity certificate scope, recursive
+  applicability, target-tensor and exactness-certificate links, and source-note
+  caveats for non-tensor multiplication algorithms. Local benchmark runners
+  still need to emit those target-tensor/certificate and footnote-caveat
+  artifacts.
 - Keep matrix sweep-space wording scoped to evidence validation rather than
   executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared `sweep` function identity, user-provided `hyper`

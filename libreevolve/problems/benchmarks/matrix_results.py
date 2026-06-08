@@ -20,6 +20,7 @@ MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
 MATRIX_SCALAR_FIELD_SCHEMA = "libreevolve.matrix_scalar_field_evidence.v1"
+MATRIX_TENSOR_RANK_SCHEMA = "libreevolve.matrix_tensor_rank_evidence.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
@@ -42,6 +43,19 @@ SCALAR_FIELD_COEFFICIENT_REPRESENTATIONS = frozenset(
     }
 )
 PAPER_COMPLEX_TARGET_IDS = frozenset({"mm_3x4x7", "mm_4x4x4", "mm_4x4x8"})
+MATRIX_ALGORITHM_KINDS = frozenset(
+    {
+        "matrix_multiplication_tensor_decomposition",
+        "non_tensor_multiplication_algorithm",
+    }
+)
+TENSOR_CERTIFICATE_SCOPES = frozenset(
+    {
+        "matrix_multiplication_tensor_identity",
+        "functional_multiplication_only",
+        "not_certified",
+    }
+)
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _STRASSEN_TARGET_ID = "mm_2x2x2"
@@ -146,6 +160,16 @@ class MatrixScalarFieldValidation:
     target_id: str | None
     field_claim_count: int
     complex_claim_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixTensorRankValidation:
+    ok: bool
+    target_id: str | None
+    claim_count: int
+    tensor_decomposition_count: int
+    recursive_applicable_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -453,6 +477,42 @@ def validate_matrix_scalar_field_evidence(
     )
 
 
+def validate_matrix_tensor_rank_evidence(
+    evidence: object | str | Path,
+) -> MatrixTensorRankValidation:
+    """Validate tensor-rank and recursive-applicability claims."""
+    data, read_issues = _load_report(evidence)
+    if read_issues:
+        return MatrixTensorRankValidation(False, None, 0, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_TENSOR_RANK_SCHEMA:
+        issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix tensor-rank evidence schema"))
+    target_id = _text_field(data, "target_id", issues)
+    target_suite = _text_field(data, "target_suite", issues)
+    if target_id is not None and target_suite == APPENDIX_A_TARGET_SUITE:
+        if matrix_target_by_id(target_id) is None:
+            issues.append(MatrixResultIssue("unknown_appendix_a_target", "target_id is not in the AlphaEvolve Appendix A matrix registry"))
+    source_refs = data.get("source_refs")
+    if not isinstance(source_refs, list) or not source_refs:
+        issues.append(MatrixResultIssue("invalid_source_refs", "source_refs must be a non-empty list"))
+    else:
+        for source_ref in source_refs:
+            _validate_tensor_rank_source_ref(source_ref, issues)
+    claim_count, tensor_count, recursive_count = _validate_tensor_rank_claims(
+        data.get("rank_claims"),
+        issues,
+    )
+    return MatrixTensorRankValidation(
+        ok=not issues,
+        target_id=target_id,
+        claim_count=claim_count,
+        tensor_decomposition_count=tensor_count,
+        recursive_applicable_count=recursive_count,
+        issues=issues,
+    )
+
+
 def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
     validation = validate_matrix_near_integrality_evidence(evidence)
     status = "ok" if validation.ok else "invalid"
@@ -484,6 +544,26 @@ def render_matrix_scalar_field_summary(evidence: dict[str, Any]) -> str:
         f"| target_id | {validation.target_id or '<unknown>'} |",
         f"| field_claim_count | {validation.field_claim_count} |",
         f"| complex_claim_count | {validation.complex_claim_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_tensor_rank_summary(evidence: dict[str, Any]) -> str:
+    validation = validate_matrix_tensor_rank_evidence(evidence)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix tensor-rank evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| target_id | {validation.target_id or '<unknown>'} |",
+        f"| claim_count | {validation.claim_count} |",
+        f"| tensor_decomposition_count | {validation.tensor_decomposition_count} |",
+        f"| recursive_applicable_count | {validation.recursive_applicable_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -850,6 +930,107 @@ def _validate_scalar_field_source_ref(value: object, issues: list[MatrixResultIs
                 issues.append(MatrixResultIssue("invalid_source_ref_page", "source ref page must be a positive integer"))
         elif not isinstance(value.get(field), str) or not value[field].strip():
             issues.append(MatrixResultIssue(f"missing_source_ref_{field}", f"source ref {field} is required"))
+
+
+def _validate_tensor_rank_source_ref(value: object, issues: list[MatrixResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_source_ref", "source_refs entries must be objects"))
+        return
+    for field in ("source", "claim"):
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixResultIssue(f"missing_source_ref_{field}", f"source ref {field} is required"))
+    page = value.get("page")
+    if isinstance(page, bool) or not isinstance(page, int) or page <= 0:
+        issues.append(MatrixResultIssue("invalid_source_ref_page", "source ref page must be a positive integer"))
+    note = value.get("note")
+    if note is not None and (not isinstance(note, str) or not note.strip()):
+        issues.append(MatrixResultIssue("invalid_source_ref_note", "source ref note must be a non-empty string when present"))
+
+
+def _validate_tensor_rank_claims(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> tuple[int, int, int]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_rank_claims", "rank_claims must be a non-empty list"))
+        return 0, 0, 0
+    seen: set[str] = set()
+    tensor_count = 0
+    recursive_count = 0
+    for claim in value:
+        if not isinstance(claim, dict):
+            issues.append(MatrixResultIssue("invalid_rank_claim", "rank claims must be objects"))
+            continue
+        claim_id = claim.get("claim_id")
+        if not isinstance(claim_id, str) or _ID_RE.fullmatch(claim_id) is None:
+            issues.append(MatrixResultIssue("invalid_rank_claim_id", "claim_id must be a safe identifier"))
+        elif claim_id in seen:
+            issues.append(MatrixResultIssue("duplicate_rank_claim_id", "claim_id values must be unique"))
+        else:
+            seen.add(claim_id)
+        rank = _positive_int(claim.get("rank"), "rank", issues)
+        if rank is None:
+            issues.append(MatrixResultIssue("missing_rank", "rank is required for tensor-rank claims"))
+        algorithm_kind = claim.get("algorithm_kind")
+        if algorithm_kind not in MATRIX_ALGORITHM_KINDS:
+            issues.append(MatrixResultIssue("invalid_algorithm_kind", "algorithm_kind must distinguish tensor decompositions from non-tensor algorithms"))
+        certificate_scope = claim.get("certificate_scope")
+        if certificate_scope not in TENSOR_CERTIFICATE_SCOPES:
+            issues.append(MatrixResultIssue("invalid_tensor_certificate_scope", "unsupported tensor-rank certificate scope"))
+        recursive_applicable = claim.get("recursive_applicable")
+        if not isinstance(recursive_applicable, bool):
+            issues.append(MatrixResultIssue("invalid_recursive_applicable", "recursive_applicable must be boolean"))
+            recursive_applicable = False
+        else:
+            if recursive_applicable:
+                recursive_count += 1
+        if algorithm_kind == "matrix_multiplication_tensor_decomposition":
+            tensor_count += 1
+            _validate_tensor_decomposition_rank_claim(claim, certificate_scope, recursive_applicable, issues)
+        elif algorithm_kind == "non_tensor_multiplication_algorithm":
+            _validate_non_tensor_rank_claim(claim, certificate_scope, recursive_applicable, issues)
+    return len(value), tensor_count, recursive_count
+
+
+def _validate_tensor_decomposition_rank_claim(
+    claim: dict[str, Any],
+    certificate_scope: object,
+    recursive_applicable: bool,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if certificate_scope != "matrix_multiplication_tensor_identity":
+        issues.append(MatrixResultIssue("invalid_tensor_decomposition_certificate_scope", "tensor decompositions require matrix_multiplication_tensor_identity certificate scope"))
+    if recursive_applicable is not True:
+        issues.append(MatrixResultIssue("missing_recursive_applicability", "matrix multiplication tensor decompositions must declare recursive_applicable true"))
+    if claim.get("tensor_identity_verified") is not True:
+        issues.append(MatrixResultIssue("tensor_identity_not_verified", "tensor decompositions must verify the matrix multiplication tensor identity"))
+    for field in ("target_tensor_ref", "exactness_certificate_ref"):
+        if not isinstance(claim.get(field), str) or not claim[field].strip():
+            issues.append(MatrixResultIssue(f"missing_{field}", f"{field} is required for tensor decomposition claims"))
+    if claim.get("non_tensor_caveat") is not None:
+        issues.append(MatrixResultIssue("unexpected_non_tensor_caveat", "tensor decomposition claims must not carry a non_tensor_caveat"))
+
+
+def _validate_non_tensor_rank_claim(
+    claim: dict[str, Any],
+    certificate_scope: object,
+    recursive_applicable: bool,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if certificate_scope != "functional_multiplication_only":
+        issues.append(MatrixResultIssue("invalid_non_tensor_certificate_scope", "non-tensor algorithms must use functional_multiplication_only certificate scope"))
+    if recursive_applicable is not False:
+        issues.append(MatrixResultIssue("invalid_non_tensor_recursive_applicability", "non-tensor algorithms must declare recursive_applicable false"))
+    caveat = claim.get("non_tensor_caveat")
+    if not isinstance(caveat, dict):
+        issues.append(MatrixResultIssue("missing_non_tensor_caveat", "non-tensor algorithms require a non_tensor_caveat object"))
+        return
+    if caveat.get("not_matrix_tensor_decomposition") is not True:
+        issues.append(MatrixResultIssue("missing_non_tensor_decomposition_caveat", "non-tensor caveat must mark not_matrix_tensor_decomposition true"))
+    if caveat.get("not_recursively_applicable") is not True:
+        issues.append(MatrixResultIssue("missing_non_recursive_caveat", "non-tensor caveat must mark not_recursively_applicable true"))
+    if not isinstance(caveat.get("source_note_ref"), str) or not caveat["source_note_ref"].strip():
+        issues.append(MatrixResultIssue("missing_source_note_ref", "non-tensor caveat must link to source note or footnote provenance"))
 
 
 def _validate_scalar_field_claims(

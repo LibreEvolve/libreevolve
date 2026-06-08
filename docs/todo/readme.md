@@ -1128,8 +1128,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README can distinguish schema validation from AlphaEvolve-style
     complex-valued matrix result evidence.
 
-- [ ] Keep README matrix rank wording scoped until tensor-rank and recursive
-      applicability caveats exist.
+- [ ] Keep README matrix rank wording scoped until tensor-rank artifacts exist.
   - Spec evidence: AlphaEvolve Section 3.1 frames matrix improvements as
     low-rank tensor decompositions, and footnote 3 says some algorithms using
     fewer than 49 multiplications do not correspond to matrix-multiplication
@@ -1137,11 +1136,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     multiplication.
   - Current evidence: README describes Appendix A target/rank/outcome
     validation, coefficient-domain/exactness fields, scalar-field gaps, and
-    checked Strassen artifacts. It does not document algorithm-kind metadata,
-    tensor-decomposition certificate scope, recursive applicability, or
-    footnote-level caveats that separate tensor-rank evidence from
-    non-recursive multiplication algorithms.
-  - Required result: when matrix reports or companion metadata capture
+    checked Strassen artifacts. It now documents
+    `libreevolve.matrix_tensor_rank_evidence.v1`, which validates
+    algorithm-kind metadata, tensor-decomposition certificate scope, recursive
+    applicability, target-tensor/certificate links, and footnote-level caveats
+    that separate tensor-rank evidence from non-recursive multiplication
+    algorithms. It also states that target-tensor/certificate artifacts are not
+    emitted.
+  - Required result: when matrix reports or companion artifacts capture
     tensor-rank applicability and recursive-use caveats, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README
     qualifies rank comparisons and does not imply every fewer-multiplication

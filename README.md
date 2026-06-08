@@ -3079,6 +3079,15 @@ characteristic/order, paper complex-row caveats for `mm_3x4x7`, `mm_4x4x4`,
 and `mm_4x4x8`, and certificate scope. It validates emitted evidence after a
 run records it; local matrix benchmark runners still do not emit exact complex
 decomposition/certificate artifacts for those claims.
+Matrix tensor-rank evidence uses
+`libreevolve.matrix_tensor_rank_evidence.v1`; it validates declared rank
+claims that distinguish matrix-multiplication tensor decompositions from
+non-tensor multiplication algorithms, including tensor-identity certificate
+scope, recursive applicability, target-tensor links, exactness-certificate
+links, and source-note caveats for algorithms that cannot be applied
+recursively. It validates emitted evidence after a run records it; local matrix
+benchmark runners still do not emit target-tensor/certificate artifacts or
+footnote-level non-tensor caveat records for those claims.
 Matrix sweep-space evidence uses
 `libreevolve.matrix_sweep_space_evidence.v1`; it validates declared Figure
 9-style search-program provenance for the `sweep` function, user-provided

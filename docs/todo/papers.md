@@ -3897,16 +3897,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     recursively to larger matrix multiplication.
   - Current gap: the paper-facing Appendix A registry/status and matrix result
     contract store target ids, dimensions, rank values, outcomes, exactness,
-    coefficient domain, and artifacts, but not whether an algorithm is a
-    tensor decomposition versus another multiplication algorithm, whether the
-    construction is recursively applicable, whether the certificate proves the
-    target tensor identity, or whether docs should qualify comparisons against
-    non-tensor or finite-field-only prior algorithms.
-  - Required result: add paper-facing metadata for matrix rank claims:
-    algorithm kind, tensor-decomposition certificate scope, recursive
-    applicability, source note/page or footnote locator, and docs validation
-    that rank/outcome wording does not treat non-recursive multiplication
-    algorithms as comparable tensor-rank baselines.
+    coefficient domain, and artifacts. `libreevolve.matrix_tensor_rank_evidence.v1`
+    now validates whether an algorithm is a tensor decomposition versus another
+    multiplication algorithm, whether the construction is recursively
+    applicable, whether the certificate proves the target tensor identity, and
+    source-note caveats for comparisons against non-tensor or finite-field-only
+    prior algorithms. It does not emit target-tensor/certificate artifacts.
+  - Required result: add concrete paper-facing artifacts for matrix rank
+    claims: algorithm kind, tensor-decomposition certificate scope, recursive
+    applicability, source note/page or footnote locator, target tensor identity
+    evidence, and docs validation that rank/outcome wording does not treat
+    non-recursive multiplication algorithms as comparable tensor-rank
+    baselines.
 
 - [ ] Generate independent certification evidence for paper-level result
   claims.

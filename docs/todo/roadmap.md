@@ -2973,8 +2973,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap text distinguishes schema validation from
     AlphaEvolve-style scalar-field result provenance.
 
-- [ ] Keep matrix roadmap wording scoped until tensor-rank and recursive-use
-      caveats exist.
+- [ ] Keep matrix roadmap wording scoped until tensor-rank artifacts exist.
   - Spec evidence: AlphaEvolve Section 3.1 reports matrix multiplication
     improvements as low-rank tensor decompositions, and footnote 3 says some
     fewer-than-49 multiplication algorithms do not correspond to decompositions
@@ -2982,11 +2981,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     larger matrix multiplication.
   - Current evidence: roadmap/README/paper-index status points to the Appendix
     A target registry, matrix result reports, coefficient-domain/exactness
-    fields, scalar-field follow-ups, and checked Strassen artifacts. It does
-    not require algorithm-kind metadata, tensor-decomposition certificate
-    scope, recursive applicability, or footnote/source-note provenance for
-    rank comparisons against non-tensor or non-recursive algorithms.
-  - Required result: when matrix reports or companion metadata capture
+    fields, scalar-field follow-ups, checked Strassen artifacts, and
+    `libreevolve.matrix_tensor_rank_evidence.v1`. The tensor-rank schema
+    validates algorithm-kind metadata, tensor-decomposition certificate scope,
+    recursive applicability, target-tensor/certificate links, and
+    footnote/source-note provenance for rank comparisons against non-tensor or
+    non-recursive algorithms. It does not emit those artifacts.
+  - Required result: when matrix reports or companion artifacts capture
     tensor-rank applicability and recursive-use caveats, update ROADMAP,
     README, papers index, and code/paper TODO entries together so roadmap text
     distinguishes tensor-decomposition rank evidence from broader

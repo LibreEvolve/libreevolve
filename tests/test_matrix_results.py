@@ -10,16 +10,19 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_RESULT_SCHEMA,
     MATRIX_SCALAR_FIELD_SCHEMA,
     MATRIX_SWEEP_SPACE_SCHEMA,
+    MATRIX_TENSOR_RANK_SCHEMA,
     matrix_result_artifact_inventory,
     render_matrix_near_integrality_summary,
     render_matrix_result_summary,
     render_matrix_scalar_field_summary,
     render_matrix_sweep_space_summary,
+    render_matrix_tensor_rank_summary,
     validate_matrix_near_integrality_evidence,
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
     validate_matrix_scalar_field_evidence,
     validate_matrix_sweep_space_evidence,
+    validate_matrix_tensor_rank_evidence,
     write_strassen_2x2_publication_bundle,
 )
 
@@ -733,3 +736,133 @@ def test_render_matrix_scalar_field_summary_reports_shape():
     assert "| target_id | mm_4x4x4 |" in summary
     assert "| field_claim_count | 1 |" in summary
     assert "| complex_claim_count | 1 |" in summary
+
+
+def _valid_tensor_rank_evidence() -> dict:
+    return {
+        "schema": MATRIX_TENSOR_RANK_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "source_refs": [
+            {
+                "source": "AlphaEvolve Section 3.1",
+                "page": 10,
+                "claim": "matrix results are low-rank tensor decompositions",
+            },
+            {
+                "source": "AlphaEvolve Section 3.1 note 3",
+                "page": 10,
+                "claim": "some fewer-than-49 algorithms are not matrix tensor decompositions and cannot be applied recursively",
+                "note": "footnote body may require rendered/PDF note extraction",
+            },
+        ],
+        "rank_claims": [
+            {
+                "claim_id": "alphaevolve_mm_4x4x4_rank48",
+                "algorithm_kind": "matrix_multiplication_tensor_decomposition",
+                "rank": 48,
+                "recursive_applicable": True,
+                "certificate_scope": "matrix_multiplication_tensor_identity",
+                "tensor_identity_verified": True,
+                "target_tensor_ref": "tensors/mm_4x4x4.json",
+                "exactness_certificate_ref": "certificates/mm_4x4x4_tensor_identity.json",
+            }
+        ],
+    }
+
+
+def test_matrix_tensor_rank_evidence_accepts_recursive_tensor_decomposition_claim():
+    evidence = _valid_tensor_rank_evidence()
+
+    validation = validate_matrix_tensor_rank_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.claim_count == 1
+    assert validation.tensor_decomposition_count == 1
+    assert validation.recursive_applicable_count == 1
+    assert validation.issues == []
+
+
+def test_matrix_tensor_rank_evidence_accepts_non_tensor_caveat_claim():
+    evidence = _valid_tensor_rank_evidence()
+    evidence["rank_claims"] = [
+        {
+            "claim_id": "non_tensor_less_than_49_caveat",
+            "algorithm_kind": "non_tensor_multiplication_algorithm",
+            "rank": 47,
+            "recursive_applicable": False,
+            "certificate_scope": "functional_multiplication_only",
+            "non_tensor_caveat": {
+                "not_matrix_tensor_decomposition": True,
+                "not_recursively_applicable": True,
+                "source_note_ref": "AlphaEvolve Section 3.1 footnote 3",
+            },
+        }
+    ]
+
+    validation = validate_matrix_tensor_rank_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.claim_count == 1
+    assert validation.tensor_decomposition_count == 0
+    assert validation.recursive_applicable_count == 0
+
+
+def test_matrix_tensor_rank_evidence_rejects_tensor_claim_scope_drift():
+    evidence = _valid_tensor_rank_evidence()
+    claim = evidence["rank_claims"][0]
+    claim["recursive_applicable"] = False
+    claim["certificate_scope"] = "functional_multiplication_only"
+    claim["tensor_identity_verified"] = False
+    claim["target_tensor_ref"] = ""
+    claim["exactness_certificate_ref"] = ""
+    claim["non_tensor_caveat"] = {"not_matrix_tensor_decomposition": True}
+
+    validation = validate_matrix_tensor_rank_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_tensor_decomposition_certificate_scope" in codes
+    assert "missing_recursive_applicability" in codes
+    assert "tensor_identity_not_verified" in codes
+    assert "missing_target_tensor_ref" in codes
+    assert "missing_exactness_certificate_ref" in codes
+    assert "unexpected_non_tensor_caveat" in codes
+
+
+def test_matrix_tensor_rank_evidence_rejects_non_tensor_caveat_drift():
+    evidence = _valid_tensor_rank_evidence()
+    evidence["rank_claims"][0] = {
+        "claim_id": "bad_non_tensor",
+        "algorithm_kind": "non_tensor_multiplication_algorithm",
+        "rank": 47,
+        "recursive_applicable": True,
+        "certificate_scope": "matrix_multiplication_tensor_identity",
+        "non_tensor_caveat": {
+            "not_matrix_tensor_decomposition": False,
+            "not_recursively_applicable": False,
+            "source_note_ref": "",
+        },
+    }
+
+    validation = validate_matrix_tensor_rank_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_non_tensor_certificate_scope" in codes
+    assert "invalid_non_tensor_recursive_applicability" in codes
+    assert "missing_non_tensor_decomposition_caveat" in codes
+    assert "missing_non_recursive_caveat" in codes
+    assert "missing_source_note_ref" in codes
+
+
+def test_render_matrix_tensor_rank_summary_reports_shape():
+    summary = render_matrix_tensor_rank_summary(_valid_tensor_rank_evidence())
+
+    assert "Matrix tensor-rank evidence" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| target_id | mm_4x4x4 |" in summary
+    assert "| claim_count | 1 |" in summary
+    assert "| tensor_decomposition_count | 1 |" in summary
+    assert "| recursive_applicable_count | 1 |" in summary

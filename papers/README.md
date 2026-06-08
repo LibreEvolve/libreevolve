@@ -795,6 +795,12 @@ Implemented:
   exact coefficient representation, finite-field caveats, and certificate scope
   for exact real/complex applicability, but no local matrix benchmark runner
   emits exact complex decomposition/certificate artifacts for those claims yet.
+  `libreevolve.matrix_tensor_rank_evidence.v1` now validates declared rank
+  claims that distinguish matrix-multiplication tensor decompositions from
+  non-tensor multiplication algorithms, including tensor-identity certificate
+  scope, recursive applicability, target-tensor links, exactness-certificate
+  links, and source-note caveats for non-recursive algorithms, but no local
+  matrix benchmark runner emits those target-tensor/certificate artifacts yet.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

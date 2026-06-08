@@ -417,16 +417,20 @@ Primary evidence:
     These surfaces do not yet provide a paper-facing prompt-core record that
     proves which solution was the target being edited, which previously
     discovered solutions were supporting context, which instruction block told
-    the LLM how to modify that particular target, and whether required
-    AlphaEvolve prompt ingredients were present or intentionally omitted.
+    the LLM how to modify that particular target, whether those instructions
+    were delivered as provider system/developer/user role messages or only as
+    part of one rendered prompt string, and whether required AlphaEvolve prompt
+    ingredients were present or intentionally omitted.
   - Required result: add primary-prompt ingredient metadata and validators for
     each mutation call: prompt/call id, target solution/program id, target
     source hash, selected prior-solution ids and roles (`target`,
     `inspiration`, `feedback_source`, or equivalent), instruction policy id,
-    instruction text hash/redaction status, mutation mode/edit-scope
-    constraints, required-channel presence/omission reasons, and README/
-    ROADMAP checks that distinguish generic prompt-template rendering from
-    AlphaEvolve-style instructions tied to a particular sampled solution.
+    instruction text hash/redaction status, provider message role placement
+    (`system`, `developer`, `user`, or serialized-single-prompt), mutation
+    mode/edit-scope constraints, required-channel presence/omission reasons,
+    and README/ROADMAP checks that distinguish generic prompt-template
+    rendering from AlphaEvolve-style instructions tied to a particular sampled
+    solution.
 
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.

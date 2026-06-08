@@ -744,12 +744,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata, parent-code rendering policy, mutation-instruction variants, and
     prompt-size diagnostics. They do not yet require a prompt-core record that
     links instruction identity/version/hash, target solution id/source hash,
-    sampled supporting-solution roles, edit-scope constraints, and required
-    prompt-channel presence for each mutation call.
+    sampled supporting-solution roles, provider message-role placement,
+    edit-scope constraints, and required prompt-channel presence for each
+    mutation call.
   - Required result: when primary-prompt ingredient metadata and validators
     land, update ROADMAP, README, papers index, and code/paper TODO entries
     together so roadmap wording separates generic prompt-template rendering
-    from AlphaEvolve-style target-specific prompt instruction evidence.
+    from AlphaEvolve-style target-specific prompt instruction evidence,
+    including whether provider calls used role-separated
+    system/developer/user messages or a serialized single prompt.
 
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain

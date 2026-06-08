@@ -393,14 +393,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     selected parent/inspiration ids, prompt-context policy, and prompt-size
     diagnostics. They do not preserve a paper-facing prompt-core record that
     identifies the current target solution, the role of each sampled prior
-    solution, the instruction block/version/hash used for that target, or
-    required-channel presence/omission status.
+    solution, the instruction block/version/hash used for that target, whether
+    that instruction was delivered through provider system/developer/user role
+    messages or through a serialized single prompt, or required-channel
+    presence/omission status.
   - Required result: add paper-facing prompt ingredient records with prompt
     call id, target program/source hash, sampled solution roles, instruction
-    policy id, instruction text hash/redaction policy, edit-scope or mutation
-    mode constraints, required-channel diagnostics, prompt-history linkage, and
-    wording that separates AlphaEvolve-style target-specific prompt
-    instructions from generic prompt-template compatibility.
+    policy id, instruction text hash/redaction policy, provider message-role
+    placement, edit-scope or mutation mode constraints, required-channel
+    diagnostics, prompt-history linkage, and wording that separates
+    AlphaEvolve-style target-specific prompt instructions from generic
+    prompt-template compatibility.
 
 - [ ] Track early-user and collaborator feedback provenance as paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early

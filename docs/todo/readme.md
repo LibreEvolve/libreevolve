@@ -512,12 +512,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     parent/inspiration metadata, parent-code rendering policy, prompt ids,
     prompt-size diagnostics, and mutation-instruction variants. It does not
     yet document a paper-facing prompt-core record that ties an instruction
-    block/version/hash to the specific target solution and sampled supporting
-    solutions for a mutation call.
+    block/version/hash and provider message-role placement to the specific
+    target solution and sampled supporting solutions for a mutation call.
   - Required result: when primary-prompt ingredient provenance lands, update
     README, ROADMAP, papers index, and code/paper TODO entries together so
     README distinguishes generic prompt rendering and template validation from
-    AlphaEvolve-style target-specific prompt instruction evidence.
+    AlphaEvolve-style target-specific prompt instruction evidence, including
+    whether instructions were delivered as role-separated system/developer/user
+    messages or as a serialized single prompt.
 
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.

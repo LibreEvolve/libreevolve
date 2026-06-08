@@ -6367,12 +6367,27 @@ Primary evidence:
 - [ ] Add GigaEvo framework source boundary before inspiration claims become
       reproduction claims.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
-    Optimization Framework Powered by LLMs and Evolution Algorithms`, presents
-    an open-source AlphaEvolve-inspired framework with Redis-backed program
-    storage, an `asyncio` DAG execution engine, MAP-Elites evolution,
-    LangGraph mutation operators, generated insights, bidirectional lineage
-    tracking, declarative configuration, and AlphaEvolve benchmark
-    reproduction attempts.
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, by
+    Valentin Khrulkov, Andrey V. Galichin, Denis Bashkirov, Dmitry Vinichenko,
+    Oleg Travkin, Roman Alferov, Andrey Kuznetsov, and Ivan Oseledets was
+    submitted November 17, 2025 as arXiv v1; the cached PDF hash is
+    `9a14bf06a1323e63bf53234e79e44c41e1e78e0dc2f90578d74b928efd067113`.
+    It presents an open-source AlphaEvolve-inspired framework with four core
+    components: Redis program storage, an `asyncio` DAG execution engine,
+    MAP-Elites evolution, and a LangGraph mutation operator. Its Redis
+    `Program` records contain UUID, source code, lifecycle state such as
+    `FRESH`, `RUNNING`, and `COMPLETE`, metrics, genealogical lineage, and DAG
+    stage outputs, with optimistic concurrency control via atomic counters.
+    The DAG supports execution, validation, complexity analysis, LLM
+    inference, agentic pipelines, data-flow edges, execution-order
+    dependencies, caching, and automatic stage skipping. It also describes
+    Hydra configuration, directory problems with `task description.txt`,
+    `metrics.yaml`, `validate.py`, and `initial programs/`, generated
+    insights, bidirectional lineage stages, diff and rewrite mutation modes,
+    and reproduction/generalization experiments. The paper links both
+    `https://github.com/AIRI-Institute/gigaevo-core` and
+    `https://github.com/FusionBrainLab/gigaevo-core`, so source URL status
+    needs explicit disambiguation.
   - Current evidence: `papers/README.md` marks GigaEvo as framework
     inspiration and explicitly says LibreEvolve has no Redis lifecycle
     database, `asyncio` DAG engine, insight stage, or concurrent units. A broad
@@ -6380,19 +6395,27 @@ Primary evidence:
     ThetaEvolve, ImprovEvolve, MadEvolve, CausalEvolve, and DeepEvolve, but
     there is no source-specific code TODO for `2511.17592`, no local
     equivalent of Redis program lifecycle states, no DAG stage graph/caching
-    schema, no LangGraph-style mutation operator, no bidirectional lineage
-    analysis records, no GigaEvo benchmark reproduction report, and no
-    validation that README/ROADMAP wording distinguishes framework inspiration
-    from GigaEvo reproduction.
+    schema, no optimistic-concurrency program archive, no Hydra-equivalent
+    component composition, no GigaEvo problem-layout adapter, no LangGraph-
+    style mutation operator, no bidirectional lineage analysis records, no
+    GigaEvo benchmark reproduction report, and no validation that
+    README/ROADMAP wording distinguishes framework inspiration from GigaEvo
+    reproduction. Current `ProgramDatabase` explicitly says it is a small
+    local log/archive facade, not a GigaEvo-style lifecycle database.
   - Required result: add source-boundary metadata and implementation gates for
     `2511.17592`: arXiv version/date/PDF hash, source/license and code-URL
     status, Redis-vs-local-storage applicability, program lifecycle state
     schema, DAG node/edge/stage-output records, concurrency/caching telemetry,
-    insight and ancestor/descendant lineage-analysis artifacts, LangGraph or
-    equivalent mutation-operator provenance, MAP-Elites/island compatibility
-    reports, AlphaEvolve benchmark reproduction records, and docs wording that
-    keeps current LibreEvolve behavior labeled as inspiration-only until those
-    artifacts exist.
+    optimistic-concurrency semantics, Hydra/component-composition mapping,
+    problem-layout adapter records, insight and ancestor/descendant lineage-
+    analysis artifacts, LangGraph or equivalent mutation-operator provenance,
+    diff-vs-rewrite mutation-mode evidence, MAP-Elites/island compatibility
+    reports, and benchmark reproduction records for Heilbronn `n = 11`
+    (`0.0364` vs AlphaEvolve `0.0365`), circle packing `n = 26` and `n = 32`,
+    kissing numbers, bin packing (`0.55%` Weibull excess bin usage vs
+    FunSearch `0.68%`), and prompt/agent evolution on Jigsaw Agile Community
+    Rules (`0.803` test AUC for the evolved agent). Keep docs wording labeled
+    as inspiration-only until those artifacts exist.
 
 - [ ] Add CodeEvolve source boundary before crossover/refinement claims.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source

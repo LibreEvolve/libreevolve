@@ -4263,26 +4263,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README GigaEvo wording scoped until framework-parity evidence
       exists.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
-    Optimization Framework Powered by LLMs and Evolution Algorithms`, describes
-    Redis-backed program storage with lifecycle states, an `asyncio` DAG
-    execution engine, MAP-Elites evolution, LangGraph mutation operators,
-    insight generation, bidirectional lineage tracking, declarative
-    configuration, and AlphaEvolve benchmark reproduction experiments.
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, by
+    Valentin Khrulkov et al. describes Redis-backed program storage with UUID,
+    source code, lifecycle states (`FRESH`, `RUNNING`, `COMPLETE`), metrics,
+    genealogical lineage, DAG stage outputs, and optimistic concurrency;
+    an `asyncio` DAG execution engine with data-flow and execution-order
+    dependencies, caching, and automatic stage skipping; MAP-Elites evolution;
+    LangGraph mutation operators; insight generation; bidirectional lineage
+    tracking; Hydra configuration; diff and rewrite mutation modes; and
+    AlphaEvolve benchmark reproduction experiments. The paper reports
+    Heilbronn `n = 11` at `0.0364` vs AlphaEvolve `0.0365`, circle-packing
+    reproduction attempts, kissing-number recovery without improvements in
+    most dimensions, bin-packing Weibull excess bin usage `0.55%`, and Jigsaw
+    prompt/agent evolution with `0.803` test AUC for the evolved agent.
   - Current evidence: README and `papers/README.md` mark GigaEvo as framework
     inspiration only and say Redis lifecycle database, `asyncio` DAG engine,
     insight stage, and concurrent units are not implemented. Existing README
     TODOs group GigaEvo with other paper-inspired approximations, but README
     does not require a source-specific boundary for `2511.17592`, code
     repository status, architecture-component mapping, lifecycle/DAG/lineage
-    semantics, or benchmark-reproduction claim handling.
+    semantics, Hydra problem-layout mapping, or benchmark-reproduction claim
+    handling.
   - Required result: if README mentions GigaEvo, Redis lifecycle storage,
     DAG-based evaluation, concurrent units, insight stages, bidirectional
     lineage tracking, LangGraph mutation, or GigaEvo benchmark reproduction,
     keep the wording source-scoped until local manifests and reports include
     the `2511.17592` source row, PDF/code hashes, lifecycle-state schema,
     DAG-stage/dependency records, concurrency/caching telemetry, insight and
-    lineage artifacts, benchmark reproduction rows, and a clear distinction
-    between LibreEvolve's current local runner and GigaEvo framework parity.
+    lineage artifacts, Hydra/component-layout mapping, benchmark reproduction
+    rows for the named paper tasks, and a clear distinction between
+    LibreEvolve's current local runner and GigaEvo framework parity.
 
 - [ ] Keep README CodeEvolve wording scoped until operator and benchmark
       evidence exists.

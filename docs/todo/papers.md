@@ -5876,12 +5876,23 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 - [ ] Track GigaEvo framework paper evidence as a source-specific boundary.
   - Paper/source evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
-    Optimization Framework Powered by LLMs and Evolution Algorithms`, describes
-    an AlphaEvolve-inspired open-source framework with Redis program storage,
-    an `asyncio` DAG execution engine, MAP-Elites quality-diversity evolution,
-    LangGraph-based mutation, insight generation, bidirectional lineage
-    tracking, flexible Hydra configuration, and reproduction experiments on
-    AlphaEvolve benchmark problems.
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, by
+    Valentin Khrulkov, Andrey V. Galichin, Denis Bashkirov, Dmitry Vinichenko,
+    Oleg Travkin, Roman Alferov, Andrey Kuznetsov, and Ivan Oseledets was
+    submitted November 17, 2025 as arXiv v1; the cached PDF hash is
+    `9a14bf06a1323e63bf53234e79e44c41e1e78e0dc2f90578d74b928efd067113`.
+    It describes an AlphaEvolve-inspired open-source framework with Redis
+    program storage, an `asyncio` DAG execution engine, MAP-Elites
+    quality-diversity evolution, LangGraph-based mutation, insight generation,
+    bidirectional lineage tracking, flexible Hydra configuration, and
+    reproduction experiments on AlphaEvolve benchmark problems. The paper
+    defines Redis `Program` records with UUID, source, lifecycle state
+    (`FRESH`, `RUNNING`, `COMPLETE`), metrics, genealogy, and DAG stage
+    outputs; DAG stages include validation, execution, validator calls,
+    complexity, insights, lineage analysis, ancestor/descendant collectors,
+    and mutation-context assembly. It links both
+    `https://github.com/AIRI-Institute/gigaevo-core` and
+    `https://github.com/FusionBrainLab/gigaevo-core`.
   - Current gap: `papers/README.md` lists `2511.17592` as framework
     inspiration and says Redis lifecycle database, `asyncio` DAG engine,
     insight stage, and concurrent units are not implemented. Existing paper
@@ -5889,17 +5900,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     GigaEvo PDF itself as a source-specific evidence boundary with
     architecture-component rows, lifecycle-state semantics, DAG-stage
     topology, insight/lineage artifacts, benchmark-reproduction claims, code
-    repository status, or validation that docs do not conflate grouped
-    inspiration status with GigaEvo framework parity.
+    repository status, Hydra problem-layout requirements, or validation that
+    docs do not conflate grouped inspiration status with GigaEvo framework
+    parity.
   - Required result: add paper-manifest and paper-index coverage for
     `2511.17592`: title/authors/arXiv version/date/PDF digest, source license,
     linked code URL/status, architecture-component inventory, Redis program
     lifecycle schema, DAG stage/dependency/caching metadata, insight and
     lineage-analysis records, mutation-operator mode/source details,
-    benchmark-problem and reproduction-result rows, relation to AlphaEvolve
-    and LibreEvolve, and README/ROADMAP/code wording that keeps GigaEvo
-    framework behavior marked missing unless local implementation artifacts
-    and reports prove it.
+    Hydra/problem-layout metadata, benchmark-problem and reproduction-result
+    rows for Heilbronn `n = 11`, circle packing `n = 26`/`n = 32`, kissing
+    numbers, bin packing, and prompt/agent evolution, linked-model rows for
+    Qwen3/Gemini/Qwen embedding/GPT-OSS usage where claimed, relation to
+    AlphaEvolve and LibreEvolve, and README/ROADMAP/code wording that keeps
+    GigaEvo framework behavior marked missing unless local implementation
+    artifacts and reports prove it.
 
 - [ ] Track CodeEvolve paper evidence as a source-specific boundary.
   - Paper/source evidence: local arXiv `2510.14150`, `CODE EVOLVE: an

@@ -4729,27 +4729,39 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add GigaEvo framework gates before roadmap promotion.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source
-    Optimization Framework Powered by LLMs and Evolution Algorithms`, presents
-    an AlphaEvolve-inspired framework with Redis-backed evolutionary units,
-    `asyncio` DAG processing, MAP-Elites evolution, LangGraph mutation,
-    generated insights, bidirectional lineage tracking, Hydra configuration,
-    and benchmark experiments against AlphaEvolve problem families.
+    Optimization Framework Powered by LLMs and Evolution Algorithms`, by
+    Valentin Khrulkov et al. presents an AlphaEvolve-inspired framework with
+    Redis-backed evolutionary units, `asyncio` DAG processing, MAP-Elites
+    evolution, LangGraph mutation, generated insights, bidirectional lineage
+    tracking, Hydra configuration, and benchmark experiments against
+    AlphaEvolve problem families. Its program records carry UUID, source,
+    lifecycle state (`FRESH`, `RUNNING`, `COMPLETE`), metrics, genealogy, and
+    DAG outputs; its DAG supports validation/execution/complexity/insight/
+    lineage/mutation-context stages with caching and automatic stage skipping.
+    It reports single-island experiments with `Qwen3-235B-A22B-Thinking-2507`,
+    Heilbronn `0.0364` vs AlphaEvolve `0.0365`, circle-packing attempts for
+    `n = 26` and `n = 32`, kissing-number recovery without improvements in
+    most dimensions, bin-packing `0.55%` Weibull excess usage, and Jigsaw
+    prompt/agent evolution with `0.803` test AUC.
   - Current evidence: ROADMAP tells readers to keep GigaEvo features labeled
     as inspired unless the paper behavior is actually implemented, and
     `papers/README.md` marks Redis lifecycle database, `asyncio` DAG engine,
     insight stage, and concurrent units as absent. The roadmap does not yet
     define `2511.17592`-specific gates for source metadata, code repository
     status, architecture-component parity, lifecycle-state persistence,
-    DAG-stage dependency/caching evidence, lineage/insight artifacts, or
-    benchmark-reproduction reports.
+    DAG-stage dependency/caching evidence, Hydra/problem-layout parity,
+    lineage/insight artifacts, or benchmark-reproduction reports.
   - Required result: add roadmap gates for `2511.17592`: paper/source manifest
     entry, PDF/cache hash, source-license and code-artifact status,
     Redis-vs-local-storage boundary, program lifecycle state model, DAG
     topology/stage-output/caching records, concurrency telemetry, insight and
     ancestor/descendant lineage-analysis artifacts, mutation-operator
-    provenance, MAP-Elites/island compatibility reports, AlphaEvolve
-    benchmark reproduction rows, and README/papers/code wording that keeps
-    GigaEvo as framework inspiration until local evidence proves otherwise.
+    provenance, Hydra/component-configuration mapping, MAP-Elites/island
+    compatibility reports, AlphaEvolve benchmark reproduction rows plus
+    bin-packing and prompt/agent rows where referenced, source-code URL
+    disambiguation for the AIRI/FusionBrainLab links, and README/papers/code
+    wording that keeps GigaEvo as framework inspiration until local evidence
+    proves otherwise.
 
 - [ ] Add CodeEvolve operator and benchmark gates before roadmap promotion.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source

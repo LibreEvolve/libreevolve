@@ -4664,3 +4664,35 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Table 3 model-contribution statistics, compute environment, reward-hacking
     and mode-collapse diagnostics, and README/papers/code wording that keeps
     MadEvolve as background until local evidence proves those semantics.
+
+- [ ] Add CausalEvolve causal-scratchpad gates before roadmap promotion.
+  - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
+    Open-Ended Discovery with Causal Scratchpad`, models evolve-based
+    scientific discovery as a POMDP over hidden scientific knowledge, uses SCM
+    intervention language for program evaluation, and introduces a causal
+    scratchpad with LLM-generated outcome-level factors, CausalPlanner
+    factor-direction interventions, procedure-level factor discovery,
+    approximate treatment effects, surprise-pattern detection, abductive
+    hypothesis generation, and four-task benchmark comparisons.
+  - Current evidence: ROADMAP says CausalEvolve features remain inspired unless
+    paper behavior is implemented, README describes the causal plugin as fixed
+    token-pattern guidance rather than a causal scratchpad, and
+    `papers/README.md` says there are no LLM-discovered causal variables.
+    Roadmap lacks `2603.14575`-specific gates for source metadata,
+    POMDP/SCM-scoped task records, LLM factor-generation prompts, executable
+    outcome-factor code, intervention actions, inspiration-sorting traces,
+    procedure-factor extraction, treatment-effect estimates, surprise-pattern
+    and abductive-reasoning artifacts, benchmark rows, ablations, seed/step
+    schedules, model provenance, and environment-shift/generalization caveats.
+  - Required result: add roadmap gates for `2603.14575`: paper/source manifest
+    entry, PDF/cache hash, code/source status, causal scratchpad schema,
+    POMDP/SCM and environment metadata, outcome-factor and executable
+    factor-code contracts, CausalPlanner action/reward policy with tau and K
+    parameters, inspiration-selection records, procedure-factor extraction
+    artifacts, approximate treatment-effect reports, surprise-pattern detector
+    outputs, abductive hypothesis/factor lifecycle, scratchpad replay
+    artifacts, Hadamard/autocorrelation/circle-packing/AIME benchmark rows,
+    ShinkaEvolve/CausalPlanner(Meta)/COAT comparison rows, Grok-4.1-FR model
+    provenance, seed and step schedules, and README/papers/code wording that
+    keeps CausalEvolve as causal-guidance inspiration until local evidence
+    proves causal-scratchpad semantics.

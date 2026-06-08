@@ -6225,3 +6225,42 @@ Primary evidence:
     report-generator lineage/comparative-analysis/synthesis artifacts,
     overfitting/reward-hacking diagnostics, and README/ROADMAP wording that
     keeps MadEvolve as background until those mechanisms are locally executed.
+
+- [ ] Add CausalEvolve causal-scratchpad source boundary before causal
+      discovery claims.
+  - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
+    Open-Ended Discovery with Causal Scratchpad`, frames AlphaEvolve-like
+    scientific discovery as a POMDP/SCM process and adds a causal scratchpad.
+    The paper uses LLMs before evolution to define outcome-level factors and
+    executable factor code, uses a CausalPlanner MAB over `(factor, direction)`
+    interventions to select inspiration programs, identifies procedure-level
+    factors from accumulated trials with COAT-style LLM analysis, estimates
+    approximate treatment effects, detects surprise patterns such as sign
+    inversions or quantity shifts, performs abductive reasoning to propose new
+    hypotheses/factors, and reports four-task comparisons against
+    ShinkaEvolve, CausalPlanner(Meta), and COAT.
+  - Current evidence: `libreevolve/plugins/causal.py` explicitly says the local
+    plugin is not the CausalEvolve causal scratchpad. It uses a fixed regex
+    factor list over diff/full mutation text, parent-aware score deltas,
+    pull-once-then-UCB-like factor selection, bounded recent history, malformed
+    evidence counters, and prompt-visible recent outcome summaries. There is
+    no source-specific `2603.14575` code TODO, no POMDP/SCM belief record, no
+    LLM-defined outcome-factor schema or executable factor-code validation, no
+    `(factor, direction)` intervention action records, no top-factor inspiration
+    sorting, no procedure-factor extractor, no treatment-effect estimates, no
+    surprise-pattern detector, no abductive-reasoning scratchpad, no causal
+    hypothesis lifecycle, and no Hadamard/autocorrelation/circle-packing/AIME
+    comparison report tied to this source.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2603.14575`: arXiv version/date/PDF hash, code/source status, causal
+    scratchpad schema, POMDP/SCM task-world metadata, outcome-factor prompt and
+    executable factor-code contracts, deterministic factor metric artifacts,
+    CausalPlanner action/reward policy with tau/K parameters, inspiration
+    selection records, procedure-factor extraction prompts and artifacts,
+    approximate treatment-effect tables, surprise-pattern detection records,
+    abductive hypothesis/factor proposals, scratchpad memory update/replay
+    artifacts, environment-shift/generalization checks, four benchmark task
+    rows, seed/step/result tables, ablation rows for ShinkaEvolve,
+    CausalPlanner(Meta), and COAT, model/runtime provenance, and README/ROADMAP
+    wording that keeps current token-pattern factor guidance separate from
+    CausalEvolve-style causal discovery.

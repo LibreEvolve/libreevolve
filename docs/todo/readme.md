@@ -4231,4 +4231,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     clear distinction between LibreEvolve's current generic evolution surfaces
     and MadEvolve execution semantics.
 
+- [ ] Keep README CausalEvolve wording scoped until causal-scratchpad evidence
+      exists.
+  - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
+    Open-Ended Discovery with Causal Scratchpad`, adds causal memory to
+    AlphaEvolve-like search: LLM-generated outcome-level factors and executable
+    factor code, CausalPlanner MAB interventions over factor directions,
+    procedure-level factor discovery from accumulated trials, approximate
+    treatment-effect estimates, surprise-pattern detection, abductive reasoning
+    for new factors/hypotheses, and four-task comparisons against
+    ShinkaEvolve, CausalPlanner(Meta), and COAT.
+  - Current evidence: README says the causal plugin is a lightweight
+    token-pattern heuristic, not CausalEvolve's causal scratchpad, and
+    `papers/README.md` says detected factors are fixed local token-pattern
+    categories rather than LLM-discovered causal variables. Existing README
+    TODOs keep paper-inspired plugin rows scoped generally, but README does not
+    require a `2603.14575` source-specific boundary for POMDP/SCM framing,
+    executable outcome factors, directional interventions, procedure factors,
+    treatment effects, surprise patterns, abductive hypotheses, benchmark rows,
+    ablations, seed/step schedules, or model provenance.
+  - Required result: if README mentions CausalEvolve, causal scratchpads,
+    outcome-level factors, procedure-level factors, causal planning,
+    treatment-effect guidance, surprise-pattern reasoning, abductive causal
+    hypotheses, or CausalEvolve benchmark improvements, keep wording
+    source-scoped until manifests and reports include the `2603.14575` source
+    row, PDF/code hashes, factor-generation prompts, executable factor metrics,
+    intervention/action records, scratchpad memory artifacts, procedure-factor
+    and treatment-effect tables, abduction outputs, benchmark/baseline/result
+    rows, model/seed/step provenance, and a clear distinction between fixed
+    token-pattern factor guidance and CausalEvolve causal-scratchpad execution.
+
 ## Architecture Description

@@ -4195,14 +4195,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Combinatorial Structures: Ramsey Numbers`. The abstract says AlphaEvolve
     improved lower bounds for nine Ramsey numbers, recovered all exact known
     lower bounds, matched many other best-known lower bounds, and served as a
-    single meta-algorithm yielding search algorithms across those cases.
+    single meta-algorithm yielding search algorithms across those cases. The
+    paper body defines the roadmap target as constructive lower-bound
+    witnesses: an `n`-vertex graph free of `r`-cliques and `s`-independent
+    sets proves `R(r,s) >= n+1`; Algorithm 1 evolves programs from an empty
+    baseline that emit `G1` and prospect `G2`, scoring size and low violations
+    against an expected random-graph baseline; Table 1 covers 28 colored
+    cells; Table 2 groups initialization families; and the PDF links public
+    Google Research construction and search-code artifacts.
   - Current evidence: ROADMAP tracks AlphaEvolve Appendix B constructive-math
     gaps, broad benchmark-fixture gaps, graph/certification ideas, and the
     paper-index background rows. It does not promote `2603.09172` beyond
     potential-future-benchmark status, define Ramsey graph witness schemas,
     require `R(s,t)` lower-bound verifier artifacts, store exact-bound
     recovery records, compare matched best-known bounds, or require a result
-    table that attributes the nine prior/current lower-bound improvements.
+    table that attributes the nine prior/current lower-bound improvements. It
+    also lacks roadmap gates for off-by-one lower-bound normalization,
+    Algorithm 1-compatible primary/prospect scoring, public-artifact ingestion
+    or citation status, Table 1/Table 2 coverage checks, appendix-algorithm
+    provenance for Algorithms 2-34, and baseline caveats distinguishing public
+    computational references, graph-only evidence, and personal
+    communications.
   - Required result: add roadmap gates for `2603.09172`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     Ramsey candidate representation, graph/witness artifact schema,
@@ -4212,7 +4225,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records, witness graph hashes, independent checker outputs, failure and
     negative-result records, and a background-only or benchmark-fixture status
     rule so roadmap claims do not outpace local AlphaEvolve-style Ramsey
-    discovery support.
+    discovery support. Roadmap promotion should additionally require exact
+    `R(r,s) >= n+1` witness semantics, primary/prospect graph run artifacts,
+    expected-violation formula inputs, imported or reproducibly regenerated
+    Google Research construction/code artifacts, 28-cell Table 1 and
+    34-algorithm appendix traceability, initialization-family coverage, and
+    comparison rows for Radziszowski 2024, Exoo/Tatarevic 2015, Exoo 2006,
+    Tatarevic 2020, Exoo 2012, Harborth/Krause 2003, plus explicit
+    graph-only/personal-communication limitations.
 
 - [ ] Add AlphaEvolve local-correction combinatorics gates before roadmap
       promotion.

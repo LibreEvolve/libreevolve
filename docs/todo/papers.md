@@ -5249,7 +5249,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `R(4,18)`, `R(4,19)`, and `R(4,20)`. It also reports recovering all
     exact known Ramsey lower bounds, matching many other best-known lower
     bounds, and using AlphaEvolve as a single meta-algorithm that yields
-    search algorithms for those results.
+    search algorithms for those results. In the introduction, the certificate
+    semantics are explicit: a graph with `n` vertices, no `r`-clique, and no
+    `s`-independent set proves `R(r,s) >= n+1`. Algorithm 1 defines the
+    AlphaEvolve Ramsey setup as evolving code from an empty baseline; each
+    program returns a valid primary graph `G1` and a larger prospect graph
+    `G2`; `G1` is size-scored with boosts for matching or exceeding `n_SoTA`;
+    and `G2` receives a bonus from low `r`-clique plus `s`-independent-set
+    violations relative to a random-graph expectation. Table 1 reports 28
+    colored lower-bound cells, Table 2 groups search algorithms by
+    initialization family, and the appendix summarizes Algorithms 2-34. The
+    PDF embeds public Google Research links for the nine improved-bound graph
+    constructions and the AI-discovered search algorithms.
   - Current gap: `papers/README.md` lists `2603.09172` as a constructive math
     benchmark candidate with `Not implemented; potential future benchmark`,
     and the active TODO coverage does not yet track this paper-specific
@@ -5257,7 +5268,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     family/status registries, but not Ramsey-specific graph witness schemas,
     `R(s,t)` lower-bound verifier contracts, exact-bound recovery records,
     matched-best-known result rows, or per-result prior/current attribution
-    for the nine reported improvements.
+    for the nine reported improvements. They also do not preserve the
+    off-by-one distinction between graph size and implied Ramsey lower bound,
+    Algorithm 1's primary/prospect graph scoring evidence, artifact URLs for
+    improved-bound constructions and generated code, the 28-cell Table 1
+    coverage boundary, Gemini-3 summary/provenance caveats for Table 2, or the
+    paper's source distinction between public references, graph-only prior
+    evidence, and personal-communication baselines.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2603.09172`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
@@ -5268,7 +5285,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     provenance, seed/budget records, witness graph hashes, independent checker
     outputs, reproducibility status, and README/ROADMAP wording that treats
     Ramsey-number discovery as missing paper evidence rather than implemented
-    LibreEvolve support.
+    LibreEvolve support. Paper evidence should additionally capture the
+    `R(r,s) >= n+1` witness semantics, primary/prospect graph output schema,
+    expected-violation scoring formula inputs, Table 1 status classes
+    (exact-match, best-known-match, and new-result), Table 2 initialization
+    taxonomy, appendix algorithm identifiers 2-34, public Google Research
+    construction/code links, and baseline-reference caveats for Radziszowski
+    2024, Exoo/Tatarevic 2015, Exoo 2006, Tatarevic 2020, Exoo 2012,
+    Harborth/Krause 2003, and graph-only or personal-communication sources.
 
 - [ ] Track AlphaEvolve local-correction combinatorics paper evidence.
   - Paper/source evidence: arXiv `2603.06692`, submitted March 4, 2026, is

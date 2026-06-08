@@ -5671,7 +5671,16 @@ Primary evidence:
     from 234 to 237. The abstract also says AlphaEvolve recovered all exact
     known Ramsey lower bounds, matched many other best-known lower bounds,
     and acted as a single meta-algorithm yielding search algorithms across
-    those results.
+    those results. The paper body defines the lower-bound certificate as a
+    graph on `n` vertices with no clique of size `r` and no independent set of
+    size `s`, establishing `R(r,s) >= n+1`; Algorithm 1 evolves programs that
+    return `(G1,G2)`, scores valid `G1` by graph size with boosts relative to
+    `n_SoTA`, and gives `G2` a prospect bonus from the ratio of observed
+    `r`-clique plus `s`-independent-set violations to the random-graph
+    expectation. The appendix gives Algorithms 2-10 for the nine improved
+    cells and Algorithms 11-34 for the other colored Table 1 cells, while the
+    PDF links public Google Research locations for improved-bound
+    constructions and AI-discovered search code.
   - Current evidence: `papers/README.md` lists `2603.09172` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has no first-class code TODO for this
@@ -5680,7 +5689,14 @@ Primary evidence:
     matched-best-known benchmark ledger, no per-Ramsey-number result table,
     no artifact policy for witness graphs or search algorithms, and no
     single-meta-algorithm report showing one evolved search procedure family
-    covering the new, recovered, and matched bounds.
+    covering the new, recovered, and matched bounds. It also lacks a
+    `run()`-return contract for primary/prospect Ramsey graphs, expected
+    violation baseline scoring, off-by-one lower-bound normalization
+    (`n`-vertex witness versus `R(r,s) >= n+1`), artifact ingestion for the
+    linked Google Research improved-bound graphs and code, or implementation
+    hooks for the paper's initialization families: random/stochastic,
+    Paley/cubic/quadratic-residue algebraic seeding, circulant/cyclic/sum-free
+    bootstrap, and hybrid/fractal/spectral seeding.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2603.09172`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
@@ -5691,7 +5707,16 @@ Primary evidence:
     algorithm provenance, seed/budget records, witness graph hashes, failed
     construction records, independent checker outputs, and README/ROADMAP
     wording that keeps Ramsey-number discovery as missing evidence until
-    local implementation and reports exist.
+    local implementation and reports exist. The implementation boundary should
+    include an exact clique/independent-set certifier, normalized result rows
+    that record both witness vertex count and implied Ramsey lower bound,
+    Algorithm 1-compatible primary/prospect scoring fields, imported or
+    reproducibly regenerated public construction artifacts, per-algorithm
+    appendix classifications for all 28 colored Table 1 cells, baseline
+    comparison metadata for Radziszowski 2024, Exoo/Tatarevic 2015, Exoo 2006,
+    Tatarevic 2020, Harborth/Krause 2003, and explicit caveats where prior
+    work is only a graph or personal communication rather than a published
+    search algorithm.
 
 - [ ] Add AlphaEvolve local-correction combinatorics boundary.
   - Spec evidence: arXiv `2603.06692`, `Evolving Local Corrections for Global

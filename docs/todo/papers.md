@@ -5603,7 +5603,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     is `Finite-time Analysis of the Multiarmed Bandit Problem`. The paper
     presents UCB1 for `K` arms with unknown reward distributions supported in
     `[0, 1]`, defines regret as expected loss from not always playing the best
-    arm, and proves logarithmic finite-time regret bounds.
+    arm, proves logarithmic finite-time regret bounds, and gives adjacent
+    UCB2, epsilon-n-greedy, and UCB1-NORMAL variants under separate
+    assumptions.
   - Current gap: `papers/README.md` lists `auer-cesa-bianchi-fischer-2002` as
     the foundational bandit-policy source for LibreEvolve's heuristic
     UCB-style backend router, and README/ROADMAP/code wording says the router
@@ -5611,14 +5613,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     a paper-facing evidence boundary with the bounded-support, iid-arm,
     regret-definition, reward-normalization, and proof-scope assumptions
     needed to prevent backend-routing telemetry from being read as canonical
-    UCB1 finite-time analysis.
+    UCB1 finite-time analysis. It also does not require variant-level status
+    rows showing that UCB2, epsilon-n-greedy, and UCB1-NORMAL are unsupported
+    unless separately implemented and validated.
   - Required result: add paper-manifest and paper-index coverage for
     `auer-cesa-bianchi-fischer-2002`: source URL/cache/hash, title/authors/
     venue/year, source-license or mirror status, UCB1 theorem-scope metadata,
     reward-support and iid/stationarity assumptions, regret-definition fields,
-    scheduler-linkage records, and README/ROADMAP wording that treats
-    LibreEvolve's backend scheduler as heuristic unless those assumptions and
-    regret reports are explicitly validated.
+    scheduler-linkage records, variant support matrix, and README/ROADMAP
+    wording that treats LibreEvolve's backend scheduler as heuristic unless
+    those assumptions and regret reports are explicitly validated.
 
 - [ ] Track GigaEvo framework paper evidence as a source-specific boundary.
   - Paper/source evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source

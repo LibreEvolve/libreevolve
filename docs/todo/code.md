@@ -6051,7 +6051,9 @@ Primary evidence:
     `Finite-time Analysis of the Multiarmed Bandit Problem`, defines UCB1 for
     independent bandit arms with reward distributions supported in `[0, 1]`
     and proves logarithmic finite-time regret bounds. It frames regret as the
-    expected loss from not always playing the best machine.
+    expected loss from not always playing the best machine, initializes by
+    playing each arm once, and selects by empirical mean plus
+    `sqrt(2 ln n / n_i)`.
   - Current evidence: `papers/README.md` marks the UCB1 row as a foundational
     bandit-policy source, and LibreEvolve implements a heuristic UCB-style
     backend router over archive-admitted valid fitness-improvement rewards
@@ -6059,14 +6061,17 @@ Primary evidence:
     current scheduler is not canonical regret-analyzed UCB1, but there is no
     source-specific code gate for the local UCB1 PDF id, bounded-support
     assumptions, iid-arm assumptions, regret definition, reward normalization
-    policy, or proof/non-proof status in scheduler telemetry.
+    policy, stable arm identity, initialization semantics, stationary-reward
+    diagnostics, or proof/non-proof status in scheduler telemetry.
   - Required result: add source-boundary metadata and scheduler validation for
     `auer-cesa-bianchi-fischer-2002`: PDF hash/source status, paper-title and
     theorem-scope fields, arm/reward-support assumptions, reward-normalization
-    evidence, iid/stationarity disclaimer, selected-arm/index telemetry,
-    regret-report fields when applicable, and docs checks that distinguish
-    heuristic UCB-style backend routing from canonical UCB1 finite-time regret
-    guarantees.
+    evidence, stable backend-as-arm identity records, initialization policy,
+    empirical-mean/confidence-radius calculation telemetry, iid/stationarity
+    disclaimer, selected-arm/index traces, regret-baseline fields when
+    applicable, unsupported flags for UCB2, epsilon-n-greedy, and
+    UCB1-NORMAL, and docs checks that distinguish heuristic UCB-style backend
+    routing from canonical UCB1 finite-time regret guarantees.
 
 - [ ] Add GigaEvo framework source boundary before inspiration claims become
       reproduction claims.

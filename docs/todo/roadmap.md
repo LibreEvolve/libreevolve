@@ -4516,20 +4516,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exploration/exploitation dilemma for multi-armed bandits, defines regret
     as expected loss from not always playing the best arm, and proves UCB1
     finite-time logarithmic regret for arbitrary reward distributions with
-    support in `[0, 1]`.
+    support in `[0, 1]` using play counts, empirical reward means, and a
+    confidence-radius index.
   - Current evidence: ROADMAP can describe LibreEvolve's heuristic UCB-style
     backend routing and already warns that canonical UCB1 assumptions,
     calibrated reward scaling, and regret bounds are not proven. The roadmap
     does not yet tie that scheduler caveat to the local UCB1 paper source id,
     PDF/cache hash, bounded-support and iid-arm assumptions, reward
-    normalization, selected-arm/index telemetry, or proof-scope metadata.
+    normalization, stable arm identity, selected-arm/index telemetry, or
+    proof-scope metadata.
   - Required result: add roadmap gates for `auer-cesa-bianchi-fischer-2002`:
     paper/source manifest entry, PDF/cache hash, source-license or mirror
     status, UCB1 theorem-scope fields, reward-support normalization,
-    iid/stationarity disclaimers, selected-backend/index traces, regret report
-    fields when applicable, and README/papers/code wording that keeps current
-    backend scheduling heuristic until canonical UCB1 assumptions and
-    finite-time-regret evidence are validated.
+    stable backend-as-arm identity, iid/stationarity disclaimers,
+    selected-backend/index traces, regret report fields when applicable,
+    unsupported status for UCB2, epsilon-n-greedy, and UCB1-NORMAL, and
+    README/papers/code wording that keeps current backend scheduling heuristic
+    until canonical UCB1 assumptions and finite-time-regret evidence are
+    validated.
 
 - [ ] Add GigaEvo framework gates before roadmap promotion.
   - Spec evidence: local arXiv `2511.17592`, `GigaEvo: An Open Source

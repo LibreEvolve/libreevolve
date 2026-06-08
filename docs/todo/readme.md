@@ -4080,21 +4080,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `Finite-time Analysis of the Multiarmed Bandit Problem`, analyzes UCB1
     for independent arms with reward distributions supported in `[0, 1]`,
     defines regret as expected loss from not always playing the best arm, and
-    proves finite-time logarithmic regret bounds.
+    proves finite-time logarithmic regret bounds using empirical reward means,
+    play counts, and a confidence-radius index.
   - Current evidence: README describes LibreEvolve's backend selector as
     `UCB-style` and the paper table lists UCB1 as inspiration for heuristic
     backend routing. ROADMAP/code caveats already warn against canonical UCB1
     overclaims, but README does not require a source-specific boundary for the
     local UCB1 PDF id, reward-support assumptions, iid/stationarity
-    assumptions, reward-normalization policy, selected-arm/index telemetry, or
-    regret-report proof status.
+    assumptions, reward-normalization policy, backend-as-arm stability,
+    selected-arm/index telemetry, or regret-report proof status.
   - Required result: when README discusses UCB1, UCB-style routing, backend
     bandits, or scheduler reward, keep wording source-scoped until manifests
     and reports record the UCB1 source row, bounded-reward normalization,
-    iid/stationarity disclaimer, selected-backend/index telemetry, regret
-    metrics where applicable, and a clear statement that heuristic backend
-    routing is not a finite-time-regret UCB1 reproduction without those
-    assumptions.
+    iid/stationarity disclaimer, stable backend-as-arm identity,
+    selected-backend/index telemetry, regret metrics where applicable, variant
+    unsupported status for UCB2, epsilon-n-greedy, and UCB1-NORMAL where
+    relevant, and a clear statement that heuristic backend routing is not a
+    finite-time-regret UCB1 reproduction without those assumptions.
 
 - [ ] Keep README GigaEvo wording scoped until framework-parity evidence
       exists.

@@ -76,20 +76,26 @@ Primary evidence:
 
 - [ ] Add Figure 3 evolve-block marker spelling provenance.
   - Spec evidence: AlphaEvolve Section 2.1 names the special marker comments
-    as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF text
-    extraction from Figure 3(a) shows one opening marker as
-    `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
+    as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
+    while PDF text extraction from Figure 3(a) on page 6 shows one opening
+    marker as `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
+    The same Figure 3 caption says the user-provided file has blocks marked
+    for evolution plus a special `evaluate` function invoked by evaluators.
   - Current evidence: LibreEvolve deliberately enforces the local exact
     Python marker grammar `# EVOLVE-BLOCK-START/END` and rejects malformed or
-    unsupported marker-like syntax. Existing Figure 3 exhibit TODOs require
-    source/prompt/output excerpt artifacts, but they do not explicitly classify
-    this marker-text variant as canonical section prose, rendered figure text,
-    extraction/OCR uncertainty, or paper typo.
+    unsupported marker-like syntax. A direct parser check accepts canonical
+    `# EVOLVE-BLOCK-START a` but does not recognize `# EVOLVE-BLOCK START` as
+    a start marker; when that space variant is paired with
+    `# EVOLVE-BLOCK-END`, validation reports `orphan_end`. Existing Figure 3
+    exhibit TODOs require source/prompt/output excerpt artifacts, but they do
+    not explicitly classify this marker-text variant as canonical section
+    prose, rendered figure text, extraction/OCR uncertainty, or paper typo.
   - Required result: record marker text per paper source location and
     subfigure, preserve source artifact hashes or screenshots for the variant,
-    classify the discrepancy before using it in docs, and keep parser/support
-    claims scoped to the implemented local grammar unless a deliberate
-    compatibility mode for the space variant is added.
+    classify the discrepancy before using it in docs, add tests or a
+    compatibility decision record if the space variant should ever be accepted,
+    and keep parser/support claims scoped to the implemented local grammar
+    unless a deliberate compatibility mode for the space variant is added.
 
 - [ ] Add candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.

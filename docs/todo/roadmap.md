@@ -247,18 +247,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Keep marker roadmap wording scoped until Figure 3 marker-variant
       metadata exists.
   - Spec evidence: AlphaEvolve Section 2.1 names the marker comments as
-    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF text extraction
-    from Figure 3(a) shows one opening marker as `# EVOLVE-BLOCK START` and
-    another as `# EVOLVE-BLOCK-START`.
+    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
+    while PDF text extraction from Figure 3(a) on page 6 shows one opening
+    marker as `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
   - Current evidence: ROADMAP can point to local Python evolve-block marker
-    parsing, validation, and unsupported marker diagnostics. It does not yet
-    require source-location metadata that classifies the Figure 3 marker-text
-    variant before roadmap wording treats it as canonical paper prose, rendered
-    figure text, extraction/OCR uncertainty, or paper typo.
+    parsing, validation, unsupported marker diagnostics, and the exact local
+    parser behavior that treats the Figure 3 space variant as unsupported when
+    paired with an end marker. It does not yet require source-location metadata
+    that classifies the Figure 3 marker-text variant before roadmap wording
+    treats it as canonical paper prose, rendered figure text, extraction/OCR
+    uncertainty, or paper typo.
   - Required result: when Figure 3 marker source metadata lands, update
     ROADMAP, README, papers index, and code/paper TODO entries together so
     roadmap language separates local marker grammar work from any deliberate
-    compatibility or documentation decision about the space variant.
+    compatibility or documentation decision about the space variant and does
+    not imply support until parser tests prove that support.
 
 - [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
       abstraction-choice reports exist.

@@ -202,20 +202,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README marker syntax wording scoped until Figure 3 marker-variant
       metadata exists.
   - Spec evidence: AlphaEvolve Section 2.1 names the marker comments as
-    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF text extraction
-    from Figure 3(a) shows one opening marker as `# EVOLVE-BLOCK START` and
-    another as `# EVOLVE-BLOCK-START`.
+    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
+    while PDF text extraction from Figure 3(a) on page 6 shows one opening
+    marker as `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
   - Current evidence: README documents LibreEvolve's exact local Python marker
     grammar and fail-closed behavior for malformed or unsupported marker-like
-    syntax. It does not yet have source-location metadata that classifies the
-    Figure 3 marker variant before deciding whether README should mention it
-    as canonical paper text, rendered figure text, extraction/OCR uncertainty,
-    or paper typo.
+    syntax. Current parser behavior accepts the canonical hyphenated start
+    marker and does not support `# EVOLVE-BLOCK START`; paired with
+    `# EVOLVE-BLOCK-END`, that variant fails as `orphan_end`. README does not
+    yet have source-location metadata that classifies the Figure 3 marker
+    variant before deciding whether README should mention it as canonical paper
+    text, rendered figure text, extraction/OCR uncertainty, or paper typo.
   - Required result: when Figure 3 marker source metadata lands, update README,
     ROADMAP, papers index, and code/paper TODO entries together so README
     distinguishes supported local marker syntax from source-exhibit
     reproduction and does not imply support for the space variant unless that
-    compatibility mode is intentionally implemented.
+    compatibility mode is intentionally implemented and tested.
 
 - [ ] Keep README candidate-abstraction wording scoped to current divergence
       until abstraction-choice evidence exists.

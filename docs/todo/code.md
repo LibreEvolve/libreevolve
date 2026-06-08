@@ -4741,3 +4741,32 @@ Primary evidence:
     taxonomy, baseline identities, and README/ROADMAP wording that keeps
     LEVI-style cost-aware search architecture as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add PACEvolve long-horizon consistency source boundary.
+  - Spec evidence: arXiv `2601.10657`, `PACEvolve: Enabling Long-Horizon
+    Progress-Aware Consistent Evolution`, was submitted January 15, 2026 and
+    revised January 16, 2026. Its abstract says current LLM-in-the-loop
+    evolutionary systems lack systematic process management and suffer from
+    context pollution, mode collapse, and weak collaboration. PACEvolve
+    combines hierarchical context management with pruning, momentum-based
+    backtracking to escape local minima, and a self-adaptive sampling policy
+    that unifies backtracking and crossover for dynamic search coordination,
+    reporting state-of-the-art results on LLM-SR and KernelBench plus
+    record-surpassing solutions on Modded NanoGPT.
+  - Current evidence: LibreEvolve has prompt history, recent failed-child
+    snippets, fixed mixed parent sampling, island migration, MAP-Elites
+    retention, and archive/run manifests, but no PACEvolve source row, no
+    context-pollution detector, no hierarchical context pruning policy, no
+    momentum-based backtracking controller, no unified crossover/backtracking
+    sampler, no weak-collaboration diagnostics across parallel trajectories,
+    and no LLM-SR, KernelBench, or Modded NanoGPT benchmark reports.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2601.10657`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve prompt/search dynamics,
+    context-pollution metrics, hierarchical context-management artifacts,
+    pruning policy traces, mode-collapse/stagnation diagnostics,
+    momentum-backtracking state, crossover/backtracking coordination schema,
+    adaptive sampling records, trajectory-collaboration evidence, LLM-SR/
+    KernelBench/Modded-NanoGPT benchmark taxonomy, baseline identities, and
+    README/ROADMAP wording that keeps PACEvolve-style consistency support as
+    missing evidence until local implementation and reports exist.

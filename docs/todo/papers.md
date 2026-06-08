@@ -71,6 +71,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve as AlphaEvolve-style grounded against incorrect base-LLM
     suggestions.
 
+- [ ] Track hypothesis backtracking and abandoned-branch evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Section 2.4.
+  - Requirement: AlphaEvolve frames scientific/program discovery as ideation,
+    exploration, backtracking on unpromising hypotheses, experimentation, and
+    validation, with cascades pruning less-promising solutions before larger
+    budget is spent.
+  - Partial status: LibreEvolve records candidate failures, evaluator
+    rejections, admission outcomes, quarantine streams, proposal
+    `idea`/`rationale`/`hypothesis` metadata, bounded failure-memory snippets,
+    and run-local hypothesis summaries for valid programs.
+  - Current gap: paper-facing reports do not identify a proposal/hypothesis
+    branch, track when evidence made that branch unpromising, record a
+    backtrack or abandonment decision, or show that subsequent prompt/database
+    sampling redirected to an ancestor, sibling, or different idea family.
+    Individual rejection logs and failure snippets are not enough to prove the
+    AlphaEvolve process claim about backtracking during discovery.
+  - Required result: add paper-visible hypothesis-branch reports with branch
+    id, proposal/idea-family labels, candidate ids explored, evaluator/cascade
+    evidence, abandonment or backtrack reason, fallback target, prompt and
+    failure-memory linkage, suppression/retry policy, resumed-search outcome,
+    and claim-readiness validation before using AlphaEvolve-style
+    backtracking wording.
+
 - [ ] Track candidate-embedded evaluator entrypoint parity.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's example codebase contains an

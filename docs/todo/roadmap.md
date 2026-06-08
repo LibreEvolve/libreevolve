@@ -865,6 +865,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO entries together so they neither underclaim current bounded
     hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
 
+- [ ] Keep backtracking roadmap wording scoped until abandoned-hypothesis
+      branch evidence exists.
+  - Spec evidence: AlphaEvolve's Introduction frames discovery as involving
+    ideation, exploration, backtracking on unpromising hypotheses,
+    experimentation, and validation, while Section 2.4 describes pruning less
+    promising solutions through evaluation cascades.
+  - Current evidence: `ROADMAP.md` can describe candidate failures,
+    rejected-candidate diagnostics, bounded failure memory, proposal metadata,
+    cascade stages, and run-local hypothesis summaries. Those are individual
+    records, not branch-level evidence that a hypothesis was abandoned and the
+    search deliberately backtracked or redirected.
+  - Required result: when hypothesis-branch reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with branch ids,
+    proposal/idea-family labels, explored candidate ids, evaluator/cascade
+    evidence, abandonment or backtrack decisions, fallback ancestor or
+    alternative-branch targets, prompt/failure-memory linkage,
+    suppression/retry policy, resumed-search outcomes, and claim-readiness
+    checks so roadmap wording separates failure logging from
+    AlphaEvolve-style backtracking on unpromising hypotheses.
+
 - [ ] Keep scientific-discovery roadmap wording scoped to automated evaluators
       versus manual-experiment or LLM-only idea-review workflows.
   - Spec evidence: AlphaEvolve's Discussion says its main limitation is that

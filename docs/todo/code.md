@@ -1670,6 +1670,28 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
+- [ ] Add hypothesis backtracking and abandoned-branch evidence.
+  - Spec evidence: AlphaEvolve's Introduction frames discovery as a prolonged
+    process of ideation, exploration, backtracking on unpromising hypotheses,
+    experimentation, and validation. Section 2.4 further describes pruning
+    less-promising solutions through evaluation cascades before spending more
+    budget.
+  - Current evidence: LibreEvolve records malformed-output failures,
+    evaluator rejections, admission outcomes, bounded failure-memory snippets,
+    proposal `idea`/`rationale`/`hypothesis` metadata, and run-local
+    hypothesis summaries for valid programs. Those records show individual
+    failures and retained proposal text, but they do not identify a hypothesis
+    branch as unpromising, record a deliberate backtrack to an ancestor or
+    alternative idea family, or prove that later prompt/database sampling was
+    redirected away from the abandoned line.
+  - Required result: add versioned branch-level hypothesis state with proposal
+    or idea-family ids, explored candidate ids, evaluator and cascade evidence
+    that made the branch unpromising, abandonment/backtrack decisions,
+    fallback ancestor or alternative-branch targets, prompt/failure-memory
+    linkage, suppression or retry policy, resumed search outcome, and report
+    validation before claiming AlphaEvolve-style backtracking on unpromising
+    hypotheses rather than only logging rejected candidates.
+
 - [ ] Add initial-pool syntactic and functional divergence reporting.
   - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
     enables discovery of candidates that are substantially different from the

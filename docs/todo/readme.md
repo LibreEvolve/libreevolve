@@ -62,6 +62,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     review fields so README distinguishes local validity mechanics from
     AlphaEvolve-style grounding against incorrect base-LLM suggestions.
 
+- [ ] Keep README backtracking wording scoped until abandoned-hypothesis
+      branch evidence exists.
+  - Spec evidence: AlphaEvolve's Introduction describes discovery as including
+    ideation, exploration, backtracking on unpromising hypotheses,
+    experimentation, and validation; Section 2.4 says cascades can prune less
+    promising solutions quickly.
+  - Current evidence: README can describe rejected candidates, quarantine
+    streams, bounded failure feedback, proposal metadata, and run-local
+    hypothesis summaries. It should not imply that LibreEvolve records
+    branch-level hypothesis abandonment, backtracking targets, or redirected
+    sampling after an idea family becomes unpromising.
+  - Required result: when hypothesis-branch reports land, update README,
+    ROADMAP, papers index, and code/paper TODOs with branch ids,
+    proposal/idea-family labels, explored candidate ids, evaluator/cascade
+    evidence, abandonment or backtrack reasons, fallback target, prompt and
+    failure-memory linkage, suppression/retry policy, resumed-search outcome,
+    and claim-readiness checks.
+
 - [ ] Keep README multiple-score prompt-context wording scoped until
       metric-diverse inspiration evidence exists.
   - Spec evidence: AlphaEvolve Section 2.4 says multiple metrics can improve a

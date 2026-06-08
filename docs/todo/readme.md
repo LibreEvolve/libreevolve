@@ -3540,4 +3540,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     report outcomes. Avoid implying LibreEvolve supports Adaptive
     Auto-Harness-style deployment without those artifacts.
 
+- [ ] Keep README Meta-Harness optimization claims absent or source-scoped
+      until harness-code search evidence exists.
+  - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End
+    Optimization of Model Harnesses`, introduces an outer-loop system that
+    searches over harness code using an agentic proposer with filesystem
+    access to prior source code, scores, and execution traces. Its abstract
+    reports gains in online text classification with fewer context tokens,
+    retrieval-augmented IMO-level math reasoning across held-out models, and
+    TerminalBench-2 agentic coding.
+  - Current evidence: README documents LibreEvolve's current candidate
+    workspace mutation, prompt construction, evaluator artifacts, run
+    histories, and benchmark boundaries. It does not list `2603.28052`, treat
+    harness code as the evolved artifact, expose a source/score/trace corpus
+    of prior harness candidates, provide an agentic harness proposer, report
+    context-token efficiency, evaluate held-out model transfer, or benchmark
+    discovered harnesses against hand-engineered baselines.
+  - Required result: if README mentions Meta-Harness, end-to-end harness
+    optimization, harness-code search, agentic proposer, filesystem-visible
+    prior candidates, source/score/trace search history, context-token
+    efficiency, held-out model transfer, online text classification, RAG math,
+    or TerminalBench-2 discovered harnesses, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show harness
+    candidate schemas, proposer records, corpus layout, mutation/evaluation
+    traces, transfer reports, benchmark baselines, and report outcomes. Avoid
+    implying LibreEvolve supports Meta-Harness-style harness-code optimization
+    without those artifacts.
+
 ## Architecture Description

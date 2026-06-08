@@ -5385,3 +5385,35 @@ Primary evidence:
     forecasting benchmark metadata, baseline identities, ablation records, and
     README/ROADMAP wording that keeps adaptive open-ended harness deployment
     claims as missing evidence until local implementation and reports exist.
+
+- [ ] Add Meta-Harness outer-loop harness-code search boundary.
+  - Spec evidence: arXiv `2603.28052`, `Meta-Harness: End-to-End
+    Optimization of Model Harnesses`, was submitted March 30, 2026. Its
+    abstract says LLM-system performance depends not only on model weights but
+    also on the harness code that determines what information to store,
+    retrieve, and present to the model. Meta-Harness is an outer-loop system
+    that searches over harness code for LLM applications, using an agentic
+    proposer with filesystem access to source code, scores, and execution
+    traces of prior candidates. It reports gains on online text
+    classification, retrieval-augmented IMO-level math reasoning across held-
+    out models, and agentic coding on TerminalBench-2.
+  - Current evidence: LibreEvolve searches over candidate program workspaces
+    and records prompt/evaluator/history artifacts, but it has no
+    `2603.28052` source row, no first-class harness-code search target, no
+    agentic proposer role with filesystem access to prior harness candidates,
+    no source/score/trace corpus for harness variants, no harness-level
+    mutation and evaluation loop distinct from candidate-program evolution,
+    no context-token efficiency report, no held-out model transfer evaluation,
+    and no TerminalBench-2 agentic-coding harness benchmark.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2603.28052`: arXiv id/version/date/PDF hash, authors, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    candidate search, harness-code candidate schema, agentic proposer role
+    schema, filesystem-visible source/score/trace corpus records, prior-
+    candidate retrieval policy, harness mutation and evaluation records,
+    context storage/retrieval/presentation artifacts, context-token budget and
+    efficiency metrics, held-out model transfer reports, online text-
+    classification/RAG-math/TerminalBench-2 benchmark metadata, hand-
+    engineered baseline identities, and README/ROADMAP wording that keeps
+    end-to-end harness-code optimization as missing evidence until local
+    implementation and reports exist.

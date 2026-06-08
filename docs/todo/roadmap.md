@@ -3965,3 +3965,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     identities, and a background-only or benchmark-fixture status rule so
     roadmap claims do not outpace local Adaptive Auto-Harness-style sustained
     deployment support.
+
+- [ ] Add Meta-Harness outer-loop harness-code search gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2603.28052`, submitted March 30, 2026, introduces
+    `Meta-Harness: End-to-End Optimization of Model Harnesses`. The abstract
+    frames harness code as the mechanism controlling what information an LLM
+    system stores, retrieves, and presents, then searches over that harness
+    code with an agentic proposer that inspects prior source code, scores, and
+    execution traces through a filesystem.
+  - Current evidence: ROADMAP tracks candidate program evolution, prompt
+    context, run artifacts, AHE, AI Harness Engineering, Adaptive
+    Auto-Harness, RHO, HarnessFix, and SIA gates. It does not mention
+    `2603.28052` as a first-class roadmap gate, define harness-code candidate
+    schemas, expose prior harness candidates through a filesystem corpus,
+    record agentic proposer decisions, measure context-token efficiency,
+    evaluate held-out model transfer, or compare discovered harnesses against
+    hand-engineered TerminalBench-2 baselines.
+  - Required result: add roadmap gates for `2603.28052`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    harness-code candidate schema, agentic proposer role records, filesystem
+    source/score/trace corpus layout, prior-candidate retrieval policy,
+    harness mutation/evaluation records, information storage/retrieval/
+    presentation artifacts, context-token budget and efficiency telemetry,
+    held-out model transfer reports, online text-classification/RAG-math/
+    TerminalBench-2 benchmark records, hand-engineered baseline identities,
+    and a background-only or benchmark-fixture status rule so roadmap claims
+    do not outpace local Meta-Harness-style end-to-end harness optimization.

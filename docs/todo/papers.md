@@ -4973,3 +4973,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproducibility status, and README/ROADMAP wording that treats Adaptive
     Auto-Harness as missing paper evidence rather than implemented LibreEvolve
     support.
+
+- [ ] Track Meta-Harness outer-loop harness-code search paper evidence.
+  - Paper/source evidence: arXiv `2603.28052`, submitted March 30, 2026, is
+    titled `Meta-Harness: End-to-End Optimization of Model Harnesses`. Its
+    abstract says LLM systems depend on harness code that decides what
+    information to store, retrieve, and present to the model, and that text
+    optimizers are poorly matched to harness optimization because they
+    compress feedback too aggressively. Meta-Harness searches over harness
+    code with an agentic proposer that accesses source code, scores, and
+    execution traces for prior candidates through a filesystem. The abstract
+    reports a 7.7 point online text-classification gain using 4x fewer context
+    tokens, a 4.7 point average gain on 200 IMO-level retrieval-augmented math
+    problems across five held-out models, and harnesses that surpass hand-
+    engineered baselines on TerminalBench-2.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2603.28052` as its own source. Existing rows mention
+    Meta-Harness only as a related baseline or applicability boundary while
+    covering AHE, AI Harness Engineering, Adaptive Auto-Harness, RHO,
+    HarnessFix, and SIA. They do not track Meta-Harness-specific harness-code
+    search, agentic proposer filesystem access, prior source/score/trace
+    corpora, context-token efficiency, held-out model transfer, or
+    TerminalBench-2 harness benchmark evidence.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2603.28052`: title/authors/arXiv version/date/PDF digest, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness assumptions, harness-code candidate schema, agentic proposer
+    records, filesystem corpus layout, prior source/score/trace metadata,
+    candidate retrieval policy, harness mutation/evaluation records,
+    information storage/retrieval/presentation artifacts, context-token
+    efficiency reports, online text-classification metadata, RAG math and
+    held-out model transfer records, TerminalBench-2 benchmark metadata, hand-
+    engineered baseline identities, code/artifact availability if any,
+    reproducibility status, and README/ROADMAP wording that treats
+    Meta-Harness as missing paper evidence rather than implemented LibreEvolve
+    support.

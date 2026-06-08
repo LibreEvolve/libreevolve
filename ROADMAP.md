@@ -11,6 +11,11 @@ LibreEvolve has:
 
 - Python seed programs and seed workspaces with load-time-validated optional
   `# EVOLVE-BLOCK-START/END` regions
+- existing-codebase integration reports under
+  `runtime.history.existing_codebase_integration_report`, inventorying
+  candidate workspace marker spans, skeleton hashes, unmarked-file hashes,
+  seed-source references, and explicit remaining gaps for original codebase
+  identity, marker-only setup diffs, and setup-change counts
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement with unknown named block
   targets rejected before partial replacement

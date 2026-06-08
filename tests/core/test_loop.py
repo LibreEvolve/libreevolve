@@ -45,6 +45,7 @@ from libreevolve.core.loop import (
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
+    validate_existing_codebase_integration_report,
     validate_task_spec_artifact_resolution_report,
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
@@ -3812,6 +3813,87 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
         "process_parity_overclaim",
+    }
+
+
+def test_runtime_history_reports_existing_codebase_marker_inventory():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        {
+            "primary_file": "main.py",
+            "files": {
+                "main.py": (
+                    "from pkg.helpers import helper\n"
+                    "# EVOLVE-BLOCK-START solve\n"
+                    "def solve():\n"
+                    "    return helper()\n"
+                    "# EVOLVE-BLOCK-END\n"
+                ),
+                "pkg/helpers.py": (
+                    "def keep():\n"
+                    "    return 1\n"
+                    "# EVOLVE-BLOCK-START helper\n"
+                    "def helper():\n"
+                    "    return keep()\n"
+                    "# EVOLVE-BLOCK-END\n"
+                ),
+                "README.md": "fixture notes\n",
+            },
+        }
+    ]
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["existing_codebase_integration_report"]
+
+    assert report["schema"] == "libreevolve.existing_codebase_integration_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_existing_codebase_integration_report(report)["ok"] is True
+    assert report["program_count"] == 1
+    assert report["workspace_program_count"] == 1
+    assert report["marked_python_file_count"] == 2
+    assert report["evolved_block_count"] == 2
+    assert report["unmarked_file_count"] == 1
+    assert report["marker_contract"]["start_marker"] == "# EVOLVE-BLOCK-START"
+    assert report["integration_boundary"]["original_codebase_identity"] == (
+        "not_recorded"
+    )
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["marker_span_inventory"] is True
+    assert report["claim_readiness"]["marker_only_setup_diff"] is False
+    assert "pre_marker_source_hashes" in report["claim_readiness"]["remaining_gap"]
+
+    record = report["program_records"][0]
+    assert record["primary_file"] == "main.py"
+    assert len(record["workspace_sha256"]) == 64
+    files = {item["path"]: item for item in record["marked_files"]}
+    assert set(files) == {"main.py", "pkg/helpers.py"}
+    main = files["main.py"]
+    assert main["block_count"] == 1
+    assert len(main["skeleton_sha256"]) == 64
+    block = main["blocks"][0]
+    assert block["name"] == "solve"
+    assert len(block["span_id"]) == 24
+    assert block["score_linked"] is False
+    assert record["unmarked_files"][0]["path"] == "README.md"
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["paper_faithful_existing_codebase_integration"] = True
+    validation = validate_existing_codebase_integration_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "integration_parity_overclaim",
     }
 
 

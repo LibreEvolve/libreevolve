@@ -32,6 +32,7 @@ from libreevolve.core.config import Config
 from libreevolve.core.candidate import (
     CandidateWorkspace,
     apply_workspace_mutation,
+    extract_evolve_blocks,
     validate_evolve_blocks,
     validate_candidate_workspace_limits,
 )
@@ -5124,6 +5125,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 paper_metric_contract,
             )
         ),
+        "existing_codebase_integration_report": (
+            _existing_codebase_integration_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "alphaevolve_process_exhibit_report": (
             _alphaevolve_process_exhibit_report(run_dir, programs)
         ),
@@ -5153,6 +5160,326 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _existing_codebase_integration_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    seed_sources = _existing_codebase_seed_sources(startup_manifest)
+    program_records = [
+        record
+        for program in programs
+        if (record := _existing_codebase_program_record(program)) is not None
+    ]
+    marked_file_count = sum(record["marked_python_file_count"] for record in program_records)
+    evolved_block_count = sum(record["evolved_block_count"] for record in program_records)
+    unmarked_file_count = sum(record["unmarked_file_count"] for record in program_records)
+    report = {
+        "schema": "libreevolve.existing_codebase_integration_report.v1",
+        "source": "runtime_candidate_workspaces_and_seed_sources",
+        "seed_source_count": len(seed_sources),
+        "seed_sources": seed_sources[:50],
+        "seed_sources_truncated": len(seed_sources) > 50,
+        "program_count": len(programs),
+        "workspace_program_count": len(program_records),
+        "marked_python_file_count": marked_file_count,
+        "evolved_block_count": evolved_block_count,
+        "unmarked_file_count": unmarked_file_count,
+        "program_records": program_records[:50],
+        "program_records_limit": 50,
+        "program_records_truncated": len(program_records) > 50,
+        "marker_contract": {
+            "language": "python",
+            "start_marker": "# EVOLVE-BLOCK-START",
+            "end_marker": "# EVOLVE-BLOCK-END",
+            "marker_grammar": "python_comment_exact_token_optional_manifest_safe_name",
+            "unsupported_marker_policy": "non_python_marker_like_syntax_rejected",
+            "skeleton_hash_policy": "sha256_python_file_with_evolved_block_content_placeholders",
+        },
+        "integration_boundary": {
+            "original_codebase_identity": "not_recorded",
+            "marker_added_diff_summary": "not_recorded",
+            "setup_change_counts": "not_recorded",
+            "upstream_release_artifact_identity": "not_recorded",
+            "evaluator_entrypoint_continuity": (
+                "startup_evaluator_sources_present"
+                if seed_sources
+                else "not_recorded"
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "marker_span_inventory": evolved_block_count > 0,
+            "skeleton_hashes_recorded": marked_file_count > 0,
+            "unmarked_file_inventory": unmarked_file_count > 0,
+            "original_codebase_identity": False,
+            "marker_only_setup_diff": False,
+            "paper_faithful_existing_codebase_integration": False,
+            "remaining_gap": [
+                "original_codebase_or_release_artifact_id",
+                "pre_marker_source_hashes",
+                "marker_added_setup_diff_summary",
+                "evaluator_call_path_before_after_marker_insertion",
+                "setup_change_counts",
+                "codebase_scale_fixture_with_upstream_identity",
+            ],
+        },
+    }
+    report["validation"] = validate_existing_codebase_integration_report(report)
+    return report
+
+
+def _existing_codebase_seed_sources(
+    startup_manifest: Mapping[str, object],
+) -> list[dict]:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    seed_sources = (
+        problem.get("seed_sources")
+        if isinstance(problem.get("seed_sources"), list)
+        else []
+    )
+    records = []
+    for source in seed_sources:
+        if not isinstance(source, Mapping):
+            continue
+        record = {
+            "id": source.get("id"),
+            "kind": source.get("kind"),
+            "path": source.get("path") or source.get("relative_path"),
+            "sha256": source.get("sha256"),
+            "workspace": source.get("workspace") is True,
+        }
+        records.append({key: value for key, value in record.items() if value is not None})
+    return records
+
+
+def _existing_codebase_program_record(program: Program) -> dict | None:
+    workspace = program.workspace()
+    marked_files = []
+    unmarked_files = []
+    for path, content in sorted(workspace.files.items()):
+        if not path.endswith(".py"):
+            unmarked_files.append(_unmarked_file_record(path, content))
+            continue
+        marker_error = validate_evolve_blocks(content)
+        if marker_error is not None:
+            continue
+        blocks = extract_evolve_blocks(content)
+        if blocks:
+            marked_files.append(_marked_file_record(path, content, blocks))
+        else:
+            unmarked_files.append(_unmarked_file_record(path, content))
+    if not marked_files and not unmarked_files:
+        return None
+    evolved_block_count = sum(file["block_count"] for file in marked_files)
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "primary_file": workspace.primary_file,
+        "file_count": len(workspace.files),
+        "static_file_count": len(workspace.static_files),
+        "workspace_sha256": _workspace_sha256(workspace),
+        "marked_python_file_count": len(marked_files),
+        "evolved_block_count": evolved_block_count,
+        "unmarked_file_count": len(unmarked_files),
+        "marked_files": marked_files[:25],
+        "marked_files_truncated": len(marked_files) > 25,
+        "unmarked_files": unmarked_files[:25],
+        "unmarked_files_truncated": len(unmarked_files) > 25,
+        "integration_evidence": (
+            "runtime_workspace_marker_inventory_not_upstream_setup_diff"
+        ),
+    }
+
+
+def _marked_file_record(path: str, content: str, blocks: list) -> dict:
+    skeleton = _evolve_block_skeleton_text(content, blocks)
+    return {
+        "path": path,
+        "language": "python",
+        "marker_grammar": "canonical_python_comment",
+        "file_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        "skeleton_sha256": hashlib.sha256(skeleton.encode("utf-8")).hexdigest(),
+        "block_count": len(blocks),
+        "blocks": [
+            _evolve_block_span_record(path, content, block, index)
+            for index, block in enumerate(blocks)
+        ],
+    }
+
+
+def _evolve_block_span_record(path: str, content: str, block: object, index: int) -> dict:
+    name = getattr(block, "name", "") or f"block_{index}"
+    span_key = f"{path}:{name}:{index}:{getattr(block, 'start', 0)}:{getattr(block, 'end', 0)}"
+    block_content = getattr(block, "content", "")
+    return {
+        "span_id": hashlib.sha256(span_key.encode("utf-8")).hexdigest()[:24],
+        "name": name,
+        "index": index,
+        "start_line": _line_number_for_offset(content, getattr(block, "start", 0)),
+        "content_start_line": _line_number_for_offset(
+            content,
+            getattr(block, "content_start", 0),
+        ),
+        "content_end_line": _line_number_for_offset(
+            content,
+            getattr(block, "content_end", 0),
+        ),
+        "end_line": _line_number_for_offset(content, getattr(block, "end", 0)),
+        "content_sha256": hashlib.sha256(block_content.encode("utf-8")).hexdigest(),
+        "score_linked": False,
+    }
+
+
+def _evolve_block_skeleton_text(content: str, blocks: list) -> str:
+    pieces = []
+    cursor = 0
+    for index, block in enumerate(sorted(blocks, key=lambda item: item.content_start)):
+        pieces.append(content[cursor:block.content_start])
+        pieces.append(f"<EVOLVE_BLOCK_CONTENT:{getattr(block, 'name', '')}:{index}>")
+        cursor = block.content_end
+    pieces.append(content[cursor:])
+    return "".join(pieces)
+
+
+def _line_number_for_offset(content: str, offset: int) -> int:
+    safe_offset = max(0, min(len(content), offset))
+    return content.count("\n", 0, safe_offset) + 1
+
+
+def _unmarked_file_record(path: str, content: str) -> dict:
+    return {
+        "path": path,
+        "sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        "bytes": len(content.encode("utf-8")),
+    }
+
+
+def validate_existing_codebase_integration_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.existing_codebase_integration_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "existing-codebase integration report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "seed_source_count",
+        "seed_sources",
+        "program_count",
+        "workspace_program_count",
+        "marked_python_file_count",
+        "evolved_block_count",
+        "unmarked_file_count",
+        "program_records",
+        "marker_contract",
+        "integration_boundary",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"integration report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.existing_codebase_integration_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported integration report schema"})
+    if report.get("source") != "runtime_candidate_workspaces_and_seed_sources":
+        issues.append({"code": "invalid_source", "message": "unsupported integration report source"})
+    seed_sources = report.get("seed_sources")
+    if not isinstance(seed_sources, list):
+        issues.append({"code": "invalid_seed_sources", "message": "seed_sources must be a list"})
+        seed_sources = []
+    _validate_report_count(report, "seed_source_count", len(seed_sources), issues)
+    records = report.get("program_records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_program_records", "message": "program_records must be a list"})
+        records = []
+    marked_count = 0
+    block_count = 0
+    unmarked_count = 0
+    for record in records:
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_program_record", "message": "program records must be objects"})
+            continue
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append({"code": "invalid_program_id", "message": "program_id must be non-empty text"})
+        if not _is_sha256_hex(record.get("workspace_sha256")):
+            issues.append({"code": "invalid_workspace_hash", "message": "workspace_sha256 must be sha256 hex"})
+        marked_files = record.get("marked_files")
+        if not isinstance(marked_files, list):
+            issues.append({"code": "invalid_marked_files", "message": "marked_files must be a list"})
+            marked_files = []
+        unmarked_files = record.get("unmarked_files")
+        if not isinstance(unmarked_files, list):
+            issues.append({"code": "invalid_unmarked_files", "message": "unmarked_files must be a list"})
+            unmarked_files = []
+        marked_count += int(record.get("marked_python_file_count", 0)) if isinstance(record.get("marked_python_file_count"), int) else 0
+        block_count += int(record.get("evolved_block_count", 0)) if isinstance(record.get("evolved_block_count"), int) else 0
+        unmarked_count += int(record.get("unmarked_file_count", 0)) if isinstance(record.get("unmarked_file_count"), int) else 0
+        for file_record in marked_files:
+            if not isinstance(file_record, Mapping):
+                issues.append({"code": "invalid_marked_file", "message": "marked file records must be objects"})
+                continue
+            if not _is_sha256_hex(file_record.get("file_sha256")):
+                issues.append({"code": "invalid_file_hash", "message": "marked file hash must be sha256 hex"})
+            if not _is_sha256_hex(file_record.get("skeleton_sha256")):
+                issues.append({"code": "invalid_skeleton_hash", "message": "skeleton hash must be sha256 hex"})
+            blocks = file_record.get("blocks")
+            if not isinstance(blocks, list):
+                issues.append({"code": "invalid_blocks", "message": "blocks must be a list"})
+                continue
+            if file_record.get("block_count") != len(blocks):
+                issues.append({"code": "block_count_mismatch", "message": "block_count must match blocks length"})
+            for block in blocks:
+                if not isinstance(block, Mapping):
+                    issues.append({"code": "invalid_block", "message": "block records must be objects"})
+                    continue
+                if not isinstance(block.get("span_id"), str) or len(block.get("span_id", "")) != 24:
+                    issues.append({"code": "invalid_span_id", "message": "span_id must be a stable 24-char id"})
+                if not _is_sha256_hex(block.get("content_sha256")):
+                    issues.append({"code": "invalid_block_content_hash", "message": "block content hash must be sha256 hex"})
+                if block.get("score_linked") is not False:
+                    issues.append({"code": "score_link_overclaim", "message": "block score linkage must remain false"})
+    _validate_report_count(report, "workspace_program_count", len(records), issues)
+    _validate_report_count(report, "marked_python_file_count", marked_count, issues)
+    _validate_report_count(report, "evolved_block_count", block_count, issues)
+    _validate_report_count(report, "unmarked_file_count", unmarked_count, issues)
+    contract = report.get("marker_contract")
+    if not isinstance(contract, Mapping):
+        issues.append({"code": "invalid_marker_contract", "message": "marker_contract must be an object"})
+    elif contract.get("start_marker") != "# EVOLVE-BLOCK-START" or contract.get("end_marker") != "# EVOLVE-BLOCK-END":
+        issues.append({"code": "invalid_marker_contract", "message": "marker contract must use canonical markers"})
+    boundary = report.get("integration_boundary")
+    if not isinstance(boundary, Mapping):
+        issues.append({"code": "invalid_integration_boundary", "message": "integration_boundary must be an object"})
+    elif boundary.get("original_codebase_identity") != "not_recorded":
+        issues.append({"code": "codebase_identity_overclaim", "message": "original codebase identity must remain not_recorded"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        if readiness.get("paper_faithful_existing_codebase_integration") is not False:
+            issues.append({"code": "integration_parity_overclaim", "message": "paper-faithful integration must remain false"})
+        if readiness.get("marker_only_setup_diff") is not False:
+            issues.append({"code": "marker_diff_overclaim", "message": "marker-only setup diff must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "existing-codebase integration report must not claim full parity"})
+    return {
+        "schema": "libreevolve.existing_codebase_integration_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _task_spec_artifact_resolution_report(

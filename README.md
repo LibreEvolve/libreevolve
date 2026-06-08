@@ -2402,6 +2402,16 @@ before mutation or seed loading proceeds.
 Successful workspace mutations revalidate marker structure across the full
 resulting file set, including newly created files and untouched siblings, before
 returning a mutated candidate.
+Completed manifests include
+`runtime.history.existing_codebase_integration_report`, which inventories
+runtime candidate workspaces for Python marker spans, stable span ids, skeleton
+hashes with evolved block content replaced by placeholders, unmarked-file
+hashes, seed-source references, and the current marker grammar. The report is
+bounded evidence for local workspace marker preservation, not proof of
+AlphaEvolve's existing-codebase integration claim: original upstream codebase
+identity, pre-marker source hashes, marker-only setup diffs, evaluator call
+paths before/after marker insertion, portable release/source-root identity, and
+setup-change counts remain open.
 Unmarked seed programs remain fully supported.
 For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested

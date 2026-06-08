@@ -54,6 +54,17 @@ counts, threshold failures, failure reasons, sample/retry/subprocess/timeout
 totals, elapsed seconds, promotion rates, main-test exposure, early-prune
 counts, stop reasons, and `claim_ready: false` limitations for missing
 difficulty/test-set/denominator/cost evidence.
+Completed manifests also include
+`runtime.history.existing_codebase_integration_report` with schema
+`libreevolve.existing_codebase_integration_report.v1`. This report scans
+runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` markers and
+records seed-source references, per-program workspace hashes, marked Python
+files, stable evolved-block span ids, marker line spans, block-content hashes,
+skeleton hashes with evolved content replaced by placeholders, and unmarked
+file hashes. The report is intentionally scoped to runtime workspace evidence:
+original upstream codebase identity, pre-marker source hashes, marker-added
+setup diffs, evaluator call paths before/after marker insertion, portable
+release/source-root identity, and setup-change counts remain open.
 JSONL streams use a local complete-line durability policy. Accepted rows are
 strict-serialized before append, written as newline-terminated records, flushed,
 and fsynced before the append helper returns. Before appending to an existing

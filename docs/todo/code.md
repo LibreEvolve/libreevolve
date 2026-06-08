@@ -41,7 +41,8 @@ Primary evidence:
     those runners and abstractions, not making the current Python-only
     divergence manifest-visible.
 
-- [ ] Add existing-codebase minimal-marker integration provenance.
+- [ ] Extend existing-codebase minimal-marker integration provenance beyond
+      runtime workspace evidence.
   - Spec evidence: AlphaEvolve Section 2.1 says its input API supports evolving
     multiple components across existing codebases with minimal changes, by
     adding special comment markers around blocks to be evolved. The local
@@ -58,21 +59,19 @@ Primary evidence:
     semantics for other files; `libreevolve/problems/loader.py` records seed
     workspace source paths and static-file hashes, and the `workspace_math`
     fixture proves nested Python files plus JSON/binary resources can be loaded
-    and validated. Those mechanics prove marker parsing and local workspace
-    preservation for seed workspaces, but they do not prove an AlphaEvolve-style
-    integration workflow for a pre-existing codebase: baseline codebase
-    identity, marker-only setup diff, untouched skeleton preservation across a
-    real upstream tree, language/comment syntax, component span inventory,
-    evaluator entrypoint continuity, or measured setup burden.
-  - Required result: add integration metadata and validators for existing
-    codebases: original codebase/artifact id, pre-marker source hashes,
-    marker-added diff summary, evolved-block span ids, unchanged skeleton
-    hashes, language/comment grammar, evaluator-call path before/after marker
-    insertion, setup-change counts, source-root/release-artifact identity for
-    copied static assets, a codebase-scale fixture with multiple marked
-    components and preserved unmarked files, and README/ROADMAP wording that
-    separates local evolve-block parsing from paper-faithful minimal-change
-    codebase integration evidence.
+    and validated. Completed manifests now include
+    `runtime.history.existing_codebase_integration_report` with schema
+    `libreevolve.existing_codebase_integration_report.v1`, inventorying
+    runtime candidate workspace marker spans, stable span ids, skeleton hashes,
+    unmarked-file hashes, seed-source references, marker grammar, and explicit
+    claim-readiness gaps.
+  - Required result: add integration metadata and validators for original
+    codebase/artifact id, pre-marker source hashes, marker-added setup diff
+    summary, evaluator-call path before/after marker insertion, setup-change
+    counts, source-root/release-artifact identity for copied static assets, a
+    codebase-scale fixture with upstream identity, and README/ROADMAP wording
+    that separates runtime evolve-block inventory from paper-faithful
+    minimal-change codebase integration evidence.
 
 - [ ] Add Figure 3 evolve-block marker spelling provenance.
   - Spec evidence: AlphaEvolve Section 2.1 names the special marker comments

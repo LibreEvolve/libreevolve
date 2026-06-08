@@ -267,8 +267,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the current honest Python-primary policy record nor overclaims
     AlphaEvolve-grade arbitrary-language/codebase support.
 
-- [ ] Keep evolve-block integration roadmap wording scoped until
-      minimal-marker evidence exists.
+- [ ] Extend evolve-block integration roadmap wording beyond runtime
+      minimal-marker evidence.
   - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the
     system evolve multiple components in existing codebases while requiring
     only minimal changes. The local AlphaEvolve PDF page 4 describes adding
@@ -279,17 +279,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Python evolve-block markers, marker validation, unsupported non-Python
     marker diagnostics, workspace materialization, file topology support,
     `best_workspace/` export, and the `workspace_math` nested package plus
-    JSON/static-asset smoke fixture. They do not yet require evidence for a
-    pre-existing codebase integration workflow: marker-only setup diff,
-    preserved skeleton hashes across a real upstream tree, language/comment
-    syntax, evolved-block span inventory, evaluator-call continuity,
-    source-root/release-artifact identity for copied static assets, or
-    setup-change counts.
-  - Required result: when existing-codebase integration metadata and validators
-    land, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording separates marker parser support from
-    AlphaEvolve-style minimal-change integration evidence and does not treat
-    local workspace smoke tests as codebase-integration proof.
+    JSON/static-asset smoke fixture. They now also cite
+    `runtime.history.existing_codebase_integration_report`, which records
+    runtime candidate workspace marker spans, stable span ids, skeleton hashes,
+    unmarked-file hashes, seed-source references, marker grammar, and explicit
+    upstream-integration gaps.
+  - Required result: when upstream codebase identity, pre-marker hashes,
+    marker-only setup diffs, evaluator-call paths before/after marker
+    insertion, setup-change counts, and portable static-source identities land,
+    update ROADMAP, README, papers index, and code/paper TODO entries together
+    so roadmap wording separates runtime marker inventory from AlphaEvolve-
+    style minimal-change integration evidence and does not treat local
+    workspace smoke tests as codebase-integration proof.
 
 - [ ] Keep marker roadmap wording scoped until Figure 3 marker-variant
       metadata exists.

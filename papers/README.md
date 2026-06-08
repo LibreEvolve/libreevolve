@@ -394,6 +394,17 @@ budget events, evaluator artifacts, and best exports. Standalone task-spec
 examples, evolvable-span ids, embedded-only problem definitions, score-field
 links to evolved code paths, and deeper per-id history resolution remain open.
 
+AlphaEvolve existing-codebase integration note: completed manifests now include
+`runtime.history.existing_codebase_integration_report` with schema
+`libreevolve.existing_codebase_integration_report.v1`. The report inventories
+runtime candidate workspaces for Python `# EVOLVE-BLOCK-START/END` marker
+spans, stable span ids, skeleton hashes, unmarked-file hashes, seed-source
+references, and the current marker grammar. It remains `claim_ready: false`
+because original upstream codebase identity, pre-marker source hashes,
+marker-only setup diffs, evaluator-call continuity before/after marker
+insertion, portable release/source-root identity, and setup-change counts
+remain open.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

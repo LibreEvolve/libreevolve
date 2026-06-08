@@ -70,6 +70,17 @@
       ],
       "paper_label": "No context in the prompt",
       "paper_citations": ["2506.13131"],
+      "paper_scope_boundary": {
+        "alphaevolve_setup": "explicit_problem_specific_context_removed",
+        "current_scope": "parent_inspiration_failure_plugin_context_disabled",
+        "paper_match_status": "over_broad_not_equivalent",
+        "required_future_evidence": [
+          "explicit_context_source_absence_prompt_history",
+          "prompt_section_classification",
+          "core_evolutionary_prompt_ingredients_audit",
+          "no_evolution_separation"
+        ]
+      },
       "rationale": "Tests whether prompt-visible prior programs, feedback, and external context contribute to search quality."
     },
     {

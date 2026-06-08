@@ -3164,12 +3164,13 @@ aggregation metadata for the plotted y-axis. It also does not prove the
 `No evolution` condition by checking executed prompt/history records for the
 same initial program and absent evolutionary database parent, inspiration,
 previous-candidate, and archive-feedback context. It also does not prove the
-`No context in the prompt` condition with a paper-faithful explicit-context
-boundary: the current registry is broader than AlphaEvolve's description
-because it disables parent/inspiration and feedback-like context rather than
-only proving that explicit problem-specific context was absent while the normal
-evolutionary prompt ingredients were handled separately. It also does not prove
-the `Small base LLM only` condition
+`No context in the prompt` condition with executed prompt-history evidence:
+the registry row now carries a validated `paper_scope_boundary` that marks the
+current parent/inspiration/failure/plugin section-disable scope as
+`over_broad_not_equivalent` to AlphaEvolve's explicit-problem-context removal,
+but it still does not prove that explicit context sources were absent while
+normal evolutionary prompt ingredients were handled separately. It also does
+not prove the `Small base LLM only` condition
 with backend metadata and call-ledger evidence that every mutation-generation
 call used one configured small/base-capable model with no large-model routing
 or fallback. It also does not prove the `No meta prompt evolution` condition
@@ -3241,7 +3242,10 @@ policy, target aggregation policy, equal-budget fractions, required result
 fields, and paper citation metadata. The `No full-file evolution` registry row
 also has a validated `paper_scope_boundary` that keeps its current localized
 single-file diff/no-topology scope explicitly marked as not equivalent to
-AlphaEvolve's tensor-decomposition loss-function-only ablation.
+AlphaEvolve's tensor-decomposition loss-function-only ablation. The
+`No context in the prompt` row similarly records a validated explicit-context
+boundary that marks the current broad context-disable labels as not equivalent
+to paper-faithful proof of absent explicit problem-specific context.
 The validator's JSON report separates historical download fields from current
 local PDF presence and Git-tracked status. It also enforces safe paper ids,
 portable `papers/<name>.pdf` file names, unique normalized file targets,

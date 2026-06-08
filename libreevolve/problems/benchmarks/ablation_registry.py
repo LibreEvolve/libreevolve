@@ -32,6 +32,17 @@ NO_FULL_FILE_EVOLUTION_REQUIRED_EVIDENCE = frozenset({
     "executed_prompt_history",
     "candidate_edit_surface_audit",
 })
+NO_CONTEXT_IN_PROMPT_SCOPE_BOUNDARY = {
+    "alphaevolve_setup": "explicit_problem_specific_context_removed",
+    "current_scope": "parent_inspiration_failure_plugin_context_disabled",
+    "paper_match_status": "over_broad_not_equivalent",
+}
+NO_CONTEXT_IN_PROMPT_REQUIRED_EVIDENCE = frozenset({
+    "explicit_context_source_absence_prompt_history",
+    "prompt_section_classification",
+    "core_evolutionary_prompt_ingredients_audit",
+    "no_evolution_separation",
+})
 REQUIRED_REPORT_FIELDS = frozenset({
     "variant_id",
     "target_id",
@@ -185,10 +196,30 @@ def _validate_variant(
     if not isinstance(citations, list) or "2506.13131" not in citations:
         issues.append(AblationRegistryIssue("missing_alphaevolve_citation", "paper_citations must include 2506.13131", variant_id))
     if variant_id == "no_full_file_evolution":
-        _validate_no_full_file_evolution_scope_boundary(
+        _validate_variant_scope_boundary(
             variant.get("paper_scope_boundary"),
             variant_id,
-            issues,
+            expected_fields=NO_FULL_FILE_EVOLUTION_SCOPE_BOUNDARY,
+            expected_evidence=NO_FULL_FILE_EVOLUTION_REQUIRED_EVIDENCE,
+            missing_code="missing_no_full_file_scope_boundary",
+            invalid_boundary_code="invalid_no_full_file_scope_boundary",
+            invalid_evidence_code="invalid_no_full_file_future_evidence",
+            missing_message="No full-file evolution must record its AlphaEvolve loss-function-only boundary",
+            evidence_message="No full-file evolution boundary must list the required future evidence",
+            issues=issues,
+        )
+    if variant_id == "no_context_in_prompt":
+        _validate_variant_scope_boundary(
+            variant.get("paper_scope_boundary"),
+            variant_id,
+            expected_fields=NO_CONTEXT_IN_PROMPT_SCOPE_BOUNDARY,
+            expected_evidence=NO_CONTEXT_IN_PROMPT_REQUIRED_EVIDENCE,
+            missing_code="missing_no_context_scope_boundary",
+            invalid_boundary_code="invalid_no_context_scope_boundary",
+            invalid_evidence_code="invalid_no_context_future_evidence",
+            missing_message="No context in the prompt must record its explicit-context boundary",
+            evidence_message="No context in the prompt boundary must list the required future evidence",
+            issues=issues,
         )
 
 
@@ -208,30 +239,38 @@ def _validate_assertion(
         issues.append(AblationRegistryIssue("missing_assertion_value", "config assertion value is required", variant_id))
 
 
-def _validate_no_full_file_evolution_scope_boundary(
+def _validate_variant_scope_boundary(
     value: object,
     variant_id: str,
+    *,
+    expected_fields: dict[str, str],
+    expected_evidence: frozenset[str],
+    missing_code: str,
+    invalid_boundary_code: str,
+    invalid_evidence_code: str,
+    missing_message: str,
+    evidence_message: str,
     issues: list[AblationRegistryIssue],
 ) -> None:
     if not isinstance(value, dict):
         issues.append(AblationRegistryIssue(
-            "missing_no_full_file_scope_boundary",
-            "No full-file evolution must record its AlphaEvolve loss-function-only boundary",
+            missing_code,
+            missing_message,
             variant_id,
         ))
         return
-    for field, expected in NO_FULL_FILE_EVOLUTION_SCOPE_BOUNDARY.items():
+    for field, expected in expected_fields.items():
         if value.get(field) != expected:
             issues.append(AblationRegistryIssue(
-                "invalid_no_full_file_scope_boundary",
+                invalid_boundary_code,
                 f"paper_scope_boundary.{field} must be {expected}",
                 variant_id,
             ))
     evidence = value.get("required_future_evidence")
-    if not isinstance(evidence, list) or set(evidence) != NO_FULL_FILE_EVOLUTION_REQUIRED_EVIDENCE:
+    if not isinstance(evidence, list) or set(evidence) != expected_evidence:
         issues.append(AblationRegistryIssue(
-            "invalid_no_full_file_future_evidence",
-            "No full-file evolution boundary must list the required future evidence",
+            invalid_evidence_code,
+            evidence_message,
             variant_id,
         ))
 

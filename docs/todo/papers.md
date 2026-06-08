@@ -1041,11 +1041,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     program with no database-selected parent/inspiration programs, archive
     admission feedback, or previous-candidate resurfacing, rather than relying
     on declarative `candidate_source` or `archive_admission_enabled` labels.
-    For the `No context in the prompt` variant, correct the registry's
-    over-broad semantics: the paper describes removing explicit
-    problem-specific context, not removing the current program or evolutionary
-    prior-program context. Require executed prompt-history and
-    prompt-diagnostic proof that explicit context sources were absent, require
+    For the `No context in the prompt` variant, keep the registry's validated
+    over-broad non-equivalence boundary until executed prompt-history and
+    prompt-diagnostic proof shows explicit context sources were absent, require
     a paper-facing classification of local plugin/retrieval/failure sections
     as explicit context or core prompt ingredients, and separately record which
     current-program, parent, inspiration, and rendered-result sections remained

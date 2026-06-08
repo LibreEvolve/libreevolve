@@ -413,10 +413,11 @@ is not yet an AlphaEvolve reproduction.
   every proposal uses the same initial program and excludes evolutionary
   database parent, inspiration, previous-candidate, and archive-feedback
   context.
-- For the Figure 8 `No context in the prompt` ablation, correct the current
-  over-broad registry semantics and require prompt-history or
-  prompt-diagnostic proof that explicit problem/context sources were absent,
-  while separately recording whether normal current-program,
+- For the Figure 8 `No context in the prompt` ablation, keep the registry's
+  validated explicit-context `paper_scope_boundary` marked over-broad and not
+  equivalent until prompt-history or prompt-diagnostic proof shows that
+  explicit problem/context sources were absent, while separately recording
+  whether normal current-program,
   prior-program/inspiration, and rendered-result prompt ingredients remained
   present as part of the evolutionary prompt.
 - For the Figure 8 `Small base LLM only` ablation, require backend metadata and

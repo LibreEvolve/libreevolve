@@ -740,11 +740,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prompt is built from the same initial program without database-selected
     parents, inspirations, previous-candidate feedback, or archive admission
     feedback. It also does not yet prove a paper-faithful
-    `No context in the prompt` setup: the current registry disables
-    parent/inspiration and feedback-like sections even though the paper
-    describes removing explicit problem-specific context. README wording should
-    require executed prompt-history proof that explicit context sources were
-    absent, while separately reporting which current-program,
+    `No context in the prompt` setup: the registry now records a validated
+    `paper_scope_boundary` marking the current parent/inspiration/failure/
+    plugin section-disable scope as `over_broad_not_equivalent` to
+    AlphaEvolve's explicit problem-specific context removal. README wording
+    should still require executed prompt-history proof that explicit context
+    sources were absent, while separately reporting which current-program,
     parent/inspiration, rendered-result, failure, plugin, or retrieval sections
     were treated as core evolutionary prompt ingredients versus explicit
     context. It also does not yet prove the
@@ -774,10 +775,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     exists. Require
     README wording to distinguish `No evolution` registry labels from executed
     evidence that the same initial program was repeatedly prompted without
-    evolutionary database feedback. Require
-    README wording to distinguish `No context in the prompt` registry labels
-    from executed prompt-history evidence of absent explicit context sources
-    and from separate evidence about which normal evolutionary prompt sections
+    evolutionary database feedback. Keep README wording tied to the
+    `No context in the prompt` validated over-broad non-equivalence boundary
+    until executed prompt-history evidence proves absent explicit context
+    sources and separately identifies which normal evolutionary prompt sections
     remained present. Require README wording to distinguish generic
     `Small base LLM only` labels from executed backend telemetry proving a
     single small/base model actually handled every relevant generation call.

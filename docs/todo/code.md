@@ -4831,3 +4831,29 @@ Primary evidence:
     identities, and README/ROADMAP wording that keeps mechanistic discovery
     claims source-scoped until local trace diagnostics and replay reports
     exist.
+
+- [ ] Add Zarankiewicz reinforced-search application source boundary.
+  - Spec evidence: arXiv `2605.01120`, `New Bounds for Zarankiewicz Numbers
+    via Reinforced LLM Evolutionary Search`, was submitted May 1, 2026 and
+    revised May 7, 2026. Its abstract says OpenEvolve, an open-source
+    AlphaEvolve-style LLM evolutionary algorithm, produced exact values for
+    `Z(11,21,3,3)=116`, `Z(11,22,3,3)=121`, and `Z(12,22,3,3)=132`; lower
+    bounds for 41 more Zarankiewicz numbers; and four matched closed cases.
+    It reports generation algorithms, implementation details, and costs under
+    `$30` per Zarankiewicz parameter combination.
+  - Current evidence: LibreEvolve tracks AlphaEvolve, selected math sources,
+    benchmark contracts, prompt/run artifacts, and cost-aware search papers,
+    but no Zarankiewicz source row or runnable extremal-graph fixture. There
+    is no bipartite-graph construction evaluator, `K_{s,t}`-free verifier,
+    exact/lower-bound table, generated construction algorithm capture,
+    proof/check artifact, parameter-combination manifest, reproducible cost
+    accounting, or OpenEvolve-to-LibreEvolve application boundary.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.01120`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz
+    parameter schema, bipartite graph representation, `K_{s,t}`-free
+    validation logic, exact-value/lower-bound records, generated construction
+    algorithm artifacts, computational-cost report, verifier/proof status,
+    benchmark baselines and upper-bound references, reproducibility metadata,
+    and README/ROADMAP wording that keeps Zarankiewicz discovery claims as
+    missing application evidence until local fixtures and reports exist.

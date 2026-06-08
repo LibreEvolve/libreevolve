@@ -4409,3 +4409,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/artifact availability if any, and README/ROADMAP wording that treats
     mechanistic trace diagnostics as missing paper evidence rather than
     implemented LibreEvolve support.
+
+- [ ] Track Zarankiewicz reinforced-search paper evidence.
+  - Paper/source evidence: arXiv `2605.01120`, submitted May 1, 2026 and last
+    revised May 7, 2026, is titled `New Bounds for Zarankiewicz Numbers via
+    Reinforced LLM Evolutionary Search`. Its abstract says OpenEvolve, an
+    open-source evolutionary algorithm based on LLMs, produced the first exact
+    values for `Z(11,21,3,3)=116`, `Z(11,22,3,3)=121`, and
+    `Z(12,22,3,3)=132`; lower bounds for 41 more Zarankiewicz numbers; and
+    four matched closed cases. The paper also reports generated construction
+    algorithms, implementation details, and computational costs under `$30`
+    per Zarankiewicz parameter combination.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.01120`. Existing rows cover AlphaEvolve, mathematical
+    follow-on problem sources, combinatorics examples, cost-aware routing, and
+    trace diagnostics, but not Zarankiewicz parameter manifests,
+    bipartite-graph construction artifacts, `K_{s,t}`-free validation,
+    exact/lower-bound tables, generated construction algorithms, cost records,
+    or OpenEvolve-to-LibreEvolve application boundaries.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.01120`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve/OpenEvolve and LibreEvolve, Zarankiewicz parameter
+    schema, graph representation, `K_{s,t}`-free verifier metadata,
+    exact-value and lower-bound records, generated construction algorithm
+    artifacts, proof/check status, computational-cost records, upper-bound and
+    baseline references, code/artifact availability if any, reproducibility
+    status, and README/ROADMAP wording that treats the paper as missing
+    application evidence rather than implemented LibreEvolve support.

@@ -3807,4 +3807,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reports. Avoid implying LibreEvolve supports AlphaEvolve-style Bruhat-
     interval hypercube discovery without those artifacts.
 
+- [ ] Keep README global-NLP solver comparison claims absent or source-scoped
+      until solver benchmark evidence exists.
+  - Spec evidence: arXiv `2601.05943`, `Global Optimization for
+    Combinatorial Geometry Problems`, asks whether off-the-shelf global
+    optimization solvers can match AlphaEvolve benchmark results when hard
+    geometry/combinatorial problems are directly formulated as NLPs. Its
+    abstract reports straightforward NLP formulations evaluated with
+    commercial FICO Xpress and open-source SCIP, reproducing and sometimes
+    improving best known and LLM-driven results without solver modifications.
+  - Current evidence: README documents constructive-math gaps, benchmark-
+    report contracts, paper-cache status, and smoke fixtures. It does not
+    mention `2601.05943`, define direct NLP formulations for AlphaEvolve
+    benchmark problems, run Xpress or SCIP, record solver licenses/versions,
+    preserve solver incumbents/bounds/certificates, compare solver outputs
+    against AlphaEvolve and literature baselines, or document numerical
+    tolerance and reproducibility for direct solver baselines.
+  - Required result: if README mentions global NLP solvers, FICO Xpress, SCIP,
+    direct nonlinear-programming formulations of AlphaEvolve benchmarks,
+    solver reproduction of AlphaEvolve discoveries, solver improvements over
+    LLM-driven results, or `2601.05943`, keep the wording source-scoped until
+    local artifacts can show the paper in the manifest, NLP formulation
+    schemas, solver-run records, version/license metadata, incumbent/bound/
+    certificate artifacts, tolerance policy, baseline comparisons,
+    independent checker outputs, and benchmark reports. Avoid implying
+    LibreEvolve supports global-NLP solver comparison for AlphaEvolve
+    benchmarks without those artifacts.
+
 ## Architecture Description

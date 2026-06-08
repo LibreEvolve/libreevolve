@@ -5721,3 +5721,38 @@ Primary evidence:
     independent checker outputs, and README/ROADMAP wording that keeps
     Bruhat-interval hypercube discovery as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add global NLP solver comparator boundary for AlphaEvolve geometry
+      benchmarks.
+  - Spec evidence: arXiv `2601.05943`, `Global Optimization for
+    Combinatorial Geometry Problems`, was submitted January 9, 2026. Its
+    abstract says recent AlphaEvolve results raise the question of whether
+    modern off-the-shelf global optimization solvers can match LLM-driven
+    discoveries when the problems are directly formulated as nonlinear
+    optimization problems (NLPs). It revisits a subset of the AlphaEvolve
+    benchmark suite with straightforward NLP formulations and evaluates two
+    state-of-the-art solvers: commercial FICO Xpress and open-source SCIP. It
+    reports that, without solver modifications, both solvers reproduce and in
+    several cases improve on best solutions from the literature, including
+    recent LLM-driven discoveries.
+  - Current evidence: `papers/README.md` lists `2601.05943` only as an
+    optimization benchmark comparator with no nonlinear-programming solver
+    comparison harness. LibreEvolve has no first-class code TODO for this
+    source, no NLP formulation schema for AlphaEvolve geometry/combinatorial
+    benchmarks, no FICO Xpress or SCIP runner abstraction, no solver-version
+    or license/proprietary-availability records, no result comparison table
+    against AlphaEvolve/literature values, no certificate/tolerance policy for
+    solver outputs, and no report that distinguishes LLM-discovered algorithm
+    search from direct mathematical-programming baselines.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2601.05943`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve constructive-geometry fixtures, selected AlphaEvolve benchmark
+    subset, NLP formulation records, variable/domain/constraint/objective
+    schemas, FICO Xpress and SCIP solver identity/version/license records,
+    solver parameter and time-limit metadata, incumbent/bound/certificate
+    artifacts, numerical tolerance policy, prior-literature and AlphaEvolve
+    baseline values, reproduced/improved/fell-behind outcome rows, seed/run
+    records, independent checker outputs, and README/ROADMAP wording that
+    keeps global-NLP solver comparison as missing evidence until local solver
+    harnesses and benchmark reports exist.

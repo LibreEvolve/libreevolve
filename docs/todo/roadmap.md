@@ -4240,3 +4240,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     seed/budget records, independent checker outputs, and a background-only
     or benchmark-fixture status rule so roadmap claims do not outpace local
     AlphaEvolve-style Bruhat-interval hypercube support.
+
+- [ ] Add global NLP solver comparator gates before roadmap promotion.
+  - Spec evidence: arXiv `2601.05943`, submitted January 9, 2026, introduces
+    `Global Optimization for Combinatorial Geometry Problems`. The abstract
+    frames AlphaEvolve's geometric/combinatorial discoveries as a benchmark
+    for modern off-the-shelf global optimization solvers, reformulates a
+    subset of those problems as nonlinear optimization problems, evaluates
+    FICO Xpress and SCIP without solver modifications, and reports reproduced
+    and sometimes improved best-known solutions including recent LLM-driven
+    results.
+  - Current evidence: ROADMAP tracks AlphaEvolve constructive-math benchmark
+    gaps and broad comparator ideas, but it does not promote `2601.05943`
+    beyond potential-future-benchmark status. It does not define a direct NLP
+    formulation gate, Xpress/SCIP runner abstraction, solver license/status
+    handling, selected benchmark subset, solver parameter/time-limit policy,
+    incumbent/bound/certificate artifact records, numerical tolerance policy,
+    or side-by-side result table versus AlphaEvolve and literature baselines.
+  - Required result: add roadmap gates for `2601.05943`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    selected AlphaEvolve benchmark subset, NLP formulation schema,
+    variable/domain/constraint/objective records, FICO Xpress and SCIP solver
+    identity/version/license records, solver parameter and resource-limit
+    metadata, incumbent/bound/certificate artifacts, numerical tolerance
+    policy, prior-literature and AlphaEvolve baseline values,
+    reproduced/improved/fell-behind outcome rows, seed/run records,
+    independent checker outputs, and a background-only or benchmark-fixture
+    status rule so roadmap claims do not outpace local global-NLP solver
+    comparison support.

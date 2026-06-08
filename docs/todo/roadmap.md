@@ -3540,10 +3540,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `telemetry_unproven`, but it does not prove every mutation-generation call
     used exactly one small/base-capable backend with no large-model routing,
     fallback, critique, or ensemble leakage.
-    For `No meta prompt evolution`, the current registry does not prove that
-    meta-prompt role calls, prompt-template mutations, and prompt-program
-    lineage updates were absent in the ablation while present or eligible in
-    the full-system comparator.
+    For `No meta prompt evolution`, the registry now records a validated
+    `paper_scope_boundary` marking current meta-prompt-disabled labels as
+    `lineage_unproven`, but it does not prove that meta-prompt role calls,
+    prompt-template mutations, and prompt-program lineage updates were absent
+    in the ablation while present or eligible in the full-system comparator.
     For `No full-file evolution`, the registry now encodes a validated
     AlphaEvolve tensor-decomposition loss-function-only non-equivalence
     boundary; broad single-file/diff/no-create-delete labels are still not the
@@ -3575,7 +3576,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     telemetry-unproven boundary. Ensure the
     `No meta prompt evolution` harness records prompt-history, call-ledger, and
     prompt-program lineage evidence proving meta-prompt evolution was disabled
-    for the ablation and enabled for the full-system comparator, plus the
+    for the ablation and enabled for the full-system comparator before retiring
+    the lineage-unproven boundary, plus the
     frozen human-authored prompt identity, source, revision, and context policy
     used for the human-prompter comparator. Ensure the
     `No full-file evolution` harness records the loss-function target scope,

@@ -22,6 +22,9 @@ def test_ablation_registry_enumerates_alphaevolve_figure8_variants():
     no_context = next(variant for variant in data["variants"] if variant["id"] == "no_context_in_prompt")
     assert no_context["paper_scope_boundary"]["alphaevolve_setup"] == "explicit_problem_specific_context_removed"
     assert no_context["paper_scope_boundary"]["paper_match_status"] == "over_broad_not_equivalent"
+    no_meta_prompt = next(variant for variant in data["variants"] if variant["id"] == "no_meta_prompt_evolution")
+    assert no_meta_prompt["paper_scope_boundary"]["alphaevolve_setup"] == "meta_prompt_evolution_disabled_only_for_ablation"
+    assert no_meta_prompt["paper_scope_boundary"]["paper_match_status"] == "lineage_unproven"
     no_full_file = next(variant for variant in data["variants"] if variant["id"] == "no_full_file_evolution")
     assert no_full_file["paper_scope_boundary"]["alphaevolve_setup"] == "tensor_decomposition_loss_function_only"
     assert no_full_file["paper_scope_boundary"]["paper_match_status"] == "not_equivalent"
@@ -129,3 +132,21 @@ def test_ablation_registry_requires_small_base_llm_scope_boundary(tmp_path):
     assert report.ok is False
     assert "invalid_small_base_llm_scope_boundary" in issue_codes
     assert "invalid_small_base_llm_future_evidence" in issue_codes
+
+
+def test_ablation_registry_requires_no_meta_prompt_scope_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    for variant in data["variants"]:
+        if variant["id"] == "no_meta_prompt_evolution":
+            variant["paper_scope_boundary"]["paper_match_status"] = "proved"
+            variant["paper_scope_boundary"]["required_future_evidence"] = ["no_meta_prompt_role_calls"]
+            break
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_ablation_registry(registry)
+    issue_codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_no_meta_prompt_scope_boundary" in issue_codes
+    assert "invalid_no_meta_prompt_future_evidence" in issue_codes

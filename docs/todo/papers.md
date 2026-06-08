@@ -1054,8 +1054,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     with no large-model backend eligibility, fallback, critique, or router
     leakage, rather than relying on declarative `single_backend`,
     `backend_count`, or `backend_capability_tier` labels. For the
-    `No meta prompt evolution` variant, require executed prompt-history and
-    call-ledger proof that meta-prompt calls, prompt-template mutations, and
+    `No meta prompt evolution` variant, keep the registry's validated
+    lineage-unproven boundary until executed prompt-history and call-ledger
+    proof shows that meta-prompt calls, prompt-template mutations, and
     prompt-program lineage updates were disabled for the ablation while the
     full-system baseline had meta-prompt evolution enabled and mutable prompt
     variants. Also require the paper-facing result bundle to identify the

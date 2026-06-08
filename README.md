@@ -3175,10 +3175,12 @@ registry row now carries a validated `paper_scope_boundary` that marks current
 single-backend/small-base labels as `telemetry_unproven`, but it still has no
 call-ledger evidence that every mutation-generation call used one configured
 small/base-capable model with no large-model routing or fallback. It also does
-not prove the `No meta prompt evolution` condition
-with prompt-history, call-ledger, and prompt-program lineage evidence that
-meta-prompt calls and prompt-template mutations were disabled for the ablation
-but enabled in the full-system comparator. It validates report shape only; it
+not prove the `No meta prompt evolution` condition: the registry row now
+carries a validated `paper_scope_boundary` that marks current
+meta-prompt-disabled labels as `lineage_unproven`, but it still has no
+prompt-history, call-ledger, or prompt-program lineage evidence that meta-prompt
+calls and prompt-template mutations were disabled for the ablation but enabled
+in the full-system comparator. It validates report shape only; it
 does not run ablation experiments or add accelerator/async-worker budget stops
 beyond the current live provider-token and configured-cost LLM budget surfaces.
 `libreevolve.alphaevolve_ablation_artifact_inventory.v1` verifies declared
@@ -3249,7 +3251,9 @@ AlphaEvolve's tensor-decomposition loss-function-only ablation. The
 boundary that marks the current broad context-disable labels as not equivalent
 to paper-faithful proof of absent explicit problem-specific context. The
 `Small base LLM only` row records a validated telemetry-unproven boundary for
-single-small-base-model generation.
+single-small-base-model generation. The `No meta prompt evolution` row records
+a validated lineage-unproven boundary for prompt-template and prompt-program
+mutation evidence.
 The validator's JSON report separates historical download fields from current
 local PDF presence and Git-tracked status. It also enforces safe paper ids,
 portable `papers/<name>.pdf` file names, unique normalized file targets,

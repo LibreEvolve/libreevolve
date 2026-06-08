@@ -755,13 +755,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mutation-generation call uses only one configured small/base-capable model
     and has no large-model eligibility, fallback, critique, or router leakage.
     It also does not yet prove the
-    `No meta prompt evolution` setup where meta-prompt calls, prompt-template
-    mutations, and prompt-program lineage updates are absent in the ablated run
-    but enabled in the full-system comparator. The registry now records a
-    validated `No full-file evolution` non-equivalence boundary for the
-    paper-specific tensor-decomposition loss-function-only setup; generic
-    single-file/diff/no-topology labels still should not be described as
-    executable evidence for that ablation.
+    `No meta prompt evolution` setup: the registry now records a validated
+    `paper_scope_boundary` marking current meta-prompt-disabled labels as
+    `lineage_unproven`, but there is still no proof that meta-prompt calls,
+    prompt-template mutations, and prompt-program lineage updates are absent in
+    the ablated run but enabled in the full-system comparator. The
+    `No full-file evolution` registry row also records a validated
+    non-equivalence boundary for the paper-specific tensor-decomposition
+    loss-function-only setup; generic single-file/diff/no-topology labels still
+    should not be described as executable evidence for that ablation.
     The report contract is also target-family generic: it validates declared
     targets but not Figure 8's matrix tensor-decomposition and kissing-number
     sphere-packing families, and it does not require per-target
@@ -785,12 +787,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     remained present. Keep README wording tied to the `Small base LLM only`
     telemetry-unproven boundary until executed backend telemetry proves a
     single small/base model actually handled every relevant generation call.
-    Require README wording to distinguish generic
-    `No meta prompt evolution` labels from executed prompt-history and
-    call-ledger evidence that meta-prompt and prompt-mutation surfaces were
-    disabled only for that ablation, with a frozen human-authored prompt
-    identity/source/revision/context policy recorded for the human-prompter
-    comparator. Require README wording to distinguish
+    Keep README wording tied to the `No meta prompt evolution`
+    lineage-unproven boundary until executed prompt-history, call-ledger, and
+    prompt-program lineage evidence proves meta-prompt and prompt-mutation
+    surfaces were disabled only for that ablation, with a frozen human-authored
+    prompt identity/source/revision/context policy recorded for the
+    human-prompter comparator. Require README wording to distinguish
     generic
     ablation-result schemas from
     Figure 8-equivalent matrix/kissing target-family reports with validated

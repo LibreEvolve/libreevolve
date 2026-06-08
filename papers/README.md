@@ -108,7 +108,9 @@ that records the intended single-small-base-model generation setup and marks
 the current declarative single-backend/small-base labels as
 `telemetry_unproven`; it still has no backend metadata or call-ledger proof
 that every mutation-generation call used a single small/base model with no
-large-model routing or fallback. The `No meta prompt evolution` row has no
+large-model routing or fallback. The `No meta prompt evolution` row now
+carries a validated `paper_scope_boundary` that marks the current declarative
+meta-prompt-disabled labels as `lineage_unproven`; it still has no
 prompt-history, call-ledger, or prompt-program lineage proof that meta-prompt
 calls and prompt-template mutations were disabled only in the ablated run. The
 report contract is also target-family generic: it does not require Figure 8's
@@ -847,8 +849,10 @@ Implemented:
   `No context in the prompt` variant records a validated over-broad
   non-equivalence boundary against AlphaEvolve's explicit-context ablation, and
   the `Small base LLM only` variant records a validated telemetry-unproven
-  boundary for single-small-base-model generation, but no benchmark script
-  emits these reports yet.
+  boundary for single-small-base-model generation. The
+  `No meta prompt evolution` variant records a validated lineage-unproven
+  boundary for prompt-template and prompt-program mutation evidence, but no
+  benchmark script emits these reports yet.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

@@ -4581,10 +4581,12 @@ Primary evidence:
     proving all mutation-generation calls use exactly one configured
     small/base-capable model and never route or fall back to large-model
     backends during the ablation. For `No meta prompt
-    evolution`, add runner checks proving no `meta_prompt` role calls,
-    prompt-template mutations, or mutated prompt-program lineage entries occur
-    in the ablated run, and that the full-system comparator keeps those
-    surfaces enabled. Also record the frozen human-authored prompt identity,
+    evolution`, the registry now records a validated `paper_scope_boundary`
+    marking current meta-prompt-disabled labels as `lineage_unproven`. Add
+    runner checks proving no `meta_prompt` role calls, prompt-template
+    mutations, or mutated prompt-program lineage entries occur in the ablated
+    run, and that the full-system comparator keeps those surfaces enabled.
+    Also record the frozen human-authored prompt identity,
     source, revision, and context policy used as the human-prompter comparator
     so disabling meta-prompt evolution is not conflated with an unspecified
     default prompt.

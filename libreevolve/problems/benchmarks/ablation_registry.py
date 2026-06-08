@@ -54,6 +54,18 @@ SMALL_BASE_LLM_ONLY_REQUIRED_EVIDENCE = frozenset({
     "no_large_model_route_or_fallback",
     "role_scope_generation_only",
 })
+NO_META_PROMPT_EVOLUTION_SCOPE_BOUNDARY = {
+    "alphaevolve_setup": "meta_prompt_evolution_disabled_only_for_ablation",
+    "current_scope": "declarative_meta_prompt_disabled_labels",
+    "paper_match_status": "lineage_unproven",
+}
+NO_META_PROMPT_EVOLUTION_REQUIRED_EVIDENCE = frozenset({
+    "no_meta_prompt_role_calls",
+    "no_prompt_template_mutations",
+    "no_prompt_program_lineage_updates",
+    "full_system_meta_prompt_enabled_comparator",
+    "frozen_human_prompt_identity",
+})
 REQUIRED_REPORT_FIELDS = frozenset({
     "variant_id",
     "target_id",
@@ -243,6 +255,19 @@ def _validate_variant(
             invalid_evidence_code="invalid_small_base_llm_future_evidence",
             missing_message="Small base LLM only must record its backend-telemetry boundary",
             evidence_message="Small base LLM only boundary must list the required future evidence",
+            issues=issues,
+        )
+    if variant_id == "no_meta_prompt_evolution":
+        _validate_variant_scope_boundary(
+            variant.get("paper_scope_boundary"),
+            variant_id,
+            expected_fields=NO_META_PROMPT_EVOLUTION_SCOPE_BOUNDARY,
+            expected_evidence=NO_META_PROMPT_EVOLUTION_REQUIRED_EVIDENCE,
+            missing_code="missing_no_meta_prompt_scope_boundary",
+            invalid_boundary_code="invalid_no_meta_prompt_scope_boundary",
+            invalid_evidence_code="invalid_no_meta_prompt_future_evidence",
+            missing_message="No meta prompt evolution must record its prompt-lineage boundary",
+            evidence_message="No meta prompt evolution boundary must list the required future evidence",
             issues=issues,
         )
 

@@ -95,6 +95,18 @@
       ],
       "paper_label": "No meta prompt evolution",
       "paper_citations": ["2506.13131"],
+      "paper_scope_boundary": {
+        "alphaevolve_setup": "meta_prompt_evolution_disabled_only_for_ablation",
+        "current_scope": "declarative_meta_prompt_disabled_labels",
+        "paper_match_status": "lineage_unproven",
+        "required_future_evidence": [
+          "no_meta_prompt_role_calls",
+          "no_prompt_template_mutations",
+          "no_prompt_program_lineage_updates",
+          "full_system_meta_prompt_enabled_comparator",
+          "frozen_human_prompt_identity"
+        ]
+      },
       "rationale": "Tests whether evolving prompt templates improves performance over fixed prompt policy."
     },
     {

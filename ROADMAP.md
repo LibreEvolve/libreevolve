@@ -425,9 +425,11 @@ is not yet an AlphaEvolve reproduction.
   backend metadata and call-ledger proof shows that every mutation-generation
   call used one configured small/base-capable model with no large-model routing
   or fallback.
-- For the Figure 8 `No meta prompt evolution` ablation, require prompt-history,
-  call-ledger, and prompt-program lineage proof that meta-prompt calls and
-  prompt-template mutations were absent only in the ablated run.
+- For the Figure 8 `No meta prompt evolution` ablation, keep the registry's
+  validated prompt-lineage `paper_scope_boundary` marked unproven until
+  prompt-history, call-ledger, and prompt-program lineage proof shows that
+  meta-prompt calls and prompt-template mutations were absent only in the
+  ablated run and enabled in the full-system comparator.
 - For the Figure 8 `No full-file evolution` ablation, keep the registry's
   validated `paper_scope_boundary` marked not equivalent until a
   tensor-decomposition harness proves only the loss function was mutable.

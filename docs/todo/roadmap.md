@@ -3905,3 +3905,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validation metadata, and a background-only or benchmark-fixture status
     rule so roadmap claims do not outpace local AI-harness runtime-substrate
     support.
+
+- [ ] Add inference-time trajectory-alignment harness gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.21516`, submitted May 15, 2026, introduces
+    `Harnesses for Inference-Time Alignment over Execution Trajectories`. The
+    abstract says more decomposition or guidance can improve execution but can
+    also reduce final task success. It separates harness design into task
+    decomposition and guided execution, analyzes workflow granularity, retry
+    budgets, and guidance-induced action reweighting, and identifies
+    over-decomposition, over-pruning, hallucinated execution, and partial
+    harnessing tradeoffs.
+  - Current evidence: ROADMAP tracks prompt/context surfaces, evaluator
+    retries/budgets, run artifacts, and several harness evolution gates. It
+    does not mention `2605.21516`, define decomposition/guidance parameter
+    gates, require pass-rate plus final-bias reporting, measure retry-budget
+    sensitivity, identify over-structured workflow failure modes, compare
+    partial versus fully structured harnesses, or require alignment evidence
+    before promoting increasingly structured harness workflows.
+  - Required result: add roadmap gates for `2605.21516`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, harness
+    parameter schema, decomposition-granularity records, guidance-strength and
+    guidance-rule records, sub-goal sequence artifacts, trajectory/action
+    distribution records, retry-budget sensitivity reports, pass-rate and
+    final-bias metrics, granularity-capability alignment reports,
+    guidance-evidence alignment reports, over-decomposition/over-pruning/
+    hallucinated-execution diagnostics, partial-harness benchmark records,
+    Terminal-Bench-2 and synthetic task metadata, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    treat more harness structure as automatically better.

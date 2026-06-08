@@ -5314,3 +5314,38 @@ Primary evidence:
     metadata, maintenance-burden reports, and README/ROADMAP wording that
     keeps AI-harness runtime-substrate claims as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add inference-time trajectory-alignment harness design boundary.
+  - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time
+    Alignment over Execution Trajectories`, was submitted May 15, 2026. Its
+    abstract says harness engineering aims to improve long-term performance
+    through task decomposition and guided execution, but more elaborate
+    harnesses are not uniformly better. It separates harness effects into task
+    decomposition, which structures sub-goals, and guided execution, which
+    reshapes local action distributions. It then analyzes workflow
+    granularity, retry budgets, and guidance-induced action reweighting,
+    identifying failure modes such as over-decomposition, over-pruning, and
+    hallucinated execution. It also reports that partial harnesses, which
+    specify only initial steps and leave the remainder to the agent, can
+    outperform fully structured workflows.
+  - Current evidence: LibreEvolve records prompt variants, parent selection,
+    evaluator results, retry-like evaluator behavior, and run artifacts, but
+    it has no `2605.21516` source row, no harness parameterization for
+    decomposition granularity, guidance strength, or local guidance rules, no
+    pass-rate/final-bias tradeoff report, no retry-budget sensitivity study,
+    no over-decomposition or over-pruning diagnostics, no hallucinated
+    execution metric, no partial-harness benchmark, and no alignment evidence
+    separating helpful structure from over-constraining execution.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.21516`: arXiv id/version/date/PDF hash, authors, source
+    license, relation to AlphaEvolve and LibreEvolve prompt/evaluator
+    scaffolds, harness parameter schema for decomposition granularity,
+    guidance strength, and guidance rule, sub-goal sequence records,
+    trajectory/action-distribution records, retry-budget records, pass-rate
+    and final-bias metrics, granularity-capability alignment reports,
+    guidance-evidence alignment reports, over-decomposition/over-pruning/
+    hallucinated-execution diagnostics, partial-harness prefix experiments,
+    Terminal-Bench-2 and controlled synthetic benchmark metadata, baseline
+    identities, and README/ROADMAP wording that keeps inference-time harness
+    alignment claims as missing evidence until local implementation and
+    reports exist.

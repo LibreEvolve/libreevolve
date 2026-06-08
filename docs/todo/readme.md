@@ -3484,4 +3484,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     outcomes. Avoid implying LibreEvolve implements an AI Harness Engineering
     runtime substrate without those artifacts.
 
+- [ ] Keep README inference-time harness-alignment claims scoped until
+      decomposition and guidance tradeoffs are evidenced.
+  - Spec evidence: arXiv `2605.21516`, `Harnesses for Inference-Time
+    Alignment over Execution Trajectories`, says harnesses improve agents
+    through task decomposition and guided execution, but more elaborate
+    harnesses are not uniformly better. Its abstract identifies workflow
+    granularity, retry budgets, and guidance-induced action reweighting as
+    key levers, with over-decomposition, over-pruning, and hallucinated
+    execution as failure modes. It also shows partial harnesses can outperform
+    fully structured workflows.
+  - Current evidence: README documents LibreEvolve's prompt construction,
+    context sources, evaluator stages, retries, plugins, and benchmark
+    boundaries. It does not list `2605.21516`, report decomposition
+    granularity, guidance strength, local guidance rules, pass-rate/final-bias
+    tradeoffs, retry-budget sensitivity, over-decomposition or over-pruning
+    failures, hallucinated execution, or partial-harness comparisons.
+  - Required result: if README mentions inference-time harness alignment,
+    task decomposition, guided execution, workflow granularity, retry-budget
+    optimization, guidance strength, partial harnessing, over-decomposition,
+    over-pruning, hallucinated execution, or claims that more structured
+    workflows improve long-horizon performance, keep the wording
+    source-scoped until the paper is in the manifest and local artifacts can
+    show parameter records, trajectory evidence, pass-rate/final-bias metrics,
+    retry and guidance sweeps, partial-harness baselines, and report outcomes.
+    Avoid implying LibreEvolve has proven that increased harness structure is
+    beneficial without those artifacts.
+
 ## Architecture Description

@@ -4902,3 +4902,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     any, reproducibility status, and README/ROADMAP wording that treats AI
     Harness Engineering as missing paper evidence rather than implemented
     LibreEvolve support.
+
+- [ ] Track inference-time trajectory-alignment harness paper evidence.
+  - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is
+    titled `Harnesses for Inference-Time Alignment over Execution
+    Trajectories`. Its abstract says harness engineering improves agent
+    performance through task decomposition and guided execution, but more
+    elaborate harnesses can reduce final task success. It separates harness
+    mechanisms into decomposition and guided execution, then quantifies how
+    workflow granularity, retry budgets, and guidance-induced action
+    reweighting affect performance limits. It identifies over-decomposition,
+    over-pruning, and hallucinated execution as failure modes, validates the
+    predictions with controlled synthetic experiments and real terminal-agent
+    benchmarks, and shows that partial harnesses can outperform fully
+    structured workflows.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.21516`. Existing rows cover AlphaEvolve search, AHE, AI
+    Harness Engineering, HarnessFix, RHO, SIA, and harness-benefit
+    disentanglement, but not theoretical or empirical evidence for when
+    decomposition/guidance helps or harms, retry-budget sensitivity,
+    guidance-evidence alignment, partial harnessing, final-bias metrics, or
+    over-structured workflow failure modes.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.21516`: title/authors/arXiv version/date/PDF digest, source
+    license, relation to AlphaEvolve and LibreEvolve harness assumptions,
+    harness parameter schema, decomposition-granularity records, guidance-
+    strength and guidance-rule records, sub-goal and trajectory records,
+    retry-budget experiment metadata, pass-rate/final-bias metrics,
+    granularity-capability alignment evidence, guidance-evidence alignment
+    evidence, over-decomposition/over-pruning/hallucinated-execution
+    diagnostics, partial-harness prefix experiment records, Terminal-Bench-2
+    and controlled synthetic benchmark metadata, baseline identities,
+    code/artifact availability if any, reproducibility status, and README/
+    ROADMAP wording that treats inference-time trajectory alignment as
+    missing paper evidence rather than implemented LibreEvolve support.

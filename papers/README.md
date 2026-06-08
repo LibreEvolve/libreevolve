@@ -394,6 +394,18 @@ budget events, evaluator artifacts, and best exports. Standalone task-spec
 examples, evolvable-span ids, embedded-only problem definitions, score-field
 links to evolved code paths, and deeper per-id history resolution remain open.
 
+AlphaEvolve candidate-abstraction note: completed manifests now include
+`runtime.history.candidate_abstraction_choice_report` with schema
+`libreevolve.candidate_abstraction_choice_report.v1`. The report links the
+current selected abstraction to `policies.candidate_language`, records the
+Python-primary code-file-set boundary, summarizes runtime candidate workspace
+shape, names unsupported or not-yet-distinguished constructor-function,
+bespoke-search-algorithm, and paired solution/search alternatives, and keeps
+`claim_ready: false` for AlphaEvolve-style abstraction-selection fidelity.
+Problem-level abstraction rationale, symmetry/structure assumptions,
+problem-defined abstraction hooks, paired representations, and equal-budget
+benchmark comparisons across alternative formulations remain open.
+
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema
 `libreevolve.existing_codebase_integration_report.v1`. The report inventories

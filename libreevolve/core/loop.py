@@ -41,6 +41,7 @@ from libreevolve.core.database import (
     archive_event_replay_audit,
     load_archive_restore_bundle,
     validate_archive_event_replay_audit,
+    validate_candidate_language_policy,
     validate_seed_source_record,
 )
 from libreevolve.core.diff import (
@@ -5125,6 +5126,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 paper_metric_contract,
             )
         ),
+        "candidate_abstraction_choice_report": (
+            _candidate_abstraction_choice_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "marker_spelling_provenance_report": (
             _marker_spelling_provenance_report()
         ),
@@ -5283,6 +5290,477 @@ def _marker_source_artifact_placeholder() -> dict:
         "artifact_path": None,
         "sha256": None,
         "reason": "paper source screenshot_or_exact_excerpt_not_generated_in_this_report",
+    }
+
+
+def _candidate_abstraction_choice_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    policies = (
+        startup_manifest.get("policies")
+        if isinstance(startup_manifest.get("policies"), Mapping)
+        else {}
+    )
+    candidate_policy = (
+        policies.get("candidate_language")
+        if isinstance(policies.get("candidate_language"), Mapping)
+        else {}
+    )
+    policy_validation = validate_candidate_language_policy(candidate_policy)
+    runtime_records = [_candidate_abstraction_runtime_record(program) for program in programs]
+    python_file_count = sum(record["python_file_count"] for record in runtime_records)
+    non_python_text_file_count = sum(
+        record["non_python_text_file_count"] for record in runtime_records
+    )
+    static_member_count = sum(record["static_member_count"] for record in runtime_records)
+    report = {
+        "schema": "libreevolve.candidate_abstraction_choice_report.v1",
+        "source": "candidate_language_policy_and_runtime_workspaces",
+        "selected_abstraction": "code_file_set",
+        "selected_representation": {
+            "manifest_path": "policies.candidate_language",
+            "policy": candidate_policy.get("policy"),
+            "candidate_representation": candidate_policy.get(
+                "candidate_representation"
+            ),
+            "primary_language": candidate_policy.get("primary_language"),
+            "language_runner_ready": candidate_policy.get("language_runner_ready"),
+            "policy_validation": policy_validation,
+        },
+        "serializer_runner_linkage": {
+            "workspace_serializer": "CandidateWorkspace.to_dict",
+            "workspace_materializer": "best_workspace_and_evaluator_temp_workspace",
+            "mutation_applier": "apply_workspace_mutation",
+            "validator_runner": (
+                candidate_policy.get("runner_policy", {}).get("validator_runner")
+                if isinstance(candidate_policy.get("runner_policy"), Mapping)
+                else None
+            ),
+            "problem_defined_serializer_hooks": "unsupported",
+            "problem_defined_runner_hooks": "unsupported",
+        },
+        "runtime_candidate_shape": {
+            "program_count": len(programs),
+            "workspace_program_count": len(runtime_records),
+            "python_file_count": python_file_count,
+            "non_python_text_file_count": non_python_text_file_count,
+            "static_member_count": static_member_count,
+            "program_record_count": min(len(runtime_records), 50),
+            "program_records_limit": 50,
+            "program_records_truncated": len(runtime_records) > 50,
+            "program_records": runtime_records[:50],
+        },
+        "abstraction_options": [
+            {
+                "option": "direct_solution",
+                "local_status": "supported_as_python_file_or_workspace",
+                "selection_status": "selected_current_default",
+                "bias_evidence": "not_recorded",
+                "equal_budget_benchmark": "not_recorded",
+            },
+            {
+                "option": "constructor_function",
+                "local_status": "not_distinguished_from_python_workspace",
+                "selection_status": "unsupported_as_typed_abstraction",
+                "bias_evidence": "not_recorded",
+                "equal_budget_benchmark": "not_recorded",
+            },
+            {
+                "option": "bespoke_search_algorithm",
+                "local_status": "not_distinguished_from_python_workspace",
+                "selection_status": "unsupported_as_typed_abstraction",
+                "bias_evidence": "not_recorded",
+                "equal_budget_benchmark": "not_recorded",
+            },
+            {
+                "option": "coevolved_solution_and_search",
+                "local_status": "unsupported",
+                "selection_status": "unsupported_as_paired_representation",
+                "bias_evidence": "not_recorded",
+                "equal_budget_benchmark": "not_recorded",
+            },
+        ],
+        "abstraction_rationale": {
+            "status": "not_recorded",
+            "problem_metadata_field": "not_configured",
+            "selected_abstraction_reason": None,
+            "alternative_abstraction_reasoning": [],
+        },
+        "bias_assessment": {
+            "symmetry_structure_assumptions_recorded": False,
+            "constructor_symmetry_bias_assessed": False,
+            "search_algorithm_non_symmetric_bias_assessed": False,
+            "problem_structure_labels": [],
+            "equal_budget_comparison_ready": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "candidate_language_policy_validated": policy_validation.get("ok") is True,
+            "selected_abstraction_recorded": True,
+            "serializer_runner_linkage_recorded": True,
+            "unsupported_alternatives_diagnosed": True,
+            "abstraction_rationale_recorded": False,
+            "symmetry_structure_assumptions_recorded": False,
+            "paired_solution_search_representation": False,
+            "equal_budget_benchmark_comparison": False,
+            "alphaevolve_abstraction_selection_fidelity": False,
+            "remaining_gap": [
+                "abstraction_rationale_problem_metadata",
+                "symmetry_structure_assumption_labels",
+                "problem_defined_candidate_abstraction_hooks",
+                "paired_solution_search_representation_support",
+                "equal_budget_direct_constructor_search_comparisons",
+                "benchmark_reports_for_abstraction_bias",
+            ],
+        },
+    }
+    report["validation"] = validate_candidate_abstraction_choice_report(report)
+    return report
+
+
+def _candidate_abstraction_runtime_record(program: Program) -> dict:
+    workspace = program.workspace()
+    paths = sorted(workspace.files)
+    python_paths = [path for path in paths if path.endswith(".py")]
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "candidate_type": program.metadata.get("candidate_type"),
+        "primary_file": workspace.primary_file,
+        "workspace_sha256": _workspace_sha256(workspace),
+        "file_count": len(paths),
+        "python_file_count": len(python_paths),
+        "non_python_text_file_count": len(paths) - len(python_paths),
+        "static_member_count": len(workspace.static_files),
+        "representational_role": "direct_solution_code_workspace",
+    }
+
+
+def validate_candidate_abstraction_choice_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.candidate_abstraction_choice_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "candidate abstraction choice report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "selected_abstraction",
+        "selected_representation",
+        "serializer_runner_linkage",
+        "runtime_candidate_shape",
+        "abstraction_options",
+        "abstraction_rationale",
+        "bias_assessment",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"candidate abstraction report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.candidate_abstraction_choice_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported candidate abstraction report schema",
+            }
+        )
+    if report.get("source") != "candidate_language_policy_and_runtime_workspaces":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported candidate abstraction report source",
+            }
+        )
+    if report.get("selected_abstraction") != "code_file_set":
+        issues.append(
+            {
+                "code": "invalid_selected_abstraction",
+                "message": "selected abstraction must remain the code-file-set boundary",
+            }
+        )
+    selected = report.get("selected_representation")
+    if not isinstance(selected, Mapping):
+        issues.append(
+            {
+                "code": "invalid_selected_representation",
+                "message": "selected_representation must be an object",
+            }
+        )
+    else:
+        if selected.get("policy") != "python_primary_text_workspace_v1":
+            issues.append(
+                {
+                    "code": "invalid_candidate_policy",
+                    "message": "candidate policy must be python_primary_text_workspace_v1",
+                }
+            )
+        if (
+            selected.get("candidate_representation")
+            != "bounded_utf8_text_workspace_with_typed_static_members"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_candidate_representation",
+                    "message": "candidate representation must be the bounded workspace",
+                }
+            )
+        if selected.get("primary_language") != "python":
+            issues.append(
+                {
+                    "code": "invalid_primary_language",
+                    "message": "primary language must remain python",
+                }
+            )
+        validation = selected.get("policy_validation")
+        if not isinstance(validation, Mapping) or validation.get("ok") is not True:
+            issues.append(
+                {
+                    "code": "candidate_policy_validation_failed",
+                    "message": "selected candidate-language policy must validate",
+                }
+            )
+        if selected.get("language_runner_ready") is not False:
+            issues.append(
+                {
+                    "code": "language_runner_ready_overclaim",
+                    "message": "language_runner_ready must remain false",
+                }
+            )
+    linkage = report.get("serializer_runner_linkage")
+    if not isinstance(linkage, Mapping):
+        issues.append(
+            {
+                "code": "invalid_serializer_runner_linkage",
+                "message": "serializer_runner_linkage must be an object",
+            }
+        )
+    else:
+        if linkage.get("problem_defined_serializer_hooks") != "unsupported":
+            issues.append(
+                {
+                    "code": "serializer_hook_overclaim",
+                    "message": "problem-defined serializer hooks must remain unsupported",
+                }
+            )
+        if linkage.get("problem_defined_runner_hooks") != "unsupported":
+            issues.append(
+                {
+                    "code": "runner_hook_overclaim",
+                    "message": "problem-defined runner hooks must remain unsupported",
+                }
+            )
+    shape = report.get("runtime_candidate_shape")
+    if not isinstance(shape, Mapping):
+        issues.append(
+            {
+                "code": "invalid_runtime_candidate_shape",
+                "message": "runtime_candidate_shape must be an object",
+            }
+        )
+        records = []
+    else:
+        records = shape.get("program_records")
+        if not isinstance(records, list):
+            issues.append(
+                {
+                    "code": "invalid_program_records",
+                    "message": "runtime program_records must be a list",
+                }
+            )
+            records = []
+        _validate_report_count(shape, "program_record_count", len(records), issues)
+        if not isinstance(shape.get("program_count"), int) or isinstance(
+            shape.get("program_count"), bool
+        ):
+            issues.append(
+                {"code": "invalid_program_count", "message": "program_count must be int"}
+            )
+        if not isinstance(shape.get("workspace_program_count"), int) or isinstance(
+            shape.get("workspace_program_count"), bool
+        ):
+            issues.append(
+                {
+                    "code": "invalid_workspace_program_count",
+                    "message": "workspace_program_count must be int",
+                }
+            )
+        if (
+            isinstance(shape.get("program_count"), int)
+            and isinstance(shape.get("workspace_program_count"), int)
+            and shape.get("workspace_program_count") != shape.get("program_count")
+        ):
+            issues.append(
+                {
+                    "code": "workspace_program_count_mismatch",
+                    "message": "all current Program rows should expose workspaces",
+                }
+            )
+        for count_field in (
+            "python_file_count",
+            "non_python_text_file_count",
+            "static_member_count",
+        ):
+            if not isinstance(shape.get(count_field), int) or isinstance(
+                shape.get(count_field), bool
+            ):
+                issues.append(
+                    {
+                        "code": f"invalid_{count_field}",
+                        "message": f"{count_field} must be an integer",
+                    }
+                )
+        for record in records:
+            if not isinstance(record, Mapping):
+                issues.append(
+                    {
+                        "code": "invalid_program_record",
+                        "message": "program records must be objects",
+                    }
+                )
+                continue
+            if not _is_sha256_hex(record.get("workspace_sha256")):
+                issues.append(
+                    {
+                        "code": "invalid_workspace_hash",
+                        "message": "workspace_sha256 must be sha256 hex",
+                    }
+                )
+            if record.get("representational_role") != "direct_solution_code_workspace":
+                issues.append(
+                    {
+                        "code": "invalid_representational_role",
+                        "message": "runtime records must remain direct code workspaces",
+                    }
+                )
+    options = report.get("abstraction_options")
+    if not isinstance(options, list):
+        issues.append(
+            {
+                "code": "invalid_abstraction_options",
+                "message": "abstraction_options must be a list",
+            }
+        )
+        options = []
+    option_names = {
+        option.get("option") for option in options if isinstance(option, Mapping)
+    }
+    required_options = {
+        "direct_solution",
+        "constructor_function",
+        "bespoke_search_algorithm",
+        "coevolved_solution_and_search",
+    }
+    missing_options = required_options - option_names
+    if missing_options:
+        issues.append(
+            {
+                "code": "missing_abstraction_options",
+                "message": f"abstraction options missing: {sorted(missing_options)}",
+            }
+        )
+    for option in options:
+        if not isinstance(option, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_abstraction_option",
+                    "message": "abstraction option entries must be objects",
+                }
+            )
+            continue
+        if option.get("option") != "direct_solution" and option.get(
+            "equal_budget_benchmark"
+        ) != "not_recorded":
+            issues.append(
+                {
+                    "code": "benchmark_overclaim",
+                    "message": "alternative abstraction benchmarks are not recorded yet",
+                }
+            )
+    rationale = report.get("abstraction_rationale")
+    if not isinstance(rationale, Mapping):
+        issues.append(
+            {
+                "code": "invalid_abstraction_rationale",
+                "message": "abstraction_rationale must be an object",
+            }
+        )
+    elif rationale.get("status") != "not_recorded":
+        issues.append(
+            {
+                "code": "abstraction_rationale_overclaim",
+                "message": "abstraction rationale must remain not_recorded",
+            }
+        )
+    bias = report.get("bias_assessment")
+    if not isinstance(bias, Mapping):
+        issues.append(
+            {
+                "code": "invalid_bias_assessment",
+                "message": "bias_assessment must be an object",
+            }
+        )
+    else:
+        for field in (
+            "symmetry_structure_assumptions_recorded",
+            "constructor_symmetry_bias_assessed",
+            "search_algorithm_non_symmetric_bias_assessed",
+            "equal_budget_comparison_ready",
+        ):
+            if bias.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_abstraction_selection_fidelity") is not False:
+            issues.append(
+                {
+                    "code": "abstraction_selection_fidelity_overclaim",
+                    "message": "AlphaEvolve abstraction-selection fidelity must remain false",
+                }
+            )
+        if readiness.get("equal_budget_benchmark_comparison") is not False:
+            issues.append(
+                {
+                    "code": "equal_budget_benchmark_overclaim",
+                    "message": "equal-budget abstraction comparison must remain false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "candidate abstraction report must not claim full fidelity",
+            }
+        )
+    return {
+        "schema": "libreevolve.candidate_abstraction_choice_report.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

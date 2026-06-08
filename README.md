@@ -2071,6 +2071,17 @@ evaluator artifacts, and best exports. This is still partial evidence:
 evolvable component span ids, score-field-to-candidate-path links,
 embedded-only task definitions, standalone task-spec examples, and deeper
 per-id history resolution remain open.
+Completed manifests also include
+`runtime.history.candidate_abstraction_choice_report`, which records the
+current selected abstraction as a Python-primary code-file set, links it back
+to `policies.candidate_language`, summarizes runtime workspace shape, and
+marks constructor-function, bespoke-search-algorithm, and paired
+solution/search representations as not yet typed or supported alternatives.
+It is explicit negative-boundary evidence for AlphaEvolve's flexible
+abstraction-selection claim: abstraction rationale, symmetry/structure
+assumptions, problem-defined abstraction hooks, paired representations, and
+equal-budget comparisons across direct, constructor, and search-algorithm
+formulations remain open.
 
 **validate.py** must define `evaluate(code: str) -> dict`,
 `evaluate(code: str, workspace_path: str) -> dict`, or
@@ -2421,6 +2432,10 @@ AlphaEvolve's existing-codebase integration claim: original upstream codebase
 identity, pre-marker source hashes, marker-only setup diffs, evaluator call
 paths before/after marker insertion, portable release/source-root identity, and
 setup-change counts remain open.
+Completed manifests also include
+`runtime.history.candidate_abstraction_choice_report`, which keeps the current
+candidate representation scoped to direct Python workspace solutions while
+diagnosing unsupported abstraction alternatives and missing bias evidence.
 Unmarked seed programs remain fully supported.
 For current multi-file mutation prompts, `<<<FILE ... >>>FILE` paths are routed
 through the same safety normalizer as candidate workspaces, including nested

@@ -223,19 +223,19 @@ Primary evidence:
     `python`, validator runner `python_subprocess_entrypoint`, and
     `problem_defined_solution_abstractions: unsupported`; its remaining gaps
     include `problem_defined_candidate_abstraction_hooks`.
-    `tests/population/test_database.py` asserts that manifest policy and
-    confirms `validate_candidate_language_policy()` returns
-    `language_runner_ready: False`. This documents a fixed local candidate
-    representation, but it does not define an experiment/report schema that
-    records which abstraction was selected for a benchmark, why that abstraction
-    matches the problem's symmetry or search structure, or how alternative
-    abstractions performed under comparable budgets.
-  - Required result: add problem/run metadata for candidate abstraction choice,
-    abstraction rationale, symmetry/structure assumptions, serializer/runner
-    linkage, unsupported-abstraction diagnostics, paired solution/search
-    representations when supported, and benchmark reports comparing
-    direct-solution, constructor, and search-algorithm approaches under equal
-    budgets before claiming AlphaEvolve-style abstraction selection fidelity.
+    Completed manifests now include
+    `runtime.history.candidate_abstraction_choice_report`, which records
+    `selected_abstraction: code_file_set`, links serializer/materializer/
+    mutation/validator surfaces to the candidate-language policy, summarizes
+    runtime workspace shape, names direct-solution/constructor/search/paired
+    abstraction options, diagnoses unsupported alternatives, and validates that
+    AlphaEvolve abstraction-selection fidelity remains false.
+  - Required result: add problem-level abstraction rationale,
+    symmetry/structure assumptions, typed problem-defined candidate
+    abstraction hooks, paired solution/search representations when supported,
+    and benchmark reports comparing direct-solution, constructor, and
+    search-algorithm approaches under equal budgets before claiming
+    AlphaEvolve-style abstraction selection fidelity.
 
 - [ ] Add structured initial-program idea provenance for benchmark seeds.
   - Spec evidence: AlphaEvolve Section 2.1 says the human provides the initial

@@ -311,8 +311,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     index, and code/paper TODO entries together so roadmap language separates
     local marker grammar work from source-exhibit reproduction.
 
-- [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
-      abstraction-choice reports exist.
+- [ ] Keep candidate-abstraction roadmap wording scoped beyond the current
+      abstraction-choice report.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate
     abstraction as a problem-dependent experimental choice with known biases:
     direct solution search, constructor functions, bespoke search algorithms,
@@ -326,16 +326,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `policies.candidate_language` as `python_primary_text_workspace_v1`,
     `bounded_utf8_text_workspace_with_typed_static_members`,
     `language_runner_ready: False`, and
-    `problem_defined_solution_abstractions: unsupported`. Roadmap wording does
-    not yet require benchmark metadata or reports that justify the chosen
-    abstraction, mark unsupported alternatives, or compare alternative
-    formulations under equal budgets.
-  - Required result: when abstraction-choice metadata, rationale fields,
-    symmetry/structure labels, unsupported-abstraction diagnostics, paired
-    solution/search support, or equal-budget abstraction-comparison reports
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap language does not confuse hooks with AlphaEvolve-style
-    abstraction-selection evidence.
+    `problem_defined_solution_abstractions: unsupported`. Completed manifests
+    now include `runtime.history.candidate_abstraction_choice_report`, which
+    records the selected code-file-set abstraction, policy/runner linkage,
+    unsupported constructor/search/paired alternatives, runtime workspace
+    shape, and remaining bias/equal-budget evidence gaps.
+  - Required result: when rationale fields, symmetry/structure labels, typed
+    candidate-abstraction hooks, paired solution/search support, or
+    equal-budget abstraction-comparison reports land, update ROADMAP, README,
+    papers index, and code/paper TODOs together so roadmap language does not
+    confuse the partial report with AlphaEvolve-style abstraction-selection
+    evidence.
 
 - [ ] Keep roadmap mutation-mode wording scoped to configured modes versus
       adaptive AlphaEvolve-style output contracts.

@@ -501,17 +501,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.candidate_language_policy.v1`: `python_primary_text_workspace_v1`,
     bounded UTF-8 text workspace plus typed static members, primary language
     `python`, `problem_defined_solution_abstractions: unsupported`, and
-    `language_runner_ready: False`.
-  - Current gap: no paper-facing report records abstraction choice, problem
-    structure rationale, symmetry assumptions, or equal-budget comparisons
-    across direct-solution, constructor-function, and search-algorithm
-    formulations. It also does not record unsupported alternative abstraction
-    diagnostics as part of a benchmark claim-readiness check.
-  - Required result: add benchmark/report metadata for candidate abstraction
-    family, rationale, expected problem bias, serializer/runner contract,
-    unsupported alternatives, paired solution/search linkage, and comparable
-    results for alternative abstractions before claiming AlphaEvolve-style
-    abstraction-selection evidence.
+    `language_runner_ready: False`. Completed manifests also include
+    `runtime.history.candidate_abstraction_choice_report`, which records the
+    selected code-file-set abstraction, serializer/runner linkage, runtime
+    workspace shape, unsupported constructor/search/paired alternatives, and
+    a claim-readiness check that keeps AlphaEvolve abstraction-selection
+    fidelity false.
+  - Current gap: paper-facing evidence still lacks problem structure
+    rationale, symmetry assumptions, typed problem-defined abstraction hooks,
+    paired solution/search support, or equal-budget comparisons across
+    direct-solution, constructor-function, and search-algorithm formulations.
+  - Required result: add benchmark metadata for candidate abstraction family,
+    rationale, expected problem bias, paired solution/search linkage, and
+    comparable results for alternative abstractions before claiming
+    AlphaEvolve-style abstraction-selection evidence.
 
 - [ ] Track explicit-context source roles for prompt sampling.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 lists explicit

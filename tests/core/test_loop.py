@@ -45,6 +45,7 @@ from libreevolve.core.loop import (
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
+    validate_candidate_abstraction_choice_report,
     validate_existing_codebase_integration_report,
     validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
@@ -3950,6 +3951,105 @@ def test_runtime_history_reports_marker_spelling_provenance():
     assert {issue["code"] for issue in validation["issues"]} >= {
         "space_variant_support_overclaim",
         "variant_classification_overclaim",
+    }
+
+
+def test_runtime_history_reports_candidate_abstraction_choice():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        {
+            "primary_file": "main.py",
+            "files": {
+                "main.py": "x = 1\n",
+                "notes.txt": "fixture context\n",
+            },
+            "static_files": [
+                {
+                    "path": "fixture.bin",
+                    "kind": "binary",
+                    "sha256": "a" * 64,
+                    "bytes": 3,
+                }
+            ],
+        }
+    ]
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["candidate_abstraction_choice_report"]
+
+    assert report["schema"] == "libreevolve.candidate_abstraction_choice_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_candidate_abstraction_choice_report(report)["ok"] is True
+    assert report["selected_abstraction"] == "code_file_set"
+    assert report["selected_representation"]["manifest_path"] == (
+        "policies.candidate_language"
+    )
+    assert report["selected_representation"]["policy"] == (
+        "python_primary_text_workspace_v1"
+    )
+    assert report["selected_representation"]["candidate_representation"] == (
+        "bounded_utf8_text_workspace_with_typed_static_members"
+    )
+    assert report["selected_representation"]["language_runner_ready"] is False
+    assert report["selected_representation"]["policy_validation"]["ok"] is True
+    assert report["serializer_runner_linkage"]["validator_runner"] == (
+        "python_subprocess_entrypoint"
+    )
+    assert report["serializer_runner_linkage"]["problem_defined_serializer_hooks"] == (
+        "unsupported"
+    )
+    assert report["runtime_candidate_shape"]["program_count"] == 1
+    assert report["runtime_candidate_shape"]["workspace_program_count"] == 1
+    assert report["runtime_candidate_shape"]["python_file_count"] == 1
+    assert report["runtime_candidate_shape"]["non_python_text_file_count"] == 1
+    assert report["runtime_candidate_shape"]["static_member_count"] == 1
+    record = report["runtime_candidate_shape"]["program_records"][0]
+    assert record["primary_file"] == "main.py"
+    assert record["representational_role"] == "direct_solution_code_workspace"
+    assert len(record["workspace_sha256"]) == 64
+
+    options = {item["option"]: item for item in report["abstraction_options"]}
+    assert set(options) == {
+        "direct_solution",
+        "constructor_function",
+        "bespoke_search_algorithm",
+        "coevolved_solution_and_search",
+    }
+    assert options["direct_solution"]["selection_status"] == "selected_current_default"
+    assert options["constructor_function"]["local_status"] == (
+        "not_distinguished_from_python_workspace"
+    )
+    assert options["coevolved_solution_and_search"]["local_status"] == "unsupported"
+    assert report["abstraction_rationale"]["status"] == "not_recorded"
+    assert report["bias_assessment"]["symmetry_structure_assumptions_recorded"] is False
+    assert report["bias_assessment"]["equal_budget_comparison_ready"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["selected_abstraction_recorded"] is True
+    assert report["claim_readiness"]["alphaevolve_abstraction_selection_fidelity"] is False
+    assert "equal_budget_direct_constructor_search_comparisons" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_abstraction_selection_fidelity"] = True
+    edited["bias_assessment"]["equal_budget_comparison_ready"] = True
+    validation = validate_candidate_abstraction_choice_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "abstraction_selection_fidelity_overclaim",
+        "equal_budget_comparison_ready_overclaim",
     }
 
 

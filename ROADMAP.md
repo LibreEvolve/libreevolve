@@ -119,6 +119,11 @@ LibreEvolve has:
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported
+- runtime candidate-abstraction choice reports under
+  `runtime.history.candidate_abstraction_choice_report`, recording the current
+  code-file-set selection, policy/runner linkage, runtime workspace shape,
+  unsupported constructor/search/paired alternatives, and remaining
+  AlphaEvolve abstraction-rationale and bias-evidence gaps
 - local run-budget stop accounting for generations, evaluations,
   evaluator-seconds, wall-clock runtime, logical LLM calls, provider attempts,
   provider-reported tokens, configured estimated cost, and retained LLM
@@ -140,8 +145,8 @@ is not yet an AlphaEvolve reproduction.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.
-- Add abstraction-choice reporting so benchmark claims can record why a
-  direct-solution, constructor-function, or search-algorithm formulation was
+- Extend candidate-abstraction reports with benchmark metadata that records why
+  a direct-solution, constructor-function, or search-algorithm formulation was
   chosen, what symmetry/structure bias was expected, and how alternatives
   performed under comparable budgets.
 - Add language-aware evolve-block marker grammars if non-Python workspace files

@@ -46,6 +46,17 @@ program counts, manifest-path resolution counts, artifact-link/presence counts,
 and `claim_ready: false` gaps for evolvable span ids, score-field-to-candidate
 path links, embedded-only task definitions, standalone report examples, and
 deeper id resolution into prompt/evaluator/candidate history.
+Completed manifests also include
+`runtime.history.candidate_abstraction_choice_report` with schema
+`libreevolve.candidate_abstraction_choice_report.v1`. This report derives the
+selected abstraction from `policies.candidate_language`, records the current
+Python-primary code-file-set representation, links serializer/materializer/
+mutation/validator-runner surfaces, summarizes runtime workspace shape, and
+lists direct solution, constructor function, bespoke search algorithm, and
+paired solution/search alternatives. It remains `claim_ready: false` because
+LibreEvolve does not yet record problem-level abstraction rationale,
+symmetry/structure assumptions, problem-defined abstraction hooks, paired
+representations, or equal-budget comparison reports for those alternatives.
 Completed runtime manifests include
 `runtime.history.evaluation_cascade_report` when configured stages have run.
 The `libreevolve.evaluation_cascade_report.v1` summary is rebuilt from

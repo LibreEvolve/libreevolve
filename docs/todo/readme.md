@@ -260,8 +260,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     index, and code/paper TODO entries together so README distinguishes
     supported local marker syntax from source-exhibit reproduction.
 
-- [ ] Keep README candidate-abstraction wording scoped to current divergence
-      until abstraction-choice evidence exists.
+- [ ] Keep README candidate-abstraction wording scoped beyond the current
+      abstraction-choice report.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say users can choose
     different candidate abstractions for the same problem, and those choices
     carry biases: constructor functions can favor highly symmetric solutions,
@@ -275,16 +275,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     non-code serializers or paired solution/search APIs. The underlying
     manifest policy records this as `python_primary_text_workspace_v1` with
     `problem_defined_solution_abstractions: unsupported` and
-    `language_runner_ready: False`. It does not describe benchmark metadata
-    that records why one abstraction was selected, whether the problem is
-    symmetric/non-symmetric, which alternatives were unsupported, or how
-    alternative abstractions performed under comparable budgets.
-  - Required result: when abstraction-choice metadata, benchmark rationale,
-    problem-structure labels, unsupported-abstraction diagnostics, paired
-    solution/search APIs, or equal-budget abstraction-comparison reports land,
-    update README, ROADMAP, papers index, and code/paper TODOs so README
-    distinguishes a documented divergence from AlphaEvolve-style
-    abstraction-selection evidence.
+    `language_runner_ready: False`. README now also documents
+    `runtime.history.candidate_abstraction_choice_report`, which records the
+    selected code-file-set abstraction, policy linkage, unsupported
+    constructor/search/paired alternatives, and missing bias/equal-budget
+    evidence.
+  - Required result: when benchmark rationale, problem-structure labels, typed
+    candidate-abstraction hooks, paired solution/search APIs, or equal-budget
+    abstraction-comparison reports land, update README, ROADMAP, papers index,
+    and code/paper TODOs so README distinguishes the current partial report
+    from AlphaEvolve-style abstraction-selection evidence.
 
 - [ ] Keep README seed-provenance wording scoped to source identity until
       initial-program idea provenance exists.

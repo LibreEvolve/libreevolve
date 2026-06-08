@@ -71,6 +71,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve as AlphaEvolve-style grounded against incorrect base-LLM
     suggestions.
 
+- [ ] Track evaluation-cascade promotion and attrition evidence.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4 and the matrix-
+    multiplication experiment.
+  - Requirement: AlphaEvolve's cascade lets users specify test-case ensembles
+    of increasing difficulty, promotes candidates only after sufficiently
+    promising earlier-stage results, prunes less promising candidates quickly,
+    applies small-scale checks before main tests, and uses multiple random
+    seeds for matrix-multiplication evaluation.
+  - Partial status: LibreEvolve supports local staged validators with
+    thresholds, metric thresholds, samples, retries, seeds, budgets,
+    artifact/output checks, and per-candidate
+    `evaluation.metadata.configured_stage_results`.
+  - Current gap: paper-facing evidence does not aggregate those candidate-local
+    stage traces into a cascade report with stage difficulty or scale
+    rationale, evaluator/test-set identities, seed/sample denominators,
+    candidate counts entering/passing/failing each stage, early-prune reasons,
+    main-test exposure, cost/wall-clock savings, and links back to the
+    candidate evaluation records. Without that, local stage thresholds should
+    not be presented as AlphaEvolve-style cascade-efficiency or hypothesis-
+    testing evidence.
+  - Required result: add cascade-report artifacts, validators, and papers index
+    links with stage ids, source hashes, thresholds, promotion/attrition
+    counts, random-seed/sample coverage, main-test denominator definitions,
+    cost summaries, and claim-readiness checks.
+
 - [ ] Track hypothesis backtracking and abandoned-branch evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Section 2.4.
   - Requirement: AlphaEvolve frames scientific/program discovery as ideation,

@@ -1506,6 +1506,30 @@ Primary evidence:
     rejection review fields before claiming AlphaEvolve-style grounding that
     filters incorrect base-LLM suggestions.
 
+- [ ] Add paper-facing evaluation-cascade promotion and attrition evidence.
+  - Spec evidence: AlphaEvolve Section 2.4 describes an evaluation cascade in
+    which ensembles of test cases have increasing difficulty, candidates move
+    to the next stage only after sufficiently promising earlier-stage results,
+    less promising solutions are pruned quickly, and small-scale checks filter
+    faulty programs before the main tests. The matrix-multiplication
+    experiment on local PDF page 10 also says targets are evaluated with
+    multiple random seeds using the Section 2.4 cascade.
+  - Current evidence: `CascadeEvaluator` supports configured stages, samples,
+    retries, seeds, timeouts, `min_score`, `metric_thresholds`, artifact/output
+    checks, and per-candidate `evaluation.metadata.configured_stage_results`;
+    README documents those local mechanics. Those records are candidate-local
+    validator traces, not a paper-facing run report that proves stage ordering,
+    increasing-difficulty rationale, seed/sample coverage, promotion counts,
+    early-prune attrition, main-test exposure, or final metric denominators for
+    an AlphaEvolve-style benchmark claim.
+  - Required result: add cascade-report artifacts and validators with stage
+    ids, difficulty/scale labels, evaluator/test-set hashes, seed/sample
+    counts, promotion thresholds, candidate counts entering/passing/failing
+    each stage, prune reasons, main-test denominator definitions, per-stage
+    cost/wall-clock summaries, and cross-links to candidate evaluation records
+    before claiming AlphaEvolve-style evaluation-cascade efficiency or
+    hypothesis-testing evidence.
+
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,
     but in more complicated cases it may run an evolved search algorithm or

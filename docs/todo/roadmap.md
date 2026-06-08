@@ -3551,12 +3551,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve tensor-decomposition loss-function-only non-equivalence
     boundary; broad single-file/diff/no-create-delete labels are still not the
     same as executable proof that only the loss function was mutable.
-    The current report contract is also target-family generic: tests use a
-    placeholder `hello_world` target, and neither the registry nor report
-    validator requires Figure 8's matrix tensor-decomposition and
-    kissing-number sphere-packing target families, per-target curve summaries,
-    target-metric identity/direction/normalization, or intra-target
-    standard-deviation evidence over three independent seeds.
+    The current report contract now requires Figure 8's matrix
+    tensor-decomposition and kissing-number sphere-packing target families,
+    per-target curve summaries, target-metric identity/direction/
+    normalization, and intra-target standard-deviation evidence over three
+    independent seeds; focused tests use small matrix and kissing family
+    fixtures rather than a `hello_world` placeholder.
   - Required result: when runnable ablation harnesses, backend/seed/prompt/
     archive script entrypoints, component-assertion-to-config binding,
     progress-at-budget-fraction exports, or generated report bundles land,
@@ -3585,12 +3585,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     used for the human-prompter comparator. Ensure the
     `No full-file evolution` harness records the loss-function target scope,
     fixed tensor-search components, and report evidence before claiming parity
-    with Figure 8. Also require ablation
-    reports to identify the matrix and kissing-number target families and
-    validate target-metric identity/direction/normalization plus
-    mean/standard-deviation curve summaries against per-target three-seed
-    records before treating generic declared-target reports as
-    Figure 8-equivalent.
+    with Figure 8. Also require generated reports to come from runnable
+    matrix/kissing benchmark scripts with links to the matching evolutionary
+    run artifacts and rendered Figure 8-equivalent curve exhibits before
+    treating validated report schemas as reproduced ablation evidence.
 
 - [ ] Keep Figure 8 roadmap visual wording scoped until ablation-curve exhibit
       provenance exists.

@@ -434,9 +434,11 @@ is not yet an AlphaEvolve reproduction.
 - For the Figure 8 `No full-file evolution` ablation, keep the registry's
   validated `paper_scope_boundary` marked not equivalent until a
   tensor-decomposition harness proves only the loss function was mutable.
-- Report benchmark progress at comparable compute-budget fractions, not only
-  final generation counts, with explicit target-metric identity, direction,
-  normalization, and aggregation policy for paper-facing curves.
+- Generate benchmark scripts that emit the validated Figure 8 target-family
+  ablation reports and rendered curve exhibits; the schema now requires
+  comparable compute-budget fractions, target-metric identity, direction,
+  normalization, and per-target mean/std aggregation, but no real runner
+  produces those reports yet.
 
 ### 10. Operational maturity
 

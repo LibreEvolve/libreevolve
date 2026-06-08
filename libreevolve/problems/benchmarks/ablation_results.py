@@ -16,6 +16,8 @@ ABLATION_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.alphaevolve_ablation_artifact_
 REQUIRED_BUDGET_FRACTIONS = (0.0, 0.25, 0.5, 0.75, 1.0)
 BUDGET_UNITS = frozenset({"evaluations", "wall_clock_seconds", "llm_calls", "tokens", "cost_usd"})
 ARTIFACT_KINDS = frozenset({"variant_report", "curve_summary", "raw_records", "plot"})
+FIGURE8_TARGET_FAMILIES = frozenset({"matrix_tensor_decomposition", "kissing_number_sphere_packing"})
+METRIC_DIRECTIONS = frozenset({"higher_is_better"})
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
@@ -49,7 +51,8 @@ def validate_ablation_result_report(report: object | str | Path) -> AblationResu
     targets = data.get("targets")
     target_ids = _validate_targets(targets, issues)
     records = data.get("records")
-    record_count = _validate_records(records, target_ids, issues)
+    record_count, score_groups = _validate_records(records, target_ids, issues)
+    _validate_curve_summaries(data.get("curve_summaries"), score_groups, target_ids, issues)
     _validate_artifacts(data.get("artifacts"), issues)
     equal_budget_ready = not issues
     return AblationResultValidation(
@@ -75,6 +78,7 @@ def render_ablation_result_summary(report: dict[str, Any]) -> str:
         f"| target_count | {validation.target_count} |",
         f"| record_count | {validation.record_count} |",
         f"| budget_axis | {report.get('budget_axis', '<unknown>')} |",
+        f"| curve_summary_count | {len(report.get('curve_summaries', [])) if isinstance(report.get('curve_summaries'), list) else 0} |",
         f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
     ]
     if validation.issues:
@@ -250,6 +254,7 @@ def _validate_targets(value: object, issues: list[AblationResultIssue]) -> set[s
         issues.append(AblationResultIssue("invalid_targets", "targets must be a non-empty list"))
         return set()
     seen: set[str] = set()
+    families: set[str] = set()
     for target in value:
         if not isinstance(target, dict):
             issues.append(AblationResultIssue("invalid_target", "target must be an object"))
@@ -263,18 +268,43 @@ def _validate_targets(value: object, issues: list[AblationResultIssue]) -> set[s
         seen.add(target_id)
         if not isinstance(target.get("description"), str) or not target["description"].strip():
             issues.append(AblationResultIssue("missing_target_description", "target description is required"))
+        family = target.get("target_family")
+        if family not in FIGURE8_TARGET_FAMILIES:
+            issues.append(AblationResultIssue("invalid_target_family", "target_family must match a Figure 8 target family"))
+        elif isinstance(family, str):
+            families.add(family)
+        _validate_target_metric(target.get("target_metric"), issues)
+    for family in sorted(FIGURE8_TARGET_FAMILIES - families):
+        issues.append(AblationResultIssue("missing_figure8_target_family", "reports must cover both Figure 8 target families"))
     return seen
 
 
-def _validate_records(value: object, target_ids: set[str], issues: list[AblationResultIssue]) -> int:
+def _validate_target_metric(value: object, issues: list[AblationResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(AblationResultIssue("invalid_target_metric", "target_metric must be an object"))
+        return
+    if not isinstance(value.get("name"), str) or not value["name"].strip():
+        issues.append(AblationResultIssue("missing_target_metric_name", "target_metric.name is required"))
+    if value.get("direction") not in METRIC_DIRECTIONS:
+        issues.append(AblationResultIssue("invalid_target_metric_direction", "target metric direction must be higher_is_better"))
+    if not isinstance(value.get("normalization"), str) or not value["normalization"].strip():
+        issues.append(AblationResultIssue("missing_target_metric_normalization", "target_metric.normalization is required"))
+
+
+def _validate_records(
+    value: object,
+    target_ids: set[str],
+    issues: list[AblationResultIssue],
+) -> tuple[int, dict[tuple[str, str, float], list[float]]]:
     if not isinstance(value, list) or not value:
         issues.append(AblationResultIssue("invalid_records", "records must be a non-empty list"))
-        return 0
+        return 0, {}
     seen: set[tuple[str, str, int, float]] = set()
     observed: dict[tuple[str, str], set[tuple[int, float]]] = {}
     seed_sets: dict[tuple[str, str], set[int]] = {}
     seed_budget_specs: dict[tuple[str, str, int], tuple[str, float]] = {}
     target_budget_specs: dict[str, tuple[str, float]] = {}
+    score_groups: dict[tuple[str, str, float], list[float]] = {}
     for record in value:
         if not isinstance(record, dict):
             issues.append(AblationResultIssue("invalid_record", "record must be an object"))
@@ -289,7 +319,8 @@ def _validate_records(value: object, target_ids: set[str], issues: list[Ablation
             issues.append(AblationResultIssue("invalid_record_target", "record target_id must be declared in targets"))
         if isinstance(seed, bool) or not isinstance(seed, int):
             issues.append(AblationResultIssue("invalid_seed", "seed must be an integer"))
-        if isinstance(record.get("score"), bool) or not isinstance(record.get("score"), (int, float)) or not math.isfinite(float(record.get("score"))):
+        score = record.get("score")
+        if isinstance(score, bool) or not isinstance(score, (int, float)) or not math.isfinite(float(score)):
             issues.append(AblationResultIssue("invalid_score", "score must be finite"))
         budget_spec = _validate_consumed_budget(record.get("consumed_budget"), fraction, issues)
         _validate_component_assertions(record.get("component_assertions"), issues)
@@ -300,6 +331,8 @@ def _validate_records(value: object, target_ids: set[str], issues: list[Ablation
             seen.add(key)
             observed.setdefault((variant_id, target_id), set()).add((seed, fraction))
             seed_sets.setdefault((variant_id, target_id), set()).add(seed)
+            if isinstance(score, (int, float)) and not isinstance(score, bool) and math.isfinite(float(score)):
+                score_groups.setdefault((variant_id, target_id, fraction), []).append(float(score))
             if budget_spec is not None:
                 seed_key = (variant_id, target_id, seed)
                 if seed_key in seed_budget_specs and seed_budget_specs[seed_key] != budget_spec:
@@ -309,7 +342,7 @@ def _validate_records(value: object, target_ids: set[str], issues: list[Ablation
                     issues.append(AblationResultIssue("inconsistent_target_budget", "all variants and seeds for a target must use the same budget unit and limit"))
                 target_budget_specs.setdefault(target_id, budget_spec)
     _validate_coverage(observed, seed_sets, target_ids, issues)
-    return len(value)
+    return len(value), score_groups
 
 
 def _budget_fraction(value: object, issues: list[AblationResultIssue]) -> float | None:
@@ -383,6 +416,58 @@ def _validate_coverage(
                 if fractions != required_fractions:
                     issues.append(AblationResultIssue("invalid_budget_fraction_coverage", "each variant/target/seed must report all required budget fractions"))
                     break
+
+
+def _validate_curve_summaries(
+    value: object,
+    score_groups: dict[tuple[str, str, float], list[float]],
+    target_ids: set[str],
+    issues: list[AblationResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(AblationResultIssue("invalid_curve_summaries", "curve_summaries must be a non-empty list"))
+        return
+    seen: set[tuple[str, str, float]] = set()
+    for summary in value:
+        if not isinstance(summary, dict):
+            issues.append(AblationResultIssue("invalid_curve_summary", "curve summary must be an object"))
+            continue
+        variant_id = summary.get("variant_id")
+        target_id = summary.get("target_id")
+        fraction = _budget_fraction(summary.get("budget_fraction"), issues)
+        if variant_id not in EXPECTED_VARIANT_IDS:
+            issues.append(AblationResultIssue("invalid_curve_variant", "curve summary variant_id must match AlphaEvolve ablation registry"))
+        if not isinstance(target_id, str) or target_id not in target_ids:
+            issues.append(AblationResultIssue("invalid_curve_target", "curve summary target_id must be declared in targets"))
+        if fraction is None or not isinstance(variant_id, str) or not isinstance(target_id, str):
+            continue
+        key = (variant_id, target_id, fraction)
+        if key in seen:
+            issues.append(AblationResultIssue("duplicate_curve_summary", "duplicate curve summary"))
+        seen.add(key)
+        scores = score_groups.get(key, [])
+        if len(scores) != 3:
+            issues.append(AblationResultIssue("invalid_curve_seed_count", "curve summary must be backed by three seed records"))
+            continue
+        mean = summary.get("mean_score")
+        std = summary.get("std_score")
+        seed_count = summary.get("seed_count")
+        if isinstance(seed_count, bool) or seed_count != 3:
+            issues.append(AblationResultIssue("invalid_curve_seed_count", "curve summary seed_count must be three"))
+        if isinstance(mean, bool) or not isinstance(mean, (int, float)) or not math.isfinite(float(mean)):
+            issues.append(AblationResultIssue("invalid_curve_mean", "curve summary mean_score must be finite"))
+        elif not math.isclose(float(mean), sum(scores) / len(scores), rel_tol=0.0, abs_tol=1e-9):
+            issues.append(AblationResultIssue("curve_mean_mismatch", "curve summary mean_score must match seed records"))
+        expected_std = math.sqrt(sum((score - (sum(scores) / len(scores))) ** 2 for score in scores) / len(scores))
+        if isinstance(std, bool) or not isinstance(std, (int, float)) or not math.isfinite(float(std)) or float(std) < 0:
+            issues.append(AblationResultIssue("invalid_curve_std", "curve summary std_score must be finite and non-negative"))
+        elif not math.isclose(float(std), expected_std, rel_tol=0.0, abs_tol=1e-9):
+            issues.append(AblationResultIssue("curve_std_mismatch", "curve summary std_score must match seed records"))
+    for variant_id in EXPECTED_VARIANT_IDS:
+        for target_id in target_ids:
+            for fraction in REQUIRED_BUDGET_FRACTIONS:
+                if (variant_id, target_id, fraction) not in seen:
+                    issues.append(AblationResultIssue("missing_curve_summary", "each variant/target/fraction needs a curve summary"))
 
 
 def _validate_artifacts(value: object, issues: list[AblationResultIssue]) -> None:

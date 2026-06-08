@@ -116,11 +116,10 @@ carries a validated `paper_scope_boundary` that marks the current declarative
 meta-prompt-disabled labels as `lineage_unproven`; it still has no
 prompt-history, call-ledger, or prompt-program lineage proof that meta-prompt
 calls and prompt-template mutations were disabled only in the ablated run. The
-report contract is also target-family generic: it does not require Figure 8's
-matrix tensor-decomposition and kissing-number sphere-packing target families
-or validate target-metric identity,
-higher-is-better direction, normalization policy, or mean/standard-deviation
-curve summaries against the three independent seed traces.
+report contract now requires Figure 8's matrix tensor-decomposition and
+kissing-number sphere-packing target families, target-metric identity,
+higher-is-better direction, normalization policy, and mean/standard-deviation
+curve summaries checked against the three independent seed traces.
 For AlphaEvolve context-ingestion status, "deterministic selection provenance"
 means path-segment-aware local context globs: `*` stays within one path
 component and `**` recursively matches zero or more components.
@@ -846,7 +845,11 @@ Implemented:
   exactly three seeds, required equal-budget fractions,
   finite scores, consumed-budget consistency, consistent budget unit/limit per
   seed curve and across all variants/seeds for each target, passed component
-  assertions, and hashed curve artifacts. The checked-in `No full-file
+  assertions, hashed curve artifacts, Figure 8 target-family coverage for
+  `matrix_tensor_decomposition` and `kissing_number_sphere_packing`,
+  target-metric identity/direction/normalization, and per-target/variant/
+  fraction mean/std curve summaries checked against the three seed records.
+  The checked-in `No full-file
   evolution` variant records a validated non-equivalence boundary against
   AlphaEvolve's tensor-decomposition loss-function-only setup, and the
   `No evolution` variant records a validated prompt-history-unproven boundary

@@ -4628,20 +4628,18 @@ Primary evidence:
     with different random seeds.
   - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` validates
     declared targets, six variant ids, three seeds, required budget fractions,
-    finite scores, consumed-budget consistency, component assertions, and
-    hashed curve artifacts. The focused tests use `hello_world` as a small
-    deterministic placeholder target, and the report schema does not require a
-    target-family label, matrix-vs-kissing coverage, per-target aggregation
-    records, target-metric identity, metric direction/normalization,
-    intra-target standard-deviation curves, or linkage from curve summaries
-    back to target-specific seed records.
-  - Required result: extend ablation reports or generated curve artifacts with
-    target-family metadata for `matrix_tensor_decomposition` and
-    `kissing_number_sphere_packing`, per-target and cross-target aggregation
-    summaries, target-metric name/direction/normalization records,
-    three-seed mean/standard-deviation traces at each budget fraction, and
-    validation that Figure 8-style reports are produced from the
-    paper-relevant target families rather than arbitrary smoke targets.
+    finite scores, consumed-budget consistency, component assertions, hashed
+    curve artifacts, Figure 8 target-family coverage for
+    `matrix_tensor_decomposition` and `kissing_number_sphere_packing`,
+    target-metric name/direction/normalization records, and per-target/
+    variant/fraction mean and standard-deviation summaries checked against the
+    underlying three seed records. The focused tests now use small matrix and
+    kissing target-family fixtures rather than a `hello_world` placeholder.
+  - Required result: add benchmark scripts that emit validated reports from
+    real matrix tensor-decomposition and kissing-number target-family runs,
+    link generated curve summaries back to matching evolutionary run
+    artifacts, and add cross-target aggregation plus rendered Figure 8-style
+    exhibits before treating validated schemas as reproduced ablation curves.
 
 - [ ] Add Figure 8 ablation-curve exhibit provenance and rendered artifacts.
   - Spec evidence: AlphaEvolve Figure 8 is a two-panel visual exhibit: matrix

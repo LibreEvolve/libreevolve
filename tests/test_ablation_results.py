@@ -1,5 +1,6 @@
 import hashlib
 import json
+import math
 
 from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
 from libreevolve.problems.benchmarks.ablation_results import (
@@ -31,23 +32,60 @@ def _record(variant_id: str, target_id: str, seed: int, fraction: float) -> dict
 
 
 def _valid_report() -> dict:
-    target_id = "hello_world"
+    targets = [
+        {
+            "target_id": "matrix_mm_2x2",
+            "target_family": "matrix_tensor_decomposition",
+            "description": "Small matrix target for ablation-report contract tests.",
+            "target_metric": {
+                "name": "normalized_rank_improvement",
+                "direction": "higher_is_better",
+                "normalization": "per_target_baseline_delta",
+            },
+        },
+        {
+            "target_id": "kissing_n8",
+            "target_family": "kissing_number_sphere_packing",
+            "description": "Small kissing-number target for ablation-report contract tests.",
+            "target_metric": {
+                "name": "normalized_lower_bound_improvement",
+                "direction": "higher_is_better",
+                "normalization": "per_target_baseline_delta",
+            },
+        },
+    ]
     records = []
-    for variant_id in EXPECTED_VARIANT_IDS:
-        for seed in (101, 102, 103):
+    curve_summaries = []
+    for target in targets:
+        target_id = target["target_id"]
+        for variant_id in EXPECTED_VARIANT_IDS:
+            for seed in (101, 102, 103):
+                for fraction in REQUIRED_BUDGET_FRACTIONS:
+                    records.append(_record(variant_id, target_id, seed, fraction))
             for fraction in REQUIRED_BUDGET_FRACTIONS:
-                records.append(_record(variant_id, target_id, seed, fraction))
+                scores = [float(seed) + fraction for seed in (101, 102, 103)]
+                mean = sum(scores) / len(scores)
+                std = math.sqrt(sum((score - mean) ** 2 for score in scores) / len(scores))
+                curve_summaries.append(
+                    {
+                        "variant_id": variant_id,
+                        "target_id": target_id,
+                        "budget_fraction": fraction,
+                        "mean_score": mean,
+                        "std_score": std,
+                        "seed_count": 3,
+                    }
+                )
     return {
         "schema": ABLATION_RESULT_SCHEMA,
         "budget_axis": "fraction_of_equal_compute_budget",
-        "targets": [
-            {"target_id": target_id, "description": "Small deterministic target for ablation-report contract tests."}
-        ],
+        "targets": targets,
         "records": records,
+        "curve_summaries": curve_summaries,
         "artifacts": [
             {
                 "kind": "curve_summary",
-                "path": "ablations/hello_world/curve_summary.json",
+                "path": "ablations/figure8/curve_summary.json",
                 "sha256": "a" * 64,
                 "bytes": 4096,
             }
@@ -60,8 +98,8 @@ def test_ablation_result_report_validates_equal_budget_curve_contract():
 
     assert validation.ok is True
     assert validation.equal_budget_ready is True
-    assert validation.target_count == 1
-    assert validation.record_count == 6 * 3 * 5
+    assert validation.target_count == 2
+    assert validation.record_count == 6 * 2 * 3 * 5
     assert validation.issues == []
 
 
@@ -80,7 +118,7 @@ def test_ablation_result_artifact_inventory_verifies_declared_files(tmp_path):
     report["artifacts"].append(
         {
             "kind": "raw_records",
-            "path": "ablations/hello_world/raw_records.jsonl",
+            "path": "ablations/figure8/raw_records.jsonl",
             "sha256": "b" * 64,
             "bytes": 2048,
         }
@@ -171,6 +209,45 @@ def test_ablation_result_report_requires_all_variants_seeds_and_fractions():
     assert "invalid_budget_fraction_coverage" in codes
 
 
+def test_ablation_result_report_requires_figure8_target_metadata():
+    report = _valid_report()
+    report["targets"] = [report["targets"][0]]
+    report["targets"][0]["target_family"] = "hello_world"
+    report["targets"][0]["target_metric"]["direction"] = "lower_is_better"
+    report["targets"][0]["target_metric"]["normalization"] = ""
+
+    validation = validate_ablation_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_target_family" in codes
+    assert "missing_figure8_target_family" in codes
+    assert "invalid_target_metric_direction" in codes
+    assert "missing_target_metric_normalization" in codes
+
+
+def test_ablation_result_report_validates_curve_summaries_against_seed_records():
+    report = _valid_report()
+    report["curve_summaries"] = [
+        summary for summary in report["curve_summaries"]
+        if not (
+            summary["variant_id"] == "no_evolution"
+            and summary["target_id"] == "matrix_mm_2x2"
+            and summary["budget_fraction"] == 0.5
+        )
+    ]
+    report["curve_summaries"][0]["mean_score"] += 1.0
+    report["curve_summaries"][1]["std_score"] += 1.0
+
+    validation = validate_ablation_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_curve_summary" in codes
+    assert "curve_mean_mismatch" in codes
+    assert "curve_std_mismatch" in codes
+
+
 def test_ablation_result_report_rejects_budget_mismatch_and_failed_assertions():
     report = _valid_report()
     report["records"][0]["consumed_budget"]["consumed"] = 13
@@ -191,7 +268,7 @@ def test_ablation_result_report_requires_consistent_seed_budget_unit_and_limit()
     for record in report["records"]:
         if (
             record["variant_id"] == "full_system"
-            and record["target_id"] == "hello_world"
+            and record["target_id"] == "matrix_mm_2x2"
             and record["seed"] == 101
             and record["budget_fraction"] == 0.25
         ):
@@ -214,7 +291,7 @@ def test_ablation_result_report_requires_consistent_target_budget_unit_and_limit
     for record in report["records"]:
         if (
             record["variant_id"] == "no_context_in_prompt"
-            and record["target_id"] == "hello_world"
+            and record["target_id"] == "matrix_mm_2x2"
             and record["seed"] == 101
         ):
             record["consumed_budget"] = {
@@ -249,5 +326,5 @@ def test_ablation_result_summary_renders_equal_budget_readiness():
     assert "AlphaEvolve ablation result report" in summary
     assert "| schema_status | ok |" in summary
     assert "| equal_budget_ready | yes |" in summary
-    assert "| target_count | 1 |" in summary
-    assert "| record_count | 90 |" in summary
+    assert "| target_count | 2 |" in summary
+    assert "| record_count | 180 |" in summary

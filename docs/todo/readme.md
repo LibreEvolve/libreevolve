@@ -766,11 +766,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     non-equivalence boundary for the paper-specific tensor-decomposition
     loss-function-only setup; generic single-file/diff/no-topology labels still
     should not be described as executable evidence for that ablation.
-    The report contract is also target-family generic: it validates declared
-    targets but not Figure 8's matrix tensor-decomposition and kissing-number
-    sphere-packing families, and it does not require per-target
-    target-metric identity/direction/normalization or mean/standard-deviation
-    curve summaries over three independent seeds.
+    The report contract now validates Figure 8 target-family coverage for
+    matrix tensor-decomposition and kissing-number sphere-packing targets,
+    target-metric identity/direction/normalization, and per-target
+    mean/standard-deviation curve summaries over three independent seeds.
   - Required result: when benchmark scripts emit executed equal-budget
     ablation reports, when component assertions are bound to supported runtime
     config controls, or when accelerator/async-worker budgets land, update
@@ -794,12 +793,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prompt-program lineage evidence proves meta-prompt and prompt-mutation
     surfaces were disabled only for that ablation, with a frozen human-authored
     prompt identity/source/revision/context policy recorded for the
-    human-prompter comparator. Require README wording to distinguish
-    generic
-    ablation-result schemas from
-    Figure 8-equivalent matrix/kissing target-family reports with validated
-    target-metric identity/direction/normalization and mean/standard-deviation
-    curves.
+    human-prompter comparator. Require README wording to distinguish validated
+    ablation-result schemas from executed Figure 8-equivalent matrix/kissing
+    target-family runs and rendered curve exhibits.
 
 - [ ] Keep README Figure 8 visual wording scoped until ablation-curve exhibit
       provenance exists.

@@ -921,11 +921,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     consumed-budget/fraction consistency, consistent budget unit/limit per seed
     curve and across all variants/seeds for each target, passed component
     assertions, and hashed curve artifacts.
-    That report contract remains target-family generic: it does not require the
-    two Figure 8 task families, low-rank matrix tensor decomposition and
-    kissing-number sphere packing, and it does not validate per-target
-    mean/standard-deviation curve summaries against the underlying three
-    independent seed traces.
+    That report contract now requires the two Figure 8 task families, low-rank
+    matrix tensor decomposition and kissing-number sphere packing, and
+    validates per-target mean/standard-deviation curve summaries against the
+    underlying three independent seed traces.
     `libreevolve.alphaevolve_ablation_artifact_inventory.v1` now verifies
     declared ablation report artifacts under an explicit artifact root,
     checking safe relative paths, existence, SHA-256 hashes, byte counts,
@@ -1067,11 +1066,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     whether a local meta-prompt role was toggled off. The
     remaining ablation and calibration gap is executing and
     emitting real reports from runnable variants over the Figure 8 matrix and
-    kissing-number target families, with curve summaries that expose
-    target-metric identity, higher-is-better direction, normalization policy,
-    and per-target and cross-target mean/standard-deviation evidence. The gap
-    is not validating declared result or feedback-calibration artifacts once a
-    report names them.
+    kissing-number target families, linking those reports to matching
+    evolutionary run artifacts, and rendering Figure 8-equivalent curve
+    exhibits. The gap is not validating declared result or
+    feedback-calibration artifacts once a report names them.
     The remaining provider cancellation gap is live cancellation/stop behavior,
     cross-run quarantine/resume behavior, and richer runtime artifact
     generation, not configured in-run role/backend quarantine observations or

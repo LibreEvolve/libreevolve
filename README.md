@@ -3158,9 +3158,11 @@ ablations, declared targets, exactly three seeds per variant/target, required
 equal-budget fractions, finite scores, consumed budget consistency, consistent
 budget unit/limit across each seed's fraction curve and across all
 variants/seeds for each target, passed component assertions, and hashed curve
-artifacts. It does not yet require Figure 8 target-family coverage or
-target-metric identity, higher-is-better direction, normalization, and
-aggregation metadata for the plotted y-axis. It also does not prove the
+artifacts. It now also requires the two Figure 8 target families,
+`matrix_tensor_decomposition` and `kissing_number_sphere_packing`,
+target-metric identity, higher-is-better direction, normalization policy, and
+per-target/variant/fraction mean and standard-deviation curve summaries checked
+against the three seed records. It still does not prove the
 `No evolution` condition: the registry row now carries a validated
 `paper_scope_boundary` that marks current zero-generation/seed-only labels as
 `prompt_history_unproven`, but it still has no executed prompt/history records

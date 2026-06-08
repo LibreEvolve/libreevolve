@@ -6547,8 +6547,8 @@ Primary evidence:
   - Current evidence: `papers/README.md` lists `2506.01896` only as a
     constructive math benchmark candidate with `Not implemented; potential
     future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
-    TODOs and a source-specific TODO for `2505.16105`, but no first-class code
-    TODO for this further source, no sequence-of-sets construction schema, no
+    TODOs and a source-specific TODO for `2505.16105`, but no implemented
+    source-boundary support or report schema for this further source, no
     limiting argument artifact, no large-deviation lemma checker, no
     asymptotic `W(m, floor(rm), B)` counting metadata, no MATLAB-code
     extraction/reimplementation harness, no tolerance-sweep regression for

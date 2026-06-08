@@ -24,6 +24,10 @@ LibreEvolve has:
   opt-in candidate-owned `evaluate(eval_inputs)` entrypoints, thresholds,
   samples, validator-managed seed values, retries, timeouts, and per-attempt
   history
+- embedded evaluator entrypoint reports under
+  `runtime.history.embedded_evaluator_entrypoint_report`, summarizing executed
+  candidate-owned `evaluate(eval_inputs)` stages, eval-input provenance,
+  dependency scope, metric names, and remaining Figure 3 parity gaps
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, and explicit claim-readiness
   limitations under `runtime.history.evaluation_cascade_report`

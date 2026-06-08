@@ -134,7 +134,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     resumed-search outcomes, and replayable validation before using
     AlphaEvolve-style backtracking wording without qualification.
 
-- [ ] Track candidate-embedded evaluator entrypoint parity.
+- [ ] Extend candidate-embedded evaluator reports into full Figure 3 parity.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's example codebase contains an
     `evaluate(eval_inputs) -> dict[str, float]` function that invokes the
@@ -146,12 +146,16 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve records structured results from problem-local
     validators, validates direct evaluator entrypoint provenance, enforces
     problem-local validator dependency policy, can import candidate modules
-    from external validators, and now supports an opt-in
+    from external validators, and supports an opt-in
     `eval_stages[].mode: embedded_evaluate` path. Embedded stages import the
     materialized candidate primary file, discover a one-argument
     `evaluate(eval_inputs)` callable, invoke it with JSON-safe configured
     inputs, validate returned metrics, and record candidate callable plus
-    eval-input provenance.
+    eval-input provenance. Completed manifests now include
+    `runtime.history.embedded_evaluator_entrypoint_report` with schema
+    `libreevolve.embedded_evaluator_entrypoint_report.v1`, summarizing executed
+    embedded entrypoints, dependency scope, eval-input provenance, metric
+    names, and readiness gaps.
   - Current gap: paper-facing evidence still does not show an embedded-only
     problem definition, skeleton-to-evolved-block invocation paths, stronger
     callable isolation/build policy, or score-field mapping back to specific

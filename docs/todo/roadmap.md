@@ -136,27 +136,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     main-test denominator definitions, cost-savings evidence, and exact
     candidate-evaluation cross-links.
 
-- [ ] Keep evaluator-entrypoint roadmap wording scoped to external validators
-      until embedded `evaluate(eval_inputs)` support exists.
+- [ ] Extend evaluator-entrypoint roadmap wording from opt-in embedded support
+      to full Figure 3 parity.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate
     codebase with an `evaluate(eval_inputs) -> dict[str, float]` function that
     invokes the evolved skeleton. Local PDF page 4 describes the user-provided
     evaluator as a Python `evaluate` function with a fixed input/output
     signature, and Figure 3 on page 6 says evaluators invoke the Figure 3(a)
     `evaluate` function to score the modified program.
-  - Current evidence: `ROADMAP.md` can now claim configured local validators
-    plus an opt-in `eval_stages[].mode: embedded_evaluate` path. Embedded stages
+  - Current evidence: `ROADMAP.md` now claims configured local validators plus
+    an opt-in `eval_stages[].mode: embedded_evaluate` path. Embedded stages
     import the materialized candidate primary file, discover a one-argument
     candidate-owned `evaluate(eval_inputs)` callable, invoke it with JSON-safe
     configured inputs, map the returned dictionary through local metric
-    validation, and record candidate callable plus eval-input provenance.
-    External `validate.py` remains the default path, the problem loader still
-    requires `validate.py`, and skeleton-to-block invocation evidence is not
-    yet present.
-  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
-    with the landed opt-in mode plus remaining work for embedded-only problem
-    definitions, skeleton-to-block invocation evidence, stronger callable
-    isolation/build policy, and score-field mapping back to evolved code paths.
+    validation, record candidate callable plus eval-input provenance, and report
+    executed embedded entrypoints under
+    `runtime.history.embedded_evaluator_entrypoint_report`. External
+    `validate.py` remains the default path, the problem loader still requires
+    `validate.py`, and skeleton-to-block invocation evidence is not yet present.
+  - Required result: when embedded-only problem definitions,
+    skeleton-to-block invocation evidence, stronger callable isolation/build
+    policy, and score-field mapping back to evolved code paths land, update
+    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
+    wording can claim full Figure 3 evaluator parity without overstating the
+    current opt-in report.
 
 - [ ] Keep Figure 1/Figure 2 roadmap wording scoped until process-diagram
       provenance exists.

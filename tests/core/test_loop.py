@@ -45,6 +45,7 @@ from libreevolve.core.loop import (
     validate_evaluation_cascade_report,
     validate_evaluator_workload_report,
     validate_evaluator_oracle_registry,
+    validate_embedded_evaluator_entrypoint_report,
     validate_paper_evaluator_metric_contract,
     validate_paper_metric_table_export,
     validate_proposal_lifecycle_report,
@@ -3799,6 +3800,65 @@ def test_runtime_history_reports_evaluator_workload_provenance():
     assert stage["budget"]["max_trials"] == 25
     assert stage["checkpoint_policy"] == "retained_artifacts"
     assert stage["score_fields"] == ["score"]
+
+
+def test_runtime_history_reports_embedded_evaluator_entrypoint():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    return {'score': 0.0, 'is_valid': False}\n"
+    )
+    problem.initial_programs = [
+        "def evaluate(eval_inputs):\n"
+        "    return {'score': eval_inputs['score'], 'is_valid': True}\n"
+    ]
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            eval_stages=[
+                {
+                    "name": "candidate_eval",
+                    "mode": "embedded_evaluate",
+                    "eval_inputs": {"score": 0.7},
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["embedded_evaluator_entrypoint_report"]
+
+    assert report["schema"] == "libreevolve.embedded_evaluator_entrypoint_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_embedded_evaluator_entrypoint_report(report)["ok"] is True
+    assert report["embedded_candidate_count"] == 1
+    assert report["external_validator_candidate_count"] == 0
+    assert report["embedded_entrypoint_count"] == 1
+    assert report["entrypoint_contract"]["signature"] == "evaluate(eval_inputs)"
+    assert report["entrypoint_contract"]["dependency_policy"] == (
+        "candidate_primary_module_embedded_evaluate_v1"
+    )
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["candidate_owned_evaluate_entrypoint"] is True
+    assert report["claim_readiness"]["embedded_only_problem_definition"] is False
+
+    record = report["records"][0]
+    assert record["stage_name"] == "candidate_eval"
+    assert record["evaluator_mode"] == "embedded_evaluate"
+    assert record["entrypoint"] == "main.py"
+    assert record["callable"] == "evaluate"
+    assert record["signature"] == "evaluate(eval_inputs)"
+    assert record["eval_inputs"]["retained"] is False
+    assert len(record["eval_inputs"]["sha256"]) == 64
+    assert record["dependency_policy"]["allowed_scope"] == (
+        "materialized_candidate_workspace"
+    )
+    assert record["raw_eval_inputs_retained"] is False
+    assert record["metric_names"] == ["score"]
 
 
 def test_runtime_history_reports_execution_filtered_proposal_lifecycle():

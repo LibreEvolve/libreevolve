@@ -5120,6 +5120,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             db,
             programs,
         ),
+        "embedded_evaluator_entrypoint_report": (
+            _embedded_evaluator_entrypoint_report(programs)
+        ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
@@ -6141,6 +6144,260 @@ def _evaluator_oracle_runtime_summary(programs: list[Program]) -> dict:
         "invalid_count": invalid_count,
         "configured_stage_record_count": configured_stage_record_count,
         "llm_feedback_record_count": llm_feedback_record_count,
+    }
+
+
+def _embedded_evaluator_entrypoint_report(programs: list[Program]) -> dict:
+    records = []
+    external_candidate_count = 0
+    embedded_candidate_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = (
+            evaluation.get("metadata")
+            if isinstance(evaluation.get("metadata"), Mapping)
+            else {}
+        )
+        mode = metadata.get("evaluator_mode")
+        if mode == "embedded_evaluate":
+            embedded_candidate_count += 1
+            records.append(_embedded_entrypoint_record(program, metadata))
+        elif mode == "external_validator":
+            external_candidate_count += 1
+        configured = metadata.get("configured_stage_results")
+        if isinstance(configured, list):
+            for stage in configured:
+                if not isinstance(stage, Mapping):
+                    continue
+                stage_metadata = (
+                    stage.get("metadata")
+                    if isinstance(stage.get("metadata"), Mapping)
+                    else {}
+                )
+                if stage_metadata.get("evaluator_mode") == "embedded_evaluate":
+                    records.append(
+                        _embedded_entrypoint_record(
+                            program,
+                            stage_metadata,
+                            stage_result=stage,
+                        )
+                    )
+    records = _dedupe_embedded_entrypoint_records(records)
+    report = {
+        "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
+        "source": "runtime_history_evaluation_metadata",
+        "embedded_candidate_count": embedded_candidate_count,
+        "external_validator_candidate_count": external_candidate_count,
+        "embedded_entrypoint_count": len(records),
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "entrypoint_contract": {
+            "mode": "embedded_evaluate",
+            "callable": "evaluate",
+            "signature": "evaluate(eval_inputs)",
+            "eval_inputs_policy": "json_safe_config_data_hashed_not_retained",
+            "dependency_policy": "candidate_primary_module_embedded_evaluate_v1",
+            "input_schema": "candidate_primary_module.evaluate(eval_inputs)",
+            "output_schema": "declared_metrics_plus_boolean_is_valid",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "candidate_owned_evaluate_entrypoint": bool(records),
+            "embedded_only_problem_definition": False,
+            "evolved_block_to_score_path_mapping": False,
+            "remaining_gap": [
+                "load_problem_without_external_validate_py",
+                "skeleton_to_evolved_block_invocation_trace",
+                "score_field_to_evolved_code_path_mapping",
+                "stronger_callable_isolation_or_build_policy",
+            ],
+        },
+    }
+    report["validation"] = validate_embedded_evaluator_entrypoint_report(report)
+    return report
+
+
+def _embedded_entrypoint_record(
+    program: Program,
+    metadata: Mapping[str, object],
+    *,
+    stage_result: Mapping[str, object] | None = None,
+) -> dict:
+    candidate = (
+        metadata.get("candidate_evaluator")
+        if isinstance(metadata.get("candidate_evaluator"), Mapping)
+        else {}
+    )
+    stage = metadata.get("stage") if isinstance(metadata.get("stage"), Mapping) else {}
+    dependency = (
+        metadata.get("evaluator_dependency_policy")
+        if isinstance(metadata.get("evaluator_dependency_policy"), Mapping)
+        else {}
+    )
+    record = {
+        "program_id": program.id,
+        "generation": program.generation,
+        "stage_name": stage.get("name") or (
+            stage_result.get("name") if isinstance(stage_result, Mapping) else None
+        ),
+        "stage_index": stage.get("stage_index"),
+        "evaluator_mode": "embedded_evaluate",
+        "entrypoint": candidate.get("entrypoint"),
+        "callable": candidate.get("callable"),
+        "signature": candidate.get("signature"),
+        "eval_inputs": copy.deepcopy(candidate.get("eval_inputs"))
+        if isinstance(candidate.get("eval_inputs"), Mapping)
+        else {},
+        "dependency_policy": {
+            key: dependency.get(key)
+            for key in (
+                "policy",
+                "allowed_scope",
+                "problem_local_dependency_policy",
+                "outside_problem_policy",
+            )
+            if key in dependency
+        },
+        "passed": stage_result.get("passed")
+        if isinstance(stage_result, Mapping)
+        else program.evaluation.get("is_valid"),
+        "score": _paper_metric_table_number(
+            stage_result.get("score") if isinstance(stage_result, Mapping) else program.fitness
+        ),
+        "metric_names": _embedded_entrypoint_metric_names(
+            stage_result.get("metrics")
+            if isinstance(stage_result, Mapping)
+            else program.metrics
+        ),
+        "validator_boundary": "temporary_local_subprocess",
+        "raw_eval_inputs_retained": (
+            candidate.get("eval_inputs", {}).get("retained")
+            if isinstance(candidate.get("eval_inputs"), Mapping)
+            else None
+        ),
+    }
+    return {key: value for key, value in record.items() if value is not None}
+
+
+def _embedded_entrypoint_metric_names(metrics: object) -> list[str]:
+    if not isinstance(metrics, Mapping):
+        return []
+    return sorted(
+        name
+        for name, value in metrics.items()
+        if isinstance(name, str)
+        and name != "is_valid"
+        and isinstance(value, (int, float))
+        and not isinstance(value, bool)
+    )
+
+
+def _dedupe_embedded_entrypoint_records(records: list[dict]) -> list[dict]:
+    deduped = []
+    seen = set()
+    for record in records:
+        key = (
+            record.get("program_id"),
+            record.get("stage_name"),
+            record.get("stage_index"),
+            record.get("entrypoint"),
+            record.get("signature"),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(record)
+    deduped.sort(
+        key=lambda item: (
+            int(item.get("generation", 0))
+            if isinstance(item.get("generation"), int)
+            and not isinstance(item.get("generation"), bool)
+            else 0,
+            str(item.get("program_id", "")),
+            str(item.get("stage_name", "")),
+        )
+    )
+    return deduped
+
+
+def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "embedded evaluator entrypoint report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "embedded_candidate_count",
+        "external_validator_candidate_count",
+        "embedded_entrypoint_count",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "entrypoint_contract",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"embedded evaluator entrypoint report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.embedded_evaluator_entrypoint_report.v1":
+        issues.append({"code": "invalid_schema", "message": "embedded evaluator entrypoint report schema is unsupported"})
+    if report.get("source") != "runtime_history_evaluation_metadata":
+        issues.append({"code": "invalid_source", "message": "embedded evaluator entrypoint report source is unsupported"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_record", "message": f"record {index} must be an object"})
+            continue
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append({"code": "invalid_program_id", "message": f"record {index} program_id is invalid"})
+        if record.get("evaluator_mode") != "embedded_evaluate":
+            issues.append({"code": "invalid_evaluator_mode", "message": f"record {index} evaluator_mode must be embedded_evaluate"})
+        if record.get("callable") != "evaluate":
+            issues.append({"code": "invalid_callable", "message": f"record {index} callable must be evaluate"})
+        if record.get("signature") != "evaluate(eval_inputs)":
+            issues.append({"code": "invalid_signature", "message": f"record {index} signature must be evaluate(eval_inputs)"})
+        eval_inputs = record.get("eval_inputs")
+        if not isinstance(eval_inputs, dict) or eval_inputs.get("schema") != "libreevolve.eval_inputs_provenance.v1":
+            issues.append({"code": "invalid_eval_inputs", "message": f"record {index} eval_inputs provenance is invalid"})
+        elif eval_inputs.get("retained") is not False:
+            issues.append({"code": "eval_inputs_retention_overclaim", "message": f"record {index} eval inputs must remain hashed/not retained"})
+        dependency = record.get("dependency_policy")
+        if not isinstance(dependency, dict) or dependency.get("policy") != "candidate_primary_module_embedded_evaluate_v1":
+            issues.append({"code": "invalid_dependency_policy", "message": f"record {index} dependency policy is invalid"})
+        if not isinstance(record.get("metric_names"), list):
+            issues.append({"code": "invalid_metric_names", "message": f"record {index} metric_names must be a list"})
+    if report.get("records_truncated") is not True:
+        if report.get("embedded_entrypoint_count") != len(records):
+            issues.append({"code": "invalid_entrypoint_count", "message": "embedded_entrypoint_count must match records when not truncated"})
+    for field in ("embedded_candidate_count", "external_validator_candidate_count"):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    contract = report.get("entrypoint_contract")
+    if not isinstance(contract, dict) or contract.get("signature") != "evaluate(eval_inputs)":
+        issues.append({"code": "invalid_entrypoint_contract", "message": "entrypoint contract must describe evaluate(eval_inputs)"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "embedded evaluator report must not claim full Figure 3 parity"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif readiness.get("embedded_only_problem_definition") is not False:
+        issues.append({"code": "embedded_only_overclaim", "message": "embedded-only problem definition must remain false"})
+    return {
+        "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

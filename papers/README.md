@@ -351,9 +351,11 @@ AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
 file and invokes a candidate-owned `evaluate(eval_inputs)` callable with
 JSON-safe configured inputs. Metadata records the candidate callable and
-eval-input provenance, but `validate.py` remains the default problem-loading
-contract and paper-facing reports still need embedded-only examples plus
-skeleton/block invocation evidence before claiming Figure 3 evaluator parity.
+eval-input provenance, and completed manifests now summarize executed embedded
+entrypoints under `runtime.history.embedded_evaluator_entrypoint_report`.
+`validate.py` remains the default problem-loading contract, and embedded-only
+examples plus skeleton/block invocation evidence remain necessary before
+claiming Figure 3 evaluator parity.
 
 AlphaEvolve evaluator-workload note: configured stages can now declare
 `workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,

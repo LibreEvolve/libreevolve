@@ -1592,6 +1592,18 @@ a merge-policy summary. It intentionally keeps `claim_ready: false` for
 independent multi-evaluator/oracle composition because current behavior is a
 single local cascade plus optional post-evaluator synchronous feedback graders,
 not a general conflict-arbitrated oracle system.
+Completed manifests also include
+`runtime.history.embedded_evaluator_entrypoint_report` with schema
+`libreevolve.embedded_evaluator_entrypoint_report.v1`. This report summarizes
+executed `embedded_evaluate` stages that import the materialized candidate
+primary file and call a candidate-owned `evaluate(eval_inputs)` function. It
+records program and stage ids, entrypoint path, callable name, required
+signature, eval-input type/size/SHA-256 provenance, dependency scope, metric
+names, pass/score evidence, and explicit readiness gaps. It is evidence for
+the opt-in candidate-owned evaluator entrypoint, not full Figure 3 parity:
+embedded-only problem loading, skeleton-to-evolved-block invocation traces,
+score-field-to-code-path mapping, and stronger callable isolation/build policy
+remain open.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

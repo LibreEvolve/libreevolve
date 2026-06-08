@@ -2131,6 +2131,10 @@ call a candidate-owned `evaluate(eval_inputs)` function instead. The optional
 `eval_inputs` stage field must be JSON-safe config data; evaluation metadata
 records the candidate callable, `evaluator_mode=embedded_evaluate`, and
 eval-input type/size/SHA-256 provenance without retaining the raw input object.
+Completed manifests summarize executed embedded stages under
+`runtime.history.embedded_evaluator_entrypoint_report`, including program/stage
+ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
+metric names, and remaining Figure 3 parity gaps.
 Embedded stages still require the problem to include the normal `validate.py`
 file for loading, but that validator is not run for the embedded stage.
 For `eval_stages`, `timeout_sec` is a per-validator-subprocess-attempt timeout.

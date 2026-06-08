@@ -115,17 +115,19 @@ Primary evidence:
     the existing local metric contract, and records
     `evaluator_mode=embedded_evaluate`, candidate callable metadata, and
     redacted eval-input provenance (`libreevolve.eval_inputs_provenance.v1`).
-    Tests cover successful candidate invocation despite an invalid external
-    validator and diagnostics for missing or unsupported candidate callables.
-    External `validate.py` remains the default mode and `load_problem()` still
-    requires a problem-root `validate.py`.
+    Runtime summaries now include
+    `runtime.history.embedded_evaluator_entrypoint_report` with executed
+    embedded entrypoint records, dependency scope, eval-input provenance,
+    metric names, and explicit remaining Figure 3 parity gaps. Tests cover
+    successful candidate invocation despite an invalid external validator,
+    diagnostics for missing or unsupported candidate callables, and the runtime
+    report contract. External `validate.py` remains the default mode and
+    `load_problem()` still requires a problem-root `validate.py`.
   - Required result: finish loader/problem-format support for embedded-only
     problem definitions, skeleton-to-block invocation coupling, stronger
     candidate callable build/import isolation beyond the local subprocess
-    boundary, paper-facing examples and reports that distinguish embedded
-    AlphaEvolve-style evaluation from external problem-validator execution, and
-    provenance that links score fields back to specific skeleton/evolved-block
-    paths.
+    boundary, paper-facing embedded-only examples, and provenance that links
+    score fields back to specific skeleton/evolved-block paths.
 
 - [ ] Add Figure 1/Figure 2 architecture-process exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 1 presents the high-level loop from human

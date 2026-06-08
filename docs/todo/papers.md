@@ -3080,10 +3080,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     mismatches. The registry is not itself construction evidence: it does not
     store target tensors, discovered tensor decompositions, coefficient lists,
     per-target exactness certificates, notebook exports, or construction
-    provenance for reproducing Appendix A algorithms. The Appendix A registry
-    validator is separate from the standard `paper_manifest` command, whose
-    current central gate validates Appendix B and ablation registries but not
-    Appendix A registry integrity.
+    provenance for reproducing Appendix A algorithms. The standard
+    `paper_manifest` command now also validates Appendix A registry integrity
+    when the checked-in registry is present, using the same routine gate that
+    validates Appendix B and ablation registries.
     `libreevolve.matrix_result_artifact_inventory.v1` now verifies
     declared algorithm/certificate/notebook artifact paths against concrete
     files under an explicit artifact root, checking safe relative paths,
@@ -3100,13 +3100,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     A suite.
   - Required result: connect real matrix target tensors, exact algorithm
     artifacts, coefficient-domain data, certificate-generation artifacts, and
-    generated export/notebook links to real report instances; also route
-    Appendix A registry validation through the routine paper-manifest gate
-    before treating LibreEvolve matrix results as AlphaEvolve-comparable
-    evidence. The remaining gap is producing those discovered tensor artifacts
-    for the suite, not verifying declared report artifacts, validating the
-    checked bundle wrapper, or emitting one checked Strassen baseline once
-    those files exist.
+    generated export/notebook links to real report instances. The remaining
+    gap is producing those discovered tensor artifacts for the suite and adding
+    target-suite curation provenance, not validating Appendix A registry
+    integrity, verifying declared report artifacts, validating the checked
+    bundle wrapper, or emitting one checked Strassen baseline once those files
+    exist.
 
 - [ ] Track best-known-rank citation provenance for Appendix A comparisons.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 presents matrix

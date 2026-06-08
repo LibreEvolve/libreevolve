@@ -719,6 +719,41 @@ def test_validate_paper_manifest_rejects_duplicate_json_keys(tmp_path):
     assert "duplicate_json_key" in {issue.code for issue in report.issues}
 
 
+def test_validate_paper_manifest_checks_appendix_a_matrix_registry_when_present(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    registry = tmp_path / "libreevolve" / "problems" / "benchmarks" / "alphaevolve_appendix_a_matrix.json"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        json.dumps(
+            {
+                "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1",
+                "source_paper_id": "2506.13131",
+                "target_suite": "alphaevolve_appendix_a",
+                "targets": [
+                    {
+                        "id": "mm_4x4x4",
+                        "dimensions": [4, 4, 4],
+                        "best_known_rank": 49,
+                        "alphaevolve_rank": 49,
+                        "outcome": "surpassed",
+                        "exact_algorithm": False,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "appendix_a_invalid_target_count" in codes
+    assert "appendix_a_invalid_surpassed_rank" in codes
+    assert "appendix_a_missing_exact_algorithm" in codes
+
+
 def test_validate_paper_manifest_reports_invalid_encoding_json_manifest(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

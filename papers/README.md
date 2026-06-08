@@ -51,6 +51,12 @@ phrase or benchmark qualifier against a specific implementation record.
 Symlink or Windows reparse-point backed PDF entries are rejected before
 byte/hash validation.
 The same validation command checks
+`libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json`, which
+records the 54 AlphaEvolve Appendix A Table 3 matrix target identities,
+dimensions, best-known ranks, AlphaEvolve ranks, outcome categories, and
+exact-algorithm flags. That registry is target/outcome coverage, not
+construction, Colab, or target-suite curation evidence.
+The validation command also checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json`, which records a
 coverage decision for each AlphaEvolve Appendix B constructive-math family. The
 registry currently marks only the unit-square circle-packing fixture as

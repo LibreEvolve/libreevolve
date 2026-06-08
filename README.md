@@ -3026,6 +3026,12 @@ manifest/index verification documented there:
 
 LibreEvolve is informed by a local cache of 24 papers on LLM-guided evolutionary computation, program synthesis, and quality-diversity optimization. The PDF cache lives locally under `papers/`, while the PDFs themselves are gitignored; the committed source tracks `papers/README.md` plus CSV/JSON download manifests with canonical SHA-256 digests. Manifest `title` fields are inventory/display slugs derived from cache names, not authoritative bibliographic titles; use `papers/README.md` for paper-facing titles, implementation status, and benchmark coverage decisions. Rehydrate the ignored PDF cache on a fresh checkout with `py -3.12 -m libreevolve.tools.paper_manifest --rehydrate`; the command downloads manifest URLs, verifies byte counts and SHA-256 hashes before installing files, and reports network/integrity failures explicitly. Validate the committed index with `py -3.12 -m libreevolve.tools.paper_manifest`; add `--require-local-pdfs` when the ignored PDF cache is present and should be checked for byte/hash match, `%PDF-` header shape, and lightweight `pypdf` page readability. Manifest/read diagnostics are emitted with repository-relative labels and secret-redacted exception text, including JSON/text CLI output. Local PDF stat/read failures are reported as structured, redacted validation issues rather than raw filesystem exceptions.
 The paper-manifest validator also checks
+`libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json` when
+present. That registry records the 54 AlphaEvolve Appendix A Table 3 target
+identities, dimensions, best-known ranks, AlphaEvolve ranks, outcome
+categories, and exact-algorithm flags, while preserving the boundary that it
+is target/outcome coverage rather than construction or curation evidence.
+The same validator checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json` when present.
 That registry enumerates the thirteen AlphaEvolve Appendix B constructive-math
 families, marks the checked-in unit-square circle-packing fixture as a smoke

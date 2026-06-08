@@ -26,6 +26,10 @@ from libreevolve.problems.benchmarks.ablation_registry import (
     REGISTRY_PATH as ABLATION_REGISTRY_PATH,
     validate_ablation_registry,
 )
+from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
+    validate_appendix_a_matrix_registry,
+)
 from libreevolve.problems.benchmarks.appendix_b_registry import (
     REGISTRY_PATH as APPENDIX_B_REGISTRY_PATH,
     validate_appendix_b_registry,
@@ -387,6 +391,7 @@ def validate_paper_manifest(
                     )
                 )
 
+    issues.extend(_validate_appendix_a_matrix_registry_if_present(root_path))
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
 
@@ -439,6 +444,25 @@ def validate_paper_manifest(
         availability=availability,
         issues=issues,
     )
+
+
+def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        relative_registry = APPENDIX_A_MATRIX_REGISTRY_PATH.relative_to(_repo_root())
+    except ValueError:
+        relative_registry = Path("libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json")
+    registry_path = root_path / relative_registry
+    if not registry_path.exists():
+        return []
+    report = validate_appendix_a_matrix_registry(registry_path)
+    return [
+        PaperManifestIssue(
+            f"appendix_a_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.target_id) if issue.target_id else None,
+        )
+        for issue in report.issues
+    ]
 
 
 def _validate_appendix_b_registry_if_present(root_path: Path) -> list[PaperManifestIssue]:

@@ -497,6 +497,32 @@ Primary evidence:
     implemented weighted markers from AlphaEvolve-style stochastic-formatting
     evidence.
 
+- [ ] Add prompt-visible prior-score provenance for rendered evaluation
+      results.
+  - Spec evidence: AlphaEvolve Section 2.2 says rendered evaluation results
+    include the program, execution result, and scores assigned by `evaluate`;
+    Figure 3(c) shows prior programs preceded by named metric scores and an
+    `average_score` summary before the code.
+  - Current evidence: `PromptSampler` renders parent metrics through
+    `{parent_metrics}` and inspiration headers with finite fitness plus
+    declared metric entries, including role/direction/bounds/normalization
+    annotations. Prompt histories and generated-program metadata can identify
+    selected parents, inspirations, prompt ids, and prompt context policy.
+  - Remaining gap: there is no paper-facing prompt-score record or validator
+    proving that each prompt-visible prior/current program score header
+    matches a specific evaluator/history row, that displayed scalar fitness
+    maps to the paper's score-summary semantics, or that omitted/truncated
+    execution outputs and score fields are explicitly attributed per prior
+    solution.
+  - Required result: add prompt prior-score records keyed by prompt call id,
+    program role (`target`, `inspiration`, etc.), candidate/history id, source
+    hash, raw metric names and values, normalized/maximized values, displayed
+    aggregate score formula, evaluator-output/artifact linkage, omission or
+    truncation reason, and validators/tests that fail when rendered prompt
+    score summaries diverge from persisted evaluation history. Update README,
+    ROADMAP, and papers index wording so current metric rendering is not
+    mistaken for AlphaEvolve-style rendered-evaluation-result provenance.
+
 - [ ] Add explicit-context source-role provenance for AlphaEvolve prompt
       context.
   - Spec evidence: AlphaEvolve Section 2.2 says users can tailor the primary

@@ -874,6 +874,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     entries together so roadmap wording distinguishes current weighted marker
     support from AlphaEvolve-style prompt-diversity evidence.
 
+- [ ] Keep rendered-evaluation-result roadmap wording scoped until prompt
+      prior-score provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says prompts can contain rendered
+    evaluation results with the program, execution result, and scores assigned
+    by `evaluate`; Figure 3(c) shows prior programs with metric-score headers
+    and an aggregate `average_score` before code.
+  - Current evidence: ROADMAP, README, and papers-index wording can cite
+    prompt-visible parent metrics, inspiration fitness/metrics, declared
+    metric normalization diagnostics, selected parent/inspiration metadata,
+    and prompt history ids. They do not yet require a prompt prior-score record
+    that links each rendered prior/current program's displayed score header to
+    a persisted evaluator result, execution output/artifact, aggregate formula,
+    and omission/truncation decision.
+  - Required result: when prompt prior-score records and validators land,
+    update ROADMAP, README, papers index, and code/paper TODO entries together
+    so roadmap wording separates current metric rendering from
+    AlphaEvolve-style rendered evaluation-result evidence tied to prompt calls
+    and evaluator history.
+
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

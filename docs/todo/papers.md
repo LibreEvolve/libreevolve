@@ -444,6 +444,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     boundary, and claim checks before treating local `prompt_format_options`
     as AlphaEvolve-style stochastic-formatting evidence.
 
+- [ ] Track prompt-visible prior-score provenance for rendered evaluation
+      results.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says rendered
+    evaluation results contain the program, execution result, and scores
+    assigned by `evaluate`; Figure 3(c) shows previously discovered programs
+    with named metric scores and an `average_score` before the program text.
+  - Partial status: LibreEvolve renders current-parent metrics and inspiration
+    fitness/metric summaries in mutation prompts, including declared metric
+    role, direction, bounds, normalization, and range diagnostics where a
+    problem manifest defines them.
+  - Current gap: paper/status records do not yet preserve a prompt-call-linked
+    score-summary record proving that each prompt-visible prior/current
+    program's displayed metric values and aggregate fitness came from the
+    persisted evaluator result, how the displayed aggregate maps to the paper's
+    score-summary semantics, or why any execution result or score field was
+    omitted/truncated.
+  - Required result: add paper-facing rendered-evaluation-result score records
+    with prompt id/call id, program role, candidate/history id, source hash,
+    raw and normalized metric values, aggregate formula/display label,
+    evaluator output/artifact linkage, omission/truncation policy, and claim
+    checks before treating prompt metric headers as AlphaEvolve-style rendered
+    evaluation-result evidence.
+
 - [ ] Track early-user and collaborator feedback provenance as paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements thank early
     users and collaborators for diverse use cases and insightful feedback,

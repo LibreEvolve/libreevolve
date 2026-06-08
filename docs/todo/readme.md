@@ -579,6 +579,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style stochastic-formatting evidence with prompt/call-linked
     probability records.
 
+- [ ] Keep README rendered-evaluation-result wording scoped until prompt
+      prior-score provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says rendered evaluation results
+    include the program, execution result, and scores assigned by `evaluate`;
+    Figure 3(c) shows prior programs with named score headers such as
+    `average_score` before code.
+  - Current evidence: README can accurately describe parent metrics,
+    inspiration fitness/metrics, prompt history ids, selected
+    parent/inspiration metadata, and metric normalization annotations. It does
+    not yet document a paper-facing record that proves each prompt-visible
+    prior/current program's displayed scores and aggregate fitness are linked
+    to evaluator history, persisted outputs/artifacts, and explicit
+    omission/truncation reasons.
+  - Required result: when prompt prior-score provenance lands, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    distinguishes current prompt metric rendering from AlphaEvolve-style
+    rendered evaluation results with prompt/call-linked score, output, and
+    aggregate-score semantics.
+
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

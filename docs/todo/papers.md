@@ -4142,3 +4142,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     and UI/API attribution metadata, and docs checks that keep impact-article
     claims separate from original specification, reproduced benchmark
     evidence, and LibreEvolve feature support.
+
+- [ ] Track AlphaEvolve FHE-on-TPU paper and application evidence.
+  - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is
+    titled `Adapting AlphaEvolve to Optimize Fully Homomorphic Encryption on
+    TPUs`. Its abstract says FHE deployment is limited by computational
+    overhead; AlphaEvolve is used to automate hardware-aware cryptographic
+    kernel optimization; real-world hardware execution and correctness tests
+    guide the search; and TFHE/Jaxite plus CKKS/CROSS primitives are evaluated
+    on Google Cloud TPUv5e with reported 2.5x, 1.31x, and 1.18x latency
+    improvements over human-engineered state of the art.
+  - Current gap: the paper manifest, paper index, and TODO coverage do not
+    include `2605.14718`. Existing AlphaEvolve application rows include
+    compiler, architecture, systems, mechanism-design, workflow, and
+    theoretical-CS contexts, but no FHE/cryptography-on-accelerator row, no
+    cached PDF/hash, no source-status table entry, and no benchmark/report
+    boundary for TPU-executed cryptographic kernels.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.14718`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve, FHE scheme and primitive taxonomy, TPUv5e
+    hardware-execution evidence, correctness-test and benchmark metadata,
+    reported latency-speedup claims, linked code/artifact availability if any,
+    and TODO/README/ROADMAP wording that treats it as a missing application
+    benchmark rather than existing LibreEvolve support.

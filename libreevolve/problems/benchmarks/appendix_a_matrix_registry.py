@@ -12,10 +12,29 @@ REGISTRY_PATH = Path(__file__).with_name("alphaevolve_appendix_a_matrix.json")
 REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
+SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
 _ID_RE = re.compile(r"mm_[1-9][0-9]*x[1-9][0-9]*x[1-9][0-9]*")
+TABLE_2_SELECTED_TARGET_IDS = (
+    "mm_2x4x5",
+    "mm_2x4x7",
+    "mm_2x4x8",
+    "mm_2x5x6",
+    "mm_3x3x3",
+    "mm_3x4x6",
+    "mm_3x4x7",
+    "mm_3x4x8",
+    "mm_3x5x6",
+    "mm_3x5x7",
+    "mm_4x4x4",
+    "mm_4x4x5",
+    "mm_4x4x7",
+    "mm_4x4x8",
+    "mm_4x5x6",
+    "mm_5x5x5",
+)
 
 
 @dataclass(frozen=True)
@@ -64,6 +83,23 @@ class MatrixResourceFrontierReport:
     attempted_scope_count: int
     local_artifact_count: int
     issues: list[MatrixResourceFrontierIssue]
+
+
+@dataclass(frozen=True)
+class MatrixSubsetScopeIssue:
+    code: str
+    message: str
+    subset_id: str | None = None
+
+
+@dataclass(frozen=True)
+class MatrixSubsetScopeReport:
+    ok: bool
+    subset_count: int
+    main_text_target_count: int
+    full_table_target_count: int
+    full_table_fell_behind_count: int
+    issues: list[MatrixSubsetScopeIssue]
 
 
 def matrix_target_records(
@@ -175,6 +211,88 @@ def appendix_a_matrix_resource_frontier_record() -> dict[str, Any]:
             }
         ],
     }
+
+
+def appendix_a_matrix_subset_scope_record(
+    path: str | Path = REGISTRY_PATH,
+) -> dict[str, Any]:
+    targets = matrix_target_records(path)
+    all_ids = [target["id"] for target in targets if isinstance(target.get("id"), str)]
+    main_text_ids = [
+        target["id"]
+        for target in targets
+        if isinstance(target.get("id"), str)
+        and isinstance(target.get("dimensions"), list)
+        and all(isinstance(value, int) and not isinstance(value, bool) and value <= 5 for value in target["dimensions"])
+    ]
+    return {
+        "schema": SUBSET_SCOPE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "subsets": [
+            _subset_scope_record(
+                subset_id="appendix_a_full",
+                inclusion_predicate="all_appendix_a_table3_rows",
+                source_table="Appendix A Table 3",
+                source_pdf_page=34,
+                source_phrase="Table 3 in appendix for full results",
+                target_ids=all_ids,
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+            _subset_scope_record(
+                subset_id="main_text_mnp_le_5",
+                inclusion_predicate="all_dimensions_le_5",
+                source_table="Table 2 caption",
+                source_pdf_page=9,
+                source_phrase=(
+                    "Beyond the examples shown here, for all parameters "
+                    "m, n, p <= 5, AlphaEvolve either matched or surpassed "
+                    "the best known solutions"
+                ),
+                target_ids=main_text_ids,
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+            _subset_scope_record(
+                subset_id="table_2_selected",
+                inclusion_predicate="explicit_table_2_displayed_rows",
+                source_table="Table 2",
+                source_pdf_page=9,
+                source_phrase="Upper bounds on the rank of the tensor examples shown in Table 2",
+                target_ids=list(TABLE_2_SELECTED_TARGET_IDS),
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+        ],
+    }
+
+
+def validate_appendix_a_matrix_subset_scope(
+    recordset: object | str | Path | None = None,
+) -> MatrixSubsetScopeReport:
+    data, read_issues = _load_subset_scope_recordset(recordset)
+    if read_issues:
+        return MatrixSubsetScopeReport(False, 0, 0, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixSubsetScopeIssue] = []
+    if data.get("schema") != SUBSET_SCOPE_SCHEMA:
+        issues.append(MatrixSubsetScopeIssue("invalid_schema", "unsupported Appendix A matrix subset-scope schema"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixSubsetScopeIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixSubsetScopeIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    subset_reports = _validate_subset_scope_records(data.get("subsets"), issues)
+    main_text = subset_reports.get("main_text_mnp_le_5", {})
+    full_table = subset_reports.get("appendix_a_full", {})
+    return MatrixSubsetScopeReport(
+        ok=not issues,
+        subset_count=len(subset_reports),
+        main_text_target_count=int(main_text.get("row_count", 0)),
+        full_table_target_count=int(full_table.get("row_count", 0)),
+        full_table_fell_behind_count=int(full_table.get("fell_behind_count", 0)),
+        issues=issues,
+    )
 
 
 def validate_appendix_a_matrix_resource_frontier(
@@ -335,6 +453,32 @@ def render_appendix_a_matrix_resource_frontier_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_subset_scope_summary(
+    recordset: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_subset_scope(recordset)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve matrix subset-scope evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| subset_count | {report.subset_count} |",
+        f"| main_text_target_count | {report.main_text_target_count} |",
+        f"| full_table_target_count | {report.full_table_target_count} |",
+        f"| full_table_fell_behind_count | {report.full_table_fell_behind_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.subset_id})" if issue.subset_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def _load_registry(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -379,10 +523,72 @@ def _load_resource_frontier_recordset(
     return None, [MatrixResourceFrontierIssue("invalid_shape", "resource-frontier recordset must be a JSON object")]
 
 
+def _load_subset_scope_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[MatrixSubsetScopeIssue]]:
+    if recordset is None:
+        return appendix_a_matrix_subset_scope_record(), []
+    if isinstance(recordset, dict):
+        return dict(recordset), []
+    if isinstance(recordset, (str, Path)):
+        path = Path(recordset)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixSubsetScopeIssue("read_error", f"failed to read subset-scope recordset: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixSubsetScopeIssue("invalid_json", f"invalid subset-scope JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixSubsetScopeIssue("invalid_shape", "subset-scope recordset must be a JSON object")]
+
+
 def _target_id(target: object, index: int) -> str:
     if isinstance(target, dict) and isinstance(target.get("id"), str):
         return target["id"]
     return f"target_{index}"
+
+
+def _subset_scope_record(
+    *,
+    subset_id: str,
+    inclusion_predicate: str,
+    source_table: str,
+    source_pdf_page: int,
+    source_phrase: str,
+    target_ids: list[str],
+    all_target_ids: list[str],
+    targets: list[dict[str, Any]],
+) -> dict[str, Any]:
+    targets_by_id = {target["id"]: target for target in targets if isinstance(target.get("id"), str)}
+    outcome_counts = _outcome_counts(targets_by_id[target_id] for target_id in target_ids)
+    fell_behind_ids = [
+        target_id
+        for target_id in target_ids
+        if targets_by_id[target_id].get("outcome") == "fell_behind"
+    ]
+    return {
+        "subset_id": subset_id,
+        "inclusion_predicate": inclusion_predicate,
+        "source_table": source_table,
+        "source_pdf_page": source_pdf_page,
+        "source_phrase": source_phrase,
+        "target_ids": target_ids,
+        "row_count": len(target_ids),
+        "outcome_counts": outcome_counts,
+        "all_matched_or_surpassed": not fell_behind_ids,
+        "fell_behind_target_ids": fell_behind_ids,
+        "out_of_scope_target_ids": [target_id for target_id in all_target_ids if target_id not in set(target_ids)],
+    }
+
+
+def _outcome_counts(targets: Any) -> dict[str, int]:
+    counts = {"matched": 0, "surpassed": 0, "fell_behind": 0}
+    for target in targets:
+        outcome = target.get("outcome") if isinstance(target, dict) else None
+        if outcome in counts:
+            counts[outcome] += 1
+    return counts
 
 
 def _curated_target_record(target: dict[str, Any]) -> dict[str, Any]:
@@ -548,6 +754,148 @@ def _validate_omitted_equivalent_targets(
     for omitted_id in sorted(set(expected) - seen):
         issues.append(MatrixTargetCurationIssue("missing_omitted_equivalent_target", "all omitted axis-permutation equivalents must be listed", omitted_id))
     return len(value)
+
+
+def _validate_subset_scope_records(
+    value: object,
+    issues: list[MatrixSubsetScopeIssue],
+) -> dict[str, dict[str, int]]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixSubsetScopeIssue("invalid_subsets", "subsets must be a non-empty list"))
+        return {}
+    expected = _expected_subset_scope_records()
+    seen: set[str] = set()
+    reports: dict[str, dict[str, int]] = {}
+    for subset in value:
+        if not isinstance(subset, dict):
+            issues.append(MatrixSubsetScopeIssue("invalid_subset", "subset records must be objects"))
+            continue
+        subset_id = subset.get("subset_id")
+        safe_id = subset_id if isinstance(subset_id, str) else None
+        if safe_id not in expected:
+            issues.append(MatrixSubsetScopeIssue("unknown_subset_id", "subset_id must be one of the required matrix scope ids", safe_id))
+            continue
+        if safe_id in seen:
+            issues.append(MatrixSubsetScopeIssue("duplicate_subset_id", "subset_id values must be unique", safe_id))
+        seen.add(safe_id)
+        expected_subset = expected[safe_id]
+        _validate_subset_scope_record(subset, expected_subset, issues)
+        outcome_counts = subset.get("outcome_counts")
+        fell_behind_ids = subset.get("fell_behind_target_ids")
+        reports[safe_id] = {
+            "row_count": subset.get("row_count") if isinstance(subset.get("row_count"), int) else 0,
+            "fell_behind_count": len(fell_behind_ids) if isinstance(fell_behind_ids, list) else 0,
+            "matched_count": outcome_counts.get("matched", 0) if isinstance(outcome_counts, dict) else 0,
+            "surpassed_count": outcome_counts.get("surpassed", 0) if isinstance(outcome_counts, dict) else 0,
+        }
+    for subset_id in sorted(set(expected) - seen):
+        issues.append(MatrixSubsetScopeIssue("missing_subset", "required matrix subset-scope record is missing", subset_id))
+    return reports
+
+
+def _expected_subset_scope_records() -> dict[str, dict[str, Any]]:
+    targets = matrix_target_records()
+    all_ids = [target["id"] for target in targets if isinstance(target.get("id"), str)]
+    main_text_ids = [
+        target["id"]
+        for target in targets
+        if isinstance(target.get("id"), str)
+        and isinstance(target.get("dimensions"), list)
+        and all(isinstance(value, int) and not isinstance(value, bool) and value <= 5 for value in target["dimensions"])
+    ]
+    return {
+        record["subset_id"]: record
+        for record in (
+            _subset_scope_record(
+                subset_id="appendix_a_full",
+                inclusion_predicate="all_appendix_a_table3_rows",
+                source_table="Appendix A Table 3",
+                source_pdf_page=34,
+                source_phrase="Table 3 in appendix for full results",
+                target_ids=all_ids,
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+            _subset_scope_record(
+                subset_id="main_text_mnp_le_5",
+                inclusion_predicate="all_dimensions_le_5",
+                source_table="Table 2 caption",
+                source_pdf_page=9,
+                source_phrase=(
+                    "Beyond the examples shown here, for all parameters "
+                    "m, n, p <= 5, AlphaEvolve either matched or surpassed "
+                    "the best known solutions"
+                ),
+                target_ids=main_text_ids,
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+            _subset_scope_record(
+                subset_id="table_2_selected",
+                inclusion_predicate="explicit_table_2_displayed_rows",
+                source_table="Table 2",
+                source_pdf_page=9,
+                source_phrase="Upper bounds on the rank of the tensor examples shown in Table 2",
+                target_ids=list(TABLE_2_SELECTED_TARGET_IDS),
+                all_target_ids=all_ids,
+                targets=targets,
+            ),
+        )
+    }
+
+
+def _validate_subset_scope_record(
+    subset: dict[str, Any],
+    expected: dict[str, Any],
+    issues: list[MatrixSubsetScopeIssue],
+) -> None:
+    subset_id = expected["subset_id"]
+    for field in ("inclusion_predicate", "source_table", "source_pdf_page"):
+        if subset.get(field) != expected[field]:
+            issues.append(MatrixSubsetScopeIssue(f"invalid_{field}", f"{field} must match the paper-backed subset scope", subset_id))
+    source_phrase = subset.get("source_phrase")
+    if not isinstance(source_phrase, str) or not source_phrase.strip():
+        issues.append(MatrixSubsetScopeIssue("missing_source_phrase", "source_phrase must preserve table/caption linkage", subset_id))
+    else:
+        _validate_subset_source_phrase(subset_id, source_phrase, issues)
+    target_ids = subset.get("target_ids")
+    if not isinstance(target_ids, list) or not all(isinstance(target_id, str) for target_id in target_ids):
+        issues.append(MatrixSubsetScopeIssue("invalid_target_ids", "target_ids must be a list of target ids", subset_id))
+        target_ids = []
+    if target_ids != expected["target_ids"]:
+        issues.append(MatrixSubsetScopeIssue("target_ids_mismatch", "target_ids must exactly match the declared subset predicate", subset_id))
+    if len(target_ids) != len(set(target_ids)):
+        issues.append(MatrixSubsetScopeIssue("duplicate_target_id", "target_ids must be unique", subset_id))
+    if subset.get("row_count") != expected["row_count"]:
+        issues.append(MatrixSubsetScopeIssue("invalid_row_count", "row_count must match target_ids", subset_id))
+    if subset.get("outcome_counts") != expected["outcome_counts"]:
+        issues.append(MatrixSubsetScopeIssue("invalid_outcome_counts", "outcome_counts must match the selected registry rows", subset_id))
+    if subset.get("all_matched_or_surpassed") != expected["all_matched_or_surpassed"]:
+        issues.append(MatrixSubsetScopeIssue("invalid_all_matched_or_surpassed", "all_matched_or_surpassed must reflect whether the subset has fell_behind rows", subset_id))
+    if subset.get("fell_behind_target_ids") != expected["fell_behind_target_ids"]:
+        issues.append(MatrixSubsetScopeIssue("invalid_fell_behind_target_ids", "fell_behind_target_ids must match the selected registry rows", subset_id))
+    if subset.get("out_of_scope_target_ids") != expected["out_of_scope_target_ids"]:
+        issues.append(MatrixSubsetScopeIssue("invalid_out_of_scope_target_ids", "out_of_scope_target_ids must list Appendix A rows outside the subset", subset_id))
+    if subset_id == "main_text_mnp_le_5" and subset.get("fell_behind_target_ids"):
+        issues.append(MatrixSubsetScopeIssue("main_text_subset_has_fell_behind", "main_text_mnp_le_5 must preserve the all matched/surpassed claim", subset_id))
+    if subset_id == "appendix_a_full" and subset.get("all_matched_or_surpassed") is True:
+        issues.append(MatrixSubsetScopeIssue("full_table_overclaims_all_matched", "appendix_a_full must not claim all rows matched or surpassed", subset_id))
+
+
+def _validate_subset_source_phrase(
+    subset_id: str,
+    source_phrase: str,
+    issues: list[MatrixSubsetScopeIssue],
+) -> None:
+    if subset_id == "main_text_mnp_le_5":
+        if "m, n, p <= 5" not in source_phrase or "matched or surpassed" not in source_phrase:
+            issues.append(MatrixSubsetScopeIssue("missing_main_text_source_phrase", "main_text subset must preserve the m,n,p <= 5 matched/surpassed caption phrase", subset_id))
+    elif subset_id == "table_2_selected":
+        if "Table 2" not in source_phrase or "rank" not in source_phrase:
+            issues.append(MatrixSubsetScopeIssue("missing_table2_source_phrase", "table_2_selected must preserve Table 2 rank-table linkage", subset_id))
+    elif subset_id == "appendix_a_full":
+        if "Table 3" not in source_phrase or "full results" not in source_phrase:
+            issues.append(MatrixSubsetScopeIssue("missing_appendix_full_source_phrase", "appendix_a_full must preserve Appendix A full-results linkage", subset_id))
 
 
 def _validate_frontier_observations(

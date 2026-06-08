@@ -3105,6 +3105,16 @@ omitted symmetry-equivalent target ids. It is curation provenance for the
 reported suite, not target tensor/decomposition evidence, and it still does
 not justify every possible excluded non-equivalent target or capture the
 local larger-target OOM/resource frontier.
+Appendix A matrix subset-scope evidence uses
+`libreevolve.alphaevolve_matrix_subset_scope.v1`; the built-in record separates
+`appendix_a_full` (`54` rows: `38` matched, `14` surpassed, `2` fell behind),
+`main_text_mnp_le_5` (`20` rows: `17` matched, `3` surpassed, `0` fell
+behind), and `table_2_selected` (`16` displayed rows: `2` matched, `14`
+surpassed, `0` fell behind). It validates inclusion predicates, exact target
+ids, outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage so
+the main-text all-matched-or-surpassed claim is not confused with the full
+Appendix A aggregate. It is subset metadata only; local reports and rendered
+table artifacts still do not emit these scope records.
 Appendix A matrix resource-frontier provenance uses
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`

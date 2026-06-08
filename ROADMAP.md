@@ -498,6 +498,13 @@ is not yet an AlphaEvolve reproduction.
   source refs, and links to result, scalar-field, tensor-rank, Figure 4,
   Figure 9, and companion Colab evidence. The runner still does not emit the
   headline record or linked decomposition/certificate/source artifacts.
+- Keep matrix outcome claims scoped to named target subsets:
+  `libreevolve.alphaevolve_matrix_subset_scope.v1` now validates
+  `appendix_a_full`, `main_text_mnp_le_5`, and `table_2_selected` membership,
+  outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage. The
+  scoped `m,n,p <= 5` subset has `20` rows with `0` fell behind, while the full
+  Appendix A table has `54` rows with `2` fell behind. Runtime reports and
+  rendered table artifacts still do not emit those subset-scope records.
 
 ### 10. Operational maturity
 

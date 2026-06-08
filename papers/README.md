@@ -775,6 +775,14 @@ Implemented:
   representative policy, axis-permutation equivalent omissions, included-target
   rationales, and unspecified `p` cutoff. It still does not justify every
   possible excluded non-equivalent target.
+  `libreevolve.alphaevolve_matrix_subset_scope.v1` records the paper-facing
+  matrix subset boundary between `appendix_a_full` (`54` rows: `38` matched,
+  `14` surpassed, `2` fell behind), `main_text_mnp_le_5` (`20` rows: `17`
+  matched, `3` surpassed, `0` fell behind), and `table_2_selected` (`16`
+  displayed rows: `2` matched, `14` surpassed, `0` fell behind). It validates
+  inclusion predicates, target ids, outcome counts, out-of-scope rows, and
+  Table 2/Table 3 source linkage, but no local report/export emits those
+  subset-scope records yet.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.

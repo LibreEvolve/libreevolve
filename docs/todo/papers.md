@@ -3171,13 +3171,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     parameters `m, n, p <= 5`, AlphaEvolve matched or surpassed the best-known
     solutions. Appendix A Table 3 is the full 54-target table and includes
     rows outside that main-text subset.
-  - Current gap: the checked Appendix A matrix registry validates total rows
-    and aggregate outcomes (`38` matched, `14` surpassed, `2` fell behind),
-    but it does not provide paper-facing subset summaries that prove which
-    rows belong to the `m,n,p <= 5` main-text claim, which rows are only in
-    the broader Appendix A table, or why larger-target `fell_behind` rows do
-    not contradict the scoped Table 2 statement.
-  - Required result: add paper-facing subset-scope records for named target
+  - Current gap: `libreevolve.alphaevolve_matrix_subset_scope.v1` now provides
+    paper-facing subset summaries for `main_text_mnp_le_5`, `table_2_selected`,
+    and `appendix_a_full`, proving which rows belong to the `m,n,p <= 5`
+    main-text claim, which rows are selected for Table 2, and why the
+    larger-target `fell_behind` rows do not contradict the scoped Table 2
+    statement. It validates inclusion predicates, row counts, outcome counts,
+    out-of-scope row ids, and source-caption/table linkage. No emitted paper
+    artifact or rendered table export currently carries this subset-scope
+    record.
+  - Required result: emit paper-facing subset-scope artifacts for named target
     sets such as `main_text_mnp_le_5`, `table_2_selected`, and
     `appendix_a_full`, including inclusion predicates, row counts, outcome
     counts, out-of-scope row ids, source-caption/table linkage, and

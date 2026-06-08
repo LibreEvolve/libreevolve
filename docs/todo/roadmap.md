@@ -2770,18 +2770,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes reproduced paper-table exhibits from
     general Appendix A registry and matrix result-report coverage.
 
-- [ ] Keep matrix outcome roadmap wording scoped until target-subset evidence
-      exists.
+- [ ] Keep matrix outcome roadmap wording scoped until emitted target-subset
+      artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 scopes its all-matched-or-surpassed
     statement to parameters `m, n, p <= 5`, while Appendix A Table 3 is a
     broader 54-target matrix table.
-  - Current evidence: roadmap/README/paper-index status can cite the Appendix
-    A registry and aggregate outcome counts, but that full registry includes
-    larger-target `fell_behind` rows (`mm_4x4x9` and `mm_6x6x6`). There is no
-    roadmap-facing evidence surface that ties prose claims to named target
-    subsets and prevents mixing the `m,n,p <= 5` main-text subset with the
-    full Appendix A table.
-  - Required result: when matrix subset-scope metadata lands, update ROADMAP,
+  - Current evidence: roadmap/README/paper-index status now cites
+    `libreevolve.alphaevolve_matrix_subset_scope.v1`, which ties prose claims
+    to named target subsets and prevents mixing the `m,n,p <= 5` main-text
+    subset with the full Appendix A table. It validates `appendix_a_full`,
+    `main_text_mnp_le_5`, and `table_2_selected` membership, counts,
+    out-of-scope rows, and Table 2/Table 3 source linkage. Runtime reports and
+    rendered table artifacts still do not emit those subset-scope records.
+  - Required result: when matrix subset-scope artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs with named target subsets,
     inclusion predicates, row counts, outcome counts, out-of-scope row ids,
     source-caption/table linkage, and validation that keeps scoped Table 2

@@ -3673,21 +3673,21 @@ Primary evidence:
     for all parameters `m, n, p <= 5`, AlphaEvolve either matched or surpassed
     the best-known solutions. Appendix A Table 3 is a broader 54-target table
     that includes targets outside that main-text subset.
-  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
-    validates 54 target rows and fixed aggregate outcome counts of `38`
-    matched, `14` surpassed, and `2` fell behind. The `fell_behind` rows are
-    larger-target records (`mm_4x4x9` and `mm_6x6x6`), while the main-text
-    all-matched-or-surpassed claim is scoped to the `m,n,p <= 5` subset. The
-    current registry and table-exhibit TODOs do not expose a claim-scope
-    validator that proves a prose/table claim is being checked against the
-    correct target subset rather than the whole Appendix A table.
-  - Required result: add matrix report or registry summary metadata for named
-    target subsets such as `main_text_mnp_le_5`, `table_2_selected`, and
-    `appendix_a_full`, with inclusion predicates, row counts, outcome counts,
-    out-of-scope/fell-behind row ids, source-caption linkage, and docs
-    validation so README/ROADMAP/papers wording neither treats the full
-    Appendix A registry as all matched/surpassed nor treats larger-target
-    `fell_behind` rows as contradicting the scoped main-text claim.
+  - Current evidence: `libreevolve.alphaevolve_matrix_subset_scope.v1` now
+    validates named subset metadata for `appendix_a_full`, `main_text_mnp_le_5`,
+    and `table_2_selected`, including inclusion predicates, exact row ids,
+    row counts, outcome counts, out-of-scope/fell-behind row ids, and
+    source-caption/table linkage. It preserves that the `m,n,p <= 5` subset has
+    `20` rows with `0` fell behind while the full Appendix A table has `54`
+    rows with `2` fell behind (`mm_4x4x9` and `mm_6x6x6`). This is still
+    built-in metadata only; local matrix reports, table exhibits, and run
+    artifacts do not emit or consume the subset-scope record.
+  - Required result: wire matrix report/table-exhibit generation to emit and
+    commit subset-scope artifacts for `main_text_mnp_le_5`, `table_2_selected`,
+    and `appendix_a_full`, with source-caption linkage and docs validation so
+    README/ROADMAP/papers wording neither treats the full Appendix A registry
+    as all matched/surpassed nor treats larger-target `fell_behind` rows as
+    contradicting the scoped main-text claim.
 
 - [ ] Add Appendix A matrix row-note and concurrent-work provenance.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level result

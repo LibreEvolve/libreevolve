@@ -4,17 +4,21 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
     RESOURCE_FRONTIER_SCHEMA,
+    SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_resource_frontier_record,
+    appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
     matrix_target_records,
     render_appendix_a_matrix_curation_summary,
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
+    render_appendix_a_matrix_subset_scope_summary,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
+    validate_appendix_a_matrix_subset_scope,
 )
 
 
@@ -207,3 +211,97 @@ def test_appendix_a_matrix_resource_frontier_summary_renders_counts():
     assert "AlphaEvolve Appendix A matrix resource frontier" in summary
     assert "| attempted_scope_count | 1 |" in summary
     assert "| local_artifact_count | 0 |" in summary
+
+
+def _subset_by_id(record: dict, subset_id: str) -> dict:
+    return next(subset for subset in record["subsets"] if subset["subset_id"] == subset_id)
+
+
+def test_appendix_a_matrix_subset_scope_validates_table2_and_full_table_boundaries():
+    record = appendix_a_matrix_subset_scope_record()
+    report = validate_appendix_a_matrix_subset_scope(record)
+    full = _subset_by_id(record, "appendix_a_full")
+    main_text = _subset_by_id(record, "main_text_mnp_le_5")
+    table2 = _subset_by_id(record, "table_2_selected")
+
+    assert report.ok is True
+    assert record["schema"] == SUBSET_SCOPE_SCHEMA
+    assert report.subset_count == 3
+    assert report.main_text_target_count == 20
+    assert report.full_table_target_count == EXPECTED_TARGET_COUNT == 54
+    assert report.full_table_fell_behind_count == 2
+    assert report.issues == []
+    assert full["outcome_counts"] == {"matched": 38, "surpassed": 14, "fell_behind": 2}
+    assert full["all_matched_or_surpassed"] is False
+    assert full["fell_behind_target_ids"] == ["mm_4x4x9", "mm_6x6x6"]
+    assert main_text["outcome_counts"] == {"matched": 17, "surpassed": 3, "fell_behind": 0}
+    assert main_text["all_matched_or_surpassed"] is True
+    assert set(full["fell_behind_target_ids"]).issubset(main_text["out_of_scope_target_ids"])
+    assert table2["row_count"] == 16
+    assert table2["outcome_counts"] == {"matched": 2, "surpassed": 14, "fell_behind": 0}
+    assert table2["target_ids"][0] == "mm_2x4x5"
+    assert table2["target_ids"][-1] == "mm_5x5x5"
+
+
+def test_appendix_a_matrix_subset_scope_rejects_full_table_overclaim():
+    record = appendix_a_matrix_subset_scope_record()
+    full = _subset_by_id(record, "appendix_a_full")
+    full["all_matched_or_surpassed"] = True
+    full["fell_behind_target_ids"] = []
+    full["outcome_counts"]["fell_behind"] = 0
+
+    report = validate_appendix_a_matrix_subset_scope(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_outcome_counts" in codes
+    assert "invalid_all_matched_or_surpassed" in codes
+    assert "invalid_fell_behind_target_ids" in codes
+    assert "full_table_overclaims_all_matched" in codes
+
+
+def test_appendix_a_matrix_subset_scope_rejects_main_text_fell_behind_drift():
+    record = appendix_a_matrix_subset_scope_record()
+    main_text = _subset_by_id(record, "main_text_mnp_le_5")
+    main_text["target_ids"].append("mm_4x4x9")
+    main_text["row_count"] += 1
+    main_text["outcome_counts"]["fell_behind"] = 1
+    main_text["all_matched_or_surpassed"] = False
+    main_text["fell_behind_target_ids"] = ["mm_4x4x9"]
+
+    report = validate_appendix_a_matrix_subset_scope(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "target_ids_mismatch" in codes
+    assert "invalid_row_count" in codes
+    assert "invalid_outcome_counts" in codes
+    assert "invalid_all_matched_or_surpassed" in codes
+    assert "invalid_fell_behind_target_ids" in codes
+    assert "main_text_subset_has_fell_behind" in codes
+
+
+def test_appendix_a_matrix_subset_scope_rejects_table2_membership_and_source_drift():
+    record = appendix_a_matrix_subset_scope_record()
+    table2 = _subset_by_id(record, "table_2_selected")
+    table2["target_ids"][0] = "mm_2x2x2"
+    table2["source_pdf_page"] = 10
+    table2["source_phrase"] = "selected matrix examples"
+
+    report = validate_appendix_a_matrix_subset_scope(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "target_ids_mismatch" in codes
+    assert "invalid_source_pdf_page" in codes
+    assert "missing_table2_source_phrase" in codes
+
+
+def test_appendix_a_matrix_subset_scope_summary_renders_counts():
+    summary = render_appendix_a_matrix_subset_scope_summary()
+
+    assert "AlphaEvolve matrix subset-scope evidence" in summary
+    assert "| subset_count | 3 |" in summary
+    assert "| main_text_target_count | 20 |" in summary
+    assert "| full_table_target_count | 54 |" in summary
+    assert "| full_table_fell_behind_count | 2 |" in summary

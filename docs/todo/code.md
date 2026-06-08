@@ -2850,6 +2850,9 @@ Primary evidence:
     rejects background-only/future-benchmark status classes that include
     positive implementation-support wording. Bare `Background only` status
     classes must now include an explicit missing/unsupported behavior boundary.
+    `Not implemented; potential future benchmark` status classes must now
+    include an explicit missing verifier/harness or unsupported-behavior
+    boundary.
     Limited `Only` status classes must now include an explicit
     missing/unsupported behavior boundary.
     `Static prompt guidance exists` status classes must now also state that the
@@ -2861,8 +2864,9 @@ Primary evidence:
     justifies it, or prove broader smoke-versus-paper-claim qualifiers beyond
     the role/status class matrix, required path presence, the
     `AlphaEvolve-comparable` overclaim guard, the negative-status contradiction
-    guard, the background-only boundary guard, the limited-status boundary
-    guard, the static-guidance execution-boundary guard, and the
+    guard, the background-only boundary guard, the future-benchmark boundary
+    guard, the limited-status boundary guard, the static-guidance
+    execution-boundary guard, and the
     not-implemented-as-described boundary guard.
   - Required result: extend the reusable paper-status-table validator with
     phrase-level evidence-link checks from semantic status/coverage phrases to

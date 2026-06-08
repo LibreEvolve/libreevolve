@@ -659,17 +659,17 @@ remain legacy-limited to arity/type/non-negative validation.
 | 2601.21096 | Magellan | AlphaEvolve compiler-optimization application context | Background only; no compiler-heuristic benchmark or compiler pass runner. |
 | 2602.22425 | ArchAgent | AlphaEvolve computer-architecture application context | Background only; no architecture-design simulator or cache-policy benchmark. |
 | 2602.16928 | Multiagent Learning | AlphaEvolve MARL algorithm-discovery result context | Background only; no CFR/PSRO benchmark or game-theoretic evaluator. |
-| 2603.09172 | Ramsey Numbers | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
+| 2603.09172 | Ramsey Numbers | Constructive math benchmark candidate | Not implemented; potential future benchmark; no Ramsey construction verifier or certificate benchmark. |
 | 2509.18057 | Hardness of Approximation | AlphaEvolve complexity-theory result context | Background only; no graph/certification benchmark. |
-| 2603.06692 | Combinatorics Berczy | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
+| 2603.06692 | Combinatorics Berczy | Constructive math benchmark candidate | Not implemented; potential future benchmark; no constructive-combinatorics verifier or benchmark harness. |
 | 2601.16175 | TTT Discover | Test-time discovery context | Background only; no test-time discovery evaluator or adaptation benchmark. |
 | 2603.08679 | Bilateral Trade | AlphaEvolve mechanism-design result context | Background only; no bilateral-trade distribution benchmark. |
-| 2601.01235 | Bruhat Intervals | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
+| 2601.01235 | Bruhat Intervals | Constructive math benchmark candidate | Not implemented; potential future benchmark; no Bruhat-interval verifier or construction benchmark. |
 | 2511.12916 | Fault2Flow | AlphaEvolve-optimized workflow application context | Background only; no fault-to-workflow or human-in-the-loop multi-agent benchmark. |
 | 2601.05943 | Global Nonlinear Optimization | Optimization benchmark comparator | Not implemented; potential future benchmark; no nonlinear-programming solver comparison harness. |
-| 2506.16750 | Autoconvolution | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
-| 2505.16105 | Sums and Differences | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
-| 2506.01896 | Sums and Differences II | Constructive math benchmark candidate | Not implemented; potential future benchmark. |
+| 2506.16750 | Autoconvolution | Constructive math benchmark candidate | Not implemented; potential future benchmark; no autoconvolution certificate verifier or benchmark harness. |
+| 2505.16105 | Sums and Differences | Constructive math benchmark candidate | Not implemented; potential future benchmark; no sums-and-differences construction verifier or benchmark harness. |
+| 2506.01896 | Sums and Differences II | Constructive math benchmark candidate | Not implemented; potential future benchmark; no second-variant sums-and-differences verifier or benchmark harness. |
 
 ## TODO coverage cross-references
 

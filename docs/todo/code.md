@@ -4857,3 +4857,38 @@ Primary evidence:
     benchmark baselines and upper-bound references, reproducibility metadata,
     and README/ROADMAP wording that keeps Zarankiewicz discovery claims as
     missing application evidence until local fixtures and reports exist.
+
+- [ ] Add CORAL autonomous multi-agent evolution source boundary.
+  - Spec evidence: arXiv `2604.01658`, `CORAL: Towards Autonomous Multi-Agent
+    Evolution for Open-Ended Discovery`, was submitted April 2, 2026 and
+    revised May 17, 2026. Its abstract says LLM-based evolution for
+    open-ended discovery still relies on fixed heuristics and hard-coded
+    exploration rules, limiting agent autonomy. CORAL replaces rigid control
+    with long-running agents that explore, reflect, and collaborate through
+    shared persistent memory, asynchronous multi-agent execution, and
+    heartbeat-based interventions, while adding safeguards such as isolated
+    workspaces, evaluator separation, resource management, and agent session
+    and health management. It reports state-of-the-art results on 10
+    mathematical, algorithmic, and systems optimization tasks, 3-10x higher
+    improvement rates with fewer evaluations, and a kernel-engineering score
+    improvement from 1363 to 1103 cycles.
+  - Current evidence: LibreEvolve has islands, ring migration, MAP-Elites
+    archives, prompt/run artifacts, evaluator subprocesses, and migration
+    event logs, but no CORAL source row or autonomous multi-agent runtime.
+    There is no long-running agent session model, shared persistent agent
+    memory, asynchronous collaboration protocol, heartbeat intervention
+    mechanism, isolated per-agent workspace, evaluator separation contract
+    beyond local validator subprocesses, resource quota manager, session
+    health monitor, communication/knowledge-reuse trace, or multi-agent
+    benchmark report.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2604.01658`: arXiv id/version/date/PDF hash, authors, source license,
+    linked code URL/status, relation to AlphaEvolve and LibreEvolve islands,
+    agent-session schema, shared memory/index artifacts, async execution and
+    communication traces, heartbeat intervention records, workspace isolation
+    policy, evaluator-separation invariants, resource-management telemetry,
+    health-check events, knowledge-reuse evidence, mathematical/algorithmic/
+    systems benchmark taxonomy, kernel-engineering metric records, baseline
+    identities, and README/ROADMAP wording that keeps CORAL-style autonomous
+    multi-agent evolution as missing evidence until local implementation and
+    reports exist.

@@ -4436,3 +4436,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     baseline references, code/artifact availability if any, reproducibility
     status, and README/ROADMAP wording that treats the paper as missing
     application evidence rather than implemented LibreEvolve support.
+
+- [ ] Track CORAL autonomous multi-agent evolution paper evidence.
+  - Paper/source evidence: arXiv `2604.01658`, submitted April 2, 2026 and
+    last revised May 17, 2026, is titled `CORAL: Towards Autonomous
+    Multi-Agent Evolution for Open-Ended Discovery`. Its abstract says
+    LLM-based evolution for open-ended discovery needs sustained search and
+    knowledge accumulation, but existing methods rely on fixed heuristics and
+    hard-coded exploration rules. CORAL replaces rigid control with
+    long-running agents that explore, reflect, and collaborate through shared
+    persistent memory, asynchronous multi-agent execution, and heartbeat-based
+    interventions, plus safeguards for isolated workspaces, evaluator
+    separation, resource management, and agent session and health management.
+    It reports state-of-the-art results on 10 mathematical, algorithmic, and
+    systems optimization tasks, 3-10x higher improvement rates with fewer
+    evaluations, and a kernel-engineering score improvement from 1363 to 1103
+    cycles. The arXiv page links code at `https://github.com/YangLabHKUST/CORAL`.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2604.01658`. Existing rows cover AlphaEvolve, MAP-Elites,
+    islands, migration, async orchestration, trace diagnostics, cost-aware
+    routing, and application papers, but not CORAL-style long-running agent
+    sessions, shared persistent memory, asynchronous agent collaboration,
+    heartbeat interventions, isolated workspaces, evaluator separation,
+    resource and health management, or multi-agent benchmark/mechanism
+    evidence.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2604.01658`: title/authors/arXiv version/date/PDF digest, source license,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve islands,
+    agent-session schema, shared-memory/index metadata, asynchronous
+    execution and communication traces, heartbeat intervention records,
+    workspace-isolation and evaluator-separation policies, resource and
+    health telemetry, knowledge-reuse/mechanistic analysis artifacts,
+    mathematical/algorithmic/systems benchmark taxonomy, kernel-engineering
+    metric records, baseline identities, code/artifact reproducibility status,
+    and README/ROADMAP wording that treats CORAL as missing paper evidence
+    rather than implemented LibreEvolve support.

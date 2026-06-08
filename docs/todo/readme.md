@@ -3110,4 +3110,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     baseline references, and reproducibility reports. Avoid implying
     LibreEvolve supports this application without those artifacts.
 
+- [ ] Keep README CORAL autonomous multi-agent claims absent or source-scoped
+      until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2604.01658`, `CORAL: Towards Autonomous Multi-Agent
+    Evolution for Open-Ended Discovery`, describes long-running agents that
+    explore, reflect, and collaborate through shared persistent memory,
+    asynchronous multi-agent execution, and heartbeat interventions, with
+    safeguards for isolated workspaces, evaluator separation, resource
+    management, and agent session/health management. It reports 3-10x higher
+    improvement rates with fewer evaluations and kernel-engineering cycle
+    improvements.
+  - Current evidence: README documents LibreEvolve's current CLI, MAP-Elites
+    archive, islands, migration, evaluator subprocesses, run artifacts, and
+    benchmark boundaries. It does not list `2604.01658`, expose long-running
+    agent sessions, implement shared persistent multi-agent memory, run
+    asynchronous collaborative agents, provide heartbeat interventions,
+    isolate per-agent workspaces, manage quotas, or report agent health.
+  - Required result: if README mentions CORAL, autonomous multi-agent
+    evolution, shared persistent memory, asynchronous agent collaboration,
+    heartbeat interventions, isolated workspaces, evaluator separation,
+    resource management, session health, 3-10x improvement rates, or
+    Anthropic kernel-engineering cycle records, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show session
+    state, shared-memory records, communication traces, heartbeat logs,
+    workspace/resource policies, health telemetry, benchmark baselines, and
+    report outcomes. Avoid implying LibreEvolve supports CORAL-style
+    autonomous multi-agent evolution without those artifacts.
+
 ## Architecture Description

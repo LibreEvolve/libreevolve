@@ -3523,3 +3523,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     references, cost accounting, reproducibility metadata, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local Zarankiewicz benchmark support.
+
+- [ ] Add CORAL autonomous multi-agent evolution gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2604.01658`, submitted April 2, 2026 and last
+    revised May 17, 2026, introduces CORAL for autonomous multi-agent
+    evolution on open-ended discovery tasks. The abstract says fixed
+    heuristics and hard-coded exploration rules limit current LLM-based
+    evolution, then proposes long-running collaborative agents with shared
+    persistent memory, asynchronous execution, heartbeat-based interventions,
+    isolated workspaces, evaluator separation, resource management, and agent
+    session/health management. It reports state-of-the-art results on 10
+    tasks, 3-10x higher improvement rates with fewer evaluations, and an
+    Anthropic kernel-engineering improvement from 1363 to 1103 cycles.
+  - Current evidence: ROADMAP tracks MAP-Elites islands, ring migration,
+    async reviewer gaps, archive restore, benchmark/report contracts, and
+    many search-source gates. It does not mention `2604.01658`, define CORAL
+    gates, or require evidence before promoting autonomous multi-agent
+    collaboration beyond the current island/migration abstraction.
+  - Required result: add roadmap gates for `2604.01658`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    agent-session and shared-memory schemas, async execution and communication
+    traces, heartbeat intervention logs, isolated-workspace policy,
+    evaluator-separation contract, resource-management telemetry, session
+    health events, knowledge-reuse/mechanistic analyses, benchmark taxonomy,
+    kernel-engineering metric records, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local CORAL-style autonomous multi-agent support.

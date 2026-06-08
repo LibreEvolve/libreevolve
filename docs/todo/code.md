@@ -61,6 +61,23 @@ Primary evidence:
     local evolve-block parsing from paper-faithful minimal-change codebase
     integration evidence.
 
+- [ ] Add Figure 3 evolve-block marker spelling provenance.
+  - Spec evidence: AlphaEvolve Section 2.1 names the special marker comments
+    as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF text
+    extraction from Figure 3(a) shows one opening marker as
+    `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
+  - Current evidence: LibreEvolve deliberately enforces the local exact
+    Python marker grammar `# EVOLVE-BLOCK-START/END` and rejects malformed or
+    unsupported marker-like syntax. Existing Figure 3 exhibit TODOs require
+    source/prompt/output excerpt artifacts, but they do not explicitly classify
+    this marker-text variant as canonical section prose, rendered figure text,
+    extraction/OCR uncertainty, or paper typo.
+  - Required result: record marker text per paper source location and
+    subfigure, preserve source artifact hashes or screenshots for the variant,
+    classify the discrepancy before using it in docs, and keep parser/support
+    claims scoped to the implemented local grammar unless a deliberate
+    compatibility mode for the space variant is added.
+
 - [ ] Add candidate-embedded `evaluate(eval_inputs)` entrypoint support and
       evidence.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 present a

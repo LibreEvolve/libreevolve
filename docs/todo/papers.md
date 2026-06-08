@@ -347,6 +347,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     distinguishes evolve-block parser support from AlphaEvolve-style
     minimal-change integration evidence.
 
+- [ ] Track Figure 3 evolve-block marker spelling source variants.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 names the marker
+    comments as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF
+    text extraction from Figure 3(a) shows one opening marker as
+    `# EVOLVE-BLOCK START` and another as `# EVOLVE-BLOCK-START`.
+  - Current gap: paper/status records can cite local Python marker validation
+    and unsupported marker diagnostics, and the Figure 3 exhibit TODOs require
+    exact excerpt artifacts. They do not require a paper-facing classification
+    of the marker-text variant before docs decide whether it is canonical
+    paper prose, rendered figure text, extraction/OCR uncertainty, or a paper
+    typo.
+  - Required result: add paper-facing source-location records for each marker
+    spelling, attach source artifact hashes or screenshots, classify the
+    discrepancy, and keep documentation claims scoped so local parser grammar
+    is not mistaken for full reproduction of every Figure 3 marker rendering.
+
 - [ ] Track candidate-abstraction choice and bias evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.
   - Requirement: AlphaEvolve treats the candidate representation as a

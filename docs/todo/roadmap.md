@@ -216,6 +216,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording separates marker parser support from
     AlphaEvolve-style minimal-change integration evidence.
 
+- [ ] Keep marker roadmap wording scoped until Figure 3 marker-variant
+      metadata exists.
+  - Spec evidence: AlphaEvolve Section 2.1 names the marker comments as
+    `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END`, while PDF text extraction
+    from Figure 3(a) shows one opening marker as `# EVOLVE-BLOCK START` and
+    another as `# EVOLVE-BLOCK-START`.
+  - Current evidence: ROADMAP can point to local Python evolve-block marker
+    parsing, validation, and unsupported marker diagnostics. It does not yet
+    require source-location metadata that classifies the Figure 3 marker-text
+    variant before roadmap wording treats it as canonical paper prose, rendered
+    figure text, extraction/OCR uncertainty, or paper typo.
+  - Required result: when Figure 3 marker source metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODO entries together so
+    roadmap language separates local marker grammar work from any deliberate
+    compatibility or documentation decision about the space variant.
+
 - [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
       abstraction-choice reports exist.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion treat candidate

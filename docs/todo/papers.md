@@ -5218,3 +5218,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that treats Fault2Flow-style fault-to-workflow
     automation as missing paper evidence rather than implemented LibreEvolve
     support.
+
+- [ ] Track TTT-Discover test-time-training paper evidence.
+  - Paper/source evidence: arXiv `2601.16175`, submitted January 22, 2026 and
+    last revised February 5, 2026, is titled `Learning to Discover at Test
+    Time`. Its abstract contrasts AlphaEvolve-style frozen-LLM prompting with
+    reinforcement learning at test time, where the model continues training
+    on experience from one specific test problem. It defines Test-Time
+    Training to Discover (TTT-Discover), focuses on continuous rewards, and
+    reports attempted-problem results across mathematics, GPU kernel
+    engineering, algorithm design, and biology, including Erdos minimum
+    overlap, an autocorrelation inequality, a GPUMode kernel competition with
+    up to `2x` faster results, AtCoder competitions, and single-cell
+    denoising. The abstract states results use open model `OpenAI
+    gpt-oss-120b`, public code, Tinker test-time-training runs, expert or
+    organizer review, and costs of only a few hundred dollars per problem.
+  - Current gap: `papers/README.md` lists `2601.16175` as background-only
+    test-time discovery context, and the active TODO coverage does not yet
+    track this paper-specific evidence. Existing AlphaEvolve and framework
+    gaps do not capture mutable model-policy state, RL-at-test-time training
+    records, Tinker run provenance, open-model checkpoint identity, continuous-
+    reward task definitions, cross-domain benchmark rows, expert/organizer
+    review artifacts, or cost-per-problem accounting.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2601.16175`: title/authors/arXiv version/date/PDF digest, source
+    license, public code URL/status, relation to AlphaEvolve frozen-search and
+    LibreEvolve provider assumptions, mutable policy/training-state schema,
+    RL objective and rollout-selection metadata, Tinker/API training-run
+    records, open-model/checkpoint provenance, continuous-reward task
+    definitions, Erdos/autocorrelation/GPUMode/AtCoder/single-cell benchmark
+    records, prior-art and AlphaEvolve/OpenEvolve baseline identities, expert
+    or organizer review artifacts, cost/budget accounting, seed/run records,
+    independent checker outputs, reproducibility status, and README/ROADMAP
+    wording that treats TTT-Discover-style test-time training as missing
+    paper evidence rather than implemented LibreEvolve support.

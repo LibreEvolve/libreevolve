@@ -5647,3 +5647,41 @@ Primary evidence:
     outputs, and README/ROADMAP wording that keeps Fault2Flow-style
     fault-to-workflow automation as missing evidence until local
     implementation and benchmark reports exist.
+
+- [ ] Add TTT-Discover test-time-training boundary against AlphaEvolve frozen
+      search.
+  - Spec evidence: arXiv `2601.16175`, `Learning to Discover at Test Time`,
+    was submitted January 22, 2026 and last revised February 5, 2026. Its
+    abstract contrasts prior test-time scaling such as AlphaEvolve, which
+    searches by prompting a frozen LLM, with Test-Time Training to Discover
+    (TTT-Discover), which performs reinforcement learning at test time so the
+    LLM continues training on experience specific to one test problem. It
+    targets continuous-reward discovery tasks and reports results across
+    mathematics, GPU kernel engineering, algorithm design, and biology:
+    Erdos minimum-overlap, an autocorrelation inequality, a GPUMode kernel
+    competition with up to `2x` speedup, past AtCoder competitions, and
+    single-cell denoising. The abstract says results use open model
+    `OpenAI gpt-oss-120b`, public code, Tinker runs, expert or organizer
+    review, and costs of a few hundred dollars per problem.
+  - Current evidence: `papers/README.md` lists `2601.16175` only as
+    background test-time discovery context. LibreEvolve has no first-class
+    code TODO for this source, no test-time RL training loop, no mutable model
+    policy state, no Tinker/API training-run metadata, no open-model
+    reproduction protocol for `gpt-oss-120b`, no continuous-reward
+    cross-domain benchmark suite covering the cited math/kernel/algorithm/
+    biology tasks, no expert/organizer review artifact policy, and no
+    accounting boundary that separates frozen-LLM AlphaEvolve-style search
+    from test-time model adaptation.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2601.16175`: arXiv id/version/date/PDF hash, authors, source
+    license, public code URL/status, relation to AlphaEvolve frozen-search
+    assumptions and LibreEvolve's provider adapters, mutable policy/training
+    state schema, RL objective and rollout-selection records, Tinker or
+    equivalent training API metadata, open-model identity and checkpoint
+    provenance, continuous-reward task definitions, Erdos/autocorrelation/
+    GPUMode/AtCoder/single-cell benchmark records, prior-art and
+    AlphaEvolve/OpenEvolve baseline identities, expert/organizer review
+    artifacts, cost and budget accounting, seed/run records, independent
+    checker outputs, and README/ROADMAP wording that keeps TTT-Discover-style
+    test-time training as missing evidence until local implementation and
+    benchmark reports exist.

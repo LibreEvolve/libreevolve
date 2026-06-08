@@ -4182,3 +4182,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     outputs, and a background-only or benchmark-fixture status rule so
     roadmap claims do not outpace local AlphaEvolve-style Fault2Flow
     automation support.
+
+- [ ] Add TTT-Discover test-time-training gates before roadmap promotion.
+  - Spec evidence: arXiv `2601.16175`, submitted January 22, 2026 and last
+    revised February 5, 2026, introduces `Learning to Discover at Test Time`.
+    The abstract contrasts AlphaEvolve's frozen-LLM prompting search with
+    reinforcement learning at test time, where the model continues training
+    on experience specific to the test problem. It reports continuous-reward
+    discovery results across math, GPU kernels, algorithm design, and biology,
+    including Erdos minimum overlap, autocorrelation, GPUMode, AtCoder, and
+    single-cell denoising tasks, using open model `OpenAI gpt-oss-120b`,
+    public code, Tinker runs, expert or organizer review, and low per-problem
+    costs.
+  - Current evidence: ROADMAP tracks AlphaEvolve frozen-search gaps, provider
+    routing, feedback graders, budget accounting, and broad background paper
+    rows, but it does not promote `2601.16175` beyond background-only status.
+    It does not define a mutable model-policy state gate, test-time RL loop,
+    Tinker/API training-run provenance, open-model checkpoint record,
+    continuous-reward cross-domain benchmark suite, expert/organizer review
+    artifact rule, or cost-per-problem accounting boundary.
+  - Required result: add roadmap gates for `2601.16175`: paper/source
+    manifest entry, PDF/cache hash, source-license and public-code status,
+    mutable policy/training-state schema, RL objective and rollout-selection
+    metadata, training API and checkpoint provenance, open-model identity,
+    continuous-reward task definitions, Erdos/autocorrelation/GPUMode/AtCoder/
+    single-cell benchmark records, prior-art and AlphaEvolve/OpenEvolve
+    baseline identities, expert/organizer review artifacts, seed/run records,
+    cost and budget accounting, independent checker outputs, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local TTT-Discover-style test-time-training support.

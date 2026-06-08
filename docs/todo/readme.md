@@ -1890,6 +1890,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     now include an explicit missing/unsupported behavior boundary. `Not
     implemented; potential future benchmark` status classes must now include
     an explicit missing verifier/harness or unsupported-behavior boundary.
+    `Partially implemented:` status classes must now include an explicit
+    remaining/missing/unsupported behavior boundary.
     Limited `Only` status classes must now include an explicit
     missing/unsupported behavior boundary. `Static prompt guidance exists`
     status classes must now also state that the guided
@@ -1901,9 +1903,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark evidence beyond the role/status class matrix, required path
     presence, the `AlphaEvolve-comparable` overclaim guard, the negative-status
     contradiction guard, the background-only boundary guard, the limited-status
-    boundary guard, the future-benchmark boundary guard, the static-guidance
-    execution-boundary guard, and the not-implemented-as-described boundary
-    guard.
+    boundary guard, the future-benchmark boundary guard, the partial-status
+    boundary guard, the static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: keep README wording scoped as phrase-level semantic
     status/coverage evidence checks are added, so public docs continue to
     distinguish structural/taxonomy validation from fully verified semantic

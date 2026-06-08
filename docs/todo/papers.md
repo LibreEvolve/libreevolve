@@ -3621,7 +3621,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     Bare `Background only` status classes must now include an explicit
     missing/unsupported behavior boundary. `Not implemented; potential future
     benchmark` status classes must now include an explicit missing
-    verifier/harness or unsupported-behavior boundary. Limited `Only` status
+    verifier/harness or unsupported-behavior boundary. `Partially
+    implemented:` status classes must now include an explicit
+    remaining/missing/unsupported behavior boundary. Limited `Only` status
     classes must now include an explicit missing/unsupported behavior boundary.
     `Static prompt guidance exists`
     status classes must now also state that the guided operation is not
@@ -3634,16 +3636,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     matrix, required path presence, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
     boundary guard, the future-benchmark boundary guard, the limited-status
-    boundary guard, the static-guidance execution-boundary guard, and the
-    not-implemented-as-described boundary guard.
+    boundary guard, the partial-status boundary guard, the static-guidance
+    execution-boundary guard, and the not-implemented-as-described boundary
+    guard.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
     current role/status class matrix and `AlphaEvolve-comparable` boundary
     guard plus negative-status contradiction, background-only boundary,
-    future-benchmark boundary, limited-status boundary, and static-guidance
-    execution-boundary checks plus the not-implemented-as-described boundary
-    check. Keep this validator distinct
+    future-benchmark boundary, partial-status boundary, limited-status
+    boundary, and static-guidance execution-boundary checks plus the
+    not-implemented-as-described boundary check. Keep this validator distinct
     from the already documented TODO coverage cross-reference checker, which
     verifies backlog pointers after the implementation-status table.
 

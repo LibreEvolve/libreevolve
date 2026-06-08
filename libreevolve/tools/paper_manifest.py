@@ -164,8 +164,9 @@ STATUS_TABLE_NEGATIVE_IMPLEMENTATION_PREFIXES = (
 STATUS_TABLE_BACKGROUND_ONLY_PREFIXES = ("Background only",)
 STATUS_TABLE_FUTURE_BENCHMARK_PREFIXES = ("Not implemented; potential future benchmark",)
 STATUS_TABLE_LIMITED_STATUS_PREFIXES = ("Only ",)
+STATUS_TABLE_PARTIAL_STATUS_PREFIXES = ("Partially implemented:",)
 STATUS_TABLE_LIMITATION_BOUNDARY_RE = re.compile(
-    r"\b(?:no|not|without|but|while|lacks?|missing|remain(?:s)? open|out of scope)\b",
+    r"\b(?:no|not|without|but|while|lacks?|missing|remain(?:s)? open|out of scope|unsupported)\b",
     flags=re.IGNORECASE,
 )
 STATUS_TABLE_STATIC_GUIDANCE_PREFIXES = ("Static prompt guidance exists ",)
@@ -1472,6 +1473,19 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
                 PaperManifestIssue(
                     "status_table_limited_status_missing_boundary",
                     "limited-support status classes must include an explicit missing or unsupported behavior boundary",
+                    row_id,
+                )
+            )
+        break
+    for prefix in STATUS_TABLE_PARTIAL_STATUS_PREFIXES:
+        if not status.startswith(prefix):
+            continue
+        suffix = status[len(prefix) :]
+        if not STATUS_TABLE_LIMITATION_BOUNDARY_RE.search(suffix):
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_partial_status_missing_boundary",
+                    "partial status classes must include an explicit remaining, missing, or unsupported behavior boundary",
                     row_id,
                 )
             )

@@ -12,6 +12,8 @@ from pypdf import PdfWriter
 import libreevolve.tools.paper_manifest as paper_manifest
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
+PARTIAL_FIXTURE_STATUS = "Partially implemented: fixture status; no full paper behavior."
+
 
 def _write_manifest(root, rows):
     papers = root / "papers"
@@ -41,7 +43,7 @@ def _write_manifest(root, rows):
 def _write_status_table(root, row_ids):
     rows = "\n".join(
         f"| {row_id} | Paper {index} | Primary specification target | "
-        "Partially implemented: fixture status. |"
+        f"{PARTIAL_FIXTURE_STATUS} |"
         for index, row_id in enumerate(row_ids, start=1)
     )
     (root / "papers" / "README.md").write_text(
@@ -1035,7 +1037,7 @@ def test_validate_paper_manifest_reports_status_table_row_shape(tmp_path):
     status_readme.write_text(
         status_readme.read_text(encoding="utf-8").replace(
             "| 2506.13131 | Paper 1 | Primary specification target | "
-            "Partially implemented: fixture status. |",
+            f"{PARTIAL_FIXTURE_STATUS} |",
             "| 2506.13131 | Paper 1 | Primary specification target |",
         ),
         encoding="utf-8",
@@ -1054,7 +1056,7 @@ def test_validate_paper_manifest_reports_invalid_status_table_role_and_status(tm
     status_readme = tmp_path / "papers" / "README.md"
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Unreviewed marketing claim")
-    text = text.replace("Partially implemented: fixture status.", "Production parity proven.")
+    text = text.replace(PARTIAL_FIXTURE_STATUS, "Production parity proven.")
     status_readme.write_text(text, encoding="utf-8")
 
     report = validate_paper_manifest(tmp_path)
@@ -1090,7 +1092,7 @@ def test_validate_paper_manifest_reports_alphaevolve_comparable_status_overclaim
     status_readme = tmp_path / "papers" / "README.md"
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Partially implemented: AlphaEvolve-comparable benchmark evidence is implemented.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1109,7 +1111,7 @@ def test_validate_paper_manifest_allows_scoped_alphaevolve_comparable_status_bou
     status_readme = tmp_path / "papers" / "README.md"
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Partially implemented: not AlphaEvolve-comparable until benchmark evidence exists.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1117,6 +1119,22 @@ def test_validate_paper_manifest_allows_scoped_alphaevolve_comparable_status_bou
     report = validate_paper_manifest(tmp_path)
 
     assert report.ok is True
+
+
+def test_validate_paper_manifest_reports_partial_status_without_missing_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace(PARTIAL_FIXTURE_STATUS, "Partially implemented: fixture status.")
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_partial_status_missing_boundary" in codes
 
 
 def test_validate_paper_manifest_reports_negative_status_implementation_contradiction(tmp_path):
@@ -1127,7 +1145,7 @@ def test_validate_paper_manifest_reports_negative_status_implementation_contradi
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Domain evolution inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Background only; implemented local adapter exists.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1147,7 +1165,7 @@ def test_validate_paper_manifest_allows_unimplemented_future_benchmark_boundary(
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Constructive math benchmark candidate")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Not implemented; potential future benchmark; no verifier harness.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1165,7 +1183,7 @@ def test_validate_paper_manifest_reports_unimplemented_future_benchmark_without_
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Constructive math benchmark candidate")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Not implemented; potential future benchmark.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1185,7 +1203,7 @@ def test_validate_paper_manifest_reports_background_only_status_without_missing_
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Domain evolution inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Background only.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1205,7 +1223,7 @@ def test_validate_paper_manifest_allows_background_only_status_with_missing_boun
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Domain evolution inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Background only; no domain-evolution benchmark.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1223,7 +1241,7 @@ def test_validate_paper_manifest_reports_limited_status_without_missing_boundary
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Test-time training inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Only clipped-reward export exists.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1243,7 +1261,7 @@ def test_validate_paper_manifest_allows_limited_status_with_missing_boundary(tmp
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Test-time training inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Only clipped-reward export exists; no online training loop.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1261,7 +1279,7 @@ def test_validate_paper_manifest_reports_static_guidance_without_execution_bound
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Modular search inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Static prompt guidance exists for generate/improve/perturb operations.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1281,7 +1299,7 @@ def test_validate_paper_manifest_allows_static_guidance_execution_boundary(tmp_p
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Modular search inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Static prompt guidance exists for generate/improve/perturb operations with false execution/enforcement flags.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1299,7 +1317,7 @@ def test_validate_paper_manifest_reports_not_implemented_status_without_missing_
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Framework inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Not implemented as described: generic local mutation modes are present.",
     )
     status_readme.write_text(text, encoding="utf-8")
@@ -1319,7 +1337,7 @@ def test_validate_paper_manifest_allows_not_implemented_status_with_missing_boun
     text = status_readme.read_text(encoding="utf-8")
     text = text.replace("Primary specification target", "Framework inspiration")
     text = text.replace(
-        "Partially implemented: fixture status.",
+        PARTIAL_FIXTURE_STATUS,
         "Not implemented as described: generic local mutation modes are present, but no framework lifecycle database.",
     )
     status_readme.write_text(text, encoding="utf-8")

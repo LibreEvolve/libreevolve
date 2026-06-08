@@ -4379,3 +4379,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     ACE/Meta-Harness applicability status, code/artifact availability if any,
     and README/ROADMAP wording that treats FlashEvolve as missing paper
     evidence rather than implemented LibreEvolve support.
+
+- [ ] Track evolutionary-agent trace-diagnostics paper evidence.
+  - Paper/source evidence: arXiv `2605.20086`, submitted May 25, 2026, is
+    titled `What Do Evolutionary Coding Agents Evolve?`. Its abstract says
+    aggregate benchmark scores hide how evolutionary coding agents improve
+    programs, whether improvements reflect structural innovation or
+    overfitting, and how search behavior changes across tasks. It introduces
+    EvoTrace for annotation of edit types, dependencies, and fitness
+    trajectories, and EvoReplay for interventions on search traces, reporting
+    recurring cycling and overfitting, task-dependent constant tuning versus
+    new logic, and sensitivity to population structure and prompt content
+    across AlphaEvolve-style agents such as AlphaEvolve, OpenEvolve, and
+    FunSearch.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.20086`. Existing rows cover AlphaEvolve, benchmark/report
+    contracts, prompt/history artifacts, archive events, async orchestration,
+    context memory, adaptive search, and cost-aware routing, but not
+    mechanistic trace annotation, replay interventions, cycling/overfitting
+    diagnostics, structural-innovation labels, or prompt/population
+    sensitivity evidence.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.20086`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve run artifacts, EvoTrace edit-type
+    taxonomy, dependency extraction, fitness-trajectory labels,
+    EvoReplay-intervention schema, cycling and overfitting diagnostics,
+    constant-tuning versus new-logic classification, prompt/population
+    sensitivity metadata, benchmark/task taxonomy, baseline-agent identities,
+    code/artifact availability if any, and README/ROADMAP wording that treats
+    mechanistic trace diagnostics as missing paper evidence rather than
+    implemented LibreEvolve support.

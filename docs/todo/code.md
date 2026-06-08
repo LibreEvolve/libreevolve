@@ -4800,3 +4800,34 @@ Primary evidence:
     identities, ACE/Meta-Harness applicability boundaries, and README/ROADMAP
     wording that keeps FlashEvolve-style async orchestration as missing
     evidence until local implementation and reports exist.
+
+- [ ] Add evolutionary-agent trace-diagnostics source boundary.
+  - Spec evidence: arXiv `2605.20086`, `What Do Evolutionary Coding Agents
+    Evolve?`, was submitted May 25, 2026. Its abstract argues that aggregate
+    benchmark scores hide how evolutionary coding agents improve programs,
+    whether gains come from structural innovation or overfitting, and how
+    search behavior changes across tasks. It introduces EvoTrace to annotate
+    edit types, dependency structures, and fitness trajectories, and
+    EvoReplay to intervene on search traces. The paper reports recurring
+    cycling and overfitting, task-dependent division between constant-tuning
+    and genuinely new logic, and sensitivity to population structure and
+    prompt content across AlphaEvolve-style agents such as AlphaEvolve,
+    OpenEvolve, and FunSearch.
+  - Current evidence: LibreEvolve records history JSONL, archive events,
+    prompt history, evaluator artifacts, accepted/rejected programs, and best
+    programs, but it does not annotate edit mechanisms or provide replayable
+    intervention traces. There is no edit-type taxonomy, dependency graph,
+    fitness-trajectory classifier, cycling detector, overfitting-vs-innovation
+    label, constant-tuning/new-logic split, prompt-content sensitivity report,
+    population-structure ablation, or EvoReplay-style counterfactual
+    intervention tool.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.20086`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve run-history artifacts, edit-type
+    annotation schema, dependency-structure extraction, fitness-trajectory
+    records, cycling and overfitting diagnostics, structural-innovation
+    labels, population/prompt ablation metadata, replay-intervention API,
+    counterfactual outcome records, benchmark/task taxonomy, baseline-agent
+    identities, and README/ROADMAP wording that keeps mechanistic discovery
+    claims source-scoped until local trace diagnostics and replay reports
+    exist.

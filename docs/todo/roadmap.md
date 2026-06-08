@@ -3478,3 +3478,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     baseline identities, ACE/Meta-Harness applicability boundaries, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local FlashEvolve-style async orchestration support.
+
+- [ ] Add evolutionary-agent trace-diagnostics gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.20086`, submitted May 25, 2026, asks what
+    evolutionary coding agents actually evolve. Its abstract says final
+    benchmark scores alone cannot reveal whether gains reflect structural
+    innovation, overfitting, cycling, or task-specific constant tuning. It
+    introduces EvoTrace for edit-type, dependency, and fitness-trajectory
+    annotation plus EvoReplay for interventions on search traces, and studies
+    AlphaEvolve-style agents including AlphaEvolve, OpenEvolve, and FunSearch.
+  - Current evidence: ROADMAP tracks run manifests, history streams, archive
+    events, prompt history, benchmark-report contracts, and many source gates.
+    It does not mention `2605.20086`, define trace-diagnostic gates, or
+    require evidence before promoting LibreEvolve outputs as genuine
+    algorithmic discoveries rather than constant tuning, benchmark overfit, or
+    cycling artifacts.
+  - Required result: add roadmap gates for `2605.20086`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, edit-type
+    annotation schema, dependency-graph extraction, fitness-trajectory
+    classifiers, cycling/overfitting diagnostics, structural-innovation
+    labels, prompt and population ablation records, replay-intervention tool
+    support, counterfactual outcome reports, task/baseline-agent taxonomy, and
+    a background-only or benchmark-fixture status rule so roadmap claims about
+    discovery quality do not outpace local EvoTrace/EvoReplay-style evidence.

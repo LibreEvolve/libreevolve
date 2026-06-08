@@ -187,21 +187,31 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Requirement: AlphaEvolve's task specification is a coherent user-provided
     input bundle: initial program/components to evolve, evaluation code,
     prompt template and configuration, choice of existing or custom LLMs, and
-    optional background knowledge.
+    optional background knowledge. In the local PDF, Figure 2 on page 4 labels
+    those inputs and its caption says the user provides an initial program,
+    evaluation code, and optional configurations before the evolutionary loop.
   - Partial status: LibreEvolve records problem/source provenance, seed source
     rows, evaluator source hashes, backend specs, prompt variants,
-    redacted/hash-backed effective config, and context-source diagnostics.
+    redacted/hash-backed effective config, and context-source diagnostics. The
+    current startup manifest persists these across `config`, `problem`,
+    `policies`, and `provenance`: prompt variants/metadata, backends and
+    role-backend routes, objective schema, context sources/policy, evaluator
+    sources, seed sources/policy, candidate-language policy, and source/plugin/
+    environment provenance.
   - Current gap: paper-facing evidence does not yet assemble those records
     into one validated task-spec artifact with AlphaEvolve field names,
     source hashes, redaction status, field presence/omission diagnostics, and
     links from each input field to the run, prompt, evaluator, and candidate
-    evidence it controls.
+    evidence it controls. It also does not mark which AlphaEvolve task-spec
+    fields are unsupported or represented only by local divergence records such
+    as the Python-primary candidate-language policy.
   - Required result: add paper-facing task-spec bundle records with input-field
     ids for initial code/workspace, evolvable spans, evaluator code,
     prompt-template/config, LLM choices, and optional background knowledge;
-    include source hashes/redaction, unsupported/missing-field diagnostics, and
-    README/ROADMAP wording that separates a coherent AlphaEvolve task-spec
-    artifact from scattered local manifest provenance.
+    include source hashes/redaction, unsupported/missing-field diagnostics,
+    artifact cross-links, validation that each id resolves to current manifest
+    evidence, and README/ROADMAP wording that separates a coherent
+    AlphaEvolve task-spec artifact from scattered local manifest provenance.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

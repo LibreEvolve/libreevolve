@@ -1347,6 +1347,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     coverage, intentional matched-result absences, verifier-code availability,
     and absence of the AlphaEvolve runtime code.
 
+- [ ] Keep README companion-source rights wording scoped until repository
+      license and disclaimer metadata exists.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
+    Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
+    licensing for other materials, an as-is disclaimer, and a statement that
+    the repository is not an official Google product.
+  - Current evidence: README can describe LibreEvolve's own MIT license, the
+    AlphaEvolve PDF source-rights gap, and companion Colab source gaps. It does
+    not document the companion repository's dual license, artifact-type license
+    mapping, disclaimer, or non-official-product boundary.
+  - Required result: when companion-repository rights metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    separates source-PDF rights, companion software/materials licensing,
+    generated LibreEvolve artifact licensing, and local project ownership or
+    endorsement boundaries.
+
 - [ ] Keep README paper-cache wording scoped until AlphaEvolve PDF version
       provenance is tracked.
   - Spec evidence: the local AlphaEvolve PDF header says

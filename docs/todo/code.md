@@ -2211,6 +2211,26 @@ Primary evidence:
     boundary, license/source notes, and README/ROADMAP wording that separates
     paper result coverage from the intentionally filtered companion notebook.
 
+- [ ] Add companion-result repository rights and disclaimer provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README states
+    `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,
+    licenses other materials under CC-BY 4.0, includes an as-is disclaimer, and
+    says the repository is not an official Google product.
+  - Current evidence: active TODOs track the cached AlphaEvolve PDF rights and
+    require generic license/source notes for companion artifacts. They do not
+    preserve the companion repository's dual software/materials license split,
+    rights holder, disclaimer text/source location, or the non-official-product
+    boundary as separate source-use evidence. Without that, generated
+    notebooks, copied verifier code, figures, or construction data could be
+    treated as if they inherit either the paper PDF rights or LibreEvolve's MIT
+    license.
+  - Required result: add source-rights metadata for companion repositories:
+    repository URL/ref, rights holder/year, software license, non-software
+    materials license, disclaimer/as-is text, official-product disclaimer,
+    artifact-type-to-license mapping, allowed reuse/reproduction policy, and
+    README/ROADMAP wording that distinguishes companion-source licensing from
+    the cached PDF rights and the local project license.
+
 - [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and method details for the constructive-math problems would be

@@ -2079,6 +2079,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     coverage, matched-result omissions, verifier-code availability, and
     non-availability of AlphaEvolve runtime code in the companion repository.
 
+- [ ] Keep companion-source rights roadmap wording scoped until repository
+      license and disclaimer metadata exists.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
+    Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
+    licensing for other materials, an as-is disclaimer, and a statement that
+    the repository is not an official Google product.
+  - Current evidence: roadmap/README/paper-index wording can cite LibreEvolve's
+    MIT license, source-PDF rights gaps, and companion Colab source tracking.
+    It does not require the companion repository's dual license, artifact-type
+    license mapping, disclaimer, or non-official-product boundary.
+  - Required result: when companion-repository rights metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap language
+    separates source-PDF rights, companion software/materials licensing,
+    generated LibreEvolve artifacts, and local ownership or endorsement
+    boundaries.
+
 - [ ] Keep paper-source roadmap wording scoped until AlphaEvolve PDF version
       provenance is pinned.
   - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as

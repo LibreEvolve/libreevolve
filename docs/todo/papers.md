@@ -3010,6 +3010,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     distinguish paper-reported matched results from companion-notebook
     improved-result artifacts.
 
+- [ ] Track companion-result repository rights and disclaimer evidence.
+  - Paper evidence: the `google-deepmind/alphaevolve_results` README states
+    `Copyright 2025 Google LLC`, licenses all software under Apache License
+    2.0, licenses all other materials under Creative Commons Attribution 4.0
+    International, includes an as-is warranty disclaimer, and says the
+    repository is not an official Google product.
+  - Current gap: paper-facing source-rights TODOs cover the cached
+    AlphaEvolve PDF, and companion-artifact TODOs mention generic
+    license/source notes. They do not require a source-rights row for the
+    result repository itself, nor artifact-type license mapping for notebook
+    code, verifier software, construction data, figures, or other materials.
+  - Required result: add companion-repository rights evidence with repository
+    URL/ref/commit, rights holder/year, software license, materials license,
+    source line or README span, as-is disclaimer, non-official-product
+    disclaimer, artifact-type license mapping, reuse/reproduction policy, and
+    README/ROADMAP checks that separate companion repository rights from
+    source-PDF rights and LibreEvolve's repository license.
+
 - [ ] Track AlphaEvolve source-PDF arXiv version provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
     audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.

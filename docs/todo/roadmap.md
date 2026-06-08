@@ -4243,6 +4243,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     local trades and sign-reversing involutions, and Rota's Basis Conjecture
     through local exchange policies. It reports experimental setups, scoring
     protocols, and outcomes that suggest conjectures, not completed proofs.
+    The body defines fixed mathematical harnesses, short Python evolvable
+    blocks, random symmetry-scramble robust scoring, hard constraints plus soft
+    progress, hard-negative replay, and appendix evolved-code/Gemini-summary
+    artifacts across the three case studies.
   - Current evidence: ROADMAP tracks broad constructive-math and benchmark
     fixture gaps plus selected source-specific result papers. It does not
     promote `2603.06692` beyond potential-future-benchmark status, define a
@@ -4250,7 +4254,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     traces, provide graph reconstruction, Latin-square trade, or Rota
     basis-exchange fixtures, preserve scoring protocols, or distinguish
     AlphaEvolve-suggested conjectures from verified/proved mathematical
-    results.
+    results. It also lacks promotion gates for the paper's exact result
+    surfaces: bipartite `1420/1420` and planar `896/896` reconstruction
+    ledgers, Alon-Tarsi validity/involution/sign-flip/locality/isotopy tables,
+    Rota rank-5/rank-7/variable-rank `F2` circuit-rich pool benchmarks,
+    appendix evolved-code traceability, AI-summary provenance, and explicit
+    evaluator-hardening records for WL-surrogate-to-exact-isomorphism
+    transitions.
   - Required result: add roadmap gates for `2603.06692`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     local-correction candidate schema, finite-step trace artifacts,
@@ -4261,7 +4271,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     summaries, conjecture/proof-status fields, independent checker hooks, and
     a background-only or benchmark-fixture status rule so roadmap claims do
     not outpace local AlphaEvolve-style local-correction combinatorics
-    support.
+    support. Roadmap promotion should additionally require Conjectures 4-11
+    and Tables 1-6 to map to local benchmark schemas; exact graph deck
+    equality, Latin-square involution/sign, and Rota circuit-oracle validators;
+    result rows for experiment IDs `0_9751`, `0_9774`, and `0_7176`; majority
+    rollout and symmetry-scramble robustness reports; appendix-code artifact
+    hashes; and documentation gates that keep AI-generated summaries and
+    experimental conjectures separate from proof-grade claims.
 
 - [ ] Add AlphaEvolve bilateral-trade mechanism-design gates before roadmap
       promotion.

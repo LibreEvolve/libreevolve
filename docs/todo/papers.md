@@ -5304,14 +5304,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     involutions built from local trades, and Rota's Basis Conjecture via local
     exchange policies on collections of bases. It describes experimental
     setups, scoring protocols, and search outcomes leading to concrete
-    conjectures, while explicitly not claiming proofs.
+    conjectures, while explicitly not claiming proofs. Section 2 defines the
+    paper's AlphaEvolve setup as fixed mathematical harnesses plus short
+    Python evolvable blocks, hard validity constraints, shaped soft progress
+    scores, robust aggregation over random symmetry actions, and
+    Gemini-generated summaries of 15-24 hour runs with more than 5000
+    candidate results. The graph section reports `1420/1420` bipartite and
+    `896/896` planar reconstructions under worst-of-five scrambles; the
+    Alon-Tarsi section reports Tables 1-3 for orders `8,10,12,14,26`; and the
+    Rota section reports Tables 4-6 for circuit-rich `F2` rank-5, rank-7, and
+    variable-rank `5,7,9,11,13` benchmarks.
   - Current gap: `papers/README.md` lists `2603.06692` as `Not implemented;
     potential future benchmark`, and the active TODO coverage does not yet
     track this paper-specific evidence. Broad constructive-math TODOs do not
     capture local-correction certificate schemas, graph reconstruction from
     vertex-deleted subgraphs, Latin-square local trade/involution evidence,
     Rota basis-exchange policies, scoring protocols, explicit algorithm
-    outputs, or proof-status boundaries for generated conjectures.
+    outputs, or proof-status boundaries for generated conjectures. They also
+    omit the paper's tested-regime details: bipartite matrix decks with
+    independently permuted row/column cards, planar connected biconnected
+    minimum-degree-at-least-3 non-maximal graph buckets, exact deck equality
+    hardening after Weisfeiler-Lehman surrogate risk, Latin-square residual
+    bias and isotopy anti-overfitting metrics, Rota insert/repair move
+    formalism, circuit-oracle limitations, majority-rollout success, and
+    appendix evolved-code/Gemini-summary provenance.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2603.06692`: title/author/arXiv version/date/PDF digest, source license,
     code/artifact URL/status, relation to AlphaEvolve and LibreEvolve
@@ -5322,7 +5338,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     proof-status and traditional-analysis handoff fields, checker/verifier
     hooks, reproducibility status, and README/ROADMAP wording that treats
     local-correction combinatorics as missing paper evidence rather than
-    implemented LibreEvolve support.
+    implemented LibreEvolve support. Paper evidence should also preserve
+    Conjectures 4-11, Tables 1-6, benchmark sizes and success metrics,
+    AlphaEvolve experiment IDs where reported (`0_9751`, `0_9774`, `0_7176`),
+    graph exact-isomorphism/canonical-label verification, Latin trade support
+    and isotopy-stability metrics, Rota fitness weights and circuit-rich pool
+    definitions, appendix evolved-code artifact status, AI-summary/AI-use
+    declaration provenance, and caveats that these are experimental
+    conjecture-generating results rather than proof certificates.
 
 - [ ] Track AlphaEvolve bilateral-trade lower-bound paper evidence.
   - Paper/source evidence: arXiv `2603.08679`, submitted March 9, 2026, is

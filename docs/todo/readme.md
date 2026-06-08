@@ -3813,14 +3813,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     engine for finite correcting-step certificates in graph reconstruction,
     Latin-square Alon-Tarsi parity, and Rota's Basis Conjecture. Its abstract
     says the paper produces explicit algorithms and structural patterns for
-    later mathematical analysis, and does not claim proofs.
+    later mathematical analysis, and does not claim proofs. The body frames
+    success as fixed mathematical harnesses evaluating short Python evolvable
+    blocks with hard constraints, shaped progress scores, symmetry-scramble
+    robustness, and experimental run summaries; it reports concrete
+    graph-reconstruction, Latin-square, and Rota benchmark tables rather than
+    a general theorem.
   - Current evidence: README documents constructive-math coverage gaps,
     benchmark report contracts, paper-cache status, and smoke fixtures. It
     does not mention `2603.06692`, define local-correction certificate
     candidates, provide graph reconstruction from vertex-deleted subgraphs,
     Latin-square local trade/involution checks, Rota basis-exchange policy
     fixtures, scoring protocol records, conjecture/proof-status fields, or
-    finite correcting-step trace artifacts.
+    finite correcting-step trace artifacts. README also lacks the paper's
+    source-specific boundaries: exact deck-agreement checks for bipartite and
+    planar reconstructions, Latin-square validity/involution/sign-flip/
+    locality/residual-bias/isotopy metrics for orders `8,10,12,14,26`, Rota
+    rank/pool/rollout/fitness tables over `F2`, appendix evolved-code
+    provenance, and AI-generated summary/AI-use caveats.
   - Required result: if README mentions Berczi local-correction
     combinatorics, graph reconstruction, vertex-deleted subgraphs,
     Alon-Tarsi parity, Latin-square local trades, sign-reversing involutions,
@@ -3832,6 +3842,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     generated algorithms, checker outputs, conjecture/proof-status records,
     and benchmark reports. Avoid implying LibreEvolve proves or implements
     AlphaEvolve-style local-correction combinatorics without those artifacts.
+    README wording should distinguish the reported `1420/1420` and `896/896`
+    reconstruction results, Alon-Tarsi Tables 1-3, and Rota Tables 4-6 from
+    local LibreEvolve capabilities unless executable harnesses, trace
+    artifacts, appendix-code hashes, verifier outputs, robustness reports, and
+    explicit conjecture/proof-status ledgers exist locally.
 
 - [ ] Keep README AlphaEvolve bilateral-trade claims absent or source-scoped
       until mechanism-design benchmark evidence exists.

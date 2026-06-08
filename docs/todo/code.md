@@ -5730,7 +5730,15 @@ Primary evidence:
     trades, and Rota's Basis Conjecture via local exchange policies on
     collections of bases. The abstract frames the outputs as explicit
     algorithms and structural patterns that may support later traditional
-    analysis, not as proofs.
+    analysis, not as proofs. The paper body fixes the AlphaEvolve object as a
+    short Python evolvable block evaluated by an immutable mathematical
+    harness, with hard validity constraints, soft progress measures,
+    worst-case or near-worst-case scoring over random symmetry scrambles, and
+    hard-negative replay. It reports concrete graph-reconstruction harnesses
+    for bipartite matrix decks and planar biconnected non-maximal graphs,
+    Alon-Tarsi Latin-square involution harnesses over orders
+    `8,10,12,14,26`, and Rota local-exchange policy harnesses over `F2` ranks
+    `5`, `7`, and `{5,7,9,11,13}`.
   - Current evidence: `papers/README.md` lists `2603.06692` only as
     `Not implemented; potential future benchmark`. LibreEvolve has no
     first-class code TODO for this source, no local-correction certificate
@@ -5738,7 +5746,15 @@ Primary evidence:
     trade/involution verifier, no matroid/basis-exchange evaluator for Rota's
     Basis Conjecture, no scoring-protocol metadata for these case studies, no
     outcome/conjecture ledger that separates explicit algorithms from proofs,
-    and no artifact policy for finite correcting-step traces.
+    and no artifact policy for finite correcting-step traces. It also lacks
+    deck-agreement scoring with exact isomorphism/canonical-label checks,
+    bipartite row/column-deletion card schemas, neighbor-degree profile and
+    two-deletion compatibility records, min-cost-flow reconstruction evidence,
+    planar minimum-degree-neighborhood enumeration with exact deck equality,
+    Latin-square sign/involution/locality/isotopy-stress metrics, Rota
+    assignment-matrix move traces, circuit-oracle metadata, majority-rollout
+    robustness, and preservation of the paper's Gemini-generated summary and
+    AI-use caveats.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2603.06692`: arXiv id/version/date/PDF hash, author, source license,
     code/artifact availability, relation to AlphaEvolve and LibreEvolve
@@ -5751,7 +5767,16 @@ Primary evidence:
     conjecture/proof-status fields, independent checker hooks, and README/
     ROADMAP wording that keeps local-correction combinatorics as missing
     evidence and avoids treating AlphaEvolve-generated conjectures as proved
-    results.
+    results. The implementation boundary should additionally require
+    source-specific result ledgers for `1420/1420` bipartite reconstruction
+    and `896/896` planar reconstruction under worst-of-five scrambles,
+    Conjectures 4 and 5 with their tested-regime caveats, Alon-Tarsi Tables
+    1-3 with validity/involution/sign-flip/non-identity/residual-bias/locality
+    metrics, Conjectures 6-8 for stable odd-cycle trades, Rota Tables 4-6 with
+    rank, pool, step-limit, instance, rollout, weight, fitness, and success
+    fields, Conjectures 9-11 for circuit-rich `F2` pools, appendix evolved-code
+    artifact hashes, and explicit proof-boundary fields marking these as
+    experimental algorithms and conjectures rather than verified theorems.
 
 - [ ] Add AlphaEvolve bilateral-trade mechanism-design boundary.
   - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random

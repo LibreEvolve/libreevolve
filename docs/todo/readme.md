@@ -332,12 +332,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       feedback provenance exists.
   - Spec evidence: AlphaEvolve's Acknowledgements say early users and
     collaborators supplied diverse use cases and insightful feedback that
-    shaped the system into a more robust and versatile tool.
+    shaped the system into a more robust and versatile tool. This external
+    use-case feedback is distinct from candidate-evaluation feedback,
+    prompt-visible evaluator feedback, and configured LLM feedback graders.
   - Current evidence: README can describe implemented surfaces, local examples,
     paper/status rows, expert formulation gaps, and domain-owner review gaps.
     It does not document feedback-provenance records for early-user or
     collaborator use cases, affected workflow areas, resulting changes,
-    validation outcomes, or privacy/redaction policy.
+    validation outcomes, or privacy/redaction policy. README documents
+    `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages, feedback
+    retention, feedback indexes, and feedback-sourced metrics, but those are
+    in-run reviewer/telemetry records rather than external
+    collaborator-feedback evidence.
   - Required result: when use-case feedback provenance lands, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes local feature breadth and smoke examples from

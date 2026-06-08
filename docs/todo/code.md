@@ -337,14 +337,20 @@ Primary evidence:
     collaborators for diverse use cases and insightful feedback that shaped
     the system into a more robust and versatile tool. That is a
     use-case-feedback evidence claim, distinct from expert mathematical
-    problem formulation and from production-domain owner signoff.
+    problem formulation, in-loop evaluator/LLM feedback, and production-domain
+    owner signoff.
   - Current evidence: LibreEvolve records problem/source provenance, local
     context sources, benchmark status rows, systems owner/reviewer TODOs, and
     expert formulation TODOs. It does not define a report schema that records
     early-user or collaborator feedback events, use-case taxonomy, affected
     feature or benchmark area, resulting product/code/documentation changes,
     validation evidence, privacy/redaction policy, or links from feedback to
-    robustness or versatility claims.
+    robustness or versatility claims. Code evidence: `llm_feedback` graders are
+    configured candidate-evaluation reviewers recorded under
+    `evaluation.metadata.llm_feedback`, `llm_feedback:<name>` stages,
+    feedback indexes, retention modes, and scheduler reward telemetry; those
+    records do not model external users, collaborator cohorts, feedback-event
+    lineage, or feedback-to-change review.
   - Required result: add feedback-provenance metadata for use-case cohorts,
     collaborator role labels, feedback event IDs, affected workflow areas,
     change/artifact links, validation outcomes, and redaction policy before

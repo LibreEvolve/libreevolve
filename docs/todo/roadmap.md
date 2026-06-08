@@ -398,13 +398,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       feedback provenance exists.
   - Spec evidence: AlphaEvolve's Acknowledgements say early users and
     collaborators supplied diverse use cases and insightful feedback that
-    shaped AlphaEvolve into a more robust and versatile tool.
+    shaped AlphaEvolve into a more robust and versatile tool. This is a
+    product/process feedback claim, not the same as evaluator output,
+    archive-feedback context, or LLM-grader feedback inside the search loop.
   - Current evidence: ROADMAP and README/code evidence track implemented
     surfaces, benchmark examples, expert formulation gaps, and systems
     owner/reviewer gaps. They do not require roadmap milestones or report
     schemas for early-user/collaborator feedback event IDs, use-case taxonomy,
     affected workflow areas, resulting changes, validation outcomes, or
-    privacy/redaction policy.
+    privacy/redaction policy. Current roadmap and code surfaces cover
+    candidate feedback, feedback-sourced objective metrics, and LLM feedback
+    calibration artifacts, but not external feedback cohorts or
+    feedback-to-change provenance for robustness claims.
   - Required result: when feedback-provenance metadata or report evidence
     lands, update roadmap, README, papers index, and code/paper TODO entries
     together so roadmap wording neither underclaims local breadth nor

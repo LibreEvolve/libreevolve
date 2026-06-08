@@ -3436,6 +3436,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve matrix runs as faithful to AlphaEvolve's Figure 4/Figure 9
     tensor-decomposition search workflow.
 
+- [ ] Preserve the Strassen baseline bundle as pinned paper evidence.
+  - Paper evidence: AlphaEvolve's matrix section and Appendix A publish exact
+    matrix-multiplication algorithms and companion artifacts as auditable
+    result evidence. A local baseline helper is useful only if the generated
+    algorithm, certificate, report, inventory, and notebook are durable enough
+    for paper-index readers to inspect or reproduce from a fresh checkout.
+  - Current gap: `write_strassen_2x2_publication_bundle()` is tested and can
+    emit a checked `mm_2x2x2` Strassen bundle under a temporary or
+    caller-provided root, but the repository does not contain committed
+    `matrix/mm_2x2x2/` output files and the paper-manifest gate does not
+    regenerate or validate that bundle. `papers/README.md` can describe the
+    helper, but the paper index has no pinned artifact digest set proving the
+    helper-generated baseline files are present, reproducible, or unchanged.
+  - Required result: add paper-facing Strassen baseline artifact provenance:
+    generation command, output root, report path, algorithm/certificate/
+    notebook/inventory paths, expected SHA-256 hashes and byte counts,
+    validation command, and README/ROADMAP wording that distinguishes
+    helper-generated evidence from committed or CI-regenerated artifacts. This
+    should remain scoped to the one known baseline and not imply Appendix A
+    suite discovery.
+
 - [ ] Track Appendix A Figure 9a-9c magnified matrix-diff exhibits as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A says Figures 9a

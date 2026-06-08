@@ -2670,6 +2670,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     target/SOTA baseline, seed/budget policy, and evidence that the fixture is
     not merely a smoke example or predeclared static artifact bundle.
 
+- [ ] Keep Strassen baseline roadmap wording scoped until helper output is
+      pinned as a paper artifact.
+  - Spec evidence: a roadmap item that cites a checked matrix baseline should
+    distinguish implementation/test coverage for a generator helper from
+    durable paper-evidence artifacts available in a checkout or CI artifact
+    bundle.
+  - Current evidence: roadmap/README/paper-index wording can cite the
+    `write_strassen_2x2_publication_bundle()` helper and
+    `validate_matrix_publication_bundle()` tests, but `rg --files` shows no
+    committed `matrix/mm_2x2x2/` bundle outputs in the current repository, and
+    the standard paper-manifest/docs validation path does not regenerate or
+    verify those generated files.
+  - Required result: once the Strassen baseline output is committed, generated
+    by a documented command, or produced as a CI artifact, update ROADMAP,
+    README, papers index, and code/paper TODOs with the output-root policy,
+    artifact paths, hash/byte-count expectations, validation command, and
+    wording that separates helper-generated baseline evidence from a non-toy
+    executed benchmark or Appendix A suite discovery.
+
 - [ ] Keep heuristic-search benchmark roadmap wording scoped to real
       incumbent-construction handoff support.
   - Spec evidence: AlphaEvolve Section 3.2 mathematical applications evolved

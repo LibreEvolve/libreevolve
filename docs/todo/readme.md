@@ -682,6 +682,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README neither underclaims the checked Strassen baseline nor overclaims
     AlphaEvolve-comparable discovery coverage.
 
+- [ ] Keep README Strassen-baseline wording scoped until generated artifacts
+      are pinned or routinely regenerated.
+  - Spec evidence: README-facing paper evidence should distinguish a tested
+    helper function from durable paper artifacts that a reader can inspect or
+    reproduce on a fresh checkout.
+  - Current evidence: README says `write_strassen_2x2_publication_bundle()`
+    emits a concrete checked Strassen bundle with canonical algorithm,
+    certificate, notebook, report, and artifact-inventory files. The helper
+    and validator are covered by focused tests, but the checkout does not
+    include `matrix/mm_2x2x2/` output files, and the documented
+    paper-manifest command does not regenerate or validate the helper output.
+  - Required result: when the Strassen baseline bundle is committed, generated
+    by a documented artifact command, or wired into CI/paper-manifest
+    validation, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README states whether the baseline is a helper-generated
+    artifact, a checked-in artifact, or a routinely regenerated artifact with
+    stable hash evidence.
+
 - [ ] Keep README Appendix A best-known-rank wording scoped until baseline
       citation provenance exists.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets using a

@@ -471,7 +471,11 @@ Primary evidence:
   materialization diagnostics complete for future edge cases.
   - Spec evidence: AlphaEvolve operates on task-defined program artifacts and
     codebases; invalid generated workspaces should produce inspectable
-    evaluator feedback rather than opaque local filesystem exceptions.
+    evaluator feedback rather than opaque local filesystem exceptions. The
+    local AlphaEvolve PDF says the API supports evolving multiple components
+    across a codebase on page 4, asks the model to improve the provided
+    codebase on page 6, describes larger-codebase changes as diff-block
+    sequences on page 7, and notes entire-codebase evolution on pages 18-19.
   - Current evidence: `CandidateWorkspace.materialize()` now raises
     `CandidateMaterializationError` for materialized candidate-path collisions,
     linked target roots or ancestors, linked nested entries, file target roots,
@@ -490,7 +494,9 @@ Primary evidence:
     replacement. Static `source_copy_path` members are checked at
     materialization time for links, byte count, and SHA-256, but their source
     identity is still a local path label rather than a portable manifest-rooted
-    artifact reference.
+    artifact reference. This is strong local file-workspace coverage, not a
+    complete future policy for arbitrary languages, build systems, generated
+    dependency graphs, or non-local runner workspace mounts.
   - Required result: extend topology diagnostics for future topology surfaces
     such as bulk directory operations or language/build-runner generated
     artifacts; add a portable source-root/release-artifact policy for copied

@@ -441,7 +441,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Spec evidence: AlphaEvolve-style codebase evolution should leave stable,
     inspectable evaluator feedback for generated invalid artifacts, especially
     as task-defined program artifacts and workspace surfaces grow beyond the
-    current local file-set prototype.
+    current local file-set prototype. The AlphaEvolve PDF describes
+    multi-component codebase evolution, larger-codebase diff-block sequences,
+    and entire-codebase evolution, so README wording needs to separate current
+    local file-workspace support from broader codebase parity.
   - Current evidence: README documents that collision checks are still
     incomplete while also describing rejected normalized path collisions,
     case-folded host-path materialization preflights, structured
@@ -450,7 +453,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     materialization, link/junction rejection, static source-copy verification,
     and workspace topology command prevalidation for duplicate sources/targets,
     edit/delete/move conflicts, chained operations, host/case-folded target
-    collisions, duplicate `PRIMARY` commands, and non-empty command bodies.
+    collisions, duplicate `PRIMARY` commands, and non-empty command bodies. It
+    also documents prompt controls for selecting and capping
+    materialization-error fields. These are current local-workspace
+    diagnostics, not proof of arbitrary-language, build-runner,
+    dependency-graph, or remote/container workspace parity.
   - Required result: when future topology surfaces such as bulk directory
     operations, language/build-runner generated artifacts, external
     materialization paths, or richer artifact runners land, update README,

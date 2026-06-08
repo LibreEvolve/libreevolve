@@ -707,7 +707,10 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: AlphaEvolve-style tasks mutate program artifacts under
     automated evaluator feedback; generated invalid artifacts should leave
-    stable, inspectable diagnostics that can steer future proposals.
+    stable, inspectable diagnostics that can steer future proposals. The local
+    PDF describes multi-component codebase evolution on page 4,
+    larger-codebase diff-block sequences on page 7, and entire-codebase
+    evolution on pages 18-19.
   - Partial status: typed `CandidateMaterializationError` records now cover
     materialized candidate-path collisions, linked target roots or ancestors,
     linked nested root entries, file target roots, parent/temp root creation,
@@ -726,7 +729,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     identity beyond local `source_copy_path` labels, and future materialization
     filesystem paths must preserve the stable reason/path diagnostic contract
     before LibreEvolve can claim robust codebase-scale invalid-artifact
-    feedback.
+    feedback across arbitrary-language runners, build-system outputs,
+    dependency manifests, or remote/containerized execution roots.
 
 - [ ] Track Table 1 code-scale benchmark evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 and Section 2.1.

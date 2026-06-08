@@ -2388,6 +2388,15 @@ literal program text, not block boundaries. If Python tokenization fails while
 raw evolve-block marker lines are present, marker validation fails closed
 instead of treating the file as unmarked. Problem loading prevalidates marker
 pairing, nesting, names, and duplicate names for seed files before evaluation.
+Completed manifests include
+`runtime.history.marker_spelling_provenance_report`, which records the
+AlphaEvolve Section 2.1 canonical marker spelling and the Figure 3 extracted
+space variant `# EVOLVE-BLOCK START`, plus local parser probes. The current
+compatibility decision is canonical hyphenated markers only: the space variant
+is documented as a source variant or extraction uncertainty, not supported
+syntax, and paired with `# EVOLVE-BLOCK-END` it fails as `orphan_end`. Source
+screenshots/exact excerpt hashes and final OCR-versus-typo classification
+remain open.
 Evolve-block skeleton preservation is currently supported only for `.py` files
 using Python `# EVOLVE-BLOCK-*` comment markers. Non-Python workspace files can
 still be evolved as whole files, but marker-like declarations such as

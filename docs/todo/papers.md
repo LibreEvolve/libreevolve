@@ -459,25 +459,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     distinguishes runtime evolve-block inventory from AlphaEvolve-style
     minimal-change integration evidence.
 
-- [ ] Track Figure 3 evolve-block marker spelling source variants.
+- [ ] Extend Figure 3 evolve-block marker spelling source variants with source
+      artifacts and final classification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.1 names the marker
     comments as `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF
     page 4, while PDF text extraction from Figure 3(a) on page 6 shows one
     opening marker as `# EVOLVE-BLOCK START` and another as
     `# EVOLVE-BLOCK-START`.
-  - Current gap: paper/status records can cite local Python marker validation
-    and unsupported marker diagnostics, and the Figure 3 exhibit TODOs require
-    exact excerpt artifacts. They do not require a paper-facing classification
-    of the marker-text variant before docs decide whether it is canonical
-    paper prose, rendered figure text, extraction/OCR uncertainty, or a paper
-    typo. They also do not record the current parser fact that the space
-    variant is unsupported and paired `# EVOLVE-BLOCK-END` makes it fail as
-    `orphan_end`.
-  - Required result: add paper-facing source-location records for each marker
-    spelling, attach source artifact hashes or screenshots, classify the
-    discrepancy, capture the implemented parser/compatibility decision, and
-    keep documentation claims scoped so local parser grammar is not mistaken
-    for full reproduction of every Figure 3 marker rendering.
+  - Partial status: paper/status records can cite local Python marker
+    validation, unsupported marker diagnostics, and the Figure 3 exhibit TODOs
+    require exact excerpt artifacts. Completed manifests now include
+    `runtime.history.marker_spelling_provenance_report`, which records
+    paper-facing source-location records for each marker spelling, parser
+    probes, provisional Figure 3 variant classification, and the current parser
+    fact that the space variant is unsupported and paired
+    `# EVOLVE-BLOCK-END` fails as `orphan_end`.
+  - Current gap: source artifact hashes or screenshots are not attached, exact
+    Figure 3 text artifacts are not generated, and the discrepancy is not
+    finally classified as rendered figure text, extraction/OCR uncertainty, or
+    paper typo.
+  - Required result: attach source artifact hashes or screenshots, finalize the
+    discrepancy classification, add an intentional compatibility mode only if
+    needed, and keep documentation claims scoped so local parser grammar is not
+    mistaken for full reproduction of every Figure 3 marker rendering.
 
 - [ ] Track candidate-abstraction choice and bias evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Discussion.

@@ -5125,6 +5125,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 paper_metric_contract,
             )
         ),
+        "marker_spelling_provenance_report": (
+            _marker_spelling_provenance_report()
+        ),
         "existing_codebase_integration_report": (
             _existing_codebase_integration_report(
                 db.startup_manifest_snapshot(),
@@ -5160,6 +5163,227 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _marker_spelling_provenance_report() -> dict:
+    canonical_probe = _marker_spelling_parser_probe(
+        "# EVOLVE-BLOCK-START solve\nx = 1\n# EVOLVE-BLOCK-END\n"
+    )
+    space_variant_probe = _marker_spelling_parser_probe(
+        "# EVOLVE-BLOCK START solve\nx = 1\n# EVOLVE-BLOCK-END\n"
+    )
+    records = [
+        {
+            "record_id": "alphaevolve_section_2_1_page_4_start",
+            "paper": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 4,
+            "source_location": "Section 2.1 API prose",
+            "marker_text": "# EVOLVE-BLOCK-START",
+            "marker_role": "start",
+            "source_surface": "section_prose",
+            "provisional_classification": "canonical_marker_spelling",
+            "local_parser_probe": canonical_probe,
+            "local_support": "supported",
+            "source_artifact": _marker_source_artifact_placeholder(),
+        },
+        {
+            "record_id": "alphaevolve_section_2_1_page_4_end",
+            "paper": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 4,
+            "source_location": "Section 2.1 API prose",
+            "marker_text": "# EVOLVE-BLOCK-END",
+            "marker_role": "end",
+            "source_surface": "section_prose",
+            "provisional_classification": "canonical_marker_spelling",
+            "local_parser_probe": canonical_probe,
+            "local_support": "supported",
+            "source_artifact": _marker_source_artifact_placeholder(),
+        },
+        {
+            "record_id": "alphaevolve_figure_3a_page_6_space_start",
+            "paper": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 6,
+            "source_location": "Figure 3(a) extracted/rendered marker text",
+            "marker_text": "# EVOLVE-BLOCK START",
+            "marker_role": "start",
+            "source_surface": "figure_text_extraction",
+            "provisional_classification": (
+                "figure_text_variant_or_extraction_uncertainty"
+            ),
+            "local_parser_probe": space_variant_probe,
+            "local_support": "unsupported_current_parser",
+            "source_artifact": _marker_source_artifact_placeholder(),
+        },
+        {
+            "record_id": "alphaevolve_figure_3a_page_6_hyphenated_start",
+            "paper": "2506.13131__AlphaEvolve.pdf",
+            "local_pdf_page": 6,
+            "source_location": "Figure 3(a) extracted/rendered marker text",
+            "marker_text": "# EVOLVE-BLOCK-START",
+            "marker_role": "start",
+            "source_surface": "figure_text_extraction",
+            "provisional_classification": "canonical_marker_spelling_in_figure",
+            "local_parser_probe": canonical_probe,
+            "local_support": "supported",
+            "source_artifact": _marker_source_artifact_placeholder(),
+        },
+    ]
+    report = {
+        "schema": "libreevolve.marker_spelling_provenance_report.v1",
+        "source": "alphaevolve_paper_source_locations_and_local_parser_probe",
+        "canonical_start_marker": "# EVOLVE-BLOCK-START",
+        "canonical_end_marker": "# EVOLVE-BLOCK-END",
+        "record_count": len(records),
+        "records": records,
+        "compatibility_decision": {
+            "policy": "canonical_hyphenated_markers_only",
+            "space_variant_supported": False,
+            "space_variant_probe_error": space_variant_probe["error"],
+            "compatibility_mode": "not_configured",
+            "documentation_policy": (
+                "document Figure 3 space spelling as source variant or extraction "
+                "uncertainty, not as supported parser syntax"
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "source_locations_recorded": True,
+            "parser_probe_recorded": True,
+            "compatibility_decision_recorded": True,
+            "source_artifact_hashes_attached": False,
+            "source_screenshots_attached": False,
+            "final_variant_classification": False,
+            "remaining_gap": [
+                "source_pdf_excerpt_or_screenshot_hashes",
+                "exact_figure_3_text_artifact",
+                "final_classification_as_rendered_text_ocr_or_paper_typo",
+                "optional_space_variant_compatibility_mode_if_intended",
+            ],
+        },
+    }
+    report["validation"] = validate_marker_spelling_provenance_report(report)
+    return report
+
+
+def _marker_spelling_parser_probe(code: str) -> dict:
+    error = validate_evolve_blocks(code)
+    blocks = extract_evolve_blocks(code) if error is None else []
+    return {
+        "sample_sha256": hashlib.sha256(code.encode("utf-8")).hexdigest(),
+        "accepted": error is None,
+        "error": error,
+        "block_count": len(blocks),
+        "block_names": [block.name for block in blocks],
+    }
+
+
+def _marker_source_artifact_placeholder() -> dict:
+    return {
+        "status": "not_attached",
+        "artifact_path": None,
+        "sha256": None,
+        "reason": "paper source screenshot_or_exact_excerpt_not_generated_in_this_report",
+    }
+
+
+def validate_marker_spelling_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.marker_spelling_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "marker spelling provenance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "canonical_start_marker",
+        "canonical_end_marker",
+        "record_count",
+        "records",
+        "compatibility_decision",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"marker spelling report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.marker_spelling_provenance_report.v1":
+        issues.append({"code": "invalid_schema", "message": "unsupported marker spelling report schema"})
+    if report.get("source") != "alphaevolve_paper_source_locations_and_local_parser_probe":
+        issues.append({"code": "invalid_source", "message": "unsupported marker spelling report source"})
+    if report.get("canonical_start_marker") != "# EVOLVE-BLOCK-START":
+        issues.append({"code": "invalid_start_marker", "message": "canonical start marker changed"})
+    if report.get("canonical_end_marker") != "# EVOLVE-BLOCK-END":
+        issues.append({"code": "invalid_end_marker", "message": "canonical end marker changed"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "record_count", len(records), issues)
+    marker_texts = set()
+    for record in records:
+        if not isinstance(record, Mapping):
+            issues.append({"code": "invalid_record", "message": "marker records must be objects"})
+            continue
+        marker_text = record.get("marker_text")
+        if isinstance(marker_text, str):
+            marker_texts.add(marker_text)
+        else:
+            issues.append({"code": "invalid_marker_text", "message": "marker_text must be text"})
+        if record.get("marker_role") not in {"start", "end"}:
+            issues.append({"code": "invalid_marker_role", "message": "marker_role must be start or end"})
+        if not isinstance(record.get("local_pdf_page"), int) or isinstance(record.get("local_pdf_page"), bool):
+            issues.append({"code": "invalid_pdf_page", "message": "local_pdf_page must be an int"})
+        probe = record.get("local_parser_probe")
+        if not isinstance(probe, Mapping):
+            issues.append({"code": "invalid_parser_probe", "message": "local_parser_probe must be an object"})
+        else:
+            if not _is_sha256_hex(probe.get("sample_sha256")):
+                issues.append({"code": "invalid_probe_hash", "message": "parser probe sample hash must be sha256"})
+            if not isinstance(probe.get("accepted"), bool):
+                issues.append({"code": "invalid_probe_accepted", "message": "parser probe accepted must be boolean"})
+            if not isinstance(probe.get("block_count"), int) or isinstance(probe.get("block_count"), bool):
+                issues.append({"code": "invalid_probe_block_count", "message": "parser probe block_count must be int"})
+        artifact = record.get("source_artifact")
+        if not isinstance(artifact, Mapping):
+            issues.append({"code": "invalid_source_artifact", "message": "source_artifact must be an object"})
+        elif artifact.get("status") != "not_attached":
+            issues.append({"code": "source_artifact_overclaim", "message": "source artifact must remain not_attached"})
+    if "# EVOLVE-BLOCK START" not in marker_texts:
+        issues.append({"code": "missing_space_variant", "message": "space variant marker record is required"})
+    if "# EVOLVE-BLOCK-START" not in marker_texts:
+        issues.append({"code": "missing_canonical_variant", "message": "canonical marker record is required"})
+    decision = report.get("compatibility_decision")
+    if not isinstance(decision, Mapping):
+        issues.append({"code": "invalid_compatibility_decision", "message": "compatibility_decision must be an object"})
+    else:
+        if decision.get("policy") != "canonical_hyphenated_markers_only":
+            issues.append({"code": "invalid_compatibility_policy", "message": "compatibility policy must remain canonical-only"})
+        if decision.get("space_variant_supported") is not False:
+            issues.append({"code": "space_variant_support_overclaim", "message": "space variant support must remain false"})
+        if decision.get("space_variant_probe_error") != "orphan_end":
+            issues.append({"code": "invalid_space_variant_probe", "message": "space variant probe should fail as orphan_end"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        if readiness.get("source_artifact_hashes_attached") is not False:
+            issues.append({"code": "source_hash_overclaim", "message": "source artifact hashes must remain false"})
+        if readiness.get("final_variant_classification") is not False:
+            issues.append({"code": "variant_classification_overclaim", "message": "final variant classification must remain false"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "marker spelling report must not claim full source parity"})
+    return {
+        "schema": "libreevolve.marker_spelling_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _existing_codebase_integration_report(

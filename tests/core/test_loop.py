@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
     validate_existing_codebase_integration_report,
+    validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
@@ -3894,6 +3895,61 @@ def test_runtime_history_reports_existing_codebase_marker_inventory():
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
         "integration_parity_overclaim",
+    }
+
+
+def test_runtime_history_reports_marker_spelling_provenance():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(
+        _problem(),
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["marker_spelling_provenance_report"]
+
+    assert report["schema"] == "libreevolve.marker_spelling_provenance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_marker_spelling_provenance_report(report)["ok"] is True
+    assert report["canonical_start_marker"] == "# EVOLVE-BLOCK-START"
+    assert report["canonical_end_marker"] == "# EVOLVE-BLOCK-END"
+    assert report["compatibility_decision"] == {
+        "policy": "canonical_hyphenated_markers_only",
+        "space_variant_supported": False,
+        "space_variant_probe_error": "orphan_end",
+        "compatibility_mode": "not_configured",
+        "documentation_policy": (
+            "document Figure 3 space spelling as source variant or extraction "
+            "uncertainty, not as supported parser syntax"
+        ),
+    }
+    records = {record["record_id"]: record for record in report["records"]}
+    canonical = records["alphaevolve_section_2_1_page_4_start"]
+    assert canonical["marker_text"] == "# EVOLVE-BLOCK-START"
+    assert canonical["local_parser_probe"]["accepted"] is True
+    assert canonical["local_parser_probe"]["block_names"] == ["solve"]
+    space_variant = records["alphaevolve_figure_3a_page_6_space_start"]
+    assert space_variant["marker_text"] == "# EVOLVE-BLOCK START"
+    assert space_variant["local_support"] == "unsupported_current_parser"
+    assert space_variant["local_parser_probe"]["accepted"] is False
+    assert space_variant["local_parser_probe"]["error"] == "orphan_end"
+    assert space_variant["source_artifact"]["status"] == "not_attached"
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["source_locations_recorded"] is True
+    assert report["claim_readiness"]["source_artifact_hashes_attached"] is False
+    assert "source_pdf_excerpt_or_screenshot_hashes" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    edited = copy.deepcopy(report)
+    edited["compatibility_decision"]["space_variant_supported"] = True
+    edited["claim_readiness"]["final_variant_classification"] = True
+    validation = validate_marker_spelling_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "space_variant_support_overclaim",
+        "variant_classification_overclaim",
     }
 
 

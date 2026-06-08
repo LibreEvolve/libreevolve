@@ -240,8 +240,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README distinguishes runtime marker/workspace inventory from
     AlphaEvolve-style existing-codebase integration evidence.
 
-- [ ] Keep README marker syntax wording scoped until Figure 3 marker-variant
-      metadata exists.
+- [ ] Extend README marker syntax wording after Figure 3 marker-variant
+      metadata with source artifacts and final classification.
   - Spec evidence: AlphaEvolve Section 2.1 names the marker comments as
     `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
     while PDF text extraction from Figure 3(a) on page 6 shows one opening
@@ -250,15 +250,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     grammar and fail-closed behavior for malformed or unsupported marker-like
     syntax. Current parser behavior accepts the canonical hyphenated start
     marker and does not support `# EVOLVE-BLOCK START`; paired with
-    `# EVOLVE-BLOCK-END`, that variant fails as `orphan_end`. README does not
-    yet have source-location metadata that classifies the Figure 3 marker
-    variant before deciding whether README should mention it as canonical paper
-    text, rendered figure text, extraction/OCR uncertainty, or paper typo.
-  - Required result: when Figure 3 marker source metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODO entries together so README
-    distinguishes supported local marker syntax from source-exhibit
-    reproduction and does not imply support for the space variant unless that
-    compatibility mode is intentionally implemented and tested.
+    `# EVOLVE-BLOCK-END`, that variant fails as `orphan_end`. README now cites
+    `runtime.history.marker_spelling_provenance_report`, which records
+    source-location metadata, parser probes, provisional Figure 3 variant
+    classification, and the canonical-hyphenated-only compatibility decision.
+  - Required result: when source screenshots or exact excerpt hashes, exact
+    Figure 3 text artifacts, final rendered-text/OCR/typo classification, or
+    an intentional compatibility mode land, update README, ROADMAP, papers
+    index, and code/paper TODO entries together so README distinguishes
+    supported local marker syntax from source-exhibit reproduction.
 
 - [ ] Keep README candidate-abstraction wording scoped to current divergence
       until abstraction-choice evidence exists.

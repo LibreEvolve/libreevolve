@@ -65,6 +65,16 @@ file hashes. The report is intentionally scoped to runtime workspace evidence:
 original upstream codebase identity, pre-marker source hashes, marker-added
 setup diffs, evaluator call paths before/after marker insertion, portable
 release/source-root identity, and setup-change counts remain open.
+Completed manifests also include
+`runtime.history.marker_spelling_provenance_report` with schema
+`libreevolve.marker_spelling_provenance_report.v1`. This report records
+AlphaEvolve marker source-location records for Section 2.1 and Figure 3,
+including canonical `# EVOLVE-BLOCK-START/END` entries, the extracted/rendered
+Figure 3 `# EVOLVE-BLOCK START` space variant, local parser probe hashes,
+accept/reject outcomes, and a canonical-hyphenated-only compatibility decision.
+The space variant remains unsupported by the current parser and fails as
+`orphan_end` when paired with `# EVOLVE-BLOCK-END`. Source screenshots or exact
+excerpt hashes and final variant classification remain open.
 JSONL streams use a local complete-line durability policy. Accepted rows are
 strict-serialized before append, written as newline-terminated records, flushed,
 and fsynced before the append helper returns. Before appending to an existing

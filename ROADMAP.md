@@ -11,6 +11,11 @@ LibreEvolve has:
 
 - Python seed programs and seed workspaces with load-time-validated optional
   `# EVOLVE-BLOCK-START/END` regions
+- marker spelling provenance reports under
+  `runtime.history.marker_spelling_provenance_report`, recording AlphaEvolve
+  Section 2.1/Figure 3 marker-text source locations, local parser probes, and
+  the current canonical-only compatibility decision for the Figure 3 space
+  variant
 - existing-codebase integration reports under
   `runtime.history.existing_codebase_integration_report`, inventorying
   candidate workspace marker spans, skeleton hashes, unmarked-file hashes,

@@ -405,6 +405,16 @@ marker-only setup diffs, evaluator-call continuity before/after marker
 insertion, portable release/source-root identity, and setup-change counts
 remain open.
 
+AlphaEvolve marker-spelling note: completed manifests now include
+`runtime.history.marker_spelling_provenance_report` with schema
+`libreevolve.marker_spelling_provenance_report.v1`. The report records the
+Section 2.1 canonical `# EVOLVE-BLOCK-START/END` source locations, the Figure
+3 extracted/rendered `# EVOLVE-BLOCK START` space variant, local parser probes,
+and a canonical-hyphenated-only compatibility decision. It remains
+`claim_ready: false` because source screenshots or exact excerpt hashes, exact
+Figure 3 text artifacts, and final classification as rendered text, OCR/text
+extraction issue, or paper typo remain open.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

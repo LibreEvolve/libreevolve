@@ -292,8 +292,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     style minimal-change integration evidence and does not treat local
     workspace smoke tests as codebase-integration proof.
 
-- [ ] Keep marker roadmap wording scoped until Figure 3 marker-variant
-      metadata exists.
+- [ ] Extend marker roadmap wording after Figure 3 marker-variant metadata
+      with source artifacts and final classification.
   - Spec evidence: AlphaEvolve Section 2.1 names the marker comments as
     `# EVOLVE-BLOCK-START` and `# EVOLVE-BLOCK-END` on local PDF page 4,
     while PDF text extraction from Figure 3(a) on page 6 shows one opening
@@ -301,15 +301,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP can point to local Python evolve-block marker
     parsing, validation, unsupported marker diagnostics, and the exact local
     parser behavior that treats the Figure 3 space variant as unsupported when
-    paired with an end marker. It does not yet require source-location metadata
-    that classifies the Figure 3 marker-text variant before roadmap wording
-    treats it as canonical paper prose, rendered figure text, extraction/OCR
-    uncertainty, or paper typo.
-  - Required result: when Figure 3 marker source metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together so
-    roadmap language separates local marker grammar work from any deliberate
-    compatibility or documentation decision about the space variant and does
-    not imply support until parser tests prove that support.
+    paired with an end marker. ROADMAP now also cites
+    `runtime.history.marker_spelling_provenance_report`, which records
+    source-location metadata, parser probes, provisional Figure 3 variant
+    classification, and the canonical-hyphenated-only compatibility decision.
+  - Required result: when source screenshots or exact excerpt hashes, exact
+    Figure 3 text artifacts, final rendered-text/OCR/typo classification, or
+    an intentional compatibility mode land, update ROADMAP, README, papers
+    index, and code/paper TODO entries together so roadmap language separates
+    local marker grammar work from source-exhibit reproduction.
 
 - [ ] Keep candidate-abstraction roadmap wording scoped to hooks until
       abstraction-choice reports exist.

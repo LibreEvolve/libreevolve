@@ -2189,6 +2189,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     linkage, source section location, and README/ROADMAP text that keeps the
     minimum-overlap witness distinct from broad Appendix B family coverage.
 
+- [ ] Track Appendix B.5 source-formulation and equivalence evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 defines the
+    Erdos minimum-overlap constant using paired functions
+    `f,g: [-1,1] -> [0,1]`, the complement constraint `f + g = 1`,
+    `integral f = 1`, zero extension outside `[-1,1]`, and the objective
+    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt`. The appendix then
+    cites `[40]` for equality with the infimum over normalized step functions
+    `h` on `[0,2]`.
+  - Current gap: paper-facing B.5 TODOs force retention of the reduced
+    step-function payload and Figure 10 evidence, but they do not require
+    reports to retain the original `f,g` formulation, the zero-extension and
+    normalization conventions, the supremum domain, or the `[40]` equivalence
+    that justifies using the step-function construction for `C5`.
+  - Required result: add paper/report evidence for B.5 formulation rows:
+    original problem statement id, `f,g` domain and value range, complement
+    and integral constraints, zero-extension convention, supremum/objective
+    domain, `[40]` equivalence source, mapping to the `h` construction row, and
+    README/ROADMAP text that separates source-formulation evidence from
+    Figure 10 step-function evidence.
+
 - [ ] Track Appendix B.6 finite-set witness evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 improves the
     sums-and-differences lower bound using two finite integer-set witnesses:

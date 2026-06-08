@@ -1275,6 +1275,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     certificate, prior/current bounds, Figure 10 link, and source location
     without merging B.5 into generic step-function Appendix B coverage.
 
+- [ ] Keep README Appendix B.5 source-formulation wording scoped until
+      equivalence evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.5 defines the source problem using
+    non-negative `f,g: [-1,1] -> [0,1]`, `f + g = 1`, `integral f = 1`,
+    zero extension outside `[-1,1]`, and
+    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt`, then uses `[40]` to
+    reduce the constant to an infimum over normalized step functions `h` on
+    `[0,2]`.
+  - Current evidence: README can warn about B.5 step-function payload gaps, but
+    it does not separately warn that the original problem statement and
+    equivalence-to-step-functions reference must be preserved before claiming
+    source-faithful Erdos minimum-overlap coverage.
+  - Required result: when B.5 formulation/equivalence metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    names the `f,g` constraints, zero-extension policy, shift-supremum domain,
+    `[40]` equivalence, and mapping to the Figure 10 `h` payload.
+
 - [ ] Keep README Appendix B.6 finite-set wording scoped until witness
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences

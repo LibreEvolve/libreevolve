@@ -2119,6 +2119,28 @@ Primary evidence:
     linkage, and README/ROADMAP wording that distinguishes B.5 minimum-overlap
     evidence from aggregate Appendix B coverage.
 
+- [ ] Add Appendix B.5 original-formulation and equivalence provenance.
+  - Spec evidence: AlphaEvolve Appendix B.5 defines `C5` as the largest
+    constant such that
+    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt >= C5` for all
+    non-negative `f,g: [-1,1] -> [0,1]` with `f + g = 1` on `[-1,1]` and
+    `integral f = 1`, extending `f` and `g` by zero outside `[-1,1]`. It then
+    states, citing `[40]`, that this constant equals the infimum over
+    normalized step functions `h` on `[0,2]`.
+  - Current evidence: the B.5 step-function TODO records the reduced `h`
+    formulation, but no code/report schema separately records the original
+    paired-function domain, complement constraint, zero-extension convention,
+    supremum-over-shifts statement, `[40]` equivalence reference, or the
+    mapping from the source Erdos problem to the step-function construction.
+    A report could validate the Figure 10 `h` payload while losing the problem
+    statement that makes it an Erdos minimum-overlap bound.
+  - Required result: add Appendix B.5 formulation metadata and validators for
+    `f,g` domain/value bounds, `f+g=1`, `integral f=1`, zero-extension policy,
+    `sup_{x in [-2,2]}` objective, `[40]` equivalence citation, transformation
+    link to the `[0,2]` step-function row, and README/ROADMAP wording that
+    distinguishes source-problem provenance from construction-payload
+    provenance.
+
 - [ ] Add Appendix B.6 finite-set witness provenance.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
     lower bound by finding a finite set `U1` of size `2003`, yielding

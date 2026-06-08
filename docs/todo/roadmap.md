@@ -3310,3 +3310,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     status, goal-revision and human-intervention boundaries, privacy/redaction
     policy, and a background-only or future-interactive-feature status rule so
     roadmap claims do not outpace local HCI workflow support.
+
+- [ ] Add AlphaEvolve radar power-allocation application gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.01794`, submitted May 3, 2026, reports using
+    AlphaEvolve Evolution to discover a closed-form radar power-allocation
+    solution for multi-target tracking, with physically inspired state
+    features, deterministic feasibility transformation, generalization across
+    scenarios and target counts, 1.51% average relative performance loss, and
+    more than three orders of magnitude speedup over iterative solvers.
+  - Current evidence: ROADMAP tracks original AlphaEvolve alignment, local
+    benchmark/report contracts, and source gates for several later
+    application papers. It does not mention `2605.01794`, define a radar
+    source-manifest gate, or require fixtures before promoting radar resource
+    allocation as a supported LibreEvolve workflow.
+  - Required result: add roadmap gates for `2605.01794`: paper/source manifest
+    entry, PDF/cache hash, radar task/scenario/target taxonomy, state-feature
+    schema, evolved scoring function, feasibility transform and constraints,
+    iterative-solver baseline, tracking-accuracy and speedup metrics,
+    generalization split evidence, code/artifact availability status, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local radar benchmark support.

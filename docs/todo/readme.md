@@ -2892,4 +2892,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     dashboard state, and privacy/redaction boundaries. Avoid implying
     LibreEvolve supports the AlphaEvolve HCI workflow without those artifacts.
 
+- [ ] Keep README radar power-allocation AlphaEvolve claims absent or
+      source-scoped until paper and benchmark evidence exists.
+  - Spec evidence: arXiv `2605.01794` reports using AlphaEvolve Evolution to
+    discover a fast closed-form power-allocation solution for multi-target
+    tracking, with physically inspired features, a deterministic
+    constraint-satisfying transform, 1.51% average relative performance loss,
+    cross-scenario/target-count generalization, and over three orders of
+    magnitude speedup versus iterative solvers.
+  - Current evidence: README documents current LibreEvolve feature boundaries,
+    matrix/systems benchmark contracts, and selected AlphaEvolve-related paper
+    rows. It does not list `2605.01794`, radar resource allocation,
+    multi-target tracking fixtures, feasibility-transform artifacts, tracking
+    metrics, generalization splits, or iterative-solver baselines.
+  - Required result: if README mentions radar, multi-target tracking,
+    real-time resource allocation, closed-form power allocation, or the
+    `2605.01794` performance/speedup claims, keep the wording source-scoped
+    until the paper is in the manifest and local benchmark/report artifacts
+    exist. Avoid implying LibreEvolve supports this application without
+    runnable radar fixtures, constraint checks, baselines, and metric reports.
+
 ## Architecture Description

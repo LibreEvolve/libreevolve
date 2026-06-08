@@ -4188,3 +4188,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     artifact availability, privacy/redaction policy, and TODO/README/ROADMAP
     wording that treats it as HCI/source evidence rather than implemented
     LibreEvolve interaction support.
+
+- [ ] Track AlphaEvolve radar power-allocation paper evidence.
+  - Paper/source evidence: arXiv `2605.01794`, submitted May 3, 2026, is
+    titled `Discover Fast Power Allocation Solution for Multi-Target Tracking
+    via AlphaEvolve Evolution`. Its abstract proposes an AlphaEvolve-driven
+    paradigm for efficient radar resource allocation, evolving an
+    interpretable scoring function from physically inspired features and
+    converting it into feasible power allocations through a deterministic
+    constraint-satisfying transformation. It reports 1.51% average relative
+    performance loss, generalization across diverse scenarios and target
+    counts, and more than three orders of magnitude speedup over conventional
+    iterative solvers.
+  - Current gap: the paper manifest, paper index, and TODO coverage do not
+    include `2605.01794`. Existing AlphaEvolve application-source rows do not
+    capture radar tracking, real-time resource allocation, power-allocation
+    constraints, physically inspired feature encodings, symbolic closed-form
+    policy artifacts, generalization splits, or iterative-solver baselines.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.01794`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve, radar task taxonomy, scenario and target-count
+    metadata, evolved scoring-function and feasibility-transform artifacts,
+    baseline solver identities, tracking-performance and speedup metrics,
+    code/artifact availability if any, and README/ROADMAP wording that treats
+    it as missing application evidence rather than implemented LibreEvolve
+    support.

@@ -4599,3 +4599,29 @@ Primary evidence:
     intervention and goal-revision boundaries, privacy/consent or redaction
     policy for study data, and README/ROADMAP wording that keeps HCI claims
     source-scoped until local interactive workflow evidence exists.
+
+- [ ] Add AlphaEvolve radar power-allocation application source boundary.
+  - Spec evidence: arXiv `2605.01794`, `Discover Fast Power Allocation
+    Solution for Multi-Target Tracking via AlphaEvolve Evolution`, submitted
+    May 3, 2026, applies LLM-guided evolutionary search to radar resource
+    allocation. The abstract says AlphaEvolve discovers a compact
+    interpretable scoring function over physically inspired features, then
+    transforms it into feasible power allocations with a deterministic
+    constraint-satisfying transformation, reaching average relative
+    performance loss of only 1.51%, reliable generalization across scenarios
+    and target counts, and over three orders of magnitude speedup versus
+    conventional iterative solvers.
+  - Current evidence: the local paper cache, source manifests, benchmark
+    contracts, and TODO coverage do not include `2605.01794`; existing
+    AlphaEvolve application rows cover compiler/hardware/systems/math/FHE/HCI
+    contexts but not radar multi-target tracking, power-allocation feasibility
+    transforms, closed-form symbolic search, scenario/target-count
+    generalization, or iterative-solver speedup baselines.
+  - Required result: add source-manifest and benchmark-boundary metadata for
+    `2605.01794`: arXiv id/version/date/PDF hash, authors, radar task and
+    scenario taxonomy, target-count ranges, state-feature schema, evolved
+    scoring-function artifact, deterministic feasibility transform,
+    constraints, iterative-solver baseline identity, tracking-accuracy metric,
+    relative-loss and speedup records, generalization split metadata, and
+    README/ROADMAP wording that keeps this as missing application-domain
+    evidence until local radar fixtures and reports exist.

@@ -1327,6 +1327,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     wording separates concrete prompt examples from evidence that accepted
     mutations are genuine edits to the current program.
 
+- [ ] Keep prompt-current edit provenance roadmap wording scoped until binding
+      evidence exists.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 present
+    SEARCH/REPLACE as edits to the current program shown in the prompt, with
+    exact SEARCH segments matched against that version.
+  - Current evidence: ROADMAP can cite parent sampling, prompt diagnostics,
+    prompt-program ids, retained prompt hashes, parent/candidate lineage,
+    mutation payloads, LLM call telemetry, and candidate history. It does not
+    yet require a single proof record showing that each accepted or rejected
+    mutation target was the same current-program version rendered to the model.
+  - Required result: when prompt-current binding reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with prompt id, prompt-program
+    id, LLM call id, parent/current program id, rendered current-program
+    hashes/path policy, mutation target hashes, diff match spans or full-mode
+    target policy, evaluator/admission links, and candidate status so roadmap
+    wording does not overclaim AlphaEvolve-style current-program edit
+    provenance from separate parent, prompt, and history fields.
+
 - [ ] Keep multi-edit consistency roadmap wording scoped until checked
       consistency evidence exists.
   - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep

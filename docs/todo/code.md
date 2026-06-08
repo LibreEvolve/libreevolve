@@ -2193,6 +2193,33 @@ Primary evidence:
     prompt examples can remain useful without being mistaken for valid
     AlphaEvolve-style edits to the current program.
 
+- [ ] Add prompt-current-program binding evidence for applied mutations.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
+    SEARCH/REPLACE blocks as edits to the current program shown in the prompt;
+    the SEARCH text must match an exact segment in that current program
+    version before the replacement is applied.
+  - Current evidence: `evolve()` samples a parent, renders a prompt from that
+    parent, applies the mutation to `parent.workspace()`, and persists
+    generated candidate metadata with `parent_id`, `prompt_program_id`,
+    retained prompt hashes, prompt diagnostics, mutation payload, LLM call
+    telemetry, and candidate history rows. `PromptSampler` records parent-code
+    rendered/original hashes and rendered file-path metadata, while
+    `history.jsonl` stores parent/candidate file content and lineage.
+  - Remaining gap: no paper-facing invariant record ties one mutation attempt's
+    prompt id, rendered current-program hash/path set, parent workspace hash,
+    LLM call id, diff exact-match span, mutation target workspace hash,
+    evaluator result, and accepted/rejected candidate id into a single proof
+    that the proposed edit was applied to the same current program that the
+    model saw.
+  - Required result: add a versioned prompt-current binding record and
+    validator covering diff/full/workspace mutation modes, with prompt id,
+    prompt program id, LLM call id, parent/current program id, rendered
+    current-program hashes and omitted-path policy, mutation target hashes,
+    diff match spans or full-mode target policy, candidate id/status,
+    evaluator/admission links, and README/ROADMAP/paper wording that separates
+    sampled-parent mechanics from AlphaEvolve-style current-program edit
+    provenance.
+
 - [ ] Add cross-edit semantic consistency diagnostics for multi-block
       mutations.
   - Spec evidence: AlphaEvolve Figure 3(b) tells the model to keep proposed

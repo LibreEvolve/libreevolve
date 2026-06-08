@@ -1766,6 +1766,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-example compatibility as AlphaEvolve-style current-program editing
     fidelity.
 
+- [ ] Track prompt-current-program binding evidence for mutation application.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.
+  - Requirement: SEARCH/REPLACE blocks are proposed edits to the current
+    program shown in the assembled prompt; the SEARCH section must match an
+    exact segment in that current program version before replacement.
+  - Partial status: LibreEvolve samples a parent, renders parent/current code
+    into prompts, applies mutation payloads to the selected parent workspace,
+    and records parent ids, prompt-program ids, retained prompt hashes, prompt
+    diagnostics, LLM call telemetry, candidate ids, lineage, and history rows.
+    Prompt metadata also includes rendered parent-code hashes and rendered path
+    policy.
+  - Current gap: paper-facing evidence does not yet combine those fields into
+    a mutation-attempt invariant proving that the prompt-rendered
+    current-program version, the workspace used for diff matching, the LLM call,
+    the evaluated candidate, and the admitted/rejected history row are the same
+    chain.
+  - Required result: add prompt-current binding records with prompt id,
+    prompt-program id, LLM call id, parent/current program id, rendered
+    current-program hashes/path policy, mutation target hashes, diff match
+    spans or full-mode target policy, candidate id/status, evaluator/admission
+    links, and README/ROADMAP wording that distinguishes sampled-parent
+    mechanics from AlphaEvolve-style current-program edit provenance.
+
 - [ ] Track multi-edit semantic consistency evidence separately from prompt
       instructions.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).

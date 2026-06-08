@@ -1609,6 +1609,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     environment-scaling, manual-experiment, or AI-Co-Scientist-style
     idea-feedback support.
 
+- [ ] Keep README AI-Co-Scientist comparison scoped until representation
+      boundary evidence exists.
+  - Spec evidence: AlphaEvolve Related Work says AI Co-Scientist represents
+    hypotheses and evaluation criteria in natural language, whereas
+    AlphaEvolve evolves code and uses programmatic evaluation functions. The
+    paper says this choice helps sidestep LLM hallucinations and sustain many
+    evolution time steps, while a future system could combine natural-language
+    and programmatic idioms.
+  - Current evidence: README can describe executable validators, optional LLM
+    feedback graders, proposal `idea`/`rationale`/`hypothesis` metadata, and
+    scientific-discovery scope caveats. It does not yet distinguish
+    natural-language hypothesis artifacts from executable code candidates, nor
+    does it provide report evidence for programmatic evaluation criteria,
+    hallucination-risk controls, long-horizon step counts, or a bridge from
+    language-only idea stages into executable candidate evaluation.
+  - Required result: when representation-boundary reports land, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README separates
+    AI-Co-Scientist-style natural-language hypothesis workflows from
+    AlphaEvolve-style code/programmatic-evaluation workflows and does not
+    overclaim hallucination resistance or long-horizon evolution from generic
+    proposal metadata alone.
+
 - [ ] Keep README cascade wording scoped to staged threshold gates until
       statistical hypothesis-test promotion is implemented.
   - Spec evidence: AlphaEvolve Section 2.4 presents evaluation cascades as

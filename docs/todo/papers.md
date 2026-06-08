@@ -1220,6 +1220,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     broad scientific-discovery, environment-scaling, or AI-Co-Scientist-style
     claims appear in paper-facing docs.
 
+- [ ] Track AI-Co-Scientist representation boundary and hallucination claim.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Related Work.
+  - Requirement: AlphaEvolve contrasts AI Co-Scientist's natural-language
+    hypotheses and natural-language evaluation criteria with AlphaEvolve's
+    code evolution and programmatic evaluation functions. The paper says this
+    code/programmatic choice lets AlphaEvolve substantially sidestep LLM
+    hallucinations and continue evolution for many time steps, while noting
+    that the two approaches could be combined in future systems.
+  - Current gap: paper-facing TODOs track automated-evaluator scope,
+    machine-gradeable versus manual-experiment boundaries, optional LLM-only
+    idea feedback, and structured proposal metadata. They do not yet require
+    paper evidence that labels candidate representation mode, separates
+    natural-language hypothesis criteria from executable programmatic
+    criteria, or supports hallucination-resistance and long-horizon evolution
+    claims with lifecycle evidence.
+  - Required result: add paper/report evidence for representation mode,
+    evaluation-criterion mode, executable-feedback linkage, hallucination-risk
+    controls, long-horizon step counts, natural-language-to-programmatic bridge
+    status, and README/ROADMAP wording that does not conflate generic idea
+    metadata or LLM feedback graders with AlphaEvolve's Related Work
+    distinction from AI-Co-Scientist.
+
 - [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.
   - Requirement: the evaluation cascade is described as hypothesis testing:

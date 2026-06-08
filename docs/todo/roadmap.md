@@ -747,6 +747,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve coverage for environment-scaling, manual-experiment, or
     LLM-only idea-feedback workflows.
 
+- [ ] Keep AI-Co-Scientist roadmap wording scoped until representation-
+      boundary evidence exists.
+  - Spec evidence: AlphaEvolve Related Work distinguishes AI Co-Scientist as
+    representing hypotheses and evaluation criteria in natural language, while
+    AlphaEvolve evolves code and directs search through programmatic
+    evaluation functions. The paper says this programmatic choice helps
+    sidestep hallucinations and sustain many evolution time steps, while a
+    future method could combine natural-language and programmatic idioms.
+  - Current evidence: roadmap/README/paper-index wording can cite executable
+    validators, optional LLM feedback, structured proposal metadata, and
+    automated-evaluator scope boundaries. It does not require roadmap evidence
+    that classifies candidate representation, separates natural-language
+    criteria from programmatic criteria, or supports hallucination-resistance
+    and long-horizon evolution claims.
+  - Required result: when representation-boundary metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODOs with representation
+    mode, evaluation-criterion mode, executable-feedback linkage,
+    hallucination-risk controls, long-horizon step-count evidence, and bridge
+    status for any natural-language hypothesis stage before claiming
+    AlphaEvolve-style distinction from AI-Co-Scientist.
+
 - [ ] Keep self-improvement roadmap wording scoped until infrastructure and
       distillation evidence exists.
   - Spec evidence: AlphaEvolve's Discussion says practical discoveries can

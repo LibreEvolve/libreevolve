@@ -1568,6 +1568,30 @@ Primary evidence:
     claiming AlphaEvolve coverage for broader scientific-discovery,
     environment-scaling, or AI-Co-Scientist-style workflows.
 
+- [ ] Add AI-Co-Scientist representation-boundary evidence.
+  - Spec evidence: AlphaEvolve Related Work distinguishes AI Co-Scientist from
+    AlphaEvolve by saying AI Co-Scientist represents scientific hypotheses and
+    their evaluation criteria in natural language, while AlphaEvolve focuses on
+    evolving code and directing evolution with programmatic evaluation
+    functions. The paper says this choice substantially sidesteps LLM
+    hallucinations and lets the evolution process continue for many time
+    steps, while leaving a possible future combination of natural-language and
+    programmatic idioms.
+  - Current evidence: existing TODOs cover automated-evaluator scope,
+    manual-experiment exclusion, optional pre-code idea feedback, structured
+    proposal metadata, and local validation mechanics. They do not require a
+    run/report boundary that classifies which candidate artifacts are
+    executable programs versus natural-language hypotheses, which evaluation
+    criteria are machine/programmatic versus language-only, or what evidence
+    supports claims about hallucination resistance and long-horizon evolution.
+  - Required result: add problem/run/report metadata and validators for
+    representation mode (`code_candidate`, `natural_language_hypothesis`, or
+    hybrid), evaluation-criterion mode, executable-feedback linkage,
+    hallucination-risk controls, long-horizon step-count evidence, and any
+    future bridge between natural-language hypothesis stages and programmatic
+    candidate evaluation before claiming AlphaEvolve-style distinction from
+    AI-Co-Scientist workflows.
+
 - [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
       preambles.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts

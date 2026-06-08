@@ -489,17 +489,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     development work across initial implementation, project vision and problem
     scoping, first benchmark iteration, final system development,
     infrastructure maintenance, code reviews, team coordination, and
-    supervision.
+    supervision. Local PDF pages 22-23 separate those categories from
+    publication-author, acknowledgement, and application-review roles.
   - Current evidence: ROADMAP and README can cite local implementation status,
     source provenance, tests, and open contribution guidance. They do not
     require roadmap evidence for contribution-role records, development-phase
     attribution, infrastructure ownership, benchmark-iteration ownership,
-    review responsibility, or coordination/supervision scope.
+    review responsibility, or coordination/supervision scope. Runtime manifests
+    and environment provenance can record source hashes, Git state, and package
+    authors/maintainers, but not paper-attributed system-development role
+    boundaries.
   - Required result: when contribution-role metadata lands, update ROADMAP,
     README, papers index, and code/paper TODOs with role labels, development
     phase, artifact/module linkage, source page/section, and review/approval
-    scope so roadmap wording separates local implementation plans from
-    AlphaEvolve-style paper-attributed system-development provenance.
+    scope so roadmap wording separates local implementation plans, package
+    metadata, and repository history from AlphaEvolve-style paper-attributed
+    system-development provenance.
 
 - [ ] Keep workspace-topology roadmap scope aligned with current
       materialization diagnostics.

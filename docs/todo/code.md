@@ -444,20 +444,28 @@ Primary evidence:
     system design/implementation, project vision and problem scoping, first
     benchmark used for iterating on the system, final AlphaEvolve version,
     infrastructure maintenance, majority code reviews, team coordination, and
-    research-program supervision to specific contributors and roles.
+    research-program supervision to specific contributors and roles. Local PDF
+    extraction places the implementation/scoping/first-benchmark/final-system/
+    infrastructure roles on page 22 and the code-review, coordination, and
+    supervision roles on page 23.
   - Current evidence: LibreEvolve records source/build provenance, run
     manifests, selected artifact roles for figures/notebooks, practical
     application owner/reviewer gaps, and early-user feedback gaps. It does not
     define a provenance layer for core system-development roles, implementation
     phases, review ownership, infrastructure ownership, benchmark-iteration
-    ownership, or coordination/supervision boundaries.
+    ownership, or coordination/supervision boundaries. Code evidence records
+    Git/source/problem provenance and selected PEP 621 authors/maintainers plus
+    installed-distribution metadata; those are package/source facts, not
+    AlphaEvolve-style role attribution for who designed, reviewed, maintained,
+    coordinated, or supervised the system.
   - Required result: add project/system contribution metadata and validators
     with safe role labels, development phase (`initial_design`,
-    `first_benchmark_iteration`, `final_system`, `infrastructure`,
-    `code_review`, `coordination`, `supervision`), artifact or module links,
-    source section/page, review/approval scope, and README/ROADMAP checks so
-    local docs do not imply AlphaEvolve-style development provenance from
-    generic git history or contributor listings alone.
+    `project_vision_scoping`, `first_benchmark_iteration`, `final_system`,
+    `infrastructure`, `code_review`, `team_coordination`, `supervision`),
+    artifact or module links, source section/page, review/approval scope, and
+    README/ROADMAP checks so local docs do not imply AlphaEvolve-style
+    development provenance from generic git history, package metadata, or
+    contributor listings alone.
 
 - [ ] Tighten remaining workspace topology collision diagnostics and keep
   materialization diagnostics complete for future edge cases.

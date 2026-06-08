@@ -612,20 +612,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     contributors; project vision and problem scoping, first benchmark problem
     for iterating on AlphaEvolve, final version development, infrastructure
     maintenance, code reviews, team coordination, and research-program
-    supervision are all separately attributed.
+    supervision are all separately attributed. Local PDF page 22 contains the
+    implementation, scoping, first-benchmark, final-system, and infrastructure
+    categories; page 23 contains code-review, team-coordination, and
+    supervision categories.
   - Current gap: paper/status records preserve selected application owner
     roles, figure/Colab artifact roles, early-user feedback gaps, and general
     source/build provenance. They do not preserve paper-facing provenance for
     core system-development phases or responsible roles, so local docs cannot
     distinguish implementation authorship, infrastructure maintenance,
     benchmark-iteration ownership, review responsibility, and coordination
-    claims from generic repository history.
+    claims from generic repository history, package authors/maintainers, or
+    source-control metadata.
   - Required result: add paper-facing contribution records for core
     AlphaEvolve-style system development: role label, responsible person/team
     label where safe, development phase, artifact/module/report linkage,
     source page/section, review or approval scope, and README/ROADMAP wording
-    that separates local contributor history from paper-attributed
-    system-development provenance.
+    that separates local contributor history, package metadata, and source
+    hashes from paper-attributed system-development provenance.
 
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.

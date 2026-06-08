@@ -418,17 +418,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     system design/implementation phases, project vision and problem scoping,
     the first benchmark used for iterating on AlphaEvolve, infrastructure
     maintenance, code reviews, team coordination, and research-program
-    supervision.
+    supervision. Local PDF pages 22-23 show these roles as paper-attributed
+    development provenance, separate from author metadata and
+    acknowledgements.
   - Current evidence: README can describe the current codebase, tests, runtime
     manifests, and contributor openness, but it does not document a
     contribution-role schema that links implementation phases, infrastructure
     ownership, benchmark-iteration ownership, code-review responsibility, or
     coordination/supervision roles to source sections and project artifacts.
+    README and runtime manifests can expose Git/source provenance and package
+    authors/maintainers, but those do not establish AlphaEvolve-style
+    development role attribution.
   - Required result: when contribution-role metadata lands, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes local repository history from AlphaEvolve-style
-    system-development provenance and does not overclaim comparable
-    implementation, infrastructure, review, or coordination evidence.
+    distinguishes local repository history and package metadata from
+    AlphaEvolve-style system-development provenance and does not overclaim
+    comparable implementation, infrastructure, review, or coordination
+    evidence.
 
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.

@@ -334,12 +334,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and
     optional background knowledge as user-provided inputs, and Section 3.1
     reports matrix runs where researcher-supplied ideas in the initial program
-    affected performance.
+    affected performance. In the local PDF, page 10 distinguishes the simple
+    initial program used for most Table 2 matrix results from parameters where
+    researchers seeded the initial program with their own ideas and improved
+    performance.
   - Current evidence: ROADMAP and README/code evidence show source-safe seed
-    ingestion and generation-0 baseline provenance, but roadmap wording does
-    not yet require benchmark seed metadata for simple/random starts versus
-    human-idea-seeded starts, injected prior techniques, or seed-variant
-    result comparisons.
+    ingestion and generation-0 baseline provenance. Current manifest seed
+    records are source identity records (`seed_index`, `seed_source_kind`,
+    `seed_source_path`, primary file, file count, and file list), and inline
+    seeds have only index plus kind. Roadmap wording does not yet require
+    benchmark seed metadata for simple/random starts versus human-idea-seeded
+    starts, injected prior techniques, idea-origin labels, or equal-budget
+    seed-variant result comparisons.
   - Required result: when benchmark seed metadata, idea-origin validation, and
     seed-variant reports land, update roadmap, README, papers index, and
     code/paper TODO entries together so roadmap text distinguishes source-path

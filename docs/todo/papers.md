@@ -2717,19 +2717,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     Section 3.1 says some matrix-multiplication runs were seeded with
     researchers' own ideas, including adding stochasticity to the evaluation
     function or using evolutionary approaches, which boosted performance for
-    some parameters.
+    some parameters. In the local PDF, this appears on page 10, which also
+    says most Table 2 results used a simple initial program.
   - Current evidence: paper-facing status already distinguishes seed baselines
     from generated candidates and preserves safe seed source paths/kinds in
-    manifests and history. That is artifact provenance, not paper-ready
-    experiment provenance: it does not state whether a benchmark seed was
-    simple/random versus researcher-idea-seeded, what prior idea or background
-    knowledge was injected, or whether results are comparable across seed
-    variants under equal budgets.
+    manifests and history. Current seed-source records are limited to source
+    identity/workspace-shape fields such as index, kind, path, primary file,
+    file count, and file list; inline seeds get only index plus kind. That is
+    artifact provenance, not paper-ready experiment provenance: it does not
+    state whether a benchmark seed was simple/random versus
+    researcher-idea-seeded, what prior idea or background knowledge was
+    injected, which seed variant was used, or whether results are comparable
+    across seed variants under equal budgets.
   - Required result: add paper/report evidence for initial-program idea class,
     human/background-knowledge contribution, prior-art or injected-idea label,
-    prompt/evaluator linkage, and equal-budget seed-variant outcomes before
-    claiming AlphaEvolve-style scientific-collaboration or human-seeded matrix
-    result parity.
+    seed-variant id, prompt/evaluator linkage, and equal-budget seed-variant
+    outcomes before claiming AlphaEvolve-style scientific-collaboration or
+    human-seeded matrix result parity.
 
 - [ ] Track strict completeness of initial programs separately from
       optimization-pressure seeds.

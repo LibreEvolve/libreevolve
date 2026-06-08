@@ -248,21 +248,29 @@ Primary evidence:
     program and optional background knowledge, while Section 3.1 reports that
     some matrix targets improved when the initial program was seeded with
     researcher ideas such as stochastic evaluation or evolutionary approaches.
-    That makes the seed's idea origin part of the experiment, not merely a
-    filesystem source artifact.
+    In the local PDF, page 10 says most Table 2 matrix results used a simple
+    initial program, but some parameters improved when researchers seeded the
+    initial program with their own ideas. That makes the seed's idea origin
+    part of the experiment, not merely a filesystem source artifact.
   - Current evidence: LibreEvolve records safe initial-seed source provenance
     such as `seed_source_path`, `seed_source_kind`, `seed_index`, primary file,
     file counts, skipped seed diagnostics, and generation-0 baseline rows.
-    Those records do not classify a seed as simple, random, researcher-idea
-    seeded, prior-art-derived, or collaboration-enhanced; they do not record
-    which human idea was embedded in the initial program; and benchmark reports
-    do not compare simple versus idea-seeded starts for matrix or constructive
+    `_load_initial_workspaces()` loads source records from `initial_programs`,
+    `_seed_source_record()` stores only source identity and workspace shape
+    fields, `_SEED_SOURCE_ALLOWED_KEYS` accepts only source-path/kind/index/
+    file-list style metadata, and `_seed_workspace_entries()` gives inline
+    seeds only `seed_index` plus `seed_source_kind=inline`. Those records do
+    not classify a seed as simple, random, researcher-idea seeded,
+    prior-art-derived, or collaboration-enhanced; they do not record which
+    human idea was embedded in the initial program; and benchmark reports do
+    not compare simple versus idea-seeded starts for matrix or constructive
     math tasks.
   - Required result: add benchmark seed metadata and validation for initial
     program idea origin, human/background-knowledge contribution labels,
-    declared prior technique or injected idea, prompt/run linkage, and
-    seed-variant result evidence before claiming AlphaEvolve-style
-    collaboration or human-seeded matrix benchmark parity.
+    declared prior technique or injected idea, seed-variant id, prompt/run
+    linkage, evaluator/metric linkage, and equal-budget seed-variant result
+    evidence before claiming AlphaEvolve-style collaboration or human-seeded
+    matrix benchmark parity.
 
 - [ ] Add an AlphaEvolve-strict seed validity policy for complete initial
       programs.

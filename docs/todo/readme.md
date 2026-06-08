@@ -270,14 +270,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     optional background knowledge part of the task specification, and Section
     3.1 reports matrix targets where researchers seeded the initial program
     with their own ideas, such as stochastic evaluation or evolutionary
-    approaches.
+    approaches. In the local PDF, page 10 says most Table 2 matrix results used
+    a simple initial program, while some parameters improved from
+    researcher-idea-seeded starts.
   - Current evidence: README documents seed source safety and provenance,
     including `seed_source_path`, `seed_source_kind`, `seed_index`,
     `problem.seed_sources`, skipped-seed diagnostics, inline seed labels, and
-    generation-0 baselines. It does not document benchmark metadata that
+    generation-0 baselines. The implementation records seed source identity and
+    workspace shape, while inline seeds carry only index plus
+    `seed_source_kind=inline`. It does not document benchmark metadata that
     classifies initial programs by idea origin, records injected human or
-    prior-art ideas, or compares simple/random and idea-seeded starts under a
-    benchmark report.
+    prior-art ideas, names seed variants, or compares simple/random and
+    idea-seeded starts under a benchmark report.
   - Required result: when benchmark seed idea-origin metadata and seed-variant
     result evidence land, update README, ROADMAP, papers index, and code/paper
     TODO entries together so README does not imply source-path provenance is

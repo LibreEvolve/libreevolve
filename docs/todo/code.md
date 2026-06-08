@@ -5281,3 +5281,36 @@ Primary evidence:
     baseline identities, token/cost accounting, and README/ROADMAP wording
     that keeps observability-driven harness evolution as missing evidence
     until local implementation and reports exist.
+
+- [ ] Add AI Harness Engineering runtime-substrate source boundary.
+  - Spec evidence: arXiv `2605.13357`, `AI Harness Engineering: A Runtime
+    Substrate for Foundation-Model Software Agents`, was submitted May 13,
+    2026. Its abstract argues that autonomous software-engineering capability
+    emerges from a model-harness-environment system, not from the foundation
+    model alone. It identifies eleven harness responsibilities: task
+    specification, context selection, tool access, project memory, task
+    state, observability, failure attribution, verification, permissions,
+    entropy auditing, and intervention recording. It also defines a four-level
+    H0-H3 ladder that progressively exposes runtime support and a trace-based
+    evaluation protocol that converts each run into an auditable episode
+    package with richer evidence at higher harness levels.
+  - Current evidence: LibreEvolve records manifests, prompt history, LLM calls,
+    evaluator outputs, failure streams, and archive events, but it has no
+    `2605.13357` source row, no first-class model-harness-environment
+    capability contract, no complete eleven-responsibility harness inventory,
+    no H0-H3 runtime-support ladder, no episode package schema tying task,
+    repository, harness config, tools, verification rules, traces, and final
+    outcome together, no entropy audit, and no intervention log that records
+    human assistance and its avoidability.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.13357`: arXiv id/version/date/PDF hash, authors, source
+    license, relation to AlphaEvolve and LibreEvolve runtime artifacts,
+    model-harness-environment capability schema, eleven harness responsibility
+    records, H0-H3 harness-level taxonomy, exposed runtime-resource matrix,
+    task/spec/context/tool/memory/state records, observability and failure-
+    attribution traces, verification protocol records, permission-boundary
+    events, entropy-audit artifacts, intervention logs, episode package
+    schema, requirement-level evidence checks, controlled validation task
+    metadata, maintenance-burden reports, and README/ROADMAP wording that
+    keeps AI-harness runtime-substrate claims as missing evidence until local
+    implementation and reports exist.

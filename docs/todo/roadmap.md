@@ -3876,3 +3876,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     SWE-bench Verified metadata, baseline identities, token/cost accounting,
     and a background-only or benchmark-fixture status rule so roadmap claims
     do not outpace local AHE-style observability-driven harness evolution.
+
+- [ ] Add AI Harness Engineering runtime-substrate gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.13357`, submitted May 13, 2026, introduces
+    `AI Harness Engineering: A Runtime Substrate for Foundation-Model Software
+    Agents`. The abstract reframes software-engineering capability as emerging
+    from a model-harness-environment system and names eleven harness
+    responsibilities: task specification, context selection, tool access,
+    project memory, task state, observability, failure attribution,
+    verification, permissions, entropy auditing, and intervention recording.
+    It proposes an H0-H3 ladder and an auditable episode-package protocol.
+  - Current evidence: ROADMAP tracks run artifacts, prompt/context, evaluator
+    evidence, failure streams, AHE, HarnessFix, RHO, and harness-benefit
+    gates. It does not mention `2605.13357`, define a general runtime-
+    substrate gate, require all eleven harness responsibilities, distinguish
+    H0-H3 maturity levels, require episode packages, audit maintenance
+    entropy, log human interventions, or tie task completion to structured
+    requirement-level verification evidence.
+  - Required result: add roadmap gates for `2605.13357`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata,
+    model-harness-environment schema, eleven responsibility records, H0-H3
+    harness-level taxonomy, runtime-resource exposure matrix, task/context/
+    tool/memory/state records, observability traces, failure-attribution logs,
+    verification protocol/report artifacts, permission-boundary events,
+    entropy audits, intervention logs, episode-package records, deterministic
+    requirement-check evidence, maintenance-burden reports, controlled
+    validation metadata, and a background-only or benchmark-fixture status
+    rule so roadmap claims do not outpace local AI-harness runtime-substrate
+    support.

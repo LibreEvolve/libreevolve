@@ -4867,3 +4867,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     token/cost accounting, code/artifact availability if any, reproducibility
     status, and README/ROADMAP wording that treats AHE as missing paper
     evidence rather than implemented LibreEvolve support.
+
+- [ ] Track AI Harness Engineering runtime-substrate paper evidence.
+  - Paper/source evidence: arXiv `2605.13357`, submitted May 13, 2026, is
+    titled `AI Harness Engineering: A Runtime Substrate for Foundation-Model
+    Software Agents`. Its abstract says autonomous software-engineering
+    reliability should be explained through a model-harness-environment
+    system, where the harness mediates how a foundation-model agent observes a
+    project, acts on it, receives feedback, and establishes that a change is
+    complete. The paper identifies eleven component responsibilities: task
+    specification, context selection, tool access, project memory, task state,
+    observability, failure attribution, verification, permissions, entropy
+    auditing, and intervention recording. It operationalizes the harness
+    through an H0-H3 ladder and converts each run into an auditable episode
+    package; higher levels produce reproduction logs, failure attributions,
+    deterministic requirement checks, and structured verification reports.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.13357`. Existing rows cover AlphaEvolve search, AHE
+    observability-driven evolution, HarnessFix, RHO, SIA, and AEvo, but not a
+    general AI-harness runtime-substrate contract, eleven responsibility
+    records, H0-H3 support-level comparisons, episode-package trace bundles,
+    entropy auditing, intervention logging, or requirement-level verification
+    as a harness maturity artifact.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.13357`: title/authors/arXiv version/date/PDF digest, source
+    license, relation to AlphaEvolve and LibreEvolve harness assumptions,
+    model-harness-environment schema, eleven responsibility taxonomy,
+    H0-H3 harness-level records, runtime-resource exposure matrix, task/
+    context/tool/memory/state artifact records, observability traces,
+    failure-attribution logs, verification protocol and report records,
+    permission events, entropy audits, intervention logs, episode package
+    schema, deterministic requirement-check metadata, controlled validation
+    task evidence, maintenance-burden analysis, code/artifact availability if
+    any, reproducibility status, and README/ROADMAP wording that treats AI
+    Harness Engineering as missing paper evidence rather than implemented
+    LibreEvolve support.

@@ -783,6 +783,12 @@ Implemented:
   inclusion predicates, target ids, outcome counts, out-of-scope rows, and
   Table 2/Table 3 source linkage, but no local report/export emits those
   subset-scope records yet.
+  `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` records the
+  Appendix A Table 3 concurrent-work note for `mm_4x5x6`: reference `[49]`
+  also found a rank-90 algorithm for `<4, 5, 6>`, independently matching
+  AlphaEvolve's rank. It validates the target, source page/table, note text,
+  relationship, and non-exclusive-priority docs caveat, but no local
+  report/export emits that row-note caveat yet.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.

@@ -3115,6 +3115,15 @@ ids, outcome counts, out-of-scope rows, and Table 2/Table 3 source linkage so
 the main-text all-matched-or-surpassed claim is not confused with the full
 Appendix A aggregate. It is subset metadata only; local reports and rendered
 table artifacts still do not emit these scope records.
+Appendix A matrix row-note evidence uses
+`libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`; the built-in record
+preserves the Table 3 note that concurrent work `[49]` also found a rank-90
+algorithm for `mm_4x5x6` (`<4, 5, 6>`), matching AlphaEvolve's rank for that
+row. It validates the target, dimensions, AlphaEvolve rank, concurrent rank,
+reference id, source page/table, note text, relationship, and a docs caveat
+that marks exclusive-priority claims unsafe unless the concurrent work is
+mentioned. It is row-note metadata only; local table exports and matrix reports
+still do not emit this caveat artifact.
 Appendix A matrix resource-frontier provenance uses
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`

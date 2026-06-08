@@ -13,6 +13,7 @@ REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
 SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
+ROW_NOTE_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
@@ -100,6 +101,22 @@ class MatrixSubsetScopeReport:
     full_table_target_count: int
     full_table_fell_behind_count: int
     issues: list[MatrixSubsetScopeIssue]
+
+
+@dataclass(frozen=True)
+class MatrixRowNoteIssue:
+    code: str
+    message: str
+    note_id: str | None = None
+
+
+@dataclass(frozen=True)
+class MatrixRowNoteReport:
+    ok: bool
+    note_count: int
+    concurrent_work_note_count: int
+    affected_target_count: int
+    issues: list[MatrixRowNoteIssue]
 
 
 def matrix_target_records(
@@ -295,6 +312,64 @@ def validate_appendix_a_matrix_subset_scope(
     )
 
 
+def appendix_a_matrix_row_note_records(
+    path: str | Path = REGISTRY_PATH,
+) -> dict[str, Any]:
+    target = matrix_target_by_id("mm_4x5x6", path)
+    return {
+        "schema": ROW_NOTE_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "source_section": "AlphaEvolve Appendix A Table 3",
+        "source_pdf_page": 34,
+        "row_notes": [
+            {
+                "note_id": "concurrent_work_rank90_mm_4x5x6",
+                "note_type": "concurrent_work",
+                "target_id": "mm_4x5x6",
+                "dimensions": [4, 5, 6],
+                "alphaevolve_rank": target.get("alphaevolve_rank") if isinstance(target, dict) else 90,
+                "concurrent_rank": 90,
+                "cited_reference_id": "49",
+                "relationship_to_alphaevolve": "independently_matched_alphaevolve_rank",
+                "source_table": "Appendix A Table 3",
+                "source_pdf_page": 34,
+                "note_text": "Concurrent work [49] has also found a rank-90 algorithm for <4, 5, 6>.",
+                "exclusive_priority_claim_safe": False,
+                "docs_caveat": "Do not claim exclusive SOTA priority for mm_4x5x6 without noting concurrent work [49].",
+            }
+        ],
+    }
+
+
+def validate_appendix_a_matrix_row_notes(
+    recordset: object | str | Path | None = None,
+) -> MatrixRowNoteReport:
+    data, read_issues = _load_row_note_recordset(recordset)
+    if read_issues:
+        return MatrixRowNoteReport(False, 0, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixRowNoteIssue] = []
+    if data.get("schema") != ROW_NOTE_SCHEMA:
+        issues.append(MatrixRowNoteIssue("invalid_schema", "unsupported Appendix A matrix row-note schema"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixRowNoteIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixRowNoteIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    if data.get("source_section") != "AlphaEvolve Appendix A Table 3":
+        issues.append(MatrixRowNoteIssue("invalid_source_section", "source_section must identify Appendix A Table 3"))
+    if data.get("source_pdf_page") != 34:
+        issues.append(MatrixRowNoteIssue("invalid_source_pdf_page", "row-note source_pdf_page must be 34"))
+    note_count, concurrent_count, affected_count = _validate_row_notes(data.get("row_notes"), issues)
+    return MatrixRowNoteReport(
+        ok=not issues,
+        note_count=note_count,
+        concurrent_work_note_count=concurrent_count,
+        affected_target_count=affected_count,
+        issues=issues,
+    )
+
+
 def validate_appendix_a_matrix_resource_frontier(
     recordset: object | str | Path | None = None,
 ) -> MatrixResourceFrontierReport:
@@ -479,6 +554,31 @@ def render_appendix_a_matrix_subset_scope_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_row_note_summary(
+    recordset: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_row_notes(recordset)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A matrix row-note evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| note_count | {report.note_count} |",
+        f"| concurrent_work_note_count | {report.concurrent_work_note_count} |",
+        f"| affected_target_count | {report.affected_target_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.note_id})" if issue.note_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def _load_registry(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -541,6 +641,26 @@ def _load_subset_scope_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixSubsetScopeIssue("invalid_shape", "subset-scope recordset must be a JSON object")]
+
+
+def _load_row_note_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[MatrixRowNoteIssue]]:
+    if recordset is None:
+        return appendix_a_matrix_row_note_records(), []
+    if isinstance(recordset, dict):
+        return dict(recordset), []
+    if isinstance(recordset, (str, Path)):
+        path = Path(recordset)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixRowNoteIssue("read_error", f"failed to read row-note recordset: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixRowNoteIssue("invalid_json", f"invalid row-note JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixRowNoteIssue("invalid_shape", "row-note recordset must be a JSON object")]
 
 
 def _target_id(target: object, index: int) -> str:
@@ -896,6 +1016,86 @@ def _validate_subset_source_phrase(
     elif subset_id == "appendix_a_full":
         if "Table 3" not in source_phrase or "full results" not in source_phrase:
             issues.append(MatrixSubsetScopeIssue("missing_appendix_full_source_phrase", "appendix_a_full must preserve Appendix A full-results linkage", subset_id))
+
+
+def _validate_row_notes(
+    value: object,
+    issues: list[MatrixRowNoteIssue],
+) -> tuple[int, int, int]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRowNoteIssue("invalid_row_notes", "row_notes must be a non-empty list"))
+        return 0, 0, 0
+    seen: set[str] = set()
+    concurrent_count = 0
+    affected_targets: set[str] = set()
+    required_seen = False
+    for note in value:
+        if not isinstance(note, dict):
+            issues.append(MatrixRowNoteIssue("invalid_row_note", "row note entries must be objects"))
+            continue
+        note_id = note.get("note_id")
+        safe_id = note_id if isinstance(note_id, str) else None
+        if safe_id != "concurrent_work_rank90_mm_4x5x6":
+            issues.append(MatrixRowNoteIssue("invalid_note_id", "row-note note_id must identify the mm_4x5x6 concurrent-work note", safe_id))
+        else:
+            required_seen = True
+        if safe_id in seen:
+            issues.append(MatrixRowNoteIssue("duplicate_note_id", "row note ids must be unique", safe_id))
+        if safe_id is not None:
+            seen.add(safe_id)
+        if note.get("note_type") == "concurrent_work":
+            concurrent_count += 1
+        _validate_concurrent_work_row_note(note, safe_id, issues)
+        target_id = note.get("target_id")
+        if isinstance(target_id, str):
+            affected_targets.add(target_id)
+    if not required_seen:
+        issues.append(MatrixRowNoteIssue("missing_concurrent_work_note", "mm_4x5x6 concurrent-work note is required"))
+    return len(value), concurrent_count, len(affected_targets)
+
+
+def _validate_concurrent_work_row_note(
+    note: dict[str, Any],
+    note_id: str | None,
+    issues: list[MatrixRowNoteIssue],
+) -> None:
+    target = matrix_target_by_id("mm_4x5x6")
+    if note.get("note_type") != "concurrent_work":
+        issues.append(MatrixRowNoteIssue("invalid_note_type", "mm_4x5x6 note_type must be concurrent_work", note_id))
+    if note.get("target_id") != "mm_4x5x6":
+        issues.append(MatrixRowNoteIssue("invalid_note_target_id", "concurrent-work note must target mm_4x5x6", note_id))
+    if note.get("dimensions") != [4, 5, 6]:
+        issues.append(MatrixRowNoteIssue("invalid_note_dimensions", "concurrent-work note dimensions must be [4, 5, 6]", note_id))
+    if isinstance(target, dict):
+        if note.get("alphaevolve_rank") != target.get("alphaevolve_rank"):
+            issues.append(MatrixRowNoteIssue("alphaevolve_rank_mismatch", "row note alphaevolve_rank must match registry", note_id))
+        if target.get("outcome") != "surpassed":
+            issues.append(MatrixRowNoteIssue("target_outcome_mismatch", "mm_4x5x6 registry row must remain surpassed", note_id))
+    if note.get("concurrent_rank") != 90:
+        issues.append(MatrixRowNoteIssue("invalid_concurrent_rank", "concurrent work rank must be 90", note_id))
+    if note.get("cited_reference_id") != "49":
+        issues.append(MatrixRowNoteIssue("invalid_cited_reference_id", "concurrent-work note must cite reference id 49", note_id))
+    if note.get("relationship_to_alphaevolve") != "independently_matched_alphaevolve_rank":
+        issues.append(MatrixRowNoteIssue("invalid_relationship", "relationship must mark independent match of AlphaEvolve rank", note_id))
+    if note.get("source_table") != "Appendix A Table 3":
+        issues.append(MatrixRowNoteIssue("invalid_source_table", "row note must link to Appendix A Table 3", note_id))
+    if note.get("source_pdf_page") != 34:
+        issues.append(MatrixRowNoteIssue("invalid_note_source_pdf_page", "row note source_pdf_page must be 34", note_id))
+    note_text = note.get("note_text")
+    if not isinstance(note_text, str) or not note_text.strip():
+        issues.append(MatrixRowNoteIssue("missing_note_text", "row note text is required", note_id))
+    else:
+        if "Concurrent work [49]" not in note_text or "rank-90" not in note_text or "<4, 5, 6>" not in note_text:
+            issues.append(MatrixRowNoteIssue("missing_concurrent_note_text", "row note text must preserve concurrent work, reference, rank, and target wording", note_id))
+    if note.get("exclusive_priority_claim_safe") is not False:
+        issues.append(MatrixRowNoteIssue("invalid_exclusive_priority_flag", "concurrent-work notes must mark exclusive priority claims unsafe", note_id))
+    docs_caveat = note.get("docs_caveat")
+    if not isinstance(docs_caveat, str) or not docs_caveat.strip():
+        issues.append(MatrixRowNoteIssue("missing_docs_caveat", "row note must include a docs caveat", note_id))
+    else:
+        lowered = docs_caveat.lower()
+        if "exclusive" not in lowered or "concurrent work [49]" not in docs_caveat:
+            issues.append(MatrixRowNoteIssue("missing_exclusive_priority_caveat", "docs caveat must warn against exclusive priority claims and cite concurrent work [49]", note_id))
 
 
 def _validate_frontier_observations(

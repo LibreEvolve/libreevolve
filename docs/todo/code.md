@@ -3693,15 +3693,15 @@ Primary evidence:
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level result
     notes beyond the rank columns, including the note that concurrent work [49]
     also found a rank-90 algorithm for the `<4, 5, 6>` target.
-  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
-    stores target ids, dimensions, best-known ranks, AlphaEvolve ranks,
-    outcomes, and exact-algorithm flags, and separate TODOs require
-    best-known-rank source citations, target-suite curation, scalar-field
-    evidence, and Colab artifacts. It does not store per-target result notes,
-    concurrent-work attributions, independently matched result flags, note
-    source page/table locations, or report-visible caveats for rows such as
-    `mm_4x5x6`.
-  - Required result: extend the Appendix A registry or companion metadata with
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`
+    now stores row-level note provenance for `mm_4x5x6`, including note type,
+    cited reference id `49`, note text/source page/table, affected target id,
+    AlphaEvolve rank, concurrent rank, independently matched relationship, and
+    a docs caveat that marks exclusive-priority claims unsafe unless the
+    concurrent work is mentioned. This is built-in metadata only; matrix
+    reports, table exhibits, and generated artifacts do not emit or consume the
+    row-note caveat.
+  - Required result: wire Appendix A table/report artifact generation to emit
     row-level note provenance: note type, cited reference id, note text/source
     location, affected target id, relationship to AlphaEvolve's result
     (for example independently matched, superseded, or caveated), and

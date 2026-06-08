@@ -952,18 +952,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     wording checks so README does not overclaim a first-improvement result
     from rank-row metadata alone.
 
-- [ ] Keep README Appendix A row-note wording scoped until concurrent-work
-      provenance exists.
+- [ ] Keep README Appendix A row-note wording scoped until emitted
+      concurrent-work caveat artifacts exist.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level notes,
     including concurrent work [49] also finding a rank-90 algorithm for
     `<4, 5, 6>`.
-  - Current evidence: README describes the Appendix A registry as target,
-    rank, outcome, and exact-algorithm metadata, with separate gaps for
-    baseline citations, curation, resource frontier, near-integrality, scalar
-    fields, and Colab artifacts. It does not document row-level notes,
-    concurrent-work attribution, independently matched result flags, or caveats
-    for rows such as `mm_4x5x6`.
-  - Required result: when Appendix A row-note provenance lands, update README,
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`, which validates
+    row-level notes, concurrent-work attribution, independently matched result
+    flags, and caveats for rows such as `mm_4x5x6`. It records that reference
+    `[49]` also found a rank-90 algorithm for `<4, 5, 6>`, independently
+    matching AlphaEvolve's rank. No emitted report/table artifact carries that
+    row-note caveat yet.
+  - Required result: when Appendix A row-note artifacts land, update README,
     ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes stored rank/outcome values from paper-faithful result-note
     evidence and does not overstate exclusive SOTA priority where the paper

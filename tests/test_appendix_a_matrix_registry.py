@@ -4,20 +4,24 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
     RESOURCE_FRONTIER_SCHEMA,
+    ROW_NOTE_SCHEMA,
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_curation_record,
     appendix_a_matrix_resource_frontier_record,
+    appendix_a_matrix_row_note_records,
     appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
     matrix_target_records,
     render_appendix_a_matrix_curation_summary,
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
+    render_appendix_a_matrix_row_note_summary,
     render_appendix_a_matrix_subset_scope_summary,
     validate_appendix_a_matrix_curation,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
+    validate_appendix_a_matrix_row_notes,
     validate_appendix_a_matrix_subset_scope,
 )
 
@@ -305,3 +309,86 @@ def test_appendix_a_matrix_subset_scope_summary_renders_counts():
     assert "| main_text_target_count | 20 |" in summary
     assert "| full_table_target_count | 54 |" in summary
     assert "| full_table_fell_behind_count | 2 |" in summary
+
+
+def test_appendix_a_matrix_row_notes_validate_concurrent_work_caveat():
+    record = appendix_a_matrix_row_note_records()
+    report = validate_appendix_a_matrix_row_notes(record)
+    note = record["row_notes"][0]
+
+    assert report.ok is True
+    assert record["schema"] == ROW_NOTE_SCHEMA
+    assert report.note_count == 1
+    assert report.concurrent_work_note_count == 1
+    assert report.affected_target_count == 1
+    assert report.issues == []
+    assert note["target_id"] == "mm_4x5x6"
+    assert note["dimensions"] == [4, 5, 6]
+    assert note["alphaevolve_rank"] == 90
+    assert note["concurrent_rank"] == 90
+    assert note["cited_reference_id"] == "49"
+    assert note["relationship_to_alphaevolve"] == "independently_matched_alphaevolve_rank"
+    assert note["exclusive_priority_claim_safe"] is False
+
+
+def test_appendix_a_matrix_row_notes_reject_target_rank_and_reference_drift():
+    record = appendix_a_matrix_row_note_records()
+    note = record["row_notes"][0]
+    note["target_id"] = "mm_4x4x4"
+    note["dimensions"] = [4, 4, 4]
+    note["alphaevolve_rank"] = 91
+    note["concurrent_rank"] = 89
+    note["cited_reference_id"] = "48"
+    note["relationship_to_alphaevolve"] = "superseded_alphaevolve"
+
+    report = validate_appendix_a_matrix_row_notes(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_note_target_id" in codes
+    assert "invalid_note_dimensions" in codes
+    assert "alphaevolve_rank_mismatch" in codes
+    assert "invalid_concurrent_rank" in codes
+    assert "invalid_cited_reference_id" in codes
+    assert "invalid_relationship" in codes
+
+
+def test_appendix_a_matrix_row_notes_reject_source_and_text_drift():
+    record = appendix_a_matrix_row_note_records()
+    note = record["row_notes"][0]
+    record["source_pdf_page"] = 33
+    note["source_table"] = "Table 2"
+    note["source_pdf_page"] = 33
+    note["note_text"] = "Another group improved a row."
+
+    report = validate_appendix_a_matrix_row_notes(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_source_pdf_page" in codes
+    assert "invalid_source_table" in codes
+    assert "invalid_note_source_pdf_page" in codes
+    assert "missing_concurrent_note_text" in codes
+
+
+def test_appendix_a_matrix_row_notes_reject_exclusive_priority_overclaim():
+    record = appendix_a_matrix_row_note_records()
+    note = record["row_notes"][0]
+    note["exclusive_priority_claim_safe"] = True
+    note["docs_caveat"] = "AlphaEvolve owns the exclusive SOTA priority."
+
+    report = validate_appendix_a_matrix_row_notes(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_exclusive_priority_flag" in codes
+    assert "missing_exclusive_priority_caveat" in codes
+
+
+def test_appendix_a_matrix_row_note_summary_renders_counts():
+    summary = render_appendix_a_matrix_row_note_summary()
+
+    assert "AlphaEvolve Appendix A matrix row-note evidence" in summary
+    assert "| note_count | 1 |" in summary
+    assert "| concurrent_work_note_count | 1 |" in summary
+    assert "| affected_target_count | 1 |" in summary

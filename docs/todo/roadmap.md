@@ -2839,18 +2839,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     matrix figure evidence, mutation-sequence evidence, general matrix
     benchmark coverage, and Appendix A Figure 9 sweep evidence.
 
-- [ ] Keep Appendix A row-note roadmap wording scoped until concurrent-work
-      provenance exists.
+- [ ] Keep Appendix A row-note roadmap wording scoped until emitted
+      concurrent-work caveat artifacts exist.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level notes,
     including the note that concurrent work [49] also found a rank-90 algorithm
     for the `<4, 5, 6>` matrix target.
-  - Current evidence: roadmap/README/paper-index status points to the checked
-    Appendix A registry and matrix report validation. That registry stores
-    target ids, dimensions, best-known rank values, AlphaEvolve ranks,
-    outcomes, and exact-algorithm flags, but not per-target result notes,
-    concurrent-work attributions, independently matched result flags, note
-    source locations, or report-visible caveats for rows such as `mm_4x5x6`.
-  - Required result: when Appendix A row-note provenance lands, update ROADMAP,
+  - Current evidence: roadmap/README/paper-index status now points to
+    `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1`, which validates
+    per-target result notes, concurrent-work attributions, independently
+    matched result flags, note source locations, and report-visible caveats for
+    `mm_4x5x6`. It records that reference `[49]` also found a rank-90
+    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
+    emitted report/table artifact carries that row-note caveat yet.
+  - Required result: when Appendix A row-note artifacts land, update ROADMAP,
     README, papers index, and code/paper TODOs together so roadmap text
     distinguishes rank/outcome registry coverage from paper-faithful
     row-note/concurrent-work evidence and avoids overclaiming exclusive SOTA

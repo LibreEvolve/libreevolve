@@ -505,6 +505,12 @@ is not yet an AlphaEvolve reproduction.
   scoped `m,n,p <= 5` subset has `20` rows with `0` fell behind, while the full
   Appendix A table has `54` rows with `2` fell behind. Runtime reports and
   rendered table artifacts still do not emit those subset-scope records.
+- Keep Appendix A matrix row-note claims scoped to declared evidence:
+  `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` now validates the
+  `mm_4x5x6` concurrent-work note that reference `[49]` also found a rank-90
+  algorithm for `<4, 5, 6>`, including source page/table, rank relationship,
+  and a non-exclusive-priority docs caveat. Runtime reports and rendered table
+  artifacts still do not emit that row-note caveat.
 
 ### 10. Operational maturity
 

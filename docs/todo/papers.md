@@ -3216,14 +3216,14 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
     a note that concurrent work [49] also found a rank-90 algorithm for the
     `<4, 5, 6>` target.
-  - Current gap: the paper-facing Appendix A registry/status stores target
-    ids, dimensions, best-known ranks, AlphaEvolve ranks, outcomes, and
-    exact-algorithm flags, while separate TODOs require baseline citations,
-    target-suite curation, scalar-field evidence, and companion Colab links.
-    It does not preserve row-level notes, concurrent-work attribution,
-    independently matched result flags, note source location, or docs caveats
-    for matrix rows such as `mm_4x5x6`.
-  - Required result: add paper-facing row-note metadata for Appendix A matrix
+  - Current gap: `libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1` now
+    preserves row-level notes, concurrent-work attribution, independently
+    matched result flags, note source location, and docs caveats for
+    `mm_4x5x6`. It records that reference `[49]` also found a rank-90
+    algorithm for `<4, 5, 6>`, independently matching AlphaEvolve's rank. No
+    emitted paper artifact or rendered table export currently carries this
+    row-note caveat.
+  - Required result: emit paper-facing row-note metadata for Appendix A matrix
     targets: affected target id, note type, cited reference id, note text/source
     location, relationship to the AlphaEvolve result, and validation that
     README/ROADMAP/papers wording qualifies SOTA-priority claims when the

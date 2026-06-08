@@ -5788,7 +5788,20 @@ Primary evidence:
     mechanism. It says AlphaEvolve searches the space of value distributions
     and finds a new worst-case instance with
     `GFT_FB / GFT_RO >= 2.0749`, improving the lower bound beyond prior
-    counterexamples near `2.02`.
+    counterexamples near `2.02`. The paper body fixes the model as one seller
+    cost `s` and one buyer value `b`, independently drawn from known
+    distributions, with first-best `E[(b-s)+]`. Random Offerer is the exact
+    half-mixture of Seller-Offering and Buyer-Offering, where each side chooses
+    an optimal take-it-or-leave-it price. The AlphaEvolve run fixes the buyer
+    to the Discrete Equal Revenue survival function `Pr(b>=m)=1/m`, evolves
+    only `get_seller_distributions()`, starts from a uniform seller CDF, uses
+    `H=20000`, rounds PMF/CDF values to multiples of `1e-15`, and computes GFT
+    components by integer arithmetic. The discovered seller CDF is a mixture
+    of modulated power laws:
+    `F_s(m)=0.20*z^(0.15+0.05*sin(2*pi*z))+0.80*z^4`, with
+    `z=(m+1)/(H+1)`, yielding `GFT_FB ~= 1.2322`,
+    `GFT_SO ~= 0.3312`, `GFT_BO ~= 0.8565`, `GFT_RO ~= 0.5939`, and
+    ratio `2.0749`; the appendix includes evaluator code.
   - Current evidence: `papers/README.md` lists `2603.08679` only as
     background AlphaEvolve mechanism-design context with no bilateral-trade
     distribution benchmark. LibreEvolve has no first-class code TODO for this
@@ -5796,7 +5809,14 @@ Primary evidence:
     Random-Offerer evaluator, no first-best GFT computation, no BIC/BB
     assumption record, no ratio-verification report, no prior-counterexample
     baseline comparison, and no economic-mechanism artifact policy for
-    distribution witnesses.
+    distribution witnesses. It also lacks the fixed-buyer/evolved-seller
+    search boundary, discrete equal-revenue survival-function fixture, seller
+    CDF monotonicity and support validation, rounded-integer probability
+    pipeline, exact optimal-price loops for SO and BO, code-artifact capture
+    for the evolved seller generator and appendix evaluator, and records for
+    the paper's other attempts (fixing the seller and evolving the buyer
+    reportedly reached `2.08` but was not detailed; co-evolving both sides
+    found a lower bound below `2.07`).
   - Required result: add source-manifest and implementation-boundary metadata
     for `2603.08679`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
@@ -5807,7 +5827,15 @@ Primary evidence:
     artifacts, prior lower-bound/counterexample baselines, seed/budget
     records, independent checker outputs, and README/ROADMAP wording that
     keeps bilateral-trade lower-bound discovery as missing evidence until
-    local implementation and reports exist.
+    local implementation and reports exist. The code boundary should
+    additionally require a reproducible `H=20000` discrete-domain evaluator,
+    Discrete Equal Revenue buyer fixture, evolved seller CDF generator with
+    mixture/modulation parameters, CDF/SF-to-PMF conversion, monotonicity and
+    support checks, `1e-15` rounding-to-integer policy, exact FB/SO/BO/RO
+    component ledgers, optimal reserve-price witnesses per side, ratio
+    recomputation with uncertainty/tolerance notes, appendix evaluator hash,
+    and caveats that the paper's rounded distribution is verified while the
+    exact unrounded modulated-power-law ratio remains open.
 
 - [ ] Add AlphaEvolve Magellan compiler-optimization boundary.
   - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of

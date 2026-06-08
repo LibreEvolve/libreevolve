@@ -4286,13 +4286,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     using AI-Guided Evolutionary Search`. The abstract uses AlphaEvolve to
     search value distributions for a worst-case Random-Offerer instance and
     reports `GFT_FB / GFT_RO >= 2.0749`, widening the known gap between
-    first-best efficiency and Random-Offerer gains from trade.
+    first-best efficiency and Random-Offerer gains from trade. The body
+    specifies the roadmap target as a discrete bilateral-trade witness:
+    independent seller and buyer distributions, first-best `E[(b-s)+]`, RO as
+    equal randomization between optimal seller-offering and buyer-offering
+    prices, fixed Discrete Equal Revenue buyer, evolved seller CDF over
+    `H=20000`, `1e-15` rounded integer arithmetic, exact GFT computation, and
+    a modulated-power-law seller distribution yielding the reported component
+    values and ratio.
   - Current evidence: ROADMAP tracks broad benchmark gaps, constructive-math
     result gaps, systems fixtures, and background paper-index rows. It does
     not promote `2603.08679` beyond background-only status, define a
     bilateral-trade distribution benchmark, compute first-best versus
     Random-Offerer GFT, preserve BIC/BB assumptions, compare prior
-    counterexample baselines, or verify lower-bound witness distributions.
+    counterexample baselines, or verify lower-bound witness distributions. It
+    also lacks gates for fixed-buyer/evolved-seller search, equal-revenue buyer
+    survival-function fixtures, CDF/SF/PMF rounding validation, SO/BO
+    optimal-price records, appendix evaluator traceability, and the
+    rounded-versus-unrounded result caveat.
   - Required result: add roadmap gates for `2603.08679`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     value-distribution candidate schema, buyer/seller support and probability
@@ -4301,7 +4312,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     prior lower-bound/counterexample baselines, seed/budget records,
     independent checker outputs, and a background-only or benchmark-fixture
     status rule so roadmap claims do not outpace local AlphaEvolve-style
-    bilateral-trade lower-bound support.
+    bilateral-trade lower-bound support. Roadmap promotion should additionally
+    require the `H=20000` discrete evaluator, Discrete Equal Revenue buyer,
+    evolved seller CDF formula and code artifact, exact FB/SO/BO/RO component
+    rows, reserve-price witness logs, `1e-15` rounding policy, appendix
+    evaluator hash, comparison to the `2` conjecture and Babaioff et al.
+    `~2.02` baseline, source-scoped handling of the not-detailed `2.08`
+    alternating-search result, and documentation that the verified claim is
+    for the rounded distribution while the exact unrounded-mixture ratio is
+    open.
 
 - [ ] Add AlphaEvolve Magellan compiler-optimization gates before roadmap
       promotion.

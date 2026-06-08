@@ -5355,13 +5355,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     GFT with BIC and BB mechanisms, focuses on the Random-Offerer mechanism,
     and says AlphaEvolve searches value distributions to find a worst-case
     instance with `GFT_FB / GFT_RO >= 2.0749`, improving on prior
-    counterexamples including an explicit example near `2.02`.
+    counterexamples including an explicit example near `2.02`. Sections 3-5
+    define the exact benchmark: one seller cost and one buyer value from
+    independent known distributions; first-best GFT is `E[(b-s)+]`; Random
+    Offerer is `0.5*GFT_SO + 0.5*GFT_BO` using optimal seller-offering and
+    buyer-offering take-it-or-leave-it prices; the objective is the supremum
+    of `GFT_FB/GFT_RO`. The search fixes the buyer to the Discrete Equal
+    Revenue distribution, evolves the seller CDF over `{0,...,H}` with
+    `H=20000`, and reports a rounded mixture-of-modulated-power-laws seller
+    CDF with `GFT_FB ~= 1.2322`, `GFT_SO ~= 0.3312`,
+    `GFT_BO ~= 0.8565`, `GFT_RO ~= 0.5939`, and ratio `2.0749`. Section 4.3
+    and Appendix A describe rounding probabilities to `1e-15` multiples and
+    exact integer GFT computation.
   - Current gap: `papers/README.md` lists `2603.08679` as background-only
     mechanism-design context with no bilateral-trade distribution benchmark,
     and the active TODO coverage does not yet track this paper-specific
     evidence. Broad benchmark gaps do not capture value-distribution witness
     schemas, FB/RO GFT calculations, economic mechanism assumptions, ratio
-    tolerance, or lower-bound baseline attribution.
+    tolerance, or lower-bound baseline attribution. They also omit the fixed
+    Discrete Equal Revenue buyer fixture, evolved seller-generator code
+    artifact, mixture/modulated-power-law parameter ledger, exact SO/BO
+    reserve-price evaluation, rounded-versus-unrounded distribution caveat,
+    appendix evaluator code, and the paper's undocumented alternate searches
+    that reportedly reached `2.08` when evolving the buyer after fixing the
+    seller and below `2.07` when co-evolving both sides.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2603.08679`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
@@ -5372,7 +5389,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     and `~2.02` counterexample baselines, seed/budget records, independent
     checker outputs, reproducibility status, and README/ROADMAP wording that
     treats bilateral-trade lower-bound search as missing paper evidence rather
-    than implemented LibreEvolve support.
+    than implemented LibreEvolve support. Paper evidence should additionally
+    preserve the `H=20000` support limit, fixed buyer survival function,
+    evolved seller CDF formula and code listing, monotonicity/rounding
+    validation, exact FB/SO/BO/RO component rows, optimal-price witness policy,
+    ratio comparison to the original `2` conjecture and Babaioff et al. `~2.02`
+    example, appendix evaluator hash, unrounded-mixture open-status caveat,
+    and source-scoped status for the not-detailed `2.08` alternating-search
+    observation.
 
 - [ ] Track AlphaEvolve Magellan compiler-optimization paper evidence.
   - Paper/source evidence: arXiv `2601.21096`, submitted January 28, 2026 and

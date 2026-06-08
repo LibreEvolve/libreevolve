@@ -27,6 +27,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     treating LibreEvolve evaluator outputs as AlphaEvolve-comparable metric
     evidence.
 
+- [ ] Track independent evaluator-oracle composition evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve
+    iteratively improves algorithms by continuously receiving feedback from one
+    or more evaluators, then Section 2.4 distinguishes the user-provided
+    evaluation function from optional cascades and LLM-generated feedback.
+  - Current gap: paper/status records can show one local cascade validator,
+    configured stages/samples, and optional LLM feedback graders. They do not
+    preserve paper-facing evidence for multiple independent evaluator/oracle
+    sources, evaluator authority, metric ownership, merge/conflict rules, or
+    how evaluator disagreements affect validity, score reporting, database
+    admission, and prompt-visible feedback.
+  - Required result: add paper-facing evaluator-composition records before
+    claiming AlphaEvolve-style "one or more evaluators" feedback: evaluator
+    ids, oracle type, task authority, input/output schema, metric ownership,
+    merge/conflict policy, failure handling, prompt-feedback linkage, and
+    wording that separates independent evaluator composition from local
+    cascade stages or post-evaluation LLM graders.
+
 - [ ] Track execution-grounded filtering of incorrect base-LLM suggestions.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Table 1 context.
   - Requirement: AlphaEvolve says code execution and automatic evaluation

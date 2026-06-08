@@ -1116,6 +1116,26 @@ Primary evidence:
     score columns, and validation that `is_valid` and non-scalar attachments
     are not treated as scored AlphaEvolve metrics.
 
+- [ ] Add independent evaluator-oracle composition provenance.
+  - Spec evidence: AlphaEvolve's abstract says the evolutionary loop
+    continuously receives feedback from one or more evaluators, while Section
+    2.4 describes the user-provided evaluation function plus optional
+    evaluation mechanisms such as cascades and LLM-generated feedback.
+  - Current evidence: LibreEvolve has one configured local `CascadeEvaluator`
+    path with optional stages/samples/thresholds and separate optional LLM
+    feedback graders. Those surfaces can produce multiple stage results and
+    feedback scores, but they do not define a paper-facing contract for
+    independent evaluator/oracle sources, their authority, merge policy, or
+    how conflicting evaluator results should affect candidate validity,
+    scoring, admission, and prompt feedback.
+  - Required result: add evaluator-oracle registry and report metadata with
+    evaluator ids, oracle type (`deterministic_validator`, `statistical_test`,
+    `reference_checker`, `llm_judge`, or equivalent), authority/role,
+    input/output schema, metric ownership, conflict/merge policy, failure
+    policy, prompt-feedback linkage, and README/ROADMAP checks that
+    distinguish independent multi-evaluator feedback from local cascade stages
+    or post-hoc LLM feedback graders.
+
 - [ ] Add execution-grounded incorrect-suggestion filtering evidence.
   - Spec evidence: AlphaEvolve's introduction says its LLM-directed evolution
     is grounded in code execution and automatic evaluation, and that this

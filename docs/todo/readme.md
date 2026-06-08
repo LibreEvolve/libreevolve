@@ -26,6 +26,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes the implemented LibreEvolve validity gate from
     AlphaEvolve-comparable scored scalar metrics.
 
+- [ ] Keep README multi-evaluator wording scoped until evaluator-oracle
+      composition evidence exists.
+  - Spec evidence: AlphaEvolve describes feedback from one or more evaluators,
+    with Section 2.4 separating a user-provided evaluation function from
+    optional cascades and LLM-generated feedback.
+  - Current evidence: README can describe a local cascade validator with
+    stages/samples/thresholds and optional LLM feedback graders. It does not
+    yet document independent evaluator/oracle sources, their authority,
+    metric ownership, conflict/merge policy, or how evaluator disagreements
+    affect validity, score reporting, archive admission, and prompt feedback.
+  - Required result: when evaluator-oracle composition metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes local staged validation and feedback graders from
+    AlphaEvolve-style feedback from one or more independent evaluators.
+
 - [ ] Keep README grounding claims scoped until incorrect-suggestion filtering
       evidence exists.
   - Spec evidence: AlphaEvolve states that code execution and automatic

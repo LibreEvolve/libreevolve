@@ -76,6 +76,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording neither underclaims current strict local
     evaluator validation nor overclaims AlphaEvolve-comparable metric evidence.
 
+- [ ] Keep multi-evaluator roadmap wording scoped until evaluator-oracle
+      composition evidence exists.
+  - Spec evidence: AlphaEvolve's abstract describes feedback from one or more
+    evaluators, and Section 2.4 distinguishes the core evaluation function
+    from optional cascades and LLM-generated feedback.
+  - Current evidence: ROADMAP and README can describe one local cascade
+    evaluator with configured stages/samples/thresholds plus optional LLM
+    feedback graders. They do not yet require independent evaluator/oracle
+    identities, task authority, metric ownership, merge/conflict rules, or
+    evidence for how evaluator disagreements affect validity, reporting,
+    archive admission, and prompt feedback.
+  - Required result: when evaluator-oracle composition metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs together
+    so roadmap wording separates local staged validation and post-hoc graders
+    from AlphaEvolve-style multi-evaluator feedback.
+
 - [ ] Keep execution-grounding roadmap wording scoped until incorrect-
       suggestion filtering evidence exists.
   - Spec evidence: AlphaEvolve's introduction says LLM-directed evolution is

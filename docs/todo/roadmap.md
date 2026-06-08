@@ -4609,3 +4609,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     comparison rows, and README/papers/code wording that keeps ThetaEvolve as
     test-time-training inspiration until local evidence proves actual
     test-time learning support.
+
+- [ ] Add ImprovEvolve modular-operator gates before roadmap promotion.
+  - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
+    to Improve the Input Solution and Then Improvise`, replaces direct
+    solution-generation with an evolved `generate_config`/`improve`/`perturb`
+    class executed by a two-stage basin-hopping validation loop with multi-seed
+    initialization, scheduled perturbations, monotonic acceptance, GigaEvo
+    outer evolution, and HEX/ACI2 benchmark claims including `ImprovEvolve+E`.
+  - Current evidence: ROADMAP says ImprovEvolve features remain inspired unless
+    paper behavior is implemented, and `papers/README.md` scopes LibreEvolve to
+    static modular guidance with false execution/enforcement flags. Roadmap
+    lacks `2602.10233`-specific gates for source metadata, interface
+    enforcement, validation-loop execution, perturbation schedules, inner/outer
+    loop separation, human-edit provenance, GigaEvo dependency/backbone status,
+    HEX/ACI2 benchmark rows, ablations, and budget evidence.
+  - Required result: add roadmap gates for `2602.10233`: paper/source manifest
+    entry, PDF/cache hash, ACM/preprint rights and linked-code status,
+    `generate_config`/`improve`/`perturb` interface schema, Stage A/B runner,
+    seed counts, basin-hopping rounds, perturbation schedules, monotonic
+    acceptance/incremental improvement records, GigaEvo/backbone metadata,
+    human-edited variant attribution, HEX and ACI2 benchmark/baseline/result
+    rows, CPU/GPU timeout/compute budgets, ablation rows, and README/papers/
+    code wording that keeps ImprovEvolve as modular-search inspiration until
+    local execution semantics and benchmark evidence are validated.

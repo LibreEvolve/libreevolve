@@ -6158,3 +6158,35 @@ Primary evidence:
     ShinkaEvolve/OpenEvolve baseline comparisons, and README/ROADMAP wording
     that keeps LibreEvolve's current clipped-reward export separate from
     ThetaEvolve-style test-time learning.
+
+- [ ] Add ImprovEvolve modular-operator source boundary before interface
+      claims.
+  - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
+    to Improve the Input Solution and Then Improvise`, reformulates
+    AlphaEvolve-style search by evolving a class with `generate_config(seed)`,
+    `improve(x)`, and `perturb(x, sigma)` methods. The paper validates programs
+    through a two-stage basin-hopping loop with multi-seed initialization,
+    scheduled perturbation intensity, monotonic acceptance, GigaEvo as the
+    outer MAP-Elites backbone, and benchmark claims for hexagon packing and
+    the second autocorrelation inequality, including human-edited
+    `ImprovEvolve+E` variants.
+  - Current evidence: `papers/README.md` marks ImprovEvolve as modular search
+    inspiration and says LibreEvolve only emits static modular prompt guidance
+    with `operation_selected: static_modular_guidance` and false execution/
+    enforcement flags. Existing grouped inspiration TODOs cover the general
+    approximation boundary, but there is no source-specific code TODO for
+    `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,
+    no basin-hopping validation runner, no inner-loop incumbent/improvement
+    records, no perturbation-schedule telemetry, no GigaEvo-backed outer-loop
+    compatibility report, no human-edit attribution boundary, and no
+    hexagon/ACI2 benchmark report tied to this source.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2602.10233`: arXiv version/date/PDF hash, ACM/preprint rights metadata,
+    linked code/status if available, class-interface schema and enforcement,
+    Stage A/Stage B validation runner records, seed counts, basin-hopping
+    rounds, perturbation schedules, monotonic acceptance proofs, incumbent and
+    improvement-delta artifacts, GigaEvo/backbone compatibility metadata,
+    human-edited variant provenance, HEX and ACI2 benchmark/baseline rows,
+    CPU/GPU and timeout budgets, ablation reports, and README/ROADMAP wording
+    that keeps current static modular prompting separate from ImprovEvolve
+    execution semantics.

@@ -4174,4 +4174,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve/ShinkaEvolve/OpenEvolve comparison rows, and a clear
     distinction between clipped-reward JSONL export and actual test-time RL.
 
+- [ ] Keep README ImprovEvolve wording scoped until modular-operator execution
+      evidence exists.
+  - Spec evidence: local arXiv `2602.10233`, `ImprovEvolve: Ask AlphaEvolve
+    to Improve the Input Solution and Then Improvise`, evolves a class with
+    `generate_config`, `improve`, and `perturb` methods, then executes those
+    methods through a two-stage basin-hopping validation loop with scheduled
+    perturbation intensity, monotonic acceptance, GigaEvo outer evolution, and
+    benchmark claims for hexagon packing and the second autocorrelation
+    inequality.
+  - Current evidence: README describes the ImprovEvolve-inspired modular
+    plugin as static prompt guidance: it does not select, execute, or log a
+    `generate_config`/`improve`/`perturb` operation, and its metadata marks
+    execution/enforcement false. Existing README TODOs group ImprovEvolve with
+    paper-inspired approximations, but README does not require a `2602.10233`
+    source-specific boundary for interface enforcement, basin-hopping records,
+    perturbation schedules, human-edited variants, GigaEvo-backbone relation,
+    HEX/ACI2 benchmark results, ablations, or compute-budget claims.
+  - Required result: if README mentions ImprovEvolve, modular search,
+    `generate_config`, `improve`, `perturb`, basin-hopping validation,
+    scheduled perturbations, `ImprovEvolve+E`, hexagon-packing improvements,
+    ACI2 improvements, or GigaEvo-backed modular execution, keep wording
+    source-scoped until manifests and reports include the `2602.10233` source
+    row, PDF/code hashes, interface schemas, executed validation-loop
+    artifacts, perturbation and seed records, human-edit provenance,
+    benchmark/baseline rows, ablation and budget reports, and a clear
+    distinction between static prompt guidance and ImprovEvolve execution.
+
 ## Architecture Description

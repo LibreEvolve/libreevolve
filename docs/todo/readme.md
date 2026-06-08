@@ -4297,12 +4297,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 - [ ] Keep README CodeEvolve wording scoped until operator and benchmark
       evidence exists.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
-    evolutionary framework for algorithmic discovery and optimization`,
-    describes islands-based evolution with weighted LLM ensembles,
-    inspiration-based crossover, meta-prompting exploration, depth-based
-    targeted refinement, exploration scheduling, sandboxed evaluation,
-    MAP-Elites/CVT-MAP-Elites archives, and AlphaEvolve/EoH benchmark plus
-    quality-cost comparisons.
+    evolutionary framework for algorithmic discovery and optimization`, by
+    Henrique Assumpcao et al. describes islands-based evolution with weighted
+    LLM ensembles, inspiration-based semantic crossover, meta-prompting
+    exploration, depth-based targeted refinement with `k` nearest ancestors,
+    exploration scheduling, sandboxed evaluation, MAP-Elites/CVT-MAP-Elites
+    archives, and AlphaEvolve/EoH benchmark plus quality-cost comparisons. It
+    defines separate solution and prompt fitness (`fsol`/`fprompt`), reports
+    that CODE EVOLVE matches or surpasses AlphaEvolve on `5` of `9`
+    AlphaEvolve benchmark instances, shows `CirclePackingSquare(n = 26)`
+    `2.63598` vs AlphaEvolve `2.63586` and `n = 32` `2.93956` vs
+    AlphaEvolve `2.93794`, and reports Qwen3-Coder-30B cost advantages over
+    GEMINI-2.5 such as roughly `$6` vs just under `$35` for the `n = 26`
+    circle-packing run.
   - Current evidence: README and `papers/README.md` mark CodeEvolve as
     agentic code-evolution inspiration only and say crossover, targeted
     refinement, modular orchestration, and context-aware recombination are not
@@ -4310,7 +4317,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     paper-inspired approximations, but README does not require a
     source-specific boundary for `2510.14150`, prompt/solution fitness,
     semantic crossover, meta-prompting exploration, depth-refinement ancestor
-    context, scheduler behavior, sandbox parity, benchmark rows, ablations, or
+    context, Plateau Scheduler behavior, sandbox parity, MAP-Elites/CVT
+    archive parity, benchmark rows, ablations, hyperparameter guidance, or
     cost-comparison claims.
   - Required result: if README mentions CodeEvolve, inspiration crossover,
     meta-prompting, targeted refinement, modular orchestration,
@@ -4318,9 +4326,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark results, keep wording source-scoped until manifests and reports
     include the `2510.14150` source row, PDF/code hashes, operator artifacts,
     scheduler traces, prompt/solution fitness metadata, sandbox/runtime-memory
-    evidence, AlphaEvolve/EoH benchmark rows, ablation/cost reports, and a
-    clear distinction between LibreEvolve's current prompt-program features
-    and CodeEvolve framework parity.
+    evidence, MAP-Elites/CVT compatibility reports, AlphaEvolve/EoH benchmark
+    rows, ablation/cost reports, hyperparameter defaults, and a clear
+    distinction between LibreEvolve's current prompt-program features and
+    CodeEvolve framework parity.
 
 - [ ] Keep README ThetaEvolve wording scoped until test-time learning evidence
       exists.

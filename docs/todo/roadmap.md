@@ -4765,11 +4765,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add CodeEvolve operator and benchmark gates before roadmap promotion.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
-    evolutionary framework for algorithmic discovery and optimization`,
-    describes islands-based genetic search, weighted LLM ensembles,
-    inspiration-based crossover, meta-prompting, depth-based targeted
-    refinement, exploration scheduling, sandboxed evaluation, MAP-Elites/CVT
-    archives, and AlphaEvolve/EoH benchmark plus quality-cost comparisons.
+    evolutionary framework for algorithmic discovery and optimization`, by
+    Henrique Assumpcao et al. describes islands-based genetic search, weighted
+    LLM ensembles, inspiration-based semantic crossover, meta-prompting,
+    depth-based targeted refinement, exploration scheduling, sandboxed
+    evaluation, MAP-Elites/CVT archives, and AlphaEvolve/EoH benchmark plus
+    quality-cost comparisons. It defines prompt/solution fitness, Algorithm 1
+    exploitation/exploration, Plateau Scheduler, rank-based inspirations,
+    elitist migration, runtime/memory-bounded evaluation, and default guidance
+    including `5` or `10` islands, `200` or `250` epochs, ancestor depth
+    `3..5`, `2..3` inspirations, migration rate `0.1`, and exploration rate
+    `0.2..0.5`. Table 1 says CODE EVOLVE matches or surpasses AlphaEvolve on
+    `5` of `9` instances, and Table 2 records Qwen3-Coder-30B vs GEMINI-2.5
+    cost/time comparisons.
   - Current evidence: ROADMAP says CodeEvolve features should remain labeled
     as inspired unless the paper behavior is actually implemented, and
     `papers/README.md` marks crossover, targeted refinement, modular
@@ -4777,8 +4785,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     not yet define `2510.14150`-specific gates for source metadata, linked code
     status, prompt/solution dual fitness, semantic crossover, meta-prompting,
     depth-refinement context, exploration-scheduler traces, sandbox parity,
-    MAP-Elites/CVT archive behavior, benchmark rows, ablations, or
-    quality-cost comparison evidence.
+    MAP-Elites/CVT archive behavior, benchmark rows, ablations,
+    hyperparameter defaults, open-framework comparisons, or quality-cost
+    comparison evidence.
   - Required result: add roadmap gates for `2510.14150`: paper/source manifest
     entry, PDF/cache hash, source-license and code-artifact status,
     islands/population metadata, prompt/solution fitness records, weighted
@@ -4786,9 +4795,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     meta-prompting artifacts, targeted-refinement ancestor context,
     exploration-scheduler traces, sandbox runtime/memory evidence,
     MAP-Elites/CVT archive compatibility, AlphaEvolve/EoH benchmark and
-    ablation/cost rows, and README/papers/code wording that keeps CodeEvolve
-    as agentic code-evolution inspiration until local evidence proves
-    operator and benchmark parity.
+    ablation/cost rows, OpenEvolve/ShinkaEvolve comparison rows,
+    LLM-backbone sensitivity rows, hyperparameter-guidance records, and
+    README/papers/code wording that keeps CodeEvolve as agentic code-evolution
+    inspiration until local evidence proves operator and benchmark parity.
 
 - [ ] Add ThetaEvolve test-time learning gates before roadmap promotion.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning

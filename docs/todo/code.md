@@ -6419,13 +6419,26 @@ Primary evidence:
 
 - [ ] Add CodeEvolve source boundary before crossover/refinement claims.
   - Spec evidence: local arXiv `2510.14150`, `CODE EVOLVE: an open-source
-    evolutionary framework for algorithmic discovery and optimization`,
-    describes an islands-based genetic algorithm with a weighted LLM ensemble,
-    SEARCH/REPLACE edits, inspiration-based semantic crossover,
+    evolutionary framework for algorithmic discovery and optimization`, by
+    Henrique Assumpcao, Diego Ferreira, Leandro Campos, and Fabricio Murai was
+    submitted as arXiv v4 on March 12, 2026; the cached PDF hash is
+    `8dc8c35d24e2f6bce81e9608609e10b4dac5dd7072d155d9cd5c575d47472405`.
+    It describes an islands-based genetic algorithm with a weighted LLM
+    ensemble, `SEARCH/REPLACE` edits, inspiration-based semantic crossover,
     meta-prompting exploration, depth-based targeted refinement,
     exploration-rate scheduling, sandboxed evaluation with runtime and memory
     limits, prompt/solution fitness, MAP-Elites/CVT-MAP-Elites archives, and
-    AlphaEvolve/EoH benchmark plus quality-cost comparisons.
+    AlphaEvolve/EoH benchmark plus quality-cost comparisons. The paper defines
+    solution fitness `fsol` and prompt fitness `fprompt(P) = max fsol(S)` over
+    prompt-generated solutions; Algorithm 1 samples exploitation vs
+    exploration by `pexplr`, collects `k` nearest ancestors for depth
+    exploitation, calls `MetaPromptingLLM` during exploration, and passes
+    inspiration solutions to the `LLMEnsemble` as semantic crossover. It also
+    reports a Plateau Scheduler, rank-based parent/inspiration selection,
+    elitist migration, per-island MAP-Elites or CVT-MAP-Elites, AWS SageMaker
+    sandbox runs, and linked code/experiment URLs at
+    `https://github.com/inter-co/science-codeevolve` and
+    `https://github.com/inter-co/science-codeevolve-experiments`.
   - Current evidence: `papers/README.md` marks CodeEvolve as agentic
     code-evolution inspiration and says LibreEvolve lacks CodeEvolve-style
     crossover, targeted refinement, modular orchestration, and context-aware
@@ -6434,9 +6447,12 @@ Primary evidence:
     source-specific code TODO for `2510.14150`, no prompt/solution dual fitness
     implementation boundary, no semantic inspiration-crossover operator, no
     meta-prompting exploration operator, no depth-refinement ancestor context
-    records, no exploration scheduler evidence, no sandbox/runtime-memory
-    parity report, and no benchmark/cost comparison artifact tied to the local
-    CodeEvolve PDF.
+    records, no Plateau Scheduler/evolution-rate trace, no sandbox/runtime-
+    memory parity report, no CVT-MAP-Elites parity evidence, and no benchmark/
+    cost comparison artifact tied to the local CodeEvolve PDF. LibreEvolve has
+    configurable inspiration sampling and optional prompt-program mutation, but
+    those are not CodeEvolve's prompt-fitness population, semantic crossover,
+    targeted-refinement, or component-ablation artifacts.
   - Required result: add source-boundary metadata and implementation gates for
     `2510.14150`: arXiv version/date/PDF hash, linked code/release status,
     source-license metadata, islands/population schema, prompt and solution
@@ -6444,9 +6460,17 @@ Primary evidence:
     inspiration-crossover provenance, meta-prompting exploration artifacts,
     depth-refinement ancestor context records, exploration-scheduler traces,
     sandbox runtime/memory limit evidence, MAP-Elites/CVT descriptor/archive
-    compatibility, AlphaEvolve and EoH benchmark rows, ablation/cost reports,
-    and README/ROADMAP wording that keeps CodeEvolve behavior inspiration-only
-    until local artifacts prove otherwise.
+    compatibility, AlphaEvolve benchmark rows for the 9 paper instances
+    (`CirclePackingSquare`, `CirclePackingRect`, `HexagonPacking`,
+    `MinimizeMaxMinDist`, and autocorrelation inequalities), EoH rows for bin
+    packing, TSP, and flow-shop scheduling, component/depth/inspiration/
+    MAP-Elites/topology ablation reports, Qwen3-Coder-30B vs GEMINI-2.5
+    quality-cost rows including the `n = 26` circle-packing `$6` vs `$35`
+    narrative and Table 2 cost/time values, hyperparameter rows (`5` or `10`
+    islands, `200` or `250` epochs, `k = 3..5`, `2..3` inspirations,
+    migration rate `0.1`, exploration `0.2..0.5`), and README/ROADMAP wording
+    that keeps CodeEvolve behavior inspiration-only until local artifacts prove
+    otherwise.
 
 - [ ] Add ThetaEvolve test-time RL source boundary before training claims.
   - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning

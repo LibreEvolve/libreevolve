@@ -5919,11 +5919,22 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track CodeEvolve paper evidence as a source-specific boundary.
   - Paper/source evidence: local arXiv `2510.14150`, `CODE EVOLVE: an
     open-source evolutionary framework for algorithmic discovery and
-    optimization`, presents an islands-based genetic algorithm with weighted
-    LLM ensembles, SEARCH/REPLACE edits, inspiration-based crossover,
+    optimization`, by Henrique Assumpcao, Diego Ferreira, Leandro Campos, and
+    Fabricio Murai was submitted as arXiv v4 on March 12, 2026; the cached PDF
+    hash is
+    `8dc8c35d24e2f6bce81e9608609e10b4dac5dd7072d155d9cd5c575d47472405`.
+    It presents an islands-based genetic algorithm with weighted LLM
+    ensembles, `SEARCH/REPLACE` edits, inspiration-based crossover,
     meta-prompting, depth-based targeted refinement, exploration scheduling,
     sandboxed evaluation, MAP-Elites/CVT-MAP-Elites archives, and
-    AlphaEvolve/EoH benchmark and cost-efficiency comparisons.
+    AlphaEvolve/EoH benchmark and cost-efficiency comparisons. It defines
+    solution fitness `fsol` and prompt fitness `fprompt`, uses Algorithm 1 for
+    exploitation/exploration with ancestor depth `k`, inspirations, and
+    `MetaPromptingLLM`, and reports Plateau Scheduler, elitist migration,
+    runtime/memory-bounded AWS SageMaker evaluation, weighted
+    GEMINI-2.5/Qwen3-Coder-30B ensembles, and code/results links at
+    `https://github.com/inter-co/science-codeevolve` and
+    `https://github.com/inter-co/science-codeevolve-experiments`.
   - Current gap: `papers/README.md` lists `2510.14150` as agentic
     code-evolution inspiration and says CodeEvolve-style crossover, targeted
     refinement, modular orchestration, and context-aware recombination are not
@@ -5932,18 +5943,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     preserve the CodeEvolve PDF itself as a source-specific evidence boundary
     with architecture rows, prompt/solution fitness definitions,
     operator-level claims, scheduler semantics, sandbox requirements,
-    benchmark-result rows, ablation/cost claims, linked-code status, or
-    validation that docs avoid conflating LibreEvolve's prompt-program support
-    with CodeEvolve framework parity.
+    benchmark-result rows, ablation/cost claims, linked-code status,
+    hyperparameter recommendations, or validation that docs avoid conflating
+    LibreEvolve's prompt-program support with CodeEvolve framework parity.
   - Required result: add paper-manifest and paper-index coverage for
     `2510.14150`: title/authors/arXiv version/date/PDF digest, source license,
     linked code URL/status, island/population and prompt/solution fitness
     schemas, weighted ensemble and model-cost metadata, inspiration-crossover,
     meta-prompting, depth-refinement, and exploration-scheduler records,
     sandbox/runtime/memory-limit evidence, MAP-Elites/CVT archive metadata,
-    AlphaEvolve/EoH benchmark and ablation/cost rows, relation to LibreEvolve,
-    and README/ROADMAP/code wording that keeps CodeEvolve-specific behavior
-    marked missing unless implementation artifacts and reports prove it.
+    AlphaEvolve benchmark rows for all 9 Table 1 instances, EoH benchmark rows
+    for online bin packing/TSP/flow-shop scheduling, component/depth/
+    inspiration/MAP-Elites/topology ablation rows, Qwen3-Coder-30B vs
+    GEMINI-2.5 cost/runtime rows from Table 2, open-framework comparisons with
+    OpenEvolve and ShinkaEvolve, LLM-backbone sensitivity rows, recommended
+    hyperparameter defaults, relation to LibreEvolve, and README/ROADMAP/code
+    wording that keeps CodeEvolve-specific behavior marked missing unless
+    implementation artifacts and reports prove it.
 
 - [ ] Track ThetaEvolve test-time learning paper evidence as a source-specific
       boundary.

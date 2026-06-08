@@ -5097,3 +5097,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     hooks, reproducibility status, and README/ROADMAP wording that treats
     local-correction combinatorics as missing paper evidence rather than
     implemented LibreEvolve support.
+
+- [ ] Track AlphaEvolve bilateral-trade lower-bound paper evidence.
+  - Paper/source evidence: arXiv `2603.08679`, submitted March 9, 2026, is
+    titled `A New Lower Bound for the Random Offerer Mechanism in Bilateral
+    Trade using AI-Guided Evolutionary Search`. Its abstract invokes the
+    Myerson-Satterthwaite setting for bilateral trade, contrasts first-best
+    GFT with BIC and BB mechanisms, focuses on the Random-Offerer mechanism,
+    and says AlphaEvolve searches value distributions to find a worst-case
+    instance with `GFT_FB / GFT_RO >= 2.0749`, improving on prior
+    counterexamples including an explicit example near `2.02`.
+  - Current gap: `papers/README.md` lists `2603.08679` as background-only
+    mechanism-design context with no bilateral-trade distribution benchmark,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Broad benchmark gaps do not capture value-distribution witness
+    schemas, FB/RO GFT calculations, economic mechanism assumptions, ratio
+    tolerance, or lower-bound baseline attribution.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2603.08679`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve economic-mechanism assumptions, value-distribution candidate
+    schemas, buyer/seller support and probability constraints, FB and RO GFT
+    calculation metadata, BIC/BB assumption records, ratio objective and
+    tolerance policy, witness distribution artifacts, prior `2` conjecture
+    and `~2.02` counterexample baselines, seed/budget records, independent
+    checker outputs, reproducibility status, and README/ROADMAP wording that
+    treats bilateral-trade lower-bound search as missing paper evidence rather
+    than implemented LibreEvolve support.

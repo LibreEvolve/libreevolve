@@ -5517,3 +5517,34 @@ Primary evidence:
     ROADMAP wording that keeps local-correction combinatorics as missing
     evidence and avoids treating AlphaEvolve-generated conjectures as proved
     results.
+
+- [ ] Add AlphaEvolve bilateral-trade mechanism-design boundary.
+  - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random
+    Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search`,
+    was submitted March 9, 2026. Its abstract frames bilateral trade under
+    the Myerson-Satterthwaite theorem, asks how closely Bayesian incentive
+    compatible (BIC) and budget-balanced (BB) mechanisms can approximate
+    first-best gains from trade (GFT), and studies the Random-Offerer (RO)
+    mechanism. It says AlphaEvolve searches the space of value distributions
+    and finds a new worst-case instance with
+    `GFT_FB / GFT_RO >= 2.0749`, improving the lower bound beyond prior
+    counterexamples near `2.02`.
+  - Current evidence: `papers/README.md` lists `2603.08679` only as
+    background AlphaEvolve mechanism-design context with no bilateral-trade
+    distribution benchmark. LibreEvolve has no first-class code TODO for this
+    source, no buyer/seller value-distribution candidate schema, no
+    Random-Offerer evaluator, no first-best GFT computation, no BIC/BB
+    assumption record, no ratio-verification report, no prior-counterexample
+    baseline comparison, and no economic-mechanism artifact policy for
+    distribution witnesses.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2603.08679`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve mechanism-design fixtures, value-distribution candidate
+    schema, buyer/seller support and probability constraints, FB and RO GFT
+    calculation records, BIC/BB assumption metadata, ratio objective
+    definition, numerical precision/tolerance policy, witness distribution
+    artifacts, prior lower-bound/counterexample baselines, seed/budget
+    records, independent checker outputs, and README/ROADMAP wording that
+    keeps bilateral-trade lower-bound discovery as missing evidence until
+    local implementation and reports exist.

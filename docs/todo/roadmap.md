@@ -4074,3 +4074,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     a background-only or benchmark-fixture status rule so roadmap claims do
     not outpace local AlphaEvolve-style local-correction combinatorics
     support.
+
+- [ ] Add AlphaEvolve bilateral-trade mechanism-design gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2603.08679`, submitted March 9, 2026, introduces
+    `A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade
+    using AI-Guided Evolutionary Search`. The abstract uses AlphaEvolve to
+    search value distributions for a worst-case Random-Offerer instance and
+    reports `GFT_FB / GFT_RO >= 2.0749`, widening the known gap between
+    first-best efficiency and Random-Offerer gains from trade.
+  - Current evidence: ROADMAP tracks broad benchmark gaps, constructive-math
+    result gaps, systems fixtures, and background paper-index rows. It does
+    not promote `2603.08679` beyond background-only status, define a
+    bilateral-trade distribution benchmark, compute first-best versus
+    Random-Offerer GFT, preserve BIC/BB assumptions, compare prior
+    counterexample baselines, or verify lower-bound witness distributions.
+  - Required result: add roadmap gates for `2603.08679`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    value-distribution candidate schema, buyer/seller support and probability
+    constraints, FB and RO GFT evaluator records, BIC/BB assumption metadata,
+    ratio objective and tolerance policy, witness distribution artifacts,
+    prior lower-bound/counterexample baselines, seed/budget records,
+    independent checker outputs, and a background-only or benchmark-fixture
+    status rule so roadmap claims do not outpace local AlphaEvolve-style
+    bilateral-trade lower-bound support.

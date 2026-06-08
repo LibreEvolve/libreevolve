@@ -3646,4 +3646,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and benchmark reports. Avoid implying LibreEvolve proves or implements
     AlphaEvolve-style local-correction combinatorics without those artifacts.
 
+- [ ] Keep README AlphaEvolve bilateral-trade claims absent or source-scoped
+      until mechanism-design benchmark evidence exists.
+  - Spec evidence: arXiv `2603.08679`, `A New Lower Bound for the Random
+    Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search`,
+    uses AlphaEvolve to search value distributions for Random-Offerer
+    worst-case performance. Its abstract reports a witness with
+    `GFT_FB / GFT_RO >= 2.0749` under the bilateral-trade framing of first-best
+    gains from trade versus BIC and BB mechanisms.
+  - Current evidence: README documents benchmark-report contracts, paper-cache
+    status, constructive-math and systems gaps, and example fixtures. It does
+    not mention `2603.08679`, define bilateral-trade value distributions,
+    compute first-best or Random-Offerer GFT, preserve BIC/BB assumptions,
+    compare the prior `2` conjecture or `~2.02` counterexample, or provide
+    witness distribution artifacts and checker outputs.
+  - Required result: if README mentions bilateral trade, Random-Offerer,
+    Myerson-Satterthwaite, BIC/BB mechanism design, first-best gains from
+    trade, `GFT_FB / GFT_RO`, AlphaEvolve-discovered value distributions, or
+    the `2.0749` lower bound, keep the wording source-scoped until local
+    artifacts can show the paper in the manifest, distribution schemas,
+    evaluator and ratio definitions, precision/tolerance records, baseline
+    attribution, witness artifacts, independent checker outputs, and benchmark
+    reports. Avoid implying LibreEvolve supports AlphaEvolve-style bilateral-
+    trade lower-bound discovery without those artifacts.
+
 ## Architecture Description

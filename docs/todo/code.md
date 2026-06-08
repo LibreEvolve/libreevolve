@@ -1474,26 +1474,38 @@ Primary evidence:
     reference-checker/statistical-test oracle support before claiming
     AlphaEvolve-style feedback from one or more independent evaluators.
 
-- [ ] Add execution-grounded incorrect-suggestion filtering evidence.
+- [ ] Extend execution-grounded filtering evidence into independent audit
+      rates.
   - Spec evidence: AlphaEvolve's introduction says its LLM-directed evolution
     is grounded in code execution and automatic evaluation, and that this
     evaluation mechanism lets AlphaEvolve avoid incorrect suggestions from the
     base LLM while using feedback to discover candidates that differ
     substantially from the initial pool.
-  - Current evidence: LibreEvolve validates evaluator result structure,
-    applies a local `is_valid` admission gate, records malformed-output and
-    rejected-candidate diagnostics, and stores failure/quarantine streams.
-    Those mechanics do not yet prove, in a paper-facing report, that incorrect
-    LLM proposals were actually caught by execution/evaluation, excluded from
-    accepted discovery claims, and fed back into subsequent search rather than
-    merely failing parser or local admission checks.
-  - Required result: add proposal-lifecycle evidence and validators linking
-    each LLM suggestion to backend/model identity, parsed mutation payload,
-    execution/evaluator outcome, validity/admission/retention status, rejection
-    reason, evaluator-oracle sufficiency for the claimed task, prompt-visible
-    feedback or failure-memory reuse, and aggregate false-acceptance/false-
-    rejection review fields before claiming AlphaEvolve-style grounding that
-    filters incorrect base-LLM suggestions.
+  - Current evidence: completed manifests now include
+    `runtime.history.proposal_lifecycle_report` with schema
+    `libreevolve.proposal_lifecycle_report.v1`, plus
+    `validate_proposal_lifecycle_report()`. The report merges generated
+    candidate history with generated failure rows by candidate id and records
+    proposal id, parent id, generation, proposal-batch metadata, backend/call
+    summaries when available, mutation payload hashes, evaluator validity,
+    archive admission or rejection, rejection reasons, execution-filtered
+    counts, bounded failure-memory linkage, and explicit false-acceptance/
+    false-rejection review status. Focused tests cover a cleanly parsed LLM
+    mutation that execution/evaluation marks invalid, rejects from archive
+    admission, persists to `failure_history.jsonl`, and exposes through the
+    lifecycle report without accepting an invalid generated proposal.
+  - Remaining gap: this is local run-level evidence, not an independent
+    adjudication of whether every rejected proposal was truly incorrect or
+    every accepted proposal was truly correct. It does not yet provide
+    evaluator-oracle sufficiency labels per benchmark, cross-run proposal
+    tables, semantic failed-proposal retrieval beyond bounded recent memory, or
+    audited false-acceptance/false-rejection rates.
+  - Required result: add independent rejudge/reference-checker or statistical
+    oracle evidence for accepted and rejected proposals, cross-run proposal
+    lifecycle tables, benchmark-specific oracle sufficiency labels, and audited
+    false-acceptance/false-rejection rates before claiming AlphaEvolve-style
+    filtering of incorrect base-LLM suggestions at benchmark/publication
+    strength.
 
 - [ ] Finish paper-facing evaluation-cascade promotion and attrition evidence.
   - Spec evidence: AlphaEvolve Section 2.4 describes an evaluation cascade in

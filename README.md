@@ -55,6 +55,7 @@ Built by [Timothy Gregg](https://complete.tech) at [CompleteTech](https://comple
 | ⚡ | **Cascade evaluator** | Default diff/syntax/subprocess filtering plus configurable staged validators |
 | 🔀 | **SEARCH/REPLACE diffs** | LLMs can propose targeted edits, with full-block/full-code mode available when configured |
 | 📜 | **Failure memory** | Failed/rejected mutations are logged to `failure_history.jsonl` and bounded recent examples are shown in prompts |
+| 🧭 | **Proposal lifecycle evidence** | Completed manifests summarize generated proposal parsing, evaluation, admission/rejection, backend summaries, and failure-memory linkage |
 | 🧾 | **Prompt programs** | Prompt templates are selected, scored, logged, and optionally mutated for meta-prompt evolution |
 | 🧐 | **Optional LLM critique and feedback** | Critique can revise mutations before evaluation; feedback graders can add metrics, adjust fitness evidence, or discard candidates after evaluation |
 | 🔌 | **Plugin system** | Lifecycle plus metadata/artifact hooks with paper-inspired plugins |
@@ -1127,6 +1128,16 @@ Repeated failure patterns use distinct failed candidate ids with shared
 fingerprints and incremented repetition counts.
 Generated and seed failure rows include archive-admission reason/metadata when
 the candidate has been evaluated against the archive policy.
+Completed manifests also include
+`runtime.history.proposal_lifecycle_report`, a bounded
+`libreevolve.proposal_lifecycle_report.v1` summary that merges generated
+candidate history with generated failure rows by candidate id. The report
+links each generated proposal to backend/call summaries when available,
+mutation payload hashes, evaluator validity, archive admission or rejection,
+rejection reasons, execution-filtered counts, prompt-visible failure-memory
+availability, and explicit false-acceptance/false-rejection review fields. It
+is local execution-grounding evidence, not an independent benchmark rejudge or
+audited error-rate claim.
 Rejected workspace seed rows render all seed files into bounded `mutation_text`
 and include `seed_workspace` per-file path, role, byte count, SHA-256, snippet,
 and truncation metadata.

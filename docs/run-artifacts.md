@@ -2678,6 +2678,27 @@ prompt-memory analysis, but restored records are annotated with
 for resume-time reapplication. Retention policy and richer long-term query
 controls remain open work.
 
+## `runtime.history.proposal_lifecycle_report`
+
+Completed manifests include a bounded proposal lifecycle report with schema
+`libreevolve.proposal_lifecycle_report.v1`. It merges generated candidates
+from `history.jsonl` with generated rows from `failure_history.jsonl` by
+candidate id so rejected evaluated candidates are counted once. Each lifecycle
+record includes proposal id, parent id, generation, proposal-batch metadata,
+accepted/rejected lifecycle status, evaluator validity, finite score when
+available, diff/evaluator error summaries, execution-filtered status, archive
+admission or rejection flags, backend/call summaries when available, mutation
+payload SHA-256 evidence, and captured proposal-metadata field hashes.
+
+The report also includes aggregate generated/accepted/rejected counts,
+execution-filtered counts, diff/parse error counts, invalid-evaluation counts,
+archive-rejection counts, rejection-reason buckets, failure-memory linkage, and
+explicit false-acceptance/false-rejection review fields. Its
+`claim_ready: false` boundary is intentional: the report proves local
+execution/evaluator gating and bounded failure-memory availability, not an
+independent rejudge of rejected candidates, cross-run semantic failed-proposal
+retrieval, or audited false-positive/false-negative rates.
+
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage
 status, stdout/stderr, retry/sample attempts, and LLM grader feedback. It also

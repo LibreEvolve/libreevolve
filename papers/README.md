@@ -493,6 +493,18 @@ fitness or metrics still cannot enter normal strict history. They are
 diagnosed through invalid/quarantine streams until a finite rejected-candidate
 stream or normalization policy is implemented.
 
+AlphaEvolve execution-grounding note: completed manifests now include
+`runtime.history.proposal_lifecycle_report` with schema
+`libreevolve.proposal_lifecycle_report.v1`. The report merges generated
+candidate history with generated failure records by candidate id and records
+backend/call summaries, mutation payload hashes, evaluator validity, archive
+admission or rejection, rejection reasons, execution-filtered counts, bounded
+failure-memory linkage, and explicit false-acceptance/false-rejection review
+status. This supports a local claim that execution/evaluation gates generated
+suggestions before accepted discovery claims, while remaining short of an
+independent rejudge, cross-run proposal table, or audited false-positive/false-
+negative rate.
+
 AlphaEvolve archive-history consistency note: accepted archive admissions
 prevalidate their strict candidate history record before mutating the live
 MAP-Elites/island archive. Malformed accepted records such as candidates with

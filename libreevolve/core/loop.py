@@ -5118,6 +5118,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
+        "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
         "archive_state": archive_state,
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
@@ -6054,6 +6055,542 @@ def _evaluator_workload_report(programs: list[Program]) -> dict:
     }
     report["validation"] = validate_evaluator_workload_report(report)
     return report
+
+
+def _proposal_lifecycle_report(
+    db: ProgramDatabase,
+    programs: list[Program],
+) -> dict:
+    generated_programs = [
+        program
+        for program in programs
+        if isinstance(program.metadata, dict)
+        and program.metadata.get("candidate_type") == "generated"
+    ]
+    failure_records = db.failure_records_snapshot()
+    generated_failures = [
+        record
+        for record in failure_records
+        if isinstance(record, dict)
+        and record.get("record_type", "generated") == "generated"
+    ]
+    failure_by_program_id = {
+        record["program_id"]: record
+        for record in generated_failures
+        if isinstance(record.get("program_id"), str)
+    }
+    generated_program_ids = {program.id for program in generated_programs}
+    lifecycle_records = [
+        _proposal_lifecycle_history_record(
+            program,
+            failure_by_program_id.get(program.id),
+        )
+        for program in generated_programs
+    ] + [
+        _proposal_lifecycle_failure_record(record)
+        for record in generated_failures
+        if record.get("program_id") not in generated_program_ids
+    ]
+    lifecycle_records.sort(key=_proposal_lifecycle_sort_key)
+    accepted_invalid_count = sum(
+        1
+        for record in lifecycle_records
+        if record.get("lifecycle_status") == "accepted_history"
+        and record.get("evaluator_is_valid") is not True
+    )
+    accepted_generated_count = sum(
+        1
+        for record in lifecycle_records
+        if record.get("lifecycle_status") == "accepted_history"
+    )
+    rejected_generated_count = sum(
+        1
+        for record in lifecycle_records
+        if str(record.get("lifecycle_status", "")).startswith("rejected_")
+    )
+    evaluation_filtered_count = sum(
+        1 for record in lifecycle_records if record.get("execution_filtered") is True
+    )
+    report = {
+        "schema": "libreevolve.proposal_lifecycle_report.v1",
+        "source": "history_and_failure_history_records",
+        "generated_candidate_count": len(lifecycle_records),
+        "accepted_generated_count": accepted_generated_count,
+        "rejected_generated_count": rejected_generated_count,
+        "execution_filtered_count": evaluation_filtered_count,
+        "diff_or_parse_error_count": sum(
+            1 for record in lifecycle_records if record.get("diff_error") is not None
+        ),
+        "invalid_evaluation_count": sum(
+            1 for record in lifecycle_records if record.get("evaluator_is_valid") is False
+        ),
+        "archive_rejected_count": sum(
+            1
+            for record in lifecycle_records
+            if record.get("admission", {}).get("admitted") is False
+        ),
+        "accepted_invalid_count": accepted_invalid_count,
+        "rejection_reasons": _proposal_lifecycle_rejection_reasons(lifecycle_records),
+        "records": lifecycle_records[:50],
+        "records_truncated": len(lifecycle_records) > 50,
+        "feedback_reuse": {
+            "failure_record_count": len(failure_records),
+            "generated_failure_record_count": len(generated_failures),
+            "failure_memory_context_count": len(db.retrieval_failure_context),
+            "failure_memory_policy": (
+                "bounded_recent_failure_records_rendered_by_prompt_sampler_when_available"
+            ),
+            "failure_index_source": "runtime.history.failure_index",
+            "queryable_failure_fingerprints": True,
+        },
+        "false_acceptance_review": {
+            "status": "not_independently_reviewed",
+            "accepted_invalid_count": accepted_invalid_count,
+            "policy": (
+                "history admission requires evaluator is_valid true before archive "
+                "retention, but no independent false-acceptance audit is run"
+            ),
+        },
+        "false_rejection_review": {
+            "status": "not_independently_reviewed",
+            "policy": (
+                "rejected candidates are persisted with bounded diagnostics, but "
+                "LibreEvolve does not rerun them through a stronger adjudicator"
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "execution_grounded_incorrect_suggestion_filtering": True,
+            "independent_false_acceptance_rate": False,
+            "independent_false_rejection_rate": False,
+            "remaining_gap": [
+                "independent_rejudge_of_rejected_candidates",
+                "cross_run_proposal_lifecycle_table",
+                "audited_false_acceptance_and_false_rejection_rates",
+                "semantic_failed_proposal_retrieval_beyond_bounded_recent_memory",
+            ],
+        },
+    }
+    report["validation"] = validate_proposal_lifecycle_report(report)
+    return report
+
+
+def _proposal_lifecycle_history_record(
+    program: Program,
+    failure_record: Mapping[str, object] | None = None,
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), dict)
+        else {}
+    )
+    admitted = admission.get("admitted") is True
+    diff_error = (
+        _proposal_lifecycle_text(failure_record.get("diff_error"), 500)
+        if isinstance(failure_record, Mapping)
+        else None
+    )
+    evaluator_error = _proposal_lifecycle_text(evaluation.get("error"), 500)
+    rejection_reason = (
+        _proposal_lifecycle_text(
+            failure_record.get("admission_reason")
+            or failure_record.get("diff_error")
+            or failure_record.get("error"),
+            500,
+        )
+        if isinstance(failure_record, Mapping)
+        else _proposal_lifecycle_text(admission.get("reason"), 500)
+    )
+    execution_filtered = (
+        not admitted
+        and (
+            diff_error is not None
+            or evaluation.get("is_valid") is False
+            or admission.get("reason") == "invalid_evaluation"
+        )
+    )
+    record = {
+        "proposal_id": program.id,
+        "parent_id": program.parent_id,
+        "generation": program.generation,
+        "proposal_batch": _proposal_lifecycle_batch(metadata.get("proposal_batch")),
+        "lifecycle_status": (
+            "accepted_history" if admitted else "rejected_history"
+        ),
+        "evaluator_is_valid": evaluation.get("is_valid"),
+        "score": _proposal_lifecycle_number(program.fitness),
+        "diff_error": diff_error,
+        "evaluator_error": evaluator_error,
+        "execution_filtered": execution_filtered,
+        "admission": _proposal_lifecycle_admission(admission),
+        "llm": _proposal_lifecycle_llm_summary(
+            metadata.get("llm_calls"),
+            metadata.get("backend_idx"),
+        ),
+        "mutation": _proposal_lifecycle_mutation_summary(
+            metadata.get("diff"),
+            mutation_mode=metadata.get("mutation_mode"),
+        ),
+        "proposal_metadata": _proposal_lifecycle_proposal_metadata(
+            metadata.get("proposal")
+        ),
+    }
+    if not admitted:
+        record["rejection_reason"] = rejection_reason
+        record["failure_record_linked"] = isinstance(failure_record, Mapping)
+    return record
+
+
+def _proposal_lifecycle_failure_record(record: dict) -> dict:
+    archive_admission = (
+        record.get("archive_admission")
+        if isinstance(record.get("archive_admission"), dict)
+        else {}
+    )
+    diff_error = _proposal_lifecycle_text(record.get("diff_error"), 500)
+    evaluator_error = _proposal_lifecycle_text(record.get("error"), 500)
+    is_valid = record.get("is_valid")
+    admitted = archive_admission.get("admitted")
+    execution_filtered = (
+        diff_error is not None
+        or is_valid is False
+        or record.get("admission_reason") == "invalid_evaluation"
+    )
+    return {
+        "proposal_id": record.get("program_id"),
+        "parent_id": record.get("parent_id"),
+        "generation": record.get("generation"),
+        "proposal_batch": {},
+        "lifecycle_status": "rejected_failure_history",
+        "evaluator_is_valid": is_valid if isinstance(is_valid, bool) else None,
+        "score": _proposal_lifecycle_number(record.get("score")),
+        "diff_error": diff_error,
+        "evaluator_error": evaluator_error,
+        "execution_filtered": execution_filtered,
+        "rejection_reason": _proposal_lifecycle_text(
+            record.get("admission_reason") or diff_error or evaluator_error,
+            500,
+        ),
+        "admission": _proposal_lifecycle_admission(archive_admission),
+        "llm": _proposal_lifecycle_llm_from_failure(record.get("llm")),
+        "mutation": _proposal_lifecycle_failure_mutation(record),
+        "proposal_metadata": {"captured": False, "fields": []},
+    }
+
+
+def _proposal_lifecycle_batch(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        return {}
+    result: dict = {}
+    for field in (
+        "policy",
+        "proposal_index",
+        "proposal_number",
+        "proposals_per_generation",
+        "loop_proposal_index",
+    ):
+        item = value.get(field)
+        if isinstance(item, (str, int)) and not isinstance(item, bool):
+            result[field] = item
+    return result
+
+
+def _proposal_lifecycle_admission(value: Mapping[str, object]) -> dict:
+    if not isinstance(value, Mapping):
+        return {}
+    result: dict = {}
+    for field in (
+        "admitted",
+        "reason",
+        "evaluation_is_valid",
+        "cell_admitted",
+        "elite_retained",
+        "search_state_changed",
+        "sampling_eligible",
+    ):
+        item = value.get(field)
+        if isinstance(item, (str, bool)):
+            result[field] = item
+    return result
+
+
+def _proposal_lifecycle_llm_summary(
+    calls: object,
+    backend_idx: object = None,
+) -> dict:
+    summary: dict = {}
+    if isinstance(backend_idx, int) and not isinstance(backend_idx, bool):
+        summary["backend_idx"] = backend_idx
+    if isinstance(calls, list):
+        call_records = [
+            call_summary
+            for call in calls[:5]
+            if (call_summary := _proposal_lifecycle_call_summary(call))
+        ]
+        if call_records:
+            summary["calls"] = call_records
+            summary["call_count"] = len(calls)
+            summary["calls_truncated"] = len(calls) > len(call_records)
+    return summary
+
+
+def _proposal_lifecycle_llm_from_failure(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        return {}
+    summary: dict = {}
+    backend_idx = value.get("backend_idx")
+    if isinstance(backend_idx, int) and not isinstance(backend_idx, bool):
+        summary["backend_idx"] = backend_idx
+    calls = value.get("calls")
+    if isinstance(calls, list):
+        summary["calls"] = [
+            call_summary
+            for call in calls[:5]
+            if (call_summary := _proposal_lifecycle_call_summary(call))
+        ]
+        call_count = value.get("call_count")
+        summary["call_count"] = (
+            call_count
+            if isinstance(call_count, int) and not isinstance(call_count, bool)
+            else len(summary["calls"])
+        )
+        summary["calls_truncated"] = value.get("calls_truncated") is True
+    return summary
+
+
+def _proposal_lifecycle_call_summary(call: object) -> dict:
+    if not isinstance(call, Mapping):
+        return {}
+    summary: dict = {}
+    for field in (
+        "id",
+        "call_id",
+        "role",
+        "backend",
+        "backend_name",
+        "provider",
+        "model",
+        "status",
+        "finish_reason",
+        "error",
+        "provider_failure_category",
+    ):
+        value = _proposal_lifecycle_text(call.get(field), 160)
+        if value is not None:
+            summary[field] = value
+    for field in (
+        "backend_idx",
+        "attempt_index",
+        "provider_attempts",
+        "prompt_chars",
+        "output_chars",
+        "total_tokens",
+        "cost_microusd",
+    ):
+        value = call.get(field)
+        if isinstance(value, int) and not isinstance(value, bool):
+            summary[field] = value
+    return summary
+
+
+def _proposal_lifecycle_mutation_summary(
+    value: object,
+    *,
+    mutation_mode: object = None,
+) -> dict:
+    summary = {
+        "payload_text": isinstance(value, str),
+        "payload_type": type(value).__name__,
+    }
+    if isinstance(mutation_mode, str):
+        summary["mutation_mode"] = mutation_mode
+    if isinstance(value, str):
+        summary["sha256"] = hashlib.sha256(
+            value.encode("utf-8", errors="replace")
+        ).hexdigest()
+        summary["chars"] = len(value)
+    return summary
+
+
+def _proposal_lifecycle_failure_mutation(record: Mapping[str, object]) -> dict:
+    summary = {
+        "payload_text": record.get("mutation_payload_text"),
+        "payload_type": record.get("mutation_payload_type"),
+        "sha256": record.get("mutation_sha256"),
+        "truncated": record.get("mutation_truncated") is True,
+        "source": "failure_history_bounded_mutation_payload",
+    }
+    return {key: value for key, value in summary.items() if value is not None}
+
+
+def _proposal_lifecycle_proposal_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        return {"captured": False, "fields": []}
+    fields = sorted(key for key in value if isinstance(key, str))
+    return {
+        "captured": bool(fields),
+        "fields": fields,
+        "text_field_hashes": {
+            key: hashlib.sha256(
+                str(value[key]).encode("utf-8", errors="replace")
+            ).hexdigest()
+            for key in fields
+            if isinstance(value.get(key), str)
+        },
+    }
+
+
+def _proposal_lifecycle_number(value: object) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    if not math.isfinite(float(value)):
+        return None
+    return float(value)
+
+
+def _proposal_lifecycle_text(value: object, max_chars: int) -> str | None:
+    if not isinstance(value, str):
+        return None
+    redacted = redact_sensitive_text(value)
+    if len(redacted) <= max_chars:
+        return redacted
+    if max_chars <= 3:
+        return redacted[:max_chars]
+    return redacted[: max_chars - 3] + "..."
+
+
+def _proposal_lifecycle_sort_key(record: dict) -> tuple:
+    generation = record.get("generation")
+    if not isinstance(generation, int) or isinstance(generation, bool):
+        generation = 10**9
+    batch = record.get("proposal_batch") if isinstance(record.get("proposal_batch"), dict) else {}
+    loop_index = batch.get("loop_proposal_index")
+    if not isinstance(loop_index, int) or isinstance(loop_index, bool):
+        loop_index = 10**9
+    proposal_id = record.get("proposal_id") if isinstance(record.get("proposal_id"), str) else ""
+    return generation, loop_index, proposal_id
+
+
+def _proposal_lifecycle_rejection_reasons(records: list[dict]) -> dict:
+    reasons: dict[str, int] = {}
+    for record in records:
+        if not str(record.get("lifecycle_status", "")).startswith("rejected_"):
+            continue
+        reason = record.get("rejection_reason")
+        if not isinstance(reason, str) or not reason:
+            reason = "unknown"
+        reasons[reason] = reasons.get(reason, 0) + 1
+    return dict(sorted(reasons.items()))
+
+
+def validate_proposal_lifecycle_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.proposal_lifecycle_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "proposal lifecycle report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "accepted_generated_count",
+        "rejected_generated_count",
+        "execution_filtered_count",
+        "diff_or_parse_error_count",
+        "invalid_evaluation_count",
+        "archive_rejected_count",
+        "accepted_invalid_count",
+        "rejection_reasons",
+        "records",
+        "records_truncated",
+        "feedback_reuse",
+        "false_acceptance_review",
+        "false_rejection_review",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"proposal lifecycle report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.proposal_lifecycle_report.v1":
+        issues.append({"code": "invalid_schema", "message": "proposal lifecycle report schema is unsupported"})
+    if report.get("source") != "history_and_failure_history_records":
+        issues.append({"code": "invalid_source", "message": "proposal lifecycle report source is unsupported"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    accepted = 0
+    rejected = 0
+    execution_filtered = 0
+    diff_errors = 0
+    invalid_eval = 0
+    archive_rejected = 0
+    accepted_invalid = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_record", "message": f"record {index} must be an object"})
+            continue
+        if not isinstance(record.get("proposal_id"), str) or not record.get("proposal_id"):
+            issues.append({"code": "invalid_proposal_id", "message": f"record {index} proposal_id is invalid"})
+        status = record.get("lifecycle_status")
+        if status == "accepted_history":
+            accepted += 1
+            if record.get("evaluator_is_valid") is not True:
+                accepted_invalid += 1
+        elif status in {"rejected_history", "rejected_failure_history"}:
+            rejected += 1
+        else:
+            issues.append({"code": "invalid_lifecycle_status", "message": f"record {index} lifecycle_status is invalid"})
+        if record.get("execution_filtered") is True:
+            execution_filtered += 1
+        if record.get("diff_error") is not None:
+            diff_errors += 1
+        if record.get("evaluator_is_valid") is False:
+            invalid_eval += 1
+        admission = record.get("admission")
+        if isinstance(admission, dict) and admission.get("admitted") is False:
+            archive_rejected += 1
+        if not isinstance(record.get("mutation"), dict):
+            issues.append({"code": "invalid_mutation_summary", "message": f"record {index} mutation summary is invalid"})
+        if not isinstance(record.get("llm"), dict):
+            issues.append({"code": "invalid_llm_summary", "message": f"record {index} llm summary is invalid"})
+    truncated = report.get("records_truncated") is True
+    if not truncated:
+        expected = accepted + rejected
+        if report.get("generated_candidate_count") != expected:
+            issues.append({"code": "invalid_generated_count", "message": "generated_candidate_count must match record count"})
+        if report.get("accepted_generated_count") != accepted:
+            issues.append({"code": "invalid_accepted_count", "message": "accepted_generated_count must match records"})
+        if report.get("rejected_generated_count") != rejected:
+            issues.append({"code": "invalid_rejected_count", "message": "rejected_generated_count must match records"})
+        if report.get("execution_filtered_count") != execution_filtered:
+            issues.append({"code": "invalid_filtered_count", "message": "execution_filtered_count must match records"})
+        if report.get("diff_or_parse_error_count") != diff_errors:
+            issues.append({"code": "invalid_diff_error_count", "message": "diff_or_parse_error_count must match records"})
+        if report.get("invalid_evaluation_count") != invalid_eval:
+            issues.append({"code": "invalid_evaluation_count", "message": "invalid_evaluation_count must match records"})
+        if report.get("archive_rejected_count") != archive_rejected:
+            issues.append({"code": "invalid_archive_rejected_count", "message": "archive_rejected_count must match records"})
+        if report.get("accepted_invalid_count") != accepted_invalid:
+            issues.append({"code": "invalid_accepted_invalid_count", "message": "accepted_invalid_count must match records"})
+    if report.get("accepted_invalid_count") not in (0, accepted_invalid):
+        issues.append({"code": "accepted_invalid_overclaim", "message": "accepted invalid count is inconsistent"})
+    if not isinstance(report.get("feedback_reuse"), dict):
+        issues.append({"code": "invalid_feedback_reuse", "message": "feedback_reuse must be an object"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "invalid_claim_ready", "message": "proposal lifecycle report must not claim independent audit readiness"})
+    return {
+        "schema": "libreevolve.proposal_lifecycle_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _configured_stage_workload(raw_stage: dict) -> dict:

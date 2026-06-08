@@ -50,31 +50,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent evaluator composition from local cascade stages or
     post-evaluation LLM graders.
 
-- [ ] Track execution-grounded filtering of incorrect base-LLM suggestions.
+- [ ] Track independent audit rates for execution-grounded filtering of
+      incorrect base-LLM suggestions.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Table 1 context.
   - Requirement: AlphaEvolve says code execution and automatic evaluation
     ground the LLM-directed evolution process, allowing the system to avoid
     incorrect suggestions from the base LLM and use feedback to move beyond
     the initial candidate pool.
-  - Partial status: LibreEvolve records structured evaluator results,
-    malformed-output failures, rejected candidates, admission decisions,
-    quarantine streams, and prompt-visible diagnostics for bounded recent
-    failures.
-  - Current gap: paper-facing reports do not yet connect each generated LLM
-    suggestion through parsing, execution, evaluator judgment, validity,
-    admission, retention, rejection reason, and subsequent feedback reuse.
-    Current validity/admission logs are useful local mechanics, but they do
-    not by themselves prove the AlphaEvolve claim that automatic evaluation
-    filtered incorrect base-model suggestions before accepted discoveries were
-    reported.
-  - Required result: add paper/report evidence for proposal lifecycle
-    filtering: backend/model id, suggestion/proposal id, mutation payload hash,
-    execution/evaluator outcome, validity/admission/retention status,
-    rejection reason taxonomy, evaluator-oracle sufficiency for the benchmark,
-    prompt feedback or failure-memory linkage, aggregate false-acceptance/
-    false-rejection review fields, and claim-readiness checks before describing
-    LibreEvolve as AlphaEvolve-style grounded against incorrect base-LLM
-    suggestions.
+  - Partial status: completed manifests now include
+    `runtime.history.proposal_lifecycle_report` with schema
+    `libreevolve.proposal_lifecycle_report.v1`. The report connects generated
+    proposals through backend/call summaries, mutation hashes, execution/
+    evaluator validity, archive admission or rejection, rejection reasons,
+    execution-filtered counts, failure-memory linkage, aggregate false-
+    acceptance/false-rejection review status, and claim-readiness checks.
+  - Current gap: the report is local run evidence. It does not independently
+    rejudge accepted or rejected proposals, prove benchmark-specific evaluator-
+    oracle sufficiency, aggregate cross-run proposal tables, or report audited
+    false-acceptance/false-rejection rates.
+  - Required result: add independent rejudge/reference-checker or statistical
+    oracle evidence for accepted and rejected proposals, cross-run proposal
+    lifecycle tables, semantic failed-proposal retrieval, benchmark-specific
+    oracle sufficiency labels, and audited false-acceptance/false-rejection
+    rates before describing LibreEvolve as publication-strength
+    AlphaEvolve-style grounded against incorrect base-LLM suggestions.
 
 - [ ] Track evaluation-cascade promotion and attrition evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4 and the matrix-

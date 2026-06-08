@@ -44,6 +44,12 @@ LibreEvolve has:
   validator or configured cascade stages plus LLM feedback graders with metric
   ownership, merge policy, failure policy, prompt-feedback linkage, and an
   explicit limitation for independent multi-oracle arbitration
+- proposal lifecycle reports under
+  `runtime.history.proposal_lifecycle_report`, merging generated-candidate
+  history with failure records to show backend/call summaries, mutation hashes,
+  evaluator validity, archive admission/rejection, rejection reasons,
+  execution-filtered counts, bounded failure-memory linkage, and explicit
+  limitations for independent false-acceptance/false-rejection audits
 - opt-in evaluator artifact copy-out from temporary candidate workspaces with
   hashes, limits, and text redaction metadata
 - validator subprocess environment allowlisting, persisted stdout/stderr

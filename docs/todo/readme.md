@@ -40,26 +40,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes local staged validation and feedback graders from
     AlphaEvolve-style feedback from one or more independent evaluators.
 
-- [ ] Keep README grounding claims scoped until incorrect-suggestion filtering
-      evidence exists.
+- [ ] Keep README grounding claims scoped until independent incorrect-
+      suggestion audit evidence exists.
   - Spec evidence: AlphaEvolve states that code execution and automatic
     evaluation ground LLM-directed evolution and let the system avoid
     incorrect suggestions from the base LLM while using feedback to discover
     candidates substantially different from the initial pool.
-  - Current evidence: README can describe local evaluator execution, strict
-    result validation, the reserved `is_valid` gate, rejected-candidate
-    diagnostics, malformed-output failures, and bounded failure feedback. It
-    does not yet describe a paper-facing proposal-lifecycle report proving
-    that incorrect LLM suggestions were caught by execution/evaluation,
-    excluded from accepted discovery claims, and reused as feedback in
-    subsequent search.
-  - Required result: when proposal-lifecycle filtering reports land, update
-    README, ROADMAP, papers index, and code/paper TODOs together with backend
-    and proposal ids, mutation hashes, evaluator outcomes, validity/admission/
-    retention status, rejection reasons, evaluator-oracle sufficiency,
-    feedback/failure-memory linkage, and false-acceptance/false-rejection
-    review fields so README distinguishes local validity mechanics from
-    AlphaEvolve-style grounding against incorrect base-LLM suggestions.
+  - Current evidence: README now describes
+    `runtime.history.proposal_lifecycle_report`, a validated
+    `libreevolve.proposal_lifecycle_report.v1` summary with proposal ids,
+    backend/call summaries, mutation hashes, evaluator validity, archive
+    admission or rejection, rejection reasons, execution-filtered counts,
+    failure-memory linkage, and explicit false-acceptance/false-rejection
+    review fields. It also keeps the claim scoped to local execution-
+    grounding evidence rather than an independent benchmark rejudge.
+  - Required result: when independent rejudge/reference-checker or statistical
+    oracle evidence lands, update README, ROADMAP, papers index, and code/paper
+    TODOs together with benchmark-specific evaluator-oracle sufficiency,
+    cross-run proposal lifecycle tables, semantic failed-proposal retrieval,
+    and audited false-acceptance/false-rejection rates.
 
 - [ ] Keep README cascade claims scoped to partial promotion/attrition reports.
   - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use

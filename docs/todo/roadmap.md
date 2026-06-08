@@ -93,25 +93,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     local staged validation and post-hoc graders from AlphaEvolve-style
     multi-evaluator feedback.
 
-- [ ] Keep execution-grounding roadmap wording scoped until incorrect-
-      suggestion filtering evidence exists.
+- [ ] Keep execution-grounding roadmap wording scoped until independent
+      incorrect-suggestion audit evidence exists.
   - Spec evidence: AlphaEvolve's introduction says LLM-directed evolution is
     grounded by code execution and automatic evaluation, and that this
     mechanism avoids incorrect suggestions from the base LLM while letting
     feedback drive candidates far from the initial pool.
-  - Current evidence: `ROADMAP.md`, README, and paper TODOs can cite local
-    evaluator execution, structured result validation, `is_valid` admission,
-    rejected-candidate diagnostics, malformed-output failures, and bounded
-    failure feedback. They do not yet require roadmap-level proposal-lifecycle
-    evidence that proves incorrect generated suggestions are filtered by
-    execution/evaluation before they can support accepted discovery claims.
-  - Required result: when execution-grounding reports land, update ROADMAP,
-    README, papers index, and code/paper TODOs with proposal id, backend/model
-    id, mutation payload hash, execution/evaluator outcome, validity/admission/
-    retention status, rejection reason, evaluator-oracle sufficiency,
-    feedback/failure-memory linkage, and aggregate false-acceptance/false-
-    rejection review fields before claiming AlphaEvolve-style filtering of
-    incorrect base-LLM suggestions.
+  - Current evidence: `ROADMAP.md`, README, and papers index now cite
+    `runtime.history.proposal_lifecycle_report`, a validated
+    `libreevolve.proposal_lifecycle_report.v1` runtime summary with proposal
+    id, backend/call summaries, mutation payload hash, evaluator validity,
+    archive admission/rejection, rejection reason, execution-filtered counts,
+    failure-memory linkage, and false-acceptance/false-rejection review
+    status. The wording explicitly keeps this as local execution-grounding
+    evidence rather than an independent audit.
+  - Required result: when independent rejudge/reference-checker or statistical
+    oracle reports land, update ROADMAP, README, papers index, and code/paper
+    TODOs with benchmark-specific evaluator-oracle sufficiency, cross-run
+    proposal lifecycle tables, semantic failed-proposal retrieval, and audited
+    false-acceptance/false-rejection rates before claiming publication-strength
+    AlphaEvolve-style filtering of incorrect base-LLM suggestions.
 
 - [ ] Keep cascade roadmap wording scoped to partial promotion/attrition
       reports.

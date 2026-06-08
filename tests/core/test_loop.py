@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_evaluator_oracle_registry,
     validate_paper_evaluator_metric_contract,
+    validate_proposal_lifecycle_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -3754,6 +3755,67 @@ def test_runtime_history_reports_evaluator_workload_provenance():
     assert stage["budget"]["max_trials"] == 25
     assert stage["checkpoint_policy"] == "retained_artifacts"
     assert stage["score_fields"] == ["score"]
+
+
+def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    ok = 'x=2' not in code\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    failures = [
+        json.loads(line)
+        for line in (run_dir / "failure_history.jsonl").read_text().splitlines()
+    ]
+    assert len(records) == 2
+    assert len(failures) == 1
+    assert failures[0]["admission_reason"] == "invalid_evaluation"
+    assert failures[0]["llm"]["backend_idx"] == 0
+    assert failures[0]["llm"]["calls"][0]["backend_name"] == "fake/model"
+
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["proposal_lifecycle_report"]
+    assert report["schema"] == "libreevolve.proposal_lifecycle_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_proposal_lifecycle_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["accepted_generated_count"] == 0
+    assert report["rejected_generated_count"] == 1
+    assert report["execution_filtered_count"] == 1
+    assert report["invalid_evaluation_count"] == 1
+    assert report["archive_rejected_count"] == 1
+    assert report["accepted_invalid_count"] == 0
+    assert report["feedback_reuse"]["generated_failure_record_count"] == 1
+    assert report["feedback_reuse"]["failure_memory_context_count"] == 1
+    assert report["claim_ready"] is False
+    assert "audited_false_acceptance_and_false_rejection_rates" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    lifecycle = report["records"][0]
+    assert lifecycle["lifecycle_status"] == "rejected_history"
+    assert lifecycle["evaluator_is_valid"] is False
+    assert lifecycle["execution_filtered"] is True
+    assert lifecycle["rejection_reason"] == "invalid_evaluation"
+    assert lifecycle["failure_record_linked"] is True
+    assert lifecycle["admission"]["admitted"] is False
+    assert lifecycle["admission"]["reason"] == "invalid_evaluation"
+    assert lifecycle["llm"]["calls"][0]["backend_name"] == "fake/model"
+    assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
 
 
 def test_evolve_records_best_artifact_export_failure_without_failing_search():

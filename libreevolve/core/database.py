@@ -503,6 +503,9 @@ class ProgramDatabase:
             ),
             "repetition_count": repetition_count,
         }
+        failure_llm = _failure_program_llm_summary(program)
+        if failure_llm:
+            record["llm"] = failure_llm
         record = versioned_record(FAILURE_RECORD_SCHEMA, record)
         if score_diagnostic is not None:
             record["score_diagnostic"] = score_diagnostic
@@ -731,6 +734,9 @@ class ProgramDatabase:
             fingerprint_limit=_MAX_FAILURE_INDEX_FINGERPRINTS,
             records_per_fingerprint_limit=_MAX_FAILURE_INDEX_RECORDS_PER_FINGERPRINT,
         )
+
+    def failure_records_snapshot(self) -> list[dict]:
+        return copy.deepcopy(self._failure_records)
 
     def hypothesis_index_snapshot(self) -> dict:
         return _hypothesis_index_snapshot(
@@ -7004,11 +7010,14 @@ def _failure_llm_call_summary(record: object) -> dict:
         return {}
     summary: dict = {}
     for field, max_chars in (
+        ("id", 120),
         ("call_id", 120),
         ("role", 80),
         ("backend", 120),
+        ("backend_name", 120),
         ("provider", 80),
         ("model", 120),
+        ("status", 80),
         ("finish_reason", 80),
         ("error", 200),
         ("provider_failure_category", 80),
@@ -7035,6 +7044,31 @@ def _failure_llm_call_summary(record: object) -> dict:
             summary["latency_sec"] = value
         if diagnostic is not None:
             summary["latency_sec_diagnostic"] = diagnostic
+    return summary
+
+
+def _failure_program_llm_summary(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    summary: dict = {}
+    backend_idx = metadata.get("backend_idx")
+    if isinstance(backend_idx, int) and not isinstance(backend_idx, bool):
+        summary["backend_idx"] = backend_idx
+    llm_calls = metadata.get("llm_calls")
+    if isinstance(llm_calls, list):
+        calls = []
+        for call in llm_calls[:5]:
+            call_summary = _failure_llm_call_summary(call)
+            if call_summary:
+                calls.append(call_summary)
+        if calls:
+            summary["calls"] = calls
+            summary["call_count"] = len(llm_calls)
+            summary["calls_truncated"] = len(llm_calls) > len(calls)
+    llm_failure = metadata.get("llm_failure")
+    if isinstance(llm_failure, dict):
+        failure_call = _failure_llm_call_summary(llm_failure.get("llm_call"))
+        if failure_call:
+            summary["failure_call"] = failure_call
     return summary
 
 

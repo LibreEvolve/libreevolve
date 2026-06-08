@@ -3608,13 +3608,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     allowed support/status class prefixes, and role/status compatibility, while
     still testing manifest-id coverage plus missing, duplicate, and extra ids.
     Focused tests cover header drift, malformed rows, invalid roles,
-    unsupported status classes, and valid roles paired with incompatible status
-    classes. Remaining paper-facing gap: the validator does not yet link each
-    long semantic status claim to TODO or completed implementation records, nor
-    detect smoke-scoped examples being phrased as AlphaEvolve-comparable
-    benchmark evidence beyond the role/status class matrix.
+    unsupported status classes, valid roles paired with incompatible status
+    classes, missing active evidence paths, and missing completed-evidence
+    paths for rows claiming partial/implemented/local-only support. Remaining
+    paper-facing gap: the validator does not yet link each long semantic
+    status claim to the specific TODO or completed implementation record that
+    justifies it, nor detect smoke-scoped examples being phrased as
+    AlphaEvolve-comparable benchmark evidence beyond the role/status class
+    matrix and required path presence.
   - Required result: extend paper-index status-cell validation with evidence
-    links from semantic status claims to TODO or completed implementation
+    phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
     current role/status class matrix. Keep this validator distinct from the TODO
     coverage cross-reference checker, which verifies backlog pointers after

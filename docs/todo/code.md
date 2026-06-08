@@ -2838,17 +2838,19 @@ Primary evidence:
     paper-facing role taxonomy, allowed status class prefixes, and role/status
     compatibility, while still detecting duplicate ids and reconciling
     manifest coverage. Focused tests cover header drift, row-shape drift,
-    invalid roles, unsupported status classes, and valid roles paired with
-    incompatible status classes. Remaining gap: the validator does not yet
-    link long status/coverage phrases to active TODO or completed-evidence
-    records, or prove smoke-versus-paper-claim qualifiers beyond the role/
-    status class matrix.
+    invalid roles, unsupported status classes, valid roles paired with
+    incompatible status classes, missing active evidence paths, and missing
+    completed-evidence paths for rows claiming partial/implemented/local-only
+    support. Remaining gap: the validator does not yet link each long status/
+    coverage phrase to the specific active TODO or completed-evidence record
+    that justifies it, or prove smoke-versus-paper-claim qualifiers beyond the
+    role/status class matrix and required path presence.
   - Required result: extend the reusable paper-status-table validator with
-    evidence-link checks from semantic status/coverage phrases to active TODO
-    or completed-evidence records, including overclaim detection for smoke
-    examples presented as AlphaEvolve-comparable benchmarks. Keep this
-    separate from TODO-coverage cross-reference validation, which tracks the
-    later backlog-reference table rather than the semantic status cells.
+    phrase-level evidence-link checks from semantic status/coverage phrases to
+    active TODO or completed-evidence records, including overclaim detection
+    for smoke examples presented as AlphaEvolve-comparable benchmarks. Keep
+    this separate from TODO-coverage cross-reference validation, which tracks
+    the later backlog-reference table rather than the semantic status cells.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

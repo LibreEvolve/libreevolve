@@ -1876,11 +1876,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reconciliation, Appendix B registry checks, ablation registry checks, TODO
     coverage validation, stale absence-prose validation, and the new
     implementation-status table header/row/cell/taxonomy plus role/status
-    compatibility validation. README still does not describe that status-cell
-    scope, and the validator does not yet machine-check evidence links behind
-    each long semantic status claim or deeply distinguish smoke-scoped examples
-    from AlphaEvolve-comparable benchmark evidence beyond the role/status class
-    matrix.
+    compatibility validation, active evidence path requirements, and
+    completed-evidence path requirements for rows claiming partial/
+    implemented/local-only support. README still does not describe that
+    status-cell scope, and the validator does not yet machine-check
+    phrase-level evidence links behind each long semantic status claim or
+    deeply distinguish smoke-scoped examples from AlphaEvolve-comparable
+    benchmark evidence beyond the role/status class matrix and required path
+    presence.
   - Required result: update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes id-level implementation-status
     reconciliation and structural/taxonomy validation from fully verified

@@ -950,15 +950,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and stale absence prose. `_read_status_table_ids()` now also
     validates the implementation-status table's stable header, complete
     four-cell row shape, non-empty safe title/role/status cells, declared role
-    taxonomy, allowed status class prefixes, and role/status compatibility.
-    Remaining roadmap gap: README/ROADMAP/paper-index wording does not yet
-    describe this status-cell validator scope, and the validator does not yet
-    link long status claims to active/completed evidence or deeply verify
-    smoke/partial/planned/unsupported qualifiers beyond the role/status class
-    matrix.
+    taxonomy, allowed status class prefixes, role/status compatibility,
+    active evidence path presence, and completed-evidence path presence for
+    rows claiming partial/implemented/local-only support. Remaining roadmap
+    gap: README/ROADMAP/paper-index wording does not yet describe this
+    status-cell validator scope, and the validator does not yet link long
+    status claims to specific active/completed evidence records or deeply
+    verify smoke/partial/planned/unsupported qualifiers beyond the role/status
+    class matrix and required path presence.
   - Required result: update ROADMAP, README, papers index, and code/paper TODOs
-    with the exact validator scope, and extend status validation with links
-    from status claims to active or completed evidence plus richer qualifier
+    with the exact validator scope, and extend status validation with
+    phrase-level links from status claims to active or completed evidence plus richer qualifier
     checks. Keep this distinct from TODO coverage cross-reference validation,
     which validates the separate backlog pointer table.
 

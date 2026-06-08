@@ -142,6 +142,12 @@ STATUS_TABLE_ROLE_STATUS_PREFIXES = {
     "Test-time discovery context": ("Background only",),
     "Test-time training inspiration": ("Only ",),
 }
+STATUS_TABLE_STATUSES_REQUIRING_COMPLETED_EVIDENCE = (
+    "Implemented as ",
+    "Only ",
+    "Partially implemented:",
+    "Static prompt guidance exists ",
+)
 
 
 @dataclass(frozen=True)
@@ -936,6 +942,7 @@ def _validate_todo_coverage_table(root: Path, manifest_ids: set[str]) -> list[Pa
     section = _markdown_section(text, "## TODO coverage cross-references")
     if section is None:
         return []
+    status_by_id = _status_table_status_cells(text)
 
     rows: dict[str, tuple[str, str]] = {}
     issues: list[PaperManifestIssue] = []
@@ -979,6 +986,14 @@ def _validate_todo_coverage_table(root: Path, manifest_ids: set[str]) -> list[Pa
         active_cell, completed_cell = rows[row_id]
         issues.extend(_validate_active_todo_coverage_cell(root, row_id, active_cell))
         issues.extend(_validate_completed_todo_coverage_cell(root, row_id, completed_cell))
+        issues.extend(
+            _validate_status_evidence_links(
+                row_id,
+                active_cell,
+                completed_cell,
+                status_by_id.get(row_id),
+            )
+        )
     return issues
 
 
@@ -1079,6 +1094,54 @@ def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -
                 )
             )
     return issues
+
+
+def _validate_status_evidence_links(
+    row_id: str,
+    active_cell: str,
+    completed_cell: str,
+    status: str | None,
+) -> list[PaperManifestIssue]:
+    row_label = _safe_manifest_label(row_id)
+    active_paths = TODO_COVERAGE_PATH_RE.findall(active_cell)
+    completed_paths = TODO_COVERAGE_PATH_RE.findall(completed_cell)
+    issues: list[PaperManifestIssue] = []
+    if not active_paths:
+        issues.append(
+            PaperManifestIssue(
+                "missing_active_status_evidence",
+                "paper status row must link at least one active TODO evidence path",
+                row_label,
+            )
+        )
+    if (
+        status is not None
+        and status.startswith(STATUS_TABLE_STATUSES_REQUIRING_COMPLETED_EVIDENCE)
+        and not completed_paths
+    ):
+        issues.append(
+            PaperManifestIssue(
+                "missing_completed_status_evidence",
+                "paper status row claims implemented or local-only support without completed evidence paths",
+                row_label,
+            )
+        )
+    return issues
+
+
+def _status_table_status_cells(text: str) -> dict[str, str]:
+    section = _markdown_section(text, "## Implementation status")
+    if section is None:
+        return {}
+    statuses: dict[str, str] = {}
+    for line in section.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) != len(STATUS_TABLE_HEADER) or cells[0] == "ID" or set(cells[0]) <= {"-", ":"}:
+            continue
+        statuses[cells[0]] = cells[3]
+    return statuses
 
 
 def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:

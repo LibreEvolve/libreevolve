@@ -4533,3 +4533,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     baseline identities, code/artifact availability if any, reproducibility
     status, and README/ROADMAP wording that treats G-Zero as missing paper
     evidence rather than implemented LibreEvolve support.
+
+- [ ] Track GenEvolve multimodal trajectory-distillation paper evidence.
+  - Paper/source evidence: arXiv `2605.21605`, submitted May 20, 2026 and
+    last revised May 22, 2026, is titled `GenEvolve: Self-Evolving Image
+    Generation Agents via Tool-Orchestrated Visual Experience Distillation`.
+    Its abstract says open-ended image generation is no longer a simple
+    prompt-to-image problem and often requires agents to combine internal
+    generative ability with external resources. GenEvolve models each
+    generation attempt as a tool-orchestrated trajectory in which the agent
+    gathers evidence, selects references, invokes generation skills, and
+    composes them into a prompt-reference program. It compares multiple
+    trajectories for the same request, abstracts best-worst differences into
+    structured visual experience for a privileged teacher branch, and uses
+    Visual Experience Distillation to provide dense token-level supervision
+    so the student internalizes better search, knowledge activation, reference
+    selection, and prompt construction.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.21605`. Existing rows cover AlphaEvolve, text-program
+    evolution, evaluator-backed tasks, verifier-free self-play, autonomous
+    multi-agent search, and application papers, but not multimodal
+    image-generation agents, visual tool trajectories, prompt-reference
+    programs, structured visual experience, privileged teacher branches, dense
+    token-level distillation, image artifact lineage, or GenEvolve-Bench.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.21605`: title/authors/arXiv version/date/PDF digest, source license,
+    project/demo URL status, relation to AlphaEvolve and LibreEvolve,
+    tool-orchestrated visual trajectory schema, evidence/reference selection
+    metadata, prompt-reference program representation, best-worst comparison
+    records, structured visual experience taxonomy, privileged teacher/student
+    distillation traces, token-level supervision artifacts, image artifact
+    provenance, GenEvolve-Data/GenEvolve-Bench metadata, baseline identities,
+    code/artifact availability if any, reproducibility status, and README/
+    ROADMAP wording that treats GenEvolve as missing paper evidence rather
+    than implemented LibreEvolve support.

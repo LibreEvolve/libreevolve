@@ -3185,4 +3185,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying LibreEvolve supports G-Zero-style verifier-free co-evolution
     without those artifacts.
 
+- [ ] Keep README GenEvolve multimodal trajectory-distillation claims absent
+      or source-scoped until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image
+    Generation Agents via Tool-Orchestrated Visual Experience Distillation`,
+    models image-generation attempts as tool-orchestrated trajectories with
+    evidence gathering, reference selection, generation-skill invocation, and
+    prompt-reference programs. It compares multiple trajectories, converts
+    best-worst differences into structured visual experience for a privileged
+    teacher branch, and distills dense token-level supervision into a student.
+  - Current evidence: README documents LibreEvolve's current text-program
+    workflow, SEARCH/REPLACE diffs, evaluator artifacts, prompt history,
+    examples, and benchmark boundaries. It does not list `2605.21605`, support
+    image-generation tools, preserve visual references, store prompt-reference
+    programs, compare visual trajectories, run privileged teacher/student
+    distillation, or report GenEvolve-Bench results.
+  - Required result: if README mentions GenEvolve, multimodal or image
+    generation, tool-orchestrated visual trajectories, prompt-reference
+    programs, visual experience distillation, privileged teacher branches,
+    dense token-level supervision, GenEvolve-Data, or GenEvolve-Bench, keep
+    the wording source-scoped until the paper is in the manifest and local
+    artifacts can show visual trajectory logs, reference/evidence records,
+    image provenance, distillation traces, token-supervision metadata,
+    benchmark baselines, and report outcomes. Avoid implying LibreEvolve
+    supports GenEvolve-style multimodal evolution without those artifacts.
+
 ## Architecture Description

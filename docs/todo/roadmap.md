@@ -3599,3 +3599,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     open-ended task taxonomy, theoretical-assumption records, baseline
     identities, and a background-only or benchmark-fixture status rule so
     roadmap claims do not outpace local G-Zero-style verifier-free support.
+
+- [ ] Add GenEvolve multimodal trajectory-distillation gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.21605`, submitted May 20, 2026 and last revised
+    May 22, 2026, introduces GenEvolve for self-evolving image-generation
+    agents. The abstract models each generation attempt as a tool-orchestrated
+    trajectory that gathers evidence, selects references, invokes generation
+    skills, and creates a prompt-reference program. It compares multiple
+    trajectories for the same request, abstracts best-worst differences into
+    structured visual experience for a privileged teacher, and distills dense
+    token-level supervision into a student.
+  - Current evidence: ROADMAP tracks text-program evolution, prompt/run
+    artifacts, evaluator contracts, benchmark reports, and many
+    self-evolution source gates. It does not mention `2605.21605`, define a
+    multimodal trajectory-distillation gate, or require evidence before
+    promoting image-generation agents, tool-orchestrated visual trajectories,
+    or teacher/student experience distillation.
+  - Required result: add roadmap gates for `2605.21605`: paper/source
+    manifest entry, PDF/cache hash, source-license and project URL status,
+    multimodal tool-trajectory schema, reference/evidence selection logs,
+    prompt-reference program artifacts, best-worst comparison records,
+    structured visual experience taxonomy, privileged teacher and student
+    distillation traces, token-supervision metadata, image artifact lineage,
+    GenEvolve-Data/GenEvolve-Bench metadata, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local GenEvolve-style multimodal support.

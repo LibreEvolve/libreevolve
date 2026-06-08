@@ -4956,3 +4956,37 @@ Primary evidence:
     identities, and README/ROADMAP wording that keeps verifier-free
     co-evolution as missing evidence until local implementation and reports
     exist.
+
+- [ ] Add GenEvolve multimodal trajectory-distillation source boundary.
+  - Spec evidence: arXiv `2605.21605`, `GenEvolve: Self-Evolving Image
+    Generation Agents via Tool-Orchestrated Visual Experience Distillation`,
+    was submitted May 20, 2026 and revised May 22, 2026. Its abstract says
+    high-quality open-ended image generation now requires agents to combine a
+    model's internal generative ability with external resources. GenEvolve
+    models each generation attempt as a tool-orchestrated trajectory where
+    the agent gathers evidence, selects references, invokes generation skills,
+    and composes them into a prompt-reference program. It compares multiple
+    trajectories for the same request, abstracts best-worst differences into
+    structured visual experience for a privileged teacher branch, and uses
+    Visual Experience Distillation to give dense token-level supervision so a
+    student internalizes better search, knowledge activation, reference
+    selection, and prompt construction.
+  - Current evidence: LibreEvolve evolves Python programs through text
+    SEARCH/REPLACE diffs with scalar evaluator scores, prompt history, and
+    run artifacts, but it has no GenEvolve source row or multimodal
+    image-generation agent pathway. There is no visual tool trajectory schema,
+    reference/evidence selection log, prompt-reference program artifact,
+    best-worst trajectory comparison, structured visual experience record,
+    privileged teacher branch, dense token-level distillation trace, student
+    policy update, image artifact lineage, or GenEvolve-Bench-style report.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.21605`: arXiv id/version/date/PDF hash, authors, source license,
+    project/demo URL status, relation to AlphaEvolve and LibreEvolve's
+    text-program search, tool-orchestrated trajectory schema, reference and
+    evidence selection artifacts, prompt-reference program representation,
+    best-worst trajectory comparison records, structured visual experience
+    taxonomy, privileged-teacher/student-distillation traces, token-level
+    supervision metadata, image artifact provenance, GenEvolve-Data/
+    GenEvolve-Bench task taxonomy, baseline identities, and README/ROADMAP
+    wording that keeps multimodal trajectory distillation as missing evidence
+    until local implementation and reports exist.

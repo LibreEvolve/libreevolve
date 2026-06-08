@@ -6050,14 +6050,20 @@ directory and using the AlphaEvolve paper as the primary specification.
       specific boundary.
   - Paper/source evidence: local arXiv `2602.15951`, `MadEvolve:
     Evolutionary Optimization of Cosmological Algorithms with Large Language
-    Models`, describes a framework similar to AlphaEvolve but focused on
-    scientific algorithms with explicit free-parameter tracking and nested
-    parameter optimization. It reports greedy one-shot derivative-free tuning,
-    autodiff/Adam tuning for differentiable JAX/vmad programs, hybrid
+    Models`, by Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as
+    arXiv v1 on February 17, 2026; the cached PDF hash is
+    `ec47332c9b20ca391b8aedb6b8696c42aad20c976906d1e43f13490163daea19`
+    and the PDF metadata uses the arXiv nonexclusive distribution license. It
+    describes a framework similar to AlphaEvolve but focused on scientific
+    algorithms with explicit free-parameter tracking and nested parameter
+    optimization. It reports greedy one-shot derivative-free tuning,
+    autodiff/Adam tuning for differentiable JAX/`vmad` programs, hybrid
     MAP-Elites/island/elite population management, UCB-style model selection,
     diff/full/synthesis mutation modes, automated lineage/comparison/report
     generation, and cosmology applications for BAO reconstruction, 21cm tidal
-    reconstruction, and tSZ prediction.
+    reconstruction, and tSZ prediction. The PDF links `madevolve.org`,
+    `tianyi-stack/MadEvolve`, `tianyi-stack/MadEvolve-Cosmo`, `biweidai/LDL`,
+    `rainwoodman/vmad`, and four generated report PDFs.
   - Current gap: `papers/README.md` lists `2602.15951` as background only with
     no free-parameter optimization or innovation report, and completed TODOs
     only preserve that scoping. There is no source-specific active paper TODO
@@ -6065,7 +6071,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     parameter schemas, optimization budgets, differentiability requirements,
     per-task prompts/evaluators, report sections, run statistics, model
     contribution table, compute environment, reward-hacking caveats, or
-    generalization claims.
+    generalization claims. Existing docs also do not distinguish the framework
+    repository from the cosmology application repository or the hosted report
+    artifacts.
   - Required result: add paper-manifest and paper-index coverage for
     `2602.15951`: title/authors/arXiv version/date/PDF digest, source/license
     and public code status for madevolve.org, `tianyi-stack/MadEvolve`, and
@@ -6076,9 +6084,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     schema, BAO/iterative-BAO/21cm/tSZ benchmark rows, Table 1 result values,
     Table 2 success/improvement statistics, Table 3 model-contribution
     statistics, compute environment, prompt/evaluator artifact links,
-    reward-hacking and over-parameterization caveats, and README/ROADMAP/code
-    wording that keeps MadEvolve behavior marked missing unless local artifacts
-    prove it.
+    reward-hacking and over-parameterization caveats, Quijote/LDL/vmad dataset
+    and dependency provenance, training/validation/test split records,
+    madevolve.org report-link checks, and README/ROADMAP/code wording that
+    keeps MadEvolve behavior marked missing unless local artifacts prove it.
 
 - [ ] Track CausalEvolve causal-scratchpad paper evidence as a source-specific
       boundary.

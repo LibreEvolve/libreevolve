@@ -4872,13 +4872,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add MadEvolve parameter-optimization gates before roadmap promotion.
   - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
-    Optimization of Cosmological Algorithms with Large Language Models`,
-    adapts AlphaEvolve-style evolution to scientific algorithms with nested
-    free-parameter optimization, greedy one-shot derivative-free search,
-    autodiff/Adam tuning for differentiable JAX/vmad programs, hybrid
-    MAP-Elites/island/elite population management, UCB model routing,
-    diff/full/synthesis mutation modes, automated scientific reports, and
-    BAO, iterative BAO, 21cm, and tSZ benchmark claims.
+    Optimization of Cosmological Algorithms with Large Language Models`, by
+    Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as arXiv v1 on
+    February 17, 2026 and adapts AlphaEvolve-style evolution to scientific
+    algorithms with nested free-parameter optimization, greedy one-shot
+    derivative-free search, autodiff/Adam tuning for differentiable JAX/`vmad`
+    programs, hybrid MAP-Elites/island/elite population management, UCB model
+    routing, diff/full/synthesis mutation modes, automated scientific reports,
+    and BAO, iterative BAO, 21cm, and tSZ benchmark claims. It describes a
+    three-stage report generator (`lineage extraction`, `comparative analysis`,
+    and `synthesis`) and a five-island heterogeneous LLM ensemble with UCB
+    model selection.
   - Current evidence: ROADMAP says MadEvolve features remain inspired unless
     paper behavior is implemented, README labels MadEvolve as background
     context, and `papers/README.md` states that no free-parameter optimization
@@ -4887,7 +4891,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     execution, differentiability/operator constraints, optimized-value source
     injection, per-task cosmology fixtures, generated reports, run statistics,
     model-contribution statistics, compute environment, reward-hacking
-    diagnostics, and over-parameterization/generalization evidence.
+    diagnostics, hosted report-link validation, and
+    over-parameterization/generalization evidence.
   - Required result: add roadmap gates for `2602.15951`: paper/source manifest
     entry, PDF/cache hash, madevolve.org and GitHub source status,
     framework-vs-application split, parameter-declaration and parameter-meaning
@@ -4898,7 +4903,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     split provenance, generated lineage/comparative-analysis/synthesis report
     artifacts, Table 1 benchmark rows, Table 2 success/improvement statistics,
     Table 3 model-contribution statistics, compute environment, reward-hacking
-    and mode-collapse diagnostics, and README/papers/code wording that keeps
+    and mode-collapse diagnostics, Quijote/LDL/vmad provenance, hosted
+    report-artifact checks, and README/papers/code wording that keeps
     MadEvolve as background until local evidence proves those semantics.
 
 - [ ] Add CausalEvolve causal-scratchpad gates before roadmap promotion.

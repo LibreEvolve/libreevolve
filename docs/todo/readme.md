@@ -4404,9 +4404,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Optimization of Cosmological Algorithms with Large Language Models`,
     presents AlphaEvolve-like scientific algorithm evolution with explicit
     free-parameter tracking, greedy one-shot and autodiff/Adam inner
-    optimization, JAX/vmad differentiability constraints, hybrid
+    optimization, JAX/`vmad` differentiability constraints, hybrid
     MAP-Elites/island/elite population management, UCB-style model routing,
     generated scientific reports, and BAO, 21cm, and tSZ cosmology results.
+    It reports Table 1 improvements from `0.752` to `0.924` for standard BAO
+    reconstruction, `0.933` to `0.959` for iterative BAO reconstruction,
+    `0.743` to `0.971` for 21cm tidal reconstruction, and tSZ loss reduction
+    from `0.613` to `0.230`, plus Table 2/3 run and model-contribution
+    statistics across `2,126` generated programs.
   - Current evidence: README labels MadEvolve as background context with no
     MadEvolve implementation; `papers/README.md` says there is no
     free-parameter optimization or innovation report. Existing README TODOs
@@ -4415,7 +4420,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     inner optimizer records, optimized-value source injection,
     differentiability/operator validation, generated report sections, per-task
     benchmark rows, run statistics, model-contribution statistics, compute
-    budgets, overfitting/reward-hacking caveats, or public code/source status.
+    budgets, overfitting/reward-hacking caveats, hosted report artifacts, or
+    public code/source status.
   - Required result: if README mentions MadEvolve, domain evolution,
     free-parameter optimization, nested optimization, autodiff/JAX/vmad
     support, generated innovation reports, BAO/21cm/tSZ MadEvolve results,
@@ -4424,9 +4430,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `2602.15951` source row, PDF/code hashes, parameter and optimizer schemas,
     executed inner-loop artifacts, differentiability checks, report-generator
     artifacts, benchmark/baseline/result rows, success/improvement/model
-    contribution tables, compute environment, task prompts/evaluators, and a
-    clear distinction between LibreEvolve's current generic evolution surfaces
-    and MadEvolve execution semantics.
+    contribution tables, compute environment, task prompts/evaluators,
+    reward-hacking and over-parameterization caveats, madevolve.org report
+    links, and a clear distinction between LibreEvolve's current generic
+    evolution surfaces and MadEvolve execution semantics.
 
 - [ ] Keep README CausalEvolve wording scoped until causal-scratchpad evidence
       exists.

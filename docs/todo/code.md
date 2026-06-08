@@ -6571,14 +6571,21 @@ Primary evidence:
 - [ ] Add MadEvolve parameter-optimization source boundary before domain-
       evolution claims.
   - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
-    Optimization of Cosmological Algorithms with Large Language Models`,
+    Optimization of Cosmological Algorithms with Large Language Models`, by
+    Tianyi Li, Shihui Zang, and Moritz Munchmeyer was submitted as arXiv v1 on
+    February 17, 2026; the cached PDF hash is
+    `ec47332c9b20ca391b8aedb6b8696c42aad20c976906d1e43f13490163daea19`
+    and the PDF metadata uses the arXiv nonexclusive distribution license. It
     adapts AlphaEvolve-style code evolution to computational cosmology with a
     nested optimization architecture: LLMs mutate scientific algorithms while
     an inner loop detects free parameters, records their meanings, tunes them
     through greedy one-shot derivative-free search or autodiff/Adam over JAX
-    or vmad-compatible programs, injects optimized values back into the source,
-    and generates scientific reports explaining lineage, algorithmic
-    innovations, free parameters, metrics, and physical rationale.
+    or `vmad`-compatible programs, injects optimized values back into the
+    source, and generates scientific reports explaining lineage, algorithmic
+    innovations, free parameters, metrics, and physical rationale. The paper
+    links `https://madevolve.org`, `https://github.com/tianyi-stack/MadEvolve`,
+    `https://github.com/tianyi-stack/MadEvolve-Cosmo`, and report PDFs for
+    BAO, iterative BAO, 21cm, and LDL/tSZ runs.
   - Current evidence: README and `papers/README.md` label MadEvolve as
     background/domain-evolution inspiration only, and code search shows no
     MadEvolve implementation. LibreEvolve has evaluator execution,
@@ -6588,7 +6595,10 @@ Primary evidence:
     budgeted inner optimizer, no JAX/vmad differentiability contract, no
     optimized-parameter source injection, no domain-task adapters for BAO,
     21cm, or tSZ, no generated innovation-report pipeline, and no MadEvolve run
-    statistics or model-contribution artifacts.
+    statistics or model-contribution artifacts. It also has no MadEvolve
+    reward-hacking guardrails such as large-scale BAO penalties, no
+    over-parameterization controls such as the paper's `<10` tunable-parameter
+    prompt constraint, and no mode-collapse diagnostics for island populations.
   - Required result: add source-boundary metadata and implementation gates for
     `2602.15951`: arXiv version/date/PDF hash, madevolve.org and GitHub source
     status, framework/application split, parameter config schema, parameter
@@ -6600,8 +6610,14 @@ Primary evidence:
     reconstruction, and tSZ/LDL, training/validation/test split provenance,
     compute environment records, success/improvement/model-contribution tables,
     report-generator lineage/comparative-analysis/synthesis artifacts,
-    overfitting/reward-hacking diagnostics, and README/ROADMAP wording that
-    keeps MadEvolve as background until those mechanisms are locally executed.
+    overfitting/reward-hacking diagnostics, Table 1 result rows (`0.752` to
+    `0.924` BAO StdRec, `0.933` to `0.959` IterRec, `0.743` to `0.971` 21cm,
+    `0.613` to `0.230` tSZ loss), Table 2 run statistics (`2,126` total
+    generations across four runs; success rates `54.5%..85.7%`; improvement
+    rates `13.4%..30.4%`), Table 3 per-model mutation statistics and UCB
+    selection records, Quijote/LDL/vmad dataset provenance, generated-report
+    URL/artifact checks, and README/ROADMAP wording that keeps MadEvolve as
+    background until those mechanisms are locally executed.
 
 - [ ] Add CausalEvolve causal-scratchpad source boundary before causal
       discovery claims.

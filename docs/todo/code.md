@@ -2314,6 +2314,25 @@ Primary evidence:
     source section linkage, and README/ROADMAP wording that distinguishes the
     three autocorrelation witnesses from aggregate Appendix B coverage.
 
+- [ ] Add paper-facing Appendix B.1-B.3 autocorrelation label provenance.
+  - Spec evidence: AlphaEvolve Appendix B headings are `B.1. First
+    autocorrelation inequality`, `B.2. Second autocorrelation inequality`, and
+    `B.3. Third autocorrelation inequality`; the constants in those sections
+    are `C1`, `C2`, and `C3`, respectively. The paper does not label these
+    three autocorrelation results as `k=3`, `k=4`, or `k=5`.
+  - Current evidence: `alphaevolve_appendix_b.json`,
+    `appendix_b_registry.py`, and `tests/test_appendix_b_registry.py` use
+    stable family ids and names such as `autocorrelation_bounds_k3`,
+    `autocorrelation_bounds_k4`, `autocorrelation_bounds_k5`, and
+    `Autocorrelation inequality, k=3`. The step-function provenance TODO
+    requires result rows and constants, but it does not require registry/report
+    label fields that separate internal ids from exact paper headings and
+    constant labels.
+  - Required result: add explicit paper-facing label metadata for B.1-B.3:
+    source section id, paper heading, constant id, and display label. Update
+    registry validation, tests, README/ROADMAP wording, and generated reports
+    so internal stable ids cannot be mistaken for paper terminology.
+
 - [ ] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
   - Spec evidence: AlphaEvolve Appendix B.8 reports point-set constructions for
     minimizing the ratio between maximum and minimum pairwise distances, but the

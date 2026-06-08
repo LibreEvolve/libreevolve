@@ -1466,6 +1466,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prior/current values, step-function payload hashes, and source links
     without merging them into one generic autocorrelation claim.
 
+- [ ] Keep README Appendix B.1-B.3 labels scoped until paper-heading
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.1-B.3 are titled `First
+    autocorrelation inequality`, `Second autocorrelation inequality`, and
+    `Third autocorrelation inequality`, and the constants are `C1`, `C2`, and
+    `C3`. The paper does not use `k=3`, `k=4`, or `k=5` labels for these three
+    autocorrelation entries.
+  - Current evidence: README can describe the Appendix B family/status registry
+    and broad B.1-B.3 step-function gaps, but the checked registry and tests
+    still use internal ids/names like `autocorrelation_bounds_k3` and
+    `Autocorrelation inequality, k=3` without separate paper-facing label
+    fields.
+  - Required result: when Appendix B.1-B.3 label provenance lands, update
+    README, ROADMAP, papers index, and code/paper TODOs so README exposes exact
+    B.1-B.3 headings and C1-C3 constants, while any internal k-numbered ids are
+    either renamed or clearly marked as non-paper implementation ids.
+
 - [ ] Keep README Appendix B.8 ratio wording scoped until squared-ratio
       convention provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.8 reports constructions for the

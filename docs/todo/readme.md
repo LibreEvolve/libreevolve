@@ -420,6 +420,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     so README neither underclaims automatic OpenAI counter discovery nor
     overclaims full AlphaEvolve-grade context-window fitting.
 
+- [ ] Keep README explicit-context wording scoped until context-source roles
+      exist.
+  - Spec evidence: AlphaEvolve Section 2.2 says explicit context can include
+    fixed human-written instructions, equations, code snippets, and relevant
+    literature such as PDF files.
+  - Current evidence: README can describe local context manifests, source
+    hashes, extraction spans, PDF rendering, deterministic ordering/filtering,
+    truncation, and prompt diagnostics. It does not yet document typed
+    source-role metadata proving that a selected context source is intended as
+    an instruction, equation, code snippet, literature/PDF source, or other
+    AlphaEvolve-style explicit problem context.
+  - Required result: when context-source role metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODO entries together so README
+    separates generic local file ingestion and retrieval/plugin context from
+    paper-facing explicit problem-context evidence.
+
 - [ ] Keep README ablation-report wording aligned with current LLM budget
   stops.
   - Spec evidence: AlphaEvolve Figure 8 compares executed equal-budget

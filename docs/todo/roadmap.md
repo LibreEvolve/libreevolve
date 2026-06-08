@@ -664,6 +664,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap neither underclaims current bounded retrieval provenance nor
     overclaims DeepEvolve-grade source integrity.
 
+- [ ] Keep explicit-context roadmap wording scoped until context-source roles
+      exist.
+  - Spec evidence: AlphaEvolve Section 2.2 names explicit prompt context
+    categories: fixed human-written instructions, equations, code snippets,
+    and relevant literature such as PDF files.
+  - Current evidence: ROADMAP, README, and papers-index wording can cite local
+    context ingestion, manifests, hashes, PDF extraction, prompt rendering,
+    deterministic selection/ranking/filtering, and truncation. They do not yet
+    require typed source-role metadata that proves whether a selected source is
+    an instruction, equation/formula, code snippet, literature/PDF source, or
+    other explicit problem-context artifact rather than generic local context,
+    retrieval output, or plugin-supplied text.
+  - Required result: when context-source role metadata and validators land,
+    update ROADMAP, README, papers index, and code/paper TODO entries together
+    so roadmap wording distinguishes file-ingestion mechanics from
+    AlphaEvolve-style intentionally typed explicit-context evidence.
+
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

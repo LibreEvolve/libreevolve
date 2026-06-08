@@ -390,6 +390,15 @@ is not yet an AlphaEvolve reproduction.
   slug rows use the same filename source-prefix rule. This prevents base
   id/URL/file drift while keeping arXiv source-version fields and source-rights
   metadata as separate follow-on work.
+- Keep cached source-PDF rights separate from project licensing:
+  `libreevolve.alphaevolve_source_pdf_rights.v1` now validates the AlphaEvolve
+  cached PDF page 1 rights statement `© 2025 Google DeepMind. All rights
+  reserved`, rights holder/year, source page/location, manifest row hash/bytes,
+  and boundaries separating third-party paper-source rights from LibreEvolve's
+  MIT license and the companion repository's Apache/CC licensing. The paper-
+  manifest gate validates the record against the current cached PDF text.
+  Emitted paper-derived artifacts still need explicit excerpt/table/figure
+  reproduction-policy rows linked to that rights evidence.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

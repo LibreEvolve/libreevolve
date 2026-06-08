@@ -104,6 +104,12 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
     render_alphaevolve_source_pdf_version_summary,
     validate_alphaevolve_source_pdf_version,
 )
+from libreevolve.problems.benchmarks.paper_source_rights import (
+    ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA,
+    alphaevolve_source_pdf_rights_record,
+    render_alphaevolve_source_pdf_rights_summary,
+    validate_alphaevolve_source_pdf_rights,
+)
 from libreevolve.problems.benchmarks.result_certification import (
     CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,
@@ -125,6 +131,7 @@ __all__ = [
     "ABLATION_ARTIFACT_INVENTORY_SCHEMA",
     "ABLATION_RESULT_SCHEMA",
     "ALPHAEVOLVE_COMPANION_COLAB_SCHEMA",
+    "ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA",
     "APPENDIX_A_MATRIX_CURATION_SCHEMA",
     "APPENDIX_A_MATRIX_REGISTRY_SCHEMA",
@@ -160,6 +167,7 @@ __all__ = [
     "appendix_a_matrix_subset_scope_record",
     "alphaevolve_companion_colab_source_record",
     "alphaevolve_paper_artifact_role_records",
+    "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
     "benchmark_hardening_artifact_inventory",
     "certification_artifact_inventory",
@@ -174,6 +182,7 @@ __all__ = [
     "render_appendix_a_matrix_row_note_summary",
     "render_appendix_a_matrix_subset_scope_summary",
     "render_alphaevolve_companion_colab_source_summary",
+    "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_benchmark_hardening_summary",
     "render_certification_summary",
@@ -198,6 +207,7 @@ __all__ = [
     "validate_appendix_a_matrix_row_notes",
     "validate_appendix_a_matrix_subset_scope",
     "validate_alphaevolve_companion_colab_source",
+    "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
     "validate_benchmark_evidence_scope",
     "validate_benchmark_hardening_report",

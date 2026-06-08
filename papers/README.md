@@ -964,6 +964,14 @@ Implemented:
   row id, and applies the filename-prefix rule to non-arXiv slug rows. This is
   base source-identity validation, distinct from arXiv version pinning and
   source-rights provenance.
+- `libreevolve/problems/benchmarks/paper_source_rights.py`: AlphaEvolve source-
+  PDF rights contract. It validates the cached PDF page 1 rights line
+  `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source
+  page/location, manifest row hash/bytes, lack of an open-license declaration
+  in the cached PDF, and boundaries separating third-party paper-source rights
+  from LibreEvolve's MIT license and the companion repository's Apache/CC
+  licensing. The paper-manifest command validates the built-in record against
+  the current cached PDF text.
 - `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
   Colab source-evidence contract. It validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

@@ -2479,16 +2479,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     from later arXiv version pinning.
 
 - [ ] Keep paper-source roadmap wording scoped until source-PDF rights
-      provenance is tracked.
+      provenance is emitted in paper-derived artifacts.
   - Spec evidence: page 1 of the local AlphaEvolve PDF states
     `© 2025 Google DeepMind. All rights reserved`.
-  - Current evidence: roadmap and README wording can describe LibreEvolve's own
-    license, non-affiliation, local PDF hash validation, source-version TODOs,
-    and companion-artifact gaps. They do not require roadmap-level evidence for
-    cached paper-source rights: copyright holder/year, rights statement,
-    arXiv/license terms, or the policy boundary for quoting, table extraction,
-    figure reproduction, and paper-derived artifacts.
-  - Required result: once paper manifests and validators record source-rights
+  - Current evidence: roadmap and README wording now cite
+    `libreevolve.alphaevolve_source_pdf_rights.v1`, which validates the cached
+    AlphaEvolve PDF page 1 rights line, rights holder/year, source
+    page/location, manifest row hash/bytes, lack of an open-license declaration
+    in the cached PDF, and boundaries separating third-party paper-source
+    rights from LibreEvolve's MIT license and the companion repository license.
+    Generated paper-derived artifacts still do not emit source-rights rows or
+    reproduction-policy records linked to that evidence.
+  - Required result: once generated paper-derived artifacts emit source-rights
     metadata, update ROADMAP, README, papers index, and TODO cross-links so
     paper-cache integrity, paper-derived exhibit generation, and publication
     readiness all distinguish third-party paper-source rights from the

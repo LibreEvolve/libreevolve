@@ -3151,6 +3151,17 @@ count, SHA-256 digest, and audit policy that treats an unversioned arXiv
 refresh as a source-version event. The standard paper-manifest gate validates
 that built-in record, but the CSV/JSON manifests still do not store version
 fields per row or propagate source-version ids into every claim artifact.
+AlphaEvolve source-PDF rights evidence uses
+`libreevolve.alphaevolve_source_pdf_rights.v1` in
+`libreevolve/problems/benchmarks/paper_source_rights.py`; the built-in record
+preserves the cached PDF page 1 rights line `© 2025 Google DeepMind. All
+rights reserved`, the rights holder/year, source page/location, local
+manifest row hash/bytes, and the boundary that paper-derived artifacts must
+carry third-party source-rights metadata distinct from LibreEvolve's MIT
+license and the companion repository's Apache/CC licensing. The standard
+paper-manifest gate validates that record against the current cached PDF text.
+Richer excerpt/table/figure reproduction policy rows for generated artifacts
+remain open.
 AlphaEvolve paper artifact-role provenance uses
 `libreevolve.alphaevolve_paper_artifact_roles.v1` in
 `libreevolve/problems/benchmarks/paper_artifact_roles.py`; the built-in record

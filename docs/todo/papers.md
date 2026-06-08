@@ -3322,22 +3322,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     provenance, which pins a specific revision after the base source identity
     is proven.
 
-- [ ] Track AlphaEvolve source-PDF rights and license provenance.
+- [ ] Emit AlphaEvolve source-PDF rights and license provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.
-  - Current gap: the committed paper manifest and paper index record the local
-    PDF file, URL, byte count, SHA-256 digest, and paper status. Active TODOs
-    now require source-PDF version metadata and companion/source-artifact
-    tracking, but they do not preserve source rights metadata for the cached
-    AlphaEvolve PDF: copyright holder/year, rights statement, arXiv/license
-    terms, excerpt/reproduction policy, or distinction between LibreEvolve's
-    MIT repository license and third-party paper-source rights.
-  - Required result: add paper-facing source-rights provenance for cached PDFs:
-    rights holder, copyright year, rights statement or license identifier/text,
-    source page/header location, retrieval URL, local PDF hash, allowed
-    excerpt/reproduction policy for tables/figures/quotes, and README/ROADMAP/
-    papers wording that prevents paper-derived artifacts from being presented
-    as publication-ready without verified source-use boundaries.
+  - Current gap: `libreevolve.alphaevolve_source_pdf_rights.v1` now validates a
+    built-in rights record for the cached AlphaEvolve PDF: rights holder/year,
+    page 1 rights statement, source page/location, manifest row URL/file/hash,
+    lack of an open-license declaration in the cached PDF, and boundaries
+    separating third-party paper-source rights from LibreEvolve's MIT license
+    and the companion repository license. Paper-facing generated tables,
+    figures, excerpts, and claim ledgers still do not emit source-rights rows
+    or reproduction-policy records linked to that evidence.
+  - Required result: emit paper-facing source-rights provenance for cached
+    PDFs: rights holder, copyright year, rights statement or license
+    identifier/text, source page/header location, retrieval URL, local PDF hash,
+    allowed excerpt/reproduction policy for tables/figures/quotes, and README/
+    ROADMAP/papers wording that prevents paper-derived artifacts from being
+    presented as publication-ready without verified source-use boundaries.
 
 - [ ] Track full AlphaEvolve References-section bibliography evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered

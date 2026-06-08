@@ -1341,6 +1341,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve Appendix B constants or accidentally mix stale and revised
     bounds.
 
+- [ ] Keep README Appendix B.4 numeric wording scoped until Hermite-polynomial
+      certificate evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`
+    uncertainty-inequality bound from a Hermite-polynomial test function,
+    approximate coefficients `[0.32925, -0.01159, -8.9216e-5]`, the largest
+    positive root of `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
+  - Current evidence: README can describe Appendix B family/status coverage,
+    construction/verifier export gaps, revised-result gaps, and B.4
+    similarity-interpretation gaps. It does not document B.4 coefficient
+    payloads, Hermite-basis identities, root computation, sign/condition
+    checks, bound recomputation, or artifact hashes for the actual `C4`
+    certificate.
+  - Required result: when B.4 Hermite certificate metadata and validators land,
+    update README, ROADMAP, papers index, and code/paper TODOs together so
+    README distinguishes the quoted uncertainty-inequality value from verified
+    polynomial/root evidence, result-version history, and qualitative
+    near-optimality interpretation.
+
 - [ ] Keep README Appendix B.4 interpretation wording scoped until
       prior-construction similarity evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 says the uncertainty-inequality

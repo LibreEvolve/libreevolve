@@ -2191,6 +2191,28 @@ Primary evidence:
     do not mix first-version and updated bounds when claiming AlphaEvolve-style
     mathematical result parity.
 
+- [ ] Add Appendix B.4 Hermite-polynomial certificate provenance.
+  - Spec evidence: AlphaEvolve Appendix B.4 derives `C4 <= 0.3521` from a
+    Fourier uncertainty test function `f(x) = P(x) exp(-pi x^2)` where `P` is
+    an even linear combination of Hermite polynomials `H_{4k}`. The reported
+    first-version construction uses coefficients approximately
+    `[0.32925, -0.01159, -8.9216e-5]` for `H0`, `H4`, and `H8`, factors
+    `P(x)` by `x^2`, takes the largest positive root of `P(x)/x^2`, and
+    computes the bound as `r_max^2 / (2*pi)`.
+  - Current evidence: existing Appendix B TODOs require numeric result rows,
+    revised-result provenance, construction/verifier links, and qualitative
+    comparison to reference `[33]`. They do not require B.4-specific
+    coefficient precision, Hermite-basis identities, even-polynomial/Fourier
+    invariance assumptions, sign/condition checks for the test function,
+    largest-root calculation evidence, or the normalization formula that turns
+    the root certificate into the `C4` upper bound.
+  - Required result: add Appendix B.4 construction/certificate metadata and
+    validators for Hermite basis terms, coefficient payload and precision,
+    `P(0)=0`/`x^2` factor handling, positivity/sign-condition checks,
+    largest-positive-root computation, `r_max^2 / (2*pi)` recomputation,
+    previous bound comparison, and artifact hashes. Keep this separate from
+    the B.4 revision-history and near-optimality-similarity TODOs.
+
 - [ ] Add Appendix B.4 prior-construction similarity and hypothesis provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 does more than report the
     uncertainty-inequality value and Hermite-polynomial coefficients. After

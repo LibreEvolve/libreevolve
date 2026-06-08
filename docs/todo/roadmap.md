@@ -2276,6 +2276,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     revision-aware result rows and validation so roadmap wording cannot treat a
     family/status registry as current AlphaEvolve Appendix B result evidence.
 
+- [ ] Keep Appendix B.4 roadmap wording scoped until Hermite-polynomial
+      certificate evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`
+    uncertainty-inequality bound from a Hermite-polynomial test function
+    `f(x) = P(x) exp(-pi x^2)`, approximate coefficients
+    `[0.32925, -0.01159, -8.9216e-5]`, the largest positive root of
+    `P(x)/x^2`, and the formula `r_max^2 / (2*pi)`.
+  - Current evidence: roadmap/README/paper-index wording can cite broad
+    Appendix B numeric-result rows, construction/verifier gaps, revised-result
+    provenance, and B.4 prior-construction similarity gaps. It does not require
+    B.4-specific Hermite basis terms, coefficient precision, sign/condition
+    checks, root-calculation artifacts, bound recomputation, or certificate
+    payload hashes.
+  - Required result: when B.4 Hermite-polynomial certificate metadata and
+    validators land, update ROADMAP, README, papers index, and code/paper TODOs
+    so roadmap claims separate the quoted `C4` value, the polynomial/root
+    certificate, revised-result history, and qualitative near-optimality
+    interpretation.
+
 - [ ] Keep Appendix B.4 roadmap wording scoped until prior-construction
       similarity evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 reports that the

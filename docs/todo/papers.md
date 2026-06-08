@@ -2349,6 +2349,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     versioned result rows prevent mixing stale and current mathematical
     claims.
 
+- [ ] Track Appendix B.4 Hermite-polynomial certificate evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 derives
+    `C4 <= 0.3521` from a Fourier test function
+    `f(x) = P(x) exp(-pi x^2)`, with `P` an even linear combination of Hermite
+    polynomials `H_{4k}`. The paper reports approximate coefficients
+    `[0.32925, -0.01159, -8.9216e-5]` for `H0`, `H4`, and `H8`, then computes
+    the upper bound from the largest positive root of `P(x)/x^2` using
+    `r_max^2 / (2*pi)`.
+  - Current gap: paper-facing Appendix B TODOs track numeric result rows,
+    revised constants, verifier/Colab links, and qualitative similarity to
+    reference `[33]`. They do not require B.4-specific evidence for coefficient
+    precision, Hermite-basis identities, the `P(0)=0` and `x^2` factor step,
+    sign/condition checks, largest-root computation, or recomputation of the
+    reported bound from the root certificate.
+  - Required result: add paper/report evidence for B.4 Hermite basis terms,
+    coefficient payload and precision, Fourier/test-function assumptions,
+    `P(0)=0`/factor handling, largest-positive-root calculation, bound
+    recomputation via `r_max^2 / (2*pi)`, previous-bound comparison, verifier
+    artifacts, and documentation that separates this certificate from B.4
+    revision-history and near-optimality interpretation evidence.
+
 - [ ] Track Appendix B.4 prior-construction similarity and hypothesis evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 reports the
     uncertainty-inequality construction and then says the AlphaEvolve linear

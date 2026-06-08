@@ -1592,11 +1592,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and ablation registry checks. A checked-in test lightly checks the
     `papers/README.md` cross-reference section, but the public validation
     command does not validate referenced TODO paths, grouped labels,
-    active/completed classifications, or active open-gap presence.
+    active/completed classifications, active open-gap presence, or stale
+    grouped-only labels after source-specific TODO coverage has been added for
+    individual paper rows.
   - Required result: when TODO coverage cross-reference validation lands,
     update README, ROADMAP, papers index, and code/paper TODOs together so
     README distinguishes manifest/status-table validation from verified
-    backlog traceability for every local paper row.
+    backlog traceability for every local paper row, including whether active
+    cross-reference labels remain broad on rows that now have source-specific
+    TODO evidence.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role metadata exists.

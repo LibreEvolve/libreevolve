@@ -3298,14 +3298,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.tools.paper_manifest` validator checks the implementation
     status table against manifest ids, but it does not validate the TODO
     coverage table, referenced file existence, grouped-gap labels,
-    active-versus-completed target semantics, or whether every listed active
-    evidence target still contains a matching open gap.
+    active-versus-completed target semantics, whether every listed active
+    evidence target still contains a matching open gap, or whether grouped
+    labels are stale after later source-specific TODO entries are added for
+    rows such as the AlphaEvolve application/context papers.
   - Required result: add paper-index cross-reference validation with manifest
     id coverage, duplicate/extra row checks, safe and existing backlog paths,
     allowed grouped-gap labels, active/completed target classification, and
-    optional checks that active references point to open TODO text. Update
-    README/ROADMAP/code TODO wording so the paper index distinguishes
-    implementation-status validation from verified backlog traceability.
+    optional checks that active references point to matching open TODO text.
+    Add stale-grouped-label detection so a row with source-specific open TODOs
+    is not left pointing only at a broad grouped gap. Update README/ROADMAP/
+    code TODO wording so the paper index distinguishes implementation-status
+    validation from verified backlog traceability.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of

@@ -2453,15 +2453,18 @@ Primary evidence:
     appears once in the TODO coverage section and mentions `docs/todo/`, but
     no reusable validator checks the cross-reference table's row shape,
     duplicate/extra ids, referenced path existence, active-versus-completed
-    classification, grouped-gap labels, or whether active references still map
-    to open TODO content.
+    classification, grouped-gap labels, whether active references still map to
+    open TODO content, or whether stale grouped labels remain after a row gains
+    source-specific open TODO entries.
   - Required result: extend paper-manifest or paper-index validation with a
     TODO-coverage cross-reference checker: parse the table, require exact
     manifest-id coverage, reject duplicates/extras, validate safe existing
     `docs/todo/` paths, classify active and completed evidence targets,
-    allow only declared grouped-gap labels, and optionally verify that active
-    evidence rows contain open backlog text. Keep docs wording clear that
-    status-table validation is not the same as verified backlog traceability.
+    allow only declared grouped-gap labels, flag grouped-only references when
+    source-specific open TODO entries exist for the same paper id, and
+    optionally verify that active evidence rows contain matching open backlog
+    text. Keep docs wording clear that status-table validation is not the same
+    as verified backlog traceability.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

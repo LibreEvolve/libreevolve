@@ -121,6 +121,27 @@ ALLOWED_STATUS_TABLE_STATUS_PREFIXES = (
     "Partially implemented:",
     "Static prompt guidance exists ",
 )
+STATUS_TABLE_ROLE_STATUS_PREFIXES = {
+    "Agentic code-evolution inspiration": ("Not implemented as described:",),
+    "AlphaEvolve MARL algorithm-discovery result context": ("Background only",),
+    "AlphaEvolve compiler-optimization application context": ("Background only",),
+    "AlphaEvolve complexity-theory result context": ("Background only",),
+    "AlphaEvolve computer-architecture application context": ("Background only",),
+    "AlphaEvolve mechanism-design result context": ("Background only",),
+    "AlphaEvolve-optimized workflow application context": ("Background only",),
+    "Causal-guidance inspiration": ("Only ",),
+    "Constructive math benchmark candidate": ("Not implemented; potential future benchmark",),
+    "Domain evolution inspiration": ("Background only",),
+    "Foundational archive algorithm": ("Implemented as ",),
+    "Foundational bandit policy": ("Implemented as ",),
+    "Framework inspiration": ("Not implemented as described:",),
+    "Modular search inspiration": ("Static prompt guidance exists ",),
+    "Optimization benchmark comparator": ("Not implemented; potential future benchmark",),
+    "Primary specification target": ("Partially implemented:",),
+    "Retrieval/debug loop inspiration": ("Only ",),
+    "Test-time discovery context": ("Background only",),
+    "Test-time training inspiration": ("Only ",),
+}
 
 
 @dataclass(frozen=True)
@@ -1261,6 +1282,15 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
             PaperManifestIssue(
                 "invalid_status_table_status",
                 "implementation status must start with an allowed support/status class",
+                row_id,
+            )
+        )
+    allowed_status_prefixes = STATUS_TABLE_ROLE_STATUS_PREFIXES.get(role)
+    if role and status and allowed_status_prefixes is not None and not status.startswith(allowed_status_prefixes):
+        issues.append(
+            PaperManifestIssue(
+                "status_table_role_status_mismatch",
+                "implementation status class is not compatible with the paper-facing role",
                 row_id,
             )
         )

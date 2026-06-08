@@ -3604,18 +3604,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     scoped, or unsupported.
   - Current gap: `libreevolve.tools.paper_manifest` now validates the
     implementation-status table's stable header, exact four-column row shape,
-    non-empty safe title/role/status cells, allowed paper-facing roles, and
-    allowed support/status class prefixes, while still testing manifest-id
-    coverage plus missing, duplicate, and extra ids. Focused tests cover
-    header drift, malformed rows, invalid roles, and unsupported status
+    non-empty safe title/role/status cells, allowed paper-facing roles,
+    allowed support/status class prefixes, and role/status compatibility, while
+    still testing manifest-id coverage plus missing, duplicate, and extra ids.
+    Focused tests cover header drift, malformed rows, invalid roles,
+    unsupported status classes, and valid roles paired with incompatible status
     classes. Remaining paper-facing gap: the validator does not yet link each
     long semantic status claim to TODO or completed implementation records, nor
     detect smoke-scoped examples being phrased as AlphaEvolve-comparable
-    benchmark evidence beyond the coarse status prefix taxonomy.
+    benchmark evidence beyond the role/status class matrix.
   - Required result: extend paper-index status-cell validation with evidence
     links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
-    current prefix classes. Keep this validator distinct from the TODO
+    current role/status class matrix. Keep this validator distinct from the TODO
     coverage cross-reference checker, which verifies backlog pointers after
     the implementation-status table.
 

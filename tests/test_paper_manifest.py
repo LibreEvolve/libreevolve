@@ -1058,6 +1058,24 @@ def test_validate_paper_manifest_reports_invalid_status_table_role_and_status(tm
     assert "invalid_status_table_status" in codes
 
 
+def test_validate_paper_manifest_reports_status_table_role_status_mismatch(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Framework inspiration")
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_role_status_mismatch" in codes
+    assert "invalid_status_table_role" not in codes
+    assert "invalid_status_table_status" not in codes
+
+
 def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -2835,12 +2835,14 @@ Primary evidence:
     `libreevolve.tools.paper_manifest` now parses the `## Implementation
     status` table as an exact four-column public claim surface. It validates
     the header, row shape, non-empty safe title/role/status cells, the declared
-    paper-facing role taxonomy, and allowed status class prefixes, while still
-    detecting duplicate ids and reconciling manifest coverage. Focused tests
-    cover header drift, row-shape drift, invalid roles, and unsupported status
-    classes. Remaining gap: the validator does not yet link long status/
-    coverage phrases to active TODO or completed-evidence records, or prove
-    smoke-versus-paper-claim qualifiers beyond the allowed prefix classes.
+    paper-facing role taxonomy, allowed status class prefixes, and role/status
+    compatibility, while still detecting duplicate ids and reconciling
+    manifest coverage. Focused tests cover header drift, row-shape drift,
+    invalid roles, unsupported status classes, and valid roles paired with
+    incompatible status classes. Remaining gap: the validator does not yet
+    link long status/coverage phrases to active TODO or completed-evidence
+    records, or prove smoke-versus-paper-claim qualifiers beyond the role/
+    status class matrix.
   - Required result: extend the reusable paper-status-table validator with
     evidence-link checks from semantic status/coverage phrases to active TODO
     or completed-evidence records, including overclaim detection for smoke

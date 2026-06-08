@@ -950,11 +950,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and stale absence prose. `_read_status_table_ids()` now also
     validates the implementation-status table's stable header, complete
     four-cell row shape, non-empty safe title/role/status cells, declared role
-    taxonomy, and allowed status class prefixes. Remaining roadmap gap:
-    README/ROADMAP/paper-index wording does not yet describe this status-cell
-    validator scope, and the validator does not yet link long status claims to
-    active/completed evidence or deeply verify smoke/partial/planned/
-    unsupported qualifiers.
+    taxonomy, allowed status class prefixes, and role/status compatibility.
+    Remaining roadmap gap: README/ROADMAP/paper-index wording does not yet
+    describe this status-cell validator scope, and the validator does not yet
+    link long status claims to active/completed evidence or deeply verify
+    smoke/partial/planned/unsupported qualifiers beyond the role/status class
+    matrix.
   - Required result: update ROADMAP, README, papers index, and code/paper TODOs
     with the exact validator scope, and extend status validation with links
     from status claims to active or completed evidence plus richer qualifier

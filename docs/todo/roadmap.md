@@ -376,12 +376,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       until expert provenance exists.
   - Spec evidence: AlphaEvolve Section 3.2 says external mathematicians
     suggested open problems and advised on formulation, while Section 2.1 makes
-    task definition and optional background knowledge explicit human inputs.
+    task definition and optional background knowledge explicit human inputs;
+    Figure 1 also separates the human-defined "what" from AlphaEvolve's search
+    over "how" by naming evaluation criteria, initial solution, and optional
+    background knowledge as human-provided setup.
   - Current evidence: ROADMAP and README/code evidence cover local context
     source ingestion, ranking/filtering, and source/problem provenance, but do
     not require benchmark metadata for expert contributor roles, formulation
-    advice, objective/evaluator rationale, or mathematical parameter-scope
-    decisions.
+    advice, objective/evaluator rationale, mathematical parameter-scope
+    decisions, or expert review/signoff state. Runtime evidence records a
+    problem tree digest, config/plugin/environment/source provenance, and
+    loader-validated task/metrics/validator/seed files; it does not identify
+    who formulated the benchmark or why the objective and search scope are
+    authoritative.
   - Required result: when expert formulation metadata and report evidence land,
     update roadmap, README, papers index, and code/paper TODO entries together
     so roadmap text neither underclaims context provenance nor overclaims

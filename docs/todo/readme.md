@@ -312,11 +312,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     problems were suggested by external mathematicians who advised on how to
     formulate them as AlphaEvolve inputs, while Section 2.1 treats task
     definition and optional background knowledge as human-provided setup.
+    Figure 1 further frames the setup boundary as humans defining the "what"
+    by setting evaluation criteria, providing the initial solution, and adding
+    optional background knowledge.
   - Current evidence: README documents problem/source provenance, context file
     selection, local paper context, and seed source identity. It does not yet
     document benchmark metadata for expert contributor roles, problem-origin
     records, formulation advice, evaluator/objective rationale, or parameter
-    scope decisions.
+    scope decisions. Code evidence records file and runtime provenance for the
+    problem tree, config, plugins, environment, and source checkout, but the
+    `Problem` schema and loader do not capture expert advisor identity,
+    formulation rationale, or review/signoff state.
   - Required result: when expert formulation provenance and validation lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
     so README distinguishes context-source artifact tracking from

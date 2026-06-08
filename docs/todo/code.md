@@ -307,22 +307,29 @@ Primary evidence:
 - [ ] Add expert problem-formulation provenance for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,
     evaluator, initial solution, and optional background knowledge as
-    human-provided inputs, and Section 3.2 says many open mathematical
-    problems were suggested by external mathematicians who advised on how to
-    formulate them for AlphaEvolve. That contribution is distinct from local
-    context-file selection or seed source identity.
+    human-provided inputs; Figure 1 summarizes the boundary as "Human
+    defines What?" by setting evaluation criteria, providing an initial
+    solution, and optional background knowledge. Section 3.2 says many open
+    mathematical problems were suggested by external mathematicians who
+    advised on how to formulate them for AlphaEvolve. That contribution is
+    distinct from local context-file selection or seed source identity.
   - Current evidence: LibreEvolve records problem/source provenance, safe local
     context source labels, context-source selection/ranking/filter metadata,
     bounded prompt context hashes, and local paper/retrieval evidence. It does
     not define a benchmark metadata schema for expert contributor roles,
     problem-origin records, formulation advice, mathematical parameter-scope
-    decisions, evaluator/objective rationale, or contribution visibility in
-    benchmark reports.
+    decisions, evaluator/objective rationale, expert review state, or
+    contribution visibility in benchmark reports. Code evidence: `Problem`
+    carries task text, metrics, validator path, seeds, context records, and
+    config source; `load_problem()` only requires `task_description.txt`,
+    `metrics.yaml`, `validate.py`, seeds, and optional context/seed policy; and
+    `evolve()` records `problem_provenance()`, config, plugin, environment, and
+    source provenance, not expert-formulation authority.
   - Required result: add problem-definition metadata and validation for expert
     advisor/contributor roles, formulation notes, objective/evaluator
     rationale, parameter-scope decisions, background-knowledge linkage, and
-    report/run provenance before claiming AlphaEvolve-style expert-guided
-    mathematical benchmark formulation.
+    report/run provenance with review/signoff state before claiming
+    AlphaEvolve-style expert-guided mathematical benchmark formulation.
 
 - [ ] Add early-user and collaborator feedback provenance for robustness
       claims.

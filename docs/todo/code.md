@@ -6118,7 +6118,12 @@ Primary evidence:
     state-of-the-art solvers: commercial FICO Xpress and open-source SCIP. It
     reports that, without solver modifications, both solvers reproduce and in
     several cases improve on best solutions from the literature, including
-    recent LLM-driven discoveries.
+    recent LLM-driven discoveries. The body narrows the subset to three
+    benchmark families: min-max distance ratio, circle packing in a square or
+    perimeter-4 rectangle, and unit-hexagon packing in a regular hexagon. It
+    specifies Mosel NLP/QCP formulations, squared-distance variables, circle
+    center/radius/rectangle-width variables, hexagon rotation variables,
+    half-space parameters, and Farkas multipliers for non-overlap.
   - Current evidence: `papers/README.md` lists `2601.05943` only as an
     optimization benchmark comparator with no nonlinear-programming solver
     comparison harness. LibreEvolve has no first-class code TODO for this
@@ -6127,7 +6132,14 @@ Primary evidence:
     or license/proprietary-availability records, no result comparison table
     against AlphaEvolve/literature values, no certificate/tolerance policy for
     solver outputs, and no report that distinguishes LLM-discovered algorithm
-    search from direct mathematical-programming baselines.
+    search from direct mathematical-programming baselines. It also lacks
+    Table 1-3 result-row schemas, Mosel model provenance, squared-distance
+    ratio normalization choices (`t_min = 1` or `t_max = 1`), rectangle
+    perimeter/width constraints, trigonometric and nonconvex-equality handling
+    for hexagons, outer-approximation/Farkas-separation metadata, AlphaEvolve
+    repository validation-code records, and caveats for the paper's choice not
+    to attribute each solution to a specific solver or discuss dual-bound
+    improvements in detail.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2601.05943`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
@@ -6139,7 +6151,15 @@ Primary evidence:
     baseline values, reproduced/improved/fell-behind outcome rows, seed/run
     records, independent checker outputs, and README/ROADMAP wording that
     keeps global-NLP solver comparison as missing evidence until local solver
-    harnesses and benchmark reports exist.
+    harnesses and benchmark reports exist. The implementation boundary should
+    additionally require per-problem formulations for distance-ratio instances
+    `(d,n)`, circle-packing `n` and variant rows, hexagon-packing `n` rows,
+    Mosel/exported-model artifacts, solver availability and version checks
+    including SCIP 10.0 and FICO Xpress Global where applicable, primal
+    incumbent and optional dual-bound records, AlphaEvolve/literature baseline
+    citations, Table 1-3 comparison rows, AlphaEvolve-repo validation outputs,
+    rounding/flooring/ceiling policy, and an explicit note that this is a
+    direct solver baseline, not an LLM evolutionary-search implementation.
 
 - [ ] Add post-AlphaEvolve autoconvolution improvement boundary.
   - Spec evidence: arXiv `2506.16750`, `An improved example for an

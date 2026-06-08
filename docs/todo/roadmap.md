@@ -4544,7 +4544,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     subset of those problems as nonlinear optimization problems, evaluates
     FICO Xpress and SCIP without solver modifications, and reports reproduced
     and sometimes improved best-known solutions including recent LLM-driven
-    results.
+    results. The body covers min-max distance ratio, square/rectangle circle
+    packing, and regular-hexagon packing with explicit nonlinear
+    formulations, Mosel implementations, squared-distance QCPs, and Farkas-
+    multiplier separation for hexagon non-overlap.
   - Current evidence: ROADMAP tracks AlphaEvolve constructive-math benchmark
     gaps and broad comparator ideas, but it does not promote `2601.05943`
     beyond potential-future-benchmark status. It does not define a direct NLP
@@ -4552,6 +4555,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     handling, selected benchmark subset, solver parameter/time-limit policy,
     incumbent/bound/certificate artifact records, numerical tolerance policy,
     or side-by-side result table versus AlphaEvolve and literature baselines.
+    It also lacks gates for Mosel/exported model artifacts, AlphaEvolve
+    validation-code outputs, Table 1-3 value rows, rounding policy, source-link
+    provenance for prior packing data and OpenEvolve/SciPy/SCIP, commercial
+    Xpress availability handling, solver-attribution caveats, and dual-bound
+    reporting expectations.
   - Required result: add roadmap gates for `2601.05943`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     selected AlphaEvolve benchmark subset, NLP formulation schema,
@@ -4562,7 +4570,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reproduced/improved/fell-behind outcome rows, seed/run records,
     independent checker outputs, and a background-only or benchmark-fixture
     status rule so roadmap claims do not outpace local global-NLP solver
-    comparison support.
+    comparison support. Roadmap promotion should additionally require per-
+    family distance-ratio/circle/hexagon formulation fixtures, solver logs,
+    primal incumbent and optional dual-bound records, AlphaEvolve/literature
+    baseline citations, AlphaEvolve repository validation artifacts, Table 1-3
+    reproduction reports, license/reproducibility status, and documentation
+    that direct NLP solver baselines complement but do not implement
+    AlphaEvolve's LLM evolutionary-search mechanism.
 
 - [ ] Add post-AlphaEvolve autoconvolution improvement gates before roadmap
       promotion.

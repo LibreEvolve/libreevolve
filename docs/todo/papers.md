@@ -5656,7 +5656,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     commercial FICO Xpress and open-source SCIP, and reports that without
     solver modifications both solvers reproduce and sometimes improve on
     best solutions from the literature, including recent LLM-driven
-    discoveries.
+    discoveries. The body selects three AlphaEvolve-related families: min-max
+    distance ratio, circle packing in a square or perimeter-4 rectangle, and
+    regular-hexagon packing. It defines the generic NLP form, Mosel
+    implementations, QCP distance/circle formulations, and a hexagon model
+    with rotation, half-space coefficients, and Farkas multipliers.
   - Current gap: `papers/README.md` lists `2601.05943` as an optimization
     benchmark comparator with no nonlinear-programming solver comparison
     harness, and the active TODO coverage does not yet track this paper-
@@ -5664,7 +5668,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     capture direct NLP formulation artifacts, solver identity/license
     provenance, solver-run parameters, incumbent/bound/certificate records,
     numerical tolerances, or result tables comparing Xpress/SCIP outcomes
-    against AlphaEvolve and prior-literature baselines.
+    against AlphaEvolve and prior-literature baselines. They also omit the
+    paper's arXiv `v2`/January 15, 2026 metadata, Mosel modeling-language
+    detail, AlphaEvolve-repository validation-code claim, Table 1 improving
+    squared-ratio rows, Table 2 circle-packing rows, Table 3 hexagon-packing
+    rows, source links for Friedman packing pages/OpenEvolve/SciPy/SCIP, and
+    the caveat that the paper does not separate which solver found which
+    reported solution.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2601.05943`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
@@ -5676,7 +5686,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     values, reproduced/improved/fell-behind outcome rows, seed/run records,
     independent checker outputs, reproducibility status, and README/ROADMAP
     wording that treats global-NLP solver comparison as missing paper evidence
-    rather than implemented LibreEvolve support.
+    rather than implemented LibreEvolve support. Paper evidence should
+    additionally preserve the selected problem subset, exact formulation
+    variables and constraints, instance-size records such as `7` variables/
+    `10` constraints through `91` variables/`876` constraints for distance
+    ratio, all Table 1-3 values and rounding directions, solver-attribution and
+    dual-bound-detail caveats, validation-code provenance, and the conclusion's
+    distinction between direct optimization baselines and complementary
+    LLM-driven model/prototype generation.
 
 - [ ] Track post-AlphaEvolve autoconvolution improvement paper evidence.
   - Paper/source evidence: arXiv `2506.16750`, submitted June 20, 2025 and

@@ -4092,13 +4092,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     abstract reports straightforward NLP formulations evaluated with
     commercial FICO Xpress and open-source SCIP, reproducing and sometimes
     improving best known and LLM-driven results without solver modifications.
+    The body focuses on min-max distance ratio, square/rectangle circle
+    packing, and regular-hexagon packing, using Mosel formulations, QCP
+    squared-distance constraints, circle center/radius variables, and Farkas-
+    multiplier hexagon non-overlap constraints.
   - Current evidence: README documents constructive-math gaps, benchmark-
     report contracts, paper-cache status, and smoke fixtures. It does not
     mention `2601.05943`, define direct NLP formulations for AlphaEvolve
     benchmark problems, run Xpress or SCIP, record solver licenses/versions,
     preserve solver incumbents/bounds/certificates, compare solver outputs
     against AlphaEvolve and literature baselines, or document numerical
-    tolerance and reproducibility for direct solver baselines.
+    tolerance and reproducibility for direct solver baselines. README also
+    lacks source-scoped boundaries for Mosel model artifacts, selected
+    distance/circle/hexagon benchmark rows, AlphaEvolve repository validation
+    outputs, Table 1-3 comparisons, solver-attribution caveats, dual-bound
+    omissions, and commercial-license handling for Xpress.
   - Required result: if README mentions global NLP solvers, FICO Xpress, SCIP,
     direct nonlinear-programming formulations of AlphaEvolve benchmarks,
     solver reproduction of AlphaEvolve discoveries, solver improvements over
@@ -4108,7 +4116,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     certificate artifacts, tolerance policy, baseline comparisons,
     independent checker outputs, and benchmark reports. Avoid implying
     LibreEvolve supports global-NLP solver comparison for AlphaEvolve
-    benchmarks without those artifacts.
+    benchmarks without those artifacts. README wording should also distinguish
+    LibreEvolve's LLM evolutionary code search from direct mathematical
+    programming baselines unless local reports include exported NLP models,
+    solver logs, solution validation, baseline citations, table-level outcome
+    rows, and reproducibility/licensing status for both solvers.
 
 - [ ] Keep README post-AlphaEvolve autoconvolution improvement claims absent
       or source-scoped until 575-interval witness evidence exists.

@@ -2349,6 +2349,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     versioned result rows prevent mixing stale and current mathematical
     claims.
 
+- [ ] Track Appendix B.4 prior-bound rounding evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 gives the known
+    uncertainty-inequality range as `0.2025 <= C4 <= 0.3523`. It notes that
+    reference `[33]` states the prior upper bound as `0.353`, but that rounding
+    the referenced solution to the fourth digit gives `0.3523`, which is the
+    comparison baseline for AlphaEvolve's first-version `C4 <= 0.3521` result.
+  - Current gap: paper-facing Appendix B TODOs track revised constants,
+    Hermite/coefficient payloads, verifier/Colab links, previous-bound
+    comparisons, and qualitative similarity to reference `[33]`. They do not
+    preserve the prior source's stated value versus rounded value, the
+    fourth-digit rounding policy, lower-bound context, or the precise baseline
+    value that makes the `0.3521` improvement meaningful.
+  - Required result: add B.4 paper-evidence records for the prior `[33]`
+    bound: source id and page/section, stated value `0.353`,
+    rounded/recomputed value `0.3523`, lower bound `0.2025`, rounding
+    precision/policy, source-solution artifact or citation status, comparison
+    against AlphaEvolve's `0.3521` first-version bound, and README/ROADMAP
+    wording that separates this prior-bound caveat from the later `0.3216`
+    revision and from Hermite-polynomial certificate evidence.
+
 - [ ] Track Appendix B.4 Hermite-polynomial certificate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.4 derives
     `C4 <= 0.3521` from a Fourier test function

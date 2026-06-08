@@ -2276,6 +2276,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     revision-aware result rows and validation so roadmap wording cannot treat a
     family/status registry as current AlphaEvolve Appendix B result evidence.
 
+- [ ] Keep Appendix B.4 roadmap wording scoped until prior-bound rounding
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 reports the known uncertainty
+    inequality range as `0.2025 <= C4 <= 0.3523`, with a parenthetical note
+    that reference `[33]` states the upper bound as `0.353` but rounding that
+    solution to the fourth digit gives `0.3523`. The first-version
+    AlphaEvolve value `C4 <= 0.3521` is positioned as an improvement over that
+    rounded prior bound.
+  - Current evidence: `ROADMAP.md`, README, papers index, and Appendix B TODOs
+    can cite broad Appendix B numeric-result rows, revised-result provenance,
+    Hermite certificate gaps, and construction/verifier gaps. They do not
+    require source-linked evidence for the prior paper's stated value versus
+    rounded comparison value, lower-bound context, rounding policy, or the
+    precise baseline used for the `0.3521` improvement claim.
+  - Required result: when Appendix B.4 prior-bound rounding evidence lands,
+    update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish the `[33]` stated `0.353` value, the rounded `0.3523`
+    baseline, AlphaEvolve's `0.3521` first-version result, the later `0.3216`
+    revision, and the separate Hermite-polynomial certificate.
+
 - [ ] Keep Appendix B.4 roadmap wording scoped until Hermite-polynomial
       certificate evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`

@@ -1341,6 +1341,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve Appendix B constants or accidentally mix stale and revised
     bounds.
 
+- [ ] Keep README Appendix B.4 prior-bound wording scoped until rounding
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.4 frames the uncertainty-inequality
+    result against prior work as `0.2025 <= C4 <= 0.3523`, while noting that
+    reference `[33]` states the upper bound as `0.353` and that rounding the
+    referenced solution to the fourth digit gives `0.3523`. AlphaEvolve's
+    first-version `C4 <= 0.3521` result is compared against that rounded
+    baseline.
+  - Current evidence: README can describe Appendix B family/status coverage,
+    construction/verifier export gaps, revised-result gaps, Hermite-certificate
+    gaps, and B.4 similarity-interpretation gaps. It does not separately warn
+    that prior-bound claims need source-linked evidence for the stated
+    `[33]` value, the fourth-digit rounding caveat, the lower-bound context,
+    and the exact comparison baseline.
+  - Required result: when B.4 prior-bound rounding metadata and validators
+    land, update README, ROADMAP, papers index, and code/paper TODOs together
+    so README distinguishes the prior `0.353` statement, the rounded `0.3523`
+    comparison baseline, AlphaEvolve's `0.3521` first-version bound, the later
+    `0.3216` revision, and the separate Hermite certificate evidence.
+
 - [ ] Keep README Appendix B.4 numeric wording scoped until Hermite-polynomial
       certificate evidence exists.
   - Spec evidence: AlphaEvolve Appendix B.4 derives the `C4 <= 0.3521`

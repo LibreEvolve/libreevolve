@@ -2191,6 +2191,27 @@ Primary evidence:
     do not mix first-version and updated bounds when claiming AlphaEvolve-style
     mathematical result parity.
 
+- [ ] Add Appendix B.4 prior-bound rounding provenance.
+  - Spec evidence: AlphaEvolve Appendix B.4 states the known uncertainty
+    inequality range as `0.2025 <= C4 <= 0.3523`, while noting that the upper
+    bound from reference `[33]` is stated as `0.353` in that paper but becomes
+    `0.3523` when its solution is rounded to the fourth digit. The same
+    paragraph then compares AlphaEvolve's first-version `C4 <= 0.3521` result
+    against that rounded prior bound.
+  - Current evidence: existing Appendix B TODOs require revised-result rows,
+    Hermite-polynomial certificate details, verifier links, and qualitative
+    comparison to reference `[33]`. They do not require a source-linked record
+    for the prior `[33]` stated value, the paper's fourth-digit rounding
+    caveat, the lower-bound context, or the exact baseline value used when
+    claiming the `0.3521` improvement.
+  - Required result: add Appendix B.4 prior-bound metadata and validators for
+    the `[33]` source id/page or section, stated prior upper bound `0.353`,
+    rounded/recomputed prior bound `0.3523`, lower-bound context `0.2025`,
+    rounding precision and policy, source-solution artifact or citation status,
+    comparison to AlphaEvolve's `0.3521` first-version bound, and docs checks
+    that keep this prior-bound caveat distinct from the later `0.3216`
+    revision and from Hermite certificate verification.
+
 - [ ] Add Appendix B.4 Hermite-polynomial certificate provenance.
   - Spec evidence: AlphaEvolve Appendix B.4 derives `C4 <= 0.3521` from a
     Fourier uncertainty test function `f(x) = P(x) exp(-pi x^2)` where `P` is

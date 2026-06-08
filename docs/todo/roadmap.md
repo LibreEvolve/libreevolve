@@ -3676,3 +3676,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     learning-efficiency metrics, baseline identities, and a background-only or
     benchmark-fixture status rule so roadmap claims do not outpace local
     LLM-ALSO-style learning-signal support.
+
+- [ ] Add MemEvolve meta-evolving memory-architecture gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2512.18746`, submitted December 21, 2025, introduces
+    MemEvolve for meta-evolution of agent memory systems. The abstract says
+    memory enables agents to store trajectories, distill experience, and
+    synthesize reusable tools, but existing systems keep the memory
+    architecture itself static. MemEvolve jointly evolves experiential
+    knowledge and memory architecture, and EvolveLab defines a modular
+    encode/store/retrieve/manage design space distilled from twelve memory
+    systems, with up to 17.06% framework improvements and cross-task/cross-LLM
+    generalization.
+  - Current evidence: ROADMAP tracks run artifacts, prompt history, failed
+    proposals, archive restore, source provenance, and several memory/context
+    source gates. It does not mention `2512.18746`, define a meta-memory
+    architecture gate, or require local evidence before promoting adaptive
+    memory beyond fixed JSONL streams and prompt-context policies.
+  - Required result: add roadmap gates for `2512.18746`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    encode/store/retrieve/manage component schema, memory-architecture
+    genotype, experiential-knowledge records, joint content/architecture
+    evolution traces, memory mutation/evaluation policy, static-memory
+    baseline identities, EvolveLab benchmark metadata, cross-task/cross-LLM
+    transfer reports, performance-delta records, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    MemEvolve-style memory support.

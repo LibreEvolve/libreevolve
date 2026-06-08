@@ -4630,3 +4630,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     availability if any, reproducibility status, and README/ROADMAP wording
     that treats LLM-ALSO as missing paper evidence rather than implemented
     LibreEvolve support.
+
+- [ ] Track MemEvolve meta-evolving memory-architecture paper evidence.
+  - Paper/source evidence: arXiv `2512.18746`, submitted December 21, 2025, is
+    titled `MemEvolve: Meta-Evolution of Agent Memory Systems`. Its abstract
+    says self-evolving memory systems are reshaping LLM-agent evolution, but
+    prior work relies on manually engineered memory architectures to store
+    trajectories, distill experience, and synthesize reusable tools. MemEvolve
+    jointly evolves experiential knowledge and memory architecture, allowing
+    agents to refine how they learn from experience. It introduces EvolveLab,
+    a unified self-evolving memory codebase that distills twelve memory
+    systems into a modular encode/store/retrieve/manage design space, and
+    reports up to 17.06% improvements for frameworks such as SmolAgent and
+    Flash-Searcher plus cross-task and cross-LLM generalization.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2512.18746`. Existing rows cover AlphaEvolve run artifacts,
+    prompt history, failed-proposal snippets, DeltaEvolve semantic context,
+    CORAL shared memory, and several open-ended source gates, but not
+    meta-evolution of the memory architecture itself, EvolveLab's modular
+    memory substrate, encode/store/retrieve/manage component mutations, or
+    transfer evidence across tasks and backbone models.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2512.18746`: title/authors/arXiv version/date/PDF digest, source license,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve run
+    memory, memory-component taxonomy, encode/store/retrieve/manage schema,
+    memory-architecture mutation records, experiential-knowledge artifacts,
+    joint content/architecture evolution traces, static-memory baseline
+    identities, EvolveLab benchmark metadata, cross-task and cross-LLM
+    transfer metrics, performance-delta records, code/artifact availability
+    if any, reproducibility status, and README/ROADMAP wording that treats
+    MemEvolve as missing paper evidence rather than implemented LibreEvolve
+    support.

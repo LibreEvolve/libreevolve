@@ -47,6 +47,14 @@ and `claim_ready: false` gaps for evolvable span ids, score-field-to-candidate
 path links, embedded-only task definitions, standalone report examples, and
 deeper id resolution into prompt/evaluator/candidate history.
 Completed manifests also include
+`runtime.history.initial_program_idea_provenance_report` with schema
+`libreevolve.initial_program_idea_provenance_report.v1`. This report reads
+optional seed idea metadata from `problem.seed_sources`, links seed sources to
+generation-0 history rows, records seed variant ids, idea-origin class,
+contribution roles, prior-technique and background-reference labels, declared
+metric linkage, and explicit `claim_ready: false` gaps for equal-budget seed
+variant result tables and human contribution review/signoff.
+Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the
 selected abstraction from `policies.candidate_language`, records the current

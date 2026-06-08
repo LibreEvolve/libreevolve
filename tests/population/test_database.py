@@ -4641,6 +4641,44 @@ def test_manifest_writes_valid_seed_source_provenance():
     assert manifest["problem"]["seed_skipped"] == []
 
 
+def test_manifest_writes_seed_idea_provenance_metadata():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(
+        Config(log_dir=tmpdir, problem_name="t"),
+        seed_sources=[
+            {
+                "seed_index": 0,
+                "seed_source_kind": "file",
+                "seed_source_path": "initial_programs/seed.py",
+                "primary_file": "seed.py",
+                "file_count": 1,
+                "files": ["seed.py"],
+                "seed_variant_id": "matrix.seed:v1",
+                "seed_idea_origin": "researcher_idea",
+                "seed_idea_label": "stochastic evaluation seed",
+                "seed_idea_summary": "Adds stochastic scoring before evolution.",
+                "seed_contribution_roles": [
+                    "human_seed_author",
+                    "researcher_idea",
+                ],
+                "seed_prior_technique": "stochastic candidate evaluation",
+                "seed_background_refs": ["context/matrix_notes.md"],
+            }
+        ],
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    source = manifest["problem"]["seed_sources"][0]
+    assert source["seed_variant_id"] == "matrix.seed:v1"
+    assert source["seed_idea_origin"] == "researcher_idea"
+    assert source["seed_idea_label"] == "stochastic evaluation seed"
+    assert source["seed_contribution_roles"] == [
+        "human_seed_author",
+        "researcher_idea",
+    ]
+    assert source["seed_background_refs"] == ["context/matrix_notes.md"]
+
+
 def test_manifest_writes_seed_policy_and_reserved_seed_source_allowlist():
     tmpdir = tempfile.mkdtemp()
     ProgramDatabase(
@@ -4755,6 +4793,22 @@ def test_manifest_redacts_secret_like_seed_skipped_path():
         (
             [{"seed_source_kind": "workspace", "primary_file": ".seed.py", "files": [".seed.py"]}],
             "seed_sources\\[0\\]\\.primary_file must be a safe path label",
+        ),
+        (
+            [{"seed_idea_origin": "invented"}],
+            "seed_sources\\[0\\]\\.seed_idea_origin",
+        ),
+        (
+            [{"seed_variant_id": "bad token"}],
+            "seed_sources\\[0\\]\\.seed_variant_id",
+        ),
+        (
+            [{"seed_contribution_roles": ["unsupported_role"]}],
+            "seed_sources\\[0\\]\\.seed_contribution_roles\\[0\\]",
+        ),
+        (
+            [{"seed_background_refs": "context.md"}],
+            "seed_sources\\[0\\]\\.seed_background_refs must be a list",
         ),
     ],
 )

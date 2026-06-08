@@ -116,6 +116,11 @@ LibreEvolve has:
   task-spec manifest paths and linking each field to candidate-history,
   prompt-history, LLM-call, controller-budget, evaluator-artifact, and
   best-export evidence while leaving evolvable-span and score-link parity open
+- runtime initial-program idea provenance reports under
+  `runtime.history.initial_program_idea_provenance_report`, linking optional
+  seed idea-origin metadata and seed variant ids from `problem.seed_sources` to
+  generation-0 history rows while leaving equal-budget seed-variant result
+  tables and human contribution signoff open
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

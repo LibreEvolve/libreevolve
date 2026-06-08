@@ -249,22 +249,21 @@ Primary evidence:
   - Current evidence: LibreEvolve records safe initial-seed source provenance
     such as `seed_source_path`, `seed_source_kind`, `seed_index`, primary file,
     file counts, skipped seed diagnostics, and generation-0 baseline rows.
-    `_load_initial_workspaces()` loads source records from `initial_programs`,
-    `_seed_source_record()` stores only source identity and workspace shape
-    fields, `_SEED_SOURCE_ALLOWED_KEYS` accepts only source-path/kind/index/
-    file-list style metadata, and `_seed_workspace_entries()` gives inline
-    seeds only `seed_index` plus `seed_source_kind=inline`. Those records do
-    not classify a seed as simple, random, researcher-idea seeded,
-    prior-art-derived, or collaboration-enhanced; they do not record which
-    human idea was embedded in the initial program; and benchmark reports do
-    not compare simple versus idea-seeded starts for matrix or constructive
-    math tasks.
-  - Required result: add benchmark seed metadata and validation for initial
-    program idea origin, human/background-knowledge contribution labels,
-    declared prior technique or injected idea, seed-variant id, prompt/run
-    linkage, evaluator/metric linkage, and equal-budget seed-variant result
-    evidence before claiming AlphaEvolve-style collaboration or human-seeded
-    matrix benchmark parity.
+    `_SEED_SOURCE_ALLOWED_KEYS` now accepts optional seed idea metadata:
+    `seed_variant_id`, `seed_idea_origin`, `seed_idea_label`,
+    `seed_idea_summary`, `seed_contribution_roles`, `seed_prior_technique`,
+    and `seed_background_refs`; malformed origins, contribution roles,
+    unsafe tokens, and secret-like text fail before manifest writes. Completed
+    manifests include `runtime.history.initial_program_idea_provenance_report`,
+    which links `problem.seed_sources` to generation-0 history rows, declared
+    metric names, seed variant ids, idea-origin classes, contribution roles,
+    and background/prior-technique labels while keeping AlphaEvolve
+    human-seeded benchmark parity false.
+  - Required result: add prompt/run linkage to exact rendered context,
+    benchmark-level seed-variant result tables, equal-budget comparisons of
+    simple/random/researcher-idea starts, matrix and constructive-math seed
+    variant reports, and human contribution review/signoff before claiming
+    AlphaEvolve-style collaboration or human-seeded matrix benchmark parity.
 
 - [ ] Add an AlphaEvolve-strict seed validity policy for complete initial
       programs.

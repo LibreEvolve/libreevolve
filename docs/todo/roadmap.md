@@ -357,8 +357,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     under documented AlphaEvolve-style conditions without overclaiming current
     configured `diff`/`full` support.
 
-- [ ] Keep roadmap seed-provenance wording scoped to source identity versus
-      experiment idea provenance.
+- [ ] Keep roadmap seed-provenance wording scoped beyond current idea
+      metadata.
   - Spec evidence: AlphaEvolve Section 2.1 treats the initial program and
     optional background knowledge as user-provided inputs, and Section 3.1
     reports matrix runs where researcher-supplied ideas in the initial program
@@ -367,17 +367,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     researchers seeded the initial program with their own ideas and improved
     performance.
   - Current evidence: ROADMAP and README/code evidence show source-safe seed
-    ingestion and generation-0 baseline provenance. Current manifest seed
-    records are source identity records (`seed_index`, `seed_source_kind`,
-    `seed_source_path`, primary file, file count, and file list), and inline
-    seeds have only index plus kind. Roadmap wording does not yet require
-    benchmark seed metadata for simple/random starts versus human-idea-seeded
-    starts, injected prior techniques, idea-origin labels, or equal-budget
-    seed-variant result comparisons.
-  - Required result: when benchmark seed metadata, idea-origin validation, and
-    seed-variant reports land, update roadmap, README, papers index, and
-    code/paper TODO entries together so roadmap text distinguishes source-path
-    provenance from AlphaEvolve-style human-seeded experiment provenance.
+    ingestion, generation-0 baseline provenance, optional seed idea metadata,
+    and `runtime.history.initial_program_idea_provenance_report` with seed
+    variant ids, idea-origin labels, contribution roles, prior-technique/
+    background refs, history linkage, and metric linkage.
+  - Required result: when seed-variant result tables, prompt/context linkage,
+    equal-budget simple/random/researcher-idea comparisons, and contribution
+    review/signoff land, update roadmap, README, papers index, and code/paper
+    TODO entries together so roadmap text distinguishes metadata/reporting
+    from AlphaEvolve-style human-seeded experiment result provenance.
 
 - [ ] Keep roadmap seed-validity wording scoped to permissive baselines versus
       AlphaEvolve-strict complete initial programs.

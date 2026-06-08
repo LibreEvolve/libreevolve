@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_alphaevolve_process_exhibit_report,
     validate_candidate_abstraction_choice_report,
+    validate_initial_program_idea_provenance_report,
     validate_existing_codebase_integration_report,
     validate_marker_spelling_provenance_report,
     validate_task_spec_artifact_resolution_report,
@@ -4050,6 +4051,94 @@ def test_runtime_history_reports_candidate_abstraction_choice():
         "claim_ready_overclaim",
         "abstraction_selection_fidelity_overclaim",
         "equal_budget_comparison_ready_overclaim",
+    }
+
+
+def test_runtime_history_reports_initial_program_idea_provenance():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace):\n"
+        "    return {'score': 0.8, 'is_valid': True}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [CandidateWorkspace.from_code("x = 1\n", "main.py")]
+    problem.initial_workspace_sources = [
+        {
+            "seed_index": 0,
+            "seed_source_kind": "workspace",
+            "primary_file": "main.py",
+            "file_count": 1,
+            "files": ["main.py"],
+            "seed_variant_id": "seed.simple:v1",
+            "seed_idea_origin": "researcher_idea",
+            "seed_idea_label": "stochastic baseline idea",
+            "seed_idea_summary": "Use a researcher-proposed stochastic baseline.",
+            "seed_contribution_roles": [
+                "human_seed_author",
+                "researcher_idea",
+            ],
+            "seed_prior_technique": "stochastic evaluation",
+            "seed_background_refs": ["context/matrix.md"],
+        }
+    ]
+
+    evolve(
+        problem,
+        Config(max_generations=0, log_dir=tmpdir, problem_name="t"),
+    )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["initial_program_idea_provenance_report"]
+
+    assert report["schema"] == "libreevolve.initial_program_idea_provenance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_initial_program_idea_provenance_report(report)["ok"] is True
+    assert report["seed_source_count"] == 1
+    assert report["seed_program_count"] == 1
+    assert report["annotated_seed_count"] == 1
+    assert report["unknown_origin_count"] == 0
+    assert report["origin_counts"] == {"researcher_idea": 1}
+    assert report["metadata_contract"]["manifest_path"] == "problem.seed_sources"
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["idea_origin_metadata_present"] is True
+    assert report["claim_readiness"]["evaluator_metric_linkage"] is True
+    assert report["claim_readiness"]["equal_budget_seed_variant_results"] is False
+    assert report["claim_readiness"]["alphaevolve_human_seeded_benchmark_parity"] is False
+    assert "equal_budget_simple_random_researcher_seed_comparison" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    record = report["records"][0]
+    assert record["seed_variant_id"] == "seed.simple:v1"
+    assert record["seed_idea_origin"] == "researcher_idea"
+    assert record["seed_contribution_roles"] == [
+        "human_seed_author",
+        "researcher_idea",
+    ]
+    assert record["seed_background_refs"] == ["context/matrix.md"]
+    assert record["runtime"]["history_linked"] is True
+    assert record["runtime"]["metric_names"] == ["score"]
+    assert len(record["runtime"]["workspace_sha256"]) == 64
+    assert record["equal_budget_variant_evidence"] == "not_recorded"
+
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    assert history[0]["metadata"]["seed_idea_origin"] == "researcher_idea"
+    assert history[0]["metadata"]["seed_variant_id"] == "seed.simple:v1"
+
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_human_seeded_benchmark_parity"] = True
+    edited["records"][0]["equal_budget_variant_evidence"] = "claimed"
+    validation = validate_initial_program_idea_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_overclaim",
+        "human_seeded_parity_overclaim",
+        "equal_budget_variant_overclaim",
     }
 
 

@@ -5126,6 +5126,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 paper_metric_contract,
             )
         ),
+        "initial_program_idea_provenance_report": (
+            _initial_program_idea_provenance_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -5290,6 +5296,386 @@ def _marker_source_artifact_placeholder() -> dict:
         "artifact_path": None,
         "sha256": None,
         "reason": "paper source screenshot_or_exact_excerpt_not_generated_in_this_report",
+    }
+
+
+def _initial_program_idea_provenance_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    seed_sources = (
+        problem.get("seed_sources")
+        if isinstance(problem.get("seed_sources"), list)
+        else []
+    )
+    seed_programs = [
+        program
+        for program in programs
+        if isinstance(program.metadata, Mapping)
+        and program.metadata.get("candidate_type") == "seed"
+    ]
+    seed_programs_by_index = {
+        program.metadata.get("seed_index"): program
+        for program in seed_programs
+        if isinstance(program.metadata.get("seed_index"), int)
+        and not isinstance(program.metadata.get("seed_index"), bool)
+    }
+    records = [
+        _initial_program_idea_record(index, source, seed_programs_by_index.get(index))
+        for index, source in enumerate(seed_sources)
+        if isinstance(source, Mapping)
+    ]
+    retained_records = records[:50]
+    annotated_count = sum(
+        1 for record in retained_records if record["idea_metadata_present"]
+    )
+    origin_counts: dict[str, int] = {}
+    for record in retained_records:
+        origin = record["seed_idea_origin"]
+        origin_counts[origin] = origin_counts.get(origin, 0) + 1
+    report = {
+        "schema": "libreevolve.initial_program_idea_provenance_report.v1",
+        "source": "seed_source_metadata_and_generation_zero_history",
+        "seed_source_count": len(seed_sources),
+        "seed_program_count": len(seed_programs),
+        "record_count": len(retained_records),
+        "annotated_seed_count": annotated_count,
+        "unknown_origin_count": origin_counts.get("unknown", 0),
+        "origin_counts": origin_counts,
+        "records": retained_records,
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "metadata_contract": {
+            "manifest_path": "problem.seed_sources",
+            "optional_fields": [
+                "seed_variant_id",
+                "seed_idea_origin",
+                "seed_idea_label",
+                "seed_idea_summary",
+                "seed_contribution_roles",
+                "seed_prior_technique",
+                "seed_background_refs",
+            ],
+            "allowed_idea_origins": [
+                "unknown",
+                "simple_baseline",
+                "random_baseline",
+                "researcher_idea",
+                "prior_art_derived",
+                "collaboration_enhanced",
+            ],
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "seed_source_identity_recorded": bool(seed_sources),
+            "generation_zero_history_linked": len(seed_programs) == len(records),
+            "idea_origin_metadata_present": annotated_count == len(records)
+            and len(records) > 0,
+            "human_or_background_contribution_labels": all(
+                bool(record["seed_contribution_roles"]) for record in records
+            )
+            and len(records) > 0,
+            "seed_variant_ids_recorded": all(
+                isinstance(record.get("seed_variant_id"), str)
+                for record in records
+            )
+            and len(records) > 0,
+            "evaluator_metric_linkage": all(
+                bool(record["runtime"].get("metric_names")) for record in records
+            )
+            and len(records) > 0,
+            "equal_budget_seed_variant_results": False,
+            "alphaevolve_human_seeded_benchmark_parity": False,
+            "remaining_gap": [
+                "seed_variant_result_table",
+                "equal_budget_simple_random_researcher_seed_comparison",
+                "matrix_and_constructive_math_seed_variant_reports",
+                "human_contribution_review_or_signoff",
+                "prompt_context_to_seed_idea_linkage",
+            ],
+        },
+    }
+    report["validation"] = validate_initial_program_idea_provenance_report(report)
+    return report
+
+
+def _initial_program_idea_record(
+    index: int,
+    source: Mapping[str, object],
+    program: Program | None,
+) -> dict:
+    origin = source.get("seed_idea_origin")
+    if not isinstance(origin, str):
+        origin = "unknown"
+    roles = source.get("seed_contribution_roles")
+    if not isinstance(roles, list):
+        roles = []
+    background_refs = source.get("seed_background_refs")
+    if not isinstance(background_refs, list):
+        background_refs = []
+    idea_fields = [
+        "seed_variant_id",
+        "seed_idea_origin",
+        "seed_idea_label",
+        "seed_idea_summary",
+        "seed_contribution_roles",
+        "seed_prior_technique",
+        "seed_background_refs",
+    ]
+    runtime = {
+        "program_id": None,
+        "workspace_sha256": None,
+        "metric_names": [],
+        "fitness": None,
+        "evaluator_validity": None,
+        "history_linked": False,
+    }
+    if program is not None:
+        evaluation = (
+            program.evaluation
+            if isinstance(program.evaluation, Mapping)
+            else {}
+        )
+        runtime = {
+            "program_id": program.id,
+            "workspace_sha256": _workspace_sha256(program.workspace()),
+            "metric_names": sorted(
+                name for name in program.metrics if name != "is_valid"
+            ),
+            "fitness": program.fitness,
+            "evaluator_validity": evaluation.get("is_valid"),
+            "history_linked": True,
+        }
+    return {
+        "seed_index": source.get("seed_index", index),
+        "seed_source_kind": source.get("seed_source_kind"),
+        "seed_source_path": source.get("seed_source_path"),
+        "primary_file": source.get("primary_file"),
+        "seed_variant_id": source.get("seed_variant_id"),
+        "seed_idea_origin": origin,
+        "seed_idea_label": source.get("seed_idea_label"),
+        "seed_idea_summary_present": isinstance(source.get("seed_idea_summary"), str),
+        "seed_contribution_roles": roles,
+        "seed_prior_technique": source.get("seed_prior_technique"),
+        "seed_background_refs": background_refs,
+        "idea_metadata_present": any(field in source for field in idea_fields),
+        "runtime": runtime,
+        "equal_budget_variant_evidence": "not_recorded",
+    }
+
+
+def validate_initial_program_idea_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.initial_program_idea_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "initial-program idea provenance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "seed_source_count",
+        "seed_program_count",
+        "record_count",
+        "annotated_seed_count",
+        "unknown_origin_count",
+        "origin_counts",
+        "records",
+        "metadata_contract",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"initial-program idea report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.initial_program_idea_provenance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported initial-program idea report schema",
+            }
+        )
+    if report.get("source") != "seed_source_metadata_and_generation_zero_history":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported initial-program idea report source",
+            }
+        )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "record_count", len(records), issues)
+    annotated_count = 0
+    unknown_count = 0
+    origin_counts: dict[str, int] = {}
+    allowed_origins = {
+        "unknown",
+        "simple_baseline",
+        "random_baseline",
+        "researcher_idea",
+        "prior_art_derived",
+        "collaboration_enhanced",
+    }
+    allowed_roles = {
+        "human_seed_author",
+        "researcher_idea",
+        "background_knowledge",
+        "prior_art",
+        "collaborator_feedback",
+        "automated_baseline_generator",
+    }
+    for record in records:
+        if not isinstance(record, Mapping):
+            issues.append(
+                {"code": "invalid_record", "message": "records must be objects"}
+            )
+            continue
+        seed_index = record.get("seed_index")
+        if not isinstance(seed_index, int) or isinstance(seed_index, bool) or seed_index < 0:
+            issues.append(
+                {
+                    "code": "invalid_seed_index",
+                    "message": "seed_index must be a non-negative integer",
+                }
+            )
+        origin = record.get("seed_idea_origin")
+        if origin not in allowed_origins:
+            issues.append(
+                {
+                    "code": "invalid_seed_idea_origin",
+                    "message": "seed_idea_origin is unsupported",
+                }
+            )
+        else:
+            origin_counts[origin] = origin_counts.get(origin, 0) + 1
+            if origin == "unknown":
+                unknown_count += 1
+        if record.get("idea_metadata_present") is True:
+            annotated_count += 1
+        roles = record.get("seed_contribution_roles")
+        if not isinstance(roles, list):
+            issues.append(
+                {
+                    "code": "invalid_seed_contribution_roles",
+                    "message": "seed_contribution_roles must be a list",
+                }
+            )
+        else:
+            for role in roles:
+                if role not in allowed_roles:
+                    issues.append(
+                        {
+                            "code": "invalid_seed_contribution_role",
+                            "message": "seed contribution role is unsupported",
+                        }
+                    )
+        runtime = record.get("runtime")
+        if not isinstance(runtime, Mapping):
+            issues.append(
+                {"code": "invalid_runtime_link", "message": "runtime must be an object"}
+            )
+        else:
+            workspace_hash = runtime.get("workspace_sha256")
+            if workspace_hash is not None and not _is_sha256_hex(workspace_hash):
+                issues.append(
+                    {
+                        "code": "invalid_workspace_hash",
+                        "message": "runtime workspace hash must be sha256 hex",
+                    }
+                )
+            metric_names = runtime.get("metric_names")
+            if not isinstance(metric_names, list) or not all(
+                isinstance(item, str) for item in metric_names
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_metric_names",
+                        "message": "runtime metric_names must be a list of strings",
+                    }
+                )
+        if record.get("equal_budget_variant_evidence") != "not_recorded":
+            issues.append(
+                {
+                    "code": "equal_budget_variant_overclaim",
+                    "message": "equal-budget seed-variant evidence must remain not_recorded",
+                }
+            )
+    _validate_report_count(report, "annotated_seed_count", annotated_count, issues)
+    _validate_report_count(report, "unknown_origin_count", unknown_count, issues)
+    if report.get("origin_counts") != origin_counts:
+        issues.append(
+            {
+                "code": "origin_counts_mismatch",
+                "message": "origin_counts must match records",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("manifest_path") != "problem.seed_sources":
+        issues.append(
+            {
+                "code": "invalid_metadata_manifest_path",
+                "message": "metadata contract must point at problem.seed_sources",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("equal_budget_seed_variant_results") is not False:
+            issues.append(
+                {
+                    "code": "equal_budget_results_overclaim",
+                    "message": "equal-budget seed-variant results must remain false",
+                }
+            )
+        if readiness.get("alphaevolve_human_seeded_benchmark_parity") is not False:
+            issues.append(
+                {
+                    "code": "human_seeded_parity_overclaim",
+                    "message": "AlphaEvolve human-seeded benchmark parity must remain false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "initial-program idea report must not claim full parity",
+            }
+        )
+    return {
+        "schema": "libreevolve.initial_program_idea_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 
@@ -6515,7 +6901,7 @@ def _task_spec_field_gap(field_name: str) -> list[str]:
     common = {
         "initial_programs": [
             "evolvable_component_span_ids",
-            "seed_idea_origin_records",
+            "seed_idea_variant_result_tables",
         ],
         "evaluation_code": [
             "score_field_to_candidate_path_links",

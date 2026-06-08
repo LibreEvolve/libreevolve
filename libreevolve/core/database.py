@@ -4,6 +4,7 @@ import hashlib
 import json
 import math
 import random
+import re
 from collections.abc import Mapping
 from pathlib import Path
 import shutil
@@ -135,8 +136,34 @@ _SEED_SOURCE_ALLOWED_KEYS = {
     "file_count",
     "files",
     "allowed_reserved_paths",
+    "seed_variant_id",
+    "seed_idea_origin",
+    "seed_idea_label",
+    "seed_idea_summary",
+    "seed_contribution_roles",
+    "seed_prior_technique",
+    "seed_background_refs",
 }
 _SEED_SOURCE_KINDS = {"file", "directory", "inline", "workspace"}
+_SEED_IDEA_ORIGINS = {
+    "unknown",
+    "simple_baseline",
+    "random_baseline",
+    "researcher_idea",
+    "prior_art_derived",
+    "collaboration_enhanced",
+}
+_SEED_CONTRIBUTION_ROLES = {
+    "human_seed_author",
+    "researcher_idea",
+    "background_knowledge",
+    "prior_art",
+    "collaborator_feedback",
+    "automated_baseline_generator",
+}
+_SEED_IDEA_TEXT_MAX_CHARS = 512
+_SEED_IDEA_LABEL_MAX_CHARS = 160
+_SEED_BACKGROUND_REF_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -4591,6 +4618,13 @@ def _seed_source_metadata(program: Program) -> dict:
             "file_count",
             "files",
             "allowed_reserved_paths",
+            "seed_variant_id",
+            "seed_idea_origin",
+            "seed_idea_label",
+            "seed_idea_summary",
+            "seed_contribution_roles",
+            "seed_prior_technique",
+            "seed_background_refs",
         )
         if key in metadata
     }
@@ -5057,8 +5091,108 @@ def _validate_seed_source_record(index: int, source: object | None) -> dict:
     if "primary_file" in normalized and "files" in normalized:
         if normalized["primary_file"] not in normalized["files"]:
             raise StrictJsonlError(f"{label}.primary_file must be present in files")
+    _normalize_seed_idea_metadata(label, source, normalized)
     _validate_seed_source_json_size(label, normalized)
     return normalized
+
+
+def _normalize_seed_idea_metadata(
+    label: str,
+    source: Mapping[str, object],
+    normalized: dict,
+) -> None:
+    if "seed_variant_id" in source:
+        normalized["seed_variant_id"] = _normalize_seed_idea_token(
+            f"{label}.seed_variant_id",
+            source["seed_variant_id"],
+        )
+    if "seed_idea_origin" in source:
+        origin = source["seed_idea_origin"]
+        if not isinstance(origin, str) or origin not in _SEED_IDEA_ORIGINS:
+            raise StrictJsonlError(
+                f"{label}.seed_idea_origin must be one of {sorted(_SEED_IDEA_ORIGINS)}"
+            )
+        normalized["seed_idea_origin"] = origin
+    if "seed_idea_label" in source:
+        normalized["seed_idea_label"] = _normalize_seed_idea_text(
+            f"{label}.seed_idea_label",
+            source["seed_idea_label"],
+            max_chars=_SEED_IDEA_LABEL_MAX_CHARS,
+        )
+    if "seed_idea_summary" in source:
+        normalized["seed_idea_summary"] = _normalize_seed_idea_text(
+            f"{label}.seed_idea_summary",
+            source["seed_idea_summary"],
+            max_chars=_SEED_IDEA_TEXT_MAX_CHARS,
+        )
+    if "seed_prior_technique" in source:
+        normalized["seed_prior_technique"] = _normalize_seed_idea_text(
+            f"{label}.seed_prior_technique",
+            source["seed_prior_technique"],
+            max_chars=_SEED_IDEA_TEXT_MAX_CHARS,
+        )
+    if "seed_contribution_roles" in source:
+        roles = source["seed_contribution_roles"]
+        if not isinstance(roles, list) or not roles:
+            raise StrictJsonlError(
+                f"{label}.seed_contribution_roles must be a non-empty list"
+            )
+        normalized_roles = []
+        for role_index, role in enumerate(roles):
+            if not isinstance(role, str) or role not in _SEED_CONTRIBUTION_ROLES:
+                raise StrictJsonlError(
+                    f"{label}.seed_contribution_roles[{role_index}] must be one of "
+                    f"{sorted(_SEED_CONTRIBUTION_ROLES)}"
+                )
+            if role not in normalized_roles:
+                normalized_roles.append(role)
+        normalized["seed_contribution_roles"] = normalized_roles
+    if "seed_background_refs" in source:
+        refs = source["seed_background_refs"]
+        if not isinstance(refs, list):
+            raise StrictJsonlError(f"{label}.seed_background_refs must be a list")
+        normalized_refs = []
+        for ref_index, ref in enumerate(refs):
+            normalized_ref = _normalize_seed_idea_text(
+                f"{label}.seed_background_refs[{ref_index}]",
+                ref,
+                max_chars=_SEED_BACKGROUND_REF_MAX_CHARS,
+            )
+            if normalized_ref not in normalized_refs:
+                normalized_refs.append(normalized_ref)
+        normalized["seed_background_refs"] = normalized_refs
+
+
+def _normalize_seed_idea_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > _SEED_IDEA_LABEL_MAX_CHARS:
+        raise StrictJsonlError(
+            f"{label} must be <= {_SEED_IDEA_LABEL_MAX_CHARS} characters"
+        )
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value):
+        raise StrictJsonlError(f"{label} must be a safe seed metadata token")
+    return value
+
+
+def _normalize_seed_idea_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(value.strip())
+    if redacted != value.strip():
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
 
 
 def _normalize_seed_source_path(
@@ -5715,6 +5849,8 @@ def _seed_source_refs(seed_sources: list) -> list[dict]:
                 "path": source.get("seed_source_path"),
                 "primary_file": source.get("primary_file"),
                 "workspace_sha256": source.get("workspace_sha256"),
+                "seed_variant_id": source.get("seed_variant_id"),
+                "seed_idea_origin": source.get("seed_idea_origin"),
             }
         )
     return refs

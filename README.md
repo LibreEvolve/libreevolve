@@ -1983,10 +1983,21 @@ converted into immutable binary static members with byte count, SHA-256, and
 bounded `content_b64` provenance; the primary file must remain text. Direct
 `initial_workspace_sources` records, when
 provided, must be mappings using only `seed_index`, `seed_source_kind`,
-`seed_source_path`, `primary_file`, `file_count`, and `files`; path labels are
-validated with the candidate-path policy, `seed_index` must match the seed
-position, `file_count` must match `files`, and malformed records fail before
-run manifests or seed history rows are written.
+`seed_source_path`, `primary_file`, `file_count`, `files`, and optional
+seed-idea metadata fields: `seed_variant_id`, `seed_idea_origin`,
+`seed_idea_label`, `seed_idea_summary`, `seed_contribution_roles`,
+`seed_prior_technique`, and `seed_background_refs`. Path labels are validated
+with the candidate-path policy, `seed_index` must match the seed position,
+`file_count` must match `files`, idea origins and contribution roles use fixed
+allowlists, and malformed records fail before run manifests or seed history
+rows are written.
+Completed manifests include
+`runtime.history.initial_program_idea_provenance_report`, which links
+`problem.seed_sources` to generation-0 history rows, records seed idea-origin
+metadata when present, reports seed variant ids, contribution roles, prior
+technique/background references, evaluator metric linkage, and keeps
+AlphaEvolve-style human-seeded benchmark parity false until equal-budget seed
+variant result tables exist.
 Prompt context under `context/` follows the same problem-local boundary:
 symlinks and Windows junctions, including linked `context.yaml` manifests, are
 rejected instead of being read as context sources. Run manifests record both

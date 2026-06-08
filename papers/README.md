@@ -283,13 +283,16 @@ retention under that cap.
 | 2506.01896 | Sums and Differences II | Constructive math benchmark candidate | Not implemented; potential future benchmark; no second-variant sums-and-differences verifier or benchmark harness. |
 
 AlphaEvolve initial-program provenance note: current manifests and history
-preserve safe seed source identity for generation-0 baselines, but they do not
-record whether a benchmark seed was simple/random, researcher-idea-seeded,
-prior-art-derived, or collaboration-enhanced. AlphaEvolve Section 3.1 reports
-matrix runs boosted by human ideas in the initial program, such as stochastic
-evaluation or evolutionary approaches; LibreEvolve needs structured
-idea-origin metadata and equal-budget seed-variant evidence before making that
-class of paper claim.
+preserve safe seed source identity for generation-0 baselines, and optional
+seed-source metadata can now record seed variant ids, idea-origin classes,
+human/background contribution roles, prior-technique labels, and background
+references. Completed manifests include
+`runtime.history.initial_program_idea_provenance_report`, which links that
+metadata to generation-0 history rows and declared metric names. AlphaEvolve
+Section 3.1 reports matrix runs boosted by human ideas in the initial program,
+such as stochastic evaluation or evolutionary approaches; LibreEvolve still
+needs equal-budget seed-variant result evidence and contribution review/signoff
+before making that class of paper claim.
 
 AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
 surfaces listed in the table, including SEARCH/REPLACE, configured full

@@ -286,8 +286,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and code/paper TODOs so README distinguishes the current partial report
     from AlphaEvolve-style abstraction-selection evidence.
 
-- [ ] Keep README seed-provenance wording scoped to source identity until
-      initial-program idea provenance exists.
+- [ ] Keep README seed-provenance wording scoped beyond current idea metadata.
   - Spec evidence: AlphaEvolve Section 2.1 makes the initial solution and
     optional background knowledge part of the task specification, and Section
     3.1 reports matrix targets where researchers seeded the initial program
@@ -298,15 +297,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README documents seed source safety and provenance,
     including `seed_source_path`, `seed_source_kind`, `seed_index`,
     `problem.seed_sources`, skipped-seed diagnostics, inline seed labels, and
-    generation-0 baselines. The implementation records seed source identity and
-    workspace shape, while inline seeds carry only index plus
-    `seed_source_kind=inline`. It does not document benchmark metadata that
-    classifies initial programs by idea origin, records injected human or
-    prior-art ideas, names seed variants, or compares simple/random and
-    idea-seeded starts under a benchmark report.
-  - Required result: when benchmark seed idea-origin metadata and seed-variant
-    result evidence land, update README, ROADMAP, papers index, and code/paper
-    TODO entries together so README does not imply source-path provenance is
+    generation-0 baselines. README now also documents optional seed idea
+    metadata fields and
+    `runtime.history.initial_program_idea_provenance_report`, which links seed
+    variant ids, idea origins, contribution roles, prior-technique labels, and
+    background refs to generation-0 history rows and declared metric names.
+  - Required result: when seed-variant result tables, prompt/context linkage,
+    equal-budget simple/random/researcher-idea comparisons, and contribution
+    review/signoff land, update README, ROADMAP, papers index, and code/paper
+    TODO entries together so README does not imply metadata alone is
     sufficient for AlphaEvolve-style human-seeded collaboration claims.
 
 - [ ] Keep README seed-validity wording scoped to permissive examples versus

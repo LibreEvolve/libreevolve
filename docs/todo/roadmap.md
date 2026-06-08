@@ -2808,8 +2808,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and companion Colab links, and validation that roadmap text distinguishes
     rank-row support from the "first improvement after 56 years" claim.
 
-- [ ] Keep Figure 4 matrix-exhibit roadmap wording scoped until exhibit
-      provenance exists.
+- [ ] Keep Figure 4 matrix-exhibit roadmap wording scoped until rendered
+      artifacts and mutation lineage exist.
   - Spec evidence: AlphaEvolve Figure 4 presents the main-text matrix
     multiplication discovery exhibit, showing an evolved 4x4
     tensor-decomposition search-program diff and tying the displayed example
@@ -2820,18 +2820,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: roadmap/README/paper-index status can point to Appendix A
     target identities, matrix result-report validation, checked Strassen
     bundle evidence, and separate TODOs for near-integrality, scalar-field,
-    baseline, companion Colab, and Figure 9 sweep-space provenance. They do not
-    require Figure 4 exhibit ids, exact source diff excerpt artifacts/hashes,
-    selected target/result-row mappings, caption values, visual/text artifact
-    paths/hashes, rendering/source parameters, the accepted 15-mutation
-    lineage, component-change labels, or links from the displayed figure to
-    decomposition reports, exactness certificates, notebooks, and paper-source
-    evidence.
-  - Required result: when Figure 4 matrix exhibit provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODOs with exhibit-level
-    metadata and validators so roadmap wording distinguishes reproduced
-    main-text matrix figure evidence, mutation-sequence evidence, general
-    matrix benchmark coverage, and Appendix A Figure 9 sweep evidence.
+    baseline, companion Colab, Figure 9 sweep-space provenance, and
+    `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`. The Figure
+    4 schema validates exhibit ids, paper page 11, caption values, exact source
+    diff excerpt artifacts/hashes, selected target/result-row mappings,
+    visual/text artifact paths/hashes, rendering/source parameters, the
+    15-mutation caption count, component-change labels, and links from the
+    displayed figure to Figure 9, decomposition reports, exactness
+    certificates, notebooks, and paper-source evidence. It does not emit or
+    check in the rendered/source artifacts or accepted 15-mutation lineage.
+  - Required result: when Figure 4 rendered/source artifacts and accepted
+    mutation-lineage records land, update ROADMAP, README, papers index, and
+    code/paper TODOs so roadmap wording distinguishes reproduced main-text
+    matrix figure evidence, mutation-sequence evidence, general matrix
+    benchmark coverage, and Appendix A Figure 9 sweep evidence.
 
 - [ ] Keep Appendix A row-note roadmap wording scoped until concurrent-work
       provenance exists.

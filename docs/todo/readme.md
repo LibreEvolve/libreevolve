@@ -1064,8 +1064,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     main-text exhibit evidence, semantic change-component evidence, and generic
     sweep-space provenance.
 
-- [ ] Keep README Figure 4 matrix-exhibit wording scoped until exhibit
-      provenance exists.
+- [ ] Keep README Figure 4 matrix-exhibit wording scoped until rendered
+      artifacts and mutation lineage exist.
   - Spec evidence: AlphaEvolve Figure 4 is the main-text matrix discovery
     exhibit, showing a concrete evolved 4x4 tensor-decomposition search-program
     diff and tying it to Section 3.1/Table 2 matrix rank-improvement results.
@@ -1074,18 +1074,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     hyperparameter-sweep changes.
   - Current evidence: README documents matrix result reports, Appendix A
     registry checks, checked Strassen baseline evidence, and open
-    near-integrality, scalar-field, baseline, and sweep-space gaps. It does
-    not document Figure 4 exhibit ids, exact source diff excerpt
-    artifacts/hashes, selected matrix target/result-row mappings, caption
-    values, rendered visual/text artifact paths/hashes, rendering parameters,
-    the 15-mutation accepted sequence, component-level mutation categories, or
-    links from the displayed exhibit to matrix reports, certificates,
-    notebooks, and paper-source evidence.
-  - Required result: when Figure 4 exhibit provenance lands, update README,
-    ROADMAP, papers index, and matching TODOs so README distinguishes
-    reproduced main-text matrix exhibit evidence from general matrix benchmark
-    readiness, Figure 4 mutation-lineage evidence, and Appendix A Figure 9
-    sweep-space parity.
+    near-integrality, scalar-field, baseline, and sweep-space gaps. It now
+    documents `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`,
+    which validates Figure 4 exhibit ids, source PDF page 11, caption values,
+    exact source diff excerpt artifacts/hashes, selected matrix target/result
+    mappings, rendered visual/text artifact paths/hashes, rendering parameters,
+    the 15-mutation caption count, component-level mutation categories, and
+    links from the displayed exhibit to Figure 9, matrix reports,
+    certificates, notebooks, and paper-source evidence. It also states that
+    rendered/source artifacts and accepted-mutation lineage are not emitted.
+  - Required result: when Figure 4 rendered/source artifacts and accepted
+    mutation-lineage records land, update README, ROADMAP, papers index, and
+    matching TODOs so README distinguishes reproduced main-text matrix exhibit
+    evidence from general matrix benchmark readiness, Figure 4 mutation-lineage
+    evidence, and Appendix A Figure 9 sweep-space parity.
 
 - [ ] Keep README matrix wording scoped to final reports until
       baseline-component provenance exists.

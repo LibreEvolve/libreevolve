@@ -3832,22 +3832,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     sweep.
   - Current gap: matrix paper evidence tracks Appendix A target identities,
     report validation, companion Colab TODOs, near-integrality, scalar-field,
-    baseline, and Figure 9 sweep-space gaps. It does not preserve the
-    paper-facing Figure 4 exhibit as its own evidence object with stable
-    exhibit id, exact source diff excerpt artifact/hash, selected matrix target
-    and result-row links, caption values, visual/text artifact hashes,
-    rendering/source parameters, the accepted 15-mutation sequence, component
-    labels for optimizer/initialization/loss/sweep changes, or links from the
-    displayed figure to report, certificate, notebook, and source-paper
-    artifacts.
-  - Required result: add paper-facing Figure 4 exhibit records and validation:
-    figure/exhibit id, source PDF page/caption location, target ids, exact diff
-    excerpt artifact and hash, Table 2/Appendix A row mappings, rank/baseline
-    values, rendered artifact paths/hashes, accepted mutation count and
-    component lineage, and links to decomposition reports, exactness
-    certificates, companion notebook/source evidence, and README/ROADMAP
-    wording that separates main-text exhibit reproduction from general matrix
-    benchmark coverage.
+    baseline, and Figure 9 sweep-space gaps.
+    `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1` now validates
+    the paper-facing Figure 4 exhibit as its own evidence object with stable
+    exhibit id, source PDF page/caption location, selected matrix target and
+    result-row links, caption values, exact source diff excerpt artifact/hash,
+    rendered visual/text artifact hashes, rendering/source parameters,
+    15-mutation caption count, component labels for
+    optimizer/initialization/loss/sweep changes, and links from the displayed
+    figure to report, certificate, notebook, Figure 9, and source-paper
+    artifacts. It does not render or commit those Figure 4 artifacts, and it
+    does not prove the accepted 15-mutation sequence.
+  - Required result: add concrete paper-facing Figure 4 rendered/source-diff
+    artifacts and accepted-mutation lineage records with component labels,
+    Table 2/Appendix A row mappings, rank/baseline values, decomposition
+    report links, exactness certificates, companion notebook/source evidence,
+    and README/ROADMAP wording that separates main-text exhibit reproduction
+    from general matrix benchmark coverage.
 
 - [ ] Track matrix baseline-component provenance for Section 3.1 workflows.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the

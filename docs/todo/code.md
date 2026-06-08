@@ -3829,21 +3829,25 @@ Primary evidence:
     evolutionary process.
   - Current evidence: LibreEvolve tracks Appendix A target/report contracts,
     checked Strassen bundle evidence, matrix baseline-component TODOs, and
-    Figure 9 sweep-space provenance TODOs. Those cover benchmark/result shape
-    and the Appendix A search-program workflow, but no code/report schema
-    records a Figure 4 exhibit id, exact source diff excerpt artifact/hash,
-    selected target/result-row mapping, caption values, rendering/source
-    parameters, visual/text artifact hashes, the 15-mutation accepted-lineage
-    count, per-mutation component labels, or links from the displayed exhibit
-    to decomposition reports, certificates, and companion paper evidence.
-  - Required result: add Figure 4-style matrix exhibit metadata with stable
-    exhibit ids, target ids, exact source/diff excerpt artifacts and hashes,
-    selected Table 2/Appendix A row mappings, rank/baseline/outcome values,
-    rendered figure/text artifacts, accepted mutation sequence length,
-    component-change categories for each accepted mutation, and links to matrix
-    report, certificate, notebook, and paper-source evidence so docs
-    distinguish main-text exhibit reproduction from general matrix benchmark
-    readiness and Appendix A Figure 9 sweep evidence.
+    Figure 9 sweep-space provenance TODOs.
+    `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1` now validates
+    a Figure 4 exhibit id, paper page 11, caption values, 15-mutation caption
+    count, selected `mm_4x4x4` rank-48 target/result mapping, left diff outline
+    plus top-right optimizer/initialization, middle-right loss, and bottom-right
+    hyperparameter-sweep highlight regions, exact source diff excerpt
+    artifacts/hashes, rendering/source artifact hashes, semantic component
+    labels, and links from the displayed exhibit to Figure 9, decomposition
+    reports, sweep metadata, certificates, and companion paper evidence. It
+    validates declared metadata only; no local generator emits or checks in the
+    rendered/text/source-diff Figure 4 artifacts, and no lineage artifact proves
+    the accepted 15-mutation sequence.
+  - Required result: emit or commit the concrete Figure 4 rendered/text/source
+    diff artifacts plus accepted mutation sequence records with component
+    labels for each accepted mutation, selected Table 2/Appendix A row mappings,
+    rank/baseline/outcome values, and links to matrix report, certificate,
+    notebook, and paper-source evidence so docs distinguish main-text exhibit
+    reproduction from general matrix benchmark readiness and Appendix A Figure
+    9 sweep evidence.
 
 - [ ] Add matrix scalar-field provenance for real, complex, and characteristic
       claims.

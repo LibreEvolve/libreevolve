@@ -468,6 +468,14 @@ is not yet an AlphaEvolve reproduction.
   optimizer/init/noise/clipping/loss/discretization/sweep labels, and links to
   result, sweep-space, certificate, and companion notebook evidence. Rendered
   appendix panel artifacts are still not emitted or checked in.
+- Keep Figure 4 matrix-discovery exhibit claims scoped to declared exhibit
+  validation: `libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`
+  now validates the main-text exhibit id, page 11, caption linkage,
+  15-mutation count, `mm_4x4x4` rank-48 mapping, left diff outline plus the
+  three highlighted right-side excerpt regions, source-diff/rendered-region
+  hashes, semantic optimizer/init/loss/sweep coverage, and links to Figure 9,
+  result, sweep-space, certificate, and companion notebook evidence. Rendered
+  Figure 4 artifacts and accepted-mutation lineage records remain open.
 
 ### 10. Operational maturity
 

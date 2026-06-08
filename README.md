@@ -3235,6 +3235,16 @@ labels such as `Full method`, axis metadata, std-band style declarations,
 rendered artifact hashes, and links to report/curve/raw-trace artifacts. It
 does not render a plot or prove that benchmark scripts emitted the linked
 artifacts.
+Figure 4 matrix-discovery exhibit metadata uses
+`libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1`; it validates
+the main-text Figure 4 exhibit id, paper page 11, caption linkage, 15-mutation
+caption count, `mm_4x4x4` rank-48 target mapping, left diff outline plus the
+top-right optimizer/initialization, middle-right loss, and bottom-right
+hyperparameter-sweep highlight regions, source-diff/rendered-region artifact
+hashes, semantic component coverage, and links to Figure 9, matrix result,
+sweep-space, certificate, and companion notebook evidence. It validates
+declared exhibit metadata once artifacts exist; it does not render or check in
+the Figure 4 panel artifacts or prove the accepted 15-mutation lineage.
 Appendix A Figure 9 matrix-diff exhibit metadata uses
 `libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1`; it validates the
 three magnified Figure 9a/9b/9c panel ids, paper pages 35-37, Figure 4

@@ -887,6 +887,16 @@ Implemented:
   style declarations, rendered artifact hashes, and links to ablation report,
   curve-summary, and raw-seed-trace artifacts. It does not render plots or
   prove that benchmark scripts emitted those artifacts.
+- `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve main-text
+  Figure 4 matrix-discovery metadata contract. It validates the main-text
+  exhibit id, paper page 11, caption linkage, 15-mutation caption count,
+  `mm_4x4x4` rank-48 target mapping, left diff outline plus the top-right
+  optimizer/initialization, middle-right loss, and bottom-right
+  hyperparameter-sweep highlight regions, source-diff/rendered-region artifact
+  hashes, semantic component coverage, and links to Figure 9, matrix result,
+  sweep-space, exactness-certificate, and companion notebook evidence. It does
+  not render or commit the Figure 4 artifacts, and it does not prove the
+  accepted 15-mutation lineage.
 - `libreevolve/problems/benchmarks/matrix_exhibits.py`: AlphaEvolve Appendix A
   Figure 9a-9c magnified matrix-diff metadata contract. It validates the three
   panel ids, paper pages 35-37, Figure 4 caption linkage, `mm_4x4x4` rank-48

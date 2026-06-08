@@ -210,6 +210,28 @@ Primary evidence:
     separates paper-process acknowledgement evidence from benchmark,
     deployment, validation, or system-development provenance.
 
+- [ ] Add paper author-metadata provenance for equal contributors and
+      correspondence roles.
+  - Spec evidence: AlphaEvolve's Author information section names equal
+    contributors, identifies manuscript-writing contributors and paper-input
+    contributors in the Contributions section, and lists corresponding
+    authors. These author metadata claims are distinct from technical system
+    contributions, figure/Colab artifact authorship, and acknowledgement
+    review/support roles.
+  - Current evidence: LibreEvolve TODOs track core system-development roles,
+    paper-artifact creator/assembler roles, and acknowledgement-role
+    provenance, but no schema preserves paper author metadata such as equal
+    contributor groups, manuscript-writing roles, paper-input roles, or
+    corresponding-author records. Local docs could therefore cite the paper
+    source without distinguishing artifact authorship, system authorship, and
+    publication-author/contact metadata.
+  - Required result: add paper-author metadata records with safe contributor
+    labels, role category (`equal_contributor`, `manuscript_writer`,
+    `paper_input`, `corresponding_author`), source page/section, applicable
+    artifact or publication scope, privacy/contact redaction policy, and
+    README/ROADMAP wording that separates publication metadata from technical
+    implementation, validation, artifact-creation, and acknowledgement roles.
+
 - [ ] Add core system-development contribution provenance.
   - Spec evidence: AlphaEvolve's Contributions section attributes the initial
     system design/implementation, project vision and problem scoping, first

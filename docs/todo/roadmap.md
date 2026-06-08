@@ -299,6 +299,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording does not treat acknowledgement-process roles as
     technical validation or system-development provenance.
 
+- [ ] Keep paper-author roadmap wording scoped until publication-author
+      metadata exists.
+  - Spec evidence: AlphaEvolve's Author information names equal contributors
+    and corresponding authors, while the Contributions section identifies
+    manuscript writers and paper-input contributors.
+  - Current evidence: ROADMAP and README/code evidence track contribution-role
+    gaps, paper-artifact creator roles, acknowledgement-role gaps, and
+    application owner/reviewer gaps. They do not require publication-author
+    metadata for equal-contributor status, manuscript-writing roles,
+    paper-input roles, or correspondence, nor docs wording that separates those
+    metadata from technical implementation, artifact creation, validation, or
+    acknowledgement evidence.
+  - Required result: when paper-author metadata lands, update ROADMAP, README,
+    papers index, and code/paper TODOs with safe contributor labels, author
+    role categories, source page/section, publication scope, and contact/
+    privacy redaction policy so roadmap wording does not conflate publication
+    metadata with AlphaEvolve technical capability provenance.
+
 - [ ] Keep system-development roadmap wording scoped until contribution-role
       provenance exists.
   - Spec evidence: AlphaEvolve's Contributions section attributes core system

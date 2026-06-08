@@ -323,6 +323,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     validation, benchmark formulation, deployment, and system-development
     provenance.
 
+- [ ] Track paper author-metadata evidence for equal contributors and
+      correspondence roles.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Author information says a
+    named group contributed equally, the Contributions section identifies the
+    people who wrote the paper and contributors who supplied input, and the
+    Author information section lists corresponding authors.
+  - Current gap: paper/status TODOs track system-development contribution
+    roles, figure/Colab creator roles, and acknowledgement review/support
+    roles. They do not preserve publication-author metadata for equal
+    contribution, manuscript writing, paper input, or correspondence. A paper
+    provenance report could therefore conflate author metadata with technical
+    implementation, artifact creation, review, or domain-validation roles.
+  - Required result: add paper-facing author-metadata records with safe
+    contributor labels, role category, source page/section, publication or
+    artifact scope, contact/privacy redaction policy, and README/ROADMAP
+    wording that distinguishes publication-author metadata from technical
+    system provenance, figure/notebook artifact authorship, and
+    acknowledgement roles.
+
 - [ ] Track core AlphaEvolve system-development contribution provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the
     initial version of AlphaEvolve was designed and implemented by specific

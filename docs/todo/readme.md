@@ -243,6 +243,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     advice, and application-review acknowledgements from technical
     AlphaEvolve-spec evidence.
 
+- [ ] Keep README paper-author wording scoped until publication-author
+      metadata exists.
+  - Spec evidence: AlphaEvolve's Author information and Contributions sections
+    separately record equal contributors, manuscript writers, paper-input
+    contributors, and corresponding authors.
+  - Current evidence: README can describe local project status, source papers,
+    paper-artifact roles, acknowledgement-role gaps, and contribution-role
+    gaps. It does not document publication-author metadata or distinguish that
+    metadata from technical implementation authorship, artifact creation,
+    domain validation, or acknowledgement review/support roles.
+  - Required result: when paper-author metadata lands, update README, ROADMAP,
+    papers index, and code/paper TODOs together so README separates equal
+    contributor, manuscript-writing, paper-input, and corresponding-author
+    records from AlphaEvolve technical capability or validation evidence.
+
 - [ ] Keep README system-development provenance scoped until contribution-role
       evidence exists.
   - Spec evidence: AlphaEvolve's Contributions section separately attributes

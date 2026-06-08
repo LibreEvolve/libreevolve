@@ -29,7 +29,9 @@ from libreevolve.problems.benchmarks.ablation_registry import (
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     REGISTRY_PATH as APPENDIX_A_MATRIX_REGISTRY_PATH,
     appendix_a_matrix_curation_record,
+    appendix_a_matrix_resource_frontier_record,
     validate_appendix_a_matrix_curation,
+    validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
 )
 from libreevolve.problems.benchmarks.appendix_b_registry import (
@@ -480,6 +482,17 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.target_id) if issue.target_id else None,
         )
         for issue in curation_report.issues
+    )
+    resource_frontier_report = validate_appendix_a_matrix_resource_frontier(
+        appendix_a_matrix_resource_frontier_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"appendix_a_resource_frontier_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.attempt_id) if issue.attempt_id else None,
+        )
+        for issue in resource_frontier_report.issues
     )
     return issues
 

@@ -3720,13 +3720,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     Appendix A target identities, rank outcomes, per-seed hit fractions, and
     artifact links once present. Generic runtime docs also track evaluator
     seconds, LLM budgets, accelerator environment hints, and unsupported
-    CPU/memory/GPU quota enforcement. They do not provide matrix-specific
-    resource-frontier evidence for larger target attempts, GPU memory
-    exhaustion, seed-count scaling, or target-exclusion rationale.
-  - Required result: add paper/report evidence for attempted larger matrix
-    targets, configured seed counts, accelerator/memory profile, resource
-    exhaustion or OOM diagnostics, reduced-seed tradeoffs if used, and
-    explicit inclusion/exclusion policy before claiming LibreEvolve can extend
+    CPU/memory/GPU quota enforcement.
+    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
+    preserves the paper-only larger-target boundary for sizes beyond `<5,5,5>`,
+    1000 random seeds, single-GPU evaluators, frequent OOM, and
+    further-optimization need. It does not provide local matrix-specific
+    resource-frontier evidence for attempted larger target runs, GPU memory
+    measurements, reduced-seed tradeoffs, or target-exclusion rationale.
+  - Required result: add local paper/report evidence for attempted larger
+    matrix targets, measured accelerator/memory profile, resource exhaustion or
+    OOM diagnostics, reduced-seed tradeoffs if used, and explicit
+    inclusion/exclusion policy before claiming LibreEvolve can extend
     AlphaEvolve-style matrix search beyond the Appendix A target suite.
 
 - [ ] Track matrix near-integrality prompt/evaluator evidence separately from

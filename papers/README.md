@@ -60,7 +60,11 @@ construction or Colab evidence. The companion
 paper's rough size-selection wording, sorted representative policy under
 axis-permutation symmetries, included-target rationales, and the derived
 omitted-equivalent target ledger; it does not provide target tensor,
-decomposition, Colab, or larger-target resource-frontier evidence.
+decomposition, or Colab evidence. The companion
+`libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` record
+preserves the paper-only Appendix A boundary for sizes beyond `<5,5,5>`, 1000
+random seeds, single-GPU evaluators, frequent OOM, and further-optimization
+need; it does not claim local OOM run artifacts.
 The validation command also checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json`, which records a
 coverage decision for each AlphaEvolve Appendix B constructive-math family. The
@@ -770,8 +774,12 @@ Implemented:
   curation contract for the paper's rough size-selection wording, sorted
   representative policy, axis-permutation equivalent omissions, included-target
   rationales, and unspecified `p` cutoff. It still does not justify every
-  possible excluded non-equivalent target or provide larger-target OOM/resource
-  frontier evidence.
+  possible excluded non-equivalent target.
+  `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
+  paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
+  seeds, single-GPU evaluators, frequent OOM, and further-optimization need.
+  It does not provide local matrix scaling attempts, measured GPU memory, OOM
+  artifacts, reduced-seed tradeoffs, or exclusion rationale.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. It still does not provide discovered
@@ -788,10 +796,10 @@ Implemented:
   Figures 9a-9c, such as hyperparameter range declarations, sampled
   configuration ids, per-sweep losses/ranks, or linkage from the winning sweep
   configuration to the final exact decomposition certificate.
-  It also does not yet record the Appendix A resource frontier for larger
-  targets: attempted sizes beyond the table, 1000-seed or reduced-seed
-  policies, accelerator/GPU memory profile, OOM/resource-exhaustion
-  diagnostics, and explicit target-exclusion rationale.
+  It also does not yet emit local Appendix A resource-frontier runs for larger
+  targets: attempted sizes beyond the table, reduced-seed policies if any,
+  measured accelerator/GPU memory profile, OOM/resource-exhaustion diagnostics,
+  and explicit target-exclusion rationale.
 - `libreevolve/problems/benchmarks/result_certification.py`: paper-result
   certification report contract. It separates local-validator records from
   paper-claim-ready independent certifications with claim scope, verifier

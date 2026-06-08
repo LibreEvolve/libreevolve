@@ -2875,14 +2875,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     for extending the target suite.
   - Current evidence: roadmap and report-contract language cover the reported
     Appendix A target registry, matrix result artifacts, generic runtime
-    budget accounting, and accelerator-environment hints. They do not yet
-    require matrix-specific attempted-target rows, GPU memory/resource
-    diagnostics, seed-count tradeoff records, or a clear policy for target
-    inclusion/exclusion beyond the reported suite.
-  - Required result: when matrix scaling/resource-frontier report fields land,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap text distinguishes AlphaEvolve-comparable reported-target evidence
-    from unsupported claims about larger matrix target scalability.
+    budget accounting, accelerator-environment hints, and
+    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
+    resource-frontier contract validates the paper-only boundary for sizes
+    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
+    and further-optimization need. It does not require local matrix-specific
+    attempted-target rows, measured GPU memory/resource diagnostics, seed-count
+    tradeoff records, or a clear policy for target inclusion/exclusion beyond
+    the reported suite.
+  - Required result: when local matrix scaling/resource-frontier report fields
+    land, update ROADMAP, README, papers index, and code/paper TODOs together
+    so roadmap text distinguishes AlphaEvolve paper-source OOM boundary
+    evidence from local claims about larger matrix target scalability.
 
 - [ ] Keep matrix roadmap wording scoped to result artifacts until evolved
       sweep-space provenance exists.

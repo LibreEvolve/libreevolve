@@ -11,6 +11,7 @@ from typing import Any
 REGISTRY_PATH = Path(__file__).with_name("alphaevolve_appendix_a_matrix.json")
 REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
+RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
 EXPECTED_TARGET_COUNT = 54
 OUTCOMES = frozenset({"matched", "surpassed", "fell_behind"})
@@ -48,6 +49,21 @@ class MatrixTargetCurationReport:
     omitted_equivalent_count: int
     outside_rough_rule_count: int
     issues: list[MatrixTargetCurationIssue]
+
+
+@dataclass(frozen=True)
+class MatrixResourceFrontierIssue:
+    code: str
+    message: str
+    attempt_id: str | None = None
+
+
+@dataclass(frozen=True)
+class MatrixResourceFrontierReport:
+    ok: bool
+    attempted_scope_count: int
+    local_artifact_count: int
+    issues: list[MatrixResourceFrontierIssue]
 
 
 def matrix_target_records(
@@ -131,6 +147,59 @@ def validate_appendix_a_matrix_curation(
         included_target_count=included_count,
         omitted_equivalent_count=omitted_count,
         outside_rough_rule_count=outside_count,
+        issues=issues,
+    )
+
+
+def appendix_a_matrix_resource_frontier_record() -> dict[str, Any]:
+    return {
+        "schema": RESOURCE_FRONTIER_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "source_section": "AlphaEvolve Appendix A",
+        "source_pdf_page": 34,
+        "target_suite": TARGET_SUITE,
+        "frontier_observations": [
+            {
+                "attempt_id": "paper_beyond_5x5x5_single_gpu_1000_seeds",
+                "target_scope": "sizes_beyond_5x5x5",
+                "seed_count": 1000,
+                "accelerator_profile": "single_gpu_accelerator",
+                "resource_status": "often_out_of_memory",
+                "extension_requirement": "further_optimization_required",
+                "source_phrase": (
+                    "sizes beyond <5,5,5> on 1000 random seeds on evaluators "
+                    "with a single GPU accelerator often run out of memory"
+                ),
+                "local_execution_evidence": False,
+                "local_artifacts": [],
+            }
+        ],
+    }
+
+
+def validate_appendix_a_matrix_resource_frontier(
+    recordset: object | str | Path | None = None,
+) -> MatrixResourceFrontierReport:
+    data, read_issues = _load_resource_frontier_recordset(recordset)
+    if read_issues:
+        return MatrixResourceFrontierReport(False, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResourceFrontierIssue] = []
+    if data.get("schema") != RESOURCE_FRONTIER_SCHEMA:
+        issues.append(MatrixResourceFrontierIssue("invalid_schema", "unsupported Appendix A matrix resource-frontier schema"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixResourceFrontierIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_section") != "AlphaEvolve Appendix A":
+        issues.append(MatrixResourceFrontierIssue("invalid_source_section", "source_section must be AlphaEvolve Appendix A"))
+    if data.get("source_pdf_page") != 34:
+        issues.append(MatrixResourceFrontierIssue("invalid_source_pdf_page", "source_pdf_page must identify page 34"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixResourceFrontierIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    attempted_count, artifact_count = _validate_frontier_observations(data.get("frontier_observations"), issues)
+    return MatrixResourceFrontierReport(
+        ok=not issues,
+        attempted_scope_count=attempted_count,
+        local_artifact_count=artifact_count,
         issues=issues,
     )
 
@@ -242,6 +311,30 @@ def render_appendix_a_matrix_curation_summary(
     return "\n".join(lines)
 
 
+def render_appendix_a_matrix_resource_frontier_summary(
+    recordset: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_resource_frontier(recordset)
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A matrix resource frontier",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| attempted_scope_count | {report.attempted_scope_count} |",
+        f"| local_artifact_count | {report.local_artifact_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.attempt_id})" if issue.attempt_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
 def _load_registry(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -264,6 +357,26 @@ def _load_curation_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixTargetCurationIssue("invalid_shape", "curation recordset must be a JSON object")]
+
+
+def _load_resource_frontier_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[MatrixResourceFrontierIssue]]:
+    if recordset is None:
+        return appendix_a_matrix_resource_frontier_record(), []
+    if isinstance(recordset, dict):
+        return dict(recordset), []
+    if isinstance(recordset, (str, Path)):
+        path = Path(recordset)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixResourceFrontierIssue("read_error", f"failed to read resource-frontier recordset: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixResourceFrontierIssue("invalid_json", f"invalid resource-frontier JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixResourceFrontierIssue("invalid_shape", "resource-frontier recordset must be a JSON object")]
 
 
 def _target_id(target: object, index: int) -> str:
@@ -435,6 +548,61 @@ def _validate_omitted_equivalent_targets(
     for omitted_id in sorted(set(expected) - seen):
         issues.append(MatrixTargetCurationIssue("missing_omitted_equivalent_target", "all omitted axis-permutation equivalents must be listed", omitted_id))
     return len(value)
+
+
+def _validate_frontier_observations(
+    value: object,
+    issues: list[MatrixResourceFrontierIssue],
+) -> tuple[int, int]:
+    if not isinstance(value, list):
+        issues.append(MatrixResourceFrontierIssue("invalid_frontier_observations", "frontier_observations must be a list"))
+        return 0, 0
+    seen: set[str] = set()
+    artifact_count = 0
+    for observation in value:
+        if not isinstance(observation, dict):
+            issues.append(MatrixResourceFrontierIssue("invalid_frontier_observation", "frontier observation must be an object"))
+            continue
+        attempt_id = observation.get("attempt_id")
+        safe_id = attempt_id if isinstance(attempt_id, str) else None
+        if safe_id != "paper_beyond_5x5x5_single_gpu_1000_seeds":
+            issues.append(MatrixResourceFrontierIssue("invalid_attempt_id", "attempt_id must identify the Appendix A larger-target boundary", safe_id))
+            continue
+        if safe_id in seen:
+            issues.append(MatrixResourceFrontierIssue("duplicate_attempt_id", "frontier observation attempt_id values must be unique", safe_id))
+        seen.add(safe_id)
+        if observation.get("target_scope") != "sizes_beyond_5x5x5":
+            issues.append(MatrixResourceFrontierIssue("invalid_target_scope", "target_scope must be sizes_beyond_5x5x5", safe_id))
+        if observation.get("seed_count") != 1000:
+            issues.append(MatrixResourceFrontierIssue("invalid_seed_count", "seed_count must preserve the paper's 1000 random seed statement", safe_id))
+        if observation.get("accelerator_profile") != "single_gpu_accelerator":
+            issues.append(MatrixResourceFrontierIssue("invalid_accelerator_profile", "accelerator_profile must preserve the single GPU accelerator statement", safe_id))
+        if observation.get("resource_status") != "often_out_of_memory":
+            issues.append(MatrixResourceFrontierIssue("invalid_resource_status", "resource_status must preserve the out-of-memory observation", safe_id))
+        if observation.get("extension_requirement") != "further_optimization_required":
+            issues.append(MatrixResourceFrontierIssue("invalid_extension_requirement", "extension_requirement must preserve the further-optimization statement", safe_id))
+        source_phrase = observation.get("source_phrase")
+        if (
+            not isinstance(source_phrase, str)
+            or "beyond <5,5,5>" not in source_phrase
+            or "1000 random seeds" not in source_phrase
+            or "single GPU accelerator" not in source_phrase
+            or "out of memory" not in source_phrase
+        ):
+            issues.append(MatrixResourceFrontierIssue("missing_source_phrase", "source_phrase must preserve target, seed, GPU, and OOM wording", safe_id))
+        local_execution = observation.get("local_execution_evidence")
+        local_artifacts = observation.get("local_artifacts")
+        if local_execution is not False:
+            issues.append(MatrixResourceFrontierIssue("local_execution_overclaim", "paper-only frontier observations must not claim local execution evidence", safe_id))
+        if not isinstance(local_artifacts, list):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_artifacts", "local_artifacts must be a list", safe_id))
+        else:
+            artifact_count += len(local_artifacts)
+            if local_artifacts:
+                issues.append(MatrixResourceFrontierIssue("unexpected_local_artifacts", "paper-only frontier observations must not declare local artifacts", safe_id))
+    if "paper_beyond_5x5x5_single_gpu_1000_seeds" not in seen:
+        issues.append(MatrixResourceFrontierIssue("missing_frontier_observation", "Appendix A larger-target OOM observation is required"))
+    return len(value), artifact_count
 
 
 def _validate_target(

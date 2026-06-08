@@ -379,11 +379,13 @@ is not yet an AlphaEvolve reproduction.
   validates the rough size-selection wording, sorted representative policy,
   axis-permutation equivalent omissions, included-target rationales, and
   unspecified `p` cutoff. Explicit non-equivalent excluded-target
-  justifications and larger-target resource-frontier/OOM evidence remain open.
-- Add matrix target-scaling resource-frontier reports before claiming larger
-  Appendix A extensions: attempted target sizes, seed counts, accelerator/GPU
-  memory profile, OOM or resource-exhaustion diagnostics, and exclusion
-  rationale for targets beyond the reported suite.
+  justifications remain open.
+- Keep matrix target-scaling claims scoped to paper-source frontier evidence:
+  `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
+  validates the Appendix A page 34 boundary for sizes beyond `<5,5,5>`, 1000
+  random seeds, single-GPU evaluators, frequent OOM, and further-optimization
+  need. Local scaling runs with attempted target sizes, measured GPU memory,
+  OOM artifacts, reduced-seed tradeoffs, and exclusion rationale remain open.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

@@ -3,13 +3,17 @@ import json
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
+    RESOURCE_FRONTIER_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_curation_record,
+    appendix_a_matrix_resource_frontier_record,
     matrix_target_by_id,
     matrix_target_records,
     render_appendix_a_matrix_curation_summary,
+    render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
     validate_appendix_a_matrix_curation,
+    validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
 )
 
@@ -147,3 +151,59 @@ def test_appendix_a_matrix_curation_summary_renders_counts():
     assert "| included_target_count | 54 |" in summary
     assert "| omitted_equivalent_count | 155 |" in summary
     assert "| outside_rough_rule_count | 1 |" in summary
+
+
+def test_appendix_a_matrix_resource_frontier_validates_paper_oom_boundary():
+    record = appendix_a_matrix_resource_frontier_record()
+    report = validate_appendix_a_matrix_resource_frontier(record)
+
+    assert report.ok is True
+    assert record["schema"] == RESOURCE_FRONTIER_SCHEMA
+    assert report.attempted_scope_count == 1
+    assert report.local_artifact_count == 0
+    assert report.issues == []
+    observation = record["frontier_observations"][0]
+    assert observation["target_scope"] == "sizes_beyond_5x5x5"
+    assert observation["seed_count"] == 1000
+    assert observation["accelerator_profile"] == "single_gpu_accelerator"
+    assert observation["resource_status"] == "often_out_of_memory"
+    assert observation["local_execution_evidence"] is False
+
+
+def test_appendix_a_matrix_resource_frontier_rejects_overclaimed_local_artifacts():
+    record = appendix_a_matrix_resource_frontier_record()
+    observation = record["frontier_observations"][0]
+    observation["local_execution_evidence"] = True
+    observation["local_artifacts"] = [{"path": "runs/matrix_oom.json"}]
+
+    report = validate_appendix_a_matrix_resource_frontier(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert report.local_artifact_count == 1
+    assert "local_execution_overclaim" in codes
+    assert "unexpected_local_artifacts" in codes
+
+
+def test_appendix_a_matrix_resource_frontier_rejects_source_drift():
+    record = appendix_a_matrix_resource_frontier_record()
+    record["source_pdf_page"] = 35
+    observation = record["frontier_observations"][0]
+    observation["seed_count"] = 100
+    observation["source_phrase"] = "larger sizes were expensive"
+
+    report = validate_appendix_a_matrix_resource_frontier(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_source_pdf_page" in codes
+    assert "invalid_seed_count" in codes
+    assert "missing_source_phrase" in codes
+
+
+def test_appendix_a_matrix_resource_frontier_summary_renders_counts():
+    summary = render_appendix_a_matrix_resource_frontier_summary()
+
+    assert "AlphaEvolve Appendix A matrix resource frontier" in summary
+    assert "| attempted_scope_count | 1 |" in summary
+    assert "| local_artifact_count | 0 |" in summary

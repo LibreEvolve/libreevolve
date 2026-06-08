@@ -3070,7 +3070,13 @@ permutation symmetries, included-target rationales, and the derived ledger of
 omitted symmetry-equivalent target ids. It is curation provenance for the
 reported suite, not target tensor/decomposition evidence, and it still does
 not justify every possible excluded non-equivalent target or capture the
-larger-target OOM/resource frontier.
+local larger-target OOM/resource frontier.
+Appendix A matrix resource-frontier provenance uses
+`libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`; the built-in
+record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`
+with 1000 random seeds on single-GPU evaluators often ran out of memory and
+needed further optimization. It is paper-source boundary evidence only: it
+does not claim local execution evidence or declare local OOM artifacts.
 The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
@@ -3090,10 +3096,10 @@ algorithm, certificate, notebook, report, and artifact-inventory files with a
 1.0 per-seed rank-hit fraction. This is a reproducible baseline artifact, not
 evidence that LibreEvolve has discovered or exported the full Appendix A target
 suite.
-LibreEvolve also does not yet record the Appendix A matrix scaling frontier:
-larger target attempts, configured seed counts, accelerator/GPU memory profile,
-OOM or resource-exhaustion diagnostics, and target-exclusion rationale for
-matrix sizes beyond the reported suite are still missing.
+LibreEvolve still does not emit local Appendix A matrix scaling-frontier runs:
+larger target attempts, measured accelerator/GPU memory profiles, OOM or
+resource-exhaustion artifacts, reduced-seed tradeoffs, and target-exclusion
+rationale for matrix sizes beyond the reported suite are still missing.
 The checked-in
 2x2
 `matrix_multiplication` example remains a smoke fixture until a

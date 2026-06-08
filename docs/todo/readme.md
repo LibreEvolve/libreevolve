@@ -990,14 +990,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     optimization.
   - Current evidence: README documents matrix report contracts, Appendix A
     registry checks, one checked Strassen baseline bundle, generic runtime
-    budget surfaces, and unsupported resource quotas. It does not document
-    matrix-specific scaling attempts, accelerator-memory profiles,
-    OOM/resource-exhaustion diagnostics, or target-exclusion rationale for
-    sizes beyond the reported suite.
-  - Required result: when matrix resource-frontier reports land, update
+    budget surfaces, unsupported resource quotas, and
+    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
+    resource-frontier contract documents the paper-only boundary for sizes
+    beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
+    and further-optimization need. It does not document local matrix-specific
+    scaling attempts, measured accelerator-memory profiles,
+    OOM/resource-exhaustion artifacts, or target-exclusion rationale for sizes
+    beyond the reported suite.
+  - Required result: when local matrix resource-frontier reports land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes generic budget/resource metadata from AlphaEvolve Appendix
-    A-style evidence about larger matrix target scaling limits.
+    distinguishes paper-source OOM boundary evidence from local larger-target
+    scaling evidence.
 
 - [ ] Keep README matrix wording scoped to result contracts until
       near-integrality prompt/evaluator evidence exists.

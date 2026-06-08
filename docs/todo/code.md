@@ -3733,15 +3733,18 @@ Primary evidence:
   - Current evidence: LibreEvolve tracks generic local run budgets,
     accelerator-environment hints, and unsupported CPU/memory/GPU quotas, and
     the Appendix A registry records the 54 reported target identities and
-    outcomes. It does not record matrix-benchmark resource frontiers, failed
-    larger-target attempts, accelerator memory profiles, seed-count/resource
-    tradeoffs, or explicit rationale for excluding targets beyond the
-    registered Appendix A suite.
-  - Required result: add matrix benchmark report fields and validators for
-    target-size scaling attempts, seed counts, accelerator/GPU memory profile,
-    OOM or resource-exhaustion diagnostics, attempted-versus-excluded target
-    identities, and optimization/resource rationale before claiming readiness
-    to extend AlphaEvolve-style matrix results beyond the reported suite.
+    outcomes.
+    `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
+    preserves the paper-only resource boundary for sizes beyond `<5,5,5>`,
+    1000 random seeds, single-GPU evaluators, frequent OOM, and
+    further-optimization need. It intentionally records
+    `local_execution_evidence: false` and no local artifacts.
+  - Required result: add local matrix benchmark report fields and validators
+    for target-size scaling attempts, measured accelerator/GPU memory profile,
+    OOM or resource-exhaustion diagnostics, reduced-seed tradeoffs if used,
+    attempted-versus-excluded target identities, and optimization/resource
+    rationale before claiming readiness to extend AlphaEvolve-style matrix
+    results beyond the reported suite.
 
 - [ ] Add a matrix coefficient-domain prompt/evaluator contract for
       near-integral decompositions.

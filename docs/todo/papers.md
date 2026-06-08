@@ -6176,13 +6176,16 @@ directory and using the AlphaEvolve paper as the primary specification.
 - [ ] Track MAP-Elites illumination-algorithm paper evidence as a source-
       specific boundary.
   - Paper/source evidence: local arXiv `1504.04909`, `Illuminating search
-    spaces by mapping elites`, introduces the Multi-dimensional Archive of
-    Phenotypic Elites as an illumination algorithm. It searches a high-
-    dimensional genotype/search space while filling a low-dimensional,
-    user-chosen feature space with the best elite found per cell, using
-    feature descriptors, performance scores, random initialization, mutation or
-    crossover variation from existing elites, and per-cell replacement by
-    local performance.
+    spaces by mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a
+    preliminary draft dated April 21, 2015; the local cache row points to
+    `https://arxiv.org/pdf/1504.04909.pdf`, byte count `3221283`, and SHA-256
+    `df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872`.
+    It introduces the Multi-dimensional Archive of Phenotypic Elites as an
+    illumination algorithm. It searches a high-dimensional genotype/search
+    space while filling a low-dimensional, user-chosen feature space with the
+    best elite found per cell, using feature descriptors, performance scores,
+    random initialization, mutation or crossover variation from existing elites,
+    and per-cell replacement by local performance.
   - Current gap: `papers/README.md` lists `1504.04909` as foundational and
     describes LibreEvolve's current configurable 3D archive plus open stable
     descriptor/rebin/diagnostic gaps. Existing active paper TODOs discuss
@@ -6190,7 +6193,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     as a source-specific evidence boundary with the pseudocode variables,
     algorithm assumptions, feature-space discretization policy, illumination
     metrics, visualization outputs, lineage/stepping-stone analysis, benchmark
-    domains, or paper-draft caveat.
+    domains, paper-draft caveat, or experiment-parameter schedules.
   - Required result: add paper-manifest and paper-index coverage for
     `1504.04909`: title/authors/date/PDF digest, preliminary-draft status,
     feature descriptor `b(x)`, performance function `f(x)`, map variables
@@ -6199,10 +6202,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     discretization records, empty/unfillable cell notes, global performance,
     global reliability, precision, and coverage metric definitions, feature-
     performance visualization requirements, parent/lineage stepping-stone
-    evidence, modular-neural-network and soft-robot benchmark context, relation
-    to NS+LC/MOLE/novelty search, and README/ROADMAP/code wording that keeps
-    current local archive support distinct from full illumination-algorithm
-    reproduction.
+    evidence, retina feature axes and resolution schedule, simulated soft-robot
+    feature axes and resolution schedule, physical soft-arm MAP-Elites/grid-
+    search/random-sampling evaluation counts, modular-neural-network and soft-
+    robot benchmark context, relation to NS+LC/MOLE/novelty search/EA+D/grid
+    search, and README/ROADMAP/code wording that keeps current local archive
+    support distinct from full illumination-algorithm reproduction.
 
 - [ ] Track hardness-of-approximation proof-element paper evidence as a
       source-specific boundary.

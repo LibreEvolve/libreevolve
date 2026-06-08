@@ -4505,12 +4505,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 - [ ] Keep README MAP-Elites wording scoped until illumination evidence exists.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
-    mapping elites`, defines MAP-Elites as an illumination algorithm that
-    returns a feature-performance map of elites across user-chosen behavior
-    dimensions, with explicit feature descriptors, discretized cells, random
-    initialization, variation from selected elites, per-cell replacement, and
-    reports for global performance, global reliability, precision, and
-    coverage.
+    mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a preliminary
+    draft dated April 21, 2015 with cached SHA-256
+    `df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872`.
+    It defines MAP-Elites as an illumination algorithm that returns a feature-
+    performance map of elites across user-chosen behavior dimensions, with
+    explicit feature descriptors, discretized cells, random initialization,
+    variation from selected elites, per-cell replacement, and reports for
+    global performance, global reliability, precision, and coverage. Its
+    experiments include modular neural-network retina maps, simulated soft-
+    robot morphology maps, and a real soft-arm map.
   - Current evidence: README describes LibreEvolve's MAP-Elites archive as a
     local 3D quality-diversity grid plus retained elite list, with default
     axes based on archive selection score, complexity, and TF-IDF diversity,
@@ -4528,9 +4532,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source row, PDF hash, `b(x)`/`f(x)` schemas, dimension/discretization
     records, initialization/variation/replacement records, full map exports,
     coverage/reliability/precision/global-performance reports, visualization
-    artifacts, lineage/parent-distance evidence, descriptor compatibility
-    tests, and a clear distinction between LibreEvolve's current 3D archive and
-    MAP-Elites illumination semantics.
+    artifacts for Figures 3-7 style maps, lineage/parent-distance evidence,
+    retina/simulated-soft-robot/physical-soft-arm benchmark schedules,
+    descriptor compatibility tests, and a clear distinction between
+    LibreEvolve's current 3D archive and MAP-Elites illumination semantics.
 
 - [ ] Keep README hardness-of-approximation wording scoped until proof-element
       artifacts exist.

@@ -6726,36 +6726,52 @@ Primary evidence:
 - [ ] Add MAP-Elites illumination-algorithm source boundary before archive
       completeness claims.
   - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
-    mapping elites`, defines MAP-Elites as an illumination algorithm that maps
-    the highest-performing elite for each cell in a user-chosen feature space.
-    The paper specifies a feature descriptor `b(x)`, performance function
-    `f(x)`, discretized N-dimensional map `P`/`X`, random initialization for
-    `G` solutions, random elite selection plus variation, replacement only when
-    a candidate improves its feature cell, and evaluation criteria for global
-    performance, global reliability, precision, and coverage.
+    mapping elites`, by Jean-Baptiste Mouret and Jeff Clune is a preliminary
+    draft dated April 21, 2015; the cached PDF has 15 pages, byte count
+    `3221283`, and SHA-256
+    `df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872`.
+    It defines MAP-Elites as an illumination algorithm that maps the highest-
+    performing elite for each cell in a user-chosen feature space. The paper
+    specifies a feature descriptor `b(x)`, performance function `f(x)`,
+    discretized N-dimensional maps `P` and `X`, random initialization for `G`
+    solutions, random elite selection plus mutation/crossover variation,
+    replacement only when a candidate improves its feature cell, and evaluation
+    criteria for global performance, global reliability, precision, and
+    coverage.
   - Current evidence: `libreevolve/population/map_elites.py` implements a local
     3D archive whose defaults are scalar archive selection score, serialized
     workspace complexity, and TF-IDF diversity; configurable descriptor axes can
     use normalized metrics or numeric metadata, and archive snapshots persist
-    descriptor policy/model metadata. Existing active TODOs mention MAP-Elites
+    descriptor policy/model metadata with insertion-time cell coordinates and a
+    no-rebin policy. `IslandModel` adds synchronous ring migration, which is not
+    the paper's default pseudocode. Existing active TODOs mention MAP-Elites
     descriptor and archive gaps, but there is no source-specific code TODO for
-    `1504.04909`, no paper-version/source boundary, no explicit `b(x)` feature
-    descriptor contract, no random-initialization/variation policy evidence, no
+    `1504.04909`, no explicit `b(x)` feature-descriptor contract separate from
+    current three-axis archive coordinates, no random-initialization/variation
+    policy evidence, no batched/hierarchical-resolution MAP-Elites mode, no
     illumination-map report, no coverage/reliability/precision metrics, no
     feature-space visualization artifacts, no parent-distance/lineage stepping-
     stone analysis, and no paper-domain reproduction rows for modular neural
-    networks or soft robots.
+    networks, simulated soft robots, or the real soft arm.
   - Required result: add source-boundary metadata and implementation gates for
     `1504.04909`: paper version/date/PDF hash, feature-descriptor schema,
     user-chosen dimension declarations, discretization/binning resource policy,
     performance function and cell replacement records, initialization and
     variation policy records, feature-performance map export with both `P` and
-    `X` identities, empty/unfillable cell diagnostics, coverage/global
-    reliability/precision/global-performance reports, archive visualization
-    artifacts, lineage parent-cell distance reports, descriptor compatibility
-    and rebin tests, benchmark/domain reproduction notes, and README/ROADMAP
-    wording that keeps LibreEvolve's current 3D archive separate from full
-    MAP-Elites illumination evidence.
+    `X` identities, empty/unfillable cell diagnostics, formal global
+    reliability `G(m)`, precision/opt-in reliability `P(m)`, coverage, and
+    global-performance reports, normalized comparison records against
+    traditional EA, novelty search with local competition, random sampling,
+    EA+D, MOLE, and grid search where applicable, archive heatmap/lineage
+    visualization artifacts for Figures 3-7, parent-cell distance and full-
+    lineage stepping-stone reports from Figure 4, descriptor compatibility and
+    rebin tests, experiment-parameter rows for retina (`16x16` to `512x512`,
+    batch `2000`, initial batch `20000`, `10000` iterations), simulated soft
+    robots (`64x64` to `128x128`, batch `1024`, initial batch `4096`, `1400`
+    iterations), and real soft arm (`420` MAP-Elites evaluations, initial batch
+    `120`, `30` iterations), benchmark/domain reproduction notes, and
+    README/ROADMAP wording that keeps LibreEvolve's current 3D archive separate
+    from full MAP-Elites illumination evidence.
 
 - [ ] Add hardness-of-approximation proof-element gates before theoretical-CS
       application claims.

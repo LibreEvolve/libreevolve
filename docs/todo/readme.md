@@ -3424,4 +3424,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying LibreEvolve benefits from harness self-evolution merely because
     it can generate or record update-like artifacts.
 
+- [ ] Keep README AHE observability-driven harness evolution claims absent or
+      source-scoped until paper and runtime evidence exists.
+  - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:
+    Observability-Driven Automatic Evolution of Coding-Agent Harnesses`,
+    introduces AHE, a closed loop for coding-agent harness evolution with
+    component observability, experience observability, and decision
+    observability. Its abstract says every editable harness component has a
+    file-level representation, trajectory evidence is distilled into a
+    layered corpus, and every edit carries a self-declared prediction later
+    verified against task-level outcomes. It reports Terminal-Bench 2 pass@1
+    improvement from 69.7% to 77.0% after ten iterations and transfer of a
+    frozen harness to SWE-bench Verified.
+  - Current evidence: README documents LibreEvolve's current CLI, prompt
+    history, evaluator artifacts, candidate diffs, MAP-Elites archive,
+    plugins, and benchmark boundaries. It does not list `2604.25850`, expose
+    file-level editable harness components, create a layered trajectory
+    evidence corpus, pair harness edits with falsifiable predictions, verify
+    those predictions against later outcomes, attribute gains to specific
+    harness component classes, or report frozen-harness transfer.
+  - Required result: if README mentions AHE, Agentic Harness Engineering,
+    observability-driven harness evolution, component observability,
+    experience observability, decision observability, file-level harness
+    components, drill-down trajectory evidence, falsifiable edit contracts,
+    Terminal-Bench 2 69.7-to-77.0 pass@1, Codex-CLI comparison, or frozen-
+    harness transfer to SWE-bench Verified, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show component
+    manifests, revertible edit records, evidence corpus records,
+    edit-prediction verification, component-attribution reports, benchmark
+    baselines, token/cost accounting, and report outcomes. Avoid implying
+    LibreEvolve supports AHE-style observability-driven harness evolution
+    without those artifacts.
+
 ## Architecture Description

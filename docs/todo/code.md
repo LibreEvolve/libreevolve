@@ -5245,3 +5245,39 @@ Primary evidence:
     metadata if reproduced, and README/ROADMAP wording that keeps harness
     self-evolution benefit claims separate from harness-update generation
     until local evidence proves both.
+
+- [ ] Add AHE observability-driven harness evolution source boundary.
+  - Spec evidence: arXiv `2604.25850`, `Agentic Harness Engineering:
+    Observability-Driven Automatic Evolution of Coding-Agent Harnesses`, was
+    submitted April 28, 2026. Its abstract says harness engineering remains
+    manual because automating it faces a heterogeneous action space, massive
+    trajectories that bury useful signals, and edits whose downstream effects
+    are hard to attribute. It introduces Agentic Harness Engineering (AHE), a
+    closed loop with three observability pillars: component observability,
+    where every editable harness component has an explicit file-level
+    representation; experience observability, where raw trajectory tokens are
+    distilled into layered drill-down evidence; and decision observability,
+    where each edit is paired with a self-declared prediction later verified
+    against task-level outcomes. It reports ten AHE iterations improving
+    Terminal-Bench 2 pass@1 from 69.7% to 77.0%, plus frozen-harness transfer
+    to SWE-bench Verified and other model families.
+  - Current evidence: LibreEvolve records prompts, candidate diffs, evaluator
+    outputs, failures, archives, and manifests, but it has no AHE source row,
+    no file-level editable harness component inventory for prompts/tools/
+    middleware/skills/sub-agents/memory, no revertible harness edit action
+    space, no layered trajectory-evidence corpus distilled from long runs, no
+    decision-observability record that pairs each edit with an expected
+    outcome, no falsifiable edit contract, no cross-iteration harness
+    evolution report, and no frozen-harness transfer benchmark.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2604.25850`: arXiv id/version/date/PDF hash, authors, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness artifacts, editable component taxonomy, file-level component
+    manifests, revertible patch records, trajectory-evidence distillation
+    schema, drill-down evidence corpus links, edit-prediction records,
+    outcome verification records, falsifiable contract status, iteration
+    traces, tool/middleware/memory attribution, frozen-harness transfer
+    reports, Terminal-Bench 2 and SWE-bench Verified benchmark metadata,
+    baseline identities, token/cost accounting, and README/ROADMAP wording
+    that keeps observability-driven harness evolution as missing evidence
+    until local implementation and reports exist.

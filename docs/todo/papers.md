@@ -4831,3 +4831,39 @@ directory and using the AlphaEvolve paper as the primary specification.
     availability if any, reproducibility status, and README/ROADMAP wording
     that treats harness-update benefit as missing paper evidence rather than
     implemented LibreEvolve support.
+
+- [ ] Track AHE observability-driven harness evolution paper evidence.
+  - Paper/source evidence: arXiv `2604.25850`, submitted April 28, 2026, is
+    titled `Agentic Harness Engineering: Observability-Driven Automatic
+    Evolution of Coding-Agent Harnesses`. Its abstract says harnesses mediate
+    how models interact with tools and execution environments, but automating
+    harness engineering is hard because of heterogeneous editable components,
+    very large trajectories, sparse/noisy signals, and edits whose effects are
+    hard to attribute. AHE adds component observability through explicit
+    file-level editable components, experience observability through layered
+    drill-down trajectory evidence, and decision observability by pairing each
+    edit with a self-declared prediction that is later checked against
+    task-level outcomes. It reports ten iterations improving Terminal-Bench 2
+    pass@1 from 69.7% to 77.0%, surpassing Codex-CLI and self-evolving
+    baselines, plus frozen-harness transfer to SWE-bench Verified and cross-
+    family Terminal-Bench gains.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2604.25850`. Existing rows cover AlphaEvolve search, SIA,
+    HarnessFix, RHO, harness-benefit disentanglement, and AEvo meta-editing,
+    but not component/experience/decision observability as a harness evolution
+    contract, file-level harness component action spaces, layered trajectory
+    evidence corpora, edit-prediction verification, frozen-harness transfer,
+    or attribution of gains to tools, middleware, and long-term memory rather
+    than system prompts.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2604.25850`: title/authors/arXiv version/date/PDF digest, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness assumptions, editable component taxonomy, file-level component
+    manifests, component edit/revert records, trajectory-evidence corpus
+    schema, drill-down evidence links, edit-prediction records, task-outcome
+    verification records, falsifiable edit-contract status, iteration traces,
+    component-attribution reports, frozen-harness transfer results,
+    Terminal-Bench 2 and SWE-bench Verified metadata, baseline identities,
+    token/cost accounting, code/artifact availability if any, reproducibility
+    status, and README/ROADMAP wording that treats AHE as missing paper
+    evidence rather than implemented LibreEvolve support.

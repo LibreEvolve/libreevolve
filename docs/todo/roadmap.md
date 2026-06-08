@@ -76,6 +76,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording neither underclaims current strict local
     evaluator validation nor overclaims AlphaEvolve-comparable metric evidence.
 
+- [ ] Keep execution-grounding roadmap wording scoped until incorrect-
+      suggestion filtering evidence exists.
+  - Spec evidence: AlphaEvolve's introduction says LLM-directed evolution is
+    grounded by code execution and automatic evaluation, and that this
+    mechanism avoids incorrect suggestions from the base LLM while letting
+    feedback drive candidates far from the initial pool.
+  - Current evidence: `ROADMAP.md`, README, and paper TODOs can cite local
+    evaluator execution, structured result validation, `is_valid` admission,
+    rejected-candidate diagnostics, malformed-output failures, and bounded
+    failure feedback. They do not yet require roadmap-level proposal-lifecycle
+    evidence that proves incorrect generated suggestions are filtered by
+    execution/evaluation before they can support accepted discovery claims.
+  - Required result: when execution-grounding reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with proposal id, backend/model
+    id, mutation payload hash, execution/evaluator outcome, validity/admission/
+    retention status, rejection reason, evaluator-oracle sufficiency,
+    feedback/failure-memory linkage, and aggregate false-acceptance/false-
+    rejection review fields before claiming AlphaEvolve-style filtering of
+    incorrect base-LLM suggestions.
+
 - [ ] Keep evaluator-entrypoint roadmap wording scoped to external validators
       until embedded `evaluate(eval_inputs)` support exists.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 3 use a candidate

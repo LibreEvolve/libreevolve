@@ -27,6 +27,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     treating LibreEvolve evaluator outputs as AlphaEvolve-comparable metric
     evidence.
 
+- [ ] Track execution-grounded filtering of incorrect base-LLM suggestions.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Table 1 context.
+  - Requirement: AlphaEvolve says code execution and automatic evaluation
+    ground the LLM-directed evolution process, allowing the system to avoid
+    incorrect suggestions from the base LLM and use feedback to move beyond
+    the initial candidate pool.
+  - Partial status: LibreEvolve records structured evaluator results,
+    malformed-output failures, rejected candidates, admission decisions,
+    quarantine streams, and prompt-visible diagnostics for bounded recent
+    failures.
+  - Current gap: paper-facing reports do not yet connect each generated LLM
+    suggestion through parsing, execution, evaluator judgment, validity,
+    admission, retention, rejection reason, and subsequent feedback reuse.
+    Current validity/admission logs are useful local mechanics, but they do
+    not by themselves prove the AlphaEvolve claim that automatic evaluation
+    filtered incorrect base-model suggestions before accepted discoveries were
+    reported.
+  - Required result: add paper/report evidence for proposal lifecycle
+    filtering: backend/model id, suggestion/proposal id, mutation payload hash,
+    execution/evaluator outcome, validity/admission/retention status,
+    rejection reason taxonomy, evaluator-oracle sufficiency for the benchmark,
+    prompt feedback or failure-memory linkage, aggregate false-acceptance/
+    false-rejection review fields, and claim-readiness checks before describing
+    LibreEvolve as AlphaEvolve-style grounded against incorrect base-LLM
+    suggestions.
+
 - [ ] Track candidate-embedded evaluator entrypoint parity.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's example codebase contains an

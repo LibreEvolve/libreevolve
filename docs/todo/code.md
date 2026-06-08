@@ -1027,6 +1027,27 @@ Primary evidence:
     score columns, and validation that `is_valid` and non-scalar attachments
     are not treated as scored AlphaEvolve metrics.
 
+- [ ] Add execution-grounded incorrect-suggestion filtering evidence.
+  - Spec evidence: AlphaEvolve's introduction says its LLM-directed evolution
+    is grounded in code execution and automatic evaluation, and that this
+    evaluation mechanism lets AlphaEvolve avoid incorrect suggestions from the
+    base LLM while using feedback to discover candidates that differ
+    substantially from the initial pool.
+  - Current evidence: LibreEvolve validates evaluator result structure,
+    applies a local `is_valid` admission gate, records malformed-output and
+    rejected-candidate diagnostics, and stores failure/quarantine streams.
+    Those mechanics do not yet prove, in a paper-facing report, that incorrect
+    LLM proposals were actually caught by execution/evaluation, excluded from
+    accepted discovery claims, and fed back into subsequent search rather than
+    merely failing parser or local admission checks.
+  - Required result: add proposal-lifecycle evidence and validators linking
+    each LLM suggestion to backend/model identity, parsed mutation payload,
+    execution/evaluator outcome, validity/admission/retention status, rejection
+    reason, evaluator-oracle sufficiency for the claimed task, prompt-visible
+    feedback or failure-memory reuse, and aggregate false-acceptance/false-
+    rejection review fields before claiming AlphaEvolve-style grounding that
+    filters incorrect base-LLM suggestions.
+
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,
     but in more complicated cases it may run an evolved search algorithm or

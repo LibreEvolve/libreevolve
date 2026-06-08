@@ -26,6 +26,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes the implemented LibreEvolve validity gate from
     AlphaEvolve-comparable scored scalar metrics.
 
+- [ ] Keep README grounding claims scoped until incorrect-suggestion filtering
+      evidence exists.
+  - Spec evidence: AlphaEvolve states that code execution and automatic
+    evaluation ground LLM-directed evolution and let the system avoid
+    incorrect suggestions from the base LLM while using feedback to discover
+    candidates substantially different from the initial pool.
+  - Current evidence: README can describe local evaluator execution, strict
+    result validation, the reserved `is_valid` gate, rejected-candidate
+    diagnostics, malformed-output failures, and bounded failure feedback. It
+    does not yet describe a paper-facing proposal-lifecycle report proving
+    that incorrect LLM suggestions were caught by execution/evaluation,
+    excluded from accepted discovery claims, and reused as feedback in
+    subsequent search.
+  - Required result: when proposal-lifecycle filtering reports land, update
+    README, ROADMAP, papers index, and code/paper TODOs together with backend
+    and proposal ids, mutation hashes, evaluator outcomes, validity/admission/
+    retention status, rejection reasons, evaluator-oracle sufficiency,
+    feedback/failure-memory linkage, and false-acceptance/false-rejection
+    review fields so README distinguishes local validity mechanics from
+    AlphaEvolve-style grounding against incorrect base-LLM suggestions.
+
 - [ ] Keep README multiple-score prompt-context wording scoped until
       metric-diverse inspiration evidence exists.
   - Spec evidence: AlphaEvolve Section 2.4 says multiple metrics can improve a

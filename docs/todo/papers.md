@@ -2990,6 +2990,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     results, and docs wording that separates source-artifact verification from
     LibreEvolve reproducing those results.
 
+- [ ] Track companion-result notebook selection scope and absences.
+  - Paper evidence: the `google-deepmind/alphaevolve_results` README says
+    `mathematical_results.ipynb` contains the mathematical discoveries from
+    Section 3 and corresponding correctness-verification code, but only for
+    instances where AlphaEvolve outperformed the state of the art. It says
+    matched-but-not-outperformed constructions are excluded to avoid clutter,
+    and that the repository does not contain the code to run AlphaEvolve.
+  - Current gap: paper-facing companion-artifact TODOs require the actual
+    notebook URL/ref/digest and claim-to-cell mapping, but they do not require
+    a notebook selection-scope record. Without that record, a matrix or
+    Appendix B claim missing from the companion notebook could be misread as a
+    source-tracking failure instead of an intentional
+    outperformed-results-only repository policy.
+  - Required result: add source evidence for companion-notebook selection:
+    repository URL/ref/commit, notebook path, inclusion rule, excluded/matched
+    result rule, per-claim coverage or absence reason, verifier-code presence,
+    runtime-code absence, license/source notes, and docs checks that
+    distinguish paper-reported matched results from companion-notebook
+    improved-result artifacts.
+
 - [ ] Track AlphaEvolve source-PDF arXiv version provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
     audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.

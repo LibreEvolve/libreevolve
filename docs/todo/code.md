@@ -2190,6 +2190,27 @@ Primary evidence:
     AlphaEvolve source evidence from LibreEvolve's own generated
     Colab-equivalent exports.
 
+- [ ] Add companion-result notebook selection-scope provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
+    repository's `mathematical_results.ipynb` contains mathematical
+    discoveries and correctness-verification code, but only for instances
+    where AlphaEvolve outperformed the state of the art. It explicitly excludes
+    problems where AlphaEvolve matched, but did not outperform, the best known
+    constructions, and states that the repository does not contain the code to
+    run AlphaEvolve.
+  - Current evidence: companion Colab TODOs require URL/ref/digest,
+    notebook-readability checks, and claim-to-cell mapping, while Appendix A/B
+    TODOs require result rows and verifier/code exports. They do not require a
+    source-selection policy that distinguishes notebook-covered improved
+    results from paper-reported matched results, nor a report field that
+    explains why a paper claim may be absent from the companion notebook.
+  - Required result: add companion-artifact selection metadata and validators:
+    source repository URL/ref, notebook path, inclusion policy
+    (`outperformed_sota_only`), excluded/matched-result policy, per-claim
+    notebook coverage status, absence reason, runtime-code availability
+    boundary, license/source notes, and README/ROADMAP wording that separates
+    paper result coverage from the intentionally filtered companion notebook.
+
 - [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and method details for the constructive-math problems would be

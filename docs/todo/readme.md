@@ -1331,6 +1331,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README distinguishes PDF-source validation, external AlphaEvolve Colab
     source evidence, and LibreEvolve-generated result notebooks/exports.
 
+- [ ] Keep README companion-notebook wording scoped until selection-scope
+      metadata exists.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
+    companion notebook includes only instances where AlphaEvolve outperformed
+    SOTA, excludes matched-but-not-outperformed constructions, and does not
+    contain the code to run AlphaEvolve.
+  - Current evidence: README can describe the companion-Colab source gap and
+    future Colab-equivalent exports, but it does not document the official
+    notebook's inclusion/exclusion policy or explain that missing notebook
+    cells for paper-reported matched results may be expected source behavior.
+  - Required result: when companion-notebook selection metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    separates paper result coverage, official improved-result notebook
+    coverage, intentional matched-result absences, verifier-code availability,
+    and absence of the AlphaEvolve runtime code.
+
 - [ ] Keep README paper-cache wording scoped until AlphaEvolve PDF version
       provenance is tracked.
   - Spec evidence: the local AlphaEvolve PDF header says

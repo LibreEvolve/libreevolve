@@ -2062,6 +2062,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve companion-source verification, and generated LibreEvolve
     result-export artifacts.
 
+- [ ] Keep companion-notebook roadmap wording scoped until selection-scope
+      metadata exists.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
+    `mathematical_results.ipynb` notebook includes only instances where
+    AlphaEvolve outperformed SOTA, excludes matched-but-not-outperformed
+    constructions, and does not contain the code to run AlphaEvolve.
+  - Current evidence: roadmap/README/paper-index wording can cite companion
+    Colab source tracking and future local Colab-equivalent exports. It does
+    not require a source-selection policy or per-claim absence reason that
+    distinguishes paper-reported matched results from intentionally omitted
+    companion-notebook cells.
+  - Required result: when companion-notebook selection metadata lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so roadmap language
+    separates paper result coverage, official improved-result notebook
+    coverage, matched-result omissions, verifier-code availability, and
+    non-availability of AlphaEvolve runtime code in the companion repository.
+
 - [ ] Keep paper-source roadmap wording scoped until AlphaEvolve PDF version
       provenance is pinned.
   - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as

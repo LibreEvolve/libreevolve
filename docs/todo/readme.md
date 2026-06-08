@@ -800,11 +800,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `dimensions` against the 54-row Appendix A Table 3 registry. It does not
     document target-suite curation metadata: the selection rule, sorted
     representative policy, omitted symmetry-equivalent targets, cutoff
-    rationale, or included/excluded target justifications.
+    rationale, or included/excluded target justifications. The Appendix A
+    registry's dedicated validator is also not yet part of the routine
+    paper-manifest command that README tells users to run for paper-cache
+    validation.
   - Required result: when Appendix A registry/report metadata captures
-    target-suite curation and symmetry-equivalence provenance, update README,
-    ROADMAP, papers index, and matching TODOs so README does not imply the
-    54-row registry alone proves full paper-faithful suite construction.
+    target-suite curation and symmetry-equivalence provenance, and when the
+    Appendix A validator is wired into the standard paper-manifest gate, update
+    README, ROADMAP, papers index, and matching TODOs so README does not imply
+    the 54-row registry alone proves full paper-faithful suite construction.
 
 - [ ] Keep README matrix-scaling wording scoped until resource-frontier
       reports exist.

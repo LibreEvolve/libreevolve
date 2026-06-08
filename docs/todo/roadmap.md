@@ -2353,9 +2353,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     54-target Appendix A registry. That registry records target identities,
     dimensions, ranks, and outcomes, but not the selection rule,
     symmetry-class/canonical-representative policy, omitted equivalent targets,
-    cutoff rationale, or included/excluded target justifications.
+    cutoff rationale, or included/excluded target justifications. Its dedicated
+    validator is not yet part of the standard paper-manifest validation gate,
+    which currently checks Appendix B and ablation registries.
   - Required result: when Appendix A matrix curation metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap text
+    ROADMAP, README, papers index, and code/paper TODOs; also wire Appendix A
+    registry validation into the paper-manifest gate so roadmap text
     distinguishes target-identity coverage from paper-faithful target-suite
     curation evidence.
 

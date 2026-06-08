@@ -3083,7 +3083,10 @@ Primary evidence:
     mismatches. That registry is rank/outcome metadata only: it does not store
     the target tensors, discovered tensor decompositions, coefficient lists,
     per-target exactness certificates, notebook exports, or construction
-    provenance needed to reproduce Appendix A algorithms.
+    provenance needed to reproduce Appendix A algorithms. The registry has its
+    own validator, but the standard `libreevolve.tools.paper_manifest` gate
+    currently wires Appendix B and ablation registries only, so corrupt
+    Appendix A registry rows would not fail the routine paper-manifest check.
     `libreevolve.matrix_result_artifact_inventory.v1` now verifies declared
     algorithm/certificate/notebook artifact references against concrete files
     under an explicit artifact root, checking safe relative paths, existence,
@@ -3098,6 +3101,7 @@ Primary evidence:
     consistency for that bundle.
   - Required result: connect exact target tensors, tensor-decomposition
     algorithms, coefficient-domain data, certificate artifacts, and
+    Appendix A registry validation through the standard paper-manifest gate,
     notebook/export artifacts to the registered target suite; keep the existing
     Python smoke example clearly outside AlphaEvolve-comparison evidence until
     it emits validated tensor-result reports. The remaining gap is generating

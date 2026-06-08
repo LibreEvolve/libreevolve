@@ -5093,6 +5093,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
     programs = db.all_programs()
     programs_logged = len(programs)
     archive_state = db.archive_state_snapshot()
+    paper_metric_contract = _paper_evaluator_metric_contract_report(
+        db,
+        programs,
+    )
     summary = {
         "programs_logged": programs_logged,
         "history_partially_written": history_exists,
@@ -5108,9 +5112,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "failure_index": db.failure_index_snapshot(),
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
-        "paper_evaluator_metric_contract": _paper_evaluator_metric_contract_report(
-            db,
-            programs,
+        "paper_evaluator_metric_contract": paper_metric_contract,
+        "paper_metric_table_export": _paper_metric_table_export_report(
+            paper_metric_contract
         ),
         "evaluator_oracle_registry": _evaluator_oracle_registry_report(
             db,
@@ -5308,7 +5312,6 @@ def _paper_evaluator_metric_contract_report(
         "claim_readiness": {
             "alphaevolve_scalar_metric_boundary": True,
             "remaining_gap": [
-                "paper_table_export_format",
                 "cross_run_metric_contract_diff_report",
             ],
         },
@@ -5476,6 +5479,260 @@ def _paper_metric_attachment_exclusions(programs: list[Program]) -> dict:
         "llm_feedback_record_count": llm_feedback_count,
         "feedback_adjusted_fitness_count": feedback_adjusted_fitness_count,
         "scored_metric": False,
+    }
+
+
+_PAPER_METRIC_TABLE_COLUMNS = [
+    "metric_name",
+    "program_id",
+    "is_valid",
+    "primary",
+    "direction",
+    "raw_value",
+    "raw_display",
+    "maximized_value",
+    "maximized_display",
+    "normalized_value",
+    "normalized_display",
+]
+
+
+def _paper_metric_table_export_report(contract: Mapping[str, object]) -> dict:
+    rows: list[dict] = []
+    metrics = contract.get("metrics") if isinstance(contract.get("metrics"), list) else []
+    for metric in metrics:
+        if not isinstance(metric, Mapping) or metric.get("paper_metric") is not True:
+            continue
+        rows.extend(_paper_metric_table_rows(metric))
+    display_policy = {
+        "schema": "libreevolve.paper_metric_table_display_policy.v1",
+        "raw_value_format": "significant_digits",
+        "raw_value_significant_digits": 12,
+        "maximized_value_format": "significant_digits",
+        "maximized_value_significant_digits": 12,
+        "normalized_value_format": "fixed_decimal_places",
+        "normalized_value_decimal_places": 6,
+        "rounding": "python_format_half_even_for_binary_float",
+        "missing_value": "",
+        "boolean_format": "json_lowercase",
+    }
+    table_payload = {
+        "columns": list(_PAPER_METRIC_TABLE_COLUMNS),
+        "rows": rows,
+    }
+    report = {
+        "schema": "libreevolve.paper_metric_table_export.v1",
+        "source": "runtime.history.paper_evaluator_metric_contract",
+        "contract_schema": contract.get("schema"),
+        "primary_metric": contract.get("primary_metric"),
+        "paper_metric_names": list(contract.get("paper_metric_names", []))
+        if isinstance(contract.get("paper_metric_names"), list)
+        else [],
+        "excluded_declared_metrics": copy.deepcopy(
+            contract.get("excluded_declared_metrics", [])
+        )
+        if isinstance(contract.get("excluded_declared_metrics"), list)
+        else [],
+        "columns": list(_PAPER_METRIC_TABLE_COLUMNS),
+        "row_count": len(rows),
+        "rows": rows,
+        "rows_limit": 250,
+        "rows_truncated": False,
+        "display_policy": display_policy,
+        "export_formats": {
+            "manifest_json_rows": True,
+            "csv_header_order": list(_PAPER_METRIC_TABLE_COLUMNS),
+            "external_file_written": False,
+        },
+        "table_sha256": hashlib.sha256(
+            json.dumps(table_payload, sort_keys=True, separators=(",", ":")).encode(
+                "utf-8"
+            )
+        ).hexdigest(),
+        "claim_ready": True,
+        "claim_readiness": {
+            "single_run_paper_metric_table": True,
+            "cross_run_metric_contract_diff": False,
+            "remaining_gap": ["cross_run_metric_contract_diff_report"],
+        },
+    }
+    if len(rows) > report["rows_limit"]:
+        report["rows"] = rows[: report["rows_limit"]]
+        report["rows_truncated"] = True
+    report["validation"] = validate_paper_metric_table_export(report)
+    return report
+
+
+def _paper_metric_table_rows(metric: Mapping[str, object]) -> list[dict]:
+    name = str(metric.get("name"))
+    direction = str(metric.get("direction", "maximize"))
+    primary = metric.get("primary") is True
+    rows = []
+    observed_values = (
+        metric.get("observed_values")
+        if isinstance(metric.get("observed_values"), list)
+        else []
+    )
+    for observed in observed_values:
+        if not isinstance(observed, Mapping):
+            continue
+        raw_value = _paper_metric_table_number(observed.get("raw_value"))
+        maximized_value = _paper_metric_table_number(observed.get("maximized_value"))
+        normalized_value = _paper_metric_table_number(observed.get("normalized_value"))
+        rows.append(
+            {
+                "metric_name": name,
+                "program_id": observed.get("program_id"),
+                "is_valid": observed.get("is_valid"),
+                "primary": primary,
+                "direction": direction,
+                "raw_value": raw_value,
+                "raw_display": _paper_metric_display_significant(raw_value, 12),
+                "maximized_value": maximized_value,
+                "maximized_display": _paper_metric_display_significant(
+                    maximized_value,
+                    12,
+                ),
+                "normalized_value": normalized_value,
+                "normalized_display": _paper_metric_display_fixed(
+                    normalized_value,
+                    6,
+                ),
+            }
+        )
+    return rows
+
+
+def _paper_metric_table_number(value: object) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    numeric = float(value)
+    if not math.isfinite(numeric):
+        return None
+    return numeric
+
+
+def _paper_metric_display_significant(value: float | None, digits: int) -> str:
+    if value is None:
+        return ""
+    return f"{value:.{digits}g}"
+
+
+def _paper_metric_display_fixed(value: float | None, places: int) -> str:
+    if value is None:
+        return ""
+    return f"{value:.{places}f}"
+
+
+def validate_paper_metric_table_export(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.paper_metric_table_export.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "paper metric table export must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "contract_schema",
+        "primary_metric",
+        "paper_metric_names",
+        "excluded_declared_metrics",
+        "columns",
+        "row_count",
+        "rows",
+        "rows_limit",
+        "rows_truncated",
+        "display_policy",
+        "export_formats",
+        "table_sha256",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"paper metric table export missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.paper_metric_table_export.v1":
+        issues.append({"code": "invalid_schema", "message": "paper metric table export schema is unsupported"})
+    if report.get("source") != "runtime.history.paper_evaluator_metric_contract":
+        issues.append({"code": "invalid_source", "message": "paper metric table export source is unsupported"})
+    if report.get("contract_schema") != "libreevolve.paper_evaluator_metric_contract.v1":
+        issues.append({"code": "invalid_contract_schema", "message": "paper metric table export must consume the evaluator metric contract"})
+    columns = report.get("columns")
+    if columns != _PAPER_METRIC_TABLE_COLUMNS:
+        issues.append({"code": "invalid_columns", "message": "paper metric table columns are not stable"})
+    rows = report.get("rows")
+    if not isinstance(rows, list):
+        issues.append({"code": "invalid_rows", "message": "paper metric table rows must be a list"})
+        rows = []
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            issues.append({"code": "invalid_row", "message": f"paper metric table row {index} must be an object"})
+            continue
+        missing_columns = set(_PAPER_METRIC_TABLE_COLUMNS) - set(row)
+        if missing_columns:
+            issues.append({"code": "missing_row_columns", "message": f"paper metric table row {index} missing columns: {sorted(missing_columns)}"})
+        if not isinstance(row.get("metric_name"), str) or not row.get("metric_name"):
+            issues.append({"code": "invalid_metric_name", "message": f"paper metric table row {index} metric_name is invalid"})
+        if not isinstance(row.get("program_id"), str) or not row.get("program_id"):
+            issues.append({"code": "invalid_program_id", "message": f"paper metric table row {index} program_id is invalid"})
+        if row.get("direction") not in {"maximize", "minimize"}:
+            issues.append({"code": "invalid_direction", "message": f"paper metric table row {index} direction is invalid"})
+        for field in ("raw_value", "maximized_value"):
+            value = row.get(field)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+                issues.append({"code": f"invalid_{field}", "message": f"paper metric table row {index} {field} must be finite"})
+        normalized = row.get("normalized_value")
+        if normalized is not None and (
+            isinstance(normalized, bool)
+            or not isinstance(normalized, (int, float))
+            or not math.isfinite(float(normalized))
+            or not 0.0 <= float(normalized) <= 1.0
+        ):
+            issues.append({"code": "invalid_normalized_value", "message": f"paper metric table row {index} normalized_value must be in [0, 1] or null"})
+        if row.get("raw_display") != _paper_metric_display_significant(_paper_metric_table_number(row.get("raw_value")), 12):
+            issues.append({"code": "invalid_raw_display", "message": f"paper metric table row {index} raw_display does not match policy"})
+        if row.get("maximized_display") != _paper_metric_display_significant(_paper_metric_table_number(row.get("maximized_value")), 12):
+            issues.append({"code": "invalid_maximized_display", "message": f"paper metric table row {index} maximized_display does not match policy"})
+        if row.get("normalized_display") != _paper_metric_display_fixed(_paper_metric_table_number(row.get("normalized_value")), 6):
+            issues.append({"code": "invalid_normalized_display", "message": f"paper metric table row {index} normalized_display does not match policy"})
+    if isinstance(report.get("row_count"), int) and not isinstance(report.get("row_count"), bool):
+        if report.get("rows_truncated") is not True and report["row_count"] != len(rows):
+            issues.append({"code": "invalid_row_count", "message": "row_count must match rows when not truncated"})
+    else:
+        issues.append({"code": "invalid_row_count", "message": "row_count must be an integer"})
+    if not isinstance(report.get("display_policy"), dict):
+        issues.append({"code": "invalid_display_policy", "message": "display_policy must be an object"})
+    if not isinstance(report.get("export_formats"), dict):
+        issues.append({"code": "invalid_export_formats", "message": "export_formats must be an object"})
+    table_sha = report.get("table_sha256")
+    if not isinstance(table_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", table_sha):
+        issues.append({"code": "invalid_table_sha256", "message": "table_sha256 must be a SHA-256 hex digest"})
+    elif report.get("rows_truncated") is not True and columns == _PAPER_METRIC_TABLE_COLUMNS:
+        expected_sha = hashlib.sha256(
+            json.dumps(
+                {"columns": columns, "rows": rows},
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
+        if table_sha != expected_sha:
+            issues.append({"code": "table_sha256_mismatch", "message": "table_sha256 must match stable column/row payload"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif readiness.get("cross_run_metric_contract_diff") is not False:
+        issues.append({"code": "cross_run_overclaim", "message": "cross-run metric contract diff must remain false until implemented"})
+    return {
+        "schema": "libreevolve.paper_metric_table_export.v1",
+        "ok": not issues,
+        "issues": issues,
     }
 
 

@@ -39,6 +39,10 @@ LibreEvolve has:
   `runtime.history.paper_evaluator_metric_contract`, separating evaluator
   scalar metrics from local validity/output/feedback fields and recording raw,
   maximized, and normalized score evidence
+- single-run paper metric table exports under
+  `runtime.history.paper_metric_table_export`, with stable metric/program rows,
+  raw/maximized/normalized value columns, display precision policy, excluded
+  metric notes, and deterministic table hashes
 - evaluator/oracle registry reports under
   `runtime.history.evaluator_oracle_registry`, registering the default
   validator or configured cascade stages plus LLM feedback graders with metric
@@ -143,8 +147,8 @@ is not yet an AlphaEvolve reproduction.
 
 ### 2. Strengthen multi-objective search
 
-- Extend the current paper-facing evaluator metric contract into export-ready
-  benchmark table generation and cross-run metric-contract diff reports.
+- Extend the current single-run paper metric table export into cross-run
+  metric-contract diff reports.
 - Extend the current documented hybrid, which averages normalized declared
   metrics for archive ranking, into a first-class multi-objective policy:
   Pareto/frontier primary archive replacement, durable cross-run

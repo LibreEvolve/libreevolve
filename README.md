@@ -2061,7 +2061,11 @@ metric. Completed manifests include
 paper-facing evaluator metric names, excludes local validity/output/feedback
 fields, records raw, maximized, and normalized observed metric values, and
 documents minimize-to-maximize direction transforms for AlphaEvolve-comparable
-scalar metric evidence. The evaluator rejects non-string result
+scalar metric evidence. Completed manifests also include
+`runtime.history.paper_metric_table_export`, a stable single-run table view
+with metric/program rows, raw/maximized/normalized value columns, display
+precision policy, excluded declared metrics, and a deterministic table hash.
+Cross-run metric-contract diff reports remain future work. The evaluator rejects non-string result
 keys before JSON transport and rejects missing declared metrics, undeclared
 return keys, bad metric types, non-finite values, and non-boolean `is_valid`;
 rejected contracts record a

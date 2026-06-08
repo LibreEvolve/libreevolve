@@ -1560,6 +1560,18 @@ raw values, maximized values, normalized values, and missing/non-numeric
 counts. The report explicitly excludes `is_valid`, `outputs`,
 `program_output`, `feedback_adjusted_fitness`, and `llm_feedback` from scored
 AlphaEvolve-style scalar metric tables.
+Completed manifests also include
+`runtime.history.paper_metric_table_export` with schema
+`libreevolve.paper_metric_table_export.v1`. This report consumes the evaluator
+metric contract and emits stable single-run table rows for paper-facing
+evaluator metrics only. Rows include metric name, program id, validity,
+primary flag, direction, raw value/display, maximized value/display, and
+normalized value/display. The display policy records significant-digit and
+fixed-decimal precision, missing-value formatting, boolean formatting, and the
+rounding boundary used by Python's numeric formatting. The report also records
+stable CSV header order, a manifest JSON row export flag, excluded declared
+metrics copied from the contract, a deterministic table hash, and explicit
+claim-readiness metadata that leaves cross-run metric-contract diffs open.
 Completed manifests also include `runtime.history.evaluator_oracle_registry`
 with schema `libreevolve.evaluator_oracle_registry.v1`. This registry is
 derived from the startup manifest and runtime history. It records the default

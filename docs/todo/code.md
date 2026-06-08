@@ -1429,8 +1429,8 @@ Primary evidence:
 
 ## Evaluation
 
-- [ ] Extend the paper-facing evaluator metric contract into export-ready
-      benchmark tables.
+- [ ] Extend single-run paper metric table exports into cross-run metric-
+      contract diff reports.
   - Spec evidence: AlphaEvolve Section 2.1 describes an evaluation function
     mapping a solution to scalar metrics, with metrics maximized by
     convention; the Figure 3 example shows a Python `evaluate(eval_inputs)`
@@ -1443,14 +1443,26 @@ Primary evidence:
     `feedback_adjusted_fitness`, `llm_feedback`, and non-evaluator objective
     metrics, records maximize/minimize direction-to-maximized transforms, and
     preserves raw/maximized/normalized observed values with validation.
-  - Remaining gap: the contract is manifest evidence, not an export-ready
-    benchmark table or cross-run report. It does not yet generate paper-table
-    rows, compare metric contracts across runs, or attach table-ready
-    precision/rounding/display policy.
-  - Required result: add export-ready paper metric table generation and
-    cross-run metric-contract diff reports that consume
-    `paper_evaluator_metric_contract`, preserve raw/maximized/normalized score
-    columns, and make precision/rounding/display policy explicit.
+    Completed manifests now also include
+    `runtime.history.paper_metric_table_export` with schema
+    `libreevolve.paper_metric_table_export.v1`, plus
+    `validate_paper_metric_table_export()`. The report consumes the metric
+    contract and emits stable single-run table rows with metric name, program
+    id, validity, primary flag, direction, raw/maximized/normalized value and
+    display columns, display precision/rounding policy, CSV column order,
+    excluded declared metrics, and a deterministic table hash. Focused tests
+    cover evaluator-sourced metrics while excluding feedback metrics from the
+    paper table.
+  - Remaining gap: this is a single-run manifest table, not a cross-run
+    benchmark report. It does not yet compare metric contract schemas,
+    declared metric sets, direction/bounds/primary flags, display policies, or
+    table rows across multiple runs.
+  - Required result: add cross-run metric-contract diff reports that consume
+    `paper_evaluator_metric_contract` and `paper_metric_table_export` from
+    multiple manifests, preserve raw/maximized/normalized score columns, and
+    flag metric/schema/display-policy drift before treating multi-run
+    LibreEvolve evaluator outputs as complete AlphaEvolve-comparable table
+    evidence.
 
 - [ ] Extend evaluator-oracle provenance into independent arbitration policy.
   - Spec evidence: AlphaEvolve's abstract says the evolutionary loop

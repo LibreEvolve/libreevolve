@@ -5,8 +5,8 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
-- [ ] Extend paper-facing evaluator-metric evidence into export-ready
-      benchmark tables.
+- [ ] Extend single-run evaluator-metric tables into cross-run benchmark
+      reports.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
   - Requirement: AlphaEvolve's evaluator maps a solution to scalar metrics,
     metrics are maximized by convention, and the paper's Python example
@@ -19,13 +19,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.paper_evaluator_metric_contract` with declared
     `paper_metric_names`, validity-gate exclusion, raw/maximized/normalized
     observed values, non-scalar output/feedback exclusions, and validation.
-  - Current gap: benchmark and paper-result tooling does not yet export
-    paper-table rows from that contract, compare metric contracts across runs,
-    or define precision/rounding/display policy for publication tables.
-  - Required result: add export-ready paper metric tables and cross-run
-    metric-contract diff reports that consume
-    `paper_evaluator_metric_contract` before treating LibreEvolve evaluator
-    outputs as complete AlphaEvolve-comparable table evidence.
+    Completed manifests now also include
+    `runtime.history.paper_metric_table_export` with stable single-run
+    metric/program rows, raw/maximized/normalized value columns, display
+    precision/rounding policy, excluded metric notes, CSV column order, and a
+    table hash.
+  - Current gap: benchmark and paper-result tooling does not yet compare
+    metric contracts or paper table rows across runs, detect schema/metric/
+    display-policy drift, or aggregate multi-run paper tables.
+  - Required result: add cross-run metric-contract diff reports that consume
+    `paper_evaluator_metric_contract` and `paper_metric_table_export` from
+    multiple manifests before treating LibreEvolve evaluator outputs as
+    complete AlphaEvolve-comparable table evidence.
 
 - [ ] Track independent evaluator-oracle arbitration evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve

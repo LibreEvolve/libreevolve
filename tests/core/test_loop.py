@@ -46,6 +46,7 @@ from libreevolve.core.loop import (
     validate_evaluator_workload_report,
     validate_evaluator_oracle_registry,
     validate_paper_evaluator_metric_contract,
+    validate_paper_metric_table_export,
     validate_proposal_lifecycle_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
@@ -3390,6 +3391,48 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert feedback_metric["maximize_transform"] == "upper_bound_minus_raw_value"
     assert feedback_metric["observed_values"][-1]["raw_value"] == 25.0
     assert feedback_metric["observed_values"][-1]["normalized_value"] == 0.75
+    table = manifest["runtime"]["history"]["paper_metric_table_export"]
+    assert table["schema"] == "libreevolve.paper_metric_table_export.v1"
+    assert table["validation"]["ok"] is True
+    assert validate_paper_metric_table_export(table)["ok"] is True
+    assert table["source"] == "runtime.history.paper_evaluator_metric_contract"
+    assert table["paper_metric_names"] == ["score"]
+    assert table["columns"] == [
+        "metric_name",
+        "program_id",
+        "is_valid",
+        "primary",
+        "direction",
+        "raw_value",
+        "raw_display",
+        "maximized_value",
+        "maximized_display",
+        "normalized_value",
+        "normalized_display",
+    ]
+    assert table["row_count"] == 2
+    assert table["rows_truncated"] is False
+    assert len(table["table_sha256"]) == 64
+    assert table["display_policy"]["raw_value_significant_digits"] == 12
+    assert table["display_policy"]["normalized_value_decimal_places"] == 6
+    assert table["claim_ready"] is True
+    assert table["claim_readiness"]["single_run_paper_metric_table"] is True
+    assert table["claim_readiness"]["cross_run_metric_contract_diff"] is False
+    assert table["claim_readiness"]["remaining_gap"] == [
+        "cross_run_metric_contract_diff_report"
+    ]
+    assert table["excluded_declared_metrics"] == contract["excluded_declared_metrics"]
+    assert [row["metric_name"] for row in table["rows"]] == ["score", "score"]
+    assert [row["program_id"] for row in table["rows"]] == [
+        records[0]["id"],
+        child["id"],
+    ]
+    assert table["rows"][-1]["raw_value"] == 0.4
+    assert table["rows"][-1]["raw_display"] == "0.4"
+    assert table["rows"][-1]["maximized_value"] == 0.4
+    assert table["rows"][-1]["maximized_display"] == "0.4"
+    assert table["rows"][-1]["normalized_value"] == 0.4
+    assert table["rows"][-1]["normalized_display"] == "0.400000"
 
     oracle_registry = manifest["runtime"]["history"]["evaluator_oracle_registry"]
     assert oracle_registry["schema"] == "libreevolve.evaluator_oracle_registry.v1"

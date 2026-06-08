@@ -88,6 +88,39 @@ SOURCE_SPECIFIC_TODO_TARGET_PATHS = {
     "roadmap": "docs/todo/roadmap.md",
     "readme": "docs/todo/readme.md",
 }
+STATUS_TABLE_HEADER = ("ID", "Title", "Role", "Current LibreEvolve status")
+ALLOWED_STATUS_TABLE_ROLES = frozenset(
+    {
+        "Agentic code-evolution inspiration",
+        "AlphaEvolve MARL algorithm-discovery result context",
+        "AlphaEvolve compiler-optimization application context",
+        "AlphaEvolve complexity-theory result context",
+        "AlphaEvolve computer-architecture application context",
+        "AlphaEvolve mechanism-design result context",
+        "AlphaEvolve-optimized workflow application context",
+        "Causal-guidance inspiration",
+        "Constructive math benchmark candidate",
+        "Domain evolution inspiration",
+        "Foundational archive algorithm",
+        "Foundational bandit policy",
+        "Framework inspiration",
+        "Modular search inspiration",
+        "Optimization benchmark comparator",
+        "Primary specification target",
+        "Retrieval/debug loop inspiration",
+        "Test-time discovery context",
+        "Test-time training inspiration",
+    }
+)
+ALLOWED_STATUS_TABLE_STATUS_PREFIXES = (
+    "Background only",
+    "Implemented as ",
+    "Not implemented as described:",
+    "Not implemented; potential future benchmark",
+    "Only ",
+    "Partially implemented:",
+    "Static prompt guidance exists ",
+)
 
 
 @dataclass(frozen=True)
@@ -1142,6 +1175,7 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
             )
         ]
     in_section = False
+    header_seen = False
     ids: list[str] = []
     issues: list[PaperManifestIssue] = []
     seen: set[str] = set()
@@ -1154,10 +1188,33 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
         if not in_section or not line.startswith("|"):
             continue
         cells = [cell.strip() for cell in line.strip("|").split("|")]
-        if not cells or cells[0] == "ID" or set(cells[0]) <= {"-", ":"}:
+        if not cells:
+            continue
+        if cells[0] == "ID":
+            header_seen = True
+            if tuple(cells) != STATUS_TABLE_HEADER:
+                issues.append(
+                    PaperManifestIssue(
+                        "status_table_header_mismatch",
+                        f"implementation status header must exactly match {list(STATUS_TABLE_HEADER)}",
+                    )
+                )
+            continue
+        if set(cells[0]) <= {"-", ":"}:
+            continue
+        if len(cells) != len(STATUS_TABLE_HEADER):
+            row_label = _safe_manifest_label(cells[0]) if cells else None
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_row_shape",
+                    "implementation status rows must have exactly four cells",
+                    row_label,
+                )
+            )
             continue
         row_id = cells[0]
         safe_row_id = _safe_manifest_label(row_id)
+        issues.extend(_validate_status_table_row_cells(cells, safe_row_id))
         if row_id in seen:
             issues.append(
                 PaperManifestIssue(
@@ -1170,7 +1227,44 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
         ids.append(row_id)
     if not in_section or not ids:
         return None, issues
+    if not header_seen:
+        issues.append(PaperManifestIssue("missing_status_table_header", "implementation status header is missing"))
     return ids, issues
+
+
+def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[PaperManifestIssue]:
+    issues: list[PaperManifestIssue] = []
+    for index, field_name in enumerate(STATUS_TABLE_HEADER):
+        value = cells[index]
+        if not value.strip():
+            issues.append(PaperManifestIssue("empty_status_table_cell", f"{field_name} cell must be non-empty", row_id))
+        if _has_unsafe_text(value) or redact_sensitive_text(value) != value:
+            issues.append(
+                PaperManifestIssue(
+                    "unsafe_status_table_cell",
+                    f"{field_name} cell must be display-safe and secret-free",
+                    row_id,
+                )
+            )
+    role = cells[2]
+    if role and role not in ALLOWED_STATUS_TABLE_ROLES:
+        issues.append(
+            PaperManifestIssue(
+                "invalid_status_table_role",
+                "implementation status role is not in the allowed paper-facing taxonomy",
+                row_id,
+            )
+        )
+    status = cells[3]
+    if status and not status.startswith(ALLOWED_STATUS_TABLE_STATUS_PREFIXES):
+        issues.append(
+            PaperManifestIssue(
+                "invalid_status_table_status",
+                "implementation status must start with an allowed support/status class",
+                row_id,
+            )
+        )
+    return issues
 
 
 def _canonical_row(row: dict[str, Any]) -> dict[str, Any]:

@@ -3602,19 +3602,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     cache-display slugs. Those cells define whether a paper row is background,
     a primary AlphaEvolve specification target, partially implemented, smoke
     scoped, or unsupported.
-  - Current gap: `libreevolve.tools.paper_manifest` reconciles manifest ids
-    against the implementation-status table and tests missing, duplicate, and
-    extra ids. It does not parse or validate the remaining cells: paper-facing
-    title, role, status taxonomy, coverage qualifiers, "implemented" versus
-    "not implemented" language, or whether a row's semantic claim is backed by
-    the cited code/TODO evidence. A row could keep the same id while drifting
-    from smoke-scoped wording to paper-claim wording without the manifest gate
-    noticing.
-  - Required result: add paper-index status-cell validation with stable
-    headers, exact four-column row shape, allowed role/status classes,
-    title/role non-empty checks, smoke/partial/planned/unsupported qualifier
-    rules, and evidence links from semantic status claims to TODO or completed
-    implementation records. Keep this validator distinct from the TODO
+  - Current gap: `libreevolve.tools.paper_manifest` now validates the
+    implementation-status table's stable header, exact four-column row shape,
+    non-empty safe title/role/status cells, allowed paper-facing roles, and
+    allowed support/status class prefixes, while still testing manifest-id
+    coverage plus missing, duplicate, and extra ids. Focused tests cover
+    header drift, malformed rows, invalid roles, and unsupported status
+    classes. Remaining paper-facing gap: the validator does not yet link each
+    long semantic status claim to TODO or completed implementation records, nor
+    detect smoke-scoped examples being phrased as AlphaEvolve-comparable
+    benchmark evidence beyond the coarse status prefix taxonomy.
+  - Required result: extend paper-index status-cell validation with evidence
+    links from semantic status claims to TODO or completed implementation
+    records and smoke/partial/planned/unsupported qualifier checks beyond the
+    current prefix classes. Keep this validator distinct from the TODO
     coverage cross-reference checker, which verifies backlog pointers after
     the implementation-status table.
 

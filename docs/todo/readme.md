@@ -1873,16 +1873,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     parity, not just a manifest index.
   - Current evidence: README can accurately describe paper-manifest
     validation, paper-count reconciliation, implementation-status id
-    reconciliation, Appendix B registry checks, and ablation registry checks.
-    The validator does not yet validate implementation-status table headers,
-    row shape, title/role/status cells, allowed status taxonomy, smoke versus
-    AlphaEvolve-comparable benchmark qualifiers, or evidence links behind
-    semantic status claims.
-  - Required result: when paper-status semantic validation lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes id-level implementation-status reconciliation from verified
-    semantic status/coverage cells and does not imply that paper-facing status
-    wording is machine-checked before that validator exists.
+    reconciliation, Appendix B registry checks, ablation registry checks, TODO
+    coverage validation, stale absence-prose validation, and the new
+    implementation-status table header/row/cell/taxonomy validation. README
+    still does not describe that status-cell scope, and the validator does not
+    yet machine-check evidence links behind each long semantic status claim or
+    deeply distinguish smoke-scoped examples from AlphaEvolve-comparable
+    benchmark evidence beyond the allowed status class prefixes.
+  - Required result: update README, ROADMAP, papers index, and code/paper TODOs
+    together so README distinguishes id-level implementation-status
+    reconciliation and structural/taxonomy validation from fully verified
+    semantic status/coverage evidence.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role metadata exists.

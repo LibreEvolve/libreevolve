@@ -946,18 +946,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     implementation-status table's title, role, and status cells carry the
     public AlphaEvolve-alignment meaning.
   - Current evidence: current validation reconciles manifest ids, README
-    counts, Appendix B registry shape, and ablation registry shape, while
-    `_read_status_table_ids()` only extracts first-column ids from the
-    implementation-status table. It does not validate the four-column table
-    shape, role/status taxonomy, benchmark-coverage qualifiers, or evidence
-    links that justify semantic status wording.
-  - Required result: when status-cell validation lands, update ROADMAP,
-    README, papers index, and code/paper TODOs with the exact validator scope:
-    stable headers, complete row shape, allowed role/status categories,
-    smoke/partial/planned/unsupported qualifier checks, and links from status
-    claims to active or completed evidence. Keep this distinct from TODO
-    coverage cross-reference validation, which validates the separate backlog
-    pointer table.
+    counts, Appendix B registry shape, ablation registry shape, TODO coverage
+    rows, and stale absence prose. `_read_status_table_ids()` now also
+    validates the implementation-status table's stable header, complete
+    four-cell row shape, non-empty safe title/role/status cells, declared role
+    taxonomy, and allowed status class prefixes. Remaining roadmap gap:
+    README/ROADMAP/paper-index wording does not yet describe this status-cell
+    validator scope, and the validator does not yet link long status claims to
+    active/completed evidence or deeply verify smoke/partial/planned/
+    unsupported qualifiers.
+  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
+    with the exact validator scope, and extend status validation with links
+    from status claims to active or completed evidence plus richer qualifier
+    checks. Keep this distinct from TODO coverage cross-reference validation,
+    which validates the separate backlog pointer table.
 
 - [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
   versus audit-grade source integrity.

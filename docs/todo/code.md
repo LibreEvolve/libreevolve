@@ -2832,21 +2832,21 @@ Primary evidence:
     benchmark coverage decisions. AlphaEvolve-alignment audits therefore rely
     on those cells as structured claim boundaries, not only as row ids.
   - Current evidence: `_read_status_table_ids()` in
-    `libreevolve.tools.paper_manifest` parses the `## Implementation status`
-    table only far enough to collect the first cell, detect duplicate ids, and
-    reconcile id coverage against `papers/download_manifest.json`. It does not
-    validate the header shape, title and role cells, allowed role/status
-    taxonomy, implementation-status wording, smoke-versus-paper-claim
-    qualifiers, benchmark coverage terms, row length, or links from semantic
-    status phrases to the active TODO/code evidence that justifies them.
-  - Required result: add a reusable paper-status-table validator that parses
-    all four columns, rejects malformed row shape/header drift, checks
-    manifest-id coverage and duplicate/extra ids, validates title/role/status
-    cells against a declared taxonomy, detects overclaims such as smoke
-    examples presented as AlphaEvolve-comparable benchmarks, and links
-    status/coverage phrases to active TODO or completed-evidence records. Keep
-    this separate from TODO-coverage cross-reference validation, which tracks
-    the later backlog-reference table rather than the semantic status cells.
+    `libreevolve.tools.paper_manifest` now parses the `## Implementation
+    status` table as an exact four-column public claim surface. It validates
+    the header, row shape, non-empty safe title/role/status cells, the declared
+    paper-facing role taxonomy, and allowed status class prefixes, while still
+    detecting duplicate ids and reconciling manifest coverage. Focused tests
+    cover header drift, row-shape drift, invalid roles, and unsupported status
+    classes. Remaining gap: the validator does not yet link long status/
+    coverage phrases to active TODO or completed-evidence records, or prove
+    smoke-versus-paper-claim qualifiers beyond the allowed prefix classes.
+  - Required result: extend the reusable paper-status-table validator with
+    evidence-link checks from semantic status/coverage phrases to active TODO
+    or completed-evidence records, including overclaim detection for smoke
+    examples presented as AlphaEvolve-comparable benchmarks. Keep this
+    separate from TODO-coverage cross-reference validation, which tracks the
+    later backlog-reference table rather than the semantic status cells.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

@@ -392,6 +392,13 @@ is not yet an AlphaEvolve reproduction.
   rounding policy, raw-versus-rounded coefficient diagnostics, rounding-error
   consistency, and exactness-certificate links. Local benchmark runners still
   need to emit those records during matrix search.
+- Keep matrix scalar-field wording scoped to evidence validation rather than
+  emitted complex result parity: `libreevolve.matrix_scalar_field_evidence.v1`
+  now validates declared real, complex, finite-field, and any-field
+  applicability, field characteristic, exact coefficient representation,
+  complex component domains, finite-field characteristic/order, paper complex
+  target caveats, and certificate scope. Local benchmark runners still need to
+  emit exact complex decomposition/certificate artifacts for those claims.
 - Keep matrix sweep-space wording scoped to evidence validation rather than
   executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared `sweep` function identity, user-provided `hyper`

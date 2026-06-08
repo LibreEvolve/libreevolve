@@ -1108,22 +1108,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     matrix result-report validation from AlphaEvolve Section 3.1
     baseline-to-evolved-program workflow evidence.
 
-- [ ] Keep README matrix wording scoped to coefficient-domain validation until
-      scalar-field evidence exists.
+- [ ] Keep README matrix wording scoped until scalar-field artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 notes that some improved matrix
     algorithms use complex-valued multiplications and can be used for exact
     multiplication of complex or real-valued matrices, while Section 3.1
     contrasts characteristic-0 and finite-field-only results.
   - Current evidence: README describes matrix-result fields for coefficient
     domain and exactness, plus Appendix A target identity and checked Strassen
-    baseline artifacts. It does not yet document scalar-field metadata,
-    exact complex coefficient representation, characteristic/applicability
-    claims, or certificate scope for real-versus-complex multiplication.
-  - Required result: when matrix reports and certificates record scalar field,
-    complex coefficient data, characteristic, and applicability evidence,
+    baseline artifacts. It now documents
+    `libreevolve.matrix_scalar_field_evidence.v1`, which validates scalar-field
+    metadata, exact complex coefficient representation,
+    characteristic/applicability claims, paper complex target caveats, and
+    certificate scope for real-versus-complex multiplication. It also states
+    that local runners do not emit exact complex decomposition/certificate
+    artifacts.
+  - Required result: when matrix reports and certificates emit scalar field,
+    complex coefficient data, characteristic, and applicability artifacts,
     update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README does not imply coefficient-domain validation is sufficient for
-    AlphaEvolve-style complex-valued matrix result claims.
+    so README can distinguish schema validation from AlphaEvolve-style
+    complex-valued matrix result evidence.
 
 - [ ] Keep README matrix rank wording scoped until tensor-rank and recursive
       applicability caveats exist.

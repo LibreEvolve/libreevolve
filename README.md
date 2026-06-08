@@ -3070,6 +3070,15 @@ coefficient diagnostics, maximum rounding-error consistency, and links from
 rounded candidate coefficients to exactness certificates. It validates emitted
 evidence after a run records it; it does not yet make the local matrix smoke
 fixture inject that instruction or emit those diagnostics during search.
+Matrix scalar-field evidence uses
+`libreevolve.matrix_scalar_field_evidence.v1`; it validates declared field
+claims for real, complex, finite-field, and any-field applicability, including
+field characteristic, exact coefficient representation, complex real/imaginary
+component domains, real-versus-complex applicability, finite-field
+characteristic/order, paper complex-row caveats for `mm_3x4x7`, `mm_4x4x4`,
+and `mm_4x4x8`, and certificate scope. It validates emitted evidence after a
+run records it; local matrix benchmark runners still do not emit exact complex
+decomposition/certificate artifacts for those claims.
 Matrix sweep-space evidence uses
 `libreevolve.matrix_sweep_space_evidence.v1`; it validates declared Figure
 9-style search-program provenance for the `sweep` function, user-provided

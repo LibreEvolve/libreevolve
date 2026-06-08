@@ -3860,16 +3860,18 @@ Primary evidence:
   - Current evidence: `libreevolve.problems.benchmarks.matrix_results`
     validates a coarse `coefficient_domain` value such as `integer` or
     `half_integer` for AlphaEvolve-comparable reports, plus exactness and
-    artifact requirements. It does not model the scalar field or semiring over
-    which the decomposition is valid, whether coefficients are real or complex
-    with exact real/imaginary parts, whether a result is characteristic-0
-    versus finite-field-specific, or whether the certificate proves real and
-    complex matrix multiplication applicability separately.
-  - Required result: extend matrix benchmark/report metadata and certificate
-    validation with scalar-field/domain declarations, exact complex-coefficient
-    representation, characteristic/applicability claims, and verifier evidence
-    tying each claim to the target tensor before treating matrix reports as
-    faithful to AlphaEvolve's complex-valued Appendix A results.
+    artifact requirements. `libreevolve.matrix_scalar_field_evidence.v1` now
+    validates scalar-field/domain declarations, exact complex real/imaginary
+    coefficient representation, characteristic/applicability claims,
+    finite-field caveats, paper complex target ids, and certificate scope for
+    real and complex matrix multiplication applicability. It validates declared
+    metadata only; no local benchmark runner emits exact complex
+    decomposition/certificate artifacts tied to those claims.
+  - Required result: emit or commit matrix benchmark/report artifacts with
+    exact complex-coefficient data, scalar-field/domain declarations,
+    characteristic/applicability claims, and verifier evidence tying each
+    claim to the target tensor before treating matrix reports as faithful to
+    AlphaEvolve's complex-valued Appendix A results.
 
 - [ ] Add matrix tensor-rank applicability and recursive-use caveats.
   - Spec evidence: AlphaEvolve Section 3.1 frames matrix multiplication results

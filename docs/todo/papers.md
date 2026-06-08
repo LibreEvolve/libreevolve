@@ -3878,14 +3878,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     characteristic-0 rank-48 result with finite-field-only prior work.
   - Current evidence: the matrix-result report contract validates target
     identity, dimensions, best rank, seed hit fraction, exactness status,
-    coefficient domain, and algorithm/certificate/notebook artifacts. Its
-    `coefficient_domain` values do not record scalar field, complex
-    coefficient representation, field characteristic, real-versus-complex
-    applicability, or certificate scope for those claims.
-  - Required result: add paper/report evidence for scalar field, exact complex
-    coefficient data, characteristic/applicability claims, and certificate
-    verification scope before claiming AlphaEvolve-comparable complex-valued
-    matrix results.
+    coefficient domain, and algorithm/certificate/notebook artifacts.
+    `libreevolve.matrix_scalar_field_evidence.v1` now validates declared scalar
+    field, exact complex coefficient representation, field characteristic,
+    real-versus-complex applicability, finite-field caveats, and certificate
+    scope for those claims. It does not emit exact complex
+    decomposition/certificate artifacts.
+  - Required result: add concrete paper/report artifacts for scalar field,
+    exact complex coefficient data, characteristic/applicability claims, and
+    certificate verification scope before claiming AlphaEvolve-comparable
+    complex-valued matrix results.
 
 - [ ] Track matrix tensor-rank applicability and recursive-use caveats.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 reports matrix

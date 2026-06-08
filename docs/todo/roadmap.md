@@ -2956,19 +2956,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap text distinguishes final result/report readiness from
     AlphaEvolve Section 3.1 baseline-to-evolved-program parity.
 
-- [ ] Keep matrix roadmap wording scoped to coefficient-domain validation
-      until scalar-field evidence exists.
+- [ ] Keep matrix roadmap wording scoped until scalar-field artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 and Section 3.1 distinguish
     complex-valued matrix multiplication algorithms, exact real/complex
     applicability, and characteristic-0 claims from finite-field-only results.
   - Current evidence: roadmap and report-contract language mention
-    coefficient-domain and exactness validation, but current matrix metadata
-    does not record scalar field, exact complex coefficient representation,
-    characteristic, or certificate scope for real-versus-complex applicability.
-  - Required result: when matrix reports gain scalar-field/domain declarations
+    coefficient-domain and exactness validation, and now
+    `libreevolve.matrix_scalar_field_evidence.v1` validates scalar field, exact
+    complex coefficient representation, characteristic, finite-field caveats,
+    and certificate scope for real-versus-complex applicability. Current
+    matrix runners still do not emit exact complex decomposition/certificate
+    artifacts for those claims.
+  - Required result: when matrix reports emit scalar-field/domain declarations
     and certificate evidence for complex-valued and characteristic-specific
     claims, update roadmap, README, papers index, and code/paper TODO entries
-    together so roadmap text distinguishes coefficient-domain validation from
+    together so roadmap text distinguishes schema validation from
     AlphaEvolve-style scalar-field result provenance.
 
 - [ ] Keep matrix roadmap wording scoped until tensor-rank and recursive-use

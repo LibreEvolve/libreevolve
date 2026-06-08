@@ -790,9 +790,12 @@ Implemented:
   produce near-integral decompositions, rounded to integer or half-integer
   coefficients, and linked to exactness certificates as in AlphaEvolve Section
   3.1, but no local matrix benchmark runner emits those records yet. Its
-  coefficient-domain field also does not yet encode scalar-field provenance
-  for complex-valued algorithms, field characteristic, or certificate scope for
-  exact real/complex applicability. `libreevolve.matrix_sweep_space_evidence.v1`
+  `libreevolve.matrix_scalar_field_evidence.v1` contract now validates declared
+  scalar-field provenance for complex-valued algorithms, field characteristic,
+  exact coefficient representation, finite-field caveats, and certificate scope
+  for exact real/complex applicability, but no local matrix benchmark runner
+  emits exact complex decomposition/certificate artifacts for those claims yet.
+  `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter
   range declarations, sampled configuration ids, per-sweep losses/ranks, and

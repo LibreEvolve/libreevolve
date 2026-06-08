@@ -19,6 +19,7 @@ MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 MATRIX_SWEEP_SPACE_SCHEMA = "libreevolve.matrix_sweep_space_evidence.v1"
+MATRIX_SCALAR_FIELD_SCHEMA = "libreevolve.matrix_scalar_field_evidence.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
@@ -27,6 +28,20 @@ NEAR_INTEGRAL_ROUNDING_DOMAINS = frozenset({"integer", "half_integer"})
 SWEEP_SOURCE_FIGURES = frozenset({"Figures 9a-9c"})
 SWEEP_DISTRIBUTIONS = frozenset({"uniform", "log_uniform", "choice"})
 SWEEP_DTYPES = frozenset({"float", "int"})
+SCALAR_FIELD_TYPES = frozenset({"real", "complex", "finite_field", "any_field"})
+SCALAR_FIELD_CHARACTERISTICS = frozenset({"zero", "positive", "any"})
+SCALAR_FIELD_APPLICABILITY = frozenset({"real_matrices", "complex_matrices", "finite_field_matrices", "all_fields"})
+SCALAR_FIELD_CERTIFICATE_SCOPES = frozenset({"real_only", "complex_only", "complex_and_real", "finite_field_only", "all_fields"})
+SCALAR_FIELD_COEFFICIENT_REPRESENTATIONS = frozenset(
+    {
+        "integer",
+        "half_integer",
+        "complex_integer",
+        "complex_half_integer",
+        "finite_field",
+    }
+)
+PAPER_COMPLEX_TARGET_IDS = frozenset({"mm_3x4x7", "mm_4x4x4", "mm_4x4x8"})
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _STRASSEN_TARGET_ID = "mm_2x2x2"
@@ -122,6 +137,15 @@ class MatrixSweepSpaceValidation:
     target_id: str | None
     hyperparameter_count: int
     sampled_configuration_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixScalarFieldValidation:
+    ok: bool
+    target_id: str | None
+    field_claim_count: int
+    complex_claim_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -393,6 +417,42 @@ def validate_matrix_sweep_space_evidence(
     )
 
 
+def validate_matrix_scalar_field_evidence(
+    evidence: object | str | Path,
+) -> MatrixScalarFieldValidation:
+    """Validate scalar-field and characteristic claims for matrix decompositions."""
+    data, read_issues = _load_report(evidence)
+    if read_issues:
+        return MatrixScalarFieldValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_SCALAR_FIELD_SCHEMA:
+        issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix scalar-field evidence schema"))
+    target_id = _text_field(data, "target_id", issues)
+    target_suite = _text_field(data, "target_suite", issues)
+    if target_id is not None and target_suite == APPENDIX_A_TARGET_SUITE:
+        if matrix_target_by_id(target_id) is None:
+            issues.append(MatrixResultIssue("unknown_appendix_a_target", "target_id is not in the AlphaEvolve Appendix A matrix registry"))
+    source_refs = data.get("source_refs")
+    if not isinstance(source_refs, list) or not source_refs:
+        issues.append(MatrixResultIssue("invalid_source_refs", "source_refs must be a non-empty list"))
+    else:
+        for source_ref in source_refs:
+            _validate_scalar_field_source_ref(source_ref, issues)
+    field_claim_count, complex_claim_count = _validate_scalar_field_claims(
+        data.get("field_claims"),
+        target_id,
+        issues,
+    )
+    return MatrixScalarFieldValidation(
+        ok=not issues,
+        target_id=target_id,
+        field_claim_count=field_claim_count,
+        complex_claim_count=complex_claim_count,
+        issues=issues,
+    )
+
+
 def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
     validation = validate_matrix_near_integrality_evidence(evidence)
     status = "ok" if validation.ok else "invalid"
@@ -405,6 +465,25 @@ def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
         f"| target_id | {validation.target_id or '<unknown>'} |",
         f"| candidate_count | {validation.candidate_count} |",
         f"| coefficient_count | {validation.coefficient_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_scalar_field_summary(evidence: dict[str, Any]) -> str:
+    validation = validate_matrix_scalar_field_evidence(evidence)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix scalar-field evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| target_id | {validation.target_id or '<unknown>'} |",
+        f"| field_claim_count | {validation.field_claim_count} |",
+        f"| complex_claim_count | {validation.complex_claim_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -759,6 +838,150 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixResultIssue("invalid_shape", "matrix result report must be a JSON object")]
+
+
+def _validate_scalar_field_source_ref(value: object, issues: list[MatrixResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_source_ref", "source_refs entries must be objects"))
+        return
+    for field in ("source", "page", "claim"):
+        if field == "page":
+            if isinstance(value.get(field), bool) or not isinstance(value.get(field), int) or value[field] <= 0:
+                issues.append(MatrixResultIssue("invalid_source_ref_page", "source ref page must be a positive integer"))
+        elif not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixResultIssue(f"missing_source_ref_{field}", f"source ref {field} is required"))
+
+
+def _validate_scalar_field_claims(
+    value: object,
+    target_id: str | None,
+    issues: list[MatrixResultIssue],
+) -> tuple[int, int]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_field_claims", "field_claims must be a non-empty list"))
+        return 0, 0
+    seen: set[str] = set()
+    complex_claim_count = 0
+    for claim in value:
+        if not isinstance(claim, dict):
+            issues.append(MatrixResultIssue("invalid_field_claim", "field claims must be objects"))
+            continue
+        claim_id = claim.get("claim_id")
+        if not isinstance(claim_id, str) or _ID_RE.fullmatch(claim_id) is None:
+            issues.append(MatrixResultIssue("invalid_field_claim_id", "claim_id must be a safe identifier"))
+        elif claim_id in seen:
+            issues.append(MatrixResultIssue("duplicate_field_claim_id", "claim_id values must be unique"))
+        else:
+            seen.add(claim_id)
+        field_type = claim.get("scalar_field")
+        if field_type not in SCALAR_FIELD_TYPES:
+            issues.append(MatrixResultIssue("invalid_scalar_field", "scalar_field must be real, complex, finite_field, or any_field"))
+        characteristic = claim.get("characteristic")
+        if characteristic not in SCALAR_FIELD_CHARACTERISTICS:
+            issues.append(MatrixResultIssue("invalid_characteristic", "characteristic must be zero, positive, or any"))
+        applicability = _validate_scalar_field_applicability(claim.get("applicability"), issues)
+        certificate_scope = claim.get("certificate_scope")
+        if certificate_scope not in SCALAR_FIELD_CERTIFICATE_SCOPES:
+            issues.append(MatrixResultIssue("invalid_certificate_scope", "unsupported scalar-field certificate scope"))
+        _validate_scalar_field_representation(claim.get("coefficient_representation"), field_type, issues)
+        for field in ("algorithm_ref", "certificate_ref"):
+            if not isinstance(claim.get(field), str) or not claim[field].strip():
+                issues.append(MatrixResultIssue(f"missing_{field}", f"{field} is required for scalar-field claims"))
+        if field_type == "complex":
+            complex_claim_count += 1
+            _validate_complex_scalar_claim(
+                claim,
+                target_id,
+                characteristic,
+                applicability,
+                certificate_scope,
+                issues,
+            )
+        elif field_type == "finite_field":
+            _validate_finite_field_claim(claim, characteristic, applicability, certificate_scope, issues)
+    return len(value), complex_claim_count
+
+
+def _validate_scalar_field_applicability(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> set[str]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_applicability", "applicability must be a non-empty list"))
+        return set()
+    applicability: set[str] = set()
+    for item in value:
+        if item not in SCALAR_FIELD_APPLICABILITY:
+            issues.append(MatrixResultIssue("invalid_applicability", "unsupported scalar-field applicability"))
+        elif isinstance(item, str):
+            applicability.add(item)
+    return applicability
+
+
+def _validate_scalar_field_representation(
+    value: object,
+    field_type: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_coefficient_representation", "coefficient_representation must be an object"))
+        return
+    representation = value.get("representation")
+    if representation not in SCALAR_FIELD_COEFFICIENT_REPRESENTATIONS:
+        issues.append(MatrixResultIssue("invalid_coefficient_representation", "unsupported coefficient representation"))
+    if value.get("exact") is not True:
+        issues.append(MatrixResultIssue("coefficient_representation_not_exact", "coefficient representation must be exact"))
+    if field_type == "complex":
+        if representation not in {"complex_integer", "complex_half_integer"}:
+            issues.append(MatrixResultIssue("invalid_complex_coefficient_representation", "complex claims require exact complex integer or half-integer representation"))
+        real_domain = value.get("real_part_domain")
+        imaginary_domain = value.get("imaginary_part_domain")
+        if real_domain not in PUBLICATION_COEFFICIENT_DOMAINS or imaginary_domain not in PUBLICATION_COEFFICIENT_DOMAINS:
+            issues.append(MatrixResultIssue("invalid_complex_component_domain", "complex coefficient real/imaginary parts must be integer or half_integer"))
+    if field_type == "finite_field":
+        if representation != "finite_field":
+            issues.append(MatrixResultIssue("invalid_finite_field_representation", "finite-field claims require finite_field coefficient representation"))
+
+
+def _validate_complex_scalar_claim(
+    claim: dict[str, Any],
+    target_id: str | None,
+    characteristic: object,
+    applicability: set[str],
+    certificate_scope: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and target_id not in PAPER_COMPLEX_TARGET_IDS:
+        issues.append(MatrixResultIssue("target_not_paper_complex_valued", "complex-valued Appendix A claim must match a paper-noted complex target"))
+    if characteristic != "zero":
+        issues.append(MatrixResultIssue("invalid_complex_characteristic", "complex matrix claims must have characteristic zero"))
+    if not {"complex_matrices", "real_matrices"}.issubset(applicability):
+        issues.append(MatrixResultIssue("missing_complex_real_applicability", "complex claims must cover exact complex and real matrix multiplication applicability"))
+    if certificate_scope != "complex_and_real":
+        issues.append(MatrixResultIssue("invalid_complex_certificate_scope", "complex claims must use complex_and_real certificate scope"))
+    if claim.get("paper_complex_row") is not True:
+        issues.append(MatrixResultIssue("missing_paper_complex_row", "complex Appendix A claims must mark the paper complex-valued row caveat"))
+
+
+def _validate_finite_field_claim(
+    claim: dict[str, Any],
+    characteristic: object,
+    applicability: set[str],
+    certificate_scope: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if characteristic != "positive":
+        issues.append(MatrixResultIssue("invalid_finite_field_characteristic", "finite-field claims must have positive characteristic"))
+    prime = claim.get("prime_characteristic")
+    if isinstance(prime, bool) or not isinstance(prime, int) or prime <= 1:
+        issues.append(MatrixResultIssue("invalid_prime_characteristic", "finite-field claims require a prime_characteristic > 1"))
+    field_order = claim.get("field_order")
+    if isinstance(field_order, bool) or not isinstance(field_order, int) or field_order <= 1:
+        issues.append(MatrixResultIssue("invalid_field_order", "finite-field claims require field_order > 1"))
+    if "finite_field_matrices" not in applicability:
+        issues.append(MatrixResultIssue("missing_finite_field_applicability", "finite-field claims must cover finite_field_matrices"))
+    if certificate_scope != "finite_field_only":
+        issues.append(MatrixResultIssue("invalid_finite_field_certificate_scope", "finite-field claims must use finite_field_only certificate scope"))
 
 
 def _validate_sweep_hyper_library(value: object, issues: list[MatrixResultIssue]) -> None:

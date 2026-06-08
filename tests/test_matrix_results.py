@@ -8,14 +8,17 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
+    MATRIX_SCALAR_FIELD_SCHEMA,
     MATRIX_SWEEP_SPACE_SCHEMA,
     matrix_result_artifact_inventory,
     render_matrix_near_integrality_summary,
     render_matrix_result_summary,
+    render_matrix_scalar_field_summary,
     render_matrix_sweep_space_summary,
     validate_matrix_near_integrality_evidence,
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
+    validate_matrix_scalar_field_evidence,
     validate_matrix_sweep_space_evidence,
     write_strassen_2x2_publication_bundle,
 )
@@ -587,3 +590,146 @@ def test_render_matrix_sweep_space_summary_reports_shape():
     assert "| target_id | mm_4x4x4 |" in summary
     assert "| hyperparameter_count | 2 |" in summary
     assert "| sampled_configuration_count | 2 |" in summary
+
+
+def _valid_scalar_field_evidence() -> dict:
+    return {
+        "schema": MATRIX_SCALAR_FIELD_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "source_refs": [
+            {
+                "source": "AlphaEvolve Section 3.1",
+                "page": 10,
+                "claim": "rank-48 complex-valued matrices over characteristic zero",
+            },
+            {
+                "source": "AlphaEvolve Appendix A Table 3 note",
+                "page": 34,
+                "claim": "complex-valued algorithms can be used for exact complex or real-valued matrix multiplication",
+            },
+        ],
+        "field_claims": [
+            {
+                "claim_id": "complex_characteristic_zero",
+                "scalar_field": "complex",
+                "characteristic": "zero",
+                "applicability": ["complex_matrices", "real_matrices"],
+                "certificate_scope": "complex_and_real",
+                "paper_complex_row": True,
+                "coefficient_representation": {
+                    "representation": "complex_half_integer",
+                    "exact": True,
+                    "real_part_domain": "half_integer",
+                    "imaginary_part_domain": "half_integer",
+                },
+                "algorithm_ref": "algorithms/mm_4x4x4_complex.json",
+                "certificate_ref": "certificates/mm_4x4x4_complex.json",
+            },
+        ],
+    }
+
+
+def test_matrix_scalar_field_evidence_accepts_complex_characteristic_zero_claim():
+    evidence = _valid_scalar_field_evidence()
+
+    validation = validate_matrix_scalar_field_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.field_claim_count == 1
+    assert validation.complex_claim_count == 1
+    assert validation.issues == []
+
+
+def test_matrix_scalar_field_evidence_accepts_finite_field_caveat():
+    evidence = _valid_scalar_field_evidence()
+    evidence["target_id"] = "mm_4x4x4"
+    evidence["field_claims"] = [
+        {
+            "claim_id": "fawzi_f2_caveat",
+            "scalar_field": "finite_field",
+            "characteristic": "positive",
+            "prime_characteristic": 2,
+            "field_order": 2,
+            "applicability": ["finite_field_matrices"],
+            "certificate_scope": "finite_field_only",
+            "coefficient_representation": {
+                "representation": "finite_field",
+                "exact": True,
+            },
+            "algorithm_ref": "prior/fawzi_f2.json",
+            "certificate_ref": "prior/fawzi_f2_certificate.json",
+        }
+    ]
+
+    validation = validate_matrix_scalar_field_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.field_claim_count == 1
+    assert validation.complex_claim_count == 0
+
+
+def test_matrix_scalar_field_evidence_rejects_complex_scope_drift():
+    evidence = _valid_scalar_field_evidence()
+    claim = evidence["field_claims"][0]
+    claim["characteristic"] = "positive"
+    claim["applicability"] = ["complex_matrices"]
+    claim["certificate_scope"] = "complex_only"
+    claim["paper_complex_row"] = False
+    claim["coefficient_representation"]["representation"] = "half_integer"
+    claim["coefficient_representation"]["imaginary_part_domain"] = "float"
+
+    validation = validate_matrix_scalar_field_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_complex_characteristic" in codes
+    assert "missing_complex_real_applicability" in codes
+    assert "invalid_complex_certificate_scope" in codes
+    assert "missing_paper_complex_row" in codes
+    assert "invalid_complex_coefficient_representation" in codes
+    assert "invalid_complex_component_domain" in codes
+
+
+def test_matrix_scalar_field_evidence_rejects_finite_field_scope_drift():
+    evidence = _valid_scalar_field_evidence()
+    evidence["field_claims"][0] = {
+        "claim_id": "bad_finite_field",
+        "scalar_field": "finite_field",
+        "characteristic": "zero",
+        "prime_characteristic": 1,
+        "field_order": 1,
+        "applicability": ["real_matrices"],
+        "certificate_scope": "real_only",
+        "coefficient_representation": {
+            "representation": "integer",
+            "exact": False,
+        },
+        "algorithm_ref": "",
+        "certificate_ref": "",
+    }
+
+    validation = validate_matrix_scalar_field_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_finite_field_characteristic" in codes
+    assert "invalid_prime_characteristic" in codes
+    assert "invalid_field_order" in codes
+    assert "missing_finite_field_applicability" in codes
+    assert "invalid_finite_field_certificate_scope" in codes
+    assert "invalid_finite_field_representation" in codes
+    assert "coefficient_representation_not_exact" in codes
+    assert "missing_algorithm_ref" in codes
+    assert "missing_certificate_ref" in codes
+
+
+def test_render_matrix_scalar_field_summary_reports_shape():
+    summary = render_matrix_scalar_field_summary(_valid_scalar_field_evidence())
+
+    assert "Matrix scalar-field evidence" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| target_id | mm_4x4x4 |" in summary
+    assert "| field_claim_count | 1 |" in summary
+    assert "| complex_claim_count | 1 |" in summary

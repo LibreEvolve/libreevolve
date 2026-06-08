@@ -5624,27 +5624,41 @@ Primary evidence:
     suite covering Poker, Goofspiel, Liar's Dice, Blotto, and Battleship
     variants, then ablates and distills the LLM-discovered mechanisms into
     WOP-CFR and PM-PSRO minimal solvers for better generalization with lower
-    complexity.
+    complexity. The paper exposes three CFR classes
+    (`RegretAccumulator`, `PolicyFromRegretAccumulator`, `PolicyAccumulator`)
+    and two PSRO meta-strategy solver classes (`TrainMetaStrategySolver`,
+    `EvalMetaStrategySolver`) as Python search spaces, uses OpenSpiel, exact
+    game-tree exploitability, four training games plus fourteen test games,
+    and deterministic metrics.
   - Current evidence: `papers/README.md` has a background-only row for
     `2602.16928`, but LibreEvolve has no first-class code TODO for this
     source, no CFR or PSRO candidate interface, no imperfect-information game
     evaluator, no OpenSpiel-style game-suite fixture, no train/generalization
     split metadata for game-theoretic algorithms, no mechanism-coupling or
     structural-complexity report, no ablation/distillation workflow that
-    reduces discovered solvers to a minimal algorithmic core, and no VAD-CFR,
+    reduces discovered solvers to a minimal algorithmic core, no exact
+    exploitability traversal boundary, no IQM log-improvement audit, no
+    constant-sum normal-form random-game validation, and no VAD-CFR,
     SHOR-PSRO, WOP-CFR, or PM-PSRO benchmark records.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2602.16928`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
     LibreEvolve evaluator APIs, CFR and PSRO candidate schemas, game-suite
-    metadata, train/evaluation game split hashes, baseline solver identities,
-    regret/exploitability or task-specific metric definitions, evaluator
-    budget and random-seed records, evolved-mechanism provenance,
-    mechanism-coupling ablation records, structural-complexity metrics,
-    distilled-solver handoff records, generalization reports for VAD-CFR,
-    SHOR-PSRO, WOP-CFR, and PM-PSRO, and README/ROADMAP wording that keeps
-    MARL/game-theoretic algorithm discovery as missing evidence until local
-    implementation and reports exist.
+    metadata for the 18 OpenSpiel instances including information-state counts
+    and action ranges, train/evaluation game split hashes, baseline solver
+    identities for CFR/CFR+/LCFR/DCFR/PCFR+/DPCFR+/HS-PCFR+, Uniform/Nash/
+    AlphaRank/PRD/RM, exact-oracle PSRO records, regret/exploitability and
+    IQM log-improvement metric definitions, evaluator budget and random-seed
+    records, evolved-mechanism provenance for VAD-CFR and SHOR-PSRO,
+    mechanism-coupling ablation records, WOP-CFR warm-start/asymmetric-
+    discount/optimistic-prediction records, PM-PSRO tangent-projection and
+    dynamic-budget records, structural-complexity metrics, distilled-solver
+    handoff records, random constant-sum normal-form validation, exact-
+    exploitability scale limits, single-trajectory/LLM-backbone/baseline-scope
+    caveats, generalization reports for VAD-CFR, SHOR-PSRO, WOP-CFR, and
+    PM-PSRO, and README/ROADMAP wording that keeps MARL/game-theoretic
+    algorithm discovery as missing evidence until local implementation and
+    reports exist.
 
 - [ ] Add AlphaEvolve Ramsey-number combinatorial-structure boundary.
   - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of

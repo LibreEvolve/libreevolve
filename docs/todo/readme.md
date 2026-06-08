@@ -3739,7 +3739,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     SHOR-PSRO, an 18-game evaluation suite covering Poker, Goofspiel, Liar's
     Dice, Blotto, and Battleship variants, and ablation/distillation into
     WOP-CFR and PM-PSRO minimal solvers that improve generalization with lower
-    structural complexity.
+    structural complexity. The method uses OpenSpiel, exact exploitability,
+    deterministic metrics, and train-test ablation to separate overfit
+    mechanisms from minimal algorithmic cores.
   - Current evidence: README documents LibreEvolve's Python problem format,
     local subprocess validators, staged evaluator cascades, examples,
     benchmark boundaries, and paper cache. It does not mention `2602.16928`,
@@ -3747,15 +3749,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     game evaluator, define game-suite train/generalization splits, compare
     against human-designed MARL baselines, report evolved mechanism coupling,
     or show ablation/distillation evidence for minimal generalizing solvers.
+    It also lacks README boundaries for exact exploitability scale limits,
+    exact best-response PSRO, IQM log-improvement audits, random normal-form
+    validation, single-trajectory caveats, and tabular-baseline-only
+    comparison scope.
   - Required result: if README mentions AlphaEvolve MARL discovery,
     game-theoretic learning, CFR, PSRO, VAD-CFR, SHOR-PSRO, WOP-CFR,
     PM-PSRO, Poker/Goofspiel/Liar's Dice/Blotto/Battleship benchmarks,
     evolved multiagent-learning algorithms, mechanism distillation, or
     generalized MARL solver discovery, keep the wording source-scoped until
     local artifacts can show the paper in the manifest, candidate schemas,
-    evaluator protocols, game-suite split records, baseline identities,
-    result tables, ablation/distillation traces, structural-complexity
-    metrics, and generalization reports. Avoid implying LibreEvolve supports
+    OpenSpiel or equivalent evaluator protocols, game-suite split records,
+    exact-exploitability and exact-oracle records, baseline identities,
+    result tables, IQM ablation/distillation traces, structural-complexity
+    metrics, random normal-form validation, limitation records, and
+    generalization reports. Avoid implying LibreEvolve supports
     AlphaEvolve-style MARL algorithm discovery without those artifacts.
 
 - [ ] Keep README AlphaEvolve Ramsey-number claims absent or source-scoped

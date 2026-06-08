@@ -4162,7 +4162,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evaluating them on an 18-game suite across Poker, Goofspiel, Liar's Dice,
     Blotto, and Battleship variants, and distilling them through systematic
     ablations into WOP-CFR and PM-PSRO minimal solvers with improved
-    generalization and reduced complexity.
+    generalization and reduced complexity. The paper uses OpenSpiel, exact
+    exploitability by full game-tree traversal, deterministic metrics, and
+    separate CFR/PSRO Python class skeletons as the AlphaEvolve search space.
   - Current evidence: ROADMAP tracks AlphaEvolve alignment, local evaluator
     stages, systems benchmarks, mathematical benchmark gaps, and selected
     application-source gates. It does not promote `2602.16928` beyond the
@@ -4170,16 +4172,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     require an imperfect-information game evaluator, preserve train/evaluation
     game splits, track VAD-CFR or SHOR-PSRO mechanism provenance, require
     mechanism-coupling ablations, or define distilled-solver handoff and
-    generalization gates for WOP-CFR and PM-PSRO.
+    generalization gates for WOP-CFR and PM-PSRO. It also lacks roadmap gates
+    for exact-oracle PSRO, IQM log-improvement audit scores, random constant-
+    sum normal-form validation, exact-exploitability scale limits, single-
+    trajectory caveats, and tabular-baseline comparison scope.
   - Required result: add roadmap gates for `2602.16928`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     CFR and PSRO candidate schemas, game-suite taxonomy, train/evaluation
-    split hashes, evaluator protocol and metric definitions, random-seed and
+    split hashes, evaluator protocol and metric definitions, exact
+    exploitability and exact best-response oracle records, random-seed and
     budget records, baseline solver identities, VAD-CFR and SHOR-PSRO result
-    tables, mechanism-coupling ablation records, structural-complexity
-    metrics, distilled WOP-CFR/PM-PSRO solver records, generalization reports,
-    and a background-only or benchmark-fixture status rule so roadmap claims
-    do not outpace local AlphaEvolve-style MARL algorithm-discovery support.
+    tables, mechanism-coupling IQM ablation records, structural-complexity
+    metrics, distilled WOP-CFR/PM-PSRO solver records, random normal-form
+    validation rows, limitation/caveat records for scale, LLM trajectory, and
+    baseline scope, generalization reports, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    AlphaEvolve-style MARL algorithm-discovery support.
 
 - [ ] Add AlphaEvolve Ramsey-number discovery gates before roadmap promotion.
   - Spec evidence: arXiv `2603.09172`, submitted March 10, 2026 and last

@@ -5210,23 +5210,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     human-designed baselines across an 18-game suite spanning Poker,
     Goofspiel, Liar's Dice, Blotto, and Battleship variants, then uses
     systematic ablations and distillation to identify minimal solvers WOP-CFR
-    and PM-PSRO that generalize with reduced structural complexity.
+    and PM-PSRO that generalize with reduced structural complexity. It uses
+    OpenSpiel, exact game-tree exploitability, deterministic algorithms, and a
+    four-game training split plus fourteen-game test split.
   - Current gap: `papers/README.md` lists `2602.16928` only as
     `Background only; no CFR/PSRO benchmark or game-theoretic evaluator`.
     The active TODO coverage does not yet track a first-class paper/source
     boundary for CFR/PSRO candidate schemas, imperfect-information game
     evaluator protocols, train/generalization game splits, baseline solver
     identities, mechanism-coupling ablations, structural complexity, or
-    distilled-solver handoff evidence.
+    distilled-solver handoff evidence. It also does not preserve paper-facing
+    rows for the CFR/PSRO skeleton class names, exact-oracle PSRO, IQM
+    log-improvement scores, 1000 random constant-sum normal-form games per
+    `(N, A)` configuration, exact-exploitability scale limits below `350K`
+    information states, or the single-AlphaEvolve-trajectory and tabular-
+    baseline caveats.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2602.16928`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
     LibreEvolve problem/evaluator assumptions, CFR/PSRO candidate schemas,
-    game-suite taxonomy, train/evaluation split metadata, game-specific metric
-    definitions, random-seed and budget records, VAD-CFR and SHOR-PSRO result
-    tables, human-designed baseline identities, ablation and distillation
-    records, WOP-CFR and PM-PSRO generalization reports, structural-complexity
-    measures, reproducibility status, and README/ROADMAP wording that treats
+    game-suite taxonomy with information-state/action metadata, train/
+    evaluation split metadata, game-specific metric definitions, exact
+    exploitability traversal records, random-seed and budget records, VAD-CFR
+    and SHOR-PSRO result tables, human-designed baseline identities, IQM
+    ablation and distillation records, WOP-CFR and PM-PSRO generalization
+    reports, structural-complexity measures, exact-oracle and exact-payoff
+    PSRO records, random normal-form validation rows, limitation/caveat
+    records, reproducibility status, and README/ROADMAP wording that treats
     MARL algorithm discovery as missing paper evidence rather than implemented
     LibreEvolve support.
 

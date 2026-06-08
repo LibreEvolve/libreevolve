@@ -2974,6 +2974,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     unchanged-kernel-math evidence, and deployment/readiness provenance before
     claiming AlphaEvolve-comparable Gemini/Pallas kernel optimization results.
 
+- [ ] Record Pallas autotuning/manual-heuristic baseline workflow evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 says
+    traditional kernel engineers use search-based autotuning or manually
+    crafted heuristics for tiling. Search-based tuning interrupts research
+    workflows and must be repeated when input shapes change; manual heuristic
+    design is a major bottleneck requiring deep understanding of kernel
+    behavior and hardware intricacies. The paper says AlphaEvolve offers a path
+    toward automating manual tuning and improving Gemini kernel ergonomics.
+  - Current gap: paper-facing Pallas TODOs require input-shape corpus evidence,
+    train/eval split hashes, real TPU runtime artifacts, expert-baseline
+    comparison, tiling-only correctness, speedup and training-time calibration,
+    and production adoption state. They do not require paper/report evidence
+    that distinguishes search-based autotuning from manually crafted heuristic
+    baselines, records retuning burden for changed shapes, or captures the
+    manual-engineering bottleneck and model-developer ergonomics comparison.
+  - Required result: add paper/report fields for baseline workflow class
+    (`search_autotuning`, `manual_heuristic`, or `hybrid_expert`), autotuning
+    search-space and retuning policy, manual authoring/review effort, input
+    shape-change sensitivity, hardware-expertise assumptions, ergonomics impact,
+    and comparison evidence before describing LibreEvolve kernel reports as
+    AlphaEvolve-style automation of Pallas tiling-heuristic work.
+
 - [ ] Record RTL/EDA verification evidence for hardware-circuit results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes
     optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and

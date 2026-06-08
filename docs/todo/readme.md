@@ -863,6 +863,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     imply generic systems report readiness proves AlphaEvolve-style Pallas
     kernel optimization.
 
+- [ ] Keep README Pallas workflow wording scoped until autotuning/manual
+      heuristic baseline evidence exists.
+  - Spec evidence: AlphaEvolve Section 3.3.2 contrasts AlphaEvolve-discovered
+    tiling heuristics with search-based autotuning, which interrupts research
+    workflows and requires retuning for input-shape changes, and manually
+    crafted heuristics, which are a major expert-engineering bottleneck. It
+    frames AlphaEvolve as a path toward automating manual tuning and improving
+    Gemini kernel ergonomics.
+  - Current evidence: README can describe generic systems reports, shape splits,
+    TPU runtime gaps, expert-baseline comparison gaps, and months-to-days
+    optimization-turnaround calibration. It should not imply current kernel
+    evidence proves reduced autotuning interruption, reduced manual heuristic
+    effort, retuning avoidance, or model-developer ergonomics impact.
+  - Required result: once kernel report metadata captures baseline workflow
+    class, autotuning search/retuning policy, manual-effort assumptions,
+    input-shape-change sensitivity, hardware-expertise requirements, and
+    ergonomics comparison, update README, ROADMAP, papers index, and matching
+    TODOs so README distinguishes speedup evidence from AlphaEvolve-style
+    workflow automation for Pallas tiling.
+
 - [ ] Keep README hardware wording scoped to generic systems reports until
       RTL/EDA verification evidence exists.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes Verilog RTL for a TPU

@@ -2792,6 +2792,29 @@ Primary evidence:
     and deployment/readiness evidence before treating Pallas-style kernel
     heuristic reports as AlphaEvolve-ready.
 
+- [ ] Add Pallas autotuning/manual-heuristic baseline workflow provenance.
+  - Spec evidence: AlphaEvolve Section 3.3.2 says kernel engineers traditionally
+    relied on search-based autotuning or manually crafted tiling heuristics.
+    Search-based tuning interrupts the research workflow and requires retuning
+    whenever input shapes change, while manual heuristic design is a major
+    engineering bottleneck requiring deep kernel and hardware expertise. The
+    paper frames AlphaEvolve as a way to automate manual tuning and improve
+    ergonomics for emerging hardware and model developers.
+  - Current evidence: existing Pallas TODOs require shape-corpus provenance,
+    train/evaluation splits, real TPU runtime measurements, expert-baseline
+    heuristic identity, tiling-only correctness, speedup metrics, and
+    months-to-days optimization-time calibration. They do not require a report
+    to classify the baseline workflow as search-based autotuning, manually
+    crafted heuristic, or expert hybrid; record retuning burden for changed
+    input shapes; preserve manual-effort assumptions; or compare AlphaEvolve's
+    generated heuristic to both baseline workflow classes.
+  - Required result: add kernel report fields and validators for baseline
+    workflow type, autotuning search-space and retuning policy, manual-heuristic
+    authoring/review effort, input-shape-change sensitivity, hardware-expertise
+    assumptions, model-developer ergonomics impact, and comparison rows that
+    distinguish AlphaEvolve-generated tiling heuristics from search-based
+    autotuning and manual expert heuristics.
+
 - [ ] Add RTL/EDA verification provenance for hardware-circuit optimization.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes an already highly
     optimized Verilog implementation of a TPU arithmetic circuit, with

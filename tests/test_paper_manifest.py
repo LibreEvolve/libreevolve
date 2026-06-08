@@ -1636,7 +1636,7 @@ def test_validate_paper_manifest_reports_not_implemented_benchmark_under_impleme
         readme_path.read_text(encoding="utf-8")
         + "\n\n## Benchmark coverage decisions\n\n"
         + "Implemented:\n\n"
-        + "- Self-improvement evidence: not implemented.\n\n"
+        + "- `libreevolve/problems/examples/demo`: self-improvement evidence: not implemented.\n\n"
         + "Planned or background-only:\n\n"
         + "- Future systems fixtures are not implemented.\n",
         encoding="utf-8",
@@ -1649,6 +1649,28 @@ def test_validate_paper_manifest_reports_not_implemented_benchmark_under_impleme
     assert "benchmark_implemented_not_implemented_contradiction" in codes
 
 
+def test_validate_paper_manifest_reports_implemented_benchmark_without_local_artifact(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- Evaluation-cascade status: configured stages support thresholds.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Future systems fixtures are not implemented.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "benchmark_implemented_missing_local_artifact" in codes
+
+
 def test_validate_paper_manifest_allows_scoped_not_yet_benchmark_under_implemented(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
@@ -1658,7 +1680,7 @@ def test_validate_paper_manifest_allows_scoped_not_yet_benchmark_under_implement
         readme_path.read_text(encoding="utf-8")
         + "\n\n## Benchmark coverage decisions\n\n"
         + "Implemented:\n\n"
-        + "- Matrix report contract: implemented locally, but not yet a full benchmark.\n\n"
+        + "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, but not yet a full benchmark.\n\n"
         + "Planned or background-only:\n\n"
         + "- Self-improvement evidence is not implemented.\n",
         encoding="utf-8",

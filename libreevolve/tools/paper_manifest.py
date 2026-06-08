@@ -51,6 +51,9 @@ COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
 ACTIVE_TODO_GAP_CONTEXT_RE = re.compile(r"(?m)^  - (?:Current gap|Remaining gap|Current evidence):")
 ACTIVE_TODO_REQUIRED_RESULT_RE = re.compile(r"(?m)^  - Required result:")
 BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE = re.compile(r"\bnot implemented\b", flags=re.IGNORECASE)
+BENCHMARK_IMPLEMENTED_LOCAL_ARTIFACT_RE = re.compile(
+    r"`(?:libreevolve/|tests/|README\.md|ROADMAP\.md|papers/|docs/)[^`]+`"
+)
 SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
     r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
     flags=re.IGNORECASE,
@@ -1330,9 +1333,16 @@ def _validate_benchmark_coverage_decisions(root: Path) -> list[PaperManifestIssu
     implemented_text = section.split("Implemented:", 1)[1].split("\nPlanned or background-only:", 1)[0]
     issues: list[PaperManifestIssue] = []
     for block in _markdown_bullet_blocks(implemented_text):
+        summary = block.splitlines()[0].strip()
+        if not BENCHMARK_IMPLEMENTED_LOCAL_ARTIFACT_RE.search(block):
+            issues.append(
+                PaperManifestIssue(
+                    "benchmark_implemented_missing_local_artifact",
+                    f"Implemented benchmark coverage bullet must cite a local code or artifact path: {summary}",
+                )
+            )
         if not BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(block):
             continue
-        summary = block.splitlines()[0].strip()
         issues.append(
             PaperManifestIssue(
                 "benchmark_implemented_not_implemented_contradiction",

@@ -2810,6 +2810,23 @@ Primary evidence:
     text. Keep docs wording clear that status-table validation is not the same
     as verified backlog traceability.
 
+- [ ] Detect stale source-specific absence wording inside active TODO bodies.
+  - Spec evidence: the TODO ledgers are the audit surface for AlphaEvolve and
+    paper-alignment gaps, so their "current evidence" clauses must remain
+    truthful as new source-specific backlog rows are added.
+  - Current evidence: paper-index cross-reference validation is already tracked,
+    including stale grouped-label checks. That does not catch individual TODO
+    bodies that still say a source-specific code, paper, README, or ROADMAP
+    TODO is absent after the audit has added one for the same paper id. For
+    example, several source-boundary rows now exist while older current-gap
+    prose still uses phrases such as "no source-specific code TODO".
+  - Required result: add a TODO-ledger consistency check that scans active
+    backlog text for stale absence phrases keyed by manifest id and target
+    ledger, compares them with existing open source-specific TODO rows, and
+    reports or rejects contradictory wording. Update the affected TODO text so
+    "missing implementation/report evidence" remains distinct from "missing
+    source-specific TODO coverage."
+
 - [ ] Validate semantic cells in the paper implementation-status table.
   - Spec evidence: `papers/README.md` says manifest `title` values are only
     inventory/display slugs and that the implementation-status table is the

@@ -3580,6 +3580,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     code TODO wording so the paper index distinguishes implementation-status
     validation from verified backlog traceability.
 
+- [ ] Track stale source-specific absence wording in active TODO bodies.
+  - Paper evidence: `papers/README.md` uses the implementation-status table and
+    TODO coverage table as the source-to-backlog chain for paper-alignment
+    audits. The ledgers therefore need internally consistent current-gap
+    wording, not only row-level cross-reference coverage.
+  - Current gap: active TODOs already require validation for stale grouped
+    labels in the paper-index cross-reference table, but that does not detect
+    stale prose inside individual TODO entries. Some source-boundary entries
+    can still say there is no source-specific code/paper/README/ROADMAP TODO
+    after the same ledger set has added one for that paper id.
+  - Required result: add paper-ledger validation that identifies manifest-id
+    scoped absence claims such as "no source-specific code TODO" and checks
+    them against active open source-specific rows across the four TODO ledgers.
+    Rewrite stale entries so paper-facing gaps describe the remaining missing
+    implementation, report, or evidence surface rather than falsely claiming
+    the source-specific TODO coverage is absent.
+
 - [ ] Validate paper-index implementation-status semantics, not only ids.
   - Paper evidence: `papers/README.md` explicitly makes the implementation
     status table the source for paper-facing titles, roles, implementation

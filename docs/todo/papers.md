@@ -3562,23 +3562,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve-alignment audits depend on this source-to-backlog chain so
     paper status rows do not become disconnected from the TODO ledgers that
     state missing or unsupported behavior.
-  - Current gap: checked-in tests only assert that each manifest id appears
-    once in the section and that the row mentions `docs/todo/`. The
-    `libreevolve.tools.paper_manifest` validator checks the implementation
-    status table against manifest ids, but it does not validate the TODO
-    coverage table, referenced file existence, grouped-gap labels,
-    active-versus-completed target semantics, whether every listed active
-    evidence target still contains a matching open gap, or whether grouped
-    labels are stale after later source-specific TODO entries are added for
-    rows such as the AlphaEvolve application/context papers.
-  - Required result: add paper-index cross-reference validation with manifest
-    id coverage, duplicate/extra row checks, safe and existing backlog paths,
-    allowed grouped-gap labels, active/completed target classification, and
-    optional checks that active references point to matching open TODO text.
-    Add stale-grouped-label detection so a row with source-specific open TODOs
-    is not left pointing only at a broad grouped gap. Update README/ROADMAP/
-    code TODO wording so the paper index distinguishes implementation-status
-    validation from verified backlog traceability.
+  - Current gap: `libreevolve.tools.paper_manifest` now validates the TODO
+    coverage table when present: manifest-id row coverage, duplicate/extra
+    rows, safe existing active/completed `docs/todo/` paths, active versus
+    completed path classification, and active references that match open TODO
+    blocks for the same paper id. Focused tests cover accepted coverage,
+    stale active-cell references, and missing rows. Remaining paper-facing
+    gaps are completed/grouped evidence semantics, any future declared
+    grouped-label taxonomy, and README/ROADMAP/code wording that explains the
+    validator's scope without conflating it with implementation-status
+    semantic validation.
+  - Required result: finish paper-index cross-reference validation by adding
+    any needed completed-evidence semantics or grouped-label policy and
+    updating README/ROADMAP/code TODO wording so the paper index distinguishes
+    implementation-status validation from verified backlog traceability.
 
 - [ ] Track stale source-specific absence wording in active TODO bodies.
   - Paper evidence: `papers/README.md` uses the implementation-status table and

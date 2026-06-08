@@ -905,18 +905,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     table for this purpose.
   - Current evidence: roadmap/README/papers-index wording can cite manifest
     validation, implementation-status table reconciliation, Appendix B and
-    ablation registry checks, and a checked-in test that every manifest id has
-    a cross-reference row mentioning `docs/todo/`. It does not require a
-    reusable validation rule for cross-reference row coverage, referenced path
-    existence, grouped-gap labels, active/completed target semantics, or
-    whether active targets still contain open TODO evidence. It also does not
-    require detection of stale grouped-only labels after the audit expands a
-    paper row into source-specific code/paper/README/ROADMAP TODO entries.
-  - Required result: when paper-index TODO cross-reference validation lands,
-    update ROADMAP, README, papers index, and code/paper TODOs with the
-    validator scope and failure modes, including stale grouped-label checks,
-    so roadmap wording distinguishes shareable cache/status diagnostics from
-    verified backlog traceability.
+    ablation registry checks. `validate_paper_manifest()` now also validates
+    the paper-index TODO coverage table's manifest-id coverage,
+    duplicate/extra rows, safe existing active/completed `docs/todo/` paths,
+    active/completed path classification, and active references that still
+    contain open TODO evidence for the same paper id. Remaining roadmap gap:
+    docs do not yet describe that validator scope or the still-open
+    completed/grouped evidence semantics and implementation-status semantic
+    validation boundaries.
+  - Required result: update ROADMAP, README, papers index, and code/paper
+    TODOs with the validator scope and failure modes so roadmap wording
+    distinguishes shareable cache/status diagnostics from verified backlog
+    traceability.
 
 - [ ] Keep roadmap backlog-integrity wording scoped until stale absence prose
       is detected inside TODO bodies.

@@ -54,6 +54,43 @@ def _write_status_table(root, row_ids):
     )
 
 
+def _append_todo_coverage_table(root, rows):
+    table_rows = "\n".join(
+        f"| {row_id} | {active_cell} | {completed_cell} |"
+        for row_id, active_cell, completed_cell in rows
+    )
+    path = root / "papers" / "README.md"
+    existing = path.read_text(encoding="utf-8") if path.exists() else ""
+    path.write_text(
+        existing.rstrip()
+        + "\n\n"
+        + "## TODO coverage cross-references\n\n"
+        + "| ID | Active gap evidence | Completed/grouped evidence |\n"
+        + "|---|---|---|\n"
+        + f"{table_rows}\n",
+        encoding="utf-8",
+    )
+
+
+def _write_active_todo_ledgers(root, row_id, *, paths=None):
+    paths = set(paths or paper_manifest.ACTIVE_TODO_LEDGER_PATHS)
+    for relative_path in paper_manifest.ACTIVE_TODO_LEDGER_PATHS:
+        path = root / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if relative_path in paths:
+            path.write_text(
+                f"- [ ] Track source-specific gap for `{row_id}`.\n"
+                "  - Current gap: temporary test ledger entry.\n",
+                encoding="utf-8",
+            )
+        else:
+            path.write_text("- [ ] Track unrelated source.\n", encoding="utf-8")
+
+
+def _active_todo_cell(*paths):
+    return "; ".join(f"`{path}`" for path in paths)
+
+
 def _valid_pdf_bytes(extra=b""):
     buffer = BytesIO()
     writer = PdfWriter()
@@ -588,7 +625,7 @@ def test_validate_paper_manifest_reports_unreadable_papers_readme_count_source(t
 
 
 def test_validate_paper_manifest_rejects_unsafe_urls(tmp_path, capsys):
-    secret_url = "file:///C:/Users/timot/api_key=sk-proj_paperurl_secret_1234567890.pdf"
+    secret_url = "file:///C:/Users/timot/api_key=sk-proj_paperurl_secret_1234567890.pdf"  # pragma: allowlist secret
     row = _row(tmp_path, url=secret_url)
     _write_manifest(tmp_path, [row])
 
@@ -603,7 +640,7 @@ def test_validate_paper_manifest_rejects_unsafe_urls(tmp_path, capsys):
 
 
 def test_validate_paper_manifest_redacts_and_bounds_download_messages(tmp_path):
-    message = "download failed api_key=sk-proj_papermsg_secret_1234567890 " + ("x" * 5000)
+    message = "download failed api_key=sk-proj_papermsg_secret_1234567890 " + ("x" * 5000)  # pragma: allowlist secret
     row = _row(tmp_path, message=message)
     _write_manifest(tmp_path, [row])
 
@@ -623,7 +660,7 @@ def test_validate_paper_manifest_rejects_unsupported_json_fields_and_csv_headers
     _write_manifest(tmp_path, [row])
     json_path = tmp_path / "papers" / "download_manifest.json"
     json_rows = json.loads(json_path.read_text(encoding="utf-8"))
-    json_rows[0]["api_key"] = "sk-proj_extra_json_secret_1234567890"
+    json_rows[0]["api_key"] = "sk-proj_extra_json_secret_1234567890"  # pragma: allowlist secret
     json_path.write_text(json.dumps(json_rows), encoding="utf-8")
     csv_path = tmp_path / "papers" / "download_manifest.csv"
     text = csv_path.read_text(encoding="utf-8")
@@ -684,7 +721,7 @@ def test_validate_paper_manifest_reports_invalid_encoding_json_manifest(tmp_path
 
 
 def test_paper_manifest_cli_redacts_missing_manifest_paths(tmp_path, capsys):
-    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"  # pragma: allowlist secret
     root.mkdir()
 
     exit_code = main(["--root", str(root)])
@@ -700,7 +737,7 @@ def test_paper_manifest_cli_redacts_missing_manifest_paths(tmp_path, capsys):
 
 
 def test_paper_manifest_json_redacts_malformed_manifest_paths(tmp_path, capsys):
-    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"  # pragma: allowlist secret
     root.mkdir()
     row = _row(root)
     _write_manifest(root, [row])
@@ -818,7 +855,7 @@ def test_paper_manifest_cli_reports_json_row_schema_and_missing_fields(tmp_path,
 
 
 def test_paper_manifest_json_redacts_readme_source_exception_paths(tmp_path, monkeypatch, capsys):
-    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"
+    root = tmp_path / "api_key=sk-proj_papermanifestroot_secret_1234567890"  # pragma: allowlist secret
     root.mkdir()
     row = _row(root)
     _write_manifest(root, [row])
@@ -961,6 +998,69 @@ def test_validate_paper_manifest_reports_duplicate_status_table_rows(tmp_path):
 
     assert report.ok is False
     assert "duplicate_status_table_row" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                "",
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_reports_stale_todo_coverage_active_cell(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(
+                    "docs/todo/code.md",
+                    "docs/todo/papers.md",
+                    "docs/todo/roadmap.md",
+                ),
+                "",
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    issues = [issue for issue in report.issues if issue.code == "todo_coverage_active_mismatch"]
+    assert report.ok is False
+    assert len(issues) == 1
+    assert issues[0].row_id == row["id"]
+    assert "docs/todo/readme.md" in issues[0].message
+
+
+def test_validate_paper_manifest_reports_missing_todo_coverage_row(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    _append_todo_coverage_table(tmp_path, [])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "missing_todo_coverage_row" in {issue.code for issue in report.issues}
 
 
 def test_checked_in_paper_index_maps_each_manifest_id_to_todo_coverage():

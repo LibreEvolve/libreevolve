@@ -2791,24 +2791,22 @@ Primary evidence:
     `papers/README.md` "TODO coverage cross-references" section claims to map
     implementation-status rows to active and completed/grouped backlog
     evidence.
-  - Current evidence: `validate_paper_manifest()` reconciles manifest rows,
-    README counts, the implementation-status table, Appendix B registry, and
-    Figure 8 ablation registry. A checked-in test confirms every manifest id
-    appears once in the TODO coverage section and mentions `docs/todo/`, but
-    no reusable validator checks the cross-reference table's row shape,
-    duplicate/extra ids, referenced path existence, active-versus-completed
-    classification, grouped-gap labels, whether active references still map to
-    open TODO content, or whether stale grouped labels remain after a row gains
-    source-specific open TODO entries.
-  - Required result: extend paper-manifest or paper-index validation with a
-    TODO-coverage cross-reference checker: parse the table, require exact
-    manifest-id coverage, reject duplicates/extras, validate safe existing
-    `docs/todo/` paths, classify active and completed evidence targets,
-    allow only declared grouped-gap labels, flag grouped-only references when
-    source-specific open TODO entries exist for the same paper id, and
-    optionally verify that active evidence rows contain matching open backlog
-    text. Keep docs wording clear that status-table validation is not the same
-    as verified backlog traceability.
+  - Current evidence: `validate_paper_manifest()` now parses the
+    `papers/README.md` TODO coverage table when present, requires exact
+    manifest-id row coverage, rejects duplicate/extra rows, validates safe
+    existing active/completed `docs/todo/` paths, and checks that active
+    references match open TODO blocks for the same paper id in the four active
+    ledgers. Focused tests cover accepted coverage, stale active-cell
+    references, and missing coverage rows. Remaining gaps: completed/grouped
+    evidence cells are only path-validated, grouped-label taxonomies are not
+    modeled because the current table now lists concrete active ledgers, and
+    public README/ROADMAP wording still needs to reflect the validator's exact
+    scope.
+  - Required result: finish paper-index backlog-traceability validation by
+    documenting the validator scope in README/ROADMAP/paper-index wording,
+    adding any needed completed-evidence semantics or declared grouped-label
+    policy, and keeping this distinct from implementation-status semantic
+    validation.
 
 - [ ] Detect stale source-specific absence wording inside active TODO bodies.
   - Spec evidence: the TODO ledgers are the audit surface for AlphaEvolve and

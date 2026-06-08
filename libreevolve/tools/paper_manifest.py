@@ -46,6 +46,7 @@ LOCAL_PAPER_CACHE_SECTION_RE = re.compile(
     r"<summary><h2>Local Paper Cache\b.*?</details>",
     flags=re.IGNORECASE | re.DOTALL,
 )
+TODO_COVERAGE_PATH_RE = re.compile(r"`(docs/todo/(?:Completed/)?[A-Za-z0-9_.-]+\.md)`")
 JSON_DUPLICATE_KEYS_FIELD = "__libreevolve_duplicate_keys__"
 MAX_TITLE_CHARS = 240
 MAX_DOWNLOAD_MESSAGE_CHARS = 512
@@ -69,6 +70,12 @@ WINDOWS_RESERVED_NAMES = frozenset(
         *(f"COM{index}" for index in range(1, 10)),
         *(f"LPT{index}" for index in range(1, 10)),
     }
+)
+ACTIVE_TODO_LEDGER_PATHS = (
+    "docs/todo/code.md",
+    "docs/todo/papers.md",
+    "docs/todo/roadmap.md",
+    "docs/todo/readme.md",
 )
 
 
@@ -301,6 +308,7 @@ def validate_paper_manifest(
             )
         )
     issues.extend(_validate_root_readme_paper_summary(root_path, seen_ids))
+    issues.extend(_validate_todo_coverage_table(root_path, seen_ids))
 
     return PaperManifestReport(
         ok=not issues,
@@ -843,6 +851,174 @@ def _validate_root_readme_paper_summary(root: Path, manifest_ids: set[str]) -> l
             "curated subset and papers/README.md is the complete implementation-status index",
         )
     ]
+
+
+def _validate_todo_coverage_table(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:
+    path = root / "papers" / "README.md"
+    if not path.exists() or not manifest_ids:
+        return []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "todo_coverage_table_unreadable",
+                _manifest_diagnostic(path, root, exc),
+            )
+        ]
+
+    section = _markdown_section(text, "## TODO coverage cross-references")
+    if section is None:
+        return []
+
+    rows: dict[str, tuple[str, str]] = {}
+    issues: list[PaperManifestIssue] = []
+    for line in section.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) < 3 or cells[0] == "ID" or set(cells[0]) <= {"-", ":"}:
+            continue
+        row_id = cells[0]
+        row_label = _safe_manifest_label(row_id)
+        if row_id in rows:
+            issues.append(
+                PaperManifestIssue(
+                    "duplicate_todo_coverage_row",
+                    "duplicate papers/README.md TODO coverage row",
+                    row_label,
+                )
+            )
+            continue
+        rows[row_id] = (cells[1], cells[2])
+
+    for row_id in sorted(manifest_ids - set(rows)):
+        issues.append(
+            PaperManifestIssue(
+                "missing_todo_coverage_row",
+                "manifest row is missing from papers/README.md TODO coverage table",
+                _safe_manifest_label(row_id),
+            )
+        )
+    for row_id in sorted(set(rows) - manifest_ids):
+        issues.append(
+            PaperManifestIssue(
+                "extra_todo_coverage_row",
+                "papers/README.md TODO coverage row has no manifest row",
+                _safe_manifest_label(row_id),
+            )
+        )
+
+    for row_id in sorted(manifest_ids & set(rows)):
+        active_cell, completed_cell = rows[row_id]
+        issues.extend(_validate_active_todo_coverage_cell(root, row_id, active_cell))
+        issues.extend(_validate_completed_todo_coverage_cell(root, row_id, completed_cell))
+    return issues
+
+
+def _markdown_section(text: str, heading: str) -> str | None:
+    lines = text.splitlines()
+    section_start: int | None = None
+    for index, line in enumerate(lines):
+        if line.strip() == heading:
+            section_start = index + 1
+            break
+    if section_start is None:
+        return None
+    section_lines: list[str] = []
+    for line in lines[section_start:]:
+        if line.startswith("## "):
+            break
+        section_lines.append(line)
+    return "\n".join(section_lines)
+
+
+def _validate_active_todo_coverage_cell(root: Path, row_id: str, cell: str) -> list[PaperManifestIssue]:
+    row_label = _safe_manifest_label(row_id)
+    listed_paths = set(TODO_COVERAGE_PATH_RE.findall(cell))
+    issues: list[PaperManifestIssue] = []
+    for relative_path in sorted(listed_paths):
+        if relative_path not in ACTIVE_TODO_LEDGER_PATHS:
+            issues.append(
+                PaperManifestIssue(
+                    "invalid_active_todo_coverage_path",
+                    f"{relative_path} is not an active TODO ledger path",
+                    row_label,
+                )
+            )
+        if not (root / relative_path).exists():
+            issues.append(
+                PaperManifestIssue(
+                    "missing_todo_coverage_path",
+                    f"{relative_path} does not exist",
+                    row_label,
+                )
+            )
+
+    expected_paths: set[str] = set()
+    for relative_path in ACTIVE_TODO_LEDGER_PATHS:
+        todo_path = root / relative_path
+        if not todo_path.exists():
+            continue
+        try:
+            text = todo_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            issues.append(
+                PaperManifestIssue(
+                    "active_todo_coverage_unreadable",
+                    _manifest_diagnostic(todo_path, root, exc),
+                    row_label,
+                )
+            )
+            continue
+        if _open_todo_blocks_contain(text, row_id):
+            expected_paths.add(relative_path)
+
+    if listed_paths != expected_paths:
+        missing = sorted(expected_paths - listed_paths)
+        extra = sorted(listed_paths - expected_paths)
+        parts: list[str] = []
+        if missing:
+            parts.append(f"missing active paths {missing}")
+        if extra:
+            parts.append(f"extra active paths {extra}")
+        issues.append(
+            PaperManifestIssue(
+                "todo_coverage_active_mismatch",
+                "; ".join(parts) or "active TODO coverage paths do not match open TODO blocks",
+                row_label,
+            )
+        )
+    return issues
+
+
+def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -> list[PaperManifestIssue]:
+    issues: list[PaperManifestIssue] = []
+    row_label = _safe_manifest_label(row_id)
+    for relative_path in sorted(TODO_COVERAGE_PATH_RE.findall(cell)):
+        if not relative_path.startswith("docs/todo/Completed/"):
+            issues.append(
+                PaperManifestIssue(
+                    "invalid_completed_todo_coverage_path",
+                    f"{relative_path} is not a completed TODO ledger path",
+                    row_label,
+                )
+            )
+        if not (root / relative_path).exists():
+            issues.append(
+                PaperManifestIssue(
+                    "missing_todo_coverage_path",
+                    f"{relative_path} does not exist",
+                    row_label,
+                )
+            )
+    return issues
+
+
+def _open_todo_blocks_contain(text: str, needle: str) -> bool:
+    starts = [match.start() for match in re.finditer(r"(?m)^- \[ \] ", text)]
+    starts.append(len(text))
+    return any(needle in text[start:end] for start, end in zip(starts, starts[1:]))
 
 
 def _format_count_source(source: ReadmeCountSource) -> str:

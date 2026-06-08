@@ -347,6 +347,17 @@ metadata, benchmark validation, or deployment evidence; populated reviewed
 records are still needed before making paper-facing acknowledgement parity
 claims.
 
+AlphaEvolve publication-author note: LibreEvolve now has optional
+`paper_authors.yaml` / `Problem.paper_author_metadata` records plus
+`runtime.history.paper_author_metadata_report` for equal contributors,
+manuscript writers, paper-input contributors, corresponding authors,
+source-page locators, title-page marker linkage, contact/privacy policy, and
+review/signoff state. These publication metadata records are separate from
+technical implementation provenance, acknowledgement roles, title-page
+affiliation metadata, package/project metadata, and local validation evidence;
+populated reviewed records are still needed before making paper-facing author
+metadata parity claims.
+
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema
 `libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves

@@ -2131,6 +2131,18 @@ white-paper review, early exploration, support/advice,
 practical-application-management advice, application review, and
 application-specific advice separate from implementation authorship,
 publication-author metadata, benchmark validation, and deployment signoff.
+Problem fixtures can also optionally add `paper_authors.yaml` or
+`paper_authors.yml`; direct callers can set `Problem.paper_author_metadata`.
+The manifest normalizes this to `problem.paper_author_metadata` with fixed
+vocabularies for publication-author role categories, scope types,
+contact/privacy policy, and review status, plus bounded non-secret contributor
+labels, source page/section locators, title-page marker labels, and per-record
+contact policy. Completed manifests include
+`runtime.history.paper_author_metadata_report`, which keeps equal
+contributors, manuscript writers, paper-input contributors, and corresponding
+authors separate from implementation authorship, acknowledgement roles,
+title-page affiliation metadata, package/project metadata, and technical
+validation evidence.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report`, which records the
 current selected abstraction as a Python-primary code-file set, links it back

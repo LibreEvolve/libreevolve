@@ -394,7 +394,7 @@ Primary evidence:
     from treating the schema alone as AlphaEvolve-style paper-process
     acknowledgement evidence.
 
-- [ ] Add paper author-metadata provenance for equal contributors and
+- [ ] Populate paper author-metadata provenance for equal contributors and
       correspondence roles.
   - Spec evidence: AlphaEvolve's Author information section names equal
     contributors, identifies manuscript-writing contributors and paper-input
@@ -405,21 +405,23 @@ Primary evidence:
     technical system contributions, figure/Colab artifact authorship,
     title-page affiliation, and acknowledgement review/support roles.
   - Current evidence: LibreEvolve TODOs track core system-development roles,
-    paper-artifact creator/assembler roles, and acknowledgement-role
-    provenance. Runtime/package provenance records selected PEP 621 project
-    metadata, installed package names/versions, WHEEL/source metadata, and
-    source hashes, but no schema preserves paper author metadata such as equal
-    contributor groups, manuscript-writing roles, paper-input roles, or
-    corresponding-author records. Local docs could therefore cite the paper
-    source without distinguishing artifact authorship, system authorship,
-    package/project metadata, and publication-author/contact metadata.
-  - Required result: add paper-author metadata records with safe contributor
-    labels, role category (`equal_contributor`, `manuscript_writer`,
-    `paper_input`, `corresponding_author`), source page/section, title-page
-    marker linkage when applicable, applicable artifact or publication scope,
-    privacy/contact redaction policy, and README/ROADMAP wording that separates
-    publication metadata from technical implementation, validation,
-    artifact-creation, affiliation, and acknowledgement roles.
+    paper-artifact creator/assembler roles, acknowledgement-role provenance,
+    and now optional `paper_authors.yaml` / direct
+    `Problem.paper_author_metadata`. Code validates fixed publication-author
+    role categories, scope types, contact/privacy policies, and review-status
+    vocabularies, persists normalized `problem.paper_author_metadata`, and
+    emits `runtime.history.paper_author_metadata_report` with readiness checks
+    for equal-contributor, manuscript-writer, paper-input, and
+    corresponding-author records, source page/section locators, title-page
+    marker linkage, contact policy, and publication-metadata review or owner
+    signoff. Runtime/package provenance still records PEP 621 and installed
+    distribution metadata as separate package/source facts. Existing fixtures
+    have not yet been populated with real publication-author metadata records.
+  - Required result: populate representative fixtures with reviewed
+    paper-author metadata, link records to source page/section and title-page
+    marker evidence, add paper-facing examples or certification rows, and keep
+    docs from treating the schema alone as AlphaEvolve-style publication-author
+    metadata evidence.
 
 - [ ] Add AlphaEvolve title-page affiliation and footnote provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author

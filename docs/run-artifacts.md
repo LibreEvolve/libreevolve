@@ -108,6 +108,20 @@ white-paper review, early exploration, support/advice, practical-application
 management advice, application review, and application-specific advice
 separate from technical validation, benchmark formulation, deployment signoff,
 system-development provenance, and publication-author metadata.
+Problem fixtures can also optionally include `paper_authors.yaml` or
+`paper_authors.yml`; direct callers can set `Problem.paper_author_metadata`.
+Startup manifest validation normalizes this into
+`problem.paper_author_metadata` with schema
+`libreevolve.paper_author_metadata.v1`, fixed publication-author role
+categories, scope types, contact/privacy policy, and review-status
+vocabularies, bounded non-secret contributor labels, source page/section
+locators, title-page marker labels, and contact-policy records. Completed
+manifests include `runtime.history.paper_author_metadata_report` with schema
+`libreevolve.paper_author_metadata_report.v1`. This report keeps equal
+contributors, manuscript writers, paper-input contributors, and corresponding
+authors separate from technical implementation provenance, acknowledgement
+roles, title-page affiliation metadata, package/project metadata, and local
+validation evidence.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

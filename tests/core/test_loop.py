@@ -57,6 +57,7 @@ from libreevolve.core.loop import (
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
     validate_paper_evaluator_metric_contract,
+    validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
@@ -6059,6 +6060,146 @@ def test_direct_acknowledgement_metadata_rejects_secret_like_text_before_manifes
         StrictJsonlError,
         match=(
             "acknowledgement_metadata\\.records\\[0\\]\\.contributor_label "
+            "must not contain secret-like text"
+        ),
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
+
+
+def test_loaded_paper_author_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text("author metadata task", encoding="utf-8")
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    (problem_dir / "paper_authors.yaml").write_text(
+        "records:\n"
+        "  - record_id: author-equal\n"
+        "    contributor_label: equal contributor group\n"
+        "    role_category: equal_contributor\n"
+        "    scope_type: publication\n"
+        "    scope_label: title page equal contributor marker\n"
+        "    source_page: 1\n"
+        "    source_section: AlphaEvolve title page\n"
+        "    title_page_marker: star\n"
+        "    contact_policy: no_contact_recorded\n"
+        "  - record_id: author-writer\n"
+        "    contributor_label: manuscript writer group\n"
+        "    role_category: manuscript_writer\n"
+        "    scope_type: manuscript\n"
+        "    scope_label: Contributions section manuscript writing\n"
+        "    source_page: 22\n"
+        "    source_section: Contributions\n"
+        "    contact_policy: no_contact_recorded\n"
+        "  - record_id: author-input\n"
+        "    contributor_label: paper input group\n"
+        "    role_category: paper_input\n"
+        "    scope_type: paper_input\n"
+        "    scope_label: Contributions section paper input\n"
+        "    source_page: 22\n"
+        "    source_section: Contributions\n"
+        "    contact_policy: no_contact_recorded\n"
+        "  - record_id: author-corresponding\n"
+        "    contributor_label: corresponding author group\n"
+        "    role_category: corresponding_author\n"
+        "    scope_type: correspondence\n"
+        "    scope_label: Author information contact list\n"
+        "    source_page: 23\n"
+        "    source_section: Author information\n"
+        "    contact_policy: public_contact_available_in_source\n"
+        "privacy_policy:\n"
+        "  contact: redacted_contact\n"
+        "review:\n"
+        "  status: publication_metadata_reviewed\n"
+        "  reviewer_labels:\n"
+        "    - publication metadata reviewer\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["paper_author_metadata"]
+    assert metadata["schema"] == "libreevolve.paper_author_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["records"][0]["title_page_marker"] == "star"
+    report = manifest["runtime"]["history"]["paper_author_metadata_report"]
+    assert report["schema"] == "libreevolve.paper_author_metadata_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_paper_author_metadata_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["record_count"] == 4
+    assert report["source_pages"] == [1, 22, 23]
+    assert report["claim_readiness"][
+        "alphaevolve_publication_author_metadata_parity"
+    ] is True
+
+
+def test_paper_author_metadata_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["paper_author_metadata_report"]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["validation"]["ok"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_publication_author_metadata_parity"
+    ] is False
+    assert "paper_authors_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_publication_author_metadata_parity"] = True
+    validation = validate_paper_author_metadata_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "publication_author_parity_mismatch",
+    }
+
+
+def test_direct_paper_author_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.paper_author_metadata = {
+        "records": [
+            {
+                "record_id": "author-secret",
+                "contributor_label": (
+                    "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678"
+                ),
+                "role_category": "equal_contributor",
+                "scope_type": "publication",
+                "scope_label": "title page",
+                "source_page": 1,
+                "source_section": "Title page",
+            }
+        ]
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=(
+            "paper_author_metadata\\.records\\[0\\]\\.contributor_label "
             "must not contain secret-like text"
         ),
     ):

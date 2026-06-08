@@ -147,6 +147,13 @@ LibreEvolve has:
   review, early exploration, support/advice, practical-application management
   advice, application review, application-specific advice, source locators,
   privacy/redaction policy, and review/signoff readiness
+- optional publication-author metadata under `paper_authors.yaml` or direct
+  `Problem.paper_author_metadata`, normalized into
+  `problem.paper_author_metadata` and summarized by
+  `runtime.history.paper_author_metadata_report` for equal contributors,
+  manuscript writers, paper-input contributors, corresponding authors,
+  title-page marker linkage, contact/privacy policy, and review/signoff
+  readiness
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

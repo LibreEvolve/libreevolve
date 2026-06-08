@@ -655,7 +655,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     paper-facing examples or certification rows, and keep docs from treating
     the schema alone as AlphaEvolve-style acknowledgement-process evidence.
 
-- [ ] Track paper author-metadata evidence for equal contributors and
+- [ ] Populate paper author-metadata evidence for equal contributors and
       correspondence roles.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Author information says a
     named group contributed equally, the Contributions section identifies the
@@ -663,19 +663,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     Author information section lists corresponding authors. Page 1 defines the
     equal-contribution marker, page 22 begins Author information and
     Contributions, and page 23 lists corresponding authors.
-  - Current gap: paper/status TODOs track system-development contribution
-    roles, figure/Colab creator roles, and acknowledgement review/support
-    roles. They do not preserve publication-author metadata for equal
-    contribution, manuscript writing, paper input, or correspondence. A paper
-    provenance report could therefore conflate author metadata with technical
-    implementation, artifact creation, title-page affiliation, package/project
-    metadata, review, or domain-validation roles.
-  - Required result: add paper-facing author-metadata records with safe
+  - Current evidence: paper/status TODOs track system-development contribution
+    roles, figure/Colab creator roles, acknowledgement review/support roles,
+    optional `paper_authors.yaml` / `Problem.paper_author_metadata`,
+    normalized `problem.paper_author_metadata`, and
+    `runtime.history.paper_author_metadata_report`. The report records safe
     contributor labels, role category, source page/section, title-page marker
     linkage, publication or artifact scope, contact/privacy redaction policy,
-    and README/ROADMAP wording that distinguishes publication-author metadata
-    from technical system provenance, figure/notebook artifact authorship,
-    title-page affiliation, package metadata, and acknowledgement roles.
+    review/signoff state, and boundaries that keep publication-author metadata
+    separate from technical implementation, artifact creation, title-page
+    affiliation, package/project metadata, review, and domain-validation roles.
+    Existing fixtures still lack real populated reviewed publication-author
+    records and paper-facing certification examples.
+  - Required result: populate representative fixtures with reviewed
+    author-metadata records, link them to source page/section and title-page
+    marker evidence, add paper-facing examples or certification rows, and keep
+    docs from treating the schema alone as AlphaEvolve-style publication-author
+    metadata evidence.
 
 - [ ] Track AlphaEvolve title-page affiliation and footnote evidence.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` lists the authors,

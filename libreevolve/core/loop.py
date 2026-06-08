@@ -790,6 +790,7 @@ def evolve(
         formulation_metadata=_problem_formulation_metadata(problem),
         collaborator_feedback_metadata=_problem_collaborator_feedback_metadata(problem),
         acknowledgement_metadata=_problem_acknowledgement_metadata(problem),
+        paper_author_metadata=_problem_paper_author_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5166,6 +5167,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "paper_author_metadata_report": (
+            _paper_author_metadata_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -6961,6 +6967,477 @@ def validate_acknowledgement_role_provenance_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.acknowledgement_role_provenance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _paper_author_metadata_report(startup_manifest: Mapping[str, object]) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("paper_author_metadata")
+        if isinstance(problem.get("paper_author_metadata"), Mapping)
+        else {}
+    )
+    records = (
+        metadata.get("records")
+        if isinstance(metadata.get("records"), list)
+        else []
+    )
+    privacy = (
+        metadata.get("privacy_policy")
+        if isinstance(metadata.get("privacy_policy"), Mapping)
+        else {}
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    role_counts: dict[str, int] = {}
+    scope_counts: dict[str, int] = {}
+    marker_counts: dict[str, int] = {}
+    source_pages: set[int] = set()
+    records_with_source = 0
+    records_with_contact_policy = 0
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        role = record.get("role_category")
+        if isinstance(role, str):
+            role_counts[role] = role_counts.get(role, 0) + 1
+        scope = record.get("scope_type")
+        if isinstance(scope, str):
+            scope_counts[scope] = scope_counts.get(scope, 0) + 1
+        marker = record.get("title_page_marker")
+        if isinstance(marker, str) and marker:
+            marker_counts[marker] = marker_counts.get(marker, 0) + 1
+        page = record.get("source_page")
+        if isinstance(page, int) and not isinstance(page, bool):
+            source_pages.add(page)
+        if isinstance(record.get("source_section"), str) and isinstance(page, int):
+            records_with_source += 1
+        if isinstance(record.get("contact_policy"), str):
+            records_with_contact_policy += 1
+    required_roles = {
+        "equal_contributor",
+        "manuscript_writer",
+        "paper_input",
+        "corresponding_author",
+    }
+    metadata_present = metadata.get("status") == "provided"
+    role_coverage_complete = required_roles <= set(role_counts)
+    source_linked = bool(records) and records_with_source == len(records)
+    marker_linked = any(
+        isinstance(record, Mapping)
+        and record.get("role_category") == "equal_contributor"
+        and isinstance(record.get("title_page_marker"), str)
+        and record.get("title_page_marker")
+        for record in records
+    )
+    contact_policy_recorded = (
+        isinstance(privacy.get("contact"), str)
+        and records_with_contact_policy == len(records)
+        and bool(records)
+    )
+    reviewed = review.get("status") in {
+        "publication_metadata_reviewed",
+        "owner_signed_off",
+    }
+    claim_ready = (
+        metadata_present
+        and role_coverage_complete
+        and source_linked
+        and marker_linked
+        and contact_policy_recorded
+        and reviewed
+    )
+    report = {
+        "schema": "libreevolve.paper_author_metadata_report.v1",
+        "source": "paper_author_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.paper_author_metadata",
+        "metadata_status": metadata.get("status"),
+        "record_count": len(records),
+        "role_category_counts": role_counts,
+        "scope_type_counts": scope_counts,
+        "title_page_marker_counts": marker_counts,
+        "source_page_count": len(source_pages),
+        "source_pages": sorted(source_pages),
+        "records_with_source_locator": records_with_source,
+        "records_with_contact_policy": records_with_contact_policy,
+        "privacy_policy": {
+            "contact": privacy.get("contact"),
+        },
+        "review_status": review.get("status"),
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata_present,
+            "all_publication_author_roles_recorded": role_coverage_complete,
+            "source_page_and_section_recorded": source_linked,
+            "title_page_equal_contribution_marker_linked": marker_linked,
+            "contact_privacy_policy_recorded": contact_policy_recorded,
+            "publication_metadata_review_or_owner_signoff": reviewed,
+            "technical_implementation_boundary_separated": True,
+            "acknowledgement_boundary_separated": True,
+            "title_page_affiliation_boundary_separated": True,
+            "alphaevolve_publication_author_metadata_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("paper_authors_yaml_in_problem_fixture", metadata_present),
+                    ("all_publication_author_roles", role_coverage_complete),
+                    ("source_page_and_section_locators", source_linked),
+                    ("title_page_equal_contribution_marker", marker_linked),
+                    ("contact_privacy_policy", contact_policy_recorded),
+                    (
+                        "publication_metadata_review_or_owner_signoff",
+                        reviewed,
+                    ),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.paper_author_metadata",
+            "optional_problem_file": "paper_authors.yaml",
+            "allowed_role_categories": [
+                "equal_contributor",
+                "manuscript_writer",
+                "paper_input",
+                "corresponding_author",
+            ],
+            "allowed_scope_types": [
+                "publication",
+                "manuscript",
+                "paper_input",
+                "correspondence",
+            ],
+            "allowed_contact_policies": [
+                "redacted_contact",
+                "public_contact_available_in_source",
+                "no_contact_recorded",
+            ],
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "publication_metadata_reviewed",
+                "owner_signed_off",
+            ],
+            "boundary": (
+                "publication_author_metadata_not_technical_implementation_"
+                "or_acknowledgement_or_affiliation_metadata"
+            ),
+        },
+    }
+    report["validation"] = validate_paper_author_metadata_report(report)
+    return report
+
+
+def validate_paper_author_metadata_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.paper_author_metadata_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "paper author metadata report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "record_count",
+        "role_category_counts",
+        "scope_type_counts",
+        "title_page_marker_counts",
+        "source_page_count",
+        "source_pages",
+        "records_with_source_locator",
+        "records_with_contact_policy",
+        "privacy_policy",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"paper author metadata report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.paper_author_metadata_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported paper author metadata report schema",
+            }
+        )
+    if report.get("source") != "paper_author_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported paper author metadata report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.paper_author_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference paper author metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.paper_author_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at paper author metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    for field in (
+        "record_count",
+        "source_page_count",
+        "records_with_source_locator",
+        "records_with_contact_policy",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    allowed_roles = {
+        "equal_contributor",
+        "manuscript_writer",
+        "paper_input",
+        "corresponding_author",
+    }
+    role_counts = report.get("role_category_counts")
+    if not isinstance(role_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_role_category_counts",
+                "message": "role_category_counts must be an object",
+            }
+        )
+        role_counts = {}
+    else:
+        for role, count in role_counts.items():
+            if role not in allowed_roles:
+                issues.append(
+                    {
+                        "code": "invalid_role_category",
+                        "message": "role category is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_role_count",
+                        "message": "role counts must be non-negative integers",
+                    }
+                )
+    allowed_scopes = {
+        "publication",
+        "manuscript",
+        "paper_input",
+        "correspondence",
+    }
+    scope_counts = report.get("scope_type_counts")
+    if not isinstance(scope_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_scope_type_counts",
+                "message": "scope_type_counts must be an object",
+            }
+        )
+    else:
+        for scope, count in scope_counts.items():
+            if scope not in allowed_scopes:
+                issues.append(
+                    {
+                        "code": "invalid_scope_type",
+                        "message": "scope type is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_scope_count",
+                        "message": "scope counts must be non-negative integers",
+                    }
+                )
+    marker_counts = report.get("title_page_marker_counts")
+    if not isinstance(marker_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_title_page_marker_counts",
+                "message": "title_page_marker_counts must be an object",
+            }
+        )
+        marker_counts = {}
+    else:
+        for marker, count in marker_counts.items():
+            if not isinstance(marker, str) or not marker:
+                issues.append(
+                    {
+                        "code": "invalid_title_page_marker",
+                        "message": "title page markers must be non-empty text",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_title_page_marker_count",
+                        "message": "title page marker counts must be non-negative integers",
+                    }
+                )
+    pages = report.get("source_pages")
+    if not isinstance(pages, list) or not all(
+        isinstance(page, int) and not isinstance(page, bool) and page > 0
+        for page in pages
+    ):
+        issues.append(
+            {
+                "code": "invalid_source_pages",
+                "message": "source_pages must be positive integers",
+            }
+        )
+    privacy = report.get("privacy_policy")
+    contact_policy_recorded = False
+    if not isinstance(privacy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_privacy_policy",
+                "message": "privacy_policy must be an object",
+            }
+        )
+    else:
+        contact_policy_recorded = isinstance(privacy.get("contact"), str)
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "publication_metadata_reviewed",
+        "owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    record_count = report.get("record_count")
+    source_count = report.get("records_with_source_locator")
+    record_contact_count = report.get("records_with_contact_policy")
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and set(role_counts) >= allowed_roles
+        and isinstance(record_count, int)
+        and not isinstance(record_count, bool)
+        and record_count > 0
+        and isinstance(source_count, int)
+        and not isinstance(source_count, bool)
+        and source_count == record_count
+        and bool(marker_counts)
+        and isinstance(record_contact_count, int)
+        and not isinstance(record_contact_count, bool)
+        and record_contact_count == record_count
+        and contact_policy_recorded
+        and review_status in {"publication_metadata_reviewed", "owner_signed_off"}
+    )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_publication_author_metadata_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "publication_author_parity_mismatch",
+                    "message": "publication author parity must match report readiness",
+                }
+            )
+        if readiness.get("publication_metadata_review_or_owner_signoff") != (
+            review_status in {"publication_metadata_reviewed", "owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+        for boundary in (
+            "technical_implementation_boundary_separated",
+            "acknowledgement_boundary_separated",
+            "title_page_affiliation_boundary_separated",
+        ):
+            if readiness.get(boundary) is not True:
+                issues.append(
+                    {
+                        "code": "publication_author_boundary_overclaim",
+                        "message": "publication-author boundaries must remain separated",
+                    }
+                )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match publication author readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "paper_authors.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name paper_authors.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.paper_author_metadata_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -12194,6 +12671,10 @@ def _problem_collaborator_feedback_metadata(problem: Problem) -> dict:
 
 def _problem_acknowledgement_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "acknowledgement_metadata", {}) or {})
+
+
+def _problem_paper_author_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "paper_author_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

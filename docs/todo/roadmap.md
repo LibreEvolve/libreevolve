@@ -476,27 +476,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     neither underclaims the new metadata/report surface nor overclaims
     AlphaEvolve-style acknowledgement-role evidence.
 
-- [ ] Keep paper-author roadmap wording scoped until publication-author
-      metadata exists.
+- [ ] Keep paper-author roadmap wording scoped until populated publication-
+      author metadata exists.
   - Spec evidence: AlphaEvolve's Author information names equal contributors
     and corresponding authors, while the Contributions section identifies
     manuscript writers and paper-input contributors. Page 1 defines the
     equal-contribution marker, page 22 begins Author information and
     Contributions, and page 23 lists corresponding authors.
   - Current evidence: ROADMAP and README/code evidence track contribution-role
-    gaps, paper-artifact creator roles, acknowledgement-role gaps, and
-    application owner/reviewer gaps. They do not require publication-author
-    metadata for equal-contributor status, manuscript-writing roles,
-    paper-input roles, or correspondence, nor docs wording that separates those
-    metadata from technical implementation, artifact creation, validation,
-    title-page affiliation, package/project metadata, or acknowledgement
-    evidence.
-  - Required result: when paper-author metadata lands, update ROADMAP, README,
-    papers index, and code/paper TODOs with safe contributor labels, author
-    role categories, source page/section, title-page marker linkage,
-    publication scope, and contact/privacy redaction policy so roadmap wording
-    does not conflate publication metadata with AlphaEvolve technical
-    capability provenance.
+    gaps, paper-artifact creator roles, acknowledgement-role gaps, application
+    owner/reviewer gaps, optional `paper_authors.yaml` /
+    `Problem.paper_author_metadata`, normalized
+    `problem.paper_author_metadata`, and
+    `runtime.history.paper_author_metadata_report` for equal-contributor
+    status, manuscript-writing roles, paper-input roles, correspondence,
+    source locators, title-page marker linkage, contact/privacy policy, and
+    review/signoff readiness. It separates those metadata from technical
+    implementation, artifact creation, validation, title-page affiliation,
+    package/project metadata, and acknowledgement evidence. Existing fixtures
+    do not yet carry real reviewed publication-author metadata records.
+  - Required result: when representative fixtures carry reviewed paper-author
+    metadata and paper-facing evidence, update ROADMAP, README, papers index,
+    and code/paper TODOs together so roadmap wording neither underclaims the
+    new metadata/report surface nor overclaims AlphaEvolve-style
+    publication-author metadata evidence.
 
 - [ ] Keep source-affiliation roadmap wording scoped until title-page
       affiliation metadata exists.

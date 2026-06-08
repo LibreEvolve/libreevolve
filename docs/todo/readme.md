@@ -4148,4 +4148,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     clear distinction between LibreEvolve's current prompt-program features
     and CodeEvolve framework parity.
 
+- [ ] Keep README ThetaEvolve wording scoped until test-time learning evidence
+      exists.
+  - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
+    on Open Problems`, describes an AlphaEvolve-inspired dynamic environment
+    with a single LLM, large program database, batch sampling, early checks,
+    lazy penalties, reward shaping, optional GRPO/RL training at test time,
+    RL-trained checkpoints, and open-problem benchmark claims.
+  - Current evidence: README says the ThetaEvolve-inspired `ttt_rl` plugin
+    writes clipped-reward training data and is not a real GRPO/RL trainer.
+    `papers/README.md` likewise says there is no online RL/GRPO training loop,
+    checkpoint management, resume semantics, or lazy-penalty dynamics.
+    Existing README TODOs group ThetaEvolve with paper-inspired approximations,
+    but README does not require a `2511.23473` source-specific boundary for
+    batch-sampled dynamic environments, large database scaling, lazy penalties,
+    reward-shaping parameters, GRPO telemetry, checkpoint provenance,
+    evaluator caveats, transfer reports, or benchmark comparison claims.
+  - Required result: if README mentions ThetaEvolve, test-time learning,
+    GRPO/RL training, lazy penalties, reward shaping, batch sampling, large
+    program databases, trained checkpoints, or ThetaEvolve benchmark results,
+    keep wording source-scoped until manifests and reports include the
+    `2511.23473` source row, PDF/code hashes, dynamic-environment metadata,
+    batch-sampling records, lazy-penalty and reward-shaping schemas, training
+    and checkpoint artifacts, evaluator-compatibility caveats,
+    AlphaEvolve/ShinkaEvolve/OpenEvolve comparison rows, and a clear
+    distinction between clipped-reward JSONL export and actual test-time RL.
+
 ## Architecture Description

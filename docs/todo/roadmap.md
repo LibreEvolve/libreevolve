@@ -4581,3 +4581,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ablation/cost rows, and README/papers/code wording that keeps CodeEvolve
     as agentic code-evolution inspiration until local evidence proves
     operator and benchmark parity.
+
+- [ ] Add ThetaEvolve test-time learning gates before roadmap promotion.
+  - Spec evidence: local arXiv `2511.23473`, `ThetaEvolve: Test-time Learning
+    on Open Problems`, describes a dynamic program-evolution environment with
+    a single LLM, large program database, batch sampling, early checks, lazy
+    penalties, optional reward shaping, GRPO/RL training at test time,
+    RL-trained checkpoints, and AlphaEvolve-related open-problem benchmark
+    claims.
+  - Current evidence: ROADMAP says ThetaEvolve features should remain labeled
+    as inspired unless the paper behavior is actually implemented, and
+    `papers/README.md` states that LibreEvolve has clipped-reward JSONL export
+    but no online RL/GRPO training loop, checkpoint management, resume
+    semantics, or lazy-penalty dynamics. The roadmap does not yet define
+    `2511.23473`-specific gates for source metadata, linked code status,
+    dynamic-environment architecture, batch-sampling evidence,
+    database-scaling reports, lazy-penalty and reward-shaping semantics,
+    GRPO training telemetry, checkpoint lifecycle, transfer/generalization
+    reports, evaluator caveats, or benchmark comparisons.
+  - Required result: add roadmap gates for `2511.23473`: paper/source manifest
+    entry, PDF/cache hash, source-license and code-artifact status,
+    single-LLM/database/batch-sampling metadata, early-check and lazy-penalty
+    schemas, reward-shaping parameters, GRPO/RL training-run records,
+    generated-sample and compute-budget telemetry, checkpoint/adaptor
+    lifecycle, inference-with-trained-checkpoint and transfer reports,
+    task/evaluator compatibility notes, AlphaEvolve/ShinkaEvolve/OpenEvolve
+    comparison rows, and README/papers/code wording that keeps ThetaEvolve as
+    test-time-training inspiration until local evidence proves actual
+    test-time learning support.

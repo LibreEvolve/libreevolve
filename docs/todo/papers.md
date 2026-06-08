@@ -5675,3 +5675,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve/EoH benchmark and ablation/cost rows, relation to LibreEvolve,
     and README/ROADMAP/code wording that keeps CodeEvolve-specific behavior
     marked missing unless implementation artifacts and reports prove it.
+
+- [ ] Track ThetaEvolve test-time learning paper evidence as a source-specific
+      boundary.
+  - Paper/source evidence: local arXiv `2511.23473`, `ThetaEvolve:
+    Test-time Learning on Open Problems`, presents an AlphaEvolve-inspired
+    dynamic environment using a single LLM, large program database, batch
+    sampling over parents and responses, early checks, lazy penalties, reward
+    shaping, optional GRPO/RL training at test time, checkpoint evaluation, and
+    benchmark claims on circle packing, autocorrelation inequalities, and
+    Hadamard matrices.
+  - Current gap: `papers/README.md` lists `2511.23473` as test-time training
+    inspiration and explicitly scopes LibreEvolve to clipped-reward JSONL
+    export without online RL/GRPO training, checkpointing, resume semantics, or
+    lazy-penalty dynamics. Existing paper TODOs group ThetaEvolve with other
+    inspiration rows and separately track broader TTT-Discover work, but they
+    do not preserve the ThetaEvolve PDF itself as a source-specific evidence
+    boundary with dynamic-environment components, batch-sampling semantics,
+    lazy-penalty/reward-shaping formulas, GRPO configuration, checkpoint
+    provenance, evaluator-compatibility caveats, benchmark rows, or
+    comparison claims.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2511.23473`: title/authors/arXiv version/date/PDF digest, source license,
+    linked code URL/status, dynamic-environment architecture rows,
+    single-LLM/database-size/batch-sampling metadata, early-check and
+    lazy-penalty schemas, reward-shaping parameters, GRPO/RL training
+    configuration, checkpoint and inference-transfer records, generated-sample
+    counts, task/evaluator caveats for tolerance and corrected typos,
+    AlphaEvolve/ShinkaEvolve/OpenEvolve baseline rows, relation to
+    LibreEvolve's `ttt_rl` export, and README/ROADMAP/code wording that keeps
+    ThetaEvolve-style test-time learning marked missing until implementation
+    artifacts and reports prove it.

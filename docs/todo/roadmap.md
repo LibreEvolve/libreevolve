@@ -650,8 +650,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     reproduction from delivering each underlying AlphaEvolve workflow
     capability.
 
-- [ ] Keep task-specification roadmap wording scoped until a unified
-      AlphaEvolve input bundle exists.
+- [ ] Keep task-specification roadmap wording scoped to the partial unified
+      AlphaEvolve input bundle.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 frame task
     specification as one user-provided input bundle: initial program/components
     to evolve, evaluation code, prompt template/configuration, LLM choices,
@@ -659,26 +659,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     "Initial program", "Prompt template", "Evaluation code", "LLMs ensemble",
     and "Background knowledge"; the caption says the user provides the initial
     program, evaluation code, and optional configurations before the loop.
-  - Current evidence: `ROADMAP.md`, README, and manifests can describe
-    problem/source provenance, seed sources, evaluator sources, backend specs,
-    prompt variants, redacted/hash-backed effective config, and context-source
-    diagnostics. Current startup manifests persist these as separate
-    `config`, `problem`, `policies`, and `provenance` sections rather than a
-    field-level AlphaEvolve task-spec bundle. They include task/problem
-    provenance, objective schema, context sources/policy, evaluator sources,
-    seed sources/policy, prompt variants and prompt metadata, backend specs,
-    role-backend routing, candidate-language policy, and source/plugin/
-    environment provenance. They do not yet require a single validated
-    task-spec artifact with AlphaEvolve field names, presence/omission status,
-    source hashes, redaction policy, or links from each input field to the run
-    evidence it controls.
-  - Required result: when task-spec bundle records land, update ROADMAP,
-    README, papers index, and code/paper TODOs with initial code/workspace
-    ids, evolvable spans, evaluator-code ids, prompt-template/config ids, LLM
-    choice ids, optional background-knowledge ids, hashes/redaction state,
-    artifact cross-links, and missing/unsupported-field diagnostics so roadmap
-    wording separates scattered local provenance from a coherent AlphaEvolve
-    task specification.
+  - Current evidence: startup manifests now include
+    `task_specification` with schema
+    `libreevolve.alphaevolve_task_specification_bundle.v1`. The bundle
+    cross-links initial programs, evaluator code or embedded evaluator stages,
+    prompt template/config metadata, backend choices, optional background
+    context, candidate representation, and objective metrics to their manifest
+    paths, plus field statuses, ids/hashes/counts, `task_spec_id`, validation,
+    and unsupported/incomplete labels. It is still a manifest-derived partial
+    artifact, not a standalone AlphaEvolve task specification with full
+    evolvable-span and score-link evidence.
+  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
+    with the landed bundle and remaining work for evolvable component spans,
+    artifact-level cross-links, embedded-only problem definitions, and score
+    linkage from evaluator outputs to candidate/evolved-block paths.
 
 ## Missing Roadmap Items
 

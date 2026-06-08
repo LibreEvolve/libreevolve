@@ -544,30 +544,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     partial or missing, and why process-diagram reproduction is separate from
     satisfying each underlying workflow capability.
 
-- [ ] Keep README task-specification wording scoped until a unified
-      AlphaEvolve input bundle exists.
+- [ ] Keep README task-specification wording scoped to the partial unified
+      AlphaEvolve input bundle.
   - Spec evidence: AlphaEvolve Section 2.1 and Figure 2 define a task
     specification as the user-provided initial program/components, evaluation
     code, prompt template and configuration, choice of existing or custom
     LLMs, and optional background knowledge. Local PDF page 4 labels those
     Figure 2 inputs and says the user provides the initial program, evaluation
     code, and optional configurations before AlphaEvolve starts the loop.
-  - Current evidence: README can accurately describe local problem folders,
-    seed source provenance, evaluator source hashes, prompt variants, backend
-    configuration, redacted/hash-backed effective config, and context-source
-    diagnostics. The underlying startup manifest stores these surfaces across
-    separate `config`, `problem`, `policies`, and `provenance` sections:
-    prompt variants/metadata, backend specs and role routes, objective schema,
-    context sources/policy, evaluator sources, seed sources/policy,
-    candidate-language policy, and source/plugin/environment provenance. README
-    should not imply that those scattered records already form a single
-    AlphaEvolve task-specification artifact with field-level readiness,
-    omission diagnostics, unsupported-field status, and links to run evidence.
-  - Required result: when a task-spec bundle lands, update README, ROADMAP,
-    papers index, and code/paper TODOs with initial-program/workspace ids,
-    evolvable spans, evaluator-code ids, prompt-template/config ids, backend/
-    LLM choice ids, optional background-knowledge ids, source hashes/redaction
-    status, artifact cross-links, and missing/unsupported field diagnostics.
+  - Current evidence: README can now cite `manifest.json.task_specification`,
+    a validated `libreevolve.alphaevolve_task_specification_bundle.v1` record
+    that cross-links initial programs, evaluator code or embedded evaluator
+    stages, prompt template/config metadata, backend choices, optional
+    background context, candidate representation, and objective metrics to
+    their manifest paths. It records field statuses, ids/hashes/counts, a
+    deterministic `task_spec_id`, and unsupported/incomplete gaps. README
+    should still not imply full AlphaEvolve task-spec parity because evolvable
+    component spans, embedded-only problem formats, score-field-to-block
+    links, and standalone report examples remain incomplete.
+  - Required result: update README, ROADMAP, papers index, and code/paper TODOs
+    with the partial bundle and the remaining proof gaps around evolvable spans,
+    artifact-level cross-links, embedded-only problem definitions, and score
+    linkage to candidate/evolved-block paths.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

@@ -162,7 +162,7 @@ Primary evidence:
     validation so local workflow diagrams are not mistaken for reproduced
     AlphaEvolve process-diagram evidence.
 
-- [ ] Add unified AlphaEvolve task-specification bundle provenance.
+- [ ] Finish unified AlphaEvolve task-specification bundle provenance.
   - Spec evidence: AlphaEvolve Section 2.1 is explicitly a task
     specification: the user provides the initial program/components to evolve,
     evaluation code, prompt template/configuration, choice of existing or
@@ -172,34 +172,23 @@ Primary evidence:
     its caption says the user provides an initial program with components
     marked, evaluation code, and optional configurations before AlphaEvolve
     initiates the evolutionary loop.
-  - Current evidence: LibreEvolve manifests already record many pieces
-    separately: problem/source provenance, seed source records, evaluator
-    source hashes, redacted/hash-backed effective config fields, backend specs,
-    prompt variants, context-source diagnostics, and source-root provenance.
-    `load_problem()` requires `task_description.txt`, `metrics.yaml`,
-    `validate.py`, seed workspaces under `initial_programs`, and optional
-    context files. `evolve()` preflights evaluator sources, LLM backends, source
-    provenance, problem/config/plugin/environment provenance, then passes
-    `context_sources`, `context_policy`, `objective_schema`,
-    `evaluator_sources`, `seed_sources`, `seed_policy`, and config/backend
-    fields into `ProgramDatabase`. `_startup_manifest_payload()` persists those
-    under separate `config`, `problem`, `policies`, and `provenance` sections,
-    including `prompt_variants`, prompt metadata, `backends`,
-    `llm_role_backend_indices`, `objective_schema`, `context_sources`,
-    `evaluator_sources`, `seed_sources`, and the candidate-language policy.
-    Those records are useful, but they do not form one paper-facing task-spec
-    contract that proves which exact user-provided inputs jointly defined a
-    run, whether each AlphaEvolve input field is present/omitted/unsupported,
-    and how each maps to task-spec fields and downstream run evidence.
-  - Required result: add a versioned task-spec bundle with initial program or
-    workspace ids, evolvable component spans, evaluator code/entrypoint ids,
-    prompt template/config ids, LLM choice/backend ids, optional background
-    knowledge/context ids, source hashes/redaction states, field-level
-    presence/omission/unsupported diagnostics, cross-links to prompt/evaluator/
-    candidate/history artifacts, validation that every bundle id resolves to
-    current manifest evidence, and README/ROADMAP wording that distinguishes
-    scattered local provenance from an AlphaEvolve-style task specification
-    artifact.
+  - Current evidence: `manifest.json` now includes
+    `task_specification` with schema
+    `libreevolve.alphaevolve_task_specification_bundle.v1`. The bundle is
+    derived from startup manifest evidence and cross-links initial programs,
+    evaluator code or embedded evaluator stages, prompt template/config,
+    backend ensemble, optional background context, candidate representation,
+    and objective metrics to their manifest paths. It records counts, hashes,
+    ids, present/omitted/missing statuses, an explicit partial-status label,
+    unsupported/incomplete gaps, a deterministic `task_spec_id`, and embedded
+    validation from `validate_task_specification_bundle()`. Tests verify the
+    emitted bundle and a tampered-id failure.
+  - Required result: finish evolvable component span references, score-field
+    links from evaluator results to candidate/evolved-block paths,
+    embedded-only problem-format support, standalone task-spec report examples,
+    and deeper validation that every referenced id resolves to a concrete
+    prompt/evaluator/candidate/history artifact rather than only to the startup
+    manifest section.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

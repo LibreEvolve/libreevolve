@@ -238,28 +238,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     optional background knowledge. In the local PDF, Figure 2 on page 4 labels
     those inputs and its caption says the user provides an initial program,
     evaluation code, and optional configurations before the evolutionary loop.
-  - Partial status: LibreEvolve records problem/source provenance, seed source
-    rows, evaluator source hashes, backend specs, prompt variants,
-    redacted/hash-backed effective config, and context-source diagnostics. The
-    current startup manifest persists these across `config`, `problem`,
-    `policies`, and `provenance`: prompt variants/metadata, backends and
-    role-backend routes, objective schema, context sources/policy, evaluator
-    sources, seed sources/policy, candidate-language policy, and source/plugin/
-    environment provenance.
-  - Current gap: paper-facing evidence does not yet assemble those records
-    into one validated task-spec artifact with AlphaEvolve field names,
-    source hashes, redaction status, field presence/omission diagnostics, and
-    links from each input field to the run, prompt, evaluator, and candidate
-    evidence it controls. It also does not mark which AlphaEvolve task-spec
-    fields are unsupported or represented only by local divergence records such
-    as the Python-primary candidate-language policy.
-  - Required result: add paper-facing task-spec bundle records with input-field
-    ids for initial code/workspace, evolvable spans, evaluator code,
-    prompt-template/config, LLM choices, and optional background knowledge;
-    include source hashes/redaction, unsupported/missing-field diagnostics,
-    artifact cross-links, validation that each id resolves to current manifest
-    evidence, and README/ROADMAP wording that separates a coherent
-    AlphaEvolve task-spec artifact from scattered local manifest provenance.
+  - Partial status: LibreEvolve now emits
+    `manifest.json.task_specification` with schema
+    `libreevolve.alphaevolve_task_specification_bundle.v1`. The record
+    cross-links initial programs, evaluator code or embedded evaluator stages,
+    prompt template/config metadata, backend choices, optional background
+    context, candidate representation, and objective metrics to manifest paths,
+    with field statuses, ids/hashes/counts, explicit unsupported/incomplete
+    labels, a deterministic `task_spec_id`, and embedded validation.
+  - Current gap: paper-facing evidence still lacks evolvable component spans,
+    standalone task-spec report examples, embedded-only problem definitions,
+    score-field links to candidate/evolved-block paths, and deep validation
+    that every id resolves beyond the startup manifest section into concrete
+    prompt/evaluator/candidate/history artifacts.
+  - Required result: finish paper-facing task-spec reports with evolvable-span
+    ids, evaluator score-field linkage, artifact-level cross-links,
+    embedded-only task definitions, and README/ROADMAP wording that treats the
+    current bundle as partial AlphaEvolve task-spec evidence rather than full
+    parity.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

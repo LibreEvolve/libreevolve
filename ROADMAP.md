@@ -61,6 +61,10 @@ LibreEvolve has:
 - explicit v1 run-artifact schema metadata on `manifest.json` and current
   JSONL streams, with legacy history rows still readable for `show` and restore
   helpers
+- manifest-visible `libreevolve.alphaevolve_task_specification_bundle.v1`
+  records that cross-link startup inputs such as seeds, evaluators, prompts,
+  backends, context, candidate policy, and metrics into a partial task-spec
+  bundle with validation and explicit remaining gaps
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

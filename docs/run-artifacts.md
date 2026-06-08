@@ -25,6 +25,15 @@ already malformed, empty, non-UTF-8, or otherwise unreadable during a runtime
 update, LibreEvolve appends an unreadable-current-manifest diagnostic and
 rewrites from the in-memory startup manifest plus the runtime payload when that
 replacement payload is valid.
+Startup manifests include `task_specification`, a
+`libreevolve.alphaevolve_task_specification_bundle.v1` cross-reference over the
+inputs that define the run: initial programs, evaluator code or embedded
+evaluator stages, prompt template/config metadata, backend choices, optional
+background context, candidate representation, and objective metrics. The bundle
+records field statuses, manifest paths, ids/hashes/counts, explicit
+unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
+validation. It is partial AlphaEvolve task-spec evidence, not a standalone
+problem definition or full proof of evolvable-span and score-link parity.
 JSONL streams use a local complete-line durability policy. Accepted rows are
 strict-serialized before append, written as newline-terminated records, flushed,
 and fsynced before the append helper returns. Before appending to an existing

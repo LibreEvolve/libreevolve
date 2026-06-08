@@ -2031,6 +2031,15 @@ single range.
 Context ingestion does not yet provide learned semantic ranking, external
 embedding retrieval, or provider-token prompt packing.
 
+Each startup `manifest.json` also includes a partial AlphaEvolve task-spec
+bundle at `task_specification`. It cross-links the run-defining inputs already
+present elsewhere in the manifest: initial programs, evaluator code or embedded
+evaluator stages, prompt template/config metadata, backend choices, optional
+background context, candidate representation, and objective metrics. The bundle
+records field statuses, manifest paths, ids/hashes/counts, explicit remaining
+gaps, a deterministic `task_spec_id`, and embedded validation; it is not yet a
+standalone task-spec file with full evolvable-span and score-link evidence.
+
 **validate.py** must define `evaluate(code: str) -> dict`,
 `evaluate(code: str, workspace_path: str) -> dict`, or
 `evaluate(code: str, workspace_path: str, stage: dict) -> dict` returning a dict

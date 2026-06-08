@@ -20,6 +20,7 @@ from libreevolve.core.budget import (
     validate_controller_budget_event,
 )
 from libreevolve.core.config import Config
+from libreevolve.core.database import validate_task_specification_bundle
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
@@ -4537,6 +4538,69 @@ def test_loop_writes_objective_schema_to_manifest():
         "primary_bounds": [0.0, 10.0],
         "metric_count": 2,
     }
+
+
+def test_loop_writes_unified_task_specification_bundle_to_manifest():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.context_sources = [
+        {"path": "context/notes.md", "sha256": "a" * 64, "source_type": "text"}
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()) as build:
+        evolve(
+            problem,
+            Config(
+                max_generations=0,
+                log_dir=tmpdir,
+                problem_name="t",
+                prompt_variants=[DEFAULT_TEMPLATE],
+                backends=[{"type": "openai", "model": "gpt-4o-mini"}],
+            ),
+        )
+
+    build.assert_not_called()
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    task_spec = manifest["task_specification"]
+
+    assert task_spec["schema"] == "libreevolve.alphaevolve_task_specification_bundle.v1"
+    assert task_spec["status"] == "partial_alphaevolve_task_specification"
+    assert task_spec["validation"]["ok"] is True
+    assert validate_task_specification_bundle(task_spec)["ok"] is True
+    assert len(task_spec["task_spec_id"]) == 64
+
+    fields = task_spec["fields"]
+    assert fields["initial_programs"]["status"] == "present"
+    assert fields["initial_programs"]["manifest_path"] == "problem.seed_sources"
+    assert fields["initial_programs"]["count"] == len(manifest["problem"]["seed_sources"])
+    assert fields["evaluation_code"]["status"] == "present"
+    assert fields["evaluation_code"]["ids"][0]["relative_path"] == "validate.py"
+    assert fields["prompt_template_and_config"]["variant_count"] == 1
+    assert fields["prompt_template_and_config"]["ids"][0]["sha256"] == (
+        manifest["config"]["prompt_variants_metadata"][0]["sha256"]
+    )
+    assert fields["llm_ensemble"]["backend_count"] == 1
+    assert fields["llm_ensemble"]["ids"][0] == {
+        "backend_index": 0,
+        "type": "openai",
+        "model": "gpt-4o-mini",
+        "api_mode": None,
+    }
+    assert fields["background_knowledge"]["status"] == "present"
+    assert fields["background_knowledge"]["context_source_count"] == 1
+    assert fields["candidate_representation"]["manifest_path"] == (
+        "policies.candidate_language"
+    )
+    assert fields["objective_metrics"]["primary_metric"] == "score"
+    assert "embedded_only_problem_definitions_still_require_loader_support" in (
+        task_spec["unsupported_or_incomplete"]
+    )
+
+    tampered = copy.deepcopy(task_spec)
+    tampered["fields"]["llm_ensemble"]["backend_count"] = 99
+    validation = validate_task_specification_bundle(tampered)
+    assert validation["ok"] is False
+    assert validation["issues"][0]["code"] == "invalid_task_spec_id"
 
 
 def test_invalid_seed_failure_memory_is_rendered_for_first_mutation_prompt():

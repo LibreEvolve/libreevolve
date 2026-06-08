@@ -332,6 +332,16 @@ eval-input provenance, but `validate.py` remains the default problem-loading
 contract and paper-facing reports still need embedded-only examples plus
 skeleton/block invocation evidence before claiming Figure 3 evaluator parity.
 
+AlphaEvolve task-specification note: startup manifests now include
+`task_specification` with schema
+`libreevolve.alphaevolve_task_specification_bundle.v1`. The bundle cross-links
+initial programs, evaluator code or embedded evaluator stages, prompt
+template/config metadata, backend choices, optional background context,
+candidate representation, and objective metrics to manifest evidence. It
+records a deterministic `task_spec_id`, validation, and unsupported/incomplete
+labels, but standalone task-spec reports, evolvable-span ids, embedded-only
+problem definitions, and score-field links to evolved code paths remain open.
+
 AlphaEvolve runtime-accounting note: the ensemble call-history accessor is now
 a bounded retained in-memory window with retained/total/dropped counters, not
 an unbounded list. Config-created ensembles also write append-only

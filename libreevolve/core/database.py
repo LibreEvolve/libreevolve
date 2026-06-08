@@ -105,6 +105,7 @@ _MAX_ARTIFACT_INDEX_FILES_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_SKIPPED_PER_PROGRAM = 10
 _MAX_ARTIFACT_INDEX_TEXT_CHARS = 300
 CANDIDATE_LANGUAGE_POLICY_SCHEMA = "libreevolve.candidate_language_policy.v1"
+TASK_SPECIFICATION_BUNDLE_SCHEMA = "libreevolve.alphaevolve_task_specification_bundle.v1"
 RESURFACING_INDEX_SCHEMA = "libreevolve.resurfacing_index.v1"
 RESURFACING_INDEX_POLICY = (
     "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
@@ -5212,7 +5213,7 @@ def _startup_manifest_payload(
         config.evaluator_stdin_text,
         config.evaluator_stdin_file,
     )
-    return {
+    manifest = {
         "schema_version": ARTIFACT_SCHEMA_VERSION,
         "artifact_schema": run_artifact_schema(),
         "config": {
@@ -5443,7 +5444,332 @@ def _startup_manifest_payload(
             "foreign_entries": foreign_entries,
         },
         "provenance": run_provenance,
-}
+    }
+    manifest["task_specification"] = _task_specification_bundle(manifest)
+    return manifest
+
+
+def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
+    config = manifest.get("config") if isinstance(manifest.get("config"), Mapping) else {}
+    problem = manifest.get("problem") if isinstance(manifest.get("problem"), Mapping) else {}
+    policies = manifest.get("policies") if isinstance(manifest.get("policies"), Mapping) else {}
+    seed_sources = _manifest_list(problem.get("seed_sources"))
+    seed_skipped = _manifest_list(problem.get("seed_skipped"))
+    evaluator_sources = _manifest_list(problem.get("evaluator_sources"))
+    context_sources = _manifest_list(problem.get("context_sources"))
+    prompt_metadata = _manifest_list(config.get("prompt_variants_metadata"))
+    backends = _manifest_list(config.get("backends"))
+    candidate_language = (
+        policies.get("candidate_language")
+        if isinstance(policies.get("candidate_language"), Mapping)
+        else {}
+    )
+    eval_stages = _manifest_list(config.get("eval_stages"))
+    embedded_stages = [
+        index
+        for index, stage in enumerate(eval_stages)
+        if isinstance(stage, Mapping) and stage.get("mode") == "embedded_evaluate"
+    ]
+    bundle = {
+        "schema": TASK_SPECIFICATION_BUNDLE_SCHEMA,
+        "source": "startup_manifest_cross_reference",
+        "status": "partial_alphaevolve_task_specification",
+        "fields": {
+            "initial_programs": {
+                "status": "present" if seed_sources else "missing",
+                "manifest_path": "problem.seed_sources",
+                "count": len(seed_sources),
+                "skipped_count": len(seed_skipped),
+                "ids": _seed_source_refs(seed_sources),
+            },
+            "evaluation_code": {
+                "status": "present" if evaluator_sources or embedded_stages else "missing",
+                "manifest_path": "problem.evaluator_sources",
+                "entrypoint_count": len(evaluator_sources),
+                "embedded_stage_indices": embedded_stages,
+                "ids": _evaluator_source_refs(evaluator_sources),
+                "embedded_candidate_evaluate": bool(embedded_stages),
+            },
+            "prompt_template_and_config": {
+                "status": "present" if prompt_metadata else "missing",
+                "manifest_path": "config.prompt_variants_metadata",
+                "variant_count": len(prompt_metadata),
+                "ids": _prompt_variant_refs(prompt_metadata),
+                "prompt_format_option_count": len(
+                    config.get("prompt_format_options", {})
+                    if isinstance(config.get("prompt_format_options"), Mapping)
+                    else {}
+                ),
+            },
+            "llm_ensemble": {
+                "status": "present" if backends else "missing",
+                "manifest_path": "config.backends",
+                "backend_count": len(backends),
+                "ids": _backend_refs(backends),
+                "role_routing_manifest_path": "config.llm_role_backend_indices",
+            },
+            "background_knowledge": {
+                "status": "present" if context_sources else "omitted",
+                "manifest_path": "problem.context_sources",
+                "context_source_count": len(context_sources),
+                "ids": _context_source_refs(context_sources),
+                "context_policy_manifest_path": "problem.context_policy",
+            },
+            "candidate_representation": {
+                "status": "present",
+                "manifest_path": "policies.candidate_language",
+                "policy": candidate_language.get("policy"),
+                "primary_language": candidate_language.get("primary_language"),
+                "language_runner_ready": candidate_language.get("language_runner_ready"),
+            },
+            "objective_metrics": {
+                "status": "present"
+                if isinstance(problem.get("objective_schema"), Mapping)
+                else "missing",
+                "manifest_path": "problem.objective_schema",
+                "primary_metric": (
+                    problem.get("objective_schema", {}).get("primary_metric")
+                    if isinstance(problem.get("objective_schema"), Mapping)
+                    else None
+                ),
+                "metric_count": (
+                    problem.get("objective_schema", {}).get("metric_count")
+                    if isinstance(problem.get("objective_schema"), Mapping)
+                    else 0
+                ),
+            },
+        },
+        "unsupported_or_incomplete": [
+            "unified_task_spec_bundle_is_manifest_evidence_not_standalone_problem_file",
+            "embedded_only_problem_definitions_still_require_loader_support",
+            "arbitrary_language_build_runner_task_specs_unsupported",
+            "problem_defined_candidate_abstraction_hooks_unsupported",
+            "skeleton_to_evolved_block_score_linkage_not_yet_reported",
+        ],
+    }
+    bundle["task_spec_id"] = _task_specification_id(bundle)
+    bundle["validation"] = validate_task_specification_bundle(bundle)
+    return bundle
+
+
+def validate_task_specification_bundle(bundle: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(bundle, Mapping):
+        return {
+            "schema": TASK_SPECIFICATION_BUNDLE_SCHEMA,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "task specification bundle must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "status",
+        "fields",
+        "unsupported_or_incomplete",
+        "task_spec_id",
+    }
+    missing = required - set(bundle)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"task specification bundle missing fields: {sorted(missing)}",
+            }
+        )
+    unsupported = set(bundle) - (required | {"validation"})
+    if unsupported:
+        issues.append(
+            {
+                "code": "unsupported_fields",
+                "message": f"task specification bundle has unsupported fields: {sorted(unsupported)}",
+            }
+        )
+    _candidate_policy_issue_if(
+        issues,
+        bundle.get("schema") != TASK_SPECIFICATION_BUNDLE_SCHEMA,
+        "invalid_schema",
+        "task specification bundle schema is unsupported",
+    )
+    _candidate_policy_issue_if(
+        issues,
+        bundle.get("source") != "startup_manifest_cross_reference",
+        "invalid_source",
+        "task specification bundle must be derived from startup manifest evidence",
+    )
+    fields = bundle.get("fields")
+    if not isinstance(fields, Mapping):
+        issues.append(
+            {
+                "code": "invalid_fields",
+                "message": "task specification fields must be an object",
+            }
+        )
+    else:
+        expected_fields = {
+            "initial_programs",
+            "evaluation_code",
+            "prompt_template_and_config",
+            "llm_ensemble",
+            "background_knowledge",
+            "candidate_representation",
+            "objective_metrics",
+        }
+        missing_fields = expected_fields - set(fields)
+        if missing_fields:
+            issues.append(
+                {
+                    "code": "missing_task_fields",
+                    "message": f"task specification fields missing: {sorted(missing_fields)}",
+                }
+            )
+        for name, field in fields.items():
+            if not isinstance(name, str) or not isinstance(field, Mapping):
+                issues.append(
+                    {
+                        "code": "invalid_task_field",
+                        "message": "task specification field entries must be named objects",
+                    }
+                )
+                continue
+            status = field.get("status")
+            if status not in {"present", "missing", "omitted", "unsupported", "partial"}:
+                issues.append(
+                    {
+                        "code": "invalid_field_status",
+                        "message": f"task specification field {name!r} has invalid status",
+                    }
+                )
+            manifest_path = field.get("manifest_path")
+            if not isinstance(manifest_path, str) or not manifest_path:
+                issues.append(
+                    {
+                        "code": "invalid_manifest_path",
+                        "message": f"task specification field {name!r} must link to a manifest path",
+                    }
+                )
+    gaps = bundle.get("unsupported_or_incomplete")
+    if not isinstance(gaps, list) or not all(isinstance(item, str) and item for item in gaps):
+        issues.append(
+            {
+                "code": "invalid_gap_list",
+                "message": "task specification unsupported_or_incomplete must be a list of labels",
+            }
+        )
+    task_spec_id = bundle.get("task_spec_id")
+    expected_id = _task_specification_id(bundle)
+    if task_spec_id != expected_id:
+        issues.append(
+            {
+                "code": "invalid_task_spec_id",
+                "message": "task specification id must hash the bundle content excluding validation/id",
+            }
+        )
+    return {
+        "schema": TASK_SPECIFICATION_BUNDLE_SCHEMA,
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _task_specification_id(bundle: Mapping[str, object]) -> str:
+    payload = {
+        key: value
+        for key, value in bundle.items()
+        if key not in {"task_spec_id", "validation"}
+    }
+    raw = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _manifest_list(value: object) -> list:
+    return list(value) if isinstance(value, list) else []
+
+
+def _seed_source_refs(seed_sources: list) -> list[dict]:
+    refs = []
+    for index, source in enumerate(seed_sources):
+        if not isinstance(source, Mapping):
+            continue
+        refs.append(
+            {
+                "seed_index": source.get("seed_index", index),
+                "kind": source.get("seed_source_kind"),
+                "path": source.get("seed_source_path"),
+                "primary_file": source.get("primary_file"),
+                "workspace_sha256": source.get("workspace_sha256"),
+            }
+        )
+    return refs
+
+
+def _evaluator_source_refs(evaluator_sources: list) -> list[dict]:
+    refs = []
+    for index, source in enumerate(evaluator_sources):
+        if not isinstance(source, Mapping):
+            continue
+        refs.append(
+            {
+                "evaluator_index": index,
+                "role": source.get("role"),
+                "relative_path": source.get("relative_path"),
+                "sha256": source.get("sha256"),
+                "source_type": source.get("source_type"),
+            }
+        )
+    return refs
+
+
+def _prompt_variant_refs(prompt_metadata: list) -> list[dict]:
+    refs = []
+    for index, metadata in enumerate(prompt_metadata):
+        if not isinstance(metadata, Mapping):
+            continue
+        refs.append(
+            {
+                "prompt_variant_index": index,
+                "sha256": metadata.get("sha256"),
+                "chars": metadata.get("chars"),
+                "retention": metadata.get("retention"),
+            }
+        )
+    return refs
+
+
+def _backend_refs(backends: list) -> list[dict]:
+    refs = []
+    for index, backend in enumerate(backends):
+        if not isinstance(backend, Mapping):
+            continue
+        refs.append(
+            {
+                "backend_index": index,
+                "type": backend.get("type"),
+                "model": backend.get("model"),
+                "api_mode": backend.get("api_mode"),
+            }
+        )
+    return refs
+
+
+def _context_source_refs(context_sources: list) -> list[dict]:
+    refs = []
+    for index, source in enumerate(context_sources):
+        if not isinstance(source, Mapping):
+            continue
+        refs.append(
+            {
+                "context_source_index": index,
+                "path": source.get("path"),
+                "sha256": source.get("sha256"),
+                "source_type": source.get("source_type"),
+            }
+        )
+    return refs
 
 
 def _candidate_language_policy() -> dict:

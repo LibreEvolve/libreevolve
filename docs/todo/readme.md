@@ -4201,4 +4201,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark/baseline rows, ablation and budget reports, and a clear
     distinction between static prompt guidance and ImprovEvolve execution.
 
+- [ ] Keep README MadEvolve wording scoped until parameter-optimization and
+      innovation-report evidence exists.
+  - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
+    Optimization of Cosmological Algorithms with Large Language Models`,
+    presents AlphaEvolve-like scientific algorithm evolution with explicit
+    free-parameter tracking, greedy one-shot and autodiff/Adam inner
+    optimization, JAX/vmad differentiability constraints, hybrid
+    MAP-Elites/island/elite population management, UCB-style model routing,
+    generated scientific reports, and BAO, 21cm, and tSZ cosmology results.
+  - Current evidence: README labels MadEvolve as background context with no
+    MadEvolve implementation; `papers/README.md` says there is no
+    free-parameter optimization or innovation report. Existing README TODOs
+    keep paper-inspired framework rows scoped generally, but README does not
+    require a `2602.15951` source-specific boundary for parameter schemas,
+    inner optimizer records, optimized-value source injection,
+    differentiability/operator validation, generated report sections, per-task
+    benchmark rows, run statistics, model-contribution statistics, compute
+    budgets, overfitting/reward-hacking caveats, or public code/source status.
+  - Required result: if README mentions MadEvolve, domain evolution,
+    free-parameter optimization, nested optimization, autodiff/JAX/vmad
+    support, generated innovation reports, BAO/21cm/tSZ MadEvolve results,
+    UCB model-contribution statistics, or MadEvolve public code availability,
+    keep wording source-scoped until manifests and reports include the
+    `2602.15951` source row, PDF/code hashes, parameter and optimizer schemas,
+    executed inner-loop artifacts, differentiability checks, report-generator
+    artifacts, benchmark/baseline/result rows, success/improvement/model
+    contribution tables, compute environment, task prompts/evaluators, and a
+    clear distinction between LibreEvolve's current generic evolution surfaces
+    and MadEvolve execution semantics.
+
 ## Architecture Description

@@ -5735,3 +5735,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     `ModularPlugin`, and README/ROADMAP/code wording that keeps
     ImprovEvolve-style execution marked missing unless implementation
     artifacts and reports prove it.
+
+- [ ] Track MadEvolve parameter-optimization paper evidence as a source-
+      specific boundary.
+  - Paper/source evidence: local arXiv `2602.15951`, `MadEvolve:
+    Evolutionary Optimization of Cosmological Algorithms with Large Language
+    Models`, describes a framework similar to AlphaEvolve but focused on
+    scientific algorithms with explicit free-parameter tracking and nested
+    parameter optimization. It reports greedy one-shot derivative-free tuning,
+    autodiff/Adam tuning for differentiable JAX/vmad programs, hybrid
+    MAP-Elites/island/elite population management, UCB-style model selection,
+    diff/full/synthesis mutation modes, automated lineage/comparison/report
+    generation, and cosmology applications for BAO reconstruction, 21cm tidal
+    reconstruction, and tSZ prediction.
+  - Current gap: `papers/README.md` lists `2602.15951` as background only with
+    no free-parameter optimization or innovation report, and completed TODOs
+    only preserve that scoping. There is no source-specific active paper TODO
+    for MadEvolve's PDF evidence, public framework/application repositories,
+    parameter schemas, optimization budgets, differentiability requirements,
+    per-task prompts/evaluators, report sections, run statistics, model
+    contribution table, compute environment, reward-hacking caveats, or
+    generalization claims.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2602.15951`: title/authors/arXiv version/date/PDF digest, source/license
+    and public code status for madevolve.org, `tianyi-stack/MadEvolve`, and
+    `tianyi-stack/MadEvolve-Cosmo`, parameter-declaration schema, free-parameter
+    meaning/function records, one-shot and autodiff optimizer descriptions,
+    JAX/vmad operator constraints, outer-loop population and LLM-scheduler
+    details, diff/full/synthesis mutation-mode rows, generated-report section
+    schema, BAO/iterative-BAO/21cm/tSZ benchmark rows, Table 1 result values,
+    Table 2 success/improvement statistics, Table 3 model-contribution
+    statistics, compute environment, prompt/evaluator artifact links,
+    reward-hacking and over-parameterization caveats, and README/ROADMAP/code
+    wording that keeps MadEvolve behavior marked missing unless local artifacts
+    prove it.

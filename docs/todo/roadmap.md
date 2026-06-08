@@ -4633,3 +4633,34 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, CPU/GPU timeout/compute budgets, ablation rows, and README/papers/
     code wording that keeps ImprovEvolve as modular-search inspiration until
     local execution semantics and benchmark evidence are validated.
+
+- [ ] Add MadEvolve parameter-optimization gates before roadmap promotion.
+  - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
+    Optimization of Cosmological Algorithms with Large Language Models`,
+    adapts AlphaEvolve-style evolution to scientific algorithms with nested
+    free-parameter optimization, greedy one-shot derivative-free search,
+    autodiff/Adam tuning for differentiable JAX/vmad programs, hybrid
+    MAP-Elites/island/elite population management, UCB model routing,
+    diff/full/synthesis mutation modes, automated scientific reports, and
+    BAO, iterative BAO, 21cm, and tSZ benchmark claims.
+  - Current evidence: ROADMAP says MadEvolve features remain inspired unless
+    paper behavior is implemented, README labels MadEvolve as background
+    context, and `papers/README.md` states that no free-parameter optimization
+    or innovation report exists. Roadmap lacks `2602.15951`-specific gates for
+    source metadata, linked code status, parameter schemas, inner optimizer
+    execution, differentiability/operator constraints, optimized-value source
+    injection, per-task cosmology fixtures, generated reports, run statistics,
+    model-contribution statistics, compute environment, reward-hacking
+    diagnostics, and over-parameterization/generalization evidence.
+  - Required result: add roadmap gates for `2602.15951`: paper/source manifest
+    entry, PDF/cache hash, madevolve.org and GitHub source status,
+    framework-vs-application split, parameter-declaration and parameter-meaning
+    schemas, one-shot/grid/Latin-hypercube/Bayesian and autodiff/Adam optimizer
+    records, inner/outer budget accounting, JAX/vmad differentiability
+    validation, optimized-value source-injection provenance, BAO/iterative
+    BAO/21cm/tSZ task prompts and evaluator fixtures, training/validation/test
+    split provenance, generated lineage/comparative-analysis/synthesis report
+    artifacts, Table 1 benchmark rows, Table 2 success/improvement statistics,
+    Table 3 model-contribution statistics, compute environment, reward-hacking
+    and mode-collapse diagnostics, and README/papers/code wording that keeps
+    MadEvolve as background until local evidence proves those semantics.

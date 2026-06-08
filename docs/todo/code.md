@@ -6190,3 +6190,38 @@ Primary evidence:
     CPU/GPU and timeout budgets, ablation reports, and README/ROADMAP wording
     that keeps current static modular prompting separate from ImprovEvolve
     execution semantics.
+
+- [ ] Add MadEvolve parameter-optimization source boundary before domain-
+      evolution claims.
+  - Spec evidence: local arXiv `2602.15951`, `MadEvolve: Evolutionary
+    Optimization of Cosmological Algorithms with Large Language Models`,
+    adapts AlphaEvolve-style code evolution to computational cosmology with a
+    nested optimization architecture: LLMs mutate scientific algorithms while
+    an inner loop detects free parameters, records their meanings, tunes them
+    through greedy one-shot derivative-free search or autodiff/Adam over JAX
+    or vmad-compatible programs, injects optimized values back into the source,
+    and generates scientific reports explaining lineage, algorithmic
+    innovations, free parameters, metrics, and physical rationale.
+  - Current evidence: README and `papers/README.md` label MadEvolve as
+    background/domain-evolution inspiration only, and code search shows no
+    MadEvolve implementation. LibreEvolve has evaluator execution,
+    metric/result reports, MAP-Elites/islands, and prompt-context tunable-field
+    policy metadata, but no source-specific `2602.15951` code TODO, no
+    parameter declaration schema, no child-vs-parent new-parameter detector, no
+    budgeted inner optimizer, no JAX/vmad differentiability contract, no
+    optimized-parameter source injection, no domain-task adapters for BAO,
+    21cm, or tSZ, no generated innovation-report pipeline, and no MadEvolve run
+    statistics or model-contribution artifacts.
+  - Required result: add source-boundary metadata and implementation gates for
+    `2602.15951`: arXiv version/date/PDF hash, madevolve.org and GitHub source
+    status, framework/application split, parameter config schema, parameter
+    count limits, one-shot/grid/Latin-hypercube/Bayesian-search records,
+    autodiff/Adam optimizer records, differentiability and operator-compatibility
+    validation, optimized-value source-injection provenance, parent/child
+    parameter-set diffs, inner-vs-outer budget accounting, domain prompt and
+    evaluator fixtures for BAO reconstruction, iterative BAO, 21cm tidal
+    reconstruction, and tSZ/LDL, training/validation/test split provenance,
+    compute environment records, success/improvement/model-contribution tables,
+    report-generator lineage/comparative-analysis/synthesis artifacts,
+    overfitting/reward-hacking diagnostics, and README/ROADMAP wording that
+    keeps MadEvolve as background until those mechanisms are locally executed.

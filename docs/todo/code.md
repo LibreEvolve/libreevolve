@@ -6003,7 +6003,15 @@ Primary evidence:
     competition with up to `2x` speedup, past AtCoder competitions, and
     single-cell denoising. The abstract says results use open model
     `OpenAI gpt-oss-120b`, public code, Tinker runs, expert or organizer
-    review, and costs of a few hundred dollars per problem.
+    review, and costs of a few hundred dollars per problem. The body defines
+    Algorithm 1 over mutable weights `theta_i`, a buffer `H_i`, transition
+    and reward functions induced by the problem, an adaptive entropic
+    objective, and PUCT state reuse. Table 9 fixes `gpt-oss-120b`, high
+    reasoning effort, Tinker context window `32768`, sampling temperature
+    `1.0`, prompt-plus-thinking limit `26000`, `50` training steps, batch
+    size `512` as `8` groups of `64`, Adam learning rate `4e-5`, LoRA rank
+    `32`, KL coefficient `{0.01, 0.1}`, adaptive-beta KL constraint
+    `gamma = ln(2)`, and PUCT exploration coefficient `1.0`.
   - Current evidence: `papers/README.md` lists `2601.16175` only as
     background test-time discovery context. LibreEvolve has no first-class
     code TODO for this source, no test-time RL training loop, no mutable model
@@ -6012,7 +6020,14 @@ Primary evidence:
     cross-domain benchmark suite covering the cited math/kernel/algorithm/
     biology tasks, no expert/organizer review artifact policy, and no
     accounting boundary that separates frozen-LLM AlphaEvolve-style search
-    from test-time model adaptation.
+    from test-time model adaptation. It also lacks public artifact URL
+    tracking for `https://github.com/test-time-training/discover`, the project
+    page, result notebooks, GPUMode and AtCoder submissions, LoRA/checkpoint
+    lineage, adaptive-beta and PUCT trace records, context-window truncation
+    diagnostics for OpenEvolve baselines, per-domain verifier resource limits,
+    Modal/GPUMode/AtCoder/OpenProblems harness provenance, and a checker for
+    the paper's `Best-of-25600` versus Figure 4 `50 * 512 = 256000` sampling
+    inconsistency.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2601.16175`: arXiv id/version/date/PDF hash, authors, source
     license, public code URL/status, relation to AlphaEvolve frozen-search
@@ -6025,7 +6040,14 @@ Primary evidence:
     artifacts, cost and budget accounting, seed/run records, independent
     checker outputs, and README/ROADMAP wording that keeps TTT-Discover-style
     test-time training as missing evidence until local implementation and
-    benchmark reports exist.
+    benchmark reports exist. The implementation boundary should additionally
+    require Algorithm 1 event logs, mutable-weight/checkpoint and LoRA records,
+    per-step rollout batches, adaptive-beta KL solves, PUCT parent/reuse and
+    top-1000 archive-retention traces, reward-validity zeroing, public code
+    and result-link provenance, Table 2/3/4/5/6/7/8/9/10 result rows, expert
+    review attestations, benchmark-specific resource limits, official
+    submission IDs, and explicit documentation that LibreEvolve's current
+    provider calls and feedback graders are not test-time model training.
 
 - [ ] Add AlphaEvolve Bruhat-interval hypercube construction boundary.
   - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large

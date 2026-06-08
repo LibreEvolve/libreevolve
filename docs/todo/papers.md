@@ -5554,13 +5554,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     denoising. The abstract states results use open model `OpenAI
     gpt-oss-120b`, public code, Tinker test-time-training runs, expert or
     organizer review, and costs of only a few hundred dollars per problem.
+    The paper body formalizes discovery as finding a state `s` with
+    `R(s) > r_sota`, defines Algorithm 1 with mutable weights `theta_i`,
+    buffer `H_i`, train/reuse subroutines, an adaptive entropic objective, and
+    PUCT reuse, and reports fixed hyperparameters in Table 9: `50` steps,
+    `512` rollouts per step, LoRA rank `32`, Tinker context window `32768`,
+    prompt-plus-thinking limit `26000`, Adam `4e-5`, and `gamma = ln(2)`.
   - Current gap: `papers/README.md` lists `2601.16175` as background-only
     test-time discovery context, and the active TODO coverage does not yet
     track this paper-specific evidence. Existing AlphaEvolve and framework
     gaps do not capture mutable model-policy state, RL-at-test-time training
     records, Tinker run provenance, open-model checkpoint identity, continuous-
     reward task definitions, cross-domain benchmark rows, expert/organizer
-    review artifacts, or cost-per-problem accounting.
+    review artifacts, or cost-per-problem accounting. They also omit the
+    public GitHub/project/result links, Table 2 math comparisons against
+    AlphaEvolve, AlphaEvolve V2, ThetaEvolve, OpenEvolve, and Best-of-25600,
+    Table 4/5 GPUMode runtime rows, Table 6 AtCoder official-score rows,
+    Table 7 OpenProblems denoising rows, Table 8 ablations, Table 9
+    hyperparameters, Table 10 Triton-filtered MLA results, OpenEvolve
+    context-window truncation caveats, and the `Best-of-25600` versus Figure 4
+    `50 * 512 = 256000` inconsistency.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2601.16175`: title/authors/arXiv version/date/PDF digest, source
     license, public code URL/status, relation to AlphaEvolve frozen-search and
@@ -5572,7 +5585,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     or organizer review artifacts, cost/budget accounting, seed/run records,
     independent checker outputs, reproducibility status, and README/ROADMAP
     wording that treats TTT-Discover-style test-time training as missing
-    paper evidence rather than implemented LibreEvolve support.
+    paper evidence rather than implemented LibreEvolve support. Paper evidence
+    should additionally preserve the exact public URLs, result notebook paths,
+    GPUMode and AtCoder submission links, Modal and OpenProblems harness
+    provenance, per-domain verifier limits, LoRA/checkpoint lineage, adaptive-
+    beta and PUCT formulas, table-level result rows, expert-review identities,
+    official/retrospective evaluation status, and source-scoped caveats for
+    any internally inconsistent sampling-budget text.
 
 - [ ] Track AlphaEvolve Bruhat-interval hypercube paper evidence.
   - Paper/source evidence: arXiv `2601.01235`, submitted January 3, 2026, is

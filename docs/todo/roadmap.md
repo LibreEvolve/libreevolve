@@ -4456,14 +4456,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     including Erdos minimum overlap, autocorrelation, GPUMode, AtCoder, and
     single-cell denoising tasks, using open model `OpenAI gpt-oss-120b`,
     public code, Tinker runs, expert or organizer review, and low per-problem
-    costs.
+    costs. The body specifies a mutable-policy loop with Algorithm 1,
+    adaptive entropic objective, PUCT reuse, `50` training steps, `512`
+    rollouts per step, LoRA rank `32`, Tinker `32768`-token context window,
+    fixed Table 9 hyperparameters, and result tables for math, GPUMode
+    kernels, AtCoder, denoising, ablations, and MLA Triton-filtered variants.
   - Current evidence: ROADMAP tracks AlphaEvolve frozen-search gaps, provider
     routing, feedback graders, budget accounting, and broad background paper
     rows, but it does not promote `2601.16175` beyond background-only status.
     It does not define a mutable model-policy state gate, test-time RL loop,
     Tinker/API training-run provenance, open-model checkpoint record,
     continuous-reward cross-domain benchmark suite, expert/organizer review
-    artifact rule, or cost-per-problem accounting boundary.
+    artifact rule, or cost-per-problem accounting boundary. It also lacks
+    promotion gates for public code/result URLs, LoRA/checkpoint lineage,
+    adaptive-beta and PUCT traceability, OpenEvolve context-window truncation
+    caveats, Modal/GPUMode/AtCoder/OpenProblems harness provenance, official
+    submission IDs, Table 2-10 result rows, and the paper's sampling-budget
+    inconsistency.
   - Required result: add roadmap gates for `2601.16175`: paper/source
     manifest entry, PDF/cache hash, source-license and public-code status,
     mutable policy/training-state schema, RL objective and rollout-selection
@@ -4473,7 +4482,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     baseline identities, expert/organizer review artifacts, seed/run records,
     cost and budget accounting, independent checker outputs, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
-    outpace local TTT-Discover-style test-time-training support.
+    outpace local TTT-Discover-style test-time-training support. Roadmap
+    promotion should additionally require Algorithm 1 event logs, per-step
+    rollout batches, mutable checkpoint and LoRA artifact policies, adaptive-
+    beta KL and PUCT archive records, benchmark resource-limit contracts,
+    public result-link verification, table-level result reproduction, official
+    leaderboard/submission artifacts, expert-review attestations, and explicit
+    documentation that TTT-Discover is not supported by LibreEvolve until
+    weight-updating test-time-training artifacts exist locally.
 
 - [ ] Add AlphaEvolve Bruhat-interval hypercube gates before roadmap
       promotion.

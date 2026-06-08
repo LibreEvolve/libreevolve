@@ -4008,7 +4008,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     discovery problem. Its abstract reports continuous-reward results across
     math, GPU kernel engineering, algorithm design, and biology, with open
     model `OpenAI gpt-oss-120b`, public code, Tinker runs, expert or
-    organizer review, and low per-problem costs.
+    organizer review, and low per-problem costs. The body uses mutable
+    test-time weights, adaptive entropic RL, PUCT reuse, LoRA rank `32`, `50`
+    steps of `512` rollouts, Tinker `32768`-token context windows, and
+    benchmark-specific verifiers for math constructions, Triton kernels, C++
+    AtCoder submissions, and single-cell denoising.
   - Current evidence: README documents provider adapters, feedback graders,
     benchmark-report contracts, paper-cache status, and smoke fixtures. It
     does not mention `2601.16175`, implement test-time RL, mutate model
@@ -4016,6 +4020,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     model checkpoint provenance, define continuous-reward task rows for the
     cited domains, record expert/organizer review, or compare frozen-search
     AlphaEvolve/OpenEvolve baselines against a trained-at-test-time policy.
+    README also lacks source-scoped boundaries for public TTT-Discover URLs,
+    LoRA/checkpoint lineage, adaptive-beta/PUCT traces, GPUMode/AtCoder/
+    OpenProblems harness provenance, Table 2-10 result rows, OpenEvolve
+    truncation caveats, official submission links, and the sampling-budget
+    inconsistency in the paper text.
   - Required result: if README mentions TTT-Discover, test-time training,
     reinforcement learning at test time, mutable LLM policy state, Tinker
     discovery runs, `gpt-oss-120b` reproduction, continuous-reward discovery
@@ -4026,7 +4035,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     checkpoint records, benchmark definitions, baseline identities, expert
     review artifacts, budget/cost records, independent checker outputs, and
     benchmark reports. Avoid implying LibreEvolve supports TTT-Discover-style
-    test-time training without those artifacts.
+    test-time training without those artifacts. README wording should also
+    distinguish provider inference, critique, and feedback grading from
+    weight-updating test-time RL unless local artifacts include mutable
+    checkpoints, rollout batches, adaptive-beta and PUCT records, table-level
+    result reproduction, official score/runtime submissions, and source
+    caveats for paper-text inconsistencies.
 
 - [ ] Keep README AlphaEvolve Bruhat-interval claims absent or source-scoped
       until permutation and interval-verifier evidence exists.

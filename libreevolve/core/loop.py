@@ -5123,6 +5123,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
+        "hypothesis_branch_report": _hypothesis_branch_report(db, programs),
         "archive_state": archive_state,
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
@@ -6845,6 +6846,385 @@ def validate_proposal_lifecycle_report(report: object) -> dict:
         issues.append({"code": "invalid_claim_ready", "message": "proposal lifecycle report must not claim independent audit readiness"})
     return {
         "schema": "libreevolve.proposal_lifecycle_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _hypothesis_branch_report(
+    db: ProgramDatabase,
+    programs: list[Program],
+) -> dict:
+    failure_records = db.failure_records_snapshot()
+    failure_by_id = {
+        record["program_id"]: record
+        for record in failure_records
+        if isinstance(record, Mapping)
+        and record.get("record_type", "generated") == "generated"
+        and isinstance(record.get("program_id"), str)
+    }
+    branches: dict[str, dict] = {}
+    for program in programs:
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        if metadata.get("candidate_type") != "generated":
+            continue
+        proposal = metadata.get("proposal")
+        if not isinstance(proposal, Mapping):
+            continue
+        branch = _hypothesis_branch_record_for_proposal(proposal)
+        if branch is None:
+            continue
+        branch_record = branches.setdefault(branch["branch_id"], branch)
+        _hypothesis_branch_add_program(
+            branch_record,
+            program,
+            failure_by_id.get(program.id),
+        )
+    finalized = [
+        _finalize_hypothesis_branch_record(record)
+        for record in branches.values()
+    ]
+    finalized.sort(key=_hypothesis_branch_sort_key)
+    abandonment_count = sum(
+        1 for branch in finalized if branch["branch_status"] == "abandoned_evidence"
+    )
+    report = {
+        "schema": "libreevolve.hypothesis_branch_report.v1",
+        "source": "history_failure_history_and_proposal_metadata",
+        "branch_count": len(finalized),
+        "abandoned_branch_count": abandonment_count,
+        "active_or_validated_branch_count": sum(
+            1
+            for branch in finalized
+            if branch["branch_status"] == "active_or_validated"
+        ),
+        "branches": finalized[:50],
+        "branches_limit": 50,
+        "branches_truncated": len(finalized) > 50,
+        "failure_memory_linkage": {
+            "failure_record_count": len(failure_records),
+            "failure_memory_context_count": len(db.retrieval_failure_context),
+            "hypothesis_context_count": len(db.retrieval_hypothesis_context),
+            "failure_memory_policy": (
+                "bounded_recent_failure_records_rendered_by_prompt_sampler_when_available"
+            ),
+            "hypothesis_context_policy": (
+                "bounded_recent_valid_proposal_hypothesis_context_when_available"
+            ),
+        },
+        "backtracking_policy": {
+            "controller_suppression": "not_configured",
+            "fallback_target_policy": "inferred_parent_or_alternative_branch_only",
+            "resumed_search_outcome_policy": (
+                "observed_later_accepted_different_branch_not_causal_proof"
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "branch_level_abandonment_evidence": abandonment_count > 0,
+            "controller_backtracking_decision": False,
+            "redirected_sampling_proof": False,
+            "remaining_gap": [
+                "explicit_branch_state_machine",
+                "controller_suppression_or_retry_policy",
+                "fallback_target_selection_event",
+                "causal_redirected_sampling_evidence",
+                "cross_run_hypothesis_branch_table",
+            ],
+        },
+    }
+    report["validation"] = validate_hypothesis_branch_report(report)
+    return report
+
+
+def _hypothesis_branch_record_for_proposal(proposal: Mapping[str, object]) -> dict | None:
+    text: dict[str, str] = {}
+    for field in ("idea", "hypothesis", "rationale"):
+        value = proposal.get(field)
+        if isinstance(value, str) and value.strip():
+            text[field] = redact_sensitive_text(value.strip())
+    if not text:
+        return None
+    key_payload = json.dumps(text, sort_keys=True, separators=(",", ":"))
+    branch_id = "hypothesis-" + hashlib.sha256(
+        key_payload.encode("utf-8")
+    ).hexdigest()[:16]
+    return {
+        "branch_id": branch_id,
+        "proposal_fields": {
+            field: _hypothesis_branch_text_summary(value)
+            for field, value in text.items()
+        },
+        "candidate_ids": [],
+        "accepted_candidate_ids": [],
+        "rejected_candidate_ids": [],
+        "execution_filtered_candidate_ids": [],
+        "parent_ids": [],
+        "generations": [],
+        "rejection_reasons": {},
+        "evaluator_errors": {},
+        "cascade_stop_reasons": {},
+    }
+
+
+def _hypothesis_branch_text_summary(value: str) -> dict:
+    return {
+        "policy": "bounded_redacted_branch_text_v1",
+        "sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
+        "chars": len(value),
+        "preview": value[:200],
+        "preview_chars": min(len(value), 200),
+        "truncated": len(value) > 200,
+    }
+
+
+def _hypothesis_branch_add_program(
+    branch: dict,
+    program: Program,
+    failure_record: Mapping[str, object] | None,
+) -> None:
+    branch["candidate_ids"].append(program.id)
+    if program.parent_id is not None:
+        branch["parent_ids"].append(program.parent_id)
+    branch["generations"].append(program.generation)
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    admitted = admission.get("admitted") is True
+    if admitted:
+        branch["accepted_candidate_ids"].append(program.id)
+    else:
+        branch["rejected_candidate_ids"].append(program.id)
+    execution_filtered = (
+        not admitted
+        and (
+            evaluation.get("is_valid") is False
+            or admission.get("reason") == "invalid_evaluation"
+            or (
+                isinstance(failure_record, Mapping)
+                and isinstance(failure_record.get("diff_error"), str)
+            )
+        )
+    )
+    if execution_filtered:
+        branch["execution_filtered_candidate_ids"].append(program.id)
+    reason = None
+    if not admitted:
+        if isinstance(failure_record, Mapping):
+            reason = failure_record.get("admission_reason") or failure_record.get(
+                "diff_error"
+            )
+        reason = reason or admission.get("reason") or "rejected"
+        reason = str(reason)
+        branch["rejection_reasons"][reason] = branch["rejection_reasons"].get(reason, 0) + 1
+    error = evaluation.get("error")
+    if isinstance(error, str) and error:
+        branch["evaluator_errors"][error] = branch["evaluator_errors"].get(error, 0) + 1
+    eval_metadata = (
+        evaluation.get("metadata")
+        if isinstance(evaluation.get("metadata"), Mapping)
+        else {}
+    )
+    stopped_at = eval_metadata.get("stopped_at")
+    if isinstance(stopped_at, str) and stopped_at:
+        key = f"stopped_at:{stopped_at}"
+        branch["cascade_stop_reasons"][key] = (
+            branch["cascade_stop_reasons"].get(key, 0) + 1
+        )
+
+
+def _finalize_hypothesis_branch_record(branch: dict) -> dict:
+    candidate_ids = _unique_preserve_order(branch["candidate_ids"])
+    accepted_ids = _unique_preserve_order(branch["accepted_candidate_ids"])
+    rejected_ids = _unique_preserve_order(branch["rejected_candidate_ids"])
+    filtered_ids = _unique_preserve_order(branch["execution_filtered_candidate_ids"])
+    parent_ids = _unique_preserve_order(branch["parent_ids"])
+    generations = [
+        generation
+        for generation in branch["generations"]
+        if isinstance(generation, int) and not isinstance(generation, bool)
+    ]
+    rejected_count = len(rejected_ids)
+    accepted_count = len(accepted_ids)
+    if rejected_count and not accepted_count:
+        status = "abandoned_evidence"
+        abandonment_reason = (
+            "all_observed_candidates_rejected_or_execution_filtered"
+            if len(filtered_ids) == rejected_count
+            else "all_observed_candidates_rejected"
+        )
+    elif accepted_count:
+        status = "active_or_validated"
+        abandonment_reason = None
+    else:
+        status = "insufficient_evidence"
+        abandonment_reason = None
+    fallback_target = {
+        "type": "parent_program",
+        "candidate_ids": parent_ids[:5],
+        "policy": "inferred_from_rejected_candidate_parent_ids",
+    } if rejected_count else {
+        "type": "not_applicable",
+        "candidate_ids": [],
+        "policy": "no_rejected_candidates",
+    }
+    return {
+        "branch_id": branch["branch_id"],
+        "proposal_fields": branch["proposal_fields"],
+        "branch_status": status,
+        "abandonment_reason": abandonment_reason,
+        "candidate_count": len(candidate_ids),
+        "accepted_count": accepted_count,
+        "rejected_count": rejected_count,
+        "execution_filtered_count": len(filtered_ids),
+        "candidate_ids": candidate_ids[:25],
+        "candidate_ids_truncated": len(candidate_ids) > 25,
+        "accepted_candidate_ids": accepted_ids[:25],
+        "rejected_candidate_ids": rejected_ids[:25],
+        "execution_filtered_candidate_ids": filtered_ids[:25],
+        "generation_span": [
+            min(generations) if generations else None,
+            max(generations) if generations else None,
+        ],
+        "parent_ids": parent_ids[:10],
+        "parent_ids_truncated": len(parent_ids) > 10,
+        "rejection_reasons": dict(sorted(branch["rejection_reasons"].items())),
+        "evaluator_errors": dict(sorted(branch["evaluator_errors"].items())),
+        "cascade_stop_reasons": dict(sorted(branch["cascade_stop_reasons"].items())),
+        "fallback_target": fallback_target,
+        "suppression_policy": "not_configured",
+        "retry_policy": "normal_parent_sampling_can_retry_until_budget_or_archive_state_changes",
+        "resumed_search_outcome": {
+            "status": "not_causally_tracked",
+            "policy": "manifest_report_observes_branch_outcomes_without_controller_redirect_events",
+        },
+    }
+
+
+def _unique_preserve_order(values: list) -> list:
+    result = []
+    seen = set()
+    for value in values:
+        if not isinstance(value, str) or value in seen:
+            continue
+        seen.add(value)
+        result.append(value)
+    return result
+
+
+def _hypothesis_branch_sort_key(branch: dict) -> tuple:
+    status_rank = 0 if branch.get("branch_status") == "abandoned_evidence" else 1
+    return (
+        status_rank,
+        -int(branch.get("rejected_count", 0)),
+        -int(branch.get("candidate_count", 0)),
+        str(branch.get("branch_id", "")),
+    )
+
+
+def validate_hypothesis_branch_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.hypothesis_branch_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "hypothesis branch report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "branch_count",
+        "abandoned_branch_count",
+        "active_or_validated_branch_count",
+        "branches",
+        "branches_limit",
+        "branches_truncated",
+        "failure_memory_linkage",
+        "backtracking_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"hypothesis branch report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.hypothesis_branch_report.v1":
+        issues.append({"code": "invalid_schema", "message": "hypothesis branch report schema is unsupported"})
+    if report.get("source") != "history_failure_history_and_proposal_metadata":
+        issues.append({"code": "invalid_source", "message": "hypothesis branch report source is unsupported"})
+    branches = report.get("branches")
+    if not isinstance(branches, list):
+        issues.append({"code": "invalid_branches", "message": "branches must be a list"})
+        branches = []
+    abandoned = 0
+    active = 0
+    for index, branch in enumerate(branches):
+        if not isinstance(branch, dict):
+            issues.append({"code": "invalid_branch", "message": f"branch {index} must be an object"})
+            continue
+        branch_id = branch.get("branch_id")
+        if not isinstance(branch_id, str) or not re.fullmatch(r"hypothesis-[0-9a-f]{16}", branch_id):
+            issues.append({"code": "invalid_branch_id", "message": f"branch {index} id is invalid"})
+        status = branch.get("branch_status")
+        if status == "abandoned_evidence":
+            abandoned += 1
+        elif status == "active_or_validated":
+            active += 1
+        elif status != "insufficient_evidence":
+            issues.append({"code": "invalid_branch_status", "message": f"branch {index} status is invalid"})
+        candidate_count = branch.get("candidate_count")
+        accepted_count = branch.get("accepted_count")
+        rejected_count = branch.get("rejected_count")
+        filtered_count = branch.get("execution_filtered_count")
+        for field, value in (
+            ("candidate_count", candidate_count),
+            ("accepted_count", accepted_count),
+            ("rejected_count", rejected_count),
+            ("execution_filtered_count", filtered_count),
+        ):
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                issues.append({"code": f"invalid_{field}", "message": f"branch {index} {field} must be a non-negative integer"})
+        if (
+            isinstance(candidate_count, int)
+            and isinstance(accepted_count, int)
+            and isinstance(rejected_count, int)
+            and candidate_count != accepted_count + rejected_count
+        ):
+            issues.append({"code": "invalid_branch_counts", "message": f"branch {index} accepted/rejected counts must add to candidate_count"})
+        if isinstance(filtered_count, int) and isinstance(rejected_count, int) and filtered_count > rejected_count:
+            issues.append({"code": "invalid_filtered_count", "message": f"branch {index} filtered count cannot exceed rejected count"})
+        if not isinstance(branch.get("proposal_fields"), dict) or not branch["proposal_fields"]:
+            issues.append({"code": "invalid_proposal_fields", "message": f"branch {index} must include proposal fields"})
+        if not isinstance(branch.get("fallback_target"), dict):
+            issues.append({"code": "invalid_fallback_target", "message": f"branch {index} fallback target must be an object"})
+    if report.get("branches_truncated") is not True:
+        if report.get("branch_count") != len(branches):
+            issues.append({"code": "invalid_branch_count", "message": "branch_count must match branches when not truncated"})
+        if report.get("abandoned_branch_count") != abandoned:
+            issues.append({"code": "invalid_abandoned_count", "message": "abandoned_branch_count must match branches"})
+        if report.get("active_or_validated_branch_count") != active:
+            issues.append({"code": "invalid_active_count", "message": "active_or_validated_branch_count must match branches"})
+    if not isinstance(report.get("failure_memory_linkage"), dict):
+        issues.append({"code": "invalid_failure_memory_linkage", "message": "failure_memory_linkage must be an object"})
+    policy = report.get("backtracking_policy")
+    if not isinstance(policy, dict):
+        issues.append({"code": "invalid_backtracking_policy", "message": "backtracking_policy must be an object"})
+    elif policy.get("controller_suppression") != "not_configured":
+        issues.append({"code": "controller_backtracking_overclaim", "message": "controller suppression must remain not_configured until implemented"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "hypothesis branch report must not claim AlphaEvolve backtracking parity"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif readiness.get("controller_backtracking_decision") is not False:
+        issues.append({"code": "controller_decision_overclaim", "message": "controller backtracking decision must remain false"})
+    return {
+        "schema": "libreevolve.hypothesis_branch_report.v1",
         "ok": not issues,
         "issues": issues,
     }

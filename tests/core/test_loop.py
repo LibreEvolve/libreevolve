@@ -48,6 +48,7 @@ from libreevolve.core.loop import (
     validate_paper_evaluator_metric_contract,
     validate_paper_metric_table_export,
     validate_proposal_lifecycle_report,
+    validate_hypothesis_branch_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -3859,6 +3860,83 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert lifecycle["admission"]["reason"] == "invalid_evaluation"
     assert lifecycle["llm"]["calls"][0]["backend_name"] == "fake/model"
     assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
+
+
+def test_runtime_history_reports_abandoned_hypothesis_branch_evidence():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    ok = 'x=1' in code\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        (
+            "IDEA: Try the risky branch.\n"
+            "RATIONALE: It may improve the candidate.\n"
+            "HYPOTHESIS: Risky branch remains valid.\n"
+            "<<<<<<< SEARCH\nx=1\n=======\nx=2\n>>>>>>> REPLACE",
+            0,
+        ),
+        (
+            "IDEA: Try the risky branch.\n"
+            "RATIONALE: It may improve the candidate.\n"
+            "HYPOTHESIS: Risky branch remains valid.\n"
+            "<<<<<<< SEARCH\nx=1\n=======\nx=3\n>>>>>>> REPLACE",
+            0,
+        ),
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=2,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    failures = [
+        json.loads(line)
+        for line in (run_dir / "failure_history.jsonl").read_text().splitlines()
+    ]
+    assert len(failures) == 2
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["hypothesis_branch_report"]
+
+    assert report["schema"] == "libreevolve.hypothesis_branch_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_hypothesis_branch_report(report)["ok"] is True
+    assert report["branch_count"] == 1
+    assert report["abandoned_branch_count"] == 1
+    assert report["active_or_validated_branch_count"] == 0
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["branch_level_abandonment_evidence"] is True
+    assert report["claim_readiness"]["controller_backtracking_decision"] is False
+    assert report["backtracking_policy"]["controller_suppression"] == "not_configured"
+    assert report["failure_memory_linkage"]["failure_record_count"] == 2
+    assert report["failure_memory_linkage"]["failure_memory_context_count"] == 2
+
+    branch = report["branches"][0]
+    assert branch["branch_status"] == "abandoned_evidence"
+    assert branch["abandonment_reason"] == (
+        "all_observed_candidates_rejected_or_execution_filtered"
+    )
+    assert branch["candidate_count"] == 2
+    assert branch["accepted_count"] == 0
+    assert branch["rejected_count"] == 2
+    assert branch["execution_filtered_count"] == 2
+    assert branch["rejection_reasons"] == {"invalid_evaluation": 2}
+    assert branch["proposal_fields"]["hypothesis"]["preview"] == (
+        "Risky branch remains valid."
+    )
+    assert branch["fallback_target"]["type"] == "parent_program"
+    assert len(branch["fallback_target"]["candidate_ids"]) == 1
+    assert branch["suppression_policy"] == "not_configured"
+    assert branch["resumed_search_outcome"]["status"] == "not_causally_tracked"
 
 
 def test_evolve_records_best_artifact_export_failure_without_failing_search():

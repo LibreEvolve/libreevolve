@@ -248,11 +248,13 @@ is not yet an AlphaEvolve reproduction.
   provider order, a replayable transport/failure decision tree, and explicit
   default-provider plus custom-provider provenance tests.
 - Extend the current optional `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata
-  preamble and bounded `runtime.history.hypothesis_index` summaries into
-  scored and semantically searchable proposal memory only if needed; remaining
-  work is proposal scoring, semantic proposal-index retrieval, cross-run
-  proposal tables, hypothesis-refinement loops, and stricter policy for which
-  proposal fields may influence retrieval, prompting, and archive resurfacing.
+  preamble, bounded `runtime.history.hypothesis_index` summaries, and
+  `runtime.history.hypothesis_branch_report` abandonment evidence into scored
+  and semantically searchable proposal memory only if needed; remaining work is
+  proposal scoring, semantic proposal-index retrieval, controller-driven
+  backtracking decisions, cross-run proposal tables, hypothesis-refinement
+  loops, and stricter policy for which proposal fields may influence
+  retrieval, prompting, and archive resurfacing.
 - Improve meta-prompt scoring beyond the current absolute/improvement child
   score reward modes and UCB-style prompt-arm selection; add calibrated reward
   signals plus ablation reporting for prompt-program lineages.

@@ -2025,27 +2025,34 @@ Primary evidence:
     prompt/retrieval/archive policies that state exactly which proposal fields
     may influence resurfacing and future candidate generation.
 
-- [ ] Add hypothesis backtracking and abandoned-branch evidence.
+- [ ] Extend hypothesis branch evidence into controller backtracking decisions.
   - Spec evidence: AlphaEvolve's Introduction frames discovery as a prolonged
     process of ideation, exploration, backtracking on unpromising hypotheses,
     experimentation, and validation. Section 2.4 further describes pruning
     less-promising solutions through evaluation cascades before spending more
     budget.
-  - Current evidence: LibreEvolve records malformed-output failures,
-    evaluator rejections, admission outcomes, bounded failure-memory snippets,
-    proposal `idea`/`rationale`/`hypothesis` metadata, and run-local
-    hypothesis summaries for valid programs. Those records show individual
-    failures and retained proposal text, but they do not identify a hypothesis
-    branch as unpromising, record a deliberate backtrack to an ancestor or
-    alternative idea family, or prove that later prompt/database sampling was
-    redirected away from the abandoned line.
-  - Required result: add versioned branch-level hypothesis state with proposal
-    or idea-family ids, explored candidate ids, evaluator and cascade evidence
-    that made the branch unpromising, abandonment/backtrack decisions,
-    fallback ancestor or alternative-branch targets, prompt/failure-memory
-    linkage, suppression or retry policy, resumed search outcome, and report
+  - Current evidence: completed manifests now include
+    `runtime.history.hypothesis_branch_report` with schema
+    `libreevolve.hypothesis_branch_report.v1`, plus
+    `validate_hypothesis_branch_report()`. The report groups generated
+    candidates by captured proposal idea/hypothesis/rationale text hashes,
+    includes rejected candidates, records branch ids, explored candidate ids,
+    accepted/rejected/execution-filtered counts, generation spans, rejection
+    and evaluator/cascade evidence, inferred fallback parent targets,
+    failure-memory and hypothesis-context linkage, suppression/retry policy
+    status, resumed-search outcome status, and claim-readiness checks. Focused
+    tests cover a repeated rejected hypothesis branch marked
+    `abandoned_evidence` without accepting controller-backtracking parity.
+  - Remaining gap: this is evidence of abandoned-looking branches, not a
+    controller decision. LibreEvolve still does not persist an explicit branch
+    state machine, suppression or retry policy event, fallback-target selection
+    event, causal redirected-sampling proof, or cross-run hypothesis branch
+    table.
+  - Required result: add explicit controller backtracking/redirect events with
+    branch state transitions, suppression/retry policy, selected fallback
+    ancestor or alternative branch, resumed-search outcome, and replayable
     validation before claiming AlphaEvolve-style backtracking on unpromising
-    hypotheses rather than only logging rejected candidates.
+    hypotheses rather than branch-level rejection evidence.
 
 - [ ] Add initial-pool syntactic and functional divergence reporting.
   - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution

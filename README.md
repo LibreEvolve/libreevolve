@@ -1325,7 +1325,12 @@ retained.
 `runtime.history.hypothesis_index` stores bounded redacted proposal
 `idea`/`rationale`/`hypothesis` summaries for valid programs and can contribute
 current-run hypothesis evidence to `runtime.history.resurfacing_index`.
-Proposal scoring, semantic proposal/hypothesis retrieval, and persisted
+`runtime.history.hypothesis_branch_report` groups generated candidates by
+captured proposal idea/hypothesis/rationale hashes, includes rejected
+candidates, and marks branches with rejected candidates and no accepted
+candidates as `abandoned_evidence` while recording fallback-parent inference,
+failure-memory linkage, and claim-readiness limits. Proposal scoring, semantic
+proposal/hypothesis retrieval, controller-driven backtracking, and persisted
 cross-run proposal-index tables remain future work.
 Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define

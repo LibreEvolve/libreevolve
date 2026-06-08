@@ -84,23 +84,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with the partial cascade report and the remaining difficulty, denominator,
     test-set, cost, and artifact-linkage gaps.
 
-- [ ] Keep README backtracking wording scoped until abandoned-hypothesis
-      branch evidence exists.
+- [ ] Keep README backtracking wording scoped until controller backtracking
+      decisions exist.
   - Spec evidence: AlphaEvolve's Introduction describes discovery as including
     ideation, exploration, backtracking on unpromising hypotheses,
     experimentation, and validation; Section 2.4 says cascades can prune less
     promising solutions quickly.
-  - Current evidence: README can describe rejected candidates, quarantine
-    streams, bounded failure feedback, proposal metadata, and run-local
-    hypothesis summaries. It should not imply that LibreEvolve records
-    branch-level hypothesis abandonment, backtracking targets, or redirected
-    sampling after an idea family becomes unpromising.
-  - Required result: when hypothesis-branch reports land, update README,
-    ROADMAP, papers index, and code/paper TODOs with branch ids,
-    proposal/idea-family labels, explored candidate ids, evaluator/cascade
-    evidence, abandonment or backtrack reasons, fallback target, prompt and
-    failure-memory linkage, suppression/retry policy, resumed-search outcome,
-    and claim-readiness checks.
+  - Current evidence: README now documents
+    `runtime.history.hypothesis_branch_report`, which groups generated
+    candidates by captured proposal idea/hypothesis/rationale hashes, includes
+    rejected candidates, and marks rejected/no-accepted branches as
+    `abandoned_evidence` with fallback-parent inference, failure-memory
+    linkage, and claim-readiness limits.
+  - Required result: when controller backtracking/redirect events land, update
+    README, ROADMAP, papers index, and code/paper TODOs with explicit branch
+    state transitions, suppression/retry policy, selected fallback ancestor or
+    alternative branch, causal resumed-search outcome, and replayable
+    validation.
 
 - [ ] Keep README multiple-score prompt-context wording scoped until
       metric-diverse inspiration evidence exists.

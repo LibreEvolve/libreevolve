@@ -108,28 +108,31 @@ directory and using the AlphaEvolve paper as the primary specification.
     coverage, denominator definitions, cost summaries, and claim-readiness
     checks.
 
-- [ ] Track hypothesis backtracking and abandoned-branch evidence.
+- [ ] Track controller backtracking decisions beyond abandoned-branch
+      evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Section 2.4.
   - Requirement: AlphaEvolve frames scientific/program discovery as ideation,
     exploration, backtracking on unpromising hypotheses, experimentation, and
     validation, with cascades pruning less-promising solutions before larger
     budget is spent.
-  - Partial status: LibreEvolve records candidate failures, evaluator
-    rejections, admission outcomes, quarantine streams, proposal
-    `idea`/`rationale`/`hypothesis` metadata, bounded failure-memory snippets,
-    and run-local hypothesis summaries for valid programs.
-  - Current gap: paper-facing reports do not identify a proposal/hypothesis
-    branch, track when evidence made that branch unpromising, record a
-    backtrack or abandonment decision, or show that subsequent prompt/database
-    sampling redirected to an ancestor, sibling, or different idea family.
-    Individual rejection logs and failure snippets are not enough to prove the
-    AlphaEvolve process claim about backtracking during discovery.
-  - Required result: add paper-visible hypothesis-branch reports with branch
-    id, proposal/idea-family labels, candidate ids explored, evaluator/cascade
-    evidence, abandonment or backtrack reason, fallback target, prompt and
-    failure-memory linkage, suppression/retry policy, resumed-search outcome,
-    and claim-readiness validation before using AlphaEvolve-style
-    backtracking wording.
+  - Partial status: completed manifests now include
+    `runtime.history.hypothesis_branch_report` with schema
+    `libreevolve.hypothesis_branch_report.v1`. The report groups generated
+    candidates by captured proposal text hashes and records branch ids,
+    proposal-field summaries, explored candidate ids, accepted/rejected/
+    execution-filtered counts, evaluator/cascade evidence, abandonment reason,
+    inferred fallback parent targets, prompt/failure-memory linkage,
+    suppression/retry policy status, resumed-search outcome status, and
+    claim-readiness validation.
+  - Current gap: the report is evidence of abandoned-looking hypothesis
+    branches, not proof that the controller deliberately backtracked or
+    redirected sampling. It lacks explicit branch state transitions,
+    suppression/retry events, selected fallback or alternative-branch events,
+    causal resumed-search proof, and cross-run branch tables.
+  - Required result: add controller backtracking/redirect reports with branch
+    state transitions, fallback target selection, suppression/retry policy,
+    resumed-search outcomes, and replayable validation before using
+    AlphaEvolve-style backtracking wording without qualification.
 
 - [ ] Track candidate-embedded evaluator entrypoint parity.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.

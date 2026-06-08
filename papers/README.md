@@ -539,12 +539,16 @@ through `runtime.history.resurfacing_index`,
 `resurface_by_descriptor()`, `resurface_by_novelty()`, and
 `resurface_by_feedback()`. `runtime.history.hypothesis_index` also exposes
 bounded redacted proposal idea/rationale/hypothesis summaries for valid
-programs and can feed current-run resurfacing evidence. This narrows the
-remaining database gap to durable cross-run query/index tables, full
-metric-vector and feedback/artifact-content ranking, proposal scoring,
-semantic/cross-run novelty or hypothesis retrieval, schema migrations, and
-replayable sampling policies, not the absence of any resurfacing API or
-proposal metadata capture.
+programs and can feed current-run resurfacing evidence.
+`runtime.history.hypothesis_branch_report` now groups generated candidates by
+captured proposal text hashes and marks rejected/no-accepted branches as
+`abandoned_evidence` with fallback-parent inference and failure-memory linkage.
+This narrows the remaining database gap to durable cross-run query/index
+tables, full metric-vector and feedback/artifact-content ranking, proposal
+scoring, semantic/cross-run novelty or hypothesis retrieval, explicit
+controller backtracking/redirect decisions, schema migrations, and replayable
+sampling policies, not the absence of any resurfacing API, proposal metadata
+capture, or branch-level abandonment evidence.
 
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
 identity provenance, but LibreEvolve does not yet expose paper-visible evidence

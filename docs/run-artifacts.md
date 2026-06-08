@@ -1308,6 +1308,16 @@ Important behavior:
   manifest persistence. This makes proposal-hypothesis evidence queryable from
   run artifacts, but it is not a cross-run hypothesis database or semantic
   hypothesis search layer.
+- `runtime.history.hypothesis_branch_report` groups generated candidates by
+  captured proposal idea/hypothesis/rationale text hashes, including rejected
+  candidates. It records branch ids, bounded proposal-field summaries,
+  explored candidate ids, accepted/rejected/execution-filtered counts,
+  generation span, rejection/evaluator/cascade evidence, inferred fallback
+  parent targets, failure-memory and hypothesis-context linkage, and explicit
+  claim-readiness flags. A branch with rejected candidates and no accepted
+  candidates is marked as `abandoned_evidence`, but controller suppression,
+  fallback selection events, causal redirected-sampling proof, and cross-run
+  branch tables remain unsupported.
 - `runtime.history.artifact_index` stores bounded evaluator-artifact evidence
   for programs whose `evaluation.metadata.artifacts.files` retained copied
   files. Records include program id, lineage root, validity, generation,

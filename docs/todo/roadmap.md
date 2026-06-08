@@ -4268,7 +4268,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     passes, couples an LLM coding agent with evolutionary search and
     autotuning, evaluates candidates on user-provided macro-benchmarks, and
     reports LLVM function-inlining, register-allocation, and preliminary XLA
-    results.
+    results. The design section specifies policy proposal, local evaluation,
+    hyperparameter tuning, and feedback incorporation around compiler rebuilds
+    and end-to-end macro-benchmark rewards.
   - Current evidence: ROADMAP tracks AlphaEvolve systems fixtures,
     FlashAttention/XLA IR provenance, and broad background paper-index rows,
     but it does not promote `2601.21096` beyond background-only status. It
@@ -4276,16 +4278,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     runner, macro-benchmark dataset contract, LLVM inlining benchmark,
     register-allocation benchmark, XLA portability benchmark, autotuning loop
     report, expert-baseline comparison, or production-style metric report for
-    binary size and end-to-end performance.
+    binary size and end-to-end performance. It also lacks roadmap gates for
+    feature-based versus full-API inlining search modes, EVOLVE-BLOCK compiler
+    source insertion, compiler-flag hyperparameters, temporal/domain
+    generalization, generated-policy maintainability, XLA e-graph extraction,
+    auto-sharding contest-split evaluation, and explicit caveats for
+    preliminary or not-yet-integrated XLA pipeline results.
   - Required result: add roadmap gates for `2601.21096`: paper/source
     manifest entry, PDF/cache hash, source-license and code-artifact status,
     executable C++ decision-logic candidate schema, compiler-pass integration
-    records, LLVM function-inlining benchmark, register-allocation priority-
-    rule benchmark, XLA portability benchmark, macro-benchmark provenance,
-    binary-size and performance metric definitions, autotuning loop records,
-    expert-baseline identities, seed/budget records, compiler environment
-    hashes, independent checker outputs, and a background-only or benchmark-
-    fixture status rule so roadmap claims do not outpace local
+    records, EVOLVE-BLOCK compiler-source provenance, compiler-flag
+    hyperparameter schema, LLVM function-inlining benchmark with partial/full
+    heuristic modes, register-allocation priority-rule benchmark, XLA graph-
+    extraction and auto-sharding benchmarks, macro-benchmark provenance,
+    binary-size and performance metric definitions, autotuning loop records
+    including tuner identity, batch/round counts, and invalid-sample metrics,
+    expert/neural baseline identities, temporal/domain generalization reports,
+    generated-code maintainability caveats, seed/budget records, compiler
+    environment hashes, independent checker outputs, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
     AlphaEvolve-style Magellan compiler-optimization support.
 
 - [ ] Add AlphaEvolve ArchAgent computer-architecture gates before roadmap

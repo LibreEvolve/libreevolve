@@ -5755,7 +5755,12 @@ Primary evidence:
     generation, evaluation on user-provided macro-benchmarks, and refinement.
     The reported tasks include LLVM function inlining for binary-size and
     end-to-end performance, register-allocation live-range priority rules,
-    and preliminary XLA portability results.
+    and preliminary XLA portability results. Section 2 splits the loop into
+    policy proposal, local evaluation, hyperparameter tuning, and feedback:
+    AlphaEvolve edits EVOLVE-BLOCK-delimited compiler source, emits C++
+    heuristic templates with compiler-flag hyperparameters, rebuilds the
+    compiler, evaluates macro-benchmarks with signals such as `llvm-size` or
+    `perf stat`, and can hand exposed parameters to Vizier.
   - Current evidence: `papers/README.md` lists `2601.21096` only as
     background AlphaEvolve compiler-optimization context with no
     compiler-heuristic benchmark or compiler pass runner. LibreEvolve has no
@@ -5763,20 +5768,27 @@ Primary evidence:
     candidate schema, no LLVM function-inlining benchmark, no register-
     allocation workload fixture, no XLA portability fixture, no macro-
     benchmark harness, no compiler integration/artifact policy, no expert-
-    baseline comparison table, and no production-style binary-size,
-    end-to-end-performance, or large-workload validation reports.
+    baseline comparison table, no feature-based versus full-heuristic
+    inlining mode distinction, no autotuner batch/round telemetry, no
+    temporal/domain generalization report, no generated-policy maintainability
+    report, and no production-style binary-size, end-to-end-performance, or
+    large-workload validation reports.
   - Required result: add source-manifest and implementation-boundary metadata
     for `2601.21096`: arXiv id/version/date/PDF hash, authors, source
     license, code/artifact availability, relation to AlphaEvolve and
     LibreEvolve compiler fixtures, C++ decision-logic candidate schemas,
-    compiler-pass integration points, LLVM inlining task records,
-    register-allocation priority-rule records, XLA portability task records,
-    macro-benchmark dataset provenance, binary-size and performance metric
-    definitions, autotuning loop metadata, expert baseline identities,
-    seed/budget records, compiler build/runtime environment hashes,
-    independent checker outputs, and README/ROADMAP wording that keeps
-    Magellan-style compiler optimization as missing evidence until local
-    implementation and benchmark reports exist.
+    compiler-pass integration points, EVOLVE-BLOCK source-span and insertion
+    records, compiler-flag hyperparameter schemas, LLVM inlining task records
+    for partial-feature and full-API heuristics, register-allocation
+    priority-rule records for `RegAllocGreedy`, XLA graph-extraction and
+    auto-sharding task records, macro-benchmark dataset provenance,
+    binary-size and performance metric definitions, autotuning loop metadata
+    including batch size/rounds and invalid-sample rate, expert and neural
+    baseline identities, temporal and domain generalization rows,
+    generated-code maintainability rows, seed/budget records, compiler
+    build/runtime environment hashes, independent checker outputs, and
+    README/ROADMAP wording that keeps Magellan-style compiler optimization as
+    missing evidence until local implementation and benchmark reports exist.
 
 - [ ] Add AlphaEvolve ArchAgent computer-architecture boundary.
   - Spec evidence: arXiv `2602.22425`, `ArchAgent: Agentic AI-driven Computer

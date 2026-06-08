@@ -5326,7 +5326,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     with evolutionary search and autotuning. It reports closed-loop
     generation, macro-benchmark evaluation, and refinement across production
     optimization tasks, including LLVM function inlining, register allocation,
-    and preliminary XLA portability.
+    and preliminary XLA portability. Its method section records policy
+    proposal in EVOLVE-BLOCK-delimited compiler source, local compiler rebuild
+    and macro-benchmark evaluation, hyperparameter tuning, and feedback
+    incorporation.
   - Current gap: `papers/README.md` lists `2601.21096` as background-only
     compiler-optimization application context with no compiler-heuristic
     benchmark or compiler pass runner, and the active TODO coverage does not
@@ -5334,19 +5337,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     do not capture Magellan's C++ decision-logic candidates, macro-benchmark
     datasets, compiler-pass integration points, binary-size and end-to-end
     performance metrics, register-allocation priority rules, XLA portability
-    records, or expert-baseline comparison evidence.
+    records, or expert-baseline comparison evidence. They also do not require
+    paper-facing rows for feature-based versus full-API inlining,
+    Vizier-style autotuning, invalid-sample-rate reduction, temporal/domain
+    generalization, generated-code maintainability caveats, XLA e-graph
+    extraction, or auto-sharding contest split/protocol limits.
   - Required result: add paper-manifest and paper-index coverage updates for
     `2601.21096`: title/authors/arXiv version/date/PDF digest, source
     license, code/artifact URL/status, relation to AlphaEvolve and
     LibreEvolve compiler assumptions, executable C++ decision-logic candidate
     schemas, compiler-pass integration metadata, LLVM inlining task records,
-    register-allocation task records, XLA portability task records, macro-
-    benchmark provenance, metric definitions for binary-size and end-to-end
-    performance, autotuning loop records, expert baseline identities, seed/
-    budget records, compiler build/runtime environment metadata, independent
-    checker outputs, reproducibility status, and README/ROADMAP wording that
-    treats Magellan-style compiler optimization as missing paper evidence
-    rather than implemented LibreEvolve support.
+    register-allocation task records, XLA e-graph extraction and
+    auto-sharding task records, macro-benchmark provenance, metric definitions
+    for binary-size and end-to-end performance, autotuning loop records with
+    tuner identity and batch/round counts, feature/full heuristic mode labels,
+    temporal/domain generalization rows, generated-policy size and
+    maintainability caveats, expert/neural baseline identities, seed/budget
+    records, compiler build/runtime environment metadata, independent checker
+    outputs, reproducibility status, and README/ROADMAP wording that treats
+    Magellan-style compiler optimization as missing paper evidence rather
+    than implemented LibreEvolve support.
 
 - [ ] Track AlphaEvolve ArchAgent computer-architecture paper evidence.
   - Paper/source evidence: arXiv `2602.22425`, submitted February 25, 2026, is

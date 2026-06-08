@@ -3842,24 +3842,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     compiler passes. Its abstract reports a closed loop of generation,
     user-provided macro-benchmark evaluation, autotuning, and refinement, with
     LLVM function-inlining, register-allocation, and preliminary XLA
-    optimization results.
+    optimization results. The paper's concrete loop edits EVOLVE-BLOCK regions
+    in compiler source, emits C++ decision policies with compiler-flag
+    hyperparameters, rebuilds the toolchain, scores macro-benchmarks with
+    binary-size or runtime signals, and feeds best scores, tuning logs, and
+    profiling traces back into AlphaEvolve.
   - Current evidence: README documents general AlphaEvolve systems gaps,
     paper-cache status, benchmark-report contracts, and existing smoke
     fixtures. It does not mention `2601.21096`, define compiler-heuristic
     candidates, run compiler pass candidates, evaluate LLVM inlining, measure
     register-allocation priority rules, test XLA portability, preserve macro-
     benchmark provenance, compare expert compiler baselines, or report binary-
-    size and end-to-end-performance results.
+    size and end-to-end-performance results. It also lacks README boundaries
+    for feature-based versus full-API inlining modes, autotuner-assisted
+    hyperparameter search, temporal/domain generalization, generated-policy
+    maintainability, and XLA graph-extraction or auto-sharding benchmark
+    caveats.
   - Required result: if README mentions Magellan, compiler-optimization
     heuristics, executable C++ compiler decision logic, compiler pass
     evolution, LLVM inlining, register-allocation priority rules, XLA
     portability, macro-benchmark compiler evaluation, AlphaEvolve-discovered
     compiler policies, or compiler autotuning loops, keep the wording source-
     scoped until local artifacts can show the paper in the manifest, candidate
-    schemas, compiler-pass runners, benchmark provenance, metric definitions,
-    baseline identities, environment hashes, independent checker outputs, and
-    benchmark reports. Avoid implying LibreEvolve supports AlphaEvolve-style
-    Magellan compiler optimization without those artifacts.
+    schemas, EVOLVE-BLOCK compiler-source spans, compiler-pass runners,
+    benchmark provenance, metric definitions, feature/full heuristic mode
+    labels, autotuning traces, generalization reports, maintainability reports,
+    XLA task/protocol rows, baseline identities, environment hashes,
+    independent checker outputs, and benchmark reports. Avoid implying
+    LibreEvolve supports AlphaEvolve-style Magellan compiler optimization
+    without those artifacts.
 
 - [ ] Keep README AlphaEvolve ArchAgent computer-architecture claims absent
       or source-scoped until simulator benchmark evidence exists.

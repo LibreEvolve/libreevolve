@@ -21,6 +21,18 @@ EXPECTED_VARIANT_IDS = (
 STATUSES = frozenset({"definition_only", "implemented", "reported"})
 VARIANT_ROLES = frozenset({"baseline", "ablation"})
 ASSERTION_OPERATORS = frozenset({"equals", "not_equals", "in", "gt", "gte", "lt", "lte"})
+NO_EVOLUTION_SCOPE_BOUNDARY = {
+    "alphaevolve_setup": "same_initial_program_repeated_sampling_no_evolutionary_feedback",
+    "current_scope": "declarative_zero_generation_seed_only_labels",
+    "paper_match_status": "prompt_history_unproven",
+}
+NO_EVOLUTION_REQUIRED_EVIDENCE = frozenset({
+    "same_initial_program_prompt_history",
+    "no_database_selected_parent",
+    "no_inspiration_program_context",
+    "no_previous_candidate_feedback",
+    "no_archive_feedback_context",
+})
 NO_FULL_FILE_EVOLUTION_SCOPE_BOUNDARY = {
     "alphaevolve_setup": "tensor_decomposition_loss_function_only",
     "current_scope": "localized_diff_single_primary_python_file_no_topology",
@@ -218,6 +230,19 @@ def _validate_variant(
     citations = variant.get("paper_citations")
     if not isinstance(citations, list) or "2506.13131" not in citations:
         issues.append(AblationRegistryIssue("missing_alphaevolve_citation", "paper_citations must include 2506.13131", variant_id))
+    if variant_id == "no_evolution":
+        _validate_variant_scope_boundary(
+            variant.get("paper_scope_boundary"),
+            variant_id,
+            expected_fields=NO_EVOLUTION_SCOPE_BOUNDARY,
+            expected_evidence=NO_EVOLUTION_REQUIRED_EVIDENCE,
+            missing_code="missing_no_evolution_scope_boundary",
+            invalid_boundary_code="invalid_no_evolution_scope_boundary",
+            invalid_evidence_code="invalid_no_evolution_future_evidence",
+            missing_message="No evolution must record its repeated-sampling prompt-history boundary",
+            evidence_message="No evolution boundary must list the required future evidence",
+            issues=issues,
+        )
     if variant_id == "no_full_file_evolution":
         _validate_variant_scope_boundary(
             variant.get("paper_scope_boundary"),

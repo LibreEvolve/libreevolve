@@ -1036,11 +1036,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     evolution` variant, keep the registry's non-equivalence boundary until a
     runner emits loss-function-only tensor-decomposition scope evidence rather
     than treating generic single-file/diff/no-topology settings as equivalent.
-    For the `No evolution` variant, require executed prompt and
-    history proof that each candidate is generated from the same initial
-    program with no database-selected parent/inspiration programs, archive
-    admission feedback, or previous-candidate resurfacing, rather than relying
-    on declarative `candidate_source` or `archive_admission_enabled` labels.
+    For the `No evolution` variant, keep the registry's validated
+    prompt-history-unproven boundary until executed prompt and history proof
+    shows that each candidate is generated from the same initial program with
+    no database-selected parent/inspiration programs, archive admission
+    feedback, or previous-candidate resurfacing, rather than relying on
+    declarative `candidate_source` or `archive_admission_enabled` labels.
     For the `No context in the prompt` variant, keep the registry's validated
     over-broad non-equivalence boundary until executed prompt-history and
     prompt-diagnostic proof shows explicit context sources were absent, require

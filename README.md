@@ -3161,9 +3161,11 @@ variants/seeds for each target, passed component assertions, and hashed curve
 artifacts. It does not yet require Figure 8 target-family coverage or
 target-metric identity, higher-is-better direction, normalization, and
 aggregation metadata for the plotted y-axis. It also does not prove the
-`No evolution` condition by checking executed prompt/history records for the
-same initial program and absent evolutionary database parent, inspiration,
-previous-candidate, and archive-feedback context. It also does not prove the
+`No evolution` condition: the registry row now carries a validated
+`paper_scope_boundary` that marks current zero-generation/seed-only labels as
+`prompt_history_unproven`, but it still has no executed prompt/history records
+showing the same initial program and absent evolutionary database parent,
+inspiration, previous-candidate, and archive-feedback context. It also does not prove the
 `No context in the prompt` condition with executed prompt-history evidence:
 the registry row now carries a validated `paper_scope_boundary` that marks the
 current parent/inspiration/failure/plugin section-disable scope as
@@ -3243,7 +3245,9 @@ AlphaEvolve Figure 8 full-system baseline plus the five named component
 ablations. It is a report contract, not executed results: each variant records
 the intended disabled components, config assertions, three-seed aggregation
 policy, target aggregation policy, equal-budget fractions, required result
-fields, and paper citation metadata. The `No full-file evolution` registry row
+fields, and paper citation metadata. The `No evolution` registry row records a
+validated prompt-history-unproven boundary for repeated same-seed prompting
+without evolutionary feedback. The `No full-file evolution` registry row
 also has a validated `paper_scope_boundary` that keeps its current localized
 single-file diff/no-topology scope explicitly marked as not equivalent to
 AlphaEvolve's tensor-decomposition loss-function-only ablation. The

@@ -736,10 +736,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `archive_admission_enabled`, `prompt_context_sections`,
     `candidate_workspace_mode`, `file_create_delete_enabled`,
     `ensemble_strategy: single_backend`, and `backend_capability_tier`. The
-    registry also does not yet prove the `No evolution` setup where every
-    prompt is built from the same initial program without database-selected
-    parents, inspirations, previous-candidate feedback, or archive admission
-    feedback. It also does not yet prove a paper-faithful
+    registry now records a validated `No evolution` `paper_scope_boundary`
+    marking current zero-generation/seed-only labels as
+    `prompt_history_unproven`, but it still does not prove that every prompt is
+    built from the same initial program without database-selected parents,
+    inspirations, previous-candidate feedback, or archive admission feedback.
+    It also does not yet prove a paper-faithful
     `No context in the prompt` setup: the registry now records a validated
     `paper_scope_boundary` marking the current parent/inspiration/failure/
     plugin section-disable scope as `over_broad_not_equivalent` to
@@ -777,10 +779,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     overclaims AlphaEvolve-style executed ablations. For `No full-file
     evolution`, keep README wording tied to the validated non-equivalence
     boundary until a real loss-function-only tensor-decomposition harness
-    exists. Require
-    README wording to distinguish `No evolution` registry labels from executed
-    evidence that the same initial program was repeatedly prompted without
-    evolutionary database feedback. Keep README wording tied to the
+    exists. Keep README wording tied to the `No evolution`
+    prompt-history-unproven boundary until executed evidence proves that the
+    same initial program was repeatedly prompted without evolutionary database
+    feedback. Keep README wording tied to the
     `No context in the prompt` validated over-broad non-equivalence boundary
     until executed prompt-history evidence proves absent explicit context
     sources and separately identifies which normal evolutionary prompt sections

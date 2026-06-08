@@ -91,9 +91,12 @@ metadata, but it does not claim those reports have been run. Its
 that records AlphaEvolve's tensor-decomposition loss-function-only setup and
 marks the current localized single-file diff/no-topology scope as
 `not_equivalent`; that boundary is still not executable proof that only the
-loss function is mutable. The `No evolution` row has no executed prompt/history
-proof that each proposal repeatedly starts from the same initial program
-without evolutionary-database parent, inspiration, previous-candidate, or
+loss function is mutable. The `No evolution` row now carries a validated
+`paper_scope_boundary` that records the repeated-sampling/no-evolutionary
+feedback setup and marks current zero-generation/seed-only labels as
+`prompt_history_unproven`; it still has no executed prompt/history proof that
+each proposal repeatedly starts from the same initial program without
+evolutionary-database parent, inspiration, previous-candidate, or
 archive-feedback context. The `No context in the prompt` row is currently too
 broad for the paper definition: AlphaEvolve describes removing explicit
 problem-specific context, not removing the current program or evolutionary
@@ -846,6 +849,8 @@ Implemented:
   assertions, and hashed curve artifacts. The checked-in `No full-file
   evolution` variant records a validated non-equivalence boundary against
   AlphaEvolve's tensor-decomposition loss-function-only setup, and the
+  `No evolution` variant records a validated prompt-history-unproven boundary
+  for repeated same-seed prompting without evolutionary feedback. The
   `No context in the prompt` variant records a validated over-broad
   non-equivalence boundary against AlphaEvolve's explicit-context ablation, and
   the `Small base LLM only` variant records a validated telemetry-unproven

@@ -3525,7 +3525,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     variants, bind every component assertion to executable runtime controls,
     collect intermediate progress from real experiments, or generate
     equal-budget reports from executable benchmark scripts.
-    For `No evolution`, the current registry does not prove that every prompt
+    For `No evolution`, the registry now records a validated
+    `paper_scope_boundary` marking current zero-generation/seed-only labels as
+    `prompt_history_unproven`, but it does not prove that every prompt
     repeatedly feeds the same initial program with no database-selected parent,
     inspiration, previous-candidate feedback, or archive-feedback context.
     For `No context in the prompt`, the registry now records a validated
@@ -3563,7 +3565,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     report contract nor overclaims repeatable AlphaEvolve-grade benchmark
     execution. Ensure the `No evolution` harness records prompt/history
     evidence that the same initial program was used for every proposal and
-    that evolutionary database feedback was absent. Ensure the
+    that evolutionary database feedback was absent before retiring the
+    prompt-history-unproven boundary. Ensure the
     `No context in the prompt` harness records prompt
     history or diagnostics proving absent explicit context sources, a
     paper-facing classification of local context-like sections, and separate

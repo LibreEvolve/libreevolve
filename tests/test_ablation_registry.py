@@ -19,6 +19,9 @@ def test_ablation_registry_enumerates_alphaevolve_figure8_variants():
     assert tuple(variant_ids) == EXPECTED_VARIANT_IDS
     assert data["report_contract"]["seed_policy"]["independent_seed_count"] == 3
     assert data["report_contract"]["budget_axis"] == "fraction_of_equal_compute_budget"
+    no_evolution = next(variant for variant in data["variants"] if variant["id"] == "no_evolution")
+    assert no_evolution["paper_scope_boundary"]["alphaevolve_setup"] == "same_initial_program_repeated_sampling_no_evolutionary_feedback"
+    assert no_evolution["paper_scope_boundary"]["paper_match_status"] == "prompt_history_unproven"
     no_context = next(variant for variant in data["variants"] if variant["id"] == "no_context_in_prompt")
     assert no_context["paper_scope_boundary"]["alphaevolve_setup"] == "explicit_problem_specific_context_removed"
     assert no_context["paper_scope_boundary"]["paper_match_status"] == "over_broad_not_equivalent"
@@ -78,6 +81,24 @@ def test_ablation_registry_requires_report_contract_fields(tmp_path):
 
     assert report.ok is False
     assert [issue.code for issue in report.issues] == ["invalid_required_result_fields"]
+
+
+def test_ablation_registry_requires_no_evolution_scope_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    for variant in data["variants"]:
+        if variant["id"] == "no_evolution":
+            variant["paper_scope_boundary"]["paper_match_status"] = "proved"
+            variant["paper_scope_boundary"]["required_future_evidence"] = ["same_initial_program_prompt_history"]
+            break
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_ablation_registry(registry)
+    issue_codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_no_evolution_scope_boundary" in issue_codes
+    assert "invalid_no_evolution_future_evidence" in issue_codes
 
 
 def test_ablation_registry_requires_no_full_file_scope_boundary(tmp_path):

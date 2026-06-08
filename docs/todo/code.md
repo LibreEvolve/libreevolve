@@ -4563,10 +4563,12 @@ Primary evidence:
     config/runtime bindings for every Figure 8 component assertion and keep
     the full-system baseline distinct from the five component-disabled
     ablations before any ablation runner treats the current registry as
-    runnable experiment policy. For `No evolution`, add runner and history
-    checks proving the same initial program is repeatedly fed to the LLM and
-    no generated program is selected from the evolutionary database as parent,
-    inspiration, or archive-feedback context. For `No context in the prompt`,
+    runnable experiment policy. For `No evolution`, the registry now records a
+    validated `paper_scope_boundary` marking current zero-generation/seed-only
+    labels as `prompt_history_unproven`. Add runner and history checks proving
+    the same initial program is repeatedly fed to the LLM and no generated
+    program is selected from the evolutionary database as parent, inspiration,
+    or archive-feedback context. For `No context in the prompt`,
     the registry now records a validated `paper_scope_boundary` marking the
     current parent/inspiration/failure/plugin section-disable scope as
     `over_broad_not_equivalent` to AlphaEvolve's explicit problem-specific

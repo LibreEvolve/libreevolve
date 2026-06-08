@@ -54,6 +54,18 @@
       ],
       "paper_label": "No evolution",
       "paper_citations": ["2506.13131"],
+      "paper_scope_boundary": {
+        "alphaevolve_setup": "same_initial_program_repeated_sampling_no_evolutionary_feedback",
+        "current_scope": "declarative_zero_generation_seed_only_labels",
+        "paper_match_status": "prompt_history_unproven",
+        "required_future_evidence": [
+          "same_initial_program_prompt_history",
+          "no_database_selected_parent",
+          "no_inspiration_program_context",
+          "no_previous_candidate_feedback",
+          "no_archive_feedback_context"
+        ]
+      },
       "rationale": "Tests whether iterative evolutionary selection and archive feedback improve over non-evolutionary sampling."
     },
     {

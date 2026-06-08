@@ -2003,6 +2003,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark telemetry before README implies AlphaEvolve-style replacement of
     handwritten mutation operators.
 
+- [ ] Keep README creative-generation wording scoped until proposal-diversity
+      evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previous
+    solutions and propose new, diverse ways to improve them, while Section 4
+    ablations connect stronger underlying LLMs to better performance.
+  - Current evidence: README can describe parent/inspiration prompt context,
+    proposal metadata, candidate history, sampling strategy metadata, bounded
+    hypothesis summaries, and backend/model telemetry. It should not imply
+    that LibreEvolve currently measures generated-proposal diversity,
+    duplicate/near-duplicate rates, semantic idea novelty, or model-quality
+    effects on proposal diversity.
+  - Required result: when proposal-diversity reporting lands, update README,
+    ROADMAP, papers index, and code/paper TODOs with per-call or per-batch
+    idea/operator-family labels, parent/inspiration relations, prompt/backend
+    model ids, duplicate/near-duplicate diagnostics, code and semantic or
+    task-output distance measures where available, accepted/rejected outcomes,
+    novelty contribution, and equal-budget/model ablation linkage.
+
 - [ ] Keep README database-output claims scoped to prompt-visible output
       capture versus queryable output indexes.
   - Spec evidence: AlphaEvolve's evolutionary database stores generated

@@ -1940,6 +1940,31 @@ Primary evidence:
     claiming AlphaEvolve's "no fixed handwritten mutation-operator set"
     related-work contrast.
 
+- [ ] Add proposal-diversity and idea-novelty evidence for creative
+      generation.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previously
+    developed solutions and propose new, diverse ways to improve them. The
+    same section and later ablations frame model strength as part of the
+    creative-generation claim, with performance improving as the underlying
+    LLM improves.
+  - Current evidence: LibreEvolve records prompt and call ids, selected parent
+    and inspiration ids, proposal `idea`/`rationale`/`hypothesis` metadata,
+    candidate history, admission outcomes, sampling strategy metadata,
+    bounded hypothesis indexes, and backend/model telemetry. Existing TODOs
+    separately track semantic proposal retrieval, initial-pool divergence, and
+    higher-level mutation-operator families. Those surfaces do not prove that
+    generated proposals within a call or batch are diverse improvement
+    approaches rather than duplicates, near-duplicates, or minor variants of
+    the same idea, and they do not relate proposal diversity to model/context
+    quality.
+  - Required result: add versioned per-call or per-batch proposal-diversity
+    reports with idea/operator-family labels, code-distance and semantic or
+    task-output distance where available, duplicate/near-duplicate detection,
+    parent/inspiration relation, prompt/context/backend model ids,
+    accepted/rejected status, novelty contribution, and equal-budget/model
+    ablation linkage before claiming AlphaEvolve-style creative generation of
+    new, diverse improvement approaches.
+
 - [ ] Replay archive event logs as an ordered migration restore engine.
   - Spec evidence: AlphaEvolve's program database is an active evolutionary
     state, not just a candidate log; resuming, auditing, and comparing runs

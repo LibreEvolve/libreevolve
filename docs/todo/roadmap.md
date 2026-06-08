@@ -1071,6 +1071,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     edit-payload support from AlphaEvolve's broader claim that LLMs replace
     handwritten mutation-operator sets.
 
+- [ ] Keep creative-generation roadmap wording scoped until proposal-diversity
+      evidence exists.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previously
+    developed solutions and propose new, diverse ways to improve them, and its
+    ablations connect stronger underlying LLMs to better performance.
+  - Current evidence: `ROADMAP.md` can describe selected parent/inspiration
+    context, proposal metadata, candidate outcomes, sampling strategy metadata,
+    bounded hypothesis summaries, and backend/model telemetry. That does not
+    yet prove proposal-level diversity or idea novelty across a call, batch,
+    generation, prompt context, or backend/model comparison.
+  - Required result: when proposal-diversity reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with per-call or per-batch
+    idea/operator-family labels, duplicate/near-duplicate diagnostics, code
+    and semantic or task-output distances where available, parent/inspiration
+    relations, prompt/backend model ids, accepted/rejected outcomes, novelty
+    contribution, and equal-budget/model ablation linkage so roadmap wording
+    separates current proposal metadata from AlphaEvolve-style SOTA LLM
+    creative-generation evidence.
+
 - [ ] Keep database-query-index follow-up wording scoped to run-local
       resurfacing versus durable cross-run indexes.
   - Spec evidence: AlphaEvolve's program database should support durable

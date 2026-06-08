@@ -2139,6 +2139,28 @@ Primary evidence:
     lower-bound value, source section linkage, and README/ROADMAP wording that
     distinguishes the two witness sets from aggregate Appendix B coverage.
 
+- [ ] Add Appendix B.6 finite-set theorem/admissibility provenance.
+  - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` through arbitrarily
+    large finite integer sets `A` and `B`, the sumset
+    `A + B = {a + b : a in A, b in B}`, the difference set
+    `A - B = {a - b : a in A, b in B}`, and asymptotic notation where
+    `X << Y`/`X >> Y` use constants independent of sufficiently large sets.
+    It then cites `[39, Corollary 3]` for `C6 <= 4/3`, `[39, Theorem 1]` for
+    the prior lower bound, and the Gyarmati et al. finite-set theorem requiring
+    `U` to be a finite set of non-negative integers containing zero with
+    `|U - U| <= 2 max(U) + 1`.
+  - Current evidence: the B.6 witness TODO records `U1`/`U2`, arithmetic
+    counts, feasibility checks, and derived lower-bound values, but no
+    code/report schema separately records the theorem statement, asymptotic
+    quantifier scope, sumset/difference-set definitions, source theorem ids,
+    or admissibility preconditions that distinguish theorem-valid witnesses
+    from arbitrary finite-set payloads.
+  - Required result: add Appendix B.6 theorem metadata and validators for the
+    `C6` statement, `A+B`/`A-B` definitions, `<<`/`>>` constant-independence
+    notes, prior bound sources, Gyarmati theorem/corollary references,
+    admissible-`U` domain checks, and README/ROADMAP wording that keeps
+    theorem conditions separate from witness-payload provenance.
+
 - [ ] Add Appendix B.7 regular-hexagon packing provenance.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon
     packing improvements: packing `n = 11` disjoint unit regular hexagons into

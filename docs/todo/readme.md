@@ -1293,6 +1293,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     values, payload hashes, and source links without collapsing the result to
     one aggregate finite-set claim.
 
+- [ ] Keep README Appendix B.6 theorem wording scoped until admissibility
+      evidence exists.
+  - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` via arbitrarily large
+    finite sets `A` and `B`, explicit sumset/difference-set notation,
+    `X << Y` and `X >> Y` constants independent of sufficiently large sets,
+    `[39, Corollary 3]` for the `4/3` upper bound, `[39, Theorem 1]` for the
+    lower-bound method, and a Gyarmati finite-set admissibility condition for
+    non-negative integer `U` containing zero.
+  - Current evidence: README can point to B.6 witness gaps, but it does not
+    separately warn that theorem definitions and admissibility conditions must
+    be present before presenting the witness rows as source-faithful evidence
+    for `C6`.
+  - Required result: when B.6 theorem-condition metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README distinguishes
+    theorem scope, notation, source theorem anchors, admissible-`U` checks,
+    and witness arithmetic instead of treating all B.6 evidence as payload
+    provenance alone.
+
 - [ ] Keep README Appendix B.7 regular-hexagon wording scoped until packing
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two unit-regular-hexagon

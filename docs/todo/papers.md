@@ -2209,6 +2209,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     that separates the two finite-set witnesses from broad Appendix B family
     coverage.
 
+- [ ] Track Appendix B.6 theorem-condition evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 first defines
+    `C6` using arbitrarily large finite integer sets `A` and `B`, with
+    `A+B` and `A-B` explicitly defined as sumset and difference set. The
+    appendix states that `X << Y` and `X >> Y` use constants independent of
+    sufficiently large sets, cites `[39, Corollary 3]` for `C6 <= 4/3` and
+    `[39, Theorem 1]` for the lower-bound framework, then applies the
+    Gyarmati et al. result for finite `U` consisting of non-negative integers
+    containing zero and satisfying `|U - U| <= 2 max(U) + 1`.
+  - Current gap: paper-facing B.6 TODOs retain witness identities and
+    recomputation inputs, but they do not require reports to preserve the
+    theorem-level definitions, asymptotic constant scope, cited theorem and
+    corollary anchors, or admissible-`U` domain statement. A report could
+    recompute `U1`/`U2` values while omitting the source theorem conditions
+    that justify using those finite sets for `C6`.
+  - Required result: add paper/report evidence for B.6 theorem rows:
+    theorem id, source location, sumset/difference-set definitions,
+    `<<`/`>>` semantics, lower/upper source references, admissible-`U`
+    conditions, formula linkage to witness rows, and README/ROADMAP text that
+    separates theorem-condition evidence from witness arithmetic.
+
 - [ ] Track Appendix B.7 regular-hexagon packing evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.7 improves two
     regular-hexagon packing bounds: for `n = 11`, the outer regular-hexagon

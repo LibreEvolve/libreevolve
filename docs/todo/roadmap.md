@@ -2265,6 +2265,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     derived lower-bound values, payload hashes, and source links from aggregate
     Appendix B coverage.
 
+- [ ] Keep Appendix B.6 roadmap wording scoped until theorem-condition
+      provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.6 defines the `C6` problem through
+    arbitrarily large finite integer sets `A` and `B`, explicit
+    sumset/difference-set definitions, asymptotic `<<`/`>>` notation whose
+    constants are independent of sufficiently large sets, and source anchors
+    `[39, Corollary 3]` for `C6 <= 4/3` and `[39, Theorem 1]` for the
+    Gyarmati lower-bound theorem. The finite-set theorem applies only to
+    non-negative integer `U` containing zero and satisfying
+    `|U - U| <= 2 max(U) + 1`.
+  - Current evidence: roadmap/README/paper-index wording can cite B.6 witness
+    provenance, but it does not separately require the theorem definitions,
+    asymptotic-notation scope, cited source theorem/corollary ids, or
+    admissible-`U` preconditions that make finite-set witnesses meaningful.
+  - Required result: when B.6 theorem-condition metadata lands, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap claims distinguish
+    theorem scope and admissibility evidence from `U1`/`U2` witness payloads,
+    arithmetic counts, and derived lower-bound values.
+
 - [ ] Keep Appendix B.7 roadmap wording scoped until regular-hexagon packing
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon

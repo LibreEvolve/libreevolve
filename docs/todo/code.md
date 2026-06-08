@@ -6303,3 +6303,37 @@ Primary evidence:
     values, Table 3 debugging success-rate values, deep-research ablation rows,
     runtime/GPU budget records, and README/ROADMAP wording that keeps current
     retrieval context separate from DeepEvolve execution semantics.
+
+- [ ] Add MAP-Elites illumination-algorithm source boundary before archive
+      completeness claims.
+  - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
+    mapping elites`, defines MAP-Elites as an illumination algorithm that maps
+    the highest-performing elite for each cell in a user-chosen feature space.
+    The paper specifies a feature descriptor `b(x)`, performance function
+    `f(x)`, discretized N-dimensional map `P`/`X`, random initialization for
+    `G` solutions, random elite selection plus variation, replacement only when
+    a candidate improves its feature cell, and evaluation criteria for global
+    performance, global reliability, precision, and coverage.
+  - Current evidence: `libreevolve/population/map_elites.py` implements a local
+    3D archive whose defaults are scalar archive selection score, serialized
+    workspace complexity, and TF-IDF diversity; configurable descriptor axes can
+    use normalized metrics or numeric metadata, and archive snapshots persist
+    descriptor policy/model metadata. Existing active TODOs mention MAP-Elites
+    descriptor and archive gaps, but there is no source-specific code TODO for
+    `1504.04909`, no paper-version/source boundary, no explicit `b(x)` feature
+    descriptor contract, no random-initialization/variation policy evidence, no
+    illumination-map report, no coverage/reliability/precision metrics, no
+    feature-space visualization artifacts, no parent-distance/lineage stepping-
+    stone analysis, and no paper-domain reproduction rows for modular neural
+    networks or soft robots.
+  - Required result: add source-boundary metadata and implementation gates for
+    `1504.04909`: paper version/date/PDF hash, feature-descriptor schema,
+    user-chosen dimension declarations, discretization/binning resource policy,
+    performance function and cell replacement records, initialization and
+    variation policy records, feature-performance map export with both `P` and
+    `X` identities, empty/unfillable cell diagnostics, coverage/global
+    reliability/precision/global-performance reports, archive visualization
+    artifacts, lineage parent-cell distance reports, descriptor compatibility
+    and rebin tests, benchmark/domain reproduction notes, and README/ROADMAP
+    wording that keeps LibreEvolve's current 3D archive separate from full
+    MAP-Elites illumination evidence.

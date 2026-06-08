@@ -4290,4 +4290,33 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     runtime/GPU budgets, and a clear distinction between bounded retrieval
     context and DeepEvolve execution semantics.
 
+- [ ] Keep README MAP-Elites wording scoped until illumination evidence exists.
+  - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
+    mapping elites`, defines MAP-Elites as an illumination algorithm that
+    returns a feature-performance map of elites across user-chosen behavior
+    dimensions, with explicit feature descriptors, discretized cells, random
+    initialization, variation from selected elites, per-cell replacement, and
+    reports for global performance, global reliability, precision, and
+    coverage.
+  - Current evidence: README describes LibreEvolve's MAP-Elites archive as a
+    local 3D quality-diversity grid plus retained elite list, with default
+    axes based on archive selection score, complexity, and TF-IDF diversity,
+    and configurable descriptor axes over metrics/metadata. Existing README
+    TODOs scope descriptor claims to insertion-time coordinates, but README
+    does not require a `1504.04909` source-specific boundary for paper
+    pseudocode, user-chosen feature descriptor contracts, illumination metrics,
+    feature-performance map exports, visualization artifacts, unfilled-cell
+    diagnostics, lineage/stepping-stone analysis, benchmark/domain
+    reproduction, or descriptor rebin compatibility evidence.
+  - Required result: if README mentions MAP-Elites, illumination, behavior
+    descriptors, feature-performance maps, archive coverage, reliability,
+    precision, elite maps, or paper-faithful quality-diversity behavior, keep
+    wording source-scoped until manifests and reports include the `1504.04909`
+    source row, PDF hash, `b(x)`/`f(x)` schemas, dimension/discretization
+    records, initialization/variation/replacement records, full map exports,
+    coverage/reliability/precision/global-performance reports, visualization
+    artifacts, lineage/parent-distance evidence, descriptor compatibility
+    tests, and a clear distinction between LibreEvolve's current 3D archive and
+    MAP-Elites illumination semantics.
+
 ## Architecture Description

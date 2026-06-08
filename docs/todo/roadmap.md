@@ -4728,3 +4728,33 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     30-minute/single-GPU budget evidence, and README/papers/code wording that
     keeps DeepEvolve as retrieval/debug-loop inspiration until local execution
     evidence proves those semantics.
+
+- [ ] Add MAP-Elites illumination-algorithm gates before roadmap promotion.
+  - Spec evidence: local arXiv `1504.04909`, `Illuminating search spaces by
+    mapping elites`, defines MAP-Elites as a feature-performance map over
+    user-chosen dimensions of variation. The simple algorithm maintains maps
+    `P` and `X`, initializes with random solutions, repeatedly selects an elite
+    from the map, applies random variation, computes feature descriptor `b(x)`
+    and performance `f(x)`, and replaces a cell occupant only when the new
+    candidate improves that cell. The paper evaluates illumination with global
+    performance, global reliability, precision, and coverage.
+  - Current evidence: ROADMAP describes a configurable local MAP-Elites archive
+    and tracks stable descriptor/rebin gaps, while `papers/README.md` says the
+    default local axes are selection score, serialized-workspace complexity,
+    and TF-IDF diversity. Roadmap lacks `1504.04909`-specific gates for paper
+    source metadata, explicit feature-descriptor schemas, user-chosen dimension
+    semantics, initialization/variation evidence, full feature-performance map
+    exports, unfilled-cell diagnostics, illumination metric reports,
+    visualization artifacts, parent-distance/lineage stepping-stone analysis,
+    benchmark/domain reproduction, and descriptor compatibility tests.
+  - Required result: add roadmap gates for `1504.04909`: paper/source manifest
+    entry, PDF/cache hash, preliminary-draft status, `b(x)`/`f(x)` contracts,
+    dimension declaration and discretization policy, random-initialization and
+    variation policy, per-cell replacement records, `P`/`X` feature-
+    performance map exports, empty/unfillable cell diagnostics, coverage/global
+    reliability/precision/global-performance reports, heatmap/visualization
+    artifacts, lineage parent-cell distance reports, descriptor-model
+    compatibility and rebin validation, NS+LC/MOLE/random/traditional-EA
+    comparison context, benchmark-domain notes, and README/papers/code wording
+    that keeps current 3D archive support separate from full MAP-Elites
+    illumination evidence.

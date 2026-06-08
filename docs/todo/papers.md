@@ -5838,3 +5838,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     budget evidence, and README/ROADMAP/code wording that keeps current
     DeepResearch retrieval context marked missing for DeepEvolve execution
     claims.
+
+- [ ] Track MAP-Elites illumination-algorithm paper evidence as a source-
+      specific boundary.
+  - Paper/source evidence: local arXiv `1504.04909`, `Illuminating search
+    spaces by mapping elites`, introduces the Multi-dimensional Archive of
+    Phenotypic Elites as an illumination algorithm. It searches a high-
+    dimensional genotype/search space while filling a low-dimensional,
+    user-chosen feature space with the best elite found per cell, using
+    feature descriptors, performance scores, random initialization, mutation or
+    crossover variation from existing elites, and per-cell replacement by
+    local performance.
+  - Current gap: `papers/README.md` lists `1504.04909` as foundational and
+    describes LibreEvolve's current configurable 3D archive plus open stable
+    descriptor/rebin/diagnostic gaps. Existing active paper TODOs discuss
+    descriptor modeling generally, but none preserve the MAP-Elites PDF itself
+    as a source-specific evidence boundary with the pseudocode variables,
+    algorithm assumptions, feature-space discretization policy, illumination
+    metrics, visualization outputs, lineage/stepping-stone analysis, benchmark
+    domains, or paper-draft caveat.
+  - Required result: add paper-manifest and paper-index coverage for
+    `1504.04909`: title/authors/date/PDF digest, preliminary-draft status,
+    feature descriptor `b(x)`, performance function `f(x)`, map variables
+    `P`/`X`, initialization count `G`, iteration budget `I`, random selection
+    and variation policy, cell replacement condition, user-chosen dimension and
+    discretization records, empty/unfillable cell notes, global performance,
+    global reliability, precision, and coverage metric definitions, feature-
+    performance visualization requirements, parent/lineage stepping-stone
+    evidence, modular-neural-network and soft-robot benchmark context, relation
+    to NS+LC/MOLE/novelty search, and README/ROADMAP/code wording that keeps
+    current local archive support distinct from full illumination-algorithm
+    reproduction.

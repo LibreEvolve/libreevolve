@@ -3670,4 +3670,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reports. Avoid implying LibreEvolve supports AlphaEvolve-style bilateral-
     trade lower-bound discovery without those artifacts.
 
+- [ ] Keep README AlphaEvolve Magellan compiler-optimization claims absent or
+      source-scoped until compiler benchmark evidence exists.
+  - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of
+    Novel Compiler Optimization Heuristics with AlphaEvolve`, uses
+    AlphaEvolve-style search to synthesize executable C++ decision logic for
+    compiler passes. Its abstract reports a closed loop of generation,
+    user-provided macro-benchmark evaluation, autotuning, and refinement, with
+    LLVM function-inlining, register-allocation, and preliminary XLA
+    optimization results.
+  - Current evidence: README documents general AlphaEvolve systems gaps,
+    paper-cache status, benchmark-report contracts, and existing smoke
+    fixtures. It does not mention `2601.21096`, define compiler-heuristic
+    candidates, run compiler pass candidates, evaluate LLVM inlining, measure
+    register-allocation priority rules, test XLA portability, preserve macro-
+    benchmark provenance, compare expert compiler baselines, or report binary-
+    size and end-to-end-performance results.
+  - Required result: if README mentions Magellan, compiler-optimization
+    heuristics, executable C++ compiler decision logic, compiler pass
+    evolution, LLVM inlining, register-allocation priority rules, XLA
+    portability, macro-benchmark compiler evaluation, AlphaEvolve-discovered
+    compiler policies, or compiler autotuning loops, keep the wording source-
+    scoped until local artifacts can show the paper in the manifest, candidate
+    schemas, compiler-pass runners, benchmark provenance, metric definitions,
+    baseline identities, environment hashes, independent checker outputs, and
+    benchmark reports. Avoid implying LibreEvolve supports AlphaEvolve-style
+    Magellan compiler optimization without those artifacts.
+
 ## Architecture Description

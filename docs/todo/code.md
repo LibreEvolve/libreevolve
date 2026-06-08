@@ -5548,3 +5548,36 @@ Primary evidence:
     records, independent checker outputs, and README/ROADMAP wording that
     keeps bilateral-trade lower-bound discovery as missing evidence until
     local implementation and reports exist.
+
+- [ ] Add AlphaEvolve Magellan compiler-optimization boundary.
+  - Spec evidence: arXiv `2601.21096`, `Magellan: Autonomous Discovery of
+    Novel Compiler Optimization Heuristics with AlphaEvolve`, was submitted
+    January 28, 2026 and accepted to `C4ML@CGO'26`. Its abstract says modern
+    compilers rely on hand-crafted heuristics, and Magellan evolves compiler
+    passes by synthesizing executable C++ decision logic. It couples an LLM
+    coding agent with evolutionary search and autotuning in a closed loop of
+    generation, evaluation on user-provided macro-benchmarks, and refinement.
+    The reported tasks include LLVM function inlining for binary-size and
+    end-to-end performance, register-allocation live-range priority rules,
+    and preliminary XLA portability results.
+  - Current evidence: `papers/README.md` lists `2601.21096` only as
+    background AlphaEvolve compiler-optimization context with no
+    compiler-heuristic benchmark or compiler pass runner. LibreEvolve has no
+    first-class code TODO for this source, no executable C++ decision-logic
+    candidate schema, no LLVM function-inlining benchmark, no register-
+    allocation workload fixture, no XLA portability fixture, no macro-
+    benchmark harness, no compiler integration/artifact policy, no expert-
+    baseline comparison table, and no production-style binary-size,
+    end-to-end-performance, or large-workload validation reports.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2601.21096`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve compiler fixtures, C++ decision-logic candidate schemas,
+    compiler-pass integration points, LLVM inlining task records,
+    register-allocation priority-rule records, XLA portability task records,
+    macro-benchmark dataset provenance, binary-size and performance metric
+    definitions, autotuning loop metadata, expert baseline identities,
+    seed/budget records, compiler build/runtime environment hashes,
+    independent checker outputs, and README/ROADMAP wording that keeps
+    Magellan-style compiler optimization as missing evidence until local
+    implementation and benchmark reports exist.

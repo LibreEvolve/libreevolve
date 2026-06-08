@@ -5124,3 +5124,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     checker outputs, reproducibility status, and README/ROADMAP wording that
     treats bilateral-trade lower-bound search as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track AlphaEvolve Magellan compiler-optimization paper evidence.
+  - Paper/source evidence: arXiv `2601.21096`, submitted January 28, 2026 and
+    accepted to `C4ML@CGO'26`, is titled `Magellan: Autonomous Discovery of
+    Novel Compiler Optimization Heuristics with AlphaEvolve`. Its abstract
+    presents Magellan as an agentic framework that evolves compiler passes by
+    synthesizing executable C++ decision logic, coupling an LLM coding agent
+    with evolutionary search and autotuning. It reports closed-loop
+    generation, macro-benchmark evaluation, and refinement across production
+    optimization tasks, including LLVM function inlining, register allocation,
+    and preliminary XLA portability.
+  - Current gap: `papers/README.md` lists `2601.21096` as background-only
+    compiler-optimization application context with no compiler-heuristic
+    benchmark or compiler pass runner, and the active TODO coverage does not
+    yet track this paper-specific evidence. Broad systems and compiler gaps
+    do not capture Magellan's C++ decision-logic candidates, macro-benchmark
+    datasets, compiler-pass integration points, binary-size and end-to-end
+    performance metrics, register-allocation priority rules, XLA portability
+    records, or expert-baseline comparison evidence.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2601.21096`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve compiler assumptions, executable C++ decision-logic candidate
+    schemas, compiler-pass integration metadata, LLVM inlining task records,
+    register-allocation task records, XLA portability task records, macro-
+    benchmark provenance, metric definitions for binary-size and end-to-end
+    performance, autotuning loop records, expert baseline identities, seed/
+    budget records, compiler build/runtime environment metadata, independent
+    checker outputs, reproducibility status, and README/ROADMAP wording that
+    treats Magellan-style compiler optimization as missing paper evidence
+    rather than implemented LibreEvolve support.

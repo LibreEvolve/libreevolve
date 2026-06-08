@@ -6337,3 +6337,34 @@ Primary evidence:
     and rebin tests, benchmark/domain reproduction notes, and README/ROADMAP
     wording that keeps LibreEvolve's current 3D archive separate from full
     MAP-Elites illumination evidence.
+
+- [ ] Add hardness-of-approximation proof-element gates before theoretical-CS
+      application claims.
+  - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
+    Combinatorial Structures: Hardness of Approximation`, uses AlphaEvolve to
+    discover finite combinatorial structures for complexity-theory proofs:
+    Ramanujan graph witnesses for MAX-CUT/MAX-Independent-Set certification,
+    MAX-3-CUT and MAX-4-CUT gadget reductions from 3LIN(k), and metric-TSP
+    equation gadgets. The paper also uses AlphaEvolve to evolve faster
+    verifiers by scoring runtime plus correctness checks, reports about
+    `10,000x` verifier speedups, and states that final gadgets were verified by
+    brute-force algorithms independent of the evolved fast verifiers.
+  - Current evidence: `papers/README.md` marks `2509.18057` as background only
+    with no graph/certification benchmark, and existing TODOs ask for general
+    theoretical-CS proof-element source tracking. There is no source-specific
+    code gate for graph/gadget artifact schemas, witness encoding, Ramanujan
+    checks, MAX-CUT/independent-set scoring, MAX-k-CUT completeness/soundness
+    verifier contracts, TSP/MWST gadget verification, evolved-verifier runtime
+    datasets, correctness-judge records, final brute-force verification
+    provenance, or theorem-lifting boundaries.
+  - Required result: add implementation gates for `2509.18057`: arXiv version/
+    date/PDF hash, source/repository/artifact status, Ramanujan graph and
+    witness schemas, gadget edge-list/weight schemas, theorem/result ids,
+    verifier API contracts, synthetic verifier-speed dataset records,
+    correctness-check and judge-LLM records, evolved-verifier runtime telemetry,
+    independent brute-force verifier outputs, final graph/gadget inventories,
+    lifting-framework metadata linking finite structures to universal theorem
+    statements, human-inspection/proof-handoff attribution, baseline/SOTA
+    comparison rows, and README/ROADMAP wording that keeps LibreEvolve's
+    generic evaluator validation separate from AlphaEvolve-discovered
+    complexity-theory proof elements.

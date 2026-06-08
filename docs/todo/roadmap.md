@@ -4758,3 +4758,30 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     comparison context, benchmark-domain notes, and README/papers/code wording
     that keeps current 3D archive support separate from full MAP-Elites
     illumination evidence.
+
+- [ ] Add hardness-of-approximation proof-element gates before roadmap
+      promotion.
+  - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
+    Combinatorial Structures: Hardness of Approximation`, reports
+    AlphaEvolve-discovered Ramanujan graph witnesses, MAX-3-CUT/MAX-4-CUT
+    gadget reductions, metric-TSP equation gadgets, evolved faster verifier
+    code, final brute-force verification of discovered gadgets, and
+    mathematical lifting from finite structures to theorem statements.
+  - Current evidence: ROADMAP has a general theoretical-CS source-tracking TODO
+    and `papers/README.md` labels `2509.18057` background-only with no graph/
+    certification benchmark. Roadmap lacks `2509.18057`-specific gates for
+    graph/gadget artifact schemas, witness inventories, verifier APIs,
+    synthetic correctness datasets, evolved-verifier runtime telemetry,
+    judge-LLM/human-inspection records, brute-force final verification outputs,
+    theorem/lemma/proof cross-links, proof-lifting metadata, source/artifact
+    status, and SOTA comparison rows.
+  - Required result: add roadmap gates for `2509.18057`: paper/source manifest
+    entry, PDF/cache hash, code/artifact availability, Ramanujan graph witness
+    schema, MAX-k-CUT gadget schema, TSP/MWST equation-gadget schema, verifier
+    contracts, evolved-verifier speedup reports, correctness-check dataset
+    provenance, judge-LLM and human-inspection attribution, independent
+    brute-force verifier artifacts, theorem/result/lifting metadata,
+    baseline/SOTA comparison rows, proof-handoff status, and README/papers/code
+    wording that keeps hardness-of-approximation proof-element support
+    background-only until local execution, artifact, and verification evidence
+    proves those semantics.

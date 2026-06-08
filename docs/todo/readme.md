@@ -4319,4 +4319,32 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     tests, and a clear distinction between LibreEvolve's current 3D archive and
     MAP-Elites illumination semantics.
 
+- [ ] Keep README hardness-of-approximation wording scoped until proof-element
+      artifacts exist.
+  - Spec evidence: local arXiv `2509.18057v7`, `Reinforced Generation of
+    Combinatorial Structures: Hardness of Approximation`, uses AlphaEvolve to
+    produce finite proof elements for complexity theory, including Ramanujan
+    graph witnesses, MAX-k-CUT gadgets, and metric-TSP equation gadgets. It
+    also reports AlphaEvolve-evolved verifier speedups and separates proxy
+    search scores, independent brute-force verification, human inspection, and
+    mathematical lifting/proof arguments.
+  - Current evidence: README TODOs already say theoretical-CS AlphaEvolve
+    wording should remain scoped until proof-element source tracking exists,
+    and `papers/README.md` marks `2509.18057` as background only with no graph/
+    certification benchmark. README does not require a detailed source-specific
+    boundary for graph/gadget inventories, verifier runtime/correctness
+    artifacts, final brute-force verifier outputs, theorem/proof cross-links,
+    lifting-framework metadata, human-inspection attribution, or SOTA/baseline
+    comparison rows.
+  - Required result: if README mentions AlphaEvolve complexity-theory results,
+    hardness of approximation, MAX-k-CUT, metric TSP, random regular graph
+    certification, Ramanujan graph witnesses, proof elements, verifier speedups,
+    or theorem-lifting applications, keep wording source-scoped until manifests
+    and reports include the `2509.18057` source row, PDF/artifact hashes,
+    graph/gadget schemas, verifier-speed and correctness records, brute-force
+    verification outputs, theorem/proof cross-links, source/repository status,
+    human/proof-handoff attribution, and a clear distinction between generic
+    LibreEvolve evaluator validation and AlphaEvolve-discovered
+    complexity-theory proof elements.
+
 ## Architecture Description

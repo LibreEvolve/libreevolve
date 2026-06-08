@@ -5869,3 +5869,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     to NS+LC/MOLE/novelty search, and README/ROADMAP/code wording that keeps
     current local archive support distinct from full illumination-algorithm
     reproduction.
+
+- [ ] Track hardness-of-approximation proof-element paper evidence as a
+      source-specific boundary.
+  - Paper/source evidence: local arXiv `2509.18057v7`, `Reinforced Generation
+    of Combinatorial Structures: Hardness of Approximation`, reports
+    AlphaEvolve-discovered finite proof elements for three complexity-theory
+    settings: average-case certification lower bounds for random regular graph
+    MAX-CUT/MAX-Independent-Set, gadget-based NP-hardness improvements for
+    MAX-3-CUT and MAX-4-CUT, and metric-TSP hardness via a new equation
+    gadget. It distinguishes proxy scores from theorem constants, uses evolved
+    fast verifiers to search larger gadgets, and requires final brute-force
+    verification plus human/proof arguments before theorem claims.
+  - Current gap: the paper index labels `2509.18057` as AlphaEvolve
+    complexity-theory result context and background-only, while an active
+    theoretical-CS TODO asks for general source tracking. It does not preserve
+    this PDF as a detailed source-specific boundary with arXiv versioning,
+    result ids, graph/gadget artifact inventories, verifier-speedup evidence,
+    correctness-check records, final brute-force verification, proof-lifting
+    metadata, source/repository status, or claim boundaries between finite
+    constructions and universal theorem statements.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2509.18057`: title/authors/arXiv version/date/PDF digest, source/artifact
+    availability and rights, result table for MAX-CUT, MAX-Independent-Set,
+    MAX-k-CUT, and metric TSP, Ramanujan graph witness metadata, MAX-k-CUT
+    gadget schemas, TSP equation-gadget schemas, verifier API and runtime
+    records, synthetic correctness dataset provenance, judge-LLM and human-
+    inspection attribution, final brute-force verification outputs, theorem/
+    lemma/proof appendix cross-links, baseline/SOTA comparison values, lifting
+    framework statements, and README/ROADMAP/code wording that keeps
+    complexity-theory proof-element support missing unless those artifacts are
+    locally represented and verified.

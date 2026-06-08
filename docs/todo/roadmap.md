@@ -2175,20 +2175,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     where appropriate. It gives a hosted `problems/{n}.html` URL pattern on
     `google-deepmind.github.io`, says no installation is required, says
     notebooks open in Google Colab and webpages open in any browser, and
-    points the distribution graphic to root-level `status_grid.png`.
+    points the distribution graphic to root-level `status_grid.png`. Current
+    `status.json` has buckets `world_record`, `former_record`,
+    `worse_than_record`, and `matched_optimal`, listing 43 problem ids total.
   - Current evidence: roadmap TODOs require tracking the later paper,
     repository ref, problem inventory, and notebook artifacts, but they do not
     force roadmap language to separate complete problem-page coverage from
     partial notebook/artifact coverage, to record hosted-page URL/access modes,
     or to describe live-repository evidence as a pinned snapshot with
-    root-level status-artifact provenance. Existing coverage wording also
-    needs to avoid unverified `assets/...` status paths.
+    root-level status-artifact provenance. They also do not require parsed
+    status-bucket membership or explicit absent-status states for problem ids
+    not listed in `status.json`. Existing coverage wording also needs to avoid
+    unverified `assets/...` status paths.
   - Required result: once the coverage manifest is implemented, update ROADMAP
     milestones and evidence gates so follow-on AlphaEvolve math coverage names
     the repository snapshot, records hosted page URLs plus page/notebook/
     artifact availability by problem, records browser/Colab access modes,
-    includes root-level status artifact hashes when cited, and avoids treating
-    a live partial-notebook repository as fully static or notebook-complete.
+    includes root-level status artifact hashes and parsed status-bucket
+    membership when cited, records absent-status handling for unlisted problem
+    ids, and avoids treating a live partial-notebook repository as fully static
+    or notebook/status-complete.
 
 - [ ] Keep follow-on problem-repository rights and attribution gates scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

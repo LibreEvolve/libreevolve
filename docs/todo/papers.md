@@ -3120,23 +3120,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     Google Colab while webpages can be opened in any browser. The README's
     distribution graphic points to root-level `status_grid.png`, and the
     repository tree also exposes root-level status artifacts such as
-    `status.json` and `result_distribution.png`.
+    `status.json` and `result_distribution.png`. Current `status.json` uses
+    explicit buckets `world_record`, `former_record`, `worse_than_record`, and
+    `matched_optimal`, listing 43 problem ids total.
   - Current gap: existing paper TODOs require a repository ref and broad
     notebook artifact metadata, but they do not preserve source-state
     distinctions between all problem pages, partial notebook availability,
     hosted-page URLs, browser/Colab access modes, artifact-presence variants,
     missing-notebook reasons, root-level status-artifact provenance, and
-    live-repository snapshot dates. Earlier coverage wording also used
-    unverified `assets/...` status paths instead of the README's root-level
-    status artifact path.
+    live-repository snapshot dates. They also do not parse status-bucket
+    membership or preserve explicit `unclassified`/absent-status states for
+    problem ids not listed in `status.json`. Earlier coverage wording also
+    used unverified `assets/...` status paths instead of the README's
+    root-level status artifact path.
   - Required result: add source-manifest rows and checks for the problem
     repository snapshot: repository URL/ref/commit/date, live-update policy,
     all 67 problem ids, hosted page URL, page path/hash, notebook path/hash or
     explicit absence reason, access mode, prompt/verifier/initial/final/
     visualization/analysis presence flags, root-level status artifact paths/
     hashes such as `status_grid.png`, `status.json`, and
-    `result_distribution.png` when used, and citation wording that avoids
-    implying notebook coverage is complete when only problem-page coverage is.
+    `result_distribution.png` when used, parsed status bucket membership,
+    explicit state for problem ids absent from `status.json`, and citation
+    wording that avoids implying notebook or status coverage is complete when
+    only problem-page coverage is complete.
 
 - [ ] Track follow-on problem-repository rights, citation, and attribution.
   - Paper/source evidence: the

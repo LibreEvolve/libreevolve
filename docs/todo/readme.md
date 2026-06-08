@@ -1442,21 +1442,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `problems/{n}.html` URL pattern on `google-deepmind.github.io`, says no
     installation is required, says notebooks open in Google Colab and webpages
     open in any browser, and points the distribution graphic to root-level
-    `status_grid.png`.
+    `status_grid.png`. Current `status.json` has buckets `world_record`,
+    `former_record`, `worse_than_record`, and `matched_optimal`, listing 43
+    problem ids total.
   - Current evidence: README TODOs mention the later 67-problem source set but
     do not require wording that distinguishes complete problem-page coverage
     from partial notebook coverage, artifact-by-artifact availability,
     hosted-page URL/access modes, missing-notebook states, root-level status
-    artifact provenance, or the pinned snapshot needed for a live repository.
-    Existing coverage wording also needs to avoid unverified `assets/...`
-    status paths.
+    artifact provenance, parsed status-bucket membership, absent-status states
+    for problem ids not listed in `status.json`, or the pinned snapshot needed
+    for a live repository. Existing coverage wording also needs to avoid
+    unverified `assets/...` status paths.
   - Required result: after the coverage manifest exists, update README wording
     so AlphaEvolve follow-on claims name the pinned repository snapshot,
     distinguish all-problem-page coverage from partial notebook/artifact
     coverage, record hosted page URLs and browser/Colab access modes, avoid
     implying notebooks exist for every problem, and cite status artifacts such
     as `status_grid.png`, `status.json`, or `result_distribution.png` only with
-    tracked root-level paths and hashes.
+    tracked root-level paths, hashes, parsed bucket semantics, and explicit
+    absent-status handling.
 
 - [ ] Keep README follow-on problem-repository rights and attribution scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

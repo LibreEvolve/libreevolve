@@ -2267,16 +2267,20 @@ Primary evidence:
     Google Colab while webpages can be opened in any browser. The README's
     distribution graphic points to root-level `status_grid.png`, and the
     repository tree also exposes root-level status artifacts such as
-    `status.json` and `result_distribution.png`.
+    `status.json` and `result_distribution.png`. Current `status.json` uses
+    explicit buckets `world_record`, `former_record`, `worse_than_record`, and
+    `matched_optimal`, listing 43 problem ids total.
   - Current evidence: broad follow-on source TODOs require a repository ref,
     live-update policy, problem ids, notebook metadata, and prompt/verifier/
     final-program presence. They do not require per-problem coverage states
     distinguishing mandatory problem pages from partial notebook availability,
     hosted-page URL validation, browser/Colab access modes, missing-notebook
     reasons, artifact-presence matrices, root-level status-artifact
-    provenance, or snapshot-date semantics for a live repository that can
-    change. Earlier coverage wording also used unverified `assets/...` paths
-    instead of the README's root-level status artifact path.
+    provenance, parsed status-bucket semantics, explicit handling for the
+    problem ids absent from `status.json`, or snapshot-date semantics for a
+    live repository that can change. Earlier coverage wording also used
+    unverified `assets/...` paths instead of the README's root-level status
+    artifact path.
   - Required result: add a follow-on repository coverage manifest and
     validators with repository URL/ref/commit/date, live-update policy, all 67
     problem ids, hosted page URL, page path/hash, notebook path/hash or absence
@@ -2284,8 +2288,11 @@ Primary evidence:
     artifact presence flags for prompt/verifier/initial/final/visualization/
     analysis, root-level status artifact paths/hashes such as
     `status_grid.png`, `status.json`, and `result_distribution.png` when used,
-    and README/ROADMAP wording that separates complete problem-page coverage
-    from partial notebook/artifact coverage at a pinned snapshot.
+    parsed status bucket membership, an explicit `unclassified` or
+    `not_listed_in_status_json` state for problem ids absent from those
+    buckets, and README/ROADMAP wording that separates complete problem-page
+    coverage from partial notebook/artifact/status coverage at a pinned
+    snapshot.
 
 - [ ] Add follow-on problem-repository rights and attribution provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`

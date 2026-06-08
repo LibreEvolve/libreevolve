@@ -963,9 +963,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     only` status classes must now include an explicit missing/unsupported
     behavior boundary. `Not implemented; potential future benchmark` status
     classes must now include an explicit missing verifier/harness or
-    unsupported-behavior boundary. `Partially implemented:` status classes
-    must now include an explicit remaining/missing/unsupported behavior
-    boundary. Limited `Only` status classes must now include an explicit
+    unsupported-behavior boundary. `Implemented as` status classes must now
+    include an explicit scoped/open or out-of-scope behavior boundary.
+    `Partially implemented:` status classes must now include an explicit
+    remaining/missing/unsupported behavior boundary. Limited `Only` status
+    classes must now include an explicit
     missing/unsupported behavior boundary. `Static prompt guidance exists`
     status classes must now also
     state that the guided operation is not executed or enforced. `Not
@@ -976,10 +978,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     smoke/partial/planned/unsupported qualifiers beyond the role/status class
     matrix, required path presence, the `AlphaEvolve-comparable` overclaim
     guard, the negative-status contradiction guard, the background-only
-    boundary guard, the future-benchmark boundary guard, the limited-status
-    boundary guard, the partial-status boundary guard, the static-guidance
-    execution-boundary guard, and the not-implemented-as-described boundary
-    guard.
+    boundary guard, the future-benchmark boundary guard, the implemented-status
+    boundary guard, the partial-status boundary guard, the limited-status
+    boundary guard, the static-guidance execution-boundary guard, and the
+    not-implemented-as-described boundary guard.
   - Required result: extend status validation with phrase-level links from
     status claims to active or completed evidence plus richer qualifier checks.
     Keep this distinct from the already documented TODO coverage

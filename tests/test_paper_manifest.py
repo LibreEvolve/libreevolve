@@ -1137,6 +1137,38 @@ def test_validate_paper_manifest_reports_partial_status_without_missing_boundary
     assert "status_table_partial_status_missing_boundary" in codes
 
 
+def test_validate_paper_manifest_reports_implemented_status_without_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Foundational archive algorithm")
+    text = text.replace(PARTIAL_FIXTURE_STATUS, "Implemented as a local archive.")
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_implemented_status_missing_boundary" in codes
+
+
+def test_validate_paper_manifest_allows_implemented_status_with_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Foundational archive algorithm")
+    text = text.replace(PARTIAL_FIXTURE_STATUS, "Implemented as a local archive; richer semantics remain open.")
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_reports_negative_status_implementation_contradiction(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

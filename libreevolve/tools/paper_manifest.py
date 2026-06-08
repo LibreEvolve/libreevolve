@@ -163,6 +163,7 @@ STATUS_TABLE_NEGATIVE_IMPLEMENTATION_PREFIXES = (
 )
 STATUS_TABLE_BACKGROUND_ONLY_PREFIXES = ("Background only",)
 STATUS_TABLE_FUTURE_BENCHMARK_PREFIXES = ("Not implemented; potential future benchmark",)
+STATUS_TABLE_IMPLEMENTED_STATUS_PREFIXES = ("Implemented as ",)
 STATUS_TABLE_LIMITED_STATUS_PREFIXES = ("Only ",)
 STATUS_TABLE_PARTIAL_STATUS_PREFIXES = ("Partially implemented:",)
 STATUS_TABLE_LIMITATION_BOUNDARY_RE = re.compile(
@@ -1460,6 +1461,19 @@ def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[Pape
                 PaperManifestIssue(
                     "status_table_future_benchmark_missing_boundary",
                     "future-benchmark status classes must name a missing verifier, harness, or unsupported paper behavior",
+                    row_id,
+                )
+            )
+        break
+    for prefix in STATUS_TABLE_IMPLEMENTED_STATUS_PREFIXES:
+        if not status.startswith(prefix):
+            continue
+        suffix = status[len(prefix) :]
+        if not STATUS_TABLE_LIMITATION_BOUNDARY_RE.search(suffix):
+            issues.append(
+                PaperManifestIssue(
+                    "status_table_implemented_status_missing_boundary",
+                    "implemented status classes must include an explicit scoped, open, or out-of-scope behavior boundary",
                     row_id,
                 )
             )

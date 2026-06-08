@@ -3779,4 +3779,32 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     benchmark reports. Avoid implying LibreEvolve supports TTT-Discover-style
     test-time training without those artifacts.
 
+- [ ] Keep README AlphaEvolve Bruhat-interval claims absent or source-scoped
+      until permutation and interval-verifier evidence exists.
+  - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large
+    hypercubes`, says AlphaEvolve-suggested permutations revealed a pattern
+    for large Bruhat intervals that are poset hypercubes in `S_n`, later
+    proved for general `n`. For powers of `2`, the paper exhibits
+    `O(n log n)`-dimensional hypercubes, characterizes vertices as dyadically
+    well-distributed permutations, and links the result to Kazhdan-Lusztig
+    `R`-polynomial coefficients and lower-bound consequences in cluster
+    algebras and Bruhat-graph embeddings.
+  - Current evidence: README documents constructive-math gaps, benchmark-
+    report contracts, paper-cache status, and smoke fixtures. It does not
+    mention `2601.01235`, define permutation generators for `S_n`, verify
+    Bruhat intervals, check poset-hypercube structure, compute dyadic well-
+    distribution predicates, record power-of-two benchmark rows, connect
+    outputs to Kazhdan-Lusztig coefficients or cluster-algebra consequences,
+    or preserve finite-search versus general-proof status.
+  - Required result: if README mentions Bruhat intervals, poset hypercubes in
+    `S_n`, dyadically well-distributed permutations, AlphaEvolve-suggested
+    permutation patterns, Kazhdan-Lusztig `R`-polynomials, open Richardson
+    cluster-algebra frozen variables, Bruhat graph embeddings, or
+    `2601.01235`, keep the wording source-scoped until local artifacts can
+    show the paper in the manifest, permutation schemas, interval witness
+    artifacts, hypercube verifier outputs, dyadic checker records, benchmark
+    rows, proof-status fields, independent checker outputs, and benchmark
+    reports. Avoid implying LibreEvolve supports AlphaEvolve-style Bruhat-
+    interval hypercube discovery without those artifacts.
+
 ## Architecture Description

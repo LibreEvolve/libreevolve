@@ -5252,3 +5252,35 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent checker outputs, reproducibility status, and README/ROADMAP
     wording that treats TTT-Discover-style test-time training as missing
     paper evidence rather than implemented LibreEvolve support.
+
+- [ ] Track AlphaEvolve Bruhat-interval hypercube paper evidence.
+  - Paper/source evidence: arXiv `2601.01235`, submitted January 3, 2026, is
+    titled `Bruhat intervals that are large hypercubes`. Its abstract studies
+    big Bruhat intervals that are poset hypercubes in the symmetric group
+    `S_n`, says AlphaEvolve-suggested permutations revealed a pattern that
+    performed well for tested `n` and was proved for general `n`, exhibits
+    for powers of `2` a hypercube of dimension `O(n log n)`, characterizes
+    vertices as dyadically well-distributed permutations, and connects the
+    construction to Kazhdan-Lusztig `R`-polynomial coefficients plus lower
+    bounds for frozen variables in open Richardson cluster algebras and for
+    embeddings of Bruhat graphs.
+  - Current gap: `papers/README.md` lists `2601.01235` as a constructive math
+    benchmark candidate with `Not implemented; potential future benchmark`,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Broad Appendix B and constructive-math gaps do not capture
+    permutation generator schemas, Bruhat interval verification, hypercube
+    isomorphism checks, dyadic well-distribution predicates, `S_n` power-of-
+    two benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-algebra
+    consequence fields, or the boundary between AlphaEvolve-suggested finite
+    evidence and human-written general proofs.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2601.01235`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve constructive-math assumptions, permutation candidate schemas,
+    Bruhat interval records, poset-hypercube witness artifacts, dyadic well-
+    distribution checker metadata, dimension/asymptotic-bound records,
+    Kazhdan-Lusztig `R`-polynomial coefficient metadata, cluster-algebra and
+    Bruhat-graph consequence records, finite-test versus general-proof status,
+    seed/budget records, independent checker outputs, reproducibility status,
+    and README/ROADMAP wording that treats Bruhat-interval hypercube discovery
+    as missing paper evidence rather than implemented LibreEvolve support.

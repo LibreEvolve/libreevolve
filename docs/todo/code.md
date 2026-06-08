@@ -5685,3 +5685,39 @@ Primary evidence:
     checker outputs, and README/ROADMAP wording that keeps TTT-Discover-style
     test-time training as missing evidence until local implementation and
     benchmark reports exist.
+
+- [ ] Add AlphaEvolve Bruhat-interval hypercube construction boundary.
+  - Spec evidence: arXiv `2601.01235`, `Bruhat intervals that are large
+    hypercubes`, was submitted January 3, 2026. Its abstract studies large
+    Bruhat intervals that are poset hypercubes in the symmetric group `S_n`.
+    It says permutations suggested by AlphaEvolve led to a pattern that
+    performed well for tested `n` and was then proved to work for general
+    `n`. For `n` a power of `2`, the paper exhibits a hypercube of dimension
+    `O(n log n)`, matching the largest possible dimension up to a constant
+    multiple, and characterizes vertices as dyadically well-distributed
+    permutations. It also links maximal Bruhat-hypercube dimension to the
+    second-highest-degree coefficient of Kazhdan-Lusztig `R`-polynomials and
+    obtains `n log n` lower-bound consequences for frozen variables in open
+    Richardson cluster algebras and embeddings of Bruhat graphs.
+  - Current evidence: `papers/README.md` lists `2601.01235` only as a
+    constructive math benchmark candidate with `Not implemented; potential
+    future benchmark`. LibreEvolve has no first-class code TODO for this
+    source, no permutation-generator candidate schema, no Bruhat order or
+    interval verifier, no poset-hypercube isomorphism checker, no dyadically
+    well-distributed permutation checker, no `S_n` power-of-two benchmark
+    rows, no Kazhdan-Lusztig `R`-polynomial coefficient metadata, no cluster-
+    algebra/frozen-variable consequence ledger, and no artifact policy that
+    separates AlphaEvolve-suggested finite patterns from human-proved general
+    theorems.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2601.01235`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve constructive-math fixtures, permutation candidate schema,
+    Bruhat interval input/output records, power-of-two `S_n` benchmark rows,
+    poset-hypercube verifier, dyadic well-distribution checker, dimension
+    computation and asymptotic-bound records, Kazhdan-Lusztig `R`-polynomial
+    coefficient linkage metadata, cluster-algebra and Bruhat-graph consequence
+    fields, finite-test versus general-proof status, seed/budget records,
+    independent checker outputs, and README/ROADMAP wording that keeps
+    Bruhat-interval hypercube discovery as missing evidence until local
+    implementation and reports exist.

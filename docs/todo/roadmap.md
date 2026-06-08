@@ -4211,3 +4211,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cost and budget accounting, independent checker outputs, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local TTT-Discover-style test-time-training support.
+
+- [ ] Add AlphaEvolve Bruhat-interval hypercube gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2601.01235`, submitted January 3, 2026, introduces
+    `Bruhat intervals that are large hypercubes`. The abstract says
+    AlphaEvolve-suggested permutations led to a pattern that worked for tested
+    `n` and was then proved for general `n`; for powers of `2`, it exhibits
+    `S_n` Bruhat intervals that are hypercubes of dimension `O(n log n)`,
+    characterizes vertices as dyadically well-distributed permutations, and
+    connects maximal Bruhat-hypercube dimension to Kazhdan-Lusztig
+    `R`-polynomial coefficients, frozen variables in open Richardson cluster
+    algebras, and embeddings of Bruhat graphs.
+  - Current evidence: ROADMAP tracks broad constructive-math and Appendix B
+    fixture gaps plus background paper-index rows, but it does not promote
+    `2601.01235` beyond potential-future-benchmark status. It does not define
+    permutation candidate schemas, Bruhat order/interval verifiers, poset-
+    hypercube isomorphism checks, dyadic well-distribution predicates, power-
+    of-two `S_n` benchmark rows, Kazhdan-Lusztig coefficient linkage, cluster-
+    algebra consequence records, or finite-pattern versus proof-status gates.
+  - Required result: add roadmap gates for `2601.01235`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    permutation candidate schema, Bruhat interval witness artifacts, poset-
+    hypercube verifier, dyadic well-distribution checker, power-of-two `S_n`
+    benchmark records, dimension and asymptotic-bound calculations,
+    Kazhdan-Lusztig `R`-polynomial coefficient metadata, cluster-algebra and
+    Bruhat-graph consequence fields, finite-test/general-proof status,
+    seed/budget records, independent checker outputs, and a background-only
+    or benchmark-fixture status rule so roadmap claims do not outpace local
+    AlphaEvolve-style Bruhat-interval hypercube support.

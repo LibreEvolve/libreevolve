@@ -224,18 +224,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
       minimal-marker evidence exists.
   - Spec evidence: AlphaEvolve Section 2.1 says special comment markers let the
     system evolve multiple components in existing codebases while requiring
-    only minimal changes.
+    only minimal changes. The local AlphaEvolve PDF page 4 describes adding
+    `# EVOLVE-BLOCK-START` / `# EVOLVE-BLOCK-END` comments to integrate with
+    existing codebases, and Figure 3 on page 6 shows those marked components
+    beside an `evaluate(eval_inputs)` function used by evaluators.
   - Current evidence: ROADMAP, README, and papers-index wording can cite
     Python evolve-block markers, marker validation, unsupported non-Python
-    marker diagnostics, workspace materialization, and file topology support.
-    They do not yet require evidence for a pre-existing codebase integration
-    workflow: marker-only setup diff, preserved skeleton hashes, language
-    comment syntax, evolved-block span inventory, evaluator-call continuity,
-    or setup-change counts.
+    marker diagnostics, workspace materialization, file topology support,
+    `best_workspace/` export, and the `workspace_math` nested package plus
+    JSON/static-asset smoke fixture. They do not yet require evidence for a
+    pre-existing codebase integration workflow: marker-only setup diff,
+    preserved skeleton hashes across a real upstream tree, language/comment
+    syntax, evolved-block span inventory, evaluator-call continuity,
+    source-root/release-artifact identity for copied static assets, or
+    setup-change counts.
   - Required result: when existing-codebase integration metadata and validators
     land, update ROADMAP, README, papers index, and code/paper TODO entries
     together so roadmap wording separates marker parser support from
-    AlphaEvolve-style minimal-change integration evidence.
+    AlphaEvolve-style minimal-change integration evidence and does not treat
+    local workspace smoke tests as codebase-integration proof.
 
 - [ ] Keep marker roadmap wording scoped until Figure 3 marker-variant
       metadata exists.

@@ -177,21 +177,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
       minimal-marker evidence exists.
   - Spec evidence: AlphaEvolve Section 2.1 says evolve-block markers enable
     integrating with existing codebases using only minimal changes by adding
-    special comments around evolvable blocks.
+    special comments around evolvable blocks. The local AlphaEvolve PDF page 4
+    explicitly ties the marker API to existing-codebase integration, and Figure
+    3 on page 6 shows marked code blocks plus `evaluate(eval_inputs) ->
+    dict[str, float]` as the evaluator-facing entrypoint.
   - Current evidence: README can document Python evolve-block marker syntax,
     marker validation, fail-closed unsupported non-Python markers, workspace
-    materialization, and full-workspace export. It does not yet document
-    paper-facing evidence that an existing codebase was integrated with a
-    marker-only or minimal setup diff while preserving non-evolved skeleton
-    code and evaluator invocation. Static copy-only assets are verified by
-    local `source_copy_path` hash/byte-count checks, but README wording should
-    not treat that as portable codebase/release-artifact integration until
-    source roots or artifact identities can replay across machines.
+    materialization, full-workspace export, and the `workspace_math` fixture's
+    nested Python package plus JSON/static resource contract. It does not yet
+    document paper-facing evidence that an existing codebase was integrated
+    with a marker-only or minimal setup diff while preserving non-evolved
+    skeleton code and evaluator invocation. Static copy-only assets are
+    verified by local `source_copy_path` hash/byte-count checks, but README
+    wording should not treat that as portable codebase/release-artifact
+    integration until source roots or artifact identities can replay across
+    machines.
   - Required result: when minimal-marker integration records land, update
     README, ROADMAP, papers index, and code/paper TODO entries together; when
     portable static-source identities land, keep the same cross-document update
     discipline so README distinguishes local marker/workspace mechanics from
-    AlphaEvolve-style existing-codebase integration evidence.
+    AlphaEvolve-style existing-codebase integration evidence and avoids
+    treating smoke fixtures as proof of minimal-change integration.
 
 - [ ] Keep README marker syntax wording scoped until Figure 3 marker-variant
       metadata exists.

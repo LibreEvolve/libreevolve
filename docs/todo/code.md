@@ -44,22 +44,35 @@ Primary evidence:
 - [ ] Add existing-codebase minimal-marker integration provenance.
   - Spec evidence: AlphaEvolve Section 2.1 says its input API supports evolving
     multiple components across existing codebases with minimal changes, by
-    adding special comment markers around blocks to be evolved.
+    adding special comment markers around blocks to be evolved. The local
+    AlphaEvolve PDF page 4 states that the API annotates blocks to be evolved
+    across a codebase and integrates with existing codebases by adding only
+    `# EVOLVE-BLOCK-START` / `# EVOLVE-BLOCK-END` comments; Figure 3 on page 6
+    shows those marked blocks alongside the special `evaluate(eval_inputs) ->
+    dict[str, float]` function that invokes the marked code.
   - Current evidence: LibreEvolve validates Python `# EVOLVE-BLOCK-START/END`
     markers, rejects malformed or unsupported non-Python marker-like syntax,
     materializes bounded workspaces, and records candidate-language policy
-    boundaries. Those mechanics prove marker parsing for local seed files, but
-    they do not prove an AlphaEvolve-style integration workflow for a
-    pre-existing codebase: baseline codebase identity, marker-only setup diff,
-    untouched skeleton preservation, language/comment syntax, component span
-    inventory, evaluator entrypoint continuity, or measured setup burden.
+    boundaries. `libreevolve/core/candidate.py` restricts skeleton-preserving
+    markers to Python files and falls back to whole-file/full-workspace
+    semantics for other files; `libreevolve/problems/loader.py` records seed
+    workspace source paths and static-file hashes, and the `workspace_math`
+    fixture proves nested Python files plus JSON/binary resources can be loaded
+    and validated. Those mechanics prove marker parsing and local workspace
+    preservation for seed workspaces, but they do not prove an AlphaEvolve-style
+    integration workflow for a pre-existing codebase: baseline codebase
+    identity, marker-only setup diff, untouched skeleton preservation across a
+    real upstream tree, language/comment syntax, component span inventory,
+    evaluator entrypoint continuity, or measured setup burden.
   - Required result: add integration metadata and validators for existing
     codebases: original codebase/artifact id, pre-marker source hashes,
     marker-added diff summary, evolved-block span ids, unchanged skeleton
     hashes, language/comment grammar, evaluator-call path before/after marker
-    insertion, setup-change counts, and README/ROADMAP wording that separates
-    local evolve-block parsing from paper-faithful minimal-change codebase
-    integration evidence.
+    insertion, setup-change counts, source-root/release-artifact identity for
+    copied static assets, a codebase-scale fixture with multiple marked
+    components and preserved unmarked files, and README/ROADMAP wording that
+    separates local evolve-block parsing from paper-faithful minimal-change
+    codebase integration evidence.
 
 - [ ] Add Figure 3 evolve-block marker spelling provenance.
   - Spec evidence: AlphaEvolve Section 2.1 names the special marker comments

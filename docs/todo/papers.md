@@ -5037,3 +5037,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     measures, reproducibility status, and README/ROADMAP wording that treats
     MARL algorithm discovery as missing paper evidence rather than implemented
     LibreEvolve support.
+
+- [ ] Track AlphaEvolve Ramsey-number paper evidence.
+  - Paper/source evidence: arXiv `2603.09172`, submitted March 10, 2026 and
+    last revised April 21, 2026, is titled `Reinforced Generation of
+    Combinatorial Structures: Ramsey Numbers`. Its abstract says AlphaEvolve
+    improved lower bounds for nine classical Ramsey numbers, including
+    `R(3,13)`, `R(3,18)`, `R(4,13)`, `R(4,14)`, `R(4,15)`, `R(4,16)`,
+    `R(4,18)`, `R(4,19)`, and `R(4,20)`. It also reports recovering all
+    exact known Ramsey lower bounds, matching many other best-known lower
+    bounds, and using AlphaEvolve as a single meta-algorithm that yields
+    search algorithms for those results.
+  - Current gap: `papers/README.md` lists `2603.09172` as a constructive math
+    benchmark candidate with `Not implemented; potential future benchmark`,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Existing Appendix B and constructive-math gaps cover broad
+    family/status registries, but not Ramsey-specific graph witness schemas,
+    `R(s,t)` lower-bound verifier contracts, exact-bound recovery records,
+    matched-best-known result rows, or per-result prior/current attribution
+    for the nine reported improvements.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2603.09172`: title/authors/arXiv version/date/PDF digest, source
+    license, code/artifact URL/status, relation to AlphaEvolve and
+    LibreEvolve constructive-math assumptions, Ramsey-number parameter rows,
+    graph witness artifact schema, verifier/certifier metadata, exact-bound
+    recovery suite records, best-known-bound comparison rows, prior/current
+    value provenance for all reported improvements, search-algorithm
+    provenance, seed/budget records, witness graph hashes, independent checker
+    outputs, reproducibility status, and README/ROADMAP wording that treats
+    Ramsey-number discovery as missing paper evidence rather than implemented
+    LibreEvolve support.

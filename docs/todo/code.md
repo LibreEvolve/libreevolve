@@ -5449,3 +5449,36 @@ Primary evidence:
     SHOR-PSRO, WOP-CFR, and PM-PSRO, and README/ROADMAP wording that keeps
     MARL/game-theoretic algorithm discovery as missing evidence until local
     implementation and reports exist.
+
+- [ ] Add AlphaEvolve Ramsey-number combinatorial-structure boundary.
+  - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of
+    Combinatorial Structures: Ramsey Numbers`, was submitted March 10, 2026
+    and last revised April 21, 2026. Its abstract says AlphaEvolve improved
+    lower bounds for nine classical Ramsey numbers: `R(3,13)` from 60 to 61,
+    `R(3,18)` from 99 to 100, `R(4,13)` from 138 to 139, `R(4,14)` from 147
+    to 148, `R(4,15)` from 158 to 159, `R(4,16)` from 170 to 174,
+    `R(4,18)` from 205 to 209, `R(4,19)` from 213 to 219, and `R(4,20)`
+    from 234 to 237. The abstract also says AlphaEvolve recovered all exact
+    known Ramsey lower bounds, matched many other best-known lower bounds,
+    and acted as a single meta-algorithm yielding search algorithms across
+    those results.
+  - Current evidence: `papers/README.md` lists `2603.09172` only as a
+    constructive math benchmark candidate with `Not implemented; potential
+    future benchmark`. LibreEvolve has no first-class code TODO for this
+    source, no Ramsey graph-construction candidate schema, no graph verifier
+    for `R(s,t)` lower-bound certificates, no exact-bound recovery suite, no
+    matched-best-known benchmark ledger, no per-Ramsey-number result table,
+    no artifact policy for witness graphs or search algorithms, and no
+    single-meta-algorithm report showing one evolved search procedure family
+    covering the new, recovered, and matched bounds.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2603.09172`: arXiv id/version/date/PDF hash, authors, source
+    license, code/artifact availability, relation to AlphaEvolve and
+    LibreEvolve constructive-math fixtures, Ramsey candidate representation,
+    graph/witness artifact schema, verifier/certifier entrypoints for
+    `R(s,t)` lower-bound claims, exact-bound recovery suite, best-known-bound
+    comparison table, per-result prior/current values and sources, search
+    algorithm provenance, seed/budget records, witness graph hashes, failed
+    construction records, independent checker outputs, and README/ROADMAP
+    wording that keeps Ramsey-number discovery as missing evidence until
+    local implementation and reports exist.

@@ -3594,4 +3594,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     metrics, and generalization reports. Avoid implying LibreEvolve supports
     AlphaEvolve-style MARL algorithm discovery without those artifacts.
 
+- [ ] Keep README AlphaEvolve Ramsey-number claims absent or source-scoped
+      until graph-witness benchmark evidence exists.
+  - Spec evidence: arXiv `2603.09172`, `Reinforced Generation of
+    Combinatorial Structures: Ramsey Numbers`, reports AlphaEvolve-improved
+    lower bounds for nine classical Ramsey numbers, recovery of all exact
+    known Ramsey lower bounds, many matched best-known lower bounds, and one
+    meta-algorithm yielding search algorithms for those results.
+  - Current evidence: README documents general constructive-math gaps, paper
+    cache status, benchmark-report contracts, and example smoke fixtures. It
+    does not mention `2603.09172`, define Ramsey graph witnesses, provide a
+    verifier for `R(s,t)` lower-bound certificates, list the nine Ramsey
+    prior/current values, show exact-bound recovery results, compare matched
+    best-known bounds, or store generated search algorithms and witness graph
+    artifacts.
+  - Required result: if README mentions Ramsey numbers, reinforced
+    combinatorial-structure generation, AlphaEvolve-discovered Ramsey lower
+    bounds, exact-bound recovery, matched best-known Ramsey bounds, one
+    meta-algorithm for Ramsey search, graph witnesses, or `R(s,t)`
+    certificates, keep the wording source-scoped until local artifacts can
+    show the paper in the manifest, candidate and witness schemas, verifier
+    outputs, parameter/result rows, prior/current value provenance, witness
+    graph hashes, search-algorithm provenance, independent checker evidence,
+    and benchmark reports. Avoid implying LibreEvolve supports
+    AlphaEvolve-style Ramsey-number discovery without those artifacts.
+
 ## Architecture Description

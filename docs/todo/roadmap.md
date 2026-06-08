@@ -4020,3 +4020,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metrics, distilled WOP-CFR/PM-PSRO solver records, generalization reports,
     and a background-only or benchmark-fixture status rule so roadmap claims
     do not outpace local AlphaEvolve-style MARL algorithm-discovery support.
+
+- [ ] Add AlphaEvolve Ramsey-number discovery gates before roadmap promotion.
+  - Spec evidence: arXiv `2603.09172`, submitted March 10, 2026 and last
+    revised April 21, 2026, introduces `Reinforced Generation of
+    Combinatorial Structures: Ramsey Numbers`. The abstract says AlphaEvolve
+    improved lower bounds for nine Ramsey numbers, recovered all exact known
+    lower bounds, matched many other best-known lower bounds, and served as a
+    single meta-algorithm yielding search algorithms across those cases.
+  - Current evidence: ROADMAP tracks AlphaEvolve Appendix B constructive-math
+    gaps, broad benchmark-fixture gaps, graph/certification ideas, and the
+    paper-index background rows. It does not promote `2603.09172` beyond
+    potential-future-benchmark status, define Ramsey graph witness schemas,
+    require `R(s,t)` lower-bound verifier artifacts, store exact-bound
+    recovery records, compare matched best-known bounds, or require a result
+    table that attributes the nine prior/current lower-bound improvements.
+  - Required result: add roadmap gates for `2603.09172`: paper/source
+    manifest entry, PDF/cache hash, source-license and code-artifact status,
+    Ramsey candidate representation, graph/witness artifact schema,
+    verifier/certifier entrypoints, parameterized `R(s,t)` result rows,
+    exact-bound recovery suite, best-known-bound comparison table,
+    prior/current value provenance, search-algorithm provenance, seed/budget
+    records, witness graph hashes, independent checker outputs, failure and
+    negative-result records, and a background-only or benchmark-fixture status
+    rule so roadmap claims do not outpace local AlphaEvolve-style Ramsey
+    discovery support.

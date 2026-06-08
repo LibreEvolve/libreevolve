@@ -952,12 +952,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     four-cell row shape, non-empty safe title/role/status cells, declared role
     taxonomy, allowed status class prefixes, role/status compatibility,
     active evidence path presence, and completed-evidence path presence for
-    rows claiming partial/implemented/local-only support. Remaining roadmap
-    gap: README/ROADMAP/paper-index wording does not yet describe this
-    status-cell validator scope, and the validator does not yet link long
-    status claims to specific active/completed evidence records or deeply
-    verify smoke/partial/planned/unsupported qualifiers beyond the role/status
-    class matrix and required path presence.
+    rows claiming partial/implemented/local-only support; completed evidence
+    paths must also exist under `docs/todo/Completed/` and contain completed
+    checklist text. Remaining roadmap gap: README/ROADMAP/paper-index wording
+    does not yet describe this status-cell validator scope, and the validator
+    does not yet link long status claims to specific active/completed evidence
+    records or deeply verify smoke/partial/planned/unsupported qualifiers
+    beyond the role/status class matrix and required path presence.
   - Required result: update ROADMAP, README, papers index, and code/paper TODOs
     with the exact validator scope, and extend status validation with
     phrase-level links from status claims to active or completed evidence plus richer qualifier

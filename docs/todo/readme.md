@@ -1878,12 +1878,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implementation-status table header/row/cell/taxonomy plus role/status
     compatibility validation, active evidence path requirements, and
     completed-evidence path requirements for rows claiming partial/
-    implemented/local-only support. README still does not describe that
-    status-cell scope, and the validator does not yet machine-check
-    phrase-level evidence links behind each long semantic status claim or
-    deeply distinguish smoke-scoped examples from AlphaEvolve-comparable
-    benchmark evidence beyond the role/status class matrix and required path
-    presence.
+    implemented/local-only support, including the requirement that completed
+    evidence paths exist under `docs/todo/Completed/` and contain completed
+    checklist text. README still does not describe that status-cell scope, and
+    the validator does not yet machine-check phrase-level evidence links behind
+    each long semantic status claim or deeply distinguish smoke-scoped examples
+    from AlphaEvolve-comparable benchmark evidence beyond the role/status class
+    matrix and required path presence.
   - Required result: update README, ROADMAP, papers index, and code/paper TODOs
     together so README distinguishes id-level implementation-status
     reconciliation and structural/taxonomy validation from fully verified

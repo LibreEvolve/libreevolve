@@ -1178,6 +1178,32 @@ def test_validate_paper_manifest_reports_missing_completed_status_evidence(tmp_p
     assert "missing_completed_status_evidence" in codes
 
 
+def test_validate_paper_manifest_reports_completed_evidence_without_completed_item(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_path = tmp_path / "docs" / "todo" / "Completed" / "code.md"
+    completed_path.parent.mkdir(parents=True, exist_ok=True)
+    completed_path.write_text("- [ ] Not completed fixture evidence.\n", encoding="utf-8")
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                "`docs/todo/Completed/code.md`",
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "completed_todo_coverage_without_completed_item" in codes
+
+
 def test_validate_paper_manifest_ignores_unscoped_absence_phrase_examples(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

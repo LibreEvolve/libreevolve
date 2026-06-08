@@ -47,6 +47,7 @@ LOCAL_PAPER_CACHE_SECTION_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 TODO_COVERAGE_PATH_RE = re.compile(r"`(docs/todo/(?:Completed/)?[A-Za-z0-9_.-]+\.md)`")
+COMPLETED_TODO_ITEM_RE = re.compile(r"(?m)^- \[x\] ")
 SOURCE_SPECIFIC_ABSENCE_RE = re.compile(
     r"\bno\s+source-specific\s+([A-Za-z/]+)\s+TODO\b",
     flags=re.IGNORECASE,
@@ -1085,11 +1086,33 @@ def _validate_completed_todo_coverage_cell(root: Path, row_id: str, cell: str) -
                     row_label,
                 )
             )
-        if not (root / relative_path).exists():
+            continue
+        todo_path = root / relative_path
+        if not todo_path.exists():
             issues.append(
                 PaperManifestIssue(
                     "missing_todo_coverage_path",
                     f"{relative_path} does not exist",
+                    row_label,
+                )
+            )
+            continue
+        try:
+            text = todo_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            issues.append(
+                PaperManifestIssue(
+                    "completed_todo_coverage_unreadable",
+                    _manifest_diagnostic(todo_path, root, exc),
+                    row_label,
+                )
+            )
+            continue
+        if not COMPLETED_TODO_ITEM_RE.search(text):
+            issues.append(
+                PaperManifestIssue(
+                    "completed_todo_coverage_without_completed_item",
+                    f"{relative_path} does not contain a completed checklist item",
                     row_label,
                 )
             )

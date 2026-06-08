@@ -2841,10 +2841,12 @@ Primary evidence:
     invalid roles, unsupported status classes, valid roles paired with
     incompatible status classes, missing active evidence paths, and missing
     completed-evidence paths for rows claiming partial/implemented/local-only
-    support. Remaining gap: the validator does not yet link each long status/
-    coverage phrase to the specific active TODO or completed-evidence record
-    that justifies it, or prove smoke-versus-paper-claim qualifiers beyond the
-    role/status class matrix and required path presence.
+    support; completed evidence paths must now also exist under
+    `docs/todo/Completed/` and contain completed checklist text. Remaining
+    gap: the validator does not yet link each long status/coverage phrase to
+    the specific active TODO or completed-evidence record that justifies it, or
+    prove smoke-versus-paper-claim qualifiers beyond the role/status class
+    matrix and required path presence.
   - Required result: extend the reusable paper-status-table validator with
     phrase-level evidence-link checks from semantic status/coverage phrases to
     active TODO or completed-evidence records, including overclaim detection

@@ -3610,12 +3610,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     Focused tests cover header drift, malformed rows, invalid roles,
     unsupported status classes, valid roles paired with incompatible status
     classes, missing active evidence paths, and missing completed-evidence
-    paths for rows claiming partial/implemented/local-only support. Remaining
-    paper-facing gap: the validator does not yet link each long semantic
-    status claim to the specific TODO or completed implementation record that
-    justifies it, nor detect smoke-scoped examples being phrased as
-    AlphaEvolve-comparable benchmark evidence beyond the role/status class
-    matrix and required path presence.
+    paths for rows claiming partial/implemented/local-only support; completed
+    evidence paths must now also exist under `docs/todo/Completed/` and contain
+    completed checklist text. Remaining paper-facing gap: the validator does
+    not yet link each long semantic status claim to the specific TODO or
+    completed implementation record that justifies it, nor detect smoke-scoped
+    examples being phrased as AlphaEvolve-comparable benchmark evidence beyond
+    the role/status class matrix and required path presence.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the

@@ -6057,8 +6057,9 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: `papers/README.md` lists `auer-cesa-bianchi-fischer-2002` as
     the foundational bandit-policy source for LibreEvolve's heuristic
     UCB-style backend router, and README/ROADMAP/code wording says the router
-    is heuristic. The paper TODOs do not yet preserve this UCB1 source row as
-    a paper-facing evidence boundary with the bounded-support, iid-arm,
+    is heuristic. The remaining paper-facing gap is that the paper index and
+    manifest do not yet preserve this UCB1 source row as an evidence boundary
+    with the bounded-support, iid-arm,
     conditional-mean/stationarity, regret-definition, reward-normalization,
     theorem-constant, and proof-scope assumptions needed to prevent backend-
     routing telemetry from being read as canonical UCB1 finite-time analysis.

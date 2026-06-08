@@ -4429,7 +4429,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status.
   - Required result: when README discusses UCB1, UCB-style routing, backend
     bandits, or scheduler reward, keep wording source-scoped until manifests
-    and reports record the UCB1 source row, bounded-reward normalization,
+    and reports record the `auer-cesa-bianchi-fischer-2002` UCB1 source row,
+    bounded-reward normalization,
     conditional-mean/stationarity disclaimer, stable backend-as-arm identity,
     selected-backend/index telemetry, exploration-coefficient mapping, regret
     metrics where applicable, variant unsupported status for UCB2,

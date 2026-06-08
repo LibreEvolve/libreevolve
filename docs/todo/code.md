@@ -2789,6 +2789,28 @@ Primary evidence:
     matrix reports/certificates, and companion source evidence so docs
     distinguish table reproduction from general matrix registry validity.
 
+- [ ] Add matrix result subset-scope validation for main-text versus
+      Appendix A outcome claims.
+  - Spec evidence: AlphaEvolve Table 2 says that beyond the selected examples,
+    for all parameters `m, n, p <= 5`, AlphaEvolve either matched or surpassed
+    the best-known solutions. Appendix A Table 3 is a broader 54-target table
+    that includes targets outside that main-text subset.
+  - Current evidence: `libreevolve.alphaevolve_appendix_a_matrix_registry.v1`
+    validates 54 target rows and fixed aggregate outcome counts of `38`
+    matched, `14` surpassed, and `2` fell behind. The `fell_behind` rows are
+    larger-target records (`mm_4x4x9` and `mm_6x6x6`), while the main-text
+    all-matched-or-surpassed claim is scoped to the `m,n,p <= 5` subset. The
+    current registry and table-exhibit TODOs do not expose a claim-scope
+    validator that proves a prose/table claim is being checked against the
+    correct target subset rather than the whole Appendix A table.
+  - Required result: add matrix report or registry summary metadata for named
+    target subsets such as `main_text_mnp_le_5`, `table_2_selected`, and
+    `appendix_a_full`, with inclusion predicates, row counts, outcome counts,
+    out-of-scope/fell-behind row ids, source-caption linkage, and docs
+    validation so README/ROADMAP/papers wording neither treats the full
+    Appendix A registry as all matched/surpassed nor treats larger-target
+    `fell_behind` rows as contradicting the scoped main-text claim.
+
 - [ ] Add Appendix A matrix row-note and concurrent-work provenance.
   - Spec evidence: AlphaEvolve Appendix A Table 3 includes row-level result
     notes beyond the rank columns, including the note that concurrent work [49]

@@ -2833,6 +2833,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     rendered table artifacts/hashes, and links to Appendix A registry rows,
     matrix reports/certificates, and companion source evidence.
 
+- [ ] Track matrix result subset-scope evidence for Table 2 versus Appendix A
+      outcome claims.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 states that for all
+    parameters `m, n, p <= 5`, AlphaEvolve matched or surpassed the best-known
+    solutions. Appendix A Table 3 is the full 54-target table and includes
+    rows outside that main-text subset.
+  - Current gap: the checked Appendix A matrix registry validates total rows
+    and aggregate outcomes (`38` matched, `14` surpassed, `2` fell behind),
+    but it does not provide paper-facing subset summaries that prove which
+    rows belong to the `m,n,p <= 5` main-text claim, which rows are only in
+    the broader Appendix A table, or why larger-target `fell_behind` rows do
+    not contradict the scoped Table 2 statement.
+  - Required result: add paper-facing subset-scope records for named target
+    sets such as `main_text_mnp_le_5`, `table_2_selected`, and
+    `appendix_a_full`, including inclusion predicates, row counts, outcome
+    counts, out-of-scope row ids, source-caption/table linkage, and
+    README/ROADMAP validation that keeps scoped main-text claims distinct from
+    full Appendix A aggregate outcomes.
+
 - [ ] Track Appendix A matrix row-note and concurrent-work provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A Table 3 includes
     a note that concurrent work [49] also found a rank-90 algorithm for the

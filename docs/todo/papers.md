@@ -2053,6 +2053,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     update README/ROADMAP wording so claims about Appendix B.8 name the
     squared-ratio convention explicitly.
 
+- [ ] Track Appendix B.5 minimum-overlap step-function evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 reports that
+    the Erdos minimum-overlap constant has known bounds
+    `0.379005 <= C5 <= 0.380927`, and that the Figure 10 step function
+    slightly improves the upper bound to `C5 <= 0.380924`. The step-function
+    formulation uses `h: [0, 2] -> [0, 1]`, requires
+    `integral_0^2 h(x) dx = 1`, and minimizes
+    `max_k integral h(x) * (1 - h(x + k)) dx`.
+  - Current gap: paper-facing Appendix B TODOs require normalized result rows,
+    step-function payloads, and Figure 10 exhibit provenance in general, but
+    they do not force B.5 reports to retain the normalized `[0, 2]`
+    step-function formulation, value-range and integral certificates,
+    shift-objective recomputation, prior lower/upper values, or the improved
+    upper-bound comparison.
+  - Required result: add paper/report evidence for Appendix B.5 rows: result
+    id, constant id, function domain and value range, step-function payload
+    hash, integral-normalization certificate, shift/objective recomputation,
+    prior lower/upper values and sources, reported upper bound, Figure 10
+    linkage, source section location, and README/ROADMAP text that keeps the
+    minimum-overlap witness distinct from broad Appendix B family coverage.
+
 - [ ] Track Appendix B.6 finite-set witness evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 improves the
     sums-and-differences lower bound using two finite integer-set witnesses:

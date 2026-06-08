@@ -2040,6 +2040,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validators land, update ROADMAP, README, papers index, and code/paper TODOs
     so roadmap claims cannot compare or quote B.8 values in the wrong unit.
 
+- [ ] Keep Appendix B.5 roadmap wording scoped until minimum-overlap
+      step-function provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos
+    minimum-overlap upper bound from `C5 <= 0.380927` to `C5 <= 0.380924`.
+    The Figure 10 construction is a step function on `[0, 2]` with values in
+    `[0, 1]`, integral normalization `integral_0^2 h(x) dx = 1`, and an
+    objective that minimizes the maximum shifted overlap integral.
+  - Current evidence: roadmap/README/paper-index wording can cite the broad
+    Appendix B per-result and Figure 10 visual gaps, but it does not require
+    B.5-specific function-domain metadata, value-range and normalization
+    certificates, shift-objective recomputation, prior lower/upper bounds,
+    reported upper bound, or construction payload hash.
+  - Required result: when Appendix B.5 minimum-overlap metadata and validators
+    land, update ROADMAP, README, papers index, and code/paper TODOs so roadmap
+    claims distinguish B.5's step-function domain, normalization, objective,
+    prior/current bounds, Figure 10 link, payload hash, and source location
+    from aggregate Appendix B coverage.
+
 - [ ] Keep Appendix B.6 roadmap wording scoped until finite-set witness
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the

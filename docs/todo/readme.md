@@ -1105,6 +1105,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     dimensions, coordinate artifacts, and comparison units without conflating
     squared and unsquared objectives.
 
+- [ ] Keep README Appendix B.5 minimum-overlap wording scoped until
+      step-function provenance exists.
+  - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos
+    minimum-overlap upper bound from `C5 <= 0.380927` to `C5 <= 0.380924`
+    using a Figure 10 step function on `[0, 2]` with values in `[0, 1]`,
+    integral normalization `integral_0^2 h(x) dx = 1`, and a shift-overlap
+    objective.
+  - Current evidence: README can point to broad Appendix B per-result and
+    Figure 10 visual gaps, but it does not separately warn that B.5 needs
+    domain/value-range, normalization, objective recomputation, prior-bound,
+    improved-bound, and construction-payload evidence before quoting the
+    minimum-overlap result.
+  - Required result: when Appendix B.5 minimum-overlap metadata lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    names the domain, normalization, step-function payload, objective
+    certificate, prior/current bounds, Figure 10 link, and source location
+    without merging B.5 into generic step-function Appendix B coverage.
+
 - [ ] Keep README Appendix B.6 finite-set wording scoped until witness
       provenance exists.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences

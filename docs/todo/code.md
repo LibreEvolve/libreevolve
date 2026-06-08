@@ -1984,6 +1984,27 @@ Primary evidence:
     README/ROADMAP wording that labels both the squared value and the geometric
     square-root ratio unambiguously.
 
+- [ ] Add Appendix B.5 minimum-overlap step-function provenance.
+  - Spec evidence: AlphaEvolve Appendix B.5 improves the Erdos minimum-overlap
+    upper bound from `C5 <= 0.380927` to `C5 <= 0.380924` using the step
+    function shown in Figure 10. The claim depends on the formulation over
+    step functions `h` on `[0, 2]` with values in `[0, 1]`,
+    integral normalization `integral_0^2 h(x) dx = 1`, and the objective
+    `max_k integral h(x) * (1 - h(x + k)) dx`.
+  - Current evidence: the broad Appendix B per-result TODO names Erdos minimum
+    overlap and step-function payloads, and the figure-level TODO names
+    Figure 10, but no code/report schema separately records B.5's function
+    domain, value bounds, normalization certificate, convolution/shift
+    objective, prior lower/upper bounds, improved upper bound, or Figure 10
+    construction payload. A generated report could quote the improved bound
+    without proving the step function satisfies the normalized formulation.
+  - Required result: add Appendix B.5-specific result rows and validators for
+    step-function domain, interval/value payload hash, value-range check,
+    integral-normalization certificate, objective recomputation over shifts,
+    prior lower/upper values and sources, reported upper bound, Figure 10
+    linkage, and README/ROADMAP wording that distinguishes B.5 minimum-overlap
+    evidence from aggregate Appendix B coverage.
+
 - [ ] Add Appendix B.6 finite-set witness provenance.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
     lower bound by finding a finite set `U1` of size `2003`, yielding

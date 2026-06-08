@@ -2902,17 +2902,17 @@ Primary evidence:
     A.M., and A.Z.W. assembled the accompanying Google Colab.
   - Current evidence: TODOs already require figure/exhibit metadata, rendered
     artifact hashes, companion Colab URL/ref/digest records, claim-to-cell
-    maps, and local Colab-equivalent exports. They do not require any code or
-    paper-source manifest schema to preserve artifact-role provenance for who
-    created a figure or assembled a companion notebook, what artifact each role
-    applies to, or how that role evidence is tied to the PDF Contributions
-    source location.
-  - Required result: extend paper artifact manifests or exhibit/notebook
-    provenance records with source-role metadata: artifact type, figure/table/
-    notebook id, creator or assembler role, responsible initials/names,
-    source PDF section/page, artifact digest/link, and docs wording that
-    distinguishes byte-level artifact verification from paper-attributed
-    artifact authorship.
+    maps, and local Colab-equivalent exports.
+    `libreevolve.alphaevolve_paper_artifact_roles.v1` now preserves the PDF
+    page 23 contribution-role evidence for the figure creator initials and
+    accompanying Google Colab assembler initials, with stable artifact ids,
+    artifact types, creator/assembler roles, exact initials and ordering,
+    source section/page metadata, and source phrases.
+  - Required result: connect those role records to concrete rendered figure or
+    companion-notebook artifacts with digest/link metadata, retrieval
+    provenance, and source-to-artifact maps, while keeping docs wording clear
+    that paper-attributed authorship is separate from byte-level artifact
+    availability.
 
 - [ ] Connect benchmark-grade fixtures to hardening and scope reports.
   - Spec evidence: AlphaEvolve's matrix-multiplication work searches tensor

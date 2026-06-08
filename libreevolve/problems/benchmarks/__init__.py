@@ -44,6 +44,12 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_result_report,
     write_strassen_2x2_publication_bundle,
 )
+from libreevolve.problems.benchmarks.paper_artifact_roles import (
+    PAPER_ARTIFACT_ROLE_SCHEMA,
+    alphaevolve_paper_artifact_role_records,
+    render_paper_artifact_role_summary,
+    validate_paper_artifact_roles,
+)
 from libreevolve.problems.benchmarks.result_certification import (
     CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,
@@ -75,10 +81,12 @@ __all__ = [
     "FIGURE8_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
     "MATRIX_RESULT_SCHEMA",
+    "PAPER_ARTIFACT_ROLE_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
     "ablation_result_artifact_inventory",
+    "alphaevolve_paper_artifact_role_records",
     "benchmark_hardening_artifact_inventory",
     "certification_artifact_inventory",
     "example_benchmark_scope_records",
@@ -92,6 +100,7 @@ __all__ = [
     "render_example_benchmark_scope_summary",
     "render_figure8_exhibit_summary",
     "render_matrix_result_summary",
+    "render_paper_artifact_role_summary",
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
     "validate_ablation_result_report",
@@ -102,6 +111,7 @@ __all__ = [
     "validate_example_benchmark_scope",
     "validate_figure8_exhibit",
     "validate_matrix_result_report",
+    "validate_paper_artifact_roles",
     "validate_paper_result_certification",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",

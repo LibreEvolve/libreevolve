@@ -369,6 +369,11 @@ is not yet an AlphaEvolve reproduction.
   superseded/current status, update note, attribution, and verifier/Colab
   artifact linkage for revised results such as the uncertainty-inequality
   bound.
+- Keep paper artifact-role attribution separate from artifact availability:
+  `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
+  AlphaEvolve PDF contribution records for figure creators and companion
+  Colab assemblers, but rendered figure/notebook artifact hashes, URLs,
+  retrieval digests, and source-to-artifact links remain future work.
 - Add Appendix A matrix target-suite curation provenance before treating the
   54-row registry as paper-faithful suite evidence. The standard paper-manifest
   command now validates the registry's stored row integrity when present, but

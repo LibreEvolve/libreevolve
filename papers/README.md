@@ -868,6 +868,13 @@ Implemented:
   style declarations, rendered artifact hashes, and links to ablation report,
   curve-summary, and raw-seed-trace artifacts. It does not render plots or
   prove that benchmark scripts emitted those artifacts.
+- `libreevolve/problems/benchmarks/paper_artifact_roles.py`: AlphaEvolve paper
+  artifact-role attribution contract. It validates the PDF page 23 contribution
+  records for the paper-figure creator initials and the accompanying Google
+  Colab assembler initials, with stable artifact ids, artifact types,
+  creator/assembler roles, exact initials and ordering, source section/page
+  metadata, and source phrases. It does not verify rendered figure files or a
+  retrieved companion-notebook artifact.
 - `libreevolve/llm/budget_report.py`: LLM role/retry budget report contract.
   It validates mutation, critique, and feedback role budgets, provider-internal
   retry attempts, token/cost/wall-clock limits and usage, persisted

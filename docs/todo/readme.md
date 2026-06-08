@@ -1926,19 +1926,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status/coverage evidence.
 
 - [ ] Keep README figure/notebook provenance wording scoped until paper
-      artifact-role metadata exists.
+      artifact-role records are bound to artifacts.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper figure
     creation to specific authors and separately identifies the people who
     assembled the accompanying Google Colab.
   - Current evidence: README can describe PDF manifest validation, future
-    companion Colab tracking, exhibit provenance gaps, and rendered artifact
-    hashes. It does not document creator/assembler role metadata for figures,
-    tables, or companion notebooks, nor source locations tying those roles back
-    to the AlphaEvolve Contributions section.
-  - Required result: when paper-artifact role provenance lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes artifact availability, rendered/source hashes, and
-    paper-attributed figure/notebook creator or assembler provenance.
+    companion Colab tracking, exhibit provenance gaps, rendered artifact
+    hashes, and `libreevolve.alphaevolve_paper_artifact_roles.v1`. The role
+    contract validates figure-creator and companion-Colab assembler records
+    with stable artifact ids, exact initials, source section/page metadata, and
+    source phrases, but it does not document concrete rendered figure files,
+    companion notebook URLs/digests, or source-to-artifact maps.
+  - Required result: when role records are linked to concrete rendered or
+    companion-notebook artifacts, update README, ROADMAP, papers index, and
+    code/paper TODOs together so README distinguishes artifact availability,
+    rendered/source hashes, and paper-attributed figure/notebook creator or
+    assembler provenance.
 
 - [ ] Keep README constructive-math wording scoped to static context/artifacts
       versus AlphaEvolve-style incumbent handoff.

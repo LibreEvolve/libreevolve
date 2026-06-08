@@ -3678,13 +3678,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     the accompanying Google Colab.
   - Current gap: paper-facing TODOs require exhibit ids, source/caption
     locations, rendered artifact hashes, companion Colab URL/ref/digest
-    records, and claim-to-cell mappings. They do not require a paper-source
-    role record that attributes figure creation or notebook assembly to the
-    responsible contributors, ties those roles to a figure/table/notebook id,
-    or validates the source location for the role claim.
-  - Required result: add paper-facing artifact-role provenance for figures,
-    tables, and companion notebooks: artifact id/type, creator or assembler
-    role, responsible initials/names, source section/page, artifact hash/link,
+    records, and claim-to-cell mappings.
+    `libreevolve.alphaevolve_paper_artifact_roles.v1` now records and validates
+    the required paper-artifact role attribution for the figure set and
+    companion notebook: artifact id/type, creator or assembler role,
+    responsible initials/names, source section/page, and source phrases. It
+    does not yet bind those role records to concrete rendered figure files,
+    companion notebook URLs, retrieval digests, artifact hashes, or notebook
+    cell/source maps.
+  - Required result: connect paper-facing artifact-role records to rendered
+    figures and companion notebook source artifacts with digest/link metadata
     and README/ROADMAP wording that separates artifact availability from
     paper-attributed artifact authorship.
 

@@ -3070,6 +3070,15 @@ The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
 benchmark evidence.
+AlphaEvolve paper artifact-role provenance uses
+`libreevolve.alphaevolve_paper_artifact_roles.v1` in
+`libreevolve/problems/benchmarks/paper_artifact_roles.py`; the built-in record
+preserves the PDF page 23 contribution evidence for the paper-figure creator
+initials and the accompanying Google Colab assembler initials. It validates
+artifact ids, artifact types, creator/assembler roles, exact initials and
+ordering, source section/page metadata, and the role source phrases. It is
+attribution evidence, not proof that local rendered figures or a companion
+notebook artifact with hashes/links exists.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

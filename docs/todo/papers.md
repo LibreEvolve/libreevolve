@@ -3150,15 +3150,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     54-target version with best-known ranks, AlphaEvolve ranks, outcome
     coloring/summary counts, complex-valued row caveats, Colab decomposition
     links, and the concurrent-work note for `<4, 5, 6>`.
-  - Current gap: the paper TODOs track baseline-rank citations, row notes,
-    target-suite curation, companion Colab evidence, Figure 4 exhibit
-    provenance, scalar-field caveats, tensor-rank caveats, and result
-    artifacts. They do not yet preserve Table 2/Table 3 as table exhibits with
-    stable ids, selected-row versus full-table relation, row ordering, caption
-    aggregate checks, color/outcome encoding, complex-valued annotations, note
-    linkage, source PDF/caption locations, rendered table artifact hashes, or
-    row-to-registry/report/Colab mappings.
-  - Required result: add paper-facing table exhibit records for Table 2 and
+  - Current gap: `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` now
+    preserves Table 2/Table 3 as declared table exhibits with stable ids,
+    selected-row versus full-table relation, row ordering, caption aggregate
+    checks, color/outcome encoding, complex-valued annotations, note linkage,
+    source PDF/caption locations, rendered table artifact hashes, and
+    row-to-registry/report/Colab mappings. No emitted paper artifact or table
+    export currently carries those rendered/source/OCR files.
+  - Required result: emit paper-facing table exhibit records for Table 2 and
     Appendix A Table 3: source PDF page/caption locations, table ids, row
     ids/order, selected/full-table membership, rank values, outcome classes and
     aggregate count validation, complex-valued and concurrent-work annotations,

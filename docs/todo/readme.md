@@ -889,23 +889,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes post-hoc per-seed report validation from AlphaEvolve
     Section 3.1-style repeated-seed cascade execution evidence.
 
-- [ ] Keep README Table 2/Table 3 matrix-rank table wording scoped until table
-      exhibit provenance exists.
+- [ ] Keep README Table 2/Table 3 matrix-rank table wording scoped until
+      emitted table exhibit artifacts exist.
   - Spec evidence: AlphaEvolve Table 2 is the selected main-text matrix-rank
     comparison table, and Appendix A Table 3 is the full 54-target version with
     caption-level aggregate counts, outcome coloring, complex-valued row
     caveats, companion Colab links, and the concurrent-work note for
     `<4, 5, 6>`.
-  - Current evidence: README describes the Appendix A matrix registry and
-    matrix report validation, while related TODOs cover baseline citations,
-    row notes, target-suite curation, Figure 4 exhibit provenance,
-    scalar-field evidence, and tensor-rank caveats. README does not document
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`, which validates
     Table 2/Table 3 exhibit ids, selected-row versus full-table relation, row
     ordering, caption aggregate validation, color/outcome encoding,
-    source/caption locations, rendered table artifacts/hashes, or links from
-    table rows to registry/report/Colab evidence.
-  - Required result: when Table 2/Table 3 matrix-rank table exhibit provenance
-    lands, update README, ROADMAP, papers index, and code/paper TODOs together
+    source/caption locations, rendered table artifacts/hashes, and links from
+    table rows to registry/report/Colab evidence. No emitted report/table
+    artifact carries those rendered/source/OCR files yet.
+  - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
+    land, update README, ROADMAP, papers index, and code/paper TODOs together
     so README distinguishes reproduced paper-table exhibits from general
     Appendix A registry and matrix report-contract coverage.
 

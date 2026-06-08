@@ -511,6 +511,12 @@ is not yet an AlphaEvolve reproduction.
   algorithm for `<4, 5, 6>`, including source page/table, rank relationship,
   and a non-exclusive-priority docs caveat. Runtime reports and rendered table
   artifacts still do not emit that row-note caveat.
+- Keep Table 2/Table 3 matrix-rank claims scoped to declared exhibit evidence:
+  `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` now validates stable
+  table ids, selected/full-table membership, row ordering, rank values, outcome
+  counts/color semantics, complex-row annotations, concurrent-note linkage,
+  rendered/source/OCR artifact hashes, and registry/subset/row-note/Colab
+  links. Runtime reports still do not render or emit those table artifacts.
 
 ### 10. Operational maturity
 

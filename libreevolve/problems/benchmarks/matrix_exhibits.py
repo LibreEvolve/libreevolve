@@ -8,11 +8,14 @@ from typing import Any
 
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     TARGET_SUITE as APPENDIX_A_TARGET_SUITE,
+    TABLE_2_SELECTED_TARGET_IDS,
+    matrix_target_records,
 )
 
 
 FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1"
 FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1"
+MATRIX_RANK_TABLE_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1"
 EXPECTED_FIGURE4_EXHIBIT_ID = "figure4_matrix_discovery"
 EXPECTED_FIGURE9_EXHIBIT_ID = "figure9_matrix_diff_magnified"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
@@ -21,6 +24,22 @@ EXPECTED_SOURCE_FIGURE = "Figures 9a-9c"
 EXPECTED_TARGET_ID = "mm_4x4x4"
 EXPECTED_TARGET_DIMENSIONS = [4, 4, 4]
 EXPECTED_RESULT_RANK = 48
+EXPECTED_TABLE_IDS = frozenset({"table2_matrix_rank_selected", "appendix_a_table3_matrix_rank_full"})
+EXPECTED_TABLE_PAGES = {
+    "table2_matrix_rank_selected": 9,
+    "appendix_a_table3_matrix_rank_full": 34,
+}
+EXPECTED_TABLE_SOURCE_NAMES = {
+    "table2_matrix_rank_selected": "Table 2",
+    "appendix_a_table3_matrix_rank_full": "Appendix A Table 3",
+}
+EXPECTED_COMPLEX_ROW_IDS = frozenset({"mm_3x4x7", "mm_4x4x4", "mm_4x4x8"})
+EXPECTED_CONCURRENT_NOTE_TARGET_ID = "mm_4x5x6"
+EXPECTED_OUTCOME_ENCODING = {
+    "matched": "uncolored_or_neutral",
+    "surpassed": "green",
+    "fell_behind": "red",
+}
 EXPECTED_FIGURE4_PAGE = 11
 EXPECTED_FIGURE4_MUTATION_COUNT = 15
 EXPECTED_FIGURE4_REGION_IDS = frozenset(
@@ -89,6 +108,20 @@ class Figure4MatrixDiscoveryExhibitValidation:
     region_count: int
     semantic_component_count: int
     issues: list[Figure4MatrixDiscoveryExhibitIssue]
+
+
+@dataclass(frozen=True)
+class MatrixRankTableExhibitIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class MatrixRankTableExhibitValidation:
+    ok: bool
+    table_count: int
+    row_count: int
+    issues: list[MatrixRankTableExhibitIssue]
 
 
 def validate_figure4_matrix_discovery_exhibit(
@@ -170,6 +203,30 @@ def validate_figure9_matrix_diff_exhibit(
     )
 
 
+def validate_matrix_rank_table_exhibit(
+    exhibit: object | str | Path,
+) -> MatrixRankTableExhibitValidation:
+    data, read_issues = _load_table_exhibit(exhibit)
+    if read_issues:
+        return MatrixRankTableExhibitValidation(False, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixRankTableExhibitIssue] = []
+    if data.get("schema") != MATRIX_RANK_TABLE_EXHIBIT_SCHEMA:
+        issues.append(MatrixRankTableExhibitIssue("invalid_schema", "unsupported matrix rank table exhibit schema"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(MatrixRankTableExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(MatrixRankTableExhibitIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    _validate_table_evidence_links(data.get("evidence_links"), issues)
+    table_count, row_count = _validate_rank_tables(data.get("tables"), issues)
+    return MatrixRankTableExhibitValidation(
+        ok=not issues,
+        table_count=table_count,
+        row_count=row_count,
+        issues=issues,
+    )
+
+
 def render_figure4_matrix_discovery_exhibit_summary(exhibit: dict[str, Any]) -> str:
     validation = validate_figure4_matrix_discovery_exhibit(exhibit)
     status = "ok" if validation.ok else "invalid"
@@ -201,6 +258,24 @@ def render_figure9_matrix_diff_exhibit_summary(exhibit: dict[str, Any]) -> str:
         f"| panel_count | {validation.panel_count} |",
         f"| semantic_component_count | {validation.semantic_component_count} |",
         f"| source_figure | {exhibit.get('source_figure', '<unknown>')} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_rank_table_exhibit_summary(exhibit: dict[str, Any]) -> str:
+    validation = validate_matrix_rank_table_exhibit(exhibit)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "AlphaEvolve matrix-rank table exhibit",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| table_count | {validation.table_count} |",
+        f"| row_count | {validation.row_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -242,6 +317,227 @@ def _load_exhibit(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [Figure9MatrixDiffExhibitIssue("invalid_shape", "Figure 9 exhibit must be a JSON object")]
+
+
+def _load_table_exhibit(
+    exhibit: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixRankTableExhibitIssue]]:
+    if isinstance(exhibit, dict):
+        return dict(exhibit), []
+    if isinstance(exhibit, (str, Path)):
+        path = Path(exhibit)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixRankTableExhibitIssue("read_error", f"failed to read matrix-rank table exhibit: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixRankTableExhibitIssue("invalid_json", f"invalid matrix-rank table exhibit JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixRankTableExhibitIssue("invalid_shape", "matrix-rank table exhibit must be a JSON object")]
+
+
+def _validate_table_evidence_links(
+    value: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixRankTableExhibitIssue("invalid_evidence_links", "evidence_links must be an object"))
+        return
+    for field in (
+        "appendix_a_registry_ref",
+        "subset_scope_ref",
+        "row_note_ref",
+        "scalar_field_evidence_ref",
+        "companion_colab_ref",
+    ):
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixRankTableExhibitIssue(f"missing_{field}", f"evidence_links.{field} is required"))
+
+
+def _validate_rank_tables(
+    value: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> tuple[int, int]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRankTableExhibitIssue("invalid_tables", "tables must be a non-empty list"))
+        return 0, 0
+    seen: set[str] = set()
+    row_count = 0
+    for table in value:
+        if not isinstance(table, dict):
+            issues.append(MatrixRankTableExhibitIssue("invalid_table", "table entries must be objects"))
+            continue
+        table_id = table.get("table_id")
+        if table_id not in EXPECTED_TABLE_IDS:
+            issues.append(MatrixRankTableExhibitIssue("invalid_table_id", "table_id must identify Table 2 or Appendix A Table 3"))
+            continue
+        if isinstance(table_id, str):
+            seen.add(table_id)
+            row_count += _validate_rank_table(table, table_id, issues)
+    for table_id in sorted(EXPECTED_TABLE_IDS - seen):
+        issues.append(MatrixRankTableExhibitIssue("missing_table", "matrix-rank table exhibit must include Table 2 and Appendix A Table 3"))
+    return len(value), row_count
+
+
+def _validate_rank_table(
+    table: dict[str, Any],
+    table_id: str,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> int:
+    expected_rows = _expected_table_rows(table_id)
+    if table.get("source_table") != EXPECTED_TABLE_SOURCE_NAMES[table_id]:
+        issues.append(MatrixRankTableExhibitIssue("invalid_source_table", "source_table must match the declared matrix rank table"))
+    if table.get("source_pdf_page") != EXPECTED_TABLE_PAGES[table_id]:
+        issues.append(MatrixRankTableExhibitIssue("invalid_source_pdf_page", "source_pdf_page must match the local AlphaEvolve PDF table page"))
+    caption = table.get("source_caption_ref")
+    if not isinstance(caption, str) or not caption.strip():
+        issues.append(MatrixRankTableExhibitIssue("missing_source_caption_ref", "source_caption_ref is required"))
+    else:
+        _validate_table_caption(table_id, caption, issues)
+    membership = table.get("membership")
+    expected_membership = "table_2_selected" if table_id == "table2_matrix_rank_selected" else "appendix_a_full"
+    if membership != expected_membership:
+        issues.append(MatrixRankTableExhibitIssue("invalid_membership", "membership must identify selected-row or full-table scope"))
+    if table.get("row_count") != len(expected_rows):
+        issues.append(MatrixRankTableExhibitIssue("invalid_row_count", "row_count must match expected table rows"))
+    if table.get("outcome_counts") != _expected_outcome_counts(expected_rows):
+        issues.append(MatrixRankTableExhibitIssue("invalid_outcome_counts", "outcome_counts must match expected table row outcomes"))
+    if table.get("outcome_encoding") != EXPECTED_OUTCOME_ENCODING:
+        issues.append(MatrixRankTableExhibitIssue("invalid_outcome_encoding", "outcome_encoding must preserve matched/surpassed/fell-behind color semantics"))
+    expected_complex_ids = [row["target_id"] for row in expected_rows if row["target_id"] in EXPECTED_COMPLEX_ROW_IDS]
+    if table.get("complex_valued_target_ids") != expected_complex_ids:
+        issues.append(MatrixRankTableExhibitIssue("invalid_complex_valued_target_ids", "complex-valued annotations must match the paper-noted rows in this table"))
+    expected_note_ids = [EXPECTED_CONCURRENT_NOTE_TARGET_ID] if any(row["target_id"] == EXPECTED_CONCURRENT_NOTE_TARGET_ID for row in expected_rows) else []
+    if table.get("concurrent_note_target_ids") != expected_note_ids:
+        issues.append(MatrixRankTableExhibitIssue("invalid_concurrent_note_target_ids", "concurrent-note annotations must match table rows"))
+    _validate_table_artifacts(table.get("source_links"), issues)
+    return _validate_table_rows(table.get("rows"), table_id, expected_rows, issues)
+
+
+def _validate_table_caption(
+    table_id: str,
+    caption: str,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if table_id == "table2_matrix_rank_selected":
+        if "Upper bounds on the rank" not in caption or "accompanying Google Colab" not in caption:
+            issues.append(MatrixRankTableExhibitIssue("invalid_table2_caption", "Table 2 caption must preserve rank and Colab linkage"))
+    elif table_id == "appendix_a_table3_matrix_rank_full":
+        if "Full version of Table 2" not in caption or "38 cases" not in caption or "14 cases" not in caption or "2 cases" not in caption:
+            issues.append(MatrixRankTableExhibitIssue("invalid_table3_caption", "Table 3 caption must preserve full-table aggregate counts"))
+
+
+def _validate_table_artifacts(
+    value: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixRankTableExhibitIssue("invalid_source_links", "source_links must be an object"))
+        return
+    for key in ("source_pdf_excerpt", "rendered_table_artifact", "ocr_text_artifact"):
+        _validate_table_artifact(value.get(key), key, issues)
+
+
+def _validate_table_artifact(
+    value: object,
+    label: str,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixRankTableExhibitIssue(f"invalid_{label}", f"{label} must be an object"))
+        return
+    path = value.get("path")
+    path_obj = Path(path) if isinstance(path, str) else None
+    if (
+        path_obj is None
+        or not path
+        or path_obj.is_absolute()
+        or path.startswith(("/", "\\"))
+        or ".." in path_obj.parts
+    ):
+        issues.append(MatrixRankTableExhibitIssue(f"invalid_{label}_path", f"{label} path must be safe and relative"))
+    sha = value.get("sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(MatrixRankTableExhibitIssue(f"invalid_{label}_hash", f"{label} sha256 must be a lowercase SHA-256 hex digest"))
+    byte_count = value.get("bytes")
+    if isinstance(byte_count, bool) or not isinstance(byte_count, int) or byte_count <= 0:
+        issues.append(MatrixRankTableExhibitIssue(f"invalid_{label}_bytes", f"{label} bytes must be a positive integer"))
+
+
+def _validate_table_rows(
+    value: object,
+    table_id: str,
+    expected_rows: list[dict[str, Any]],
+    issues: list[MatrixRankTableExhibitIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRankTableExhibitIssue("invalid_rows", "rows must be a non-empty list"))
+        return 0
+    expected_by_id = {row["target_id"]: row for row in expected_rows}
+    expected_order = [row["target_id"] for row in expected_rows]
+    seen: list[str] = []
+    for index, row in enumerate(value, start=1):
+        if not isinstance(row, dict):
+            issues.append(MatrixRankTableExhibitIssue("invalid_row", "table rows must be objects"))
+            continue
+        target_id = row.get("target_id")
+        if not isinstance(target_id, str) or target_id not in expected_by_id:
+            issues.append(MatrixRankTableExhibitIssue("unknown_row_target_id", "row target_id must belong to the declared table"))
+            continue
+        seen.append(target_id)
+        expected = expected_by_id[target_id]
+        if row.get("row_order") != index:
+            issues.append(MatrixRankTableExhibitIssue("invalid_row_order", "row_order must preserve source table order"))
+        expected_target = expected_order[index - 1] if index <= len(expected_order) else None
+        if target_id != expected_target:
+            issues.append(MatrixRankTableExhibitIssue("row_order_target_mismatch", "row target order must match source table order"))
+        for field in ("dimensions", "best_known_rank", "alphaevolve_rank", "outcome"):
+            if row.get(field) != expected[field]:
+                issues.append(MatrixRankTableExhibitIssue(f"invalid_row_{field}", f"row {field} must match Appendix A registry"))
+        if row.get("registry_ref") != target_id:
+            issues.append(MatrixRankTableExhibitIssue("invalid_registry_ref", "row registry_ref must match target_id"))
+        if row.get("complex_valued") != (target_id in EXPECTED_COMPLEX_ROW_IDS):
+            issues.append(MatrixRankTableExhibitIssue("invalid_row_complex_annotation", "row complex_valued flag must match paper caveats"))
+        expected_note_ref = "concurrent_work_rank90_mm_4x5x6" if target_id == EXPECTED_CONCURRENT_NOTE_TARGET_ID else None
+        if row.get("concurrent_note_ref") != expected_note_ref:
+            issues.append(MatrixRankTableExhibitIssue("invalid_row_concurrent_note_ref", "row concurrent_note_ref must match Appendix A row-note metadata"))
+        for field in ("matrix_result_ref", "companion_colab_ref"):
+            if not isinstance(row.get(field), str) or not row[field].strip():
+                issues.append(MatrixRankTableExhibitIssue(f"missing_row_{field}", f"row {field} is required"))
+    if seen != expected_order:
+        issues.append(MatrixRankTableExhibitIssue("table_row_set_mismatch", "table rows must exactly match expected source table membership and order"))
+    return len(value)
+
+
+def _expected_table_rows(table_id: str) -> list[dict[str, Any]]:
+    records = matrix_target_records()
+    records_by_id = {record["id"]: record for record in records if isinstance(record.get("id"), str)}
+    if table_id == "table2_matrix_rank_selected":
+        target_ids = list(TABLE_2_SELECTED_TARGET_IDS)
+    else:
+        target_ids = [record["id"] for record in records if isinstance(record.get("id"), str)]
+    rows: list[dict[str, Any]] = []
+    for target_id in target_ids:
+        record = records_by_id[target_id]
+        rows.append(
+            {
+                "target_id": target_id,
+                "dimensions": record["dimensions"],
+                "best_known_rank": record["best_known_rank"],
+                "alphaevolve_rank": record["alphaevolve_rank"],
+                "outcome": record["outcome"],
+            }
+        )
+    return rows
+
+
+def _expected_outcome_counts(rows: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {"matched": 0, "surpassed": 0, "fell_behind": 0}
+    for row in rows:
+        outcome = row["outcome"]
+        counts[outcome] += 1
+    return counts
 
 
 def _validate_figure4_target_mapping(value: object, issues: list[Figure4MatrixDiscoveryExhibitIssue]) -> None:

@@ -55,10 +55,13 @@ from libreevolve.problems.benchmarks.example_scope import (
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
+    MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
     render_figure4_matrix_discovery_exhibit_summary,
     render_figure9_matrix_diff_exhibit_summary,
+    render_matrix_rank_table_exhibit_summary,
     validate_figure4_matrix_discovery_exhibit,
     validate_figure9_matrix_diff_exhibit,
+    validate_matrix_rank_table_exhibit,
 )
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
@@ -124,6 +127,7 @@ __all__ = [
     "FIGURE8_EXHIBIT_SCHEMA",
     "FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA",
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
+    "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
     "MATRIX_HEADLINE_HISTORICITY_SCHEMA",
     "MATRIX_NEAR_INTEGRALITY_SCHEMA",
@@ -159,6 +163,7 @@ __all__ = [
     "render_figure8_exhibit_summary",
     "render_figure4_matrix_discovery_exhibit_summary",
     "render_figure9_matrix_diff_exhibit_summary",
+    "render_matrix_rank_table_exhibit_summary",
     "render_matrix_headline_historicity_summary",
     "render_matrix_near_integrality_summary",
     "render_matrix_result_summary",
@@ -181,6 +186,7 @@ __all__ = [
     "validate_figure8_exhibit",
     "validate_figure4_matrix_discovery_exhibit",
     "validate_figure9_matrix_diff_exhibit",
+    "validate_matrix_rank_table_exhibit",
     "validate_matrix_headline_historicity_evidence",
     "validate_matrix_near_integrality_evidence",
     "validate_matrix_result_report",

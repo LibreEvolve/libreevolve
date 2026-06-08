@@ -3152,6 +3152,15 @@ Fawzi rank-47 caveat, source refs, and links to matrix result, scalar-field,
 tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It validates
 the declared evidence shape; local matrix benchmark runners still do not emit
 the headline record or the linked decomposition/certificate/source artifacts.
+Matrix-rank table exhibit evidence uses
+`libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`; it validates declared
+Table 2 and Appendix A Table 3 table exhibits, including stable table ids,
+source page/caption links, selected-row versus full-table membership, row order,
+best-known and AlphaEvolve rank values, outcome counts and color semantics,
+complex-valued row annotations, `mm_4x5x6` concurrent-note linkage, rendered
+table/source/OCR artifact hashes, and links to registry, subset-scope,
+row-note, scalar-field, matrix-result, and companion Colab evidence. It does
+not render or emit those table artifacts during local runs yet.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

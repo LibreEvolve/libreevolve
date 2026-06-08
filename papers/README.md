@@ -822,6 +822,14 @@ Implemented:
   refs, and links to result, scalar-field, tensor-rank, Figure 4, Figure 9,
   and companion Colab evidence. No local matrix benchmark runner emits those
   headline/source/decomposition/certificate artifacts yet.
+  `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` validates declared
+  Table 2 and Appendix A Table 3 matrix-rank table exhibits, including stable
+  table ids, source page/caption links, selected/full-table membership, row
+  order, rank values, outcome counts and color semantics, complex-valued row
+  annotations, concurrent-note linkage, rendered table/source/OCR artifact
+  hashes, and links to registry, subset, row-note, scalar-field, result, and
+  companion Colab evidence. No local report/export emits those rendered table
+  artifacts yet.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

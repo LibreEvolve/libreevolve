@@ -3,10 +3,18 @@ import json
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
+    MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
     render_figure4_matrix_discovery_exhibit_summary,
     render_figure9_matrix_diff_exhibit_summary,
+    render_matrix_rank_table_exhibit_summary,
     validate_figure4_matrix_discovery_exhibit,
     validate_figure9_matrix_diff_exhibit,
+    validate_matrix_rank_table_exhibit,
+)
+
+from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    TABLE_2_SELECTED_TARGET_IDS,
+    matrix_target_records,
 )
 
 
@@ -159,6 +167,105 @@ def _valid_figure4_exhibit() -> dict:
     }
 
 
+def _table_row(target: dict, row_order: int) -> dict:
+    target_id = target["id"]
+    return {
+        "row_order": row_order,
+        "target_id": target_id,
+        "dimensions": target["dimensions"],
+        "best_known_rank": target["best_known_rank"],
+        "alphaevolve_rank": target["alphaevolve_rank"],
+        "outcome": target["outcome"],
+        "registry_ref": target_id,
+        "complex_valued": target_id in {"mm_3x4x7", "mm_4x4x4", "mm_4x4x8"},
+        "concurrent_note_ref": (
+            "concurrent_work_rank90_mm_4x5x6"
+            if target_id == "mm_4x5x6"
+            else None
+        ),
+        "matrix_result_ref": f"reports/{target_id}_result.json",
+        "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
+    }
+
+
+def _rank_table(
+    table_id: str,
+    source_table: str,
+    page: int,
+    membership: str,
+    caption: str,
+    targets: list[dict],
+) -> dict:
+    outcome_counts = {"matched": 0, "surpassed": 0, "fell_behind": 0}
+    for target in targets:
+        outcome_counts[target["outcome"]] += 1
+    target_ids = [target["id"] for target in targets]
+    return {
+        "table_id": table_id,
+        "source_table": source_table,
+        "source_pdf_page": page,
+        "source_caption_ref": caption,
+        "membership": membership,
+        "row_count": len(targets),
+        "outcome_counts": outcome_counts,
+        "outcome_encoding": {
+            "matched": "uncolored_or_neutral",
+            "surpassed": "green",
+            "fell_behind": "red",
+        },
+        "complex_valued_target_ids": [
+            target_id
+            for target_id in target_ids
+            if target_id in {"mm_3x4x7", "mm_4x4x4", "mm_4x4x8"}
+        ],
+        "concurrent_note_target_ids": [
+            target_id for target_id in target_ids if target_id == "mm_4x5x6"
+        ],
+        "source_links": {
+            "source_pdf_excerpt": _artifact(f"tables/{table_id}_source.txt", "8"),
+            "rendered_table_artifact": _artifact(f"tables/{table_id}.png", "9"),
+            "ocr_text_artifact": _artifact(f"tables/{table_id}_ocr.txt", "a"),
+        },
+        "rows": [_table_row(target, index) for index, target in enumerate(targets, 1)],
+    }
+
+
+def _valid_rank_table_exhibit() -> dict:
+    records = matrix_target_records()
+    records_by_id = {record["id"]: record for record in records}
+    table2_targets = [records_by_id[target_id] for target_id in TABLE_2_SELECTED_TARGET_IDS]
+    return {
+        "schema": MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": "alphaevolve_appendix_a",
+        "evidence_links": {
+            "appendix_a_registry_ref": "benchmarks/alphaevolve_appendix_a_matrix.json",
+            "subset_scope_ref": "benchmarks/matrix_subset_scope.json",
+            "row_note_ref": "benchmarks/matrix_row_notes.json",
+            "scalar_field_evidence_ref": "benchmarks/matrix_scalar_field.json",
+            "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
+        },
+        "tables": [
+            _rank_table(
+                "table2_matrix_rank_selected",
+                "Table 2",
+                9,
+                "table_2_selected",
+                "Upper bounds on the rank of the tensor; decompositions shown in this table can be found in the accompanying Google Colab.",
+                table2_targets,
+            ),
+            _rank_table(
+                "appendix_a_table3_matrix_rank_full",
+                "Appendix A Table 3",
+                34,
+                "appendix_a_full",
+                "Full version of Table 2, with 38 cases matched, 14 cases surpassed, and 2 cases fell behind.",
+                records,
+            ),
+        ],
+    }
+
+
 def test_validate_figure4_matrix_discovery_exhibit_accepts_main_text_metadata():
     validation = validate_figure4_matrix_discovery_exhibit(_valid_figure4_exhibit())
 
@@ -294,3 +401,97 @@ def test_render_figure9_matrix_diff_exhibit_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| panel_count | 3 |" in summary
     assert "| semantic_component_count | 7 |" in summary
+
+
+def test_validate_matrix_rank_table_exhibit_accepts_table2_and_table3_metadata():
+    validation = validate_matrix_rank_table_exhibit(_valid_rank_table_exhibit())
+
+    assert validation.ok is True
+    assert validation.table_count == 2
+    assert validation.row_count == 70
+    assert validation.issues == []
+
+
+def test_validate_matrix_rank_table_exhibit_loads_json_file(tmp_path):
+    path = tmp_path / "matrix_rank_tables.json"
+    path.write_text(json.dumps(_valid_rank_table_exhibit()), encoding="utf-8")
+
+    validation = validate_matrix_rank_table_exhibit(path)
+
+    assert validation.ok is True
+
+
+def test_validate_matrix_rank_table_exhibit_rejects_table_identity_and_counts_drift():
+    exhibit = _valid_rank_table_exhibit()
+    table2 = exhibit["tables"][0]
+    table2["source_pdf_page"] = 10
+    table2["membership"] = "appendix_a_full"
+    table2["row_count"] = 15
+    table2["outcome_counts"]["matched"] = 3
+    table2["outcome_encoding"]["surpassed"] = "blue"
+    table2["source_caption_ref"] = "Selected rows"
+
+    validation = validate_matrix_rank_table_exhibit(exhibit)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_source_pdf_page" in codes
+    assert "invalid_membership" in codes
+    assert "invalid_row_count" in codes
+    assert "invalid_outcome_counts" in codes
+    assert "invalid_outcome_encoding" in codes
+    assert "invalid_table2_caption" in codes
+
+
+def test_validate_matrix_rank_table_exhibit_rejects_row_order_and_value_drift():
+    exhibit = _valid_rank_table_exhibit()
+    table2 = exhibit["tables"][0]
+    table2["rows"][0], table2["rows"][1] = table2["rows"][1], table2["rows"][0]
+    table2["rows"][0]["row_order"] = 99
+    table2["rows"][0]["best_known_rank"] = 999
+    table2["rows"][0]["registry_ref"] = "mm_missing"
+
+    validation = validate_matrix_rank_table_exhibit(exhibit)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_row_order" in codes
+    assert "row_order_target_mismatch" in codes
+    assert "invalid_row_best_known_rank" in codes
+    assert "invalid_registry_ref" in codes
+    assert "table_row_set_mismatch" in codes
+
+
+def test_validate_matrix_rank_table_exhibit_rejects_annotations_links_and_artifacts():
+    exhibit = _valid_rank_table_exhibit()
+    table3 = exhibit["tables"][1]
+    row = next(row for row in table3["rows"] if row["target_id"] == "mm_4x5x6")
+    row["concurrent_note_ref"] = None
+    row["companion_colab_ref"] = ""
+    table3["complex_valued_target_ids"] = []
+    table3["concurrent_note_target_ids"] = []
+    table3["source_links"]["rendered_table_artifact"] = _artifact("../escape.png", "bad")
+    table3["source_links"]["rendered_table_artifact"]["bytes"] = 0
+    exhibit["evidence_links"]["row_note_ref"] = ""
+
+    validation = validate_matrix_rank_table_exhibit(exhibit)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_complex_valued_target_ids" in codes
+    assert "invalid_concurrent_note_target_ids" in codes
+    assert "invalid_row_concurrent_note_ref" in codes
+    assert "missing_row_companion_colab_ref" in codes
+    assert "invalid_rendered_table_artifact_path" in codes
+    assert "invalid_rendered_table_artifact_hash" in codes
+    assert "invalid_rendered_table_artifact_bytes" in codes
+    assert "missing_row_note_ref" in codes
+
+
+def test_render_matrix_rank_table_exhibit_summary_reports_shape():
+    summary = render_matrix_rank_table_exhibit_summary(_valid_rank_table_exhibit())
+
+    assert "AlphaEvolve matrix-rank table exhibit" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| table_count | 2 |" in summary
+    assert "| row_count | 70 |" in summary

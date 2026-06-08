@@ -5819,3 +5819,32 @@ Primary evidence:
     independent checker outputs, and README/ROADMAP wording that keeps this
     post-AlphaEvolve sums-and-differences improvement as missing evidence
     until local construction artifacts and reports exist.
+
+- [ ] Add further post-AlphaEvolve sums-and-differences sequence boundary.
+  - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a
+    further improvement over AlphaEvolve`, was submitted June 2, 2025. Its
+    abstract says it improves on both DeepMind AlphaEvolve's
+    `theta = 1.1584` result and the subsequent explicit-construction result
+    `theta = 1.173050`. It constructs a sequence of `U` sets whose limit
+    establishes a new lower bound `theta = 1.173077`.
+  - Current evidence: `papers/README.md` lists `2506.01896` only as a
+    constructive math benchmark candidate with `Not implemented; potential
+    future benchmark`. LibreEvolve has broad Appendix B sums-and-differences
+    TODOs and a source-specific TODO for `2505.16105`, but no first-class code
+    TODO for this further source, no sequence-of-sets construction schema, no
+    limiting argument artifact, no convergence/tail-bound verifier, no
+    `theta = 1.173077` recomputation report, no side-by-side lineage from
+    AlphaEvolve `1.1584` through `2505.16105` `1.173050`, and no artifact
+    policy that distinguishes finite explicit `U` witnesses from asymptotic
+    sequence constructions.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2506.01896`: arXiv id/version/date/PDF hash, author, source license,
+    code/artifact availability, relation to AlphaEvolve Appendix B and
+    LibreEvolve sums-and-differences fixtures, sequence-of-`U` construction
+    schema, per-sequence parameter records, finite-prefix witness artifacts,
+    limiting lower-bound derivation metadata, convergence/tail-bound checks,
+    sumset/difference-set cardinality records, `theta` formula and tolerance
+    policy, AlphaEvolve `1.1584` baseline, `2505.16105` `1.173050` baseline,
+    prior/current comparison rows, independent checker outputs, and README/
+    ROADMAP wording that keeps this further sums-and-differences improvement
+    as missing evidence until local sequence artifacts and reports exist.

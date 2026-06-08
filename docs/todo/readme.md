@@ -3886,4 +3886,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     supports this post-AlphaEvolve sums-and-differences improvement without
     those artifacts.
 
+- [ ] Keep README further post-AlphaEvolve sums-and-differences claims absent
+      or source-scoped until sequence evidence exists.
+  - Spec evidence: arXiv `2506.01896`, `Sums and differences of sets: a
+    further improvement over AlphaEvolve`, improves on both AlphaEvolve's
+    `theta = 1.1584` and the later `2505.16105` explicit-construction result
+    `theta = 1.173050`. Its abstract constructs a sequence of `U` sets whose
+    limit establishes `theta = 1.173077`.
+  - Current evidence: README documents Appendix B sums-and-differences gaps
+    plus the need for source-scoped coverage of `2505.16105`. It does not
+    mention `2506.01896`, define a sequence-of-sets construction, preserve
+    finite-prefix artifacts, verify limiting lower-bound derivations, compare
+    against both the AlphaEvolve and `2505.16105` baselines, or distinguish
+    asymptotic sequence evidence from finite huge-set evidence.
+  - Required result: if README mentions the further sums-and-differences
+    improvement, the `1.173077` bound, a sequence of `U` sets, limiting
+    lower-bound constructions, the AlphaEvolve `1.1584` baseline, the
+    `2505.16105` `1.173050` baseline, or `2506.01896`, keep the wording
+    source-scoped until local artifacts can show the paper in the manifest,
+    sequence schemas, finite-prefix artifacts, limiting-bound derivation
+    records, convergence/tail-bound checker outputs, baseline comparison
+    rows, independent checker outputs, and benchmark reports. Avoid implying
+    LibreEvolve supports this further post-AlphaEvolve sums-and-differences
+    improvement without those artifacts.
+
 ## Architecture Description

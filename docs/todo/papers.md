@@ -5374,3 +5374,32 @@ directory and using the AlphaEvolve paper as the primary specification.
     checker outputs, reproducibility status, and README/ROADMAP wording that
     treats this post-AlphaEvolve sums-and-differences improvement as missing
     paper evidence rather than implemented LibreEvolve support.
+
+- [ ] Track further post-AlphaEvolve sums-and-differences sequence paper
+      evidence.
+  - Paper/source evidence: arXiv `2506.01896`, submitted June 2, 2025, is
+    titled `Sums and differences of sets: a further improvement over
+    AlphaEvolve`. Its abstract says it improves on DeepMind AlphaEvolve's
+    `theta = 1.1584` and the later explicit-construction result
+    `theta = 1.173050`, by constructing a sequence of `U` sets that in the
+    limit establishes `theta = 1.173077`.
+  - Current gap: `papers/README.md` lists `2506.01896` as a constructive math
+    benchmark candidate with `Not implemented; potential future benchmark`,
+    and the active TODO coverage does not yet track this paper-specific
+    evidence. Existing sums-and-differences TODOs do not capture this
+    sequence-of-sets construction, limiting lower-bound proof artifact,
+    convergence/tail-bound verification, or lineage comparison against both
+    AlphaEvolve's `1.1584` finite witness and `2505.16105`'s `1.173050`
+    explicit huge-set witness.
+  - Required result: add paper-manifest and paper-index coverage updates for
+    `2506.01896`: title/author/arXiv version/date/PDF digest, source license,
+    code/artifact URL/status, relation to AlphaEvolve Appendix B and
+    LibreEvolve sums-and-differences assumptions, sequence-of-`U` construction
+    schema, parameter records, finite-prefix artifacts, limiting-bound
+    derivation metadata, convergence/tail-bound checker records,
+    sumset/difference-set cardinality records, `theta` formula and tolerance
+    policy, AlphaEvolve `1.1584` baseline, `2505.16105` `1.173050` baseline,
+    prior/current result rows, independent checker outputs, reproducibility
+    status, and README/ROADMAP wording that treats this further
+    post-AlphaEvolve sums-and-differences improvement as missing paper
+    evidence rather than implemented LibreEvolve support.

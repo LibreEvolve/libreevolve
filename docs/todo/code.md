@@ -2294,6 +2294,28 @@ Primary evidence:
     coverage from partial notebook/artifact/status coverage at a pinned
     snapshot.
 
+- [ ] Reconcile follow-on numbered problem-page inventory with README count.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README says the repository contains problem descriptions for 67
+    mathematical problems, but the current `problems/` directory exposes 68
+    numbered HTML pages. The live raw pages include both `problems/67.html`
+    and `problems/68.html` titled `Logic puzzles`; `67.html` uses a Colab link
+    placeholder `#`, while `68.html` uses a generic
+    `https://colab.research.google.com/` URL and a paper-link placeholder `#`.
+  - Current evidence: follow-on coverage TODOs require all 67 problem ids,
+    hosted page URLs, notebook paths or absence reasons, status buckets, and
+    access modes. They do not require a numbered-page inventory check that
+    reconciles repository file count with README/paper problem count, detects
+    duplicate titles/sections, or flags placeholder/generic resource links in
+    individual pages.
+  - Required result: add repository-page inventory validation with repository
+    URL/ref/commit/date, discovered numbered HTML files, expected problem-count
+    policy, duplicate title/section detection, page id-to-paper section
+    mapping, placeholder/generic link diagnostics for Colab and paper links,
+    and README/ROADMAP wording that distinguishes paper-declared problem count
+    from live repository page inventory until the source discrepancy is
+    classified.
+
 - [ ] Add follow-on problem-repository rights and attribution provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README asks users of the package's code or data to cite

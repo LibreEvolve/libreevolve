@@ -3144,6 +3144,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     wording that avoids implying notebook or status coverage is complete when
     only problem-page coverage is complete.
 
+- [ ] Track follow-on numbered problem-page inventory and source-count
+      discrepancy.
+  - Paper/source evidence: the
+    `google-deepmind/alphaevolve_repository_of_problems` README says the
+    repository contains problem descriptions for 67 mathematical problems, but
+    the current repository `problems/` directory exposes 68 numbered HTML
+    pages. Raw pages `problems/67.html` and `problems/68.html` are both titled
+    `Logic puzzles`; page 67 has a Colab placeholder `#`, while page 68 has a
+    generic Colab URL and a paper-link placeholder `#`.
+  - Current gap: follow-on paper/source TODOs require problem ids, hosted URLs,
+    notebook availability, access modes, status buckets, and live snapshot
+    policy. They do not require a source-count reconciliation between the
+    README/paper claim and live numbered HTML inventory, nor diagnostics for
+    duplicate titles, repeated paper-section mappings, under-construction
+    links, generic Colab links, or placeholder paper links.
+  - Required result: add source-manifest validation for numbered problem pages:
+    expected count from paper/README, discovered page files, page id/title,
+    paper section mapping, duplicate-title/section diagnostics, resource-link
+    status (`valid`, `placeholder`, `generic`, `under_construction`, or
+    absent), classification of the 67-versus-68 discrepancy, and README/
+    ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
+
 - [ ] Track follow-on problem-repository rights, citation, and attribution.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README says users of

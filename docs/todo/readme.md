@@ -1462,6 +1462,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     tracked root-level paths, hashes, parsed bucket semantics, and explicit
     absent-status handling.
 
+- [ ] Keep README follow-on problem-count wording scoped until page inventory
+      is reconciled.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README says there are 67 mathematical problem descriptions, while the
+    current live `problems/` directory exposes 68 numbered HTML files.
+    `problems/67.html` and `problems/68.html` are both titled `Logic puzzles`;
+    one page has an under-construction Colab placeholder and the other has a
+    generic Colab URL plus a placeholder paper link.
+  - Current evidence: README TODOs require follow-on repository coverage,
+    hosted URLs, notebook/artifact access modes, status buckets, and pinned
+    snapshots. They do not require README wording that explains the live
+    repository's numbered-page inventory versus the README/paper problem-count
+    claim, nor do they require duplicate-title or placeholder-link diagnostics.
+  - Required result: after numbered-page inventory validation exists, update
+    README so follow-on source claims distinguish paper/README problem count
+    from live repository HTML-page count, list any duplicate or placeholder
+    pages as snapshot diagnostics, and avoid treating every numbered page as a
+    complete problem/notebook/paper-linked source artifact until reconciled.
+
 - [ ] Keep README follow-on problem-repository rights and attribution scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README asks users of the code or data to cite `Mathematical exploration and

@@ -2196,6 +2196,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ids, and avoids treating a live partial-notebook repository as fully static
     or notebook/status-complete.
 
+- [ ] Keep follow-on problem-count roadmap gates scoped until numbered-page
+      inventory is reconciled.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README says the repository contains descriptions for 67 mathematical
+    problems, while the current live `problems/` directory exposes 68 numbered
+    HTML files. `problems/67.html` and `problems/68.html` are both titled
+    `Logic puzzles`; page 67 uses a placeholder Colab link, and page 68 uses a
+    generic Colab URL plus a placeholder paper link.
+  - Current evidence: roadmap TODOs require follow-on coverage snapshots,
+    hosted page URLs, notebook/artifact availability, status bucket semantics,
+    and live-repository policy. They do not require an evidence gate that
+    reconciles paper/README problem count with live numbered HTML inventory or
+    flags duplicate titles, repeated section mappings, and placeholder/generic
+    resource links.
+  - Required result: when numbered-page inventory validation lands, update
+    ROADMAP, README, papers index, and code/paper TODOs so follow-on coverage
+    gates include expected-versus-discovered page counts, page id/title/section
+    mapping, duplicate diagnostics, resource-link validity, discrepancy
+    classification, and snapshot-scoped wording for any 67-versus-68 source
+    mismatch.
+
 - [ ] Keep follow-on problem-repository rights and attribution gates scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README asks users of the code or data to cite `Mathematical exploration and

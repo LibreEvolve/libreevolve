@@ -3152,6 +3152,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     source URL, and README/ROADMAP/papers wording that distinguishes these
     terms from the original AlphaEvolve PDF and result companion repository.
 
+- [ ] Track follow-on problem-repository runtime-absence evidence.
+  - Paper/source evidence: the
+    `google-deepmind/alphaevolve_repository_of_problems` README says notebooks
+    contain prompts, verification code, initial programs, final evolved
+    programs, and visualization/analysis code where appropriate, and then
+    explicitly says the repository does not contain code to run AlphaEvolve.
+  - Current gap: existing paper TODOs require follow-on notebook availability
+    and artifact-presence flags, while companion-result TODOs track runtime
+    absence for `alphaevolve_results`. They do not preserve this same runtime
+    absence boundary for the later problem repository, which could make
+    paper/source claims imply the notebooks are executable AlphaEvolve runtime
+    harnesses rather than source evidence for prompts, verifiers, and evolved
+    outputs.
+  - Required result: add source-manifest metadata and checks for follow-on
+    runtime availability: repository URL/ref/commit/date, notebook path/hash,
+    artifact-kind flags, explicit AlphaEvolve-runtime absence, source span for
+    the absence statement, verifier-versus-runtime classification, and README/
+    ROADMAP/papers wording that does not treat problem-repository notebooks as
+    containing the AlphaEvolve implementation.
+
 - [ ] Track AlphaEvolve theoretical-CS proof-element source evidence.
   - Paper evidence: Google Research's September 30, 2025 article
     `AI as a research partner: Advancing theoretical computer science with

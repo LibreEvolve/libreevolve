@@ -4770,3 +4770,33 @@ Primary evidence:
     KernelBench/Modded-NanoGPT benchmark taxonomy, baseline identities, and
     README/ROADMAP wording that keeps PACEvolve-style consistency support as
     missing evidence until local implementation and reports exist.
+
+- [ ] Add FlashEvolve asynchronous-stage source boundary.
+  - Spec evidence: arXiv `2605.08520`, `FlashEvolve: Accelerating Agent
+    Self-Evolution with Asynchronous Stage Orchestration`, was submitted May
+    8, 2026. Its abstract says LLM-based evolution is bottlenecked by
+    synchronized stage execution and imbalance inside LLM-heavy stages.
+    FlashEvolve replaces synchronized execution with asynchronous workers and
+    queues so stages and evolution steps overlap, tracks artifact versions,
+    applies policies to update, discard, or patch stale artifacts, treats
+    language-space staleness as inspectable and repairable, and adds
+    speculative stage completion plus adaptive workflow control. It reports
+    GEPA proposal-throughput gains of 3.5x on local vLLM and 4.9x on API
+    serving, with applicability to ACE and Meta-Harness.
+  - Current evidence: LibreEvolve runs a mostly synchronous generation,
+    validation, admission, archive-update, and migration loop with sequential
+    reviewer calls and manifest/audit artifacts. It has no FlashEvolve source
+    row, asynchronous worker/queue orchestration, per-stage queue-state
+    artifacts, artifact-version lineage, stale-item classification, reflective
+    stale-patch workflow, speculative stage-completion policy, adaptive
+    workflow controller, or throughput/token-efficiency report.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.08520`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve's synchronous loop, worker and
+    queue schemas, stage-overlap traces, artifact-version provenance,
+    staleness classification and policy outcomes, reflective patch artifacts,
+    speculative-completion records, adaptive workflow-control metrics,
+    throughput/token-efficiency measurements, GEPA/vLLM/API baseline
+    identities, ACE/Meta-Harness applicability boundaries, and README/ROADMAP
+    wording that keeps FlashEvolve-style async orchestration as missing
+    evidence until local implementation and reports exist.

@@ -3452,3 +3452,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     collaboration diagnostics, LLM-SR/KernelBench/Modded-NanoGPT benchmark
     metadata, baseline identities, and a background-only or benchmark-fixture
     status rule so roadmap claims do not outpace local PACEvolve-style support.
+
+- [ ] Add FlashEvolve asynchronous-stage gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.08520`, submitted May 8, 2026, introduces
+    FlashEvolve for asynchronous stage orchestration in LLM-based evolution.
+    The abstract identifies synchronized stage execution and LLM-heavy stage
+    imbalance as wall-clock bottlenecks, then proposes asynchronous workers
+    and queues, artifact-version tracking, staleness-aware update/discard/
+    patch policies, speculative stage completion, and adaptive workflow
+    control. It reports 3.5x local-vLLM and 4.9x API proposal-throughput gains
+    over synchronous GEPA and says the design also applies to ACE and
+    Meta-Harness.
+  - Current evidence: ROADMAP tracks async reviewer gaps, archive restore,
+    prompt/run provenance, benchmark-report contracts, and several
+    long-horizon search gates. It does not mention `2605.08520`, define an
+    asynchronous-stage source gate, or require evidence before promoting
+    overlapping generation/evaluation/admission, artifact-version repair, or
+    throughput gains beyond the current synchronous evolution loop.
+  - Required result: add roadmap gates for `2605.08520`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, worker/queue
+    architecture, stage-overlap and queue-depth traces, artifact-version
+    lineage, stale-artifact update/discard/patch policy records, reflective
+    stale-patch artifacts, speculative-completion metrics, adaptive workflow
+    control telemetry, throughput/token-efficiency reports, GEPA/vLLM/API
+    baseline identities, ACE/Meta-Harness applicability boundaries, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local FlashEvolve-style async orchestration support.

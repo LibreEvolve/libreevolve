@@ -4349,3 +4349,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     baseline method identities, code/artifact availability if any, and README/
     ROADMAP wording that treats PACEvolve as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track FlashEvolve asynchronous-stage paper evidence.
+  - Paper/source evidence: arXiv `2605.08520`, submitted May 8, 2026, is
+    titled `FlashEvolve: Accelerating Agent Self-Evolution with Asynchronous
+    Stage Orchestration`. Its abstract says synchronized stage execution and
+    imbalance inside LLM-heavy stages create wall-clock bottlenecks in
+    LLM-based evolution. FlashEvolve replaces synchronized execution with
+    asynchronous workers and queues so different stages and evolution steps
+    overlap; tracks artifact versions; updates, discards, or patches stale
+    artifacts; treats language-space staleness as inspectable and repairable;
+    adds speculative stage completion and adaptive workflow control; and
+    reports 3.5x local-vLLM and 4.9x API proposal-throughput gains over
+    synchronous GEPA, with the design also applying to ACE and Meta-Harness.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.08520`. Existing rows cover AlphaEvolve, prompt/history
+    artifacts, reviewer metadata, async reviewer gaps, archive restore,
+    PACEvolve consistency, LEVI cost-aware routing, and MLEvolve long-horizon
+    MLE, but not asynchronous stage orchestration, queue overlap, artifact
+    versioning, stale-language-artifact repair, speculative completion, or
+    throughput/token-efficiency measurements.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.08520`: title/authors/arXiv version/date/PDF digest, source license,
+    relation to AlphaEvolve and LibreEvolve's synchronous loop, worker/queue
+    schema, stage-overlap traces, artifact-version lineage, stale-artifact
+    update/discard/patch policies, reflective patch artifacts,
+    speculative-completion metrics, adaptive workflow telemetry,
+    throughput/token-efficiency records, GEPA/vLLM/API baseline identities,
+    ACE/Meta-Harness applicability status, code/artifact availability if any,
+    and README/ROADMAP wording that treats FlashEvolve as missing paper
+    evidence rather than implemented LibreEvolve support.

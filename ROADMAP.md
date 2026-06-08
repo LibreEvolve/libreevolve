@@ -226,6 +226,12 @@ is not yet an AlphaEvolve reproduction.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.
+- Keep the paper-index validator boundary explicit: it currently proves
+  manifest/readability/count checks, Appendix B and ablation registry shape,
+  implementation-status table structure, role/status taxonomy compatibility,
+  TODO coverage row coverage, active ledger links, and completed-ledger
+  checklist evidence. It does not yet prove every long status phrase,
+  benchmark qualifier, or paper claim against a specific evidence record.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, and MadEvolve features as inspired unless paper behavior
   is actually implemented.

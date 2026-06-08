@@ -3612,17 +3612,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     classes, missing active evidence paths, and missing completed-evidence
     paths for rows claiming partial/implemented/local-only support; completed
     evidence paths must now also exist under `docs/todo/Completed/` and contain
-    completed checklist text. Remaining paper-facing gap: the validator does
-    not yet link each long semantic status claim to the specific TODO or
-    completed implementation record that justifies it, nor detect smoke-scoped
-    examples being phrased as AlphaEvolve-comparable benchmark evidence beyond
-    the role/status class matrix and required path presence.
+    completed checklist text. README, ROADMAP, and `papers/README.md` now
+    describe that validator boundary without claiming full semantic proof.
+    Remaining paper-facing gap: the validator does not yet link each long
+    semantic status claim to the specific TODO or completed implementation
+    record that justifies it, nor detect smoke-scoped examples being phrased as
+    AlphaEvolve-comparable benchmark evidence beyond the role/status class
+    matrix and required path presence.
   - Required result: extend paper-index status-cell validation with evidence
     phrase-level links from semantic status claims to TODO or completed implementation
     records and smoke/partial/planned/unsupported qualifier checks beyond the
-    current role/status class matrix. Keep this validator distinct from the TODO
-    coverage cross-reference checker, which verifies backlog pointers after
-    the implementation-status table.
+    current role/status class matrix. Keep this validator distinct from the
+    already documented TODO coverage cross-reference checker, which verifies
+    backlog pointers after the implementation-status table.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of

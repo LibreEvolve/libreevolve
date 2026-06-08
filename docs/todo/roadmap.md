@@ -954,16 +954,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     active evidence path presence, and completed-evidence path presence for
     rows claiming partial/implemented/local-only support; completed evidence
     paths must also exist under `docs/todo/Completed/` and contain completed
-    checklist text. Remaining roadmap gap: README/ROADMAP/paper-index wording
-    does not yet describe this status-cell validator scope, and the validator
-    does not yet link long status claims to specific active/completed evidence
-    records or deeply verify smoke/partial/planned/unsupported qualifiers
-    beyond the role/status class matrix and required path presence.
-  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
-    with the exact validator scope, and extend status validation with
-    phrase-level links from status claims to active or completed evidence plus richer qualifier
-    checks. Keep this distinct from TODO coverage cross-reference validation,
-    which validates the separate backlog pointer table.
+    checklist text. README, ROADMAP, and the paper index now describe this
+    validator boundary without claiming full semantic proof. Remaining roadmap
+    gap: the validator does not yet link long status claims to specific
+    active/completed evidence records or deeply verify
+    smoke/partial/planned/unsupported qualifiers beyond the role/status class
+    matrix and required path presence.
+  - Required result: extend status validation with phrase-level links from
+    status claims to active or completed evidence plus richer qualifier checks.
+    Keep this distinct from the already documented TODO coverage
+    cross-reference validation, which validates the separate backlog pointer
+    table.
 
 - [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
   versus audit-grade source integrity.

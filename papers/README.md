@@ -38,8 +38,18 @@ verification instead of reading whole files into memory, fails historical
 failed-download rows, reports unmanifested local PDFs, and treats Git-tracked
 cache PDFs as repository-boundary violations. The
 implementation-status table IDs below are reconciled against the committed
-manifest IDs by the same validator, and symlink or Windows reparse-point backed
-PDF entries are rejected before byte/hash validation.
+manifest IDs by the same validator. The validator treats the implementation-
+status table as a structured public claim surface: it requires the stable
+four-column header, exact four-cell rows, non-empty display-safe title, role,
+and status cells, the declared role taxonomy, allowed status class prefixes,
+and compatible role/status pairs. The TODO coverage cross-reference table is
+validated separately for manifest-id row coverage, exact row shape, active TODO
+ledger links, and completed-ledger links under `docs/todo/Completed/` that
+contain completed checklist evidence. These checks keep paper-index structure
+and backlog traceability honest, but they do not yet prove every long status
+phrase or benchmark qualifier against a specific implementation record.
+Symlink or Windows reparse-point backed PDF entries are rejected before
+byte/hash validation.
 The same validation command checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json`, which records a
 coverage decision for each AlphaEvolve Appendix B constructive-math family. The

@@ -2842,17 +2842,20 @@ Primary evidence:
     incompatible status classes, missing active evidence paths, and missing
     completed-evidence paths for rows claiming partial/implemented/local-only
     support; completed evidence paths must now also exist under
-    `docs/todo/Completed/` and contain completed checklist text. Remaining
-    gap: the validator does not yet link each long status/coverage phrase to
-    the specific active TODO or completed-evidence record that justifies it, or
-    prove smoke-versus-paper-claim qualifiers beyond the role/status class
-    matrix and required path presence.
+    `docs/todo/Completed/` and contain completed checklist text. README,
+    ROADMAP, and `papers/README.md` now describe that validator boundary
+    without claiming full semantic proof. Remaining gap: the validator does not
+    yet link each long status/coverage phrase to the specific active TODO or
+    completed-evidence record that justifies it, or prove
+    smoke-versus-paper-claim qualifiers beyond the role/status class matrix and
+    required path presence.
   - Required result: extend the reusable paper-status-table validator with
     phrase-level evidence-link checks from semantic status/coverage phrases to
     active TODO or completed-evidence records, including overclaim detection
     for smoke examples presented as AlphaEvolve-comparable benchmarks. Keep
-    this separate from TODO-coverage cross-reference validation, which tracks
-    the later backlog-reference table rather than the semantic status cells.
+    this separate from the already documented TODO-coverage cross-reference
+    validation, which tracks the later backlog-reference table rather than the
+    semantic status cells.
 
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.

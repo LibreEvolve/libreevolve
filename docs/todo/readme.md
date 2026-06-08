@@ -3397,4 +3397,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     outcomes. Avoid implying LibreEvolve supports RHO-style retrospective
     harness optimization without those artifacts.
 
+- [ ] Keep README harness self-evolution benefit claims scoped until
+      harness-updating and harness-benefit evidence both exist.
+  - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness
+    Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM
+    Agents`, distinguishes harness-updating from harness-benefit. Its
+    abstract reports that models across capability tiers can produce harness
+    updates with similar gains, but the ability to benefit from updated
+    harnesses is non-monotonic and can fail when agents do not activate
+    relevant harness artifacts or do not follow them faithfully.
+  - Current evidence: README documents LibreEvolve's current prompt context,
+    backend ensemble, candidate mutation, failure streams, and benchmark
+    boundaries. It does not list `2605.30621`, measure harness-update quality
+    separately from task-agent benefit, record whether prompt/context artifacts
+    were activated or used, track long-horizon adherence to updated harness
+    instructions, compare evolver and task-agent model tiers, or report
+    capability-budget tradeoffs.
+  - Required result: if README mentions harness self-evolution, harness
+    updating, harness benefit, persistent harness updates, artifact activation,
+    skill or memory load rates, adherence to harness instructions, mid-tier
+    benefit peaks, weak-agent activation failures, or capability-budget
+    guidance for evolver versus task agent, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show separate
+    update and benefit metrics, activation telemetry, adherence traces,
+    model-tier comparisons, benchmark baselines, and report outcomes. Avoid
+    implying LibreEvolve benefits from harness self-evolution merely because
+    it can generate or record update-like artifacts.
+
 ## Architecture Description

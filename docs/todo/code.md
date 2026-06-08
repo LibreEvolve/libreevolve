@@ -5212,3 +5212,36 @@ Primary evidence:
     metadata, baseline identities, and README/ROADMAP wording that keeps
     retrospective self-preference harness optimization as missing evidence
     until local implementation and reports exist.
+
+- [ ] Add harness-updating versus harness-benefit capability boundary.
+  - Spec evidence: arXiv `2605.30621`, `Harness Updating Is Not Harness
+    Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM
+    Agents`, was submitted May 28, 2026. Its abstract distinguishes
+    harness-updating, the capability to produce useful persistent harness
+    updates from execution evidence, from harness-benefit, the capability of
+    a task-solving agent to benefit from updated harnesses during task
+    execution. It reports that harness-updating is relatively flat across
+    base model capability, while harness-benefit is non-monotonic: weak-tier
+    models benefit little, mid-tier models benefit most, and strong-tier
+    models benefit less than mid-tier. It traces weak-tier failure to missing
+    harness artifact activation or poor faithful following after activation.
+  - Current evidence: LibreEvolve records candidate mutations, prompt
+    context, backend selection, run artifacts, and failure histories, but it
+    has no source row for `2605.30621`, no harness self-evolution benchmark,
+    no metric separating update-generation quality from downstream
+    task-agent benefit, no harness artifact activation telemetry, no
+    long-horizon instruction-following/adherence metric, no model-tier
+    comparison matrix, and no budget rule distinguishing capability spent on
+    the evolver from capability spent on the task-solving agent.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.30621`: arXiv id/version/date/PDF hash, authors, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness assumptions, harness-updating metric definitions, harness-benefit
+    metric definitions, evolver/task-agent pairing matrix, persistent harness
+    update artifacts, activation/load-rate telemetry, adherence/following
+    traces across long trajectories, model-tier taxonomy, weak/mid/strong
+    baseline identities, capability-budget accounting, post-evolution
+    performance deltas, SWE-Bench Verified/MCP-Atlas/SkillsBench benchmark
+    metadata if reproduced, and README/ROADMAP wording that keeps harness
+    self-evolution benefit claims separate from harness-update generation
+    until local evidence proves both.

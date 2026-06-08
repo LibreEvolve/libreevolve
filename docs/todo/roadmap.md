@@ -3819,3 +3819,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmark records, baseline identities, and a background-only or
     benchmark-fixture status rule so roadmap claims do not outpace local
     RHO-style retrospective harness optimization support.
+
+- [ ] Add harness-updating versus harness-benefit gates before roadmap
+      promotion.
+  - Spec evidence: arXiv `2605.30621`, submitted May 28, 2026, introduces
+    `Harness Updating Is Not Harness Benefit: Disentangling Evolution
+    Capabilities in Self-Evolving LLM Agents`. The abstract distinguishes
+    generating useful persistent harness updates from actually benefiting
+    from those updates during task solving. It reports flat harness-updating
+    across base capability tiers, non-monotonic harness-benefit with mid-tier
+    agents benefiting most, and weak-agent failure modes around harness
+    artifact activation and faithful long-horizon following.
+  - Current evidence: ROADMAP tracks backend capability, prompt context,
+    failure artifacts, SIA, HarnessFix, RHO, and AEvo gates. It does not
+    mention `2605.30621`, define separate harness-updating and harness-benefit
+    readiness gates, require artifact activation metrics, measure adherence
+    to updated harness instructions over long trajectories, compare model
+    tiers for evolver versus task-solving roles, or require capability-budget
+    evidence before promoting harness self-evolution gains.
+  - Required result: add roadmap gates for `2605.30621`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    harness-updating metric schema, harness-benefit metric schema,
+    evolver/task-agent pairing matrix, persistent harness update records,
+    harness artifact activation/load telemetry, adherence/following traces,
+    long-horizon instruction-following reports, model-tier taxonomy,
+    weak/mid/strong baseline identities, capability-budget accounting,
+    benchmark records for SWE-Bench Verified, MCP-Atlas, and SkillsBench if
+    reproduced, and a background-only or benchmark-fixture status rule so
+    roadmap claims do not conflate harness update generation with downstream
+    harness benefit.

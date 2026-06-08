@@ -4796,3 +4796,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     identities, code/artifact availability if any, reproducibility status, and
     README/ROADMAP wording that treats RHO as missing paper evidence rather
     than implemented LibreEvolve support.
+
+- [ ] Track harness-updating versus harness-benefit paper evidence.
+  - Paper/source evidence: arXiv `2605.30621`, submitted May 28, 2026, is
+    titled `Harness Updating Is Not Harness Benefit: Disentangling Evolution
+    Capabilities in Self-Evolving LLM Agents`. Its abstract says LLM agents
+    are increasingly built around editable external harnesses such as prompts,
+    skills, memories, and tools. It analyzes two separable capabilities:
+    harness-updating, the ability to produce useful persistent harness updates
+    from execution evidence, and harness-benefit, the ability to benefit from
+    updated harnesses during task solving. The abstract reports that
+    harness-updating is flat across model capability tiers, while
+    harness-benefit is non-monotonic: weak-tier models benefit little,
+    mid-tier models benefit most, and strong-tier models benefit less than
+    mid-tier. It traces weak-tier failures to failing to activate relevant
+    harness artifacts or failing to follow them faithfully.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.30621`. Existing rows cover AlphaEvolve search, SIA
+    harness-plus-weight updates, HarnessFix diagnosis/repair, RHO
+    retrospective optimization, and AEvo meta-editing, but not the empirical
+    separation between harness update generation and actual downstream
+    harness benefit, model-tier benefit curves, activation failures,
+    adherence failures, or capability-budget guidance for evolver versus
+    task-solving agent selection.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.30621`: title/authors/arXiv version/date/PDF digest, source
+    license, linked-code URL/status, relation to AlphaEvolve and LibreEvolve
+    harness assumptions, harness-updating and harness-benefit metric
+    definitions, evolver/task-agent pairing records, persistent harness
+    update artifacts, activation telemetry, adherence and instruction-
+    following traces, model-tier taxonomy, weak/mid/strong baseline identities,
+    capability-budget analysis, post-evolution performance deltas, SWE-Bench
+    Verified/MCP-Atlas/SkillsBench metadata if used, code/artifact
+    availability if any, reproducibility status, and README/ROADMAP wording
+    that treats harness-update benefit as missing paper evidence rather than
+    implemented LibreEvolve support.

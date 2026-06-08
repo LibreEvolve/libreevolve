@@ -948,8 +948,16 @@ Implemented:
   records for the paper-figure creator initials and the accompanying Google
   Colab assembler initials, with stable artifact ids, artifact types,
   creator/assembler roles, exact initials and ordering, source section/page
-  metadata, and source phrases. It does not verify rendered figure files or a
-  retrieved companion-notebook artifact.
+  metadata, and source phrases. It does not verify rendered figure files or
+  local generated notebook/export artifacts.
+- `libreevolve/problems/benchmarks/paper_source_versions.py`: AlphaEvolve
+  source-PDF version contract. It validates the cached `2506.13131` source row
+  against the audited first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun
+  2025`, including arXiv id, version, category, posted date, floating and
+  versioned URLs, expected header page/text, byte count, SHA-256 digest, and
+  the policy that paper-claim audits must identify the source version. The
+  paper-manifest command validates the built-in record, but the download
+  manifests still do not carry per-row version fields.
 - `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
   Colab source-evidence contract. It validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

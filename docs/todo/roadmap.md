@@ -2444,21 +2444,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     LibreEvolve artifacts, and local ownership or endorsement boundaries.
 
 - [ ] Keep paper-source roadmap wording scoped until AlphaEvolve PDF version
-      provenance is pinned.
+      provenance is emitted per manifest row.
   - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as
     `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
-  - Current evidence: roadmap/README wording can cite local PDF byte/hash
-    validation and Appendix B result-version TODOs, while the committed
-    manifests still use the floating `https://arxiv.org/pdf/2506.13131.pdf`
-    source URL and do not store source arXiv version, category, posted date,
-    expected header text, or URL-kind metadata. This leaves roadmap-level
-    source-parity claims vulnerable to a future arXiv PDF refresh changing the
-    audited source without a visible claim-ledger boundary.
-  - Required result: once paper manifests record versioned source identity and
-    validators check the expected header/page/hash, update ROADMAP, README,
-    papers index, and TODO cross-links so AlphaEvolve audit claims identify
-    whether they are based on the v1 PDF, a later arXiv revision, or another
-    pinned source artifact.
+  - Current evidence: roadmap/README wording now cites
+    `libreevolve.alphaevolve_source_pdf_version.v1`, which validates the cached
+    AlphaEvolve row's v1 arXiv id/category/date/header, floating and versioned
+    URLs, byte count, SHA-256 digest, and audit policy through the
+    paper-manifest gate. The committed manifests still use the legacy
+    PDF-only row schema and do not emit per-row source-version fields or
+    claim-ledger links.
+  - Required result: once paper manifests or emitted artifact bundles record
+    versioned source identity per row and validators check the expected
+    header/page/hash from those row fields, update ROADMAP, README, papers
+    index, and TODO cross-links so AlphaEvolve audit claims identify whether
+    they are based on the v1 PDF, a later arXiv revision, or another pinned
+    source artifact.
 
 - [ ] Keep paper-source roadmap wording scoped until manifest row identity is
       validated.

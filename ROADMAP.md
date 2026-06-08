@@ -372,8 +372,17 @@ is not yet an AlphaEvolve reproduction.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion
-  Colab assemblers, but rendered figure/notebook artifact hashes, URLs,
-  retrieval digests, and source-to-artifact links remain future work.
+  Colab assemblers, but rendered figure artifacts and local notebook/export
+  availability remain future work.
+- Keep AlphaEvolve source-PDF versioning explicit:
+  `libreevolve.alphaevolve_source_pdf_version.v1` now validates the cached
+  `2506.13131` PDF manifest row against the audited first-page header
+  `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`, including arXiv id, version,
+  category, posted date, floating and versioned URLs, expected header page,
+  local byte count, SHA-256 digest, and the policy that claim audits must name
+  the source version. The paper-manifest gate validates this built-in record,
+  but CSV/JSON row schema fields and per-claim source-version propagation
+  remain open.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

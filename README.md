@@ -3134,6 +3134,16 @@ The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable
 benchmark evidence.
+AlphaEvolve source-PDF version evidence uses
+`libreevolve.alphaevolve_source_pdf_version.v1` in
+`libreevolve/problems/benchmarks/paper_source_versions.py`; the built-in record
+pins the cached `papers/2506.13131__AlphaEvolve.pdf` manifest row to the
+first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`, records the
+floating arXiv PDF URL, versioned arXiv URLs, category, posted date, byte
+count, SHA-256 digest, and audit policy that treats an unversioned arXiv
+refresh as a source-version event. The standard paper-manifest gate validates
+that built-in record, but the CSV/JSON manifests still do not store version
+fields per row or propagate source-version ids into every claim artifact.
 AlphaEvolve paper artifact-role provenance uses
 `libreevolve.alphaevolve_paper_artifact_roles.v1` in
 `libreevolve/problems/benchmarks/paper_artifact_roles.py`; the built-in record
@@ -3142,7 +3152,7 @@ initials and the accompanying Google Colab assembler initials. It validates
 artifact ids, artifact types, creator/assembler roles, exact initials and
 ordering, source section/page metadata, and the role source phrases. It is
 attribution evidence, not proof that local rendered figures or a companion
-notebook artifact with hashes/links exists.
+notebook export exists.
 AlphaEvolve companion Colab source evidence uses
 `libreevolve.alphaevolve_companion_colab_source.v1` in
 `libreevolve/problems/benchmarks/companion_sources.py`; the built-in record

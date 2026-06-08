@@ -1612,20 +1612,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     boundaries.
 
 - [ ] Keep README paper-cache wording scoped until AlphaEvolve PDF version
-      provenance is tracked.
+      provenance is emitted per manifest row.
   - Spec evidence: the local AlphaEvolve PDF header says
     `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
-  - Current evidence: README describes the local paper cache as
-    `papers/README.md` plus CSV/JSON download manifests with canonical PDF byte
-    counts and SHA-256 digests. It does not explain that the current
-    AlphaEvolve manifest row uses a floating arXiv PDF URL, nor that claim
-    audits depend on the specific v1 source header/date rather than any future
-    PDF served by the unversioned URL. Existing README TODOs scope companion
-    Colab and Appendix B result revisions, but not source-PDF version identity.
-  - Required result: after manifest support lands for arXiv source version,
-    category/date, URL kind, expected header text/page, and version-pinned
-    claim links, update README wording so paper-cache integrity claims
-    distinguish content hash validation from source-version pinning.
+  - Current evidence: README now documents
+    `libreevolve.alphaevolve_source_pdf_version.v1`, which validates the
+    cached AlphaEvolve row's v1 arXiv id/category/date/header, floating and
+    versioned URLs, byte count, SHA-256 digest, and audit policy through the
+    paper-manifest gate. The CSV/JSON manifests still do not carry per-row
+    source-version fields, and README cannot yet point to emitted claim links
+    that name the source version behind every table, figure, and appendix
+    TODO.
+  - Required result: after manifest/emitter support lands for per-row arXiv
+    source version, category/date, URL kind, expected header text/page, and
+    version-pinned claim links, update README wording so paper-cache integrity
+    claims distinguish content hash validation from source-version pinning.
 
 - [ ] Keep README paper-cache wording scoped until manifest row identity is
       validated.

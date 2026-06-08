@@ -1119,6 +1119,44 @@ def test_validate_paper_manifest_allows_scoped_alphaevolve_comparable_status_bou
     assert report.ok is True
 
 
+def test_validate_paper_manifest_reports_negative_status_implementation_contradiction(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Domain evolution inspiration")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Background only; implemented local adapter exists.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_negative_status_contradiction" in codes
+
+
+def test_validate_paper_manifest_allows_unimplemented_future_benchmark_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    status_readme = tmp_path / "papers" / "README.md"
+    text = status_readme.read_text(encoding="utf-8")
+    text = text.replace("Primary specification target", "Constructive math benchmark candidate")
+    text = text.replace(
+        "Partially implemented: fixture status.",
+        "Not implemented; potential future benchmark; no verifier harness.",
+    )
+    status_readme.write_text(text, encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
 def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

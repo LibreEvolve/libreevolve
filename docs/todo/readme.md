@@ -1884,11 +1884,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status-cell and TODO-coverage validation scope without claiming full
     semantic proof. The validator also now rejects unqualified
     `AlphaEvolve-comparable` status-table overclaims unless the phrase is
-    framed as missing, scoped, or requirement-bound evidence. Remaining README
-    gap: the validator does not yet machine-check phrase-level evidence links
-    behind each long semantic status claim or deeply distinguish smoke-scoped
-    examples from benchmark evidence beyond the role/status class matrix,
-    required path presence, and this `AlphaEvolve-comparable` overclaim guard.
+    framed as missing, scoped, or requirement-bound evidence, and it rejects
+    background-only/future-benchmark status classes that include positive
+    implementation-support wording. Remaining README gap: the validator does
+    not yet machine-check phrase-level evidence links behind each long semantic
+    status claim or deeply distinguish smoke-scoped examples from benchmark
+    evidence beyond the role/status class matrix, required path presence, the
+    `AlphaEvolve-comparable` overclaim guard, and the negative-status
+    contradiction guard.
   - Required result: keep README wording scoped as phrase-level semantic
     status/coverage evidence checks are added, so public docs continue to
     distinguish structural/taxonomy validation from fully verified semantic

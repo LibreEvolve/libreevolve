@@ -958,11 +958,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validator boundary without claiming full semantic proof. The validator also
     now rejects unqualified `AlphaEvolve-comparable` status-table overclaims
     unless the phrase is framed as missing, scoped, or requirement-bound
-    evidence. Remaining roadmap gap: the validator does not yet link long
-    status claims to specific active/completed evidence records or deeply
-    verify smoke/partial/planned/unsupported qualifiers beyond the role/status
-    class matrix, required path presence, and this `AlphaEvolve-comparable`
-    overclaim guard.
+    evidence, and it rejects background-only/future-benchmark status classes
+    that include positive implementation-support wording. Remaining roadmap
+    gap: the validator does not yet link long status claims to specific
+    active/completed evidence records or deeply verify
+    smoke/partial/planned/unsupported qualifiers beyond the role/status class
+    matrix, required path presence, the `AlphaEvolve-comparable` overclaim
+    guard, and the negative-status contradiction guard.
   - Required result: extend status validation with phrase-level links from
     status claims to active or completed evidence plus richer qualifier checks.
     Keep this distinct from the already documented TODO coverage

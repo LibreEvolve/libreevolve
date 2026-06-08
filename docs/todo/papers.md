@@ -1428,22 +1428,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     GPU-kernel and other LLM-agent optimizers, and broader AI-for-science
     systems. It says AlphaEvolve differs from most scientific-discovery
     methods by using programmatic hypothesis representations and evaluation
-    metrics, and frames mathematical witness/counterexample discovery as
-    complementary to formal and informal proof discovery.
+    metrics, calls continuous LLM fine-tuning through reinforcement learning
+    and LLM-directed concept learning over high-performing programs adjacent
+    ideas needing more investigation at AlphaEvolve scale, and frames
+    mathematical witness/counterexample discovery as complementary to formal
+    and informal proof discovery.
   - Current gap: the local paper index lists PDFs and selected inspiration
     relationships, while TODOs cover individual gaps such as FunSearch,
     AI-Co-Scientist, CodeEvolve, DeepEvolve, and domain benchmarks. It does
     not preserve the paper's Related Work taxonomy as evidence: source
     reference ids, method family, task stage, candidate representation,
     evaluator/evidence mode, proof-versus-witness status, comparison claim,
-    and whether LibreEvolve implements, partially implements, or only cites the
-    related approach as background.
+    complementary-mechanism status, and whether LibreEvolve implements,
+    partially implements, or only cites the related approach as background.
   - Required result: add paper-facing related-work taxonomy records and
     validation for each relevant source/category, including method family,
     representation mode, evaluation/evidence mode, discovery stage, comparison
-    text, local status, source page/section, and README/ROADMAP claim checks so
-    the papers index distinguishes AlphaEvolve positioning evidence from flat
-    bundled-paper availability.
+    text, complementary-mechanism status, local status, source page/section,
+    and README/ROADMAP claim checks so the papers index distinguishes
+    AlphaEvolve positioning evidence from flat bundled-paper availability.
 
 - [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.

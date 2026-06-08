@@ -1796,9 +1796,12 @@ Primary evidence:
     learning, AlphaTensor, GPU-kernel agents, LLM multi-agent approaches, and
     broader AI-for-science systems, and says AlphaEvolve differs from most
     scientific-discovery methods through programmatic hypothesis
-    representations and evaluation metrics. It also positions FunSearch-style
-    witness/counterexample discovery as complementary to formal and informal
-    proof search.
+    representations and evaluation metrics. It also identifies adjacent
+    LLM-guided evolution enhancements such as continuous LLM fine-tuning
+    through reinforcement learning and LLM-directed concept learning over
+    high-performing programs as complementary ideas needing more investigation
+    at AlphaEvolve scale, and positions FunSearch-style witness/counterexample
+    discovery as complementary to formal and informal proof search.
   - Current evidence: LibreEvolve has a PDF manifest and paper index with
     selected local inspiration papers plus feature-specific TODOs for
     FunSearch, AI-Co-Scientist, CodeEvolve, DeepEvolve, and benchmark domains.
@@ -1810,8 +1813,9 @@ Primary evidence:
   - Required result: add paper/reference taxonomy metadata and validators for
     related-work source ids, method families (`superoptimization`,
     `llm_algorithm_discovery`, `ai_for_science`, `proof_search`,
-    `witness_discovery`, etc.), candidate representation, evaluator/evidence
-    mode, task stage, comparison claim, local implementation status, source
+    `witness_discovery`, `llm_finetuning`, `concept_learning`, etc.),
+    candidate representation, evaluator/evidence mode, task stage, comparison
+    claim, complementary-mechanism status, local implementation status, source
     location, and README/ROADMAP wording checks so LibreEvolve does not
     overclaim AlphaEvolve's Related Work positioning from a flat paper list or
     isolated feature TODOs.

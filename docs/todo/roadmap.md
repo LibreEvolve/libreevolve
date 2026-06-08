@@ -759,6 +759,28 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes shareable cache/status diagnostics from
     verified backlog traceability.
 
+- [ ] Keep implementation-status roadmap wording scoped until semantic cells
+      are validated.
+  - Spec evidence: the roadmap depends on `papers/README.md` as the
+    paper-facing status index for which sources are specification targets,
+    background influences, partially implemented surfaces, smoke fixtures, or
+    unsupported paper claims. Since manifest titles are only cache slugs, the
+    implementation-status table's title, role, and status cells carry the
+    public AlphaEvolve-alignment meaning.
+  - Current evidence: current validation reconciles manifest ids, README
+    counts, Appendix B registry shape, and ablation registry shape, while
+    `_read_status_table_ids()` only extracts first-column ids from the
+    implementation-status table. It does not validate the four-column table
+    shape, role/status taxonomy, benchmark-coverage qualifiers, or evidence
+    links that justify semantic status wording.
+  - Required result: when status-cell validation lands, update ROADMAP,
+    README, papers index, and code/paper TODOs with the exact validator scope:
+    stable headers, complete row shape, allowed role/status categories,
+    smoke/partial/planned/unsupported qualifier checks, and links from status
+    claims to active or completed evidence. Keep this distinct from TODO
+    coverage cross-reference validation, which validates the separate backlog
+    pointer table.
+
 - [ ] Keep DeepEvolve retrieval roadmap wording scoped to bounded provenance
   versus audit-grade source integrity.
   - Spec evidence: retrieval-augmented AlphaEvolve-style runs should preserve

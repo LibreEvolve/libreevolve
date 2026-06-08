@@ -3322,6 +3322,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     code TODO wording so the paper index distinguishes implementation-status
     validation from verified backlog traceability.
 
+- [ ] Validate paper-index implementation-status semantics, not only ids.
+  - Paper evidence: `papers/README.md` explicitly makes the implementation
+    status table the source for paper-facing titles, roles, implementation
+    status, and benchmark coverage decisions because manifest titles are only
+    cache-display slugs. Those cells define whether a paper row is background,
+    a primary AlphaEvolve specification target, partially implemented, smoke
+    scoped, or unsupported.
+  - Current gap: `libreevolve.tools.paper_manifest` reconciles manifest ids
+    against the implementation-status table and tests missing, duplicate, and
+    extra ids. It does not parse or validate the remaining cells: paper-facing
+    title, role, status taxonomy, coverage qualifiers, "implemented" versus
+    "not implemented" language, or whether a row's semantic claim is backed by
+    the cited code/TODO evidence. A row could keep the same id while drifting
+    from smoke-scoped wording to paper-claim wording without the manifest gate
+    noticing.
+  - Required result: add paper-index status-cell validation with stable
+    headers, exact four-column row shape, allowed role/status classes,
+    title/role non-empty checks, smoke/partial/planned/unsupported qualifier
+    rules, and evidence links from semantic status claims to TODO or completed
+    implementation records. Keep this validator distinct from the TODO
+    coverage cross-reference checker, which verifies backlog pointers after
+    the implementation-status table.
+
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of
     `2506.13131__AlphaEvolve.pdf` states that N.V., E.D., M.E., S.C., A.N.,

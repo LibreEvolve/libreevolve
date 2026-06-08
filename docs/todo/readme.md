@@ -1615,6 +1615,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     cross-reference labels remain broad on rows that now have source-specific
     TODO evidence.
 
+- [ ] Keep README implementation-status wording scoped until table semantics
+      are validated.
+  - Spec evidence: README directs readers to `papers/README.md` for
+    paper-facing titles, implementation status, and benchmark coverage
+    decisions because manifest titles are only local cache slugs. That makes
+    the implementation-status table a public claim surface for AlphaEvolve
+    parity, not just a manifest index.
+  - Current evidence: README can accurately describe paper-manifest
+    validation, paper-count reconciliation, implementation-status id
+    reconciliation, Appendix B registry checks, and ablation registry checks.
+    The validator does not yet validate implementation-status table headers,
+    row shape, title/role/status cells, allowed status taxonomy, smoke versus
+    AlphaEvolve-comparable benchmark qualifiers, or evidence links behind
+    semantic status claims.
+  - Required result: when paper-status semantic validation lands, update
+    README, ROADMAP, papers index, and code/paper TODOs together so README
+    distinguishes id-level implementation-status reconciliation from verified
+    semantic status/coverage cells and does not imply that paper-facing status
+    wording is machine-checked before that validator exists.
+
 - [ ] Keep README figure/notebook provenance wording scoped until paper
       artifact-role metadata exists.
   - Spec evidence: AlphaEvolve's Contributions section attributes paper figure

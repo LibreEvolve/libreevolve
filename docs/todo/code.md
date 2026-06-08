@@ -4575,10 +4575,12 @@ Primary evidence:
     sections count as explicit context, and separately record which core
     evolutionary prompt ingredients remain present so this ablation is not
     conflated with `No evolution`. For
-    `Small base LLM only`, add executable
-    backend policy and call-ledger checks proving all mutation-generation calls
-    use exactly one configured small/base-capable model and never route or fall
-    back to large-model backends during the ablation. For `No meta prompt
+    `Small base LLM only`, the registry now records a validated
+    `paper_scope_boundary` marking current single-backend/small-base labels as
+    `telemetry_unproven`. Add executable backend policy and call-ledger checks
+    proving all mutation-generation calls use exactly one configured
+    small/base-capable model and never route or fall back to large-model
+    backends during the ablation. For `No meta prompt
     evolution`, add runner checks proving no `meta_prompt` role calls,
     prompt-template mutations, or mutated prompt-program lineage entries occur
     in the ablated run, and that the full-system comparator keeps those

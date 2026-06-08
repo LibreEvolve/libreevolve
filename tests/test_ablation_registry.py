@@ -25,6 +25,9 @@ def test_ablation_registry_enumerates_alphaevolve_figure8_variants():
     no_full_file = next(variant for variant in data["variants"] if variant["id"] == "no_full_file_evolution")
     assert no_full_file["paper_scope_boundary"]["alphaevolve_setup"] == "tensor_decomposition_loss_function_only"
     assert no_full_file["paper_scope_boundary"]["paper_match_status"] == "not_equivalent"
+    small_base = next(variant for variant in data["variants"] if variant["id"] == "small_base_llm_only")
+    assert small_base["paper_scope_boundary"]["alphaevolve_setup"] == "single_small_base_model_generation_only"
+    assert small_base["paper_scope_boundary"]["paper_match_status"] == "telemetry_unproven"
 
 
 def test_ablation_registry_requires_each_named_variant(tmp_path):
@@ -108,3 +111,21 @@ def test_ablation_registry_requires_no_context_scope_boundary(tmp_path):
     assert report.ok is False
     assert "invalid_no_context_scope_boundary" in issue_codes
     assert "invalid_no_context_future_evidence" in issue_codes
+
+
+def test_ablation_registry_requires_small_base_llm_scope_boundary(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    for variant in data["variants"]:
+        if variant["id"] == "small_base_llm_only":
+            variant["paper_scope_boundary"]["paper_match_status"] = "proved"
+            variant["paper_scope_boundary"]["required_future_evidence"] = ["backend_capability_metadata"]
+            break
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_ablation_registry(registry)
+    issue_codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_small_base_llm_scope_boundary" in issue_codes
+    assert "invalid_small_base_llm_future_evidence" in issue_codes

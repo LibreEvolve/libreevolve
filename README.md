@@ -3170,10 +3170,12 @@ current parent/inspiration/failure/plugin section-disable scope as
 `over_broad_not_equivalent` to AlphaEvolve's explicit-problem-context removal,
 but it still does not prove that explicit context sources were absent while
 normal evolutionary prompt ingredients were handled separately. It also does
-not prove the `Small base LLM only` condition
-with backend metadata and call-ledger evidence that every mutation-generation
-call used one configured small/base-capable model with no large-model routing
-or fallback. It also does not prove the `No meta prompt evolution` condition
+not prove the `Small base LLM only` condition with backend telemetry: the
+registry row now carries a validated `paper_scope_boundary` that marks current
+single-backend/small-base labels as `telemetry_unproven`, but it still has no
+call-ledger evidence that every mutation-generation call used one configured
+small/base-capable model with no large-model routing or fallback. It also does
+not prove the `No meta prompt evolution` condition
 with prompt-history, call-ledger, and prompt-program lineage evidence that
 meta-prompt calls and prompt-template mutations were disabled for the ablation
 but enabled in the full-system comparator. It validates report shape only; it
@@ -3245,7 +3247,9 @@ single-file diff/no-topology scope explicitly marked as not equivalent to
 AlphaEvolve's tensor-decomposition loss-function-only ablation. The
 `No context in the prompt` row similarly records a validated explicit-context
 boundary that marks the current broad context-disable labels as not equivalent
-to paper-faithful proof of absent explicit problem-specific context.
+to paper-faithful proof of absent explicit problem-specific context. The
+`Small base LLM only` row records a validated telemetry-unproven boundary for
+single-small-base-model generation.
 The validator's JSON report separates historical download fields from current
 local PDF presence and Git-tracked status. It also enforces safe paper ids,
 portable `papers/<name>.pdf` file names, unique normalized file targets,

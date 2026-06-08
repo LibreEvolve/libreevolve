@@ -749,9 +749,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     parent/inspiration, rendered-result, failure, plugin, or retrieval sections
     were treated as core evolutionary prompt ingredients versus explicit
     context. It also does not yet prove the
-    `Small base LLM only` setup where every mutation-generation call uses only
-    one configured small/base-capable model and has no large-model eligibility,
-    fallback, critique, or router leakage. It also does not yet prove the
+    `Small base LLM only` setup: the registry now records a validated
+    `paper_scope_boundary` marking the current single-backend/small-base
+    labels as `telemetry_unproven`, but there is still no proof that every
+    mutation-generation call uses only one configured small/base-capable model
+    and has no large-model eligibility, fallback, critique, or router leakage.
+    It also does not yet prove the
     `No meta prompt evolution` setup where meta-prompt calls, prompt-template
     mutations, and prompt-program lineage updates are absent in the ablated run
     but enabled in the full-system comparator. The registry now records a
@@ -779,8 +782,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `No context in the prompt` validated over-broad non-equivalence boundary
     until executed prompt-history evidence proves absent explicit context
     sources and separately identifies which normal evolutionary prompt sections
-    remained present. Require README wording to distinguish generic
-    `Small base LLM only` labels from executed backend telemetry proving a
+    remained present. Keep README wording tied to the `Small base LLM only`
+    telemetry-unproven boundary until executed backend telemetry proves a
     single small/base model actually handled every relevant generation call.
     Require README wording to distinguish generic
     `No meta prompt evolution` labels from executed prompt-history and

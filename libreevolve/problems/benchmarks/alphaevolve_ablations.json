@@ -136,6 +136,17 @@
       ],
       "paper_label": "Small base LLM only",
       "paper_citations": ["2506.13131"],
+      "paper_scope_boundary": {
+        "alphaevolve_setup": "single_small_base_model_generation_only",
+        "current_scope": "declarative_single_backend_small_base_labels",
+        "paper_match_status": "telemetry_unproven",
+        "required_future_evidence": [
+          "backend_capability_metadata",
+          "mutation_generation_call_ledger",
+          "no_large_model_route_or_fallback",
+          "role_scope_generation_only"
+        ]
+      },
       "rationale": "Tests whether the larger/mixed LLM ensemble contributes beyond a small base model."
     }
   ]

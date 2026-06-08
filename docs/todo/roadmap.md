@@ -3535,9 +3535,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     context removal. It does not prove that executed prompts omitted explicit
     context sources, nor does it classify local plugin/retrieval/failure
     sections as explicit context versus core evolutionary prompt ingredients.
-    For `Small base LLM only`, the current registry does not prove every
-    mutation-generation call used exactly one small/base-capable backend with
-    no large-model routing, fallback, critique, or ensemble leakage.
+    For `Small base LLM only`, the registry now records a validated
+    `paper_scope_boundary` marking current single-backend/small-base labels as
+    `telemetry_unproven`, but it does not prove every mutation-generation call
+    used exactly one small/base-capable backend with no large-model routing,
+    fallback, critique, or ensemble leakage.
     For `No meta prompt evolution`, the current registry does not prove that
     meta-prompt role calls, prompt-template mutations, and prompt-program
     lineage updates were absent in the ablation while present or eligible in
@@ -3569,7 +3571,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ingredients before retiring the validated over-broad boundary. Ensure the
     `Small base LLM only` harness records backend metadata, eligibility, and
     call-ledger evidence proving every relevant generation call used a single
-    small/base model and no large-model route. Ensure the
+    small/base model and no large-model route before retiring the
+    telemetry-unproven boundary. Ensure the
     `No meta prompt evolution` harness records prompt-history, call-ledger, and
     prompt-program lineage evidence proving meta-prompt evolution was disabled
     for the ablation and enabled for the full-system comparator, plus the

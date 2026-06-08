@@ -43,6 +43,17 @@ NO_CONTEXT_IN_PROMPT_REQUIRED_EVIDENCE = frozenset({
     "core_evolutionary_prompt_ingredients_audit",
     "no_evolution_separation",
 })
+SMALL_BASE_LLM_ONLY_SCOPE_BOUNDARY = {
+    "alphaevolve_setup": "single_small_base_model_generation_only",
+    "current_scope": "declarative_single_backend_small_base_labels",
+    "paper_match_status": "telemetry_unproven",
+}
+SMALL_BASE_LLM_ONLY_REQUIRED_EVIDENCE = frozenset({
+    "backend_capability_metadata",
+    "mutation_generation_call_ledger",
+    "no_large_model_route_or_fallback",
+    "role_scope_generation_only",
+})
 REQUIRED_REPORT_FIELDS = frozenset({
     "variant_id",
     "target_id",
@@ -219,6 +230,19 @@ def _validate_variant(
             invalid_evidence_code="invalid_no_context_future_evidence",
             missing_message="No context in the prompt must record its explicit-context boundary",
             evidence_message="No context in the prompt boundary must list the required future evidence",
+            issues=issues,
+        )
+    if variant_id == "small_base_llm_only":
+        _validate_variant_scope_boundary(
+            variant.get("paper_scope_boundary"),
+            variant_id,
+            expected_fields=SMALL_BASE_LLM_ONLY_SCOPE_BOUNDARY,
+            expected_evidence=SMALL_BASE_LLM_ONLY_REQUIRED_EVIDENCE,
+            missing_code="missing_small_base_llm_scope_boundary",
+            invalid_boundary_code="invalid_small_base_llm_scope_boundary",
+            invalid_evidence_code="invalid_small_base_llm_future_evidence",
+            missing_message="Small base LLM only must record its backend-telemetry boundary",
+            evidence_message="Small base LLM only boundary must list the required future evidence",
             issues=issues,
         )
 

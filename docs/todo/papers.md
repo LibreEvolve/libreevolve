@@ -1048,10 +1048,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     as explicit context or core prompt ingredients, and separately record which
     current-program, parent, inspiration, and rendered-result sections remained
     present so this ablation is not conflated with `No evolution`. For the
-    `Small base LLM only` variant, require executed backend telemetry proving
-    that every mutation-generation call used one configured small/base-capable
-    model with no large-model backend eligibility, fallback, critique, or
-    router leakage, rather than relying on declarative `single_backend`,
+    `Small base LLM only` variant, keep the registry's validated
+    telemetry-unproven boundary until executed backend telemetry proves that
+    every mutation-generation call used one configured small/base-capable model
+    with no large-model backend eligibility, fallback, critique, or router
+    leakage, rather than relying on declarative `single_backend`,
     `backend_count`, or `backend_capability_tier` labels. For the
     `No meta prompt evolution` variant, require executed prompt-history and
     call-ledger proof that meta-prompt calls, prompt-template mutations, and

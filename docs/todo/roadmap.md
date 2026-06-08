@@ -3331,3 +3331,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     generalization split evidence, code/artifact availability status, and a
     background-only or benchmark-fixture status rule so roadmap claims do not
     outpace local radar benchmark support.
+
+- [ ] Add EvoX adaptive meta-evolution gates before roadmap promotion.
+  - Spec evidence: arXiv `2602.23413`, submitted February 26, 2026 and last
+    revised March 16, 2026, introduces EvoX as an adaptive evolution method
+    that optimizes its own evolution process. The abstract positions
+    AlphaEvolve and related systems as using prior evaluated solutions to
+    guide candidate generation, says fixed search strategies with static
+    explore/exploit knobs can fail to adapt, and reports EvoX outperforming
+    AlphaEvolve, OpenEvolve, GEPA, and ShinkaEvolve on the majority of nearly
+    200 real-world optimization tasks.
+  - Current evidence: ROADMAP tracks fixed parent-selection, run manifests,
+    migration/replay gaps, benchmark/report contracts, and later
+    AlphaEvolve-related source gates. It does not mention `2602.23413`, define
+    an adaptive-search source gate, or require local evidence before promoting
+    strategy self-optimization beyond the current fixed mixed 30/70
+    explore/exploit policy and explicit strategy switches.
+  - Required result: add roadmap gates for `2602.23413`: paper/source
+    manifest entry, PDF/cache hash, source-license metadata, adaptive
+    strategy representation, controller-state and strategy-provenance
+    artifacts, task-suite and baseline-method taxonomy, metric definitions,
+    ablation and token-efficiency reports, and a background-only or
+    benchmark-fixture status rule so roadmap claims do not outpace local
+    EvoX-style strategy evolution support.

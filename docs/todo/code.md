@@ -4625,3 +4625,30 @@ Primary evidence:
     relative-loss and speedup records, generalization split metadata, and
     README/ROADMAP wording that keeps this as missing application-domain
     evidence until local radar fixtures and reports exist.
+
+- [ ] Add EvoX meta-evolution source boundary before adaptive-search claims.
+  - Spec evidence: arXiv `2602.23413`, `EvoX: Meta-Evolution for Automated
+    Discovery`, was submitted February 26, 2026 and revised March 16, 2026.
+    Its abstract says recent systems such as AlphaEvolve reuse evaluated
+    solutions to guide LLM-driven evolution, but fixed search strategies and
+    predefined knobs such as explore/exploit ratios can fail to adapt across
+    tasks or phases. EvoX jointly evolves candidate solutions and the search
+    strategies that generate them, dynamically shifting strategies, and
+    reports outperforming AlphaEvolve, OpenEvolve, GEPA, and ShinkaEvolve on
+    the majority of nearly 200 real-world optimization tasks.
+  - Current evidence: LibreEvolve currently documents a fixed default `mixed`
+    parent-selection policy with 30% explore and 70% exploit, plus explicit
+    parent-selection strategies that bypass that ratio. The code/source
+    ledgers do not include `2602.23413`, adaptive strategy genomes,
+    meta-evolution controller state, strategy-credit assignment, per-task
+    search-policy traces, or benchmark rows comparing fixed-ratio search
+    against adaptive EvoX-style evolution.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2602.23413`: arXiv id/version/date/PDF hash, authors, source license,
+    relation to AlphaEvolve and LibreEvolve's fixed sampling knobs,
+    strategy-representation schema, controller-state artifacts,
+    strategy-selection provenance, task-suite taxonomy, baseline method
+    identities, win-rate/score/token metrics, ablation requirements, and
+    README/ROADMAP wording that keeps EvoX-style adaptive meta-evolution as
+    missing research evidence until local strategy evolution and benchmark
+    reports exist.

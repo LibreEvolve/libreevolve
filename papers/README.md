@@ -785,13 +785,14 @@ Implemented:
   report, and artifact inventory files. It still does not provide discovered
   tensor-decomposition algorithms, certificates, or notebook exports across the
   full Appendix A target suite. It also validates matrix result metadata after
-  the report exists; it does not yet emit search-time prompt/evaluator evidence
-  that candidates were instructed to produce near-integral decompositions,
-  rounded to integer or half-integer coefficients, and linked to exactness
-  certificates as in AlphaEvolve Section 3.1. Its coefficient-domain field also
-  does not yet encode scalar-field provenance for complex-valued algorithms,
-  field characteristic, or certificate scope for exact real/complex
-  applicability. It also does not yet preserve the evolved `sweep()` function
+  the report exists. `libreevolve.matrix_near_integrality_evidence.v1` now
+  validates declared search-time evidence that candidates were instructed to
+  produce near-integral decompositions, rounded to integer or half-integer
+  coefficients, and linked to exactness certificates as in AlphaEvolve Section
+  3.1, but no local matrix benchmark runner emits those records yet. Its
+  coefficient-domain field also does not yet encode scalar-field provenance
+  for complex-valued algorithms, field characteristic, or certificate scope for
+  exact real/complex applicability. It also does not yet preserve the evolved `sweep()` function
   and user-provided `hyper` search-space provenance shown in AlphaEvolve
   Figures 9a-9c, such as hyperparameter range declarations, sampled
   configuration ids, per-sweep losses/ranks, or linkage from the winning sweep

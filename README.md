@@ -3062,6 +3062,14 @@ rank or hit fraction does not match the per-seed rank records. Reports must expl
 reports are valid only when that flag is false. AlphaEvolve-comparable matrix
 claims require integer or half-integer coefficients, verified exactness, exact
 per-seed results, and algorithm/certificate/notebook artifacts.
+Matrix search-time near-integrality evidence uses
+`libreevolve.matrix_near_integrality_evidence.v1`; it validates declared
+prompt-instruction provenance for near-integral matrix tensor decompositions,
+nearest rounding to integer or half-integer domains, raw-versus-rounded
+coefficient diagnostics, maximum rounding-error consistency, and links from
+rounded candidate coefficients to exactness certificates. It validates emitted
+evidence after a run records it; it does not yet make the local matrix smoke
+fixture inject that instruction or emit those diagnostics during search.
 Appendix A matrix target-suite curation uses
 `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`; the built-in record
 preserves the paper's rough `2 <= m,n <= 5` selection wording, unspecified

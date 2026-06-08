@@ -3745,14 +3745,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     coefficient-domain fields, exactness certificates, per-seed results,
     artifact hashes, Appendix A target identities, and the checked Strassen
     baseline bundle. Those checks prove that a report is internally
-    consistent once produced; they do not prove that candidate prompts carried
-    the near-integrality instruction, that evaluators recorded raw-versus-
-    rounded coefficients, or that exactness certificates were generated from
-    the rounded candidate outputs during the search.
-  - Required result: add paper/report evidence fields or artifacts for the
-    matrix prompt instruction, rounding policy, raw and rounded coefficient
-    diagnostics, per-seed exactness linkage, and prompt/run provenance before
-    claiming AlphaEvolve Section 3.1 matrix-search parity.
+    consistent once produced. `libreevolve.matrix_near_integrality_evidence.v1`
+    now validates paper/report evidence fields for the matrix prompt
+    instruction, rounding policy, raw and rounded coefficient diagnostics,
+    rounding-error consistency, and exactness-certificate links. It does not
+    prove that current local matrix benchmark prompts/evaluators emit those
+    records during search.
+  - Required result: emit near-integrality evidence records from real matrix
+    search runs, including prompt/run provenance and per-seed exactness linkage,
+    before claiming AlphaEvolve Section 3.1 matrix-search parity.
 
 - [ ] Track matrix sweep-space provenance for AlphaEvolve Figure 9 workflows.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figures 9a-9c show the

@@ -17,10 +17,12 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
+MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
 COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"})
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
+NEAR_INTEGRAL_ROUNDING_DOMAINS = frozenset({"integer", "half_integer"})
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _STRASSEN_TARGET_ID = "mm_2x2x2"
@@ -98,6 +100,15 @@ class MatrixPublicationBundleValidation:
     report_ok: bool
     inventory_ok: bool
     alphaevolve_comparable: bool
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
+class MatrixNearIntegralityValidation:
+    ok: bool
+    target_id: str | None
+    candidate_count: int
+    coefficient_count: int
     issues: list[MatrixResultIssue]
 
 
@@ -287,6 +298,59 @@ def validate_matrix_publication_bundle(
         alphaevolve_comparable=report_validation.alphaevolve_comparable,
         issues=issues,
     )
+
+
+def validate_matrix_near_integrality_evidence(
+    evidence: object | str | Path,
+) -> MatrixNearIntegralityValidation:
+    """Validate search-time near-integrality prompt and rounding evidence."""
+    data, read_issues = _load_report(evidence)
+    if read_issues:
+        return MatrixNearIntegralityValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_NEAR_INTEGRALITY_SCHEMA:
+        issues.append(MatrixResultIssue("invalid_schema", "unsupported matrix near-integrality evidence schema"))
+    target_id = _text_field(data, "target_id", issues)
+    target_suite = _text_field(data, "target_suite", issues)
+    if target_id is not None and target_suite == APPENDIX_A_TARGET_SUITE:
+        if matrix_target_by_id(target_id) is None:
+            issues.append(MatrixResultIssue("unknown_appendix_a_target", "target_id is not in the AlphaEvolve Appendix A matrix registry"))
+    if not isinstance(data.get("local_search_evidence"), bool):
+        issues.append(MatrixResultIssue("invalid_local_search_evidence", "local_search_evidence must be boolean"))
+    _validate_near_integrality_prompt(data.get("prompt_instruction"), issues)
+    rounding_domain = _validate_rounding_policy(data.get("rounding_policy"), issues)
+    candidate_count, coefficient_count = _validate_near_integrality_candidates(
+        data.get("candidate_records"),
+        rounding_domain,
+        issues,
+    )
+    return MatrixNearIntegralityValidation(
+        ok=not issues,
+        target_id=target_id,
+        candidate_count=candidate_count,
+        coefficient_count=coefficient_count,
+        issues=issues,
+    )
+
+
+def render_matrix_near_integrality_summary(evidence: dict[str, Any]) -> str:
+    validation = validate_matrix_near_integrality_evidence(evidence)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix near-integrality evidence",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| target_id | {validation.target_id or '<unknown>'} |",
+        f"| candidate_count | {validation.candidate_count} |",
+        f"| coefficient_count | {validation.coefficient_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
 
 
 def render_matrix_result_summary(report: dict[str, Any]) -> str:
@@ -617,6 +681,113 @@ def _load_report(report: object | str | Path) -> tuple[dict[str, Any] | None, li
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixResultIssue("invalid_shape", "matrix result report must be a JSON object")]
+
+
+def _validate_near_integrality_prompt(value: object, issues: list[MatrixResultIssue]) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_prompt_instruction", "prompt_instruction must be an object"))
+        return
+    text = value.get("text")
+    if not isinstance(text, str) or not text.strip():
+        issues.append(MatrixResultIssue("missing_prompt_instruction_text", "prompt_instruction.text is required"))
+    else:
+        lowered = text.lower()
+        if "near-integral" not in lowered and "near integral" not in lowered:
+            issues.append(MatrixResultIssue("missing_near_integral_instruction", "prompt instruction must ask for near-integral solutions"))
+        if "matrix" not in lowered or "decomposition" not in lowered:
+            issues.append(MatrixResultIssue("missing_matrix_decomposition_instruction", "prompt instruction must reference matrix decompositions"))
+    for field in ("prompt_hash", "source"):
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            issues.append(MatrixResultIssue(f"missing_prompt_{field}", f"prompt_instruction.{field} is required"))
+
+
+def _validate_rounding_policy(value: object, issues: list[MatrixResultIssue]) -> str | None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResultIssue("invalid_rounding_policy", "rounding_policy must be an object"))
+        return None
+    domain = value.get("target_domain")
+    if domain not in NEAR_INTEGRAL_ROUNDING_DOMAINS:
+        issues.append(MatrixResultIssue("invalid_rounding_target_domain", "rounding target_domain must be integer or half_integer"))
+        domain = None
+    if value.get("method") != "nearest":
+        issues.append(MatrixResultIssue("invalid_rounding_method", "rounding method must be nearest"))
+    tolerance = value.get("max_abs_error")
+    if isinstance(tolerance, bool) or not isinstance(tolerance, (int, float)) or not math.isfinite(float(tolerance)) or float(tolerance) < 0:
+        issues.append(MatrixResultIssue("invalid_rounding_tolerance", "max_abs_error must be a finite non-negative number"))
+    certificate_scope = value.get("certificate_scope")
+    if certificate_scope != "rounded_coefficients":
+        issues.append(MatrixResultIssue("invalid_certificate_scope", "certificate_scope must be rounded_coefficients"))
+    return domain
+
+
+def _validate_near_integrality_candidates(
+    value: object,
+    rounding_domain: str | None,
+    issues: list[MatrixResultIssue],
+) -> tuple[int, int]:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixResultIssue("invalid_candidate_records", "candidate_records must be a non-empty list"))
+        return 0, 0
+    coefficient_count = 0
+    seen: set[str] = set()
+    for candidate in value:
+        if not isinstance(candidate, dict):
+            issues.append(MatrixResultIssue("invalid_candidate_record", "candidate records must be objects"))
+            continue
+        candidate_id = candidate.get("candidate_id")
+        if not isinstance(candidate_id, str) or not candidate_id.strip():
+            issues.append(MatrixResultIssue("missing_candidate_id", "candidate_id is required"))
+        elif candidate_id in seen:
+            issues.append(MatrixResultIssue("duplicate_candidate_id", "candidate_id values must be unique"))
+        elif candidate_id:
+            seen.add(candidate_id)
+        raw_coefficients = candidate.get("raw_coefficients")
+        rounded_coefficients = candidate.get("rounded_coefficients")
+        if not isinstance(raw_coefficients, list) or not raw_coefficients:
+            issues.append(MatrixResultIssue("invalid_raw_coefficients", "raw_coefficients must be a non-empty list"))
+            raw_coefficients = []
+        if not isinstance(rounded_coefficients, list) or not rounded_coefficients:
+            issues.append(MatrixResultIssue("invalid_rounded_coefficients", "rounded_coefficients must be a non-empty list"))
+            rounded_coefficients = []
+        if raw_coefficients and rounded_coefficients and len(raw_coefficients) != len(rounded_coefficients):
+            issues.append(MatrixResultIssue("coefficient_count_mismatch", "raw and rounded coefficient counts must match"))
+        coefficient_count += min(len(raw_coefficients), len(rounded_coefficients))
+        max_abs_error = candidate.get("max_abs_rounding_error")
+        computed_error = _validate_coefficient_pairs(raw_coefficients, rounded_coefficients, rounding_domain, issues)
+        if computed_error is not None:
+            if isinstance(max_abs_error, bool) or not isinstance(max_abs_error, (int, float)) or not math.isfinite(float(max_abs_error)):
+                issues.append(MatrixResultIssue("invalid_max_abs_rounding_error", "max_abs_rounding_error must be finite"))
+            elif not math.isclose(float(max_abs_error), computed_error, rel_tol=0.0, abs_tol=1e-12):
+                issues.append(MatrixResultIssue("max_abs_rounding_error_mismatch", "max_abs_rounding_error must match raw-versus-rounded coefficients"))
+        exactness_ref = candidate.get("exactness_certificate_ref")
+        if not isinstance(exactness_ref, str) or not exactness_ref.strip():
+            issues.append(MatrixResultIssue("missing_exactness_certificate_ref", "candidate must link rounded coefficients to an exactness certificate"))
+    return len(value), coefficient_count
+
+
+def _validate_coefficient_pairs(
+    raw_coefficients: list[object],
+    rounded_coefficients: list[object],
+    rounding_domain: str | None,
+    issues: list[MatrixResultIssue],
+) -> float | None:
+    if not raw_coefficients or not rounded_coefficients or len(raw_coefficients) != len(rounded_coefficients):
+        return None
+    max_error = 0.0
+    for raw, rounded in zip(raw_coefficients, rounded_coefficients):
+        if isinstance(raw, bool) or not isinstance(raw, (int, float)) or not math.isfinite(float(raw)):
+            issues.append(MatrixResultIssue("invalid_raw_coefficient", "raw coefficients must be finite numbers"))
+            return None
+        if isinstance(rounded, bool) or not isinstance(rounded, (int, float)) or not math.isfinite(float(rounded)):
+            issues.append(MatrixResultIssue("invalid_rounded_coefficient", "rounded coefficients must be finite numbers"))
+            return None
+        rounded_float = float(rounded)
+        if rounding_domain == "integer" and not math.isclose(rounded_float, round(rounded_float), rel_tol=0.0, abs_tol=1e-12):
+            issues.append(MatrixResultIssue("rounded_coefficient_not_integer", "rounded coefficients must be integers"))
+        if rounding_domain == "half_integer" and not math.isclose(rounded_float * 2, round(rounded_float * 2), rel_tol=0.0, abs_tol=1e-12):
+            issues.append(MatrixResultIssue("rounded_coefficient_not_half_integer", "rounded coefficients must be integer or half-integer values"))
+        max_error = max(max_error, abs(float(raw) - rounded_float))
+    return max_error
 
 
 def _validate_bundle_report_file(

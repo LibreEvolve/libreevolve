@@ -386,6 +386,12 @@ is not yet an AlphaEvolve reproduction.
   random seeds, single-GPU evaluators, frequent OOM, and further-optimization
   need. Local scaling runs with attempted target sizes, measured GPU memory,
   OOM artifacts, reduced-seed tradeoffs, and exclusion rationale remain open.
+- Keep matrix near-integrality wording scoped to evidence validation rather
+  than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
+  now validates declared prompt instructions, integer/half-integer nearest
+  rounding policy, raw-versus-rounded coefficient diagnostics, rounding-error
+  consistency, and exactness-certificate links. Local benchmark runners still
+  need to emit those records during matrix search.
 - Connect real compiler/hardware/kernel/scheduling fixtures to
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that

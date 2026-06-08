@@ -1011,13 +1011,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: README describes the matrix-result report contract,
     Appendix A registry, and checked Strassen baseline bundle, including
     coefficient-domain and exactness restrictions for AlphaEvolve-comparable
-    reports. It does not yet document a matrix benchmark prompt/evaluator path
-    that injects the near-integrality instruction, records raw-versus-rounded
-    coefficient diagnostics, or links those diagnostics to per-seed exactness
-    certificates produced during search.
-  - Required result: when that benchmark prompt/evaluator evidence lands,
+    reports. It now documents `libreevolve.matrix_near_integrality_evidence.v1`
+    as a validation contract for declared prompt instructions,
+    integer/half-integer rounding policy, raw-versus-rounded coefficient
+    diagnostics, and exactness-certificate links. It does not document a local
+    matrix benchmark prompt/evaluator path that emits those records during
+    search.
+  - Required result: when local benchmark prompt/evaluator emission lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README distinguishes report-schema validation from AlphaEvolve Section
+    so README distinguishes evidence-schema validation from AlphaEvolve Section
     3.1 search-workflow parity.
 
 - [ ] Keep README matrix wording scoped to final artifacts until sweep-space

@@ -46,9 +46,12 @@ from libreevolve.problems.benchmarks.example_scope import (
 )
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_RESULT_SCHEMA,
     matrix_result_artifact_inventory,
+    render_matrix_near_integrality_summary,
     render_matrix_result_summary,
+    validate_matrix_near_integrality_evidence,
     validate_matrix_result_report,
     write_strassen_2x2_publication_bundle,
 )
@@ -90,6 +93,7 @@ __all__ = [
     "EXAMPLE_BENCHMARK_SCOPE_SCHEMA",
     "FIGURE8_EXHIBIT_SCHEMA",
     "MATRIX_ARTIFACT_INVENTORY_SCHEMA",
+    "MATRIX_NEAR_INTEGRALITY_SCHEMA",
     "MATRIX_RESULT_SCHEMA",
     "PAPER_ARTIFACT_ROLE_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
@@ -113,6 +117,7 @@ __all__ = [
     "render_certification_summary",
     "render_example_benchmark_scope_summary",
     "render_figure8_exhibit_summary",
+    "render_matrix_near_integrality_summary",
     "render_matrix_result_summary",
     "render_paper_artifact_role_summary",
     "render_systems_result_summary",
@@ -126,6 +131,7 @@ __all__ = [
     "validate_certification_evidence_bundle",
     "validate_example_benchmark_scope",
     "validate_figure8_exhibit",
+    "validate_matrix_near_integrality_evidence",
     "validate_matrix_result_report",
     "validate_paper_artifact_roles",
     "validate_paper_result_certification",

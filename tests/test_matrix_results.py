@@ -5,10 +5,13 @@ import pytest
 
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+    MATRIX_NEAR_INTEGRALITY_SCHEMA,
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
     matrix_result_artifact_inventory,
+    render_matrix_near_integrality_summary,
     render_matrix_result_summary,
+    validate_matrix_near_integrality_evidence,
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
     write_strassen_2x2_publication_bundle,
@@ -357,3 +360,100 @@ def test_strassen_2x2_publication_bundle_rejects_bad_seed_list(tmp_path):
     for seeds in ((), (1, 1), (True,), ("1",)):
         with pytest.raises(ValueError, match="seeds"):
             write_strassen_2x2_publication_bundle(tmp_path, seeds=seeds)
+
+
+def _valid_near_integrality_evidence() -> dict:
+    return {
+        "schema": MATRIX_NEAR_INTEGRALITY_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": "mm_4x4x4",
+        "local_search_evidence": True,
+        "prompt_instruction": {
+            "source": "matrix-search prompt fixture",
+            "prompt_hash": "a" * 64,
+            "text": "Generate near-integral matrix tensor decomposition coefficients.",
+        },
+        "rounding_policy": {
+            "target_domain": "half_integer",
+            "method": "nearest",
+            "max_abs_error": 0.02,
+            "certificate_scope": "rounded_coefficients",
+        },
+        "candidate_records": [
+            {
+                "candidate_id": "candidate_001",
+                "seed": 7,
+                "raw_coefficients": [0.01, 0.49, -1.02, 1.51],
+                "rounded_coefficients": [0.0, 0.5, -1.0, 1.5],
+                "max_abs_rounding_error": 0.02,
+                "exactness_certificate_ref": "certificates/candidate_001.json",
+            }
+        ],
+    }
+
+
+def test_matrix_near_integrality_evidence_accepts_prompt_rounding_and_certificate_links():
+    evidence = _valid_near_integrality_evidence()
+
+    validation = validate_matrix_near_integrality_evidence(evidence)
+
+    assert validation.ok is True
+    assert validation.target_id == "mm_4x4x4"
+    assert validation.candidate_count == 1
+    assert validation.coefficient_count == 4
+    assert validation.issues == []
+
+
+def test_matrix_near_integrality_evidence_rejects_missing_prompt_semantics():
+    evidence = _valid_near_integrality_evidence()
+    evidence["prompt_instruction"]["text"] = "Optimize the program."
+    evidence["prompt_instruction"]["prompt_hash"] = ""
+
+    validation = validate_matrix_near_integrality_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_near_integral_instruction" in codes
+    assert "missing_matrix_decomposition_instruction" in codes
+    assert "missing_prompt_prompt_hash" in codes
+
+
+def test_matrix_near_integrality_evidence_rejects_rounding_drift():
+    evidence = _valid_near_integrality_evidence()
+    evidence["rounding_policy"]["target_domain"] = "float"
+    evidence["rounding_policy"]["method"] = "floor"
+    evidence["rounding_policy"]["certificate_scope"] = "raw_coefficients"
+
+    validation = validate_matrix_near_integrality_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_rounding_target_domain" in codes
+    assert "invalid_rounding_method" in codes
+    assert "invalid_certificate_scope" in codes
+
+
+def test_matrix_near_integrality_evidence_rejects_bad_candidate_diagnostics():
+    evidence = _valid_near_integrality_evidence()
+    candidate = evidence["candidate_records"][0]
+    candidate["rounded_coefficients"][1] = 0.25
+    candidate["max_abs_rounding_error"] = 0.01
+    candidate["exactness_certificate_ref"] = ""
+
+    validation = validate_matrix_near_integrality_evidence(evidence)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "rounded_coefficient_not_half_integer" in codes
+    assert "max_abs_rounding_error_mismatch" in codes
+    assert "missing_exactness_certificate_ref" in codes
+
+
+def test_render_matrix_near_integrality_summary_reports_shape():
+    summary = render_matrix_near_integrality_summary(_valid_near_integrality_evidence())
+
+    assert "Matrix near-integrality evidence" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| target_id | mm_4x4x4 |" in summary
+    assert "| candidate_count | 1 |" in summary
+    assert "| coefficient_count | 4 |" in summary

@@ -3758,15 +3758,16 @@ Primary evidence:
     coefficient domain, exactness certificate status, per-seed exactness, and
     AlphaEvolve-comparable restrictions. The checked-in
     `matrix_multiplication` example remains a 2x2 scalar-count smoke fixture,
-    and the benchmark report contracts do not yet inject or persist a
-    benchmark-grade prompt instruction requiring near-integral tensor
-    decompositions, record raw-versus-rounded coefficient diagnostics, or link
-    those diagnostics to exactness certificates during evaluation.
-  - Required result: add a matrix benchmark prompt/evaluator hook that records
-    the coefficient-domain instruction, rounding policy, raw and rounded
-    coefficient-domain diagnostics, per-seed exactness linkage, and prompt/run
-    evidence before treating matrix search runs as aligned with the Section
-    3.1 near-integrality workflow.
+    and `libreevolve.matrix_near_integrality_evidence.v1` now validates
+    declared prompt instruction provenance, integer/half-integer nearest
+    rounding policy, raw-versus-rounded coefficient diagnostics,
+    rounding-error consistency, and exactness-certificate links. The benchmark
+    runner still does not inject that instruction or persist those diagnostics
+    during local matrix search.
+  - Required result: add a matrix benchmark prompt/evaluator hook that emits
+    the near-integrality evidence contract from real runs before treating
+    matrix search runs as aligned with the Section 3.1 near-integrality
+    workflow.
 
 - [ ] Add matrix hyperparameter-sweep provenance for evolved search programs.
   - Spec evidence: AlphaEvolve's Appendix A Figure 9 matrix example evolves a

@@ -304,6 +304,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     metadata, and README/ROADMAP wording that separates documented local
     breadth from AlphaEvolve-style broad collaborator-feedback evidence.
 
+- [ ] Track acknowledgement-role evidence for review, support, and practical
+      application management advice.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Acknowledgements separately
+    thank contributors for reviewing the white paper, early explorations and
+    insightful discussions, support and advice, helpful advice on managing the
+    practical applications, and reviewing application-specific work.
+  - Current gap: paper/status records track early-user feedback, expert
+    formulation, application owner/reviewer roles, and core contribution
+    provenance. They do not preserve acknowledgement-role records for these
+    paper-process and governance contributions, so docs could conflate paper
+    review/support/advice with implementation authorship, benchmark
+    formulation, domain validation, or deployment signoff.
+  - Required result: add paper-facing acknowledgement records with safe
+    contributor labels, role category, affected white-paper or application
+    scope, source page/section, privacy/redaction policy, and README/ROADMAP
+    wording that distinguishes acknowledgement-process evidence from technical
+    validation, benchmark formulation, deployment, and system-development
+    provenance.
+
 - [ ] Track core AlphaEvolve system-development contribution provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the
     initial version of AlphaEvolve was designed and implemented by specific

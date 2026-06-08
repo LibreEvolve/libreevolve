@@ -186,6 +186,30 @@ Primary evidence:
     README, ROADMAP, or papers-index wording claims AlphaEvolve-style
     robustness or versatility shaped by broad collaborator feedback.
 
+- [ ] Add acknowledgement-role provenance for review, support, and practical
+      application management advice.
+  - Spec evidence: AlphaEvolve's Acknowledgements separately thank named
+    contributors for reviewing the white paper, early explorations and
+    insightful discussions, support and advice, helpful advice on managing
+    practical applications, and reviewing application-specific work. These are
+    paper-process and governance roles distinct from early-user feedback,
+    expert benchmark formulation, application owner signoff, and core
+    implementation contributions.
+  - Current evidence: LibreEvolve TODOs track early-user feedback, expert
+    formulation, systems application owner/reviewer evidence, and core
+    system-development contribution roles. They do not define a schema for
+    paper-review, support/advice, practical-application management advice, or
+    application-review acknowledgement records, nor a docs check that keeps
+    these softer paper-process roles separate from technical validation or
+    implementation authorship.
+  - Required result: add acknowledgement-role metadata with safe contributor
+    labels, role category (`white_paper_review`, `early_exploration`,
+    `support_advice`, `practical_application_management_advice`,
+    `application_review`), affected paper/application scope, source
+    page/section, privacy/redaction policy, and README/ROADMAP wording that
+    separates paper-process acknowledgement evidence from benchmark,
+    deployment, validation, or system-development provenance.
+
 - [ ] Add core system-development contribution provenance.
   - Spec evidence: AlphaEvolve's Contributions section attributes the initial
     system design/implementation, project vision and problem scoping, first

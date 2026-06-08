@@ -226,6 +226,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style robustness or versatility claims backed by diverse
     collaborator feedback.
 
+- [ ] Keep README acknowledgement wording scoped until review/support/advice
+      role evidence exists.
+  - Spec evidence: AlphaEvolve's Acknowledgements separately credit white-paper
+    review, early explorations and discussions, support/advice, practical
+    application management advice, and application-specific reviewing.
+  - Current evidence: README can describe local project status, examples,
+    expert formulation gaps, systems owner/reviewer gaps, early-user feedback
+    gaps, and contribution-role gaps. It does not document paper-process
+    acknowledgement records for review/support/advice roles, nor distinguish
+    those roles from implementation authorship, domain validation, deployment
+    signoff, or feedback-backed robustness claims.
+  - Required result: when acknowledgement-role metadata lands, update README,
+    ROADMAP, papers index, and code/paper TODOs together so README separates
+    white-paper review, support/advice, practical-application management
+    advice, and application-review acknowledgements from technical
+    AlphaEvolve-spec evidence.
+
 - [ ] Keep README system-development provenance scoped until contribution-role
       evidence exists.
   - Spec evidence: AlphaEvolve's Contributions section separately attributes

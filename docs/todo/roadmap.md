@@ -280,6 +280,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     overclaims AlphaEvolve-style robustness or versatility shaped by broad
     collaborator feedback.
 
+- [ ] Keep acknowledgement-role roadmap wording scoped until review/support/
+      advice provenance exists.
+  - Spec evidence: AlphaEvolve's Acknowledgements separately thank named people
+    for white-paper review, early explorations and discussions, support and
+    advice, practical-application management advice, and reviewing
+    application-specific work.
+  - Current evidence: ROADMAP and README/code evidence track expert
+    formulation, early-user feedback, systems owner/reviewer gaps, and
+    contribution-role gaps. They do not require acknowledgement-role metadata
+    for paper-process review/support/advice records or docs wording that
+    separates those roles from implementation authorship, benchmark
+    formulation, domain validation, deployment signoff, or broad collaborator
+    feedback.
+  - Required result: when acknowledgement-role metadata lands, update ROADMAP,
+    README, papers index, and code/paper TODOs with role categories, affected
+    paper/application scope, source page/section, and privacy/redaction policy
+    so roadmap wording does not treat acknowledgement-process roles as
+    technical validation or system-development provenance.
+
 - [ ] Keep system-development roadmap wording scoped until contribution-role
       provenance exists.
   - Spec evidence: AlphaEvolve's Contributions section attributes core system

@@ -4290,3 +4290,34 @@ directory and using the AlphaEvolve paper as the primary specification.
     mathematical-algorithm baseline identities, code/artifact reproducibility
     status, and README/ROADMAP wording that treats MLEvolve as missing paper
     evidence rather than implemented LibreEvolve support.
+
+- [ ] Track LEVI cost-aware search-architecture paper evidence.
+  - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is
+    titled `LEVI: Stronger Search Architectures Can Substitute for Larger LLMs
+    in Evolutionary Search`. Its abstract says AlphaEvolve-style LLM-guided
+    evolutionary methods work across math, systems research, and algorithmic
+    discovery but are expensive because search allocation often fails to
+    preserve solution diversity, uses frontier models blindly for local edits,
+    and evaluates redundant examples. LEVI proposes a harness-first framework
+    with a diversity-preserving solution database, smarter mutation routing
+    between large and small LLMs, and rank-preserving proxy benchmarks; it
+    reports systems-research wins at 3.3x-6.7x lower budget, one 35x
+    lower-cost match, and prompt-optimization results at less than half GEPA's
+    rollout budget. The arXiv page links code at `https://github.com/ttanv/levi`.
+  - Current gap: the paper cache, paper index, and TODO coverage do not
+    include `2605.09764`. Existing rows cover AlphaEvolve, MAP-Elites,
+    UCB-style ensemble selection, evaluator artifacts, EvoX adaptive search,
+    DeltaEvolve context memory, and MLEvolve long-horizon MLE, but not
+    LEVI-style diversity preservation, cost-aware mutation routing,
+    proxy-benchmark rank preservation, provider-budget accounting, or
+    systems/prompt optimization cost comparisons.
+  - Required result: add paper-manifest and paper-index coverage for
+    `2605.09764`: title/authors/arXiv version/date/PDF digest, source license,
+    linked-code URL/status, relation to AlphaEvolve and LibreEvolve archive/
+    ensemble behavior, diversity metrics, solution-database invariants,
+    mutation-router policy, large/small model assignment traces,
+    proxy-benchmark construction and rank-correlation evidence, rollout and
+    provider-cost accounting, systems/prompt benchmark taxonomy, baseline
+    method identities, code/artifact reproducibility status, and README/
+    ROADMAP wording that treats LEVI as missing paper evidence rather than
+    implemented LibreEvolve support.

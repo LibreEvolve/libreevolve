@@ -3401,3 +3401,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     definitions, AlphaEvolve comparison boundary, and a background-only or
     benchmark-fixture status rule so roadmap claims do not outpace local
     MLEvolve-style harness support.
+
+- [ ] Add LEVI cost-aware search-architecture gates before roadmap promotion.
+  - Spec evidence: arXiv `2605.09764`, submitted May 10, 2026, introduces
+    LEVI as a harness-first evolutionary framework arguing that stronger
+    search architectures can substitute for larger LLMs. The abstract says
+    AlphaEvolve-style systems incur unnecessary cost when archives fail to
+    preserve diversity, frontier models are used blindly for local edits, and
+    full-set evaluation spends rollouts on redundant examples. LEVI adds a
+    diversity-preserving solution database, smarter mutation routing between
+    large and small LLMs, and rank-preserving proxy benchmarks, reporting
+    3.3x-6.7x lower-budget systems results, one 35x lower-cost match, and
+    prompt-optimization results at less than half GEPA's rollout budget.
+  - Current evidence: ROADMAP tracks MAP-Elites/islands behavior, heuristic
+    LLM ensemble selection, evaluator artifacts, benchmark-report contracts,
+    and newer adaptive-search source gates. It does not mention
+    `2605.09764`, define a LEVI cost/source gate, or require local cost and
+    diversity evidence before promoting claims about cheaper-than-frontier
+    AlphaEvolve-style search.
+  - Required result: add roadmap gates for `2605.09764`: paper/source
+    manifest entry, PDF/cache hash, source-license and linked-code status,
+    diversity-preserving solution-database invariants, mutation-router schema,
+    large/small model routing traces, proxy-benchmark calibration and
+    rank-correlation reports, rollout-budget and provider-cost metrics,
+    systems/prompt benchmark taxonomy, baseline identities, and a
+    background-only or benchmark-fixture status rule so roadmap claims do not
+    outpace local LEVI-style cost-aware search support.

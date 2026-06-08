@@ -4711,3 +4711,33 @@ Primary evidence:
     metric definitions, mathematical-algorithm baseline identities, and
     README/ROADMAP wording that keeps MLEvolve-style long-horizon MLE support
     as missing evidence until local harnesses and reports exist.
+
+- [ ] Add LEVI cost-aware search-architecture source boundary.
+  - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures
+    Can Substitute for Larger LLMs in Evolutionary Search`, was submitted May
+    10, 2026. Its abstract says AlphaEvolve-style LLM-guided evolutionary
+    methods are effective but expensive because of frontier-model reliance,
+    weak diversity preservation, blind model use for local edits, and
+    full-set evaluation over redundant examples. LEVI proposes a
+    harness-first framework with an explicitly diversity-preserving solution
+    database, smarter mutation routing between large and small LLMs, and a
+    rank-preserving proxy benchmark for rollout-heavy settings. It reports
+    systems-research benchmark scores at 3.3x-6.7x lower budget than
+    frontier-model runs and one 35x lower-cost match, plus prompt-optimization
+    results at less than half GEPA's rollout budget.
+  - Current evidence: LibreEvolve has MAP-Elites cells, island migration, a
+    heuristic LLM ensemble, run manifests, and evaluator artifacts, but no
+    LEVI source row, cost-aware mutation router, explicit large/small model
+    role split, diversity-preservation report for the solution database,
+    proxy-benchmark calibration, rank-preservation test, rollout-budget
+    accounting, or systems/prompt optimization cost-comparison fixture.
+  - Required result: add source-manifest and implementation-boundary metadata
+    for `2605.09764`: arXiv id/version/date/PDF hash, authors, source license,
+    linked code URL/status, relation to AlphaEvolve and LibreEvolve's archive
+    and ensemble behavior, diversity metrics and database invariants,
+    mutation-router policy schema, large/small model assignment traces,
+    proxy-benchmark construction and rank-correlation evidence,
+    rollout-budget/cost accounting, systems and prompt-optimization benchmark
+    taxonomy, baseline identities, and README/ROADMAP wording that keeps
+    LEVI-style cost-aware search architecture as missing evidence until local
+    implementation and reports exist.

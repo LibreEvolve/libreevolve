@@ -2986,4 +2986,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     outcomes. Avoid implying LibreEvolve supports MLEvolve-style long-horizon
     MLE without those implementation and benchmark artifacts.
 
+- [ ] Keep README LEVI cost-aware search-architecture claims absent or
+      source-scoped until paper and benchmark evidence exists.
+  - Spec evidence: arXiv `2605.09764`, `LEVI: Stronger Search Architectures
+    Can Substitute for Larger LLMs in Evolutionary Search`, says
+    AlphaEvolve-style evolutionary methods are effective but expensive because
+    search allocation often fails to preserve diversity, spends frontier-model
+    budget on local edits, and evaluates redundant examples. LEVI proposes a
+    diversity-preserving solution database, large/small LLM mutation routing,
+    and rank-preserving proxy benchmarks, reporting lower-budget systems and
+    prompt-optimization results.
+  - Current evidence: README documents LibreEvolve's current MAP-Elites
+    archive, islands, LLM ensemble heuristic, evaluator artifacts, and
+    benchmark-report boundaries. It does not list `2605.09764`, expose
+    LEVI-style model routing, preserve diversity/cost evidence, calibrate
+    proxy benchmarks, record rank-preservation checks, or report systems/
+    prompt optimization budget comparisons.
+  - Required result: if README mentions LEVI, cheaper-than-frontier
+    evolutionary search, large/small model routing, diversity-preserving
+    archives, proxy benchmarks, 3.3x-6.7x lower budgets, 35x lower-cost
+    matches, or reduced GEPA rollout budgets, keep the wording source-scoped
+    until the paper is in the manifest and local artifacts can show database
+    diversity metrics, routing traces, proxy calibration, rank-correlation
+    evidence, budget/cost accounting, benchmark baselines, and report
+    outcomes. Avoid implying LibreEvolve supports LEVI-style cost-aware search
+    architecture without those implementation and benchmark artifacts.
+
 ## Architecture Description

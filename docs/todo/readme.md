@@ -4444,7 +4444,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     procedure-level factor discovery from accumulated trials, approximate
     treatment-effect estimates, surprise-pattern detection, abductive reasoning
     for new factors/hypotheses, and four-task comparisons against
-    ShinkaEvolve, CausalPlanner(Meta), and COAT.
+    ShinkaEvolve, CausalPlanner(Meta), and COAT. Table 1 reports final-step
+    CausalEvolve mean/best values of `0.568`/`0.576` on Hadamard,
+    `0.793`/`0.809` on second autocorrelation, `2.476`/`2.564` on circle
+    packing, and `38.89`/`40.00` on AIME with Grok-4.1-fast-reasoning.
   - Current evidence: README says the causal plugin is a lightweight
     token-pattern heuristic, not CausalEvolve's causal scratchpad, and
     `papers/README.md` says detected factors are fixed local token-pattern
@@ -4462,8 +4465,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     row, PDF/code hashes, factor-generation prompts, executable factor metrics,
     intervention/action records, scratchpad memory artifacts, procedure-factor
     and treatment-effect tables, abduction outputs, benchmark/baseline/result
-    rows, model/seed/step provenance, and a clear distinction between fixed
-    token-pattern factor guidance and CausalEvolve causal-scratchpad execution.
+    rows, model/seed/step provenance, paper license and code/source status,
+    and a clear distinction between fixed token-pattern factor guidance and
+    CausalEvolve causal-scratchpad execution.
 
 - [ ] Keep README DeepEvolve wording scoped until cross-file research/debug
       loop evidence exists.

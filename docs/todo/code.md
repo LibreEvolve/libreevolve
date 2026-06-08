@@ -6622,16 +6622,23 @@ Primary evidence:
 - [ ] Add CausalEvolve causal-scratchpad source boundary before causal
       discovery claims.
   - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
-    Open-Ended Discovery with Causal Scratchpad`, frames AlphaEvolve-like
-    scientific discovery as a POMDP/SCM process and adds a causal scratchpad.
-    The paper uses LLMs before evolution to define outcome-level factors and
-    executable factor code, uses a CausalPlanner MAB over `(factor, direction)`
-    interventions to select inspiration programs, identifies procedure-level
-    factors from accumulated trials with COAT-style LLM analysis, estimates
-    approximate treatment effects, detects surprise patterns such as sign
-    inversions or quantity shifts, performs abductive reasoning to propose new
-    hypotheses/factors, and reports four-task comparisons against
-    ShinkaEvolve, CausalPlanner(Meta), and COAT.
+    Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen, Chenxi
+    Liu, Zhenhao Chen, Tongliang Liu, Bo Han, and Kun Zhang was submitted as
+    arXiv v1 on March 15, 2026 and revised as v2 on March 29, 2026; the cached
+    PDF hash is
+    `b3190d25d802f5b9913e4e266b7dda1b76d2211d2d4cad68e1a5d0a3d03fc4d2`
+    and the PDF metadata declares CC BY-NC-SA 4.0. It frames
+    AlphaEvolve-like scientific discovery as a POMDP/SCM process and adds a
+    causal scratchpad. The paper uses LLMs before evolution to define
+    outcome-level factors and executable factor code, uses a CausalPlanner MAB
+    over `(factor, direction)` interventions to select inspiration programs,
+    identifies procedure-level factors from accumulated trials with COAT-style
+    LLM analysis, estimates approximate treatment effects, detects surprise
+    patterns such as sign inversions or quantity shifts, performs abductive
+    reasoning to propose new hypotheses/factors, and reports four-task
+    comparisons against ShinkaEvolve, CausalPlanner(Meta), and COAT. It fixes
+    Grok-4.1-fast-reasoning for fair comparisons and evaluates 3 seeds over
+    task-specific step schedules.
   - Current evidence: `libreevolve/plugins/causal.py` explicitly says the local
     plugin is not the CausalEvolve causal scratchpad. It uses a fixed regex
     factor list over diff/full mutation text, parent-aware score deltas,
@@ -6643,7 +6650,10 @@ Primary evidence:
     sorting, no procedure-factor extractor, no treatment-effect estimates, no
     surprise-pattern detector, no abductive-reasoning scratchpad, no causal
     hypothesis lifecycle, and no Hadamard/autocorrelation/circle-packing/AIME
-    comparison report tied to this source.
+    comparison report tied to this source. The local heuristic also has no
+    source/target environment-shift model, no theorem-backed sample-efficiency
+    or non-identifiability boundary, and no executable Appendix D metric
+    library for task outputs.
   - Required result: add source-boundary metadata and implementation gates for
     `2603.14575`: arXiv version/date/PDF hash, code/source status, causal
     scratchpad schema, POMDP/SCM task-world metadata, outcome-factor prompt and
@@ -6656,7 +6666,11 @@ Primary evidence:
     rows, seed/step/result tables, ablation rows for ShinkaEvolve,
     CausalPlanner(Meta), and COAT, model/runtime provenance, and README/ROADMAP
     wording that keeps current token-pattern factor guidance separate from
-    CausalEvolve-style causal discovery.
+    CausalEvolve-style causal discovery. The result rows must include Table 1
+    final-step CausalEvolve values (`Hadamard` mean/best `0.568`/`0.576`,
+    `Second Autocorr` `0.793`/`0.809`, `Circle Packing` `2.476`/`2.564`,
+    `AIME` `38.89`/`40.00`) and the corresponding ShinkaEvolve,
+    CausalPlanner(Meta), and COAT rows.
 
 - [ ] Add DeepEvolve cross-file research/debug-loop source boundary before
       retrieval-agent claims.

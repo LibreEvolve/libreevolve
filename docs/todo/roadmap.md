@@ -4909,13 +4909,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 - [ ] Add CausalEvolve causal-scratchpad gates before roadmap promotion.
   - Spec evidence: local arXiv `2603.14575v2`, `CausalEvolve: Towards
-    Open-Ended Discovery with Causal Scratchpad`, models evolve-based
-    scientific discovery as a POMDP over hidden scientific knowledge, uses SCM
-    intervention language for program evaluation, and introduces a causal
-    scratchpad with LLM-generated outcome-level factors, CausalPlanner
-    factor-direction interventions, procedure-level factor discovery,
-    approximate treatment effects, surprise-pattern detection, abductive
-    hypothesis generation, and four-task benchmark comparisons.
+    Open-Ended Discovery with Causal Scratchpad`, by Yongqiang Chen et al. was
+    submitted as arXiv v1 on March 15, 2026 and revised as v2 on March 29,
+    2026. It models evolve-based scientific discovery as a POMDP over hidden
+    scientific knowledge, uses SCM intervention language for program
+    evaluation, and introduces a causal scratchpad with LLM-generated
+    outcome-level factors, CausalPlanner factor-direction interventions,
+    procedure-level factor discovery, approximate treatment effects,
+    surprise-pattern detection, abductive hypothesis generation, and four-task
+    benchmark comparisons. The CausalPlanner action space is `(factor, +1)` or
+    `(factor, -1)`, inspiration programs are sorted by selected factor
+    direction, rewards use `(child_score - tau * best_so_far)+`, and random
+    actions are alternated for `K` iterations with currently best actions for
+    the next `K` iterations.
   - Current evidence: ROADMAP says CausalEvolve features remain inspired unless
     paper behavior is implemented, README describes the causal plugin as fixed
     token-pattern guidance rather than a causal scratchpad, and
@@ -4937,7 +4943,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ShinkaEvolve/CausalPlanner(Meta)/COAT comparison rows, Grok-4.1-FR model
     provenance, seed and step schedules, and README/papers/code wording that
     keeps CausalEvolve as causal-guidance inspiration until local evidence
-    proves causal-scratchpad semantics.
+    proves causal-scratchpad semantics. Roadmap result rows must include
+    Table 1 final-step comparisons for Hadamard, second autocorrelation,
+    circle packing, and AIME, plus CC BY-NC-SA license and no-dedicated-code-
+    link status.
 
 - [ ] Add DeepEvolve cross-file research/debug-loop gates before roadmap
       promotion.

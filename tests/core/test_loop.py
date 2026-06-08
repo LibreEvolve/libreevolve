@@ -42,6 +42,7 @@ from libreevolve.core.loop import (
     validate_prompt_section_packing_coverage,
     validate_retrieval_evidence_coverage,
     validate_controller_state_snapshot,
+    validate_evaluation_cascade_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -3551,6 +3552,64 @@ def test_run_budget_persists_evaluator_attempt_and_sample_accounting():
     assert runtime_consumed["evaluator_subprocess_attempts"] == 4
     assert runtime_consumed["evaluator_stage_samples"] == 2
     assert runtime_consumed["evaluator_retry_attempts"] == 2
+
+
+def test_runtime_history_reports_configured_stage_promotion_and_attrition():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    name = stage['name']\n"
+        "    seed = 'x=1' in code\n"
+        "    if name == 'smoke':\n"
+        "        score = 1.0 if seed else 0.2\n"
+        "    else:\n"
+        "        score = 1.0 if seed else 0.9\n"
+        "    return {'score': score, 'is_valid': True}\n"
+    )
+    llm = _llm("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                eval_stages=[
+                    {"name": "smoke", "min_score": 0.5},
+                    {"name": "main", "min_score": 0.5},
+                ],
+            ),
+        )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["evaluation_cascade_report"]
+
+    assert report["schema"] == "libreevolve.evaluation_cascade_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_evaluation_cascade_report(report)["ok"] is True
+    assert report["configured_candidate_count"] == 2
+    assert report["stage_count"] == 2
+    assert report["main_test_exposure_count"] == 1
+    assert report["early_prune_count"] == 1
+    assert report["claim_ready"] is False
+    assert "stage_difficulty_or_scale_labels" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+
+    smoke, main = report["stages"]
+    assert smoke["name"] == "smoke"
+    assert smoke["candidate_count"] == 2
+    assert smoke["passed"] == 1
+    assert smoke["failed"] == 1
+    assert smoke["threshold_failed"] == 1
+    assert smoke["promotion_rate"] == 0.5
+    assert smoke["sample_count"] == 2
+    assert smoke["failure_reasons"] == {"stage_threshold_not_met": 1}
+    assert main["name"] == "main"
+    assert main["candidate_count"] == 1
+    assert main["passed"] == 1
+    assert main["failed"] == 0
 
 
 def test_evolve_records_best_artifact_export_failure_without_failing_search():

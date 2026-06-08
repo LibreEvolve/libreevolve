@@ -112,24 +112,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rejection review fields before claiming AlphaEvolve-style filtering of
     incorrect base-LLM suggestions.
 
-- [ ] Keep cascade roadmap wording scoped until promotion/attrition reports
-      exist.
+- [ ] Keep cascade roadmap wording scoped to partial promotion/attrition
+      reports.
   - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use
     ensembles of test cases with increasing difficulty, promote candidates to
     later stages only after promising earlier-stage results, prune less
     promising solutions quickly, and run small-scale checks before main tests.
     The matrix-multiplication experiment also evaluates targets with multiple
     random seeds using that cascade.
-  - Current evidence: ROADMAP and README can claim local configured evaluator
-    stages with thresholds, samples, retries, seeds, budgets, and persisted
-    per-candidate `configured_stage_results`. They do not yet require a
-    run-level paper report that aggregates stage entry/pass/fail counts,
-    difficulty or scale rationale, seed/sample denominators, early-prune
-    attrition, main-test exposure, or per-stage cost summaries.
-  - Required result: when cascade-report artifacts land, update ROADMAP,
-    README, papers index, and code/paper TODOs together so roadmap wording
-    separates local stage-threshold mechanics from AlphaEvolve-style
-    cascade-efficiency and hypothesis-testing evidence.
+  - Current evidence: ROADMAP and README can now reference
+    `runtime.history.evaluation_cascade_report`, a validated
+    `libreevolve.evaluation_cascade_report.v1` runtime summary with configured
+    candidate count, per-stage entry/pass/fail/threshold-fail counts, failure
+    reasons, sample/retry/subprocess/timeout totals, elapsed seconds, promotion
+    rates, main-test exposure, early-prune counts, and explicit
+    `claim_ready: false` limitations.
+  - Required result: update ROADMAP, README, papers index, and code/paper TODOs
+    with the partial report and remaining work for stage difficulty/scale
+    labels, evaluator/test-set hashes, seed/sample denominator policy,
+    main-test denominator definitions, cost-savings evidence, and exact
+    candidate-evaluation cross-links.
 
 - [ ] Keep evaluator-entrypoint roadmap wording scoped to external validators
       until embedded `evaluate(eval_inputs)` support exists.

@@ -2120,6 +2120,14 @@ metadata and the final runtime manifest. Optional
 `max_evaluator_sample_budget_exhaustions`, and
 `max_evaluator_stage_budget_exhaustions` limits stop the synchronous loop after
 the evaluation that consumes the configured counter budget.
+Completed manifests summarize configured-stage promotion and attrition under
+`runtime.history.evaluation_cascade_report`. The report aggregates
+candidate-local `configured_stage_results` into stage candidate counts,
+pass/fail/threshold-fail counts, failure reasons, sample/retry/subprocess/
+timeout totals, elapsed seconds, promotion rates, main-test exposure, and
+early-prune counts. It also records `claim_ready: false` until stage
+difficulty/scale labels, evaluator test-set hashes, denominator policy, and
+cost-savings evidence are added.
 Configured stage `retries` are capped at `10`; the total subprocess attempts
 for a stage remain `samples * (retries + 1)` before early success/stop.
 Retries are threshold-aware when `min_score` or `metric_thresholds` is

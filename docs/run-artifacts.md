@@ -34,6 +34,14 @@ records field statuses, manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
 validation. It is partial AlphaEvolve task-spec evidence, not a standalone
 problem definition or full proof of evolvable-span and score-link parity.
+Completed runtime manifests include
+`runtime.history.evaluation_cascade_report` when configured stages have run.
+The `libreevolve.evaluation_cascade_report.v1` summary is rebuilt from
+candidate history `configured_stage_results` and records stage entry/pass/fail
+counts, threshold failures, failure reasons, sample/retry/subprocess/timeout
+totals, elapsed seconds, promotion rates, main-test exposure, early-prune
+counts, stop reasons, and `claim_ready: false` limitations for missing
+difficulty/test-set/denominator/cost evidence.
 JSONL streams use a local complete-line durability policy. Accepted rows are
 strict-serialized before append, written as newline-terminated records, flushed,
 and fsynced before the append helper returns. Before appending to an existing

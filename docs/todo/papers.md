@@ -81,20 +81,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     seeds for matrix-multiplication evaluation.
   - Partial status: LibreEvolve supports local staged validators with
     thresholds, metric thresholds, samples, retries, seeds, budgets,
-    artifact/output checks, and per-candidate
-    `evaluation.metadata.configured_stage_results`.
-  - Current gap: paper-facing evidence does not aggregate those candidate-local
-    stage traces into a cascade report with stage difficulty or scale
-    rationale, evaluator/test-set identities, seed/sample denominators,
-    candidate counts entering/passing/failing each stage, early-prune reasons,
-    main-test exposure, cost/wall-clock savings, and links back to the
-    candidate evaluation records. Without that, local stage thresholds should
-    not be presented as AlphaEvolve-style cascade-efficiency or hypothesis-
-    testing evidence.
-  - Required result: add cascade-report artifacts, validators, and papers index
-    links with stage ids, source hashes, thresholds, promotion/attrition
-    counts, random-seed/sample coverage, main-test denominator definitions,
-    cost summaries, and claim-readiness checks.
+    artifact/output checks, per-candidate
+    `evaluation.metadata.configured_stage_results`, and a runtime
+    `libreevolve.evaluation_cascade_report.v1` summary under
+    `runtime.history.evaluation_cascade_report`. The report aggregates
+    configured candidate count, per-stage entry/pass/fail/threshold-fail
+    counts, failure reasons, sample/retry/subprocess/timeout totals, elapsed
+    seconds, promotion rates, main-test exposure, early-prune counts, and
+    claim-readiness limitations.
+  - Current gap: paper-facing evidence still lacks stage difficulty or scale
+    rationale, evaluator/test-set identities, seed/sample denominator policy,
+    main-test denominator definitions, counterfactual cost/wall-clock savings,
+    and exact candidate-evaluation cross-links. The report therefore remains
+    `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
+  - Required result: finish cascade-report artifacts and validators with stage
+    ids, source hashes, difficulty/test-set metadata, random-seed/sample
+    coverage, denominator definitions, cost summaries, and claim-readiness
+    checks.
 
 - [ ] Track hypothesis backtracking and abandoned-branch evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Section 2.4.

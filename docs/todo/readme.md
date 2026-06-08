@@ -62,25 +62,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     review fields so README distinguishes local validity mechanics from
     AlphaEvolve-style grounding against incorrect base-LLM suggestions.
 
-- [ ] Keep README cascade claims scoped until promotion/attrition reports
-      exist.
+- [ ] Keep README cascade claims scoped to partial promotion/attrition reports.
   - Spec evidence: AlphaEvolve Section 2.4 says evaluation cascades can use
     ensembles of test cases with increasing difficulty, promote candidates to
     the next stage only after sufficiently promising earlier-stage results,
     prune less promising solutions quickly, and run small-scale tests before
     main tests. The matrix-multiplication experiment also uses multiple random
     seeds with the Section 2.4 cascade.
-  - Current evidence: README documents local configured stages, samples,
-    retries, thresholds, seed values, artifact/output checks, and
-    per-candidate `configured_stage_results`. It does not yet document a
-    paper-facing run artifact proving stage difficulty/scale ordering,
-    promotion thresholds, candidate entry/pass/fail counts, early-prune
-    attrition, main-test denominators, seed/sample coverage, or per-stage
-    cost/wall-clock summaries.
-  - Required result: when cascade reports land, update README, ROADMAP, papers
-    index, and code/paper TODOs together so README distinguishes local
-    cascade-pipeline mechanics from AlphaEvolve-style cascade efficiency and
-    hypothesis-testing evidence.
+  - Current evidence: README can now cite
+    `runtime.history.evaluation_cascade_report`, a validated
+    `libreevolve.evaluation_cascade_report.v1` runtime summary with stage
+    candidate counts, pass/fail/threshold-fail counts, failure reasons,
+    sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
+    main-test exposure, early-prune counts, and explicit `claim_ready: false`
+    limitations. README should still not imply AlphaEvolve cascade-efficiency
+    parity because stage difficulty/scale labels, evaluator/test-set hashes,
+    denominator policy, and cost-savings counterfactuals remain incomplete.
+  - Required result: update README, ROADMAP, papers index, and code/paper TODOs
+    with the partial cascade report and the remaining difficulty, denominator,
+    test-set, cost, and artifact-linkage gaps.
 
 - [ ] Keep README backtracking wording scoped until abandoned-hypothesis
       branch evidence exists.

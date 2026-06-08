@@ -24,6 +24,9 @@ LibreEvolve has:
   opt-in candidate-owned `evaluate(eval_inputs)` entrypoints, thresholds,
   samples, validator-managed seed values, retries, timeouts, and per-attempt
   history
+- runtime cascade summaries that aggregate configured-stage promotion,
+  attrition, threshold failures, work counters, and explicit claim-readiness
+  limitations under `runtime.history.evaluation_cascade_report`
 - strict scalar evaluator-output validation against `metrics.yaml`, including
   finite, strictly increasing non-boolean metric bounds and a reserved boolean
   validity gate outside optimization metrics

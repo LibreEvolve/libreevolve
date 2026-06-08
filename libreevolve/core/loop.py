@@ -5090,7 +5090,8 @@ def _bounded_redacted_plugin_context_text(
 
 def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudget) -> dict:
     history_exists = (run_dir / "history.jsonl").exists()
-    programs_logged = len(db.all_programs())
+    programs = db.all_programs()
+    programs_logged = len(programs)
     archive_state = db.archive_state_snapshot()
     summary = {
         "programs_logged": programs_logged,
@@ -5107,6 +5108,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "failure_index": db.failure_index_snapshot(),
         "hypothesis_index": db.hypothesis_index_snapshot(),
         "artifact_index": db.artifact_index_snapshot(),
+        "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "archive_state": archive_state,
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
@@ -5122,6 +5124,195 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         if not history_exists:
             summary["history_absent_reason"] = absence_reason
     return summary
+
+
+def _evaluation_cascade_report(programs: list[Program]) -> dict:
+    stages: dict[str, dict] = {}
+    configured_candidate_count = 0
+    main_test_exposure_count = 0
+    stop_reasons: dict[str, int] = {}
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), dict) else {}
+        configured = metadata.get("configured_stage_results")
+        if not isinstance(configured, list):
+            continue
+        configured_candidate_count += 1
+        if configured and isinstance(configured[-1], dict) and configured[-1].get("passed") is True:
+            main_test_exposure_count += 1
+        stopped_at = metadata.get("stopped_at")
+        for stage_index, raw_stage in enumerate(configured):
+            if not isinstance(raw_stage, dict):
+                continue
+            name = str(raw_stage.get("name", f"stage_{stage_index}"))
+            stage = stages.setdefault(
+                name,
+                {
+                    "name": name,
+                    "stage_index": raw_stage.get("stage_index", stage_index),
+                    "entered": 0,
+                    "passed": 0,
+                    "failed": 0,
+                    "threshold_failed": 0,
+                    "local_invalid": 0,
+                    "sample_count": 0,
+                    "retry_attempts": 0,
+                    "subprocess_attempts": 0,
+                    "timeout_count": 0,
+                    "elapsed_sec": 0.0,
+                    "candidate_ids": [],
+                    "failure_reasons": {},
+                    "thresholds": {
+                        "fitness": raw_stage.get("threshold"),
+                        "metric_thresholds": raw_stage.get("metric_thresholds", []),
+                        "artifact_output_checks": raw_stage.get("artifact_output_checks", []),
+                    },
+                },
+            )
+            stage["entered"] += 1
+            stage["candidate_ids"].append(program.id)
+            if raw_stage.get("passed") is True:
+                stage["passed"] += 1
+            else:
+                stage["failed"] += 1
+                reason = str(
+                    raw_stage.get("stop_reason")
+                    or raw_stage.get("error")
+                    or "stage_threshold_not_met"
+                )
+                stage["failure_reasons"][reason] = stage["failure_reasons"].get(reason, 0) + 1
+                stop_reasons[reason] = stop_reasons.get(reason, 0) + 1
+            if raw_stage.get("threshold_passed") is False:
+                stage["threshold_failed"] += 1
+            if raw_stage.get("local_valid") is False:
+                stage["local_invalid"] += 1
+            accounting = evaluation_accounting(raw_stage)
+            stage["sample_count"] += int(accounting.get("configured_stage_samples", 0))
+            stage["retry_attempts"] += int(accounting.get("retry_attempts", 0))
+            stage["subprocess_attempts"] += int(accounting.get("subprocess_attempts", 0))
+            stage["timeout_count"] += int(accounting.get("timeout_count", 0))
+            elapsed = raw_stage.get("elapsed_sec")
+            if isinstance(elapsed, (int, float)) and not isinstance(elapsed, bool):
+                stage["elapsed_sec"] += float(elapsed)
+        if isinstance(stopped_at, str):
+            stop_reasons.setdefault(f"stopped_at:{stopped_at}", 0)
+            stop_reasons[f"stopped_at:{stopped_at}"] += 1
+    ordered_stages = [
+        _finalize_cascade_stage_record(record)
+        for record in sorted(stages.values(), key=lambda item: (item["stage_index"], item["name"]))
+    ]
+    report = {
+        "schema": "libreevolve.evaluation_cascade_report.v1",
+        "source": "runtime_history_configured_stage_results",
+        "configured_candidate_count": configured_candidate_count,
+        "stage_count": len(ordered_stages),
+        "stages": ordered_stages,
+        "main_test_exposure_count": main_test_exposure_count,
+        "early_prune_count": max(0, configured_candidate_count - main_test_exposure_count),
+        "stop_reasons": dict(sorted(stop_reasons.items())),
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_cascade_efficiency": False,
+            "reason": (
+                "stage promotion and attrition counts exist, but difficulty/scale "
+                "rationale and evaluator test-set identities are not yet complete"
+            ),
+            "remaining_gap": [
+                "stage_difficulty_or_scale_labels",
+                "evaluator_test_set_hashes",
+                "main_test_denominator_policy",
+                "cost_savings_counterfactual",
+            ],
+        },
+    }
+    report["validation"] = validate_evaluation_cascade_report(report)
+    return report
+
+
+def _finalize_cascade_stage_record(record: dict) -> dict:
+    finalized = dict(record)
+    finalized["candidate_count"] = finalized.pop("entered")
+    finalized["promotion_rate"] = (
+        finalized["passed"] / finalized["candidate_count"]
+        if finalized["candidate_count"]
+        else None
+    )
+    finalized["failure_reasons"] = dict(sorted(finalized["failure_reasons"].items()))
+    finalized["candidate_ids"] = finalized["candidate_ids"][:50]
+    finalized["candidate_ids_truncated"] = finalized["candidate_count"] > len(
+        finalized["candidate_ids"]
+    )
+    finalized["elapsed_sec"] = round(finalized["elapsed_sec"], 9)
+    return finalized
+
+
+def validate_evaluation_cascade_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.evaluation_cascade_report.v1",
+            "ok": False,
+            "issues": [{"code": "invalid_shape", "message": "cascade report must be an object"}],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_candidate_count",
+        "stage_count",
+        "stages",
+        "main_test_exposure_count",
+        "early_prune_count",
+        "stop_reasons",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"cascade report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.evaluation_cascade_report.v1":
+        issues.append({"code": "invalid_schema", "message": "cascade report schema is unsupported"})
+    if report.get("source") != "runtime_history_configured_stage_results":
+        issues.append({"code": "invalid_source", "message": "cascade report source is unsupported"})
+    stages = report.get("stages")
+    if not isinstance(stages, list):
+        issues.append({"code": "invalid_stages", "message": "cascade report stages must be a list"})
+        stages = []
+    if isinstance(report.get("stage_count"), int) and not isinstance(report.get("stage_count"), bool):
+        if report["stage_count"] != len(stages):
+            issues.append({"code": "stage_count_mismatch", "message": "stage_count must match stages length"})
+    for index, stage in enumerate(stages):
+        if not isinstance(stage, dict):
+            issues.append({"code": "invalid_stage", "message": "cascade stage records must be objects"})
+            continue
+        for key in ("candidate_count", "passed", "failed"):
+            value = stage.get(key)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                issues.append({"code": "invalid_stage_count", "message": f"stage {index} {key} must be a non-negative integer"})
+        if (
+            isinstance(stage.get("candidate_count"), int)
+            and isinstance(stage.get("passed"), int)
+            and isinstance(stage.get("failed"), int)
+            and stage["candidate_count"] != stage["passed"] + stage["failed"]
+        ):
+            issues.append({"code": "stage_count_inconsistent", "message": f"stage {index} counts must balance"})
+    configured = report.get("configured_candidate_count")
+    exposure = report.get("main_test_exposure_count")
+    early = report.get("early_prune_count")
+    if all(isinstance(value, int) and not isinstance(value, bool) for value in (configured, exposure, early)):
+        if configured < 0 or exposure < 0 or early < 0 or configured != exposure + early:
+            issues.append({"code": "candidate_count_inconsistent", "message": "configured candidate counts must balance"})
+    else:
+        issues.append({"code": "invalid_candidate_counts", "message": "candidate counts must be non-negative integers"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaimed", "message": "current cascade report must not claim AlphaEvolve readiness"})
+    return {
+        "schema": "libreevolve.evaluation_cascade_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _runtime_controller_state(run_dir: Path, budget: RunBudget) -> dict:

@@ -324,6 +324,16 @@ convention. Paper-facing reports still need explicit metric-name, validity-gate,
 and direction-transform evidence before LibreEvolve run outputs can be treated
 as AlphaEvolve-comparable scored metric tables.
 
+AlphaEvolve cascade-report note: completed manifests now include
+`runtime.history.evaluation_cascade_report` with schema
+`libreevolve.evaluation_cascade_report.v1`. The report aggregates configured
+stage promotion and attrition counts, threshold failures, failure reasons,
+sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
+main-test exposure, early-prune counts, and explicit `claim_ready: false`
+limitations. Stage difficulty/test-set identities, denominator policy, and
+cost-savings evidence remain open before claiming AlphaEvolve cascade
+efficiency or hypothesis-testing parity.
+
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
 file and invokes a candidate-owned `evaluate(eval_inputs)` callable with

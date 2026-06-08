@@ -1489,7 +1489,7 @@ Primary evidence:
     rejection review fields before claiming AlphaEvolve-style grounding that
     filters incorrect base-LLM suggestions.
 
-- [ ] Add paper-facing evaluation-cascade promotion and attrition evidence.
+- [ ] Finish paper-facing evaluation-cascade promotion and attrition evidence.
   - Spec evidence: AlphaEvolve Section 2.4 describes an evaluation cascade in
     which ensembles of test cases have increasing difficulty, candidates move
     to the next stage only after sufficiently promising earlier-stage results,
@@ -1497,21 +1497,21 @@ Primary evidence:
     faulty programs before the main tests. The matrix-multiplication
     experiment on local PDF page 10 also says targets are evaluated with
     multiple random seeds using the Section 2.4 cascade.
-  - Current evidence: `CascadeEvaluator` supports configured stages, samples,
-    retries, seeds, timeouts, `min_score`, `metric_thresholds`, artifact/output
-    checks, and per-candidate `evaluation.metadata.configured_stage_results`;
-    README documents those local mechanics. Those records are candidate-local
-    validator traces, not a paper-facing run report that proves stage ordering,
-    increasing-difficulty rationale, seed/sample coverage, promotion counts,
-    early-prune attrition, main-test exposure, or final metric denominators for
-    an AlphaEvolve-style benchmark claim.
-  - Required result: add cascade-report artifacts and validators with stage
-    ids, difficulty/scale labels, evaluator/test-set hashes, seed/sample
-    counts, promotion thresholds, candidate counts entering/passing/failing
-    each stage, prune reasons, main-test denominator definitions, per-stage
-    cost/wall-clock summaries, and cross-links to candidate evaluation records
-    before claiming AlphaEvolve-style evaluation-cascade efficiency or
-    hypothesis-testing evidence.
+  - Current evidence: `runtime.history.evaluation_cascade_report` now aggregates
+    candidate-local `configured_stage_results` into a validated
+    `libreevolve.evaluation_cascade_report.v1` record. It reports configured
+    candidate count, stage count, per-stage candidate/pass/fail/threshold-fail
+    counts, failure reasons, sample/retry/subprocess/timeout counts, elapsed
+    seconds, promotion rate, bounded candidate ids, main-test exposure count,
+    early-prune count, stop reasons, and an explicit `claim_ready: false`
+    readiness record. Tests cover a two-stage run where one candidate reaches
+    the final stage and another is pruned at smoke.
+  - Required result: finish difficulty/scale labels, evaluator/test-set hashes,
+    seed/sample denominator definitions, main-test denominator policy,
+    counterfactual cost-savings evidence, and stronger cross-links from stage
+    summaries to exact candidate evaluation records before claiming
+    AlphaEvolve-style evaluation-cascade efficiency or hypothesis-testing
+    evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,

@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add Terence Tao follow-on blog source provenance and claim boundaries.
+  - Spec evidence: Terence Tao's November 5, 2025 post `Mathematical
+    exploration and discovery at scale` links arXiv `2511.02864`, the
+    AlphaEvolve tool, and the follow-on problem repository, and adds
+    commentary on experiment scale, verifier exploits, negative results,
+    parameterized generalization, and proof handoffs.
+  - Status: `libreevolve.alphaevolve_follow_on_tao_blog.v1` now emits
+    `papers/follow_on_tao_blog.json` with the canonical WordPress URL, API
+    post id/date/modified metadata, retrieval hashes, linked arXiv/repository/
+    tool URLs, claim categories, source-line spans, docs/TODO claim-surface
+    links, and the policy that blog-only claims remain secondary until backed
+    by pinned paper, repository, notebook, verifier, or proof artifacts.
+  - Remaining gap: theoretical-CS proof-element sources, Tao-blog claim
+    mapping to exact paper/repository problem ids, proof-handoff artifacts,
+    and comment-thread separation remain separate active follow-on TODOs.
+
 - [x] Add follow-on problem-repository runtime-absence provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says notebooks contain prompts, verification code, initial programs,

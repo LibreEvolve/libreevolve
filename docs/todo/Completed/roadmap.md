@@ -4,6 +4,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep Tao-blog follow-on roadmap claims scoped until source metadata
+      exists.
+  - Spec evidence: the November 5, 2025 Tao blog post links the follow-on
+    arXiv paper and problem repository and adds commentary on verifier
+    exploits, negative results, parameterized-code generalization, and proof
+    handoffs.
+  - Status: ROADMAP now documents `papers/follow_on_tao_blog.json` as the
+    committed Tao-blog source sidecar with canonical URL/date/author,
+    retrieval hashes, linked source ids, claim categories, source-line spans,
+    docs/TODO claim-surface links, and evidence gates that keep blog
+    commentary secondary to pinned paper/repository/notebook/verifier/proof
+    artifacts.
+  - Remaining gap: none for this bounded roadmap wording slice; theoretical-CS
+    proof-element gates and exact proof-handoff artifacts remain active work.
+
 - [x] Keep follow-on runtime-availability roadmap gates scoped.
   - Spec evidence: the follow-on repository README says notebooks contain
     prompts, verification code, initial programs, final evolved programs, and

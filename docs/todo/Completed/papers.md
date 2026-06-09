@@ -6,6 +6,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track Terence Tao follow-on blog source and claim boundaries.
+  - Paper/source evidence: Terence Tao's November 5, 2025 post links the
+    follow-on arXiv paper, the AlphaEvolve tool, and the problem repository,
+    describes 67 mathematics experiments, and adds commentary on verifier
+    hardening, negative-result recording, generalization, and proof handoffs.
+  - Status: `papers/follow_on_tao_blog.json` now records the Tao blog source
+    row with canonical URL, author/date/title, WordPress API metadata,
+    retrieval hashes, linked arXiv/repository/tool URLs, claim categories,
+    source-line spans, and evidence policy. The paper-manifest gate requires
+    and validates this sidecar at repo root.
+  - Remaining gap: none for this bounded blog-source slice; theoretical-CS
+    source rows, exact blog-to-paper/repository mappings, proof artifacts, and
+    comment-thread claim separation remain separate paper work.
+
 - [x] Track follow-on problem-repository runtime-absence evidence.
   - Paper/source evidence: the follow-on problem repository README says
     notebooks contain prompts, verification code, initial programs, final

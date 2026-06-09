@@ -3355,30 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Track Terence Tao follow-on blog source and claim boundaries.
-  - Paper/source evidence: Terence Tao's November 5, 2025 post
-    `Mathematical exploration and discovery at scale` links the arXiv paper,
-    the AlphaEvolve tool, and the follow-on problem repository, describes 67
-    mathematics experiments with both positive and negative outcomes, and adds
-    commentary on scale, adaptability, interpretability, verifier exploits,
-    exact/interval-arithmetic verifier hardening, one-sided open-conjecture
-    bounds, systematic negative-result recording, parameterized-code
-    generalization, and proof handoffs involving human proof work, Deep Think,
-    AlphaProof, or later papers.
-  - Current gap: the paper index and TODOs track the original AlphaEvolve PDF,
-    the follow-on arXiv paper, the DeepMind problem repository, official
-    DeepMind/Google articles, and source rights. They do not preserve this
-    linked Tao blog as a separate source surface, nor classify which blog-only
-    claims are commentary, anecdotal lessons, future work, or evidence that
-    must be backed by pinned repository/notebook/proof artifacts before being
-    used in README or roadmap claims.
-  - Required result: add source rows for the Tao blog with canonical URL,
-    author, date, title, retrieval timestamp/hash, linked arXiv/repository
-    references, source spans, claim category, paper/repository cross-links,
-    and docs checks that keep blog commentary secondary to paper/repository
-    evidence for verifier-hardening, negative-result, generalization, and
-    proof-handoff claims.
-
 - [ ] Track AlphaEvolve theoretical-CS proof-element source evidence.
   - Paper evidence: Google Research's September 30, 2025 article
     `AI as a research partner: Advancing theoretical computer science with

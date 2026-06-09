@@ -3601,6 +3601,14 @@ repository does not contain the code to run AlphaEvolve. This sidecar proves
 the notebooks are source artifacts around experiments already run, not runnable
 AlphaEvolve implementation artifacts; full per-problem notebook mapping,
 SHA-256 notebook inventory, and cell-level artifact verification remain open.
+`papers/follow_on_tao_blog.json` records Terence Tao's November 5, 2025
+follow-on blog post as secondary source commentary for arXiv `2511.02864` and
+the pinned problem repository. It preserves the canonical WordPress URL, API
+post id/date/modified metadata, retrieval hashes, linked arXiv/repository/tool
+URLs, claim categories for commentary, experiment summary, verifier-design
+lessons, negative results, proof handoffs, and future work, and the policy that
+blog-only claims need paper, repository, notebook, verifier, or proof-artifact
+backing before they can support implementation-parity claims.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

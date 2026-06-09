@@ -1344,6 +1344,13 @@ Implemented:
   later problem repository, not evidence that the notebooks contain a runnable
   AlphaEvolve implementation; per-problem notebook mapping, SHA-256 notebook
   inventory, and cell-level artifact checks remain open.
+- `papers/follow_on_tao_blog.json`: Terence Tao follow-on blog source
+  sidecar, not implementation-parity evidence. It records the November 5,
+  2025 WordPress post URL, API post
+  metadata, retrieval hashes, linked arXiv/repository/tool URLs, claim
+  categories, source-line spans, and the evidence policy that blog-only
+  commentary remains secondary until backed by pinned paper, repository,
+  notebook, verifier, or proof artifacts.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

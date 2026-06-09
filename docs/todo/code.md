@@ -2528,33 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add Terence Tao follow-on blog source provenance and claim boundaries.
-  - Spec evidence: Terence Tao's November 5, 2025 post
-    `Mathematical exploration and discovery at scale` says the arXiv paper is
-    a longer report on experiments done with Google DeepMind's AlphaEvolve
-    tool, links the follow-on repository with prompts and tool outputs, and
-    summarizes 67 mathematics problems with positive and negative outcomes.
-    It adds source-specific observations not in the local manifests: scale,
-    adaptability, interpretability, verifier-exploit behavior, the need for
-    non-exploitable verifiers using exact or interval arithmetic and
-    conservative bounds, one-sided limitations for open conjectures, systematic
-    negative-result recording, parameterized-code generalization, and proof
-    handoffs involving human proof work, Deep Think, AlphaProof, or later
-    papers.
-  - Current evidence: follow-on TODOs track arXiv `2511.02864`, the DeepMind
-    problem repository, notebook coverage, rights, and runtime absence. They do
-    not require a separate source row for Tao's blog post, nor a claim-boundary
-    policy distinguishing blog commentary and anecdotal lessons from the
-    audited paper/repository artifacts.
-  - Required result: add source metadata and validators for the Tao blog:
-    canonical URL, author, post date, title, retrieval/hash data, linked arXiv
-    and repository ids, claim categories (`commentary`, `experiment_summary`,
-    `verifier_design_lesson`, `negative_result`, `proof_handoff`,
-    `future_work`), source spans, paper/repository cross-links, and
-    README/ROADMAP wording that treats blog-only claims as secondary evidence
-    unless backed by pinned paper, repository, notebook, verifier, or proof
-    artifacts.
-
 - [ ] Add AlphaEvolve theoretical-CS proof-element source tracking.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve
     theoretical-CS article and arXiv `2509.18057`, `Reinforced Generation of

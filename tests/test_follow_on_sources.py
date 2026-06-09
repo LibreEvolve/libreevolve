@@ -9,6 +9,8 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_runtime_absence_manifest_record,
     alphaevolve_follow_on_runtime_absence_record,
     alphaevolve_follow_on_source_manifest_record,
+    alphaevolve_follow_on_tao_blog_manifest_record,
+    alphaevolve_follow_on_tao_blog_record,
     render_alphaevolve_follow_on_math_source_summary,
     validate_alphaevolve_follow_on_math_source,
     validate_alphaevolve_follow_on_repository_rights,
@@ -16,6 +18,8 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     validate_alphaevolve_follow_on_runtime_absence,
     validate_alphaevolve_follow_on_runtime_absence_manifest,
     validate_alphaevolve_follow_on_source_manifest,
+    validate_alphaevolve_follow_on_tao_blog,
+    validate_alphaevolve_follow_on_tao_blog_manifest,
 )
 from libreevolve.tools.paper_manifest import validate_paper_manifest
 
@@ -263,6 +267,95 @@ def test_validate_alphaevolve_follow_on_runtime_absence_manifest_rejects_surface
     assert "invalid_runtime_claim_policy_alphaevolve_runtime_available" in codes
     assert "invalid_runtime_claim_policy_publication_ready_runtime_claim" in codes
     assert "invalid_runtime_claim_policy_scope" in codes
+
+
+def test_validate_alphaevolve_follow_on_tao_blog_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_tao_blog_record()
+
+    validation = validate_alphaevolve_follow_on_tao_blog(recordset)
+
+    assert validation.ok is True
+    assert validation.source_count == 1
+    assert validation.claim_category_count == 6
+    assert validation.linked_repository_pinned is True
+    assert validation.commentary_secondary is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_tao_blog_manifest_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_tao_blog_manifest_record()
+
+    validation = validate_alphaevolve_follow_on_tao_blog_manifest(recordset)
+
+    assert validation.ok is True
+    assert validation.source_count == 1
+    assert validation.claim_category_count == 6
+    assert validation.linked_repository_pinned is True
+    assert validation.commentary_secondary is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_tao_blog_loads_json_file(tmp_path):
+    path = tmp_path / "follow_on_tao_blog.json"
+    path.write_text(
+        json.dumps(alphaevolve_follow_on_tao_blog_manifest_record()),
+        encoding="utf-8",
+    )
+
+    validation = validate_alphaevolve_follow_on_tao_blog_manifest(path)
+
+    assert validation.ok is True
+
+
+def test_validate_alphaevolve_follow_on_tao_blog_rejects_source_drift():
+    recordset = copy.deepcopy(alphaevolve_follow_on_tao_blog_record())
+    recordset["canonical_url"] = "https://example.com"
+    recordset["post"]["post_date"] = "2025-11-06T00:00:00+00:00"
+    recordset["retrieval"]["api_sha256"] = "0" * 64
+    recordset["linked_sources"]["problem_repository_commit"] = "0" * 40
+    recordset["claim_spans"][1]["category"] = "runtime_spec"
+    recordset["claim_spans"][2]["requires_backing_artifact"] = False
+    recordset["claim_boundary"]["blog_commentary_secondary"] = False
+
+    validation = validate_alphaevolve_follow_on_tao_blog(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.linked_repository_pinned is False
+    assert validation.commentary_secondary is False
+    assert "invalid_tao_blog_canonical_url" in codes
+    assert "invalid_tao_blog_post_post_date" in codes
+    assert "invalid_tao_blog_retrieval_api_sha256" in codes
+    assert "invalid_tao_blog_linked_problem_repository_commit" in codes
+    assert "invalid_tao_blog_claim_category" in codes
+    assert "tao_blog_claim_backing_artifact_missing" in codes
+    assert "invalid_tao_blog_claim_boundary_blog_commentary_secondary" in codes
+
+
+def test_validate_alphaevolve_follow_on_tao_blog_manifest_rejects_surface_and_policy_drift():
+    recordset = alphaevolve_follow_on_tao_blog_manifest_record()
+    source = recordset["sources"][0]
+    source["manifest_row_id"] = "2506.13131"
+    source["follow_on_source_manifest"] = "papers/companion_sources.json"
+    source["tao_blog_source_id"] = "other"
+    source["claim_artifact_links"]["tao_blog_used_by"] = ["README.md"]
+    source["claim_artifact_links"]["policy"] = "blog_is_primary_spec"
+    source["evidence_policy"]["publication_ready_without_backing_artifacts"] = True
+    source["evidence_policy"]["comment_thread_included"] = True
+    source["evidence_policy"]["scope"] = "original AlphaEvolve specification"
+
+    validation = validate_alphaevolve_follow_on_tao_blog_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_tao_blog_manifest_manifest_row_id" in codes
+    assert "invalid_tao_blog_manifest_follow_on_source_manifest" in codes
+    assert "invalid_tao_blog_manifest_tao_blog_source_id" in codes
+    assert "tao_blog_claim_surface_mismatch" in codes
+    assert "invalid_tao_blog_claim_policy" in codes
+    assert "invalid_tao_blog_evidence_policy_publication_ready_without_backing_artifacts" in codes
+    assert "invalid_tao_blog_evidence_policy_comment_thread_included" in codes
+    assert "invalid_tao_blog_evidence_policy_scope" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_cache_overclaims():

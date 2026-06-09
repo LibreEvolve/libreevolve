@@ -2463,27 +2463,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classification, and snapshot-scoped wording for any 67-versus-68 source
     mismatch.
 
-- [ ] Keep Tao-blog follow-on roadmap claims scoped until source metadata
-      exists.
-  - Spec evidence: Terence Tao's November 5, 2025 post
-    `Mathematical exploration and discovery at scale` links the follow-on
-    arXiv paper and problem repository, describes 67 mathematics experiments,
-    and adds commentary about scale, adaptability, interpretability,
-    verifier-exploit behavior, exact/interval-arithmetic verifier hardening,
-    one-sided open-conjecture bounds, negative-result recording,
-    parameterized-code generalization, and proof handoffs involving humans,
-    Deep Think, AlphaProof, or later papers.
-  - Current evidence: roadmap TODOs track follow-on paper/repository evidence,
-    repository coverage, source-use terms, and runtime absence, but they do
-    not require a separate source row for Tao's blog or a policy that keeps
-    blog-only lessons secondary to paper, repository, notebook, verifier, and
-    proof artifacts.
-  - Required result: when Tao-blog source metadata lands, update ROADMAP,
-    README, papers index, and code/paper TODOs with canonical URL/date/author,
-    retrieval/hash metadata, linked arXiv/repository ids, claim categories,
-    and evidence gates so blog commentary does not become unqualified
-    AlphaEvolve specification or implementation-parity evidence.
-
 - [ ] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README Tao-blog follow-on wording scoped until source metadata
+      exists.
+  - Spec evidence: the November 5, 2025 Tao blog post links the follow-on
+    arXiv paper and problem repository and adds commentary on AlphaEvolve
+    experiment lessons and proof handoffs.
+  - Status: README now documents `papers/follow_on_tao_blog.json` as secondary
+    source commentary with URL/date/metadata, claim categories, retrieval
+    hashes, linked arXiv/repository/tool URLs, and the boundary that blog-only
+    claims need backing artifacts before supporting implementation-parity
+    claims.
+  - Remaining gap: none for this bounded README wording slice; theoretical-CS
+    wording and exact proof-handoff artifact wording remain active TODOs.
+
 - [x] Keep README follow-on runtime-availability wording scoped.
   - Spec evidence: the follow-on repository README says notebooks contain
     prompts, verification code, initial programs, final evolved programs, and

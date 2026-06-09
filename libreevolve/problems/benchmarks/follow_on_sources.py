@@ -23,6 +23,12 @@ ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_SCHEMA = (
 ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_follow_on_runtime_absence_manifest.v1"
 )
+ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_tao_blog.v1"
+)
+ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_tao_blog_manifest.v1"
+)
 EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE = "papers/follow_on_sources.json"
 EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE = (
     "papers/follow_on_repository_rights.json"
@@ -30,6 +36,7 @@ EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE = (
 EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE = (
     "papers/follow_on_runtime_absence.json"
 )
+EXPECTED_FOLLOW_ON_TAO_BLOG_MANIFEST_FILE = "papers/follow_on_tao_blog.json"
 EXPECTED_ORIGINAL_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_FOLLOW_ON_ARXIV_ID = "2511.02864"
 EXPECTED_FOLLOW_ON_VERSION = 3
@@ -149,6 +156,40 @@ EXPECTED_FOLLOW_ON_NOTEBOOKS = (
     ("experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb", 309704, "fff09e075abf6e4391248dd80dc1cb0b616b4926"),
     ("experiments/thomson_problem/thomson_problem.ipynb", 86472, "95871bcbb7f5fdf43749d3d17cf61d37fc476081"),
 )
+EXPECTED_TAO_BLOG_URL = (
+    "https://terrytao.wordpress.com/2025/11/05/"
+    "mathematical-exploration-and-discovery-at-scale/"
+)
+EXPECTED_TAO_BLOG_API_URL = (
+    "https://public-api.wordpress.com/rest/v1.1/sites/"
+    "terrytao.wordpress.com/posts/slug:mathematical-exploration-and-discovery-at-scale"
+)
+EXPECTED_TAO_BLOG_POST_ID = 15811
+EXPECTED_TAO_BLOG_TITLE = "Mathematical exploration and discovery at scale"
+EXPECTED_TAO_BLOG_AUTHOR = "Terence Tao"
+EXPECTED_TAO_BLOG_POST_DATE = "2025-11-05T22:36:56+00:00"
+EXPECTED_TAO_BLOG_MODIFIED_DATE = "2025-11-06T17:14:40+00:00"
+EXPECTED_TAO_BLOG_API_BYTES = 34570
+EXPECTED_TAO_BLOG_API_SHA256 = "5b351f99976faa5061aaa52732d5d46bc1d09ee5f8ad20d2fac256a5826a3231"
+EXPECTED_TAO_BLOG_HTML_BYTES = 378198
+EXPECTED_TAO_BLOG_HTML_SHA256 = "929af5092a099abafef443b2d3dd1bf9c5f4a7df038be649dfb7b2174847c4bc"
+EXPECTED_TAO_BLOG_CLAIM_CATEGORIES = (
+    "commentary",
+    "experiment_summary",
+    "verifier_design_lesson",
+    "negative_result",
+    "proof_handoff",
+    "future_work",
+)
+EXPECTED_TAO_BLOG_SURFACES = {
+    "README.md",
+    "ROADMAP.md",
+    "papers/README.md",
+    "docs/todo/code.md",
+    "docs/todo/papers.md",
+    "docs/todo/readme.md",
+    "docs/todo/roadmap.md",
+}
 
 
 @dataclass(frozen=True)
@@ -183,6 +224,16 @@ class AlphaEvolveFollowOnRuntimeAbsenceValidation:
     notebook_count: int
     alphaevolve_runtime_available: bool
     verifier_code_available: bool
+    issues: list[AlphaEvolveFollowOnMathSourceIssue]
+
+
+@dataclass(frozen=True)
+class AlphaEvolveFollowOnTaoBlogValidation:
+    ok: bool
+    source_count: int
+    claim_category_count: int
+    linked_repository_pinned: bool
+    commentary_secondary: bool
     issues: list[AlphaEvolveFollowOnMathSourceIssue]
 
 
@@ -483,6 +534,152 @@ def alphaevolve_follow_on_runtime_absence_manifest_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_follow_on_tao_blog_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_SCHEMA,
+        "source_family": "alphaevolve_follow_on_tao_blog_commentary",
+        "source_paper_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "canonical_url": EXPECTED_TAO_BLOG_URL,
+        "api_url": EXPECTED_TAO_BLOG_API_URL,
+        "post": {
+            "post_id": EXPECTED_TAO_BLOG_POST_ID,
+            "title": EXPECTED_TAO_BLOG_TITLE,
+            "author": EXPECTED_TAO_BLOG_AUTHOR,
+            "post_date": EXPECTED_TAO_BLOG_POST_DATE,
+            "modified_date": EXPECTED_TAO_BLOG_MODIFIED_DATE,
+            "site_title": "What's new",
+        },
+        "retrieval": {
+            "retrieved_on": "2026-06-09",
+            "api_bytes": EXPECTED_TAO_BLOG_API_BYTES,
+            "api_sha256": EXPECTED_TAO_BLOG_API_SHA256,
+            "html_bytes": EXPECTED_TAO_BLOG_HTML_BYTES,
+            "html_sha256": EXPECTED_TAO_BLOG_HTML_SHA256,
+            "hash_algorithm": "sha256",
+            "api_surface_preferred": True,
+            "html_surface_expected_volatile": True,
+        },
+        "linked_sources": {
+            "follow_on_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+            "follow_on_arxiv_url": f"https://arxiv.org/abs/{EXPECTED_FOLLOW_ON_ARXIV_ID}",
+            "problem_repository_url": EXPECTED_REPOSITORY_URL,
+            "problem_repository_commit": EXPECTED_REPOSITORY_COMMIT,
+            "alphaevolve_tool_url": (
+                "https://deepmind.google/discover/blog/"
+                "alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+            ),
+            "original_whitepaper_url": (
+                "https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/"
+                "alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+                "AlphaEvolve.pdf"
+            ),
+        },
+        "claim_spans": [
+            {
+                "category": "commentary",
+                "source_lines": "20-26",
+                "summary": (
+                    "Frames the post as Tao's longer-report commentary on AlphaEvolve "
+                    "experiments and describes LLM-guided code mutation."
+                ),
+                "requires_backing_artifact": False,
+            },
+            {
+                "category": "experiment_summary",
+                "source_lines": "27-31",
+                "summary": (
+                    "Summarizes 67 mathematics problems and positive/negative outcomes "
+                    "with scale and adaptability observations."
+                ),
+                "requires_backing_artifact": True,
+            },
+            {
+                "category": "verifier_design_lesson",
+                "source_lines": "43-46",
+                "summary": (
+                    "Describes verifier exploits and the need for exact or interval "
+                    "arithmetic with conservative bounds."
+                ),
+                "requires_backing_artifact": True,
+            },
+            {
+                "category": "negative_result",
+                "source_lines": "48-51",
+                "summary": (
+                    "Describes one-sided open-conjecture limits and the value of "
+                    "systematically recording negative search results."
+                ),
+                "requires_backing_artifact": True,
+            },
+            {
+                "category": "proof_handoff",
+                "source_lines": "42, 52-82",
+                "summary": (
+                    "Separates discovered constructions from later human proof work, "
+                    "Deep Think, AlphaProof, or later-paper handoffs."
+                ),
+                "requires_backing_artifact": True,
+            },
+            {
+                "category": "future_work",
+                "source_lines": "50-51, 712-713",
+                "summary": (
+                    "Presents future-use and variationalization ideas as commentary, "
+                    "not implemented LibreEvolve capability."
+                ),
+                "requires_backing_artifact": True,
+            },
+        ],
+        "claim_boundary": {
+            "blog_commentary_secondary": True,
+            "blog_only_claims_require_paper_repository_or_proof_artifact": True,
+            "not_original_alphaevolve_spec": True,
+            "not_runtime_implementation_evidence": True,
+            "not_repository_snapshot": True,
+            "not_proof_artifact": True,
+            "not_independent_verification": True,
+        },
+        "remaining_work": [
+            "map_blog_claims_to_paper_sections",
+            "map_blog_claims_to_repository_problem_ids",
+            "attach_proof_artifacts_for_handoff_claims",
+            "separate_comment_thread_claims_from_post_claims",
+        ],
+    }
+
+
+def alphaevolve_follow_on_tao_blog_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_MANIFEST_SCHEMA,
+        "tao_blog_source_count": 1,
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+                "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+                "tao_blog_source_id": "terence_tao_2025_11_05_mathematical_exploration",
+                "source_record": alphaevolve_follow_on_tao_blog_record(),
+                "claim_artifact_links": {
+                    "tao_blog_used_by": sorted(EXPECTED_TAO_BLOG_SURFACES),
+                    "policy": (
+                        "tao_blog_claims_are_secondary_until_backed_by_"
+                        "paper_repository_notebook_verifier_or_proof_artifacts"
+                    ),
+                },
+                "evidence_policy": {
+                    "commentary_secondary": True,
+                    "publication_ready_without_backing_artifacts": False,
+                    "comment_thread_included": False,
+                    "scope": (
+                        "Terence Tao follow-on blog source metadata and claim "
+                        "boundaries, not original AlphaEvolve specification"
+                    ),
+                },
+            }
+        ],
+    }
+
+
 def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
     return {
         "schema": ALPHAEVOLVE_FOLLOW_ON_SOURCE_MANIFEST_SCHEMA,
@@ -740,6 +937,79 @@ def validate_alphaevolve_follow_on_runtime_absence_manifest(
     )
 
 
+def validate_alphaevolve_follow_on_tao_blog(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnTaoBlogValidation:
+    data, read_issues = _load_tao_blog_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnTaoBlogValidation(False, 0, 0, False, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_SCHEMA:
+        issues.append(_issue("invalid_tao_blog_schema", "unsupported follow-on Tao blog schema"))
+    if data.get("source_family") != "alphaevolve_follow_on_tao_blog_commentary":
+        issues.append(_issue("invalid_tao_blog_source_family", "source_family must identify Tao follow-on blog commentary"))
+    if data.get("source_paper_id") != EXPECTED_FOLLOW_ON_ARXIV_ID:
+        issues.append(_issue("invalid_tao_blog_source_paper_id", "source_paper_id must be 2511.02864"))
+    if data.get("source_manifest") != EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE:
+        issues.append(_issue("invalid_tao_blog_source_manifest", "source_manifest must point to papers/follow_on_sources.json"))
+    if data.get("canonical_url") != EXPECTED_TAO_BLOG_URL:
+        issues.append(_issue("invalid_tao_blog_canonical_url", "canonical_url must match Tao's blog post URL"))
+    if data.get("api_url") != EXPECTED_TAO_BLOG_API_URL:
+        issues.append(_issue("invalid_tao_blog_api_url", "api_url must match the pinned WordPress post API URL"))
+    _validate_tao_blog_post(data.get("post"), issues)
+    _validate_tao_blog_retrieval(data.get("retrieval"), issues)
+    linked_repository_pinned = _validate_tao_blog_linked_sources(data.get("linked_sources"), issues)
+    claim_category_count = _validate_tao_blog_claim_spans(data.get("claim_spans"), issues)
+    commentary_secondary = _validate_tao_blog_claim_boundary(data.get("claim_boundary"), issues)
+    _validate_tao_blog_remaining_work(data.get("remaining_work"), issues)
+    return AlphaEvolveFollowOnTaoBlogValidation(
+        ok=not issues,
+        source_count=1,
+        claim_category_count=claim_category_count,
+        linked_repository_pinned=linked_repository_pinned,
+        commentary_secondary=commentary_secondary,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_follow_on_tao_blog_manifest(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnTaoBlogValidation:
+    data, read_issues = _load_tao_blog_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnTaoBlogValidation(False, 0, 0, False, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_TAO_BLOG_MANIFEST_SCHEMA:
+        issues.append(_issue("invalid_tao_blog_manifest_schema", "unsupported follow-on Tao blog manifest schema"))
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(_issue("invalid_tao_blog_manifest_sources", "Tao blog manifest sources must be a list"))
+        sources = []
+    source_count = len(sources)
+    if data.get("tao_blog_source_count") != source_count:
+        issues.append(_issue("invalid_tao_blog_source_count", "tao_blog_source_count must equal the number of Tao blog source records"))
+    if source_count != 1:
+        issues.append(_issue("invalid_tao_blog_manifest_source_count", "Tao blog manifest must contain the follow-on blog source row"))
+    claim_category_count = 0
+    linked_repository_pinned = False
+    commentary_secondary = False
+    for index, source in enumerate(sources):
+        report = _validate_tao_blog_manifest_source(source, issues, index)
+        claim_category_count += report.claim_category_count
+        linked_repository_pinned = linked_repository_pinned or report.linked_repository_pinned
+        commentary_secondary = commentary_secondary or report.commentary_secondary
+    return AlphaEvolveFollowOnTaoBlogValidation(
+        ok=not issues,
+        source_count=source_count,
+        claim_category_count=claim_category_count,
+        linked_repository_pinned=linked_repository_pinned,
+        commentary_secondary=commentary_secondary,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_follow_on_math_source_summary(recordset: object | str | Path | None = None) -> str:
     validation = validate_alphaevolve_follow_on_math_source(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -803,6 +1073,22 @@ def _load_runtime_absence_manifest_recordset(
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
     if recordset is None:
         return alphaevolve_follow_on_runtime_absence_manifest_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_tao_blog_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_tao_blog_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_tao_blog_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_tao_blog_manifest_record(), []
     return _load_recordset(recordset)
 
 
@@ -1504,6 +1790,212 @@ def _validate_runtime_claim_policy(
     scope = value.get("scope")
     if not isinstance(scope, str) or "runtime absence" not in scope or "not full notebook inventory" not in scope:
         issues.append(_issue("invalid_runtime_claim_policy_scope", "runtime_claim_policy.scope must distinguish runtime absence from full notebook inventory", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_tao_blog_post(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_post", "post must be an object", EXPECTED_TAO_BLOG_URL))
+        return
+    expected = {
+        "post_id": EXPECTED_TAO_BLOG_POST_ID,
+        "title": EXPECTED_TAO_BLOG_TITLE,
+        "author": EXPECTED_TAO_BLOG_AUTHOR,
+        "post_date": EXPECTED_TAO_BLOG_POST_DATE,
+        "modified_date": EXPECTED_TAO_BLOG_MODIFIED_DATE,
+        "site_title": "What's new",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_post_{field}", f"post.{field} must match the pinned WordPress API metadata", EXPECTED_TAO_BLOG_URL))
+
+
+def _validate_tao_blog_retrieval(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_retrieval", "retrieval must be an object", EXPECTED_TAO_BLOG_URL))
+        return
+    expected = {
+        "retrieved_on": "2026-06-09",
+        "api_bytes": EXPECTED_TAO_BLOG_API_BYTES,
+        "api_sha256": EXPECTED_TAO_BLOG_API_SHA256,
+        "html_bytes": EXPECTED_TAO_BLOG_HTML_BYTES,
+        "html_sha256": EXPECTED_TAO_BLOG_HTML_SHA256,
+        "hash_algorithm": "sha256",
+        "api_surface_preferred": True,
+        "html_surface_expected_volatile": True,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_retrieval_{field}", f"retrieval.{field} must match the pinned Tao blog retrieval metadata", EXPECTED_TAO_BLOG_URL))
+    for field in ("api_sha256", "html_sha256"):
+        digest = value.get(field)
+        if not isinstance(digest, str) or _SHA256_RE.fullmatch(digest) is None:
+            issues.append(_issue(f"invalid_tao_blog_retrieval_{field}_format", f"retrieval.{field} must be a SHA-256 digest", EXPECTED_TAO_BLOG_URL))
+
+
+def _validate_tao_blog_linked_sources(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> bool:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_linked_sources", "linked_sources must be an object", EXPECTED_TAO_BLOG_URL))
+        return False
+    expected = {
+        "follow_on_arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "follow_on_arxiv_url": f"https://arxiv.org/abs/{EXPECTED_FOLLOW_ON_ARXIV_ID}",
+        "problem_repository_url": EXPECTED_REPOSITORY_URL,
+        "problem_repository_commit": EXPECTED_REPOSITORY_COMMIT,
+        "alphaevolve_tool_url": (
+            "https://deepmind.google/discover/blog/"
+            "alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+        ),
+        "original_whitepaper_url": (
+            "https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/"
+            "alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+            "AlphaEvolve.pdf"
+        ),
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_linked_{field}", f"linked_sources.{field} must preserve Tao blog cross-source links", EXPECTED_TAO_BLOG_URL))
+    commit = value.get("problem_repository_commit")
+    if not isinstance(commit, str) or _COMMIT_RE.fullmatch(commit) is None:
+        issues.append(_issue("invalid_tao_blog_repository_commit", "problem_repository_commit must be a 40-character commit hash", EXPECTED_TAO_BLOG_URL))
+    return value.get("problem_repository_commit") == EXPECTED_REPOSITORY_COMMIT
+
+
+def _validate_tao_blog_claim_spans(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> int:
+    if not isinstance(value, list):
+        issues.append(_issue("invalid_tao_blog_claim_spans", "claim_spans must be a list", EXPECTED_TAO_BLOG_URL))
+        return 0
+    categories = []
+    for claim in value:
+        if not isinstance(claim, dict):
+            issues.append(_issue("invalid_tao_blog_claim_span", "claim span entries must be objects", EXPECTED_TAO_BLOG_URL))
+            continue
+        category = claim.get("category")
+        categories.append(category)
+        if category not in EXPECTED_TAO_BLOG_CLAIM_CATEGORIES:
+            issues.append(_issue("invalid_tao_blog_claim_category", "claim category must match the Tao blog category taxonomy", EXPECTED_TAO_BLOG_URL))
+        if not isinstance(claim.get("source_lines"), str) or not claim["source_lines"]:
+            issues.append(_issue("invalid_tao_blog_claim_source_lines", "claim spans must preserve source line references", EXPECTED_TAO_BLOG_URL))
+        summary = claim.get("summary")
+        if not isinstance(summary, str) or len(summary) < 40:
+            issues.append(_issue("invalid_tao_blog_claim_summary", "claim spans must include bounded paraphrased summaries", EXPECTED_TAO_BLOG_URL))
+        if claim.get("requires_backing_artifact") is not True and category != "commentary":
+            issues.append(_issue("tao_blog_claim_backing_artifact_missing", "non-commentary Tao blog claims must require backing artifacts", EXPECTED_TAO_BLOG_URL))
+    if tuple(categories) != EXPECTED_TAO_BLOG_CLAIM_CATEGORIES:
+        issues.append(_issue("tao_blog_claim_category_mismatch", "claim_spans must preserve commentary, experiment, verifier, negative-result, proof-handoff, and future-work categories", EXPECTED_TAO_BLOG_URL))
+    return len([category for category in categories if isinstance(category, str)])
+
+
+def _validate_tao_blog_claim_boundary(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> bool:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_claim_boundary", "claim_boundary must be an object", EXPECTED_TAO_BLOG_URL))
+        return False
+    expected = {
+        "blog_commentary_secondary": True,
+        "blog_only_claims_require_paper_repository_or_proof_artifact": True,
+        "not_original_alphaevolve_spec": True,
+        "not_runtime_implementation_evidence": True,
+        "not_repository_snapshot": True,
+        "not_proof_artifact": True,
+        "not_independent_verification": True,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_claim_boundary_{field}", f"claim_boundary.{field} must preserve Tao blog source limits", EXPECTED_TAO_BLOG_URL))
+    return value.get("blog_commentary_secondary") is True
+
+
+def _validate_tao_blog_remaining_work(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    expected = {
+        "map_blog_claims_to_paper_sections",
+        "map_blog_claims_to_repository_problem_ids",
+        "attach_proof_artifacts_for_handoff_claims",
+        "separate_comment_thread_claims_from_post_claims",
+    }
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        issues.append(_issue("invalid_tao_blog_remaining_work", "remaining_work must list unsatisfied Tao blog follow-ups", EXPECTED_TAO_BLOG_URL))
+        return
+    if set(value) != expected:
+        issues.append(_issue("tao_blog_remaining_work_mismatch", "remaining_work must preserve blog-to-paper/repository/proof mapping follow-ups", EXPECTED_TAO_BLOG_URL))
+
+
+def _validate_tao_blog_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+    index: int,
+) -> AlphaEvolveFollowOnTaoBlogValidation:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_manifest_source", f"Tao blog manifest source {index} must be an object", EXPECTED_TAO_BLOG_URL))
+        return AlphaEvolveFollowOnTaoBlogValidation(False, 0, 0, False, False, [])
+    expected = {
+        "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "tao_blog_source_id": "terence_tao_2025_11_05_mathematical_exploration",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_manifest_{field}", f"{field} must identify the Tao follow-on blog source row", EXPECTED_TAO_BLOG_URL))
+    report = validate_alphaevolve_follow_on_tao_blog(value.get("source_record"))
+    issues.extend(report.issues)
+    _validate_tao_blog_claim_artifact_links(value.get("claim_artifact_links"), issues)
+    _validate_tao_blog_evidence_policy(value.get("evidence_policy"), issues)
+    return report
+
+
+def _validate_tao_blog_claim_artifact_links(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_claim_artifact_links", "claim_artifact_links must be an object", EXPECTED_TAO_BLOG_URL))
+        return
+    surfaces = value.get("tao_blog_used_by")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(_issue("invalid_tao_blog_claim_surfaces", "tao_blog_used_by must list docs, papers, and active TODO surfaces", EXPECTED_TAO_BLOG_URL))
+    elif set(surfaces) != EXPECTED_TAO_BLOG_SURFACES:
+        issues.append(_issue("tao_blog_claim_surface_mismatch", "tao_blog_used_by must cover docs, papers, and active TODO evidence", EXPECTED_TAO_BLOG_URL))
+    if value.get("policy") != (
+        "tao_blog_claims_are_secondary_until_backed_by_"
+        "paper_repository_notebook_verifier_or_proof_artifacts"
+    ):
+        issues.append(_issue("invalid_tao_blog_claim_policy", "claim policy must keep Tao blog claims secondary until backed by artifacts", EXPECTED_TAO_BLOG_URL))
+
+
+def _validate_tao_blog_evidence_policy(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_tao_blog_evidence_policy", "evidence_policy must be an object", EXPECTED_TAO_BLOG_URL))
+        return
+    expected = {
+        "commentary_secondary": True,
+        "publication_ready_without_backing_artifacts": False,
+        "comment_thread_included": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_tao_blog_evidence_policy_{field}", f"evidence_policy.{field} must preserve Tao blog evidence boundaries", EXPECTED_TAO_BLOG_URL))
+    scope = value.get("scope")
+    if not isinstance(scope, str) or "not original AlphaEvolve specification" not in scope:
+        issues.append(_issue("invalid_tao_blog_evidence_policy_scope", "evidence_policy.scope must separate Tao blog metadata from the original AlphaEvolve specification", EXPECTED_TAO_BLOG_URL))
 
 
 def _issue(code: str, message: str, source_id: str | None = None) -> AlphaEvolveFollowOnMathSourceIssue:

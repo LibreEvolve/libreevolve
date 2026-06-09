@@ -646,6 +646,13 @@ is not yet an AlphaEvolve reproduction.
   completed experiments, not runnable AlphaEvolve implementation artifacts;
   per-problem notebook mapping, SHA-256 notebook inventory, and cell-level
   artifact verification remain open.
+- Keep Tao follow-on blog claims secondary to pinned artifacts:
+  `papers/follow_on_tao_blog.json` now records the canonical WordPress URL,
+  post id/date/modified metadata, retrieval hashes, linked arXiv/repository/
+  tool URLs, claim categories, source-line spans, docs/TODO claim-surface
+  links, and the policy that blog commentary does not become unqualified
+  AlphaEvolve specification or implementation-parity evidence without backing
+  paper, repository, notebook, verifier, or proof artifacts.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

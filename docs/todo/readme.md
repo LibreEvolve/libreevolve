@@ -1628,27 +1628,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     pages as snapshot diagnostics, and avoid treating every numbered page as a
     complete problem/notebook/paper-linked source artifact until reconciled.
 
-- [ ] Keep README Tao-blog follow-on wording scoped until source metadata
-      exists.
-  - Spec evidence: Terence Tao's November 5, 2025 post
-    `Mathematical exploration and discovery at scale` links the follow-on
-    arXiv paper and problem repository, describes 67 mathematics experiments,
-    and adds commentary about AlphaEvolve's scale, adaptability,
-    interpretability, verifier exploits, exact/interval-arithmetic verifier
-    hardening, negative-result recording, parameterized-code generalization,
-    and proof handoffs involving humans, Deep Think, AlphaProof, or later
-    papers.
-  - Current evidence: README TODOs cover the follow-on arXiv paper, problem
-    repository coverage, rights, attribution, and runtime absence. README does
-    not require a source row or claim classification for Tao's blog, so it
-    could overstate blog commentary as paper-verified evidence or omit the
-    source boundary entirely.
-  - Required result: after Tao-blog source metadata lands, update README so
-    any blog-derived follow-on claims name the URL/date/author, distinguish
-    commentary from paper/repository-backed evidence, and keep verifier
-    hardening, negative-result, parameterized-generalization, and proof-handoff
-    claims scoped until supported by pinned artifacts.
-
 - [ ] Keep README theoretical-CS AlphaEvolve wording scoped until
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 AlphaEvolve

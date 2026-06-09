@@ -692,7 +692,7 @@ def test_full_mode_preserves_multi_block_trailing_newlines():
     assert "y = 20\n# EVOLVE-BLOCK-END" in result
 
 
-def test_full_mode_rejects_leading_prose_around_block_sections():
+def test_full_mode_allows_explanatory_preamble_before_block_sections():
     code = (
         "# EVOLVE-BLOCK-START a\nx = 1\n# EVOLVE-BLOCK-END\n"
         "# EVOLVE-BLOCK-START b\ny = 2\n# EVOLVE-BLOCK-END\n"
@@ -701,8 +701,9 @@ def test_full_mode_rejects_leading_prose_around_block_sections():
 
     result, err = apply_candidate_mutation(code, response, mutation_mode="full")
 
-    assert result == code
-    assert err == "malformed_block_sections:unconsumed_text"
+    assert err is None
+    assert "x = 10\n# EVOLVE-BLOCK-END" in result
+    assert "y = 2\n# EVOLVE-BLOCK-END" in result
 
 
 def test_full_mode_rejects_trailing_prose_around_block_sections():
@@ -1844,14 +1845,14 @@ def test_workspace_rejects_duplicate_file_edit_sections_without_partial_apply():
     assert err == "helper.py:duplicate_file_section"
 
 
-def test_workspace_rejects_leading_prose_around_file_sections():
+def test_workspace_allows_explanatory_preamble_before_file_sections():
     workspace = CandidateWorkspace.from_code("x = 1\n", "main.py")
     response = "Please update this file.\n<<<FILE main.py\nx = 2\n>>>FILE"
 
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
 
-    assert result == workspace
-    assert err == "malformed_file_sections:unconsumed_text"
+    assert err is None
+    assert result.files["main.py"] == "x = 2\n"
 
 
 def test_workspace_rejects_stray_diff_around_file_sections():

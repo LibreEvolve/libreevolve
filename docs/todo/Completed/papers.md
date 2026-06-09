@@ -6,6 +6,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track bounded natural-language preambles separately from structured
+      proposal metadata.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section
+    2.3.
+  - Status: generated candidates now keep structured
+    `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata separate from bounded
+    leading freeform preamble metadata. Completed manifests include
+    `runtime.history.natural_language_preamble_report`, and the paper index
+    lists bounded leading explanatory-preamble capture/reporting as partial
+    AlphaEvolve support.
+  - Remaining gap: arbitrary interleaved/trailing prose, raw full replacement
+    preamble disambiguation, semantic rationale-quality scoring, and cross-run
+    preamble/proposal joins remain active paper TODOs.
+
 - [x] Track canonical AlphaEvolve diff-fence guidance separately from compact
       compatibility syntax.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.3 and Figure 3 use

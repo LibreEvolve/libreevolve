@@ -373,14 +373,18 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus
   `runtime.history.proposal_diversity_report` exact duplicate counts and
   `runtime.history.proposal_score_report` outcome/exact-novelty score records,
-  and `runtime.history.controller_backtracking_report` observed branch-state
-  transition/redirect evidence,
+  `runtime.history.controller_backtracking_report` observed branch-state
+  transition/redirect evidence, and
+  `runtime.history.natural_language_preamble_report` bounded leading
+  explanatory-preamble capture,
   into semantically searchable proposal memory only if needed; remaining work
   is semantic proposal-index retrieval, calibrated proposal-quality models,
   near-duplicate/idea-family novelty, model-quality attribution,
   explicit controller-driven backtracking policies, cross-run proposal tables,
-  hypothesis-refinement loops, and stricter policy for which proposal fields
-  may influence retrieval, prompting, and archive resurfacing.
+  hypothesis-refinement loops, configurable preamble policy, full-replacement
+  preamble disambiguation, rationale-quality scoring, and stricter policy for
+  which proposal fields may influence retrieval, prompting, and archive
+  resurfacing.
 - Improve meta-prompt scoring beyond the current absolute/improvement child
   score reward modes and UCB-style prompt-arm selection; add calibrated reward
   signals plus ablation reporting for prompt-program lineages.

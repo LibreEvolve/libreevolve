@@ -2701,17 +2701,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     distinguishes current deterministic staged threshold gates from
     AlphaEvolve-style hypothesis-testing cascades.
 
-- [ ] Keep README mutation-response wording scoped to structured proposal
-      metadata versus natural-language preambles.
+- [ ] Keep README mutation-response wording scoped beyond bounded
+      natural-language preamble capture.
   - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory natural-language
     text before a SEARCH/REPLACE diff example.
-  - Current evidence: README accurately says text outside mutation payload
-    sections must be proposal metadata; code accepts bounded structured fields
-    and rejects ordinary prose around valid diff/block/workspace-file sections.
-  - Required result: if LibreEvolve later accepts explanatory preambles, update
-    README, ROADMAP, papers index, and code/paper TODOs with the exact parser
-    boundary, redaction/provenance behavior, and distinction between safe
-    proposal metadata and arbitrary unparsed prose.
+  - Current evidence: README documents that leading explanatory preambles are
+    accepted before structured mutation markers and captured in bounded,
+    redacted metadata through `runtime.history.natural_language_preamble_report`.
+    It also says prose between or after mutation sections remains rejected.
+  - Remaining gap: README still needs to stay scoped as future work adds
+    configurable preamble policies, raw full-replacement disambiguation,
+    rationale-quality scoring, or cross-run proposal-memory joins.
+  - Required result: when any of those broader preamble features land, update
+    README, ROADMAP, papers index, and code/paper TODOs together with the exact
+    parser boundary and provenance behavior.
 
 - [ ] Keep README prompt-example wording scoped until copy-detection policy is
       stronger than built-in exact sentinels.

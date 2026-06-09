@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document bounded explanatory preambles before structured mutations.
+  - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory text before a
+    SEARCH/REPLACE payload.
+  - Status: README now documents
+    `runtime.history.natural_language_preamble_report`, leading preamble
+    redaction/provenance, accepted diff/block/file-section boundaries, and
+    continued rejection of prose between or after mutation markers.
+  - Remaining gap: README wording must be updated again if future work adds
+    configurable preamble policy, full-replacement disambiguation, rationale
+    scoring, or cross-run preamble tables.
+
 - [x] Keep README/AGENTS diff-format wording scoped until canonical
       AlphaEvolve fence guidance is primary.
   - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 show the

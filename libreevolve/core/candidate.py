@@ -20,6 +20,7 @@ from libreevolve.core.diff import (
     _line_ending_tolerant_matches,
     _replace_line_ending_tolerant,
     _strip_fences,
+    strip_allowed_leading_preamble,
     strip_proposal_metadata,
 )
 from libreevolve.core.redaction import redact_sensitive_text
@@ -1567,8 +1568,8 @@ def _validate_consumed_section_text(
         outside.append(text[cursor:match.start()])
         cursor = match.end()
     outside.append(text[cursor:])
-    remainder = "".join(outside)
-    remainder = strip_proposal_metadata(remainder)
+    leading = strip_allowed_leading_preamble(outside[0])
+    remainder = leading + "".join(strip_proposal_metadata(segment) for segment in outside[1:])
     if remainder.strip():
         return f"malformed_{label}_sections:unconsumed_text"
     return None

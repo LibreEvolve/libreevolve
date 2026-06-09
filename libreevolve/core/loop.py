@@ -46,6 +46,7 @@ from libreevolve.core.database import (
     validate_seed_source_record,
 )
 from libreevolve.core.diff import (
+    extract_explanatory_preamble,
     extract_proposal_metadata,
     parse_diff_blocks,
     strip_proposal_metadata,
@@ -1232,6 +1233,7 @@ def evolve(
             original_proposal_metadata = (
                 extract_proposal_metadata(diff) if proposal_metadata_enabled else {}
             )
+            explanatory_preamble_metadata = extract_explanatory_preamble(diff)
             proposal_metadata = original_proposal_metadata
             critique_metadata = None
             if config.critique_enabled:
@@ -1262,6 +1264,7 @@ def evolve(
                         if proposal_source == "revised"
                         else original_proposal_metadata
                     )
+                explanatory_preamble_metadata = extract_explanatory_preamble(diff)
             mutation_payload = (
                 strip_proposal_metadata(diff) if proposal_metadata_enabled else diff
             )
@@ -1401,6 +1404,7 @@ def evolve(
                                         "diff": diff,
                                         "prompt_diagnostics": dict(prompt_sampler.last_metadata),
                                         "proposal": proposal_metadata,
+                                        "explanatory_preamble": explanatory_preamble_metadata,
                                         "backend_idx": backend_idx,
                                         "critique": critique_metadata,
                                         "mutation_mode": config.mutation_mode,
@@ -5319,6 +5323,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "prompt_example_copy_report": _prompt_example_copy_report(programs),
         "prompt_current_binding_report": _prompt_current_binding_report(programs),
+        "natural_language_preamble_report": _natural_language_preamble_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
         "proposal_score_report": _proposal_score_report(programs),
         "metric_diverse_inspiration_report": (
@@ -14772,6 +14777,279 @@ def validate_prompt_example_copy_report(report: object) -> dict:
                 issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
     return {
         "schema": "libreevolve.prompt_example_copy_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _natural_language_preamble_report(programs: list[Program]) -> dict:
+    generated = [
+        program
+        for program in programs
+        if isinstance(program.metadata, Mapping)
+        and program.metadata.get("candidate_type") == "generated"
+    ]
+    records = [
+        _natural_language_preamble_record(program)
+        for program in generated
+        if _natural_language_preamble_metadata(program)
+    ]
+    status_counts: dict[str, int] = {}
+    mode_counts: dict[str, int] = {}
+    structured_plus_preamble_count = 0
+    for record in records:
+        status = str(record.get("candidate_status") or "unknown")
+        status_counts[status] = status_counts.get(status, 0) + 1
+        mode = str(record.get("mutation_mode") or "unknown")
+        mode_counts[mode] = mode_counts.get(mode, 0) + 1
+        if record.get("structured_proposal_fields"):
+            structured_plus_preamble_count += 1
+    report = {
+        "schema": "libreevolve.natural_language_preamble_report.v1",
+        "source": "runtime_history_explanatory_preamble_metadata",
+        "generated_candidate_count": len(generated),
+        "preamble_record_count": len(records),
+        "structured_proposal_plus_preamble_count": structured_plus_preamble_count,
+        "candidate_status_counts": dict(sorted(status_counts.items())),
+        "mutation_mode_counts": dict(sorted(mode_counts.items())),
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "preamble_policy": {
+            "accepted_position": "leading_text_before_first_mutation_marker_only",
+            "structured_metadata_interop": (
+                "blank_line_separated_structured_metadata_then_freeform_capture"
+            ),
+            "interleaved_or_trailing_prose": (
+                "rejected_by_consumed_text_validation"
+            ),
+            "raw_full_replacement_policy": "unsupported_without_structured_marker",
+            "redaction_policy": "secret_redacted_and_bounded_preview",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "bounded_freeform_preamble_capture": bool(records),
+            "diff_file_block_leading_preamble_supported": True,
+            "interleaved_or_trailing_prose_rejected": True,
+            "arbitrary_unparsed_rationale_accepted": False,
+            "remaining_gap": [
+                "configurable_preamble_policy_controls",
+                "semantic_rationale_quality_scoring",
+                "full_replacement_preamble_disambiguation",
+                "cross_run_preamble_table",
+            ],
+        },
+    }
+    report["validation"] = validate_natural_language_preamble_report(report)
+    return report
+
+
+def _natural_language_preamble_metadata(program: Program) -> Mapping[str, object]:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    preamble = metadata.get("explanatory_preamble")
+    if isinstance(preamble, Mapping) and preamble:
+        return preamble
+    return {}
+
+
+def _natural_language_preamble_record(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    preamble = _natural_language_preamble_metadata(program)
+    proposal = (
+        metadata.get("proposal")
+        if isinstance(metadata.get("proposal"), Mapping)
+        else {}
+    )
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    payload = metadata.get("diff")
+    payload_text = payload if isinstance(payload, str) else ""
+    candidate_status = (
+        "accepted_history"
+        if admission.get("admitted") is True
+        else "rejected_history"
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_status": candidate_status,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": metadata.get("prompt_program_id"),
+        "prompt_sha256": (
+            metadata.get("prompt_diagnostics", {}).get("prompt_sha256")
+            if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+            else None
+        ),
+        "mutation_mode": metadata.get("mutation_mode"),
+        "payload_sha256": hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+        "preamble": dict(preamble),
+        "structured_proposal_fields": sorted(
+            field
+            for field in ("idea", "rationale", "hypothesis")
+            if isinstance(proposal.get(field), str) and proposal.get(field)
+        ),
+        "admission": {
+            "admitted": admission.get("admitted"),
+            "reason": admission.get("reason"),
+            "sampling_eligible": admission.get("sampling_eligible"),
+        },
+        "evaluation": {
+            "is_valid": evaluation.get("is_valid"),
+            "error": evaluation.get("error"),
+        },
+    }
+
+
+def validate_natural_language_preamble_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.natural_language_preamble_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "natural language preamble report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "preamble_record_count",
+        "structured_proposal_plus_preamble_count",
+        "candidate_status_counts",
+        "mutation_mode_counts",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "preamble_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"natural language preamble report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.natural_language_preamble_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "natural language preamble report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_explanatory_preamble_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "natural language preamble report source is unsupported",
+            }
+        )
+    for field in (
+        "generated_candidate_count",
+        "preamble_record_count",
+        "structured_proposal_plus_preamble_count",
+        "records_limit",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {"code": "invalid_record", "message": f"record {index} must be an object"}
+            )
+            continue
+        preamble = record.get("preamble")
+        if not isinstance(preamble, dict):
+            issues.append(
+                {
+                    "code": "invalid_record_preamble",
+                    "message": f"record {index} preamble must be an object",
+                }
+            )
+            continue
+        if preamble.get("schema") != "libreevolve.explanatory_preamble.v1":
+            issues.append(
+                {
+                    "code": "invalid_record_preamble_schema",
+                    "message": f"record {index} preamble schema is unsupported",
+                }
+            )
+        if preamble.get("policy") != "bounded_redacted_leading_preamble_only":
+            issues.append(
+                {
+                    "code": "invalid_record_preamble_policy",
+                    "message": f"record {index} preamble policy is unsupported",
+                }
+            )
+        if not _is_sha256_hex(preamble.get("sha256")):
+            issues.append(
+                {
+                    "code": "invalid_record_preamble_hash",
+                    "message": f"record {index} preamble sha256 is invalid",
+                }
+            )
+    if report.get("records_truncated") is not True:
+        if report.get("preamble_record_count") != len(records):
+            issues.append(
+                {
+                    "code": "invalid_record_count",
+                    "message": "preamble count must match records when not truncated",
+                }
+            )
+    for field in ("candidate_status_counts", "mutation_mode_counts"):
+        if not isinstance(report.get(field), dict):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be an object"}
+            )
+    if not isinstance(report.get("preamble_policy"), dict):
+        issues.append(
+            {"code": "invalid_preamble_policy", "message": "preamble_policy must be an object"}
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "natural language preamble report must not claim full readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("arbitrary_unparsed_rationale_accepted") is not False:
+            issues.append(
+                {
+                    "code": "arbitrary_rationale_overclaim",
+                    "message": "arbitrary_unparsed_rationale_accepted must be false",
+                }
+            )
+    return {
+        "schema": "libreevolve.natural_language_preamble_report.v1",
         "ok": not issues,
         "issues": issues,
     }

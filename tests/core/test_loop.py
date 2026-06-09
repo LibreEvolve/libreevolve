@@ -70,6 +70,7 @@ from libreevolve.core.loop import (
     validate_mutation_operator_boundary_report,
     validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
+    validate_natural_language_preamble_report,
     validate_proposal_diversity_report,
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
@@ -3286,6 +3287,64 @@ def test_runtime_history_reports_prompt_current_binding_for_full_mutation_policy
     assert binding["search_block_count"] == 0
     assert binding["all_search_blocks_match_once"] is False
     assert report["claim_ready"] is False
+
+
+def test_runtime_history_reports_natural_language_preamble_metadata():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Change x to the accepted value.
+
+This explains the edit before the structured SEARCH/REPLACE payload.
+<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    preamble = child["metadata"]["explanatory_preamble"]
+    assert preamble["schema"] == "libreevolve.explanatory_preamble.v1"
+    assert preamble["source"] == "freeform_text_before_first_mutation_marker"
+    assert preamble["structured_proposal_preamble_present"] is True
+    assert "This explains the edit" in preamble["preview"]
+    assert "IDEA:" not in preamble["preview"]
+
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["natural_language_preamble_report"]
+
+    assert report["schema"] == "libreevolve.natural_language_preamble_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_natural_language_preamble_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["preamble_record_count"] == 1
+    assert report["structured_proposal_plus_preamble_count"] == 1
+    assert report["candidate_status_counts"] == {"accepted_history": 1}
+    assert report["mutation_mode_counts"] == {"diff": 1}
+    assert report["claim_ready"] is False
+    assert (
+        report["claim_readiness"]["arbitrary_unparsed_rationale_accepted"]
+        is False
+    )
+    record = report["records"][0]
+    assert record["preamble"]["sha256"] == preamble["sha256"]
+    assert record["structured_proposal_fields"] == ["idea"]
+    assert record["admission"]["admitted"] is True
+    assert record["evaluation"]["is_valid"] is True
 
 
 def test_prompt_context_policy_can_enable_proposal_metadata_capture():
@@ -14627,7 +14686,7 @@ def test_critique_selection_preserves_original_when_no_full_candidate_is_valid()
         "# EVOLVE-BLOCK-START\nx=1\n# EVOLVE-BLOCK-END\n"
     )
     original = "<<<BLOCK unknown\nx=2\n>>>BLOCK"
-    revised = "preamble\n<<<BLOCK block_0\nx=3\n>>>BLOCK"
+    revised = "<<<BLOCK block_0\nx=3\n>>>BLOCK\npreamble"
 
     selected, status = _select_critique_mutation(
         workspace, original, revised, mutation_mode="full"

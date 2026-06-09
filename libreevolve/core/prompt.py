@@ -7340,6 +7340,7 @@ For multiline metadata, use bounded blocks such as:
 brief multiline idea text
 [/IDEA]
 Do not wrap colon-style metadata fields onto continuation lines.
+If you add a separate explanation after metadata, put a blank line before it.
 Then include the patch in the required format.
 """
     if mutation_mode == "full":
@@ -7348,7 +7349,9 @@ Then include the patch in the required format.
 Use <<<FILE path ... >>>FILE for multi-file edits or topology commands.
 For a single primary file, return the complete replacement file or changed
 evolve-block body as appropriate.
-Rules: No markdown fences. No extra explanation. No SEARCH/REPLACE blocks."""
+Rules: No markdown fences. Optional brief leading explanation before the first
+mutation marker is allowed. No prose between or after mutation markers. No
+SEARCH/REPLACE blocks."""
         exploratory = ""
         if instruction_variant == "exploratory":
             exploratory = (
@@ -7381,12 +7384,16 @@ replacement block body
 Keep all proposed edits consistent with each other: if one replacement uses a
 new helper, config value, file, import, or block name, include the matching
 definition or topology change in the same response.
-Rules: No markdown fences. No extra explanation. No SEARCH/REPLACE blocks."""
+Rules: No markdown fences. Optional brief leading explanation before the first
+mutation marker is allowed. No prose between or after mutation markers. No
+SEARCH/REPLACE blocks."""
     if instruction_variant == "minimal":
         return proposal + """Return only the required patch.
 Use SEARCH/REPLACE fences for ordinary edits and <<<FILE ... >>>FILE sections
 for multi-file or topology changes.
-Rules: No comments inside the patch. No markdown fences. No extra explanation."""
+Rules: No comments inside the patch. No markdown fences. Optional brief leading
+explanation before the first mutation marker is allowed. No prose between or
+after mutation markers."""
     exploratory = ""
     if instruction_variant == "exploratory":
         exploratory = (
@@ -7406,7 +7413,9 @@ For workspace topology changes, use command file sections such as
 Keep all proposed edits consistent with each other: if one replacement uses a
 new helper, config value, file, import, or block name, include the matching
 definition or topology change in the same response.
-Rules: No comments inside the patch. No markdown fences. No extra explanation.
+Rules: No comments inside the patch. No markdown fences. Optional brief leading
+explanation before the first mutation marker is allowed. No prose between or
+after mutation markers.
 If metadata sections are requested, keep them outside the patch."""
     if not include_example:
         return instructions

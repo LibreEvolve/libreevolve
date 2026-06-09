@@ -1817,21 +1817,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-history linkage, and validation examples for hard-to-code properties
     such as simplicity.
 
-- [ ] Track natural-language proposal preambles separately from structured
-      proposal metadata.
+- [ ] Track natural-language proposal preambles beyond bounded leading capture.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section 2.3.
   - Requirement: AlphaEvolve examples can include explanatory natural-language
     reasoning before the SEARCH/REPLACE edit payload, while the edit itself is
     still carried by structured diff blocks.
   - Partial status: LibreEvolve captures bounded structured `IDEA`,
-    `RATIONALE`, and `HYPOTHESIS` proposal metadata before mutation payloads.
-  - Current gap: ordinary prose around valid diff/block/workspace-file
-    sections is rejected with `malformed_diff:unconsumed_text`; this is stricter
-    than the explanatory preamble shown before the Figure 3(c) diff example.
-  - Required result: either support bounded explanatory preambles with
-    redaction/provenance and tests, or keep the paper index, README, ROADMAP,
-    and code TODOs explicit that LibreEvolve requires structured proposal
-    metadata rather than arbitrary natural-language patch rationale.
+    `RATIONALE`, and `HYPOTHESIS` proposal metadata before mutation payloads
+    and now also captures bounded/redacted leading explanatory text before the
+    first structured diff/file/block mutation marker. The paper index lists
+    this as partial AlphaEvolve support, not complete proposal-memory parity.
+  - Current gap: the preamble contract remains narrower than arbitrary
+    AlphaEvolve-style rationale handling. Prose between or after mutation
+    sections is still rejected, raw full replacements without structured
+    markers are not disambiguated, preamble/rationale quality is not scored,
+    and no cross-run preamble table exists.
+  - Required result: add paper-facing evidence for configurable preamble
+    policy, raw-full-replacement disambiguation if used, semantic
+    rationale-quality scoring, and cross-run preamble/proposal joins before
+    presenting natural-language proposal preambles as complete.
 
 - [ ] Track prompt example-copy diagnostics beyond built-in exact sentinels.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.

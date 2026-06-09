@@ -1383,20 +1383,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims current staged validators nor overclaims AlphaEvolve-style
     hypothesis-testing cascades.
 
-- [ ] Keep mutation-response roadmap wording scoped to structured proposal
-      metadata versus natural-language preambles.
+- [ ] Keep mutation-response roadmap wording scoped beyond bounded
+      natural-language preamble capture.
   - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a
     SEARCH/REPLACE diff example, while Section 2.3 still defines the edit
     payload through structured diff blocks.
-  - Current evidence: LibreEvolve roadmap claims should distinguish supported
-    structured proposal metadata from ordinary explanatory prose. Current code
-    accepts bounded `IDEA`/`RATIONALE`/`HYPOTHESIS` fields but rejects prose
-    around valid mutation sections.
-  - Required result: when response parsing supports safe explanatory
-    preambles, or when strict structured-metadata divergence is documented as
-    policy, update ROADMAP, README, papers index, and code/paper TODOs
-    together so they do not imply AlphaEvolve-style freeform rationale parsing
-    already exists.
+  - Current evidence: ROADMAP now distinguishes bounded leading
+    explanatory-preamble capture and `runtime.history.natural_language_preamble_report`
+    from broader semantic proposal memory. Current code accepts leading
+    preambles before structured mutation markers and rejects prose between or
+    after mutation sections.
+  - Remaining gap: roadmap wording must stay scoped as future work adds
+    configurable preamble policies, raw full-replacement disambiguation,
+    rationale-quality scoring, or cross-run proposal-memory tables.
+  - Required result: when broader preamble handling lands, update ROADMAP,
+    README, papers index, and code/paper TODOs together so they do not imply
+    full AlphaEvolve-style freeform rationale parsing before it exists.
 
 - [ ] Keep prompt-example roadmap wording scoped until copy-detection policy
       is stronger than built-in exact sentinels.

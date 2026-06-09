@@ -1,5 +1,6 @@
 from libreevolve.core.diff import (
     apply_diff,
+    extract_explanatory_preamble,
     extract_proposal_metadata,
     strip_proposal_metadata,
     validate_proposal_metadata_preamble,
@@ -74,9 +75,23 @@ def test_search_replace_preserves_file_and_block_marker_literals_in_replacement(
     assert new_code == 'TEXT = "<<<FILE not a section >>>FILE <<<BLOCK not a section >>>BLOCK"\n'
 
 
-def test_rejects_prose_around_valid_diff_block():
+def test_allows_explanatory_preamble_before_valid_diff_block():
     code = "x = 1"
     diff = "Here is the patch:\n<<<SEARCH\nx = 1\n===\nx = 2\n>>>REPLACE"
+
+    result, err = apply_diff(code, diff)
+    preamble = extract_explanatory_preamble(diff)
+
+    assert err is None
+    assert result == "x = 2"
+    assert preamble["schema"] == "libreevolve.explanatory_preamble.v1"
+    assert preamble["preview"] == "Here is the patch:"
+    assert preamble["policy"] == "bounded_redacted_leading_preamble_only"
+
+
+def test_rejects_trailing_prose_after_valid_diff_block():
+    code = "x = 1"
+    diff = "<<<SEARCH\nx = 1\n===\nx = 2\n>>>REPLACE\nThis is why it works."
 
     result, err = apply_diff(code, diff)
 

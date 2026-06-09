@@ -5,7 +5,10 @@ accepts both the AlphaEvolve-style fence spelling and the older compact local
 format for backward compatibility.
 """
 from __future__ import annotations
+import hashlib
 import re
+
+from libreevolve.core.redaction import redact_sensitive_text
 
 DIFF_PATTERN = re.compile(r"<<<SEARCH\n(.*?)\n===\n(.*?)\n>>>REPLACE", re.DOTALL)
 CANONICAL_DIFF_PATTERN = re.compile(
@@ -20,6 +23,13 @@ PROPOSAL_BLOCK_CLOSE_PATTERN = re.compile(
     r"(?im)^\s*\[/(IDEA|RATIONALE|HYPOTHESIS)\]\s*$"
 )
 _MAX_PROPOSAL_FIELD_CHARS = 2000
+_MAX_EXPLANATORY_PREAMBLE_CHARS = 2000
+_MUTATION_PAYLOAD_MARKERS = (
+    "<<<SEARCH",
+    "<<<<<<< SEARCH",
+    "<<<FILE",
+    "<<<BLOCK",
+)
 
 def _strip_fences(text: str) -> str:
     """Remove one markdown code fence only when it wraps the whole response."""
@@ -169,7 +179,8 @@ def _validate_consumed_diff_text(diff_text: str) -> str | None:
         outside.append(text[cursor:start])
         cursor = end
     outside.append(text[cursor:])
-    remainder = strip_proposal_metadata("".join(outside))
+    leading = strip_allowed_leading_preamble(outside[0])
+    remainder = leading + "".join(strip_proposal_metadata(segment) for segment in outside[1:])
     if remainder.strip():
         return "malformed_diff:unconsumed_text"
     return None
@@ -190,6 +201,54 @@ def strip_proposal_metadata(response_text: str) -> str:
     """Remove optional proposal sections, leaving only the mutation payload."""
     _, payload = _split_proposal_preamble(response_text)
     return payload.lstrip("\n")
+
+
+def extract_explanatory_preamble(response_text: str) -> dict:
+    """Return bounded freeform rationale before the first mutation marker."""
+    if not isinstance(response_text, str):
+        return {}
+    text = response_text.replace("\r\n", "\n")
+    text = _strip_fences(text)
+    structured_preamble, payload = _split_proposal_preamble(text)
+    if structured_preamble.strip() and payload.strip() and not payload.startswith("\n"):
+        return {}
+    marker_index = _first_mutation_marker_index(payload)
+    if marker_index is None:
+        return {}
+    preamble = payload[:marker_index].strip()
+    if not preamble or _contains_mutation_marker_fragment(preamble):
+        return {}
+    redacted = redact_sensitive_text(preamble)
+    truncated = len(redacted) > _MAX_EXPLANATORY_PREAMBLE_CHARS
+    preview = (
+        redacted[: _MAX_EXPLANATORY_PREAMBLE_CHARS - 14].rstrip()
+        + "\n...[truncated]"
+        if truncated
+        else redacted
+    )
+    return {
+        "schema": "libreevolve.explanatory_preamble.v1",
+        "source": "freeform_text_before_first_mutation_marker",
+        "policy": "bounded_redacted_leading_preamble_only",
+        "structured_proposal_preamble_present": bool(structured_preamble.strip()),
+        "sha256": hashlib.sha256(redacted.encode("utf-8")).hexdigest(),
+        "chars": len(redacted),
+        "preview": preview,
+        "preview_chars": len(preview),
+        "truncated": truncated,
+    }
+
+
+def strip_allowed_leading_preamble(text: str) -> str:
+    """Strip structured metadata plus safe freeform text before a payload marker."""
+    structured_preamble, payload = _split_proposal_preamble(text)
+    if not payload.strip():
+        return ""
+    if structured_preamble.strip() and not payload.startswith("\n"):
+        return payload
+    if _contains_mutation_marker_fragment(payload):
+        return payload
+    return ""
 
 
 def validate_proposal_metadata_preamble(response_text: str) -> str | None:
@@ -294,3 +353,13 @@ def _truncate_metadata_field(value: str) -> str:
     if len(value) <= _MAX_PROPOSAL_FIELD_CHARS:
         return value
     return value[: _MAX_PROPOSAL_FIELD_CHARS - 14].rstrip() + "\n...[truncated]"
+
+
+def _first_mutation_marker_index(text: str) -> int | None:
+    indexes = [text.find(marker) for marker in _MUTATION_PAYLOAD_MARKERS]
+    indexes = [index for index in indexes if index >= 0]
+    return min(indexes) if indexes else None
+
+
+def _contains_mutation_marker_fragment(text: str) -> bool:
+    return "<<<" in text or ">>>>" in text or "=======" in text

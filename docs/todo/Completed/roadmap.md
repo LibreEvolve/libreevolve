@@ -4,6 +4,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document bounded explanatory preambles in the roadmap.
+  - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a
+    SEARCH/REPLACE payload while Section 2.3 keeps edits in structured blocks.
+  - Status: ROADMAP now cites
+    `runtime.history.natural_language_preamble_report` as bounded leading
+    explanatory-preamble capture and keeps semantic proposal memory,
+    configurable preamble policy, full-replacement disambiguation, rationale
+    scoring, and cross-run tables as remaining work.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Keep diff-format roadmap wording scoped until canonical AlphaEvolve
       fence guidance is primary.
   - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define SEARCH/REPLACE

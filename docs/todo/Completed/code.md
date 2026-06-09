@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add bounded explanatory preamble capture before structured mutations.
+  - Spec evidence: AlphaEvolve Figure 3(c) shows natural-language explanatory
+    text before SEARCH/REPLACE diff blocks, while Section 2.3 keeps the edit
+    payload inside structured diff blocks.
+  - Status: `libreevolve/core/diff.py` now accepts and extracts bounded,
+    redacted leading explanatory text before the first diff/file/block mutation
+    marker; `libreevolve/core/candidate.py` applies the same boundary for
+    block and file sections; `libreevolve/core/loop.py` stores
+    `metadata.explanatory_preamble` and emits
+    `runtime.history.natural_language_preamble_report`; prompt wording allows a
+    brief leading explanation while preserving strict rejection between or
+    after mutation markers.
+  - Remaining gap: configurable policy, raw full-replacement disambiguation,
+    semantic rationale-quality scoring, and cross-run preamble/proposal-memory
+    tables remain active TODOs.
+
 - [x] Align agent-facing diff-format guidance with canonical AlphaEvolve
       fences.
   - Spec evidence: AlphaEvolve Section 2.3 and Figure 3 define the

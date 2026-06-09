@@ -736,6 +736,14 @@ archive admission. The report is current-run provenance, not full Figure 3
 parity: per-file span expansion for workspace sections, evolve-block inner span
 mapping, prompt-history row joins, full-mode target spans, and cross-run
 binding tables remain open.
+Completed manifests also include
+`runtime.history.natural_language_preamble_report`, which records bounded,
+redacted natural-language text that appears before the first structured
+mutation marker in generated responses. This aligns with AlphaEvolve-style
+explanatory text before a SEARCH/REPLACE payload while keeping the parser
+boundary narrow: prose between or after mutation sections remains rejected,
+raw full replacements without a structured marker do not get preamble
+disambiguation, and semantic rationale-quality scoring remains open.
 
 Explicit problem context bodies are also rendered as character-counted JSON
 strings under source citation headers, and context entries render in
@@ -2712,9 +2720,10 @@ before the body or closing marker. Multi-block full replacement also rejects
 named `<<<BLOCK ...>>>` targets that do not exist in the current candidate.
 Named `<<<BLOCK name ...>>>BLOCK` replacements work for both single-block and
 multi-block candidates; one-block candidates also keep the raw-body shorthand.
-When block sections are present, non-whitespace text outside those sections
-must be proposal metadata or the mutation is rejected as
-`malformed_block_sections:unconsumed_text`.
+When block sections are present, non-whitespace text before the first section
+may be structured proposal metadata or a bounded explanatory preamble that is
+captured in runtime metadata. Non-whitespace text between or after sections is
+rejected as `malformed_block_sections:unconsumed_text`.
 Proposal metadata is recognized only as a leading contiguous preamble before
 the first mutation payload line; marker-like `IDEA:`, `RATIONALE:`, or
 `HYPOTHESIS:` lines inside file/block/full-code payloads are preserved as
@@ -2724,6 +2733,9 @@ candidate content. Proposal metadata accepts either one-line `IDEA:`,
 proposal marker are rejected before mutation application as
 `malformed_proposal_metadata:multiline_continuation`; unterminated multiline
 blocks are rejected as `malformed_proposal_metadata:unterminated_section`.
+When structured proposal metadata is followed by freeform explanatory preamble
+text, use a blank line between the metadata preamble and the explanatory text
+so wrapped colon-style metadata does not become ambiguous.
 In `mutation_mode: diff`, each SEARCH payload must match exactly one target in
 the current scope. Duplicate matches in a whole file, inside one evolve block,
 or across multiple evolve blocks fail with `ambiguous_search_match` before any
@@ -2731,9 +2743,10 @@ partial edit is committed. SEARCH/REPLACE matching is line-ending tolerant:
 patch text and candidate text are compared through an LF-normalized view, and
 accepted replacements are written back using the matched candidate span's
 dominant line ending while leaving surrounding text unchanged. When
-SEARCH/REPLACE blocks are present, non-whitespace text outside those blocks
-must be proposal metadata or the mutation is rejected as
-`malformed_diff:unconsumed_text`. Direct prompt construction validates
+SEARCH/REPLACE blocks are present, non-whitespace text before the first block
+may be structured proposal metadata or a bounded explanatory preamble captured
+in runtime metadata. Non-whitespace text between or after diff blocks is
+rejected as `malformed_diff:unconsumed_text`. Direct prompt construction validates
 `mutation_mode` against the same `diff`/`full` enum before rendering labels or
 instructions. Direct `PromptSampler` construction also validates configured
 variant containers as lists of renderable template strings, and direct
@@ -2771,13 +2784,14 @@ file-section bodies are complete file replacements only for files without
 evolve blocks; file sections that target files with evolve blocks use the same
 raw one-block body or named `<<<BLOCK ...>>>BLOCK` rules as single-file
 full-block replacement. When file sections are present, non-whitespace text
-outside those sections must be proposal metadata or the mutation is rejected.
-They can also express file topology operations with command file
-sections. Topology command sections must have empty bodies, and a mutation may
-contain at most one `PRIMARY` command. `PRIMARY` is validated against the final
-same-mutation file set, so it can target a file created or moved by the same
-mutation. Deleting the current primary file requires an explicit replacement
-`PRIMARY` command.
+before the first section may be structured proposal metadata or a bounded
+explanatory preamble, but prose between or after file sections is rejected as
+`malformed_file_sections:unconsumed_text`. They can also express file topology
+operations with command file sections. Topology command sections must have
+empty bodies, and a mutation may contain at most one `PRIMARY` command.
+`PRIMARY` is validated against the final same-mutation file set, so it can
+target a file created or moved by the same mutation. Deleting the current
+primary file requires an explicit replacement `PRIMARY` command.
 
 ```text
 <<<FILE DELETE old_helper.py
@@ -3325,6 +3339,7 @@ manifest/index verification documented there:
 **Prompt engineering for LLM-guided evolution:**
 - Models wrap diffs in markdown fences — the diff engine strips a single outer response wrapper automatically while preserving fence text inside replacement code
 - Models add comments that cause diff matching failures — the prompt instructs "no comments"
+- Models may add brief explanatory text before the patch — leading preambles are captured in bounded/redacted metadata, but prose between or after mutation markers still fails parsing
 - Without stronger failed-proposal memory, models can repeat the same bad mutation many times
 - A concrete diff example in the prompt reduces observed placeholder-copying mistakes; `runtime.history.prompt_example_copy_report` now records exact built-in example-sentinel copying, but hard rejection and semantic copy detection remain open
 

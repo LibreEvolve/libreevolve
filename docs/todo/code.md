@@ -2216,26 +2216,27 @@ Primary evidence:
     overclaim AlphaEvolve's Related Work positioning from a flat paper list or
     isolated feature TODOs.
 
-- [ ] Reconcile strict mutation-response parsing with AlphaEvolve explanatory
-      preambles.
+- [ ] Extend explanatory-preamble support beyond bounded leading capture.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts
     with natural-language explanation about the current model before
     SEARCH/REPLACE diff blocks, while Section 2.3 defines diff blocks as the
     code-edit payload.
-  - Current evidence: `apply_diff()` accepts compact and canonical
-    SEARCH/REPLACE blocks and allows only structured leading
-    `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata outside those blocks.
-    Tests intentionally reject ordinary prose around a valid diff with
-    `malformed_diff:unconsumed_text`, and full/workspace mutation paths also
-    reject prose around block or file sections. The prompt currently says
-    "No extra explanation" and README documents that text outside mutation
-    sections must be proposal metadata.
-  - Required result: decide whether AlphaEvolve-style explanatory preambles
-    should be accepted, normalized into bounded proposal metadata, or remain
-    a documented strict LibreEvolve divergence. If accepted, add parser tests,
-    prompt wording, provenance/redaction policy, and TODO/README/paper-index
-    updates that distinguish safe proposal rationale capture from arbitrary
-    unparsed prose.
+  - Current evidence: `apply_diff()`, full-mode block sections, and workspace
+    file sections now allow bounded natural-language text before the first
+    structured mutation marker. Generated candidates persist
+    `metadata.explanatory_preamble`, completed manifests include
+    `runtime.history.natural_language_preamble_report`, and prompt wording
+    allows optional brief leading explanations while preserving strict
+    rejection for prose between or after mutation sections.
+  - Remaining gap: explanatory-preamble support is bounded leading capture
+    only. It does not accept arbitrary interleaved/trailing rationale, does
+    not disambiguate raw full replacements without a structured marker, does
+    not score rationale quality, and does not provide a configurable policy or
+    cross-run preamble table.
+  - Required result: add configurable preamble policy, full-replacement
+    disambiguation if needed, semantic/rubric rationale-quality evidence, and
+    cross-run preamble/proposal-memory joins before treating natural-language
+    rationale handling as complete AlphaEvolve-style proposal memory.
 
 - [ ] Extend prompt example-copy diagnostics beyond built-in exact sentinels.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete current-program

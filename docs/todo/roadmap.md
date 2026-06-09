@@ -2466,23 +2466,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source-PDF rights, companion software/materials licensing, generated
     LibreEvolve artifacts, and local ownership or endorsement boundaries.
 
-- [ ] Keep paper-source roadmap wording scoped until row identity is emitted in
-      claim artifacts.
-  - Spec evidence: roadmap claims about paper-cache provenance rely on each
-    manifest row's id, URL, and local PDF label describing the same source
-    before source-version, rights, or claim evidence is attached.
-  - Current evidence: roadmap/README wording now cites paper-manifest row-
-    identity validation: arXiv URL ids must match row ids, local PDF stems must
-    start with the row id before any `__` title suffix, and non-ArXiv slug rows
-    use the same filename-prefix identity rule. Runtime/report artifacts still
-    do not emit row-identity proof alongside table, figure, appendix, or TODO
-    claim evidence.
-  - Required result: once row-identity evidence is emitted in paper claim
-    artifacts, update ROADMAP, README, papers index, and TODO cross-links so
-    roadmap wording distinguishes safe manifest fields, proven source identity,
-    and per-claim source linkage, while separating base id/URL/file consistency
-    from later arXiv version pinning.
-
 - [ ] Keep paper-source roadmap wording scoped until source-PDF rights
       provenance is emitted in paper-derived artifacts.
   - Spec evidence: page 1 of the local AlphaEvolve PDF states

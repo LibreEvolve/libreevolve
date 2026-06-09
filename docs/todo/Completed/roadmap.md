@@ -4,6 +4,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document paper-cache row identity companion manifest.
+  - Spec evidence: roadmap paper-cache provenance depends on each row's id,
+    URL, and local PDF label describing the same source before version or
+    rights evidence attaches.
+  - Status: ROADMAP now documents `papers/row_identity.json` as the committed
+    companion manifest that emits derived source identities for all 24 cache
+    rows and links the AlphaEvolve row to `papers/source_versions.json`.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document AlphaEvolve source-PDF version companion manifest.
   - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as
     `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.

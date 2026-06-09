@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document paper-cache row identity artifact evidence.
+  - Spec evidence: README points readers to the local paper cache as the source
+    ledger for paper-facing implementation status and benchmark decisions.
+  - Status: README now documents `papers/row_identity.json` as the committed
+    companion manifest that emits derived source identities for all 24 cache
+    rows, including URL source id, filename source prefix, validation booleans,
+    and the AlphaEvolve row's source-version link.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document AlphaEvolve source-PDF version manifest evidence.
   - Spec evidence: the local AlphaEvolve PDF header says
     `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.

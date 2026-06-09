@@ -6,6 +6,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit paper-manifest row identity evidence before claim artifacts.
+  - Paper evidence: AlphaEvolve-alignment paper audits depend on the local
+    paper cache preserving the correct source PDF for each paper-facing row.
+  - Status: `papers/row_identity.json` now records source-identity evidence for
+    every cached paper row: manifest row id, URL source id where applicable,
+    file source prefix, validation status booleans, SHA-256, and the
+    AlphaEvolve row's link to `papers/source_versions.json`.
+  - Remaining gap: none for this bounded paper-facing row-identity slice;
+    source-rights metadata and reproduction policies remain active paper TODOs.
+
 - [x] Emit AlphaEvolve source-PDF arXiv version provenance in paper artifacts.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
     audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.

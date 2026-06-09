@@ -2471,27 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Emit paper-manifest row identity evidence into paper artifacts.
-  - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
-    audit evidence. A row should not only have a safe id, URL, and filename;
-    those fields must describe the same paper source before claim audits rely
-    on the cached PDF.
-  - Current evidence: `libreevolve.tools.paper_manifest` now validates row id
-    grammar, allowed HTTPS source hosts, safe `papers/<name>.pdf` paths,
-    CSV/JSON agreement, duplicate ids/files/hashes, optional local
-    PDF byte/hash/readability, and source-row identity. For arXiv URLs it
-    parses `/pdf/<id>`, `/pdf/<id>.pdf`, `/pdf/<id>vN`, and `/abs/<id>` style
-    paths and rejects URL ids that do not match the manifest `id`. It also
-    rejects local PDF filenames whose stem does not start with the manifest id
-    before any `__` title suffix, and applies that filename-prefix identity
-    rule to non-arXiv slug rows.
-  - Required result: propagate validated row-identity evidence into emitted
-    paper-artifact manifests or claim ledgers, with explicit source-id fields
-    and links to version/rights evidence. Keep this distinct from source-
-    version metadata: version pinning identifies which revision was audited,
-    while row-identity validation prevents cross-paper URL/file/id drift before
-    version checks.
-
 - [ ] Emit AlphaEvolve source-PDF rights provenance into paper artifacts.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.

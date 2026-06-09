@@ -60,6 +60,10 @@ from libreevolve.problems.benchmarks.paper_source_rights import (
     alphaevolve_source_pdf_rights_record,
     validate_alphaevolve_source_pdf_rights,
 )
+from libreevolve.problems.benchmarks.paper_source_identity import (
+    PAPER_SOURCE_IDENTITY_MANIFEST_FILE,
+    validate_paper_source_identity_manifest,
+)
 from libreevolve.problems.benchmarks.paper_bibliography import (
     alphaevolve_references_section_record,
     validate_alphaevolve_references_section,
@@ -463,6 +467,7 @@ def validate_paper_manifest(
         )
     issues.extend(_validate_root_readme_paper_summary(root_path, seen_ids))
     manifest_rows_by_id = {str(row.get("id")): row for row in json_rows if row.get("id")}
+    issues.extend(_validate_paper_source_identity_manifest(root_path, json_rows))
     issues.extend(_validate_alphaevolve_source_pdf_version_manifest(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_version_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
@@ -570,6 +575,38 @@ def _validate_example_benchmark_scope_records() -> list[PaperManifestIssue]:
         PaperManifestIssue(
             f"example_scope_{issue.code}",
             issue.message,
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_paper_source_identity_manifest(
+    root_path: Path,
+    manifest_rows: list[dict[str, Any]],
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / PAPER_SOURCE_IDENTITY_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "paper_source_identity_manifest_missing",
+                    "papers/row_identity.json must emit source-identity rows for the paper cache",
+                )
+            ]
+        return []
+    report = validate_paper_source_identity_manifest(
+        manifest_path,
+        manifest_rows=manifest_rows,
+    )
+    return [
+        PaperManifestIssue(
+            f"paper_source_identity_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.row_id) if issue.row_id else None,
         )
         for issue in report.issues
     ]

@@ -1,0 +1,442 @@
+{
+  "schema": "libreevolve.paper_source_identity_manifest.v1",
+  "source_identity_count": 24,
+  "source_identity_policy": "manifest_id_url_source_id_and_file_source_prefix_must_match_before_source_version_or_rights_claims",
+  "sources": [
+    {
+      "manifest_row_id": "2506.13131",
+      "title": "AlphaEvolve",
+      "url": "https://arxiv.org/pdf/2506.13131.pdf",
+      "file": "papers/2506.13131__AlphaEvolve.pdf",
+      "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2506.13131",
+      "url_versioned_id": "2506.13131",
+      "file_source_id": "2506.13131",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": {
+        "source_version_id": "2506.13131v1",
+        "source_version_manifest": "papers/source_versions.json"
+      }
+    },
+    {
+      "manifest_row_id": "2511.17592",
+      "title": "GigaEvo",
+      "url": "https://arxiv.org/pdf/2511.17592.pdf",
+      "file": "papers/2511.17592__GigaEvo.pdf",
+      "sha256": "9a14bf06a1323e63bf53234e79e44c41e1e78e0dc2f90578d74b928efd067113",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2511.17592",
+      "url_versioned_id": "2511.17592",
+      "file_source_id": "2511.17592",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2510.14150",
+      "title": "CodeEvolve",
+      "url": "https://arxiv.org/pdf/2510.14150.pdf",
+      "file": "papers/2510.14150__CodeEvolve.pdf",
+      "sha256": "8dc8c35d24e2f6bce81e9608609e10b4dac5dd7072d155d9cd5c575d47472405",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2510.14150",
+      "url_versioned_id": "2510.14150",
+      "file_source_id": "2510.14150",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2511.23473",
+      "title": "ThetaEvolve",
+      "url": "https://arxiv.org/pdf/2511.23473.pdf",
+      "file": "papers/2511.23473__ThetaEvolve.pdf",
+      "sha256": "8e74933b2a4dddbf80a063fb88438c95b62b982a5167bbb77213ce1e3839715d",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2511.23473",
+      "url_versioned_id": "2511.23473",
+      "file_source_id": "2511.23473",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2602.10233",
+      "title": "ImprovEvolve",
+      "url": "https://arxiv.org/pdf/2602.10233.pdf",
+      "file": "papers/2602.10233__ImprovEvolve.pdf",
+      "sha256": "8123f1b19d9ba6c891e642be28b1bd4395fff549131d2e45b619dfd28ddfe57a",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2602.10233",
+      "url_versioned_id": "2602.10233",
+      "file_source_id": "2602.10233",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2602.15951",
+      "title": "MadEvolve",
+      "url": "https://arxiv.org/pdf/2602.15951.pdf",
+      "file": "papers/2602.15951__MadEvolve.pdf",
+      "sha256": "ec47332c9b20ca391b8aedb6b8696c42aad20c976906d1e43f13490163daea19",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2602.15951",
+      "url_versioned_id": "2602.15951",
+      "file_source_id": "2602.15951",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2603.14575",
+      "title": "CausalEvolve",
+      "url": "https://arxiv.org/pdf/2603.14575.pdf",
+      "file": "papers/2603.14575__CausalEvolve.pdf",
+      "sha256": "b3190d25d802f5b9913e4e266b7dda1b76d2211d2d4cad68e1a5d0a3d03fc4d2",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2603.14575",
+      "url_versioned_id": "2603.14575",
+      "file_source_id": "2603.14575",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2510.06056",
+      "title": "DeepEvolve",
+      "url": "https://arxiv.org/pdf/2510.06056.pdf",
+      "file": "papers/2510.06056__DeepEvolve.pdf",
+      "sha256": "e2f578c3b7979eb72857b1545b244405cf0fa8792bab82645e58c97cf3681f86",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2510.06056",
+      "url_versioned_id": "2510.06056",
+      "file_source_id": "2510.06056",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2601.21096",
+      "title": "Magellan",
+      "url": "https://arxiv.org/pdf/2601.21096.pdf",
+      "file": "papers/2601.21096__Magellan.pdf",
+      "sha256": "4619366bb337eb723bbe882d9efd07d8f57dca53e95fb7e1de6788a011e7f8bb",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2601.21096",
+      "url_versioned_id": "2601.21096",
+      "file_source_id": "2601.21096",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2602.22425",
+      "title": "ArchAgent",
+      "url": "https://arxiv.org/pdf/2602.22425.pdf",
+      "file": "papers/2602.22425__ArchAgent.pdf",
+      "sha256": "c074fe0dc4680dcc5f25ee48bc27815218d2735b29afcff879df0d64e340ca98",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2602.22425",
+      "url_versioned_id": "2602.22425",
+      "file_source_id": "2602.22425",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2602.16928",
+      "title": "Multiagent_Learning",
+      "url": "https://arxiv.org/pdf/2602.16928.pdf",
+      "file": "papers/2602.16928__Multiagent_Learning.pdf",
+      "sha256": "21b4d32be45ead4199d348c60e8671b0c9b5e0d3ca6c16381e27c7e1e2fafd48",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2602.16928",
+      "url_versioned_id": "2602.16928",
+      "file_source_id": "2602.16928",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2603.09172",
+      "title": "Ramsey_Numbers",
+      "url": "https://arxiv.org/pdf/2603.09172.pdf",
+      "file": "papers/2603.09172__Ramsey_Numbers.pdf",
+      "sha256": "f133fe6f2b7db15fad214164359359f0e5ecbc0656b81bb6917c5c40df402ded",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2603.09172",
+      "url_versioned_id": "2603.09172",
+      "file_source_id": "2603.09172",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2509.18057",
+      "title": "Hardness_of_Approximation",
+      "url": "https://arxiv.org/pdf/2509.18057.pdf",
+      "file": "papers/2509.18057__Hardness_of_Approximation.pdf",
+      "sha256": "32eb8c787527bf8674ec22fd08ee6e1108179e88d97300e110286270c041e842",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2509.18057",
+      "url_versioned_id": "2509.18057",
+      "file_source_id": "2509.18057",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2603.06692",
+      "title": "Combinatorics_Berczy",
+      "url": "https://arxiv.org/pdf/2603.06692.pdf",
+      "file": "papers/2603.06692__Combinatorics_Berczy.pdf",
+      "sha256": "86e39ec4ae7e93dd88e1e44a0c8484c890be682ffb5396a4edb079103a68fb6f",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2603.06692",
+      "url_versioned_id": "2603.06692",
+      "file_source_id": "2603.06692",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2601.16175",
+      "title": "TTT_Discover",
+      "url": "https://arxiv.org/pdf/2601.16175.pdf",
+      "file": "papers/2601.16175__TTT_Discover.pdf",
+      "sha256": "4656ec28d800002d9a3e3f83a71c7d9032ef5f1873cd953b8808a8391ce06ec7",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2601.16175",
+      "url_versioned_id": "2601.16175",
+      "file_source_id": "2601.16175",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2603.08679",
+      "title": "Bilateral_Trade",
+      "url": "https://arxiv.org/pdf/2603.08679.pdf",
+      "file": "papers/2603.08679__Bilateral_Trade.pdf",
+      "sha256": "34d3bf9c5f424d911d4ac91cc5bf4ef88d3b4cac02b7b31c064b9c868689bfa1",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2603.08679",
+      "url_versioned_id": "2603.08679",
+      "file_source_id": "2603.08679",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2601.01235",
+      "title": "Bruhat_Intervals",
+      "url": "https://arxiv.org/pdf/2601.01235.pdf",
+      "file": "papers/2601.01235__Bruhat_Intervals.pdf",
+      "sha256": "a5ff203da843a73bc0b6f5568be7320963e5f4f45bff11f5d2ce39ec08b0ef64",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2601.01235",
+      "url_versioned_id": "2601.01235",
+      "file_source_id": "2601.01235",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2511.12916",
+      "title": "Fault2Flow",
+      "url": "https://arxiv.org/pdf/2511.12916.pdf",
+      "file": "papers/2511.12916__Fault2Flow.pdf",
+      "sha256": "7319d8cc2bba103c7e508a1017b79e59a9446cab21e229760ba6b0f83945b477",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2511.12916",
+      "url_versioned_id": "2511.12916",
+      "file_source_id": "2511.12916",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2601.05943",
+      "title": "Global_NLP_Optimization",
+      "url": "https://arxiv.org/pdf/2601.05943.pdf",
+      "file": "papers/2601.05943__Global_NLP_Optimization.pdf",
+      "sha256": "9e8a50b1b9613392941341258d9e13e2ce954b87efce840b4d6c0e7bfe2ceae5",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2601.05943",
+      "url_versioned_id": "2601.05943",
+      "file_source_id": "2601.05943",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2506.16750",
+      "title": "Autoconvolution",
+      "url": "https://arxiv.org/pdf/2506.16750.pdf",
+      "file": "papers/2506.16750__Autoconvolution.pdf",
+      "sha256": "74f3e1781ce06e3752142fa24b60037ae5d27e33ee188273b4a7aa20d54f1c1d",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2506.16750",
+      "url_versioned_id": "2506.16750",
+      "file_source_id": "2506.16750",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2505.16105",
+      "title": "Sums_and_Differences",
+      "url": "https://arxiv.org/pdf/2505.16105.pdf",
+      "file": "papers/2505.16105__Sums_and_Differences.pdf",
+      "sha256": "90d63d13afd7b8e15ceac25a4cef3f6b1c974a12a7893e80bd18e3ef4e16e1e8",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2505.16105",
+      "url_versioned_id": "2505.16105",
+      "file_source_id": "2505.16105",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "2506.01896",
+      "title": "Sums_and_Differences_II",
+      "url": "https://arxiv.org/pdf/2506.01896.pdf",
+      "file": "papers/2506.01896__Sums_and_Differences_II.pdf",
+      "sha256": "3f04c75ccd850eb6e5c785e543f98d12446e9891399cc5246acae9335b4494c2",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "2506.01896",
+      "url_versioned_id": "2506.01896",
+      "file_source_id": "2506.01896",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "1504.04909",
+      "title": "MAP_Elites",
+      "url": "https://arxiv.org/pdf/1504.04909.pdf",
+      "file": "papers/1504.04909__MAP_Elites.pdf",
+      "sha256": "df7344343b14893a1d79a5459c1f56db50562e246d132cd0269f5201d1455872",
+      "source_kind": "arxiv",
+      "source_host": "arxiv.org",
+      "url_source_id": "1504.04909",
+      "url_versioned_id": "1504.04909",
+      "file_source_id": "1504.04909",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    },
+    {
+      "manifest_row_id": "auer-cesa-bianchi-fischer-2002",
+      "title": "UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
+      "url": "https://web.engr.oregonstate.edu/~afern/classes/cs533/notes/ucb.pdf",
+      "file": "papers/auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf",
+      "sha256": "82c8a8192bdb425fbe7662c59ee85faf47f59901f1a4999a732d04db82702a5d",
+      "source_kind": "web",
+      "source_host": "web.engr.oregonstate.edu",
+      "url_source_id": null,
+      "url_versioned_id": null,
+      "file_source_id": "auer-cesa-bianchi-fischer-2002",
+      "identity_checks": {
+        "manifest_id_matches_url_source_id": true,
+        "manifest_id_matches_file_source_id": true,
+        "source_identity_valid": true
+      },
+      "source_version_link": null
+    }
+  ]
+}

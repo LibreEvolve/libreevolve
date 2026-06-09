@@ -131,6 +131,11 @@ from libreevolve.problems.benchmarks.paper_source_rights import (
     render_alphaevolve_source_pdf_rights_summary,
     validate_alphaevolve_source_pdf_rights,
 )
+from libreevolve.problems.benchmarks.paper_source_identity import (
+    PAPER_SOURCE_IDENTITY_MANIFEST_SCHEMA,
+    paper_source_identity_manifest_record,
+    validate_paper_source_identity_manifest,
+)
 from libreevolve.problems.benchmarks.result_certification import (
     CERTIFICATION_ARTIFACT_INVENTORY_SCHEMA,
     PAPER_CERTIFICATION_SCHEMA,

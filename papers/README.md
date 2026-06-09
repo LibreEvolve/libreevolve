@@ -1269,12 +1269,12 @@ Implemented:
   than widened source-version row schemas. It still does not emit source-row
   identity proof or source-rights metadata into every generated table, figure,
   or appendix artifact.
-- `libreevolve/tools/paper_manifest.py`: paper-cache row identity validation.
-  It rejects arXiv source URLs whose embedded id does not match the manifest
-  row id, rejects local PDF filenames whose source prefix does not match the
-  row id, and applies the filename-prefix rule to non-arXiv slug rows. This is
-  base source-identity validation, distinct from arXiv version pinning and
-  source-rights provenance.
+- `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
+  identity evidence. It validates `papers/row_identity.json`, whose 24 source
+  records emit manifest row id, URL source id where available, local filename
+  source prefix, identity-check booleans, and the AlphaEvolve row's link to
+  `papers/source_versions.json`. It still does not emit source-rights metadata
+  into every generated table, figure, or appendix artifact.
 - `libreevolve/problems/benchmarks/paper_source_rights.py`: AlphaEvolve source-
   PDF rights contract. It validates the cached PDF page 1 rights line
   `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source

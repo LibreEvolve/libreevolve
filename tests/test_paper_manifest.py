@@ -14,6 +14,9 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
     alphaevolve_source_pdf_version_manifest_record,
     alphaevolve_source_pdf_version_record,
 )
+from libreevolve.problems.benchmarks.paper_source_identity import (
+    paper_source_identity_manifest_record,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -192,6 +195,44 @@ def test_validate_paper_manifest_rejects_source_version_manifest_row_drift(tmp_p
 
     assert report.ok is False
     assert "alphaevolve_source_pdf_version_manifest_sha256_mismatch" in codes
+
+
+def test_validate_paper_manifest_accepts_matching_source_identity_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "row_identity.json").write_text(
+        json.dumps(paper_source_identity_manifest_record([row]), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_source_identity_manifest_row_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    identity_record = paper_source_identity_manifest_record([row])
+    identity_record["sources"][0]["file_source_id"] = "2506.99999"
+    (tmp_path / "papers" / "row_identity.json").write_text(
+        json.dumps(identity_record, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "paper_source_identity_file_source_id_mismatch" in codes
+    assert "paper_source_identity_manifest_file_source_id_mismatch" in codes
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

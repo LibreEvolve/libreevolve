@@ -3355,26 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     policy and README/ROADMAP checks that separate companion repository rights
     from source-PDF rights and LibreEvolve's repository license.
 
-- [ ] Emit paper-manifest row identity evidence before claim artifacts.
-  - Paper evidence: AlphaEvolve-alignment paper audits depend on the local
-    paper cache preserving the correct source PDF for each paper-facing row.
-    The row id, source URL, and local PDF label should agree on the source
-    identity before later version, rights, citation, or claim-excerpt evidence
-    is attached.
-  - Current gap: `libreevolve.tools.paper_manifest` now validates source-row
-    identity: arXiv source URL ids must match the manifest `id`, local PDF
-    stems must start with the manifest id before any `__` title suffix, and
-    non-arXiv slug rows use the same filename-prefix identity rule. Emitted
-    paper-facing claim artifacts still do not carry a source-identity field or
-    link that proves which validated row each table, figure, appendix claim, or
-    TODO entry used.
-  - Required result: emit paper-index source-identity evidence in claim
-    artifacts and paper ledgers: canonical source id, manifest row id, source
-    URL id where applicable, local file source prefix, validation status, and
-    links to arXiv version provenance. Keep this separate from arXiv version
-    provenance, which pins a specific revision after the base source identity
-    is proven.
-
 - [ ] Emit AlphaEvolve source-PDF rights and license provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.

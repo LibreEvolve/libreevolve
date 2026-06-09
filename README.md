@@ -3491,8 +3491,11 @@ PDFs: arXiv source URLs must carry an arXiv id matching the manifest `id`, and
 local PDF filenames must begin with the manifest id before any `__` title
 suffix. Non-arXiv source rows use the same local filename source-prefix rule,
 so the UCB1 foundational slug cannot silently drift to a different file label.
-This proves base id/URL/file consistency; source-version and rights metadata
-remain separate evidence layers.
+The committed `papers/row_identity.json` companion manifest now emits those
+derived source identities for all 24 cache rows, including URL source id,
+filename source prefix, validation booleans, and the AlphaEvolve row's link to
+`papers/source_versions.json`. This proves base id/URL/file consistency;
+source-rights metadata remains a separate evidence layer.
 AlphaEvolve source-PDF version evidence uses
 `libreevolve.alphaevolve_source_pdf_version.v1` in
 `libreevolve/problems/benchmarks/paper_source_versions.py`; the built-in record

@@ -567,9 +567,11 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF
   filename begins with the manifest id before any `__` title suffix. Non-arXiv
-  slug rows use the same filename source-prefix rule. This prevents base
-  id/URL/file drift while keeping arXiv source-version fields and source-rights
-  metadata as separate follow-on work.
+  slug rows use the same filename source-prefix rule. The committed
+  `papers/row_identity.json` companion manifest emits those derived source
+  identities for all 24 cache rows and links the AlphaEvolve row to
+  `papers/source_versions.json`. This prevents base id/URL/file drift while
+  keeping source-rights metadata as separate follow-on work.
 - Keep cached source-PDF rights separate from project licensing:
   `libreevolve.alphaevolve_source_pdf_rights.v1` now validates the AlphaEvolve
   cached PDF page 1 rights statement `© 2025 Google DeepMind. All rights

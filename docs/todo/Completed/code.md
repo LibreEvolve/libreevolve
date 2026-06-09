@@ -4,6 +4,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit paper-manifest row identity evidence into paper artifacts.
+  - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
+    audit evidence; row id, source URL, and local PDF filename must identify
+    the same paper before source-version or rights evidence attaches.
+  - Status: `papers/row_identity.json` now emits schema-versioned source
+    identity rows for all 24 paper-cache entries, including manifest row id,
+    URL source id where available, local filename source prefix, validation
+    booleans, SHA-256, and the AlphaEvolve row's source-version link. The
+    paper-manifest gate validates the artifact against `download_manifest.json`.
+  - Remaining gap: none for this bounded row-identity evidence slice; source
+    rights and reproduction-policy artifacts remain active TODOs.
+
 - [x] Emit AlphaEvolve source-PDF version metadata in paper manifests.
   - Spec evidence: page 1 of the local `2506.13131__AlphaEvolve.pdf` source
     identifies the audited paper as `arXiv:2506.13131v1 [cs.AI] 16 Jun

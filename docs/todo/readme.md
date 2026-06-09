@@ -1633,25 +1633,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve artifact licensing, and local project ownership or endorsement
     boundaries.
 
-- [ ] Keep README paper-cache wording scoped until row identity is emitted in
-      claim artifacts.
-  - Spec evidence: README points readers to the local paper cache as the source
-    ledger for paper-facing implementation status and benchmark decisions. The
-    row id, source URL, and local PDF filename need to describe the same paper
-    before README treats the cache row as reliable source evidence.
-  - Current evidence: README now states that the paper-manifest validator
-    checks safe row ids, allowed HTTPS source URLs, safe local PDF paths,
-    CSV/JSON agreement, duplicate file/hash rows, optional local PDF hashes,
-    arXiv URL id consistency, and local filename source-prefix consistency for
-    both arXiv and non-ArXiv slug rows. README still cannot point to emitted
-    claim artifacts that carry row-identity proof alongside table/figure/
-    appendix evidence.
-  - Required result: after row-identity evidence is emitted in paper claim
-    artifacts, update README, ROADMAP, papers index, and code/paper TODOs
-    together so README distinguishes safe manifest fields, proven source
-    identity, and per-claim source linkage, while keeping base id/URL/file
-    consistency separate from later source-version pinning.
-
 - [ ] Keep README paper-cache wording scoped until source-PDF rights metadata
       is emitted in paper-derived artifacts.
   - Spec evidence: the local AlphaEvolve PDF header states

@@ -1633,23 +1633,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve artifact licensing, and local project ownership or endorsement
     boundaries.
 
-- [ ] Keep README paper-cache wording scoped until AlphaEvolve PDF version
-      provenance is emitted per manifest row.
-  - Spec evidence: the local AlphaEvolve PDF header says
-    `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_source_pdf_version.v1`, which validates the
-    cached AlphaEvolve row's v1 arXiv id/category/date/header, floating and
-    versioned URLs, byte count, SHA-256 digest, and audit policy through the
-    paper-manifest gate. The CSV/JSON manifests still do not carry per-row
-    source-version fields, and README cannot yet point to emitted claim links
-    that name the source version behind every table, figure, and appendix
-    TODO.
-  - Required result: after manifest/emitter support lands for per-row arXiv
-    source version, category/date, URL kind, expected header text/page, and
-    version-pinned claim links, update README wording so paper-cache integrity
-    claims distinguish content hash validation from source-version pinning.
-
 - [ ] Keep README paper-cache wording scoped until row identity is emitted in
       claim artifacts.
   - Spec evidence: README points readers to the local paper cache as the source

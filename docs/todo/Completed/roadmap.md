@@ -4,6 +4,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document AlphaEvolve source-PDF version companion manifest.
+  - Spec evidence: page 1 of the local AlphaEvolve PDF identifies the source as
+    `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
+  - Status: ROADMAP now says the paper-manifest gate validates both the
+    built-in source-version record and `papers/source_versions.json`, which
+    emits the `2506.13131v1` row and links it to docs/TODO claim surfaces.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Remove prompt-current cross-run binding table from roadmap future work.
   - Spec evidence: AlphaEvolve Figure 3(b,c) treats generated edits as changes
     to the current program in the prompt.

@@ -4,6 +4,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit AlphaEvolve source-PDF version metadata in paper manifests.
+  - Spec evidence: page 1 of the local `2506.13131__AlphaEvolve.pdf` source
+    identifies the audited paper as `arXiv:2506.13131v1 [cs.AI] 16 Jun
+    2025`.
+  - Status: `papers/source_versions.json` now emits a schema-versioned
+    companion source-version manifest for the AlphaEvolve row, including
+    `2506.13131v1`, versioned arXiv URLs, expected header page/text, cached PDF
+    byte count/SHA-256, and docs/TODO claim-surface links. The paper-manifest
+    validator checks the companion file against the cached PDF header and the
+    legacy `download_manifest.json` row.
+  - Remaining gap: none for this bounded source-version manifest slice; source
+    row-identity claim emission and source-rights artifacts remain separate
+    active TODOs.
+
 - [x] Add cross-run prompt-current binding table export.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
     edits as changes to the current program shown in the prompt.

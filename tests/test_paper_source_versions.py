@@ -1,9 +1,12 @@
 import json
 
 from libreevolve.problems.benchmarks.paper_source_versions import (
+    ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA,
     ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA,
+    alphaevolve_source_pdf_version_manifest_record,
     alphaevolve_source_pdf_version_record,
     render_alphaevolve_source_pdf_version_summary,
+    validate_alphaevolve_source_pdf_version_manifest,
     validate_alphaevolve_source_pdf_version,
 )
 
@@ -21,6 +24,37 @@ def test_validate_alphaevolve_source_pdf_version_accepts_builtin_record():
     assert validation.source_count == 1
     assert validation.header_checked is True
     assert validation.issues == []
+
+
+def test_validate_alphaevolve_source_pdf_version_manifest_accepts_builtin_record():
+    recordset = alphaevolve_source_pdf_version_manifest_record()
+
+    validation = validate_alphaevolve_source_pdf_version_manifest(
+        recordset,
+        first_page_text="arXiv:2506.13131v1  [cs.AI]  16 Jun 2025\nAlphaEvolve",
+    )
+
+    assert recordset["schema"] == ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA
+    assert validation.ok is True
+    assert validation.source_count == 1
+    assert validation.header_checked is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_source_pdf_version_manifest_rejects_claim_link_drift():
+    recordset = alphaevolve_source_pdf_version_manifest_record()
+    source = recordset["sources"][0]
+    source["source_version_id"] = "2506.13131v2"
+    source["claim_artifact_links"]["source_version_used_by"] = ["README.md"]
+    source["claim_artifact_links"]["policy"] = "optional"
+
+    validation = validate_alphaevolve_source_pdf_version_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_manifest_source_version_id" in codes
+    assert "claim_artifact_surface_mismatch" in codes
+    assert "invalid_claim_artifact_policy" in codes
 
 
 def test_validate_alphaevolve_source_pdf_version_loads_json_file(tmp_path):

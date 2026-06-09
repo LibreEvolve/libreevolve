@@ -8,9 +8,13 @@ from typing import Any
 
 
 ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA = "libreevolve.alphaevolve_source_pdf_version.v1"
+ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_source_pdf_version_manifest.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_TITLE = "AlphaEvolve"
 EXPECTED_FILE = "papers/2506.13131__AlphaEvolve.pdf"
+EXPECTED_SOURCE_VERSION_MANIFEST_FILE = "papers/source_versions.json"
 EXPECTED_FLOATING_PDF_URL = "https://arxiv.org/pdf/2506.13131.pdf"
 EXPECTED_VERSIONED_ABS_URL = "https://arxiv.org/abs/2506.13131v1"
 EXPECTED_VERSIONED_PDF_URL = "https://arxiv.org/pdf/2506.13131v1"
@@ -94,6 +98,32 @@ def alphaevolve_source_pdf_version_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_source_pdf_version_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA,
+        "source_version_count": 1,
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_SOURCE_PAPER_ID,
+                "source_version_id": EXPECTED_ARXIV_VERSIONED_ID,
+                "source_record": alphaevolve_source_pdf_version_record(),
+                "claim_artifact_links": {
+                    "source_version_used_by": [
+                        "README.md",
+                        "ROADMAP.md",
+                        "papers/README.md",
+                        "docs/todo/code.md",
+                        "docs/todo/papers.md",
+                        "docs/todo/readme.md",
+                        "docs/todo/roadmap.md",
+                    ],
+                    "policy": "paper_claim_audits_must_name_the_source_version_id",
+                },
+            }
+        ],
+    }
+
+
 def validate_alphaevolve_source_pdf_version(
     recordset: object | str | Path | None = None,
     *,
@@ -131,6 +161,57 @@ def validate_alphaevolve_source_pdf_version(
     )
 
 
+def validate_alphaevolve_source_pdf_version_manifest(
+    recordset: object | str | Path | None = None,
+    *,
+    first_page_text: str | None = None,
+) -> AlphaEvolveSourcePdfVersionValidation:
+    data, read_issues = _load_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveSourcePdfVersionValidation(False, 0, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveSourcePdfVersionIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_schema",
+                "unsupported AlphaEvolve source-PDF version manifest schema",
+            )
+        )
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_sources",
+                "source-version manifest sources must be a list",
+            )
+        )
+        sources = []
+    source_count = len(sources)
+    if data.get("source_version_count") != source_count:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_source_version_count",
+                "source_version_count must equal the number of source records",
+            )
+        )
+    if source_count != 1:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_source_count",
+                "source-version manifest must contain the cached AlphaEvolve source row",
+            )
+        )
+    for index, source in enumerate(sources):
+        _validate_source_version_manifest_source(source, issues, first_page_text, index)
+    return AlphaEvolveSourcePdfVersionValidation(
+        ok=not issues,
+        source_count=source_count,
+        header_checked=first_page_text is not None,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_source_pdf_version_summary(recordset: object | str | Path | None = None) -> str:
     validation = validate_alphaevolve_source_pdf_version(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -151,6 +232,14 @@ def render_alphaevolve_source_pdf_version_summary(recordset: object | str | Path
     return "\n".join(lines)
 
 
+def _load_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveSourcePdfVersionIssue]]:
+    if recordset is None:
+        return alphaevolve_source_pdf_version_manifest_record(), []
+    return _load_recordset(recordset)
+
+
 def _load_recordset(
     recordset: object | str | Path | None,
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveSourcePdfVersionIssue]]:
@@ -169,6 +258,88 @@ def _load_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [AlphaEvolveSourcePdfVersionIssue("invalid_shape", "source-PDF version record must be a JSON object")]
+
+
+def _validate_source_version_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveSourcePdfVersionIssue],
+    first_page_text: str | None,
+    index: int,
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_source",
+                f"source-version manifest source {index} must be an object",
+            )
+        )
+        return
+    if value.get("manifest_row_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_source_row_id",
+                "source-version manifest row id must match the cached AlphaEvolve row",
+            )
+        )
+    if value.get("source_version_id") != EXPECTED_ARXIV_VERSIONED_ID:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_manifest_source_version_id",
+                "source-version manifest must name the audited arXiv version id",
+            )
+        )
+    source_record = value.get("source_record")
+    record_report = validate_alphaevolve_source_pdf_version(
+        source_record,
+        first_page_text=first_page_text,
+    )
+    issues.extend(record_report.issues)
+    _validate_claim_artifact_links(value.get("claim_artifact_links"), issues)
+
+
+def _validate_claim_artifact_links(
+    value: object,
+    issues: list[AlphaEvolveSourcePdfVersionIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_claim_artifact_links",
+                "claim_artifact_links must be an object",
+            )
+        )
+        return
+    expected_surfaces = {
+        "README.md",
+        "ROADMAP.md",
+        "papers/README.md",
+        "docs/todo/code.md",
+        "docs/todo/papers.md",
+        "docs/todo/readme.md",
+        "docs/todo/roadmap.md",
+    }
+    surfaces = value.get("source_version_used_by")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_claim_artifact_surfaces",
+                "source_version_used_by must list paper-claim artifact surfaces",
+            )
+        )
+    elif set(surfaces) != expected_surfaces:
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "claim_artifact_surface_mismatch",
+                "source_version_used_by must cover docs, papers, and active TODO evidence",
+            )
+        )
+    if value.get("policy") != "paper_claim_audits_must_name_the_source_version_id":
+        issues.append(
+            AlphaEvolveSourcePdfVersionIssue(
+                "invalid_claim_artifact_policy",
+                "claim artifact policy must require source version ids",
+            )
+        )
 
 
 def _validate_manifest_row(value: object, issues: list[AlphaEvolveSourcePdfVersionIssue]) -> None:

@@ -3501,8 +3501,11 @@ first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`, records the
 floating arXiv PDF URL, versioned arXiv URLs, category, posted date, byte
 count, SHA-256 digest, and audit policy that treats an unversioned arXiv
 refresh as a source-version event. The standard paper-manifest gate validates
-that built-in record, but the CSV/JSON manifests still do not store version
-fields per row or propagate source-version ids into every claim artifact.
+that built-in record and the committed `papers/source_versions.json` companion
+manifest, whose AlphaEvolve row names `2506.13131v1`, the versioned arXiv URLs,
+the expected header page/text, and the docs/TODO claim surfaces that must use
+that source version. The legacy CSV/JSON download manifests remain PDF cache
+ledgers rather than widened per-row source-version schemas.
 AlphaEvolve source-PDF rights evidence uses
 `libreevolve.alphaevolve_source_pdf_rights.v1` in
 `libreevolve/problems/benchmarks/paper_source_rights.py`; the built-in record

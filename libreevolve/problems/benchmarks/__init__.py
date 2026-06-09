@@ -117,9 +117,12 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
     validate_alphaevolve_references_section,
 )
 from libreevolve.problems.benchmarks.paper_source_versions import (
+    ALPHAEVOLVE_SOURCE_PDF_VERSION_MANIFEST_SCHEMA,
     ALPHAEVOLVE_SOURCE_PDF_VERSION_SCHEMA,
+    alphaevolve_source_pdf_version_manifest_record,
     alphaevolve_source_pdf_version_record,
     render_alphaevolve_source_pdf_version_summary,
+    validate_alphaevolve_source_pdf_version_manifest,
     validate_alphaevolve_source_pdf_version,
 )
 from libreevolve.problems.benchmarks.paper_source_rights import (

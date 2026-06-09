@@ -2471,26 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Emit AlphaEvolve source-PDF version metadata in paper manifests.
-  - Spec evidence: page 1 of the local `2506.13131__AlphaEvolve.pdf` source
-    identifies the audited paper as `arXiv:2506.13131v1 [cs.AI] 16 Jun
-    2025`.
-  - Current evidence: `libreevolve.alphaevolve_source_pdf_version.v1` in
-    `libreevolve/problems/benchmarks/paper_source_versions.py` now validates a
-    built-in AlphaEvolve source-version record with arXiv id, version,
-    category, posted date, floating and versioned URLs, expected first-page
-    header text/page, manifest row id/title/file/byte count/SHA-256, and audit
-    policy that treats floating URL refreshes as source-version events.
-    `libreevolve.tools.paper_manifest` validates that built-in record during
-    the standard manifest gate. `papers/download_manifest.*` still preserve
-    only the legacy PDF row fields and do not emit per-row version metadata or
-    claim/TODO links.
-  - Required result: extend paper-manifest row schema or companion emitted
-    manifest artifacts with versioned source identity fields, validate the
-    local PDF header against those row fields, and propagate source-version
-    links into paper-claim artifacts and TODO evidence so every AlphaEvolve
-    audit row names the source version it used.
-
 - [ ] Emit paper-manifest row identity evidence into paper artifacts.
   - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
     audit evidence. A row should not only have a safe id, URL, and filename;

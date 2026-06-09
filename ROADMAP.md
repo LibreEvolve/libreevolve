@@ -558,9 +558,11 @@ is not yet an AlphaEvolve reproduction.
   `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`, including arXiv id, version,
   category, posted date, floating and versioned URLs, expected header page,
   local byte count, SHA-256 digest, and the policy that claim audits must name
-  the source version. The paper-manifest gate validates this built-in record,
-  but CSV/JSON row schema fields and per-claim source-version propagation
-  remain open.
+  the source version. The paper-manifest gate validates this built-in record
+  and the committed `papers/source_versions.json` companion manifest, which
+  emits the `2506.13131v1` source-version row and links it to docs/TODO claim
+  surfaces while keeping the legacy CSV/JSON download manifests as PDF cache
+  ledgers.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

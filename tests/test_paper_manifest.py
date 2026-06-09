@@ -10,6 +10,10 @@ from pathlib import Path
 from pypdf import PdfWriter
 
 import libreevolve.tools.paper_manifest as paper_manifest
+from libreevolve.problems.benchmarks.paper_source_versions import (
+    alphaevolve_source_pdf_version_manifest_record,
+    alphaevolve_source_pdf_version_record,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -153,6 +157,41 @@ def test_validate_paper_manifest_accepts_matching_local_pdf(tmp_path):
     assert report.availability[0].local_status == "present"
     assert report.availability[0].download_ok is True
     assert report.issues == []
+
+
+def test_validate_paper_manifest_accepts_matching_source_version_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "source_versions.json").write_text(
+        json.dumps(alphaevolve_source_pdf_version_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_source_version_manifest_row_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded", "sha256": "0" * 64})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "source_versions.json").write_text(
+        json.dumps(alphaevolve_source_pdf_version_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_source_pdf_version_manifest_sha256_mismatch" in codes
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

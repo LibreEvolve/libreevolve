@@ -6,6 +6,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit AlphaEvolve source-PDF arXiv version provenance in paper artifacts.
+  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
+    audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
+  - Status: `papers/source_versions.json` now records the AlphaEvolve
+    `2506.13131v1` source-version row with arXiv id/category/date, floating and
+    version-pinned URLs, expected header page/text, cached PDF hash/bytes, and
+    claim-surface links. Paper-manifest validation checks the companion file,
+    row hash/bytes, and local first-page header.
+  - Remaining gap: none for this bounded paper-facing source-version slice;
+    source-row identity claim links and source-rights metadata remain separate
+    active paper TODOs.
+
 - [x] Track cross-run prompt-current binding table evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
     2.3.

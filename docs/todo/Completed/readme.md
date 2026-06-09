@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document AlphaEvolve source-PDF version manifest evidence.
+  - Spec evidence: the local AlphaEvolve PDF header says
+    `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
+  - Status: README now documents `papers/source_versions.json` as the
+    committed companion manifest that emits the `2506.13131v1` source-version
+    row, versioned URLs, expected header page/text, and docs/TODO claim-surface
+    links validated by the paper-manifest gate.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document cross-run prompt-current binding table evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
     program rendered in the prompt.

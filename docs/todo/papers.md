@@ -3355,23 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     policy and README/ROADMAP checks that separate companion repository rights
     from source-PDF rights and LibreEvolve's repository license.
 
-- [ ] Emit AlphaEvolve source-PDF arXiv version provenance in paper artifacts.
-  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` identifies the
-    audited source as `arXiv:2506.13131v1 [cs.AI] 16 Jun 2025`.
-  - Current evidence: `libreevolve.alphaevolve_source_pdf_version.v1` now
-    validates a built-in AlphaEvolve source-version record with arXiv id,
-    version, category, posted date, floating and versioned URLs, expected
-    first-page header text/page, manifest row id/title/file/byte count/SHA-256,
-    and audit policy that treats floating URL refreshes as source-version
-    events. The paper-manifest command validates that record. The committed
-    download manifests still do not persist per-row source-version fields, and
-    paper-facing claim artifacts do not yet carry source-version links.
-  - Required result: emit paper-facing provenance rows for source PDF identity:
-    arXiv id, version, category, posted date, canonical floating and
-    version-pinned URLs where available, expected header page/text, PDF hash,
-    local header check status, and claim-audit links that identify the source
-    version behind every AlphaEvolve table, figure, and appendix TODO.
-
 - [ ] Emit paper-manifest row identity evidence before claim artifacts.
   - Paper evidence: AlphaEvolve-alignment paper audits depend on the local
     paper cache preserving the correct source PDF for each paper-facing row.

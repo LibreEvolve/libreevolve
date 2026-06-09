@@ -1261,9 +1261,14 @@ Implemented:
   against the audited first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun
   2025`, including arXiv id, version, category, posted date, floating and
   versioned URLs, expected header page/text, byte count, SHA-256 digest, and
-  the policy that paper-claim audits must identify the source version. The
-  paper-manifest command validates the built-in record, but the download
-  manifests still do not carry per-row version fields.
+  the policy that paper-claim audits must identify the source version.
+  `papers/source_versions.json` emits that `2506.13131v1` row as a committed
+  companion source-version manifest with docs/TODO claim-surface links, and
+  the paper-manifest command validates both the companion file and the cached
+  PDF header. The download manifests remain legacy PDF cache ledgers rather
+  than widened source-version row schemas. It still does not emit source-row
+  identity proof or source-rights metadata into every generated table, figure,
+  or appendix artifact.
 - `libreevolve/tools/paper_manifest.py`: paper-cache row identity validation.
   It rejects arXiv source URLs whose embedded id does not match the manifest
   row id, rejects local PDF filenames whose source prefix does not match the

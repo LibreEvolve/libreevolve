@@ -2862,24 +2862,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with canonical hash scope, evaluator/config cache-key semantics,
     hit/miss/re-evaluation telemetry, replay behavior, and budget accounting.
 
-- [ ] Keep README database-sampling wording scoped until sampling-balance
-      reports exist.
+- [ ] Keep README database-sampling wording scoped until calibrated sampling-
+      balance comparisons exist.
   - Spec evidence: AlphaEvolve's database balances exploration and
     exploitation while resurfacing previously explored ideas.
   - Current evidence: README can describe configurable `explore_ratio`,
     `mixed` parent selection, explicit parent/inspiration strategies, selected
     parent/inspiration metadata, MAP-Elites cells, island pools, metric/frontier
-    sampling, lineage sampling, novelty sampling, recency sampling, and bounded
-    current-run resurfacing. It should not imply that these knobs have been
-    calibrated or measured as an AlphaEvolve-style exploration/exploitation
-    balance.
-  - Required result: when sampling-balance reports land, update README,
-    ROADMAP, papers index, and code/paper TODO entries with aggregate
-    parent/inspiration decision counts, fallback and source-pool provenance,
-    selected-program repetition, island/cell/metric/lineage/descriptor
-    coverage, score-improvement versus diversity effects, and equal-budget
-    comparisons across exploit, explore, mixed, metric, frontier, and lineage
-    variants.
+    sampling, lineage sampling, novelty sampling, recency sampling, bounded
+    current-run resurfacing, and `runtime.history.sampling_balance_report` with
+    aggregate parent/inspiration decision counts. It should not imply that
+    these knobs have been calibrated or measured as an AlphaEvolve-style
+    exploration/exploitation balance.
+  - Required result: when calibrated sampling-balance comparisons land, update
+    README, ROADMAP, papers index, and code/paper TODO entries with fallback
+    and source-pool provenance, selected-program repetition,
+    island/cell/metric/lineage/descriptor coverage, score-improvement versus
+    diversity effects, and equal-budget comparisons across exploit, explore,
+    mixed, metric, frontier, and lineage variants.
 
 - [ ] Keep README discovery-distance wording scoped until initial-pool
       divergence evidence exists.

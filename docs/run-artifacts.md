@@ -2921,6 +2921,21 @@ not implemented. Repeated work is evaluated again, consumes normal budget, and
 is reported after the fact. This is duplicate-work evidence, not AlphaEvolve-
 grade fixed-budget cache/reuse memory.
 
+## `runtime.history.sampling_balance_report`
+
+Completed manifests include a sampling-balance report with schema
+`libreevolve.sampling_balance_report.v1`. It aggregates generated-candidate
+`metadata.parent_selection` and `metadata.inspiration_selection` records into
+parent strategy counts, inspiration strategy counts, prompt-context-vs-config
+inspiration strategy source counts, mixed explore/exploit decision counts,
+inspiration requested/selected totals, metric target counts, frontier/lineage
+decision counts, per-generation summaries, and bounded sample records.
+
+The report also embeds `libreevolve.sampling_balance_policy.v1`, which records
+that this is observed current-run decision telemetry. It does not claim
+AlphaEvolve-grade balance calibration, score-improvement attribution, diversity
+effect measurement, or equal-budget comparison across sampling policies.
+
 ## `runtime.history.proposal_lifecycle_report`
 
 Completed manifests include a bounded proposal lifecycle report with schema

@@ -241,8 +241,10 @@ is not yet an AlphaEvolve reproduction.
   feedback, lineage-diversity, and novelty indexes. Current generated-candidate
   metadata and `runtime.history.metric_diverse_inspiration_report` now prove
   when a rendered prompt contained inspirations from at least two declared
-  metric niches; benchmark-required policies and cross-run fixtures for this
-  prompt-diversity condition remain open.
+  metric niches, and `runtime.history.sampling_balance_report` now aggregates
+  current-run parent/inspiration strategy decisions. Benchmark-required
+  policies, cross-run fixtures, and equal-budget strategy-effect analysis
+  remain open.
 - Add source/workspace deduplication and evaluation-cache policy before
   treating deterministic candidate ids or workspace hashes as AlphaEvolve-grade
   memory over previously explored programs. Current

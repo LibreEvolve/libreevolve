@@ -63,6 +63,7 @@ from libreevolve.core.loop import (
     validate_title_page_affiliation_report,
     validate_metric_diverse_inspiration_report,
     validate_duplicate_work_policy_report,
+    validate_sampling_balance_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -4453,6 +4454,71 @@ def test_runtime_history_reports_duplicate_work_policy_without_cache_claim():
         "seed",
         "generated",
     }
+
+
+def test_runtime_history_reports_sampling_balance_counts():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c):\n"
+        "    if 'x=2' in c:\n"
+        "        return {'score': 0.8, 'latency': 0.2, 'is_valid': True}\n"
+        "    return {'score': 0.9, 'latency': 0.1, 'is_valid': True}\n"
+    )
+    problem = Problem(
+        name="t",
+        task_description="t",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "latency", "bounds": [0.0, 1.0]},
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1", "x=2"],
+        problem_dir=d,
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                parent_selection_strategy="mixed",
+                explore_ratio=1.0,
+                inspiration_strategy="metric",
+                num_inspirations=1,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["sampling_balance_report"]
+
+    assert report["schema"] == "libreevolve.sampling_balance_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_sampling_balance_report(report)["ok"] is True
+    assert report["configured_parent_selection_strategy"] == "mixed"
+    assert report["configured_explore_ratio"] == 1.0
+    assert report["configured_inspiration_strategy"] == "metric"
+    assert report["generated_candidate_count"] == 1
+    assert report["parent_strategy_counts"] == {"explore": 1}
+    assert report["mixed_parent_decision_count"] == 1
+    assert report["mixed_parent_explore_count"] == 1
+    assert report["mixed_parent_exploit_count"] == 0
+    assert report["inspiration_strategy_counts"] == {"metric": 1}
+    assert report["inspiration_strategy_source_counts"] == {"config": 1}
+    assert report["inspiration_requested_total"] == 1
+    assert report["inspiration_selected_total"] == 1
+    assert set(report["metric_target_counts"]) == {"score", "latency"}
+    assert report["generation_records"][0]["candidate_count"] == 1
+    sample = report["sample_records"][0]
+    assert sample["parent_strategy"] == "explore"
+    assert sample["inspiration_strategy"] == "metric"
+    assert sample["inspiration_selected_count"] == 1
+    assert report["claim_ready"] is False
 
 
 def test_runtime_history_reports_abandoned_hypothesis_branch_evidence():

@@ -5227,6 +5227,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             _metric_diverse_inspiration_report(programs)
         ),
         "duplicate_work_policy_report": _duplicate_work_policy_report(programs),
+        "sampling_balance_report": _sampling_balance_report(
+            db.startup_manifest_snapshot(),
+            programs,
+        ),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
         "hypothesis_branch_report": _hypothesis_branch_report(db, programs),
         "archive_state": archive_state,
@@ -12231,6 +12235,456 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.duplicate_work_policy_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _sampling_balance_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    generated_records = [
+        _sampling_balance_candidate_record(program)
+        for program in programs
+        if _program_candidate_type(program) == "generated"
+    ]
+    parent_strategy_counts: dict[str, int] = {}
+    inspiration_strategy_counts: dict[str, int] = {}
+    inspiration_source_counts: dict[str, int] = {}
+    inspiration_selected_total = 0
+    metric_target_counts: dict[str, int] = {}
+    frontier_decision_count = 0
+    lineage_decision_count = 0
+    generation_records: dict[int, dict] = {}
+    for record in generated_records:
+        parent_strategy = record["parent_strategy"]
+        _increment_count(parent_strategy_counts, parent_strategy)
+        inspiration_strategy = record["inspiration_strategy"]
+        _increment_count(inspiration_strategy_counts, inspiration_strategy)
+        _increment_count(inspiration_source_counts, record["inspiration_strategy_source"])
+        selected_count = record["inspiration_selected_count"]
+        inspiration_selected_total += selected_count
+        for metric in record["parent_target_metrics"]:
+            _increment_count(metric_target_counts, metric)
+        for metric in record["inspiration_target_metrics"]:
+            _increment_count(metric_target_counts, metric)
+        if record["parent_frontier"]:
+            frontier_decision_count += 1
+        if record["inspiration_frontier"]:
+            frontier_decision_count += 1
+        if record["parent_lineage"]:
+            lineage_decision_count += 1
+        if record["inspiration_lineage"]:
+            lineage_decision_count += 1
+        generation = record["loop_generation_index"]
+        generation_record = generation_records.setdefault(
+            generation,
+            {
+                "loop_generation_index": generation,
+                "candidate_count": 0,
+                "parent_strategy_counts": {},
+                "inspiration_strategy_counts": {},
+                "inspiration_selected_total": 0,
+            },
+        )
+        generation_record["candidate_count"] += 1
+        _increment_count(generation_record["parent_strategy_counts"], parent_strategy)
+        _increment_count(
+            generation_record["inspiration_strategy_counts"],
+            inspiration_strategy,
+        )
+        generation_record["inspiration_selected_total"] += selected_count
+    configured_parent_strategy = str(config.get("parent_selection_strategy", "mixed"))
+    configured_inspiration_strategy = str(config.get("inspiration_strategy", "mixed"))
+    explore_ratio = _sampling_balance_float(config.get("explore_ratio"))
+    mixed_parent_decision_count = 0
+    if configured_parent_strategy == "mixed":
+        mixed_parent_decision_count = sum(
+            parent_strategy_counts.get(strategy, 0)
+            for strategy in ("explore", "exploit")
+        )
+    report = {
+        "schema": "libreevolve.sampling_balance_report.v1",
+        "source": "history_program_metadata_parent_and_inspiration_selection",
+        "configured_parent_selection_strategy": configured_parent_strategy,
+        "configured_explore_ratio": explore_ratio,
+        "configured_inspiration_strategy": configured_inspiration_strategy,
+        "generated_candidate_count": len(generated_records),
+        "parent_strategy_counts": dict(sorted(parent_strategy_counts.items())),
+        "inspiration_strategy_counts": dict(sorted(inspiration_strategy_counts.items())),
+        "inspiration_strategy_source_counts": dict(
+            sorted(inspiration_source_counts.items())
+        ),
+        "mixed_parent_decision_count": mixed_parent_decision_count,
+        "mixed_parent_explore_count": parent_strategy_counts.get("explore", 0)
+        if configured_parent_strategy == "mixed"
+        else 0,
+        "mixed_parent_exploit_count": parent_strategy_counts.get("exploit", 0)
+        if configured_parent_strategy == "mixed"
+        else 0,
+        "inspiration_requested_total": sum(
+            record["inspiration_requested_count"] for record in generated_records
+        ),
+        "inspiration_selected_total": inspiration_selected_total,
+        "metric_target_counts": dict(sorted(metric_target_counts.items())),
+        "frontier_selection_decision_count": frontier_decision_count,
+        "lineage_selection_decision_count": lineage_decision_count,
+        "generation_records": [
+            generation_records[index]
+            for index in sorted(generation_records)
+        ][:100],
+        "generation_records_limit": 100,
+        "generation_records_truncated": len(generation_records) > 100,
+        "sample_records": generated_records[:100],
+        "sample_records_limit": 100,
+        "sample_records_truncated": len(generated_records) > 100,
+        "balance_policy": {
+            "schema": "libreevolve.sampling_balance_policy.v1",
+            "parent_decision_source": "metadata.parent_selection.strategy",
+            "inspiration_decision_source": "metadata.inspiration_selection.strategy",
+            "mixed_parent_policy": (
+                "config.explore_ratio_drives_explore_vs_exploit_decisions"
+            ),
+            "calibration_status": "observed_current_run_counts_not_equal_budget_ablation",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_grade_sampling_balance": False,
+            "observed_decision_counts": bool(generated_records),
+            "remaining_gap": [
+                "equal_budget_sampling_strategy_comparison",
+                "per_strategy_score_improvement_analysis",
+                "diversity_retention_effect_analysis",
+                "cross_run_sampling_balance_calibration",
+            ],
+        },
+    }
+    report["validation"] = validate_sampling_balance_report(report)
+    return report
+
+
+def _sampling_balance_candidate_record(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    parent = (
+        metadata.get("parent_selection")
+        if isinstance(metadata.get("parent_selection"), Mapping)
+        else {}
+    )
+    inspiration = (
+        metadata.get("inspiration_selection")
+        if isinstance(metadata.get("inspiration_selection"), Mapping)
+        else {}
+    )
+    loop_generation_index = metadata.get("loop_generation_index")
+    if (
+        isinstance(loop_generation_index, bool)
+        or not isinstance(loop_generation_index, int)
+    ):
+        loop_generation_index = program.generation
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "loop_generation_index": loop_generation_index,
+        "parent_id": program.parent_id,
+        "parent_strategy": _sampling_balance_label(parent.get("strategy")),
+        "parent_target_metrics": _sampling_balance_target_metrics(parent),
+        "parent_frontier": isinstance(parent.get("frontier_size"), int),
+        "parent_lineage": isinstance(parent.get("lineage_root_id"), str),
+        "inspiration_strategy": _sampling_balance_label(inspiration.get("strategy")),
+        "inspiration_strategy_source": _sampling_balance_label(
+            inspiration.get("strategy_source")
+        ),
+        "inspiration_requested_count": _sampling_balance_int(
+            inspiration.get("requested_count")
+        ),
+        "inspiration_selected_count": _sampling_balance_int(
+            inspiration.get("selected_count")
+        ),
+        "inspiration_target_metrics": _sampling_balance_target_metrics(inspiration),
+        "inspiration_frontier": isinstance(inspiration.get("frontier_size"), int),
+        "inspiration_lineage": isinstance(inspiration.get("lineages"), list),
+    }
+
+
+def _program_candidate_type(program: Program) -> str:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    value = metadata.get("candidate_type")
+    return value if isinstance(value, str) and value else "seed"
+
+
+def _sampling_balance_label(value: object) -> str:
+    return value if isinstance(value, str) and value else "unknown"
+
+
+def _sampling_balance_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        return 0
+    return max(0, value)
+
+
+def _sampling_balance_float(value: object) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    numeric = float(value)
+    return numeric if math.isfinite(numeric) else None
+
+
+def _sampling_balance_target_metrics(selection: Mapping[str, object]) -> list[str]:
+    metrics: list[str] = []
+    target = selection.get("target_metric")
+    if isinstance(target, str) and target:
+        metrics.append(target)
+    targets = selection.get("target_metrics")
+    if isinstance(targets, list):
+        for record in targets:
+            if not isinstance(record, Mapping):
+                continue
+            metric = record.get("metric")
+            if isinstance(metric, str) and metric:
+                metrics.append(metric)
+    return _unique_in_order(metrics)
+
+
+def _increment_count(counts: dict[str, int], key: str) -> None:
+    counts[key] = counts.get(key, 0) + 1
+
+
+def validate_sampling_balance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.sampling_balance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "sampling-balance report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_parent_selection_strategy",
+        "configured_explore_ratio",
+        "configured_inspiration_strategy",
+        "generated_candidate_count",
+        "parent_strategy_counts",
+        "inspiration_strategy_counts",
+        "inspiration_strategy_source_counts",
+        "mixed_parent_decision_count",
+        "mixed_parent_explore_count",
+        "mixed_parent_exploit_count",
+        "inspiration_requested_total",
+        "inspiration_selected_total",
+        "metric_target_counts",
+        "frontier_selection_decision_count",
+        "lineage_selection_decision_count",
+        "generation_records",
+        "generation_records_limit",
+        "generation_records_truncated",
+        "sample_records",
+        "sample_records_limit",
+        "sample_records_truncated",
+        "balance_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"sampling-balance report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.sampling_balance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "sampling-balance report schema is unsupported",
+            }
+        )
+    if (
+        report.get("source")
+        != "history_program_metadata_parent_and_inspiration_selection"
+    ):
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "sampling-balance report source is unsupported",
+            }
+        )
+    sample_records = report.get("sample_records")
+    if not isinstance(sample_records, list):
+        issues.append(
+            {"code": "invalid_sample_records", "message": "sample_records must be a list"}
+        )
+        sample_records = []
+    parent_counts = report.get("parent_strategy_counts")
+    if not isinstance(parent_counts, dict):
+        issues.append(
+            {
+                "code": "invalid_parent_strategy_counts",
+                "message": "parent_strategy_counts must be an object",
+            }
+        )
+        parent_counts = {}
+    inspiration_counts = report.get("inspiration_strategy_counts")
+    if not isinstance(inspiration_counts, dict):
+        issues.append(
+            {
+                "code": "invalid_inspiration_strategy_counts",
+                "message": "inspiration_strategy_counts must be an object",
+            }
+        )
+        inspiration_counts = {}
+    requested_total = 0
+    selected_total = 0
+    observed_parent_counts: dict[str, int] = {}
+    observed_inspiration_counts: dict[str, int] = {}
+    for index, record in enumerate(sample_records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_sample_record",
+                    "message": f"sample record {index} must be an object",
+                }
+            )
+            continue
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append(
+                {
+                    "code": "invalid_program_id",
+                    "message": f"sample record {index} program_id is invalid",
+                }
+            )
+        parent_strategy = record.get("parent_strategy")
+        inspiration_strategy = record.get("inspiration_strategy")
+        if not isinstance(parent_strategy, str) or not parent_strategy:
+            issues.append(
+                {
+                    "code": "invalid_parent_strategy",
+                    "message": f"sample record {index} parent_strategy is invalid",
+                }
+            )
+            parent_strategy = "unknown"
+        if not isinstance(inspiration_strategy, str) or not inspiration_strategy:
+            issues.append(
+                {
+                    "code": "invalid_inspiration_strategy",
+                    "message": f"sample record {index} inspiration_strategy is invalid",
+                }
+            )
+            inspiration_strategy = "unknown"
+        _increment_count(observed_parent_counts, parent_strategy)
+        _increment_count(observed_inspiration_counts, inspiration_strategy)
+        requested = record.get("inspiration_requested_count")
+        selected = record.get("inspiration_selected_count")
+        if isinstance(requested, bool) or not isinstance(requested, int) or requested < 0:
+            issues.append(
+                {
+                    "code": "invalid_requested_count",
+                    "message": f"sample record {index} requested count is invalid",
+                }
+            )
+            requested = 0
+        if isinstance(selected, bool) or not isinstance(selected, int) or selected < 0:
+            issues.append(
+                {
+                    "code": "invalid_selected_count",
+                    "message": f"sample record {index} selected count is invalid",
+                }
+            )
+            selected = 0
+        requested_total += requested
+        selected_total += selected
+    if report.get("sample_records_truncated") is not True:
+        if report.get("generated_candidate_count") != len(sample_records):
+            issues.append(
+                {
+                    "code": "invalid_generated_candidate_count",
+                    "message": "generated_candidate_count must match sample records",
+                }
+            )
+        if dict(sorted(observed_parent_counts.items())) != parent_counts:
+            issues.append(
+                {
+                    "code": "invalid_parent_strategy_count_values",
+                    "message": "parent_strategy_counts must match sample records",
+                }
+            )
+        if dict(sorted(observed_inspiration_counts.items())) != inspiration_counts:
+            issues.append(
+                {
+                    "code": "invalid_inspiration_strategy_count_values",
+                    "message": "inspiration_strategy_counts must match sample records",
+                }
+            )
+        if report.get("inspiration_requested_total") != requested_total:
+            issues.append(
+                {
+                    "code": "invalid_requested_total",
+                    "message": "inspiration_requested_total must match sample records",
+                }
+            )
+        if report.get("inspiration_selected_total") != selected_total:
+            issues.append(
+                {
+                    "code": "invalid_selected_total",
+                    "message": "inspiration_selected_total must match sample records",
+                }
+            )
+    for field in (
+        "mixed_parent_decision_count",
+        "mixed_parent_explore_count",
+        "mixed_parent_exploit_count",
+        "frontier_selection_decision_count",
+        "lineage_selection_decision_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    ratio = report.get("configured_explore_ratio")
+    if ratio is not None and (
+        isinstance(ratio, bool)
+        or not isinstance(ratio, (int, float))
+        or not math.isfinite(float(ratio))
+        or not 0.0 <= float(ratio) <= 1.0
+    ):
+        issues.append(
+            {
+                "code": "invalid_configured_explore_ratio",
+                "message": "configured_explore_ratio must be null or [0, 1]",
+            }
+        )
+    if not isinstance(report.get("balance_policy"), dict):
+        issues.append(
+            {
+                "code": "invalid_balance_policy",
+                "message": "balance_policy must be an object",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "sampling-balance report must not claim calibration parity",
+            }
+        )
+    return {
+        "schema": "libreevolve.sampling_balance_report.v1",
         "ok": not issues,
         "issues": issues,
     }

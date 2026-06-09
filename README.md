@@ -1380,7 +1380,12 @@ fill for any remaining slots.
 Metric, frontier, lineage, novelty, recency, selection, and mixed strategies sample from retained
 archive state, including auxiliary elite-only, Pareto-only, and metric-cell-only
 programs; `explore` parent sampling and random inspiration sampling remain
-occupied-cell sampling.
+occupied-cell sampling. Completed manifests include
+`runtime.history.sampling_balance_report`, which aggregates generated-candidate
+parent and inspiration strategy counts, mixed explore/exploit decisions,
+inspiration strategy sources, per-generation decision counts, selected
+inspiration totals, and metric/frontier/lineage selection indicators. This is
+current-run sampling evidence, not equal-budget calibration of strategy effects.
 Recency uses a monotonic in-memory archive sequence before generation and score
 tie-breaks; accepted history records persist that sequence in
 `metadata.archive_sequence` and `metadata.archive_admission.archive_sequence`

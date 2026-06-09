@@ -1628,26 +1628,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     pages as snapshot diagnostics, and avoid treating every numbered page as a
     complete problem/notebook/paper-linked source artifact until reconciled.
 
-- [ ] Keep README backlog-integrity wording scoped until stale source-specific
-      absence prose is validated.
-  - Spec evidence: README should describe the paper cache and TODO ledgers as
-    an evidence-backed backlog only to the extent that active TODO text is
-    internally consistent. Source-specific paper rows should not be presented
-    as absent once the active ledgers contain them.
-  - Current evidence: README can mention manifest validation, implementation
-    status id reconciliation, Appendix B/Figure 8 registry checks, TODO
-    coverage-table validation, and the new active-TODO stale absence-prose
-    check. The check is manifest-id scoped and rejects explicit
-    `no source-specific ... TODO` wording when the matching code/paper/
-    README/ROADMAP ledger already has an open TODO block for that paper id.
-    README still does not explain this scope or the remaining limitation that
-    broader paraphrases need future pattern additions.
-  - Required result: update README, ROADMAP, papers index, and code/paper
-    TODOs so README distinguishes verified backlog traceability from
-    hand-maintained prose and does not imply source-specific TODO coverage is
-    missing where the remaining gap is implementation, report, artifact, or
-    evidence work.
-
 - [ ] Keep README implementation-status wording scoped until table semantics
       are validated.
   - Spec evidence: README directs readers to `papers/README.md` for

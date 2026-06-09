@@ -3355,24 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Track stale source-specific absence wording in active TODO bodies.
-  - Paper evidence: `papers/README.md` uses the implementation-status table and
-    TODO coverage table as the source-to-backlog chain for paper-alignment
-    audits. The ledgers therefore need internally consistent current-gap
-    wording, not only row-level cross-reference coverage.
-  - Current gap: `libreevolve.tools.paper_manifest` now detects manifest-id-
-    scoped stale absence claims such as "no source-specific code TODO" and
-    checks them against active open source-specific rows across the four TODO
-    ledgers. Focused tests cover generic/example wording that should not fail
-    and a stale source-specific README absence claim that should fail.
-    Remaining paper-facing gap: the detector only covers the explicit
-    `no source-specific ... TODO` phrase family, so broader paraphrases still
-    rely on review or future pattern additions.
-  - Required result: extend paper-ledger validation as new stale absence
-    phrase families appear, and rewrite affected entries so paper-facing gaps
-    describe the remaining missing implementation, report, or evidence surface
-    rather than falsely claiming the source-specific TODO coverage is absent.
-
 - [ ] Validate paper-index implementation-status semantics, not only ids.
   - Paper evidence: `papers/README.md` explicitly makes the implementation
     status table the source for paper-facing titles, roles, implementation

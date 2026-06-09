@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README backlog-integrity wording scoped until stale source-specific
+      absence prose is validated.
+  - Spec evidence: README should describe the paper cache and TODO ledgers as
+    evidence-backed only to the extent active TODO text is internally
+    consistent.
+  - Status: README now states that manifest-id-scoped `no source-specific ...
+    TODO` claims fail when the referenced active ledger already has an open
+    TODO block for that paper id, while broader paraphrases remain review or
+    future-pattern work.
+  - Remaining gap: none for this bounded README wording slice; broader
+    implementation-status semantics remain active TODOs.
+
 - [x] Keep README paper-index traceability wording scoped until TODO coverage
       cross-references are validated.
   - Spec evidence: `papers/README.md` presents a TODO coverage table that

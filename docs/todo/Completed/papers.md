@@ -6,6 +6,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track stale source-specific absence wording in active TODO bodies.
+  - Paper evidence: the paper index uses implementation-status and TODO
+    coverage tables as the source-to-backlog chain for paper-alignment audits.
+  - Status: the paper-manifest gate now rejects explicit
+    `no source-specific ... TODO` wording when the target active ledger already
+    has an open source-specific TODO block for the same manifest id. Focused
+    tests cover ignored generic examples and rejected stale source-specific
+    README absence wording.
+  - Remaining gap: broader stale-absence paraphrases remain separate future
+    pattern additions.
+
 - [x] Validate paper-index TODO coverage cross-references.
   - Paper evidence: the `papers/README.md` TODO coverage table is the
     paper-index source-to-backlog chain for AlphaEvolve-alignment audits.

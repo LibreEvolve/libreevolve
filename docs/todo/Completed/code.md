@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Detect stale source-specific absence wording inside active TODO bodies.
+  - Spec evidence: active TODO ledgers are the audit surface for AlphaEvolve
+    and paper-alignment gaps, so current-evidence clauses must not claim
+    source-specific TODO coverage is absent once it exists.
+  - Status: `validate_paper_manifest()` now scans manifest-id-scoped active
+    TODO blocks for the explicit `no source-specific ... TODO` phrase family
+    and reports contradictions when the referenced active ledger contains an
+    open TODO block for that paper id. README, ROADMAP, and `papers/README.md`
+    document the narrow scope and distinguish missing evidence from missing
+    TODO coverage.
+  - Remaining gap: arbitrary paraphrases and non-manifest paper ids remain
+    review/future-pattern work.
+
 - [x] Add validation for paper-index TODO coverage cross-references.
   - Spec evidence: `papers/README.md` includes a TODO coverage
     cross-reference table tying paper status rows to active and completed

@@ -920,25 +920,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current safe diagnostics nor overclaims
     paper-implementation verification.
 
-- [ ] Keep roadmap backlog-integrity wording scoped until stale absence prose
-      is detected inside TODO bodies.
-  - Spec evidence: ROADMAP planning depends on active TODO entries as a truthful
-    map of remaining AlphaEvolve and paper-alignment work. Once source-specific
-    TODOs have been created, roadmap-facing backlog diagnostics should not
-    leave older entries saying that such TODO coverage is absent.
-  - Current evidence: `validate_paper_manifest()` now validates free-form
-    current-gap prose inside active TODO bodies for manifest-id-scoped stale
-    absence phrases. It detects explicit `no source-specific ... TODO`
-    wording, maps code/paper/README/ROADMAP targets to the active ledgers, and
-    reports contradictions when the target ledger already has an open TODO
-    block for that paper id. Remaining roadmap gap: README/ROADMAP/paper-index
-    wording does not yet describe this validator scope, and future paraphrases
-    outside the current phrase family need additional patterns.
-  - Required result: update ROADMAP, README, papers index, and code/paper
-    TODOs with the validator scope: manifest-id matching, target-ledger
-    detection, contradictory absence-phrase reporting, and rewrites that
-    distinguish missing evidence from missing TODO coverage.
-
 - [ ] Keep implementation-status roadmap wording scoped until semantic cells
       are validated.
   - Spec evidence: the roadmap depends on `papers/README.md` as the

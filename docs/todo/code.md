@@ -2528,23 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Detect stale source-specific absence wording inside active TODO bodies.
-  - Spec evidence: the TODO ledgers are the audit surface for AlphaEvolve and
-    paper-alignment gaps, so their "current evidence" clauses must remain
-    truthful as new source-specific backlog rows are added.
-  - Current evidence: `validate_paper_manifest()` now scans active TODO blocks
-    for manifest-id-scoped phrases such as "no source-specific code TODO" or
-    "no source-specific README TODO" and rejects them when the target active
-    ledger contains an open TODO block for the same paper id. Focused tests
-    cover ignored generic/example wording and rejected stale source-specific
-    absence wording. Remaining gap: the phrase detector is intentionally
-    narrow and only covers the current explicit `no source-specific ... TODO`
-    family, not arbitrary paraphrases or non-manifest paper ids.
-  - Required result: extend TODO-ledger consistency checks as new stale
-    absence patterns appear, and update README/ROADMAP/paper-index wording so
-    "missing implementation/report evidence" remains distinct from "missing
-    source-specific TODO coverage."
-
 - [ ] Validate semantic cells in the paper implementation-status table.
   - Spec evidence: `papers/README.md` says manifest `title` values are only
     inventory/display slugs and that the implementation-status table is the

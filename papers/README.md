@@ -1001,6 +1001,11 @@ Source-specific active gaps now appear across
 `docs/todo/readme.md`; completed evidence remains split by the completed-ledger
 files listed below. This table is backlog traceability evidence, not a claim
 that implementation-status prose is semantically complete.
+The same manifest gate also checks active TODO bodies for a narrow stale
+absence phrase family: a manifest-id-scoped claim such as `no source-specific
+README TODO` is rejected when the referenced active ledger already has an open
+TODO block for that paper id. This distinguishes missing implementation,
+report, artifact, or evidence work from missing source-specific TODO coverage.
 
 | ID | Active gap evidence | Completed evidence |
 |---|---|---|

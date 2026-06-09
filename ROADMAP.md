@@ -678,6 +678,11 @@ is not yet an AlphaEvolve reproduction.
   checklist evidence, and rejection of grouped labels until a grouped-label
   taxonomy exists. This is backlog-link validation, not full semantic proof of
   every implementation-status sentence.
+- Keep active TODO prose internally consistent: `validate_paper_manifest()`
+  now rejects manifest-id-scoped stale absence wording such as
+  `no source-specific README TODO` when the target active ledger already has
+  an open TODO block for that paper id. The check is intentionally phrase-
+  family scoped, so broader paraphrases remain a review/future-pattern task.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

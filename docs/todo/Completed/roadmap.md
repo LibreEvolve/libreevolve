@@ -4,6 +4,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep roadmap backlog-integrity wording scoped until stale absence prose
+      is detected inside TODO bodies.
+  - Spec evidence: ROADMAP planning depends on active TODO entries as a
+    truthful map of remaining AlphaEvolve and paper-alignment work.
+  - Status: ROADMAP now documents the active-TODO stale absence check:
+    manifest-id matching, target-ledger detection, contradictory
+    `no source-specific ... TODO` reporting, and the boundary that broader
+    paraphrases need future patterns or review.
+  - Remaining gap: none for this bounded roadmap wording slice; broader
+    implementation-status semantics remain active work.
+
 - [x] Keep paper-index backlog-traceability roadmap wording scoped until TODO
       coverage cross-references are validated.
   - Spec evidence: roadmap planning depends on paper status rows being

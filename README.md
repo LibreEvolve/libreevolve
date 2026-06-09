@@ -3637,6 +3637,12 @@ cells must point at completed ledgers with source-specific completed checklist
 items, and grouped labels are rejected until a grouped-label taxonomy exists.
 That check proves backlog linkage for the local paper index; it is separate
 from implementation-status semantic completeness.
+Active TODO prose is also checked for a narrow stale-absence pattern:
+manifest-id-scoped claims such as `no source-specific README TODO` now fail
+when the referenced active ledger already contains an open TODO block for that
+paper id. This keeps missing implementation/report/artifact evidence separate
+from missing TODO coverage; broader paraphrases still require review or future
+pattern additions.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

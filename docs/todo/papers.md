@@ -1639,7 +1639,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark-level discovery-distance telemetry before using AlphaEvolve-style
     functional discovery-distance wording.
 
-- [ ] Extend source/workspace duplicate evidence into evaluation-cache policy.
+- [ ] Extend run-local duplicate-work cache into durable paper-visible memory.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.
   - Requirement: AlphaEvolve's generated-program database stores previously
     explored programs with evaluation results and program outputs under fixed
@@ -1648,16 +1648,18 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: generated candidate ids include a workspace hash, and
     database/history restore paths validate unique program ids. Completed
     manifests now include `runtime.history.duplicate_work_policy_report`, which
-    groups identical runtime workspaces and records that current duplicates are
-    evaluated and reported rather than skipped or served from cached results.
-  - Current gap: the workspace hash is still identity/reporting provenance, not
-    a pre-evaluation duplicate gate or evaluation-cache lookup. The paper index
-    has no evidence for evaluator cache-key scope, cache hit/miss telemetry,
-    stochastic re-evaluation policy, cross-run lookup, or replayable budget
-    accounting for duplicate proposals.
-  - Required result: add paper-visible cache/reuse policy proving whether
-    identical source/workspace proposals are skipped, reuse prior evaluation
-    results, or are intentionally re-evaluated as new stochastic samples with
+    groups identical runtime workspaces, records cache stores/hits, and states
+    that diff-error-free exact workspace matches reuse a run-local evaluator
+    result keyed by canonical workspace hash plus evaluator-contract hash.
+    Cache hits emit replayable `candidate_evaluation_cache_hit` controller
+    events and do not consume evaluator-call budget.
+  - Current gap: the cache is still run-local and exact-match only. The paper
+    index has no evidence for durable cross-run lookup, resume-spanning cache
+    replay, stochastic re-evaluation policy, semantic near-duplicate handling,
+    or output/source-aware duplicate indexes.
+  - Required result: add paper-visible durable cache/reuse policy proving how
+    repeated source/workspace proposals are skipped, reused, replayed across
+    runs/resumes, or intentionally re-evaluated as stochastic samples with
     documented budget effects.
 
 - [ ] Extend exploration/exploitation sampling-balance evidence into calibrated

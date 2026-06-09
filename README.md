@@ -1413,11 +1413,13 @@ Generated candidate ids include a workspace hash for identity provenance, and
 history/database paths reject duplicate program ids. Completed manifests also
 include `runtime.history.duplicate_work_policy_report`, which groups identical
 runtime candidate workspaces by canonical workspace hash and records the
-current evaluation-cache policy: duplicates are evaluated and reported, not
-pre-evaluation skipped or served from cached results. Identical candidate
-workspaces can still consume evaluator budget unless a future canonical
-hash/evaluator-cache scope explicitly skips, reuses, or deliberately
-re-evaluates them with cache-hit and budget telemetry.
+current evaluation-cache policy. Diff-error-free exact workspace matches are
+looked up in a run-local evaluator-result cache keyed by canonical workspace
+hash plus evaluator-contract hash; cache hits emit
+`candidate_evaluation_cache_hit` controller events and do not consume
+evaluator-call budget, while LLM feedback and plugin scoring still run after
+reuse. Diff/syntax mutation failures and durable cross-run or semantic
+near-duplicate lookup remain outside this cache.
 Seed baselines are persisted with `generation: 0`. Generated candidates use
 completed-generation counts starting at `1`, while
 `metadata.loop_generation_index` keeps the internal zero-based loop index for

@@ -2091,8 +2091,8 @@ Primary evidence:
     telemetry before claiming AlphaEvolve-style functional discovery distance
     from the starting pool.
 
-- [ ] Extend duplicate-work reporting into source/workspace deduplication and
-      evaluation-cache policy.
+- [ ] Extend run-local duplicate-work cache into durable source/workspace
+      deduplication policy.
   - Spec evidence: AlphaEvolve Section 2.5 describes a growing evolutionary
     database of generated solutions with scores and program outputs attached,
     whose purpose is to resurface previously explored ideas under fixed
@@ -2106,16 +2106,17 @@ Primary evidence:
     Completed manifests now include
     `runtime.history.duplicate_work_policy_report`, which groups identical
     runtime workspaces by canonical workspace hash and records the current
-    `libreevolve.evaluation_cache_policy.v1` boundary: duplicates are
-    evaluated and reported, not pre-evaluation skipped or served from cache.
-    There is still no run-local or durable cache index keyed by canonical
-    workspace/source hash, evaluator contract, evaluator inputs, seed/sample
-    configuration, static sidecars, or environment provenance.
-  - Required result: add a versioned dedup/evaluation-cache mechanism that
-    records cache-key scope, duplicate-detection timing, cache hit/miss/
-    re-evaluation reasons, stochastic sample policy, budget-accounting effects,
-    and replay semantics before presenting the program database as
-    AlphaEvolve-grade fixed-budget memory over previously explored programs.
+    `libreevolve.evaluation_cache_policy.v1` boundary. The loop now maintains
+    a run-local evaluator-result cache for diff-error-free exact workspace
+    matches keyed by canonical workspace hash plus evaluator-contract hash.
+    Cache hits emit `candidate_evaluation_cache_hit` controller events, do not
+    consume evaluator-call budget, and are visible in generated-candidate
+    metadata and the duplicate-work report.
+  - Required result: add durable cross-run cache storage, resume-spanning cache
+    replay, cache invalidation/migration policy, stochastic re-evaluation
+    policy, semantic near-duplicate detection, and source/output-aware cache
+    indexes before presenting the program database as AlphaEvolve-grade
+    fixed-budget memory over previously explored programs.
 
 - [ ] Extend automated-evaluator scope policy into robust environment fixtures.
   - Spec evidence: AlphaEvolve says automated evaluation is both an advantage

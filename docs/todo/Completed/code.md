@@ -15447,3 +15447,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover manifest emission, validator
     success, seed/candidate counts, distance records, and unready claim
     boundaries.
+
+- [x] Add run-local exact-workspace evaluator cache evidence.
+  - Spec evidence: AlphaEvolve's generated-program database stores evaluated
+    solutions under fixed compute budgets, so repeated identical work needs an
+    explicit skip/reuse/re-evaluation policy.
+  - Status: diff-error-free exact workspace matches now reuse a run-local
+    evaluator result keyed by canonical workspace hash plus evaluator-contract
+    hash. Cache stores/hits are recorded in candidate metadata and
+    `runtime.history.duplicate_work_policy_report`; cache hits emit replayable
+    `candidate_evaluation_cache_hit` controller events and do not consume
+    evaluator-call budget.
+  - Remaining gap: durable cross-run cache storage, resume-spanning cache
+    replay, stochastic re-evaluation policy, semantic near-duplicate
+    detection, and source/output-aware duplicate indexes remain open.
+  - Verification: focused budget and loop tests cover event validation,
+    no-op budget replay, cache metadata, duplicate-work report counts, and
+    evaluator-call budget savings.

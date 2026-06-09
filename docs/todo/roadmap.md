@@ -1552,8 +1552,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     effects, and equal-budget comparisons across exploit, explore, mixed,
     metric, frontier, and lineage policies.
 
-- [ ] Keep database-memory roadmap wording scoped until duplicate-work cache
-      reuse lands.
+- [ ] Keep database-memory roadmap wording scoped until duplicate-work cache is
+      durable and cross-run.
   - Spec evidence: AlphaEvolve's program database is a memory of generated
     solutions with attached evaluation evidence, used to resurface previously
     explored ideas under fixed budgets.
@@ -1561,15 +1561,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     unique program-id validation, workspace-hash identity components, current
     JSONL history, bounded current-run resurfacing, and
     `runtime.history.duplicate_work_policy_report`, which reports duplicate
-    workspaces and states that current duplicates are evaluated rather than
-    cache-skipped or reused. It does not yet claim, and should not imply, that
-    identical source/workspace proposals are detected before evaluation or
-    served from a cache.
-  - Required result: when duplicate-work source/workspace hash indexes,
-    evaluation-cache reuse, or documented stochastic re-evaluation lands,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap wording separates current identity/reporting provenance from
-    AlphaEvolve-grade fixed-budget memory over previously explored programs.
+    workspaces, run-local evaluator cache stores/hits, canonical workspace plus
+    evaluator-contract cache-key scope, and replayable no-op cache-hit budget
+    events. It should not imply durable cross-run cache storage, semantic
+    near-duplicate handling, or resume-spanning cache replay.
+  - Required result: when durable duplicate-work source/workspace hash indexes,
+    cross-run evaluation-cache reuse, resume replay, or documented stochastic
+    re-evaluation lands, update ROADMAP, README, papers index, and code/paper
+    TODOs together so roadmap wording separates current run-local exact-match
+    reuse from AlphaEvolve-grade fixed-budget memory over previously explored
+    programs.
 
 - [ ] Keep discovery-distance roadmap wording scoped until functional
       initial-pool divergence reports exist.

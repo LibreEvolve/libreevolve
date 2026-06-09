@@ -10411,3 +10411,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     artifacts, behavior/output-distance metrics, substantially-different
     thresholds, and benchmark telemetry open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document run-local duplicate-work cache evidence.
+  - Evidence: README needed to distinguish current exact-workspace
+    evaluator-result reuse from durable AlphaEvolve-grade database memory.
+  - Status: docs now describe
+    `runtime.history.duplicate_work_policy_report`, run-local canonical
+    workspace plus evaluator-contract cache keys, cache-hit controller events,
+    and evaluator-call budget savings.
+  - Remaining documentation gap: durable cross-run cache storage,
+    resume-spanning replay, semantic near-duplicate handling, stochastic
+    re-evaluation policy, and source/output-aware indexes remain open.
+  - Verification: focused budget and loop tests cover the manifest field,
+    cache-hit event validation, and duplicate-work report counts.

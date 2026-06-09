@@ -52,6 +52,7 @@ from libreevolve.core.diff import (
 )
 from libreevolve.core.evaluator import (
     CascadeEvaluator,
+    EvaluationResult,
     evaluation_accounting,
     preflight_evaluator_contracts,
 )
@@ -824,6 +825,12 @@ def evolve(
             stdin_file=config.evaluator_stdin_file,
             validator_network_policy=config.validator_network_policy,
         )
+        evaluation_cache_contract_sha256 = _evaluation_cache_contract_sha256(
+            problem,
+            config,
+            evaluator_sources,
+        )
+        evaluation_cache: dict[str, dict] = {}
         prompt_token_counter, prompt_token_counter_capability = (
             discover_prompt_token_counter(
                 config.backends,
@@ -868,7 +875,24 @@ def evolve(
             phase = "seed_evaluation"
             if budget.check_before_evaluation():
                 break
+            seed_candidate_id = _deterministic_seed_candidate_id(
+                seed_index,
+                seed_workspace,
+            )
             result = evaluator.evaluate(seed_workspace, diff_error=None)
+            seed_cache_metadata = _store_evaluation_cache_result(
+                evaluation_cache,
+                seed_workspace,
+                evaluation_cache_contract_sha256,
+                result,
+                source_program_id=seed_candidate_id,
+                source_generation=0,
+                source_candidate_type="seed",
+            )
+            result = _evaluation_result_with_cache_metadata(
+                result,
+                seed_cache_metadata,
+            )
             result_accounting = evaluation_accounting(result)
             budget.record_evaluation(
                 result.elapsed_sec,
@@ -884,7 +908,7 @@ def evolve(
             )
             budget.check_before_evaluation()
             program = Program(
-                id=_deterministic_seed_candidate_id(seed_index, seed_workspace),
+                id=seed_candidate_id,
                 code=seed_workspace.code,
                 files=dict(seed_workspace.files),
                 primary_file=seed_workspace.primary_file,
@@ -897,6 +921,7 @@ def evolve(
                     "candidate_type": "seed",
                     **seed_source,
                     "post_processing": _seed_post_processing_policy(),
+                    "evaluation_cache": seed_cache_metadata,
                     "budget": budget.snapshot(),
                 },
             )
@@ -1253,21 +1278,74 @@ def evolve(
                     parent.workspace(), mutation_payload, mutation_mode=config.mutation_mode
                 )
             _validate_workspace_size_for_config(child_workspace, config)
+            candidate_id = _deterministic_generated_candidate_id(
+                generation=candidate_generation,
+                loop_generation_index=gen,
+                proposal_index=proposal_index,
+                parent_id=parent.id,
+                prompt_program_id=prompt_program.id,
+                mutation_text=diff,
+                workspace=child_workspace,
+            )
             phase = f"generation:{gen}:candidate_evaluation"
-            result = evaluator.evaluate(child_workspace, diff_error=diff_error)
-            result_accounting = evaluation_accounting(result)
-            budget.record_evaluation(
-                result.elapsed_sec,
-                seed=False,
-                accounting=result_accounting,
+            cache_hit = _lookup_evaluation_cache_result(
+                evaluation_cache,
+                child_workspace,
+                evaluation_cache_contract_sha256,
+                diff_error=diff_error,
             )
-            db.log_controller_budget_event(
-                {
-                    "kind": "candidate_evaluation",
-                    "elapsed_sec": result.elapsed_sec,
-                    "accounting": result_accounting,
-                }
-            )
+            if cache_hit is not None:
+                result = _evaluation_cache_hit_result(cache_hit)
+                evaluation_cache_metadata = result.metadata["evaluation_cache"]
+                db.log_controller_budget_event(
+                    {
+                        "kind": "candidate_evaluation_cache_hit",
+                        "cache_key_sha256": evaluation_cache_metadata[
+                            "cache_key_sha256"
+                        ],
+                        "workspace_sha256": evaluation_cache_metadata[
+                            "workspace_sha256"
+                        ],
+                        "source_program_id": evaluation_cache_metadata[
+                            "source_program_id"
+                        ],
+                    }
+                )
+            else:
+                result = evaluator.evaluate(child_workspace, diff_error=diff_error)
+                if diff_error is None:
+                    evaluation_cache_metadata = _store_evaluation_cache_result(
+                        evaluation_cache,
+                        child_workspace,
+                        evaluation_cache_contract_sha256,
+                        result,
+                        source_program_id=candidate_id,
+                        source_generation=candidate_generation,
+                        source_candidate_type="generated",
+                    )
+                else:
+                    evaluation_cache_metadata = _evaluation_cache_bypass_metadata(
+                        child_workspace,
+                        evaluation_cache_contract_sha256,
+                        reason="diff_error_present",
+                    )
+                result = _evaluation_result_with_cache_metadata(
+                    result,
+                    evaluation_cache_metadata,
+                )
+                result_accounting = evaluation_accounting(result)
+                budget.record_evaluation(
+                    result.elapsed_sec,
+                    seed=False,
+                    accounting=result_accounting,
+                )
+                db.log_controller_budget_event(
+                    {
+                        "kind": "candidate_evaluation",
+                        "elapsed_sec": result.elapsed_sec,
+                        "accounting": result_accounting,
+                    }
+                )
             phase = f"generation:{gen}:llm_feedback"
             result = apply_llm_feedback(
                 result,
@@ -1295,15 +1373,6 @@ def evolve(
                 retained_prompt,
                 context_text=prompt_sampler.last_context_text,
                 mode=config.explicit_context_retention_mode,
-            )
-            candidate_id = _deterministic_generated_candidate_id(
-                generation=candidate_generation,
-                loop_generation_index=gen,
-                proposal_index=proposal_index,
-                parent_id=parent.id,
-                prompt_program_id=prompt_program.id,
-                mutation_text=diff,
-                workspace=child_workspace,
             )
             program = Program(code=child_code, fitness=score,
                               id=candidate_id,
@@ -1343,6 +1412,7 @@ def evolve(
                                         "inspiration_selection": inspiration_selection_metadata,
                                         "plugin_context": plugin_context,
                                         "prompt_program_id": prompt_program.id,
+                                        "evaluation_cache": evaluation_cache_metadata,
                                         "llm_calls": _program_llm_calls(
                                             _llm_call_span(llm, candidate_llm_call_start),
                                             mutation_llm_call,
@@ -12360,6 +12430,16 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
 
 def _duplicate_work_policy_report(programs: list[Program]) -> dict:
     records = [_duplicate_work_program_record(program) for program in programs]
+    cache_hit_ids = [
+        record["program_id"]
+        for record in records
+        if record.get("evaluation_cache", {}).get("cache_hit") is True
+    ]
+    cache_store_ids = [
+        record["program_id"]
+        for record in records
+        if record.get("evaluation_cache", {}).get("status") == "stored"
+    ]
     by_workspace: dict[str, list[dict]] = {}
     for record in records:
         by_workspace.setdefault(record["workspace_sha256"], []).append(record)
@@ -12387,6 +12467,10 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
         "duplicate_generated_candidate_count": len(generated_duplicate_ids),
         "duplicate_generated_program_ids": generated_duplicate_ids[:100],
         "duplicate_generated_program_ids_truncated": len(generated_duplicate_ids) > 100,
+        "evaluation_cache_store_count": len(cache_store_ids),
+        "evaluation_cache_hit_count": len(cache_hit_ids),
+        "evaluation_cache_hit_program_ids": cache_hit_ids[:100],
+        "evaluation_cache_hit_program_ids_truncated": len(cache_hit_ids) > 100,
         "records_limit": 100,
         "records_truncated": len(duplicate_groups) > 100,
         "duplicate_workspace_groups": duplicate_groups[:100],
@@ -12394,23 +12478,33 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
             "schema": "libreevolve.evaluation_cache_policy.v1",
             "candidate_id_policy": "deterministic_id_includes_workspace_hash",
             "workspace_hash_source": "CandidateWorkspace.files_primary_and_static_members",
-            "pre_evaluation_duplicate_skip": False,
-            "evaluation_result_reuse": False,
+            "pre_evaluation_duplicate_skip": True,
+            "evaluation_result_reuse": True,
             "duplicate_observation_policy": (
-                "duplicates_are_evaluated_and_reported_not_skipped"
+                "diff_error_free_exact_workspace_cache_hits_reuse_prior_evaluator_result"
             ),
-            "budget_policy": "duplicate_evaluations_consume_normal_budget",
-            "cache_storage": "not_implemented",
+            "cache_key_scope": (
+                "canonical_workspace_sha256_plus_evaluator_contract_sha256"
+            ),
+            "cache_eligibility": (
+                "diff_error_must_be_absent; llm_feedback_and_plugin_scores_run_after_reuse"
+            ),
+            "budget_policy": (
+                "cache_hits_emit_candidate_evaluation_cache_hit_events_and_do_not_"
+                "consume_evaluator_call_budget"
+            ),
+            "cache_storage": "run_local_memory",
         },
         "claim_ready": False,
         "claim_readiness": {
             "alphaevolve_grade_duplicate_work_memory": False,
             "duplicate_detection_reported": bool(duplicate_groups),
+            "run_local_cache_hit_reported": bool(cache_hit_ids),
+            "run_local_evaluation_result_reuse": True,
             "remaining_gap": [
-                "pre_evaluation_duplicate_gate",
-                "evaluation_result_cache_lookup",
-                "cache_hit_budget_accounting",
                 "cross_run_workspace_hash_index",
+                "durable_evaluation_cache_storage",
+                "cache_replay_across_resume_boundaries",
                 "semantic_near_duplicate_detection",
             ],
         },
@@ -12431,6 +12525,11 @@ def _duplicate_work_program_record(program: Program) -> dict:
         "workspace_sha256": _workspace_sha256(program.workspace()),
         "fitness": program.fitness,
         "is_valid": evaluation.get("is_valid"),
+        "evaluation_cache": (
+            dict(metadata["evaluation_cache"])
+            if isinstance(metadata.get("evaluation_cache"), Mapping)
+            else {}
+        ),
     }
 
 
@@ -12466,7 +12565,15 @@ def _duplicate_work_group(workspace_hash: str, records: list[dict]) -> dict:
         "generated_duplicate_program_ids": [
             record["program_id"] for record in generated_duplicates
         ],
-        "evaluated_again": bool(generated_duplicates),
+        "evaluated_again": any(
+            record.get("evaluation_cache", {}).get("cache_hit") is not True
+            for record in generated_duplicates
+        ),
+        "cache_hit_program_ids": [
+            record["program_id"]
+            for record in generated
+            if record.get("evaluation_cache", {}).get("cache_hit") is True
+        ],
         "records": ordered[:25],
         "records_truncated": len(ordered) > 25,
     }
@@ -12495,6 +12602,10 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
         "duplicate_generated_candidate_count",
         "duplicate_generated_program_ids",
         "duplicate_generated_program_ids_truncated",
+        "evaluation_cache_store_count",
+        "evaluation_cache_hit_count",
+        "evaluation_cache_hit_program_ids",
+        "evaluation_cache_hit_program_ids_truncated",
         "records_limit",
         "records_truncated",
         "duplicate_workspace_groups",
@@ -12537,6 +12648,7 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
         )
         groups = []
     duplicate_generated_ids: list[str] = []
+    cache_hit_ids: list[str] = []
     for index, group in enumerate(groups):
         if not isinstance(group, dict):
             issues.append(
@@ -12627,6 +12739,45 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                             ),
                         }
                     )
+                cache_record = record.get("evaluation_cache")
+                if cache_record is not None and not isinstance(cache_record, dict):
+                    issues.append(
+                        {
+                            "code": "invalid_evaluation_cache_record",
+                            "message": (
+                                f"duplicate workspace group {index} record "
+                                f"{record_index} evaluation_cache must be an object"
+                            ),
+                        }
+                    )
+                elif isinstance(cache_record, dict):
+                    if cache_record.get("cache_hit") is True:
+                        program_id = record.get("program_id")
+                        if isinstance(program_id, str):
+                            cache_hit_ids.append(program_id)
+                        if not _is_sha256_hex(cache_record.get("cache_key_sha256")):
+                            issues.append(
+                                {
+                                    "code": "invalid_cache_key_hash",
+                                    "message": (
+                                        f"duplicate workspace group {index} record "
+                                        f"{record_index} cache key is invalid"
+                                    ),
+                                }
+                            )
+        group_cache_hit_ids = group.get("cache_hit_program_ids")
+        if not isinstance(group_cache_hit_ids, list) or any(
+            not isinstance(program_id, str) or not program_id
+            for program_id in group_cache_hit_ids
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cache_hit_program_ids",
+                    "message": (
+                        f"duplicate workspace group {index} cache hit ids are invalid"
+                    ),
+                }
+            )
     if report.get("records_truncated") is not True:
         if report.get("duplicate_workspace_group_count") != len(groups):
             issues.append(
@@ -12638,6 +12789,7 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                 }
             )
     duplicate_generated_ids = _unique_in_order(duplicate_generated_ids)
+    cache_hit_ids = _unique_in_order(cache_hit_ids)
     if report.get("duplicate_generated_program_ids_truncated") is not True:
         if report.get("duplicate_generated_program_ids") != duplicate_generated_ids:
             issues.append(
@@ -12657,6 +12809,31 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                 ),
             }
         )
+    if report.get("evaluation_cache_hit_program_ids_truncated") is not True:
+        if report.get("evaluation_cache_hit_program_ids") != cache_hit_ids:
+            issues.append(
+                {
+                    "code": "invalid_cache_hit_program_ids",
+                    "message": (
+                        "evaluation_cache_hit_program_ids must match group records"
+                    ),
+                }
+            )
+    if report.get("evaluation_cache_hit_count") != len(cache_hit_ids):
+        issues.append(
+            {
+                "code": "invalid_cache_hit_count",
+                "message": "evaluation_cache_hit_count must match group records",
+            }
+        )
+    store_count = report.get("evaluation_cache_store_count")
+    if isinstance(store_count, bool) or not isinstance(store_count, int) or store_count < 0:
+        issues.append(
+            {
+                "code": "invalid_cache_store_count",
+                "message": "evaluation_cache_store_count must be a non-negative integer",
+            }
+        )
     policy = report.get("evaluation_cache_policy")
     if not isinstance(policy, dict):
         issues.append(
@@ -12666,18 +12843,25 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
             }
         )
     else:
-        if policy.get("pre_evaluation_duplicate_skip") is not False:
+        if policy.get("pre_evaluation_duplicate_skip") is not True:
             issues.append(
                 {
                     "code": "invalid_duplicate_skip_policy",
-                    "message": "current duplicate skip policy must be false",
+                    "message": "current duplicate skip policy must be true",
                 }
             )
-        if policy.get("evaluation_result_reuse") is not False:
+        if policy.get("evaluation_result_reuse") is not True:
             issues.append(
                 {
                     "code": "invalid_result_reuse_policy",
-                    "message": "current evaluation result reuse policy must be false",
+                    "message": "current evaluation result reuse policy must be true",
+                }
+            )
+        if policy.get("cache_storage") != "run_local_memory":
+            issues.append(
+                {
+                    "code": "invalid_cache_storage",
+                    "message": "cache storage must be run_local_memory",
                 }
             )
     if report.get("claim_ready") is not False:
@@ -16968,6 +17152,197 @@ def _candidate_id_mutation_text(value: object) -> str:
         return json.dumps(value, sort_keys=True, allow_nan=False, separators=(",", ":"))
     except (TypeError, ValueError):
         return repr(value)
+
+
+def _evaluation_cache_contract_sha256(
+    problem: Problem,
+    config: Config,
+    evaluator_sources: object,
+) -> str:
+    stdin_text = config.evaluator_stdin_text
+    payload = {
+        "schema": "libreevolve.evaluation_cache_contract.v1",
+        "problem_name": problem.name,
+        "primary_metric": problem.primary_metric,
+        "metrics": _evaluation_cache_json_value(problem.metrics),
+        "evaluator_sources": _evaluation_cache_json_value(evaluator_sources),
+        "eval_stages": _evaluation_cache_json_value(config.eval_stages),
+        "validator_network_policy": config.validator_network_policy,
+        "validator_env_allowlist": list(config.validator_env_allowlist),
+        "evaluator_data_include": list(config.evaluator_data_include),
+        "evaluator_data_exclude": list(config.evaluator_data_exclude),
+        "evaluator_stdin_text_sha256": (
+            hashlib.sha256(stdin_text.encode("utf-8")).hexdigest()
+            if isinstance(stdin_text, str)
+            else None
+        ),
+        "evaluator_stdin_file": (
+            str(config.evaluator_stdin_file)
+            if config.evaluator_stdin_file is not None
+            else None
+        ),
+        "cache_stage": "pre_llm_feedback_evaluator_result",
+    }
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _evaluation_cache_json_value(value: object) -> object:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, Mapping):
+        return {
+            str(key): _evaluation_cache_json_value(item)
+            for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
+        }
+    if isinstance(value, (list, tuple)):
+        return [_evaluation_cache_json_value(item) for item in value]
+    return repr(value)
+
+
+def _evaluation_cache_key(
+    workspace: CandidateWorkspace,
+    evaluator_contract_sha256: str,
+    *,
+    diff_error: object | None,
+) -> dict | None:
+    if diff_error is not None:
+        return None
+    workspace_hash = _workspace_sha256(workspace)
+    payload = {
+        "schema": "libreevolve.evaluation_cache_key.v1",
+        "workspace_sha256": workspace_hash,
+        "evaluator_contract_sha256": evaluator_contract_sha256,
+        "diff_error": None,
+    }
+    cache_key_sha256 = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    return {
+        "schema": "libreevolve.evaluation_cache_key.v1",
+        "cache_key_sha256": cache_key_sha256,
+        "workspace_sha256": workspace_hash,
+        "evaluator_contract_sha256": evaluator_contract_sha256,
+        "diff_error": None,
+    }
+
+
+def _store_evaluation_cache_result(
+    cache: dict[str, dict],
+    workspace: CandidateWorkspace,
+    evaluator_contract_sha256: str,
+    result: EvaluationResult,
+    *,
+    source_program_id: str,
+    source_generation: int,
+    source_candidate_type: str,
+) -> dict:
+    key = _evaluation_cache_key(
+        workspace,
+        evaluator_contract_sha256,
+        diff_error=None,
+    )
+    assert key is not None
+    entry = {
+        **key,
+        "result": copy.deepcopy(result),
+        "source_program_id": source_program_id,
+        "source_generation": source_generation,
+        "source_candidate_type": source_candidate_type,
+        "source_fitness": result.fitness,
+        "source_metric_names": sorted(result.metrics),
+        "source_elapsed_sec": result.elapsed_sec,
+    }
+    cache[key["cache_key_sha256"]] = entry
+    return {
+        "schema": "libreevolve.evaluation_cache_record.v1",
+        "status": "stored",
+        "cache_hit": False,
+        "cache_key_sha256": key["cache_key_sha256"],
+        "workspace_sha256": key["workspace_sha256"],
+        "evaluator_contract_sha256": evaluator_contract_sha256,
+        "source_program_id": source_program_id,
+        "source_generation": source_generation,
+        "source_candidate_type": source_candidate_type,
+        "cache_stage": "pre_llm_feedback_evaluator_result",
+        "budget_policy": "store_consumed_normal_evaluator_budget",
+    }
+
+
+def _lookup_evaluation_cache_result(
+    cache: dict[str, dict],
+    workspace: CandidateWorkspace,
+    evaluator_contract_sha256: str,
+    *,
+    diff_error: object | None,
+) -> dict | None:
+    key = _evaluation_cache_key(
+        workspace,
+        evaluator_contract_sha256,
+        diff_error=diff_error,
+    )
+    if key is None:
+        return None
+    return cache.get(key["cache_key_sha256"])
+
+
+def _evaluation_cache_hit_result(entry: Mapping[str, object]) -> EvaluationResult:
+    cached = entry.get("result")
+    if not isinstance(cached, EvaluationResult):
+        raise RuntimeError("evaluation cache entry is malformed")
+    result = copy.deepcopy(cached)
+    source_elapsed_sec = result.elapsed_sec
+    result.elapsed_sec = 0.0
+    for stage in result.stages:
+        stage.elapsed_sec = 0.0
+    metadata = {
+        "schema": "libreevolve.evaluation_cache_record.v1",
+        "status": "hit",
+        "cache_hit": True,
+        "cache_key_sha256": entry["cache_key_sha256"],
+        "workspace_sha256": entry["workspace_sha256"],
+        "evaluator_contract_sha256": entry["evaluator_contract_sha256"],
+        "source_program_id": entry["source_program_id"],
+        "source_generation": entry["source_generation"],
+        "source_candidate_type": entry["source_candidate_type"],
+        "cache_stage": "pre_llm_feedback_evaluator_result",
+        "budget_policy": "cache_hit_does_not_consume_evaluator_call_budget",
+        "source_elapsed_sec": source_elapsed_sec,
+    }
+    result.metadata = dict(result.metadata)
+    result.metadata["evaluation_cache"] = metadata
+    return result
+
+
+def _evaluation_cache_bypass_metadata(
+    workspace: CandidateWorkspace,
+    evaluator_contract_sha256: str,
+    *,
+    reason: str,
+) -> dict:
+    return {
+        "schema": "libreevolve.evaluation_cache_record.v1",
+        "status": "bypassed",
+        "cache_hit": False,
+        "workspace_sha256": _workspace_sha256(workspace),
+        "evaluator_contract_sha256": evaluator_contract_sha256,
+        "reason": reason,
+        "cache_stage": "pre_llm_feedback_evaluator_result",
+        "budget_policy": "bypass_consumed_normal_evaluator_budget",
+    }
+
+
+def _evaluation_result_with_cache_metadata(
+    result: EvaluationResult,
+    metadata: Mapping[str, object],
+) -> EvaluationResult:
+    updated = copy.deepcopy(result)
+    updated.metadata = dict(updated.metadata)
+    updated.metadata["evaluation_cache"] = dict(metadata)
+    return updated
 
 
 def _workspace_sha256(workspace: CandidateWorkspace) -> str:

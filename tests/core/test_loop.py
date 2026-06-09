@@ -937,7 +937,9 @@ def test_loop_evaluates_configured_proposal_batch_in_one_generation():
     consumed = manifest["runtime"]["consumed"]
     assert consumed["generations_started"] == 1
     assert consumed["generations_completed"] == 1
-    assert consumed["candidate_evaluations"] == 3
+    assert consumed["candidate_evaluations"] == 2
+    duplicate_report = manifest["runtime"]["history"]["duplicate_work_policy_report"]
+    assert duplicate_report["evaluation_cache_hit_count"] == 1
     assert manifest["config"]["proposals_per_generation"] == 3
 
 
@@ -4725,47 +4727,73 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
 
 
-def test_runtime_history_reports_duplicate_work_policy_without_cache_claim():
+def test_runtime_history_reports_duplicate_work_policy_with_run_local_cache():
     tmpdir = tempfile.mkdtemp()
     problem = _problem(
         "def evaluate(code):\n"
-        "    return {'score': 1.0, 'is_valid': True}\n"
+        "    ok = 'x=1' in code\n"
+        "    return {'score': 1.0 if ok else -0.1, 'is_valid': ok}\n"
     )
-    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=1\n>>>REPLACE")
+    llm = _TelemetryLLM("x=2")
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
         evolve(
             problem,
-            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+            Config(
+                max_generations=1,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
         )
 
     run_dir = Path(tmpdir) / "t"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    events = [
+        json.loads(line)
+        for line in (run_dir / "controller_budget_events.jsonl").read_text().splitlines()
+    ]
     manifest = json.loads((run_dir / "manifest.json").read_text())
     report = manifest["runtime"]["history"]["duplicate_work_policy_report"]
 
     assert report["schema"] == "libreevolve.duplicate_work_policy_report.v1"
     assert report["validation"]["ok"] is True
     assert validate_duplicate_work_policy_report(report)["ok"] is True
-    assert report["program_count"] == 2
-    assert report["generated_candidate_count"] == 1
-    assert report["unique_workspace_count"] == 1
+    assert report["program_count"] == 3
+    assert report["generated_candidate_count"] == 2
+    assert report["unique_workspace_count"] == 2
     assert report["duplicate_workspace_group_count"] == 1
     assert report["duplicate_generated_candidate_count"] == 1
-    assert report["evaluation_cache_policy"]["pre_evaluation_duplicate_skip"] is False
-    assert report["evaluation_cache_policy"]["evaluation_result_reuse"] is False
+    assert report["evaluation_cache_store_count"] == 2
+    assert report["evaluation_cache_hit_count"] == 1
+    assert report["evaluation_cache_policy"]["pre_evaluation_duplicate_skip"] is True
+    assert report["evaluation_cache_policy"]["evaluation_result_reuse"] is True
+    assert report["evaluation_cache_policy"]["cache_storage"] == "run_local_memory"
     assert report["claim_ready"] is False
 
     group = report["duplicate_workspace_groups"][0]
     assert group["program_count"] == 2
-    assert group["generated_program_count"] == 1
+    assert group["generated_program_count"] == 2
     assert group["generated_duplicate_program_ids"] == (
         report["duplicate_generated_program_ids"]
     )
-    assert group["evaluated_again"] is True
-    assert {record["candidate_type"] for record in group["records"]} == {
-        "seed",
-        "generated",
-    }
+    assert group["evaluated_again"] is False
+    assert group["cache_hit_program_ids"] == report["evaluation_cache_hit_program_ids"]
+    assert {record["candidate_type"] for record in group["records"]} == {"generated"}
+
+    generated = [record for record in history if record["metadata"]["candidate_type"] == "generated"]
+    assert generated[0]["metadata"]["evaluation_cache"]["status"] == "stored"
+    assert generated[1]["metadata"]["evaluation_cache"]["status"] == "hit"
+    assert generated[1]["evaluation"]["metadata"]["evaluation_cache"]["cache_hit"] is True
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 1
+    assert [event["kind"] for event in events].count("candidate_evaluation") == 1
+    assert [event["kind"] for event in events].count(
+        "candidate_evaluation_cache_hit"
+    ) == 1
 
 
 def test_runtime_history_reports_sampling_balance_counts():

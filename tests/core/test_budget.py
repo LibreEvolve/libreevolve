@@ -600,6 +600,14 @@ def _controller_event(kind: str, sequence: int = 0, **extra):
         )
     if kind == "stop":
         event["stop_reason"] = "completed"
+    if kind == "candidate_evaluation_cache_hit":
+        event.update(
+            {
+                "cache_key_sha256": "a" * 64,
+                "workspace_sha256": "b" * 64,
+                "source_program_id": "candidate-gen-1-source",
+            }
+        )
     event.update(extra)
     return event
 
@@ -614,15 +622,20 @@ def test_controller_budget_events_validate_and_apply_before_counter_mutation():
     llm_call = apply_controller_budget_event(
         budget, _controller_event("llm_call", sequence=2)
     )
-    apply_controller_budget_event(budget, _controller_event("generation_started", sequence=3))
-    apply_controller_budget_event(budget, _controller_event("generation_completed", sequence=4))
+    cache_hit = apply_controller_budget_event(
+        budget,
+        _controller_event("candidate_evaluation_cache_hit", sequence=3),
+    )
+    apply_controller_budget_event(budget, _controller_event("generation_started", sequence=4))
+    apply_controller_budget_event(budget, _controller_event("generation_completed", sequence=5))
     stop = apply_controller_budget_event(
-        budget, _controller_event("stop", sequence=5, stop_reason="completed")
+        budget, _controller_event("stop", sequence=6, stop_reason="completed")
     )
 
     consumed = budget.snapshot()["consumed"]
     assert seed["kind"] == "seed_evaluation"
     assert candidate["kind"] == "candidate_evaluation"
+    assert cache_hit["kind"] == "candidate_evaluation_cache_hit"
     assert llm_call["kind"] == "llm_call"
     assert stop["stop_reason"] == "completed"
     assert consumed["evaluations"] == 2
@@ -714,6 +727,14 @@ def test_controller_llm_call_event_replays_usage_budget_consumption_by_role():
         (_controller_event("llm_call", tokens=True), "event.tokens"),
         (_controller_event("llm_call", cost_microusd="1"), "event.cost_microusd"),
         (_controller_event("llm_call", seconds=math.inf), "event.seconds"),
+        (
+            _controller_event("candidate_evaluation_cache_hit", cache_key_sha256="bad"),
+            "cache_key_sha256",
+        ),
+        (
+            _controller_event("candidate_evaluation_cache_hit", source_program_id=""),
+            "source_program_id",
+        ),
     ],
 )
 def test_validate_controller_budget_event_rejects_malformed_events(event, message):

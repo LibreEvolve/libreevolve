@@ -7850,3 +7850,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     behavior/output-distance metrics, substantially-different thresholds, and
     benchmark-level discovery-distance telemetry remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow duplicate-work roadmap wording to durable cache memory.
+  - Evidence: roadmap wording needed to recognize implemented run-local
+    exact-workspace evaluator-result reuse without implying durable
+    AlphaEvolve-grade program-database memory.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.duplicate_work_policy_report` for cache stores/hits,
+    canonical workspace plus evaluator-contract cache-key scope, and
+    replayable cache-hit budget events.
+  - Remaining roadmap gap: durable cross-run cache storage, resume-spanning
+    replay, stochastic re-evaluation policy, semantic near-duplicate handling,
+    and source/output-aware duplicate indexes remain open.
+  - Verification: focused budget and loop tests cover the report, event
+    validation, and evaluator-call budget savings.

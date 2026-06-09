@@ -252,13 +252,14 @@ is not yet an AlphaEvolve reproduction.
   current-run parent/inspiration strategy decisions. Benchmark-required
   policies, cross-run fixtures, and equal-budget strategy-effect analysis
   remain open.
-- Add source/workspace deduplication and evaluation-cache policy before
-  treating deterministic candidate ids or workspace hashes as AlphaEvolve-grade
-  memory over previously explored programs. Current
-  `runtime.history.duplicate_work_policy_report` groups identical runtime
-  workspaces and records that duplicates are evaluated and reported, not
-  skipped or cache-reused; cache-key semantics, hit/miss telemetry, and budget
-  accounting for reuse remain open.
+- Extend the current run-local exact-workspace evaluator cache into
+  AlphaEvolve-grade duplicate-work memory before treating deterministic
+  candidate ids or workspace hashes as durable memory over previously explored
+  programs. `runtime.history.duplicate_work_policy_report` now records
+  canonical workspace plus evaluator-contract cache-key scope, cache stores,
+  cache hits, and no-op cache-hit controller budget events. Durable cross-run
+  cache storage, resume-spanning cache replay, stochastic re-evaluation
+  policy, and semantic near-duplicate detection remain open.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics.

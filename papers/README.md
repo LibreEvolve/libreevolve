@@ -701,11 +701,14 @@ branch-level abandonment evidence.
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
 identity provenance, and completed manifests now include
 `runtime.history.duplicate_work_policy_report`, which groups identical
-candidate workspaces and records that repeated work is evaluated and reported
-rather than skipped or served from an evaluation cache. The remaining gap is a
-canonical hash/evaluator-cache scope with cache hit/miss/re-evaluation
-telemetry, cross-run lookup, and budget accounting for repeated previously
-explored programs.
+candidate workspaces and records a run-local evaluator cache for
+diff-error-free exact workspace matches. Cache keys include canonical workspace
+hash plus evaluator-contract hash; cache hits emit replayable
+`candidate_evaluation_cache_hit` controller events and do not consume
+evaluator-call budget. The remaining gap is durable cross-run cache lookup,
+resume-spanning cache replay, stochastic re-evaluation policy, semantic
+near-duplicate detection, and broader AlphaEvolve-grade fixed-budget memory
+over previously explored programs.
 
 AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate

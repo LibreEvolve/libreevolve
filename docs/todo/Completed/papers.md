@@ -10301,3 +10301,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     unimplemented.
   - Verification: focused loop tests cover the report, validator,
     seed/candidate counts, distance records, and unready claim boundaries.
+
+- [x] Add paper-visible run-local duplicate-work cache evidence.
+  - Paper evidence: AlphaEvolve Section 2.5 frames the generated-program
+    database as fixed-budget memory over prior evaluated solutions.
+  - Status: paper-facing docs now cite
+    `runtime.history.duplicate_work_policy_report` for run-local exact
+    workspace evaluator-result reuse, canonical workspace plus
+    evaluator-contract cache-key scope, cache-hit metadata, and replayable
+    `candidate_evaluation_cache_hit` budget events.
+  - Remaining paper gap: durable cross-run cache lookup, resume-spanning cache
+    replay, stochastic re-evaluation semantics, semantic near-duplicate
+    handling, and output/source-aware duplicate indexes remain unimplemented.
+  - Verification: focused budget and loop tests cover cache-hit reporting,
+    controller-event validation, and evaluator-call budget savings.

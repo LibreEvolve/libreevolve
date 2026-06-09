@@ -41,6 +41,7 @@ CONTROLLER_BUDGET_EVENT_SCHEMA = "libreevolve.controller_budget_event.v1"
 CONTROLLER_BUDGET_EVENT_KINDS = {
     "seed_evaluation",
     "candidate_evaluation",
+    "candidate_evaluation_cache_hit",
     "llm_call",
     "generation_started",
     "generation_completed",
@@ -708,6 +709,41 @@ def validate_controller_budget_event(event: object) -> dict:
             "elapsed_sec": elapsed_sec,
             "accounting": accounting,
         }
+    if kind == "candidate_evaluation_cache_hit":
+        required = {
+            "schema",
+            "sequence",
+            "kind",
+            "cache_key_sha256",
+            "workspace_sha256",
+            "source_program_id",
+        }
+        _validate_controller_event_required_fields(event, required)
+        unsupported = set(event) - required
+        if unsupported:
+            raise BudgetSnapshotError(
+                f"controller budget event has unsupported fields: {sorted(unsupported)}"
+            )
+        try:
+            cache_key = _validate_sha256(
+                event["cache_key_sha256"], "event.cache_key_sha256"
+            )
+            workspace_hash = _validate_sha256(
+                event["workspace_sha256"], "event.workspace_sha256"
+            )
+            source_program_id = _validate_event_text(
+                event["source_program_id"], "event.source_program_id"
+            )
+        except ValueError as exc:
+            raise BudgetSnapshotError(f"controller budget event invalid: {exc}") from exc
+        return {
+            "schema": event["schema"],
+            "sequence": sequence,
+            "kind": kind,
+            "cache_key_sha256": cache_key,
+            "workspace_sha256": workspace_hash,
+            "source_program_id": source_program_id,
+        }
     if kind == "llm_call":
         required = {"schema", "sequence", "kind"}
         optional = {
@@ -812,6 +848,8 @@ def apply_controller_budget_event(budget: RunBudget, event: object) -> dict:
             seed=False,
             accounting=validated["accounting"],
         )
+    elif kind == "candidate_evaluation_cache_hit":
+        pass
     elif kind == "llm_call":
         budget.record_llm_call()
         role = validated.get("role")
@@ -1252,6 +1290,24 @@ def _validate_optional_non_negative_int(value: object, field: str) -> int | None
 def _validate_role_label(value: object, field: str) -> str:
     if not isinstance(value, str) or _BUDGET_ROLE_RE.fullmatch(value) is None:
         raise ValueError(f"{field} must be a manifest-safe role label")
+    return value
+
+
+def _validate_sha256(value: object, field: str) -> str:
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(ch not in "0123456789abcdef" for ch in value)
+    ):
+        raise ValueError(f"{field} must be a lowercase SHA-256 hex digest")
+    return value
+
+
+def _validate_event_text(value: object, field: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{field} must be non-empty text")
+    if len(value) > 256:
+        raise ValueError(f"{field} must be <= 256 characters")
     return value
 
 

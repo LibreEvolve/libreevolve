@@ -3368,6 +3368,47 @@ x=2
     assert record["admission_link"]["admitted"] is True
 
 
+def test_runtime_history_reports_prompt_current_binding_for_evolve_block_span():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.initial_programs = [
+        "# EVOLVE-BLOCK-START solve\nx=1\n# EVOLVE-BLOCK-END\n"
+    ]
+    response = """<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_current_binding_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_current_binding_report(report)["ok"] is True
+    assert report["exact_diff_binding_count"] == 1
+    assert report["evolve_block_match_count"] == 1
+    assert report["claim_readiness"]["evolve_block_inner_span_mapping"] is True
+
+    match = report["records"][0]["mutation_binding"]["match_records"][0]
+    assert match["match_count"] == 1
+    assert match["normalized_span"] is not None
+    scope = match["evolve_block_scope"]
+    assert scope["scope"] == "evolve_block"
+    assert scope["target_path"] == "main.py"
+    assert scope["block_name"] == "solve"
+    assert scope["block_index"] == 0
+    assert scope["search_span_in_block"] == [0, 3]
+    assert scope["block_content_span"][0] <= match["normalized_span"][0]
+    assert scope["block_content_span"][1] >= match["normalized_span"][1]
+
+
 def test_runtime_history_reports_prompt_current_binding_for_full_mutation_policy():
     tmpdir = tempfile.mkdtemp()
 

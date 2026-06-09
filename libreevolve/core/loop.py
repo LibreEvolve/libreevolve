@@ -15793,6 +15793,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
     exact_match_count = 0
     truncated_prompt_current_count = 0
     omitted_path_count = 0
+    evolve_block_match_count = 0
     for record in records:
         mode = str(record.get("mutation_mode") or "unknown")
         mode_counts[mode] = mode_counts.get(mode, 0) + 1
@@ -15801,6 +15802,13 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
         binding = record.get("mutation_binding")
         if isinstance(binding, Mapping) and binding.get("all_search_blocks_match_once") is True:
             exact_match_count += 1
+        if isinstance(binding, Mapping):
+            for match in binding.get("match_records", []):
+                if not isinstance(match, Mapping):
+                    continue
+                scope = match.get("evolve_block_scope")
+                if isinstance(scope, Mapping) and scope.get("scope") == "evolve_block":
+                    evolve_block_match_count += 1
         prompt_current = record.get("prompt_current_program")
         if isinstance(prompt_current, Mapping):
             if prompt_current.get("parent_code_truncated") is True:
@@ -15816,6 +15824,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
         "mutation_mode_counts": dict(sorted(mode_counts.items())),
         "candidate_status_counts": dict(sorted(status_counts.items())),
         "exact_diff_binding_count": exact_match_count,
+        "evolve_block_match_count": evolve_block_match_count,
         "truncated_prompt_current_count": truncated_prompt_current_count,
         "omitted_prompt_current_path_total": omitted_path_count,
         "records": records[:50],
@@ -15825,6 +15834,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             "prompt_current_source": "prompt_diagnostics.parent_code_policy",
             "mutation_target_source": "selected_parent.workspace_at_mutation_time",
             "diff_match_policy": "primary_file_exact_SEARCH_match_counts_for_non_file_section_diff_payloads",
+            "evolve_block_scope_policy": "normalized_SEARCH_span_mapped_to_parent_evolve_block_when_exactly_inside_block_content",
             "full_mode_policy": "target_policy_recorded_without_SEARCH_span_claim",
             "workspace_section_policy": "file_section_payloads_recorded_without_expanded_per_file_span_claim",
             "llm_call_source": "candidate.metadata.llm_calls",
@@ -15843,10 +15853,10 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
                 for record in records
             ),
             "diff_exact_match_spans_recorded": exact_match_count > 0,
+            "evolve_block_inner_span_mapping": evolve_block_match_count > 0,
             "full_alphaevolve_current_program_provenance": False,
             "remaining_gap": [
                 "per_file_span_expansion_for_workspace_file_sections",
-                "evolve_block_inner_span_mapping",
                 "prompt_history_row_id_to_candidate_history_row_id_join",
                 "full_mode_target_span_or_block_policy",
                 "cross_run_prompt_current_binding_table",
@@ -16064,6 +16074,48 @@ def _prompt_current_search_match_record(
         "search_chars": len(search),
         "match_count": match_count,
         "normalized_span": span,
+        "evolve_block_scope": _prompt_current_evolve_block_scope(
+            target_path,
+            normalized_target,
+            span,
+        ),
+    }
+
+
+def _prompt_current_evolve_block_scope(
+    target_path: str,
+    normalized_target: str,
+    span: list[int] | None,
+) -> dict:
+    if span is None:
+        return {
+            "scope": "unmatched_or_ambiguous",
+            "target_path": target_path,
+        }
+    blocks = extract_evolve_blocks(normalized_target)
+    if not blocks:
+        return {
+            "scope": "whole_file",
+            "target_path": target_path,
+        }
+    start, end = span
+    for index, block in enumerate(blocks):
+        if start >= block.content_start and end <= block.content_end:
+            return {
+                "scope": "evolve_block",
+                "target_path": target_path,
+                "block_name": block.name,
+                "block_index": index,
+                "block_outer_span": [block.start, block.end],
+                "block_content_span": [block.content_start, block.content_end],
+                "search_span_in_block": [
+                    start - block.content_start,
+                    end - block.content_start,
+                ],
+            }
+    return {
+        "scope": "outside_evolve_block",
+        "target_path": target_path,
     }
 
 
@@ -16094,6 +16146,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "mutation_mode_counts",
         "candidate_status_counts",
         "exact_diff_binding_count",
+        "evolve_block_match_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
         "records",
@@ -16114,6 +16167,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "generated_candidate_count",
         "binding_record_count",
         "exact_diff_binding_count",
+        "evolve_block_match_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
     ):
@@ -16137,6 +16191,38 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         binding = record.get("mutation_binding")
         if not isinstance(binding, dict):
             issues.append({"code": "invalid_mutation_binding", "message": f"record {index} mutation_binding must be an object"})
+        else:
+            match_records = binding.get("match_records")
+            if isinstance(match_records, list):
+                for match_index, match in enumerate(match_records):
+                    if not isinstance(match, dict):
+                        continue
+                    scope = match.get("evolve_block_scope")
+                    if not isinstance(scope, dict):
+                        issues.append(
+                            {
+                                "code": "invalid_evolve_block_scope",
+                                "message": (
+                                    f"record {index} match {match_index} "
+                                    "evolve_block_scope must be an object"
+                                ),
+                            }
+                        )
+                    elif scope.get("scope") not in {
+                        "evolve_block",
+                        "whole_file",
+                        "outside_evolve_block",
+                        "unmatched_or_ambiguous",
+                    }:
+                        issues.append(
+                            {
+                                "code": "invalid_evolve_block_scope_value",
+                                "message": (
+                                    f"record {index} match {match_index} "
+                                    "evolve_block_scope.scope is invalid"
+                                ),
+                            }
+                        )
         prompt_current = record.get("prompt_current_program")
         if not isinstance(prompt_current, dict):
             issues.append({"code": "invalid_prompt_current_program", "message": f"record {index} prompt_current_program must be an object"})

@@ -6,6 +6,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track evolve-block inner span mapping in prompt-current binding
+      evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
+    2.3.
+  - Status: paper-facing docs now cite prompt-current binding records that map
+    exact SEARCH matches inside parent evolve-block content to block name,
+    outer/content spans, and block-relative SEARCH span.
+  - Remaining gap: workspace file-section span expansion, prompt-history row
+    joins, full-mode target spans/block ids, and cross-run binding tables
+    remain active paper TODOs.
+
 - [x] Track normalized and skeleton prompt-example copy diagnostics.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
     2.3.

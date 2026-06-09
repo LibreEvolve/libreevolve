@@ -4,6 +4,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add evolve-block inner span mapping to prompt-current binding evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
+    SEARCH/REPLACE blocks as edits to the current program shown in the prompt.
+  - Status: `runtime.history.prompt_current_binding_report` now maps exact
+    diff SEARCH matches inside parent evolve-block content to block name,
+    block outer/content spans, and SEARCH span relative to the block body, with
+    schema validation and focused runtime tests.
+  - Remaining gap: per-file span expansion for workspace sections,
+    prompt-history row joins, full-mode target spans/block ids, and cross-run
+    binding tables remain active TODOs.
+
 - [x] Extend prompt example-copy diagnostics with normalized and skeleton
       signals.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program

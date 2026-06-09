@@ -1432,13 +1432,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     also cites `runtime.history.prompt_current_binding_report`, which records
     prompt/current-program hashes, parent/candidate workspace hashes, LLM call
     ids, diff SEARCH match counts/spans for non-file-section diff payloads,
-    full-mode target policy, evaluator links, and archive admission.
+    evolve-block inner span mapping for exact matches inside parent block
+    content, full-mode target policy, evaluator links, and archive admission.
   - Required result: when fuller prompt-current binding evidence lands, update
     ROADMAP, README, papers index, and code/paper TODOs with per-file span
-    expansion for workspace sections, evolve-block inner span mapping,
-    prompt-history row joins, full-mode target spans/block ids, and cross-run
-    binding tables so roadmap wording does not overclaim AlphaEvolve-style
-    current-program edit provenance.
+    expansion for workspace sections, prompt-history row joins, full-mode
+    target spans/block ids, and cross-run binding tables so roadmap wording
+    does not overclaim AlphaEvolve-style current-program edit provenance.
 
 - [ ] Keep multi-edit consistency roadmap wording scoped beyond current
       diagnostic scan.

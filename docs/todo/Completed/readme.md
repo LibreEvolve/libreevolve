@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document evolve-block inner span mapping in prompt-current binding
+      evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
+    program rendered in the prompt.
+  - Status: README now says `runtime.history.prompt_current_binding_report`
+    maps exact SEARCH matches inside parent evolve-block content to block
+    names, block spans, and block-relative SEARCH spans.
+  - Remaining gap: per-file section span expansion, prompt-history joins,
+    full-mode target spans/block ids, and cross-run binding tables remain
+    active README TODOs.
+
 - [x] Document normalized and skeleton prompt-example copy diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete examples to
     communicate the mutation format without making those examples valid

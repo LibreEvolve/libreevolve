@@ -734,11 +734,11 @@ Completed manifests also include
 candidate ids, prompt-program ids, rendered prompt hashes, parent/current
 program render hashes and path policy, parent/candidate workspace hashes, LLM
 call ids, mutation payload hashes, diff SEARCH match counts/spans for
-non-file-section diff payloads, full-mode target policy, evaluator status, and
-archive admission. The report is current-run provenance, not full Figure 3
-parity: per-file span expansion for workspace sections, evolve-block inner span
-mapping, prompt-history row joins, full-mode target spans, and cross-run
-binding tables remain open.
+non-file-section diff payloads, evolve-block inner span mapping for exact
+matches inside parent block content, full-mode target policy, evaluator status,
+and archive admission. The report is current-run provenance, not full Figure 3
+parity: per-file span expansion for workspace sections, prompt-history row
+joins, full-mode target spans, and cross-run binding tables remain open.
 Completed manifests also include
 `runtime.history.mutation_consistency_report`, which records current-run
 multi-edit candidate payloads, changed file/block/search edit units,
@@ -2755,6 +2755,9 @@ partial edit is committed. SEARCH/REPLACE matching is line-ending tolerant:
 patch text and candidate text are compared through an LF-normalized view, and
 accepted replacements are written back using the matched candidate span's
 dominant line ending while leaving surrounding text unchanged. When
+`runtime.history.prompt_current_binding_report` is emitted, exact diff matches
+inside parent evolve-block content include the block name, block outer/content
+spans, and the SEARCH span relative to the block body. When
 SEARCH/REPLACE blocks are present, non-whitespace text before the first block
 may be structured proposal metadata or a bounded explanatory preamble captured
 in runtime metadata. Non-whitespace text between or after diff blocks is

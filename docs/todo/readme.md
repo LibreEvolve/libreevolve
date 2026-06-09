@@ -2747,11 +2747,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     also documents `runtime.history.prompt_current_binding_report`, which
     records prompt/current-program hashes, parent/candidate workspace hashes,
     LLM call ids, diff SEARCH match counts/spans for non-file-section diff
-    payloads, full-mode target policy, evaluator links, and archive admission.
+    payloads, evolve-block inner span mapping for exact matches inside parent
+    block content, full-mode target policy, evaluator links, and archive
+    admission.
   - Required result: when fuller binding evidence lands, update README,
     ROADMAP, papers index, and matching TODOs with per-file span expansion for
-    workspace sections, evolve-block inner span mapping, prompt-history row
-    joins, full-mode target spans/block ids, and cross-run binding tables.
+    workspace sections, prompt-history row joins, full-mode target spans/block
+    ids, and cross-run binding tables.
 
 - [ ] Keep README multi-edit consistency wording scoped beyond current
       diagnostic scan.

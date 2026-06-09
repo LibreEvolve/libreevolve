@@ -3576,8 +3576,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.matrix_scalar_field_evidence.v1` now validates declared scalar
     field, exact complex coefficient representation, field characteristic,
     real-versus-complex applicability, finite-field caveats, and certificate
-    scope for those claims. It does not emit exact complex
-    decomposition/certificate artifacts.
+    scope for those claims. `libreevolve.matrix_scalar_field_runtime_boundary.v1`
+    now validates the current `not_emitted_by_local_runner` boundary and
+    required future emitted-record fields for scalar field, characteristic,
+    applicability, coefficient representation, algorithm refs, certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes. It does not
+    emit exact complex decomposition/certificate artifacts.
   - Required result: add concrete paper/report artifacts for scalar field,
     exact complex coefficient data, characteristic/applicability claims, and
     certificate verification scope before claiming AlphaEvolve-comparable

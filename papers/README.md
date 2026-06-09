@@ -1121,8 +1121,14 @@ Implemented:
   `libreevolve.matrix_scalar_field_evidence.v1` contract now validates declared
   scalar-field provenance for complex-valued algorithms, field characteristic,
   exact coefficient representation, finite-field caveats, and certificate scope
-  for exact real/complex applicability, but no local matrix benchmark runner
-  emits exact complex decomposition/certificate artifacts for those claims yet.
+  for exact real/complex applicability.
+  `libreevolve.matrix_scalar_field_runtime_boundary.v1` now records the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for scalar field, characteristic, applicability,
+  coefficient representation, algorithm refs, certificate refs, matrix-result
+  refs, artifact paths, and artifact hashes, but no local matrix benchmark
+  runner emits exact complex decomposition/certificate artifacts for those
+  claims yet.
   `libreevolve.matrix_tensor_rank_evidence.v1` now validates declared rank
   claims that distinguish matrix-multiplication tensor decompositions from
   non-tensor multiplication algorithms, including tensor-identity certificate

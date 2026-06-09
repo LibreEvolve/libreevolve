@@ -10760,3 +10760,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     exactness-certificate links, matrix-result refs, artifact paths, and
     artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix scalar-field runtime boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared
+    scalar-field evidence validation from actual local runner emission for
+    complex-valued and characteristic-specific claims.
+  - Status: README now names
+    `libreevolve.matrix_scalar_field_runtime_boundary.v1`, scopes it to the
+    current `not_emitted_by_local_runner` state, and lists the required future
+    emitted-record fields for scalar field, characteristic, applicability,
+    coefficient representation, algorithm refs, certificate refs,
+    matrix-result refs, artifact paths, and artifact hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

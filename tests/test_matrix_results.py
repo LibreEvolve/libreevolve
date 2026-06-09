@@ -15,15 +15,18 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_PUBLICATION_BUNDLE_SCHEMA,
     MATRIX_RESULT_SCHEMA,
     MATRIX_SCALAR_FIELD_SCHEMA,
+    MATRIX_SCALAR_FIELD_RUNTIME_SCHEMA,
     MATRIX_SWEEP_SPACE_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
+    matrix_scalar_field_runtime_boundary_record,
     render_matrix_headline_historicity_summary,
     render_matrix_near_integrality_summary,
     render_matrix_near_integrality_runtime_boundary_summary,
     render_matrix_result_summary,
     render_matrix_scalar_field_summary,
+    render_matrix_scalar_field_runtime_boundary_summary,
     render_matrix_sweep_space_summary,
     render_matrix_tensor_rank_summary,
     validate_matrix_headline_historicity_evidence,
@@ -32,6 +35,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_publication_bundle,
     validate_matrix_result_report,
     validate_matrix_scalar_field_evidence,
+    validate_matrix_scalar_field_runtime_boundary,
     validate_matrix_sweep_space_evidence,
     validate_matrix_tensor_rank_evidence,
     write_strassen_2x2_publication_bundle,
@@ -893,6 +897,100 @@ def test_render_matrix_scalar_field_summary_reports_shape():
     assert "| target_id | mm_4x4x4 |" in summary
     assert "| field_claim_count | 1 |" in summary
     assert "| complex_claim_count | 1 |" in summary
+
+
+def test_matrix_scalar_field_runtime_boundary_accepts_current_absence():
+    boundary = matrix_scalar_field_runtime_boundary_record()
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+
+    assert boundary["schema"] == MATRIX_SCALAR_FIELD_RUNTIME_SCHEMA
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "not_emitted_by_local_runner"
+    assert validation.emitted_record_count == 0
+    assert validation.required_field_count == 13
+    assert "scalar_field" in boundary["required_emission_fields"]
+    assert "certificate_ref" in boundary["required_emission_fields"]
+    assert "matrix_result_ref" in boundary["required_emission_fields"]
+
+
+def test_matrix_scalar_field_runtime_boundary_rejects_absence_with_records():
+    boundary = matrix_scalar_field_runtime_boundary_record()
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "scalar_field_evidence": _valid_scalar_field_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_runtime_scalar_field_records" in codes
+
+
+def test_matrix_scalar_field_runtime_boundary_requires_emitted_records():
+    boundary = matrix_scalar_field_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_runtime_scalar_field_records" in codes
+
+
+def test_matrix_scalar_field_runtime_boundary_accepts_emitted_evidence():
+    boundary = matrix_scalar_field_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "scalar_field_evidence": _valid_scalar_field_evidence(),
+        }
+    ]
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.runtime_emission_status == "emitted"
+    assert validation.emitted_record_count == 1
+
+
+def test_matrix_scalar_field_runtime_boundary_rejects_invalid_nested_evidence():
+    boundary = matrix_scalar_field_runtime_boundary_record()
+    boundary["runtime_emission_status"] = "emitted"
+    nested = _valid_scalar_field_evidence()
+    nested["field_claims"][0]["certificate_ref"] = ""
+    boundary["emitted_records"] = [
+        {
+            "run_id": "run_001",
+            "candidate_id": "candidate_001",
+            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
+            "scalar_field_evidence": nested,
+        }
+    ]
+
+    validation = validate_matrix_scalar_field_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_scalar_field_missing_certificate_ref" in codes
+
+
+def test_render_matrix_scalar_field_runtime_boundary_summary_reports_shape():
+    summary = render_matrix_scalar_field_runtime_boundary_summary()
+
+    assert "Matrix scalar-field runtime boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| runtime_emission_status | not_emitted_by_local_runner |" in summary
+    assert "| emitted_record_count | 0 |" in summary
+    assert "| required_field_count | 13 |" in summary
 
 
 def _valid_tensor_rank_evidence() -> dict:

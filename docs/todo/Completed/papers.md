@@ -10707,3 +10707,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     matrix-result refs, artifact paths, and artifact hashes. The paper-manifest
     gate validates this boundary with the Appendix A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix scalar-field runtime-emission absence separately from
+      declared evidence validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Table 2
+    distinguish complex-valued matrix multiplication, exact real/complex
+    applicability, characteristic-0 claims, and finite-field-only caveats.
+  - Status: `libreevolve.matrix_scalar_field_runtime_boundary.v1` now records
+    the current `not_emitted_by_local_runner` boundary and validates required
+    future emitted-record fields for scalar field, characteristic,
+    applicability, coefficient representation, algorithm refs, certificate
+    refs, matrix-result refs, artifact paths, and artifact hashes. The
+    paper-manifest gate validates this boundary with the Appendix A matrix
+    checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

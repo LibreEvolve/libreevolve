@@ -15906,3 +15906,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-record validation, invalid nested evidence, and
     manifest hook.
+
+- [x] Add a matrix scalar-field runtime-emission boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 and Table 2 distinguish
+    complex-valued matrix algorithms, exact real/complex applicability,
+    characteristic-0 claims, and finite-field-only caveats, which require
+    runtime/report evidence beyond a generic coefficient-domain field.
+  - Status: `libreevolve.matrix_scalar_field_runtime_boundary.v1` now
+    validates the current `not_emitted_by_local_runner` state, rejects false
+    emitted-record claims without nested scalar-field evidence, and records
+    required future fields for scalar field, characteristic, applicability,
+    coefficient representation, algorithm refs, certificate refs,
+    matrix-result refs, artifact paths, and artifact hashes. Local matrix
+    runners still do not emit exact complex decomposition/certificate records.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-record validation, invalid nested evidence, and
+    manifest hook.

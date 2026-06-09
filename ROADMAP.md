@@ -727,8 +727,14 @@ is not yet an AlphaEvolve reproduction.
   now validates declared real, complex, finite-field, and any-field
   applicability, field characteristic, exact coefficient representation,
   complex component domains, finite-field characteristic/order, paper complex
-  target caveats, and certificate scope. Local benchmark runners still need to
-  emit exact complex decomposition/certificate artifacts for those claims.
+  target caveats, and certificate scope.
+  `libreevolve.matrix_scalar_field_runtime_boundary.v1` now validates the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for scalar field, characteristic, applicability,
+  coefficient representation, algorithm refs, certificate refs, matrix-result
+  refs, artifact paths, and artifact hashes. Local benchmark runners still
+  need to emit exact complex decomposition/certificate artifacts for those
+  claims.
 - Keep matrix tensor-rank wording scoped to evidence validation rather than
   emitted tensor-rank parity: `libreevolve.matrix_tensor_rank_evidence.v1` now
   validates algorithm kind, tensor-identity certificate scope, recursive

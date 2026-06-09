@@ -102,7 +102,9 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
 )
 from libreevolve.problems.benchmarks.matrix_results import (
     matrix_near_integrality_runtime_boundary_record,
+    matrix_scalar_field_runtime_boundary_record,
     validate_matrix_near_integrality_runtime_boundary,
+    validate_matrix_scalar_field_runtime_boundary,
 )
 
 
@@ -594,6 +596,16 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             issue.message,
         )
         for issue in near_integrality_runtime_report.issues
+    )
+    scalar_field_runtime_report = validate_matrix_scalar_field_runtime_boundary(
+        matrix_scalar_field_runtime_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_scalar_field_runtime_{issue.code}",
+            issue.message,
+        )
+        for issue in scalar_field_runtime_report.issues
     )
     return issues
 

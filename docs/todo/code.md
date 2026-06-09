@@ -3514,8 +3514,13 @@ Primary evidence:
     validates scalar-field/domain declarations, exact complex real/imaginary
     coefficient representation, characteristic/applicability claims,
     finite-field caveats, paper complex target ids, and certificate scope for
-    real and complex matrix multiplication applicability. It validates declared
-    metadata only; no local benchmark runner emits exact complex
+    real and complex matrix multiplication applicability.
+    `libreevolve.matrix_scalar_field_runtime_boundary.v1` now validates the
+    current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for scalar field, characteristic, applicability,
+    coefficient representation, algorithm refs, certificate refs,
+    matrix-result refs, artifact paths, and artifact hashes. It validates
+    declared metadata only; no local benchmark runner emits exact complex
     decomposition/certificate artifacts tied to those claims.
   - Required result: emit or commit matrix benchmark/report artifacts with
     exact complex-coefficient data, scalar-field/domain declarations,

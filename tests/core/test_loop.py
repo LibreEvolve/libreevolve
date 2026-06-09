@@ -3449,13 +3449,65 @@ def test_runtime_history_reports_prompt_current_binding_for_full_mutation_policy
     assert validate_prompt_current_binding_report(report)["ok"] is True
     assert report["mutation_mode_counts"] == {"full": 1}
     assert report["exact_diff_binding_count"] == 0
+    assert report["full_mode_target_record_count"] == 1
+    assert report["claim_readiness"]["full_mode_target_spans_or_block_ids"] is True
+    assert "full_mode_target_span_or_block_policy" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     record = report["records"][0]
     binding = record["mutation_binding"]
-    assert binding["mode_policy"] == "full_mode_target_policy_recorded"
+    assert binding["mode_policy"] == "full_mode_target_span_records"
     assert binding["target_path"] == "main.py"
     assert binding["search_block_count"] == 0
     assert binding["all_search_blocks_match_once"] is False
+    assert binding["full_mode_target_count"] == 1
+    target = binding["full_mode_target_records"][0]
+    assert target["target_scope"] == "whole_file"
+    assert target["target_path"] == "main.py"
+    assert target["target_span_policy"] == "whole_primary_file_replacement"
+    assert target["parent_file"]["normalized_full_file_span"] == [0, 3]
+    assert target["candidate_file"]["normalized_full_file_span"] == [0, 3]
     assert report["claim_ready"] is False
+
+
+def test_runtime_history_reports_prompt_current_binding_for_full_block_target():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.initial_programs = [
+        "keep = 1\n# EVOLVE-BLOCK-START solve\nx=1\n# EVOLVE-BLOCK-END\n"
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm("x=2")):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_current_binding_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_current_binding_report(report)["ok"] is True
+    assert report["full_mode_target_record_count"] == 1
+    binding = report["records"][0]["mutation_binding"]
+    target = binding["full_mode_target_records"][0]
+    assert target["target_scope"] == "evolve_block"
+    assert target["block_name"] == "solve"
+    assert target["target_span_policy"] == "single_parent_evolve_block_content_span"
+    assert target["parent_block"]["exists"] is True
+    assert target["parent_block"]["block_name"] == "solve"
+    assert target["parent_block"]["content_span"] is not None
+    assert target["candidate_block"]["exists"] is True
+    assert target["candidate_block"]["block_name"] == "solve"
+    assert target["parent_block"]["content_sha256"] != (
+        target["candidate_block"]["content_sha256"]
+    )
 
 
 def test_runtime_history_reports_prompt_current_binding_for_file_section_spans():

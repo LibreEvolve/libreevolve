@@ -1434,13 +1434,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ids, diff SEARCH match counts/spans for non-file-section diff payloads,
     evolve-block inner span mapping for exact matches inside parent block
     content, workspace file-section target records with parent/candidate
-    full-file span and hash evidence, full-mode target policy,
-    prompt-history row joins to candidate history rows, evaluator links, and
-    archive admission.
+    full-file span and hash evidence, full-mode whole-file and evolve-block
+    target span records, prompt-history row joins to candidate history rows,
+    evaluator links, and archive admission.
   - Required result: when fuller prompt-current binding evidence lands, update
-    ROADMAP, README, papers index, and code/paper TODOs with full-mode target
-    spans/block ids and cross-run binding tables so roadmap wording does not
-    overclaim AlphaEvolve-style current-program edit provenance.
+    ROADMAP, README, papers index, and code/paper TODOs with cross-run binding
+    tables so roadmap wording does not overclaim AlphaEvolve-style
+    current-program edit provenance.
 
 - [ ] Keep multi-edit consistency roadmap wording scoped beyond current
       diagnostic scan.

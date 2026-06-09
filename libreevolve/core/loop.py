@@ -14532,6 +14532,10 @@ _PROMPT_EXAMPLE_FILE_SECTION_RE = re.compile(
     r"^<<<FILE[ \t]*(.*?)\n(.*?)^>>>FILE[ \t]*(?:\n|$)",
     re.DOTALL | re.MULTILINE,
 )
+_PROMPT_CURRENT_BLOCK_SECTION_RE = re.compile(
+    r"^<<<BLOCK[ \t]*(.*?)\n(.*?)\n^>>>BLOCK[ \t]*(?:\n|$)",
+    re.DOTALL | re.MULTILINE,
+)
 _PROMPT_EXAMPLE_SKELETON_RE = re.compile(
     r"(?s)def\s+[A-Za-z_][A-Za-z0-9_]*\s*\(\s*\)\s*:\s*return\s+1"
     r".*?def\s+[A-Za-z_][A-Za-z0-9_]*\s*\(\s*\)\s*:\s*return\s+2"
@@ -15803,6 +15807,7 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
     omitted_path_count = 0
     evolve_block_match_count = 0
     file_section_record_count = 0
+    full_mode_target_record_count = 0
     history_join_count = 0
     prompt_history_score_join_count = 0
     for record in records:
@@ -15817,6 +15822,9 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
             section_records = binding.get("file_section_records")
             if isinstance(section_records, list):
                 file_section_record_count += len(section_records)
+            full_target_records = binding.get("full_mode_target_records")
+            if isinstance(full_target_records, list):
+                full_mode_target_record_count += len(full_target_records)
             for match in binding.get("match_records", []):
                 if not isinstance(match, Mapping):
                     continue
@@ -15854,6 +15862,7 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
         "exact_diff_binding_count": exact_match_count,
         "evolve_block_match_count": evolve_block_match_count,
         "file_section_record_count": file_section_record_count,
+        "full_mode_target_record_count": full_mode_target_record_count,
         "history_join_count": history_join_count,
         "prompt_history_score_join_count": prompt_history_score_join_count,
         "truncated_prompt_current_count": truncated_prompt_current_count,
@@ -15866,7 +15875,7 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
             "mutation_target_source": "selected_parent.workspace_at_mutation_time",
             "diff_match_policy": "primary_file_exact_SEARCH_match_counts_for_non_file_section_diff_payloads",
             "evolve_block_scope_policy": "normalized_SEARCH_span_mapped_to_parent_evolve_block_when_exactly_inside_block_content",
-            "full_mode_policy": "target_policy_recorded_without_SEARCH_span_claim",
+            "full_mode_policy": "primary_file_or_named_evolve_block_target_spans_recorded_without_SEARCH_match_claim",
             "workspace_section_policy": "file_section_payloads_record_per_section_target_and_full_file_span_records",
             "file_section_span_policy": "file_section_targets_record_parent_and_candidate_full_file_spans_when_available",
             "history_join_policy": "candidate_history_rows_joined_to_prompt_history_add_and_score_rows_by_program_id",
@@ -15888,12 +15897,12 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
             "diff_exact_match_spans_recorded": exact_match_count > 0,
             "evolve_block_inner_span_mapping": evolve_block_match_count > 0,
             "workspace_file_section_span_records": file_section_record_count > 0,
+            "full_mode_target_spans_or_block_ids": full_mode_target_record_count > 0,
             "prompt_history_row_join": (
                 history_join_count > 0 and prompt_history_score_join_count > 0
             ),
             "full_alphaevolve_current_program_provenance": False,
             "remaining_gap": [
-                "full_mode_target_span_or_block_policy",
                 "cross_run_prompt_current_binding_table",
             ],
         },
@@ -16230,13 +16239,21 @@ def _prompt_current_mutation_binding(
             "file_section_records_truncated": len(section_records) > 50,
         }
     if mode == "full":
+        full_target_records = _prompt_current_full_mode_target_records(
+            parent_workspace,
+            candidate_workspace,
+            payload,
+        )
         return {
-            "mode_policy": "full_mode_target_policy_recorded",
+            "mode_policy": "full_mode_target_span_records",
             "payload_surfaces": surfaces,
             "target_path": parent_workspace.primary_file,
             "all_search_blocks_match_once": False,
             "search_block_count": 0,
             "match_records": [],
+            "full_mode_target_count": len(full_target_records),
+            "full_mode_target_records": full_target_records[:25],
+            "full_mode_target_records_truncated": len(full_target_records) > 25,
         }
     if mode != "diff":
         return {
@@ -16318,6 +16335,156 @@ def _prompt_current_file_section_records(
             )
         records.append(record)
     return records
+
+
+def _prompt_current_full_mode_target_records(
+    parent_workspace: CandidateWorkspace,
+    candidate_workspace: CandidateWorkspace,
+    payload: str,
+) -> list[dict]:
+    target_path = parent_workspace.primary_file
+    parent_text = parent_workspace.files.get(target_path, "")
+    candidate_text = candidate_workspace.files.get(target_path, "")
+    parent_blocks = extract_evolve_blocks(parent_text)
+    candidate_blocks = extract_evolve_blocks(candidate_text)
+    normalized_payload = _prompt_current_strip_outer_markdown_fence(payload)
+    block_sections = [
+        (match.group(1).strip(), match.group(2))
+        for match in _PROMPT_CURRENT_BLOCK_SECTION_RE.finditer(normalized_payload)
+    ]
+    if block_sections:
+        parent_by_name = {
+            block.name: (index, block)
+            for index, block in enumerate(parent_blocks)
+        }
+        candidate_by_name = {
+            block.name: (index, block) for index, block in enumerate(candidate_blocks)
+        }
+        records: list[dict] = []
+        for section_index, (name, body) in enumerate(block_sections):
+            parent_index, parent_block = parent_by_name.get(name, (None, None))
+            candidate_index, candidate_block = candidate_by_name.get(
+                name,
+                (None, None),
+            )
+            record = {
+                "target_index": section_index,
+                "target_path": target_path,
+                "target_scope": "evolve_block",
+                "block_name": _mutation_consistency_safe_label(name),
+                "block_section_body_sha256": hashlib.sha256(
+                    body.encode("utf-8")
+                ).hexdigest(),
+                "block_section_body_chars": len(body),
+                "target_span_policy": "named_block_section_targets_parent_evolve_block_content_span",
+                "parent_block": _prompt_current_block_span_record(
+                    parent_block,
+                    parent_index,
+                ),
+                "candidate_block": _prompt_current_block_span_record(
+                    candidate_block,
+                    candidate_index,
+                ),
+            }
+            records.append(record)
+        return records
+
+    if len(parent_blocks) == 1:
+        candidate_block = (
+            candidate_blocks[0]
+            if (
+                len(candidate_blocks) == 1
+                and candidate_blocks[0].name == parent_blocks[0].name
+            )
+            else None
+        )
+        return [
+            {
+                "target_index": 0,
+                "target_path": target_path,
+                "target_scope": "evolve_block",
+                "block_name": _mutation_consistency_safe_label(parent_blocks[0].name),
+                "target_span_policy": "single_parent_evolve_block_content_span",
+                "parent_block": _prompt_current_block_span_record(
+                    parent_blocks[0],
+                    0,
+                ),
+                "candidate_block": _prompt_current_block_span_record(
+                    candidate_block,
+                    0 if candidate_block is not None else None,
+                ),
+            }
+        ]
+
+    if parent_blocks:
+        return [
+            {
+                "target_index": 0,
+                "target_path": target_path,
+                "target_scope": "ambiguous_evolve_blocks",
+                "target_span_policy": "multiple_parent_evolve_blocks_require_named_block_sections",
+                "parent_block_count": len(parent_blocks),
+                "candidate_block_count": len(candidate_blocks),
+            }
+        ]
+
+    return [
+        {
+            "target_index": 0,
+            "target_path": target_path,
+            "target_scope": "whole_file",
+            "target_span_policy": "whole_primary_file_replacement",
+            "parent_file": _prompt_current_file_span_record(parent_text),
+            "candidate_file": _prompt_current_file_span_record(candidate_text),
+        }
+    ]
+
+
+def _prompt_current_block_span_record(
+    block: object,
+    block_index: int | None,
+) -> dict:
+    if block is None:
+        return {
+            "exists": False,
+            "block_index": block_index,
+            "block_name": None,
+            "outer_span": None,
+            "content_span": None,
+            "content_sha256": None,
+            "content_chars": 0,
+        }
+    content = getattr(block, "content", "")
+    if not isinstance(content, str):
+        content = ""
+    return {
+        "exists": True,
+        "block_index": block_index,
+        "block_name": _mutation_consistency_safe_label(
+            str(getattr(block, "name", ""))
+        ),
+        "outer_span": [
+            int(getattr(block, "start", 0)),
+            int(getattr(block, "end", 0)),
+        ],
+        "content_span": [
+            int(getattr(block, "content_start", 0)),
+            int(getattr(block, "content_end", 0)),
+        ],
+        "content_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        "content_chars": len(content),
+    }
+
+
+def _prompt_current_strip_outer_markdown_fence(text: str) -> str:
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    stripped = normalized.strip()
+    if not stripped.startswith("```"):
+        return normalized
+    lines = stripped.splitlines()
+    if len(lines) < 2 or not lines[-1].strip().startswith("```"):
+        return normalized
+    return "\n".join(lines[1:-1])
 
 
 def _prompt_current_file_section_target(header: str) -> dict:
@@ -16477,6 +16644,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "exact_diff_binding_count",
         "evolve_block_match_count",
         "file_section_record_count",
+        "full_mode_target_record_count",
         "history_join_count",
         "prompt_history_score_join_count",
         "truncated_prompt_current_count",
@@ -16504,6 +16672,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "exact_diff_binding_count",
         "evolve_block_match_count",
         "file_section_record_count",
+        "full_mode_target_record_count",
         "history_join_count",
         "prompt_history_score_join_count",
         "truncated_prompt_current_count",
@@ -16611,13 +16780,64 @@ def validate_prompt_current_binding_report(report: object) -> dict:
                         "destination_candidate_file",
                     ):
                         file_record = section.get(file_field)
-                        if file_record is not None and not isinstance(file_record, dict):
+                        if file_record is not None and not isinstance(
+                            file_record,
+                            dict,
+                        ):
                             issues.append(
                                 {
                                     "code": "invalid_file_span_record",
                                     "message": (
                                         f"record {index} file section {section_index} "
                                         f"{file_field} must be an object"
+                                    ),
+                                }
+                            )
+            full_target_records = binding.get("full_mode_target_records")
+            if isinstance(full_target_records, list):
+                for target_index, target in enumerate(full_target_records):
+                    if not isinstance(target, dict):
+                        issues.append(
+                            {
+                                "code": "invalid_full_mode_target_record",
+                                "message": (
+                                    f"record {index} full target {target_index} "
+                                    "must be an object"
+                                ),
+                            }
+                        )
+                        continue
+                    if target.get("target_scope") not in {
+                        "whole_file",
+                        "evolve_block",
+                        "ambiguous_evolve_blocks",
+                    }:
+                        issues.append(
+                            {
+                                "code": "invalid_full_mode_target_scope",
+                                "message": (
+                                    f"record {index} full target {target_index} "
+                                    "target_scope is invalid"
+                                ),
+                            }
+                        )
+                    for target_field in (
+                        "parent_file",
+                        "candidate_file",
+                        "parent_block",
+                        "candidate_block",
+                    ):
+                        target_record = target.get(target_field)
+                        if target_record is not None and not isinstance(
+                            target_record,
+                            dict,
+                        ):
+                            issues.append(
+                                {
+                                    "code": "invalid_full_mode_target_span_record",
+                                    "message": (
+                                        f"record {index} full target {target_index} "
+                                        f"{target_field} must be an object"
                                     ),
                                 }
                             )

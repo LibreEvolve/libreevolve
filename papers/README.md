@@ -343,10 +343,10 @@ parent and candidate workspace hashes, LLM call ids, mutation payload hashes,
 diff SEARCH match counts/spans for non-file-section diff payloads,
 evolve-block-inner span mapping when an exact SEARCH match falls inside parent
 block content, workspace file-section target records with parent/candidate
-full-file span and hash evidence, full-mode target policy, evaluator status,
-archive admission, and prompt-history row joins to candidate history rows.
-Remaining Figure 3 parity gaps are full-mode target spans or block ids and
-cross-run binding tables.
+full-file span and hash evidence, full-mode whole-file and evolve-block target
+span records, evaluator status, archive admission, and prompt-history row
+joins to candidate history rows. Remaining Figure 3 parity gap is cross-run
+binding tables.
 
 AlphaEvolve initial-program validity note: current seed handling can still
 evaluate and record invalid generation-0 seeds as permissive

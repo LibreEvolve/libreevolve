@@ -1881,14 +1881,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     non-file-section diff payloads, evolve-block inner span mapping for exact
     SEARCH matches inside parent block content, workspace file-section target
     records with parent/candidate full-file span and hash evidence, full-mode
-    target policy, prompt-history row joins to candidate history rows,
-    evaluator status, and archive admission.
+    whole-file and evolve-block target span records, prompt-history row joins
+    to candidate history rows, evaluator status, and archive admission.
   - Current gap: paper-facing evidence is still current-run only and does not
-    record full-mode target spans or block ids or persist cross-run binding
-    tables.
-  - Required result: extend prompt-current binding evidence with full-mode
-    target spans/block policy and cross-run validation before claiming full
-    AlphaEvolve Figure 3 current-program edit provenance.
+    persist cross-run binding tables.
+  - Required result: extend prompt-current binding evidence with cross-run
+    validation before claiming full AlphaEvolve Figure 3 current-program edit
+    provenance.
 
 - [ ] Track multi-edit semantic consistency beyond current diagnostic scan.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).

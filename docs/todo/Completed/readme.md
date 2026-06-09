@@ -4,13 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document full-mode target span and block-id records in prompt-current
+      binding evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
+    program rendered in the prompt.
+  - Status: README now says `runtime.history.prompt_current_binding_report`
+    includes full-mode whole-file and evolve-block target span records.
+  - Remaining gap: cross-run binding tables remain active README TODOs.
+
 - [x] Document prompt-history row joins in prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
     program rendered in the prompt.
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes prompt-history row joins to candidate history rows.
-  - Remaining gap: full-mode target spans/block ids and cross-run binding
-    tables remain active README TODOs.
+  - Remaining gap: cross-run binding tables remain active README TODOs.
 
 - [x] Document workspace file-section span records in prompt-current binding
       evidence.
@@ -19,8 +26,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes workspace file-section target records with parent/candidate
     full-file span and hash evidence.
-  - Remaining gap: full-mode target spans/block ids and cross-run binding
-    tables remain active README TODOs.
+  - Remaining gap: cross-run binding tables remain active README TODOs.
 
 - [x] Document evolve-block inner span mapping in prompt-current binding
       evidence.
@@ -29,8 +35,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     maps exact SEARCH matches inside parent evolve-block content to block
     names, block spans, and block-relative SEARCH spans.
-  - Remaining gap: full-mode target spans/block ids and cross-run binding
-    tables remain active README TODOs.
+  - Remaining gap: cross-run binding tables remain active README TODOs.
 
 - [x] Document normalized and skeleton prompt-example copy diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete examples to
@@ -10516,11 +10521,10 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now describes
     `runtime.history.prompt_current_binding_report`, prompt/current-program
     hashes, parent/candidate workspace hashes, LLM call ids, diff SEARCH
-    match counts/spans, full-mode target policy, evaluator links, and archive
-    admission.
-  - Remaining documentation gap: per-file span expansion, evolve-block inner
-    span mapping, prompt-history row joins, full-mode target spans/block ids,
-    and cross-run binding tables remain open.
+    match counts/spans, evolve-block inner span mapping, workspace
+    file-section target/full-file spans, full-mode target spans,
+    prompt-history row joins, evaluator links, and archive admission.
+  - Remaining documentation gap: cross-run binding tables remain open.
   - Verification: focused loop tests cover the manifest field and validator.
 
 - [x] Document built-in prompt example-copy diagnostics.

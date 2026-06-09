@@ -2749,12 +2749,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LLM call ids, diff SEARCH match counts/spans for non-file-section diff
     payloads, evolve-block inner span mapping for exact matches inside parent
     block content, workspace file-section target records with parent/candidate
-    full-file span and hash evidence, full-mode target policy,
-    prompt-history row joins to candidate history rows, evaluator links, and
-    archive admission.
+    full-file span and hash evidence, full-mode whole-file and evolve-block
+    target span records, prompt-history row joins to candidate history rows,
+    evaluator links, and archive admission.
   - Required result: when fuller binding evidence lands, update README,
-    ROADMAP, papers index, and matching TODOs with full-mode target
-    spans/block ids and cross-run binding tables.
+    ROADMAP, papers index, and matching TODOs with cross-run binding tables.
 
 - [ ] Keep README multi-edit consistency wording scoped beyond current
       diagnostic scan.

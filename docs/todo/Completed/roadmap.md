@@ -4,12 +4,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document full-mode target span and block-id records in prompt-current
+      binding evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) treats generated edits as changes
+    to the current program in the prompt.
+  - Status: ROADMAP now includes full-mode whole-file and evolve-block target
+    span records in `runtime.history.prompt_current_binding_report` and leaves
+    cross-run tables as future work.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document prompt-history row joins in prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) treats generated edits as changes
     to the current program in the prompt.
   - Status: ROADMAP now includes prompt-history row joins in
-    `runtime.history.prompt_current_binding_report` and leaves full-mode spans
-    and cross-run tables as future work.
+    `runtime.history.prompt_current_binding_report` and leaves cross-run tables
+    as future work.
   - Remaining gap: none for this bounded roadmap wording slice.
 
 - [x] Document workspace file-section span records in prompt-current binding
@@ -18,7 +27,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     to the current program in the prompt.
   - Status: ROADMAP now includes workspace file-section target/full-file span
     records in `runtime.history.prompt_current_binding_report` and leaves
-    full-mode spans and cross-run tables as future work.
+    cross-run tables as future work.
   - Remaining gap: none for this bounded roadmap wording slice.
 
 - [x] Document evolve-block inner span mapping in prompt-current binding
@@ -26,8 +35,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Spec evidence: AlphaEvolve Figure 3(b,c) treats SEARCH/REPLACE as edits to
     the current program in the prompt.
   - Status: ROADMAP now includes evolve-block inner span mapping in
-    `runtime.history.prompt_current_binding_report` and leaves full-mode spans
-    and cross-run tables as future work.
+    `runtime.history.prompt_current_binding_report` and leaves cross-run tables
+    as future work.
   - Remaining gap: none for this bounded roadmap wording slice.
 
 - [x] Document normalized and skeleton prompt-example copy diagnostics in the
@@ -7954,11 +7963,10 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
     `runtime.history.prompt_current_binding_report` for prompt/current-program
     hashes, parent/candidate workspace hashes, LLM call ids, diff SEARCH
-    match counts/spans, full-mode target policy, evaluator links, and archive
-    admission.
-  - Remaining roadmap gap: per-file span expansion, evolve-block inner span
-    mapping, prompt-history row joins, full-mode target spans/block ids, and
-    cross-run binding tables remain open.
+    match counts/spans, evolve-block inner span mapping, workspace
+    file-section target/full-file spans, full-mode target spans,
+    prompt-history row joins, evaluator links, and archive admission.
+  - Remaining roadmap gap: cross-run binding tables remain open.
   - Verification: focused loop tests cover the report and validator.
 
 - [x] Narrow prompt-example roadmap wording to stronger copy-policy gaps.

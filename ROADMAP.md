@@ -623,9 +623,11 @@ is not yet an AlphaEvolve reproduction.
   commit `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`. It records the README
   digest, live-repository policy, declared 67-problem count, many-but-not-all
   notebook coverage, prompt/verifier/initial/final artifact kinds, runtime-code
-  absence, source-use licenses, and citation boundary. Cached PDF rows,
-  emitted source manifests, per-problem inventory, numbered-page reconciliation,
-  notebook artifact hashes, and Appendix B claim mappings remain open.
+  absence, source-use licenses, and citation boundary.
+  `papers/follow_on_sources.json` now emits the committed follow-on source row
+  with docs/TODO claim-surface links and an explicit no-cache policy. Cached
+  PDF rows, per-problem inventory, numbered-page reconciliation, notebook
+  artifact hashes, and Appendix B claim mappings remain open.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

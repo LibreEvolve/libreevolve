@@ -3579,10 +3579,12 @@ commit `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`, including README digest,
 declared 67-problem count, many-but-not-all Colab notebook coverage, prompt /
 verifier / initial / final-program artifact kinds, hosted problem-page URL
 pattern, runtime-code absence, Apache-2.0 software / CC-BY-4.0 materials
-license split, citation requirement, and live-repository snapshot policy. This
-is later math-source evidence for the original paper's Section 3.2 handoff,
-not the original `2506.13131` AlphaEvolve specification, not a local cached
-PDF row, and not proof of per-problem notebook/status coverage yet.
+license split, citation requirement, and live-repository snapshot policy. The
+committed `papers/follow_on_sources.json` sidecar emits the follow-on source
+row with docs/TODO claim-surface links and an explicit no-cache policy: it is
+later math-source evidence for the original paper's Section 3.2 handoff, not
+the original `2506.13131` AlphaEvolve specification, not a local cached PDF
+row, and not proof of per-problem notebook/status coverage yet.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

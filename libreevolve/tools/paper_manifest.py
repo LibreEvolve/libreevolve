@@ -43,7 +43,9 @@ from libreevolve.problems.benchmarks.example_scope import (
     validate_example_benchmark_scope,
 )
 from libreevolve.problems.benchmarks.follow_on_sources import (
+    EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
     alphaevolve_follow_on_math_source_record,
+    validate_alphaevolve_follow_on_source_manifest,
     validate_alphaevolve_follow_on_math_source,
 )
 from libreevolve.problems.benchmarks.follow_on_coverage import (
@@ -483,6 +485,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_references_bibliography(root_path, manifest_rows_by_id, json_rows))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_companion_source_manifest(root_path))
+    issues.extend(_validate_alphaevolve_follow_on_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
@@ -1070,6 +1073,33 @@ def _validate_alphaevolve_follow_on_math_source_record(
             )
         )
     return issues
+
+
+def _validate_alphaevolve_follow_on_source_manifest(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_follow_on_source_manifest_missing",
+                    "papers/follow_on_sources.json must emit the AlphaEvolve follow-on math source row",
+                    "2511.02864",
+                )
+            ]
+        return []
+    report = validate_alphaevolve_follow_on_source_manifest(manifest_path)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_follow_on_source_manifest_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.source_id) if issue.source_id else "2511.02864",
+        )
+        for issue in report.issues
+    ]
 
 
 def _validate_alphaevolve_follow_on_problem_coverage_record() -> list[PaperManifestIssue]:

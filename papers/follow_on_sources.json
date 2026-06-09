@@ -1,0 +1,120 @@
+{
+  "schema": "libreevolve.alphaevolve_follow_on_source_manifest.v1",
+  "follow_on_source_count": 1,
+  "sources": [
+    {
+      "manifest_row_id": "2511.02864",
+      "follow_on_source_id": "2511.02864v3",
+      "source_record": {
+        "schema": "libreevolve.alphaevolve_follow_on_math_source.v1",
+        "source_family": "alphaevolve_follow_on_mathematics",
+        "original_source_paper_id": "2506.13131",
+        "scope_boundary": {
+          "original_alphaevolve_spec_source": "2506.13131",
+          "follow_on_evidence_source": "2511.02864",
+          "separates_original_spec_from_later_math_evidence": true,
+          "not_original_alphaevolve_runtime_spec": true,
+          "not_full_problem_inventory": true
+        },
+        "paper": {
+          "arxiv_id": "2511.02864",
+          "version": 3,
+          "versioned_id": "2511.02864v3",
+          "category": "cs.NE",
+          "latest_revision_date": "2025-12-22",
+          "title": "Mathematical exploration and discovery at scale",
+          "authors": [
+            "Bogdan Georgiev",
+            "Javier Gomez-Serrano",
+            "Terence Tao",
+            "Adam Zsolt Wagner"
+          ],
+          "abs_url": "https://arxiv.org/abs/2511.02864",
+          "versioned_abs_url": "https://arxiv.org/abs/2511.02864v3",
+          "floating_pdf_url": "https://arxiv.org/pdf/2511.02864.pdf",
+          "versioned_pdf_url": "https://arxiv.org/pdf/2511.02864v3",
+          "local_cache": {
+            "available": false,
+            "manifest_row_present": false,
+            "file": null,
+            "sha256": null,
+            "bytes": null
+          }
+        },
+        "repository": {
+          "name": "google-deepmind/alphaevolve_repository_of_problems",
+          "url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+          "git_url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems.git",
+          "default_branch": "main",
+          "commit": "bfd224d0e7763f89eb4a8efe93ac126091f85ed9",
+          "snapshot_date": "2026-06-08",
+          "live_update_policy": "live_repository_snapshot_required",
+          "readme_url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems/blob/main/README.md",
+          "readme_raw_url": "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/bfd224d0e7763f89eb4a8efe93ac126091f85ed9/README.md",
+          "readme_sha256": "cecf8d523151ca5e174f306fa52ef8041350e3ac61286cbb744a312a029a1543",
+          "readme_bytes": 4425
+        },
+        "repository_claims": {
+          "declared_problem_count": 67,
+          "problem_pages_declared_complete": true,
+          "per_problem_inventory_validated": false,
+          "numbered_page_inventory_validated": false,
+          "notebook_coverage": "many_not_all",
+          "runtime_code_available": false,
+          "notebook_artifact_kinds": [
+            "problem_pages",
+            "colab_notebooks_many_not_all",
+            "prompts",
+            "verification_code",
+            "initial_programs",
+            "final_evolved_programs",
+            "visualization_or_analysis_where_appropriate"
+          ],
+          "hosted_problem_page_url_pattern": "https://google-deepmind.github.io/alphaevolve_repository_of_problems/problems/{n}.html",
+          "status_artifact_inventory_validated": true
+        },
+        "source_use": {
+          "repository_software_license": "Apache-2.0",
+          "repository_materials_license": "CC-BY-4.0",
+          "rights_holder": "Google LLC",
+          "copyright_year": 2025,
+          "citation_required": true,
+          "citation_arxiv_id": "2511.02864"
+        },
+        "required_follow_on_work": [
+          "build_per_problem_repository_inventory",
+          "reconcile_numbered_problem_pages_with_declared_count",
+          "validate_notebook_prompt_verifier_initial_final_artifacts",
+          "map_original_appendix_b_claims_to_follow_on_problem_records",
+          "attach_rights_attribution_to_generated_artifacts"
+        ]
+      },
+      "claim_artifact_links": {
+        "follow_on_source_used_by": [
+          "README.md",
+          "ROADMAP.md",
+          "papers/README.md",
+          "docs/todo/code.md",
+          "docs/todo/papers.md",
+          "docs/todo/readme.md",
+          "docs/todo/roadmap.md"
+        ],
+        "policy": "follow_on_sources_must_not_be_treated_as_original_alphaevolve_spec_or_cached_pdf"
+      },
+      "cache_policy": {
+        "paper_cache_manifest_row_required": false,
+        "explicit_no_cache_policy_recorded": true,
+        "repository_snapshot_required": true,
+        "local_cache_status_field": "source_record.paper.local_cache",
+        "scope": "committed follow-on source provenance, not cached PDF or per-problem inventory"
+      },
+      "remaining_work": [
+        "build_per_problem_repository_inventory",
+        "reconcile_numbered_problem_pages_with_declared_count",
+        "validate_notebook_prompt_verifier_initial_final_artifacts",
+        "map_original_appendix_b_claims_to_follow_on_problem_records",
+        "attach_rights_attribution_to_generated_artifacts"
+      ]
+    }
+  ]
+}

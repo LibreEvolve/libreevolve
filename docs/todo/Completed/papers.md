@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
+    constructive-math examples and method details would appear in an upcoming
+    paper. Current source evidence identifies that follow-on as arXiv
+    `2511.02864v3`, `Mathematical exploration and discovery at scale`, and the
+    `google-deepmind/alphaevolve_repository_of_problems` repository.
+  - Status: `papers/follow_on_sources.json` now records the follow-on
+    paper/repository source row, including versioned arXiv identity, pinned
+    repository commit, README digest, declared 67-problem count, notebook
+    coverage boundary, runtime-code absence, source-use licenses, citation
+    boundary, docs/TODO claim-surface links, and explicit no-cache policy. The
+    standard paper-manifest validation requires the sidecar at repo root.
+  - Remaining gap: no cached `2511.02864` PDF/digest row exists yet, and
+    problem inventory, notebook hash/readability matrices, Appendix B claim
+    mappings, and generated-artifact rights rows remain active paper work.
+
 - [x] Track companion-result repository rights and disclaimer evidence.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README declares
     Google LLC copyright, Apache-2.0 software licensing, CC-BY-4.0 materials

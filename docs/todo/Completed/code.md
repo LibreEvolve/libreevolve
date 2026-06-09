@@ -4,6 +4,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says the
+    constructive-math examples and method details would be provided in an
+    upcoming paper; current source evidence identifies that follow-on as arXiv
+    `2511.02864v3`, `Mathematical exploration and discovery at scale`, with
+    the `google-deepmind/alphaevolve_repository_of_problems` repository.
+  - Status: `libreevolve.alphaevolve_follow_on_source_manifest.v1` now emits
+    `papers/follow_on_sources.json`, linking the follow-on paper/repository
+    source row to README, ROADMAP, papers, and TODO surfaces. The
+    paper-manifest gate validates the sidecar, preserves the original
+    `2506.13131` versus later-source boundary, records an explicit no-cache
+    policy for `2511.02864`, and still rejects a false download-manifest cache
+    row until a real cached PDF row is implemented.
+  - Remaining gap: per-problem repository inventory, numbered-page
+    reconciliation, notebook/prompt/verifier/initial/final artifact metadata,
+    Appendix B claim mapping, generated-artifact rights rows, and cached PDF
+    digest work remain active follow-on TODOs.
+
 - [x] Add companion-result repository rights and disclaimer provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
     Google LLC copyright, Apache-2.0 software licensing, CC-BY-4.0 materials

@@ -2471,37 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
-  - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
-    examples and method details for the constructive-math problems would be
-    provided in an upcoming paper. Current primary-source evidence shows that
-    paper as arXiv `2511.02864`, `Mathematical exploration and discovery at
-    scale`, last revised as v3 on 2025-12-22, and its
-    `google-deepmind/alphaevolve_repository_of_problems` repository says it
-    contains 67 problem descriptions plus Google Colab notebooks with prompts,
-    verification code, initial programs, final evolved programs, and
-    visualization or analysis code where available.
-  - Current evidence: `libreevolve.alphaevolve_follow_on_math_source.v1` in
-    `libreevolve/problems/benchmarks/follow_on_sources.py` now validates arXiv
-    `2511.02864v3`, title/authors/date, the pinned
-    `google-deepmind/alphaevolve_repository_of_problems` commit and README
-    digest, live-repository snapshot policy, declared 67-problem count,
-    many-but-not-all notebook coverage, artifact-kind claims, runtime-code
-    absence, repository source-use licenses, citation boundary, and the
-    separation from the original `2506.13131` AlphaEvolve specification. The
-    paper-manifest gate validates the built-in source record and rejects a
-    stale cache-boundary mismatch if a `2511.02864` manifest row appears before
-    the source record is updated. It still does not cache the follow-on PDF,
-    emit paper/source manifest rows, enumerate problem ids/pages, hash
-    notebooks, or map Appendix B claims to the 67-problem source set.
-  - Required result: extend emitted paper/source manifests for the follow-on
-    math-scale paper and repository: cached-PDF or explicit no-cache policy
-    rows, repository snapshot rows, all problem ids, notebook/prompt/verifier/
-    final-program artifact metadata, per-problem status/page inventory,
-    rights/source-use rows on generated artifacts, and claim mappings from the
-    original AlphaEvolve Section 3.2/Appendix B evidence to the later expanded
-    math repository.
-
 - [ ] Add follow-on problem-repository coverage-state provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README describes the repository as live, with plans to expand and improve

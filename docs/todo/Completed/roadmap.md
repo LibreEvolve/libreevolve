@@ -4,6 +4,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document committed follow-on AlphaEvolve math-source manifest.
+  - Spec evidence: AlphaEvolve Section 3.2 points to a later
+    constructive-math source; current evidence identifies arXiv
+    `2511.02864v3`, `Mathematical exploration and discovery at scale`, and the
+    `google-deepmind/alphaevolve_repository_of_problems` repository.
+  - Status: ROADMAP now documents `papers/follow_on_sources.json` as the
+    committed follow-on source manifest, with docs/TODO claim-surface links,
+    pinned repository identity, explicit no-cache policy, and separation from
+    both the original `2506.13131` specification and any future cached PDF row.
+  - Remaining gap: none for this bounded roadmap wording slice; per-problem
+    inventory, numbered-page reconciliation, notebook artifact hashes, Appendix
+    B mappings, generated-artifact rights rows, and cached PDF evidence remain
+    active roadmap work.
+
 - [x] Document companion repository rights rows on generated artifacts.
   - Spec evidence: the companion repository README declares Apache-2.0 software
     licensing, CC-BY-4.0 materials licensing, AS-IS disclaimer, and

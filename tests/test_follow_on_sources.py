@@ -4,8 +4,10 @@ import json
 from libreevolve.problems.benchmarks.follow_on_sources import (
     ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
     alphaevolve_follow_on_math_source_record,
+    alphaevolve_follow_on_source_manifest_record,
     render_alphaevolve_follow_on_math_source_summary,
     validate_alphaevolve_follow_on_math_source,
+    validate_alphaevolve_follow_on_source_manifest,
 )
 from libreevolve.tools.paper_manifest import validate_paper_manifest
 
@@ -30,6 +32,54 @@ def test_validate_alphaevolve_follow_on_math_source_loads_json_file(tmp_path):
     validation = validate_alphaevolve_follow_on_math_source(path)
 
     assert validation.ok is True
+
+
+def test_validate_alphaevolve_follow_on_source_manifest_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_source_manifest_record()
+
+    validation = validate_alphaevolve_follow_on_source_manifest(recordset)
+
+    assert validation.ok is True
+    assert validation.source_count == 1
+    assert validation.repository_ref_pinned is True
+    assert validation.local_pdf_cache_available is False
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_source_manifest_loads_json_file(tmp_path):
+    path = tmp_path / "follow_on_sources.json"
+    path.write_text(
+        json.dumps(alphaevolve_follow_on_source_manifest_record()),
+        encoding="utf-8",
+    )
+
+    validation = validate_alphaevolve_follow_on_source_manifest(path)
+
+    assert validation.ok is True
+
+
+def test_validate_alphaevolve_follow_on_source_manifest_rejects_surface_and_cache_policy_drift():
+    recordset = alphaevolve_follow_on_source_manifest_record()
+    source = recordset["sources"][0]
+    source["manifest_row_id"] = "2506.13131"
+    source["follow_on_source_id"] = "2511.02864v2"
+    source["claim_artifact_links"]["follow_on_source_used_by"] = ["README.md"]
+    source["claim_artifact_links"]["policy"] = "same_as_cached_pdf"
+    source["cache_policy"]["paper_cache_manifest_row_required"] = True
+    source["cache_policy"]["scope"] = "cached PDF evidence"
+    source["remaining_work"] = ["build_per_problem_repository_inventory"]
+
+    validation = validate_alphaevolve_follow_on_source_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_manifest_source_row_id" in codes
+    assert "invalid_manifest_follow_on_source_id" in codes
+    assert "claim_artifact_surface_mismatch" in codes
+    assert "invalid_claim_artifact_policy" in codes
+    assert "invalid_cache_policy_paper_cache_manifest_row_required" in codes
+    assert "invalid_cache_policy_scope" in codes
+    assert "manifest_remaining_work_mismatch" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_cache_overclaims():

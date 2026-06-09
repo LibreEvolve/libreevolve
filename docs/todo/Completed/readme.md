@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document committed follow-on AlphaEvolve math-source manifest.
+  - Spec evidence: AlphaEvolve Section 3.2 points to a forthcoming
+    constructive-math paper; current source evidence identifies arXiv
+    `2511.02864v3`, `Mathematical exploration and discovery at scale`, and the
+    `google-deepmind/alphaevolve_repository_of_problems` repository.
+  - Status: README now documents `papers/follow_on_sources.json` as the
+    committed follow-on source manifest with docs/TODO claim-surface links,
+    pinned repository identity, explicit no-cache policy, and the boundary that
+    this is later math-source evidence, not the original `2506.13131`
+    specification or a cached PDF row.
+  - Remaining gap: none for this bounded README wording slice; per-problem
+    coverage, notebook artifact hashes, Appendix B mappings, rights rows, and
+    cached PDF evidence remain separate active TODOs.
+
 - [x] Document companion repository rights rows on generated artifacts.
   - Spec evidence: the companion repository README declares Apache-2.0 software
     licensing, CC-BY-4.0 materials licensing, AS-IS disclaimer, and

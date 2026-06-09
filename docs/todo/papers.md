@@ -3298,37 +3298,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP/papers wording qualifies SOTA-priority claims when the
     paper records concurrent matching work.
 
-- [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
-    examples and details on the mathematical construction problems and methods
-    would appear in an upcoming paper. Current primary-source evidence
-    identifies that follow-on as arXiv `2511.02864`, `Mathematical exploration
-    and discovery at scale`, by Bogdan Georgiev, Javier Gomez-Serrano, Terence
-    Tao, and Adam Zsolt Wagner, with arXiv v3 dated 2025-12-22. The associated
-    `google-deepmind/alphaevolve_repository_of_problems` repository states
-    that it contains 67 problem pages and Colab notebooks for many problems,
-    including prompts, verification code, initial programs, final evolved
-    programs, and visualization/analysis code where appropriate.
-  - Current gap: `libreevolve.alphaevolve_follow_on_math_source.v1` now
-    preserves the follow-on paper identity, arXiv version/date, pinned DeepMind
-    repository URL/commit, README digest, live-update policy, declared 67-
-    problem count, many-but-not-all notebook coverage, prompt/verifier/
-    initial/final artifact-kind claims, runtime-code absence, source-use
-    licenses, citation boundary, and the original-paper versus follow-on
-    source boundary. The standard paper-manifest gate validates that built-in
-    record and rejects a `2511.02864` cache row until the source record is
-    updated. Paper-facing emitted rows are still missing: no cached PDF/digest
-    row, no source-manifest snapshot row, no problem inventory, no notebook
-    hash/readability matrix, and no Appendix B claim mapping to the expanded
-    67-problem source set.
-  - Required result: emit paper/source evidence rows for arXiv `2511.02864`
-    and the DeepMind problem repository: cached-PDF or explicit no-cache
-    policy, repository snapshot rows, problem ids, notebook artifact metadata,
-    prompt/verifier/initial/final-program presence, license/source-use notes on
-    generated artifacts, claim mappings to the original AlphaEvolve math
-    results, and README/ROADMAP wording that keeps the original-paper versus
-    follow-on source boundary explicit.
-
 - [ ] Track follow-on problem-repository coverage-state evidence.
   - Paper/source evidence: the
     `google-deepmind/alphaevolve_repository_of_problems` README describes a

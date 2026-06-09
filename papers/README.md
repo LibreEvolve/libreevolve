@@ -1001,7 +1001,7 @@ completed-ledger files listed below.
 
 | ID | Active gap evidence | Completed/grouped evidence |
 |---|---|---|
-| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md` |
+| 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/readme.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | auer-cesa-bianchi-fischer-2002 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
 | 2511.17592 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |
@@ -1323,8 +1323,10 @@ Implemented:
   `bfd224d0e7763f89eb4a8efe93ac126091f85ed9`, including README digest, live
   repository policy, declared 67-problem count, many-but-not-all notebook
   coverage, prompt/verifier/initial/final artifact kinds, runtime-code absence,
-  source-use licenses, and citation boundary. It is later math-source evidence,
-  not the original `2506.13131` specification, not a cached PDF row, and not a
+  source-use licenses, and citation boundary. `papers/follow_on_sources.json`
+  emits this committed follow-on source row with docs/TODO claim-surface links
+  and an explicit no-cache policy. It is later math-source evidence, not the
+  original `2506.13131` specification, not a cached PDF row, and not a
   per-problem notebook/status inventory.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the

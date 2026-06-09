@@ -4,6 +4,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep DeepMind-blog roadmap wording scoped until official announcement
+      source provenance exists.
+  - Spec evidence: the May 14, 2025 Google DeepMind blog announcement
+    describes the Gemini/evaluator/evolution loop, whole-codebase evolution,
+    systems and math impacts, white-paper/Colab links, Early Access plans, and
+    blog-specific metric wording.
+  - Status: ROADMAP now documents `papers/official_deepmind_blog.json` as the
+    committed official-announcement sidecar with source metadata, retrieval
+    hash, outbound links, claim ids, blog-versus-paper variants, role metadata,
+    and evidence gates separating announcement evidence from white-paper spec
+    parity and reproduced benchmark evidence.
+  - Remaining gap: none for this bounded roadmap wording slice; PDF/Colab
+    mappings, variant reconciliation, and rendered-artifact role bindings
+    remain active work.
+
 - [x] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 article and arXiv

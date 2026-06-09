@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add official DeepMind AlphaEvolve blog-source provenance and claim
+      reconciliation.
+  - Spec evidence: the May 14, 2025 Google DeepMind article `AlphaEvolve: A
+    Gemini-powered coding agent for designing advanced algorithms` is the
+    official public announcement with architecture, systems, math,
+    availability, white-paper/Colab links, and blog-specific metric wording.
+  - Status: `libreevolve.alphaevolve_official_blog_source.v1` now emits
+    `papers/official_deepmind_blog.json` with the canonical and legacy blog
+    URLs, title/date/team, retrieval hash, white-paper/Colab/Early Access
+    links, claim ids, values/units, blog-versus-paper variant metadata,
+    acknowledgement/illustration role metadata, docs/TODO claim-surface links,
+    and evidence policy.
+  - Remaining gap: paper-section/Colab mappings, blog update metadata,
+    FlashAttention and kernel-effort variant reconciliation, and role-to-
+    artifact links remain separate active TODOs.
+
 - [x] Add AlphaEvolve theoretical-CS proof-element source tracking.
   - Spec evidence: Google Research's September 30, 2025 article and arXiv
     `2509.18057v7` report AlphaEvolve-discovered finite combinatorial proof

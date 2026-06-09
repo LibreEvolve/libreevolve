@@ -3620,6 +3620,16 @@ search/verifier code, original brute-force verifier provenance, and local
 certification benchmarks. This is later proof-element source evidence, not the
 original AlphaEvolve specification, not the 67-problem constructive-math source,
 and not a local theorem prover or graph-certification implementation.
+Official DeepMind AlphaEvolve announcement evidence uses
+`libreevolve.alphaevolve_official_blog_source.v1`; the committed
+`papers/official_deepmind_blog.json` sidecar records the May 14, 2025 blog URL,
+title/date/team, retrieval hash, white-paper and Colab outbound links, Early
+Access form link, claim variants such as `32.5%` FlashAttention and
+weeks-to-days kernel work, blog-only availability statements, and
+announcement/illustration role metadata. These claims are announcement-source
+evidence, not audited white-paper specification or reproduced LibreEvolve
+evidence; blog-versus-paper value and wording variants remain explicitly gated
+until reconciled to the PDF, Colab, or local artifacts.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

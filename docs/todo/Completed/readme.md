@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README DeepMind-blog wording scoped until official announcement
+      source provenance exists.
+  - Spec evidence: the May 14, 2025 Google DeepMind blog article is an
+    official public AlphaEvolve announcement with white-paper/Colab links,
+    systems summaries, Early Access plans, and blog-specific metric wording.
+  - Status: README now documents `papers/official_deepmind_blog.json` as
+    announcement-source evidence with URL/date/title/team, retrieval hash,
+    outbound links, claim variants, availability statements, and role metadata,
+    while separating it from audited white-paper specification and reproduced
+    LibreEvolve evidence.
+  - Remaining gap: none for this bounded README wording slice; claim-to-paper/
+    Colab mappings and metric variant reconciliation remain active TODOs.
+
 - [x] Keep README theoretical-CS AlphaEvolve wording scoped until
       proof-element source tracking exists.
   - Spec evidence: Google Research's September 30, 2025 article and arXiv

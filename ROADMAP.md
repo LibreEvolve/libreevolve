@@ -662,6 +662,15 @@ is not yet an AlphaEvolve reproduction.
   code, verifier code, original brute-force verifier provenance, and local
   graph-certification benchmarks remain open before roadmap claims can treat
   this source as implemented benchmark parity.
+- Keep official DeepMind announcement claims separated from white-paper spec
+  parity: `papers/official_deepmind_blog.json` now records the May 14, 2025
+  blog URL/date/title/team, retrieval hash, white-paper and Colab outbound
+  links, Early Access form link, claim ids, blog-versus-paper variants such as
+  `32.5%` FlashAttention and weeks-to-days kernel work, and blog
+  acknowledgement/illustration roles. Reconciliation to paper sections, Colab
+  artifacts, rendered artifacts, and reproduced LibreEvolve evidence remains
+  open before announcement wording can be treated as audited implementation
+  parity.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

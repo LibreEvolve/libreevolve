@@ -62,6 +62,10 @@ from libreevolve.problems.benchmarks.theoretical_cs_sources import (
     EXPECTED_THEORETICAL_CS_SOURCE_MANIFEST_FILE,
     validate_alphaevolve_theoretical_cs_source_manifest,
 )
+from libreevolve.problems.benchmarks.official_deepmind_blog import (
+    EXPECTED_OFFICIAL_BLOG_MANIFEST_FILE,
+    validate_alphaevolve_official_blog_manifest,
+)
 from libreevolve.problems.benchmarks.paper_source_versions import (
     EXPECTED_SOURCE_VERSION_MANIFEST_FILE,
     alphaevolve_source_pdf_version_record,
@@ -502,6 +506,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
     issues.extend(_validate_alphaevolve_theoretical_cs_source_manifest(root_path))
+    issues.extend(_validate_alphaevolve_official_blog_manifest(root_path))
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
@@ -1233,6 +1238,33 @@ def _validate_alphaevolve_theoretical_cs_source_manifest(root_path: Path) -> lis
             f"alphaevolve_theoretical_cs_source_manifest_{issue.code}",
             issue.message,
             _safe_manifest_label(issue.source_id) if issue.source_id else "2509.18057",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_official_blog_manifest(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / EXPECTED_OFFICIAL_BLOG_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_official_blog_manifest_missing",
+                    "papers/official_deepmind_blog.json must emit the official DeepMind announcement source row",
+                    "2506.13131",
+                )
+            ]
+        return []
+    report = validate_alphaevolve_official_blog_manifest(manifest_path)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_official_blog_manifest_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.source_id) if issue.source_id else "2506.13131",
         )
         for issue in report.issues
     ]

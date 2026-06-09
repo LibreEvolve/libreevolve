@@ -1358,6 +1358,12 @@ Implemented:
   Ramanujan, and metric-TSP application rows, lifting-framework boundaries,
   verifier-speedup and final-brute-force-verification claims, and remaining
   artifact/code/verifier inventory gaps.
+- `papers/official_deepmind_blog.json`: official DeepMind AlphaEvolve
+  announcement sidecar, not white-paper specification or reproduced local
+  evidence. It records the May 14, 2025 blog URL/date/title/team, retrieval
+  hash, outbound white-paper/Colab/Early Access links, claim ids and
+  blog-versus-paper value variants, blog-only availability statements, and
+  announcement/illustration role metadata.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

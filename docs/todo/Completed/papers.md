@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track official DeepMind AlphaEvolve blog source and claim variants.
+  - Paper/source evidence: the official May 14, 2025 Google DeepMind blog
+    article describes the AlphaEvolve architecture, whole-codebase scope,
+    deployed systems results, white-paper/Colab links, Early Access plans, and
+    blog-specific values such as `32.5%` FlashAttention speedup.
+  - Status: `papers/official_deepmind_blog.json` now records the source row
+    with URL/date/title/team, retrieval hash, outbound links, claim ids,
+    source-specific values/units, reconciliation status, blog-only availability
+    statements, acknowledgement/illustration role metadata, and evidence
+    policy. The paper-manifest gate requires and validates this sidecar at
+    repo root.
+  - Remaining gap: none for this bounded announcement-source slice; exact
+    PDF/Colab claim mappings, variant reconciliation, and role-to-artifact
+    evidence remain separate paper work.
+
 - [x] Track AlphaEvolve theoretical-CS proof-element source evidence.
   - Paper/source evidence: Google Research's September 30, 2025 article and
     arXiv `2509.18057v7`, `Reinforced Generation of Combinatorial Structures:

@@ -2463,26 +2463,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classification, and snapshot-scoped wording for any 67-versus-68 source
     mismatch.
 
-- [ ] Keep DeepMind-blog roadmap wording scoped until official announcement
-      source provenance exists.
-  - Spec evidence: the May 14, 2025 Google DeepMind blog announcement is an
-    official AlphaEvolve source that describes the Gemini/evaluator/evolution
-    loop, whole-codebase evolution, systems and math impacts, white-paper and
-    Colab links, Early Access/user-interface plans, and blog-specific values
-    or wording such as `up to a 32.5%` FlashAttention speedup and reducing
-    kernel-optimization effort from `weeks` to days.
-  - Current evidence: ROADMAP and README can cite the AlphaEvolve paper,
-    systems metric gaps, source-PDF/Colab/follow-on source gaps, and broad
-    public DeepMind description. They do not require source metadata for the
-    blog itself, claim-to-paper mappings, blog-only availability claims,
-    acknowledgement/illustration role records, or reconciliation where blog
-    and white-paper values differ.
-  - Required result: when official blog-source provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap language
-    distinguishes announcement evidence from white-paper specification,
-    reproduced benchmark evidence, source availability claims, and
-    blog-versus-paper metric/value variants.
-
 - [ ] Keep paper-artifact roadmap wording scoped until creator/assembler role
       records are bound to artifacts.
   - Spec evidence: AlphaEvolve's Contributions section identifies the figure

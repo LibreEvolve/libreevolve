@@ -3355,31 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Track official DeepMind AlphaEvolve blog source and claim variants.
-  - Paper evidence: the official Google DeepMind blog article dated May 14,
-    2025, `AlphaEvolve: A Gemini-powered coding agent for designing advanced
-    algorithms`, is cited by the local TODO ledgers as public AlphaEvolve
-    evidence. It describes the Gemini/evaluator/evolutionary-framework
-    combination, entire-codebase evolution, systems deployments, the white
-    paper and mathematical-results Colab links, Early Access/user-interface
-    plans, and blog-specific values or wording such as `up to a 32.5%`
-    FlashAttention speedup and kernel-optimization effort reduced from
-    `weeks` to days.
-  - Current gap: the paper cache and AlphaEvolve TODOs track PDF sources,
-    companion Colab gaps, follow-on papers/repositories, Section 3.3 metric
-    calibration, and paper acknowledgements. They do not preserve the official
-    blog as a source artifact with URL/date/title/digest, outbound links,
-    claim-to-white-paper mappings, blog-only availability statements,
-    acknowledgement/illustration roles, or variant handling where the blog and
-    white paper differ in value or wording.
-  - Required result: add paper/source evidence rows for official DeepMind blog
-    sources: URL, publication/update date, title, retrieval digest, linked
-    white-paper and Colab targets, claim ids, source-specific text/value/unit,
-    reconciliation status against the white paper, blog-only availability or
-    Early Access statements, acknowledgement/illustration role metadata, and
-    README/ROADMAP wording that separates announcement-source evidence from
-    white-paper specification and LibreEvolve reproduction evidence.
-
 - [ ] Validate paper-index TODO coverage cross-references.
   - Paper evidence: `papers/README.md` includes a "TODO coverage
     cross-references" table that says each implementation-status row is tied

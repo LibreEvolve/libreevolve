@@ -2528,33 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add official DeepMind AlphaEvolve blog-source provenance and claim
-      reconciliation.
-  - Spec evidence: the May 14, 2025 Google DeepMind article `AlphaEvolve: A
-    Gemini-powered coding agent for designing advanced algorithms` is an
-    official public source for the project scope. It says AlphaEvolve combines
-    Gemini models with automated evaluators and an evolutionary framework,
-    goes beyond single-function discovery to evolve entire codebases, reports
-    deployed systems impacts, links the white paper and mathematical-results
-    Colab, and includes blog-specific claim wording such as a production Borg
-    heuristic for over a year, `weeks` of kernel-engineering effort reduced to
-    days, `up to a 32.5%` FlashAttention speedup, Early Access/user-interface
-    plans, and blog-post acknowledgement/illustration roles.
-  - Current evidence: this ledger lists the DeepMind blog as primary evidence,
-    and existing TODOs track many underlying paper claims. No source manifest
-    or report schema records the blog URL/date/title, content digest, outbound
-    white-paper/Colab links, blog-only availability/early-access statements,
-    acknowledgement/illustration roles, or value/text variants between the
-    blog and white paper such as `32.5%` versus `32%` FlashAttention speedup
-    and `weeks` versus `months` of kernel-engineering effort.
-  - Required result: extend source-artifact provenance for official non-PDF
-    AlphaEvolve sources: blog URL, publication/update date, title, retrieval
-    hash, linked white-paper/Colab targets, claim ids, claim text/value/unit,
-    claim source (`blog`, `white_paper`, `both`), variant/reconciliation
-    status, acknowledgement/illustration role metadata, and README/ROADMAP
-    wording that distinguishes official announcement claims from audited
-    white-paper specification and reproduced LibreEvolve evidence.
-
 - [ ] Add validation for paper-index TODO coverage cross-references.
   - Spec evidence: AlphaEvolve-alignment work relies on paper-facing status
     rows being traceable to concrete missing-behavior ledgers. The local

@@ -4170,23 +4170,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     formulation from ranking-only safety, deployment metrics, and Figure 6
     exhibit reproduction.
 
-- [ ] Record scheduling feasibility-boundary evidence for Borg-style results.
+- [ ] Populate scheduling feasibility-boundary evidence for Borg-style results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 states that
     AlphaEvolve's scheduling heuristic scores machines after Borg has already
     determined that they are available and capable of running the pending job;
     the heuristic only influences ranking among feasible machines, so
     decisions are effectively correct by construction.
-  - Current gap: current systems report contracts are domain-agnostic and can
-    accept scheduling reference-correctness as `not_applicable` with a
-    rationale. They do not require paper-facing evidence for the external
-    feasibility filter, ranking-only scope, resource/capacity invariants, or
-    proof that the candidate did not alter job admission or placement
-    constraints directly.
-  - Required result: add scheduling report fields and validation for feasible
-    candidate-set provenance, ranking-only function boundaries, resource
-    invariant checks, simulator/admission-boundary artifacts, and
-    deployment/simulator confirmation before claiming AlphaEvolve-comparable
-    Borg-style scheduling evidence.
+  - Current gap: `libreevolve.systems_result_report.v1` now requires
+    `scheduling_safety` before accepting `alphaevolve_ready` scheduling claims.
+    It validates paper-facing evidence for the external feasibility filter,
+    ranking-only scope, resource/capacity invariants, simulator/admission/
+    placement boundaries, direct authority flags, and safety artifact refs.
+    Existing scheduling fixtures still lack real populated safety records and
+    paper-facing certification examples.
+  - Required result: populate scheduling fixtures with feasible candidate-set
+    provenance, ranking-only function boundaries, resource invariant checks,
+    simulator/admission-boundary artifacts, and deployment/simulator
+    confirmation before claiming AlphaEvolve-comparable Borg-style scheduling
+    evidence.
 
 - [ ] Record scheduling interpretability and mission-critical deployment
       evidence for Borg-style results.

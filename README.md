@@ -3503,11 +3503,15 @@ deployment state, and a boundary statement separating local benchmark evidence
 from domain-owner validated production claims. It is a readiness/report schema
 only, not a compiler, kernel, scheduling, or deployment benchmark
 implementation.
-Scheduling reports also still need
-domain-specific evidence for mission-critical deployment suitability, such as
-interpretable heuristic structure, debuggability/operator review,
-predictability checks, rollout-risk evidence, and comparison against less
-interpretable learned-policy baselines.
+Ready scheduling reports additionally require `scheduling_safety` provenance
+showing the feasible candidate-set source, ranking-only heuristic scope,
+external simulator/admission/placement boundaries, resource invariants, and
+artifact references proving that evolved code only ranks machines already
+deemed feasible. Scheduling reports still need domain-specific evidence for
+mission-critical deployment suitability, such as interpretable heuristic
+structure, debuggability/operator review, predictability checks,
+rollout-risk evidence, and comparison against less interpretable learned-policy
+baselines.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,

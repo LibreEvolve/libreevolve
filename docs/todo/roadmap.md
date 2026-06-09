@@ -2090,24 +2090,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims the report contract nor overclaims AlphaEvolve-style
     domain-owner validated production evidence.
 
-- [ ] Keep scheduling roadmap wording scoped to generic systems reports until
-      ranking-only feasibility evidence exists.
+- [ ] Keep scheduling roadmap wording scoped until ranking-only feasibility
+      evidence is populated.
   - Spec evidence: AlphaEvolve's Borg scheduling heuristic only scores
     machines that Borg already determined were available and capable of
     running the job, so the heuristic influences ranking without owning
     feasibility or admission decisions.
-  - Current evidence: roadmap systems-result wording names unseen workload,
-    deployment, and domain-specific readiness gaps, while current report
-    validation allows scheduling reference correctness to be `not_applicable`
-    with a rationale. It does not require scheduling-specific feasibility
-    filter provenance or proof that evolved code is only a ranking heuristic
-    over feasible machines.
-  - Required result: when scheduling fixtures or report validators add
-    feasible candidate-set provenance, ranking-only boundaries,
+  - Current evidence: roadmap systems-result wording now names
+    `scheduling_safety` records required for `alphaevolve_ready` scheduling
+    reports: feasible candidate-set source, ranking-only boundaries,
+    resource/capacity invariants, simulator/admission/placement boundaries,
+    authority flags, and artifact refs. Existing scheduling fixtures do not
+    yet carry real populated safety records.
+  - Required result: when scheduling fixtures and certification examples
+    populate feasible candidate-set provenance, ranking-only boundaries,
     resource/capacity invariant checks, and simulator/admission-boundary
     evidence, update ROADMAP, README, papers index, and code/paper TODOs so
-    roadmap text distinguishes generic systems readiness from Borg-style
-    correctness-by-construction scheduling evidence.
+    roadmap text neither underclaims the report contract nor overclaims
+    Borg-style correctness-by-construction scheduling evidence.
 
 - [ ] Keep scheduling roadmap wording scoped until vector-bin-packing
       formulation evidence exists.

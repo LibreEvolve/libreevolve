@@ -91,6 +91,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         domain = None
     gate_statuses = _validate_gates(data.get("gates"), issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    scheduling_safety_ready = _validate_scheduling_safety(
+        data.get("scheduling_safety"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     claim_calibration_ready = _validate_claim_calibration(
         data.get("claim_calibration"),
         data,
@@ -120,6 +127,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_claim_calibration",
                     "alphaevolve_ready systems reports require claim-calibrated metric records",
+                )
+            )
+        if domain == "scheduling" and not scheduling_safety_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_scheduling_safety",
+                    "alphaevolve_ready scheduling reports require ranking-only safety provenance",
                 )
             )
         if not application_ready:
@@ -259,6 +273,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
                 gate_rows.append(f"{gate.get('name', '<unknown>')}={gate.get('status', '<unknown>')}")
     claim_records = report.get("claim_calibration", {}).get("records")
     application_records = report.get("application_provenance", {}).get("records")
+    scheduling_safety = report.get("scheduling_safety")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -272,6 +287,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
         f"| claim_calibration_records | {len(claim_records) if isinstance(claim_records, list) else 0} |",
         f"| application_provenance_records | {len(application_records) if isinstance(application_records, list) else 0} |",
+        f"| scheduling_safety | {'present' if isinstance(scheduling_safety, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -752,6 +768,126 @@ def _validate_ready_gate_artifacts(
                 "alphaevolve_ready passed gates require matching artifact kinds",
             )
         )
+
+
+def _validate_scheduling_safety(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "scheduling":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "unexpected_scheduling_safety",
+                    "scheduling_safety is only valid for scheduling reports",
+                )
+            )
+        return domain != "scheduling"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_scheduling_safety",
+                    "alphaevolve_ready scheduling reports require scheduling_safety",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_safety",
+                "scheduling_safety must be an object",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    ok = True
+    for field in (
+        "feasibility_filter_id",
+        "candidate_set_source",
+        "simulator_boundary",
+        "admission_boundary",
+        "placement_boundary",
+        "ranking_function_scope",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_scheduling_{field}",
+                    f"scheduling_safety.{field} must be non-empty text",
+                )
+            )
+            ok = False
+    if value.get("ranking_only") is not True:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_ranking_only",
+                "scheduling_safety.ranking_only must be true",
+            )
+        )
+        ok = False
+    if value.get("can_admit_jobs") is not False:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_admission_authority",
+                "scheduling heuristics must not admit jobs directly",
+            )
+        )
+        ok = False
+    if value.get("can_reject_jobs") is not False:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_rejection_authority",
+                "scheduling heuristics must not reject jobs directly",
+            )
+        )
+        ok = False
+    if value.get("can_place_jobs") is not False:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_placement_authority",
+                "scheduling heuristics must not place jobs directly",
+            )
+        )
+        ok = False
+    invariants = value.get("resource_invariants")
+    if not isinstance(invariants, list) or not invariants:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_resource_invariants",
+                "scheduling_safety.resource_invariants must be a non-empty list",
+            )
+        )
+        ok = False
+    elif not all(isinstance(item, str) and item.strip() for item in invariants):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_resource_invariants",
+                "scheduling resource invariants must be non-empty text",
+            )
+        )
+        ok = False
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_scheduling_artifact_ref",
+        "scheduling_safety",
+        issues,
+    )
+    if not isinstance(value.get("artifact_refs"), list) or not value["artifact_refs"]:
+        ok = False
+    elif any(item not in artifact_paths for item in value["artifact_refs"]):
+        ok = False
+    return ok
 
 
 def _validate_claim_calibration(

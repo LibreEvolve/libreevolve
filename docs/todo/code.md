@@ -4066,24 +4066,26 @@ Primary evidence:
     scheduling problem-formulation evidence from ranking-only safety,
     deployment, and Figure 6 exhibit evidence.
 
-- [ ] Add scheduling ranking-only safety provenance for Borg-style heuristics.
+- [ ] Populate scheduling ranking-only safety provenance for Borg-style
+      heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the discovered Borg
     scheduling heuristic outputs a priority score for machines that Borg has
     already determined are available and capable of running the pending job,
     making scheduling decisions effectively correct by construction.
-  - Current evidence: `libreevolve.systems_result_report.v1` can validate
-    generic optimization, held-out, and reference-correctness gates and can
-    accept `reference_correctness: not_applicable` for scheduling with a
-    rationale. It does not require scheduling-domain reports to declare the
-    candidate-set feasibility oracle, prove that evolved code only reorders
-    feasible machines, record resource constraint invariants, or distinguish a
-    safe ranking heuristic from code that directly admits, rejects, or places
-    jobs.
-  - Required result: add scheduling-specific report metadata and validator
-    rules for feasibility-filter provenance, ranking-only heuristic scope,
+  - Current evidence: `libreevolve.systems_result_report.v1` now requires
+    `scheduling_safety` before accepting `alphaevolve_ready` scheduling
+    reports. The validator checks feasible candidate-set source,
+    feasibility-filter identity, ranking-only heuristic scope, resource
+    invariants, simulator/admission/placement boundaries, direct
+    admit/reject/place authority flags, artifact refs, and allowed
+    `not_applicable` reference-correctness rationale. Existing scheduling
+    fixtures still lack real populated safety records and paper-facing
+    certification examples.
+  - Required result: populate Borg-style scheduling fixtures with reviewed
+    feasibility-filter provenance, ranking-only heuristic scope,
     resource/capacity invariant checks, simulator/admission-boundary evidence,
-    and allowed `not_applicable` reference-correctness rationale before
-    treating Borg-style scheduling reports as AlphaEvolve-ready.
+    and concrete safety artifacts before treating finite scheduling reports as
+    AlphaEvolve-ready.
 
 - [ ] Add scheduling interpretability and deployment-readiness evidence for
       mission-critical heuristics.

@@ -1233,23 +1233,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     describe those records without implying the schema alone proves
     domain-owner validated production or deployment claims.
 
-- [ ] Keep README scheduling wording scoped to generic systems reports until
-      ranking-only safety provenance exists.
+- [ ] Keep README scheduling wording scoped until ranking-only safety
+      provenance is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
     heuristic scores only machines already determined by Borg to be available
     and capable of running the pending job, so correctness is effectively by
     construction.
-  - Current evidence: README documents systems result reports and artifact
-    inventories, and notes that deployment evidence and domain-specific
-    readiness gates remain open. It does not yet document scheduling-specific
-    evidence that a heuristic only reorders feasible machines, preserves
-    resource/capacity constraints, and cannot directly admit, reject, or place
-    jobs outside the scheduler's feasibility boundary.
-  - Required result: once scheduling report metadata captures feasibility
-    filter provenance, ranking-only scope, resource invariants, and
-    simulator/admission-boundary evidence, update README, ROADMAP, papers
-    index, and matching TODOs so README does not imply generic systems report
-    readiness proves Borg-style scheduling safety.
+  - Current evidence: README now documents `scheduling_safety` records required
+    for `alphaevolve_ready` scheduling reports, including feasible
+    candidate-set source, ranking-only scope, resource invariants,
+    simulator/admission/placement boundaries, authority flags, and artifact
+    refs. Existing scheduling fixtures do not yet carry real populated safety
+    records.
+  - Required result: once scheduling fixtures and certification examples
+    populate feasibility-filter provenance, ranking-only scope, resource
+    invariants, and simulator/admission-boundary evidence, update README,
+    ROADMAP, papers index, and matching TODOs so README can describe those
+    records without implying the schema alone proves Borg-style scheduling
+    safety.
 
 - [ ] Keep README scheduling wording scoped until vector-bin-packing
       formulation evidence exists.

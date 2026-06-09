@@ -143,6 +143,42 @@ def _valid_report() -> dict:
     return report
 
 
+def _valid_scheduling_report() -> dict:
+    report = _valid_report()
+    report["domain"] = "scheduling"
+    for record in report["application_provenance"]["records"]:
+        record["domain"] = "scheduling"
+    for record in report["claim_calibration"]["records"]:
+        record["domain"] = "scheduling"
+        record["claim_kind"] = "scheduling_resource_recovery"
+        record["unit"] = "resource recovery percentage"
+        record["denominator"] = "historical workload and capacity snapshot"
+    report["gates"][2] = {
+        "name": "reference_correctness",
+        "status": "not_applicable",
+        "case_set_id": "not_applicable_reference",
+        "rationale": "Scheduling heuristic only ranks feasible machines.",
+    }
+    report["scheduling_safety"] = {
+        "feasibility_filter_id": "borg-feasible-machine-filter",
+        "candidate_set_source": "machines already available and capable",
+        "simulator_boundary": "historical workload simulator owns feasibility",
+        "admission_boundary": "external scheduler admits or rejects jobs",
+        "placement_boundary": "external scheduler performs placement",
+        "ranking_function_scope": "score feasible machines only",
+        "ranking_only": True,
+        "can_admit_jobs": False,
+        "can_reject_jobs": False,
+        "can_place_jobs": False,
+        "resource_invariants": [
+            "candidate machine has sufficient CPU",
+            "candidate machine has sufficient memory",
+        ],
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
+    return report
+
+
 def _write_systems_files(report: dict, root) -> None:
     for artifact in report["artifacts"]:
         path = root / artifact["path"]
@@ -425,18 +461,7 @@ def test_non_ready_report_can_reference_pending_certification():
 
 
 def test_not_applicable_gate_requires_rationale_but_can_be_ready():
-    report = _valid_report()
-    report["domain"] = "scheduling"
-    for record in report["application_provenance"]["records"]:
-        record["domain"] = "scheduling"
-    for record in report["claim_calibration"]["records"]:
-        record["domain"] = "scheduling"
-    report["gates"][2] = {
-        "name": "reference_correctness",
-        "status": "not_applicable",
-        "case_set_id": "not_applicable_reference",
-        "rationale": "Scheduling simulator has no reference-code equivalence oracle.",
-    }
+    report = _valid_scheduling_report()
 
     validation = validate_systems_result_report(report)
 
@@ -449,6 +474,61 @@ def test_not_applicable_gate_requires_rationale_but_can_be_ready():
 
     assert validation.ok is False
     assert "missing_reference_correctness_rationale" in codes
+
+
+def test_ready_scheduling_report_requires_ranking_only_safety():
+    report = _valid_scheduling_report()
+    report.pop("scheduling_safety")
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_scheduling_safety" in codes
+    assert "invalid_ready_scheduling_safety" in codes
+
+
+def test_scheduling_safety_rejects_direct_authority_and_bad_refs():
+    report = _valid_scheduling_report()
+    report["scheduling_safety"]["can_place_jobs"] = True
+    report["scheduling_safety"]["resource_invariants"] = []
+    report["scheduling_safety"]["artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_scheduling_placement_authority" in codes
+    assert "invalid_scheduling_resource_invariants" in codes
+    assert "invalid_scheduling_artifact_ref" in codes
+
+
+def test_non_ready_scheduling_report_can_omit_safety_provenance():
+    report = _valid_scheduling_report()
+    report["alphaevolve_ready"] = False
+    report["gates"][1]["status"] = "failed"
+    report["certification"]["paper_claim_ready"] = False
+    report.pop("scheduling_safety")
+
+    validation = validate_systems_result_report(report)
+
+    assert validation.ok is True
+    assert validation.alphaevolve_ready is False
+
+
+def test_non_scheduling_report_rejects_scheduling_safety_block():
+    report = _valid_report()
+    report["scheduling_safety"] = _valid_scheduling_report()["scheduling_safety"]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_scheduling_safety" in codes
 
 
 def test_systems_result_report_rejects_unsafe_artifacts_and_bad_metrics():
@@ -478,6 +558,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| alphaevolve_ready | yes |" in summary
     assert "| claim_calibration_records | 1 |" in summary
     assert "| application_provenance_records | 4 |" in summary
+    assert "| scheduling_safety | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

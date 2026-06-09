@@ -15890,3 +15890,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     this record alongside the paper-only resource-frontier record.
   - Verification: `py -3.12 -m pytest tests/test_appendix_a_matrix_registry.py -q`
     reports 27 passed.
+
+- [x] Add a matrix near-integrality runtime-emission boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 says matrix-decomposition
+    candidates were prompted to generate near-integral solutions and rounded
+    to integer or half-integer coefficients before exactness checking, which
+    needs runtime evidence rather than only publication-result fields.
+  - Status: `libreevolve.matrix_near_integrality_runtime_boundary.v1` now
+    validates the current `not_emitted_by_local_runner` state, rejects false
+    emitted-record claims without nested near-integrality evidence, and records
+    required future fields for run/candidate ids, prompt hashes, raw and
+    rounded coefficients, exactness-certificate links, matrix-result refs,
+    artifact paths, and artifact hashes. Local matrix runners still do not
+    emit those records.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, emitted-record validation, invalid nested evidence, and
+    manifest hook.

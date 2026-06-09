@@ -3421,7 +3421,13 @@ nearest rounding to integer or half-integer domains, raw-versus-rounded
 coefficient diagnostics, maximum rounding-error consistency, and links from
 rounded candidate coefficients to exactness certificates. It validates emitted
 evidence after a run records it; it does not yet make the local matrix smoke
-fixture inject that instruction or emit those diagnostics during search.
+fixture inject that instruction or emit those diagnostics during search. The
+companion runtime boundary
+`libreevolve.matrix_near_integrality_runtime_boundary.v1` validates the current
+`not_emitted_by_local_runner` state and the required future emitted-record
+fields for run/candidate ids, prompt hashes, raw and rounded coefficients,
+exactness-certificate links, matrix-result refs, artifact paths, and artifact
+hashes.
 Matrix scalar-field evidence uses
 `libreevolve.matrix_scalar_field_evidence.v1`; it validates declared field
 claims for real, complex, finite-field, and any-field applicability, including

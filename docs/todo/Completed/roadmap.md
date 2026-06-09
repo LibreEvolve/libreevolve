@@ -8191,3 +8191,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scopes current evidence to a validated absence/readiness boundary, with
     actual local larger-target attempts still open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix near-integrality runtime boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared
+    near-integrality evidence validation from actual runner-emitted
+    AlphaEvolve Section 3.1 search records.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1`, scopes it to
+    the current `not_emitted_by_local_runner` state, and keeps real local
+    matrix-search emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

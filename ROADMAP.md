@@ -715,8 +715,13 @@ is not yet an AlphaEvolve reproduction.
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest
   rounding policy, raw-versus-rounded coefficient diagnostics, rounding-error
-  consistency, and exactness-certificate links. Local benchmark runners still
-  need to emit those records during matrix search.
+  consistency, and exactness-certificate links.
+  `libreevolve.matrix_near_integrality_runtime_boundary.v1` now validates the
+  current `not_emitted_by_local_runner` boundary and required future
+  emitted-record fields for run/candidate ids, prompt hashes, raw and rounded
+  coefficients, exactness-certificate links, matrix-result refs, artifact
+  paths, and artifact hashes. Local benchmark runners still need to emit those
+  records during matrix search.
 - Keep matrix scalar-field wording scoped to evidence validation rather than
   emitted complex result parity: `libreevolve.matrix_scalar_field_evidence.v1`
   now validates declared real, complex, finite-field, and any-field

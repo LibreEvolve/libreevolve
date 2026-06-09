@@ -3438,9 +3438,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     consistent once produced. `libreevolve.matrix_near_integrality_evidence.v1`
     now validates paper/report evidence fields for the matrix prompt
     instruction, rounding policy, raw and rounded coefficient diagnostics,
-    rounding-error consistency, and exactness-certificate links. It does not
-    prove that current local matrix benchmark prompts/evaluators emit those
-    records during search.
+    rounding-error consistency, and exactness-certificate links.
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for run/candidate ids, prompt hashes, raw and
+    rounded coefficients, exactness-certificate links, matrix-result refs,
+    artifact paths, and artifact hashes. It does not prove that current local
+    matrix benchmark prompts/evaluators emit those records during search.
   - Required result: emit near-integrality evidence records from real matrix
     search runs, including prompt/run provenance and per-seed exactness linkage,
     before claiming AlphaEvolve Section 3.1 matrix-search parity.

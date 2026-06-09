@@ -10693,3 +10693,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     attempted-versus-excluded target policies exist yet. It also validates the
     fields required before such local frontier evidence can be claimed.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix near-integrality runtime-emission absence separately from
+      declared evidence validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 describes the
+    near-integral matrix prompt and integer/half-integer rounding workflow;
+    paper-visible local claims need separate evidence that the local runner
+    emitted those prompt/evaluator records.
+  - Status: `libreevolve.matrix_near_integrality_runtime_boundary.v1` now
+    records the current `not_emitted_by_local_runner` boundary and validates
+    required future emitted-record fields for run/candidate ids, prompt hashes,
+    raw and rounded coefficients, exactness-certificate links,
+    matrix-result refs, artifact paths, and artifact hashes. The paper-manifest
+    gate validates this boundary with the Appendix A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

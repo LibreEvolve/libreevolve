@@ -3406,9 +3406,14 @@ Primary evidence:
     and `libreevolve.matrix_near_integrality_evidence.v1` now validates
     declared prompt instruction provenance, integer/half-integer nearest
     rounding policy, raw-versus-rounded coefficient diagnostics,
-    rounding-error consistency, and exactness-certificate links. The benchmark
-    runner still does not inject that instruction or persist those diagnostics
-    during local matrix search.
+    rounding-error consistency, and exactness-certificate links.
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1` now validates
+    the current `not_emitted_by_local_runner` boundary and required future
+    emitted-record fields for run/candidate ids, prompt hashes, raw and
+    rounded coefficients, exactness-certificate links, matrix-result refs,
+    artifact paths, and artifact hashes. The benchmark runner still does not
+    inject that instruction or persist those diagnostics during local matrix
+    search.
   - Required result: add a matrix benchmark prompt/evaluator hook that emits
     the near-integrality evidence contract from real runs before treating
     matrix search runs as aligned with the Section 3.1 near-integrality

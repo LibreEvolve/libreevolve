@@ -1039,9 +1039,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     reports. It now documents `libreevolve.matrix_near_integrality_evidence.v1`
     as a validation contract for declared prompt instructions,
     integer/half-integer rounding policy, raw-versus-rounded coefficient
-    diagnostics, and exactness-certificate links. It does not document a local
-    matrix benchmark prompt/evaluator path that emits those records during
-    search.
+    diagnostics, and exactness-certificate links. It now also documents
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1` as the current
+    `not_emitted_by_local_runner` boundary plus required future emitted-record
+    fields for run/candidate ids, prompt hashes, raw and rounded
+    coefficients, exactness-certificate links, matrix-result refs, artifact
+    paths, and artifact hashes. It does not document a local matrix benchmark
+    prompt/evaluator path that emits those records during search.
   - Required result: when local benchmark prompt/evaluator emission lands,
     update README, ROADMAP, papers index, and code/paper TODO entries together
     so README distinguishes evidence-schema validation from AlphaEvolve Section

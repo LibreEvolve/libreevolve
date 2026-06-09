@@ -100,6 +100,10 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
     validate_paper_artifact_linkage,
     validate_paper_artifact_roles,
 )
+from libreevolve.problems.benchmarks.matrix_results import (
+    matrix_near_integrality_runtime_boundary_record,
+    validate_matrix_near_integrality_runtime_boundary,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -580,6 +584,16 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             _safe_manifest_label(issue.attempt_id) if issue.attempt_id else None,
         )
         for issue in local_resource_frontier_report.issues
+    )
+    near_integrality_runtime_report = validate_matrix_near_integrality_runtime_boundary(
+        matrix_near_integrality_runtime_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_near_integrality_runtime_{issue.code}",
+            issue.message,
+        )
+        for issue in near_integrality_runtime_report.issues
     )
     return issues
 

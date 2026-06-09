@@ -10749,3 +10749,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     OOM diagnostics, reduced-seed tradeoffs, or attempted-versus-excluded
     target policies have been recorded yet.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix near-integrality runtime boundary in README.
+  - Spec evidence: README matrix wording needs to separate Section 3.1
+    near-integral prompt/rounding evidence from actual local runner emission.
+  - Status: README now names
+    `libreevolve.matrix_near_integrality_runtime_boundary.v1`, scopes it to
+    the current `not_emitted_by_local_runner` state, and lists the required
+    future emitted-record fields for prompt hashes, coefficients,
+    exactness-certificate links, matrix-result refs, artifact paths, and
+    artifact hashes.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

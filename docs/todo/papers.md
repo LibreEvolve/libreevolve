@@ -3355,26 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Track follow-on problem-repository runtime-absence evidence.
-  - Paper/source evidence: the
-    `google-deepmind/alphaevolve_repository_of_problems` README says notebooks
-    contain prompts, verification code, initial programs, final evolved
-    programs, and visualization/analysis code where appropriate, and then
-    explicitly says the repository does not contain code to run AlphaEvolve.
-  - Current gap: existing paper TODOs require follow-on notebook availability
-    and artifact-presence flags, while companion-result TODOs track runtime
-    absence for `alphaevolve_results`. They do not preserve this same runtime
-    absence boundary for the later problem repository, which could make
-    paper/source claims imply the notebooks are executable AlphaEvolve runtime
-    harnesses rather than source evidence for prompts, verifiers, and evolved
-    outputs.
-  - Required result: add source-manifest metadata and checks for follow-on
-    runtime availability: repository URL/ref/commit/date, notebook path/hash,
-    artifact-kind flags, explicit AlphaEvolve-runtime absence, source span for
-    the absence statement, verifier-versus-runtime classification, and README/
-    ROADMAP/papers wording that does not treat problem-repository notebooks as
-    containing the AlphaEvolve implementation.
-
 - [ ] Track Terence Tao follow-on blog source and claim boundaries.
   - Paper/source evidence: Terence Tao's November 5, 2025 post
     `Mathematical exploration and discovery at scale` links the arXiv paper,

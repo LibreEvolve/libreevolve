@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add follow-on problem-repository runtime-absence provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README says notebooks contain prompts, verification code, initial programs,
+    final evolved programs, and visualization/analysis code where appropriate,
+    but explicitly says the repository does not contain the code to run
+    AlphaEvolve.
+  - Status: `libreevolve.alphaevolve_follow_on_runtime_absence.v1` now emits
+    `papers/follow_on_runtime_absence.json` with pinned repository identity,
+    README/tree source URLs, 28 notebook paths, Git blob ids, byte counts,
+    artifact-kind flags, explicit AlphaEvolve-runtime absence,
+    verifier-versus-runtime classification, docs/TODO claim-surface links, and
+    runtime-claim policy.
+  - Remaining gap: full per-problem notebook mapping, SHA-256 notebook
+    inventory, cell-level artifact checks, Tao-blog source rows, and cached
+    follow-on PDF evidence remain separate active follow-on TODOs.
+
 - [x] Add follow-on problem-repository rights and attribution provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README asks users of code or data to cite the follow-on paper, declares

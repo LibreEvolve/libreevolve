@@ -6,11 +6,15 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_math_source_record,
     alphaevolve_follow_on_repository_rights_manifest_record,
     alphaevolve_follow_on_repository_rights_record,
+    alphaevolve_follow_on_runtime_absence_manifest_record,
+    alphaevolve_follow_on_runtime_absence_record,
     alphaevolve_follow_on_source_manifest_record,
     render_alphaevolve_follow_on_math_source_summary,
     validate_alphaevolve_follow_on_math_source,
     validate_alphaevolve_follow_on_repository_rights,
     validate_alphaevolve_follow_on_repository_rights_manifest,
+    validate_alphaevolve_follow_on_runtime_absence,
+    validate_alphaevolve_follow_on_runtime_absence_manifest,
     validate_alphaevolve_follow_on_source_manifest,
 )
 from libreevolve.tools.paper_manifest import validate_paper_manifest
@@ -171,6 +175,94 @@ def test_validate_alphaevolve_follow_on_repository_rights_manifest_rejects_surfa
     assert "invalid_repository_rights_claim_policy" in codes
     assert "invalid_repository_rights_reuse_policy_publication_ready_without_rights_review" in codes
     assert "invalid_repository_rights_reuse_policy_scope" in codes
+
+
+def test_validate_alphaevolve_follow_on_runtime_absence_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_runtime_absence_record()
+
+    validation = validate_alphaevolve_follow_on_runtime_absence(recordset)
+
+    assert validation.ok is True
+    assert validation.runtime_absence_count == 1
+    assert validation.notebook_count == 28
+    assert validation.alphaevolve_runtime_available is False
+    assert validation.verifier_code_available is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_runtime_absence_manifest_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_runtime_absence_manifest_record()
+
+    validation = validate_alphaevolve_follow_on_runtime_absence_manifest(recordset)
+
+    assert validation.ok is True
+    assert validation.runtime_absence_count == 1
+    assert validation.notebook_count == 28
+    assert validation.alphaevolve_runtime_available is False
+    assert validation.verifier_code_available is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_runtime_absence_loads_json_file(tmp_path):
+    path = tmp_path / "follow_on_runtime_absence.json"
+    path.write_text(
+        json.dumps(alphaevolve_follow_on_runtime_absence_manifest_record()),
+        encoding="utf-8",
+    )
+
+    validation = validate_alphaevolve_follow_on_runtime_absence_manifest(path)
+
+    assert validation.ok is True
+
+
+def test_validate_alphaevolve_follow_on_runtime_absence_rejects_runtime_drift():
+    recordset = copy.deepcopy(alphaevolve_follow_on_runtime_absence_record())
+    recordset["repository"]["commit"] = "0" * 40
+    recordset["notebook_inventory"]["notebooks"][0]["git_blob_sha"] = "0" * 40
+    recordset["notebook_inventory"]["notebooks"][0]["artifact_kinds"] = ["runtime"]
+    recordset["notebook_inventory"]["notebooks"][0]["alphaevolve_runtime_available"] = True
+    recordset["runtime_boundary"]["alphaevolve_runtime_available"] = True
+    recordset["runtime_boundary"]["verifier_is_not_runtime"] = False
+    recordset["runtime_boundary"]["absence_source_phrase"] = "runtime included"
+
+    validation = validate_alphaevolve_follow_on_runtime_absence(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_runtime_available is True
+    assert "invalid_runtime_absence_repository_commit" in codes
+    assert "invalid_runtime_absence_notebook_git_blob_sha" in codes
+    assert "invalid_runtime_absence_notebook_artifact_kinds" in codes
+    assert "runtime_absence_notebook_runtime_available_overclaim" in codes
+    assert "runtime_absence_runtime_available_overclaim" in codes
+    assert "runtime_absence_verifier_runtime_boundary_missing" in codes
+    assert "invalid_runtime_absence_boundary_absence_source_phrase" in codes
+
+
+def test_validate_alphaevolve_follow_on_runtime_absence_manifest_rejects_surface_and_policy_drift():
+    recordset = alphaevolve_follow_on_runtime_absence_manifest_record()
+    source = recordset["sources"][0]
+    source["manifest_row_id"] = "2506.13131"
+    source["follow_on_source_manifest"] = "papers/companion_sources.json"
+    source["runtime_absence_id"] = "other"
+    source["claim_artifact_links"]["runtime_absence_used_by"] = ["README.md"]
+    source["claim_artifact_links"]["policy"] = "notebook_runtime"
+    source["runtime_claim_policy"]["alphaevolve_runtime_available"] = True
+    source["runtime_claim_policy"]["publication_ready_runtime_claim"] = True
+    source["runtime_claim_policy"]["scope"] = "full notebook inventory"
+
+    validation = validate_alphaevolve_follow_on_runtime_absence_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_absence_manifest_manifest_row_id" in codes
+    assert "invalid_runtime_absence_manifest_follow_on_source_manifest" in codes
+    assert "invalid_runtime_absence_manifest_runtime_absence_id" in codes
+    assert "runtime_absence_claim_surface_mismatch" in codes
+    assert "invalid_runtime_absence_claim_policy" in codes
+    assert "invalid_runtime_claim_policy_alphaevolve_runtime_available" in codes
+    assert "invalid_runtime_claim_policy_publication_ready_runtime_claim" in codes
+    assert "invalid_runtime_claim_policy_scope" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_cache_overclaims():

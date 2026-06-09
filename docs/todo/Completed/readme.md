@@ -4,6 +4,20 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README follow-on runtime-availability wording scoped.
+  - Spec evidence: the follow-on repository README says notebooks contain
+    prompts, verification code, initial programs, final evolved programs, and
+    visualization/analysis code where appropriate, but do not contain the code
+    to run AlphaEvolve.
+  - Status: README now documents `papers/follow_on_runtime_absence.json` as
+    the committed runtime-availability sidecar for the pinned problem
+    repository, distinguishing prompt/verifier/final-program source artifacts
+    from executable AlphaEvolve runtime code and naming the remaining
+    per-problem, SHA-256, and cell-level inventory gaps.
+  - Remaining gap: none for this bounded README wording slice; Tao-blog
+    wording, full notebook inventory, and cached follow-on PDF wording remain
+    separate active README TODOs.
+
 - [x] Document follow-on problem-repository rights and attribution.
   - Spec evidence: the follow-on repository README records citation, dual
     license, disclaimer, role-attribution, and Problem 65 source-origin terms.

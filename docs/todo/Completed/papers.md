@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track follow-on problem-repository runtime-absence evidence.
+  - Paper/source evidence: the follow-on problem repository README says
+    notebooks contain prompts, verification code, initial programs, final
+    evolved programs, and visualization/analysis code where appropriate, and
+    then explicitly says the repository does not contain code to run
+    AlphaEvolve.
+  - Status: `papers/follow_on_runtime_absence.json` now records the pinned
+    runtime-absence row with repository URL/ref/commit/date, README/tree
+    source URLs, 28 notebook paths, Git blob ids, byte counts, artifact-kind
+    flags, explicit AlphaEvolve-runtime absence, source phrases, and
+    verifier-versus-runtime classification. The paper-manifest gate requires
+    and validates this sidecar at repo root.
+  - Remaining gap: none for this bounded runtime-absence slice; full notebook
+    cell inventory, problem-id mapping, notebook SHA-256 hashes, Tao-blog
+    evidence, and cached follow-on PDF evidence remain separate paper work.
+
 - [x] Track follow-on problem-repository rights, citation, and attribution.
   - Paper/source evidence: the follow-on problem repository README records the
     citation instruction, Google LLC copyright, Apache-2.0 software terms,

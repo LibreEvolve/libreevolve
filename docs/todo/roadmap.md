@@ -2463,22 +2463,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classification, and snapshot-scoped wording for any 67-versus-68 source
     mismatch.
 
-- [ ] Keep follow-on runtime-availability roadmap gates scoped.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says notebooks contain prompts, verification code, initial programs,
-    final evolved programs, and visualization/analysis code where appropriate,
-    while explicitly stating that the repository does not contain the code to
-    run AlphaEvolve.
-  - Current evidence: roadmap TODOs separate companion-result runtime absence,
-    follow-on problem-repository coverage, and source-use terms. They do not
-    require roadmap gates that preserve the later repository's own
-    runtime-absence boundary before treating notebooks as evidence.
-  - Required result: once follow-on notebook metadata lands, update ROADMAP
-    evidence gates so problem-repository notebooks require artifact-kind flags,
-    verifier-versus-runtime classification, explicit AlphaEvolve-runtime
-    absence with source span, and README/papers cross-links that avoid treating
-    follow-on notebooks as runnable AlphaEvolve implementation artifacts.
-
 - [ ] Keep Tao-blog follow-on roadmap claims scoped until source metadata
       exists.
   - Spec evidence: Terence Tao's November 5, 2025 post

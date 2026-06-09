@@ -4,6 +4,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep follow-on runtime-availability roadmap gates scoped.
+  - Spec evidence: the follow-on repository README says notebooks contain
+    prompts, verification code, initial programs, final evolved programs, and
+    visualization/analysis code where appropriate, while explicitly stating
+    that the repository does not contain the code to run AlphaEvolve.
+  - Status: ROADMAP now documents `papers/follow_on_runtime_absence.json` as
+    the committed runtime-absence sidecar with pinned notebook paths, Git blob
+    ids, byte counts, artifact-kind flags, verifier-versus-runtime
+    classification, docs/TODO claim-surface links, and explicit
+    AlphaEvolve-runtime absence.
+  - Remaining gap: none for this bounded roadmap wording slice; Tao-blog
+    evidence gates, per-problem notebook mapping, notebook SHA-256 hashes, and
+    cell-level artifact verification remain active roadmap work.
+
 - [x] Document follow-on problem-repository rights and attribution gates.
   - Spec evidence: the follow-on repository README records citation, dual
     license, disclaimer, role-attribution, and Problem 65 source-origin terms.

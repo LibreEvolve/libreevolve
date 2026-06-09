@@ -3592,6 +3592,15 @@ Apache-2.0 software / CC-BY-4.0 materials split, artifact-type license mapping,
 AS-IS and non-official-product disclaimers, Gómez-Serrano/Tao role
 attribution, Problem 65's official IMO origin, and the boundary between copied
 source material, generated local artifacts, and LibreEvolve's own license.
+`papers/follow_on_runtime_absence.json` records the same pinned problem
+repository's runtime-availability boundary: 28 notebook paths with Git blob
+ids and byte counts from the pinned tree, prompt/verifier/initial/final/
+visualization artifact-kind flags, explicit AlphaEvolve-runtime absence, and
+verifier-versus-runtime classification from the README statement that the
+repository does not contain the code to run AlphaEvolve. This sidecar proves
+the notebooks are source artifacts around experiments already run, not runnable
+AlphaEvolve implementation artifacts; full per-problem notebook mapping,
+SHA-256 notebook inventory, and cell-level artifact verification remain open.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

@@ -1,0 +1,439 @@
+{
+  "schema": "libreevolve.alphaevolve_follow_on_runtime_absence_manifest.v1",
+  "runtime_absence_count": 1,
+  "sources": [
+    {
+      "manifest_row_id": "2511.02864",
+      "follow_on_source_manifest": "papers/follow_on_sources.json",
+      "runtime_absence_id": "alphaevolve_repository_of_problems_runtime_absence",
+      "runtime_absence_record": {
+        "schema": "libreevolve.alphaevolve_follow_on_runtime_absence.v1",
+        "source_family": "alphaevolve_follow_on_problem_repository_runtime_absence",
+        "source_paper_id": "2511.02864",
+        "source_manifest": "papers/follow_on_sources.json",
+        "repository": {
+          "name": "google-deepmind/alphaevolve_repository_of_problems",
+          "url": "https://github.com/google-deepmind/alphaevolve_repository_of_problems",
+          "commit": "bfd224d0e7763f89eb4a8efe93ac126091f85ed9",
+          "snapshot_date": "2026-06-08",
+          "readme_raw_url": "https://raw.githubusercontent.com/google-deepmind/alphaevolve_repository_of_problems/bfd224d0e7763f89eb4a8efe93ac126091f85ed9/README.md",
+          "tree_api_url": "https://api.github.com/repos/google-deepmind/alphaevolve_repository_of_problems/git/trees/bfd224d0e7763f89eb4a8efe93ac126091f85ed9?recursive=1"
+        },
+        "notebook_inventory": {
+          "notebook_count": 28,
+          "coverage": "many_not_all_problem_notebooks",
+          "hash_algorithm": "git_blob_sha1",
+          "sha256_inventory_complete": false,
+          "problem_id_mapping_complete": false,
+          "absence_reason_inventory_complete": false,
+          "notebooks": [
+            {
+              "path": "experiments/autocorrelation_problems/autocorrelation_problems.ipynb",
+              "bytes": 740589,
+              "git_blob_sha": "617eeebbc391d535b82139f0a63f677074e16dca",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/classical_inequalities/classical_inequalities.ipynb",
+              "bytes": 32330,
+              "git_blob_sha": "07709bb38cde8ef2b4f1ef7d5a5452db2d372848",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/difference_bases/difference_bases.ipynb",
+              "bytes": 68217,
+              "git_blob_sha": "0cdb812ada3b6053f749e05301a743fd191e8700",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/edges_vs_triangles/edges_vs_triangles.ipynb",
+              "bytes": 92456,
+              "git_blob_sha": "e83e4a01c31ee122137c6826bcd1e6272f2fc1e2",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/equidistant_points_in_convex_polygons/Equidistant_points_in_convex_polygons.ipynb",
+              "bytes": 3183232,
+              "git_blob_sha": "160c7e47e7d8827310877092b9f0835194922573",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb",
+              "bytes": 16831,
+              "git_blob_sha": "7ecb9ca73d4deecb94bf6c26a2be70f1a5d5f05e",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/finite_field_kakeya_problem/finite_field_kakeya.ipynb",
+              "bytes": 176127,
+              "git_blob_sha": "ad7d55fc67eb191cbac38dea078787549cd85cc6",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb",
+              "bytes": 97138,
+              "git_blob_sha": "228345fbbe29d6f9913239d4fd44ad53287cf759",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/finite_field_sum_product_problem/finite_field_sum_product.ipynb",
+              "bytes": 30069,
+              "git_blob_sha": "5d1c3f1609bf3a8a470ccb9845ef1117fddc1fba",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/flat_polynomials/flat_polynomials.ipynb",
+              "bytes": 72500,
+              "git_blob_sha": "b3276c9d212402e7e1e48faf72e33868ee1881c0",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/imo_2025_p6/imo_2025_p6.ipynb",
+              "bytes": 20175,
+              "git_blob_sha": "b39631272746893fe395eecbd02e4d47cd605927",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/kakeya_needle_2d/kakeya_needle_2d.ipynb",
+              "bytes": 72281,
+              "git_blob_sha": "1f01477b857ea9a5a07d30f4ee49db3e135f64e7",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/kakeya_needle_3d/kakeya_needle_3d.ipynb",
+              "bytes": 237723,
+              "git_blob_sha": "0a7a1667536ec779d72989de0c3622e0d23506a0",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/kissing_cylinders/kissing_cylinders.ipynb",
+              "bytes": 94134,
+              "git_blob_sha": "14d14daf90e511f3c988989b21354fbf6e201fd7",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/no_5_on_a_sphere/no_5_on_a_sphere.ipynb",
+              "bytes": 103026,
+              "git_blob_sha": "0e8b3b4da863c316ab7207d78e2c04f551baa185",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/ovals_problem/ovals_problem.ipynb",
+              "bytes": 19563,
+              "git_blob_sha": "b47cfee8cddc895ff1d8b2edf3bccf1aae31f3d7",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/packing_circles_max_sum_of_radii/packing_circle_max_sum_of_radii.ipynb",
+              "bytes": 77546,
+              "git_blob_sha": "0f4de7b576720a3116c0aa8a3d6e9b5c12a6a92e",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/packing_unit_cubes/packing_unit_cubes.ipynb",
+              "bytes": 124215,
+              "git_blob_sha": "c147faa3323f47a64f1c2127ea35c1eadac590d1",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/prime_number_theorem/prime_number_theorem.ipynb",
+              "bytes": 13841,
+              "git_blob_sha": "284319bcf534c5152b433a03f56126e955497ebc",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/ring_loading_problem/ring_loading_problem.ipynb",
+              "bytes": 44196,
+              "git_blob_sha": "ea5abec2001c7002b2edcd59a27e04079293b5fb",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb",
+              "bytes": 104990,
+              "git_blob_sha": "38badb91897a6fb822d4203458f277fe783885d0",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/spherical_t_designs/spherical_t_designs.ipynb",
+              "bytes": 242167,
+              "git_blob_sha": "1134a81661580506e2599335ba051efbdb99e068",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/subsets_of_the_grid_with_no_isosceles_triangles/no_isosceles_triangles.ipynb",
+              "bytes": 38367,
+              "git_blob_sha": "c0d665a986ece2f7efd220f2f179ebf2935149e5",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/sums_differences_problems/sums_differences_problems.ipynb",
+              "bytes": 643544,
+              "git_blob_sha": "4f763db6d59b224e5ba9ebbab0e4e54683f74ea3",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/tammes_problem/tammes_problem.ipynb",
+              "bytes": 117565,
+              "git_blob_sha": "360abdd1b160a180288cd2da07dd8f0f8b227d62",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb",
+              "bytes": 18029403,
+              "git_blob_sha": "1125bb223c471d94d5ee32cc463a785b8f6a01be",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb",
+              "bytes": 309704,
+              "git_blob_sha": "fff09e075abf6e4391248dd80dc1cb0b616b4926",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            },
+            {
+              "path": "experiments/thomson_problem/thomson_problem.ipynb",
+              "bytes": 86472,
+              "git_blob_sha": "95871bcbb7f5fdf43749d3d17cf61d37fc476081",
+              "artifact_kinds": [
+                "prompt",
+                "verification_code",
+                "initial_program",
+                "final_evolved_programs",
+                "visualization_or_analysis_where_appropriate"
+              ],
+              "alphaevolve_runtime_available": false
+            }
+          ]
+        },
+        "runtime_boundary": {
+          "alphaevolve_runtime_available": false,
+          "verifier_code_available": true,
+          "verifier_is_not_runtime": true,
+          "notebook_artifacts_are_experiment_inputs_and_outputs": true,
+          "no_installation_required": true,
+          "colab_browser_access_only": true,
+          "absence_source_phrase": "This repository does *not* contain the code to run AlphaEvolve.",
+          "artifact_source_phrase": "Each notebook contains the prompt, verification code, and initial program used to launch the AlphaEvolve experiments, along with the final evolved programs and visualization / analysis code where appropriate."
+        },
+        "boundary": {
+          "not_alphaevolve_runtime_implementation": true,
+          "not_replayable_alphaevolve_service": true,
+          "not_full_notebook_cell_inventory": true,
+          "not_per_problem_absence_inventory": true,
+          "must_not_describe_notebooks_as_runtime_harnesses": true
+        },
+        "remaining_runtime_work": [
+          "map_notebooks_to_problem_ids_and_absence_reasons",
+          "compute_sha256_for_each_notebook",
+          "validate_notebook_cell_artifact_flags"
+        ]
+      },
+      "claim_artifact_links": {
+        "runtime_absence_used_by": [
+          "README.md",
+          "ROADMAP.md",
+          "docs/todo/code.md",
+          "docs/todo/papers.md",
+          "docs/todo/readme.md",
+          "docs/todo/roadmap.md",
+          "papers/README.md"
+        ],
+        "policy": "follow_on_problem_repository_notebooks_must_not_be_treated_as_alphaevolve_runtime"
+      },
+      "runtime_claim_policy": {
+        "prompt_verifier_outputs_are_source_artifacts": true,
+        "alphaevolve_runtime_available": false,
+        "publication_ready_runtime_claim": false,
+        "scope": "follow-on problem repository runtime absence, not full notebook inventory"
+      }
+    }
+  ]
+}

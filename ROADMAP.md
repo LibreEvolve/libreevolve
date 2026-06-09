@@ -636,6 +636,16 @@ is not yet an AlphaEvolve reproduction.
   non-official-product disclaimers, Gómez-Serrano/Tao role attribution, Problem
   65's official IMO origin, docs/TODO claim-surface links, and reuse policy for
   copied source material versus generated local artifacts.
+- Keep follow-on problem-repository runtime availability scoped:
+  `papers/follow_on_runtime_absence.json` now records the pinned repository
+  README/tree evidence for 28 notebooks, including paths, Git blob ids, byte
+  counts, artifact-kind flags, explicit `alphaevolve_runtime_available: false`,
+  verifier-versus-runtime classification, docs/TODO claim-surface links, and
+  the source phrase that the repository does not contain the code to run
+  AlphaEvolve. It treats notebooks as prompts/verifiers/inputs/outputs around
+  completed experiments, not runnable AlphaEvolve implementation artifacts;
+  per-problem notebook mapping, SHA-256 notebook inventory, and cell-level
+  artifact verification remain open.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

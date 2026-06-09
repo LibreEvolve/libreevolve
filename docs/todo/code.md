@@ -2528,26 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add follow-on problem-repository runtime-absence provenance.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says each notebook contains the prompt, verification code, initial
-    program, final evolved programs, and visualization/analysis code where
-    appropriate, but explicitly says the repository does not contain the code
-    to run AlphaEvolve.
-  - Current evidence: companion-result notebook TODOs track runtime-code
-    absence for the original `alphaevolve_results` repository, and follow-on
-    coverage TODOs track notebooks, prompts, verifiers, and final programs.
-    They do not require a separate runtime-availability boundary for the later
-    67-problem repository, so notebooks could be misdescribed as runnable
-    AlphaEvolve experiment drivers rather than source artifacts around already
-    run experiments.
-  - Required result: add runtime-availability metadata for the follow-on
-    problem repository with repository URL/ref/commit/date, per-notebook
-    artifact kinds, explicit `alphaevolve_runtime_available=false`, absence
-    reason/source span, verifier-versus-runtime classification, and
-    README/ROADMAP wording that separates prompt/verifier/final-program
-    evidence from executable AlphaEvolve runtime code.
-
 - [ ] Add Terence Tao follow-on blog source provenance and claim boundaries.
   - Spec evidence: Terence Tao's November 5, 2025 post
     `Mathematical exploration and discovery at scale` says the arXiv paper is

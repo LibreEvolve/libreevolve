@@ -17,9 +17,18 @@ ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_SCHEMA = (
 ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_follow_on_repository_rights_manifest.v1"
 )
+ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_runtime_absence.v1"
+)
+ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_runtime_absence_manifest.v1"
+)
 EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE = "papers/follow_on_sources.json"
 EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE = (
     "papers/follow_on_repository_rights.json"
+)
+EXPECTED_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_FILE = (
+    "papers/follow_on_runtime_absence.json"
 )
 EXPECTED_ORIGINAL_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_FOLLOW_ON_ARXIV_ID = "2511.02864"
@@ -94,6 +103,52 @@ EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING = {
     "status_artifacts": "CC-BY-4.0",
     "result_distribution_artifacts": "CC-BY-4.0",
 }
+EXPECTED_FOLLOW_ON_RUNTIME_SURFACES = {
+    "README.md",
+    "ROADMAP.md",
+    "papers/README.md",
+    "docs/todo/code.md",
+    "docs/todo/papers.md",
+    "docs/todo/readme.md",
+    "docs/todo/roadmap.md",
+}
+EXPECTED_FOLLOW_ON_NOTEBOOK_ARTIFACT_KINDS = (
+    "prompt",
+    "verification_code",
+    "initial_program",
+    "final_evolved_programs",
+    "visualization_or_analysis_where_appropriate",
+)
+EXPECTED_FOLLOW_ON_NOTEBOOKS = (
+    ("experiments/autocorrelation_problems/autocorrelation_problems.ipynb", 740589, "617eeebbc391d535b82139f0a63f677074e16dca"),
+    ("experiments/classical_inequalities/classical_inequalities.ipynb", 32330, "07709bb38cde8ef2b4f1ef7d5a5452db2d372848"),
+    ("experiments/difference_bases/difference_bases.ipynb", 68217, "0cdb812ada3b6053f749e05301a743fd191e8700"),
+    ("experiments/edges_vs_triangles/edges_vs_triangles.ipynb", 92456, "e83e4a01c31ee122137c6826bcd1e6272f2fc1e2"),
+    ("experiments/equidistant_points_in_convex_polygons/Equidistant_points_in_convex_polygons.ipynb", 3183232, "160c7e47e7d8827310877092b9f0835194922573"),
+    ("experiments/erdos_szekeres_happy_ending_problem/happy_ending_problem.ipynb", 16831, "7ecb9ca73d4deecb94bf6c26a2be70f1a5d5f05e"),
+    ("experiments/finite_field_kakeya_problem/finite_field_kakeya.ipynb", 176127, "ad7d55fc67eb191cbac38dea078787549cd85cc6"),
+    ("experiments/finite_field_nikodym_problem/finite_field_nikodym.ipynb", 97138, "228345fbbe29d6f9913239d4fd44ad53287cf759"),
+    ("experiments/finite_field_sum_product_problem/finite_field_sum_product.ipynb", 30069, "5d1c3f1609bf3a8a470ccb9845ef1117fddc1fba"),
+    ("experiments/flat_polynomials/flat_polynomials.ipynb", 72500, "b3276c9d212402e7e1e48faf72e33868ee1881c0"),
+    ("experiments/imo_2025_p6/imo_2025_p6.ipynb", 20175, "b39631272746893fe395eecbd02e4d47cd605927"),
+    ("experiments/kakeya_needle_2d/kakeya_needle_2d.ipynb", 72281, "1f01477b857ea9a5a07d30f4ee49db3e135f64e7"),
+    ("experiments/kakeya_needle_3d/kakeya_needle_3d.ipynb", 237723, "0a7a1667536ec779d72989de0c3622e0d23506a0"),
+    ("experiments/kissing_cylinders/kissing_cylinders.ipynb", 94134, "14d14daf90e511f3c988989b21354fbf6e201fd7"),
+    ("experiments/no_5_on_a_sphere/no_5_on_a_sphere.ipynb", 103026, "0e8b3b4da863c316ab7207d78e2c04f551baa185"),
+    ("experiments/ovals_problem/ovals_problem.ipynb", 19563, "b47cfee8cddc895ff1d8b2edf3bccf1aae31f3d7"),
+    ("experiments/packing_circles_max_sum_of_radii/packing_circle_max_sum_of_radii.ipynb", 77546, "0f4de7b576720a3116c0aa8a3d6e9b5c12a6a92e"),
+    ("experiments/packing_unit_cubes/packing_unit_cubes.ipynb", 124215, "c147faa3323f47a64f1c2127ea35c1eadac590d1"),
+    ("experiments/prime_number_theorem/prime_number_theorem.ipynb", 13841, "284319bcf534c5152b433a03f56126e955497ebc"),
+    ("experiments/ring_loading_problem/ring_loading_problem.ipynb", 44196, "ea5abec2001c7002b2edcd59a27e04079293b5fb"),
+    ("experiments/sphere_packing_uncertainty_principles/sphere_packing_uncertainty_principles.ipynb", 104990, "38badb91897a6fb822d4203458f277fe783885d0"),
+    ("experiments/spherical_t_designs/spherical_t_designs.ipynb", 242167, "1134a81661580506e2599335ba051efbdb99e068"),
+    ("experiments/subsets_of_the_grid_with_no_isosceles_triangles/no_isosceles_triangles.ipynb", 38367, "c0d665a986ece2f7efd220f2f179ebf2935149e5"),
+    ("experiments/sums_differences_problems/sums_differences_problems.ipynb", 643544, "4f763db6d59b224e5ba9ebbab0e4e54683f74ea3"),
+    ("experiments/tammes_problem/tammes_problem.ipynb", 117565, "360abdd1b160a180288cd2da07dd8f0f8b227d62"),
+    ("experiments/the_2d_moving_sofa/the_2d_moving_sofa.ipynb", 18029403, "1125bb223c471d94d5ee32cc463a785b8f6a01be"),
+    ("experiments/the_3d_moving_sofa/the_3d_moving_sofa.ipynb", 309704, "fff09e075abf6e4391248dd80dc1cb0b616b4926"),
+    ("experiments/thomson_problem/thomson_problem.ipynb", 86472, "95871bcbb7f5fdf43749d3d17cf61d37fc476081"),
+)
 
 
 @dataclass(frozen=True)
@@ -118,6 +173,16 @@ class AlphaEvolveFollowOnRepositoryRightsValidation:
     rights_count: int
     citation_required: bool
     artifact_license_mapping_count: int
+    issues: list[AlphaEvolveFollowOnMathSourceIssue]
+
+
+@dataclass(frozen=True)
+class AlphaEvolveFollowOnRuntimeAbsenceValidation:
+    ok: bool
+    runtime_absence_count: int
+    notebook_count: int
+    alphaevolve_runtime_available: bool
+    verifier_code_available: bool
     issues: list[AlphaEvolveFollowOnMathSourceIssue]
 
 
@@ -318,6 +383,106 @@ def alphaevolve_follow_on_repository_rights_manifest_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_follow_on_runtime_absence_record() -> dict[str, Any]:
+    readme_raw_url = (
+        "https://raw.githubusercontent.com/google-deepmind/"
+        f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/README.md"
+    )
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_SCHEMA,
+        "source_family": "alphaevolve_follow_on_problem_repository_runtime_absence",
+        "source_paper_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "repository": {
+            "name": EXPECTED_REPOSITORY_NAME,
+            "url": EXPECTED_REPOSITORY_URL,
+            "commit": EXPECTED_REPOSITORY_COMMIT,
+            "snapshot_date": "2026-06-08",
+            "readme_raw_url": readme_raw_url,
+            "tree_api_url": (
+                "https://api.github.com/repos/google-deepmind/"
+                "alphaevolve_repository_of_problems/git/trees/"
+                f"{EXPECTED_REPOSITORY_COMMIT}?recursive=1"
+            ),
+        },
+        "notebook_inventory": {
+            "notebook_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
+            "coverage": "many_not_all_problem_notebooks",
+            "hash_algorithm": "git_blob_sha1",
+            "sha256_inventory_complete": False,
+            "problem_id_mapping_complete": False,
+            "absence_reason_inventory_complete": False,
+            "notebooks": [
+                {
+                    "path": path,
+                    "bytes": byte_count,
+                    "git_blob_sha": git_blob_sha,
+                    "artifact_kinds": list(EXPECTED_FOLLOW_ON_NOTEBOOK_ARTIFACT_KINDS),
+                    "alphaevolve_runtime_available": False,
+                }
+                for path, byte_count, git_blob_sha in EXPECTED_FOLLOW_ON_NOTEBOOKS
+            ],
+        },
+        "runtime_boundary": {
+            "alphaevolve_runtime_available": False,
+            "verifier_code_available": True,
+            "verifier_is_not_runtime": True,
+            "notebook_artifacts_are_experiment_inputs_and_outputs": True,
+            "no_installation_required": True,
+            "colab_browser_access_only": True,
+            "absence_source_phrase": "This repository does *not* contain the code to run AlphaEvolve.",
+            "artifact_source_phrase": (
+                "Each notebook contains the prompt, verification code, and initial program "
+                "used to launch the AlphaEvolve experiments, along with the final evolved "
+                "programs and visualization / analysis code where appropriate."
+            ),
+        },
+        "boundary": {
+            "not_alphaevolve_runtime_implementation": True,
+            "not_replayable_alphaevolve_service": True,
+            "not_full_notebook_cell_inventory": True,
+            "not_per_problem_absence_inventory": True,
+            "must_not_describe_notebooks_as_runtime_harnesses": True,
+        },
+        "remaining_runtime_work": [
+            "map_notebooks_to_problem_ids_and_absence_reasons",
+            "compute_sha256_for_each_notebook",
+            "validate_notebook_cell_artifact_flags",
+        ],
+    }
+
+
+def alphaevolve_follow_on_runtime_absence_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_SCHEMA,
+        "runtime_absence_count": 1,
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+                "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+                "runtime_absence_id": "alphaevolve_repository_of_problems_runtime_absence",
+                "runtime_absence_record": alphaevolve_follow_on_runtime_absence_record(),
+                "claim_artifact_links": {
+                    "runtime_absence_used_by": sorted(EXPECTED_FOLLOW_ON_RUNTIME_SURFACES),
+                    "policy": (
+                        "follow_on_problem_repository_notebooks_must_not_be_treated_"
+                        "as_alphaevolve_runtime"
+                    ),
+                },
+                "runtime_claim_policy": {
+                    "prompt_verifier_outputs_are_source_artifacts": True,
+                    "alphaevolve_runtime_available": False,
+                    "publication_ready_runtime_claim": False,
+                    "scope": (
+                        "follow-on problem repository runtime absence, not full notebook "
+                        "inventory"
+                    ),
+                },
+            }
+        ],
+    }
+
+
 def alphaevolve_follow_on_source_manifest_record() -> dict[str, Any]:
     return {
         "schema": ALPHAEVOLVE_FOLLOW_ON_SOURCE_MANIFEST_SCHEMA,
@@ -503,6 +668,78 @@ def validate_alphaevolve_follow_on_repository_rights_manifest(
     )
 
 
+def validate_alphaevolve_follow_on_runtime_absence(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnRuntimeAbsenceValidation:
+    data, read_issues = _load_runtime_absence_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnRuntimeAbsenceValidation(False, 0, 0, False, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_SCHEMA:
+        issues.append(_issue("invalid_runtime_absence_schema", "unsupported follow-on runtime-absence schema"))
+    if data.get("source_family") != "alphaevolve_follow_on_problem_repository_runtime_absence":
+        issues.append(_issue("invalid_runtime_absence_source_family", "source_family must identify follow-on runtime absence"))
+    if data.get("source_paper_id") != EXPECTED_FOLLOW_ON_ARXIV_ID:
+        issues.append(_issue("invalid_runtime_absence_source_paper_id", "source_paper_id must be 2511.02864"))
+    if data.get("source_manifest") != EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE:
+        issues.append(_issue("invalid_runtime_absence_source_manifest", "source_manifest must point to papers/follow_on_sources.json"))
+    _validate_runtime_absence_repository(data.get("repository"), issues)
+    notebook_count = _validate_runtime_absence_notebook_inventory(data.get("notebook_inventory"), issues)
+    alphaevolve_runtime_available, verifier_code_available = _validate_runtime_absence_boundary(
+        data.get("runtime_boundary"), issues
+    )
+    _validate_runtime_absence_limits(data.get("boundary"), issues)
+    _validate_remaining_runtime_work(data.get("remaining_runtime_work"), issues)
+    return AlphaEvolveFollowOnRuntimeAbsenceValidation(
+        ok=not issues,
+        runtime_absence_count=1 if isinstance(data.get("runtime_boundary"), dict) else 0,
+        notebook_count=notebook_count,
+        alphaevolve_runtime_available=alphaevolve_runtime_available,
+        verifier_code_available=verifier_code_available,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_follow_on_runtime_absence_manifest(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnRuntimeAbsenceValidation:
+    data, read_issues = _load_runtime_absence_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnRuntimeAbsenceValidation(False, 0, 0, False, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_RUNTIME_ABSENCE_MANIFEST_SCHEMA:
+        issues.append(_issue("invalid_runtime_absence_manifest_schema", "unsupported follow-on runtime-absence manifest schema"))
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(_issue("invalid_runtime_absence_manifest_sources", "runtime-absence manifest sources must be a list"))
+        sources = []
+    runtime_absence_count = len(sources)
+    if data.get("runtime_absence_count") != runtime_absence_count:
+        issues.append(_issue("invalid_runtime_absence_count", "runtime_absence_count must equal the number of runtime-absence records"))
+    if runtime_absence_count != 1:
+        issues.append(_issue("invalid_runtime_absence_source_count", "runtime-absence manifest must contain the problem repository row"))
+    notebook_count = 0
+    alphaevolve_runtime_available = False
+    verifier_code_available = False
+    for index, source in enumerate(sources):
+        report = _validate_runtime_absence_manifest_source(source, issues, index)
+        notebook_count += report.notebook_count
+        alphaevolve_runtime_available = (
+            alphaevolve_runtime_available or report.alphaevolve_runtime_available
+        )
+        verifier_code_available = verifier_code_available or report.verifier_code_available
+    return AlphaEvolveFollowOnRuntimeAbsenceValidation(
+        ok=not issues,
+        runtime_absence_count=runtime_absence_count,
+        notebook_count=notebook_count,
+        alphaevolve_runtime_available=alphaevolve_runtime_available,
+        verifier_code_available=verifier_code_available,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_follow_on_math_source_summary(recordset: object | str | Path | None = None) -> str:
     validation = validate_alphaevolve_follow_on_math_source(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -550,6 +787,22 @@ def _load_repository_rights_manifest_recordset(
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
     if recordset is None:
         return alphaevolve_follow_on_repository_rights_manifest_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_runtime_absence_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_runtime_absence_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_runtime_absence_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_runtime_absence_manifest_record(), []
     return _load_recordset(recordset)
 
 
@@ -1041,6 +1294,216 @@ def _validate_repository_rights_reuse_policy(
     scope = value.get("scope")
     if not isinstance(scope, str) or "not original AlphaEvolve PDF rights" not in scope or "LibreEvolve project licensing" not in scope:
         issues.append(_issue("invalid_repository_rights_reuse_policy_scope", "reuse_policy.scope must separate repository rights from PDF rights and project licensing", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_runtime_absence_repository(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_repository", "repository must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "name": EXPECTED_REPOSITORY_NAME,
+        "url": EXPECTED_REPOSITORY_URL,
+        "commit": EXPECTED_REPOSITORY_COMMIT,
+        "snapshot_date": "2026-06-08",
+        "readme_raw_url": (
+            "https://raw.githubusercontent.com/google-deepmind/"
+            f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/README.md"
+        ),
+        "tree_api_url": (
+            "https://api.github.com/repos/google-deepmind/"
+            "alphaevolve_repository_of_problems/git/trees/"
+            f"{EXPECTED_REPOSITORY_COMMIT}?recursive=1"
+        ),
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_absence_repository_{field}", f"repository.{field} must match the pinned runtime-absence source", EXPECTED_REPOSITORY_NAME))
+    commit = value.get("commit")
+    if not isinstance(commit, str) or _COMMIT_RE.fullmatch(commit) is None:
+        issues.append(_issue("invalid_runtime_absence_commit", "repository.commit must be a 40-character commit hash", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_runtime_absence_notebook_inventory(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_notebook_inventory", "notebook_inventory must be an object", EXPECTED_REPOSITORY_NAME))
+        return 0
+    expected_fields = {
+        "notebook_count": len(EXPECTED_FOLLOW_ON_NOTEBOOKS),
+        "coverage": "many_not_all_problem_notebooks",
+        "hash_algorithm": "git_blob_sha1",
+        "sha256_inventory_complete": False,
+        "problem_id_mapping_complete": False,
+        "absence_reason_inventory_complete": False,
+    }
+    for field, expected_value in expected_fields.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_absence_notebook_{field}", f"notebook_inventory.{field} must preserve pinned notebook inventory scope", EXPECTED_REPOSITORY_NAME))
+    notebooks = value.get("notebooks")
+    if not isinstance(notebooks, list):
+        issues.append(_issue("invalid_runtime_absence_notebook_list", "notebook_inventory.notebooks must be a list", EXPECTED_REPOSITORY_NAME))
+        return 0
+    expected_by_path = {
+        path: {"bytes": byte_count, "git_blob_sha": git_blob_sha}
+        for path, byte_count, git_blob_sha in EXPECTED_FOLLOW_ON_NOTEBOOKS
+    }
+    actual_paths = [item.get("path") for item in notebooks if isinstance(item, dict)]
+    if set(actual_paths) != set(expected_by_path) or len(actual_paths) != len(EXPECTED_FOLLOW_ON_NOTEBOOKS):
+        issues.append(_issue("runtime_absence_notebook_inventory_mismatch", "notebook inventory must contain exactly the pinned repository notebooks", EXPECTED_REPOSITORY_NAME))
+    for notebook in notebooks:
+        if not isinstance(notebook, dict):
+            issues.append(_issue("invalid_runtime_absence_notebook", "notebook entries must be objects", EXPECTED_REPOSITORY_NAME))
+            continue
+        path = notebook.get("path")
+        if not isinstance(path, str) or path not in expected_by_path:
+            issues.append(_issue("invalid_runtime_absence_notebook_path", "notebook.path must match a pinned notebook path", EXPECTED_REPOSITORY_NAME))
+            continue
+        expected = expected_by_path[path]
+        if notebook.get("bytes") != expected["bytes"]:
+            issues.append(_issue("invalid_runtime_absence_notebook_bytes", "notebook.bytes must match the pinned GitHub tree size", path))
+        git_blob_sha = notebook.get("git_blob_sha")
+        if git_blob_sha != expected["git_blob_sha"]:
+            issues.append(_issue("invalid_runtime_absence_notebook_git_blob_sha", "notebook.git_blob_sha must match the pinned GitHub tree blob", path))
+        if not isinstance(git_blob_sha, str) or _COMMIT_RE.fullmatch(git_blob_sha) is None:
+            issues.append(_issue("invalid_runtime_absence_notebook_git_blob_sha_format", "notebook.git_blob_sha must be a 40-character Git blob hash", path))
+        if notebook.get("artifact_kinds") != list(EXPECTED_FOLLOW_ON_NOTEBOOK_ARTIFACT_KINDS):
+            issues.append(_issue("invalid_runtime_absence_notebook_artifact_kinds", "notebook artifact kinds must preserve prompt/verifier/input/output classification", path))
+        if notebook.get("alphaevolve_runtime_available") is not False:
+            issues.append(_issue("runtime_absence_notebook_runtime_available_overclaim", "notebooks must not be marked as AlphaEvolve runtime implementations", path))
+    return len(notebooks)
+
+
+def _validate_runtime_absence_boundary(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> tuple[bool, bool]:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_boundary", "runtime_boundary must be an object", EXPECTED_REPOSITORY_NAME))
+        return False, False
+    expected = {
+        "alphaevolve_runtime_available": False,
+        "verifier_code_available": True,
+        "verifier_is_not_runtime": True,
+        "notebook_artifacts_are_experiment_inputs_and_outputs": True,
+        "no_installation_required": True,
+        "colab_browser_access_only": True,
+        "absence_source_phrase": "This repository does *not* contain the code to run AlphaEvolve.",
+        "artifact_source_phrase": (
+            "Each notebook contains the prompt, verification code, and initial program "
+            "used to launch the AlphaEvolve experiments, along with the final evolved "
+            "programs and visualization / analysis code where appropriate."
+        ),
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_absence_boundary_{field}", f"runtime_boundary.{field} must preserve repository README runtime boundary", EXPECTED_REPOSITORY_NAME))
+    if value.get("alphaevolve_runtime_available") is not False:
+        issues.append(_issue("runtime_absence_runtime_available_overclaim", "the follow-on repository must not be recorded as containing AlphaEvolve runtime code", EXPECTED_REPOSITORY_NAME))
+    if value.get("verifier_is_not_runtime") is not True:
+        issues.append(_issue("runtime_absence_verifier_runtime_boundary_missing", "verification code availability must stay separate from AlphaEvolve runtime availability", EXPECTED_REPOSITORY_NAME))
+    return value.get("alphaevolve_runtime_available") is True, value.get("verifier_code_available") is True
+
+
+def _validate_runtime_absence_limits(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_limits", "boundary must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "not_alphaevolve_runtime_implementation": True,
+        "not_replayable_alphaevolve_service": True,
+        "not_full_notebook_cell_inventory": True,
+        "not_per_problem_absence_inventory": True,
+        "must_not_describe_notebooks_as_runtime_harnesses": True,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_absence_limits_{field}", f"boundary.{field} must preserve scoped runtime-absence limitations", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_remaining_runtime_work(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    expected = {
+        "map_notebooks_to_problem_ids_and_absence_reasons",
+        "compute_sha256_for_each_notebook",
+        "validate_notebook_cell_artifact_flags",
+    }
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        issues.append(_issue("invalid_remaining_runtime_work", "remaining_runtime_work must list unsatisfied runtime-absence follow-ups", EXPECTED_REPOSITORY_NAME))
+        return
+    if set(value) != expected:
+        issues.append(_issue("remaining_runtime_work_mismatch", "remaining_runtime_work must preserve notebook mapping, hashing, and cell-artifact follow-ups", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_runtime_absence_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+    index: int,
+) -> AlphaEvolveFollowOnRuntimeAbsenceValidation:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_manifest_source", f"runtime-absence manifest source {index} must be an object", EXPECTED_REPOSITORY_NAME))
+        return AlphaEvolveFollowOnRuntimeAbsenceValidation(False, 0, 0, False, False, [])
+    expected = {
+        "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "runtime_absence_id": "alphaevolve_repository_of_problems_runtime_absence",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_absence_manifest_{field}", f"{field} must identify the follow-on problem repository runtime-absence row", EXPECTED_REPOSITORY_NAME))
+    report = validate_alphaevolve_follow_on_runtime_absence(value.get("runtime_absence_record"))
+    issues.extend(report.issues)
+    _validate_runtime_absence_claim_artifact_links(value.get("claim_artifact_links"), issues)
+    _validate_runtime_claim_policy(value.get("runtime_claim_policy"), issues)
+    return report
+
+
+def _validate_runtime_absence_claim_artifact_links(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_absence_claim_artifact_links", "claim_artifact_links must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    surfaces = value.get("runtime_absence_used_by")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(_issue("invalid_runtime_absence_claim_surfaces", "runtime_absence_used_by must list docs, papers, and active TODO surfaces", EXPECTED_REPOSITORY_NAME))
+    elif set(surfaces) != EXPECTED_FOLLOW_ON_RUNTIME_SURFACES:
+        issues.append(_issue("runtime_absence_claim_surface_mismatch", "runtime_absence_used_by must cover docs, papers, and active TODO evidence", EXPECTED_REPOSITORY_NAME))
+    if value.get("policy") != (
+        "follow_on_problem_repository_notebooks_must_not_be_treated_"
+        "as_alphaevolve_runtime"
+    ):
+        issues.append(_issue("invalid_runtime_absence_claim_policy", "claim policy must keep notebooks separate from AlphaEvolve runtime availability", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_runtime_claim_policy(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_runtime_claim_policy", "runtime_claim_policy must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "prompt_verifier_outputs_are_source_artifacts": True,
+        "alphaevolve_runtime_available": False,
+        "publication_ready_runtime_claim": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_runtime_claim_policy_{field}", f"runtime_claim_policy.{field} must preserve scoped runtime claim policy", EXPECTED_REPOSITORY_NAME))
+    scope = value.get("scope")
+    if not isinstance(scope, str) or "runtime absence" not in scope or "not full notebook inventory" not in scope:
+        issues.append(_issue("invalid_runtime_claim_policy_scope", "runtime_claim_policy.scope must distinguish runtime absence from full notebook inventory", EXPECTED_REPOSITORY_NAME))
 
 
 def _issue(code: str, message: str, source_id: str | None = None) -> AlphaEvolveFollowOnMathSourceIssue:

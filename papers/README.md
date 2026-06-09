@@ -1336,6 +1336,14 @@ Implemented:
   origin, docs/TODO claim-surface links, and reuse policy. It is source-use
   provenance for the later problem repository, not original AlphaEvolve PDF
   rights, `alphaevolve_results` companion rights, or LibreEvolve licensing.
+- `papers/follow_on_runtime_absence.json`: follow-on problem-repository
+  runtime-absence sidecar. It records the pinned README/tree evidence for 28
+  notebook paths, Git blob ids, byte counts, artifact-kind flags, explicit
+  AlphaEvolve-runtime absence, verifier-versus-runtime classification, and
+  docs/TODO claim-surface links. It is runtime-availability provenance for the
+  later problem repository, not evidence that the notebooks contain a runnable
+  AlphaEvolve implementation; per-problem notebook mapping, SHA-256 notebook
+  inventory, and cell-level artifact checks remain open.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

@@ -1628,21 +1628,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     pages as snapshot diagnostics, and avoid treating every numbered page as a
     complete problem/notebook/paper-linked source artifact until reconciled.
 
-- [ ] Keep README follow-on runtime-availability wording scoped.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says notebooks contain prompts, verification code, initial programs,
-    final evolved programs, and visualization/analysis code where appropriate,
-    but do not contain the code to run AlphaEvolve.
-  - Current evidence: README TODOs cover original companion-notebook runtime
-    absence and follow-on problem-repository coverage, rights, and attribution.
-    They do not require README wording that applies the runtime-absence
-    boundary to the later problem-repository notebooks.
-  - Required result: after follow-on notebook metadata exists, update README so
-    it distinguishes problem-repository prompt/verifier/final-program artifacts
-    from executable AlphaEvolve runtime code, names the pinned source snapshot,
-    and avoids implying that imported notebooks or webpages provide a runnable
-    AlphaEvolve implementation.
-
 - [ ] Keep README Tao-blog follow-on wording scoped until source metadata
       exists.
   - Spec evidence: Terence Tao's November 5, 2025 post

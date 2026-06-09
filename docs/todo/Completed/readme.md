@@ -10398,3 +10398,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still leave near-duplicate detection,
     semantic novelty, model-quality attribution, and benchmark linkage open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document initial-pool divergence evidence.
+  - Evidence: README needed to distinguish seed-vs-generated workspace/text/
+    metric distance from AlphaEvolve-style functional discovery-distance
+    claims.
+  - Status: docs now describe
+    `runtime.history.initial_pool_divergence_report`, canonical workspace hash
+    comparisons, bounded primary-file text distance, changed-component
+    summaries, and numeric metric L1 distance over shared metric names.
+  - Remaining documentation gap: docs still leave task-specific functional
+    artifacts, behavior/output-distance metrics, substantially-different
+    thresholds, and benchmark telemetry open.
+  - Verification: focused loop tests cover the manifest field and validator.

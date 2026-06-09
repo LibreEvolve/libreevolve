@@ -50,6 +50,7 @@ from libreevolve.core.loop import (
     validate_collaborator_feedback_provenance_report,
     validate_initial_program_idea_provenance_report,
     validate_initial_program_validity_report,
+    validate_initial_pool_divergence_report,
     validate_problem_formulation_provenance_report,
     validate_existing_codebase_integration_report,
     validate_marker_spelling_provenance_report,
@@ -1019,6 +1020,76 @@ def test_runtime_history_reports_exact_proposal_diversity_counts():
         "Set x to the accepted value.",
         "Use a plain constant assignment.",
     }
+
+
+def test_runtime_history_reports_initial_pool_divergence_boundary():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c):\n"
+        "    if 'x=3' in c:\n"
+        "        return {'score': 0.9, 'is_valid': True}\n"
+        "    if 'x=2' in c:\n"
+        "        return {'score': 0.4, 'is_valid': True}\n"
+        "    return {'score': 0.1, 'is_valid': True}\n"
+    )
+    problem = Problem(
+        name="t",
+        task_description="t",
+        metrics=[{"name": "score", "primary": True, "bounds": [0.0, 1.0]}],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1", "x=2"],
+        problem_dir=d,
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm("x=3")):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                mutation_mode="full",
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["initial_pool_divergence_report"]
+
+    assert report["schema"] == "libreevolve.initial_pool_divergence_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_initial_pool_divergence_report(report)["ok"] is True
+    assert report["seed_program_count"] == 2
+    assert report["generated_candidate_count"] == 1
+    assert len(report["seed_records"]) == 2
+    assert report["exact_seed_workspace_match_count"] == 0
+    assert report["non_seed_workspace_count"] == 1
+    assert report["max_primary_text_distance"] > 0.0
+    assert report["max_numeric_metric_l1_distance"] > 0.0
+    assert report["distance_policy"]["workspace_identity"] == (
+        "canonical_workspace_sha256"
+    )
+    assert report["distance_policy"]["functional_distance_artifacts"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["syntactic_distance_reported"] is True
+    assert report["claim_readiness"]["metric_distance_reported"] is True
+    assert report["claim_readiness"]["functional_distance_reported"] is False
+    assert report["claim_readiness"]["substantially_different_claim_ready"] is False
+
+    candidate = report["candidate_records"][0]
+    assert candidate["generation"] == 1
+    assert candidate["exact_seed_workspace_match"] is False
+    assert candidate["seed_comparison_count"] == 2
+    closest = candidate["closest_seed"]
+    assert closest["exact_workspace_match"] is False
+    assert closest["primary_text_distance"] > 0.0
+    assert closest["numeric_metric_l1_distance"] > 0.0
+    assert closest["shared_metric_names"] == ["score"]
+    assert closest["changed_components"]["modified_file_count"] == 1
+    assert closest["changed_components"]["modified_files"] == ["main.py"]
 
 
 def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():

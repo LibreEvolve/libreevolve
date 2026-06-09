@@ -10285,3 +10285,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     linkage remain unimplemented.
   - Verification: focused loop tests cover the report, validator, duplicate
     idea counts, and unready claim boundaries.
+
+- [x] Add paper-visible initial-pool divergence evidence.
+  - Paper evidence: AlphaEvolve's introduction says feedback-driven evolution
+    can discover candidates substantially different from the initial candidate
+    pool in syntax and function.
+  - Status: paper-facing docs now cite
+    `runtime.history.initial_pool_divergence_report`, which compares generated
+    candidates against generation-0 seed programs with canonical workspace
+    hashes, bounded primary-file text distance, changed-component summaries,
+    and numeric metric L1 distance over shared metric names.
+  - Remaining paper gap: task-specific functional-distance artifacts,
+    behavior/output-distance metrics, thresholds for substantially different
+    claims, and benchmark-level discovery-distance telemetry remain
+    unimplemented.
+  - Verification: focused loop tests cover the report, validator,
+    seed/candidate counts, distance records, and unready claim boundaries.

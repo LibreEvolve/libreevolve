@@ -2879,19 +2879,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     diversity effects, and equal-budget comparisons across exploit, explore,
     mixed, metric, frontier, and lineage variants.
 
-- [ ] Keep README discovery-distance wording scoped until initial-pool
-      divergence evidence exists.
+- [ ] Keep README discovery-distance wording scoped until functional
+      initial-pool divergence evidence exists.
   - Spec evidence: AlphaEvolve's introduction says evolution can discover
     candidates substantially different from the initial candidate pool in both
     syntax and function.
-  - Current evidence: README can describe lineage, workspace hashes, changed
-    files, novelty/descriptor sampling, proposal metadata, and retained
-    metrics. It should not imply that retained programs have been measured
-    against every initial-pool candidate for syntactic or functional distance.
-  - Required result: when initial-pool divergence reports land, update README,
-    ROADMAP, papers index, and code/paper TODO entries together with
-    seed-pool baselines, syntax-distance metrics, changed-component summaries,
-    metric/behavior distance, and task-specific functional-difference evidence.
+  - Current evidence: README now describes
+    `runtime.history.initial_pool_divergence_report`, which compares generated
+    candidates against generation-0 seed programs with canonical workspace
+    hashes, bounded primary-file text distance, changed-component summaries,
+    and numeric metric L1 distance over shared metric names. It should not
+    imply task-specific functional-distance proof or "substantially different"
+    discovery-distance readiness.
+  - Required result: when task-specific functional-distance evidence lands,
+    update README, ROADMAP, papers index, and code/paper TODO entries together
+    with behavior/output-distance metrics, evaluator-output artifacts,
+    substantially-different thresholds, and benchmark-level telemetry.
 
 - [ ] Keep README/AGENTS failure-memory claims scoped to run-local diagnostics.
   - Spec evidence: AlphaEvolve-style repeated-mutation avoidance should be able

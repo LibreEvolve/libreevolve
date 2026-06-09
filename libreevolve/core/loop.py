@@ -6,6 +6,7 @@ This synchronous loop is intentionally smaller than the paper systems.
 from __future__ import annotations
 from collections.abc import Callable, Mapping
 import copy
+import difflib
 import hashlib
 import inspect
 import json
@@ -5166,6 +5167,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "initial_pool_divergence_report": _initial_pool_divergence_report(
+            programs
+        ),
         "problem_formulation_provenance_report": (
             _problem_formulation_provenance_report(
                 db.startup_manifest_snapshot()
@@ -5740,6 +5744,437 @@ def validate_initial_program_validity_report(report: object) -> dict:
             )
     return {
         "schema": "libreevolve.initial_program_validity_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _initial_pool_divergence_report(programs: list[Program]) -> dict:
+    seeds = [
+        program
+        for program in programs
+        if isinstance(program.metadata, Mapping)
+        and program.metadata.get("candidate_type") == "seed"
+    ]
+    generated = [
+        program
+        for program in programs
+        if isinstance(program.metadata, Mapping)
+        and program.metadata.get("candidate_type") == "generated"
+    ]
+    seed_records = [_initial_pool_seed_record(program) for program in seeds]
+    candidate_records = [
+        _initial_pool_candidate_record(program, seeds) for program in generated
+    ]
+    exact_seed_match_count = sum(
+        1 for record in candidate_records if record["exact_seed_workspace_match"]
+    )
+    syntactic_distances = [
+        record["closest_seed"]["primary_text_distance"]
+        for record in candidate_records
+        if record.get("closest_seed")
+        and isinstance(record["closest_seed"].get("primary_text_distance"), float)
+    ]
+    metric_distances = [
+        record["closest_seed"]["numeric_metric_l1_distance"]
+        for record in candidate_records
+        if record.get("closest_seed")
+        and isinstance(record["closest_seed"].get("numeric_metric_l1_distance"), float)
+    ]
+    report = {
+        "schema": "libreevolve.initial_pool_divergence_report.v1",
+        "source": "runtime_history_seed_and_generated_workspaces",
+        "seed_program_count": len(seeds),
+        "generated_candidate_count": len(generated),
+        "seed_records": seed_records[:50],
+        "seed_records_truncated": len(seed_records) > 50,
+        "candidate_records": candidate_records[:50],
+        "candidate_records_truncated": len(candidate_records) > 50,
+        "exact_seed_workspace_match_count": exact_seed_match_count,
+        "non_seed_workspace_count": len(candidate_records) - exact_seed_match_count,
+        "max_primary_text_distance": max(syntactic_distances, default=0.0),
+        "max_numeric_metric_l1_distance": max(metric_distances, default=0.0),
+        "distance_policy": {
+            "schema": "libreevolve.initial_pool_divergence_policy.v1",
+            "workspace_identity": "canonical_workspace_sha256",
+            "syntactic_distance": "bounded_primary_file_sequence_distance",
+            "syntactic_distance_max_chars": 50000,
+            "changed_component_summary": "text_file_set_added_removed_modified",
+            "metric_distance": "numeric_metric_l1_over_shared_metric_names",
+            "functional_distance_artifacts": False,
+            "task_specific_behavior_distance": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "seed_pool_baseline_recorded": bool(seed_records),
+            "syntactic_distance_reported": bool(candidate_records),
+            "metric_distance_reported": bool(metric_distances),
+            "functional_distance_reported": False,
+            "task_specific_behavior_artifacts": False,
+            "substantially_different_claim_ready": False,
+            "remaining_gap": [
+                "task_specific_functional_distance_artifacts",
+                "behavior_or_output_distance_metrics",
+                "thresholds_for_substantially_different_claims",
+                "benchmark_level_discovery_distance_telemetry",
+            ],
+        },
+    }
+    report["validation"] = validate_initial_pool_divergence_report(report)
+    return report
+
+
+def _initial_pool_seed_record(program: Program) -> dict:
+    workspace = program.workspace()
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "seed_index": metadata.get("seed_index"),
+        "workspace_sha256": _workspace_sha256(workspace),
+        "file_count": len(workspace.files),
+        "primary_file": workspace.primary_file,
+        "primary_file_chars": len(workspace.code),
+        "numeric_metrics": _initial_pool_numeric_metrics(program),
+    }
+
+
+def _initial_pool_candidate_record(program: Program, seeds: list[Program]) -> dict:
+    workspace = program.workspace()
+    workspace_hash = _workspace_sha256(workspace)
+    seed_comparisons = [
+        _initial_pool_seed_comparison(program, seed) for seed in seeds
+    ]
+    closest_seed = min(
+        seed_comparisons,
+        key=lambda record: (
+            record["primary_text_distance"],
+            record["numeric_metric_l1_distance"],
+            record["seed_program_id"],
+        ),
+        default=None,
+    )
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "workspace_sha256": workspace_hash,
+        "file_count": len(workspace.files),
+        "primary_file": workspace.primary_file,
+        "primary_file_chars": len(workspace.code),
+        "exact_seed_workspace_match": any(
+            comparison["exact_workspace_match"] for comparison in seed_comparisons
+        ),
+        "closest_seed": closest_seed,
+        "seed_comparison_count": len(seed_comparisons),
+    }
+
+
+def _initial_pool_seed_comparison(program: Program, seed: Program) -> dict:
+    program_workspace = program.workspace()
+    seed_workspace = seed.workspace()
+    program_hash = _workspace_sha256(program_workspace)
+    seed_hash = _workspace_sha256(seed_workspace)
+    changed = _initial_pool_changed_components(program_workspace, seed_workspace)
+    metric_distance, metric_names = _initial_pool_metric_distance(program, seed)
+    return {
+        "seed_program_id": seed.id,
+        "seed_index": seed.metadata.get("seed_index")
+        if isinstance(seed.metadata, Mapping)
+        else None,
+        "seed_workspace_sha256": seed_hash,
+        "exact_workspace_match": program_hash == seed_hash,
+        "primary_text_distance": _initial_pool_primary_text_distance(
+            program_workspace.code,
+            seed_workspace.code,
+        ),
+        "changed_components": changed,
+        "numeric_metric_l1_distance": metric_distance,
+        "shared_metric_names": metric_names,
+    }
+
+
+def _initial_pool_primary_text_distance(left: str, right: str) -> float:
+    max_chars = 50000
+    ratio = difflib.SequenceMatcher(
+        None,
+        left[:max_chars],
+        right[:max_chars],
+        autojunk=False,
+    ).ratio()
+    return round(1.0 - ratio, 6)
+
+
+def _initial_pool_changed_components(
+    program_workspace: CandidateWorkspace,
+    seed_workspace: CandidateWorkspace,
+) -> dict:
+    program_files = program_workspace.files
+    seed_files = seed_workspace.files
+    program_paths = set(program_files)
+    seed_paths = set(seed_files)
+    shared = sorted(program_paths & seed_paths)
+    modified = [
+        path for path in shared if program_files.get(path) != seed_files.get(path)
+    ]
+    added = sorted(program_paths - seed_paths)
+    removed = sorted(seed_paths - program_paths)
+    return {
+        "added_files": added[:25],
+        "removed_files": removed[:25],
+        "modified_files": modified[:25],
+        "added_file_count": len(added),
+        "removed_file_count": len(removed),
+        "modified_file_count": len(modified),
+    }
+
+
+def _initial_pool_numeric_metrics(program: Program) -> dict[str, float]:
+    metrics: dict[str, float] = {}
+    for name, value in program.metrics.items():
+        if (
+            isinstance(name, str)
+            and name != "is_valid"
+            and not isinstance(value, bool)
+            and isinstance(value, (int, float))
+            and math.isfinite(float(value))
+        ):
+            metrics[name] = float(value)
+    return dict(sorted(metrics.items()))
+
+
+def _initial_pool_metric_distance(program: Program, seed: Program) -> tuple[float, list[str]]:
+    left = _initial_pool_numeric_metrics(program)
+    right = _initial_pool_numeric_metrics(seed)
+    names = sorted(set(left) & set(right))
+    distance = sum(abs(left[name] - right[name]) for name in names)
+    return round(distance, 6), names
+
+
+def validate_initial_pool_divergence_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.initial_pool_divergence_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "initial-pool divergence report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "seed_program_count",
+        "generated_candidate_count",
+        "seed_records",
+        "seed_records_truncated",
+        "candidate_records",
+        "candidate_records_truncated",
+        "exact_seed_workspace_match_count",
+        "non_seed_workspace_count",
+        "max_primary_text_distance",
+        "max_numeric_metric_l1_distance",
+        "distance_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "initial-pool divergence report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.initial_pool_divergence_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "initial-pool divergence report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_seed_and_generated_workspaces":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "initial-pool divergence report source is unsupported",
+            }
+        )
+    for field in (
+        "seed_program_count",
+        "generated_candidate_count",
+        "exact_seed_workspace_match_count",
+        "non_seed_workspace_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    for field in ("max_primary_text_distance", "max_numeric_metric_l1_distance"):
+        value = report.get(field)
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(float(value))
+            or float(value) < 0.0
+        ):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative finite number",
+                }
+            )
+    seed_records = report.get("seed_records")
+    if not isinstance(seed_records, list):
+        issues.append(
+            {"code": "invalid_seed_records", "message": "seed_records must be a list"}
+        )
+        seed_records = []
+    for index, record in enumerate(seed_records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_seed_record",
+                    "message": f"seed record {index} must be an object",
+                }
+            )
+            continue
+        if not _is_sha256_hex(record.get("workspace_sha256")):
+            issues.append(
+                {
+                    "code": "invalid_seed_workspace_hash",
+                    "message": f"seed record {index} workspace hash is invalid",
+                }
+            )
+    candidate_records = report.get("candidate_records")
+    if not isinstance(candidate_records, list):
+        issues.append(
+            {
+                "code": "invalid_candidate_records",
+                "message": "candidate_records must be a list",
+            }
+        )
+        candidate_records = []
+    exact_matches = 0
+    for index, record in enumerate(candidate_records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_candidate_record",
+                    "message": f"candidate record {index} must be an object",
+                }
+            )
+            continue
+        if not _is_sha256_hex(record.get("workspace_sha256")):
+            issues.append(
+                {
+                    "code": "invalid_candidate_workspace_hash",
+                    "message": f"candidate record {index} workspace hash is invalid",
+                }
+            )
+        if record.get("exact_seed_workspace_match") is True:
+            exact_matches += 1
+        closest = record.get("closest_seed")
+        if closest is not None:
+            if not isinstance(closest, dict):
+                issues.append(
+                    {
+                        "code": "invalid_closest_seed",
+                        "message": f"candidate record {index} closest_seed must be an object",
+                    }
+                )
+            else:
+                if not _is_sha256_hex(closest.get("seed_workspace_sha256")):
+                    issues.append(
+                        {
+                            "code": "invalid_closest_seed_hash",
+                            "message": f"candidate record {index} seed hash is invalid",
+                        }
+                    )
+                distance = closest.get("primary_text_distance")
+                if (
+                    isinstance(distance, bool)
+                    or not isinstance(distance, (int, float))
+                    or not 0.0 <= float(distance) <= 1.0
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_primary_text_distance",
+                            "message": f"candidate record {index} primary distance is invalid",
+                        }
+                    )
+    if report.get("candidate_records_truncated") is not True:
+        _validate_report_count(
+            report,
+            "exact_seed_workspace_match_count",
+            exact_matches,
+            issues,
+        )
+        non_seed = len(candidate_records) - exact_matches
+        _validate_report_count(report, "non_seed_workspace_count", non_seed, issues)
+    policy = report.get("distance_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_distance_policy",
+                "message": "distance_policy must be an object",
+            }
+        )
+        policy = {}
+    if policy.get("functional_distance_artifacts") is not False:
+        issues.append(
+            {
+                "code": "functional_distance_overclaim",
+                "message": "functional distance artifacts must remain false",
+            }
+        )
+    if policy.get("task_specific_behavior_distance") is not False:
+        issues.append(
+            {
+                "code": "behavior_distance_overclaim",
+                "message": "task-specific behavior distance must remain false",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    for field in (
+        "functional_distance_reported",
+        "task_specific_behavior_artifacts",
+        "substantially_different_claim_ready",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"claim_readiness.{field} must be false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "initial-pool divergence report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.initial_pool_divergence_report.v1",
         "ok": not issues,
         "issues": issues,
     }

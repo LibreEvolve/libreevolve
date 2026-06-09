@@ -7836,3 +7836,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     task-output/code-distance evidence, model-quality attribution, and
     benchmark linkage remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow discovery-distance roadmap wording to remaining functional
+      evidence.
+  - Evidence: roadmap wording needed to recognize implemented seed-vs-generated
+    syntactic/metric distance reporting without implying AlphaEvolve-style
+    functional discovery-distance proof.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.initial_pool_divergence_report` for canonical workspace
+    hash comparisons, bounded primary-file text distance, changed-file
+    summaries, and numeric metric L1 evidence.
+  - Remaining roadmap gap: task-specific functional artifacts,
+    behavior/output-distance metrics, substantially-different thresholds, and
+    benchmark-level discovery-distance telemetry remain open.
+  - Verification: focused loop tests cover the report and validator.

@@ -1427,6 +1427,14 @@ share the same generation number and persist `metadata.proposal_batch` with the
 proposal index, one-based proposal number, configured batch size, and global
 loop proposal index. This is batch sampling/accounting, not parallel
 LLM/evaluator execution.
+Completed manifests also include
+`runtime.history.initial_pool_divergence_report`, which compares generated
+candidates with generation-0 seed programs by canonical workspace hash,
+bounded primary-file text distance, changed file summaries, and numeric metric
+L1 distance over shared metric names. This is initial-pool syntactic and
+metric-distance evidence only; it does not provide task-specific functional
+distance artifacts, behavior/output-distance metrics, or thresholds for
+claiming candidates are substantially different from the initial pool.
 
 LibreEvolve currently evolves code file sets, not arbitrary problem-defined
 solution objects. A workspace candidate is a bounded UTF-8 text file map with a

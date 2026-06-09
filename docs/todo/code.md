@@ -2071,19 +2071,25 @@ Primary evidence:
     validation before claiming AlphaEvolve-style backtracking on unpromising
     hypotheses rather than branch-level rejection evidence.
 
-- [ ] Add initial-pool syntactic and functional divergence reporting.
+- [ ] Extend initial-pool divergence reporting beyond bounded syntactic and
+      metric evidence.
   - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
     enables discovery of candidates that are substantially different from the
     initial candidate pool in both syntax and function.
-  - Current evidence: candidates retain parent ids, workspace hashes, changed
-    files, archive novelty/descriptors, proposal metadata, and current-run
-    resurfacing views. Those records can show ancestry and local novelty, but
-    they do not compute or report distance from the initial candidate pool.
-  - Required result: add versioned run/report fields that compare retained
-    candidates against all seed/initial-pool programs with syntactic distance
-    measures, changed component summaries, behavior/metric-vector distance, and
-    evaluator-output or task-specific functional-difference evidence before
-    claiming AlphaEvolve-style discovery distance from the starting pool.
+  - Current evidence: completed manifests now include
+    `runtime.history.initial_pool_divergence_report` with schema
+    `libreevolve.initial_pool_divergence_report.v1`, plus
+    `validate_initial_pool_divergence_report()`. The report compares generated
+    candidates against generation-0 seed programs with canonical workspace
+    hashes, bounded primary-file text distance, changed-component summaries,
+    and numeric metric L1 distance over shared metric names. It explicitly
+    keeps `claim_ready`, task-specific behavior distance, and functional
+    distance artifacts false.
+  - Required result: add evaluator-output or task-specific functional-
+    difference artifacts, behavior/output-distance metrics, thresholds for
+    substantially different claims, and benchmark-level discovery-distance
+    telemetry before claiming AlphaEvolve-style functional discovery distance
+    from the starting pool.
 
 - [ ] Extend duplicate-work reporting into source/workspace deduplication and
       evaluation-cache policy.

@@ -308,6 +308,15 @@ such as stochastic evaluation or evolutionary approaches; LibreEvolve still
 needs equal-budget seed-variant result evidence and contribution review/signoff
 before making that class of paper claim.
 
+AlphaEvolve initial-pool divergence note: completed manifests now include
+`runtime.history.initial_pool_divergence_report`, which compares generated
+candidates against generation-0 seed programs with canonical workspace hashes,
+bounded primary-file text distance, changed-component summaries, and numeric
+metric L1 distance over shared metric names. This is paper-visible syntactic
+and metric-distance evidence, not task-specific functional-distance proof;
+behavior/output-distance artifacts, thresholds for "substantially different"
+claims, and benchmark-level discovery-distance telemetry remain open.
+
 AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
 surfaces listed in the table, including SEARCH/REPLACE, configured full
 replacement, file/block sections, and topology commands. Completed manifests

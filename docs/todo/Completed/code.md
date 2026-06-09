@@ -15429,3 +15429,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     benchmark linkage remain open.
   - Verification: focused loop tests cover manifest emission, exact duplicate
     idea counts, batch records, sample records, and unready claim boundaries.
+
+- [x] Add initial-pool divergence report evidence.
+  - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
+    can produce candidates substantially different from the initial candidate
+    pool in syntax and function.
+  - Status: completed manifests now include
+    `runtime.history.initial_pool_divergence_report` with schema
+    `libreevolve.initial_pool_divergence_report.v1`, plus
+    `validate_initial_pool_divergence_report()`. The report compares generated
+    candidates against generation-0 seed programs with canonical workspace
+    hashes, bounded primary-file text distance, changed-component summaries,
+    and numeric metric L1 distance over shared metric names.
+  - Remaining gap: task-specific functional-distance artifacts,
+    behavior/output-distance metrics, thresholds for substantially different
+    claims, and benchmark-level discovery-distance telemetry remain open.
+  - Verification: focused loop tests cover manifest emission, validator
+    success, seed/candidate counts, distance records, and unready claim
+    boundaries.

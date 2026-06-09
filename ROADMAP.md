@@ -217,6 +217,12 @@ is not yet an AlphaEvolve reproduction.
   construction, adaptive operator-family selection, scoring, and benchmark
   telemetry before claiming AlphaEvolve's Related Work distinction from
   systems with fixed handwritten mutation or crossover operator sets.
+- Extend `runtime.history.initial_pool_divergence_report` beyond current
+  seed-vs-generated workspace hash, bounded primary-file text distance,
+  changed-file summary, and numeric metric L1 evidence into task-specific
+  functional artifacts, behavior/output-distance metrics, thresholds for
+  substantially different claims, and benchmark-level discovery-distance
+  telemetry.
 - Extend binary/static candidate handling beyond the current bounded encoded
   static members, verified copy-only static assets, and raw direct-workspace
   byte normalization into richer binary mutation/replay policy.

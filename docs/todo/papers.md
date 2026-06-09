@@ -1619,23 +1619,25 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt/retrieval/archive policy boundaries before treating proposal
     metadata as AlphaEvolve-grade idea memory.
 
-- [ ] Track initial-pool syntactic and functional divergence evidence.
+- [ ] Extend initial-pool divergence evidence beyond bounded syntactic and
+      metric reports.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction.
   - Requirement: AlphaEvolve says LLMs responding to feedback can discover
     candidates substantially different from the initial candidate pool in both
     syntax and function.
-  - Partial status: LibreEvolve records parent lineage, workspace hashes,
-    changed files, proposal metadata, archive descriptors/novelty, and retained
-    candidate metrics.
-  - Current gap: paper-facing reports do not compare final or retained
-    candidates against the seed/initial-pool programs. There is no syntactic
-    distance, component-change, behavior-vector distance, evaluator-output
-    distance, or task-specific functional-difference evidence proving that
-    accepted candidates moved substantially away from the starting pool.
-  - Required result: add paper-visible divergence reports with initial-pool
-    baselines, syntax/code distance, changed-component summaries,
-    metric/behavioral distance, and functional-difference artifacts before
-    using AlphaEvolve-style discovery-distance wording.
+  - Partial status: completed manifests now include
+    `runtime.history.initial_pool_divergence_report`, which compares generated
+    candidates against generation-0 seed programs with canonical workspace
+    hashes, bounded primary-file text distance, changed-component summaries,
+    and numeric metric L1 distance over shared metric names.
+  - Current gap: paper-facing evidence still does not include evaluator-output
+    distance, task-specific functional-difference artifacts, behavior/output
+    distance, or thresholds proving that accepted candidates moved
+    substantially away from the starting pool in function.
+  - Required result: add functional-difference artifacts, behavior/output-
+    distance metrics, thresholds for "substantially different" claims, and
+    benchmark-level discovery-distance telemetry before using AlphaEvolve-style
+    functional discovery-distance wording.
 
 - [ ] Extend source/workspace duplicate evidence into evaluation-cache policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

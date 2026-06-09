@@ -1571,20 +1571,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording separates current identity/reporting provenance from
     AlphaEvolve-grade fixed-budget memory over previously explored programs.
 
-- [ ] Keep discovery-distance roadmap wording scoped until initial-pool
-      divergence reports exist.
+- [ ] Keep discovery-distance roadmap wording scoped until functional
+      initial-pool divergence reports exist.
   - Spec evidence: AlphaEvolve's introduction says feedback-driven evolution
     can produce candidates substantially different from the initial candidate
     pool in syntax and function.
-  - Current evidence: `ROADMAP.md` can claim candidate lineage, workspace
-    hashes, changed files, archive descriptor/novelty views, and proposal
-    metadata. It does not yet promise or evidence initial-pool syntactic or
-    functional-distance reports.
-  - Required result: when initial-pool divergence reports land, update ROADMAP,
-    README, papers index, and code/paper TODOs with seed-pool comparison
-    baselines, syntax/code distance, changed-component summaries,
-    metric/behavioral distance, and functional-difference artifacts before
-    using AlphaEvolve-style discovery-distance claims.
+  - Current evidence: `ROADMAP.md` now cites
+    `runtime.history.initial_pool_divergence_report` for seed-vs-generated
+    canonical workspace hashes, bounded primary-file text distance,
+    changed-file summaries, and numeric metric L1 evidence. It does not yet
+    promise task-specific functional-distance reports or readiness for
+    substantially different discovery-distance claims.
+  - Required result: add task-specific functional artifacts,
+    behavior/output-distance metrics, thresholds for substantially different
+    claims, and benchmark-level discovery-distance telemetry before using
+    AlphaEvolve-style functional discovery-distance claims.
 
 - [ ] Keep meta-prompt context-policy roadmap wording scoped to validated
   current fields.

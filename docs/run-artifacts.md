@@ -1749,10 +1749,15 @@ derived from the startup manifest and runtime history. It records the default
 validator or configured cascade-stage evaluator records, optional LLM feedback
 grader records, oracle ids/types, authority strings, input/output schema,
 metric ownership, failure policy, prompt-feedback linkage, runtime counts, and
-a merge-policy summary. It intentionally keeps `claim_ready: false` for
-independent multi-evaluator/oracle composition because current behavior is a
-single local cascade plus optional post-evaluator synchronous feedback graders,
-not a general conflict-arbitrated oracle system.
+a merge-policy summary. It also records `arbitration_policy` with an authority
+matrix for every registered oracle, including benchmark-sufficiency labels,
+conflict roles, failure effects, independent-evidence flags, and
+reference/statistical-oracle status. The policy records that feedback graders
+do not override evaluator validity. It intentionally keeps `claim_ready: false`
+for independent multi-evaluator/oracle composition because current behavior is
+a single local cascade plus optional post-evaluator synchronous feedback
+graders, not an independent reference/statistical or disagreement-outcome
+oracle system.
 Completed manifests also include
 `runtime.history.embedded_evaluator_entrypoint_report` with schema
 `libreevolve.embedded_evaluator_entrypoint_report.v1`. This report summarizes

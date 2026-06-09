@@ -32,7 +32,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     multiple manifests before treating LibreEvolve evaluator outputs as
     complete AlphaEvolve-comparable table evidence.
 
-- [ ] Track independent evaluator-oracle arbitration evidence.
+- [ ] Track independent evaluator-oracle evidence beyond local arbitration
+      metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve
     iteratively improves algorithms by continuously receiving feedback from one
     or more evaluators, then Section 2.4 distinguishes the user-provided
@@ -40,20 +41,21 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: completed manifests now include
     `runtime.history.evaluator_oracle_registry` with evaluator ids, oracle
     type, authority, input/output schema, metric ownership, failure policy,
-    prompt-feedback linkage, runtime counts, and merge-policy metadata for the
-    default validator or configured cascade stages plus optional LLM feedback
-    graders.
+    prompt-feedback linkage, runtime counts, merge-policy metadata, and an
+    `arbitration_policy` authority matrix for the default validator or
+    configured cascade stages plus optional LLM feedback graders. The matrix
+    labels each oracle's benchmark sufficiency, conflict role, failure effect,
+    independent-evidence flag, and reference/statistical-oracle status.
   - Current gap: the registry preserves current composition evidence, but it
-    does not prove multiple independent evaluator/oracle sources, configurable
-    evaluator authority, per-oracle benchmark sufficiency, merge/conflict
-    rules, or how evaluator disagreements affect validity, score reporting,
-    database admission, and prompt-visible feedback.
-  - Required result: add independent evaluator-oracle arbitration records
-    before claiming AlphaEvolve-style "one or more evaluators" feedback:
-    configured authority, sufficiency labels, conflict policy, failure
-    handling, reference/statistical oracle support, and wording that separates
-    independent evaluator composition from local cascade stages or
-    post-evaluation LLM graders.
+    does not prove multiple independent evaluator/oracle sources, reference/
+    statistical oracle support, per-benchmark sufficiency evidence, or observed
+    disagreement outcomes that affect validity, score reporting, database
+    admission, and prompt-visible feedback.
+  - Required result: add independent evaluator-oracle evidence before claiming
+    AlphaEvolve-style "one or more evaluators" feedback: reference/statistical
+    oracle support, per-benchmark sufficiency labels, disagreement outcome
+    records, and wording that separates independent evaluator composition from
+    local cascade stages or post-evaluation LLM graders.
 
 - [ ] Track independent audit rates for execution-grounded filtering of
       incorrect base-LLM suggestions.

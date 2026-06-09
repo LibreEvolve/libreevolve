@@ -3455,7 +3455,7 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert validate_evaluator_oracle_registry(oracle_registry)["ok"] is True
     assert oracle_registry["oracle_count"] == 2
     assert oracle_registry["claim_ready"] is False
-    assert "cross_oracle_conflict_resolution_policy" in (
+    assert "cross_oracle_disagreement_outcome_evidence" in (
         oracle_registry["claim_readiness"]["remaining_gap"]
     )
     default_oracle, feedback_oracle = oracle_registry["oracles"]
@@ -3487,8 +3487,85 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert oracle_registry["merge_policy"]["llm_feedback_policy"] == (
         "synchronous_post_evaluator_feedback_graders"
     )
+    arbitration = oracle_registry["arbitration_policy"]
+    assert arbitration["schema"] == "libreevolve.evaluator_oracle_arbitration_policy.v1"
+    assert arbitration["conflict_resolution"]["validity_owner"] == (
+        "deterministic_evaluator_cascade"
+    )
+    assert arbitration["conflict_resolution"]["feedback_can_override_validity"] is False
+    assert arbitration["claim_readiness"]["independent_evaluator_oracle_arbitration"] is False
+    assert arbitration["claim_readiness"]["independent_oracle_count"] == 0
+    assert arbitration["claim_readiness"]["reference_or_statistical_oracle_count"] == 0
+    assert [record["oracle_id"] for record in arbitration["authority_matrix"]] == [
+        "evaluator:default",
+        "llm_feedback:latency_review",
+    ]
+    assert arbitration["authority_matrix"][0]["benchmark_sufficiency"] == (
+        "local_validator_gate_not_independent_benchmark_sufficient"
+    )
+    assert arbitration["authority_matrix"][0]["conflict_role"] == (
+        "primary_local_validity_gate"
+    )
+    assert arbitration["authority_matrix"][1]["benchmark_sufficiency"] == (
+        "feedback_only_not_validity_sufficient"
+    )
+    assert arbitration["authority_matrix"][1]["conflict_role"] == (
+        "post_hoc_feedback_no_validity_override"
+    )
     assert oracle_registry["runtime_summary"]["evaluated_program_count"] == 2
     assert oracle_registry["runtime_summary"]["llm_feedback_record_count"] == 1
+
+
+def test_evaluator_oracle_registry_validation_rejects_malformed_arbitration_policy():
+    report = {
+        "schema": "libreevolve.evaluator_oracle_registry.v1",
+        "source": "startup_manifest_and_runtime_history",
+        "oracle_count": 1,
+        "oracles": [
+            {
+                "oracle_id": "evaluator:default",
+                "oracle_type": "deterministic_validator",
+                "role": "default_problem_validator",
+                "authority": "candidate_validity_and_metric_gate",
+                "input_schema": "evaluate(code)",
+                "output_schema": "declared_metrics_plus_boolean_is_valid",
+                "metric_ownership": ["score"],
+                "failure_policy": "invalid_evaluation_blocks_database_admission",
+                "prompt_feedback_linkage": "evaluation_summary",
+            }
+        ],
+        "metric_ownership": [
+            {
+                "metric": "score",
+                "source": "evaluator",
+                "primary": True,
+                "oracle_id": "evaluator:default",
+                "paper_evaluator_metric": True,
+            }
+        ],
+        "merge_policy": {"schema": "libreevolve.evaluator_oracle_merge_policy.v1"},
+        "arbitration_policy": {
+            "schema": "libreevolve.evaluator_oracle_arbitration_policy.v1",
+            "authority_matrix": [],
+            "conflict_resolution": {},
+            "failure_handling": {},
+            "claim_readiness": {
+                "independent_evaluator_oracle_arbitration": True
+            },
+        },
+        "runtime_summary": {},
+        "prompt_feedback_linkage": {},
+        "claim_ready": False,
+        "claim_readiness": {},
+    }
+
+    validation = validate_evaluator_oracle_registry(report)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["ok"] is False
+    assert "invalid_authority_matrix_count" in codes
+    assert "invalid_authority_matrix_oracles" in codes
+    assert "arbitration_overclaim" in codes
 
 
 def test_evaluation_budget_stops_before_llm_mutation():

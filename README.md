@@ -2221,10 +2221,14 @@ completed manifest also records `runtime.history.evaluator_oracle_registry`,
 which registers the default validator or configured cascade stages plus any
 LLM feedback graders as evaluator/oracle records with ids, oracle types, task
 authority, input/output schema, metric ownership, failure policy, merge policy,
-prompt-feedback linkage, and runtime counts. That registry is provenance for
-the current local composition boundary; it remains `claim_ready: false` for
-general independent multi-oracle arbitration because LibreEvolve still lacks
-configurable cross-oracle authority and conflict-resolution policy.
+prompt-feedback linkage, runtime counts, and an `arbitration_policy` authority
+matrix. The arbitration policy records each oracle's benchmark-sufficiency
+label, conflict role, failure effect, independent-evidence flag, and whether it
+is a reference/statistical oracle; it also states that feedback graders do not
+override evaluator validity. That registry is provenance for the current local
+composition boundary; it remains `claim_ready: false` for general independent
+multi-oracle arbitration because LibreEvolve still lacks independent
+reference/statistical oracles and cross-oracle disagreement outcome evidence.
 The intended public call shapes are `evaluate(code)`,
 `evaluate(code, workspace_path)`, and `evaluate(code, workspace_path, stage)`;
 async and generator-style `evaluate` functions are rejected during startup

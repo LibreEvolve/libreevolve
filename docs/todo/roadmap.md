@@ -79,7 +79,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     multi-run AlphaEvolve-comparable paper table evidence.
 
 - [ ] Keep multi-evaluator roadmap wording scoped until independent
-      evaluator-oracle arbitration exists.
+      evaluator-oracle evidence exists.
   - Spec evidence: AlphaEvolve's abstract describes feedback from one or more
     evaluators, and Section 2.4 distinguishes the core evaluation function
     from optional cascades and LLM-generated feedback.
@@ -87,12 +87,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.evaluator_oracle_registry`, which registers the default
     validator or configured cascade stages plus LLM feedback graders with
     metric ownership, merge policy, failure policy, prompt-feedback linkage,
-    and an explicit limitation for independent multi-oracle arbitration.
-  - Required result: when independent evaluator-oracle authority,
-    sufficiency, and conflict-resolution policy lands, update ROADMAP, README,
-    papers index, and code/paper TODOs together so roadmap wording separates
-    local staged validation and post-hoc graders from AlphaEvolve-style
-    multi-evaluator feedback.
+    `arbitration_policy` authority metadata, benchmark-sufficiency labels,
+    conflict roles, failure effects, and an explicit limitation for independent
+    multi-oracle arbitration.
+  - Required result: when independent reference/statistical oracles,
+    per-benchmark sufficiency evidence, and disagreement outcome records land,
+    update ROADMAP, README, papers index, and code/paper TODOs together so
+    roadmap wording separates local staged validation and post-hoc graders from
+    AlphaEvolve-style multi-evaluator feedback.
 
 - [ ] Keep execution-grounding roadmap wording scoped until independent
       incorrect-suggestion audit evidence exists.

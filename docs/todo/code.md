@@ -1480,7 +1480,8 @@ Primary evidence:
     LibreEvolve evaluator outputs as complete AlphaEvolve-comparable table
     evidence.
 
-- [ ] Extend evaluator-oracle provenance into independent arbitration policy.
+- [ ] Extend evaluator-oracle arbitration beyond local policy metadata into
+      independent oracle evidence.
   - Spec evidence: AlphaEvolve's abstract says the evolutionary loop
     continuously receives feedback from one or more evaluators, while Section
     2.4 describes the user-provided evaluation function plus optional
@@ -1491,16 +1492,19 @@ Primary evidence:
     default validator or configured cascade stages plus optional LLM feedback
     graders with evaluator ids, oracle type, authority/role, input/output
     schema, metric ownership, failure policy, prompt-feedback linkage, runtime
-    counts, and the current merge-policy summary. It explicitly keeps
-    `claim_ready: false` for independent multi-oracle composition.
+    counts, the current merge-policy summary, and an `arbitration_policy`
+    authority matrix. The matrix records each oracle's benchmark-sufficiency
+    label, conflict role, failure effect, independent-evidence flag, and
+    reference/statistical-oracle status. It explicitly keeps `claim_ready:
+    false` for independent multi-oracle composition.
   - Remaining gap: the registry documents current local composition but does
-    not yet provide configurable independent evaluator/oracle authority,
-    per-oracle sufficiency for benchmark claims, or cross-oracle conflict
-    arbitration beyond configured cascade order and post-hoc feedback.
-  - Required result: add independent evaluator-oracle policy with configured
-    authority, sufficiency labels, merge/conflict rules, failure handling, and
-    reference-checker/statistical-test oracle support before claiming
-    AlphaEvolve-style feedback from one or more independent evaluators.
+    not yet provide independent reference-checker/statistical-test oracles,
+    per-benchmark sufficiency evidence, or observed cross-oracle disagreement
+    outcome records beyond configured cascade order and post-hoc feedback.
+  - Required result: add independent evaluator-oracle evidence with reference-
+    checker/statistical-test oracle support, per-benchmark sufficiency labels,
+    and disagreement outcome records before claiming AlphaEvolve-style feedback
+    from one or more independent evaluators.
 
 - [ ] Extend execution-grounded filtering evidence into independent audit
       rates.

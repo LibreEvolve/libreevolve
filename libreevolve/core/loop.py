@@ -11396,6 +11396,7 @@ def _evaluator_oracle_registry_report(
             "configured_evaluator_cascade" if eval_stages else "evaluator:default",
         ),
         "merge_policy": _evaluator_oracle_merge_policy(config),
+        "arbitration_policy": _evaluator_oracle_arbitration_policy(oracles),
         "runtime_summary": _evaluator_oracle_runtime_summary(programs),
         "prompt_feedback_linkage": {
             "stage_feedback": "evaluation.stages_and_configured_stage_results_rendered_by_prompt_sampler",
@@ -11412,9 +11413,8 @@ def _evaluator_oracle_registry_report(
                 "independent multi-oracle arbitration contract"
             ),
             "remaining_gap": [
-                "oracle_authority_configuration",
-                "cross_oracle_conflict_resolution_policy",
-                "per_oracle_sufficiency_for_benchmark_claims",
+                "independent_oracle_authority_configuration",
+                "cross_oracle_disagreement_outcome_evidence",
                 "independent_reference_checker_or_statistical_test_oracles",
             ],
         },
@@ -11616,6 +11616,81 @@ def _evaluator_oracle_merge_policy(config: Mapping[str, object]) -> dict:
         "conflict_policy": (
             "no_general_cross_oracle_conflict_arbitration_beyond_configured_order"
         ),
+    }
+
+
+def _evaluator_oracle_arbitration_policy(oracles: list[dict]) -> dict:
+    records = [_evaluator_oracle_arbitration_record(oracle) for oracle in oracles]
+    independent_count = sum(1 for record in records if record["independent_evidence"])
+    reference_count = sum(1 for record in records if record["reference_or_statistical"])
+    benchmark_sufficient_count = sum(
+        1 for record in records if record["benchmark_sufficiency"] == "claim_sufficient"
+    )
+    return {
+        "schema": "libreevolve.evaluator_oracle_arbitration_policy.v1",
+        "authority_matrix": records,
+        "conflict_resolution": {
+            "validity_owner": "deterministic_evaluator_cascade",
+            "score_owner": "declared_metric_source_ownership",
+            "stage_disagreement_policy": "ordered_cascade_first_failed_stage_stops_candidate",
+            "feedback_disagreement_policy": (
+                "post_hoc_feedback_metrics_do_not_override_evaluator_validity"
+            ),
+            "feedback_can_override_validity": False,
+            "general_cross_oracle_vote": "not_implemented",
+        },
+        "failure_handling": {
+            "evaluator_failure_effect": "invalid_evaluation_blocks_database_admission",
+            "stage_failure_effect": "stage_failure_or_threshold_failure_stops_candidate",
+            "feedback_failure_effect": "configured_ignore_penalize_or_discard_policy",
+        },
+        "claim_readiness": {
+            "independent_evaluator_oracle_arbitration": False,
+            "independent_oracle_count": independent_count,
+            "reference_or_statistical_oracle_count": reference_count,
+            "benchmark_sufficient_oracle_count": benchmark_sufficient_count,
+            "remaining_gap": [
+                "independent_reference_checker_or_statistical_test_oracles",
+                "per_benchmark_oracle_sufficiency_evidence",
+                "cross_oracle_disagreement_outcome_records",
+            ],
+        },
+    }
+
+
+def _evaluator_oracle_arbitration_record(oracle: Mapping[str, object]) -> dict:
+    oracle_id = str(oracle.get("oracle_id", "<unknown>"))
+    oracle_type = str(oracle.get("oracle_type", "<unknown>"))
+    role = str(oracle.get("role", "<unknown>"))
+    authority = str(oracle.get("authority", "not_declared"))
+    failure_policy = str(oracle.get("failure_policy", "not_declared"))
+    reference_or_statistical = oracle_type in {"reference_checker", "statistical_test"}
+    independent = reference_or_statistical and role.startswith("independent_")
+    if reference_or_statistical:
+        sufficiency = "claim_sufficient" if independent else "reference_like_not_independent"
+        conflict_role = "independent_reference_or_statistical_check"
+    elif oracle_type == "llm_judge":
+        sufficiency = "feedback_only_not_validity_sufficient"
+        conflict_role = "post_hoc_feedback_no_validity_override"
+    elif role == "configured_cascade_stage":
+        sufficiency = "local_stage_gate_not_independent_benchmark_sufficient"
+        conflict_role = "ordered_stage_gate"
+    else:
+        sufficiency = "local_validator_gate_not_independent_benchmark_sufficient"
+        conflict_role = "primary_local_validity_gate"
+    return {
+        "oracle_id": oracle_id,
+        "oracle_type": oracle_type,
+        "role": role,
+        "authority": authority,
+        "benchmark_sufficiency": sufficiency,
+        "conflict_role": conflict_role,
+        "failure_effect": failure_policy,
+        "metric_ownership": list(oracle.get("metric_ownership", []))
+        if isinstance(oracle.get("metric_ownership"), list)
+        else [],
+        "independent_evidence": independent,
+        "reference_or_statistical": reference_or_statistical,
     }
 
 
@@ -11921,6 +11996,7 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
         "oracles",
         "metric_ownership",
         "merge_policy",
+        "arbitration_policy",
         "runtime_summary",
         "prompt_feedback_linkage",
         "claim_ready",
@@ -11977,6 +12053,44 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
     merge_policy = report.get("merge_policy")
     if not isinstance(merge_policy, dict) or merge_policy.get("schema") != "libreevolve.evaluator_oracle_merge_policy.v1":
         issues.append({"code": "invalid_merge_policy", "message": "merge_policy is invalid"})
+    arbitration_policy = report.get("arbitration_policy")
+    if not isinstance(arbitration_policy, dict):
+        issues.append({"code": "invalid_arbitration_policy", "message": "arbitration_policy must be an object"})
+    else:
+        if arbitration_policy.get("schema") != "libreevolve.evaluator_oracle_arbitration_policy.v1":
+            issues.append({"code": "invalid_arbitration_policy_schema", "message": "arbitration_policy schema is unsupported"})
+        authority_matrix = arbitration_policy.get("authority_matrix")
+        if not isinstance(authority_matrix, list):
+            issues.append({"code": "invalid_authority_matrix", "message": "arbitration authority_matrix must be a list"})
+        else:
+            if len(authority_matrix) != len(oracles):
+                issues.append({"code": "invalid_authority_matrix_count", "message": "authority_matrix must match oracles length"})
+            authority_ids = {
+                item.get("oracle_id")
+                for item in authority_matrix
+                if isinstance(item, dict) and isinstance(item.get("oracle_id"), str)
+            }
+            if seen_ids and authority_ids != seen_ids:
+                issues.append({"code": "invalid_authority_matrix_oracles", "message": "authority_matrix oracle ids must match registered oracles"})
+            for index, item in enumerate(authority_matrix):
+                if not isinstance(item, dict):
+                    issues.append({"code": "invalid_authority_record", "message": f"authority record {index} must be an object"})
+                    continue
+                for field in ("benchmark_sufficiency", "conflict_role", "failure_effect"):
+                    if not isinstance(item.get(field), str) or not item.get(field):
+                        issues.append({"code": "invalid_authority_record_field", "message": f"authority record {index} {field} must be non-empty"})
+                for field in ("independent_evidence", "reference_or_statistical"):
+                    if not isinstance(item.get(field), bool):
+                        issues.append({"code": "invalid_authority_record_flag", "message": f"authority record {index} {field} must be boolean"})
+        if not isinstance(arbitration_policy.get("conflict_resolution"), dict):
+            issues.append({"code": "invalid_arbitration_conflict_resolution", "message": "arbitration conflict_resolution must be an object"})
+        if not isinstance(arbitration_policy.get("failure_handling"), dict):
+            issues.append({"code": "invalid_arbitration_failure_handling", "message": "arbitration failure_handling must be an object"})
+        readiness = arbitration_policy.get("claim_readiness")
+        if not isinstance(readiness, dict):
+            issues.append({"code": "invalid_arbitration_claim_readiness", "message": "arbitration claim_readiness must be an object"})
+        elif readiness.get("independent_evaluator_oracle_arbitration") is not False:
+            issues.append({"code": "arbitration_overclaim", "message": "independent evaluator-oracle arbitration must remain false"})
     if not isinstance(report.get("runtime_summary"), dict):
         issues.append({"code": "invalid_runtime_summary", "message": "runtime_summary must be an object"})
     return {

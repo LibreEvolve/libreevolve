@@ -1366,7 +1366,14 @@ selected counts, selected ids, metric target/program pairs for metric
 leader policies, frontier size and metric order for frontier policies,
 lineage-root/program pairs for lineage policies, and any prompt-context-policy required-metric filter
 or metric-threshold filter including pool size, matching count, filtered count,
-threshold bounds, ranking policy, and selected ids.
+threshold bounds, ranking policy, and selected ids. Generated candidates also
+record `metadata.inspiration_selection.metric_diversity`, which links the
+prompt-visible inspiration slate to `prompt_diagnostics.inspiration_policy`,
+labels each visible inspiration by its selected metric niche, stores raw and
+normalized declared metric values, and marks whether the rendered prompt
+contained at least two distinct metric niches. Completed manifests summarize
+those records at `runtime.history.metric_diverse_inspiration_report` with schema
+`libreevolve.metric_diverse_inspiration_report.v1`.
 Inspiration `mixed` is a deterministic priority cascade:
 metric leaders, novelty-ranked candidates, selection-score leaders, then random
 fill for any remaining slots.

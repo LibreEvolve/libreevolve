@@ -1900,8 +1900,8 @@ Primary evidence:
     emit real LLM feedback calibration reports for reviewer/task suites rather
     than only validating declared calibration evidence.
 
-- [ ] Add metric-diverse inspiration selection provenance for multiple-score
-      prompts.
+- [ ] Extend metric-diverse inspiration selection provenance into benchmark
+      policies and fixtures.
   - Spec evidence: AlphaEvolve Section 2.4 says multiple scores can improve a
     primary target because prompts can include examples of programs that excel
     under different evaluation criteria, each representing a different
@@ -1911,17 +1911,16 @@ Primary evidence:
     metric-cell overlays, frontier/metric retained pools, and metric-targeted
     parent/inspiration strategies with selected ids and target-metric
     provenance. Prompt context policies can require, exclude, threshold, and
-    rank inspirations by metric before rendering. However, no policy or report
-    requires a single prompt to intentionally contain a metric-diverse slate of
-    inspirations, records which metric niche each prompt-visible inspiration is
-    meant to represent, or proves that rendered prompts condition the model on
-    separate definitions of "good" rather than on one scalar or one configured
-    metric target at a time.
-  - Required result: add metric-diverse inspiration selection/report metadata:
-    selected metric/objective, candidate id, score/rank, archive/source
-    surface, reason for inclusion, prompt-history linkage, and tests/docs
-    showing multi-score runs can deliberately condition the model on programs
-    excelling under different metrics in the same prompt.
+    rank inspirations by metric before rendering. Generated candidates now
+    record `metadata.inspiration_selection.metric_diversity`, linking selected
+    inspirations to `prompt_diagnostics.inspiration_policy`, labelling each
+    prompt-visible inspiration by declared metric niche, preserving raw and
+    normalized metric values, and marking whether a single rendered prompt
+    spans at least two metric niches. Completed manifests roll this up in
+    `runtime.history.metric_diverse_inspiration_report`.
+  - Required result: add benchmark-required policies/fixtures and comparison
+    reports showing multi-score runs can deliberately condition the model on
+    programs excelling under different metrics in the same prompt.
 
 - [ ] Replace bounded run-local resurfacing indexes with a durable
   evolutionary database capable of resurfacing ideas by score, metric,

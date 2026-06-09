@@ -185,6 +185,14 @@ recording config-vs-policy strategy provenance.
 It can also override upstream inspiration sample count with
 `inspiration_sample_count`, separately from the rendered-inspiration cap, while
 recording config-vs-policy count provenance.
+Generated candidate metadata now includes
+`metadata.inspiration_selection.metric_diversity`, which links selected
+inspirations to the prompt-visible render policy, labels each visible
+inspiration with a declared metric niche, records raw/normalized metric values,
+and marks whether the prompt contained at least two distinct metric niches.
+Completed manifests summarize this evidence in
+`runtime.history.metric_diverse_inspiration_report`; benchmark-required
+metric-diverse prompt policies and cross-run comparison fixtures remain open.
 It can also cap already validated/redacted plugin `extra_context` with
 `extra_context_max_chars`, recording input/rendered/omitted character counts.
 LLM-grader prompt context can now be narrowed with `llm_feedback_fields`, a

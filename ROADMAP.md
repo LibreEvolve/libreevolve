@@ -238,7 +238,11 @@ is not yet an AlphaEvolve reproduction.
 - Extend the current configurable parent/inspiration sampling and run-local
   resurfacing queries beyond score, individual metric excellence, novelty,
   recency, lineage, feedback, and random/mixed policies to persisted
-  feedback, lineage-diversity, and novelty indexes.
+  feedback, lineage-diversity, and novelty indexes. Current generated-candidate
+  metadata and `runtime.history.metric_diverse_inspiration_report` now prove
+  when a rendered prompt contained inspirations from at least two declared
+  metric niches; benchmark-required policies and cross-run fixtures for this
+  prompt-diversity condition remain open.
 - Add source/workspace deduplication and evaluation-cache policy before
   treating deterministic candidate ids or workspace hashes as AlphaEvolve-grade
   memory over previously explored programs; identical proposals are not yet

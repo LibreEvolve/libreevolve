@@ -1085,6 +1085,18 @@ def evolve(
             prompt_sampler.last_metadata["prompt_token_counter_capability"] = dict(
                 prompt_token_counter_capability
             )
+            metric_diverse_inspiration = _metric_diverse_inspiration_record(
+                inspirations,
+                inspiration_selection_metadata,
+                prompt_sampler.last_metadata,
+                db.objective_schema_snapshot(),
+            )
+            inspiration_selection_metadata["metric_diversity"] = (
+                metric_diverse_inspiration
+            )
+            prompt_sampler.last_metadata["metric_diverse_inspiration"] = (
+                metric_diverse_inspiration
+            )
 
             if llm is None:
                 phase = f"generation:{gen}:llm_build"
@@ -5211,6 +5223,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
+        "metric_diverse_inspiration_report": (
+            _metric_diverse_inspiration_report(programs)
+        ),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
         "hypothesis_branch_report": _hypothesis_branch_report(db, programs),
         "archive_state": archive_state,
@@ -11355,6 +11370,530 @@ def validate_paper_evaluator_metric_contract(report: object) -> dict:
                 issues.append({"code": "missing_reserved_exclusion", "message": f"{field} exclusion is missing"})
     return {
         "schema": "libreevolve.paper_evaluator_metric_contract.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _metric_diverse_inspiration_record(
+    inspirations: list[Program],
+    selection_metadata: Mapping[str, object],
+    prompt_metadata: Mapping[str, object],
+    objective_schema: Mapping[str, object],
+) -> dict:
+    policy = (
+        prompt_metadata.get("inspiration_policy")
+        if isinstance(prompt_metadata.get("inspiration_policy"), Mapping)
+        else {}
+    )
+    rendered_count = policy.get("rendered_count")
+    if isinstance(rendered_count, bool) or not isinstance(rendered_count, int):
+        limit = policy.get("limit")
+        if isinstance(limit, bool) or not isinstance(limit, int):
+            visible = list(inspirations)
+        elif limit <= 0:
+            visible = []
+        else:
+            visible = list(inspirations)[:limit]
+    else:
+        visible = list(inspirations)[: max(0, rendered_count)]
+    metric_order = _metric_diverse_declared_metric_order(objective_schema)
+    target_metrics = _metric_diverse_target_metrics(selection_metadata)
+    target_metrics_by_program: dict[str, list[str]] = {}
+    for target in target_metrics:
+        program_id = target["program_id"]
+        metric = target["metric"]
+        target_metrics_by_program.setdefault(program_id, [])
+        if metric not in target_metrics_by_program[program_id]:
+            target_metrics_by_program[program_id].append(metric)
+
+    records: list[dict] = []
+    for index, program in enumerate(visible):
+        record = _metric_diverse_visible_inspiration_record(
+            program,
+            index,
+            metric_order,
+            target_metrics_by_program.get(program.id, []),
+        )
+        if record is not None:
+            records.append(record)
+    distinct_metric_niches = _unique_in_order(
+        [
+            str(record["metric_niche"])
+            for record in records
+            if isinstance(record.get("metric_niche"), str)
+        ]
+    )
+    metric_diverse = len(distinct_metric_niches) >= 2
+    prompt_sha256 = prompt_metadata.get("prompt_sha256")
+    return {
+        "schema": "libreevolve.metric_diverse_inspiration.v1",
+        "source": "prompt_visible_inspiration_selection_metadata",
+        "selection_strategy": selection_metadata.get("strategy"),
+        "sample_kind": selection_metadata.get("sample_kind"),
+        "requested_count": selection_metadata.get("requested_count"),
+        "selected_count": selection_metadata.get("selected_count"),
+        "selected_program_ids": list(selection_metadata.get("selected_program_ids", []))
+        if isinstance(selection_metadata.get("selected_program_ids"), list)
+        else [],
+        "visible_count": len(visible),
+        "visible_program_ids": [program.id for program in visible],
+        "rendered_count_source": "prompt_diagnostics.inspiration_policy.rendered_count",
+        "prompt_sha256": prompt_sha256 if isinstance(prompt_sha256, str) else None,
+        "declared_metric_order": metric_order,
+        "target_metrics": target_metrics,
+        "records": records,
+        "record_count": len(records),
+        "distinct_metric_count": len(distinct_metric_niches),
+        "distinct_metric_niches": distinct_metric_niches,
+        "metric_diverse_prompt_visible": metric_diverse,
+        "status": (
+            "metric_diverse_prompt_visible"
+            if metric_diverse
+            else "not_metric_diverse_prompt_visible"
+        ),
+        "claim_ready": metric_diverse,
+        "claim_readiness": {
+            "prompt_visible_metric_diversity_evidence": metric_diverse,
+            "remaining_gap": (
+                [
+                    "benchmark_required_metric_diverse_prompt_policy",
+                    "cross_run_metric_diverse_prompt_fixture",
+                ]
+                if metric_diverse
+                else [
+                    "prompt_visible_slate_did_not_cover_multiple_metric_niches",
+                    "benchmark_required_metric_diverse_prompt_policy",
+                ]
+            ),
+        },
+    }
+
+
+def _metric_diverse_declared_metric_order(
+    objective_schema: Mapping[str, object],
+) -> list[str]:
+    metrics = objective_schema.get("metrics")
+    if not isinstance(metrics, list):
+        return []
+    names: list[str] = []
+    for metric in metrics:
+        if not isinstance(metric, Mapping):
+            continue
+        name = metric.get("name")
+        if isinstance(name, str) and name and name not in names:
+            names.append(name)
+    return names
+
+
+def _metric_diverse_target_metrics(
+    selection_metadata: Mapping[str, object],
+) -> list[dict]:
+    records = selection_metadata.get("target_metrics")
+    if not isinstance(records, list):
+        return []
+    normalized: list[dict] = []
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        metric = record.get("metric")
+        program_id = record.get("program_id")
+        if isinstance(metric, str) and metric and isinstance(program_id, str) and program_id:
+            normalized.append({"metric": metric, "program_id": program_id})
+    return normalized
+
+
+def _metric_diverse_visible_inspiration_record(
+    program: Program,
+    visible_index: int,
+    metric_order: list[str],
+    target_metrics: list[str],
+) -> dict | None:
+    normalized_metrics = _metric_diverse_normalized_metrics(program, metric_order)
+    if not normalized_metrics:
+        return None
+    metric_niche = _metric_diverse_metric_niche(
+        normalized_metrics,
+        metric_order,
+        target_metrics,
+    )
+    if metric_niche is None:
+        return None
+    raw_value = program.metrics.get(metric_niche)
+    normalized_value = normalized_metrics.get(metric_niche)
+    return {
+        "program_id": program.id,
+        "visible_index": visible_index,
+        "metric_niche": metric_niche,
+        "metric_niche_source": (
+            "selection_metadata.target_metrics"
+            if metric_niche in target_metrics
+            else "max_normalized_declared_metric"
+        ),
+        "target_metrics": list(target_metrics),
+        "raw_metric_value": float(raw_value)
+        if isinstance(raw_value, (int, float)) and not isinstance(raw_value, bool)
+        else None,
+        "normalized_metric_value": normalized_value,
+        "normalized_metrics": normalized_metrics,
+        "fitness": program.fitness,
+        "generation": program.generation,
+    }
+
+
+def _metric_diverse_normalized_metrics(
+    program: Program,
+    metric_order: list[str],
+) -> dict[str, float]:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    raw = metadata.get("normalized_metrics")
+    if not isinstance(raw, Mapping):
+        return {}
+    allowed = set(metric_order)
+    values: dict[str, float] = {}
+    for name in metric_order:
+        value = raw.get(name)
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            numeric = float(value)
+            if math.isfinite(numeric):
+                values[name] = max(0.0, min(1.0, numeric))
+    if values or allowed:
+        return values
+    for name, value in raw.items():
+        if not isinstance(name, str) or not name:
+            continue
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            numeric = float(value)
+            if math.isfinite(numeric):
+                values[name] = max(0.0, min(1.0, numeric))
+    return values
+
+
+def _metric_diverse_metric_niche(
+    normalized_metrics: Mapping[str, float],
+    metric_order: list[str],
+    target_metrics: list[str],
+) -> str | None:
+    for metric in target_metrics:
+        if metric in normalized_metrics:
+            return metric
+    ordered_names = [
+        name for name in metric_order if name in normalized_metrics
+    ] + sorted(name for name in normalized_metrics if name not in set(metric_order))
+    if not ordered_names:
+        return None
+    order_index = {name: index for index, name in enumerate(ordered_names)}
+    return max(
+        ordered_names,
+        key=lambda name: (
+            float(normalized_metrics[name]),
+            -order_index[name],
+        ),
+    )
+
+
+def _unique_in_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        ordered.append(value)
+    return ordered
+
+
+def _metric_diverse_inspiration_report(programs: list[Program]) -> dict:
+    records: list[dict] = []
+    for program in programs:
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        inspiration = metadata.get("inspiration_selection")
+        if not isinstance(inspiration, Mapping):
+            continue
+        diversity = inspiration.get("metric_diversity")
+        if not isinstance(diversity, Mapping):
+            continue
+        records.append(
+            {
+                "program_id": program.id,
+                "generation": program.generation,
+                "parent_id": program.parent_id,
+                "candidate_type": metadata.get("candidate_type"),
+                "prompt_sha256": diversity.get("prompt_sha256"),
+                "selection_strategy": diversity.get("selection_strategy"),
+                "visible_count": diversity.get("visible_count"),
+                "visible_program_ids": list(diversity.get("visible_program_ids", []))
+                if isinstance(diversity.get("visible_program_ids"), list)
+                else [],
+                "distinct_metric_count": diversity.get("distinct_metric_count"),
+                "distinct_metric_niches": list(
+                    diversity.get("distinct_metric_niches", [])
+                )
+                if isinstance(diversity.get("distinct_metric_niches"), list)
+                else [],
+                "metric_diverse_prompt_visible": (
+                    diversity.get("metric_diverse_prompt_visible") is True
+                ),
+                "records": copy.deepcopy(diversity.get("records", []))
+                if isinstance(diversity.get("records"), list)
+                else [],
+            }
+        )
+    metric_diverse_count = sum(
+        1 for record in records if record["metric_diverse_prompt_visible"] is True
+    )
+    report = {
+        "schema": "libreevolve.metric_diverse_inspiration_report.v1",
+        "source": "history_program_metadata_inspiration_selection_metric_diversity",
+        "candidate_count": len(records),
+        "prompt_visible_candidate_count": sum(
+            1
+            for record in records
+            if isinstance(record.get("visible_count"), int)
+            and record.get("visible_count", 0) > 0
+        ),
+        "metric_diverse_prompt_count": metric_diverse_count,
+        "records_limit": 100,
+        "records_truncated": len(records) > 100,
+        "records": records[:100],
+        "evidence_policy": {
+            "schema": "libreevolve.metric_diverse_inspiration_policy.v1",
+            "prompt_visible_surface": (
+                "prompt_diagnostics.inspiration_policy.rendered_count"
+            ),
+            "metric_niche_source_order": [
+                "selection_metadata.target_metrics",
+                "max_normalized_declared_metric",
+            ],
+            "normalized_metric_source": "Program.metadata.normalized_metrics",
+            "metric_diverse_threshold": "at_least_two_distinct_visible_metric_niches",
+        },
+        "claim_ready": metric_diverse_count > 0,
+        "claim_readiness": {
+            "prompt_visible_metric_diversity_evidence": metric_diverse_count > 0,
+            "remaining_gap": [
+                "benchmark_required_metric_diverse_prompt_policy",
+                "cross_run_metric_diverse_prompt_fixture",
+            ],
+        },
+    }
+    report["validation"] = validate_metric_diverse_inspiration_report(report)
+    return report
+
+
+def validate_metric_diverse_inspiration_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.metric_diverse_inspiration_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "metric-diverse inspiration report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "candidate_count",
+        "prompt_visible_candidate_count",
+        "metric_diverse_prompt_count",
+        "records_limit",
+        "records_truncated",
+        "records",
+        "evidence_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "metric-diverse inspiration report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.metric_diverse_inspiration_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "metric-diverse inspiration report schema is unsupported",
+            }
+        )
+    if (
+        report.get("source")
+        != "history_program_metadata_inspiration_selection_metric_diversity"
+    ):
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "metric-diverse inspiration report source is unsupported",
+            }
+        )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    visible_count = 0
+    diverse_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_record",
+                    "message": f"record {index} must be an object",
+                }
+            )
+            continue
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append(
+                {
+                    "code": "invalid_program_id",
+                    "message": f"record {index} program_id is invalid",
+                }
+            )
+        rendered = record.get("visible_count")
+        if isinstance(rendered, bool) or not isinstance(rendered, int) or rendered < 0:
+            issues.append(
+                {
+                    "code": "invalid_visible_count",
+                    "message": f"record {index} visible_count is invalid",
+                }
+            )
+        elif rendered > 0:
+            visible_count += 1
+        distinct = record.get("distinct_metric_count")
+        niches = record.get("distinct_metric_niches")
+        if isinstance(distinct, bool) or not isinstance(distinct, int) or distinct < 0:
+            issues.append(
+                {
+                    "code": "invalid_distinct_metric_count",
+                    "message": f"record {index} distinct_metric_count is invalid",
+                }
+            )
+        if not isinstance(niches, list) or any(
+            not isinstance(item, str) or not item for item in niches
+        ):
+            issues.append(
+                {
+                    "code": "invalid_distinct_metric_niches",
+                    "message": f"record {index} distinct_metric_niches is invalid",
+                }
+            )
+        elif isinstance(distinct, int) and not isinstance(distinct, bool) and distinct != len(niches):
+            issues.append(
+                {
+                    "code": "distinct_metric_count_mismatch",
+                    "message": (
+                        f"record {index} distinct_metric_count must match niches"
+                    ),
+                }
+            )
+        if record.get("metric_diverse_prompt_visible") is True:
+            diverse_count += 1
+            if not isinstance(distinct, int) or distinct < 2:
+                issues.append(
+                    {
+                        "code": "invalid_metric_diverse_record",
+                        "message": (
+                            f"record {index} cannot be metric-diverse with fewer "
+                            "than two distinct metric niches"
+                        ),
+                    }
+                )
+        slate = record.get("records")
+        if not isinstance(slate, list):
+            issues.append(
+                {
+                    "code": "invalid_visible_records",
+                    "message": f"record {index} records must be a list",
+                }
+            )
+            continue
+        for visible_index, visible_record in enumerate(slate):
+            if not isinstance(visible_record, dict):
+                issues.append(
+                    {
+                        "code": "invalid_visible_record",
+                        "message": (
+                            f"record {index} visible record {visible_index} must be "
+                            "an object"
+                        ),
+                    }
+                )
+                continue
+            metric = visible_record.get("metric_niche")
+            if not isinstance(metric, str) or not metric:
+                issues.append(
+                    {
+                        "code": "invalid_metric_niche",
+                        "message": (
+                            f"record {index} visible record {visible_index} metric "
+                            "niche is invalid"
+                        ),
+                    }
+                )
+            normalized = visible_record.get("normalized_metric_value")
+            if (
+                isinstance(normalized, bool)
+                or not isinstance(normalized, (int, float))
+                or not math.isfinite(float(normalized))
+                or not 0.0 <= float(normalized) <= 1.0
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_normalized_metric_value",
+                        "message": (
+                            f"record {index} visible record {visible_index} "
+                            "normalized metric value must be in [0, 1]"
+                        ),
+                    }
+                )
+    if report.get("records_truncated") is not True:
+        if report.get("candidate_count") != len(records):
+            issues.append(
+                {
+                    "code": "invalid_candidate_count",
+                    "message": "candidate_count must match records",
+                }
+            )
+        if report.get("prompt_visible_candidate_count") != visible_count:
+            issues.append(
+                {
+                    "code": "invalid_prompt_visible_count",
+                    "message": (
+                        "prompt_visible_candidate_count must match records"
+                    ),
+                }
+            )
+        if report.get("metric_diverse_prompt_count") != diverse_count:
+            issues.append(
+                {
+                    "code": "invalid_metric_diverse_count",
+                    "message": "metric_diverse_prompt_count must match records",
+                }
+            )
+    if not isinstance(report.get("evidence_policy"), dict):
+        issues.append(
+            {
+                "code": "invalid_evidence_policy",
+                "message": "evidence_policy must be an object",
+            }
+        )
+    if report.get("claim_ready") != (report.get("metric_diverse_prompt_count") > 0):
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "claim_ready must match metric-diverse evidence presence",
+            }
+        )
+    return {
+        "schema": "libreevolve.metric_diverse_inspiration_report.v1",
         "ok": not issues,
         "issues": issues,
     }

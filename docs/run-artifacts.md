@@ -1484,7 +1484,12 @@ Important behavior:
   `metadata.inspiration_selection`; metric leader policies include target
   metric/program pairs so metric-specific inspiration choices are auditable,
   frontier policies include frontier size and declared metric order, and
-  lineage policies include lineage-root/program pairs
+  lineage policies include lineage-root/program pairs. Generated candidates
+  also store `metadata.inspiration_selection.metric_diversity`, which uses
+  prompt diagnostics to identify prompt-visible inspirations, labels each
+  visible inspiration with a declared metric niche, records raw/normalized
+  metric values, and marks whether the rendered slate spans at least two
+  metric niches.
 - normalized LLM call telemetry is stored under `metadata.llm_calls` as the
   candidate-linked mutation/critique/feedback call span, including recovered
   retry or fallback attempts that led to a successful candidate
@@ -2884,6 +2889,21 @@ prompt-memory analysis, but restored records are annotated with
 `mutation_text` is a bounded/redacted diagnostic snippet, not an exact payload
 for resume-time reapplication. Retention policy and richer long-term query
 controls remain open work.
+
+## `runtime.history.metric_diverse_inspiration_report`
+
+Completed manifests include a metric-diverse inspiration report with schema
+`libreevolve.metric_diverse_inspiration_report.v1`. It rolls up generated
+candidate `metadata.inspiration_selection.metric_diversity` records, including
+the prompt hash, selection strategy, prompt-visible inspiration ids, distinct
+metric niches, and per-visible-inspiration raw and normalized declared metric
+values. The report counts candidates with any prompt-visible inspirations and
+candidates whose rendered prompt contained at least two distinct metric niches.
+
+This is current-run prompt-conditioning evidence, not a benchmark policy by
+itself. The report's remaining gaps are benchmark fixtures or policies that
+require metric-diverse prompt slates across runs and compare them with scalar
+or one-at-a-time metric-targeted sampling.
 
 ## `runtime.history.proposal_lifecycle_report`
 

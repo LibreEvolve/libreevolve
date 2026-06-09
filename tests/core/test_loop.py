@@ -61,6 +61,7 @@ from libreevolve.core.loop import (
     validate_paper_metric_table_export,
     validate_system_contribution_provenance_report,
     validate_title_page_affiliation_report,
+    validate_metric_diverse_inspiration_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -9321,6 +9322,76 @@ def test_loop_records_metric_targeted_inspiration_selection_metadata():
         {"metric": "score", "program_id": inspiration["selected_program_ids"][0]},
         {"metric": "latency", "program_id": inspiration["selected_program_ids"][0]},
     ]
+
+
+def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
+    tmpdir = tempfile.mkdtemp()
+    d = Path(tempfile.mkdtemp())
+    (d / "validate.py").write_text(
+        "def evaluate(c):\n"
+        "    if 'x=10' in c:\n"
+        "        return {'score': 0.1, 'latency': 0.95, 'is_valid': True}\n"
+        "    if 'x=2' in c:\n"
+        "        return {'score': 0.8, 'latency': 0.2, 'is_valid': True}\n"
+        "    return {'score': 0.9, 'latency': 0.1, 'is_valid': True}\n"
+    )
+    problem = Problem(
+        name="t",
+        task_description="t",
+        metrics=[
+            {"name": "score", "primary": True, "bounds": [0.0, 1.0]},
+            {"name": "latency", "bounds": [0.0, 1.0]},
+        ],
+        primary_metric="score",
+        primary_bounds=(0.0, 1.0),
+        validate_path=d / "validate.py",
+        initial_programs=["x=1", "x=10", "x=2"],
+        problem_dir=d,
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm()):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                parent_selection_strategy="exploit",
+                inspiration_strategy="metric",
+                num_inspirations=2,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    records = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text().splitlines()
+    ]
+    child = records[-1]
+    diversity = child["metadata"]["inspiration_selection"]["metric_diversity"]
+
+    assert diversity["schema"] == "libreevolve.metric_diverse_inspiration.v1"
+    assert diversity["visible_count"] == 2
+    assert diversity["visible_program_ids"] == diversity["selected_program_ids"]
+    assert diversity["distinct_metric_count"] == 2
+    assert diversity["distinct_metric_niches"] == ["score", "latency"]
+    assert diversity["metric_diverse_prompt_visible"] is True
+    assert diversity["records"][0]["metric_niche"] == "score"
+    assert diversity["records"][0]["metric_niche_source"] == (
+        "selection_metadata.target_metrics"
+    )
+    assert diversity["records"][1]["metric_niche"] == "latency"
+    assert child["metadata"]["prompt_diagnostics"]["metric_diverse_inspiration"][
+        "metric_diverse_prompt_visible"
+    ] is True
+
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["metric_diverse_inspiration_report"]
+    assert report["schema"] == "libreevolve.metric_diverse_inspiration_report.v1"
+    assert report["candidate_count"] == 1
+    assert report["metric_diverse_prompt_count"] == 1
+    assert report["validation"]["ok"] is True
+    assert validate_metric_diverse_inspiration_report(report)["ok"] is True
 
 
 def test_prompt_context_policy_overrides_upstream_inspiration_strategy():

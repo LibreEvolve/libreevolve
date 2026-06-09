@@ -793,20 +793,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve-grade multi-objective optimization.
 
 - [ ] Keep multi-metric prompt-context roadmap wording scoped until
-      metric-diverse inspiration evidence exists.
+      benchmark-required metric-diverse prompt policies exist.
   - Spec evidence: AlphaEvolve Section 2.4 says multiple scores can improve
     search because prompts include examples of diverse high-performing
     programs, each representing a different definition of "good".
   - Current evidence: roadmap/README wording can cite declared metrics,
     normalized archive selection, objective-vector diagnostics, metric leaders,
-    metric-cell overlays, metric/frontier retained pools, and metric-targeted
-    resurfacing. They do not yet require inspiration selection policies,
-    prompt-history linkage, or report validation proving prompts intentionally
-    include different metric niches in the same rendered context.
-  - Required result: when metric-diverse inspiration selection lands, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap text
-    distinguishes multi-metric bookkeeping/resurfacing from AlphaEvolve-style
-    diverse-metric prompt context.
+    metric-cell overlays, metric/frontier retained pools, metric-targeted
+    resurfacing, generated-candidate
+    `metadata.inspiration_selection.metric_diversity`, and
+    `runtime.history.metric_diverse_inspiration_report`. They still do not
+    require benchmark policies or fixtures proving multi-score runs
+    consistently use and compare prompt slates with different metric niches.
+  - Required result: when benchmark-required metric-diverse prompt policies and
+    fixtures land, update ROADMAP, README, papers index, and code/paper TODOs
+    together so roadmap text distinguishes current-run evidence from
+    AlphaEvolve-style benchmark claims.
 
 - [ ] Keep `show`/metric archive roadmap wording scoped to selected-row CLI
       output versus manifest-level summary records.

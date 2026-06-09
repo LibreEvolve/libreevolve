@@ -104,21 +104,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     validation.
 
 - [ ] Keep README multiple-score prompt-context wording scoped until
-      metric-diverse inspiration evidence exists.
+      benchmark-required metric-diverse prompt policies exist.
   - Spec evidence: AlphaEvolve Section 2.4 says multiple metrics can improve a
     target metric by placing programs that excel under different evaluation
     criteria into prompts, each as a different definition of "good".
   - Current evidence: README documents declared metrics, direction/bounds
     normalization, selection scores, objective-vector diagnostics, metric
-    overlays, metric-targeted parent/inspiration sampling, and prompt context
-    filters/ranking. It should not imply those surfaces prove that a rendered
-    prompt intentionally included a metric-diverse slate of inspirations or
-    labelled each prompt-visible program by the metric niche it represents.
-  - Required result: when metric-diverse inspiration selection lands, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes current metric bookkeeping and one-at-a-time metric-targeted
-    sampling from AlphaEvolve-style prompt conditioning on programs that are
-    high-performing under different metrics in the same prompt.
+    overlays, metric-targeted parent/inspiration sampling, prompt context
+    filters/ranking, generated-candidate
+    `metadata.inspiration_selection.metric_diversity`, and
+    `runtime.history.metric_diverse_inspiration_report`. It should still not
+    imply those current-run evidence surfaces enforce benchmark-wide
+    metric-diverse prompt conditioning or compare against scalar and
+    one-at-a-time metric-targeted sampling.
+  - Required result: when benchmark-required metric-diverse prompt policies and
+    fixtures land, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README distinguishes current-run prompt-visible evidence from
+    AlphaEvolve-style benchmark claims.
 
 - [ ] Extend README evaluator-entrypoint wording from opt-in embedded evidence
       to full Figure 3 parity.

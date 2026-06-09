@@ -5317,6 +5317,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "prompt_example_copy_report": _prompt_example_copy_report(programs),
         "prompt_current_binding_report": _prompt_current_binding_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
         "proposal_score_report": _proposal_score_report(programs),
@@ -14509,6 +14510,268 @@ def validate_mutation_operator_boundary_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.mutation_operator_boundary_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _prompt_example_copy_report(programs: list[Program]) -> dict:
+    inventory = _prompt_example_inventory()
+    records = [
+        _prompt_example_copy_record(program, inventory)
+        for program in programs
+        if _prompt_current_binding_is_generated(program)
+    ]
+    copied_records = [
+        record for record in records if record["copied_example_sentinel_count"] > 0
+    ]
+    enabled_records = [
+        record for record in records if record["prompt_example_enabled"] is True
+    ]
+    status_counts: dict[str, int] = {}
+    copied_status_counts: dict[str, int] = {}
+    mode_counts: dict[str, int] = {}
+    for record in records:
+        status = str(record.get("candidate_status") or "unknown")
+        status_counts[status] = status_counts.get(status, 0) + 1
+        mode = str(record.get("mutation_mode") or "unknown")
+        mode_counts[mode] = mode_counts.get(mode, 0) + 1
+        if record["copied_example_sentinel_count"] > 0:
+            copied_status_counts[status] = copied_status_counts.get(status, 0) + 1
+    report = {
+        "schema": "libreevolve.prompt_example_copy_report.v1",
+        "source": "runtime_history_prompt_diagnostics_and_mutation_payloads",
+        "inventory": inventory,
+        "generated_candidate_count": len(records),
+        "prompt_example_enabled_count": len(enabled_records),
+        "copied_example_candidate_count": len(copied_records),
+        "candidate_status_counts": dict(sorted(status_counts.items())),
+        "copied_candidate_status_counts": dict(sorted(copied_status_counts.items())),
+        "mutation_mode_counts": dict(sorted(mode_counts.items())),
+        "records": copied_records[:50],
+        "records_limit": 50,
+        "records_truncated": len(copied_records) > 50,
+        "diagnostic_policy": {
+            "inventory_scope": "built_in_mutation_instruction_example_sentinels",
+            "match_policy": "exact_substring_match_in_generated_mutation_payload",
+            "acceptance_policy": "diagnostic_only_not_a_hard_rejection",
+            "prompt_example_disabled_policy": (
+                "record_include_flag_when_prompt_context_policy_disables_example"
+            ),
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "prompt_example_inventory_versioned": True,
+            "copied_sentinel_detection": True,
+            "diff_full_workspace_payloads_scanned": True,
+            "hard_acceptance_gate": False,
+            "semantic_example_copy_detection": False,
+            "remaining_gap": [
+                "hard_rejection_or_configurable_acceptance_policy",
+                "semantic_or_renamed_example_copy_detection",
+                "custom_prompt_template_example_inventory",
+                "per_file_section_normalized_copy_detection",
+            ],
+        },
+    }
+    report["validation"] = validate_prompt_example_copy_report(report)
+    return report
+
+
+def _prompt_example_inventory() -> dict:
+    sentinels = [
+        {
+            "label": "example_function_signature",
+            "text": "def foo():",
+        },
+        {
+            "label": "example_search_return",
+            "text": "return 1",
+        },
+        {
+            "label": "example_replace_return",
+            "text": "return 2",
+        },
+        {
+            "label": "example_do_not_copy_notice",
+            "text": "Example format (do NOT copy this",
+        },
+    ]
+    records = [
+        {
+            "label": item["label"],
+            "sha256": hashlib.sha256(item["text"].encode("utf-8")).hexdigest(),
+            "chars": len(item["text"]),
+            "preview": item["text"],
+        }
+        for item in sentinels
+    ]
+    return {
+        "schema": "libreevolve.prompt_example_inventory.v1",
+        "source": "built_in_mutation_instruction_example",
+        "example_id": "default_diff_format_example:v1",
+        "include_flag": "prompt_context_policy.mutation_instruction_include_example",
+        "sentinel_count": len(records),
+        "sentinels": records,
+    }
+
+
+def _prompt_example_copy_record(program: Program, inventory: Mapping[str, object]) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    context_policy = (
+        prompt_diagnostics.get("prompt_context_policy")
+        if isinstance(prompt_diagnostics.get("prompt_context_policy"), Mapping)
+        else {}
+    )
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    payload = metadata.get("diff")
+    payload_text = payload if isinstance(payload, str) else ""
+    copied = _prompt_example_copied_sentinels(payload_text, inventory)
+    return {
+        "candidate_id": program.id,
+        "candidate_status": (
+            "accepted_history"
+            if admission.get("admitted") is True
+            else "rejected_history"
+        ),
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": metadata.get("prompt_program_id"),
+        "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+        "mutation_mode": metadata.get("mutation_mode"),
+        "payload_sha256": hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+        "payload_surface": _mutation_operator_payload_surfaces(
+            payload_text,
+            str(metadata.get("mutation_mode") or "unknown"),
+        ),
+        "prompt_example_enabled": context_policy.get(
+            "mutation_instruction_include_example"
+        ),
+        "copied_example_sentinel_count": len(copied),
+        "copied_example_sentinels": copied,
+        "admission": {
+            "admitted": admission.get("admitted"),
+            "reason": admission.get("reason"),
+        },
+    }
+
+
+def _prompt_example_copied_sentinels(
+    payload_text: str,
+    inventory: Mapping[str, object],
+) -> list[dict]:
+    copied: list[dict] = []
+    sentinels = inventory.get("sentinels")
+    if not isinstance(sentinels, list):
+        return copied
+    for sentinel in sentinels:
+        if not isinstance(sentinel, Mapping):
+            continue
+        preview = sentinel.get("preview")
+        if not isinstance(preview, str) or not preview:
+            continue
+        if preview not in payload_text:
+            continue
+        copied.append(
+            {
+                "label": sentinel.get("label"),
+                "sha256": sentinel.get("sha256"),
+                "match_policy": "exact_substring",
+            }
+        )
+    return copied
+
+
+def validate_prompt_example_copy_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.prompt_example_copy_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "prompt example copy report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "inventory",
+        "generated_candidate_count",
+        "prompt_example_enabled_count",
+        "copied_example_candidate_count",
+        "candidate_status_counts",
+        "copied_candidate_status_counts",
+        "mutation_mode_counts",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "diagnostic_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"prompt example copy report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.prompt_example_copy_report.v1":
+        issues.append({"code": "invalid_schema", "message": "prompt example copy report schema is unsupported"})
+    if report.get("source") != "runtime_history_prompt_diagnostics_and_mutation_payloads":
+        issues.append({"code": "invalid_source", "message": "prompt example copy report source is unsupported"})
+    for field in (
+        "generated_candidate_count",
+        "prompt_example_enabled_count",
+        "copied_example_candidate_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    inventory = report.get("inventory")
+    if not isinstance(inventory, dict):
+        issues.append({"code": "invalid_inventory", "message": "inventory must be an object"})
+    else:
+        if inventory.get("schema") != "libreevolve.prompt_example_inventory.v1":
+            issues.append({"code": "invalid_inventory_schema", "message": "inventory schema is unsupported"})
+        sentinels = inventory.get("sentinels")
+        if not isinstance(sentinels, list) or not sentinels:
+            issues.append({"code": "invalid_inventory_sentinels", "message": "inventory must include sentinels"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_record", "message": f"record {index} must be an object"})
+            continue
+        count = record.get("copied_example_sentinel_count")
+        sentinels = record.get("copied_example_sentinels")
+        if isinstance(count, bool) or not isinstance(count, int) or count < 1:
+            issues.append({"code": "invalid_copied_count", "message": f"record {index} copied count must be positive"})
+        if not isinstance(sentinels, list) or len(sentinels) != count:
+            issues.append({"code": "invalid_copied_sentinels", "message": f"record {index} copied sentinels must match count"})
+    if report.get("records_truncated") is not True:
+        if report.get("copied_example_candidate_count") != len(records):
+            issues.append({"code": "invalid_record_count", "message": "copied count must match records when not truncated"})
+    if not isinstance(report.get("diagnostic_policy"), dict):
+        issues.append({"code": "invalid_diagnostic_policy", "message": "diagnostic_policy must be an object"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "prompt example copy report must not claim full readiness"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        for field in ("hard_acceptance_gate", "semantic_example_copy_detection"):
+            if readiness.get(field) is not False:
+                issues.append({"code": f"{field}_overclaim", "message": f"{field} must remain false"})
+    return {
+        "schema": "libreevolve.prompt_example_copy_report.v1",
         "ok": not issues,
         "issues": issues,
     }

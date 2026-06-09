@@ -7902,3 +7902,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     mapping, prompt-history row joins, full-mode target spans/block ids, and
     cross-run binding tables remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow prompt-example roadmap wording to stronger copy-policy gaps.
+  - Evidence: roadmap wording needed to recognize implemented built-in
+    example-sentinel diagnostics without implying full protection against
+    copied prompt examples.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.prompt_example_copy_report` for built-in example-sentinel
+    inventory and exact generated-payload copy diagnostics.
+  - Remaining roadmap gap: configurable rejection, semantic/renamed copy
+    detection, custom prompt-template inventories, and per-file-section
+    normalized scanning remain open.
+  - Verification: focused loop tests cover the report and validator.

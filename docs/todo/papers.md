@@ -1833,25 +1833,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     and code TODOs explicit that LibreEvolve requires structured proposal
     metadata rather than arbitrary natural-language patch rationale.
 
-- [ ] Track prompt example-copy diagnostics separately from diff syntax
-      compatibility.
+- [ ] Track prompt example-copy diagnostics beyond built-in exact sentinels.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.
   - Requirement: AlphaEvolve prompts can include concrete current-program
     context and concrete SEARCH/REPLACE demonstrations, but accepted proposals
     should be edits to the sampled current program rather than copied
     illustrative prompt examples.
   - Partial status: LibreEvolve supports canonical SEARCH/REPLACE blocks,
-    concrete prompt examples, and strict malformed-diff diagnostics.
-  - Current gap: the paper index does not yet distinguish syntactic diff
-    compatibility from evidence that prompt-only example fragments were not
-    copied into accepted candidates. README says concrete examples reduce
-    placeholder-copying mistakes, but no validator/report records prompt
-    example labels, hashes, or copy-detection outcomes.
-  - Required result: add paper-facing evidence for prompt-example inventories
-    and acceptance diagnostics that detect copied placeholder/example
-    sentinels across diff, full, and workspace mutations before treating
-    prompt-example compatibility as AlphaEvolve-style current-program editing
-    fidelity.
+    concrete prompt examples, and strict malformed-diff diagnostics. Completed
+    manifests now include `runtime.history.prompt_example_copy_report` with
+    schema `libreevolve.prompt_example_copy_report.v1`, which inventories
+    built-in mutation-format example sentinels and records exact
+    generated-payload copies with candidate status/admission metadata.
+  - Current gap: the report is diagnostic-only and covers exact built-in
+    sentinels, not hard rejection, semantic/renamed example copying, custom
+    prompt-template example inventories, or normalized per-file-section copy
+    detection.
+  - Required result: add paper-facing evidence for configurable
+    acceptance/rejection policy, semantic or renamed example-copy detection,
+    custom prompt-template inventories, and per-file-section normalized
+    scanning before treating prompt-example compatibility as AlphaEvolve-style
+    current-program editing fidelity.
 
 - [ ] Track prompt-current-program binding evidence beyond current-run
       mutation records.

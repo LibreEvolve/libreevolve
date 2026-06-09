@@ -721,6 +721,12 @@ sets; the report remains `claim_ready: false` because LibreEvolve does not yet
 declare, construct, select, score, or benchmark higher-level mutation-operator
 families separately from the parser grammar.
 Completed manifests also include
+`runtime.history.prompt_example_copy_report`, which inventories the built-in
+mutation-format example sentinels and reports generated mutation payloads that
+copy those example-only fragments. This is diagnostic-only, not a hard
+acceptance gate: semantic or renamed example copying, custom-template example
+inventories, and configurable rejection policy remain open.
+Completed manifests also include
 `runtime.history.prompt_current_binding_report`, which joins generated
 candidate ids, prompt-program ids, rendered prompt hashes, parent/current
 program render hashes and path policy, parent/candidate workspace hashes, LLM
@@ -3320,7 +3326,7 @@ manifest/index verification documented there:
 - Models wrap diffs in markdown fences — the diff engine strips a single outer response wrapper automatically while preserving fence text inside replacement code
 - Models add comments that cause diff matching failures — the prompt instructs "no comments"
 - Without stronger failed-proposal memory, models can repeat the same bad mutation many times
-- A concrete diff example in the prompt reduces observed placeholder-copying mistakes, but placeholder/example copying is not rejected by a dedicated validator yet
+- A concrete diff example in the prompt reduces observed placeholder-copying mistakes; `runtime.history.prompt_example_copy_report` now records exact built-in example-sentinel copying, but hard rejection and semantic copy detection remain open
 
 **Seeds determine the evolutionary landscape:**
 - Optimization-pressure seeds (`hello_world`, `circle_packing`, `matrix_multiplication`) start with measurable headroom

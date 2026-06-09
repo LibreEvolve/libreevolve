@@ -329,6 +329,12 @@ operator sets remains open until LibreEvolve records proposal-level
 operator-family provenance, construction or selection evidence, and benchmark
 telemetry beyond those fixed local parser surfaces.
 Completed manifests now also include
+`runtime.history.prompt_example_copy_report`, which inventories the built-in
+mutation-format example sentinels and records exact generated-payload copies
+of those example-only fragments. It is diagnostic-only: hard rejection,
+semantic/renamed copy detection, custom prompt-template example inventories,
+and per-file-section normalized copy detection remain open.
+Completed manifests now also include
 `runtime.history.prompt_current_binding_report`, which records current-run
 prompt/current-program binding evidence: generated candidate ids, prompt
 program ids, rendered prompt hashes, parent-code render hashes/path policy,

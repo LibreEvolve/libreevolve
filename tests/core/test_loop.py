@@ -68,6 +68,7 @@ from libreevolve.core.loop import (
     validate_sampling_balance_report,
     validate_programmatic_representation_boundary_report,
     validate_mutation_operator_boundary_report,
+    validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
     validate_proposal_diversity_report,
     validate_proposal_score_report,
@@ -3100,6 +3101,94 @@ x=2
     assert sample["llm_constructed_operator_family"] is False
     assert sample["adaptive_operator_selection"] is False
     assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
+
+
+def test_runtime_history_reports_prompt_example_copy_diagnostics():
+    tmpdir = tempfile.mkdtemp()
+    copied_example_payload = """<<<SEARCH
+def foo():
+    return 1
+===
+def foo():
+    return 2
+>>>REPLACE"""
+
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        return_value=_llm(copied_example_payload),
+    ):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_example_copy_report"]
+
+    assert report["schema"] == "libreevolve.prompt_example_copy_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_example_copy_report(report)["ok"] is True
+    assert report["inventory"]["schema"] == "libreevolve.prompt_example_inventory.v1"
+    assert report["inventory"]["example_id"] == "default_diff_format_example:v1"
+    assert report["generated_candidate_count"] == 1
+    assert report["prompt_example_enabled_count"] == 1
+    assert report["copied_example_candidate_count"] == 1
+    assert report["candidate_status_counts"] == {"rejected_history": 1}
+    assert report["copied_candidate_status_counts"] == {"rejected_history": 1}
+    assert report["mutation_mode_counts"] == {"diff": 1}
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["prompt_example_inventory_versioned"] is True
+    assert report["claim_readiness"]["copied_sentinel_detection"] is True
+    assert report["claim_readiness"]["hard_acceptance_gate"] is False
+    assert report["claim_readiness"]["semantic_example_copy_detection"] is False
+
+    record = report["records"][0]
+    assert record["prompt_example_enabled"] is True
+    assert record["copied_example_sentinel_count"] == 3
+    labels = {item["label"] for item in record["copied_example_sentinels"]}
+    assert labels == {
+        "example_function_signature",
+        "example_search_return",
+        "example_replace_return",
+    }
+    assert record["admission"]["admitted"] is False
+
+
+def test_runtime_history_reports_prompt_example_disabled_policy():
+    tmpdir = tempfile.mkdtemp()
+    prompt_db = PromptDatabase(
+        Path(tmpdir) / "prompt_db",
+        templates=["{task}\n{parent_code}\n{mutation_instructions}"],
+    )
+    parent_prompt = prompt_db.select()
+    prompt_db.mutate(
+        parent_prompt.id,
+        parent_prompt.template,
+        generation=1,
+        context_policy={"mutation_instruction_include_example": False},
+    )
+    prompt_db.record_result(parent_prompt.id, 0.0)
+
+    with (
+        patch("libreevolve.core.loop.PromptDatabase", return_value=prompt_db),
+        patch("libreevolve.core.loop.build_llm", return_value=_llm()),
+    ):
+        evolve(
+            _problem(),
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_example_copy_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_example_copy_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["prompt_example_enabled_count"] == 0
+    assert report["copied_example_candidate_count"] == 0
+    assert report["records"] == []
 
 
 def test_runtime_history_reports_prompt_current_binding_for_diff_mutation():

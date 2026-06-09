@@ -2237,22 +2237,27 @@ Primary evidence:
     updates that distinguish safe proposal rationale capture from arbitrary
     unparsed prose.
 
-- [ ] Add prompt example-copy diagnostics for AlphaEvolve-style concrete diff
-      examples.
+- [ ] Extend prompt example-copy diagnostics beyond built-in exact sentinels.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete current-program
     context and concrete SEARCH/REPLACE examples. The useful behavior is that
     the model edits the current program, not that it copies illustrative
     placeholder/example fragments from the prompt into a candidate patch.
   - Current evidence: LibreEvolve prompt instructions include concrete diff
     examples and README notes that those examples reduce observed
-    placeholder-copying mistakes, but example-copying is not rejected by a
-    dedicated validator. Current parser errors cover malformed diff/block
-    syntax and unconsumed prose, not semantic evidence that a proposal copied
-    prompt-only placeholders, toy identifiers, or example replacement text.
-  - Required result: add a versioned prompt-example inventory and candidate
-    acceptance diagnostic that hashes or labels illustrative prompt examples,
-    detects copied example-only sentinels in submitted mutations, records
-    bounded failure metadata, and tests diff/full/workspace mutation paths so
+    placeholder-copying mistakes. Completed manifests now include
+    `runtime.history.prompt_example_copy_report` with schema
+    `libreevolve.prompt_example_copy_report.v1`, plus
+    `validate_prompt_example_copy_report()`. The report inventories built-in
+    mutation-format example sentinels, detects exact generated-payload copies,
+    records copied candidate status/admission metadata, and respects
+    `mutation_instruction_include_example` when prompt context disables the
+    example.
+  - Remaining gap: this is diagnostic-only and covers exact built-in
+    sentinels, not hard rejection, semantic/renamed example copying, custom
+    prompt-template examples, or normalized per-file-section copy detection.
+  - Required result: extend prompt-example copy evidence with configurable
+    acceptance/rejection policy, semantic or renamed copy detection, custom
+    template example inventories, and per-file-section normalized scanning so
     prompt examples can remain useful without being mistaken for valid
     AlphaEvolve-style edits to the current program.
 

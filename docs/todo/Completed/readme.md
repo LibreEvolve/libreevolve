@@ -10461,3 +10461,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     span mapping, prompt-history row joins, full-mode target spans/block ids,
     and cross-run binding tables remain open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document built-in prompt example-copy diagnostics.
+  - Evidence: README needed to replace the stale statement that no
+    placeholder/example-copy diagnostic exists.
+  - Status: README now describes
+    `runtime.history.prompt_example_copy_report`, built-in example-sentinel
+    inventory, exact generated-payload copy diagnostics, and the remaining
+    hard-rejection/semantic/custom-template gaps.
+  - Remaining documentation gap: configurable acceptance policy,
+    semantic/renamed copy detection, custom prompt-template inventories, and
+    per-file-section normalized scanning remain open.
+  - Verification: focused loop tests cover the manifest field and validator.

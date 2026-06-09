@@ -10358,3 +10358,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     spans/block ids, and cross-run binding tables remain unimplemented.
   - Verification: focused loop tests cover diff and full-mode report records
     plus validator success.
+
+- [x] Add paper-visible built-in prompt example-copy diagnostics.
+  - Paper evidence: AlphaEvolve Figure 3(b,c) uses concrete prompt examples,
+    but proposals should edit the sampled current program rather than copy
+    illustrative prompt-only fragments.
+  - Status: paper-facing docs now cite
+    `runtime.history.prompt_example_copy_report`, which inventories built-in
+    mutation-format example sentinels and records exact generated-payload
+    copies with candidate status/admission metadata.
+  - Remaining paper gap: configurable rejection, semantic/renamed copy
+    detection, custom prompt-template inventories, and per-file-section
+    normalized scanning remain unimplemented.
+  - Verification: focused loop tests cover copied sentinel detection,
+    disabled-example policy, and validator success.

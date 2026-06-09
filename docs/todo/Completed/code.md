@@ -15516,3 +15516,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover diff-mode exact SEARCH binding,
     full-mode target-policy reporting, report validation, and unready full
     Figure 3 provenance boundaries.
+
+- [x] Add built-in prompt example-copy diagnostics.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete prompt examples,
+    but generated edits should target the sampled current program rather than
+    copy illustrative prompt scaffolding.
+  - Status: completed manifests now include
+    `runtime.history.prompt_example_copy_report` with schema
+    `libreevolve.prompt_example_copy_report.v1`, plus
+    `validate_prompt_example_copy_report()`. The report inventories built-in
+    mutation-format example sentinels, detects exact generated-payload copies,
+    records candidate status/admission metadata, and respects
+    `mutation_instruction_include_example` when the example is disabled.
+  - Remaining gap: hard rejection or configurable acceptance policy,
+    semantic/renamed copy detection, custom prompt-template inventories, and
+    per-file-section normalized copy detection remain open.
+  - Verification: focused loop tests cover copied sentinel detection,
+    disabled-example policy, report validation, and unready hard-gate
+    boundaries.

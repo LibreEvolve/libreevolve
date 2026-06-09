@@ -7876,3 +7876,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     quality models, cross-run proposal tables, hypothesis-refinement loops, and
     score/field influence policies remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow backtracking roadmap wording to explicit policy gaps.
+  - Evidence: roadmap wording needed to recognize observed current-run
+    redirect evidence without implying AlphaEvolve-grade controller
+    backtracking.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.controller_backtracking_report` for branch state
+    transitions and observed fallback-parent or alternative-branch redirects.
+  - Remaining roadmap gap: explicit controller-owned suppression/retry policy,
+    fallback-target decision events, causal resumed-search replay, and
+    cross-run branch tables remain open.
+  - Verification: focused loop tests cover the report and validator.

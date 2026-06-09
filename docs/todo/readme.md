@@ -85,8 +85,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     with the partial cascade report and the remaining difficulty, denominator,
     test-set, cost, and artifact-linkage gaps.
 
-- [ ] Keep README backtracking wording scoped until controller backtracking
-      decisions exist.
+- [ ] Keep README backtracking wording scoped until explicit controller
+      backtracking policies exist.
   - Spec evidence: AlphaEvolve's Introduction describes discovery as including
     ideation, exploration, backtracking on unpromising hypotheses,
     experimentation, and validation; Section 2.4 says cascades can prune less
@@ -96,12 +96,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     candidates by captured proposal idea/hypothesis/rationale hashes, includes
     rejected candidates, and marks rejected/no-accepted branches as
     `abandoned_evidence` with fallback-parent inference, failure-memory
-    linkage, and claim-readiness limits.
-  - Required result: when controller backtracking/redirect events land, update
-    README, ROADMAP, papers index, and code/paper TODOs with explicit branch
-    state transitions, suppression/retry policy, selected fallback ancestor or
-    alternative branch, causal resumed-search outcome, and replayable
-    validation.
+    linkage, and claim-readiness limits. README also documents
+    `runtime.history.controller_backtracking_report`, which records current-run
+    branch state transitions and observed redirects to a later fallback parent
+    or alternative branch without claiming causal controller proof.
+  - Required result: when explicit controller-owned backtracking policy lands,
+    update README, ROADMAP, papers index, and code/paper TODOs with configured
+    suppression/retry behavior, selected fallback ancestor or alternative
+    branch events, causal resumed-search outcome, and replayable validation.
 
 - [ ] Keep README multiple-score prompt-context wording scoped until
       benchmark-required metric-diverse prompt policies exist.

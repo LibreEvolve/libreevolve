@@ -15481,3 +15481,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover report emission, validator success,
     accepted/rejected score records, exact duplicate novelty penalties, and
     unready semantic-index boundaries.
+
+- [x] Add observed controller redirect evidence report.
+  - Spec evidence: AlphaEvolve frames discovery as ideation, exploration,
+    backtracking on unpromising hypotheses, experimentation, and validation.
+  - Status: completed manifests now include
+    `runtime.history.controller_backtracking_report` with schema
+    `libreevolve.controller_backtracking_report.v1`, plus
+    `validate_controller_backtracking_report()`. The report records current-run
+    branch state transitions and observed redirects from abandoned-looking
+    branches to a later fallback parent or alternative branch.
+  - Remaining gap: explicit controller-owned branch state machines,
+    suppression/retry policies, fallback-target decision events, causal
+    resumed-search replay, and cross-run branch tables remain open.
+  - Verification: focused loop tests cover report emission, validator success,
+    abandoned-branch state transitions, observed fallback-parent redirect
+    evidence, and unready causal-proof boundaries.

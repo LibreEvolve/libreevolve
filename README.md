@@ -1347,8 +1347,14 @@ captured proposal idea/hypothesis/rationale hashes, includes rejected
 candidates, and marks branches with rejected candidates and no accepted
 candidates as `abandoned_evidence` while recording fallback-parent inference,
 failure-memory linkage, and claim-readiness limits. Proposal scoring, semantic
-proposal/hypothesis retrieval, controller-driven backtracking, and persisted
-cross-run proposal-index tables remain future work.
+proposal/hypothesis retrieval, explicit controller-driven backtracking policies,
+and persisted cross-run proposal-index tables remain future work.
+`runtime.history.controller_backtracking_report` records current-run branch
+state transitions and observed redirects from abandoned-looking branches to a
+later fallback parent or alternative branch. This is observed parent-selection
+evidence, not causal controller proof: suppression/retry policies, explicit
+fallback-target decisions, resumed-search replay, and cross-run branch tables
+remain future work.
 `runtime.history.proposal_diversity_report` adds current-run exact duplicate
 evidence over captured proposal metadata, including per-generation and
 per-batch proposal/idea hash counts plus bounded sample records. It is an

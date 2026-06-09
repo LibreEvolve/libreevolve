@@ -10435,3 +10435,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     proposal-quality models, cross-run proposal tables, and score-driven
     prompt/archive policies remain open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document observed controller redirect evidence.
+  - Evidence: README needed to distinguish branch-level rejection and observed
+    fallback-parent redirects from explicit AlphaEvolve-style controller
+    backtracking.
+  - Status: README now describes
+    `runtime.history.controller_backtracking_report`, branch state transitions,
+    observed fallback-parent or alternative-branch redirects, and the lack of
+    causal controller proof.
+  - Remaining documentation gap: explicit suppression/retry policies,
+    fallback-target decision events, resumed-search replay, and cross-run
+    branch tables remain open.
+  - Verification: focused loop tests cover the manifest field and validator.

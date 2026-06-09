@@ -10329,3 +10329,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     unimplemented.
   - Verification: focused loop tests cover the report, validator, accepted/
     rejected proposal scores, and unready semantic-index boundaries.
+
+- [x] Add paper-visible observed redirect evidence.
+  - Paper evidence: AlphaEvolve Introduction and Section 2.4 describe
+    backtracking on unpromising hypotheses and cascade pruning before larger
+    budgets are spent.
+  - Status: paper-facing docs now cite
+    `runtime.history.controller_backtracking_report`, which records current-run
+    branch state transitions and observed redirects from abandoned-looking
+    branches to a later fallback parent or alternative branch.
+  - Remaining paper gap: explicit controller-owned suppression/retry policy,
+    fallback-target selection, causal resumed-search proof, and cross-run
+    hypothesis branch tables remain unimplemented.
+  - Verification: focused loop tests cover the report, validator, observed
+    redirect records, and unready causal-proof boundaries.

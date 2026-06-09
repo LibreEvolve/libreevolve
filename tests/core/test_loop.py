@@ -72,6 +72,7 @@ from libreevolve.core.loop import (
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
+    validate_controller_backtracking_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
@@ -5030,6 +5031,80 @@ def test_runtime_history_reports_abandoned_hypothesis_branch_evidence():
     assert len(branch["fallback_target"]["candidate_ids"]) == 1
     assert branch["suppression_policy"] == "not_configured"
     assert branch["resumed_search_outcome"]["status"] == "not_causally_tracked"
+
+
+def test_runtime_history_reports_observed_controller_redirect_boundary():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    if 'x=4' in code:\n"
+        "        return {'score': 2.0, 'is_valid': True}\n"
+        "    if 'x=1' in code:\n"
+        "        return {'score': 1.0, 'is_valid': True}\n"
+        "    return {'score': 0.0, 'is_valid': False}\n"
+    )
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        (
+            "IDEA: Try the risky branch.\n"
+            "RATIONALE: It may improve the candidate.\n"
+            "HYPOTHESIS: Risky branch remains valid.\n"
+            "<<<<<<< SEARCH\nx=1\n=======\nx=2\n>>>>>>> REPLACE",
+            0,
+        ),
+        (
+            "IDEA: Return to a safer parent.\n"
+            "RATIONALE: Use the last valid parent for a different edit.\n"
+            "HYPOTHESIS: Fallback parent can produce a valid improvement.\n"
+            "<<<<<<< SEARCH\nx=1\n=======\nx=4\n>>>>>>> REPLACE",
+            0,
+        ),
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=2,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["controller_backtracking_report"]
+
+    assert report["schema"] == "libreevolve.controller_backtracking_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_controller_backtracking_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 2
+    assert report["visible_branch_count"] == 2
+    assert report["visible_abandoned_branch_count"] == 1
+    assert report["redirect_event_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["branch_state_transitions"] is True
+    assert report["claim_readiness"]["observed_redirect_events"] is True
+    assert (
+        report["claim_readiness"]["explicit_controller_backtracking_decision"]
+        is False
+    )
+    assert report["policies"]["controller_suppression"] == "not_configured"
+
+    event = report["redirect_events"][0]
+    assert event["redirect_kind"] == "fallback_parent_sampled_for_alternative_branch"
+    assert event["causal_proof"] is False
+    assert event["source_branch_id"] != event["selected_branch_id"]
+    transitions = report["branch_state_transitions"]
+    assert any(
+        transition["event_type"] == "abandoned_evidence"
+        for transition in transitions
+    )
+    assert any(
+        transition["event_type"] == "candidate_accepted"
+        for transition in transitions
+    )
 
 
 def test_evolve_records_best_artifact_export_failure_without_failing_search():

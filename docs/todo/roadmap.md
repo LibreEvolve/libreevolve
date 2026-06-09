@@ -1234,8 +1234,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so they neither underclaim current bounded proposal scoring nor
     overclaim AlphaEvolve-grade idea memory.
 
-- [ ] Keep backtracking roadmap wording scoped until controller backtracking
-      decisions exist.
+- [ ] Keep backtracking roadmap wording scoped until explicit controller
+      backtracking policies exist.
   - Spec evidence: AlphaEvolve's Introduction frames discovery as involving
     ideation, exploration, backtracking on unpromising hypotheses,
     experimentation, and validation, while Section 2.4 describes pruning less
@@ -1246,12 +1246,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     marks rejected/no-accepted branches as `abandoned_evidence`, and records
     fallback-parent inference, prompt/failure-memory linkage, suppression/
     retry status, resumed-search status, and claim-readiness limits.
-  - Required result: when controller backtracking/redirect reports land,
-    update ROADMAP, README, papers index, and code/paper TODOs with explicit
-    branch state transitions, suppression/retry policy, selected fallback
-    ancestor or alternative branch, causal resumed-search outcome, and
-    replayable validation so roadmap wording separates branch-level rejection
-    evidence from AlphaEvolve-style controller backtracking.
+    `ROADMAP.md` also references
+    `runtime.history.controller_backtracking_report`, which records current-run
+    branch state transitions and observed redirects after abandoned-looking
+    branches while keeping causal controller proof false.
+  - Required result: when explicit controller-owned backtracking policy lands,
+    update ROADMAP, README, papers index, and code/paper TODOs with configured
+    suppression/retry behavior, selected fallback ancestor or alternative
+    branch events, causal resumed-search outcome, and replayable validation so
+    roadmap wording separates observed redirect evidence from AlphaEvolve-style
+    controller backtracking.
 
 - [ ] Keep scientific-discovery roadmap wording scoped to automated evaluators
       until robust evaluator-environment fixtures exist.

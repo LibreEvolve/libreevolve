@@ -110,7 +110,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     coverage, denominator definitions, cost summaries, and claim-readiness
     checks.
 
-- [ ] Track controller backtracking decisions beyond abandoned-branch
+- [ ] Track explicit controller backtracking policy beyond observed redirect
       evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Introduction and Section 2.4.
   - Requirement: AlphaEvolve frames scientific/program discovery as ideation,
@@ -126,14 +126,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     inferred fallback parent targets, prompt/failure-memory linkage,
     suppression/retry policy status, resumed-search outcome status, and
     claim-readiness validation.
-  - Current gap: the report is evidence of abandoned-looking hypothesis
-    branches, not proof that the controller deliberately backtracked or
-    redirected sampling. It lacks explicit branch state transitions,
-    suppression/retry events, selected fallback or alternative-branch events,
-    causal resumed-search proof, and cross-run branch tables.
-  - Required result: add controller backtracking/redirect reports with branch
-    state transitions, fallback target selection, suppression/retry policy,
-    resumed-search outcomes, and replayable validation before using
+    Completed manifests also include
+    `runtime.history.controller_backtracking_report` with schema
+    `libreevolve.controller_backtracking_report.v1`, which records current-run
+    branch state transitions and observed redirects from abandoned-looking
+    branches to a later fallback parent or alternative branch.
+  - Current gap: these reports are evidence of abandoned-looking branches and
+    observed redirects, not proof that the controller deliberately backtracked
+    under a configured policy. They still lack suppression/retry events,
+    explicit fallback-target selection, causal resumed-search proof, and
+    cross-run branch tables.
+  - Required result: add controller-owned backtracking policy reports with
+    configured suppression/retry behavior, explicit fallback target selection,
+    causal resumed-search outcomes, and replayable validation before using
     AlphaEvolve-style backtracking wording without qualification.
 
 - [ ] Extend candidate-embedded evaluator reports into full Figure 3 parity.

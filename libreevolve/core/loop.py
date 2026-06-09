@@ -5198,6 +5198,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         db,
         programs,
     )
+    hypothesis_branch_report = _hypothesis_branch_report(db, programs)
     summary = {
         "programs_logged": programs_logged,
         "history_partially_written": history_exists,
@@ -5326,7 +5327,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             programs,
         ),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
-        "hypothesis_branch_report": _hypothesis_branch_report(db, programs),
+        "hypothesis_branch_report": hypothesis_branch_report,
+        "controller_backtracking_report": _controller_backtracking_report(
+            programs,
+            hypothesis_branch_report,
+        ),
         "archive_state": archive_state,
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
@@ -16971,6 +16976,371 @@ def validate_hypothesis_branch_report(report: object) -> dict:
         issues.append({"code": "controller_decision_overclaim", "message": "controller backtracking decision must remain false"})
     return {
         "schema": "libreevolve.hypothesis_branch_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _controller_backtracking_report(
+    programs: list[Program],
+    hypothesis_branch_report: Mapping[str, object],
+) -> dict:
+    generated_records = _controller_backtracking_candidate_records(programs)
+    branch_lookup = {
+        branch["branch_id"]: branch
+        for branch in hypothesis_branch_report.get("branches", [])
+        if isinstance(branch, Mapping) and isinstance(branch.get("branch_id"), str)
+    }
+    transitions = _controller_backtracking_state_transitions(
+        generated_records,
+        branch_lookup,
+    )
+    redirects = _controller_backtracking_redirect_events(
+        generated_records,
+        branch_lookup,
+    )
+    report = {
+        "schema": "libreevolve.controller_backtracking_report.v1",
+        "source": "runtime_history_parent_selection_and_hypothesis_branch_report",
+        "generated_candidate_count": len(generated_records),
+        "visible_branch_count": len(branch_lookup),
+        "visible_abandoned_branch_count": sum(
+            1
+            for branch in branch_lookup.values()
+            if branch.get("branch_status") == "abandoned_evidence"
+        ),
+        "branch_state_transition_count": len(transitions),
+        "redirect_event_count": len(redirects),
+        "branch_state_transitions": transitions[:100],
+        "branch_state_transitions_limit": 100,
+        "branch_state_transitions_truncated": len(transitions) > 100,
+        "redirect_events": redirects[:50],
+        "redirect_events_limit": 50,
+        "redirect_events_truncated": len(redirects) > 50,
+        "policies": {
+            "branch_identity": "captured_proposal_text_hash",
+            "state_source": "archive_admission_and_failure_history_summary",
+            "fallback_target_selection": (
+                "observed_later_parent_sampling_after_abandoned_branch"
+            ),
+            "controller_suppression": "not_configured",
+            "retry_policy": "normal_parent_sampling_can_revisit_branch",
+            "replay_scope": "current_manifest_history_only",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "branch_state_transitions": bool(transitions),
+            "observed_redirect_events": bool(redirects),
+            "explicit_controller_backtracking_decision": False,
+            "suppression_or_retry_policy": False,
+            "causal_resumed_search_proof": False,
+            "cross_run_branch_table": False,
+            "remaining_gap": [
+                "controller_owned_branch_state_machine",
+                "configured_suppression_or_retry_policy",
+                "explicit_fallback_target_selection_event",
+                "causal_resumed_search_replay",
+                "cross_run_hypothesis_branch_table",
+            ],
+        },
+    }
+    report["validation"] = validate_controller_backtracking_report(report)
+    return report
+
+
+def _controller_backtracking_candidate_records(programs: list[Program]) -> list[dict]:
+    records: list[dict] = []
+    for index, program in enumerate(programs):
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        if metadata.get("candidate_type") != "generated":
+            continue
+        proposal = metadata.get("proposal")
+        if not isinstance(proposal, Mapping):
+            continue
+        branch = _hypothesis_branch_record_for_proposal(proposal)
+        if branch is None:
+            continue
+        admission = (
+            metadata.get("archive_admission")
+            if isinstance(metadata.get("archive_admission"), Mapping)
+            else {}
+        )
+        proposal_batch = (
+            metadata.get("proposal_batch")
+            if isinstance(metadata.get("proposal_batch"), Mapping)
+            else {}
+        )
+        parent_selection = (
+            metadata.get("parent_selection")
+            if isinstance(metadata.get("parent_selection"), Mapping)
+            else {}
+        )
+        loop_index = proposal_batch.get("loop_proposal_index")
+        if isinstance(loop_index, bool) or not isinstance(loop_index, int):
+            loop_index = index
+        admitted = admission.get("admitted") is True
+        records.append(
+            {
+                "order": loop_index,
+                "program_id": program.id,
+                "branch_id": branch["branch_id"],
+                "parent_id": program.parent_id,
+                "generation": program.generation,
+                "proposal_index": proposal_batch.get("proposal_index"),
+                "admitted": admitted,
+                "rejection_reason": None
+                if admitted
+                else str(admission.get("reason") or "rejected"),
+                "parent_strategy": parent_selection.get("strategy"),
+            }
+        )
+    records.sort(key=lambda record: (record["order"], record["program_id"]))
+    return records
+
+
+def _controller_backtracking_state_transitions(
+    records: list[dict],
+    branch_lookup: Mapping[str, Mapping[str, object]],
+) -> list[dict]:
+    transitions: list[dict] = []
+    opened: set[str] = set()
+    last_record_by_branch: dict[str, dict] = {}
+    for record in records:
+        branch_id = record["branch_id"]
+        if branch_id not in opened:
+            opened.add(branch_id)
+            transitions.append(
+                _controller_backtracking_transition(
+                    "opened",
+                    branch_id,
+                    record,
+                    from_state="unseen",
+                    to_state="exploring",
+                    reason="first_observed_candidate_for_branch",
+                )
+            )
+        outcome = "candidate_accepted" if record["admitted"] else "candidate_rejected"
+        transitions.append(
+            _controller_backtracking_transition(
+                outcome,
+                branch_id,
+                record,
+                from_state="exploring",
+                to_state="validated_observed"
+                if record["admitted"]
+                else "rejected_observed",
+                reason="archive_admission"
+                if record["admitted"]
+                else record["rejection_reason"],
+            )
+        )
+        last_record_by_branch[branch_id] = record
+    for branch_id, branch in branch_lookup.items():
+        if branch.get("branch_status") != "abandoned_evidence":
+            continue
+        record = last_record_by_branch.get(branch_id)
+        if record is None:
+            continue
+        transitions.append(
+            _controller_backtracking_transition(
+                "abandoned_evidence",
+                branch_id,
+                record,
+                from_state="rejected_observed",
+                to_state="abandoned_evidence",
+                reason=str(
+                    branch.get("abandonment_reason")
+                    or "all_observed_candidates_rejected"
+                ),
+            )
+        )
+    transitions.sort(key=lambda item: (item["order"], item["event_type"]))
+    return transitions
+
+
+def _controller_backtracking_transition(
+    event_type: str,
+    branch_id: str,
+    record: Mapping[str, object],
+    *,
+    from_state: str,
+    to_state: str,
+    reason: str | None,
+) -> dict:
+    return {
+        "event_type": event_type,
+        "branch_id": branch_id,
+        "program_id": record.get("program_id"),
+        "parent_id": record.get("parent_id"),
+        "generation": record.get("generation"),
+        "proposal_index": record.get("proposal_index"),
+        "order": record.get("order"),
+        "from_state": from_state,
+        "to_state": to_state,
+        "reason": reason or "not_recorded",
+        "decision_source": "observed_runtime_history",
+    }
+
+
+def _controller_backtracking_redirect_events(
+    records: list[dict],
+    branch_lookup: Mapping[str, Mapping[str, object]],
+) -> list[dict]:
+    records_by_branch: dict[str, list[dict]] = {}
+    for record in records:
+        records_by_branch.setdefault(record["branch_id"], []).append(record)
+    events: list[dict] = []
+    for branch_id, branch in branch_lookup.items():
+        if branch.get("branch_status") != "abandoned_evidence":
+            continue
+        source_records = records_by_branch.get(branch_id, [])
+        if not source_records:
+            continue
+        last_record = max(source_records, key=lambda item: item["order"])
+        parent_ids = {
+            parent_id
+            for parent_id in branch.get("parent_ids", [])
+            if isinstance(parent_id, str)
+        }
+        later = next(
+            (
+                item
+                for item in records
+                if item["order"] > last_record["order"]
+                and item["branch_id"] != branch_id
+            ),
+            None,
+        )
+        if later is None:
+            continue
+        redirect_kind = (
+            "fallback_parent_sampled_for_alternative_branch"
+            if later.get("parent_id") in parent_ids
+            else "alternative_parent_or_branch_sampled"
+        )
+        event_id_payload = json.dumps(
+            [branch_id, last_record["program_id"], later["program_id"]],
+            separators=(",", ":"),
+        )
+        events.append(
+            {
+                "event_id": "redirect-"
+                + hashlib.sha256(event_id_payload.encode("utf-8")).hexdigest()[:16],
+                "source_branch_id": branch_id,
+                "source_last_candidate_id": last_record["program_id"],
+                "source_last_generation": last_record["generation"],
+                "selected_candidate_id": later["program_id"],
+                "selected_generation": later["generation"],
+                "selected_branch_id": later["branch_id"],
+                "selected_parent_id": later["parent_id"],
+                "selected_parent_strategy": later.get("parent_strategy"),
+                "redirect_kind": redirect_kind,
+                "evidence_strength": "observed_after_abandoned_branch_not_causal_proof",
+                "causal_proof": False,
+            }
+        )
+    events.sort(key=lambda item: item["event_id"])
+    return events
+
+
+def validate_controller_backtracking_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.controller_backtracking_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "controller backtracking report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "visible_branch_count",
+        "visible_abandoned_branch_count",
+        "branch_state_transition_count",
+        "redirect_event_count",
+        "branch_state_transitions",
+        "branch_state_transitions_limit",
+        "branch_state_transitions_truncated",
+        "redirect_events",
+        "redirect_events_limit",
+        "redirect_events_truncated",
+        "policies",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"controller backtracking report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.controller_backtracking_report.v1":
+        issues.append({"code": "invalid_schema", "message": "controller backtracking report schema is unsupported"})
+    if report.get("source") != "runtime_history_parent_selection_and_hypothesis_branch_report":
+        issues.append({"code": "invalid_source", "message": "controller backtracking report source is unsupported"})
+    for field in (
+        "generated_candidate_count",
+        "visible_branch_count",
+        "visible_abandoned_branch_count",
+        "branch_state_transition_count",
+        "redirect_event_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    transitions = report.get("branch_state_transitions")
+    if not isinstance(transitions, list):
+        issues.append({"code": "invalid_transitions", "message": "branch_state_transitions must be a list"})
+        transitions = []
+    redirects = report.get("redirect_events")
+    if not isinstance(redirects, list):
+        issues.append({"code": "invalid_redirect_events", "message": "redirect_events must be a list"})
+        redirects = []
+    for index, transition in enumerate(transitions):
+        if not isinstance(transition, dict):
+            issues.append({"code": "invalid_transition", "message": f"transition {index} must be an object"})
+            continue
+        if not isinstance(transition.get("branch_id"), str):
+            issues.append({"code": "invalid_transition_branch", "message": f"transition {index} must include branch_id"})
+        if transition.get("event_type") not in {
+            "opened",
+            "candidate_accepted",
+            "candidate_rejected",
+            "abandoned_evidence",
+        }:
+            issues.append({"code": "invalid_transition_event", "message": f"transition {index} event_type is invalid"})
+    for index, event in enumerate(redirects):
+        if not isinstance(event, dict):
+            issues.append({"code": "invalid_redirect_event", "message": f"redirect {index} must be an object"})
+            continue
+        event_id = event.get("event_id")
+        if not isinstance(event_id, str) or not re.fullmatch(r"redirect-[0-9a-f]{16}", event_id):
+            issues.append({"code": "invalid_redirect_id", "message": f"redirect {index} id is invalid"})
+        if event.get("causal_proof") is not False:
+            issues.append({"code": "redirect_causal_overclaim", "message": f"redirect {index} must not claim causal proof"})
+    if report.get("branch_state_transitions_truncated") is not True:
+        if report.get("branch_state_transition_count") != len(transitions):
+            issues.append({"code": "invalid_transition_count", "message": "transition count must match records when not truncated"})
+    if report.get("redirect_events_truncated") is not True:
+        if report.get("redirect_event_count") != len(redirects):
+            issues.append({"code": "invalid_redirect_count", "message": "redirect count must match records when not truncated"})
+    policies = report.get("policies")
+    if not isinstance(policies, dict):
+        issues.append({"code": "invalid_policies", "message": "policies must be an object"})
+    elif policies.get("controller_suppression") != "not_configured":
+        issues.append({"code": "controller_suppression_overclaim", "message": "controller suppression must remain not_configured"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "controller backtracking report must not claim AlphaEvolve parity"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        if readiness.get("explicit_controller_backtracking_decision") is not False:
+            issues.append({"code": "controller_decision_overclaim", "message": "explicit controller decision must remain false"})
+        if readiness.get("causal_resumed_search_proof") is not False:
+            issues.append({"code": "causal_replay_overclaim", "message": "causal resumed-search proof must remain false"})
+    return {
+        "schema": "libreevolve.controller_backtracking_report.v1",
         "ok": not issues,
         "issues": issues,
     }

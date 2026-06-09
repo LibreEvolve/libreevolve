@@ -360,10 +360,12 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus
   `runtime.history.proposal_diversity_report` exact duplicate counts and
   `runtime.history.proposal_score_report` outcome/exact-novelty score records,
+  and `runtime.history.controller_backtracking_report` observed branch-state
+  transition/redirect evidence,
   into semantically searchable proposal memory only if needed; remaining work
   is semantic proposal-index retrieval, calibrated proposal-quality models,
   near-duplicate/idea-family novelty, model-quality attribution,
-  controller-driven backtracking decisions, cross-run proposal tables,
+  explicit controller-driven backtracking policies, cross-run proposal tables,
   hypothesis-refinement loops, and stricter policy for which proposal fields
   may influence retrieval, prompting, and archive resurfacing.
 - Improve meta-prompt scoring beyond the current absolute/improvement child

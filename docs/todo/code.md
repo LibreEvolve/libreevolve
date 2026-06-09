@@ -2047,7 +2047,8 @@ Primary evidence:
     state exactly which proposal fields and scores may influence resurfacing
     and future candidate generation.
 
-- [ ] Extend hypothesis branch evidence into controller backtracking decisions.
+- [ ] Extend observed controller redirect evidence into explicit backtracking
+      policy.
   - Spec evidence: AlphaEvolve's Introduction frames discovery as a prolonged
     process of ideation, exploration, backtracking on unpromising hypotheses,
     experimentation, and validation. Section 2.4 further describes pruning
@@ -2065,16 +2066,23 @@ Primary evidence:
     status, resumed-search outcome status, and claim-readiness checks. Focused
     tests cover a repeated rejected hypothesis branch marked
     `abandoned_evidence` without accepting controller-backtracking parity.
-  - Remaining gap: this is evidence of abandoned-looking branches, not a
-    controller decision. LibreEvolve still does not persist an explicit branch
-    state machine, suppression or retry policy event, fallback-target selection
-    event, causal redirected-sampling proof, or cross-run hypothesis branch
-    table.
-  - Required result: add explicit controller backtracking/redirect events with
-    branch state transitions, suppression/retry policy, selected fallback
-    ancestor or alternative branch, resumed-search outcome, and replayable
-    validation before claiming AlphaEvolve-style backtracking on unpromising
-    hypotheses rather than branch-level rejection evidence.
+    Completed manifests also include
+    `runtime.history.controller_backtracking_report` with schema
+    `libreevolve.controller_backtracking_report.v1`, plus
+    `validate_controller_backtracking_report()`. It records current-run branch
+    state transitions and observed later fallback-parent or alternative-branch
+    selections after abandoned-looking branches while keeping causal controller
+    proof false.
+  - Remaining gap: this is observed redirect evidence, not a controller-owned
+    backtracking policy. LibreEvolve still does not persist a configured branch
+    state machine, suppression or retry policy event, explicit fallback-target
+    selection event, causal redirected-sampling proof, or cross-run hypothesis
+    branch table.
+  - Required result: add explicit controller-owned backtracking policy events
+    with configured suppression/retry behavior, selected fallback ancestor or
+    alternative branch, causal resumed-search replay, and cross-run validation
+    before claiming AlphaEvolve-style backtracking on unpromising hypotheses
+    rather than branch-level rejection and observed redirect evidence.
 
 - [ ] Extend initial-pool divergence reporting beyond bounded syntactic and
       metric evidence.

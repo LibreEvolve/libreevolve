@@ -1682,7 +1682,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     accounting, and equal-budget comparisons of pure exploit, pure explore,
     default mixed, and metric/frontier/lineage variants.
 
-- [ ] Record AlphaEvolve's automated-evaluator scope boundary.
+- [ ] Extend AlphaEvolve's automated-evaluator scope boundary into robust
+      environment fixtures.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Table 1 context, Related Work, and
     Discussion.
   - Requirement: AlphaEvolve explicitly scopes its main capability to problems
@@ -1696,17 +1697,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     scope claim.
   - Current gap: the paper index and TODOs describe local validators,
     cascades, optional LLM feedback graders, proposal metadata, and
-    DeepEvolve-style retrieval, but they do not yet require a paper-facing
-    scope record that separates machine-gradeable executable evaluation from
-    manual experimentation or pre-code natural-language idea review. They also
-    do not require environment-setup evidence for robust evaluator design,
-    automatable-domain boundaries, setup effort, or expected discovery value.
-  - Required result: add benchmark/report metadata and documentation checks
-    that label automated-evaluator readiness, manual-experiment exclusion,
-    LLM-only idea-feedback stages, transition criteria into executable
-    candidate evaluation, and robust-evaluator environment readiness before
-    broad scientific-discovery, environment-scaling, or AI-Co-Scientist-style
-    claims appear in paper-facing docs.
+    DeepEvolve-style retrieval. Completed manifests now include
+    `runtime.history.automated_evaluator_scope_report`, which separates
+    machine-gradeable executable evaluation from manual experimentation and
+    pre-code natural-language idea review, labels optional LLM feedback as
+    post-evaluator rather than a primary validity gate, and requires transition
+    into executable candidate evaluation. The paper-facing gap is now robust
+    environment-setup evidence for evaluator design, automatable-domain
+    boundaries, setup effort, and expected discovery value.
+  - Required result: add benchmark/report metadata and documentation checks for
+    robust-evaluator environment readiness, LLM-only idea-feedback stage
+    contracts, manual-to-code transition criteria, and environment-scaling
+    evidence before broad scientific-discovery, environment-scaling, or
+    AI-Co-Scientist-style claims appear in paper-facing docs.
 
 - [ ] Track AI-Co-Scientist representation boundary and hallucination claim.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Related Work.

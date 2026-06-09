@@ -1252,7 +1252,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence from AlphaEvolve-style controller backtracking.
 
 - [ ] Keep scientific-discovery roadmap wording scoped to automated evaluators
-      versus manual-experiment or LLM-only idea-review workflows.
+      until robust evaluator-environment fixtures exist.
   - Spec evidence: AlphaEvolve's Discussion says its main limitation is that
     it handles problems where an automated evaluator can be devised; domains
     requiring manual experimentation are out of scope, and LLM-provided
@@ -1262,18 +1262,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     environments or problems with robust evaluation functions.
   - Current evidence: the roadmap tracks executable validators, staged
     evaluator feedback, optional LLM feedback graders, proposal metadata,
-    retrieval, and hypothesis-memory follow-ups. It does not yet require
-    roadmap-level scope metadata or workflow wording that separates
+    retrieval, hypothesis-memory follow-ups, and
+    `runtime.history.automated_evaluator_scope_report`, which separates
     machine-gradeable evolution from manual-experiment scientific workflows or
-    AI-Co-Scientist-style pre-implementation idea review. It also does not
+    AI-Co-Scientist-style pre-implementation idea review. It still does not
     require roadmap evidence for evaluator-environment setup readiness:
     robust-evaluator rationale, automatable-domain boundaries, setup effort,
     and expected high-value discovery scope.
-  - Required result: when problem/run/report scope metadata lands, update
-    ROADMAP, README, papers index, and code/paper TODO entries together so the
-    project neither underclaims executable evaluator support nor overclaims
-    AlphaEvolve coverage for environment-scaling, manual-experiment, or
-    LLM-only idea-feedback workflows.
+  - Required result: when robust evaluator-environment fixtures and transition
+    policies land, update ROADMAP, README, papers index, and code/paper TODO
+    entries together so the project neither underclaims executable evaluator
+    support nor overclaims AlphaEvolve coverage for environment-scaling,
+    manual-experiment, or LLM-only idea-feedback workflows.
 
 - [ ] Keep AI-Co-Scientist roadmap wording scoped until representation-
       boundary evidence exists.

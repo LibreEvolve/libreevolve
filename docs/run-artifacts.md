@@ -2936,6 +2936,21 @@ that this is observed current-run decision telemetry. It does not claim
 AlphaEvolve-grade balance calibration, score-improvement attribution, diversity
 effect measurement, or equal-budget comparison across sampling policies.
 
+## `runtime.history.automated_evaluator_scope_report`
+
+Completed manifests include an automated-evaluator scope report with schema
+`libreevolve.automated_evaluator_scope_report.v1`. It records configured
+machine evaluator records, runtime evaluated/valid/invalid candidate counts,
+configured LLM feedback count, runtime LLM feedback record count, and the
+current machine-feedback policy. The policy states that deterministic evaluator
+execution owns candidate validity, optional LLM feedback graders are
+post-evaluator signals, manual-experiment outcomes are not accepted as primary
+candidate feedback, and transition into executable code evaluation is required.
+
+The report is a scope-boundary artifact. It does not claim robust
+evaluator-environment readiness, manual-experiment support, AI-Co-Scientist-
+style idea-stage evaluation, or environment-scaling evidence.
+
 ## `runtime.history.proposal_lifecycle_report`
 
 Completed manifests include a bounded proposal lifecycle report with schema

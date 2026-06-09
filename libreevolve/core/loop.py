@@ -5223,6 +5223,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "evaluation_cascade_report": _evaluation_cascade_report(programs),
         "evaluator_workload_report": _evaluator_workload_report(programs),
+        "automated_evaluator_scope_report": (
+            _automated_evaluator_scope_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
@@ -12685,6 +12691,401 @@ def validate_sampling_balance_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.sampling_balance_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _automated_evaluator_scope_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    evaluator_sources = (
+        problem.get("evaluator_sources")
+        if isinstance(problem.get("evaluator_sources"), list)
+        else []
+    )
+    eval_stages = (
+        config.get("eval_stages")
+        if isinstance(config.get("eval_stages"), list)
+        else []
+    )
+    llm_feedback = (
+        config.get("llm_feedback")
+        if isinstance(config.get("llm_feedback"), list)
+        else []
+    )
+    runtime = _automated_evaluator_runtime_summary(programs)
+    evaluator_records = _automated_evaluator_records(evaluator_sources, eval_stages)
+    report = {
+        "schema": "libreevolve.automated_evaluator_scope_report.v1",
+        "source": "startup_manifest_and_runtime_history",
+        "automated_evaluator_available": bool(evaluator_records),
+        "evaluator_record_count": len(evaluator_records),
+        "evaluator_records": evaluator_records,
+        "configured_stage_count": len(eval_stages),
+        "configured_llm_feedback_count": len(llm_feedback),
+        "runtime_summary": runtime,
+        "machine_feedback_policy": {
+            "schema": "libreevolve.machine_feedback_scope_policy.v1",
+            "candidate_validity_owner": "deterministic_evaluator_cascade",
+            "candidate_score_owner": "declared_evaluator_metrics_and_plugin_composition",
+            "llm_feedback_role": "post_evaluator_optional_grader_not_primary_validity_gate",
+            "manual_experiment_role": "not_supported_for_candidate_admission",
+            "manual_experiment_candidate_feedback": False,
+            "llm_only_idea_review_candidate_feedback": False,
+            "transition_to_executable_code_required": True,
+        },
+        "manual_experiment_boundary": {
+            "status": "excluded_from_current_candidate_evaluation_scope",
+            "reason": (
+                "candidate admission requires evaluator execution metadata and "
+                "does not accept manual experiment outcomes as primary feedback"
+            ),
+        },
+        "llm_only_idea_feedback_boundary": {
+            "status": (
+                "post_evaluator_feedback_only"
+                if llm_feedback
+                else "not_configured"
+            ),
+            "configured_count": len(llm_feedback),
+            "runtime_record_count": runtime["llm_feedback_record_count"],
+            "primary_validity_gate": False,
+        },
+        "environment_readiness": {
+            "problem_local_evaluator_sources": len(evaluator_sources),
+            "configured_evaluator_stages": len(eval_stages),
+            "runtime_evaluated_candidate_count": runtime["evaluated_program_count"],
+            "runtime_valid_candidate_count": runtime["valid_count"],
+            "robust_environment_fixture": False,
+            "manual_experiment_fixture": False,
+            "environment_scaling_evidence": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_automated_evaluator_scope": bool(evaluator_records),
+            "manual_experiment_exclusion_recorded": True,
+            "llm_only_feedback_boundary_recorded": True,
+            "remaining_gap": [
+                "benchmark_environment_readiness_fixtures",
+                "manual_experiment_to_code_transition_policy",
+                "llm_only_idea_feedback_stage_contract",
+                "robust_evaluator_environment_scaling_evidence",
+            ],
+        },
+    }
+    report["validation"] = validate_automated_evaluator_scope_report(report)
+    return report
+
+
+def _automated_evaluator_records(
+    evaluator_sources: list,
+    eval_stages: list,
+) -> list[dict]:
+    records: list[dict] = []
+    if eval_stages:
+        source_by_stage = _evaluator_source_by_stage(evaluator_sources)
+        for index, stage in enumerate(eval_stages):
+            if not isinstance(stage, Mapping):
+                continue
+            name = str(stage.get("name", f"stage_{index}"))
+            mode = str(stage.get("mode", "external_validator"))
+            source = source_by_stage.get((index, name), {})
+            records.append(
+                {
+                    "evaluator_id": f"stage:{name}",
+                    "stage_index": index,
+                    "stage_name": name,
+                    "mode": mode,
+                    "automated": True,
+                    "manual_experiment": False,
+                    "candidate_feedback_channel": "machine_evaluator_execution",
+                    "source": _evaluator_oracle_source_ref(source),
+                }
+            )
+    else:
+        source = _default_evaluator_source(evaluator_sources)
+        records.append(
+            {
+                "evaluator_id": "evaluator:default",
+                "stage_index": None,
+                "stage_name": None,
+                "mode": "external_validator",
+                "automated": True,
+                "manual_experiment": False,
+                "candidate_feedback_channel": "machine_evaluator_execution",
+                "source": _evaluator_oracle_source_ref(source),
+            }
+        )
+    return records
+
+
+def _automated_evaluator_runtime_summary(programs: list[Program]) -> dict:
+    evaluated_program_count = 0
+    generated_evaluated_count = 0
+    valid_count = 0
+    invalid_count = 0
+    configured_stage_result_count = 0
+    llm_feedback_record_count = 0
+    manual_feedback_record_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        if not evaluation:
+            continue
+        evaluated_program_count += 1
+        if _program_candidate_type(program) == "generated":
+            generated_evaluated_count += 1
+        if evaluation.get("is_valid") is True:
+            valid_count += 1
+        elif evaluation.get("is_valid") is False:
+            invalid_count += 1
+        metadata = (
+            evaluation.get("metadata")
+            if isinstance(evaluation.get("metadata"), Mapping)
+            else {}
+        )
+        configured = metadata.get("configured_stage_results")
+        if isinstance(configured, list):
+            configured_stage_result_count += sum(
+                1 for item in configured if isinstance(item, Mapping)
+            )
+        feedback = metadata.get("llm_feedback")
+        if isinstance(feedback, list):
+            llm_feedback_record_count += sum(
+                1 for item in feedback if isinstance(item, Mapping)
+            )
+        manual = metadata.get("manual_feedback")
+        if isinstance(manual, list):
+            manual_feedback_record_count += sum(
+                1 for item in manual if isinstance(item, Mapping)
+            )
+    return {
+        "evaluated_program_count": evaluated_program_count,
+        "generated_evaluated_count": generated_evaluated_count,
+        "valid_count": valid_count,
+        "invalid_count": invalid_count,
+        "configured_stage_result_count": configured_stage_result_count,
+        "llm_feedback_record_count": llm_feedback_record_count,
+        "manual_feedback_record_count": manual_feedback_record_count,
+        "manual_feedback_primary_gate_count": 0,
+    }
+
+
+def validate_automated_evaluator_scope_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.automated_evaluator_scope_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "automated evaluator scope report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "automated_evaluator_available",
+        "evaluator_record_count",
+        "evaluator_records",
+        "configured_stage_count",
+        "configured_llm_feedback_count",
+        "runtime_summary",
+        "machine_feedback_policy",
+        "manual_experiment_boundary",
+        "llm_only_idea_feedback_boundary",
+        "environment_readiness",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "automated evaluator scope report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.automated_evaluator_scope_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "automated evaluator scope report schema is unsupported",
+            }
+        )
+    if report.get("source") != "startup_manifest_and_runtime_history":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "automated evaluator scope report source is unsupported",
+            }
+        )
+    records = report.get("evaluator_records")
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_evaluator_records", "message": "evaluator_records must be a list"}
+        )
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_evaluator_record",
+                    "message": f"evaluator record {index} must be an object",
+                }
+            )
+            continue
+        if not isinstance(record.get("evaluator_id"), str) or not record.get("evaluator_id"):
+            issues.append(
+                {
+                    "code": "invalid_evaluator_id",
+                    "message": f"evaluator record {index} evaluator_id is invalid",
+                }
+            )
+        if record.get("automated") is not True:
+            issues.append(
+                {
+                    "code": "invalid_automated_flag",
+                    "message": f"evaluator record {index} must be automated",
+                }
+            )
+        if record.get("manual_experiment") is not False:
+            issues.append(
+                {
+                    "code": "invalid_manual_experiment_flag",
+                    "message": (
+                        f"evaluator record {index} must not be manual experiment"
+                    ),
+                }
+            )
+    if report.get("evaluator_record_count") != len(records):
+        issues.append(
+            {
+                "code": "invalid_evaluator_record_count",
+                "message": "evaluator_record_count must match evaluator_records",
+            }
+        )
+    if report.get("automated_evaluator_available") != bool(records):
+        issues.append(
+            {
+                "code": "invalid_automated_evaluator_available",
+                "message": "automated_evaluator_available must match evaluator_records",
+            }
+        )
+    runtime = report.get("runtime_summary")
+    if not isinstance(runtime, dict):
+        issues.append(
+            {"code": "invalid_runtime_summary", "message": "runtime_summary must be an object"}
+        )
+        runtime = {}
+    for field in (
+        "evaluated_program_count",
+        "generated_evaluated_count",
+        "valid_count",
+        "invalid_count",
+        "configured_stage_result_count",
+        "llm_feedback_record_count",
+        "manual_feedback_record_count",
+        "manual_feedback_primary_gate_count",
+    ):
+        value = runtime.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"runtime_summary.{field} must be a non-negative integer",
+                }
+            )
+    policy = report.get("machine_feedback_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_machine_feedback_policy",
+                "message": "machine_feedback_policy must be an object",
+            }
+        )
+    else:
+        if policy.get("manual_experiment_candidate_feedback") is not False:
+            issues.append(
+                {
+                    "code": "invalid_manual_feedback_policy",
+                    "message": "manual experiment candidate feedback must be false",
+                }
+            )
+        if policy.get("llm_only_idea_review_candidate_feedback") is not False:
+            issues.append(
+                {
+                    "code": "invalid_llm_only_feedback_policy",
+                    "message": "LLM-only idea review candidate feedback must be false",
+                }
+            )
+        if policy.get("transition_to_executable_code_required") is not True:
+            issues.append(
+                {
+                    "code": "invalid_transition_policy",
+                    "message": "transition to executable code must be required",
+                }
+            )
+    manual_boundary = report.get("manual_experiment_boundary")
+    if (
+        not isinstance(manual_boundary, dict)
+        or manual_boundary.get("status")
+        != "excluded_from_current_candidate_evaluation_scope"
+    ):
+        issues.append(
+            {
+                "code": "invalid_manual_boundary",
+                "message": "manual experiment boundary is invalid",
+            }
+        )
+    llm_boundary = report.get("llm_only_idea_feedback_boundary")
+    if not isinstance(llm_boundary, dict):
+        issues.append(
+            {
+                "code": "invalid_llm_feedback_boundary",
+                "message": "llm_only_idea_feedback_boundary must be an object",
+            }
+        )
+    elif llm_boundary.get("primary_validity_gate") is not False:
+        issues.append(
+            {
+                "code": "invalid_llm_feedback_primary_gate",
+                "message": "LLM feedback must not be primary validity gate",
+            }
+        )
+    readiness = report.get("environment_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_environment_readiness",
+                "message": "environment_readiness must be an object",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "automated evaluator scope report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.automated_evaluator_scope_report.v1",
         "ok": not issues,
         "issues": issues,
     }

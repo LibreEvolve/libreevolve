@@ -2111,8 +2111,7 @@ Primary evidence:
     and replay semantics before presenting the program database as
     AlphaEvolve-grade fixed-budget memory over previously explored programs.
 
-- [ ] Add an automated-evaluator scope policy for manual-experiment and
-      LLM-only idea-feedback boundaries.
+- [ ] Extend automated-evaluator scope policy into robust environment fixtures.
   - Spec evidence: AlphaEvolve says automated evaluation is both an advantage
     and a limitation: tasks requiring manual experimentation are out of scope,
     and its Discussion says LLM-provided evaluation of ideas is possible but
@@ -2126,20 +2125,21 @@ Primary evidence:
   - Current evidence: LibreEvolve problem execution is centered on local
     subprocess validators, staged evaluator results, optional LLM feedback
     graders after candidate evaluation, and bounded proposal
-    `idea`/`rationale`/`hypothesis` metadata. It does not declare, validate,
-    or report whether a task is machine-gradeable, requires manual
-    experimentation, uses LLM-only idea review before code generation, or has
-    a defined transition from natural-language idea feedback into executable
-    candidate evaluation. It also does not record evaluator-environment setup
-    provenance such as why the evaluator is robust enough for sustained search,
-    which parts of the domain are automatable versus experimental, setup effort,
-    or expected high-value discovery scope.
-  - Required result: add versioned problem/run/report scope metadata for
-    automated-evaluator availability, manual-experiment exclusion, optional
-    LLM-only idea-feedback stages, transition criteria into executable
-    code-evaluation feedback, and robust-evaluator environment readiness before
-    claiming AlphaEvolve coverage for broader scientific-discovery,
-    environment-scaling, or AI-Co-Scientist-style workflows.
+    `idea`/`rationale`/`hypothesis` metadata. Completed manifests now include
+    `runtime.history.automated_evaluator_scope_report`, which records
+    automated evaluator availability, deterministic machine evaluation as the
+    candidate-validity owner, optional LLM feedback as post-evaluator feedback
+    rather than a primary gate, manual-experiment exclusion, and transition
+    into executable code feedback before scoring. It still does not record
+    evaluator-environment setup provenance such as why the evaluator is robust
+    enough for sustained search, which parts of the domain are automatable
+    versus experimental, setup effort, or expected high-value discovery scope.
+  - Required result: add versioned problem/run/report scope metadata or
+    fixtures for robust-evaluator environment readiness, manual-to-code
+    transition criteria, LLM-only idea-feedback stage contracts, and
+    environment-scaling evidence before claiming AlphaEvolve coverage for
+    broader scientific-discovery, environment-scaling, or
+    AI-Co-Scientist-style workflows.
 
 - [ ] Add AI-Co-Scientist representation-boundary evidence.
   - Spec evidence: AlphaEvolve Related Work distinguishes AI Co-Scientist from

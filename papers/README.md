@@ -882,13 +882,15 @@ AlphaEvolve scope-boundary note: the paper explicitly treats automated
 evaluation as both a core advantage and a limitation, keeping tasks that require
 manual experimentation out of scope and describing LLM-provided evaluation of
 ideas as possible but not the optimized AlphaEvolve setting. LibreEvolve's
-current feedback graders run around executable candidate evaluation and its
-proposal metadata captures bounded idea/rationale/hypothesis text; there is no
-separate AI-Co-Scientist-style stage that evaluates high-level ideas before
-transitioning into code execution. Paper-facing scientific-discovery claims
-should remain scoped to machine-gradeable evaluator workflows until
-problem/run/report metadata labels manual-experiment exclusion, LLM-only idea
-feedback, and transition criteria into executable evaluation.
+completed manifests now include
+`runtime.history.automated_evaluator_scope_report`, which labels deterministic
+machine evaluators as the candidate-validity owner, records optional LLM
+feedback as post-evaluator feedback rather than a primary gate, excludes manual
+experiment outcomes from candidate admission, and requires transition into
+executable code feedback before scoring. Paper-facing scientific-discovery
+claims should remain scoped to machine-gradeable evaluator workflows until
+robust evaluator-environment fixtures, manual-to-code transition policies, and
+AI-Co-Scientist-style idea-stage contracts are implemented.
 
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive

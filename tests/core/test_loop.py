@@ -56,6 +56,7 @@ from libreevolve.core.loop import (
     validate_task_spec_artifact_resolution_report,
     validate_evaluator_oracle_registry,
     validate_embedded_evaluator_entrypoint_report,
+    validate_automated_evaluator_scope_report,
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
@@ -3517,6 +3518,32 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     )
     assert oracle_registry["runtime_summary"]["evaluated_program_count"] == 2
     assert oracle_registry["runtime_summary"]["llm_feedback_record_count"] == 1
+
+    scope = manifest["runtime"]["history"]["automated_evaluator_scope_report"]
+    assert scope["schema"] == "libreevolve.automated_evaluator_scope_report.v1"
+    assert scope["validation"]["ok"] is True
+    assert validate_automated_evaluator_scope_report(scope)["ok"] is True
+    assert scope["automated_evaluator_available"] is True
+    assert scope["evaluator_record_count"] == 1
+    assert scope["evaluator_records"][0]["evaluator_id"] == "evaluator:default"
+    assert scope["evaluator_records"][0]["automated"] is True
+    assert scope["evaluator_records"][0]["manual_experiment"] is False
+    assert scope["configured_llm_feedback_count"] == 1
+    assert scope["runtime_summary"]["evaluated_program_count"] == 2
+    assert scope["runtime_summary"]["generated_evaluated_count"] == 1
+    assert scope["runtime_summary"]["llm_feedback_record_count"] == 1
+    assert scope["runtime_summary"]["manual_feedback_record_count"] == 0
+    assert scope["machine_feedback_policy"]["manual_experiment_candidate_feedback"] is False
+    assert scope["machine_feedback_policy"]["llm_only_idea_review_candidate_feedback"] is False
+    assert scope["machine_feedback_policy"]["transition_to_executable_code_required"] is True
+    assert scope["manual_experiment_boundary"]["status"] == (
+        "excluded_from_current_candidate_evaluation_scope"
+    )
+    assert scope["llm_only_idea_feedback_boundary"]["status"] == (
+        "post_evaluator_feedback_only"
+    )
+    assert scope["llm_only_idea_feedback_boundary"]["primary_validity_gate"] is False
+    assert scope["claim_ready"] is False
 
 
 def test_evaluator_oracle_registry_validation_rejects_malformed_arbitration_policy():

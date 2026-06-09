@@ -292,6 +292,10 @@ is not yet an AlphaEvolve reproduction.
   contracts for inner-search and ML-training tasks: dataset/split hash
   enforcement, training/search loop runners, checkpoint completeness checks,
   score-field-to-artifact linkage, and stochastic re-evaluation policy.
+- Extend `runtime.history.automated_evaluator_scope_report` beyond the current
+  machine-feedback/manual-experiment/LLM-feedback boundary into robust
+  evaluator-environment fixtures, manual-to-code transition policy, and
+  environment-scaling evidence.
 - Add OS/container-grade validator network isolation and stronger
   sandbox/resource controls beyond the current Python-socket denial option,
   minimal environment, wall-clock budgets, and process-tree cleanup.

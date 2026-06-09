@@ -2611,7 +2611,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-grade idea memory.
 
 - [ ] Keep README scientific-discovery wording scoped to automated evaluators
-      versus manual-experiment and LLM-only idea-review workflows.
+      until robust evaluator-environment fixtures exist.
   - Spec evidence: AlphaEvolve states that automated evaluation is a core
     advantage and limitation: tasks requiring manual experimentation are out
     of scope, and LLM-provided evaluation of ideas is possible but not the
@@ -2622,16 +2622,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evaluation functions.
   - Current evidence: README describes automated algorithm discovery, local
     subprocess evaluators, staged validator cascades, optional LLM feedback,
-    and proposal metadata, but it does not yet state a clear AlphaEvolve scope
-    boundary for machine-gradeable tasks versus manual-experiment scientific
-    workflows or pre-code LLM-only idea review, nor does it describe
-    evaluator-environment readiness evidence such as robust evaluator design,
-    automatable-domain boundaries, setup effort, and expected discovery value.
-  - Required result: once scope metadata/reporting exists, update README,
-    ROADMAP, papers index, and matching TODOs so public wording neither
-    underclaims the current executable-evaluator workflow nor overclaims
-    environment-scaling, manual-experiment, or AI-Co-Scientist-style
-    idea-feedback support.
+    proposal metadata, and `runtime.history.automated_evaluator_scope_report`,
+    which states the AlphaEvolve scope boundary for machine-gradeable tasks
+    versus manual-experiment scientific workflows or pre-code LLM-only idea
+    review. It still does not describe evaluator-environment readiness evidence
+    such as robust evaluator design, automatable-domain boundaries, setup
+    effort, and expected discovery value.
+  - Required result: once robust environment fixtures and transition policies
+    exist, update README, ROADMAP, papers index, and matching TODOs so public
+    wording neither underclaims the current executable-evaluator workflow nor
+    overclaims environment-scaling, manual-experiment, or
+    AI-Co-Scientist-style idea-feedback support.
 
 - [ ] Keep README AI-Co-Scientist comparison scoped until representation
       boundary evidence exists.

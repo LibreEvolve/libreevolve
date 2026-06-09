@@ -2312,6 +2312,15 @@ timeout totals, elapsed seconds, promotion rates, main-test exposure, and
 early-prune counts. It also records `claim_ready: false` until stage
 difficulty/scale labels, evaluator test-set hashes, denominator policy, and
 cost-savings evidence are added.
+Completed manifests also include
+`runtime.history.automated_evaluator_scope_report`, which records the current
+AlphaEvolve scope boundary: candidate admission is owned by deterministic
+machine evaluator execution, optional LLM feedback graders are post-evaluator
+signals rather than a primary validity gate, manual-experiment outcomes are
+excluded from candidate admission, and transition into executable code feedback
+is required before a candidate is scored. The report remains `claim_ready:
+false` for robust evaluator-environment fixtures, manual-to-code transition
+policy, and environment-scaling evidence.
 Configured stages can also declare evaluator workload provenance with
 `workload: {type: simple_check|inner_search|ml_training|custom, ...}`.
 LibreEvolve validates optional dataset/split hashes, budget fields,

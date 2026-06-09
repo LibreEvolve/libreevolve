@@ -62,6 +62,7 @@ from libreevolve.core.loop import (
     validate_system_contribution_provenance_report,
     validate_title_page_affiliation_report,
     validate_metric_diverse_inspiration_report,
+    validate_duplicate_work_policy_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -4409,6 +4410,49 @@ def test_runtime_history_reports_execution_filtered_proposal_lifecycle():
     assert lifecycle["admission"]["reason"] == "invalid_evaluation"
     assert lifecycle["llm"]["calls"][0]["backend_name"] == "fake/model"
     assert lifecycle["mutation"]["sha256"] == failures[0]["mutation_sha256"]
+
+
+def test_runtime_history_reports_duplicate_work_policy_without_cache_claim():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=1\n>>>REPLACE")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["duplicate_work_policy_report"]
+
+    assert report["schema"] == "libreevolve.duplicate_work_policy_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_duplicate_work_policy_report(report)["ok"] is True
+    assert report["program_count"] == 2
+    assert report["generated_candidate_count"] == 1
+    assert report["unique_workspace_count"] == 1
+    assert report["duplicate_workspace_group_count"] == 1
+    assert report["duplicate_generated_candidate_count"] == 1
+    assert report["evaluation_cache_policy"]["pre_evaluation_duplicate_skip"] is False
+    assert report["evaluation_cache_policy"]["evaluation_result_reuse"] is False
+    assert report["claim_ready"] is False
+
+    group = report["duplicate_workspace_groups"][0]
+    assert group["program_count"] == 2
+    assert group["generated_program_count"] == 1
+    assert group["generated_duplicate_program_ids"] == (
+        report["duplicate_generated_program_ids"]
+    )
+    assert group["evaluated_again"] is True
+    assert {record["candidate_type"] for record in group["records"]} == {
+        "seed",
+        "generated",
+    }
 
 
 def test_runtime_history_reports_abandoned_hypothesis_branch_evidence():

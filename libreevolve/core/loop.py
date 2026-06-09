@@ -5226,6 +5226,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
+        "duplicate_work_policy_report": _duplicate_work_policy_report(programs),
         "proposal_lifecycle_report": _proposal_lifecycle_report(db, programs),
         "hypothesis_branch_report": _hypothesis_branch_report(db, programs),
         "archive_state": archive_state,
@@ -11894,6 +11895,342 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.metric_diverse_inspiration_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _duplicate_work_policy_report(programs: list[Program]) -> dict:
+    records = [_duplicate_work_program_record(program) for program in programs]
+    by_workspace: dict[str, list[dict]] = {}
+    for record in records:
+        by_workspace.setdefault(record["workspace_sha256"], []).append(record)
+    duplicate_groups = [
+        _duplicate_work_group(workspace_hash, group)
+        for workspace_hash, group in sorted(by_workspace.items())
+        if len(group) > 1
+    ]
+    generated_duplicate_ids = _unique_in_order(
+        [
+            program_id
+            for group in duplicate_groups
+            for program_id in group["generated_duplicate_program_ids"]
+        ]
+    )
+    report = {
+        "schema": "libreevolve.duplicate_work_policy_report.v1",
+        "source": "runtime_history_workspace_hashes",
+        "program_count": len(records),
+        "generated_candidate_count": sum(
+            1 for record in records if record["candidate_type"] == "generated"
+        ),
+        "unique_workspace_count": len(by_workspace),
+        "duplicate_workspace_group_count": len(duplicate_groups),
+        "duplicate_generated_candidate_count": len(generated_duplicate_ids),
+        "duplicate_generated_program_ids": generated_duplicate_ids[:100],
+        "duplicate_generated_program_ids_truncated": len(generated_duplicate_ids) > 100,
+        "records_limit": 100,
+        "records_truncated": len(duplicate_groups) > 100,
+        "duplicate_workspace_groups": duplicate_groups[:100],
+        "evaluation_cache_policy": {
+            "schema": "libreevolve.evaluation_cache_policy.v1",
+            "candidate_id_policy": "deterministic_id_includes_workspace_hash",
+            "workspace_hash_source": "CandidateWorkspace.files_primary_and_static_members",
+            "pre_evaluation_duplicate_skip": False,
+            "evaluation_result_reuse": False,
+            "duplicate_observation_policy": (
+                "duplicates_are_evaluated_and_reported_not_skipped"
+            ),
+            "budget_policy": "duplicate_evaluations_consume_normal_budget",
+            "cache_storage": "not_implemented",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "alphaevolve_grade_duplicate_work_memory": False,
+            "duplicate_detection_reported": bool(duplicate_groups),
+            "remaining_gap": [
+                "pre_evaluation_duplicate_gate",
+                "evaluation_result_cache_lookup",
+                "cache_hit_budget_accounting",
+                "cross_run_workspace_hash_index",
+                "semantic_near_duplicate_detection",
+            ],
+        },
+    }
+    report["validation"] = validate_duplicate_work_policy_report(report)
+    return report
+
+
+def _duplicate_work_program_record(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "candidate_type": metadata.get("candidate_type", "seed"),
+        "candidate_status": metadata.get("candidate_status"),
+        "workspace_sha256": _workspace_sha256(program.workspace()),
+        "fitness": program.fitness,
+        "is_valid": evaluation.get("is_valid"),
+    }
+
+
+def _duplicate_work_group(workspace_hash: str, records: list[dict]) -> dict:
+    ordered = sorted(
+        records,
+        key=lambda record: (
+            int(record.get("generation", 0))
+            if isinstance(record.get("generation"), int)
+            and not isinstance(record.get("generation"), bool)
+            else 10**9,
+            str(record.get("program_id", "")),
+        ),
+    )
+    first = ordered[0]
+    generated = [
+        record
+        for record in ordered
+        if record.get("candidate_type") == "generated"
+    ]
+    generated_duplicates = [
+        record
+        for record in generated
+        if record.get("program_id") != first.get("program_id")
+    ]
+    return {
+        "workspace_sha256": workspace_hash,
+        "program_count": len(ordered),
+        "program_ids": [record["program_id"] for record in ordered],
+        "first_program_id": first["program_id"],
+        "first_candidate_type": first.get("candidate_type"),
+        "generated_program_count": len(generated),
+        "generated_duplicate_program_ids": [
+            record["program_id"] for record in generated_duplicates
+        ],
+        "evaluated_again": bool(generated_duplicates),
+        "records": ordered[:25],
+        "records_truncated": len(ordered) > 25,
+    }
+
+
+def validate_duplicate_work_policy_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.duplicate_work_policy_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "duplicate-work policy report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "program_count",
+        "generated_candidate_count",
+        "unique_workspace_count",
+        "duplicate_workspace_group_count",
+        "duplicate_generated_candidate_count",
+        "duplicate_generated_program_ids",
+        "duplicate_generated_program_ids_truncated",
+        "records_limit",
+        "records_truncated",
+        "duplicate_workspace_groups",
+        "evaluation_cache_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "duplicate-work policy report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.duplicate_work_policy_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "duplicate-work policy report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_workspace_hashes":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "duplicate-work policy report source is unsupported",
+            }
+        )
+    groups = report.get("duplicate_workspace_groups")
+    if not isinstance(groups, list):
+        issues.append(
+            {
+                "code": "invalid_duplicate_workspace_groups",
+                "message": "duplicate_workspace_groups must be a list",
+            }
+        )
+        groups = []
+    duplicate_generated_ids: list[str] = []
+    for index, group in enumerate(groups):
+        if not isinstance(group, dict):
+            issues.append(
+                {
+                    "code": "invalid_duplicate_workspace_group",
+                    "message": f"duplicate workspace group {index} must be an object",
+                }
+            )
+            continue
+        workspace_hash = group.get("workspace_sha256")
+        if not _is_sha256_hex(workspace_hash):
+            issues.append(
+                {
+                    "code": "invalid_workspace_hash",
+                    "message": f"duplicate workspace group {index} hash is invalid",
+                }
+            )
+        program_ids = group.get("program_ids")
+        if not isinstance(program_ids, list) or len(program_ids) < 2 or any(
+            not isinstance(program_id, str) or not program_id
+            for program_id in program_ids
+        ):
+            issues.append(
+                {
+                    "code": "invalid_program_ids",
+                    "message": (
+                        f"duplicate workspace group {index} must include at least "
+                        "two program ids"
+                    ),
+                }
+            )
+        if group.get("program_count") != (
+            len(program_ids) if isinstance(program_ids, list) else None
+        ):
+            issues.append(
+                {
+                    "code": "invalid_program_count",
+                    "message": (
+                        f"duplicate workspace group {index} program_count must "
+                        "match program_ids"
+                    ),
+                }
+            )
+        generated_ids = group.get("generated_duplicate_program_ids")
+        if not isinstance(generated_ids, list) or any(
+            not isinstance(program_id, str) or not program_id
+            for program_id in generated_ids
+        ):
+            issues.append(
+                {
+                    "code": "invalid_generated_duplicate_ids",
+                    "message": (
+                        f"duplicate workspace group {index} generated duplicate "
+                        "ids are invalid"
+                    ),
+                }
+            )
+        else:
+            duplicate_generated_ids.extend(generated_ids)
+        records = group.get("records")
+        if not isinstance(records, list):
+            issues.append(
+                {
+                    "code": "invalid_duplicate_records",
+                    "message": f"duplicate workspace group {index} records must be a list",
+                }
+            )
+        else:
+            for record_index, record in enumerate(records):
+                if not isinstance(record, dict):
+                    issues.append(
+                        {
+                            "code": "invalid_duplicate_record",
+                            "message": (
+                                f"duplicate workspace group {index} record "
+                                f"{record_index} must be an object"
+                            ),
+                        }
+                    )
+                    continue
+                if record.get("workspace_sha256") != workspace_hash:
+                    issues.append(
+                        {
+                            "code": "workspace_hash_mismatch",
+                            "message": (
+                                f"duplicate workspace group {index} record "
+                                f"{record_index} hash must match group"
+                            ),
+                        }
+                    )
+    if report.get("records_truncated") is not True:
+        if report.get("duplicate_workspace_group_count") != len(groups):
+            issues.append(
+                {
+                    "code": "invalid_duplicate_group_count",
+                    "message": (
+                        "duplicate_workspace_group_count must match group records"
+                    ),
+                }
+            )
+    duplicate_generated_ids = _unique_in_order(duplicate_generated_ids)
+    if report.get("duplicate_generated_program_ids_truncated") is not True:
+        if report.get("duplicate_generated_program_ids") != duplicate_generated_ids:
+            issues.append(
+                {
+                    "code": "invalid_duplicate_generated_ids",
+                    "message": (
+                        "duplicate_generated_program_ids must match group records"
+                    ),
+                }
+            )
+    if report.get("duplicate_generated_candidate_count") != len(duplicate_generated_ids):
+        issues.append(
+            {
+                "code": "invalid_duplicate_generated_count",
+                "message": (
+                    "duplicate_generated_candidate_count must match group records"
+                ),
+            }
+        )
+    policy = report.get("evaluation_cache_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_evaluation_cache_policy",
+                "message": "evaluation_cache_policy must be an object",
+            }
+        )
+    else:
+        if policy.get("pre_evaluation_duplicate_skip") is not False:
+            issues.append(
+                {
+                    "code": "invalid_duplicate_skip_policy",
+                    "message": "current duplicate skip policy must be false",
+                }
+            )
+        if policy.get("evaluation_result_reuse") is not False:
+            issues.append(
+                {
+                    "code": "invalid_result_reuse_policy",
+                    "message": "current evaluation result reuse policy must be false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "duplicate-work policy report must not claim cache parity",
+            }
+        )
+    return {
+        "schema": "libreevolve.duplicate_work_policy_report.v1",
         "ok": not issues,
         "issues": issues,
     }

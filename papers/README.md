@@ -682,11 +682,13 @@ sampling policies, not the absence of any resurfacing API, proposal metadata
 capture, or branch-level abandonment evidence.
 
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
-identity provenance, but LibreEvolve does not yet expose paper-visible evidence
-for source/workspace deduplication, evaluation-cache reuse, or documented
-stochastic re-evaluation of identical proposals. The remaining gap is a
+identity provenance, and completed manifests now include
+`runtime.history.duplicate_work_policy_report`, which groups identical
+candidate workspaces and records that repeated work is evaluated and reported
+rather than skipped or served from an evaluation cache. The remaining gap is a
 canonical hash/evaluator-cache scope with cache hit/miss/re-evaluation
-telemetry and budget accounting for repeated previously explored programs.
+telemetry, cross-run lookup, and budget accounting for repeated previously
+explored programs.
 
 AlphaEvolve budget-accounting note: runtime manifests validate current-process
 `RunBudget` counters, elapsed evaluator seconds, seed/candidate totals,

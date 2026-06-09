@@ -2905,6 +2905,22 @@ itself. The report's remaining gaps are benchmark fixtures or policies that
 require metric-diverse prompt slates across runs and compare them with scalar
 or one-at-a-time metric-targeted sampling.
 
+## `runtime.history.duplicate_work_policy_report`
+
+Completed manifests include a duplicate-work policy report with schema
+`libreevolve.duplicate_work_policy_report.v1`. It recomputes canonical
+workspace hashes for runtime programs, groups identical workspaces, records
+which generated candidates repeated a previously seen workspace, and preserves
+bounded per-program generation/type/validity/fitness records for each duplicate
+workspace group.
+
+The report also embeds `libreevolve.evaluation_cache_policy.v1`, which records
+the current policy explicitly: deterministic candidate ids include workspace
+hashes, but pre-evaluation duplicate skipping and evaluation-result reuse are
+not implemented. Repeated work is evaluated again, consumes normal budget, and
+is reported after the fact. This is duplicate-work evidence, not AlphaEvolve-
+grade fixed-budget cache/reuse memory.
+
 ## `runtime.history.proposal_lifecycle_report`
 
 Completed manifests include a bounded proposal lifecycle report with schema

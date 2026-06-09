@@ -1552,22 +1552,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     equal-budget comparisons across exploit, explore, mixed, metric, frontier,
     and lineage policies.
 
-- [ ] Keep database-memory roadmap wording scoped until duplicate-work policy
-      lands.
+- [ ] Keep database-memory roadmap wording scoped until duplicate-work cache
+      reuse lands.
   - Spec evidence: AlphaEvolve's program database is a memory of generated
     solutions with attached evaluation evidence, used to resurface previously
     explored ideas under fixed budgets.
   - Current evidence: `ROADMAP.md` can claim deterministic candidate ids,
     unique program-id validation, workspace-hash identity components, current
-    JSONL history, and bounded current-run resurfacing. It does not yet claim,
-    and should not imply, that identical source/workspace proposals are
-    detected before evaluation, served from a cache, or deliberately
-    re-evaluated under a stochastic sample policy.
-  - Required result: when duplicate-work policy, source/workspace hash indexes,
+    JSONL history, bounded current-run resurfacing, and
+    `runtime.history.duplicate_work_policy_report`, which reports duplicate
+    workspaces and states that current duplicates are evaluated rather than
+    cache-skipped or reused. It does not yet claim, and should not imply, that
+    identical source/workspace proposals are detected before evaluation or
+    served from a cache.
+  - Required result: when duplicate-work source/workspace hash indexes,
     evaluation-cache reuse, or documented stochastic re-evaluation lands,
     update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap wording separates current identity provenance from AlphaEvolve-grade
-    fixed-budget memory over previously explored programs.
+    roadmap wording separates current identity/reporting provenance from
+    AlphaEvolve-grade fixed-budget memory over previously explored programs.
 
 - [ ] Keep discovery-distance roadmap wording scoped until initial-pool
       divergence reports exist.

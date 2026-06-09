@@ -245,8 +245,11 @@ is not yet an AlphaEvolve reproduction.
   prompt-diversity condition remain open.
 - Add source/workspace deduplication and evaluation-cache policy before
   treating deterministic candidate ids or workspace hashes as AlphaEvolve-grade
-  memory over previously explored programs; identical proposals are not yet
-  proved to skip, reuse, or intentionally re-evaluate with budget telemetry.
+  memory over previously explored programs. Current
+  `runtime.history.duplicate_work_policy_report` groups identical runtime
+  workspaces and records that duplicates are evaluated and reported, not
+  skipped or cache-reused; cache-key semantics, hit/miss telemetry, and budget
+  accounting for reuse remain open.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics.

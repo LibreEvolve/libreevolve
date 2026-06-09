@@ -1791,10 +1791,10 @@ def _validate_todo_coverage_table(
     section = _markdown_section(text, "## TODO coverage cross-references")
     if section is None:
         return []
+    issues = _validate_todo_coverage_scope_text(section)
     status_by_id = _status_table_status_cells(text)
 
     rows: dict[str, tuple[str, str]] = {}
-    issues: list[PaperManifestIssue] = []
     for line in section.splitlines():
         if not line.startswith("|"):
             continue
@@ -1851,6 +1851,23 @@ def _validate_todo_coverage_table(
             )
         )
     return issues
+
+
+def _validate_todo_coverage_scope_text(section: str) -> list[PaperManifestIssue]:
+    normalized = section.casefold()
+    advertises_grouped_labels = (
+        "grouped open gap" in normalized
+        or "grouped labels are accepted" in normalized
+        or "grouped labels are allowed" in normalized
+    )
+    if advertises_grouped_labels:
+        return [
+            PaperManifestIssue(
+                "todo_coverage_grouped_label_policy_ambiguous",
+                "papers/README.md TODO coverage prose must not advertise grouped labels unless a grouped-label taxonomy is validated",
+            )
+        ]
+    return []
 
 
 def _markdown_section(text: str, heading: str) -> str | None:

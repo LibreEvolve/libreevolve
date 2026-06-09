@@ -992,14 +992,17 @@ remain legacy-limited to arity/type/non-negative validation.
 ## TODO coverage cross-references
 
 This maintained map ties each implementation-status row to backlog evidence.
-The active column points only at currently open backlog files or grouped open
-gap families; completed files preserve implemented decisions and prior
-paper-index cleanups. Source-specific active gaps now appear across
+The active column points only at currently open backlog files; grouped labels
+are intentionally not accepted until a grouped-label taxonomy exists. Completed
+files preserve implemented decisions and prior paper-index cleanups, and each
+completed path is checked for source-specific completed checklist evidence.
+Source-specific active gaps now appear across
 `docs/todo/code.md`, `docs/todo/papers.md`, `docs/todo/roadmap.md`, and
-`docs/todo/readme.md`; completed evidence remains split by the older
-completed-ledger files listed below.
+`docs/todo/readme.md`; completed evidence remains split by the completed-ledger
+files listed below. This table is backlog traceability evidence, not a claim
+that implementation-status prose is semantically complete.
 
-| ID | Active gap evidence | Completed/grouped evidence |
+| ID | Active gap evidence | Completed evidence |
 |---|---|---|
 | 2506.13131 | `docs/todo/code.md`; `docs/todo/papers.md` | `docs/todo/Completed/code.md`; `docs/todo/Completed/papers.md`; `docs/todo/Completed/readme.md`; `docs/todo/Completed/roadmap.md` |
 | 1504.04909 | `docs/todo/code.md`; `docs/todo/papers.md`; `docs/todo/roadmap.md`; `docs/todo/readme.md` | `docs/todo/Completed/papers.md` |

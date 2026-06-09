@@ -2528,29 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add validation for paper-index TODO coverage cross-references.
-  - Spec evidence: AlphaEvolve-alignment work relies on paper-facing status
-    rows being traceable to concrete missing-behavior ledgers. The local
-    `papers/README.md` "TODO coverage cross-references" section claims to map
-    implementation-status rows to active and completed/grouped backlog
-    evidence.
-  - Current evidence: `validate_paper_manifest()` now parses the
-    `papers/README.md` TODO coverage table when present, requires exact
-    manifest-id row coverage, rejects duplicate/extra rows, validates safe
-    existing active/completed `docs/todo/` paths, and checks that active
-    references match open TODO blocks for the same paper id in the four active
-    ledgers. Focused tests cover accepted coverage, stale active-cell
-    references, and missing coverage rows. Remaining gaps: completed/grouped
-    evidence cells are only path-validated, grouped-label taxonomies are not
-    modeled because the current table now lists concrete active ledgers, and
-    public README/ROADMAP wording still needs to reflect the validator's exact
-    scope.
-  - Required result: finish paper-index backlog-traceability validation by
-    documenting the validator scope in README/ROADMAP/paper-index wording,
-    adding any needed completed-evidence semantics or declared grouped-label
-    policy, and keeping this distinct from implementation-status semantic
-    validation.
-
 - [ ] Detect stale source-specific absence wording inside active TODO bodies.
   - Spec evidence: the TODO ledgers are the audit surface for AlphaEvolve and
     paper-alignment gaps, so their "current evidence" clauses must remain

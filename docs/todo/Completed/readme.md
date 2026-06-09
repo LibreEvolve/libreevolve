@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README paper-index traceability wording scoped until TODO coverage
+      cross-references are validated.
+  - Spec evidence: `papers/README.md` presents a TODO coverage table that
+    should be validated before README treats it as a backlog traceability map.
+  - Status: README now describes the paper-manifest TODO coverage validator:
+    one row per manifest id, active cells tied to open `docs/todo/*.md` blocks,
+    completed cells tied to source-specific completed checklist evidence, and
+    grouped labels rejected until a grouped-label taxonomy exists. README also
+    keeps this separate from implementation-status semantic completeness.
+  - Remaining gap: none for this bounded README wording slice; stale absence
+    prose and broader status-cell semantics remain active TODOs.
+
 - [x] Keep README DeepMind-blog wording scoped until official announcement
       source provenance exists.
   - Spec evidence: the May 14, 2025 Google DeepMind blog article is an

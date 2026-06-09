@@ -6,6 +6,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Validate paper-index TODO coverage cross-references.
+  - Paper evidence: the `papers/README.md` TODO coverage table is the
+    paper-index source-to-backlog chain for AlphaEvolve-alignment audits.
+  - Status: the paper-manifest gate validates exact manifest row coverage,
+    duplicate/extra rows, safe path classes, active open source-specific TODO
+    evidence, completed source-specific checklist evidence, completed-evidence
+    requirements for implemented/partial status classes, and a concrete-path
+    policy that rejects grouped labels until a grouped-label taxonomy exists.
+  - Remaining gap: none for this bounded coverage-table slice; stale absence
+    prose and deeper implementation-status semantic validation remain separate
+    paper-facing work.
+
 - [x] Track official DeepMind AlphaEvolve blog source and claim variants.
   - Paper/source evidence: the official May 14, 2025 Google DeepMind blog
     article describes the AlphaEvolve architecture, whole-codebase scope,

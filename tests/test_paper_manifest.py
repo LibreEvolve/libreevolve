@@ -1985,6 +1985,38 @@ def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     assert report.ok is True
 
 
+def test_validate_paper_manifest_rejects_grouped_todo_coverage_policy_text(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8").replace(
+            "## TODO coverage cross-references\n\n",
+            "## TODO coverage cross-references\n\nGrouped open gap families are accepted.\n\n",
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "todo_coverage_grouped_label_policy_ambiguous" in codes
+
+
 def test_validate_paper_manifest_reports_stale_todo_coverage_active_cell(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add validation for paper-index TODO coverage cross-references.
+  - Spec evidence: `papers/README.md` includes a TODO coverage
+    cross-reference table tying paper status rows to active and completed
+    backlog evidence.
+  - Status: `validate_paper_manifest()` now validates manifest-id row coverage,
+    duplicate/extra rows, safe active/completed `docs/todo/` paths, active
+    open TODO blocks with gap context and required result text, completed
+    ledgers with source-specific completed checklist items, missing completed
+    evidence for implemented/partial status classes, and rejection of grouped
+    labels until a grouped-label taxonomy exists.
+  - Remaining gap: stale source-specific absence wording and broader status
+    prose semantics remain separate active backlog-integrity TODOs.
+
 - [x] Add official DeepMind AlphaEvolve blog-source provenance and claim
       reconciliation.
   - Spec evidence: the May 14, 2025 Google DeepMind article `AlphaEvolve: A

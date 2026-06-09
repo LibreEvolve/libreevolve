@@ -4,6 +4,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep paper-index backlog-traceability roadmap wording scoped until TODO
+      coverage cross-references are validated.
+  - Spec evidence: roadmap planning depends on paper status rows being
+    traceable to concrete active or completed backlog evidence.
+  - Status: ROADMAP now documents the `validate_paper_manifest()` TODO coverage
+    checks: exact row coverage, duplicate/extra rows, safe path classes, active
+    open TODO blocks, source-specific completed checklist evidence, and
+    grouped-label rejection until a taxonomy exists. It states this is backlog
+    linkage, not full semantic proof of every implementation-status sentence.
+  - Remaining gap: none for this bounded roadmap wording slice; stale absence
+    prose and broader status semantics remain active work.
+
 - [x] Keep DeepMind-blog roadmap wording scoped until official announcement
       source provenance exists.
   - Spec evidence: the May 14, 2025 Google DeepMind blog announcement

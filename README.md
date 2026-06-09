@@ -3630,6 +3630,13 @@ announcement/illustration role metadata. These claims are announcement-source
 evidence, not audited white-paper specification or reproduced LibreEvolve
 evidence; blog-versus-paper value and wording variants remain explicitly gated
 until reconciled to the PDF, Colab, or local artifacts.
+Paper-index traceability is validated by the public paper-manifest gate:
+`papers/README.md` must contain one TODO coverage row per manifest id, active
+cells must point only at open `docs/todo/*.md` blocks for that id, completed
+cells must point at completed ledgers with source-specific completed checklist
+items, and grouped labels are rejected until a grouped-label taxonomy exists.
+That check proves backlog linkage for the local paper index; it is separate
+from implementation-status semantic completeness.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

@@ -671,6 +671,13 @@ is not yet an AlphaEvolve reproduction.
   artifacts, rendered artifacts, and reproduced LibreEvolve evidence remains
   open before announcement wording can be treated as audited implementation
   parity.
+- Keep paper-index backlog traceability explicit: `validate_paper_manifest()`
+  now validates the `papers/README.md` TODO coverage table for exact manifest
+  row coverage, duplicate/extra rows, safe active/completed `docs/todo/`
+  paths, active open TODO blocks for each paper id, source-specific completed
+  checklist evidence, and rejection of grouped labels until a grouped-label
+  taxonomy exists. This is backlog-link validation, not full semantic proof of
+  every implementation-status sentence.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

@@ -1628,27 +1628,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     pages as snapshot diagnostics, and avoid treating every numbered page as a
     complete problem/notebook/paper-linked source artifact until reconciled.
 
-- [ ] Keep README paper-index traceability wording scoped until TODO coverage
-      cross-references are validated.
-  - Spec evidence: `papers/README.md` presents a TODO coverage
-    cross-reference table tying implementation-status rows to backlog
-    evidence. README should not imply that the paper cache has complete
-    semantic traceability to AlphaEvolve-alignment TODOs unless that map is
-    validated, not merely maintained by hand.
-  - Current evidence: README can describe paper-manifest validation,
-    implementation-status table reconciliation, Appendix B registry checks,
-    and ablation registry checks. The public validation command now also
-    validates the `papers/README.md` TODO coverage table's manifest-id row
-    coverage, duplicate/extra rows, safe existing active/completed
-    `docs/todo/` paths, active/completed path classification, and active
-    open-gap presence for each paper id. README still does not explain this
-    scope or separate it from the still-open completed/grouped evidence and
-    implementation-status semantic-validation gaps.
-  - Required result: update README, ROADMAP, papers index, and code/paper
-    TODOs together so README distinguishes manifest/status-table validation
-    from verified backlog traceability for every local paper row and states the
-    remaining completed-evidence and status-cell validation boundaries.
-
 - [ ] Keep README backlog-integrity wording scoped until stale source-specific
       absence prose is validated.
   - Spec evidence: README should describe the paper cache and TODO ledgers as

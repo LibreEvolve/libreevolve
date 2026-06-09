@@ -3355,28 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Validate paper-index TODO coverage cross-references.
-  - Paper evidence: `papers/README.md` includes a "TODO coverage
-    cross-references" table that says each implementation-status row is tied
-    to backlog evidence, with active and completed/grouped evidence columns.
-    AlphaEvolve-alignment audits depend on this source-to-backlog chain so
-    paper status rows do not become disconnected from the TODO ledgers that
-    state missing or unsupported behavior.
-  - Current gap: `libreevolve.tools.paper_manifest` now validates the TODO
-    coverage table when present: manifest-id row coverage, duplicate/extra
-    rows, safe existing active/completed `docs/todo/` paths, active versus
-    completed path classification, and active references that match open TODO
-    blocks for the same paper id. Focused tests cover accepted coverage,
-    stale active-cell references, and missing rows. Remaining paper-facing
-    gaps are completed/grouped evidence semantics, any future declared
-    grouped-label taxonomy, and README/ROADMAP/code wording that explains the
-    validator's scope without conflating it with implementation-status
-    semantic validation.
-  - Required result: finish paper-index cross-reference validation by adding
-    any needed completed-evidence semantics or grouped-label policy and
-    updating README/ROADMAP/code TODO wording so the paper index distinguishes
-    implementation-status validation from verified backlog traceability.
-
 - [ ] Track stale source-specific absence wording in active TODO bodies.
   - Paper evidence: `papers/README.md` uses the implementation-status table and
     TODO coverage table as the source-to-backlog chain for paper-alignment

@@ -8,6 +8,10 @@ from typing import Any
 
 
 ALPHAEVOLVE_COMPANION_COLAB_SCHEMA = "libreevolve.alphaevolve_companion_colab_source.v1"
+ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_companion_source_manifest.v1"
+)
+EXPECTED_COMPANION_SOURCE_MANIFEST_FILE = "papers/companion_sources.json"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REPOSITORY_URL = "https://github.com/google-deepmind/alphaevolve_results"
 EXPECTED_REPOSITORY_COMMIT = "".join(
@@ -158,6 +162,44 @@ def alphaevolve_companion_colab_source_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_companion_source_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA,
+        "companion_source_count": 1,
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_SOURCE_PAPER_ID,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "source_record": alphaevolve_companion_colab_source_record(),
+                "claim_artifact_links": {
+                    "companion_source_used_by": [
+                        "README.md",
+                        "ROADMAP.md",
+                        "papers/README.md",
+                        "docs/todo/code.md",
+                        "docs/todo/papers.md",
+                        "docs/todo/readme.md",
+                        "docs/todo/roadmap.md",
+                    ],
+                    "policy": (
+                        "paper_claim_audits_must_distinguish_external_companion_source_"
+                        "from_local_generated_exports"
+                    ),
+                },
+                "local_cache_policy": {
+                    "cache_required_for_manifest_validation": False,
+                    "validated_when_present": True,
+                    "local_cache_status_field": "source_record.notebook.local_cache",
+                    "scope": (
+                        "committed external source provenance, not local reproduced "
+                        "notebook/export evidence"
+                    ),
+                },
+            }
+        ],
+    }
+
+
 def validate_alphaevolve_companion_colab_source(
     recordset: object | str | Path | None = None,
 ) -> AlphaEvolveCompanionColabValidation:
@@ -190,6 +232,62 @@ def validate_alphaevolve_companion_colab_source(
     )
 
 
+def validate_alphaevolve_companion_source_manifest(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveCompanionColabValidation:
+    data, read_issues = _load_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveCompanionColabValidation(False, 0, 0, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveCompanionColabIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_schema",
+                "unsupported AlphaEvolve companion-source manifest schema",
+            )
+        )
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_sources",
+                "companion-source manifest sources must be a list",
+            )
+        )
+        sources = []
+    source_count = len(sources)
+    if data.get("companion_source_count") != source_count:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_companion_source_count",
+                "companion_source_count must equal the number of companion-source records",
+            )
+        )
+    if source_count != 1:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_source_count",
+                "companion-source manifest must contain the AlphaEvolve companion notebook row",
+            )
+        )
+    artifact_count = 0
+    claim_mapping_count = 0
+    local_cache_available = False
+    for index, source in enumerate(sources):
+        source_validation = _validate_companion_source_manifest_source(source, issues, index)
+        artifact_count += source_validation.artifact_count
+        claim_mapping_count += source_validation.claim_mapping_count
+        local_cache_available = local_cache_available or source_validation.local_cache_available
+    return AlphaEvolveCompanionColabValidation(
+        ok=not issues,
+        artifact_count=artifact_count,
+        claim_mapping_count=claim_mapping_count,
+        local_cache_available=local_cache_available,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_companion_colab_source_summary(recordset: dict[str, Any]) -> str:
     validation = validate_alphaevolve_companion_colab_source(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -213,6 +311,14 @@ def render_alphaevolve_companion_colab_source_summary(recordset: dict[str, Any])
     return "\n".join(lines)
 
 
+def _load_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveCompanionColabIssue]]:
+    if recordset is None:
+        return alphaevolve_companion_source_manifest_record(), []
+    return _load_recordset(recordset)
+
+
 def _load_recordset(
     recordset: object | str | Path | None,
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveCompanionColabIssue]]:
@@ -231,6 +337,123 @@ def _load_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [AlphaEvolveCompanionColabIssue("invalid_shape", "companion source record must be a JSON object")]
+
+
+def _validate_companion_source_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveCompanionColabIssue],
+    index: int,
+) -> AlphaEvolveCompanionColabValidation:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_source",
+                f"companion-source manifest source {index} must be an object",
+            )
+        )
+        return AlphaEvolveCompanionColabValidation(False, 0, 0, False, [])
+    if value.get("manifest_row_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_source_row_id",
+                "companion-source manifest row id must match the cached AlphaEvolve row",
+            )
+        )
+    if value.get("companion_source_id") != "alphaevolve_results_mathematical_results_colab":
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_manifest_companion_source_id",
+                "companion-source manifest must name the official mathematical_results Colab",
+            )
+        )
+    source_report = validate_alphaevolve_companion_colab_source(value.get("source_record"))
+    issues.extend(source_report.issues)
+    _validate_claim_artifact_links(value.get("claim_artifact_links"), issues)
+    _validate_local_cache_policy(value.get("local_cache_policy"), issues)
+    return source_report
+
+
+def _validate_claim_artifact_links(
+    value: object,
+    issues: list[AlphaEvolveCompanionColabIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_claim_artifact_links",
+                "claim_artifact_links must be an object",
+            )
+        )
+        return
+    expected_surfaces = {
+        "README.md",
+        "ROADMAP.md",
+        "papers/README.md",
+        "docs/todo/code.md",
+        "docs/todo/papers.md",
+        "docs/todo/readme.md",
+        "docs/todo/roadmap.md",
+    }
+    surfaces = value.get("companion_source_used_by")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_claim_artifact_surfaces",
+                "companion_source_used_by must list paper-claim artifact surfaces",
+            )
+        )
+    elif set(surfaces) != expected_surfaces:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "claim_artifact_surface_mismatch",
+                "companion_source_used_by must cover docs, papers, and active TODO evidence",
+            )
+        )
+    if value.get("policy") != (
+        "paper_claim_audits_must_distinguish_external_companion_source_"
+        "from_local_generated_exports"
+    ):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_claim_artifact_policy",
+                "claim artifact policy must distinguish external companion source evidence from local exports",
+            )
+        )
+
+
+def _validate_local_cache_policy(
+    value: object,
+    issues: list[AlphaEvolveCompanionColabIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_local_cache_policy",
+                "local_cache_policy must be an object",
+            )
+        )
+        return
+    expected = {
+        "cache_required_for_manifest_validation": False,
+        "validated_when_present": True,
+        "local_cache_status_field": "source_record.notebook.local_cache",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    f"invalid_local_cache_policy_{field}",
+                    f"local_cache_policy.{field} must preserve the companion-source cache boundary",
+                )
+            )
+    scope = value.get("scope")
+    if not isinstance(scope, str) or "not local reproduced notebook/export evidence" not in scope:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_local_cache_policy_scope",
+                "local_cache_policy.scope must distinguish source provenance from local exports",
+            )
+        )
 
 
 def _validate_repository(value: object, issues: list[AlphaEvolveCompanionColabIssue]) -> None:

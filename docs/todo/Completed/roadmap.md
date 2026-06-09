@@ -4,6 +4,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document committed AlphaEvolve companion Colab source manifest.
+  - Spec evidence: AlphaEvolve footnote 2 and Table 2 cite the accompanying
+    `google-deepmind/alphaevolve_results` Colab notebook for discovered
+    algorithms, mathematical results, and matrix decompositions.
+  - Status: ROADMAP now documents `papers/companion_sources.json` as the
+    committed external companion-source manifest with docs/TODO claim-surface
+    links, local-cache policy, and paper-manifest validation.
+  - Remaining gap: none for this bounded roadmap wording slice; local
+    generated result-export artifacts and deeper per-cell claim spans remain
+    active roadmap work.
+
 - [x] Document normalized AlphaEvolve References bibliography manifest.
   - Spec evidence: the AlphaEvolve PDF includes a numbered References section
     after Author information, with entries through `[120]`.

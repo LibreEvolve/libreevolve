@@ -2471,29 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Emit companion Colab/source-artifact records from paper-artifact workflows.
-  - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
-    algorithms and new mathematical results are available in the accompanying
-    `google-deepmind/alphaevolve_results` Colab notebook, and Table 2 points
-    to that Colab for the matrix decompositions shown in the paper.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` in
-    `libreevolve/problems/benchmarks/companion_sources.py` now preserves the
-    official `google-deepmind/alphaevolve_results` repository URL, pinned
-    commit, retrieval policy, `mathematical_results.ipynb` raw/Colab URLs,
-    SHA-256 digest, byte count, nbformat, cell count, readability status,
-    matrix/constructive-math claim mappings, improved-results-only selection
-    policy, runtime-code absence, and companion repository rights/disclaimer
-    metadata. `papers/download_manifest.*` and
-    `libreevolve.tools.paper_manifest` still track PDF sources only; no
-    manifest row or runtime artifact emitter writes companion-source records
-    alongside local Appendix A/B evidence.
-  - Required result: connect the companion-source contract to paper/source-
-    artifact manifests or emitted evidence bundles, add optional local cache
-    validation for the pinned notebook, deepen claim-to-cell spans beyond
-    section markers, and link generated LibreEvolve Colab-equivalent exports to
-    this external AlphaEvolve source record without treating them as the same
-    artifact.
-
 - [ ] Add companion-result notebook selection-scope provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
     repository's `mathematical_results.ipynb` contains mathematical
@@ -2502,13 +2479,13 @@ Primary evidence:
     problems where AlphaEvolve matched, but did not outperform, the best known
     constructions, and states that the repository does not contain the code to
     run AlphaEvolve.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1`
-    validates the official notebook's `outperformed_sota_only` inclusion rule,
-    matched-result exclusion wording, runtime-code absence phrase, and per-
-    claim improved-result-only coverage status for the built-in source record.
-    Local Appendix A/B report emitters still do not attach per-claim absence
-    reasons when a paper-reported matched result is intentionally missing from
-    the official notebook.
+  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` and
+    `papers/companion_sources.json` validate the official notebook's
+    `outperformed_sota_only` inclusion rule, matched-result exclusion wording,
+    runtime-code absence phrase, and per-claim improved-result-only coverage
+    status. Local Appendix A/B report emitters still do not attach per-claim
+    absence reasons when a paper-reported matched result is intentionally
+    missing from the official notebook.
   - Required result: propagate companion selection metadata into generated
     paper-artifact reports: per-claim coverage or absence reason, distinction
     between paper-reported matched results and companion-notebook improved
@@ -2520,12 +2497,12 @@ Primary evidence:
     `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,
     licenses other materials under CC-BY 4.0, includes an as-is disclaimer, and
     says the repository is not an official Google product.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1`
-    validates the companion repository URL/ref, Google LLC rights holder/year,
-    Apache-2.0 software license, CC-BY-4.0 materials license, AS-IS
-    disclaimer, non-official-product boundary, and artifact-type license
-    mapping for the built-in source record. Local generated notebooks, copied
-    verifier code, figures, and construction-data exports still do not carry
+  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` and
+    `papers/companion_sources.json` validate the companion repository URL/ref,
+    Google LLC rights holder/year, Apache-2.0 software license, CC-BY-4.0
+    materials license, AS-IS disclaimer, non-official-product boundary, and
+    artifact-type license mapping. Local generated notebooks, copied verifier
+    code, figures, and construction-data exports still do not carry
     reuse/reproduction policy records that link back to that source-rights
     evidence.
   - Required result: attach companion repository rights metadata to generated

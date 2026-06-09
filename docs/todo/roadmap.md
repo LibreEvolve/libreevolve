@@ -2412,24 +2412,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
-- [ ] Keep paper-source roadmap wording scoped until companion Colab artifacts
-      are emitted in paper workflows.
-  - Spec evidence: AlphaEvolve footnote 2 and Table 2 cite an accompanying
-    `google-deepmind/alphaevolve_results` Colab notebook for discovered
-    algorithms, mathematical results, and matrix decompositions.
-  - Current evidence: roadmap and README now document
-    `libreevolve.alphaevolve_companion_colab_source.v1`, which validates the
-    official companion repository URL/ref, notebook URLs, digest/byte metadata,
-    nbformat/cell-count readability status, source claim mappings, selection
-    policy, runtime-code absence, and companion repository rights/disclaimer
-    boundary. The paper manifest and runtime paper-artifact workflows still do
-    not emit companion-source rows or local-cache validation.
-  - Required result: when companion paper-artifact manifest/emitter support
-    lands, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording distinguishes PDF manifest validation,
-    external AlphaEvolve companion-source verification, local cache status, and
-    generated LibreEvolve result-export artifacts.
-
 - [ ] Keep companion-notebook roadmap wording scoped until selection-scope
       metadata exists.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
@@ -2448,19 +2430,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     coverage, matched-result omissions, verifier-code availability, and
     non-availability of AlphaEvolve runtime code in the companion repository.
 
-- [ ] Keep companion-source rights roadmap wording scoped until repository
-      license and disclaimer metadata exists.
+- [ ] Keep companion-source rights roadmap wording scoped until generated
+      artifact rights rows link to repository license/disclaimer metadata.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
     Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
     licensing for other materials, an as-is disclaimer, and a statement that
     the repository is not an official Google product.
   - Current evidence: roadmap/README/paper-index wording now cites the
-    companion-source contract's Google LLC rights holder/year, Apache-2.0
-    software license, CC-BY-4.0 materials license, artifact-type license
-    mapping, AS-IS disclaimer, and non-official-product boundary. Generated
-    LibreEvolve notebooks, copied verifier code, figures, and construction-data
-    exports still do not emit reuse/reproduction policy rows linked to those
-    source rights.
+    companion-source contract and `papers/companion_sources.json`, including
+    Google LLC rights holder/year, Apache-2.0 software license, CC-BY-4.0
+    materials license, artifact-type license mapping, AS-IS disclaimer, and
+    non-official-product boundary. Generated LibreEvolve notebooks, copied
+    verifier code, figures, and construction-data exports still do not emit
+    reuse/reproduction policy rows linked to those source rights.
   - Required result: when generated artifact rights rows land, update ROADMAP,
     README, papers index, and code/paper TODOs so roadmap language separates
     source-PDF rights, companion software/materials licensing, generated

@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document committed AlphaEvolve companion Colab source manifest.
+  - Spec evidence: AlphaEvolve footnote 2 and Table 2 point readers to the
+    accompanying `google-deepmind/alphaevolve_results` Colab notebook for
+    discovered algorithms, mathematical results, and shown matrix
+    decompositions.
+  - Status: README now documents `papers/companion_sources.json` as the
+    committed companion manifest that emits the external source row, docs/TODO
+    claim-surface links, and local-cache policy, with paper-manifest
+    validation.
+  - Remaining gap: none for this bounded README wording slice; local generated
+    notebooks/exports and per-claim absence rows remain open elsewhere.
+
 - [x] Document normalized AlphaEvolve References bibliography evidence.
   - Spec evidence: the AlphaEvolve PDF has a numbered References section after
     Author information, with entries through `[120]`.

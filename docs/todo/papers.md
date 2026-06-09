@@ -3298,26 +3298,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP/papers wording qualifies SOTA-priority claims when the
     paper records concurrent matching work.
 
-- [ ] Emit AlphaEvolve companion Colab source evidence in paper artifacts.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
-    discovered algorithms and new mathematical results are available at the
-    `google-deepmind/alphaevolve_results` `mathematical_results.ipynb` Colab,
-    and Table 2 says the shown matrix decompositions can be found in the
-    accompanying Google Colab.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1`
-    validates the official repository URL, pinned commit, retrieval policy,
-    `mathematical_results.ipynb` raw/Colab URLs, SHA-256 digest, byte count,
-    nbformat, cell count, readability status, matrix/constructive-math claim
-    mappings, official notebook selection policy, runtime-code absence, and
-    companion repository rights/disclaimer metadata. The committed paper
-    manifest still tracks PDF rows only, and emitted paper artifacts do not yet
-    include a companion-source row or local-cache validation.
-  - Required result: emit paper-facing companion-artifact provenance records in
-    manifests or evidence bundles, add optional local cache validation, deepen
-    claim-to-cell spans for Appendix A matrix and Appendix B constructive
-    results, and link generated LibreEvolve notebook/export artifacts back to
-    the external DeepMind source record without conflating them.
-
 - [ ] Track companion-result notebook selection scope and absences.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README says
     `mathematical_results.ipynb` contains the mathematical discoveries from
@@ -3325,13 +3305,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     instances where AlphaEvolve outperformed the state of the art. It says
     matched-but-not-outperformed constructions are excluded to avoid clutter,
     and that the repository does not contain the code to run AlphaEvolve.
-  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` now
-    validates the source notebook's inclusion rule, matched-result exclusion,
-    per-claim improved-result-only coverage status, verifier-code source
-    markers, runtime-code absence, and license/source notes. Paper-facing
-    result artifacts still do not emit per-claim absence reasons that explain
-    when a paper-reported matched result is intentionally absent from the
-    companion notebook.
+  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` and
+    `papers/companion_sources.json` now validate the source notebook's
+    inclusion rule, matched-result exclusion, per-claim improved-result-only
+    coverage status, verifier-code source markers, runtime-code absence, and
+    license/source notes. Paper-facing result artifacts still do not emit
+    per-claim absence reasons that explain when a paper-reported matched result
+    is intentionally absent from the companion notebook.
   - Required result: attach companion selection evidence to emitted paper
     reports and exports: per-claim coverage or absence reason, verifier-code
     presence, runtime-code absence, and docs checks that distinguish paper-
@@ -3343,13 +3323,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     2.0, licenses all other materials under Creative Commons Attribution 4.0
     International, includes an as-is warranty disclaimer, and says the
     repository is not an official Google product.
-  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` now
-    validates the companion repository URL/ref, rights holder/year, Apache-2.0
-    software license, CC-BY-4.0 materials license, AS-IS disclaimer,
-    non-official-product disclaimer, and artifact-type license mapping for the
-    official source record. Paper-facing generated notebooks, verifier-code
-    exports, construction data, figures, and other materials still do not emit
-    reuse/reproduction policy records linked to that source-rights evidence.
+  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` and
+    `papers/companion_sources.json` now validate the companion repository
+    URL/ref, rights holder/year, Apache-2.0 software license, CC-BY-4.0
+    materials license, AS-IS disclaimer, non-official-product disclaimer, and
+    artifact-type license mapping. Paper-facing generated notebooks,
+    verifier-code exports, construction data, figures, and other materials
+    still do not emit reuse/reproduction policy records linked to that
+    source-rights evidence.
   - Required result: attach companion repository rights evidence to generated
     paper artifacts and export inventories, including reuse/reproduction
     policy and README/ROADMAP checks that separate companion repository rights

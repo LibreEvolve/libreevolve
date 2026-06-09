@@ -1302,8 +1302,11 @@ Implemented:
   status, matrix and constructive-math claim mappings, the official notebook's
   improved-results-only selection policy, matched-result exclusions, runtime
   AlphaEvolve-code absence, and the companion repository's Apache-2.0 software /
-  CC-BY-4.0 materials licensing plus disclaimer boundary. It is external source
-  evidence, not a local generated notebook or reproduced-result export.
+  CC-BY-4.0 materials licensing plus disclaimer boundary.
+  `papers/companion_sources.json` emits this committed external source row with
+  docs/TODO claim-surface links and local-cache policy, and the paper-manifest
+  gate validates it. It is external source evidence, not a local generated
+  notebook or reproduced-result export.
 - `libreevolve/problems/benchmarks/follow_on_sources.py`: follow-on
   AlphaEvolve mathematical-discovery source contract. It validates arXiv
   `2511.02864v3`, `Mathematical exploration and discovery at scale`, the

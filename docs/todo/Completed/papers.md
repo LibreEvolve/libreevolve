@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit AlphaEvolve companion Colab source evidence in paper artifacts.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
+    discovered algorithms and new mathematical results are available at the
+    `google-deepmind/alphaevolve_results` `mathematical_results.ipynb` Colab,
+    and Table 2 says shown matrix decompositions can be found in the
+    accompanying Google Colab.
+  - Status: `papers/companion_sources.json` now records the external
+    AlphaEvolve companion-source row, including repository URL/ref, notebook
+    URLs, SHA-256 digest, byte count, nbformat, cell count, readability status,
+    matrix/constructive-math claim mappings, improved-results-only selection
+    policy, runtime-code absence, companion repository rights/disclaimer
+    metadata, docs/TODO claim-surface links, and local-cache policy.
+    Paper-manifest validation checks the companion file.
+  - Remaining gap: none for this bounded paper-facing source-manifest slice;
+    generated notebook/export artifacts, per-claim absence reasons, and deeper
+    claim-to-cell spans remain active paper work.
+
 - [x] Normalize full AlphaEvolve References-section bibliography evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
     References section after Author information, with entries through `[120]`.

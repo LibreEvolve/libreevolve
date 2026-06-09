@@ -601,9 +601,11 @@ is not yet an AlphaEvolve reproduction.
   readability status, matrix/constructive-math claim mappings,
   improved-results-only selection policy, matched-result exclusions,
   AlphaEvolve runtime-code absence, and the companion repository's
-  Apache-2.0/CC-BY-4.0 license and disclaimer boundary. Local cache validation,
-  generated LibreEvolve Colab-equivalent exports, and deeper per-cell claim
-  spans remain open.
+  Apache-2.0/CC-BY-4.0 license and disclaimer boundary.
+  `papers/companion_sources.json` now emits this committed external source row,
+  docs/TODO claim-surface links, and local-cache policy, and the paper-manifest
+  gate validates it. Local generated LibreEvolve Colab-equivalent exports and
+  deeper per-cell claim spans remain open.
 - Keep follow-on AlphaEvolve mathematical-discovery sources separate from the
   original `2506.13131` specification: `libreevolve.alphaevolve_follow_on_math_source.v1`
   now validates arXiv `2511.02864v3`, the 2025-12-22 revision date, the

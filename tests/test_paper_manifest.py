@@ -20,6 +20,9 @@ from libreevolve.problems.benchmarks.paper_source_rights import (
 from libreevolve.problems.benchmarks.paper_source_identity import (
     paper_source_identity_manifest_record,
 )
+from libreevolve.problems.benchmarks.companion_sources import (
+    alphaevolve_companion_source_manifest_record,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -282,6 +285,43 @@ def test_validate_paper_manifest_rejects_source_rights_manifest_policy_drift(tmp
         "alphaevolve_source_pdf_rights_manifest_invalid_publication_ready_without_rights_review"
         in codes
     )
+
+
+def test_validate_paper_manifest_accepts_matching_companion_source_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "companion_sources.json").write_text(
+        json.dumps(alphaevolve_companion_source_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_companion_source_manifest_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    companion_record = alphaevolve_companion_source_manifest_record()
+    companion_record["sources"][0]["source_record"]["notebook"]["sha256"] = "0" * 64
+    (tmp_path / "papers" / "companion_sources.json").write_text(
+        json.dumps(companion_record, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_companion_source_manifest_invalid_notebook_sha256" in codes
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

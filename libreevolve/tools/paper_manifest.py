@@ -72,6 +72,10 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
     validate_alphaevolve_references_bibliography,
     validate_alphaevolve_references_section,
 )
+from libreevolve.problems.benchmarks.companion_sources import (
+    EXPECTED_COMPANION_SOURCE_MANIFEST_FILE,
+    validate_alphaevolve_companion_source_manifest,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -478,6 +482,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_references_bibliography(root_path, manifest_rows_by_id, json_rows))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_companion_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
@@ -1014,6 +1019,33 @@ def _validate_alphaevolve_references_section_record(
                     for issue in references_report.issues
                 )
     return issues
+
+
+def _validate_alphaevolve_companion_source_manifest(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / EXPECTED_COMPANION_SOURCE_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_companion_source_manifest_missing",
+                    "papers/companion_sources.json must emit the AlphaEvolve companion Colab source row",
+                    "2506.13131",
+                )
+            ]
+        return []
+    report = validate_alphaevolve_companion_source_manifest(manifest_path)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_companion_source_manifest_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
 
 
 def _validate_alphaevolve_follow_on_math_source_record(

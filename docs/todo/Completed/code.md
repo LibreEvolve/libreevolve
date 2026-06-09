@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit companion Colab/source-artifact records from paper-artifact workflows.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
+    algorithms and new mathematical results are available in the accompanying
+    `google-deepmind/alphaevolve_results` Colab notebook, and Table 2 points
+    to that Colab for shown matrix decompositions.
+  - Status: `papers/companion_sources.json` now emits a schema-versioned
+    AlphaEvolve companion-source manifest with the pinned repository commit,
+    `mathematical_results.ipynb` raw/Colab URLs, digest, byte count, nbformat,
+    cell count, readability status, claim mappings, selection policy, runtime-
+    code absence, rights/disclaimer metadata, docs/TODO claim-surface links,
+    and local-cache policy. The paper-manifest gate validates the sidecar.
+  - Remaining gap: none for this bounded committed-source-manifest slice; local
+    generated Colab-equivalent exports, per-claim absence rows, and deeper
+    claim-to-cell spans remain active TODOs.
+
 - [x] Normalize AlphaEvolve References-section bibliography provenance.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
     References section after Author information, with entries through `[120]`.

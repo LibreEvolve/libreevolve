@@ -3555,8 +3555,11 @@ mappings for matrix and constructive-math source evidence. It also records the
 companion repository's improved-results-only selection policy, matched-result
 exclusion, absence of AlphaEvolve runtime code, Apache-2.0 software /
 CC-BY-4.0 materials license split, AS-IS disclaimer, and non-official-product
-boundary. This is external DeepMind source evidence, not a LibreEvolve-generated
-Colab-equivalent notebook or local reproduced result export.
+boundary. The committed `papers/companion_sources.json` manifest emits that
+external source row, its docs/TODO claim-surface links, and its local-cache
+policy; the standard paper-manifest gate validates the sidecar. This is
+external DeepMind source evidence, not a LibreEvolve-generated Colab-equivalent
+notebook or local reproduced result export.
 Follow-on AlphaEvolve mathematical-discovery source evidence uses
 `libreevolve.alphaevolve_follow_on_math_source.v1` in
 `libreevolve/problems/benchmarks/follow_on_sources.py`; the built-in record

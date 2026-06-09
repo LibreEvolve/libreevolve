@@ -1578,25 +1578,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
     benchmark hardening.
 
-- [ ] Keep README paper-source wording scoped until companion Colab artifacts
-      are emitted in paper workflows.
-  - Spec evidence: AlphaEvolve footnote 2 and Table 2 point readers to the
-    accompanying `google-deepmind/alphaevolve_results` Colab notebook for
-    discovered algorithms, mathematical results, and shown matrix
-    decompositions.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_companion_colab_source.v1`, which validates the
-    official companion repository URL/ref, notebook URLs, digest/byte metadata,
-    nbformat/cell-count readability status, source claim mappings, selection
-    policy, runtime-code absence, and companion repository rights/disclaimer
-    boundary. The paper manifest and runtime paper-artifact workflows still do
-    not emit companion-source rows or local-cache validation.
-  - Required result: when companion-artifact manifest/emitter support lands,
-    update README, ROADMAP, papers index, and code/paper TODO entries together
-    so README distinguishes PDF-source validation, external AlphaEvolve Colab
-    source evidence, local cache status, and LibreEvolve-generated result
-    notebooks/exports.
-
 - [ ] Keep README companion-notebook wording scoped until selection-scope
       metadata exists.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
@@ -1615,18 +1596,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     intentional matched-result absences, verifier-code availability, and
     absence of the AlphaEvolve runtime code.
 
-- [ ] Keep README companion-source rights wording scoped until repository
-      license and disclaimer metadata exists.
+- [ ] Keep README companion-source rights wording scoped until generated
+      artifact rights rows link to repository license/disclaimer metadata.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
     Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
     licensing for other materials, an as-is disclaimer, and a statement that
     the repository is not an official Google product.
-  - Current evidence: README now documents the companion-source contract's
-    Google LLC rights holder/year, Apache-2.0 software license, CC-BY-4.0
-    materials license, artifact-type license mapping, AS-IS disclaimer, and
-    non-official-product boundary. Generated LibreEvolve notebooks, copied
-    verifier code, figures, and construction-data exports still do not emit
-    reuse/reproduction policy rows linked to those source rights.
+  - Current evidence: README now documents the companion-source contract and
+    `papers/companion_sources.json`, including Google LLC rights holder/year,
+    Apache-2.0 software license, CC-BY-4.0 materials license, artifact-type
+    license mapping, AS-IS disclaimer, and non-official-product boundary.
+    Generated LibreEvolve notebooks, copied verifier code, figures, and
+    construction-data exports still do not emit reuse/reproduction policy rows
+    linked to those source rights.
   - Required result: when generated artifact rights rows land, update README,
     ROADMAP, papers index, and code/paper TODOs together so README separates
     source-PDF rights, companion software/materials licensing, generated

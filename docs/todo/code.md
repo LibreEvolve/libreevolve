@@ -2528,31 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add follow-on problem-repository rights and attribution provenance.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README asks users of the package's code or data to cite
-    `Mathematical exploration and discovery at scale`, declares
-    `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,
-    licenses other materials under CC-BY 4.0, includes an as-is disclaimer,
-    says it is not an official Google product, credits Professors Javier
-    Gomez-Serrano and Terence Tao with supervision, problem selection, review,
-    analysis, and commentary, and identifies Problem 65 as originating from
-    the official IMO problems website.
-  - Current evidence: existing follow-on TODOs require generic license/source
-    notes and coverage manifests, while earlier rights TODOs are scoped to the
-    original `alphaevolve_results` companion repository and the cached PDF.
-    They do not require a separate rights, citation, role-attribution, and
-    source-origin row for the problem repository's webpages, notebooks,
-    verifier code, data, figures, and problem statements.
-  - Required result: add follow-on problem-repository source-use metadata and
-    validators with repository URL/ref/commit/date, citation/BibTeX metadata,
-    rights holder/year, software license, materials license, license URLs,
-    artifact-type license mapping, as-is and non-official-product disclaimers,
-    contributor-role attribution notes, Problem 65 IMO source URL, and
-    README/ROADMAP wording that separates these repository terms from the
-    original AlphaEvolve PDF, the `alphaevolve_results` repository, and
-    LibreEvolve's own license.
-
 - [ ] Add follow-on problem-repository runtime-absence provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says each notebook contains the prompt, verification code, initial

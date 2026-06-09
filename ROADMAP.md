@@ -628,6 +628,14 @@ is not yet an AlphaEvolve reproduction.
   with docs/TODO claim-surface links and an explicit no-cache policy. Cached
   PDF rows, per-problem inventory, numbered-page reconciliation, notebook
   artifact hashes, and Appendix B claim mappings remain open.
+- Keep follow-on problem-repository rights separate from the original PDF,
+  `alphaevolve_results`, and LibreEvolve licensing:
+  `papers/follow_on_repository_rights.json` now records the pinned repository's
+  citation/BibTeX requirement, Google LLC copyright, Apache-2.0 software /
+  CC-BY-4.0 materials split, artifact-type license mapping, AS-IS and
+  non-official-product disclaimers, Gómez-Serrano/Tao role attribution, Problem
+  65's official IMO origin, docs/TODO claim-surface links, and reuse policy for
+  copied source material versus generated local artifacts.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

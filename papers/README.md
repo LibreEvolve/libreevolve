@@ -1328,6 +1328,14 @@ Implemented:
   and an explicit no-cache policy. It is later math-source evidence, not the
   original `2506.13131` specification, not a cached PDF row, and not a
   per-problem notebook/status inventory.
+- `papers/follow_on_repository_rights.json`: follow-on problem-repository
+  source-use sidecar. It records the pinned repository's citation/BibTeX
+  requirement, Google LLC copyright, Apache-2.0 software / CC-BY-4.0 materials
+  split, artifact-type license mapping, AS-IS and non-official-product
+  disclaimers, Gómez-Serrano/Tao role attribution, Problem 65's official IMO
+  origin, docs/TODO claim-surface links, and reuse policy. It is source-use
+  provenance for the later problem repository, not original AlphaEvolve PDF
+  rights, `alphaevolve_results` companion rights, or LibreEvolve licensing.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

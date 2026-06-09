@@ -4,6 +4,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document follow-on problem-repository rights and attribution gates.
+  - Spec evidence: the follow-on repository README records citation, dual
+    license, disclaimer, role-attribution, and Problem 65 source-origin terms.
+  - Status: ROADMAP now documents `papers/follow_on_repository_rights.json` as
+    the committed source-use sidecar with pinned repository identity,
+    artifact-type license mapping, reuse policy, and separation from original
+    AlphaEvolve PDF rights, `alphaevolve_results`, and LibreEvolve licensing.
+  - Remaining gap: none for this bounded roadmap wording slice; runtime
+    availability, per-problem coverage, and numbered-page reconciliation gates
+    remain active TODOs.
+
 - [x] Document committed follow-on AlphaEvolve math-source manifest.
   - Spec evidence: AlphaEvolve Section 3.2 points to a later
     constructive-math source; current evidence identifies arXiv

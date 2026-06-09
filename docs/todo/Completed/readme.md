@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document follow-on problem-repository rights and attribution.
+  - Spec evidence: the follow-on repository README records citation, dual
+    license, disclaimer, role-attribution, and Problem 65 source-origin terms.
+  - Status: README now documents `papers/follow_on_repository_rights.json` as
+    the committed source-use sidecar for the pinned problem repository,
+    separating repository terms from original AlphaEvolve PDF rights,
+    `alphaevolve_results` companion rights, and LibreEvolve licensing.
+  - Remaining gap: none for this bounded README wording slice; runtime
+    availability and per-problem source/artifact inventory wording remain
+    active TODOs.
+
 - [x] Document committed follow-on AlphaEvolve math-source manifest.
   - Spec evidence: AlphaEvolve Section 3.2 points to a forthcoming
     constructive-math paper; current source evidence identifies arXiv

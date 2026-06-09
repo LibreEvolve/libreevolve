@@ -3585,6 +3585,13 @@ row with docs/TODO claim-surface links and an explicit no-cache policy: it is
 later math-source evidence for the original paper's Section 3.2 handoff, not
 the original `2506.13131` AlphaEvolve specification, not a local cached PDF
 row, and not proof of per-problem notebook/status coverage yet.
+`papers/follow_on_repository_rights.json` records the pinned problem
+repository's source-use terms separately from both the original PDF and
+`alphaevolve_results`: citation/BibTeX requirement, Google LLC copyright,
+Apache-2.0 software / CC-BY-4.0 materials split, artifact-type license mapping,
+AS-IS and non-official-product disclaimers, Gómez-Serrano/Tao role
+attribution, Problem 65's official IMO origin, and the boundary between copied
+source material, generated local artifacts, and LibreEvolve's own license.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

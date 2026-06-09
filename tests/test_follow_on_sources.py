@@ -4,9 +4,13 @@ import json
 from libreevolve.problems.benchmarks.follow_on_sources import (
     ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA,
     alphaevolve_follow_on_math_source_record,
+    alphaevolve_follow_on_repository_rights_manifest_record,
+    alphaevolve_follow_on_repository_rights_record,
     alphaevolve_follow_on_source_manifest_record,
     render_alphaevolve_follow_on_math_source_summary,
     validate_alphaevolve_follow_on_math_source,
+    validate_alphaevolve_follow_on_repository_rights,
+    validate_alphaevolve_follow_on_repository_rights_manifest,
     validate_alphaevolve_follow_on_source_manifest,
 )
 from libreevolve.tools.paper_manifest import validate_paper_manifest
@@ -80,6 +84,93 @@ def test_validate_alphaevolve_follow_on_source_manifest_rejects_surface_and_cach
     assert "invalid_cache_policy_paper_cache_manifest_row_required" in codes
     assert "invalid_cache_policy_scope" in codes
     assert "manifest_remaining_work_mismatch" in codes
+
+
+def test_validate_alphaevolve_follow_on_repository_rights_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_repository_rights_record()
+
+    validation = validate_alphaevolve_follow_on_repository_rights(recordset)
+
+    assert validation.ok is True
+    assert validation.rights_count == 1
+    assert validation.citation_required is True
+    assert validation.artifact_license_mapping_count == 11
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_repository_rights_manifest_accepts_builtin_record():
+    recordset = alphaevolve_follow_on_repository_rights_manifest_record()
+
+    validation = validate_alphaevolve_follow_on_repository_rights_manifest(recordset)
+
+    assert validation.ok is True
+    assert validation.rights_count == 1
+    assert validation.citation_required is True
+    assert validation.artifact_license_mapping_count == 11
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_follow_on_repository_rights_loads_json_file(tmp_path):
+    path = tmp_path / "follow_on_repository_rights.json"
+    path.write_text(
+        json.dumps(alphaevolve_follow_on_repository_rights_manifest_record()),
+        encoding="utf-8",
+    )
+
+    validation = validate_alphaevolve_follow_on_repository_rights_manifest(path)
+
+    assert validation.ok is True
+
+
+def test_validate_alphaevolve_follow_on_repository_rights_rejects_source_use_drift():
+    recordset = copy.deepcopy(alphaevolve_follow_on_repository_rights_record())
+    recordset["repository"]["commit"] = "0" * 40
+    recordset["citation"]["required"] = False
+    recordset["citation"]["arxiv_id"] = "2506.13131"
+    recordset["rights"]["software_license"] = "MIT"
+    recordset["rights"]["artifact_license_mapping"]["problem_pages"] = "Apache-2.0"
+    recordset["disclaimers"]["official_google_product"] = True
+    recordset["role_attribution"]["contributors"][0]["roles"] = ["review"]
+    recordset["third_party_origins"][0]["url"] = "https://example.com"
+    recordset["boundary"]["distinct_from_libreevolve_mit_license"] = False
+
+    validation = validate_alphaevolve_follow_on_repository_rights(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_repository_rights_repository_commit" in codes
+    assert "invalid_repository_rights_citation_required" in codes
+    assert "invalid_repository_rights_citation_arxiv_id" in codes
+    assert "invalid_repository_rights_software_license" in codes
+    assert "repository_rights_artifact_license_mapping_mismatch" in codes
+    assert "invalid_repository_rights_disclaimers_official_google_product" in codes
+    assert "repository_rights_contributor_roles_mismatch" in codes
+    assert "invalid_repository_rights_third_party_origin_url" in codes
+    assert "invalid_repository_rights_boundary_distinct_from_libreevolve_mit_license" in codes
+
+
+def test_validate_alphaevolve_follow_on_repository_rights_manifest_rejects_surface_and_policy_drift():
+    recordset = alphaevolve_follow_on_repository_rights_manifest_record()
+    source = recordset["sources"][0]
+    source["manifest_row_id"] = "2506.13131"
+    source["follow_on_source_manifest"] = "papers/companion_sources.json"
+    source["repository_rights_id"] = "other"
+    source["claim_artifact_links"]["repository_rights_used_by"] = ["README.md"]
+    source["claim_artifact_links"]["policy"] = "same_as_libreevolve_license"
+    source["reuse_policy"]["publication_ready_without_rights_review"] = True
+    source["reuse_policy"]["scope"] = "LibreEvolve project licensing"
+
+    validation = validate_alphaevolve_follow_on_repository_rights_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_repository_rights_manifest_manifest_row_id" in codes
+    assert "invalid_repository_rights_manifest_follow_on_source_manifest" in codes
+    assert "invalid_repository_rights_manifest_repository_rights_id" in codes
+    assert "repository_rights_claim_surface_mismatch" in codes
+    assert "invalid_repository_rights_claim_policy" in codes
+    assert "invalid_repository_rights_reuse_policy_publication_ready_without_rights_review" in codes
+    assert "invalid_repository_rights_reuse_policy_scope" in codes
 
 
 def test_validate_alphaevolve_follow_on_math_source_rejects_paper_identity_and_cache_overclaims():

@@ -6,6 +6,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track follow-on problem-repository rights, citation, and attribution.
+  - Paper/source evidence: the follow-on problem repository README records the
+    citation instruction, Google LLC copyright, Apache-2.0 software terms,
+    CC-BY-4.0 materials terms, AS-IS and non-official-product disclaimers,
+    Gómez-Serrano/Tao role attribution, and Problem 65 IMO source origin.
+  - Status: `papers/follow_on_repository_rights.json` now records the
+    repository source-use row with pinned URL/ref/commit/date, citation/BibTeX
+    fields, license URLs, artifact-type license mapping, source-origin notes,
+    docs/TODO claim-surface links, and reuse policy. The paper-manifest gate
+    requires and validates this sidecar at repo root.
+  - Remaining gap: none for this bounded source-use slice; notebook/runtime
+    absence, per-problem inventory, and generated-artifact source-relationship
+    rows remain separate active paper work.
+
 - [x] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     constructive-math examples and method details would appear in an upcoming

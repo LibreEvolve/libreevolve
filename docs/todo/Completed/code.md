@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add follow-on problem-repository rights and attribution provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
+    README asks users of code or data to cite the follow-on paper, declares
+    Google LLC copyright, Apache-2.0 software licensing, CC-BY-4.0 materials
+    licensing, AS-IS terms, non-official-product status, Gómez-Serrano/Tao
+    role attribution, and Problem 65's official IMO origin.
+  - Status: `libreevolve.alphaevolve_follow_on_repository_rights.v1` now emits
+    `papers/follow_on_repository_rights.json` with pinned repository identity,
+    citation/BibTeX metadata, rights holder/year, license URLs, artifact-type
+    license mapping, disclaimers, contributor-role attribution, Problem 65 IMO
+    source URL, docs/TODO claim-surface links, and reuse policy separating
+    copied source material from generated local artifacts.
+  - Remaining gap: runtime-absence metadata, per-problem notebook/artifact
+    matrices, numbered-page reconciliation, and cached follow-on PDF evidence
+    remain active follow-on TODOs.
+
 - [x] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says the
     constructive-math examples and method details would be provided in an

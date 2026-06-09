@@ -24,6 +24,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
     alphaevolve_companion_source_manifest_record,
 )
 from libreevolve.problems.benchmarks.follow_on_sources import (
+    alphaevolve_follow_on_repository_rights_manifest_record,
     alphaevolve_follow_on_source_manifest_record,
 )
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
@@ -362,6 +363,43 @@ def test_validate_paper_manifest_rejects_follow_on_source_manifest_drift(tmp_pat
 
     assert report.ok is False
     assert "alphaevolve_follow_on_source_manifest_repository_commit_drift" in codes
+
+
+def test_validate_paper_manifest_accepts_matching_follow_on_repository_rights_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "follow_on_repository_rights.json").write_text(
+        json.dumps(alphaevolve_follow_on_repository_rights_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_follow_on_repository_rights_manifest_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    rights_record = alphaevolve_follow_on_repository_rights_manifest_record()
+    rights_record["sources"][0]["repository_rights_record"]["rights"]["software_license"] = "MIT"
+    (tmp_path / "papers" / "follow_on_repository_rights.json").write_text(
+        json.dumps(rights_record, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_follow_on_repository_rights_manifest_invalid_repository_rights_software_license" in codes
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

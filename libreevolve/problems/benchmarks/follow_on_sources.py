@@ -11,7 +11,16 @@ ALPHAEVOLVE_FOLLOW_ON_MATH_SOURCE_SCHEMA = "libreevolve.alphaevolve_follow_on_ma
 ALPHAEVOLVE_FOLLOW_ON_SOURCE_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_follow_on_source_manifest.v1"
 )
+ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_repository_rights.v1"
+)
+ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_follow_on_repository_rights_manifest.v1"
+)
 EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE = "papers/follow_on_sources.json"
+EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_FILE = (
+    "papers/follow_on_repository_rights.json"
+)
 EXPECTED_ORIGINAL_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_FOLLOW_ON_ARXIV_ID = "2511.02864"
 EXPECTED_FOLLOW_ON_VERSION = 3
@@ -63,6 +72,28 @@ EXPECTED_ARTIFACT_KINDS = (
 )
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _COMMIT_RE = re.compile(r"[0-9a-f]{40}")
+EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_SURFACES = {
+    "README.md",
+    "ROADMAP.md",
+    "papers/README.md",
+    "docs/todo/code.md",
+    "docs/todo/papers.md",
+    "docs/todo/readme.md",
+    "docs/todo/roadmap.md",
+}
+EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING = {
+    "notebook_code": "Apache-2.0",
+    "verification_code": "Apache-2.0",
+    "analysis_code": "Apache-2.0",
+    "initial_programs": "Apache-2.0",
+    "final_evolved_programs": "Apache-2.0",
+    "visualization_code": "Apache-2.0",
+    "problem_pages": "CC-BY-4.0",
+    "problem_statements": "CC-BY-4.0",
+    "notebook_prompt_text": "CC-BY-4.0",
+    "status_artifacts": "CC-BY-4.0",
+    "result_distribution_artifacts": "CC-BY-4.0",
+}
 
 
 @dataclass(frozen=True)
@@ -78,6 +109,15 @@ class AlphaEvolveFollowOnMathSourceValidation:
     source_count: int
     repository_ref_pinned: bool
     local_pdf_cache_available: bool
+    issues: list[AlphaEvolveFollowOnMathSourceIssue]
+
+
+@dataclass(frozen=True)
+class AlphaEvolveFollowOnRepositoryRightsValidation:
+    ok: bool
+    rights_count: int
+    citation_required: bool
+    artifact_license_mapping_count: int
     issues: list[AlphaEvolveFollowOnMathSourceIssue]
 
 
@@ -158,6 +198,122 @@ def alphaevolve_follow_on_math_source_record() -> dict[str, Any]:
             "validate_notebook_prompt_verifier_initial_final_artifacts",
             "map_original_appendix_b_claims_to_follow_on_problem_records",
             "attach_rights_attribution_to_generated_artifacts",
+        ],
+    }
+
+
+def alphaevolve_follow_on_repository_rights_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_SCHEMA,
+        "source_family": "alphaevolve_follow_on_problem_repository_rights",
+        "source_paper_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "repository": {
+            "name": EXPECTED_REPOSITORY_NAME,
+            "url": EXPECTED_REPOSITORY_URL,
+            "commit": EXPECTED_REPOSITORY_COMMIT,
+            "snapshot_date": "2026-06-08",
+            "readme_raw_url": (
+                "https://raw.githubusercontent.com/google-deepmind/"
+                f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/README.md"
+            ),
+            "license_file": "LICENSE",
+            "license_url": f"{EXPECTED_REPOSITORY_URL}/blob/{EXPECTED_REPOSITORY_COMMIT}/LICENSE",
+        },
+        "citation": {
+            "required": True,
+            "bibtex_key": "alphaevolve",
+            "title": EXPECTED_FOLLOW_ON_TITLE,
+            "authors": [
+                "Georgiev, Bogdan",
+                "Gomez-Serrano, Javier",
+                "Tao, Terence",
+                "Wagner, Adam Zsolt",
+            ],
+            "year": 2025,
+            "journal": f"arXiv preprint arXiv:{EXPECTED_FOLLOW_ON_ARXIV_ID}",
+            "arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        },
+        "rights": {
+            "rights_holder": "Google LLC",
+            "copyright_year": 2025,
+            "software_license": "Apache-2.0",
+            "software_license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+            "materials_license": "CC-BY-4.0",
+            "materials_license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+            "artifact_license_mapping": dict(EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING),
+        },
+        "disclaimers": {
+            "as_is": True,
+            "official_google_product": False,
+            "as_is_source_phrase": 'distributed on an "AS IS" BASIS',
+            "non_official_product_source_phrase": "This is not an official Google product.",
+        },
+        "role_attribution": {
+            "contributors": [
+                {
+                    "name": "Javier Gomez-Serrano",
+                    "affiliation": "Brown University",
+                    "roles": ["supervision", "problem_selection", "review", "analysis", "commentary"],
+                },
+                {
+                    "name": "Terence Tao",
+                    "affiliation": "University of California, Los Angeles",
+                    "roles": ["supervision", "problem_selection", "review", "analysis", "commentary"],
+                },
+            ],
+            "source_phrase": (
+                "provided supervision, problem selection, review, analysis and commentary"
+            ),
+        },
+        "third_party_origins": [
+            {
+                "problem_id": 65,
+                "origin": "official IMO problems website",
+                "url": "https://www.imo-official.org/problems.aspx",
+                "source_phrase": "Problem 65 originates from https://www.imo-official.org/problems.aspx",
+            }
+        ],
+        "boundary": {
+            "distinct_from_original_alphaevolve_pdf_rights": True,
+            "distinct_from_alphaevolve_results_companion_rights": True,
+            "distinct_from_libreevolve_mit_license": True,
+            "source_rights_holder_required_for_copied_material": True,
+            "generated_artifacts_need_source_relationship": True,
+            "local_project_endorsement": False,
+        },
+    }
+
+
+def alphaevolve_follow_on_repository_rights_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_SCHEMA,
+        "repository_rights_count": 1,
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+                "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+                "repository_rights_id": "alphaevolve_repository_of_problems_rights",
+                "repository_rights_record": alphaevolve_follow_on_repository_rights_record(),
+                "claim_artifact_links": {
+                    "repository_rights_used_by": sorted(
+                        EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_SURFACES
+                    ),
+                    "policy": (
+                        "follow_on_problem_repository_rights_must_remain_separate_"
+                        "from_original_pdf_companion_repository_and_libreevolve_license"
+                    ),
+                },
+                "reuse_policy": {
+                    "copied_repository_material_requires_source_attribution": True,
+                    "generated_local_artifacts_require_source_relationship": True,
+                    "publication_ready_without_rights_review": False,
+                    "scope": (
+                        "follow-on problem repository source-use terms, not original "
+                        "AlphaEvolve PDF rights or LibreEvolve project licensing"
+                    ),
+                },
+            }
         ],
     }
 
@@ -281,6 +437,72 @@ def validate_alphaevolve_follow_on_source_manifest(
     )
 
 
+def validate_alphaevolve_follow_on_repository_rights(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnRepositoryRightsValidation:
+    data, read_issues = _load_repository_rights_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnRepositoryRightsValidation(False, 0, False, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_SCHEMA:
+        issues.append(_issue("invalid_repository_rights_schema", "unsupported follow-on repository rights schema"))
+    if data.get("source_family") != "alphaevolve_follow_on_problem_repository_rights":
+        issues.append(_issue("invalid_repository_rights_source_family", "source_family must identify follow-on repository rights"))
+    if data.get("source_paper_id") != EXPECTED_FOLLOW_ON_ARXIV_ID:
+        issues.append(_issue("invalid_repository_rights_source_paper_id", "source_paper_id must be 2511.02864"))
+    if data.get("source_manifest") != EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE:
+        issues.append(_issue("invalid_repository_rights_source_manifest", "source_manifest must point to papers/follow_on_sources.json"))
+    _validate_repository_rights_repository(data.get("repository"), issues)
+    citation_required = _validate_repository_rights_citation(data.get("citation"), issues)
+    mapping_count = _validate_repository_rights_rights(data.get("rights"), issues)
+    _validate_repository_rights_disclaimers(data.get("disclaimers"), issues)
+    _validate_repository_rights_role_attribution(data.get("role_attribution"), issues)
+    _validate_repository_rights_third_party_origins(data.get("third_party_origins"), issues)
+    _validate_repository_rights_boundary(data.get("boundary"), issues)
+    return AlphaEvolveFollowOnRepositoryRightsValidation(
+        ok=not issues,
+        rights_count=1 if isinstance(data.get("rights"), dict) else 0,
+        citation_required=citation_required,
+        artifact_license_mapping_count=mapping_count,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_follow_on_repository_rights_manifest(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveFollowOnRepositoryRightsValidation:
+    data, read_issues = _load_repository_rights_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveFollowOnRepositoryRightsValidation(False, 0, False, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveFollowOnMathSourceIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_FOLLOW_ON_REPOSITORY_RIGHTS_MANIFEST_SCHEMA:
+        issues.append(_issue("invalid_repository_rights_manifest_schema", "unsupported follow-on repository rights manifest schema"))
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(_issue("invalid_repository_rights_manifest_sources", "repository-rights manifest sources must be a list"))
+        sources = []
+    rights_count = len(sources)
+    if data.get("repository_rights_count") != rights_count:
+        issues.append(_issue("invalid_repository_rights_count", "repository_rights_count must equal the number of rights records"))
+    if rights_count != 1:
+        issues.append(_issue("invalid_repository_rights_source_count", "repository-rights manifest must contain the problem repository row"))
+    citation_required = False
+    mapping_count = 0
+    for index, source in enumerate(sources):
+        report = _validate_repository_rights_manifest_source(source, issues, index)
+        citation_required = citation_required or report.citation_required
+        mapping_count += report.artifact_license_mapping_count
+    return AlphaEvolveFollowOnRepositoryRightsValidation(
+        ok=not issues,
+        rights_count=rights_count,
+        citation_required=citation_required,
+        artifact_license_mapping_count=mapping_count,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_follow_on_math_source_summary(recordset: object | str | Path | None = None) -> str:
     validation = validate_alphaevolve_follow_on_math_source(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -312,6 +534,22 @@ def _load_manifest_recordset(
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
     if recordset is None:
         return alphaevolve_follow_on_source_manifest_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_repository_rights_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_repository_rights_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_repository_rights_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveFollowOnMathSourceIssue]]:
+    if recordset is None:
+        return alphaevolve_follow_on_repository_rights_manifest_record(), []
     return _load_recordset(recordset)
 
 
@@ -573,6 +811,236 @@ def _validate_follow_on_manifest_remaining_work(
     actual = set(value)
     if actual != expected:
         issues.append(_issue("manifest_remaining_work_mismatch", "remaining_work must preserve only unsatisfied follow-on inventory, mapping, and rights work"))
+
+
+def _validate_repository_rights_repository(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_repository", "repository must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "name": EXPECTED_REPOSITORY_NAME,
+        "url": EXPECTED_REPOSITORY_URL,
+        "commit": EXPECTED_REPOSITORY_COMMIT,
+        "snapshot_date": "2026-06-08",
+        "readme_raw_url": (
+            "https://raw.githubusercontent.com/google-deepmind/"
+            f"alphaevolve_repository_of_problems/{EXPECTED_REPOSITORY_COMMIT}/README.md"
+        ),
+        "license_file": "LICENSE",
+        "license_url": f"{EXPECTED_REPOSITORY_URL}/blob/{EXPECTED_REPOSITORY_COMMIT}/LICENSE",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_repository_{field}", f"repository.{field} must match the pinned rights source", EXPECTED_REPOSITORY_NAME))
+    commit = value.get("commit")
+    if not isinstance(commit, str) or _COMMIT_RE.fullmatch(commit) is None:
+        issues.append(_issue("invalid_repository_rights_commit", "repository.commit must be a 40-character commit hash", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_citation(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> bool:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_citation", "citation must be an object", EXPECTED_FOLLOW_ON_ARXIV_ID))
+        return False
+    expected = {
+        "required": True,
+        "bibtex_key": "alphaevolve",
+        "title": EXPECTED_FOLLOW_ON_TITLE,
+        "authors": [
+            "Georgiev, Bogdan",
+            "Gomez-Serrano, Javier",
+            "Tao, Terence",
+            "Wagner, Adam Zsolt",
+        ],
+        "year": 2025,
+        "journal": f"arXiv preprint arXiv:{EXPECTED_FOLLOW_ON_ARXIV_ID}",
+        "arxiv_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_citation_{field}", f"citation.{field} must match the README BibTeX", EXPECTED_FOLLOW_ON_ARXIV_ID))
+    return value.get("required") is True
+
+
+def _validate_repository_rights_rights(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_rights", "rights must be an object", EXPECTED_REPOSITORY_NAME))
+        return 0
+    expected = {
+        "rights_holder": "Google LLC",
+        "copyright_year": 2025,
+        "software_license": "Apache-2.0",
+        "software_license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "materials_license": "CC-BY-4.0",
+        "materials_license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_{field}", f"rights.{field} must match the problem repository README", EXPECTED_REPOSITORY_NAME))
+    mapping = value.get("artifact_license_mapping")
+    if not isinstance(mapping, dict):
+        issues.append(_issue("invalid_repository_rights_artifact_license_mapping", "artifact_license_mapping must be an object", EXPECTED_REPOSITORY_NAME))
+        return 0
+    if mapping != EXPECTED_FOLLOW_ON_REPOSITORY_LICENSE_MAPPING:
+        issues.append(_issue("repository_rights_artifact_license_mapping_mismatch", "artifact license mapping must distinguish software from other materials", EXPECTED_REPOSITORY_NAME))
+    return len(mapping)
+
+
+def _validate_repository_rights_disclaimers(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_disclaimers", "disclaimers must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "as_is": True,
+        "official_google_product": False,
+        "as_is_source_phrase": 'distributed on an "AS IS" BASIS',
+        "non_official_product_source_phrase": "This is not an official Google product.",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_disclaimers_{field}", f"disclaimers.{field} must preserve the README disclaimer", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_role_attribution(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_role_attribution", "role_attribution must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected_names = {"Javier Gomez-Serrano", "Terence Tao"}
+    expected_roles = {"supervision", "problem_selection", "review", "analysis", "commentary"}
+    contributors = value.get("contributors")
+    if not isinstance(contributors, list):
+        issues.append(_issue("invalid_repository_rights_contributors", "contributors must be a list", EXPECTED_REPOSITORY_NAME))
+        contributors = []
+    names = {item.get("name") for item in contributors if isinstance(item, dict)}
+    if names != expected_names:
+        issues.append(_issue("repository_rights_contributor_mismatch", "contributors must preserve the README role-attribution names", EXPECTED_REPOSITORY_NAME))
+    for contributor in contributors:
+        if not isinstance(contributor, dict):
+            issues.append(_issue("invalid_repository_rights_contributor", "contributors must be objects", EXPECTED_REPOSITORY_NAME))
+            continue
+        roles = set(contributor.get("roles") or ())
+        if roles != expected_roles:
+            issues.append(_issue("repository_rights_contributor_roles_mismatch", "contributor roles must preserve supervision/problem-selection/review/analysis/commentary", EXPECTED_REPOSITORY_NAME))
+    phrase = value.get("source_phrase")
+    if not isinstance(phrase, str) or "problem selection" not in phrase or "analysis and commentary" not in phrase:
+        issues.append(_issue("invalid_repository_rights_role_source_phrase", "role source phrase must preserve README attribution wording", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_third_party_origins(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, list):
+        issues.append(_issue("invalid_repository_rights_third_party_origins", "third_party_origins must be a list", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "problem_id": 65,
+        "origin": "official IMO problems website",
+        "url": "https://www.imo-official.org/problems.aspx",
+        "source_phrase": "Problem 65 originates from https://www.imo-official.org/problems.aspx",
+    }
+    if len(value) != 1 or not isinstance(value[0], dict):
+        issues.append(_issue("repository_rights_third_party_origin_count", "third_party_origins must contain the Problem 65 IMO source row", EXPECTED_REPOSITORY_NAME))
+        return
+    for field, expected_value in expected.items():
+        if value[0].get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_third_party_origin_{field}", f"third_party_origins[0].{field} must match README Problem 65 origin", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_boundary(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_boundary", "boundary must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "distinct_from_original_alphaevolve_pdf_rights": True,
+        "distinct_from_alphaevolve_results_companion_rights": True,
+        "distinct_from_libreevolve_mit_license": True,
+        "source_rights_holder_required_for_copied_material": True,
+        "generated_artifacts_need_source_relationship": True,
+        "local_project_endorsement": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_boundary_{field}", f"boundary.{field} must preserve repository rights separation", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+    index: int,
+) -> AlphaEvolveFollowOnRepositoryRightsValidation:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_manifest_source", f"repository-rights manifest source {index} must be an object", EXPECTED_REPOSITORY_NAME))
+        return AlphaEvolveFollowOnRepositoryRightsValidation(False, 0, False, 0, [])
+    expected = {
+        "manifest_row_id": EXPECTED_FOLLOW_ON_ARXIV_ID,
+        "follow_on_source_manifest": EXPECTED_FOLLOW_ON_SOURCE_MANIFEST_FILE,
+        "repository_rights_id": "alphaevolve_repository_of_problems_rights",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_manifest_{field}", f"{field} must identify the follow-on problem repository rights row", EXPECTED_REPOSITORY_NAME))
+    report = validate_alphaevolve_follow_on_repository_rights(value.get("repository_rights_record"))
+    issues.extend(report.issues)
+    _validate_repository_rights_claim_artifact_links(value.get("claim_artifact_links"), issues)
+    _validate_repository_rights_reuse_policy(value.get("reuse_policy"), issues)
+    return report
+
+
+def _validate_repository_rights_claim_artifact_links(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_claim_artifact_links", "claim_artifact_links must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    surfaces = value.get("repository_rights_used_by")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(_issue("invalid_repository_rights_claim_surfaces", "repository_rights_used_by must list docs, papers, and active TODO surfaces", EXPECTED_REPOSITORY_NAME))
+    elif set(surfaces) != EXPECTED_FOLLOW_ON_REPOSITORY_RIGHTS_SURFACES:
+        issues.append(_issue("repository_rights_claim_surface_mismatch", "repository_rights_used_by must cover docs, papers, and active TODO evidence", EXPECTED_REPOSITORY_NAME))
+    if value.get("policy") != (
+        "follow_on_problem_repository_rights_must_remain_separate_"
+        "from_original_pdf_companion_repository_and_libreevolve_license"
+    ):
+        issues.append(_issue("invalid_repository_rights_claim_policy", "claim policy must separate problem repository rights from other license surfaces", EXPECTED_REPOSITORY_NAME))
+
+
+def _validate_repository_rights_reuse_policy(
+    value: object,
+    issues: list[AlphaEvolveFollowOnMathSourceIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_repository_rights_reuse_policy", "reuse_policy must be an object", EXPECTED_REPOSITORY_NAME))
+        return
+    expected = {
+        "copied_repository_material_requires_source_attribution": True,
+        "generated_local_artifacts_require_source_relationship": True,
+        "publication_ready_without_rights_review": False,
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_repository_rights_reuse_policy_{field}", f"reuse_policy.{field} must preserve repository rights review boundaries", EXPECTED_REPOSITORY_NAME))
+    scope = value.get("scope")
+    if not isinstance(scope, str) or "not original AlphaEvolve PDF rights" not in scope or "LibreEvolve project licensing" not in scope:
+        issues.append(_issue("invalid_repository_rights_reuse_policy_scope", "reuse_policy.scope must separate repository rights from PDF rights and project licensing", EXPECTED_REPOSITORY_NAME))
 
 
 def _issue(code: str, message: str, source_id: str | None = None) -> AlphaEvolveFollowOnMathSourceIssue:

@@ -2463,30 +2463,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classification, and snapshot-scoped wording for any 67-versus-68 source
     mismatch.
 
-- [ ] Keep follow-on problem-repository rights and attribution gates scoped.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README asks users of the code or data to cite `Mathematical exploration and
-    discovery at scale`, declares Google LLC copyright, Apache 2.0 licensing
-    for software, CC-BY 4.0 licensing for other materials, an as-is warranty
-    disclaimer, and a non-official-Google-product disclaimer. It credits
-    Professors Javier Gomez-Serrano and Terence Tao with supervision, problem
-    selection, review, analysis, and commentary, and says Problem 65 originates
-    from the official IMO problems website.
-  - Current evidence: roadmap TODOs already gate follow-on paper/repository
-    source tracking and coverage snapshots, and separate the original
-    companion-result repository rights. They do not require roadmap milestones
-    to preserve this problem repository's citation instruction, dual license,
-    artifact-type license mapping, contributor-role attribution, IMO-origin
-    note, or non-endorsement boundary before using its webpages, notebooks,
-    verifier code, data, or figures as evidence.
-  - Required result: when follow-on source-use metadata lands, update ROADMAP
-    evidence gates so problem-repository use requires repository
-    URL/ref/commit/date, citation metadata, software/materials license split,
-    disclaimer and non-official-product notes, role-attribution notes, Problem
-    65 source-origin metadata, and README/papers cross-links that distinguish
-    these terms from the original AlphaEvolve PDF, `alphaevolve_results`, and
-    LibreEvolve's own license.
-
 - [ ] Keep follow-on runtime-availability roadmap gates scoped.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says notebooks contain prompts, verification code, initial programs,

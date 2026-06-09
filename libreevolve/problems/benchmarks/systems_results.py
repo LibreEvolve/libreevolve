@@ -21,6 +21,19 @@ GATE_ARTIFACT_KINDS = {
     "heldout": "heldout_report",
     "reference_correctness": "reference_report",
 }
+APPLICATION_PROVENANCE_ROLES = frozenset(
+    {
+        "application_colead",
+        "domain_advisor",
+        "domain_reviewer",
+        "validation_infrastructure_owner",
+        "workload_data_steward",
+        "production_approver",
+    }
+)
+APPLICATION_APPROVAL_STATES = frozenset(
+    {"pending", "reviewed", "approved", "deployed", "not_applicable"}
+)
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
@@ -67,6 +80,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         domain = None
     gate_statuses = _validate_gates(data.get("gates"), issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    application_ready = _validate_application_provenance(
+        data.get("application_provenance"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     certification_ready = _validate_certification_reference(data.get("certification"), issues)
     if data.get("alphaevolve_ready") is True and not _gates_are_alphaevolve_ready(gate_statuses):
         issues.append(
@@ -77,6 +97,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         )
     if data.get("alphaevolve_ready") is True:
         _validate_ready_gate_artifacts(gate_statuses, artifact_kinds, issues)
+        if not application_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_application_provenance",
+                    "alphaevolve_ready systems reports require application owner/reviewer provenance",
+                )
+            )
         if certification_ready is False:
             issues.append(
                 SystemsResultIssue(
@@ -205,6 +232,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         for gate in gates:
             if isinstance(gate, dict):
                 gate_rows.append(f"{gate.get('name', '<unknown>')}={gate.get('status', '<unknown>')}")
+    application_records = report.get("application_provenance", {}).get("records")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -216,6 +244,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| candidate_id | {report.get('candidate_id', '<unknown>')} |",
         f"| gates | {', '.join(gate_rows) if gate_rows else '<none>'} |",
         f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
+        f"| application_provenance_records | {len(application_records) if isinstance(application_records, list) else 0} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -696,6 +725,201 @@ def _validate_ready_gate_artifacts(
                 "alphaevolve_ready passed gates require matching artifact kinds",
             )
         )
+
+
+def _validate_application_provenance(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_application_provenance",
+                    "alphaevolve_ready systems reports require application_provenance",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_application_provenance",
+                "application_provenance must be an object",
+            )
+        )
+        return False
+    boundary = value.get("boundary_statement")
+    if not isinstance(boundary, str) or not boundary.strip():
+        issues.append(
+            SystemsResultIssue(
+                "missing_application_boundary",
+                "application_provenance requires a non-empty boundary_statement",
+            )
+        )
+    records = value.get("records")
+    if not isinstance(records, list) or not records:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_application_records",
+                "application_provenance.records must be a non-empty list",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    claim_ids = _report_claim_ids(report)
+    role_counts: dict[str, int] = {}
+    approved_or_deployed = False
+    record_ids: set[str] = set()
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_application_record",
+                    "application provenance records must be objects",
+                )
+            )
+            continue
+        prefix = f"application_provenance.records[{index}]"
+        record_id = record.get("record_id")
+        if not isinstance(record_id, str) or _ID_RE.fullmatch(record_id) is None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_application_record_id",
+                    f"{prefix}.record_id must be stable",
+                )
+            )
+        elif record_id in record_ids:
+            issues.append(
+                SystemsResultIssue(
+                    "duplicate_application_record",
+                    "application provenance record_id values must be unique",
+                )
+            )
+        else:
+            record_ids.add(record_id)
+        role = record.get("role")
+        if role not in APPLICATION_PROVENANCE_ROLES:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_application_role",
+                    f"{prefix}.role is unsupported",
+                )
+            )
+        else:
+            role_counts[role] = role_counts.get(role, 0) + 1
+        if domain is not None and record.get("domain") != domain:
+            issues.append(
+                SystemsResultIssue(
+                    "application_domain_mismatch",
+                    f"{prefix}.domain must match the systems report domain",
+                )
+            )
+        for field in (
+            "responsible_label",
+            "review_scope",
+            "ownership_scope",
+        ):
+            text = record.get(field)
+            if not isinstance(text, str) or not text.strip():
+                issues.append(
+                    SystemsResultIssue(
+                        f"invalid_application_{field}",
+                        f"{prefix}.{field} must be non-empty text",
+                    )
+                )
+        approval_state = record.get("approval_state")
+        if approval_state not in APPLICATION_APPROVAL_STATES:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_application_approval_state",
+                    f"{prefix}.approval_state is unsupported",
+                )
+            )
+        elif approval_state in {"approved", "deployed"}:
+            approved_or_deployed = True
+        _validate_application_reference_list(
+            record.get("claim_links"),
+            claim_ids,
+            "claim_links",
+            "invalid_application_claim_link",
+            prefix,
+            issues,
+        )
+        _validate_application_reference_list(
+            record.get("artifact_refs"),
+            artifact_paths,
+            "artifact_refs",
+            "invalid_application_artifact_ref",
+            prefix,
+            issues,
+        )
+    required_role_sets = [
+        {"application_colead", "domain_advisor"},
+        {"domain_reviewer"},
+        {"validation_infrastructure_owner", "workload_data_steward"},
+        {"production_approver"},
+    ]
+    missing_groups = [
+        sorted(group)
+        for group in required_role_sets
+        if not any(role_counts.get(role, 0) > 0 for role in group)
+    ]
+    if missing_groups:
+        issues.append(
+            SystemsResultIssue(
+                "missing_application_role_coverage",
+                "application provenance must include owner/advisor, reviewer, validation/data, and approval roles",
+            )
+        )
+    if not approved_or_deployed:
+        issues.append(
+            SystemsResultIssue(
+                "missing_application_approval",
+                "application provenance requires an approved or deployed record",
+            )
+        )
+    return not missing_groups and approved_or_deployed
+
+
+def _report_claim_ids(report: dict[str, Any]) -> set[str]:
+    claim_ids = {report["benchmark_id"]} if isinstance(report.get("benchmark_id"), str) else set()
+    certification = report.get("certification")
+    if isinstance(certification, dict) and isinstance(certification.get("claim_id"), str):
+        claim_ids.add(certification["claim_id"])
+    return claim_ids
+
+
+def _validate_application_reference_list(
+    value: object,
+    allowed: set[str],
+    field: str,
+    code: str,
+    prefix: str,
+    issues: list[SystemsResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            SystemsResultIssue(
+                code,
+                f"{prefix}.{field} must be a non-empty list",
+            )
+        )
+        return
+    for item in value:
+        if not isinstance(item, str) or item not in allowed:
+            issues.append(
+                SystemsResultIssue(
+                    code,
+                    f"{prefix}.{field} must reference declared report evidence",
+                )
+            )
 
 
 def _validate_artifacts(value: object, issues: list[SystemsResultIssue]) -> set[str]:

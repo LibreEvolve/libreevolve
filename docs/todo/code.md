@@ -4025,28 +4025,27 @@ Primary evidence:
     then, finite systems metrics should not be treated as
     reproducible AlphaEvolve result-magnitude evidence.
 
-- [ ] Add application-owner and domain-review provenance for practical systems
-      reports.
+- [ ] Populate application-owner and domain-review provenance for practical
+      systems reports.
   - Spec evidence: AlphaEvolve Section 3.3 reports production-facing
     applications across Borg scheduling, Gemini/Pallas kernels, TPU RTL, and
     XLA/FlashAttention IR, while the Acknowledgements and Contributions
     sections identify co-leads, domain advisors, reviewers, validation
     infrastructure owners, TPU designers, and XLA modification reviewers for
     those applications.
-  - Current evidence: systems report contracts can validate generic
-    held-out/reference/deployment/certification gates, and separate TODOs
-    require scheduling safety, kernel shape-corpus, RTL verification, compiler
-    reference checks, claim calibration, and exhibit provenance. They do not
-    record application-owner identity, domain-reviewer roles, reviewer or
-    signoff scope, validation-infrastructure ownership, workload/shape/capacity
-    data stewardship, production rollout approvers, or links from
-    claim-calibrated metrics to the responsible domain teams.
-  - Required result: extend systems report and certification metadata with
-    domain-owner and reviewer provenance: application domain, responsible team
-    or reviewer role labels, data/source ownership, validation infrastructure
-    owner, review/signoff scope, approval or deployment state, evidence
-    artifact links, and docs that distinguish local benchmark reports from
-    AlphaEvolve-style production/domain-owner validation.
+  - Current evidence: `libreevolve.systems_result_report.v1` now requires
+    `application_provenance` records before accepting `alphaevolve_ready`
+    systems claims. The validator checks application domain, responsible team
+    or reviewer role labels, data/source or validation-infrastructure
+    ownership, review/signoff scope, approval or deployment state, evidence
+    artifact links, claim links, and boundary wording that separates local
+    benchmark reports from AlphaEvolve-style production/domain-owner
+    validation. Existing fixtures still lack real populated owner/reviewer
+    records and paper-facing certification examples.
+  - Required result: populate practical systems fixtures and certification
+    examples with reviewed owner/reviewer provenance records linked to
+    calibrated Section 3.3 claims, source evidence, and concrete artifacts; do
+    not treat the schema alone as production/domain-owner validation.
 
 - [ ] Add Borg scheduling problem-formulation provenance.
   - Spec evidence: AlphaEvolve Section 3.3.1 frames Borg scheduling as an

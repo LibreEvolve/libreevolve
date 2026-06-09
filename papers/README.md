@@ -1033,7 +1033,12 @@ Implemented:
   held-out, and reference-correctness gates with case-set hashes, sample
   counts/seeds, finite metrics, artifact hashes, passed-gate artifact-kind
   requirements, optional certification linkage that cannot contradict
-  `alphaevolve_ready`, and readiness gating, but it does not provide real
+  `alphaevolve_ready`, and readiness gating. Ready systems reports now also
+  require `application_provenance` records for application co-leads or domain
+  advisors, domain reviewers, validation-infrastructure or data owners,
+  production approvers, approval/deployment state, claim links, artifact refs,
+  and an explicit boundary between local benchmark evidence and domain-owner
+  validated production claims. The contract still does not provide real
   compiler, hardware, kernel, scheduling, or systems fixtures. For scheduling,
   it also does not yet require Borg-style feasibility-boundary evidence that
   an evolved heuristic only ranks machines already deemed feasible by an

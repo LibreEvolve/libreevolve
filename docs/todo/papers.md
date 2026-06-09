@@ -4077,7 +4077,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     baseline duration, automated-experiment duration, workflow affected, and
     production adoption status.
 
-- [ ] Track practical-application owner and reviewer provenance as paper
+- [ ] Populate practical-application owner and reviewer provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3 presents
     practical systems discoveries as production-facing work in Borg scheduling,
@@ -4086,20 +4086,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     co-leads, domain advisors, reviewers, validation infrastructure owners,
     TPU designers, and XLA modification reviewers tied to those systems
     results.
-  - Current gap: paper/status records and
-    `libreevolve.systems_result_report.v1` can track metrics, artifacts,
-    held-out gates, reference-correctness gates, and domain-readiness evidence,
-    but they do not preserve paper-facing provenance for the domain owners and
-    reviewers behind a practical result: owner role, reviewer scope,
-    validation-infrastructure owner, workload/shape/capacity data steward,
-    production approver, approval state, or how each responsible role maps to
-    a calibrated Section 3.3-style claim.
-  - Required result: add paper-facing owner/reviewer provenance records for
-    systems results before presenting local reports as AlphaEvolve-style
-    practical-application evidence, including domain, responsible team or role
-    labels, review/signoff scope, validation/source ownership, deployment or
-    approval state, artifact links, and wording that separates local benchmark
-    evidence from domain-owner validated production claims.
+  - Current gap: `libreevolve.systems_result_report.v1` now requires
+    `application_provenance` before accepting `alphaevolve_ready` systems
+    claims. It validates owner/advisor, reviewer, validation/data-owner, and
+    production-approver role coverage; domain, responsible team or role labels,
+    review/signoff scope, validation/source ownership, approval/deployment
+    state, claim links, artifact refs, and boundary wording that separates
+    local benchmark evidence from domain-owner validated production claims.
+    Existing fixtures still lack real populated reviewed owner/reviewer records
+    and paper-facing certification examples.
+  - Required result: populate practical systems fixtures with reviewed
+    owner/reviewer provenance records linked to calibrated Section 3.3 claims,
+    source evidence, and concrete artifacts; add paper-facing examples or
+    certification rows; and keep docs from treating the schema alone as
+    AlphaEvolve-style practical-application validation evidence.
 
 - [ ] Track self-improvement and distillation evidence for Discussion claims.
   - Paper evidence: AlphaEvolve's Discussion says practical discoveries can

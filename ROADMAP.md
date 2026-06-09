@@ -600,7 +600,10 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that
   distinguish loop feedback from generalization, deployment, or independent
-  certification evidence.
+  certification evidence, and with `application_provenance` records that link
+  ready practical claims to application owners/advisors, domain reviewers,
+  validation or data owners, production approvers, approval state, artifact
+  references, and local-benchmark-versus-production boundary text.
 - Add claim-calibrated metric records for systems reports before treating
   finite metrics as reproduced AlphaEvolve Section 3.3 result magnitudes:
   metric units, denominators, baselines, aggregation windows, deployment or

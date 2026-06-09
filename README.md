@@ -3491,9 +3491,15 @@ Systems-style benchmark reports use
 separate optimization, held-out, and reference-correctness gates with case-set
 hashes, sample counts/seeds, finite metrics, artifacts matching passed gate
 kinds, explicit rationale when a gate is not applicable, and optional
-certification links that cannot contradict `alphaevolve_ready` claims. It is a
-readiness/report schema only, not a compiler, kernel, scheduling, or
-deployment benchmark implementation. Scheduling reports also still need
+certification links that cannot contradict `alphaevolve_ready` claims.
+`alphaevolve_ready` systems reports also require `application_provenance`
+records for application co-leads or domain advisors, domain reviewers,
+validation-infrastructure or data owners, production approvers,
+review/signoff scope, artifact references, approval or deployment state, and a
+boundary statement separating local benchmark evidence from domain-owner
+validated production claims. It is a readiness/report schema only, not a
+compiler, kernel, scheduling, or deployment benchmark implementation.
+Scheduling reports also still need
 domain-specific evidence for mission-critical deployment suitability, such as
 interpretable heuristic structure, debuggability/operator review,
 predictability checks, rollout-risk evidence, and comparison against less

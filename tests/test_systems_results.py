@@ -26,7 +26,7 @@ def _gate(name: str, case_set: str, status: str = "passed") -> dict:
 
 
 def _valid_report() -> dict:
-    return {
+    report = {
         "schema": SYSTEMS_RESULT_SCHEMA,
         "benchmark_id": "flashattention_ir_micro",
         "candidate_id": "program-000234",
@@ -63,6 +63,59 @@ def _valid_report() -> dict:
             },
         ],
     }
+    report["application_provenance"] = {
+        "boundary_statement": (
+            "Local benchmark evidence is separate from domain-owner validated "
+            "production claims."
+        ),
+        "records": [
+            {
+                "record_id": "kernel-owner",
+                "role": "application_colead",
+                "domain": "kernel",
+                "responsible_label": "kernel application owner",
+                "review_scope": "reviewed optimized kernel claim scope",
+                "ownership_scope": "kernel benchmark and production workflow",
+                "approval_state": "approved",
+                "claim_links": ["flashattention_ir_micro"],
+                "artifact_refs": ["systems/flashattention/optimization-metrics.json"],
+            },
+            {
+                "record_id": "kernel-reviewer",
+                "role": "domain_reviewer",
+                "domain": "kernel",
+                "responsible_label": "kernel domain reviewer",
+                "review_scope": "reviewed held-out shape behavior",
+                "ownership_scope": "kernel correctness review",
+                "approval_state": "reviewed",
+                "claim_links": ["flashattention_ir_micro"],
+                "artifact_refs": ["systems/flashattention/heldout.json"],
+            },
+            {
+                "record_id": "kernel-validation-owner",
+                "role": "validation_infrastructure_owner",
+                "domain": "kernel",
+                "responsible_label": "kernel validation owner",
+                "review_scope": "reviewed reference input validation",
+                "ownership_scope": "reference runner infrastructure",
+                "approval_state": "reviewed",
+                "claim_links": ["flashattention_ir_micro"],
+                "artifact_refs": ["systems/flashattention/reference.json"],
+            },
+            {
+                "record_id": "kernel-approver",
+                "role": "production_approver",
+                "domain": "kernel",
+                "responsible_label": "kernel production approver",
+                "review_scope": "approved production-facing claim boundary",
+                "ownership_scope": "deployment approval path",
+                "approval_state": "approved",
+                "claim_links": ["flashattention_ir_micro_001"],
+                "artifact_refs": ["systems/flashattention/optimization-metrics.json"],
+            },
+        ],
+    }
+    return report
 
 
 def _write_systems_files(report: dict, root) -> None:
@@ -271,11 +324,43 @@ def test_ready_report_rejects_contradictory_certification_reference():
     assert "invalid_ready_certification" in codes
 
 
+def test_ready_report_requires_application_owner_reviewer_provenance():
+    report = _valid_report()
+    report.pop("application_provenance")
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_application_provenance" in codes
+    assert "invalid_ready_application_provenance" in codes
+
+
+def test_application_provenance_requires_role_coverage_and_artifact_links():
+    report = _valid_report()
+    report["application_provenance"]["records"] = [
+        report["application_provenance"]["records"][0]
+    ]
+    report["application_provenance"]["records"][0]["artifact_refs"] = [
+        "systems/flashattention/missing-artifact.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_application_role_coverage" in codes
+    assert "invalid_application_artifact_ref" in codes
+
+
 def test_non_ready_report_can_reference_pending_certification():
     report = _valid_report()
     report["alphaevolve_ready"] = False
     report["gates"][1]["status"] = "failed"
     report["certification"]["paper_claim_ready"] = False
+    report.pop("application_provenance")
 
     validation = validate_systems_result_report(report)
 
@@ -286,6 +371,8 @@ def test_non_ready_report_can_reference_pending_certification():
 def test_not_applicable_gate_requires_rationale_but_can_be_ready():
     report = _valid_report()
     report["domain"] = "scheduling"
+    for record in report["application_provenance"]["records"]:
+        record["domain"] = "scheduling"
     report["gates"][2] = {
         "name": "reference_correctness",
         "status": "not_applicable",
@@ -331,6 +418,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "Systems result report: flashattention_ir_micro" in summary
     assert "| schema_status | ok |" in summary
     assert "| alphaevolve_ready | yes |" in summary
+    assert "| application_provenance_records | 4 |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

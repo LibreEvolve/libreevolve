@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add cross-run prompt-current binding table export.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
+    edits as changes to the current program shown in the prompt.
+  - Status: completed manifests now write
+    `prompt_current_binding_table.jsonl` with schema-versioned
+    `libreevolve.prompt_current_binding_table.v1` rows carrying run id,
+    problem name, candidate/prompt ids, hashes, history row joins, and binding
+    summaries. `runtime.history.prompt_current_binding_report` records the
+    export metadata and validation, and runtime artifact pointers hash the
+    table for cross-run comparison.
+  - Remaining gap: none for this bounded prompt-current binding evidence item;
+    the report remains diagnostic provenance rather than a hard semantic gate.
+
 - [x] Add full-mode target span and block-id records to prompt-current binding
       evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
@@ -13,7 +26,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     evolve-block replacements, including target path/scope, block names,
     parent/candidate spans, and content hashes. Schema validation and focused
     runtime regression tests cover whole-file and evolve-block targets.
-  - Remaining gap: cross-run binding tables remain active TODOs.
+  - Remaining gap: none for this bounded prompt-current binding evidence item.
 
 - [x] Add prompt-history row joins to prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
@@ -23,7 +36,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     its `history.jsonl` row and to `prompt_history.jsonl` add/score rows whose
     score metadata names the candidate program id. Schema validation and a
     focused runtime regression test cover the new row join.
-  - Remaining gap: cross-run binding tables remain active TODOs.
+  - Remaining gap: none for this bounded prompt-current binding evidence item.
 
 - [x] Add workspace file-section span records to prompt-current binding
       evidence.
@@ -34,7 +47,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     payload body hash/size, and parent/candidate full-file span and hash
     evidence when file content is available. Schema validation and a focused
     runtime regression test cover the new evidence.
-  - Remaining gap: cross-run binding tables remain active TODOs.
+  - Remaining gap: none for this bounded prompt-current binding evidence item.
 
 - [x] Add evolve-block inner span mapping to prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
@@ -43,7 +56,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     diff SEARCH matches inside parent evolve-block content to block name,
     block outer/content spans, and SEARCH span relative to the block body, with
     schema validation and focused runtime tests.
-  - Remaining gap: cross-run binding tables remain active TODOs.
+  - Remaining gap: none for this bounded prompt-current binding evidence item.
 
 - [x] Extend prompt example-copy diagnostics with normalized and skeleton
       signals.
@@ -15595,7 +15608,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     diff SEARCH match counts/spans, evolve-block inner span mapping,
     workspace file-section target/full-file spans, full-mode target spans,
     prompt-history row joins, evaluator status, and archive admission.
-  - Remaining gap: cross-run binding tables remain open.
+  - Remaining gap: none for this bounded prompt-current binding evidence item.
   - Verification: focused loop tests cover diff-mode exact SEARCH binding,
     full-mode target-policy reporting, report validation, and unready full
     Figure 3 provenance boundaries.

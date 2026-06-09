@@ -6,6 +6,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track cross-run prompt-current binding table evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
+    2.3.
+  - Status: paper-facing docs now cite
+    `prompt_current_binding_table.jsonl`, whose schema-versioned rows carry run
+    ids, candidate ids, prompt ids, hashes, row joins, and binding summaries
+    for cross-run comparison.
+  - Remaining gap: none for this bounded paper-facing prompt-current evidence
+    item; the evidence remains diagnostic provenance rather than a hard
+    semantic proof.
+
 - [x] Track full-mode target span and block-id records in prompt-current
       binding evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
@@ -13,7 +24,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing docs now cite prompt-current binding records that
     capture full-mode whole-file and evolve-block target spans, block names,
     and parent/candidate content hashes.
-  - Remaining gap: cross-run binding tables remain active paper TODOs.
+  - Remaining gap: none for this bounded paper-facing prompt-current evidence item.
 
 - [x] Track prompt-history row joins in prompt-current binding evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
@@ -22,7 +33,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     link generated candidate ids to `history.jsonl` rows and to
     `prompt_history.jsonl` add/score rows by prompt-program id and score
     metadata `last_program_id`.
-  - Remaining gap: cross-run binding tables remain active paper TODOs.
+  - Remaining gap: none for this bounded paper-facing prompt-current evidence item.
 
 - [x] Track workspace file-section span records in prompt-current binding
       evidence.
@@ -31,7 +42,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing docs now cite prompt-current binding records that
     capture file-section operations, target paths, payload body hashes/sizes,
     and parent/candidate full-file span and hash evidence when available.
-  - Remaining gap: cross-run binding tables remain active paper TODOs.
+  - Remaining gap: none for this bounded paper-facing prompt-current evidence item.
 
 - [x] Track evolve-block inner span mapping in prompt-current binding
       evidence.
@@ -40,7 +51,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing docs now cite prompt-current binding records that map
     exact SEARCH matches inside parent evolve-block content to block name,
     outer/content spans, and block-relative SEARCH span.
-  - Remaining gap: cross-run binding tables remain active paper TODOs.
+  - Remaining gap: none for this bounded paper-facing prompt-current evidence item.
 
 - [x] Track normalized and skeleton prompt-example copy diagnostics.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
@@ -10427,7 +10438,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     evolve-block inner span mapping, workspace file-section target/full-file
     spans, full-mode target spans, prompt-history row joins, evaluator status,
     and archive admission.
-  - Remaining paper gap: cross-run binding tables remain unimplemented.
+  - Remaining paper gap: none for this bounded prompt-current evidence item.
   - Verification: focused loop tests cover diff and full-mode report records
     plus validator success.
 

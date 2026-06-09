@@ -2736,25 +2736,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README can distinguish useful concrete examples from full
     AlphaEvolve-style current-program edit fidelity.
 
-- [ ] Keep README prompt-current edit wording scoped until full Figure 3
-      binding evidence exists.
-  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 make the
-    SEARCH/REPLACE payload an edit to the current program rendered in the
-    prompt, with exact SEARCH text matched against that version.
-  - Current evidence: README can describe parent selection, prompt rendering,
-    retained prompt hashes, prompt diagnostics, prompt-program ids, LLM call
-    telemetry, mutation payloads, and candidate lineage/history. README now
-    also documents `runtime.history.prompt_current_binding_report`, which
-    records prompt/current-program hashes, parent/candidate workspace hashes,
-    LLM call ids, diff SEARCH match counts/spans for non-file-section diff
-    payloads, evolve-block inner span mapping for exact matches inside parent
-    block content, workspace file-section target records with parent/candidate
-    full-file span and hash evidence, full-mode whole-file and evolve-block
-    target span records, prompt-history row joins to candidate history rows,
-    evaluator links, and archive admission.
-  - Required result: when fuller binding evidence lands, update README,
-    ROADMAP, papers index, and matching TODOs with cross-run binding tables.
-
 - [ ] Keep README multi-edit consistency wording scoped beyond current
       diagnostic scan.
   - Spec evidence: AlphaEvolve Figure 3(b) includes a SEARCH/REPLACE prompt

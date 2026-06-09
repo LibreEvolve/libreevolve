@@ -1861,34 +1861,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt-example compatibility as AlphaEvolve-style current-program editing
     fidelity.
 
-- [ ] Track prompt-current-program binding evidence beyond current-run
-      mutation records.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.
-  - Requirement: SEARCH/REPLACE blocks are proposed edits to the current
-    program shown in the assembled prompt; the SEARCH section must match an
-    exact segment in that current program version before replacement.
-  - Partial status: LibreEvolve samples a parent, renders parent/current code
-    into prompts, applies mutation payloads to the selected parent workspace,
-    and records parent ids, prompt-program ids, retained prompt hashes, prompt
-    diagnostics, LLM call telemetry, candidate ids, lineage, and history rows.
-    Prompt metadata also includes rendered parent-code hashes and rendered path
-    policy. Completed manifests now include
-    `runtime.history.prompt_current_binding_report` with schema
-    `libreevolve.prompt_current_binding_report.v1`, recording generated
-    candidate ids, prompt-program ids, rendered prompt hashes, parent-code
-    render hashes/path policy, parent and candidate workspace hashes, LLM call
-    ids, mutation payload hashes, diff SEARCH match counts/spans for
-    non-file-section diff payloads, evolve-block inner span mapping for exact
-    SEARCH matches inside parent block content, workspace file-section target
-    records with parent/candidate full-file span and hash evidence, full-mode
-    whole-file and evolve-block target span records, prompt-history row joins
-    to candidate history rows, evaluator status, and archive admission.
-  - Current gap: paper-facing evidence is still current-run only and does not
-    persist cross-run binding tables.
-  - Required result: extend prompt-current binding evidence with cross-run
-    validation before claiming full AlphaEvolve Figure 3 current-program edit
-    provenance.
-
 - [ ] Track multi-edit semantic consistency beyond current diagnostic scan.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).
   - Requirement: the assembled AlphaEvolve prompt tells the model to make

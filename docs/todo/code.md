@@ -2266,36 +2266,6 @@ Primary evidence:
     useful without being mistaken for valid AlphaEvolve-style edits to the
     current program.
 
-- [ ] Extend prompt-current-program binding evidence beyond current-run
-      mutation records.
-  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
-    SEARCH/REPLACE blocks as edits to the current program shown in the prompt;
-    the SEARCH text must match an exact segment in that current program
-    version before the replacement is applied.
-  - Current evidence: `evolve()` samples a parent, renders a prompt from that
-    parent, applies the mutation to `parent.workspace()`, and persists
-    generated candidate metadata with `parent_id`, `prompt_program_id`,
-    retained prompt hashes, prompt diagnostics, mutation payload, LLM call
-    telemetry, and candidate history rows. `PromptSampler` records parent-code
-    rendered/original hashes and rendered file-path metadata, while
-    `history.jsonl` stores parent/candidate file content and lineage.
-    Completed manifests now include
-    `runtime.history.prompt_current_binding_report` with schema
-    `libreevolve.prompt_current_binding_report.v1`, plus
-    `validate_prompt_current_binding_report()`. The report records generated
-    candidate ids, prompt-program ids, rendered prompt hashes, parent/current
-    program render hashes/path policy, parent and candidate workspace hashes,
-    LLM call ids, mutation payload hashes, diff SEARCH match counts/spans for
-    non-file-section diff payloads, evolve-block inner span mapping for exact
-    SEARCH matches inside parent block content, workspace file-section target
-    records with parent/candidate full-file span and hash evidence, full-mode
-    whole-file and evolve-block target span records, prompt-history row joins
-    to candidate history rows, evaluator status, and archive admission.
-  - Remaining gap: current binding evidence is run-local and does not persist
-    cross-run binding tables.
-  - Required result: extend the binding report with cross-run validation
-    before claiming full AlphaEvolve Figure 3 current-program edit provenance.
-
 - [ ] Extend cross-edit consistency diagnostics beyond current Python symbol
       scan.
   - Spec evidence: AlphaEvolve Figure 3(b) tells the model to keep proposed

@@ -4,6 +4,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Remove prompt-current cross-run binding table from roadmap future work.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) treats generated edits as changes
+    to the current program in the prompt.
+  - Status: ROADMAP no longer lists prompt-current cross-run binding tables as
+    future work because completed manifests now export
+    `prompt_current_binding_table.jsonl`.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document full-mode target span and block-id records in prompt-current
       binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) treats generated edits as changes
@@ -7966,7 +7974,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     match counts/spans, evolve-block inner span mapping, workspace
     file-section target/full-file spans, full-mode target spans,
     prompt-history row joins, evaluator links, and archive admission.
-  - Remaining roadmap gap: cross-run binding tables remain open.
+  - Remaining roadmap gap: none for this bounded roadmap wording slice.
   - Verification: focused loop tests cover the report and validator.
 
 - [x] Narrow prompt-example roadmap wording to stronger copy-policy gaps.

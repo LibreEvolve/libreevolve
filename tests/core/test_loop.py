@@ -3338,18 +3338,40 @@ x=2
     assert report["exact_diff_binding_count"] == 1
     assert report["history_join_count"] == 1
     assert report["prompt_history_score_join_count"] == 1
+    assert report["cross_run_binding_table_record_count"] == 1
+    assert report["cross_run_binding_table"]["exists"] is True
+    assert report["cross_run_binding_table"]["record_count"] == 1
+    assert report["cross_run_binding_table"]["path"] == (
+        "prompt_current_binding_table.jsonl"
+    )
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["prompt_current_hashes_recorded"] is True
     assert report["claim_readiness"]["parent_workspace_hash_recorded"] is True
     assert report["claim_readiness"]["diff_exact_match_spans_recorded"] is True
     assert report["claim_readiness"]["prompt_history_row_join"] is True
-    assert "prompt_history_row_id_to_candidate_history_row_id_join" not in (
-        report["claim_readiness"]["remaining_gap"]
-    )
+    assert report["claim_readiness"]["cross_run_binding_table"] is True
+    assert report["claim_readiness"]["remaining_gap"] == []
     assert (
         report["claim_readiness"]["full_alphaevolve_current_program_provenance"]
         is False
     )
+
+    table_path = run_dir / "prompt_current_binding_table.jsonl"
+    table_lines = table_path.read_text(encoding="utf-8").splitlines()
+    assert len(table_lines) == 1
+    table_row = json.loads(table_lines[0])
+    assert table_row["record_schema"] == "libreevolve.prompt_current_binding_table.v1"
+    assert table_row["run_id"] == manifest["config"]["run_id"]
+    assert table_row["problem_name"] == "t"
+    assert table_row["candidate_id"] == report["records"][0]["candidate_id"]
+    assert table_row["prompt_program_id"] == report["records"][0]["prompt_program_id"]
+    assert table_row["history_join"]["candidate_history_line_number"] == 2
+    assert table_row["history_join"]["prompt_history_score_line_number"] == 2
+    assert table_row["binding"]["mode_policy"] == "diff_primary_file_exact_search_match"
+    assert table_row["binding"]["diff_match_count"] == 1
+    assert manifest["runtime"]["artifacts"]["prompt_current_binding_table.jsonl"][
+        "exists"
+    ] is True
 
     record = report["records"][0]
     assert record["prompt_program_id"]

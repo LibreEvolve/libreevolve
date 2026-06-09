@@ -4,20 +4,28 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document cross-run prompt-current binding table evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
+    program rendered in the prompt.
+  - Status: README now says completed manifests export
+    `prompt_current_binding_table.jsonl` with schema-versioned rows carrying
+    run ids for cross-run comparison.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document full-mode target span and block-id records in prompt-current
       binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
     program rendered in the prompt.
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes full-mode whole-file and evolve-block target span records.
-  - Remaining gap: cross-run binding tables remain active README TODOs.
+  - Remaining gap: none for this bounded README wording slice.
 
 - [x] Document prompt-history row joins in prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
     program rendered in the prompt.
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes prompt-history row joins to candidate history rows.
-  - Remaining gap: cross-run binding tables remain active README TODOs.
+  - Remaining gap: none for this bounded README wording slice.
 
 - [x] Document workspace file-section span records in prompt-current binding
       evidence.
@@ -26,7 +34,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes workspace file-section target records with parent/candidate
     full-file span and hash evidence.
-  - Remaining gap: cross-run binding tables remain active README TODOs.
+  - Remaining gap: none for this bounded README wording slice.
 
 - [x] Document evolve-block inner span mapping in prompt-current binding
       evidence.
@@ -35,7 +43,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     maps exact SEARCH matches inside parent evolve-block content to block
     names, block spans, and block-relative SEARCH spans.
-  - Remaining gap: cross-run binding tables remain active README TODOs.
+  - Remaining gap: none for this bounded README wording slice.
 
 - [x] Document normalized and skeleton prompt-example copy diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete examples to
@@ -10524,7 +10532,7 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     match counts/spans, evolve-block inner span mapping, workspace
     file-section target/full-file spans, full-mode target spans,
     prompt-history row joins, evaluator links, and archive admission.
-  - Remaining documentation gap: cross-run binding tables remain open.
+  - Remaining documentation gap: none for this bounded README wording slice.
   - Verification: focused loop tests cover the manifest field and validator.
 
 - [x] Document built-in prompt example-copy diagnostics.

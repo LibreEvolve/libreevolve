@@ -289,6 +289,7 @@ runs/
     ├── manifest_invalid.jsonl         # Only when a runtime manifest update is rejected
     ├── prompt_history.jsonl
     ├── prompt_history_invalid.jsonl   # Only when a prompt record is rejected
+    ├── prompt_current_binding_table.jsonl # Generated prompt/current binding rows
     ├── best.py
     ├── evaluator_artifacts/
     │   └── ...                        # Optional collected validator outputs
@@ -503,8 +504,9 @@ Metadata-only static records remain manifest-only and are not copied as bytes.
 Current artifacts are explicitly marked as local v1 machine-readable formats.
 `manifest.json` carries top-level `schema_version` and `artifact_schema`
 fields, and current `history.jsonl`, `failure_history.jsonl`,
-`archive_events.jsonl`, `llm_calls.jsonl`, and `prompt_history.jsonl` rows
-carry `schema_version` plus `record_schema`. Missing schema markers are treated as legacy v0 rows by
+`archive_events.jsonl`, `llm_calls.jsonl`, `prompt_history.jsonl`, and
+`prompt_current_binding_table.jsonl` rows carry `schema_version` plus
+`record_schema`. Missing schema markers are treated as legacy v0 rows by
 `show`, accepted-history restore helpers, and the LLM call-ledger reader where
 those readers have legacy compatibility paths. True migration and full resume
 branching by schema remain open work.
@@ -2825,6 +2827,12 @@ channels. Seed rows are not
 prompt-produced; they use
 `metadata.candidate_type = seed` and the raw-baseline post-processing policy
 described above instead of a prompt-program id.
+Completed manifests also export `prompt_current_binding_table.jsonl`, a
+schema-versioned table of generated prompt/current-program binding rows. Each
+row carries the run id, problem name, candidate id, prompt-program id, prompt
+hash, mutation payload hash, parent/candidate workspace hashes, JSONL row
+joins, and compact binding summaries so rows from multiple run directories can
+be compared or concatenated by `run_id`.
 
 ## `failure_history.jsonl`
 

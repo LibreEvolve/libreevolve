@@ -345,8 +345,10 @@ evolve-block-inner span mapping when an exact SEARCH match falls inside parent
 block content, workspace file-section target records with parent/candidate
 full-file span and hash evidence, full-mode whole-file and evolve-block target
 span records, evaluator status, archive admission, and prompt-history row
-joins to candidate history rows. Remaining Figure 3 parity gap is cross-run
-binding tables.
+joins to candidate history rows. Completed manifests also export
+`prompt_current_binding_table.jsonl`, with schema-versioned rows carrying run
+ids, candidate ids, prompt ids, hashes, and row joins for cross-run comparison.
+The evidence remains diagnostic provenance rather than a hard semantic proof.
 
 AlphaEvolve initial-program validity note: current seed handling can still
 evaluate and record invalid generation-0 seeds as permissive

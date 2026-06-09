@@ -18,6 +18,11 @@ import re
 import stat as stat_module
 import unicodedata
 from pathlib import Path
+
+from libreevolve.core.artifact_schema import (
+    PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
+    versioned_record,
+)
 from libreevolve.core.best_artifacts import (
     attach_best_artifact_export,
     export_best_artifacts,
@@ -65,6 +70,7 @@ from libreevolve.core.jsonl import (
     StrictJsonlError,
     iter_strict_jsonl_objects,
     load_strict_json_object,
+    strict_json_dumps,
 )
 from libreevolve.core.meta_prompt import PromptDatabase, parse_prompt_mutation_response
 from libreevolve.core.prompt import (
@@ -1640,9 +1646,9 @@ def _write_completed_runtime(
         resume_status=rng_resume_status,
     )
     best_export = export_best_artifacts(best, run_dir) if best is not None else None
+    runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
     attach_best_artifact_export(runtime, best_export)
-    runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     _attach_runtime_summaries(
         runtime,
         db,
@@ -1692,8 +1698,8 @@ def _write_aborted_runtime(
     if plugin_failure:
         runtime["abort"]["plugin_failure"] = plugin_failure
         runtime["plugin_failures"] = [plugin_failure]
-    runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
+    runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
     _attach_runtime_summaries(
         runtime,
         db,
@@ -4943,6 +4949,7 @@ def _runtime_artifact_pointers(run_dir: Path) -> dict:
         "llm_calls_invalid.jsonl",
         "prompt_history.jsonl",
         "prompt_history_invalid.jsonl",
+        "prompt_current_binding_table.jsonl",
         "manifest_invalid.jsonl",
         "evaluator_artifacts",
         "plugin_artifacts",
@@ -5328,6 +5335,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "prompt_current_binding_report": _prompt_current_binding_report(
             programs,
             run_dir,
+            db.startup_manifest_snapshot(),
         ),
         "natural_language_preamble_report": _natural_language_preamble_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
@@ -15788,7 +15796,11 @@ def validate_natural_language_preamble_report(report: object) -> dict:
     }
 
 
-def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> dict:
+def _prompt_current_binding_report(
+    programs: list[Program],
+    run_dir: Path,
+    startup_manifest: Mapping[str, object],
+) -> dict:
     parent_by_id = {program.id: program for program in programs}
     history_indexes = _prompt_current_history_join_indexes(run_dir)
     records = [
@@ -15800,6 +15812,11 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
         for program in programs
         if _prompt_current_binding_is_generated(program)
     ]
+    table_rows = _prompt_current_binding_table_rows(
+        records,
+        startup_manifest,
+    )
+    table_export = _write_prompt_current_binding_table(run_dir, table_rows)
     mode_counts: dict[str, int] = {}
     status_counts: dict[str, int] = {}
     exact_match_count = 0
@@ -15865,6 +15882,7 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
         "full_mode_target_record_count": full_mode_target_record_count,
         "history_join_count": history_join_count,
         "prompt_history_score_join_count": prompt_history_score_join_count,
+        "cross_run_binding_table_record_count": table_export["record_count"],
         "truncated_prompt_current_count": truncated_prompt_current_count,
         "omitted_prompt_current_path_total": omitted_path_count,
         "records": records[:50],
@@ -15879,8 +15897,10 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
             "workspace_section_policy": "file_section_payloads_record_per_section_target_and_full_file_span_records",
             "file_section_span_policy": "file_section_targets_record_parent_and_candidate_full_file_spans_when_available",
             "history_join_policy": "candidate_history_rows_joined_to_prompt_history_add_and_score_rows_by_program_id",
+            "cross_run_table_policy": "stable_jsonl_rows_with_run_id_prompt_ids_candidate_ids_hashes_and_joined_runtime_row_numbers",
             "llm_call_source": "candidate.metadata.llm_calls",
         },
+        "cross_run_binding_table": table_export,
         "claim_ready": False,
         "claim_readiness": {
             "prompt_current_hashes_recorded": any(
@@ -15901,10 +15921,9 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
             "prompt_history_row_join": (
                 history_join_count > 0 and prompt_history_score_join_count > 0
             ),
+            "cross_run_binding_table": table_export["record_count"] > 0,
             "full_alphaevolve_current_program_provenance": False,
-            "remaining_gap": [
-                "cross_run_prompt_current_binding_table",
-            ],
+            "remaining_gap": [],
         },
     }
     report["validation"] = validate_prompt_current_binding_report(report)
@@ -15914,6 +15933,208 @@ def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> di
 def _prompt_current_binding_is_generated(program: Program) -> bool:
     metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
     return metadata.get("candidate_type") == "generated"
+
+
+def _prompt_current_binding_table_rows(
+    records: list[dict],
+    startup_manifest: Mapping[str, object],
+) -> list[dict]:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    run_id = config.get("run_id") if isinstance(config.get("run_id"), str) else None
+    problem_name = (
+        config.get("problem_name")
+        if isinstance(config.get("problem_name"), str)
+        else None
+    )
+    rows: list[dict] = []
+    for record_index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            continue
+        binding = (
+            record.get("mutation_binding")
+            if isinstance(record.get("mutation_binding"), Mapping)
+            else {}
+        )
+        prompt_current = (
+            record.get("prompt_current_program")
+            if isinstance(record.get("prompt_current_program"), Mapping)
+            else {}
+        )
+        history_join = (
+            record.get("history_join")
+            if isinstance(record.get("history_join"), Mapping)
+            else {}
+        )
+        rows.append(
+            {
+                "schema": "libreevolve.prompt_current_binding_table_row.v1",
+                "row_index": record_index,
+                "run_id": run_id,
+                "problem_name": problem_name,
+                "candidate_id": record.get("candidate_id"),
+                "candidate_status": record.get("candidate_status"),
+                "generation": record.get("generation"),
+                "parent_id": record.get("parent_id"),
+                "prompt_program_id": record.get("prompt_program_id"),
+                "prompt_sha256": record.get("prompt_sha256"),
+                "prompt_sha256_scope": record.get("prompt_sha256_scope"),
+                "mutation_mode": record.get("mutation_mode"),
+                "mutation_payload_sha256": record.get("mutation_payload_sha256"),
+                "parent_workspace_sha256": record.get("parent_workspace_sha256"),
+                "candidate_workspace_sha256": record.get("candidate_workspace_sha256"),
+                "prompt_current": {
+                    "primary_file": prompt_current.get("primary_file"),
+                    "parent_code_original_sha256": prompt_current.get(
+                        "parent_code_original_sha256"
+                    ),
+                    "parent_code_rendered_sha256": prompt_current.get(
+                        "parent_code_rendered_sha256"
+                    ),
+                    "parent_code_truncated": prompt_current.get(
+                        "parent_code_truncated"
+                    ),
+                    "rendered_paths": prompt_current.get("rendered_paths", []),
+                    "omitted_path_count": prompt_current.get("omitted_path_count"),
+                },
+                "history_join": _prompt_current_binding_table_history_join(
+                    history_join
+                ),
+                "binding": _prompt_current_binding_table_binding_summary(binding),
+                "evaluation": record.get("evaluation_link"),
+                "admission": record.get("admission_link"),
+            }
+        )
+    return rows
+
+
+def _prompt_current_binding_table_history_join(history_join: Mapping[str, object]) -> dict:
+    candidate_history = history_join.get("candidate_history")
+    prompt_history = history_join.get("prompt_history")
+    candidate_failure_history = history_join.get("candidate_failure_history")
+    return {
+        "candidate_history_stream": (
+            candidate_history.get("stream")
+            if isinstance(candidate_history, Mapping)
+            else None
+        ),
+        "candidate_history_line_number": (
+            candidate_history.get("line_number")
+            if isinstance(candidate_history, Mapping)
+            else None
+        ),
+        "candidate_failure_history_line_number": (
+            candidate_failure_history.get("line_number")
+            if isinstance(candidate_failure_history, Mapping)
+            else None
+        ),
+        "prompt_history_add_line_number": (
+            prompt_history.get("add_line_number")
+            if isinstance(prompt_history, Mapping)
+            else None
+        ),
+        "prompt_history_score_line_number": (
+            prompt_history.get("score_line_number")
+            if isinstance(prompt_history, Mapping)
+            else None
+        ),
+        "prompt_history_score_line_numbers": (
+            prompt_history.get("score_line_numbers", [])
+            if isinstance(prompt_history, Mapping)
+            else []
+        ),
+    }
+
+
+def _prompt_current_binding_table_binding_summary(binding: Mapping[str, object]) -> dict:
+    match_records = (
+        binding.get("match_records")
+        if isinstance(binding.get("match_records"), list)
+        else []
+    )
+    file_section_records = (
+        binding.get("file_section_records")
+        if isinstance(binding.get("file_section_records"), list)
+        else []
+    )
+    full_target_records = (
+        binding.get("full_mode_target_records")
+        if isinstance(binding.get("full_mode_target_records"), list)
+        else []
+    )
+    return {
+        "mode_policy": binding.get("mode_policy"),
+        "payload_surfaces": binding.get("payload_surfaces", []),
+        "target_path": binding.get("target_path"),
+        "all_search_blocks_match_once": binding.get("all_search_blocks_match_once"),
+        "search_block_count": binding.get("search_block_count"),
+        "diff_match_count": len(match_records),
+        "evolve_block_scope_count": sum(
+            1
+            for match in match_records
+            if isinstance(match, Mapping)
+            and isinstance(match.get("evolve_block_scope"), Mapping)
+            and match["evolve_block_scope"].get("scope") == "evolve_block"
+        ),
+        "file_section_count": binding.get("file_section_count", len(file_section_records)),
+        "full_mode_target_count": binding.get(
+            "full_mode_target_count",
+            len(full_target_records),
+        ),
+        "file_section_targets": [
+            {
+                "operation": section.get("operation"),
+                "target_path": section.get("target_path"),
+                "target_span_policy": section.get("target_span_policy"),
+            }
+            for section in file_section_records[:25]
+            if isinstance(section, Mapping)
+        ],
+        "full_mode_targets": [
+            {
+                "target_scope": target.get("target_scope"),
+                "target_path": target.get("target_path"),
+                "block_name": target.get("block_name"),
+                "target_span_policy": target.get("target_span_policy"),
+            }
+            for target in full_target_records[:25]
+            if isinstance(target, Mapping)
+        ],
+    }
+
+
+def _write_prompt_current_binding_table(run_dir: Path, rows: list[dict]) -> dict:
+    table_path = run_dir / "prompt_current_binding_table.jsonl"
+    if not rows:
+        return {
+            "schema": "libreevolve.prompt_current_binding_table_export.v1",
+            "path": "prompt_current_binding_table.jsonl",
+            "record_schema": PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
+            "record_count": 0,
+            "exists": False,
+            "sha256": None,
+            "cross_run_policy": "rows_are_safe_to_concatenate_across_run_directories_by_run_id",
+        }
+    lines = [
+        strict_json_dumps(
+            versioned_record(PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA, row)
+        )
+        for row in rows
+    ]
+    text = "\n".join(lines) + "\n"
+    table_path.write_text(text, encoding="utf-8")
+    return {
+        "schema": "libreevolve.prompt_current_binding_table_export.v1",
+        "path": "prompt_current_binding_table.jsonl",
+        "record_schema": PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
+        "record_count": len(rows),
+        "exists": True,
+        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "cross_run_policy": "rows_are_safe_to_concatenate_across_run_directories_by_run_id",
+    }
 
 
 def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
@@ -16647,12 +16868,14 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "full_mode_target_record_count",
         "history_join_count",
         "prompt_history_score_join_count",
+        "cross_run_binding_table_record_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
         "records",
         "records_limit",
         "records_truncated",
         "binding_policy",
+        "cross_run_binding_table",
         "claim_ready",
         "claim_readiness",
     }
@@ -16675,6 +16898,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "full_mode_target_record_count",
         "history_join_count",
         "prompt_history_score_join_count",
+        "cross_run_binding_table_record_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
     ):
@@ -16885,6 +17109,24 @@ def validate_prompt_current_binding_report(report: object) -> dict:
             issues.append({"code": "invalid_record_count", "message": "binding_record_count must match records when not truncated"})
     if not isinstance(report.get("binding_policy"), dict):
         issues.append({"code": "invalid_binding_policy", "message": "binding_policy must be an object"})
+    cross_run_table = report.get("cross_run_binding_table")
+    if not isinstance(cross_run_table, dict):
+        issues.append(
+            {
+                "code": "invalid_cross_run_binding_table",
+                "message": "cross_run_binding_table must be an object",
+            }
+        )
+    elif (
+        cross_run_table.get("record_schema")
+        != PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA
+    ):
+        issues.append(
+            {
+                "code": "invalid_cross_run_binding_table_schema",
+                "message": "cross_run_binding_table record schema is unsupported",
+            }
+        )
     if report.get("claim_ready") is not False:
         issues.append({"code": "claim_ready_overclaim", "message": "prompt-current binding report must not claim full AlphaEvolve provenance"})
     readiness = report.get("claim_readiness")

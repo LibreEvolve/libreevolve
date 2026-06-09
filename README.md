@@ -738,9 +738,10 @@ non-file-section diff payloads, evolve-block inner span mapping for exact
 matches inside parent block content, workspace file-section target records
 with parent/candidate full-file span and hash evidence, full-mode whole-file
 and evolve-block target span records, prompt-history row joins to candidate
-history rows, evaluator status, and archive admission. The report is
-current-run provenance, not full Figure 3 parity: cross-run binding tables
-remain open.
+history rows, evaluator status, archive admission, and a
+`prompt_current_binding_table.jsonl` export whose schema-versioned rows carry
+run ids for cross-run comparison. The evidence is diagnostic provenance, not a
+hard semantic proof or archive gate.
 Completed manifests also include
 `runtime.history.mutation_consistency_report`, which records current-run
 multi-edit candidate payloads, changed file/block/search edit units,

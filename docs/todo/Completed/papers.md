@@ -10343,3 +10343,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     hypothesis branch tables remain unimplemented.
   - Verification: focused loop tests cover the report, validator, observed
     redirect records, and unready causal-proof boundaries.
+
+- [x] Add paper-visible prompt-current binding evidence.
+  - Paper evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 define
+    SEARCH/REPLACE payloads as edits to the current program shown in the
+    prompt.
+  - Status: paper-facing docs now cite
+    `runtime.history.prompt_current_binding_report`, which records current-run
+    prompt/current-program hashes, parent/candidate workspace hashes, LLM call
+    ids, mutation payload hashes, diff SEARCH match counts/spans, full-mode
+    target policy, evaluator status, and archive admission.
+  - Remaining paper gap: per-file span expansion for workspace sections,
+    evolve-block inner span mapping, prompt-history row joins, full-mode target
+    spans/block ids, and cross-run binding tables remain unimplemented.
+  - Verification: focused loop tests cover diff and full-mode report records
+    plus validator success.

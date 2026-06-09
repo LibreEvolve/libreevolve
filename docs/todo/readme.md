@@ -2728,22 +2728,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve-style evidence that proposals edit the sampled current program
     rather than pasted prompt scaffolding.
 
-- [ ] Keep README prompt-current edit wording scoped until binding evidence
-      exists.
+- [ ] Keep README prompt-current edit wording scoped until full Figure 3
+      binding evidence exists.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 make the
     SEARCH/REPLACE payload an edit to the current program rendered in the
     prompt, with exact SEARCH text matched against that version.
   - Current evidence: README can describe parent selection, prompt rendering,
     retained prompt hashes, prompt diagnostics, prompt-program ids, LLM call
-    telemetry, mutation payloads, and candidate lineage/history. It should not
-    imply that those separate fields already prove every mutation was applied
-    to the exact current-program version the model saw.
-  - Required result: when prompt-current binding evidence exists, update
-    README, ROADMAP, papers index, and matching TODOs with the record schema
-    and validation fields: prompt id, prompt-program id, LLM call id,
-    parent/current program id, rendered current-program hashes/path policy,
-    mutation target hashes, diff match spans or full-mode target policy,
-    evaluator/admission links, and accepted/rejected candidate status.
+    telemetry, mutation payloads, and candidate lineage/history. README now
+    also documents `runtime.history.prompt_current_binding_report`, which
+    records prompt/current-program hashes, parent/candidate workspace hashes,
+    LLM call ids, diff SEARCH match counts/spans for non-file-section diff
+    payloads, full-mode target policy, evaluator links, and archive admission.
+  - Required result: when fuller binding evidence lands, update README,
+    ROADMAP, papers index, and matching TODOs with per-file span expansion for
+    workspace sections, evolve-block inner span mapping, prompt-history row
+    joins, full-mode target spans/block ids, and cross-run binding tables.
 
 - [ ] Keep README multi-edit consistency wording scoped until checked
       consistency evidence exists.

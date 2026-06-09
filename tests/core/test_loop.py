@@ -68,6 +68,7 @@ from libreevolve.core.loop import (
     validate_sampling_balance_report,
     validate_programmatic_representation_boundary_report,
     validate_mutation_operator_boundary_report,
+    validate_prompt_current_binding_report,
     validate_proposal_diversity_report,
     validate_proposal_score_report,
     validate_proposal_lifecycle_report,
@@ -3099,6 +3100,103 @@ x=2
     assert sample["llm_constructed_operator_family"] is False
     assert sample["adaptive_operator_selection"] is False
     assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
+
+
+def test_runtime_history_reports_prompt_current_binding_for_diff_mutation():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Change x to the accepted value.
+RATIONALE: The validator expects x=2.
+HYPOTHESIS: The candidate should remain valid.
+<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_current_binding_report"]
+
+    assert report["schema"] == "libreevolve.prompt_current_binding_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_current_binding_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["binding_record_count"] == 1
+    assert report["mutation_mode_counts"] == {"diff": 1}
+    assert report["candidate_status_counts"] == {"accepted_history": 1}
+    assert report["exact_diff_binding_count"] == 1
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["prompt_current_hashes_recorded"] is True
+    assert report["claim_readiness"]["parent_workspace_hash_recorded"] is True
+    assert report["claim_readiness"]["diff_exact_match_spans_recorded"] is True
+    assert (
+        report["claim_readiness"]["full_alphaevolve_current_program_provenance"]
+        is False
+    )
+
+    record = report["records"][0]
+    assert record["prompt_program_id"]
+    assert record["prompt_sha256_scope"] == "rendered_prompt"
+    assert record["parent_id"]
+    assert record["parent_workspace_sha256"]
+    assert record["candidate_workspace_sha256"]
+    current = record["prompt_current_program"]
+    assert current["policy_schema"] == "libreevolve.parent_code_policy.v1"
+    assert current["path_policy_schema"] == "libreevolve.parent_code_paths.v1"
+    assert current["primary_file"] == "main.py"
+    assert current["rendered_paths"] == ["main.py"]
+    assert current["rendered_parent_file_hashes"][0]["path"] == "main.py"
+    binding = record["mutation_binding"]
+    assert binding["mode_policy"] == "diff_primary_file_exact_search_match"
+    assert binding["target_path"] == "main.py"
+    assert binding["search_block_count"] == 1
+    assert binding["all_search_blocks_match_once"] is True
+    assert binding["match_records"][0]["match_count"] == 1
+    assert binding["match_records"][0]["normalized_span"] is not None
+    assert record["evaluation_link"]["is_valid"] is True
+    assert record["admission_link"]["admitted"] is True
+
+
+def test_runtime_history_reports_prompt_current_binding_for_full_mutation_policy():
+    tmpdir = tempfile.mkdtemp()
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm("x=2")):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_current_binding_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_current_binding_report(report)["ok"] is True
+    assert report["mutation_mode_counts"] == {"full": 1}
+    assert report["exact_diff_binding_count"] == 0
+    record = report["records"][0]
+    binding = record["mutation_binding"]
+    assert binding["mode_policy"] == "full_mode_target_policy_recorded"
+    assert binding["target_path"] == "main.py"
+    assert binding["search_block_count"] == 0
+    assert binding["all_search_blocks_match_once"] is False
+    assert report["claim_ready"] is False
 
 
 def test_prompt_context_policy_can_enable_proposal_metadata_capture():

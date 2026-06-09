@@ -2256,7 +2256,8 @@ Primary evidence:
     prompt examples can remain useful without being mistaken for valid
     AlphaEvolve-style edits to the current program.
 
-- [ ] Add prompt-current-program binding evidence for applied mutations.
+- [ ] Extend prompt-current-program binding evidence beyond current-run
+      mutation records.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
     SEARCH/REPLACE blocks as edits to the current program shown in the prompt;
     the SEARCH text must match an exact segment in that current program
@@ -2268,20 +2269,23 @@ Primary evidence:
     telemetry, and candidate history rows. `PromptSampler` records parent-code
     rendered/original hashes and rendered file-path metadata, while
     `history.jsonl` stores parent/candidate file content and lineage.
-  - Remaining gap: no paper-facing invariant record ties one mutation attempt's
-    prompt id, rendered current-program hash/path set, parent workspace hash,
-    LLM call id, diff exact-match span, mutation target workspace hash,
-    evaluator result, and accepted/rejected candidate id into a single proof
-    that the proposed edit was applied to the same current program that the
-    model saw.
-  - Required result: add a versioned prompt-current binding record and
-    validator covering diff/full/workspace mutation modes, with prompt id,
-    prompt program id, LLM call id, parent/current program id, rendered
-    current-program hashes and omitted-path policy, mutation target hashes,
-    diff match spans or full-mode target policy, candidate id/status,
-    evaluator/admission links, and README/ROADMAP/paper wording that separates
-    sampled-parent mechanics from AlphaEvolve-style current-program edit
-    provenance.
+    Completed manifests now include
+    `runtime.history.prompt_current_binding_report` with schema
+    `libreevolve.prompt_current_binding_report.v1`, plus
+    `validate_prompt_current_binding_report()`. The report records generated
+    candidate ids, prompt-program ids, rendered prompt hashes, parent/current
+    program render hashes/path policy, parent and candidate workspace hashes,
+    LLM call ids, mutation payload hashes, diff SEARCH match counts/spans for
+    non-file-section diff payloads, full-mode target policy, evaluator status,
+    and archive admission.
+  - Remaining gap: current binding evidence is run-local and does not expand
+    file-section payloads into per-file SEARCH spans, map SEARCH spans inside
+    evolve-block ranges, join to prompt-history row ids, record full-mode
+    target spans or block ids, or persist cross-run binding tables.
+  - Required result: extend the binding report with per-file span expansion,
+    evolve-block inner span mapping, prompt-history row joins, full-mode target
+    spans/block policy, and cross-run validation before claiming full
+    AlphaEvolve Figure 3 current-program edit provenance.
 
 - [ ] Add cross-edit semantic consistency diagnostics for multi-block
       mutations.

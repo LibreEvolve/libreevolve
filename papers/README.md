@@ -328,6 +328,16 @@ AlphaEvolve Related Work distinction from handwritten mutation/crossover
 operator sets remains open until LibreEvolve records proposal-level
 operator-family provenance, construction or selection evidence, and benchmark
 telemetry beyond those fixed local parser surfaces.
+Completed manifests now also include
+`runtime.history.prompt_current_binding_report`, which records current-run
+prompt/current-program binding evidence: generated candidate ids, prompt
+program ids, rendered prompt hashes, parent-code render hashes/path policy,
+parent and candidate workspace hashes, LLM call ids, mutation payload hashes,
+diff SEARCH match counts/spans for non-file-section diff payloads, full-mode
+target policy, evaluator status, and archive admission. Remaining Figure 3
+parity gaps are per-file span expansion for workspace sections,
+evolve-block-inner span mapping, prompt-history row joins, full-mode target
+spans, and cross-run binding tables.
 
 AlphaEvolve initial-program validity note: current seed handling can still
 evaluate and record invalid generation-0 seeds as permissive

@@ -10448,3 +10448,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     fallback-target decision events, resumed-search replay, and cross-run
     branch tables remain open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document prompt-current binding evidence.
+  - Evidence: README needed to distinguish separate parent/prompt/history
+    fields from a single current-run mutation-attempt binding report.
+  - Status: README now describes
+    `runtime.history.prompt_current_binding_report`, prompt/current-program
+    hashes, parent/candidate workspace hashes, LLM call ids, diff SEARCH
+    match counts/spans, full-mode target policy, evaluator links, and archive
+    admission.
+  - Remaining documentation gap: per-file span expansion, evolve-block inner
+    span mapping, prompt-history row joins, full-mode target spans/block ids,
+    and cross-run binding tables remain open.
+  - Verification: focused loop tests cover the manifest field and validator.

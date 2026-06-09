@@ -47,6 +47,7 @@ from libreevolve.core.database import (
 )
 from libreevolve.core.diff import (
     extract_proposal_metadata,
+    parse_diff_blocks,
     strip_proposal_metadata,
     validate_proposal_metadata_preamble,
 )
@@ -5316,6 +5317,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "prompt_current_binding_report": _prompt_current_binding_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
         "proposal_score_report": _proposal_score_report(programs),
         "metric_diverse_inspiration_report": (
@@ -14507,6 +14509,384 @@ def validate_mutation_operator_boundary_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.mutation_operator_boundary_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _prompt_current_binding_report(programs: list[Program]) -> dict:
+    parent_by_id = {program.id: program for program in programs}
+    records = [
+        _prompt_current_binding_record(program, parent_by_id.get(program.parent_id))
+        for program in programs
+        if _prompt_current_binding_is_generated(program)
+    ]
+    mode_counts: dict[str, int] = {}
+    status_counts: dict[str, int] = {}
+    exact_match_count = 0
+    truncated_prompt_current_count = 0
+    omitted_path_count = 0
+    for record in records:
+        mode = str(record.get("mutation_mode") or "unknown")
+        mode_counts[mode] = mode_counts.get(mode, 0) + 1
+        status = str(record.get("candidate_status") or "unknown")
+        status_counts[status] = status_counts.get(status, 0) + 1
+        binding = record.get("mutation_binding")
+        if isinstance(binding, Mapping) and binding.get("all_search_blocks_match_once") is True:
+            exact_match_count += 1
+        prompt_current = record.get("prompt_current_program")
+        if isinstance(prompt_current, Mapping):
+            if prompt_current.get("parent_code_truncated") is True:
+                truncated_prompt_current_count += 1
+            omitted = prompt_current.get("omitted_path_count")
+            if isinstance(omitted, int) and not isinstance(omitted, bool):
+                omitted_path_count += omitted
+    report = {
+        "schema": "libreevolve.prompt_current_binding_report.v1",
+        "source": "runtime_history_prompt_diagnostics_parent_workspace_and_mutation_payload",
+        "generated_candidate_count": len(records),
+        "binding_record_count": len(records),
+        "mutation_mode_counts": dict(sorted(mode_counts.items())),
+        "candidate_status_counts": dict(sorted(status_counts.items())),
+        "exact_diff_binding_count": exact_match_count,
+        "truncated_prompt_current_count": truncated_prompt_current_count,
+        "omitted_prompt_current_path_total": omitted_path_count,
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "binding_policy": {
+            "prompt_current_source": "prompt_diagnostics.parent_code_policy",
+            "mutation_target_source": "selected_parent.workspace_at_mutation_time",
+            "diff_match_policy": "primary_file_exact_SEARCH_match_counts_for_non_file_section_diff_payloads",
+            "full_mode_policy": "target_policy_recorded_without_SEARCH_span_claim",
+            "workspace_section_policy": "file_section_payloads_recorded_without_expanded_per_file_span_claim",
+            "llm_call_source": "candidate.metadata.llm_calls",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "prompt_current_hashes_recorded": any(
+                _prompt_current_has_hashes(record) for record in records
+            ),
+            "parent_workspace_hash_recorded": any(
+                _is_sha256_hex(record.get("parent_workspace_sha256"))
+                for record in records
+            ),
+            "candidate_workspace_hash_recorded": any(
+                _is_sha256_hex(record.get("candidate_workspace_sha256"))
+                for record in records
+            ),
+            "diff_exact_match_spans_recorded": exact_match_count > 0,
+            "full_alphaevolve_current_program_provenance": False,
+            "remaining_gap": [
+                "per_file_span_expansion_for_workspace_file_sections",
+                "evolve_block_inner_span_mapping",
+                "prompt_history_row_id_to_candidate_history_row_id_join",
+                "full_mode_target_span_or_block_policy",
+                "cross_run_prompt_current_binding_table",
+            ],
+        },
+    }
+    report["validation"] = validate_prompt_current_binding_report(report)
+    return report
+
+
+def _prompt_current_binding_is_generated(program: Program) -> bool:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    return metadata.get("candidate_type") == "generated"
+
+
+def _prompt_current_binding_record(
+    program: Program,
+    parent: Program | None,
+) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    llm_calls = metadata.get("llm_calls") if isinstance(metadata.get("llm_calls"), list) else []
+    parent_workspace = parent.workspace() if parent is not None else None
+    payload = metadata.get("diff")
+    mode = str(metadata.get("mutation_mode") or "unknown")
+    candidate_status = (
+        "accepted_history"
+        if admission.get("admitted") is True
+        else "rejected_history"
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_status": candidate_status,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": metadata.get("prompt_program_id"),
+        "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+        "prompt_sha256_scope": prompt_diagnostics.get("prompt_sha256_scope"),
+        "llm_call_ids": [
+            call.get("id")
+            for call in llm_calls
+            if isinstance(call, Mapping) and isinstance(call.get("id"), str)
+        ],
+        "mutation_mode": mode,
+        "mutation_payload_sha256": hashlib.sha256(
+            str(payload or "").encode("utf-8")
+        ).hexdigest(),
+        "parent_workspace_sha256": (
+            _workspace_sha256(parent_workspace) if parent_workspace is not None else None
+        ),
+        "candidate_workspace_sha256": _workspace_sha256(program.workspace()),
+        "prompt_current_program": _prompt_current_program_record(
+            prompt_diagnostics,
+            parent_workspace,
+        ),
+        "mutation_binding": _prompt_current_mutation_binding(
+            parent_workspace,
+            payload,
+            mode,
+        ),
+        "evaluation_link": {
+            "is_valid": evaluation.get("is_valid"),
+            "fitness": program.fitness,
+            "error": evaluation.get("error"),
+        },
+        "admission_link": {
+            "admitted": admission.get("admitted"),
+            "reason": admission.get("reason"),
+            "sampling_eligible": admission.get("sampling_eligible"),
+        },
+    }
+
+
+def _prompt_current_program_record(
+    prompt_diagnostics: Mapping[str, object],
+    parent_workspace: CandidateWorkspace | None,
+) -> dict:
+    policy = (
+        prompt_diagnostics.get("parent_code_policy")
+        if isinstance(prompt_diagnostics.get("parent_code_policy"), Mapping)
+        else {}
+    )
+    path_policy = (
+        policy.get("path_policy")
+        if isinstance(policy.get("path_policy"), Mapping)
+        else {}
+    )
+    rendered_paths = [
+        path for path in path_policy.get("rendered_paths", []) if isinstance(path, str)
+    ]
+    omitted_paths = [
+        path for path in path_policy.get("omitted_paths", []) if isinstance(path, str)
+    ]
+    parent_file_hashes = []
+    if parent_workspace is not None:
+        for path in rendered_paths[:25]:
+            content = parent_workspace.files.get(path)
+            if isinstance(content, str):
+                parent_file_hashes.append(
+                    {
+                        "path": path,
+                        "sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+                        "chars": len(content),
+                    }
+                )
+    return {
+        "policy_schema": policy.get("schema"),
+        "parent_code_original_sha256": policy.get("original_sha256"),
+        "parent_code_rendered_sha256": policy.get("rendered_sha256"),
+        "parent_code_original_chars": policy.get("original_chars"),
+        "parent_code_rendered_chars": policy.get("rendered_chars"),
+        "parent_code_truncated": policy.get("truncated"),
+        "path_policy_schema": path_policy.get("schema"),
+        "path_policy_source": path_policy.get("source"),
+        "primary_file": path_policy.get("primary_file")
+        if isinstance(path_policy.get("primary_file"), str)
+        else (parent_workspace.primary_file if parent_workspace is not None else None),
+        "rendered_paths": rendered_paths[:25],
+        "rendered_paths_truncated": len(rendered_paths) > 25,
+        "omitted_path_count": len(omitted_paths),
+        "omitted_paths": omitted_paths[:25],
+        "omitted_paths_truncated": len(omitted_paths) > 25,
+        "rendered_parent_file_hashes": parent_file_hashes,
+        "rendered_parent_file_hashes_truncated": len(rendered_paths) > 25,
+    }
+
+
+def _prompt_current_mutation_binding(
+    parent_workspace: CandidateWorkspace | None,
+    payload: object,
+    mode: str,
+) -> dict:
+    if parent_workspace is None:
+        return {
+            "mode_policy": "parent_workspace_unavailable",
+            "all_search_blocks_match_once": False,
+            "search_block_count": 0,
+            "match_records": [],
+        }
+    if not isinstance(payload, str) or not payload:
+        return {
+            "mode_policy": "missing_or_non_text_payload",
+            "all_search_blocks_match_once": False,
+            "search_block_count": 0,
+            "match_records": [],
+        }
+    surfaces = _mutation_operator_payload_surfaces(payload, mode)
+    if "file_sections" in surfaces:
+        return {
+            "mode_policy": "workspace_file_section_payload_not_span_expanded",
+            "payload_surfaces": surfaces,
+            "all_search_blocks_match_once": False,
+            "search_block_count": 0,
+            "match_records": [],
+        }
+    if mode == "full":
+        return {
+            "mode_policy": "full_mode_target_policy_recorded",
+            "payload_surfaces": surfaces,
+            "target_path": parent_workspace.primary_file,
+            "all_search_blocks_match_once": False,
+            "search_block_count": 0,
+            "match_records": [],
+        }
+    if mode != "diff":
+        return {
+            "mode_policy": "unsupported_mutation_mode_for_binding_spans",
+            "payload_surfaces": surfaces,
+            "all_search_blocks_match_once": False,
+            "search_block_count": 0,
+            "match_records": [],
+        }
+    blocks = parse_diff_blocks(payload)
+    target_path = parent_workspace.primary_file
+    target_text = parent_workspace.files.get(target_path, "")
+    match_records = [
+        _prompt_current_search_match_record(target_path, target_text, search)
+        for search, _replace in blocks
+    ]
+    return {
+        "mode_policy": "diff_primary_file_exact_search_match",
+        "payload_surfaces": surfaces,
+        "target_path": target_path,
+        "search_block_count": len(blocks),
+        "all_search_blocks_match_once": bool(blocks)
+        and all(record["match_count"] == 1 for record in match_records),
+        "match_records": match_records[:25],
+        "match_records_truncated": len(match_records) > 25,
+    }
+
+
+def _prompt_current_search_match_record(
+    target_path: str,
+    target_text: str,
+    search: str,
+) -> dict:
+    normalized_target = target_text.replace("\r\n", "\n").replace("\r", "\n")
+    normalized_search = search.replace("\r\n", "\n").replace("\r", "\n")
+    match_count = normalized_target.count(normalized_search) if normalized_search else 0
+    start = normalized_target.find(normalized_search) if match_count == 1 else -1
+    span = [start, start + len(normalized_search)] if start >= 0 else None
+    return {
+        "target_path": target_path,
+        "search_sha256": hashlib.sha256(search.encode("utf-8")).hexdigest(),
+        "search_chars": len(search),
+        "match_count": match_count,
+        "normalized_span": span,
+    }
+
+
+def _prompt_current_has_hashes(record: Mapping[str, object]) -> bool:
+    prompt_current = record.get("prompt_current_program")
+    if not isinstance(prompt_current, Mapping):
+        return False
+    return _is_sha256_hex(prompt_current.get("parent_code_original_sha256")) and (
+        _is_sha256_hex(prompt_current.get("parent_code_rendered_sha256"))
+    )
+
+
+def validate_prompt_current_binding_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.prompt_current_binding_report.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_shape", "message": "prompt-current binding report must be an object"}
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "binding_record_count",
+        "mutation_mode_counts",
+        "candidate_status_counts",
+        "exact_diff_binding_count",
+        "truncated_prompt_current_count",
+        "omitted_prompt_current_path_total",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "binding_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"prompt-current binding report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.prompt_current_binding_report.v1":
+        issues.append({"code": "invalid_schema", "message": "prompt-current binding report schema is unsupported"})
+    if report.get("source") != "runtime_history_prompt_diagnostics_parent_workspace_and_mutation_payload":
+        issues.append({"code": "invalid_source", "message": "prompt-current binding report source is unsupported"})
+    for field in (
+        "generated_candidate_count",
+        "binding_record_count",
+        "exact_diff_binding_count",
+        "truncated_prompt_current_count",
+        "omitted_prompt_current_path_total",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append({"code": f"invalid_{field}", "message": f"{field} must be a non-negative integer"})
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_record", "message": f"record {index} must be an object"})
+            continue
+        if not isinstance(record.get("candidate_id"), str):
+            issues.append({"code": "invalid_candidate_id", "message": f"record {index} candidate_id must be a string"})
+        if record.get("candidate_status") not in {"accepted_history", "rejected_history"}:
+            issues.append({"code": "invalid_candidate_status", "message": f"record {index} candidate_status is invalid"})
+        if not _is_sha256_hex(record.get("candidate_workspace_sha256")):
+            issues.append({"code": "invalid_candidate_workspace_hash", "message": f"record {index} candidate workspace hash is invalid"})
+        binding = record.get("mutation_binding")
+        if not isinstance(binding, dict):
+            issues.append({"code": "invalid_mutation_binding", "message": f"record {index} mutation_binding must be an object"})
+        prompt_current = record.get("prompt_current_program")
+        if not isinstance(prompt_current, dict):
+            issues.append({"code": "invalid_prompt_current_program", "message": f"record {index} prompt_current_program must be an object"})
+    if report.get("records_truncated") is not True:
+        if report.get("binding_record_count") != len(records):
+            issues.append({"code": "invalid_record_count", "message": "binding_record_count must match records when not truncated"})
+    if not isinstance(report.get("binding_policy"), dict):
+        issues.append({"code": "invalid_binding_policy", "message": "binding_policy must be an object"})
+    if report.get("claim_ready") is not False:
+        issues.append({"code": "claim_ready_overclaim", "message": "prompt-current binding report must not claim full AlphaEvolve provenance"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    elif readiness.get("full_alphaevolve_current_program_provenance") is not False:
+        issues.append({"code": "current_program_provenance_overclaim", "message": "full current-program provenance must remain false"})
+    return {
+        "schema": "libreevolve.prompt_current_binding_report.v1",
         "ok": not issues,
         "issues": issues,
     }

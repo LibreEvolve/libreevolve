@@ -15497,3 +15497,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover report emission, validator success,
     abandoned-branch state transitions, observed fallback-parent redirect
     evidence, and unready causal-proof boundaries.
+
+- [x] Add current-run prompt-current binding report.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
+    SEARCH/REPLACE payloads as exact edits to the current program rendered in
+    the prompt.
+  - Status: completed manifests now include
+    `runtime.history.prompt_current_binding_report` with schema
+    `libreevolve.prompt_current_binding_report.v1`, plus
+    `validate_prompt_current_binding_report()`. The report records prompt and
+    prompt-program ids, rendered prompt hashes, parent-code hashes/path policy,
+    parent/candidate workspace hashes, LLM call ids, mutation payload hashes,
+    diff SEARCH match counts/spans, full-mode target policy, evaluator status,
+    and archive admission.
+  - Remaining gap: per-file span expansion for workspace sections,
+    evolve-block inner span mapping, prompt-history row joins, full-mode target
+    spans/block ids, and cross-run binding tables remain open.
+  - Verification: focused loop tests cover diff-mode exact SEARCH binding,
+    full-mode target-policy reporting, report validation, and unready full
+    Figure 3 provenance boundaries.

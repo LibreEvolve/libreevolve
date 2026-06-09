@@ -7888,3 +7888,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     fallback-target decision events, causal resumed-search replay, and
     cross-run branch tables remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow prompt-current roadmap wording to full Figure 3 binding gaps.
+  - Evidence: roadmap wording needed to recognize implemented current-run
+    prompt-current mutation binding evidence without implying full Figure 3
+    provenance.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.prompt_current_binding_report` for prompt/current-program
+    hashes, parent/candidate workspace hashes, LLM call ids, diff SEARCH
+    match counts/spans, full-mode target policy, evaluator links, and archive
+    admission.
+  - Remaining roadmap gap: per-file span expansion, evolve-block inner span
+    mapping, prompt-history row joins, full-mode target spans/block ids, and
+    cross-run binding tables remain open.
+  - Verification: focused loop tests cover the report and validator.

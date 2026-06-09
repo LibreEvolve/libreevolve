@@ -217,6 +217,13 @@ is not yet an AlphaEvolve reproduction.
   construction, adaptive operator-family selection, scoring, and benchmark
   telemetry before claiming AlphaEvolve's Related Work distinction from
   systems with fixed handwritten mutation or crossover operator sets.
+- Extend `runtime.history.prompt_current_binding_report` beyond current
+  prompt/current-program hashes, parent/candidate workspace hashes, LLM call
+  ids, diff SEARCH match counts/spans, and full-mode target-policy evidence
+  into per-file span expansion for workspace sections, evolve-block inner span
+  mapping, prompt-history row joins, full-mode target spans, and cross-run
+  binding tables before claiming full AlphaEvolve Figure 3 current-program
+  edit provenance.
 - Extend `runtime.history.initial_pool_divergence_report` beyond current
   seed-vs-generated workspace hash, bounded primary-file text distance,
   changed-file summary, and numeric metric L1 evidence into task-specific

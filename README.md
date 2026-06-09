@@ -720,6 +720,16 @@ emphasizes LLM-guided mutation beyond handwritten mutation/crossover operator
 sets; the report remains `claim_ready: false` because LibreEvolve does not yet
 declare, construct, select, score, or benchmark higher-level mutation-operator
 families separately from the parser grammar.
+Completed manifests also include
+`runtime.history.prompt_current_binding_report`, which joins generated
+candidate ids, prompt-program ids, rendered prompt hashes, parent/current
+program render hashes and path policy, parent/candidate workspace hashes, LLM
+call ids, mutation payload hashes, diff SEARCH match counts/spans for
+non-file-section diff payloads, full-mode target policy, evaluator status, and
+archive admission. The report is current-run provenance, not full Figure 3
+parity: per-file span expansion for workspace sections, evolve-block inner span
+mapping, prompt-history row joins, full-mode target spans, and cross-run
+binding tables remain open.
 
 Explicit problem context bodies are also rendered as character-counted JSON
 strings under source citation headers, and context entries render in

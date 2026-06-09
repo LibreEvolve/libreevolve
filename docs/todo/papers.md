@@ -1837,7 +1837,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     rationale-quality scoring, and cross-run preamble/proposal joins before
     presenting natural-language proposal preambles as complete.
 
-- [ ] Track prompt example-copy diagnostics beyond built-in exact sentinels.
+- [ ] Track prompt example-copy diagnostics beyond built-in normalized and
+      skeleton signals.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section 2.3.
   - Requirement: AlphaEvolve prompts can include concrete current-program
     context and concrete SEARCH/REPLACE demonstrations, but accepted proposals
@@ -1847,17 +1848,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     concrete prompt examples, and strict malformed-diff diagnostics. Completed
     manifests now include `runtime.history.prompt_example_copy_report` with
     schema `libreevolve.prompt_example_copy_report.v1`, which inventories
-    built-in mutation-format example sentinels and records exact
-    generated-payload copies with candidate status/admission metadata.
-  - Current gap: the report is diagnostic-only and covers exact built-in
-    sentinels, not hard rejection, semantic/renamed example copying, custom
-    prompt-template example inventories, or normalized per-file-section copy
-    detection.
+    built-in mutation-format example sentinels and records exact,
+    normalized file-section-region, and simple example-format skeleton copy
+    signals with candidate status/admission metadata.
+  - Current gap: the report is diagnostic-only and remains scoped to built-in
+    examples. It does not provide hard rejection, configurable acceptance
+    policy, custom prompt-template example inventories, or broader
+    semantic/renamed example-copy detection beyond the current skeleton.
   - Required result: add paper-facing evidence for configurable
-    acceptance/rejection policy, semantic or renamed example-copy detection,
-    custom prompt-template inventories, and per-file-section normalized
-    scanning before treating prompt-example compatibility as AlphaEvolve-style
-    current-program editing fidelity.
+    acceptance/rejection policy, broader semantic or renamed example-copy
+    detection, and custom prompt-template inventories before treating
+    prompt-example compatibility as AlphaEvolve-style current-program editing
+    fidelity.
 
 - [ ] Track prompt-current-program binding evidence beyond current-run
       mutation records.

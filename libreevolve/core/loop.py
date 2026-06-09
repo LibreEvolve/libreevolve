@@ -14525,6 +14525,14 @@ def validate_mutation_operator_boundary_report(report: object) -> dict:
 
 _CONSISTENCY_FILE_SECTION_HEADER_RE = re.compile(r"(?m)^<<<FILE[ \t]*(.*?)\n")
 _CONSISTENCY_BLOCK_SECTION_HEADER_RE = re.compile(r"(?m)^<<<BLOCK[ \t]*(.*?)\n")
+_PROMPT_EXAMPLE_FILE_SECTION_RE = re.compile(
+    r"^<<<FILE[ \t]*(.*?)\n(.*?)^>>>FILE[ \t]*(?:\n|$)",
+    re.DOTALL | re.MULTILINE,
+)
+_PROMPT_EXAMPLE_SKELETON_RE = re.compile(
+    r"(?s)def\s+[A-Za-z_][A-Za-z0-9_]*\s*\(\s*\)\s*:\s*return\s+1"
+    r".*?def\s+[A-Za-z_][A-Za-z0-9_]*\s*\(\s*\)\s*:\s*return\s+2"
+)
 _PYTHON_BUILTIN_NAMES = frozenset(dir(builtins)) | {"True", "False", "None"}
 _PYTHON_IMPLICIT_NAMES = frozenset({"self", "cls"})
 
@@ -15092,7 +15100,7 @@ def _prompt_example_copy_report(programs: list[Program]) -> dict:
         if _prompt_current_binding_is_generated(program)
     ]
     copied_records = [
-        record for record in records if record["copied_example_sentinel_count"] > 0
+        record for record in records if record["copy_signal_count"] > 0
     ]
     enabled_records = [
         record for record in records if record["prompt_example_enabled"] is True
@@ -15100,13 +15108,17 @@ def _prompt_example_copy_report(programs: list[Program]) -> dict:
     status_counts: dict[str, int] = {}
     copied_status_counts: dict[str, int] = {}
     mode_counts: dict[str, int] = {}
+    normalized_signal_count = 0
+    skeleton_signal_count = 0
     for record in records:
         status = str(record.get("candidate_status") or "unknown")
         status_counts[status] = status_counts.get(status, 0) + 1
         mode = str(record.get("mutation_mode") or "unknown")
         mode_counts[mode] = mode_counts.get(mode, 0) + 1
-        if record["copied_example_sentinel_count"] > 0:
+        if record["copy_signal_count"] > 0:
             copied_status_counts[status] = copied_status_counts.get(status, 0) + 1
+        normalized_signal_count += int(record.get("normalized_copy_signal_count") or 0)
+        skeleton_signal_count += int(record.get("format_skeleton_signal_count") or 0)
     report = {
         "schema": "libreevolve.prompt_example_copy_report.v1",
         "source": "runtime_history_prompt_diagnostics_and_mutation_payloads",
@@ -15114,6 +15126,8 @@ def _prompt_example_copy_report(programs: list[Program]) -> dict:
         "generated_candidate_count": len(records),
         "prompt_example_enabled_count": len(enabled_records),
         "copied_example_candidate_count": len(copied_records),
+        "normalized_copy_signal_count": normalized_signal_count,
+        "format_skeleton_signal_count": skeleton_signal_count,
         "candidate_status_counts": dict(sorted(status_counts.items())),
         "copied_candidate_status_counts": dict(sorted(copied_status_counts.items())),
         "mutation_mode_counts": dict(sorted(mode_counts.items())),
@@ -15122,7 +15136,9 @@ def _prompt_example_copy_report(programs: list[Program]) -> dict:
         "records_truncated": len(copied_records) > 50,
         "diagnostic_policy": {
             "inventory_scope": "built_in_mutation_instruction_example_sentinels",
-            "match_policy": "exact_substring_match_in_generated_mutation_payload",
+            "match_policy": (
+                "exact_substring_plus_normalized_region_and_format_skeleton_signals"
+            ),
             "acceptance_policy": "diagnostic_only_not_a_hard_rejection",
             "prompt_example_disabled_policy": (
                 "record_include_flag_when_prompt_context_policy_disables_example"
@@ -15132,14 +15148,16 @@ def _prompt_example_copy_report(programs: list[Program]) -> dict:
         "claim_readiness": {
             "prompt_example_inventory_versioned": True,
             "copied_sentinel_detection": True,
+            "normalized_region_detection": normalized_signal_count > 0,
+            "format_skeleton_detection": skeleton_signal_count > 0,
             "diff_full_workspace_payloads_scanned": True,
             "hard_acceptance_gate": False,
             "semantic_example_copy_detection": False,
             "remaining_gap": [
                 "hard_rejection_or_configurable_acceptance_policy",
-                "semantic_or_renamed_example_copy_detection",
+                "semantic_or_renamed_example_copy_detection_beyond_format_skeletons",
                 "custom_prompt_template_example_inventory",
-                "per_file_section_normalized_copy_detection",
+                "configured_prompt_template_example_inventories",
             ],
         },
     }
@@ -15205,6 +15223,9 @@ def _prompt_example_copy_record(program: Program, inventory: Mapping[str, object
     payload = metadata.get("diff")
     payload_text = payload if isinstance(payload, str) else ""
     copied = _prompt_example_copied_sentinels(payload_text, inventory)
+    normalized = _prompt_example_normalized_copy_signals(payload_text, inventory)
+    skeletons = _prompt_example_format_skeleton_signals(payload_text)
+    copy_signal_count = len(copied) + len(normalized) + len(skeletons)
     return {
         "candidate_id": program.id,
         "candidate_status": (
@@ -15225,8 +15246,13 @@ def _prompt_example_copy_record(program: Program, inventory: Mapping[str, object
         "prompt_example_enabled": context_policy.get(
             "mutation_instruction_include_example"
         ),
+        "copy_signal_count": copy_signal_count,
         "copied_example_sentinel_count": len(copied),
         "copied_example_sentinels": copied,
+        "normalized_copy_signal_count": len(normalized),
+        "normalized_copy_signals": normalized,
+        "format_skeleton_signal_count": len(skeletons),
+        "format_skeleton_signals": skeletons,
         "admission": {
             "admitted": admission.get("admitted"),
             "reason": admission.get("reason"),
@@ -15260,6 +15286,104 @@ def _prompt_example_copied_sentinels(
     return copied
 
 
+def _prompt_example_payload_regions(payload_text: str) -> list[dict]:
+    regions = []
+    for index, match in enumerate(_PROMPT_EXAMPLE_FILE_SECTION_RE.finditer(payload_text)):
+        header = match.group(1).strip()
+        regions.append(
+            {
+                "label": f"file_section:{index}",
+                "surface": "file_section_body",
+                "header": _mutation_consistency_safe_label(header),
+                "text": match.group(2),
+            }
+        )
+    if regions:
+        return regions
+    regions.append(
+        {
+            "label": "entire_payload",
+            "surface": "payload",
+            "text": payload_text,
+        }
+    )
+    return regions
+
+
+def _prompt_example_normalized_copy_signals(
+    payload_text: str,
+    inventory: Mapping[str, object],
+) -> list[dict]:
+    signals: list[dict] = []
+    sentinels = inventory.get("sentinels")
+    if not isinstance(sentinels, list):
+        return signals
+    regions = _prompt_example_payload_regions(payload_text)
+    seen: set[tuple[object, object]] = set()
+    for sentinel in sentinels:
+        if not isinstance(sentinel, Mapping):
+            continue
+        preview = sentinel.get("preview")
+        if not isinstance(preview, str) or not preview:
+            continue
+        normalized_preview = _prompt_example_normalized_text(preview)
+        if not normalized_preview:
+            continue
+        for region in regions:
+            region_text = region.get("text")
+            if not isinstance(region_text, str):
+                continue
+            if normalized_preview not in _prompt_example_normalized_text(region_text):
+                continue
+            key = (sentinel.get("label"), region.get("label"))
+            if key in seen:
+                continue
+            seen.add(key)
+            signals.append(
+                {
+                    "label": sentinel.get("label"),
+                    "sha256": sentinel.get("sha256"),
+                    "match_policy": "normalized_alnum_substring",
+                    "region": region.get("label"),
+                    "surface": region.get("surface"),
+                    **(
+                        {"section_header": region["header"]}
+                        if isinstance(region.get("header"), str)
+                        else {}
+                    ),
+                }
+            )
+    return signals[:50]
+
+
+def _prompt_example_format_skeleton_signals(payload_text: str) -> list[dict]:
+    signals: list[dict] = []
+    for region in _prompt_example_payload_regions(payload_text):
+        region_text = region.get("text")
+        if not isinstance(region_text, str):
+            continue
+        if _PROMPT_EXAMPLE_SKELETON_RE.search(region_text) is None:
+            continue
+        signals.append(
+            {
+                "label": "example_def_return_1_to_2_skeleton",
+                "match_policy": "format_skeleton_regex",
+                "region": region.get("label"),
+                "surface": region.get("surface"),
+                **(
+                    {"section_header": region["header"]}
+                    if isinstance(region.get("header"), str)
+                    else {}
+                ),
+            }
+        )
+    return signals[:25]
+
+
+def _prompt_example_normalized_text(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_]+", "", value).lower()
+
+
 def validate_prompt_example_copy_report(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):
@@ -15277,6 +15401,8 @@ def validate_prompt_example_copy_report(report: object) -> dict:
         "generated_candidate_count",
         "prompt_example_enabled_count",
         "copied_example_candidate_count",
+        "normalized_copy_signal_count",
+        "format_skeleton_signal_count",
         "candidate_status_counts",
         "copied_candidate_status_counts",
         "mutation_mode_counts",
@@ -15298,6 +15424,8 @@ def validate_prompt_example_copy_report(report: object) -> dict:
         "generated_candidate_count",
         "prompt_example_enabled_count",
         "copied_example_candidate_count",
+        "normalized_copy_signal_count",
+        "format_skeleton_signal_count",
     ):
         value = report.get(field)
         if isinstance(value, bool) or not isinstance(value, int) or value < 0:
@@ -15321,10 +15449,44 @@ def validate_prompt_example_copy_report(report: object) -> dict:
             continue
         count = record.get("copied_example_sentinel_count")
         sentinels = record.get("copied_example_sentinels")
+        normalized_count = record.get("normalized_copy_signal_count")
+        normalized = record.get("normalized_copy_signals")
+        skeleton_count = record.get("format_skeleton_signal_count")
+        skeletons = record.get("format_skeleton_signals")
+        total_count = record.get("copy_signal_count")
+        for field, value in (
+            ("copy_signal_count", total_count),
+            ("normalized_copy_signal_count", normalized_count),
+            ("format_skeleton_signal_count", skeleton_count),
+        ):
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"record {index} {field} must be non-negative",
+                    }
+                )
         if isinstance(count, bool) or not isinstance(count, int) or count < 1:
-            issues.append({"code": "invalid_copied_count", "message": f"record {index} copied count must be positive"})
+            if not (
+                isinstance(total_count, int)
+                and not isinstance(total_count, bool)
+                and total_count > 0
+            ):
+                issues.append({"code": "invalid_copied_count", "message": f"record {index} copied count must be positive"})
         if not isinstance(sentinels, list) or len(sentinels) != count:
             issues.append({"code": "invalid_copied_sentinels", "message": f"record {index} copied sentinels must match count"})
+        if not isinstance(normalized, list) or len(normalized) != normalized_count:
+            issues.append({"code": "invalid_normalized_signals", "message": f"record {index} normalized signals must match count"})
+        if not isinstance(skeletons, list) or len(skeletons) != skeleton_count:
+            issues.append({"code": "invalid_skeleton_signals", "message": f"record {index} skeleton signals must match count"})
+        if (
+            isinstance(total_count, int)
+            and isinstance(count, int)
+            and isinstance(normalized_count, int)
+            and isinstance(skeleton_count, int)
+            and total_count != count + normalized_count + skeleton_count
+        ):
+            issues.append({"code": "invalid_copy_signal_count", "message": f"record {index} copy signal count must equal signal totals"})
     if report.get("records_truncated") is not True:
         if report.get("copied_example_candidate_count") != len(records):
             issues.append({"code": "invalid_record_count", "message": "copied count must match records when not truncated"})

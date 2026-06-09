@@ -2716,22 +2716,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README, ROADMAP, papers index, and code/paper TODOs together with the exact
     parser boundary and provenance behavior.
 
-- [ ] Keep README prompt-example wording scoped until copy-detection policy is
-      stronger than built-in exact sentinels.
+- [ ] Keep README prompt-example wording scoped beyond built-in normalized and
+      skeleton copy signals.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program
     context and concrete SEARCH/REPLACE examples to communicate the edit
     contract.
   - Current evidence: README notes that concrete diff examples reduce observed
     placeholder-copying mistakes. README now cites
     `runtime.history.prompt_example_copy_report`, which inventories built-in
-    mutation-format example sentinels and records exact generated-payload
-    copies with candidate status/admission metadata.
+    mutation-format example sentinels and records exact, normalized
+    file-section-region, and example-format skeleton signals with candidate
+    status/admission metadata.
+  - Remaining gap: the report is diagnostic-only and still lacks configurable
+    rejection, custom prompt-template example inventories, and broader
+    semantic/renamed copy detection.
   - Required result: when stronger copy-detection policy lands, update README,
     ROADMAP, papers index, and code/paper TODOs with configurable rejection,
-    semantic/renamed copy detection, custom prompt-template inventories, and
-    per-file-section normalized scanning so README can distinguish useful
-    concrete examples from full AlphaEvolve-style current-program edit
-    fidelity.
+    semantic/renamed copy detection, and custom prompt-template inventories so
+    README can distinguish useful concrete examples from full
+    AlphaEvolve-style current-program edit fidelity.
 
 - [ ] Keep README prompt-current edit wording scoped until full Figure 3
       binding evidence exists.

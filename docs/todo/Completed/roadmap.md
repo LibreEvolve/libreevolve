@@ -4,6 +4,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document normalized and skeleton prompt-example copy diagnostics in the
+      roadmap.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete examples that
+    should guide format without becoming copied candidate payloads.
+  - Status: ROADMAP now scopes `runtime.history.prompt_example_copy_report` to
+    built-in exact, normalized-region, and example-format skeleton diagnostics.
+  - Remaining gap: configurable acceptance policy, broader semantic/renamed
+    example-copy detection, and custom prompt-template inventories remain
+    future work.
+
 - [x] Document current-run multi-edit consistency diagnostics in the roadmap.
   - Spec evidence: AlphaEvolve Figure 3(b) instructs same-response edits to be
     internally consistent.

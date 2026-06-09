@@ -723,9 +723,12 @@ families separately from the parser grammar.
 Completed manifests also include
 `runtime.history.prompt_example_copy_report`, which inventories the built-in
 mutation-format example sentinels and reports generated mutation payloads that
-copy those example-only fragments. This is diagnostic-only, not a hard
-acceptance gate: semantic or renamed example copying, custom-template example
-inventories, and configurable rejection policy remain open.
+copy those example-only fragments. It records exact substring signals,
+normalized region signals for file-section bodies, and a simple example-format
+skeleton signal for `def ... return 1` to `def ... return 2` copies. This is
+diagnostic-only, not a hard acceptance gate: custom-template example
+inventories, broader semantic or renamed example-copy detection, and
+configurable rejection policy remain open.
 Completed manifests also include
 `runtime.history.prompt_current_binding_report`, which joins generated
 candidate ids, prompt-program ids, rendered prompt hashes, parent/current
@@ -3353,7 +3356,7 @@ manifest/index verification documented there:
 - Models may add brief explanatory text before the patch — leading preambles are captured in bounded/redacted metadata, but prose between or after mutation markers still fails parsing
 - Multi-edit payloads get diagnostic consistency records for changed edit units and unresolved Python symbol references, but this is not a hard acceptance gate
 - Without stronger failed-proposal memory, models can repeat the same bad mutation many times
-- A concrete diff example in the prompt reduces observed placeholder-copying mistakes; `runtime.history.prompt_example_copy_report` now records exact built-in example-sentinel copying, but hard rejection and semantic copy detection remain open
+- A concrete diff example in the prompt reduces observed placeholder-copying mistakes; `runtime.history.prompt_example_copy_report` now records exact, normalized, and example-skeleton copy signals, but hard rejection and custom-template semantic detection remain open
 
 **Seeds determine the evolutionary landscape:**
 - Optimization-pressure seeds (`hello_world`, `circle_packing`, `matrix_multiplication`) start with measurable headroom

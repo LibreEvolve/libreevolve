@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Extend prompt example-copy diagnostics with normalized and skeleton
+      signals.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete current-program
+    context and SEARCH/REPLACE examples; examples should not be mistaken for
+    candidate edits to the sampled current program.
+  - Status: `runtime.history.prompt_example_copy_report` now records exact
+    built-in sentinel copies, normalized file-section-region copies, and a
+    simple `def ... return 1` to `def ... return 2` example-format skeleton
+    signal, with candidate status/admission metadata and validation.
+  - Remaining gap: configurable acceptance/rejection policy, custom
+    prompt-template example inventories, and broader semantic/renamed copy
+    detection remain active TODOs.
+
 - [x] Add current-run multi-edit consistency diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep
     SEARCH/REPLACE edits consistent with each other, including adding a config

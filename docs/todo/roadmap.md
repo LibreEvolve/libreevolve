@@ -1411,14 +1411,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     parser syntax, canonical diff compatibility, and strict unconsumed-text
     rejection. ROADMAP now also cites
     `runtime.history.prompt_example_copy_report`, which inventories built-in
-    mutation-format example sentinels and records exact generated-payload
-    copies with candidate status/admission metadata.
+    mutation-format example sentinels and records exact, normalized
+    file-section-region, and example-format skeleton signals with candidate
+    status/admission metadata.
   - Required result: when stronger example-copy diagnostics land, update
     ROADMAP, README, papers index, and code/paper TODOs together with
-    configurable rejection, semantic/renamed copy detection, custom
-    prompt-template inventories, and per-file-section normalized scanning so
-    roadmap wording separates concrete prompt examples from evidence that
-    accepted mutations are genuine edits to the current program.
+    configurable rejection, broader semantic/renamed copy detection, and custom
+    prompt-template inventories so roadmap wording separates concrete prompt
+    examples from evidence that accepted mutations are genuine edits to the
+    current program.
 
 - [ ] Keep prompt-current edit provenance roadmap wording scoped until full
       Figure 3 binding evidence exists.

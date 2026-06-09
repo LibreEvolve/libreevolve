@@ -2238,7 +2238,8 @@ Primary evidence:
     cross-run preamble/proposal-memory joins before treating natural-language
     rationale handling as complete AlphaEvolve-style proposal memory.
 
-- [ ] Extend prompt example-copy diagnostics beyond built-in exact sentinels.
+- [ ] Extend prompt example-copy diagnostics beyond built-in normalized and
+      skeleton signals.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows concrete current-program
     context and concrete SEARCH/REPLACE examples. The useful behavior is that
     the model edits the current program, not that it copies illustrative
@@ -2249,18 +2250,21 @@ Primary evidence:
     `runtime.history.prompt_example_copy_report` with schema
     `libreevolve.prompt_example_copy_report.v1`, plus
     `validate_prompt_example_copy_report()`. The report inventories built-in
-    mutation-format example sentinels, detects exact generated-payload copies,
+    mutation-format example sentinels, records exact generated-payload copy
+    signals, normalized region signals for file-section bodies, and a simple
+    `def ... return 1` to `def ... return 2` example-format skeleton signal,
     records copied candidate status/admission metadata, and respects
     `mutation_instruction_include_example` when prompt context disables the
     example.
-  - Remaining gap: this is diagnostic-only and covers exact built-in
-    sentinels, not hard rejection, semantic/renamed example copying, custom
-    prompt-template examples, or normalized per-file-section copy detection.
+  - Remaining gap: this is diagnostic-only and still built-in-example scoped.
+    It does not provide hard rejection, configurable acceptance policy,
+    custom prompt-template example inventories, or broader semantic/renamed
+    example-copy detection beyond the current format skeleton.
   - Required result: extend prompt-example copy evidence with configurable
-    acceptance/rejection policy, semantic or renamed copy detection, custom
-    template example inventories, and per-file-section normalized scanning so
-    prompt examples can remain useful without being mistaken for valid
-    AlphaEvolve-style edits to the current program.
+    acceptance/rejection policy, broader semantic or renamed copy detection,
+    and custom template example inventories so prompt examples can remain
+    useful without being mistaken for valid AlphaEvolve-style edits to the
+    current program.
 
 - [ ] Extend prompt-current-program binding evidence beyond current-run
       mutation records.

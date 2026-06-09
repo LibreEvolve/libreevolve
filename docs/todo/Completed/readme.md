@@ -4,6 +4,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document normalized and skeleton prompt-example copy diagnostics.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete examples to
+    communicate the mutation format without making those examples valid
+    candidate content.
+  - Status: README now says `runtime.history.prompt_example_copy_report`
+    records exact, normalized, and example-skeleton copy signals while keeping
+    hard rejection and custom-template semantic detection open.
+  - Remaining gap: configurable rejection, custom prompt-template inventories,
+    and broader semantic/renamed copy detection remain active README TODOs.
+
 - [x] Document current-run multi-edit consistency diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b) requires same-response edits to be
     consistent with each other.

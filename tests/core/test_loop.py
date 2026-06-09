@@ -3214,6 +3214,58 @@ def foo():
     assert record["admission"]["admitted"] is False
 
 
+def test_runtime_history_reports_normalized_prompt_example_copy_diagnostics():
+    tmpdir = tempfile.mkdtemp()
+    copied_example_payload = """<<<FILE helper.py
+def foo( ):
+    return    1
+
+def foo( ):
+    return    2
+>>>FILE"""
+
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        return_value=_llm(copied_example_payload),
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_example_copy_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_example_copy_report(report)["ok"] is True
+    assert report["copied_example_candidate_count"] == 1
+    assert report["normalized_copy_signal_count"] >= 3
+    assert report["format_skeleton_signal_count"] == 1
+    assert report["claim_readiness"]["normalized_region_detection"] is True
+    assert report["claim_readiness"]["format_skeleton_detection"] is True
+    assert report["claim_readiness"]["semantic_example_copy_detection"] is False
+
+    record = report["records"][0]
+    assert record["copied_example_sentinel_count"] == 0
+    assert record["normalized_copy_signal_count"] >= 3
+    assert record["format_skeleton_signal_count"] == 1
+    assert record["copy_signal_count"] == (
+        record["normalized_copy_signal_count"]
+        + record["format_skeleton_signal_count"]
+    )
+    assert {signal["region"] for signal in record["normalized_copy_signals"]} == {
+        "file_section:0"
+    }
+    assert record["format_skeleton_signals"][0]["surface"] == "file_section_body"
+    assert record["format_skeleton_signals"][0]["section_header"] == "helper.py"
+
+
 def test_runtime_history_reports_prompt_example_disabled_policy():
     tmpdir = tempfile.mkdtemp()
     prompt_db = PromptDatabase(

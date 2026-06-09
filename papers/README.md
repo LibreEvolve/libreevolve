@@ -330,10 +330,11 @@ operator-family provenance, construction or selection evidence, and benchmark
 telemetry beyond those fixed local parser surfaces.
 Completed manifests now also include
 `runtime.history.prompt_example_copy_report`, which inventories the built-in
-mutation-format example sentinels and records exact generated-payload copies
-of those example-only fragments. It is diagnostic-only: hard rejection,
-semantic/renamed copy detection, custom prompt-template example inventories,
-and per-file-section normalized copy detection remain open.
+mutation-format example sentinels and records exact, normalized
+file-section-region, and simple example-format skeleton copy signals for
+example-only fragments. It is diagnostic-only: hard rejection, broader
+semantic/renamed copy detection, and custom prompt-template example
+inventories remain open.
 Completed manifests now also include
 `runtime.history.prompt_current_binding_report`, which records current-run
 prompt/current-program binding evidence: generated candidate ids, prompt
@@ -901,6 +902,12 @@ AlphaEvolve-style same-response consistency contract for multi-edit proposals,
 but configured prompt variants can still omit it. Evolved prompt children retain
 the placeholders used by their parent template, so the current retention policy
 preserves only the channels present in the selected parent prompt.
+`runtime.history.prompt_example_copy_report` also inventories built-in mutation
+example sentinels and records exact, normalized file-section-region, and simple
+example-format skeleton copy signals from generated payloads. This keeps
+concrete examples usable while exposing copied illustrative fragments as
+diagnostic evidence; custom-template inventories, broader semantic/renamed
+copy detection, and hard or configurable acceptance policy remain open.
 
 AlphaEvolve proposal-capture note: LibreEvolve treats leading proposal metadata
 as a structured mutation-response preamble. Short `IDEA:`, `RATIONALE:`, and

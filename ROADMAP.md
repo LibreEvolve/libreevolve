@@ -218,11 +218,11 @@ is not yet an AlphaEvolve reproduction.
   telemetry before claiming AlphaEvolve's Related Work distinction from
   systems with fixed handwritten mutation or crossover operator sets.
 - Extend `runtime.history.prompt_example_copy_report` beyond current built-in
-  example-sentinel inventory and exact payload-copy diagnostics into hard or
-  configurable acceptance policy, semantic/renamed example-copy detection,
-  custom prompt-template example inventories, and per-file-section normalized
-  copy detection before treating concrete prompt examples as fully guarded
-  AlphaEvolve-style current-program edit demonstrations.
+  exact, normalized-region, and example-format skeleton diagnostics into hard
+  or configurable acceptance policy, broader semantic/renamed example-copy
+  detection, and custom prompt-template example inventories before treating
+  concrete prompt examples as fully guarded AlphaEvolve-style current-program
+  edit demonstrations.
 - Extend `runtime.history.prompt_current_binding_report` beyond current
   prompt/current-program hashes, parent/candidate workspace hashes, LLM call
   ids, diff SEARCH match counts/spans, and full-mode target-policy evidence

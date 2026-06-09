@@ -6,6 +6,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track normalized and skeleton prompt-example copy diagnostics.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
+    2.3.
+  - Status: paper-facing docs now cite
+    `runtime.history.prompt_example_copy_report` as recording exact,
+    normalized file-section-region, and simple example-format skeleton copy
+    signals with candidate status/admission metadata.
+  - Remaining gap: custom prompt-template inventories, broader
+    semantic/renamed copy detection, and hard or configurable acceptance
+    policy remain active paper TODOs.
+
 - [x] Track current-run multi-edit consistency diagnostics separately from
       prompt instructions.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).

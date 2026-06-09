@@ -892,6 +892,19 @@ claims should remain scoped to machine-gradeable evaluator workflows until
 robust evaluator-environment fixtures, manual-to-code transition policies, and
 AI-Co-Scientist-style idea-stage contracts are implemented.
 
+AlphaEvolve representation-boundary note: Related Work contrasts
+AI-Co-Scientist's natural-language hypotheses and evaluation criteria with
+AlphaEvolve's code candidates and programmatic evaluation functions.
+LibreEvolve's completed manifests now include
+`runtime.history.programmatic_representation_boundary_report`, which records
+generated candidates as executable code workspaces, labels captured proposal
+`idea`/`rationale`/`hypothesis` fields as natural-language context metadata,
+and keeps declared evaluator metrics plus deterministic evaluator validity as
+the programmatic criteria owner. The report remains `claim_ready: false` for
+hallucination-resistance claims, long-horizon evolution claims, and any full
+natural-language hypothesis stage bridged into programmatic candidate
+evaluation.
+
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive
 diagnostics, including malformed unselected retained rows. Its non-archive

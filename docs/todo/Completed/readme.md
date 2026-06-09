@@ -10363,3 +10363,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still leave async queues, mid-generation
     resume, and provider-output replay open.
   - Verification: focused loop tests cover the manifest field.
+
+- [x] Document programmatic representation-boundary evidence.
+  - Evidence: README and run-artifact docs needed to distinguish executable
+    code candidates from natural-language proposal metadata before making
+    AI-Co-Scientist comparison claims.
+  - Status: docs now describe
+    `runtime.history.programmatic_representation_boundary_report`, generated
+    executable-code candidates, proposal metadata as context rather than
+    candidate representation, and declared evaluator metrics as programmatic
+    criteria.
+  - Remaining documentation gap: docs still leave hallucination measurement,
+    long-horizon proof, and natural-language hypothesis bridge contracts open.
+  - Verification: focused loop tests cover the manifest field and validator.

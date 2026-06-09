@@ -2951,6 +2951,24 @@ The report is a scope-boundary artifact. It does not claim robust
 evaluator-environment readiness, manual-experiment support, AI-Co-Scientist-
 style idea-stage evaluation, or environment-scaling evidence.
 
+## `runtime.history.programmatic_representation_boundary_report`
+
+Completed manifests include a programmatic-representation boundary report with
+schema `libreevolve.programmatic_representation_boundary_report.v1`. It records
+that generated candidates are executable code workspaces, that captured
+proposal `idea`/`rationale`/`hypothesis` fields are natural-language context
+metadata rather than candidate representations, and that declared evaluator
+metrics plus deterministic evaluator validity own programmatic evaluation
+criteria.
+
+The report also records bounded generated-candidate samples, proposal-field
+counts, evaluated/valid generated counts, LLM-feedback boundary metadata, and
+the maximum observed generation in the current run. Its `claim_ready: false`
+boundary is intentional: it proves structural separation for the current run,
+not measured hallucination resistance, long-horizon evolution, or a full
+AI-Co-Scientist-style natural-language hypothesis stage bridged into
+programmatic candidate evaluation.
+
 ## `runtime.history.proposal_lifecycle_report`
 
 Completed manifests include a bounded proposal lifecycle report with schema

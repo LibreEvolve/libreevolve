@@ -2141,7 +2141,8 @@ Primary evidence:
     broader scientific-discovery, environment-scaling, or
     AI-Co-Scientist-style workflows.
 
-- [ ] Add AI-Co-Scientist representation-boundary evidence.
+- [ ] Extend AI-Co-Scientist representation-boundary evidence beyond the
+      current structural report.
   - Spec evidence: AlphaEvolve Related Work distinguishes AI Co-Scientist from
     AlphaEvolve by saying AI Co-Scientist represents scientific hypotheses and
     their evaluation criteria in natural language, while AlphaEvolve focuses on
@@ -2150,20 +2151,19 @@ Primary evidence:
     hallucinations and lets the evolution process continue for many time
     steps, while leaving a possible future combination of natural-language and
     programmatic idioms.
-  - Current evidence: existing TODOs cover automated-evaluator scope,
-    manual-experiment exclusion, optional pre-code idea feedback, structured
-    proposal metadata, and local validation mechanics. They do not require a
-    run/report boundary that classifies which candidate artifacts are
-    executable programs versus natural-language hypotheses, which evaluation
-    criteria are machine/programmatic versus language-only, or what evidence
-    supports claims about hallucination resistance and long-horizon evolution.
-  - Required result: add problem/run/report metadata and validators for
-    representation mode (`code_candidate`, `natural_language_hypothesis`, or
-    hybrid), evaluation-criterion mode, executable-feedback linkage,
-    hallucination-risk controls, long-horizon step-count evidence, and any
-    future bridge between natural-language hypothesis stages and programmatic
-    candidate evaluation before claiming AlphaEvolve-style distinction from
-    AI-Co-Scientist workflows.
+  - Current evidence: completed manifests now include
+    `runtime.history.programmatic_representation_boundary_report` with schema
+    `libreevolve.programmatic_representation_boundary_report.v1` and
+    `validate_programmatic_representation_boundary_report()`. The report
+    records generated candidates as executable code workspaces, proposal
+    `idea`/`rationale`/`hypothesis` fields as natural-language context
+    metadata rather than candidate representations, declared evaluator metrics
+    as programmatic criteria, optional LLM feedback as post-evaluator, and
+    `claim_ready: false` for hallucination and long-horizon claims.
+  - Required result: add measured hallucination-risk controls, long-horizon
+    step-count evidence, and any future bridge between natural-language
+    hypothesis stages and programmatic candidate evaluation before claiming
+    AlphaEvolve-style distinction from AI-Co-Scientist workflows.
 
 - [ ] Add AlphaEvolve Related Work taxonomy and positioning evidence.
   - Spec evidence: AlphaEvolve Related Work frames the system as code

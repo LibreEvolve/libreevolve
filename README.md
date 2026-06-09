@@ -2321,6 +2321,16 @@ excluded from candidate admission, and transition into executable code feedback
 is required before a candidate is scored. The report remains `claim_ready:
 false` for robust evaluator-environment fixtures, manual-to-code transition
 policy, and environment-scaling evidence.
+Completed manifests also include
+`runtime.history.programmatic_representation_boundary_report`, which records
+the AI-Co-Scientist comparison boundary: generated candidates are executable
+code workspaces, proposal `idea`/`rationale`/`hypothesis` fields are
+natural-language context metadata rather than candidate representations, and
+declared evaluator metrics plus the deterministic evaluator cascade own
+programmatic evaluation criteria. The report keeps `claim_ready: false`
+because it does not measure hallucination resistance, prove long-horizon
+evolution, or implement a natural-language hypothesis stage that bridges into
+programmatic candidate evaluation.
 Configured stages can also declare evaluator workload provenance with
 `workload: {type: simple_check|inner_search|ml_training|custom, ...}`.
 LibreEvolve validates optional dataset/split hashes, budget fields,

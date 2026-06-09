@@ -7799,3 +7799,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     report artifacts.
   - Verification: focused benchmark hardening, example-scope, and systems
     report tests cover the implemented contracts.
+
+- [x] Narrow AI-Co-Scientist roadmap wording to remaining measurement and
+      bridge gaps.
+  - Evidence: roadmap wording needed to recognize implemented structural
+    representation-boundary evidence without turning it into hallucination or
+    long-horizon claims.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.programmatic_representation_boundary_report` as current
+    executable-code versus natural-language-proposal separation evidence.
+  - Remaining roadmap gap: hallucination-risk controls, long-horizon
+    step-count evidence, and a natural-language hypothesis bridge remain open.
+  - Verification: focused loop tests cover the report and validator.

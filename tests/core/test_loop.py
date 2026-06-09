@@ -65,6 +65,7 @@ from libreevolve.core.loop import (
     validate_metric_diverse_inspiration_report,
     validate_duplicate_work_policy_report,
     validate_sampling_balance_report,
+    validate_programmatic_representation_boundary_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -2717,6 +2718,74 @@ x=2
     assert child["metadata"]["proposal"]["rationale"] == "The validator expects x=2."
     assert child["metadata"]["proposal"]["hypothesis"] == "The candidate should remain valid."
     assert "IDEA:" in child["metadata"]["prompt"]
+
+
+def test_runtime_history_reports_programmatic_representation_boundary():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Change x to the accepted value.
+RATIONALE: The validator expects x=2.
+HYPOTHESIS: The candidate should remain valid.
+<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "programmatic_representation_boundary_report"
+    ]
+
+    assert report["schema"] == (
+        "libreevolve.programmatic_representation_boundary_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_programmatic_representation_boundary_report(report)["ok"] is True
+    assert report["candidate_representation"]["kind"] == "executable_code_workspace"
+    assert report["candidate_representation"]["natural_language_candidate"] is False
+    assert report["candidate_representation"]["generated_candidate_count"] == 1
+    assert report["candidate_representation"]["executable_generated_count"] == 1
+    assert report["natural_language_artifacts"]["capture_configured"] is True
+    assert report["natural_language_artifacts"]["proposal_record_count"] == 1
+    assert report["natural_language_artifacts"]["proposal_field_counts"] == {
+        "idea": 1,
+        "rationale": 1,
+        "hypothesis": 1,
+    }
+    assert report["natural_language_artifacts"][
+        "candidate_code_contains_proposal_preamble"
+    ] is False
+    assert report["programmatic_evaluation_criteria"]["metric_names"] == ["score"]
+    assert report["programmatic_evaluation_criteria"]["evaluated_generated_count"] == 1
+    assert report["programmatic_evaluation_criteria"]["valid_generated_count"] == 1
+    assert report["feedback_boundary"]["llm_feedback_primary_validity_gate"] is False
+    assert report["runtime_step_scope"]["max_generation_observed"] == 1
+    assert report["runtime_step_scope"]["long_horizon_evidence"] is False
+    assert report["boundary_policy"]["natural_language_hypothesis_role"] == (
+        "context_metadata_only"
+    )
+    assert report["boundary_policy"]["transition_from_hypothesis_to_code_required"] is True
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["hallucination_resistance_measured"] is False
+    assert report["claim_readiness"]["long_horizon_evolution_measured"] is False
+    assert report["claim_readiness"]["ai_coscientist_bridge_contract"] is False
+    sample = report["sample_records"][0]
+    assert sample["candidate_representation"] == "executable_code_workspace"
+    assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
+    assert sample["natural_language_hypothesis_is_candidate"] is False
+    assert sample["evaluation_criteria_source"] == "programmatic_evaluator_metrics"
 
 
 def test_prompt_context_policy_can_enable_proposal_metadata_capture():

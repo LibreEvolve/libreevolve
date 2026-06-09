@@ -296,6 +296,11 @@ is not yet an AlphaEvolve reproduction.
   machine-feedback/manual-experiment/LLM-feedback boundary into robust
   evaluator-environment fixtures, manual-to-code transition policy, and
   environment-scaling evidence.
+- Extend `runtime.history.programmatic_representation_boundary_report` beyond
+  the current executable-code versus natural-language-proposal separation into
+  measured hallucination-risk controls, long-horizon step-count evidence, and
+  a real AI-Co-Scientist-style natural-language hypothesis stage that can
+  bridge into programmatic candidate evaluation.
 - Add OS/container-grade validator network isolation and stronger
   sandbox/resource controls beyond the current Python-socket denial option,
   minimal environment, wall-clock budgets, and process-tree cleanup.

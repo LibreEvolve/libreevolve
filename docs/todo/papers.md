@@ -1711,7 +1711,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence before broad scientific-discovery, environment-scaling, or
     AI-Co-Scientist-style claims appear in paper-facing docs.
 
-- [ ] Track AI-Co-Scientist representation boundary and hallucination claim.
+- [ ] Extend AI-Co-Scientist representation-boundary tracking beyond the
+      current structural report.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Related Work.
   - Requirement: AlphaEvolve contrasts AI Co-Scientist's natural-language
     hypotheses and natural-language evaluation criteria with AlphaEvolve's
@@ -1719,19 +1720,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     code/programmatic choice lets AlphaEvolve substantially sidestep LLM
     hallucinations and continue evolution for many time steps, while noting
     that the two approaches could be combined in future systems.
-  - Current gap: paper-facing TODOs track automated-evaluator scope,
-    machine-gradeable versus manual-experiment boundaries, optional LLM-only
-    idea feedback, and structured proposal metadata. They do not yet require
-    paper evidence that labels candidate representation mode, separates
-    natural-language hypothesis criteria from executable programmatic
-    criteria, or supports hallucination-resistance and long-horizon evolution
-    claims with lifecycle evidence.
-  - Required result: add paper/report evidence for representation mode,
-    evaluation-criterion mode, executable-feedback linkage, hallucination-risk
-    controls, long-horizon step counts, natural-language-to-programmatic bridge
-    status, and README/ROADMAP wording that does not conflate generic idea
-    metadata or LLM feedback graders with AlphaEvolve's Related Work
-    distinction from AI-Co-Scientist.
+  - Current evidence: paper-facing docs now describe
+    `runtime.history.programmatic_representation_boundary_report`, which labels
+    generated candidates as executable code workspaces, captured proposal
+    `idea`/`rationale`/`hypothesis` fields as natural-language context
+    metadata rather than candidates, and declared evaluator metrics plus
+    deterministic evaluator validity as programmatic criteria. The report keeps
+    `claim_ready: false` for hallucination resistance, long-horizon evolution,
+    and full natural-language hypothesis-stage bridge claims.
+  - Required result: add measured hallucination-risk controls, long-horizon
+    step counts, natural-language-to-programmatic bridge status, and
+    README/ROADMAP wording that does not conflate generic idea metadata or LLM
+    feedback graders with AlphaEvolve's Related Work distinction from
+    AI-Co-Scientist.
 
 - [ ] Track AlphaEvolve Related Work taxonomy and positioning evidence.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Related Work.

@@ -15378,3 +15378,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     a persisted cross-run multi-objective database table.
   - Verification: focused database tests cover metric-targeted resurfacing,
     exclusion handling, defensive copies, and unknown target rejection.
+
+- [x] Add programmatic representation-boundary report evidence.
+  - Spec evidence: AlphaEvolve Related Work contrasts AI-Co-Scientist's
+    natural-language hypotheses and evaluation criteria with AlphaEvolve's code
+    candidates and programmatic evaluation functions.
+  - Status: completed manifests now include
+    `runtime.history.programmatic_representation_boundary_report` with schema
+    `libreevolve.programmatic_representation_boundary_report.v1`, plus
+    `validate_programmatic_representation_boundary_report()`. The report
+    records generated candidates as executable code workspaces, proposal
+    `idea`/`rationale`/`hypothesis` fields as natural-language context
+    metadata, declared evaluator metrics as programmatic criteria, and optional
+    LLM feedback as post-evaluator rather than a primary validity gate.
+  - Remaining gap: hallucination-risk measurement, long-horizon evidence, and
+    a full natural-language hypothesis stage bridged into programmatic
+    candidate evaluation remain open.
+  - Verification: focused loop tests cover manifest emission, proposal-field
+    counts, sample records, and claim-readiness boundaries.

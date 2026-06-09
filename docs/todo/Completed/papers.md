@@ -10242,3 +10242,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     durable cross-run multi-objective database resurfacing remains absent.
   - Verification: focused database tests cover metric-targeted resurfacing and
     invalid target rejection.
+
+- [x] Add paper-visible programmatic representation-boundary evidence.
+  - Paper evidence: AlphaEvolve Related Work contrasts AI-Co-Scientist's
+    natural-language hypotheses and evaluation criteria with AlphaEvolve's code
+    candidates and programmatic evaluation functions.
+  - Status: paper-facing docs now describe
+    `runtime.history.programmatic_representation_boundary_report`, which labels
+    generated candidates as executable code workspaces, proposal metadata as
+    natural-language context, and declared evaluator metrics plus deterministic
+    evaluator validity as programmatic criteria.
+  - Remaining paper gap: hallucination-resistance claims, long-horizon
+    evolution claims, and a full natural-language hypothesis-stage bridge
+    remain unimplemented.
+  - Verification: focused loop tests cover the report, validator, proposal
+    field counts, and unready claim boundaries.

@@ -5229,6 +5229,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "programmatic_representation_boundary_report": (
+            _programmatic_representation_boundary_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
@@ -13086,6 +13092,423 @@ def validate_automated_evaluator_scope_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.automated_evaluator_scope_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _programmatic_representation_boundary_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    objective_schema = (
+        problem.get("objective_schema")
+        if isinstance(problem.get("objective_schema"), Mapping)
+        else {}
+    )
+    metric_names = _programmatic_boundary_metric_names(objective_schema)
+    records = _programmatic_boundary_records(programs)
+    proposal_field_counts = {field: 0 for field in ("idea", "rationale", "hypothesis")}
+    natural_language_proposal_count = 0
+    generated_candidate_count = 0
+    executable_generated_count = 0
+    evaluated_generated_count = 0
+    valid_generated_count = 0
+    llm_feedback_record_count = 0
+    max_generation = 0
+    for program in programs:
+        max_generation = max(max_generation, program.generation)
+        if _program_candidate_type(program) != "generated":
+            continue
+        generated_candidate_count += 1
+        if isinstance(program.code, str) and program.code:
+            executable_generated_count += 1
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        if evaluation:
+            evaluated_generated_count += 1
+            if evaluation.get("is_valid") is True:
+                valid_generated_count += 1
+            metadata = (
+                evaluation.get("metadata")
+                if isinstance(evaluation.get("metadata"), Mapping)
+                else {}
+            )
+            feedback = metadata.get("llm_feedback")
+            if isinstance(feedback, list):
+                llm_feedback_record_count += sum(
+                    1 for item in feedback if isinstance(item, Mapping)
+                )
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        proposal = (
+            metadata.get("proposal")
+            if isinstance(metadata.get("proposal"), Mapping)
+            else {}
+        )
+        captured_any = False
+        for field in proposal_field_counts:
+            value = proposal.get(field)
+            if isinstance(value, str) and value:
+                proposal_field_counts[field] += 1
+                captured_any = True
+        if captured_any:
+            natural_language_proposal_count += 1
+    report = {
+        "schema": "libreevolve.programmatic_representation_boundary_report.v1",
+        "source": "startup_manifest_and_runtime_history",
+        "candidate_representation": {
+            "kind": "executable_code_workspace",
+            "primary_language_policy": "python_primary_text_workspace",
+            "natural_language_candidate": False,
+            "generated_candidate_count": generated_candidate_count,
+            "executable_generated_count": executable_generated_count,
+        },
+        "natural_language_artifacts": {
+            "role": "proposal_metadata_context_not_candidate_representation",
+            "capture_configured": config.get("capture_proposal_metadata") is True,
+            "proposal_record_count": natural_language_proposal_count,
+            "proposal_field_counts": proposal_field_counts,
+            "candidate_code_contains_proposal_preamble": False,
+        },
+        "programmatic_evaluation_criteria": {
+            "role": "declared_evaluator_metrics_and_validity_gate",
+            "metric_names": metric_names,
+            "metric_count": len(metric_names),
+            "evaluated_generated_count": evaluated_generated_count,
+            "valid_generated_count": valid_generated_count,
+            "primary_validity_gate": "deterministic_evaluator_cascade",
+        },
+        "feedback_boundary": {
+            "llm_feedback_record_count": llm_feedback_record_count,
+            "llm_feedback_role": "post_evaluator_optional_grader_not_candidate_representation",
+            "llm_feedback_primary_validity_gate": False,
+        },
+        "runtime_step_scope": {
+            "max_generation_observed": max_generation,
+            "long_horizon_evidence": False,
+            "scope": "current_run_generation_count_only",
+        },
+        "boundary_policy": {
+            "schema": "libreevolve.programmatic_representation_boundary_policy.v1",
+            "candidate_representation_owner": "executable_code_workspace",
+            "natural_language_hypothesis_role": "context_metadata_only",
+            "evaluation_criteria_owner": "programmatic_evaluator_metrics",
+            "natural_language_criteria_primary_gate": False,
+            "transition_from_hypothesis_to_code_required": True,
+        },
+        "sample_records": records[:50],
+        "records_truncated": len(records) > 50,
+        "claim_ready": False,
+        "claim_readiness": {
+            "representation_boundary_recorded": True,
+            "natural_language_hypothesis_separated_from_candidate": True,
+            "programmatic_evaluation_criteria_recorded": bool(metric_names),
+            "hallucination_resistance_measured": False,
+            "long_horizon_evolution_measured": False,
+            "ai_coscientist_bridge_contract": False,
+            "remaining_gap": [
+                "hallucination_risk_measurement",
+                "long_horizon_step_count_evidence",
+                "natural_language_hypothesis_to_programmatic_evaluation_bridge",
+                "ai_coscientist_style_hypothesis_stage_contract",
+            ],
+        },
+    }
+    report["validation"] = validate_programmatic_representation_boundary_report(report)
+    return report
+
+
+def _programmatic_boundary_metric_names(objective_schema: Mapping[str, object]) -> list[str]:
+    metrics = objective_schema.get("metrics")
+    names: list[str] = []
+    if isinstance(metrics, list):
+        for metric in metrics:
+            if not isinstance(metric, Mapping):
+                continue
+            name = metric.get("name")
+            if isinstance(name, str) and name:
+                names.append(name)
+    primary = objective_schema.get("primary_metric")
+    if isinstance(primary, str) and primary:
+        names.insert(0, primary)
+    return _unique_in_order(names)
+
+
+def _programmatic_boundary_records(programs: list[Program]) -> list[dict]:
+    records: list[dict] = []
+    for program in programs:
+        if _program_candidate_type(program) != "generated":
+            continue
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        proposal = (
+            metadata.get("proposal")
+            if isinstance(metadata.get("proposal"), Mapping)
+            else {}
+        )
+        proposal_fields = [
+            field
+            for field in ("idea", "rationale", "hypothesis")
+            if isinstance(proposal.get(field), str) and proposal.get(field)
+        ]
+        records.append(
+            {
+                "program_id": program.id,
+                "generation": program.generation,
+                "candidate_representation": "executable_code_workspace",
+                "candidate_type": "generated",
+                "workspace_file_count": len(program.files),
+                "primary_file": program.primary_file,
+                "proposal_fields_present": proposal_fields,
+                "natural_language_hypothesis_is_candidate": False,
+                "evaluator_is_valid": evaluation.get("is_valid"),
+                "evaluation_criteria_source": "programmatic_evaluator_metrics",
+            }
+        )
+    records.sort(key=lambda record: (record["generation"], record["program_id"]))
+    return records
+
+
+def validate_programmatic_representation_boundary_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.programmatic_representation_boundary_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "programmatic representation boundary report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "candidate_representation",
+        "natural_language_artifacts",
+        "programmatic_evaluation_criteria",
+        "feedback_boundary",
+        "runtime_step_scope",
+        "boundary_policy",
+        "sample_records",
+        "records_truncated",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "programmatic representation boundary report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.programmatic_representation_boundary_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "programmatic representation boundary report schema is unsupported",
+            }
+        )
+    if report.get("source") != "startup_manifest_and_runtime_history":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "programmatic representation boundary report source is unsupported",
+            }
+        )
+    representation = report.get("candidate_representation")
+    if not isinstance(representation, dict):
+        issues.append(
+            {
+                "code": "invalid_candidate_representation",
+                "message": "candidate_representation must be an object",
+            }
+        )
+        representation = {}
+    if representation.get("kind") != "executable_code_workspace":
+        issues.append(
+            {
+                "code": "invalid_candidate_representation_kind",
+                "message": "candidate representation kind must be executable_code_workspace",
+            }
+        )
+    if representation.get("natural_language_candidate") is not False:
+        issues.append(
+            {
+                "code": "invalid_natural_language_candidate_flag",
+                "message": "natural-language hypotheses must not be candidate programs",
+            }
+        )
+    artifacts = report.get("natural_language_artifacts")
+    if not isinstance(artifacts, dict):
+        issues.append(
+            {
+                "code": "invalid_natural_language_artifacts",
+                "message": "natural_language_artifacts must be an object",
+            }
+        )
+        artifacts = {}
+    if artifacts.get("role") != "proposal_metadata_context_not_candidate_representation":
+        issues.append(
+            {
+                "code": "invalid_natural_language_role",
+                "message": "natural-language artifacts must be context metadata only",
+            }
+        )
+    field_counts = artifacts.get("proposal_field_counts")
+    if not isinstance(field_counts, dict):
+        issues.append(
+            {
+                "code": "invalid_proposal_field_counts",
+                "message": "proposal_field_counts must be an object",
+            }
+        )
+    else:
+        for field in ("idea", "rationale", "hypothesis"):
+            value = field_counts.get(field)
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}_count",
+                        "message": f"proposal_field_counts.{field} must be non-negative integer",
+                    }
+                )
+    criteria = report.get("programmatic_evaluation_criteria")
+    if not isinstance(criteria, dict):
+        issues.append(
+            {
+                "code": "invalid_programmatic_evaluation_criteria",
+                "message": "programmatic_evaluation_criteria must be an object",
+            }
+        )
+        criteria = {}
+    if criteria.get("role") != "declared_evaluator_metrics_and_validity_gate":
+        issues.append(
+            {
+                "code": "invalid_evaluation_criteria_role",
+                "message": "evaluation criteria role is unsupported",
+            }
+        )
+    if not isinstance(criteria.get("metric_names"), list):
+        issues.append(
+            {
+                "code": "invalid_metric_names",
+                "message": "metric_names must be a list",
+            }
+        )
+    feedback = report.get("feedback_boundary")
+    if not isinstance(feedback, dict):
+        issues.append(
+            {
+                "code": "invalid_feedback_boundary",
+                "message": "feedback_boundary must be an object",
+            }
+        )
+    elif feedback.get("llm_feedback_primary_validity_gate") is not False:
+        issues.append(
+            {
+                "code": "invalid_feedback_validity_gate",
+                "message": "LLM feedback must not be the primary validity gate",
+            }
+        )
+    policy = report.get("boundary_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_boundary_policy",
+                "message": "boundary_policy must be an object",
+            }
+        )
+    else:
+        if policy.get("natural_language_criteria_primary_gate") is not False:
+            issues.append(
+                {
+                    "code": "invalid_natural_language_gate",
+                    "message": "natural-language criteria must not be the primary gate",
+                }
+            )
+        if policy.get("transition_from_hypothesis_to_code_required") is not True:
+            issues.append(
+                {
+                    "code": "invalid_hypothesis_transition",
+                    "message": "hypothesis-to-code transition must be required",
+                }
+            )
+    records = report.get("sample_records")
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_sample_records", "message": "sample_records must be a list"}
+        )
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_sample_record",
+                    "message": f"sample record {index} must be an object",
+                }
+            )
+            continue
+        if record.get("candidate_representation") != "executable_code_workspace":
+            issues.append(
+                {
+                    "code": "invalid_sample_representation",
+                    "message": f"sample record {index} representation is unsupported",
+                }
+            )
+        if record.get("natural_language_hypothesis_is_candidate") is not False:
+            issues.append(
+                {
+                    "code": "invalid_sample_hypothesis_boundary",
+                    "message": f"sample record {index} hypothesis boundary is invalid",
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("hallucination_resistance_measured") is not False:
+            issues.append(
+                {
+                    "code": "invalid_hallucination_claim",
+                    "message": "hallucination resistance must not be claimed as measured",
+                }
+            )
+        if readiness.get("long_horizon_evolution_measured") is not False:
+            issues.append(
+                {
+                    "code": "invalid_long_horizon_claim",
+                    "message": "long-horizon evolution must not be claimed as measured",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "representation boundary report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.programmatic_representation_boundary_report.v1",
         "ok": not issues,
         "issues": issues,
     }

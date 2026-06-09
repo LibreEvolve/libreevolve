@@ -10731,3 +10731,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     for every long status phrase or benchmark qualifier.
   - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
     reports 123 passed.
+- [x] Document the paper-artifact availability boundary in README.
+  - Spec evidence: README needs to distinguish paper-attributed figure/Colab
+    contributor roles from concrete rendered or notebook artifact availability.
+  - Status: README now describes
+    `libreevolve.alphaevolve_paper_artifact_linkage.v1`, including the current
+    `not_yet_linked` status for paper figures and the companion notebook plus
+    the digest/source-map fields required before concrete artifact claims.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

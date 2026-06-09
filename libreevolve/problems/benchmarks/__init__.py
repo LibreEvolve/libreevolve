@@ -105,9 +105,13 @@ from libreevolve.problems.benchmarks.matrix_results import (
     write_strassen_2x2_publication_bundle,
 )
 from libreevolve.problems.benchmarks.paper_artifact_roles import (
+    PAPER_ARTIFACT_LINKAGE_SCHEMA,
     PAPER_ARTIFACT_ROLE_SCHEMA,
+    alphaevolve_paper_artifact_linkage_record,
     alphaevolve_paper_artifact_role_records,
+    render_paper_artifact_linkage_summary,
     render_paper_artifact_role_summary,
+    validate_paper_artifact_linkage,
     validate_paper_artifact_roles,
 )
 from libreevolve.problems.benchmarks.paper_bibliography import (
@@ -192,6 +196,7 @@ __all__ = [
     "MATRIX_SWEEP_SPACE_SCHEMA",
     "MATRIX_TENSOR_RANK_SCHEMA",
     "PAPER_ARTIFACT_ROLE_SCHEMA",
+    "PAPER_ARTIFACT_LINKAGE_SCHEMA",
     "PAPER_CERTIFICATION_SCHEMA",
     "SYSTEMS_ARTIFACT_INVENTORY_SCHEMA",
     "SYSTEMS_RESULT_SCHEMA",
@@ -204,6 +209,7 @@ __all__ = [
     "alphaevolve_follow_on_math_source_record",
     "alphaevolve_follow_on_problem_coverage_record",
     "alphaevolve_paper_artifact_role_records",
+    "alphaevolve_paper_artifact_linkage_record",
     "alphaevolve_references_section_record",
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
@@ -239,6 +245,7 @@ __all__ = [
     "render_matrix_sweep_space_summary",
     "render_matrix_tensor_rank_summary",
     "render_paper_artifact_role_summary",
+    "render_paper_artifact_linkage_summary",
     "render_systems_result_summary",
     "systems_result_artifact_inventory",
     "validate_ablation_result_report",
@@ -268,6 +275,7 @@ __all__ = [
     "validate_matrix_sweep_space_evidence",
     "validate_matrix_tensor_rank_evidence",
     "validate_paper_artifact_roles",
+    "validate_paper_artifact_linkage",
     "validate_paper_result_certification",
     "validate_systems_evidence_bundle",
     "validate_systems_result_report",

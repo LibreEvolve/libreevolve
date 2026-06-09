@@ -1260,12 +1260,16 @@ Implemented:
   result, sweep-space, exactness-certificate, and companion notebook evidence.
   It does not render or commit the appendix panel artifacts.
 - `libreevolve/problems/benchmarks/paper_artifact_roles.py`: AlphaEvolve paper
-  artifact-role attribution contract. It validates the PDF page 23 contribution
-  records for the paper-figure creator initials and the accompanying Google
-  Colab assembler initials, with stable artifact ids, artifact types,
-  creator/assembler roles, exact initials and ordering, source section/page
-  metadata, and source phrases. It does not verify rendered figure files or
-  local generated notebook/export artifacts.
+  artifact-role attribution and linkage-boundary contract, but concrete
+  rendered figure and notebook artifacts are not yet linked. It validates the
+  PDF page 23 contribution records for the paper-figure creator initials and
+  the accompanying Google Colab assembler initials, with stable artifact ids,
+  artifact types, creator/assembler roles, exact initials and ordering, source
+  section/page metadata, and source phrases. The companion
+  `libreevolve.alphaevolve_paper_artifact_linkage.v1` record marks rendered
+  figure files and companion notebook/export artifacts as `not_yet_linked`
+  while validating the digest/link/source-map fields required before artifact
+  availability can be claimed.
 - `libreevolve/problems/benchmarks/paper_source_versions.py`: AlphaEvolve
   source-PDF version contract. It validates the cached `2506.13131` source row
   against the audited first-page header `arXiv:2506.13131v1 [cs.AI] 16 Jun

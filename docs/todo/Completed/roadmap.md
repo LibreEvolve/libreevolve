@@ -8173,3 +8173,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     proof for every status phrase, benchmark qualifier, or paper claim.
   - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
     reports 123 passed.
+- [x] Document the paper-artifact availability boundary in ROADMAP.
+  - Spec evidence: roadmap wording should not confuse AlphaEvolve
+    contribution-role attribution with verified rendered figure or notebook
+    artifact availability.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_paper_artifact_linkage.v1` and scopes current
+    evidence to validated `not_yet_linked` availability boundaries plus
+    required future digest/link/source-map fields.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -3369,7 +3369,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     responsible initials/names, source section/page, and source phrases. It
     does not yet bind those role records to concrete rendered figure files,
     companion notebook URLs, retrieval digests, artifact hashes, or notebook
-    cell/source maps.
+    cell/source maps. `libreevolve.alphaevolve_paper_artifact_linkage.v1` now
+    machine-validates that absence as a `not_yet_linked` availability boundary
+    with expected digest/link/source-map fields for future concrete artifacts,
+    and the paper-manifest gate validates that boundary.
   - Required result: connect paper-facing artifact-role records to rendered
     figures and companion notebook source artifacts with digest/link metadata
     and README/ROADMAP wording that separates artifact availability from

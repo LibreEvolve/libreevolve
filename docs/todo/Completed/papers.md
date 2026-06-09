@@ -10671,3 +10671,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     natural-language semantic proof.
   - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
     reports 123 passed.
+- [x] Preserve paper-artifact role attribution separately from artifact
+      availability.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` page 23 names the figure
+    creators and accompanying Google Colab assemblers, while other paper
+    surfaces require rendered figures, notebook URLs, digests, and claim maps
+    before artifact availability can be claimed.
+  - Status: `libreevolve.alphaevolve_paper_artifact_linkage.v1` now validates
+    that both `paper_figures` and `accompanying_google_colab` are currently
+    `not_yet_linked` and records the fields required for future rendered
+    figure or companion-notebook artifacts. This keeps the existing attribution
+    record from being treated as byte-level artifact evidence.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

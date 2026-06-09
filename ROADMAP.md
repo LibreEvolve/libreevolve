@@ -551,8 +551,10 @@ is not yet an AlphaEvolve reproduction.
 - Keep paper artifact-role attribution separate from artifact availability:
   `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
   AlphaEvolve PDF contribution records for figure creators and companion
-  Colab assemblers, but rendered figure artifacts and local notebook/export
-  availability remain future work.
+  Colab assemblers. `libreevolve.alphaevolve_paper_artifact_linkage.v1` now
+  validates the current `not_yet_linked` availability boundary and the digest,
+  source-locator, and source-to-artifact-map fields required before rendered
+  figure artifacts or notebook/export artifacts can be claimed.
 - Keep AlphaEvolve source-PDF versioning explicit:
   `libreevolve.alphaevolve_source_pdf_version.v1` now validates the cached
   `2506.13131` PDF manifest row against the audited first-page header

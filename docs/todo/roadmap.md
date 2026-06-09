@@ -2370,8 +2370,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.alphaevolve_paper_artifact_roles.v1` now validates the
     figure-creator and companion-Colab assembler role records with stable
     artifact ids, artifact types, exact initials, source section/page metadata,
-    and source phrases. It does not bind those roles to rendered figure hashes,
-    companion-notebook URLs/digests, or source-to-artifact maps.
+    and source phrases. `libreevolve.alphaevolve_paper_artifact_linkage.v1`
+    now validates the current `not_yet_linked` availability boundary and the
+    digest/link/source-map fields required before rendered figure or notebook
+    artifacts can be claimed. It does not bind those roles to rendered figure
+    hashes, companion-notebook URLs/digests, or source-to-artifact maps.
   - Required result: when role records are linked to concrete rendered or
     companion-notebook artifacts, update ROADMAP, README, papers index, and
     code/paper TODO entries together so roadmap wording distinguishes artifact

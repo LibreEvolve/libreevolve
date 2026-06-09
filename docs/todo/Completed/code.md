@@ -15865,3 +15865,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     `status_table_local_artifact_unlinked_evidence`.
   - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
     reports 123 passed.
+- [x] Add a paper-artifact availability boundary contract.
+  - Spec evidence: AlphaEvolve's Contributions section attributes paper
+    figures and the accompanying Google Colab to named contributor groups, but
+    artifact authorship is separate from concrete rendered figure files or
+    notebook-source artifacts.
+  - Status: `libreevolve/problems/benchmarks/paper_artifact_roles.py` now
+    includes `libreevolve.alphaevolve_paper_artifact_linkage.v1`, which
+    validates `not_yet_linked` availability boundaries for the figure set and
+    companion notebook plus expected digest, source-locator, and
+    source-to-artifact-map fields for future concrete links. The routine
+    paper-manifest gate validates the role and linkage records.
+  - Verification: `py -3.12 -m pytest tests/test_paper_artifact_roles.py -q`
+    reports 11 passed.

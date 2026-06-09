@@ -1638,7 +1638,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     hashes, and `libreevolve.alphaevolve_paper_artifact_roles.v1`. The role
     contract validates figure-creator and companion-Colab assembler records
     with stable artifact ids, exact initials, source section/page metadata, and
-    source phrases, but it does not document concrete rendered figure files,
+    source phrases. README now also documents
+    `libreevolve.alphaevolve_paper_artifact_linkage.v1`, which validates the
+    current `not_yet_linked` availability boundary and required digest/link/
+    source-map fields, but it does not document concrete rendered figure files,
     companion notebook URLs/digests, or source-to-artifact maps.
   - Required result: when role records are linked to concrete rendered or
     companion-notebook artifacts, update README, ROADMAP, papers index, and

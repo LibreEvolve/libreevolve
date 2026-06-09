@@ -92,6 +92,12 @@ from libreevolve.problems.benchmarks.companion_sources import (
     EXPECTED_COMPANION_SOURCE_MANIFEST_FILE,
     validate_alphaevolve_companion_source_manifest,
 )
+from libreevolve.problems.benchmarks.paper_artifact_roles import (
+    alphaevolve_paper_artifact_linkage_record,
+    alphaevolve_paper_artifact_role_records,
+    validate_paper_artifact_linkage,
+    validate_paper_artifact_roles,
+)
 
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
@@ -499,6 +505,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_references_bibliography(root_path, manifest_rows_by_id, json_rows))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_companion_source_manifest(root_path))
+    issues.extend(_validate_alphaevolve_paper_artifact_role_linkage())
     issues.extend(_validate_alphaevolve_follow_on_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_repository_rights_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_runtime_absence_manifest(root_path))
@@ -1091,6 +1098,32 @@ def _validate_alphaevolve_follow_on_math_source_record(
                 "2511.02864",
             )
         )
+    return issues
+
+
+def _validate_alphaevolve_paper_artifact_role_linkage() -> list[PaperManifestIssue]:
+    role_recordset = alphaevolve_paper_artifact_role_records()
+    role_report = validate_paper_artifact_roles(role_recordset)
+    issues = [
+        PaperManifestIssue(
+            f"alphaevolve_paper_artifact_roles_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.artifact_id) if issue.artifact_id else None,
+        )
+        for issue in role_report.issues
+    ]
+    linkage_report = validate_paper_artifact_linkage(
+        alphaevolve_paper_artifact_linkage_record(role_recordset),
+        role_recordset,
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"alphaevolve_paper_artifact_linkage_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.artifact_id) if issue.artifact_id else None,
+        )
+        for issue in linkage_report.issues
+    )
     return issues
 
 

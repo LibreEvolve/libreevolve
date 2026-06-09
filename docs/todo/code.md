@@ -2287,16 +2287,15 @@ Primary evidence:
     program render hashes/path policy, parent and candidate workspace hashes,
     LLM call ids, mutation payload hashes, diff SEARCH match counts/spans for
     non-file-section diff payloads, evolve-block inner span mapping for exact
-    SEARCH matches inside parent block content, full-mode target policy,
-    evaluator status, and archive admission.
-  - Remaining gap: current binding evidence is run-local and does not expand
-    file-section payloads into per-file SEARCH spans, join to prompt-history
-    row ids, record full-mode target spans or block ids, or persist cross-run
-    binding tables.
-  - Required result: extend the binding report with per-file span expansion,
-    prompt-history row joins, full-mode target spans/block policy, and
-    cross-run validation before claiming full AlphaEvolve Figure 3
-    current-program edit provenance.
+    SEARCH matches inside parent block content, workspace file-section target
+    records with parent/candidate full-file span and hash evidence, full-mode
+    target policy, evaluator status, and archive admission.
+  - Remaining gap: current binding evidence is run-local and does not join to
+    prompt-history row ids, record full-mode target spans or block ids, or
+    persist cross-run binding tables.
+  - Required result: extend the binding report with prompt-history row joins,
+    full-mode target spans/block policy, and cross-run validation before
+    claiming full AlphaEvolve Figure 3 current-program edit provenance.
 
 - [ ] Extend cross-edit consistency diagnostics beyond current Python symbol
       scan.

@@ -735,10 +735,11 @@ candidate ids, prompt-program ids, rendered prompt hashes, parent/current
 program render hashes and path policy, parent/candidate workspace hashes, LLM
 call ids, mutation payload hashes, diff SEARCH match counts/spans for
 non-file-section diff payloads, evolve-block inner span mapping for exact
-matches inside parent block content, full-mode target policy, evaluator status,
-and archive admission. The report is current-run provenance, not full Figure 3
-parity: per-file span expansion for workspace sections, prompt-history row
-joins, full-mode target spans, and cross-run binding tables remain open.
+matches inside parent block content, workspace file-section target records
+with parent/candidate full-file span and hash evidence, full-mode target
+policy, evaluator status, and archive admission. The report is current-run
+provenance, not full Figure 3 parity: prompt-history row joins, full-mode
+target spans or block ids, and cross-run binding tables remain open.
 Completed manifests also include
 `runtime.history.mutation_consistency_report`, which records current-run
 multi-edit candidate payloads, changed file/block/search edit units,

@@ -226,10 +226,10 @@ is not yet an AlphaEvolve reproduction.
 - Extend `runtime.history.prompt_current_binding_report` beyond current
   prompt/current-program hashes, parent/candidate workspace hashes, LLM call
   ids, diff SEARCH match counts/spans, evolve-block inner span mapping, and
-  full-mode target-policy evidence into per-file span expansion for workspace
-  sections, prompt-history row joins, full-mode target spans/block ids, and
-  cross-run binding tables before claiming full AlphaEvolve Figure 3
-  current-program edit provenance.
+  workspace file-section target/full-file span records, and full-mode
+  target-policy evidence into prompt-history row joins, full-mode target
+  spans/block ids, and cross-run binding tables before claiming full
+  AlphaEvolve Figure 3 current-program edit provenance.
 - Extend `runtime.history.mutation_consistency_report` beyond current
   multi-edit payload inventories, changed file/block/search edit units,
   best-effort Python AST introduced/reference symbols, unresolved-reference

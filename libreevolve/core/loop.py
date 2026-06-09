@@ -15794,6 +15794,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
     truncated_prompt_current_count = 0
     omitted_path_count = 0
     evolve_block_match_count = 0
+    file_section_record_count = 0
     for record in records:
         mode = str(record.get("mutation_mode") or "unknown")
         mode_counts[mode] = mode_counts.get(mode, 0) + 1
@@ -15803,6 +15804,9 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
         if isinstance(binding, Mapping) and binding.get("all_search_blocks_match_once") is True:
             exact_match_count += 1
         if isinstance(binding, Mapping):
+            section_records = binding.get("file_section_records")
+            if isinstance(section_records, list):
+                file_section_record_count += len(section_records)
             for match in binding.get("match_records", []):
                 if not isinstance(match, Mapping):
                     continue
@@ -15825,6 +15829,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
         "candidate_status_counts": dict(sorted(status_counts.items())),
         "exact_diff_binding_count": exact_match_count,
         "evolve_block_match_count": evolve_block_match_count,
+        "file_section_record_count": file_section_record_count,
         "truncated_prompt_current_count": truncated_prompt_current_count,
         "omitted_prompt_current_path_total": omitted_path_count,
         "records": records[:50],
@@ -15836,7 +15841,8 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             "diff_match_policy": "primary_file_exact_SEARCH_match_counts_for_non_file_section_diff_payloads",
             "evolve_block_scope_policy": "normalized_SEARCH_span_mapped_to_parent_evolve_block_when_exactly_inside_block_content",
             "full_mode_policy": "target_policy_recorded_without_SEARCH_span_claim",
-            "workspace_section_policy": "file_section_payloads_recorded_without_expanded_per_file_span_claim",
+            "workspace_section_policy": "file_section_payloads_record_per_section_target_and_full_file_span_records",
+            "file_section_span_policy": "file_section_targets_record_parent_and_candidate_full_file_spans_when_available",
             "llm_call_source": "candidate.metadata.llm_calls",
         },
         "claim_ready": False,
@@ -15854,9 +15860,9 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             ),
             "diff_exact_match_spans_recorded": exact_match_count > 0,
             "evolve_block_inner_span_mapping": evolve_block_match_count > 0,
+            "workspace_file_section_span_records": file_section_record_count > 0,
             "full_alphaevolve_current_program_provenance": False,
             "remaining_gap": [
-                "per_file_span_expansion_for_workspace_file_sections",
                 "prompt_history_row_id_to_candidate_history_row_id_join",
                 "full_mode_target_span_or_block_policy",
                 "cross_run_prompt_current_binding_table",
@@ -15924,6 +15930,7 @@ def _prompt_current_binding_record(
         ),
         "mutation_binding": _prompt_current_mutation_binding(
             parent_workspace,
+            program.workspace(),
             payload,
             mode,
         ),
@@ -15996,6 +16003,7 @@ def _prompt_current_program_record(
 
 def _prompt_current_mutation_binding(
     parent_workspace: CandidateWorkspace | None,
+    candidate_workspace: CandidateWorkspace,
     payload: object,
     mode: str,
 ) -> dict:
@@ -16015,12 +16023,20 @@ def _prompt_current_mutation_binding(
         }
     surfaces = _mutation_operator_payload_surfaces(payload, mode)
     if "file_sections" in surfaces:
+        section_records = _prompt_current_file_section_records(
+            parent_workspace,
+            candidate_workspace,
+            payload,
+        )
         return {
-            "mode_policy": "workspace_file_section_payload_not_span_expanded",
+            "mode_policy": "workspace_file_section_payload_span_records",
             "payload_surfaces": surfaces,
             "all_search_blocks_match_once": False,
             "search_block_count": 0,
             "match_records": [],
+            "file_section_count": len(section_records),
+            "file_section_records": section_records[:50],
+            "file_section_records_truncated": len(section_records) > 50,
         }
     if mode == "full":
         return {
@@ -16055,6 +16071,128 @@ def _prompt_current_mutation_binding(
         and all(record["match_count"] == 1 for record in match_records),
         "match_records": match_records[:25],
         "match_records_truncated": len(match_records) > 25,
+    }
+
+
+def _prompt_current_file_section_records(
+    parent_workspace: CandidateWorkspace | None,
+    candidate_workspace: CandidateWorkspace,
+    payload: str,
+) -> list[dict]:
+    records: list[dict] = []
+    for index, match in enumerate(_PROMPT_EXAMPLE_FILE_SECTION_RE.finditer(payload)):
+        header = match.group(1).strip()
+        body = match.group(2)
+        section = _prompt_current_file_section_target(header)
+        record = {
+            "section_index": index,
+            "header": _mutation_consistency_safe_label(header),
+            "operation": section["operation"],
+            "body_sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
+            "body_chars": len(body),
+            "target_span_policy": section["target_span_policy"],
+        }
+        if section.get("target_path"):
+            target_path = str(section["target_path"])
+            record["target_path"] = target_path
+            record["parent_file"] = _prompt_current_file_span_record(
+                parent_workspace.files.get(target_path)
+                if parent_workspace is not None
+                else None
+            )
+            record["candidate_file"] = _prompt_current_file_span_record(
+                candidate_workspace.files.get(target_path)
+            )
+        if section.get("source_path"):
+            source_path = str(section["source_path"])
+            record["source_path"] = source_path
+            record["source_parent_file"] = _prompt_current_file_span_record(
+                parent_workspace.files.get(source_path)
+                if parent_workspace is not None
+                else None
+            )
+            record["source_candidate_file"] = _prompt_current_file_span_record(
+                candidate_workspace.files.get(source_path)
+            )
+        if section.get("destination_path"):
+            destination_path = str(section["destination_path"])
+            record["destination_path"] = destination_path
+            record["destination_parent_file"] = _prompt_current_file_span_record(
+                parent_workspace.files.get(destination_path)
+                if parent_workspace is not None
+                else None
+            )
+            record["destination_candidate_file"] = _prompt_current_file_span_record(
+                candidate_workspace.files.get(destination_path)
+            )
+        records.append(record)
+    return records
+
+
+def _prompt_current_file_section_target(header: str) -> dict:
+    command = _mutation_consistency_file_command(header)
+    if command == "PATH":
+        return {
+            "operation": "edit",
+            "target_path": _mutation_consistency_safe_label(
+                header.partition(" ")[2].strip()
+            ),
+            "target_span_policy": "full_file_replacement_section",
+        }
+    if command in {"STATIC", "BINARY"}:
+        return {
+            "operation": command.lower(),
+            "target_path": _mutation_consistency_safe_label(
+                header.partition(" ")[2].strip()
+            ),
+            "target_span_policy": "static_or_binary_section_no_text_span_claim",
+        }
+    if command == "DELETE":
+        return {
+            "operation": "delete",
+            "target_path": _mutation_consistency_safe_label(
+                header.partition(" ")[2].strip()
+            ),
+            "target_span_policy": "delete_section_removes_full_file",
+        }
+    if command in {"MOVE", "RENAME"}:
+        source, _sep, destination = header.partition(" ")[2].partition("->")
+        return {
+            "operation": "move",
+            "source_path": _mutation_consistency_safe_label(source.strip()),
+            "destination_path": _mutation_consistency_safe_label(destination.strip()),
+            "target_span_policy": "move_section_retargets_full_file",
+        }
+    if command == "PRIMARY":
+        return {
+            "operation": "primary",
+            "target_path": _mutation_consistency_safe_label(
+                header.partition(" ")[2].strip()
+            ),
+            "target_span_policy": "primary_selection_no_text_span_claim",
+        }
+    return {
+        "operation": "edit",
+        "target_path": _mutation_consistency_safe_label(header),
+        "target_span_policy": "full_file_replacement_section",
+    }
+
+
+def _prompt_current_file_span_record(content: object) -> dict:
+    if not isinstance(content, str):
+        return {
+            "exists": False,
+            "sha256": None,
+            "chars": 0,
+            "normalized_full_file_span": None,
+        }
+    normalized = content.replace("\r\n", "\n").replace("\r", "\n")
+    return {
+        "exists": True,
+        "sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        "chars": len(content),
+        "normalized_chars": len(normalized),
+        "normalized_full_file_span": [0, len(normalized)],
     }
 
 
@@ -16147,6 +16285,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "candidate_status_counts",
         "exact_diff_binding_count",
         "evolve_block_match_count",
+        "file_section_record_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
         "records",
@@ -16168,6 +16307,7 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "binding_record_count",
         "exact_diff_binding_count",
         "evolve_block_match_count",
+        "file_section_record_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
     ):
@@ -16223,6 +16363,66 @@ def validate_prompt_current_binding_report(report: object) -> dict:
                                 ),
                             }
                         )
+            section_records = binding.get("file_section_records")
+            if isinstance(section_records, list):
+                for section_index, section in enumerate(section_records):
+                    if not isinstance(section, dict):
+                        issues.append(
+                            {
+                                "code": "invalid_file_section_record",
+                                "message": (
+                                    f"record {index} file section {section_index} "
+                                    "must be an object"
+                                ),
+                            }
+                        )
+                        continue
+                    if isinstance(section.get("section_index"), bool) or not isinstance(section.get("section_index"), int):
+                        issues.append(
+                            {
+                                "code": "invalid_file_section_index",
+                                "message": (
+                                    f"record {index} file section {section_index} "
+                                    "section_index must be an integer"
+                                ),
+                            }
+                        )
+                    if section.get("operation") not in {
+                        "edit",
+                        "delete",
+                        "move",
+                        "primary",
+                        "static",
+                        "binary",
+                    }:
+                        issues.append(
+                            {
+                                "code": "invalid_file_section_operation",
+                                "message": (
+                                    f"record {index} file section {section_index} "
+                                    "operation is invalid"
+                                ),
+                            }
+                        )
+                    for file_field in (
+                        "parent_file",
+                        "candidate_file",
+                        "source_parent_file",
+                        "source_candidate_file",
+                        "destination_parent_file",
+                        "destination_candidate_file",
+                    ):
+                        file_record = section.get(file_field)
+                        if file_record is not None and not isinstance(file_record, dict):
+                            issues.append(
+                                {
+                                    "code": "invalid_file_span_record",
+                                    "message": (
+                                        f"record {index} file section {section_index} "
+                                        f"{file_field} must be an object"
+                                    ),
+                                }
+                            )
         prompt_current = record.get("prompt_current_program")
         if not isinstance(prompt_current, dict):
             issues.append({"code": "invalid_prompt_current_program", "message": f"record {index} prompt_current_program must be an object"})

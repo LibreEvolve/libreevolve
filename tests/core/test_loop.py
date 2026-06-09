@@ -3440,6 +3440,47 @@ def test_runtime_history_reports_prompt_current_binding_for_full_mutation_policy
     assert report["claim_ready"] is False
 
 
+def test_runtime_history_reports_prompt_current_binding_for_file_section_spans():
+    tmpdir = tempfile.mkdtemp()
+    response = """<<<FILE main.py
+x=2
+>>>FILE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                mutation_mode="full",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["prompt_current_binding_report"]
+
+    assert report["validation"]["ok"] is True
+    assert validate_prompt_current_binding_report(report)["ok"] is True
+    assert report["file_section_record_count"] == 1
+    assert report["claim_readiness"]["workspace_file_section_span_records"] is True
+
+    binding = report["records"][0]["mutation_binding"]
+    assert binding["mode_policy"] == "workspace_file_section_payload_span_records"
+    assert binding["file_section_count"] == 1
+    section = binding["file_section_records"][0]
+    assert section["operation"] == "edit"
+    assert section["target_path"] == "main.py"
+    assert section["target_span_policy"] == "full_file_replacement_section"
+    assert section["body_chars"] == 4
+    assert section["parent_file"]["exists"] is True
+    assert section["parent_file"]["normalized_full_file_span"] == [0, 3]
+    assert section["candidate_file"]["exists"] is True
+    assert section["candidate_file"]["normalized_full_file_span"] == [0, 4]
+    assert section["parent_file"]["sha256"] != section["candidate_file"]["sha256"]
+
+
 def test_runtime_history_reports_natural_language_preamble_metadata():
     tmpdir = tempfile.mkdtemp()
     response = """IDEA: Change x to the accepted value.

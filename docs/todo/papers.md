@@ -1879,15 +1879,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     render hashes/path policy, parent and candidate workspace hashes, LLM call
     ids, mutation payload hashes, diff SEARCH match counts/spans for
     non-file-section diff payloads, evolve-block inner span mapping for exact
-    SEARCH matches inside parent block content, full-mode target policy,
-    evaluator status, and archive admission.
+    SEARCH matches inside parent block content, workspace file-section target
+    records with parent/candidate full-file span and hash evidence, full-mode
+    target policy, evaluator status, and archive admission.
   - Current gap: paper-facing evidence is still current-run only and does not
-    expand workspace file-section payloads into per-file spans, join to
-    prompt-history row ids, record full-mode target spans or block ids, or
-    persist cross-run binding tables.
-  - Required result: extend prompt-current binding evidence with per-file span
-    expansion, prompt-history row joins, full-mode target spans/block policy,
-    and cross-run validation before
+    join to prompt-history row ids, record full-mode target spans or block ids,
+    or persist cross-run binding tables.
+  - Required result: extend prompt-current binding evidence with prompt-history
+    row joins, full-mode target spans/block policy, and cross-run validation
+    before
     claiming full AlphaEvolve Figure 3 current-program edit provenance.
 
 - [ ] Track multi-edit semantic consistency beyond current diagnostic scan.

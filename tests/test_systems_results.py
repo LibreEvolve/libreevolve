@@ -159,6 +159,43 @@ def _valid_scheduling_report() -> dict:
         "case_set_id": "not_applicable_reference",
         "rationale": "Scheduling heuristic only ranks feasible machines.",
     }
+    report["scheduling_formulation"] = {
+        "problem_class": "online_vector_bin_packing",
+        "machine_role": "bin",
+        "job_role": "item",
+        "objective": "stranded_resource_minimization",
+        "resource_dimensions": [
+            {
+                "name": "cpu",
+                "unit": "normalized cpu",
+                "capacity_field": "machine.cpu_capacity",
+                "required_field": "job.required_cpu",
+                "free_field": "machine.free_cpu",
+            },
+            {
+                "name": "memory",
+                "unit": "normalized memory",
+                "capacity_field": "machine.memory_capacity",
+                "required_field": "job.required_memory",
+                "free_field": "machine.free_memory",
+            },
+        ],
+        "snapshot_provenance": [
+            {
+                "snapshot_id": "historical-workload-capacity",
+                "workload_source": "historical pending-job workload",
+                "capacity_source": "historical machine capacity snapshot",
+                "simulator_input_sha256": "e" * 64,
+            }
+        ],
+        "stranded_resource_definition": (
+            "unused CPU or memory that cannot be paired with pending job demand"
+        ),
+        "feature_mapping": (
+            "heuristic required/free features map to CPU and memory demand and capacity"
+        ),
+        "artifact_refs": ["systems/flashattention/reference.json"],
+    }
     report["scheduling_safety"] = {
         "feasibility_filter_id": "borg-feasible-machine-filter",
         "candidate_set_source": "machines already available and capable",
@@ -489,6 +526,41 @@ def test_ready_scheduling_report_requires_ranking_only_safety():
     assert "invalid_ready_scheduling_safety" in codes
 
 
+def test_ready_scheduling_report_requires_vector_bin_packing_formulation():
+    report = _valid_scheduling_report()
+    report.pop("scheduling_formulation")
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_scheduling_formulation" in codes
+    assert "invalid_ready_scheduling_formulation" in codes
+
+
+def test_scheduling_formulation_requires_cpu_memory_snapshots_and_refs():
+    report = _valid_scheduling_report()
+    report["scheduling_formulation"]["resource_dimensions"] = [
+        report["scheduling_formulation"]["resource_dimensions"][0]
+    ]
+    report["scheduling_formulation"]["snapshot_provenance"][0][
+        "simulator_input_sha256"
+    ] = "bad"
+    report["scheduling_formulation"]["artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_scheduling_resource_dimension" in codes
+    assert "invalid_scheduling_simulator_input_hash" in codes
+    assert "invalid_scheduling_formulation_artifact_ref" in codes
+
+
 def test_scheduling_safety_rejects_direct_authority_and_bad_refs():
     report = _valid_scheduling_report()
     report["scheduling_safety"]["can_place_jobs"] = True
@@ -513,6 +585,7 @@ def test_non_ready_scheduling_report_can_omit_safety_provenance():
     report["gates"][1]["status"] = "failed"
     report["certification"]["paper_claim_ready"] = False
     report.pop("scheduling_safety")
+    report.pop("scheduling_formulation")
 
     validation = validate_systems_result_report(report)
 
@@ -529,6 +602,19 @@ def test_non_scheduling_report_rejects_scheduling_safety_block():
 
     assert validation.ok is False
     assert "unexpected_scheduling_safety" in codes
+
+
+def test_non_scheduling_report_rejects_scheduling_formulation_block():
+    report = _valid_report()
+    report["scheduling_formulation"] = _valid_scheduling_report()[
+        "scheduling_formulation"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_scheduling_formulation" in codes
 
 
 def test_systems_result_report_rejects_unsafe_artifacts_and_bad_metrics():
@@ -558,6 +644,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| alphaevolve_ready | yes |" in summary
     assert "| claim_calibration_records | 1 |" in summary
     assert "| application_provenance_records | 4 |" in summary
+    assert "| scheduling_formulation | absent |" in summary
     assert "| scheduling_safety | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary

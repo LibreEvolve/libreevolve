@@ -4044,27 +4044,26 @@ Primary evidence:
     calibrated Section 3.3 claims, source evidence, and concrete artifacts; do
     not treat the schema alone as production/domain-owner validation.
 
-- [ ] Add Borg scheduling problem-formulation provenance.
+- [ ] Populate Borg scheduling problem-formulation provenance.
   - Spec evidence: AlphaEvolve Section 3.3.1 frames Borg scheduling as an
     online vector bin-packing problem with two resource dimensions: machines
     are bins with CPU and memory capacity, pending jobs are items with CPU and
     memory demands, stranded resources are the optimization motivation, and
     simulator feedback comes from historical workload and capacity snapshots.
-  - Current evidence: systems reports can validate generic optimization and
-    held-out gates, while separate scheduling TODOs cover ranking-only safety,
-    mission-critical interpretability/deployment evidence, Figure 6 exhibit
-    provenance, and calibrated fleet-recovery metrics. They do not require a
-    scheduling-domain report to declare the bin/item/resource schema, units,
-    workload/capacity snapshot identities, stranded-resource objective, or
-    mapping from simulator inputs to the `required` and `free` CPU/memory
-    fields used by the heuristic.
-  - Required result: add scheduling-domain metadata and validators for the
-    Borg-style vector-bin-packing formulation: machine/bin and job/item
-    schemas, CPU/memory units and denominators, `required`/`free` feature
-    definitions, workload/capacity snapshot provenance, stranded-resource
-    objective linkage, simulator input hashes, and docs that separate
-    scheduling problem-formulation evidence from ranking-only safety,
-    deployment, and Figure 6 exhibit evidence.
+  - Current evidence: `libreevolve.systems_result_report.v1` now requires
+    `scheduling_formulation` before accepting `alphaevolve_ready` scheduling
+    reports. The validator checks the online vector-bin-packing problem class,
+    machine/bin and job/item roles, CPU/memory dimensions, capacity/required/
+    free feature mappings, historical workload/capacity snapshot provenance,
+    stranded-resource objective linkage, simulator input hashes, and artifact
+    refs. Existing scheduling fixtures still lack real populated formulation
+    records and paper-facing certification examples.
+  - Required result: populate Borg-style scheduling fixtures with reviewed
+    machine/bin and job/item schemas, CPU/memory units and denominators,
+    `required`/`free` feature definitions, workload/capacity snapshot
+    provenance, stranded-resource objective linkage, simulator input hashes,
+    and concrete artifacts; keep formulation evidence separate from
+    ranking-only safety, deployment, and Figure 6 exhibit evidence.
 
 - [ ] Populate scheduling ranking-only safety provenance for Borg-style
       heuristics.

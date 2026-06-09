@@ -2110,23 +2110,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Borg-style correctness-by-construction scheduling evidence.
 
 - [ ] Keep scheduling roadmap wording scoped until vector-bin-packing
-      formulation evidence exists.
+      formulation evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 formulates Borg scheduling as an
     online vector bin-packing problem: machines are bins with CPU and memory
     capacity, pending jobs are items with CPU and memory requirements,
     stranded resources motivate the objective, and simulator feedback is based
     on historical workload and capacity snapshots.
-  - Current evidence: roadmap systems-result wording covers generic held-out,
-    deployment, metric-calibration, ranking-only feasibility, and Figure 6
-    exhibit gaps. It does not require scheduling fixtures or report validators
-    to declare the CPU/memory bin-item schema, resource units, workload and
-    capacity snapshot identities, stranded-resource objective, simulator input
-    hashes, or mapping to the heuristic's `required` and `free` features.
-  - Required result: when Borg-style scheduling formulation metadata and
-    validators land, update ROADMAP, README, papers index, and code/paper TODOs
-    so roadmap text separates scheduling problem setup from later evidence for
-    ranking-only safety, mission-critical deployment, and fleet-recovery
-    metrics.
+  - Current evidence: roadmap systems-result wording now names
+    `scheduling_formulation` records required for `alphaevolve_ready`
+    scheduling reports: CPU/memory bin-item schema, resource units, workload
+    and capacity snapshot identities, stranded-resource objective, simulator
+    input hashes, artifact refs, and mapping to the heuristic's `required` and
+    `free` features. Existing scheduling fixtures do not yet carry real
+    populated formulation records.
+  - Required result: when scheduling fixtures and certification examples
+    populate Borg-style scheduling formulation metadata, update ROADMAP,
+    README, papers index, and code/paper TODOs so roadmap text neither
+    underclaims the report contract nor overclaims AlphaEvolve-style scheduling
+    problem setup.
 
 - [ ] Keep scheduling roadmap wording scoped to generic systems reports until
       interpretability/deployment-readiness evidence exists.

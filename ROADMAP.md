@@ -608,11 +608,14 @@ is not yet an AlphaEvolve reproduction.
   application owners/advisors, domain reviewers, validation or data owners,
   production approvers, approval state, artifact references, and
   local-benchmark-versus-production boundary text. Ready scheduling reports
-  also require `scheduling_safety` records for feasible candidate-set source,
-  ranking-only scope, simulator/admission/placement boundaries, resource
-  invariants, and safety artifact refs. Real scheduling resource recovery,
-  kernel/training-time speedup, RTL PPA, and compiler speedup fixtures still
-  need to populate those records.
+  also require `scheduling_formulation` records for vector-bin-packing setup,
+  CPU/memory dimensions, workload/capacity snapshots, stranded-resource
+  objective, feature mapping, simulator hashes, and artifact refs, plus
+  `scheduling_safety` records for feasible candidate-set source, ranking-only
+  scope, simulator/admission/placement boundaries, resource invariants, and
+  safety artifact refs. Real scheduling resource recovery, kernel/training-time
+  speedup, RTL PPA, and compiler speedup fixtures still need to populate those
+  records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market

@@ -91,6 +91,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         domain = None
     gate_statuses = _validate_gates(data.get("gates"), issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    scheduling_formulation_ready = _validate_scheduling_formulation(
+        data.get("scheduling_formulation"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     scheduling_safety_ready = _validate_scheduling_safety(
         data.get("scheduling_safety"),
         data,
@@ -134,6 +141,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_scheduling_safety",
                     "alphaevolve_ready scheduling reports require ranking-only safety provenance",
+                )
+            )
+        if domain == "scheduling" and not scheduling_formulation_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_scheduling_formulation",
+                    "alphaevolve_ready scheduling reports require vector-bin-packing formulation provenance",
                 )
             )
         if not application_ready:
@@ -273,6 +287,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
                 gate_rows.append(f"{gate.get('name', '<unknown>')}={gate.get('status', '<unknown>')}")
     claim_records = report.get("claim_calibration", {}).get("records")
     application_records = report.get("application_provenance", {}).get("records")
+    scheduling_formulation = report.get("scheduling_formulation")
     scheduling_safety = report.get("scheduling_safety")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
@@ -287,6 +302,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
         f"| claim_calibration_records | {len(claim_records) if isinstance(claim_records, list) else 0} |",
         f"| application_provenance_records | {len(application_records) if isinstance(application_records, list) else 0} |",
+        f"| scheduling_formulation | {'present' if isinstance(scheduling_formulation, dict) else 'absent'} |",
         f"| scheduling_safety | {'present' if isinstance(scheduling_safety, dict) else 'absent'} |",
     ]
     if validation.issues:
@@ -768,6 +784,185 @@ def _validate_ready_gate_artifacts(
                 "alphaevolve_ready passed gates require matching artifact kinds",
             )
         )
+
+
+def _validate_scheduling_formulation(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "scheduling":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "unexpected_scheduling_formulation",
+                    "scheduling_formulation is only valid for scheduling reports",
+                )
+            )
+        return domain != "scheduling"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_scheduling_formulation",
+                    "alphaevolve_ready scheduling reports require scheduling_formulation",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_formulation",
+                "scheduling_formulation must be an object",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    ok = True
+    expected_text = {
+        "problem_class": "online_vector_bin_packing",
+        "machine_role": "bin",
+        "job_role": "item",
+        "objective": "stranded_resource_minimization",
+    }
+    for field, expected in expected_text.items():
+        if value.get(field) != expected:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_scheduling_{field}",
+                    f"scheduling_formulation.{field} must be {expected}",
+                )
+            )
+            ok = False
+    resource_dimensions = value.get("resource_dimensions")
+    if not isinstance(resource_dimensions, list) or not resource_dimensions:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_resource_dimensions",
+                "scheduling_formulation.resource_dimensions must be a non-empty list",
+            )
+        )
+        ok = False
+    else:
+        seen_dimensions: set[str] = set()
+        for index, dimension in enumerate(resource_dimensions):
+            if not isinstance(dimension, dict):
+                issues.append(
+                    SystemsResultIssue(
+                        "invalid_scheduling_resource_dimension",
+                        "resource dimension records must be objects",
+                    )
+                )
+                ok = False
+                continue
+            name = dimension.get("name")
+            if name not in {"cpu", "memory"}:
+                issues.append(
+                    SystemsResultIssue(
+                        "invalid_scheduling_resource_name",
+                        f"resource_dimensions[{index}].name must be cpu or memory",
+                    )
+                )
+                ok = False
+            else:
+                seen_dimensions.add(name)
+            for field in ("unit", "capacity_field", "required_field", "free_field"):
+                text = dimension.get(field)
+                if not isinstance(text, str) or not text.strip():
+                    issues.append(
+                        SystemsResultIssue(
+                            f"invalid_scheduling_resource_{field}",
+                            f"resource_dimensions[{index}].{field} must be non-empty text",
+                        )
+                    )
+                    ok = False
+        if seen_dimensions != {"cpu", "memory"}:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_scheduling_resource_dimension",
+                    "scheduling formulation must include cpu and memory dimensions",
+                )
+            )
+            ok = False
+    snapshots = value.get("snapshot_provenance")
+    if not isinstance(snapshots, list) or not snapshots:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_snapshot_provenance",
+                "scheduling_formulation.snapshot_provenance must be a non-empty list",
+            )
+        )
+        ok = False
+    else:
+        for index, snapshot in enumerate(snapshots):
+            if not isinstance(snapshot, dict):
+                issues.append(
+                    SystemsResultIssue(
+                        "invalid_scheduling_snapshot_record",
+                        "snapshot provenance records must be objects",
+                    )
+                )
+                ok = False
+                continue
+            snapshot_id = snapshot.get("snapshot_id")
+            if not isinstance(snapshot_id, str) or _ID_RE.fullmatch(snapshot_id) is None:
+                issues.append(
+                    SystemsResultIssue(
+                        "invalid_scheduling_snapshot_id",
+                        f"snapshot_provenance[{index}].snapshot_id must be stable",
+                    )
+                )
+                ok = False
+            for field in ("workload_source", "capacity_source"):
+                text = snapshot.get(field)
+                if not isinstance(text, str) or not text.strip():
+                    issues.append(
+                        SystemsResultIssue(
+                            f"invalid_scheduling_{field}",
+                            f"snapshot_provenance[{index}].{field} must be non-empty text",
+                        )
+                    )
+                    ok = False
+            _validate_sha(
+                snapshot.get("simulator_input_sha256"),
+                "invalid_scheduling_simulator_input_hash",
+                "scheduling simulator_input_sha256",
+                issues,
+            )
+            if not isinstance(snapshot.get("simulator_input_sha256"), str) or _SHA256_RE.fullmatch(snapshot.get("simulator_input_sha256")) is None:
+                ok = False
+    for field in (
+        "stranded_resource_definition",
+        "feature_mapping",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_scheduling_{field}",
+                    f"scheduling_formulation.{field} must be non-empty text",
+                )
+            )
+            ok = False
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_scheduling_formulation_artifact_ref",
+        "scheduling_formulation",
+        issues,
+    )
+    if not isinstance(value.get("artifact_refs"), list) or not value["artifact_refs"]:
+        ok = False
+    elif any(item not in artifact_paths for item in value["artifact_refs"]):
+        ok = False
+    return ok
 
 
 def _validate_scheduling_safety(

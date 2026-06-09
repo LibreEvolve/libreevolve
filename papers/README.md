@@ -1043,15 +1043,19 @@ Implemented:
   approvers, approval/deployment state, claim links, artifact refs, and an
   explicit boundary between local benchmark evidence and domain-owner validated
   production claims. Ready scheduling reports now also require
-  `scheduling_safety` records for feasible candidate-set source, ranking-only
-  scope, external simulator/admission/placement boundaries, resource
-  invariants, and artifact refs proving that evolved code only ranks machines
-  already deemed feasible. The contract still does not provide real compiler,
-  hardware, kernel, scheduling, or systems fixtures. For scheduling, it still
-  does not require mission-critical deployment evidence such as interpretable
-  heuristic structure, debuggability/operator review, predictability checks,
-  rollout-risk evidence, or comparison against less interpretable learned-policy
-  baselines. For kernel reports, it does not yet
+  `scheduling_formulation` records for online vector-bin-packing setup,
+  CPU/memory resource dimensions, workload/capacity snapshots,
+  stranded-resource objective, feature mapping, simulator input hashes, and
+  artifact refs. They also require `scheduling_safety` records for feasible
+  candidate-set source, ranking-only scope, external simulator/admission/
+  placement boundaries, resource invariants, and artifact refs proving that
+  evolved code only ranks machines already deemed feasible. The contract still
+  does not provide real compiler, hardware, kernel, scheduling, or systems
+  fixtures. For scheduling, it still does not require mission-critical
+  deployment evidence such as interpretable heuristic structure,
+  debuggability/operator review, predictability checks, rollout-risk evidence,
+  or comparison against less interpretable learned-policy baselines. For kernel
+  reports, it does not yet
   require Pallas/Gemini-style input-shape corpus provenance, deterministic
   train/eval split records, real TPU runtime measurement artifacts, baseline
   tiling-heuristic identity, or unchanged-operation correctness-by-construction

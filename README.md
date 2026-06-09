@@ -3503,11 +3503,16 @@ deployment state, and a boundary statement separating local benchmark evidence
 from domain-owner validated production claims. It is a readiness/report schema
 only, not a compiler, kernel, scheduling, or deployment benchmark
 implementation.
-Ready scheduling reports additionally require `scheduling_safety` provenance
-showing the feasible candidate-set source, ranking-only heuristic scope,
-external simulator/admission/placement boundaries, resource invariants, and
-artifact references proving that evolved code only ranks machines already
-deemed feasible. Scheduling reports still need domain-specific evidence for
+Ready scheduling reports additionally require `scheduling_formulation`
+provenance for the online vector-bin-packing setup: machines as bins, pending
+jobs as items, CPU/memory resource dimensions, capacity/required/free feature
+mapping, historical workload/capacity snapshots, stranded-resource objective,
+simulator input hashes, and artifact refs. They also require
+`scheduling_safety` provenance showing the feasible candidate-set source,
+ranking-only heuristic scope, external simulator/admission/placement
+boundaries, resource invariants, and artifact references proving that evolved
+code only ranks machines already deemed feasible. Scheduling reports still
+need domain-specific evidence for
 mission-critical deployment suitability, such as interpretable heuristic
 structure, debuggability/operator review, predictability checks,
 rollout-risk evidence, and comparison against less interpretable learned-policy

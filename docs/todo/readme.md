@@ -1253,24 +1253,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     safety.
 
 - [ ] Keep README scheduling wording scoped until vector-bin-packing
-      formulation evidence exists.
+      formulation evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 formulates Borg scheduling as an
     online vector bin-packing problem with machines as CPU/memory-capacity
     bins, pending jobs as CPU/memory-demand items, stranded resources as the
     optimization motivation, and simulator feedback from historical workload
     and capacity snapshots.
-  - Current evidence: README documents generic systems result reports and
-    notes scheduling ranking-only safety, deployment, and Figure 6 evidence
-    gaps. It does not yet document scheduling-specific problem-formulation
-    evidence: bin/item schema, CPU/memory units and denominators,
-    workload/capacity snapshot provenance, stranded-resource objective linkage,
-    simulator input hashes, or mapping from the source data to `required` and
-    `free` heuristic features.
-  - Required result: once Borg-style scheduling formulation metadata lands,
-    update README, ROADMAP, papers index, and matching TODOs so README
-    distinguishes generic systems reports from AlphaEvolve-style scheduling
-    problem setup before discussing safety, deployment, or fleet-recovery
-    result claims.
+  - Current evidence: README now documents `scheduling_formulation` records
+    required for `alphaevolve_ready` scheduling reports: bin/item schema,
+    CPU/memory units and denominators, workload/capacity snapshot provenance,
+    stranded-resource objective linkage, simulator input hashes, artifact refs,
+    and mapping from source data to `required` and `free` heuristic features.
+    Existing scheduling fixtures do not yet carry real populated formulation
+    records.
+  - Required result: once scheduling fixtures and certification examples
+    populate Borg-style formulation evidence, update README, ROADMAP, papers
+    index, and matching TODOs so README can describe those records without
+    implying the schema alone proves AlphaEvolve-style scheduling problem
+    setup.
 
 - [ ] Keep README scheduling wording scoped to generic systems reports until
       interpretability/deployment-readiness evidence exists.

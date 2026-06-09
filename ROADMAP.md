@@ -587,9 +587,13 @@ is not yet an AlphaEvolve reproduction.
   cached PDF References section spans pages 23-32, includes contiguous
   reference ids `[1]` through `[120]`, preserves page-by-page marker ranges,
   and contains selected source anchor phrases. The paper-manifest gate checks
-  those markers against the current cached PDF text. Normalized
-  author/title/venue/year fields, local-cache linkage, and per-claim citation
-  use categories remain open.
+  those markers against the current cached PDF text. The committed
+  `papers/references.json` companion manifest adds normalized rows for all
+  120 references, including the reference 120 continuation on page 33, raw
+  citation text, author/title/venue/year fields, DOI/URL/arXiv fields where
+  detected, local-cache linkage, and citation-use categories. Per-claim
+  citation links remain scoped separately from the normalized bibliography
+  table.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

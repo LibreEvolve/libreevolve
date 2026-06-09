@@ -1633,23 +1633,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve artifact licensing, and local project ownership or endorsement
     boundaries.
 
-- [ ] Keep README bibliography wording scoped until AlphaEvolve References
-      metadata is normalized.
-  - Spec evidence: the AlphaEvolve PDF has a numbered References section after
-    Author information, with entries through `[120]`.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_references_section.v1`, which validates the
-    AlphaEvolve References section page span, contiguous `[1]` through `[120]`
-    ids, page-by-page marker ranges, and selected source anchors against the
-    cached PDF text. README and `papers/README.md` still say manifest `title`
-    fields are display slugs, not authoritative bibliographic titles. README
-    does not document normalized author/title/venue/year fields, local-cache
-    linkage, absent-cache status, or claim-level citation provenance.
-  - Required result: when normalized References-section metadata lands, update
-    README, ROADMAP, papers index, and code/paper TODOs so README distinguishes
-    manifest display slugs, authoritative bibliography fields, local-cache
-    linkage, absent-cache status, and targeted claim-level citation provenance.
-
 - [ ] Keep README follow-on AlphaEvolve math-source wording scoped until the
       expanded paper/repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

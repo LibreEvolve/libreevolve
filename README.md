@@ -3529,8 +3529,12 @@ validates that the cached PDF References section spans pages 23-32, contains
 contiguous reference ids `[1]` through `[120]`, preserves the page-by-page
 marker ranges, and includes source anchor phrases for selected entries. The
 standard paper-manifest gate validates those markers against the current
-cached PDF text. Full author/title/venue/year normalization, local-cache
-linkage for cited works, and per-claim citation-use links remain open.
+cached PDF text. The committed `papers/references.json` companion manifest
+adds normalized rows for all 120 references, using the PDF References text
+through the reference 120 continuation on page 33, with raw citation text,
+author/title/venue/year fields, DOI/URL/arXiv fields where detected,
+local-cache linkage, and citation-use categories. Per-claim citation links
+remain scoped separately from the normalized bibliography table.
 AlphaEvolve paper artifact-role provenance uses
 `libreevolve.alphaevolve_paper_artifact_roles.v1` in
 `libreevolve/problems/benchmarks/paper_artifact_roles.py`; the built-in record

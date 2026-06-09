@@ -2471,28 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Normalize AlphaEvolve References-section bibliography provenance.
-  - Spec evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
-    References section beginning after Author information and running through
-    entry `[120]`, with citations used across the abstract, method, results,
-    related work, and Appendix B.
-  - Current evidence: `libreevolve.alphaevolve_references_section.v1` in
-    `libreevolve/problems/benchmarks/paper_bibliography.py` now validates the
-    References section source inventory: pages 23-32, contiguous reference ids
-    `[1]` through `[120]`, page-by-page marker ranges, selected source anchors,
-    and a boundary that manifest display titles are not authoritative
-    bibliography metadata. `libreevolve.tools.paper_manifest` validates those
-    markers against the current cached PDF text. Author/title/venue/year
-    normalization, DOI/URL/arXiv fields, local-cache linkage, and per-claim
-    citation-use categories are still absent.
-  - Required result: extend paper-source manifests or companion registries with
-    a normalized AlphaEvolve reference table: stable reference id,
-    bibliographic fields, DOI/URL/arXiv metadata, source page/span,
-    citation-use categories, local-cache linkage where present, missing-cache
-    status where absent, and validation that README/ROADMAP/papers wording
-    distinguishes authoritative bibliography metadata from manifest display
-    slugs and targeted per-claim citation TODOs.
-
 - [ ] Emit companion Colab/source-artifact records from paper-artifact workflows.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying

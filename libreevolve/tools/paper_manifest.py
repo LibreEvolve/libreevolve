@@ -67,7 +67,9 @@ from libreevolve.problems.benchmarks.paper_source_identity import (
     validate_paper_source_identity_manifest,
 )
 from libreevolve.problems.benchmarks.paper_bibliography import (
+    EXPECTED_REFERENCES_BIBLIOGRAPHY_FILE,
     alphaevolve_references_section_record,
+    validate_alphaevolve_references_bibliography,
     validate_alphaevolve_references_section,
 )
 
@@ -474,6 +476,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_source_pdf_rights_manifest(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_version_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_references_bibliography(root_path, manifest_rows_by_id, json_rows))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
@@ -891,6 +894,62 @@ def _validate_alphaevolve_source_pdf_rights_record(
                     for issue in rights_report.issues
                 )
     return issues
+
+
+def _validate_alphaevolve_references_bibliography(
+    root_path: Path,
+    manifest_rows_by_id: dict[str, dict[str, Any]],
+    manifest_rows: list[dict[str, Any]],
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    bibliography_path = root_path / EXPECTED_REFERENCES_BIBLIOGRAPHY_FILE
+    if not bibliography_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_references_bibliography_missing",
+                    "papers/references.json must emit normalized AlphaEvolve bibliography rows",
+                    "2506.13131",
+                )
+            ]
+        return []
+    page_text_by_number = None
+    if is_repo_root:
+        row = manifest_rows_by_id.get("2506.13131")
+        file_value = row.get("file") if isinstance(row, dict) else None
+        if isinstance(file_value, str):
+            pdf_path = root_path / file_value
+            if pdf_path.exists():
+                try:
+                    reader = _read_pdf_quietly(pdf_path)
+                    page_text_by_number = {
+                        page_number: reader.pages[page_number - 1].extract_text() or ""
+                        for page_number in range(23, 34)
+                    }
+                except Exception as exc:
+                    return [
+                        PaperManifestIssue(
+                            "alphaevolve_references_bibliography_read_error",
+                            _safe_pdf_parse_error(exc),
+                            "2506.13131",
+                        )
+                    ]
+    report = validate_alphaevolve_references_bibliography(
+        bibliography_path,
+        page_text_by_number=page_text_by_number,
+        manifest_rows=manifest_rows,
+    )
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_references_bibliography_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.reference_id) if issue.reference_id else "2506.13131",
+        )
+        for issue in report.issues
+    ]
 
 
 def _validate_alphaevolve_references_section_record(

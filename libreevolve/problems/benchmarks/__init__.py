@@ -111,9 +111,12 @@ from libreevolve.problems.benchmarks.paper_artifact_roles import (
     validate_paper_artifact_roles,
 )
 from libreevolve.problems.benchmarks.paper_bibliography import (
+    ALPHAEVOLVE_REFERENCES_BIBLIOGRAPHY_SCHEMA,
     ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA,
+    alphaevolve_references_bibliography_record,
     alphaevolve_references_section_record,
     render_alphaevolve_references_section_summary,
+    validate_alphaevolve_references_bibliography,
     validate_alphaevolve_references_section,
 )
 from libreevolve.problems.benchmarks.paper_source_versions import (

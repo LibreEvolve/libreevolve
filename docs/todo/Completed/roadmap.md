@@ -4,6 +4,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document normalized AlphaEvolve References bibliography manifest.
+  - Spec evidence: the AlphaEvolve PDF includes a numbered References section
+    after Author information, with entries through `[120]`.
+  - Status: ROADMAP now documents `papers/references.json` as the committed
+    normalized bibliography companion manifest, including source page,
+    bibliographic fields, detected DOI/URL/arXiv fields, local-cache linkage,
+    and citation-use categories.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document AlphaEvolve source-PDF rights companion manifest.
   - Spec evidence: page 1 of the local AlphaEvolve PDF states
     `© 2025 Google DeepMind. All rights reserved`.

@@ -1288,11 +1288,13 @@ Implemented:
   appendix claims, and the paper-manifest command validates the companion file
   against the current cached PDF text.
 - `libreevolve/problems/benchmarks/paper_bibliography.py`: AlphaEvolve
-  References-section inventory contract. It validates the cached PDF
-  References section page span, contiguous reference ids `[1]` through `[120]`,
-  page-by-page marker ranges for pages 23-32, and selected source anchor
-  phrases against the current cached PDF text. It is marker inventory evidence,
-  not yet full normalized bibliography metadata or per-claim citation linkage.
+  References-section inventory and normalized bibliography contract. It
+  validates the cached PDF marker inventory for pages 23-32 and
+  `papers/references.json`, whose 120 rows use the PDF References text through
+  the reference 120 continuation on page 33, preserving raw citation text,
+  author/title/venue/year fields, DOI/URL/arXiv fields where detected,
+  local-cache linkage, and citation-use categories. It is normalized
+  bibliography metadata, not complete per-claim citation linkage.
 - `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
   Colab source-evidence contract. It validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

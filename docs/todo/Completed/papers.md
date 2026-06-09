@@ -6,6 +6,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Normalize full AlphaEvolve References-section bibliography evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
+    References section after Author information, with entries through `[120]`.
+  - Status: `papers/references.json` now records normalized paper-facing
+    bibliography rows for all 120 references, including raw citation text,
+    bibliographic fields, DOI/URL/arXiv fields where detected, source page,
+    local-cache linkage, and citation-use category.
+  - Remaining gap: none for this bounded paper-facing bibliography table;
+    claim-specific citation mappings remain separate active paper work.
+
 - [x] Emit AlphaEvolve source-PDF rights and license provenance.
   - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.

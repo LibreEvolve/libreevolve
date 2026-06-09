@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document normalized AlphaEvolve References bibliography evidence.
+  - Spec evidence: the AlphaEvolve PDF has a numbered References section after
+    Author information, with entries through `[120]`.
+  - Status: README now documents `papers/references.json` as the committed
+    companion manifest with normalized rows for all 120 references, including
+    raw citation text, bibliographic fields, detected DOI/URL/arXiv fields,
+    local-cache linkage, and citation-use categories.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document AlphaEvolve source-PDF rights manifest evidence.
   - Spec evidence: the local AlphaEvolve PDF header states
     `© 2025 Google DeepMind. All rights reserved`.

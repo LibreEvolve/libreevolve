@@ -1,0 +1,2182 @@
+{
+  "schema": "libreevolve.alphaevolve_references_bibliography.v1",
+  "source_paper_id": "2506.13131",
+  "title": "AlphaEvolve",
+  "source_file": "papers/2506.13131__AlphaEvolve.pdf",
+  "source_section": "References",
+  "source_page_span": {
+    "first_page": 23,
+    "last_page": 33
+  },
+  "reference_count": 120,
+  "bibliography_policy": "pdf_references_are_authoritative_bibliography_metadata_not_download_manifest_titles",
+  "field_policy": {
+    "raw_citation_required": true,
+    "author_title_venue_year_fields_required": true,
+    "doi_url_arxiv_fields_nullable": true,
+    "local_cache_linkage_required": true,
+    "claim_links_complete": false
+  },
+  "references": [
+    {
+      "reference_id": "1",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "J. Abramson, J. Adler, J. Dunger, R. Evans, T. Green, A. Pritzel, O. Ronneberger, L. Will- more, A. J. Ballard, J. Bambrick, et al. Accurate structure prediction of biomolecular interactions with alphafold 3.Nature, 630(8016):493–500, 2024.",
+      "authors": "J. Abramson, J. Adler, J. Dunger, R. Evans, T. Green, A. Pritzel, O. Ronneberger, L. Will- more, A. J. Ballard, J. Bambrick, et al",
+      "title_text": "Accurate structure prediction of biomolecular interactions with alphafold 3",
+      "venue_text": "Nature, 630(8016):493–500, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "2",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "V. Aglietti, I. Ktena, J. Schrouff, E. Sgouritsa, F. J. R. Ruiz, A. Malek, A. Bellot, and S. Chiappa. FunBO: Discovering acquisition functions for Bayesian optimization with FunSearch. InInternational Conference on Machine Learning, 2025.",
+      "authors": "V. Aglietti, I. Ktena, J. Schrouff, E. Sgouritsa, F. J. R. Ruiz, A. Malek, A. Bellot, and S. Chiappa",
+      "title_text": "FunBO: Discovering acquisition functions for Bayesian optimization with FunSearch",
+      "venue_text": "InInternational Conference on Machine Learning, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "3",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "AlphaProof and AlphaGeometry teams. AI achieves silver-medal standard solving International Mathematical Olympiad problems, 2024. URLhttps://deepmind.g oogle/discover/blog/ai-solves-imo-problems-at-silver-medal-lev el.",
+      "authors": "AlphaProof and AlphaGeometry teams",
+      "title_text": "AI achieves silver-medal standard solving International Mathematical Olympiad problems, 2024",
+      "venue_text": "URLhttps://deepmind.g oogle/discover/blog/ai-solves-imo-problems-at-silver-medal-lev el.",
+      "year": 2024,
+      "doi": null,
+      "url": "https://deepmind.g",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "4",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "D. Bahdanau, K. Cho, and Y. Bengio. Neural machine translation by jointly learning to align and translate.arXiv preprint arXiv:1409.0473, 2014.",
+      "authors": "D. Bahdanau, K. Cho, and Y. Bengio",
+      "title_text": "Neural machine translation by jointly learning to align and translate.arXiv preprint arXiv:1409.0473, 2014.",
+      "venue_text": null,
+      "year": 2014,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "5",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "W. Banzhaf, P. Nordin, R. E. Keller, and F. D. Francone.Genetic Programming: An Introduction on the Automatic Evolution of computer programs and its Applications. The Morgan Kaufmann Series in Artificial Intelligence, 1998.",
+      "authors": "W. Banzhaf, P. Nordin, R. E. Keller, and F. D. Francone",
+      "title_text": "Genetic Programming: An Introduction on the Automatic Evolution of computer programs and its Applications",
+      "venue_text": "The Morgan Kaufmann Series in Artificial Intelligence, 1998.",
+      "year": 1998,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "6",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "J. Bausch, A. W. Senior, F. J. H. Heras, T. Edlich, A. Davies, M. Newman, C. Jones, K. Satzinger, M. Y. Niu, S. Blackwell, G. Holland, D. Kafri, J. Atalaya, C. Gidney, D. Hassabis, S. Boixo, H. Neven, and P. Kohli. Learning high-accuracy error decoding for quantum processors.Nature, 635(8040):834–840, 2024. doi: 10.1038/s41586-0 24-08148-8.",
+      "authors": "J. Bausch, A. W. Senior, F. J. H. Heras, T. Edlich, A. Davies, M. Newman, C. Jones, K. Satzinger, M. Y. Niu, S. Blackwell, G. Holland, D. Kafri, J. Atalaya, C. Gidney, D. Hassabis, S. Boixo, H. Neven, and P. Kohli",
+      "title_text": "Learning high-accuracy error decoding for quantum processors",
+      "venue_text": "Nature, 635(8040):834–840, 2024. doi: 10.1038/s41586-0 24-08148-8.",
+      "year": 2024,
+      "doi": "10.1038/s41586-024-08148-8",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "7",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "D. A. Boiko, R. MacKnight, B. Kline, and G. Gomes. Autonomous chemical research with large language models.Nature, 624(7992):570–578, 2023. doi: 10.1038/s415 86-023-06792-0.",
+      "authors": "D. A. Boiko, R. MacKnight, B. Kline, and G. Gomes",
+      "title_text": "Autonomous chemical research with large language models",
+      "venue_text": "Nature, 624(7992):570–578, 2023. doi: 10.1038/s415 86-023-06792-0.",
+      "year": 2023,
+      "doi": "10.1038/s41586-023-06792-0",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "8",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "P. Boyvalenkov, S. Dodunekov, and O. Musin. A survey on the kissing numbers.Serdica Math. J., 38(4):507–522, 2012. ISSN 1310-6600.",
+      "authors": "P. Boyvalenkov, S. Dodunekov, and O. Musin",
+      "title_text": "A survey on the kissing numbers",
+      "venue_text": "Serdica Math. J., 38(4):507–522, 2012. ISSN 1310-6600.",
+      "year": 2012,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "9",
+      "source_page": 23,
+      "source_section": "References",
+      "raw_citation": "J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, C. Leary, D. Maclaurin, G. Necula, A. Paszke, J. VanderPlas, S. Wanderman-Milne, and Q. Zhang. JAX: composable transformations of Python+NumPy programs, 2018. URLhttp://github.com/j ax-ml/jax.",
+      "authors": "J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, C. Leary, D. Maclaurin, G. Necula, A. Paszke, J. VanderPlas, S. Wanderman-Milne, and Q. Zhang",
+      "title_text": "JAX: composable transformations of Python+NumPy programs, 2018",
+      "venue_text": "URLhttp://github.com/j ax-ml/jax.",
+      "year": 2018,
+      "doi": null,
+      "url": "http://github.com/j",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "10",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "A.M.Bran,S.Cox,O.Schilter,C.Baldassari,A.D.White,andP.Schwaller. Augmenting large language models with chemistry tools.Nature Machine Intelligence, 6(5):525– 535, 2024. doi: 10.1038/s42256-024-00832-8.",
+      "authors": "A.M",
+      "title_text": "Bran,S",
+      "venue_text": "Cox,O.Schilter,C.Baldassari,A.D.White,andP.Schwaller. Augmenting large language models with chemistry tools.Nature Machine Intelligence, 6(5):525– 535, 2024. doi: 10.1038/s42256-024-00832-8.",
+      "year": 2024,
+      "doi": "10.1038/s42256-024-00832-8",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "11",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "A. M. Bran, T. A. Neukomm, D. P. Armstrong, Z. Jončev, and P. Schwaller. Chemical reasoning in LLMs unlocks steerable synthesis planning and reaction mechanism elucidation. InarXiv preprint arXiv:2503.08537, 2025.",
+      "authors": "A. M. Bran, T. A. Neukomm, D. P. Armstrong, Z. Jončev, and P. Schwaller",
+      "title_text": "Chemical reasoning in LLMs unlocks steerable synthesis planning and reaction mechanism elucidation",
+      "venue_text": "InarXiv preprint arXiv:2503.08537, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.08537",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "12",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "M. Caldas Ramos, C. J. Collison, and A. D. White. A review of large language models and autonomous agents in chemistry.Chemical Science, 16:2514–2572, 2025. doi: 10.1039/D4SC03921A.",
+      "authors": "M. Caldas Ramos, C. J. Collison, and A. D. White",
+      "title_text": "A review of large language models and autonomous agents in chemistry",
+      "venue_text": "Chemical Science, 16:2514–2572, 2025. doi: 10.1039/D4SC03921A.",
+      "year": 2025,
+      "doi": "10.1039/D4SC03921A",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "13",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "P. S. Castro, N. Tomasev, A. Anand, N. Sharma, R. Mohanta, A. Dev, K. Perlin, S. Jain, K. Levin, N. Éltető, W. Dabney, A. Novikov, G. C. Turner, M. K. Eckstein, N. D. Daw, K. J. Miller, and K. L. Stachenfeld. Discovering symbolic cognitive models from human and animal behavior. InInternational Conference on Machine Learning, 2025.",
+      "authors": "P. S. Castro, N. Tomasev, A. Anand, N. Sharma, R. Mohanta, A. Dev, K. Perlin, S. Jain, K. Levin, N. Éltető, W. Dabney, A. Novikov, G. C. Turner, M. K. Eckstein, N. D. Daw, K. J. Miller, and K. L. Stachenfeld",
+      "title_text": "Discovering symbolic cognitive models from human and animal behavior",
+      "venue_text": "InInternational Conference on Machine Learning, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "14",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "A. Chen, D. M. Dohan, and D. R. So. EvoPrompting: Language models for code-level neural architecture search. In Advances in Neural Information Processing Systems, 2023.",
+      "authors": "A. Chen, D. M. Dohan, and D. R. So. EvoPrompting: Language models for code-level neural architecture search",
+      "title_text": "In Advances in Neural Information Processing Systems, 2023.",
+      "venue_text": null,
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "15",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "T. Chen, B. Xu, and K. Devleker. Automating GPU kernel generation with DeepSeek-R1 and inference time scaling, 2025. URLhttps://developer.nvidia.com/blog/ automating-gpu-kernel-generation-with-deepseek-r1-and-inference -time-scaling.",
+      "authors": "T. Chen, B. Xu, and K. Devleker",
+      "title_text": "Automating GPU kernel generation with DeepSeek-R1 and inference time scaling, 2025",
+      "venue_text": "URLhttps://developer.nvidia.com/blog/ automating-gpu-kernel-generation-with-deepseek-r1-and-inference -time-scaling.",
+      "year": 2025,
+      "doi": null,
+      "url": "https://developer.nvidia.com/blog/",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "16",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "X. Chen, C. Liang, D. Huang, E. Real, K. Wang, H. Pham, X. Dong, T. Luong, C.-J. Hsieh, Y. Lu, and Q. V. Le. Symbolic discovery of optimization algorithms.Advances in Neural Information Processing Systems, 2023.",
+      "authors": "X. Chen, C. Liang, D. Huang, E. Real, K. Wang, H. Pham, X. Dong, T. Luong, C.-J",
+      "title_text": "Hsieh, Y",
+      "venue_text": "Lu, and Q. V. Le. Symbolic discovery of optimization algorithms.Advances in Neural Information Processing Systems, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "17",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "A.CloningerandS.Steinerberger. Onsupremaofautoconvolutionswithanapplication to Sidon sets.Proceedings of the American Mathematical Society, 145(8):3191–3200, 2017.",
+      "authors": "A.CloningerandS",
+      "title_text": "Steinerberger",
+      "venue_text": "Onsupremaofautoconvolutionswithanapplication to Sidon sets.Proceedings of the American Mathematical Society, 145(8):3191–3200, 2017.",
+      "year": 2017,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "18",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "H. Cohn and F. Gonçalves. An optimal uncertainty principle in twelve dimensions via modular forms.Inventiones mathematicae, 217:799–831, 2019.",
+      "authors": "H. Cohn and F. Gonçalves",
+      "title_text": "An optimal uncertainty principle in twelve dimensions via modular forms",
+      "venue_text": "Inventiones mathematicae, 217:799–831, 2019.",
+      "year": 2019,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "19",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "K. M. Collins, A. Q. Jiang, S. Frieder, L. Wong, M. Zilka, U. Bhatt, T. Lukasiewicz, Y. Wu, J. B. Tenenbaum, W. Hart, et al. Evaluating language models for mathematics through interactions. Proceedings of the National Academy of Sciences, 121(24):e2318124121, 2024.",
+      "authors": "K. M. Collins, A. Q. Jiang, S. Frieder, L. Wong, M. Zilka, U. Bhatt, T. Lukasiewicz, Y. Wu, J. B. Tenenbaum, W. Hart, et al",
+      "title_text": "Evaluating language models for mathematics through interactions",
+      "venue_text": "Proceedings of the National Academy of Sciences, 121(24):e2318124121, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "20",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "K. D. Cooper, D. Subramanian, and L. Torczon. Adaptive optimizing compilers for the 21st century.The Journal of Supercomputing, 23:7–22, 2002.",
+      "authors": "K. D. Cooper, D. Subramanian, and L. Torczon",
+      "title_text": "Adaptive optimizing compilers for the 21st century",
+      "venue_text": "The Journal of Supercomputing, 23:7–22, 2002.",
+      "year": 2002,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "21",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "M. Cranmer. Interpretable machine learning for science with pysr and symbolicre- gression. jl.arXiv preprint arXiv:2305.01582, 2023.",
+      "authors": "M. Cranmer",
+      "title_text": "Interpretable machine learning for science with pysr and symbolicre- gression",
+      "venue_text": "jl.arXiv preprint arXiv:2305.01582, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2305.01582",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "22",
+      "source_page": 24,
+      "source_section": "References",
+      "raw_citation": "T. Dao, D. Fu, S. Ermon, A. Rudra, and C. Ré. Flashattention: Fast and memory- efficient exact attention with io-awareness.Advances in neural information processing systems, 35:16344–16359, 2022.",
+      "authors": "T. Dao, D. Fu, S. Ermon, A. Rudra, and C. Ré. Flashattention: Fast and memory- efficient exact attention with io-awareness",
+      "title_text": "Advances in neural information processing systems, 35:16344–16359, 2022.",
+      "venue_text": null,
+      "year": 2022,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "23",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "A. Davies, P. Veličković, L. Buesing, S. Blackwell, D. Zheng, N. Tomašev, R. Tanburn, P. Battaglia, C. Blundell, A. Juhász, M. Lackenby, G. Williamson, D. Hassabis, and P. Kohli. Advancing mathematics by guiding human intuition with AI.Nature, 600 (7887):70–74, 2021. doi: 10.1038/s41586-021-04086-x.",
+      "authors": "A. Davies, P. Veličković, L. Buesing, S. Blackwell, D. Zheng, N. Tomašev, R. Tanburn, P. Battaglia, C. Blundell, A. Juhász, M. Lackenby, G. Williamson, D. Hassabis, and P. Kohli",
+      "title_text": "Advancing mathematics by guiding human intuition with AI",
+      "venue_text": "Nature, 600 (7887):70–74, 2021. doi: 10.1038/s41586-021-04086-x.",
+      "year": 2021,
+      "doi": "10.1038/s41586-021-04086-x",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "main_text_mathematical_discovery_context"
+    },
+    {
+      "reference_id": "24",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "J. S. Ellenberg, C. S. Fraser-Taliente, T. R. Harvey, K. Srivastava, and A. V. Sutherland. Generative modelling for mathematical discovery.arXiv preprint arXiv:2503.11061, 2025.",
+      "authors": "J. S. Ellenberg, C. S. Fraser-Taliente, T. R. Harvey, K. Srivastava, and A. V. Sutherland",
+      "title_text": "Generative modelling for mathematical discovery.arXiv preprint arXiv:2503.11061, 2025.",
+      "venue_text": null,
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.11061",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "25",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "P. Erdős. Some remarks on number theory.Riveon Lematematika, 9:45–48, 1955.",
+      "authors": "P. Erdős",
+      "title_text": "Some remarks on number theory",
+      "venue_text": "Riveon Lematematika, 9:45–48, 1955.",
+      "year": 1955,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "26",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "A.Fawzi,M.Balog,A.Huang,T.Hubert,B.Romera-Paredes,M.Barekatain,A.Novikov, F. J. R. Ruiz, J. Schrittwieser, G. Swirszcz, D. Silver, D. Hassabis, and P. Kohli. Discov- ering faster matrix multiplication algorithms with reinforcement learning.Nature, 610(7930):47–53, 2022. doi: 10.1038/s41586-022-05172-4.",
+      "authors": "A.Fawzi,M",
+      "title_text": "Balog,A",
+      "venue_text": "Huang,T.Hubert,B.Romera-Paredes,M.Barekatain,A.Novikov, F. J. R. Ruiz, J. Schrittwieser, G. Swirszcz, D. Silver, D. Hassabis, and P. Kohli. Discov- ering faster matrix multiplication algorithms with reinforcement learning.Nature, 610(7930):47–53, 2022. doi: 10.1038/s41586-022-05172-4.",
+      "year": 2022,
+      "doi": "10.1038/s41586-022-05172-4",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "27",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "C. Fernando, D. Banarse, H. Michalewski, S. Osindero, and T. Rocktäschel. Prompt- breeder: Self-referential self-improvement via prompt evolution. arXiv preprint arXiv:2309.16797, 2023.",
+      "authors": "C. Fernando, D. Banarse, H. Michalewski, S. Osindero, and T. Rocktäschel",
+      "title_text": "Prompt- breeder: Self-referential self-improvement via prompt evolution",
+      "venue_text": "arXiv preprint arXiv:2309.16797, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2309.16797",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "28",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "N. Ferruz and B. Höcker. Controllable protein design with language models.Nature Machine Intelligence, 4(6):521–532, 2022.",
+      "authors": "N. Ferruz and B. Höcker",
+      "title_text": "Controllable protein design with language models",
+      "venue_text": "Nature Machine Intelligence, 4(6):521–532, 2022.",
+      "year": 2022,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "29",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "E. Friedman. Erich’s Packing Center.https://erich-friedman.github.io/pa cking/, 2025. Accessed: 2025-04-22.",
+      "authors": "E. Friedman",
+      "title_text": "Erich’s Packing Center.https://erich-friedman.github.io/pa cking/, 2025",
+      "venue_text": "Accessed: 2025-04-22.",
+      "year": 2025,
+      "doi": null,
+      "url": "https://erich-friedman.github.io/pa",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "30",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "F. Frohnert, X. Gu, M. Krenn, and E. van Nieuwenburg. Discovering emergent connec- tions in quantum physics research via dynamic word embeddings.Machine Learning: Science and Technology, 6(1):015029, 2025. doi: 10.1088/2632-2153/adb00a.",
+      "authors": "F. Frohnert, X. Gu, M. Krenn, and E. van Nieuwenburg",
+      "title_text": "Discovering emergent connec- tions in quantum physics research via dynamic word embeddings",
+      "venue_text": "Machine Learning: Science and Technology, 6(1):015029, 2025. doi: 10.1088/2632-2153/adb00a.",
+      "year": 2025,
+      "doi": "10.1088/2632-2153/adb00a",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "31",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "M. Ganzhinov. Highly symmetric lines. InarXiv preprint arXiv:2207.08266v1, 2022.",
+      "authors": "M. Ganzhinov",
+      "title_text": "Highly symmetric lines",
+      "venue_text": "InarXiv preprint arXiv:2207.08266v1, 2022.",
+      "year": 2022,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2207.08266",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "32",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "Gemini team. Gemini 2.5: Our most intelligent AI model, 2025. URL https: //blog.google/technology/google-deepmind/gemini-model-thinking-u pdates-march-2025.",
+      "authors": "Gemini team",
+      "title_text": "Gemini 2.5: Our most intelligent AI model, 2025",
+      "venue_text": "URL https: //blog.google/technology/google-deepmind/gemini-model-thinking-u pdates-march-2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "33",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "F. Gonçalves, D. O. e Silva, and S. Steinerberger. Hermite polynomials, linear flows on the torus, and an uncertainty principle for roots.Journal of Mathematical Analysis and Applications, 451(2):678–711, 2017.",
+      "authors": "F. Gonçalves, D. O. e Silva, and S. Steinerberger",
+      "title_text": "Hermite polynomials, linear flows on the torus, and an uncertainty principle for roots",
+      "venue_text": "Journal of Mathematical Analysis and Applications, 451(2):678–711, 2017.",
+      "year": 2017,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "34",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "J. Gottweis, W.-H. Weng, A. Daryin, T. Tu, A. Palepu, P. Sirkovic, A. Myaskovsky, F. Weissenberger, K. Rong, R. Tanno, K. Saab, D. Popovici, J. Blum, F. Zhang, K. Chou, A. Hassidim, B. Gokturk, A. Vahdat, P. Kohli, Y. Matias, A. Carroll, K. Kulkarni, N. Tomasev, Y. Guan, V. Dhillon, E. D. Vaishnav, B. Lee, T. R. D. Costa, J. R. Penadés, G. Peltz, Y. Xu, A. Pawlosky, A. Karthikesalingam, and V. Natarajan. Towards an AI co-scientist. arXiv preprint arXiv:2502.18864, 2025.",
+      "authors": "J. Gottweis, W.-H",
+      "title_text": "Weng, A. Daryin, T. Tu, A. Palepu, P. Sirkovic, A. Myaskovsky, F. Weissenberger, K. Rong, R. Tanno, K. Saab, D. Popovici, J. Blum, F. Zhang, K. Chou, A. Hassidim, B. Gokturk, A. Vahdat, P. Kohli, Y. Matias, A. Carroll, K. Kulkarni, N. Tomasev, Y. Guan, V. Dhillon, E. D. Vaishnav, B. Lee, T. R. D. Costa, J. R. Penadés, G. Peltz, Y. Xu, A. Pawlosky, A. Karthikesalingam, and V. Natarajan. Towards an AI co-scientist",
+      "venue_text": "arXiv preprint arXiv:2502.18864, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2502.18864",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "35",
+      "source_page": 25,
+      "source_section": "References",
+      "raw_citation": "A. Grayeli, A. Sehgal, O. Costilla Reyes, M. Cranmer, and S. Chaudhuri. Symbolic regression with a learned concept library.Advances in Neural Information Processing Systems, 37:44678–44709, 2024.",
+      "authors": "A. Grayeli, A. Sehgal, O. Costilla Reyes, M. Cranmer, and S. Chaudhuri",
+      "title_text": "Symbolic regression with a learned concept library",
+      "venue_text": "Advances in Neural Information Processing Systems, 37:44678–44709, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "36",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "M. Gridach, J. Nanavati, C. Mack, K. Z. E. Abidine, and L. Mendes. Agentic AI for scientific discovery: A survey of progress, challenges, and future directions. InICLR Workshop: Towards Agentic AI for Science: Hypothesis Generation, Comprehension, Quantification, and Validation, 2025.",
+      "authors": "M. Gridach, J. Nanavati, C. Mack, K. Z. E. Abidine, and L. Mendes",
+      "title_text": "Agentic AI for scientific discovery: A survey of progress, challenges, and future directions",
+      "venue_text": "InICLR Workshop: Towards Agentic AI for Science: Hypothesis Generation, Comprehension, Quantification, and Validation, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "37",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "X. Gu and M. Krenn. Interesting scientific idea generation using knowledge graphs and LLMs: Evaluations with 100 research group leaders. InarXiv preprint arXiv:2405.17044, 2024.",
+      "authors": "X. Gu and M. Krenn",
+      "title_text": "Interesting scientific idea generation using knowledge graphs and LLMs: Evaluations with 100 research group leaders",
+      "venue_text": "InarXiv preprint arXiv:2405.17044, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2405.17044",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "38",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "S. Guo, A. H. Shariatmadari, G. Xiong, and A. Zhang. Embracing foundation models for advancing scientific discovery. InProceedings of the IEEE International Conference on Big Data, pages 1746–1755, 2024. doi: 10.1109/bigdata62323.2024.10825618.",
+      "authors": "S. Guo, A. H. Shariatmadari, G. Xiong, and A. Zhang",
+      "title_text": "Embracing foundation models for advancing scientific discovery",
+      "venue_text": "InProceedings of the IEEE International Conference on Big Data, pages 1746–1755, 2024. doi: 10.1109/bigdata62323.2024.10825618.",
+      "year": 2024,
+      "doi": "10.1109/bigdata62323.2024.10825618",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "39",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "K. Gyarmati, F. Hennecart, and I. Z. Ruzsa. Sums and differences of finite sets. Functiones et Approximatio Commentarii Mathematici, 37(1):175–186, 2007.",
+      "authors": "K. Gyarmati, F. Hennecart, and I. Z. Ruzsa",
+      "title_text": "Sums and differences of finite sets",
+      "venue_text": "Functiones et Approximatio Commentarii Mathematici, 37(1):175–186, 2007.",
+      "year": 2007,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "40",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "J. K. Haugland. The minimum overlap problem revisited. arXiv preprint arXiv:1609.08000, 2016.",
+      "authors": "J. K. Haugland",
+      "title_text": "The minimum overlap problem revisited",
+      "venue_text": "arXiv preprint arXiv:1609.08000, 2016.",
+      "year": 2016,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "1609.08000",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "41",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "E. Hemberg, S. Moskal, and U.-M. O’Reilly. Evolving code with a large language model. Genetic Programming and Evolvable Machines, 25(2):21, 2024. doi: 10.1007/ s10710-024-09494-2.",
+      "authors": "E. Hemberg, S. Moskal, and U.-M",
+      "title_text": "O’Reilly",
+      "venue_text": "Evolving code with a large language model. Genetic Programming and Evolvable Machines, 25(2):21, 2024. doi: 10.1007/ s10710-024-09494-2.",
+      "year": 2024,
+      "doi": "10.1007/s10710-024-09494-2",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "42",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "J. E. Hopcroft and L. R. Kerr. On minimizing the number of multiplications necessary for matrix multiplication.SIAM J. Appl. Math., 20(1):30–36, Jan. 1971. ISSN 0036- 1399. doi: 10.1137/0120004.",
+      "authors": "J. E. Hopcroft and L. R. Kerr",
+      "title_text": "On minimizing the number of multiplications necessary for matrix multiplication",
+      "venue_text": "SIAM J. Appl. Math., 20(1):30–36, Jan. 1971. ISSN 0036- 1399. doi: 10.1137/0120004.",
+      "year": 1971,
+      "doi": "10.1137/0120004",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "43",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "K. Huang, Y. Qu, H. Cousins, W. A. Johnson, D. Yin, M. Shah, D. Zhou, R. Altman, M. Wang, and L. Cong. CRISPR-GPT: An LLM agent for automated design of gene- editing experiments. InarXiv preprint arXiv:2404.18021, 2024.",
+      "authors": "K. Huang, Y. Qu, H. Cousins, W. A. Johnson, D. Yin, M. Shah, D. Zhou, R. Altman, M. Wang, and L. Cong",
+      "title_text": "CRISPR-GPT: An LLM agent for automated design of gene- editing experiments",
+      "venue_text": "InarXiv preprint arXiv:2404.18021, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2404.18021",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "44",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, B. Qin, et al. A survey on hallucination in large language models: Principles, taxonomy, challenges, and open questions.ACM Transactions on Information Systems, 43(2): 1–55, 2025.",
+      "authors": "L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, B. Qin, et al",
+      "title_text": "A survey on hallucination in large language models: Principles, taxonomy, challenges, and open questions",
+      "venue_text": "ACM Transactions on Information Systems, 43(2): 1–55, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "45",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "S. Jia, C. Zhang, and V. Fung. LLMatDesign: Autonomous materials discovery with large language models. InarXiv preprint arXiv:2406.13163, 2024.",
+      "authors": "S. Jia, C. Zhang, and V. Fung",
+      "title_text": "LLMatDesign: Autonomous materials discovery with large language models",
+      "venue_text": "InarXiv preprint arXiv:2406.13163, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2406.13163",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "46",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "J. Jumper, R. Evans, A. Pritzel, T. Green, M. Figurnov, O. Ronneberger, K. Tunyasuvu- nakool, R. Bates, A. Žídek, A. Potapenko, A. Bridgland, C. Meyer, S. A. A. Kohl, A. J. Ballard, A. Cowie, B. Romera-Paredes, S. Nikolov, R. Jain, J. Adler, T. Back, S. Petersen, D. Reiman, E. Clancy, M. Zielinski, M. Steinegger, M. Pacholska, T. Berghammer, S. Bo- denstein, D. Silver, O. Vinyals, A. W. Senior, K. Kavukcuoglu, P. Kohli, and D. Hassabis. Highly accurate protein structure prediction with AlphaFold.Nature, 596(7873): 583–589, 2021. doi: 10.1038/s41586-021-03819-2.",
+      "authors": "J. Jumper, R. Evans, A. Pritzel, T. Green, M. Figurnov, O. Ronneberger, K. Tunyasuvu- nakool, R. Bates, A. Žídek, A. Potapenko, A. Bridgland, C. Meyer, S. A. A. Kohl, A. J. Ballard, A. Cowie, B. Romera-Paredes, S. Nikolov, R. Jain, J. Adler, T. Back, S. Petersen, D. Reiman, E. Clancy, M. Zielinski, M. Steinegger, M. Pacholska, T. Berghammer, S. Bo- denstein, D. Silver, O. Vinyals, A. W. Senior, K. Kavukcuoglu, P. Kohli, and D. Hassabis",
+      "title_text": "Highly accurate protein structure prediction with AlphaFold",
+      "venue_text": "Nature, 596(7873): 583–589, 2021. doi: 10.1038/s41586-021-03819-2.",
+      "year": 2021,
+      "doi": "10.1038/s41586-021-03819-2",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "47",
+      "source_page": 26,
+      "source_section": "References",
+      "raw_citation": "M. Kauers and J. Moosbauer. Flip graphs for matrix multiplication. InProceedings of the 2023 International Symposium on Symbolic and Algebraic Computation, pages 381–388, 2023.",
+      "authors": "M. Kauers and J. Moosbauer",
+      "title_text": "Flip graphs for matrix multiplication",
+      "venue_text": "InProceedings of the 2023 International Symposium on Symbolic and Algebraic Computation, pages 381–388, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "48",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "M. Kauers and J. Moosbauer. Some new non-commutative matrix multiplication algorithms of size(𝑛, 𝑚, 6). ACM Commun. Comput. Algebra, 58(1):1–11, Jan. 2025. ISSN 1932-2232. doi: 10.1145/3712020.3712021.",
+      "authors": "M. Kauers and J. Moosbauer",
+      "title_text": "Some new non-commutative matrix multiplication algorithms of size(𝑛, 𝑚, 6)",
+      "venue_text": "ACM Commun. Comput. Algebra, 58(1):1–11, Jan. 2025. ISSN 1932-2232. doi: 10.1145/3712020.3712021.",
+      "year": 1932,
+      "doi": "10.1145/3712020.3712021",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "49",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "M. Kauers and I. Wood. Consequences of the Moosbauer-Poole algorithms.arXiv preprint arXiv:2505.05896, 2025.",
+      "authors": "M. Kauers and I. Wood",
+      "title_text": "Consequences of the Moosbauer-Poole algorithms.arXiv preprint arXiv:2505.05896, 2025.",
+      "venue_text": null,
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2505.05896",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "50",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "D. P. Kingma and J. Ba. Adam: A method for stochastic optimization. InInternational Conference on Learning Representations (ICLR), 2015.",
+      "authors": "D. P. Kingma and J. Ba. Adam: A method for stochastic optimization",
+      "title_text": "InInternational Conference on Learning Representations (ICLR), 2015.",
+      "venue_text": null,
+      "year": 2015,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "51",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "J. R. Koza. Genetic programming as a means for programming computers by natural selection. Statistics and Computing, 4(2):87–112, 1994. doi: 10.1007/BF00175355.",
+      "authors": "J. R. Koza",
+      "title_text": "Genetic programming as a means for programming computers by natural selection",
+      "venue_text": "Statistics and Computing, 4(2):87–112, 1994. doi: 10.1007/BF00175355.",
+      "year": 1994,
+      "doi": "10.1007/BF00175355",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "52",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "J. D. Laderman. A noncommutative algorithm for multiplying3 × 3 matrices using 23 multiplications.Bulletin of the American Mathematical Society, 82(1):126 – 128, 1976.",
+      "authors": "J. D. Laderman",
+      "title_text": "A noncommutative algorithm for multiplying3 × 3 matrices using 23 multiplications",
+      "venue_text": "Bulletin of the American Mathematical Society, 82(1):126 – 128, 1976.",
+      "year": 1976,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "53",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "R. Lam, A. Sanchez-Gonzalez, M. Willson, P. Wirnsberger, M. Fortunato, F. Alet, S. Ravuri, T. Ewalds, Z. Eaton-Rosen, W. Hu, A. Merose, S. Hoyer, G. Holland, O. Vinyals, J. Stott, A. Pritzel, S. Mohamed, and P. Battaglia. Learning skillful medium-range global weather forecasting.Science, 382(6677):1416–1421, 2023. doi: 10.1126/science.adi2336.",
+      "authors": "R. Lam, A. Sanchez-Gonzalez, M. Willson, P. Wirnsberger, M. Fortunato, F. Alet, S. Ravuri, T. Ewalds, Z. Eaton-Rosen, W. Hu, A. Merose, S. Hoyer, G. Holland, O. Vinyals, J. Stott, A. Pritzel, S. Mohamed, and P. Battaglia",
+      "title_text": "Learning skillful medium-range global weather forecasting",
+      "venue_text": "Science, 382(6677):1416–1421, 2023. doi: 10.1126/science.adi2336.",
+      "year": 2023,
+      "doi": "10.1126/science.adi2336",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "54",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "W. B. Langdon and R. Poli.Foundations of genetic programming. Springer Science & Business Media, 2013.",
+      "authors": "W. B. Langdon and R. Poli",
+      "title_text": "Foundations of genetic programming",
+      "venue_text": "Springer Science & Business Media, 2013.",
+      "year": 2013,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "55",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "R. Lange, Y. Tian, and Y. Tang. Large language models as evolution strategies. In ProceedingsoftheGeneticandEvolutionaryComputationConferenceCompanion ,GECCO ’24 Companion, pages 579–582. Association for Computing Machinery, 2024. doi: 10.1145/3638530.3654238.",
+      "authors": "R. Lange, Y. Tian, and Y. Tang",
+      "title_text": "Large language models as evolution strategies",
+      "venue_text": "In ProceedingsoftheGeneticandEvolutionaryComputationConferenceCompanion ,GECCO ’24 Companion, pages 579–582. Association for Computing Machinery, 2024. doi: 10.1145/3638530.3654238.",
+      "year": 2024,
+      "doi": "10.1145/3638530.3654238",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "56",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "R. T. Lange, A. Prasad, Q. Sun, M. Faldor, Y. Tang, and D. Ha. The AI CUDA engineer: Agentic CUDA kernel discovery, optimization and composition. Technical report, Sakana AI, 02 2025.",
+      "authors": "R. T. Lange, A. Prasad, Q. Sun, M. Faldor, Y. Tang, and D. Ha. The AI CUDA engineer: Agentic CUDA kernel discovery, optimization and composition",
+      "title_text": "Technical report, Sakana AI, 02 2025.",
+      "venue_text": null,
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "57",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "J. Lehman, J. Gordon, S. Jain, K. Ndousse, C. Yeh, and K. O. Stanley. Evolution through large models. InHandbook of evolutionary machine learning, pages 331–366. Springer, 2023.",
+      "authors": "J. Lehman, J. Gordon, S. Jain, K. Ndousse, C. Yeh, and K. O. Stanley",
+      "title_text": "Evolution through large models",
+      "venue_text": "InHandbook of evolutionary machine learning, pages 331–366. Springer, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "58",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "J. Lehman, J. Gordon, S. Jain, K. Ndousse, C. Yeh, and K. O. Stanley.Evolution Through Large Models, pages 331–366. Springer Nature Singapore, 2024. doi: 10.1007/978-981-99-3814-8\\_11.",
+      "authors": "J. Lehman, J. Gordon, S. Jain, K. Ndousse, C. Yeh, and K. O. Stanley",
+      "title_text": "Evolution Through Large Models, pages 331–366",
+      "venue_text": "Springer Nature Singapore, 2024. doi: 10.1007/978-981-99-3814-8\\_11.",
+      "year": 2024,
+      "doi": "10.1007/978-981-99-3814-8\\_11",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "59",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "P.-H. Li, Y.-Y. Sun, H.-F. Juan, C.-Y. Chen, H.-K. Tsai, and J.-H. Huang. A large language model framework for literature-based disease–gene association prediction.Briefings in Bioinformatics, 26(1):bbaf070, 02 2025. ISSN 1477-4054. doi: 10.1093/bib/bbaf070.",
+      "authors": "P.-H",
+      "title_text": "Li, Y.-Y",
+      "venue_text": "Sun, H.-F. Juan, C.-Y. Chen, H.-K. Tsai, and J.-H. Huang. A large language model framework for literature-based disease–gene association prediction.Briefings in Bioinformatics, 26(1):bbaf070, 02 2025. ISSN 1477-4054. doi: 10.1093/bib/bbaf070.",
+      "year": 2025,
+      "doi": "10.1093/bib/bbaf070",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "60",
+      "source_page": 27,
+      "source_section": "References",
+      "raw_citation": "Y. Li, D. Choi, J. Chung, N. Kushman, J. Schrittwieser, R. Leblond, T. Eccles, J. Keeling, F. Gimeno, A. D. Lago, T. Hubert, P. Choy, C. de Masson d’Autume, I. Babuschkin, X. Chen, P.-S. Huang, J. Welbl, S. Gowal, A. Cherepanov, J. Molloy, D. J. Mankowitz, E. S. Robson, P. Kohli, N. de Freitas, K. Kavukcuoglu, and O. Vinyals. Competition- level code generation with AlphaCode.Science, 378(6624):1092–1097, 2022. doi: 10.1126/science.abq1158.",
+      "authors": "Y. Li, D. Choi, J. Chung, N. Kushman, J. Schrittwieser, R. Leblond, T. Eccles, J. Keeling, F. Gimeno, A. D. Lago, T. Hubert, P. Choy, C. de Masson d’Autume, I. Babuschkin, X. Chen, P.-S",
+      "title_text": "Huang, J",
+      "venue_text": "Welbl, S. Gowal, A. Cherepanov, J. Molloy, D. J. Mankowitz, E. S. Robson, P. Kohli, N. de Freitas, K. Kavukcuoglu, and O. Vinyals. Competition- level code generation with AlphaCode.Science, 378(6624):1092–1097, 2022. doi: 10.1126/science.abq1158.",
+      "year": 2022,
+      "doi": "10.1126/science.abq1158",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "61",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "H. Lin, M. Maas, M. Roquemore, A. Hasanzadeh, F. Lewis, Y. Simonson, T.-W. Yang, A. Yazdanbakhsh, D. Altinbüken, F. Papa, et al. ECO: An LLM-driven efficient code optimizer for warehouse scale computers.arXiv preprint arXiv:2503.15669, 2025.",
+      "authors": "H. Lin, M. Maas, M. Roquemore, A. Hasanzadeh, F. Lewis, Y. Simonson, T.-W",
+      "title_text": "Yang, A",
+      "venue_text": "Yazdanbakhsh, D. Altinbüken, F. Papa, et al. ECO: An LLM-driven efficient code optimizer for warehouse scale computers.arXiv preprint arXiv:2503.15669, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.15669",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "62",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "Z. Lin, H. Akin, R. Rao, B. Hie, Z. Zhu, W. Lu, N. Smetanin, R. Verkuil, O. Kabeli, Y. Shmueli, A. dos Santos Costa, M. Fazel-Zarandi, T. Sercu, S. Candido, and A. Rives. Evolutionary-scale prediction of atomic-level protein structure with a language model. Science, 379(6637):1123–1130, 2023. doi: 10.1126/science.ade2574.",
+      "authors": "Z. Lin, H. Akin, R. Rao, B. Hie, Z. Zhu, W. Lu, N. Smetanin, R. Verkuil, O. Kabeli, Y. Shmueli, A. dos Santos Costa, M. Fazel-Zarandi, T. Sercu, S. Candido, and A. Rives",
+      "title_text": "Evolutionary-scale prediction of atomic-level protein structure with a language model",
+      "venue_text": "Science, 379(6637):1123–1130, 2023. doi: 10.1126/science.ade2574.",
+      "year": 2023,
+      "doi": "10.1126/science.ade2574",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "63",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "F. Liu, X. Tong, M. Yuan, X. Lin, F. Luo, Z. Wang, Z. Lu, and Q. Zhang. Evolution of heuristics: Towards efficient automatic algorithm design using large language model. arXiv preprint arXiv:2401.02051, 2024.",
+      "authors": "F. Liu, X. Tong, M. Yuan, X. Lin, F. Luo, Z. Wang, Z. Lu, and Q. Zhang",
+      "title_text": "Evolution of heuristics: Towards efficient automatic algorithm design using large language model",
+      "venue_text": "arXiv preprint arXiv:2401.02051, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2401.02051",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "64",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "F. Luo, J. Zhang, Q. Wang, and C. Yang. Leveraging prompt engineering in large language models for accelerating chemical research.ACS Central Science, 2025. doi: 10.1021/acscentsci.4c01935.",
+      "authors": "F. Luo, J. Zhang, Q. Wang, and C. Yang",
+      "title_text": "Leveraging prompt engineering in large language models for accelerating chemical research",
+      "venue_text": "ACS Central Science, 2025. doi: 10.1021/acscentsci.4c01935.",
+      "year": 2025,
+      "doi": "10.1021/acscentsci.4c01935",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "65",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "Z. Luo, Z. Yang, Z. Xu, W. Yang, and X. Du. LLM4SR: A survey on large language models for scientific research. InarXiv preprint arXiv:2501.04306, 2025.",
+      "authors": "Z. Luo, Z. Yang, Z. Xu, W. Yang, and X. Du. LLM4SR: A survey on large language models for scientific research",
+      "title_text": "InarXiv preprint arXiv:2501.04306, 2025.",
+      "venue_text": null,
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2501.04306",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "66",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "H. Ma, A. Narayanaswamy, P. Riley, and L. Li. Evolving symbolic density functionals. Science Advances, 8(36):eabq0279, 2022. doi: 10.1126/sciadv.abq0279.",
+      "authors": "H. Ma, A. Narayanaswamy, P. Riley, and L. Li. Evolving symbolic density functionals",
+      "title_text": "Science Advances, 8(36):eabq0279, 2022",
+      "venue_text": "doi: 10.1126/sciadv.abq0279.",
+      "year": 2022,
+      "doi": "10.1126/sciadv.abq0279",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "67",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "A. Madani, B. Krause, E. R. Greene, S. Subramanian, B. P. Mohr, J. M. Holton, J. L. Olmos, C. Xiong, Z. Z. Sun, R. Socher, J. S. Fraser, and N. Naik. Large language models generatefunctionalproteinsequencesacrossdiversefamilies. NatureBiotechnology, 41 (8):1099–1106, August 2023. ISSN 1087-0156. doi: 10.1038/s41587-022-01618-2.",
+      "authors": "A. Madani, B. Krause, E. R. Greene, S. Subramanian, B. P. Mohr, J. M. Holton, J. L. Olmos, C. Xiong, Z. Z. Sun, R. Socher, J. S. Fraser, and N. Naik",
+      "title_text": "Large language models generatefunctionalproteinsequencesacrossdiversefamilies",
+      "venue_text": "NatureBiotechnology, 41 (8):1099–1106, August 2023. ISSN 1087-0156. doi: 10.1038/s41587-022-01618-2.",
+      "year": 2023,
+      "doi": "10.1038/s41587-022-01618-2",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "68",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "D. J. Mankowitz, A. Michi, A. Zhernov, M. Gelmi, M. Selvi, C. Paduraru, E. Leurent, S. Iqbal, J.-B. Lespiau, A. Ahern, T. Köppe, K. Millikin, S. Gaffney, S. Elster, J. Broshear, C.Gamble, K.Milan, R.Tung, M.Hwang, T.Cemgil, M.Barekatain, Y.Li, A.Mandhane, T.Hubert, J.Schrittwieser, D.Hassabis, P.Kohli, M.Riedmiller, O.Vinyals, andD.Silver. Faster sorting algorithms discovered using deep reinforcement learning.Nature, 618 (7964):257–263, 2023. doi: 10.1038/s41586-023-06004-9.",
+      "authors": "D. J. Mankowitz, A. Michi, A. Zhernov, M. Gelmi, M. Selvi, C. Paduraru, E. Leurent, S. Iqbal, J.-B",
+      "title_text": "Lespiau, A",
+      "venue_text": "Ahern, T. Köppe, K. Millikin, S. Gaffney, S. Elster, J. Broshear, C.Gamble, K.Milan, R.Tung, M.Hwang, T.Cemgil, M.Barekatain, Y.Li, A.Mandhane, T.Hubert, J.Schrittwieser, D.Hassabis, P.Kohli, M.Riedmiller, O.Vinyals, andD.Silver. Faster sorting algorithms discovered using deep reinforcement learning.Nature, 618 (7964):257–263, 2023. doi: 10.1038/s41586-023-06004-9.",
+      "year": 2023,
+      "doi": "10.1038/s41586-023-06004-9",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "69",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "H. Massalin. Superoptimizer - A look at the smallest program. In R. H. Katz and M.Freeman, editors,ProceedingsoftheSecondInternationalConferenceonArchitectural Support for Programming Languages and Operating Systems (ASPLOS II), Palo Alto, California, USA, October 5-8, 1987, pages 122–126. ACM Press, 1987. doi: 10.1145/ 36206.36194.",
+      "authors": "H. Massalin",
+      "title_text": "Superoptimizer - A look at the smallest program",
+      "venue_text": "In R. H. Katz and M.Freeman, editors,ProceedingsoftheSecondInternationalConferenceonArchitectural Support for Programming Languages and Operating Systems (ASPLOS II), Palo Alto, California, USA, October 5-8, 1987, pages 122–126. ACM Press, 1987. doi: 10.1145/ 36206.36194.",
+      "year": 1987,
+      "doi": "10.1145/36206.36194",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "70",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "M. Matolcsi and C. Vinuesa. Improved bounds on the supremum of autoconvolutions. Journal of mathematical analysis and applications, 372(2):439–447, 2010.",
+      "authors": "M. Matolcsi and C. Vinuesa",
+      "title_text": "Improved bounds on the supremum of autoconvolutions",
+      "venue_text": "Journal of mathematical analysis and applications, 372(2):439–447, 2010.",
+      "year": 2010,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "71",
+      "source_page": 28,
+      "source_section": "References",
+      "raw_citation": "S. Miret and N. M. A. Krishnan. Are LLMs ready for real-world materials discovery? In arXiv preprint arXiv:2402.05200, 2024.",
+      "authors": "S. Miret and N. M. A. Krishnan",
+      "title_text": "Are LLMs ready for real-world materials discovery? In arXiv preprint arXiv:2402.05200, 2024.",
+      "venue_text": null,
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2402.05200",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "72",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "J. Moosbauer and M. Poole. Flip graphs with symmetry and new matrix multiplication schemes. arXiv preprint arXiv:2502.04514, 2025.",
+      "authors": "J. Moosbauer and M. Poole",
+      "title_text": "Flip graphs with symmetry and new matrix multiplication schemes",
+      "venue_text": "arXiv preprint arXiv:2502.04514, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2502.04514",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "73",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "C. Morris, M. Jurado, and J. Zutty. Llm guided evolution-the automation of mod- els advancing models. InProceedings of the Genetic and Evolutionary Computation Conference, pages 377–384, 2024.",
+      "authors": "C. Morris, M. Jurado, and J. Zutty",
+      "title_text": "Llm guided evolution-the automation of mod- els advancing models",
+      "venue_text": "InProceedings of the Genetic and Evolutionary Computation Conference, pages 377–384, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "74",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "J.-B. Mouret and J. Clune. Illuminating search spaces by mapping elites.arXiv preprint arXiv:1504.04909, 2015.",
+      "authors": "J.-B",
+      "title_text": "Mouret and J",
+      "venue_text": "Clune. Illuminating search spaces by mapping elites.arXiv preprint arXiv:1504.04909, 2015.",
+      "year": 2015,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "1504.04909",
+      "local_cache": {
+        "status": "present",
+        "manifest_row_id": "1504.04909"
+      },
+      "citation_use_category": "archive_algorithm_context"
+    },
+    {
+      "reference_id": "75",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "V. Naumov, D. Zagirova, S. Lin, Y. Xie, W. Gou, A. Urban, N. Tikhonova, K. Alawi, M. Durymanov, F. Galkin, S. Chen, D. Sidorenko, M. Korzinkin, M. Scheibye-Knudsen, A. Aspuru-Guzik, E. Izumchenko, D. Gennert, F. W. Pun, M. Zhang, P. Kamya, A. Aliper, F. Ren, and A. Zhavoronkov. DORA AI scientist: Multi-agent virtual research team for scientific exploration discovery and automated report generation. InbioRxiv preprint:10.1101/2025.03.06.641840. Cold Spring Harbor Laboratory, 2025. doi: 10.1101/2025.03.06.641840.",
+      "authors": "V. Naumov, D. Zagirova, S. Lin, Y. Xie, W. Gou, A. Urban, N. Tikhonova, K. Alawi, M. Durymanov, F. Galkin, S. Chen, D. Sidorenko, M. Korzinkin, M. Scheibye-Knudsen, A. Aspuru-Guzik, E. Izumchenko, D. Gennert, F. W. Pun, M. Zhang, P. Kamya, A. Aliper, F. Ren, and A. Zhavoronkov",
+      "title_text": "DORA AI scientist: Multi-agent virtual research team for scientific exploration discovery and automated report generation",
+      "venue_text": "InbioRxiv preprint:10.1101/2025.03.06.641840. Cold Spring Harbor Laboratory, 2025. doi: 10.1101/2025.03.06.641840.",
+      "year": 2025,
+      "doi": "10.1101/2025.03.06.641840",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "76",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "OpenAI. Introducing OpenAI o3 and o4-mini, 2025. URLhttps://openai.com/i ndex/introducing-o3-and-o4-mini/.",
+      "authors": "OpenAI",
+      "title_text": "Introducing OpenAI o3 and o4-mini, 2025",
+      "venue_text": "URLhttps://openai.com/i ndex/introducing-o3-and-o4-mini/.",
+      "year": 2025,
+      "doi": null,
+      "url": "https://openai.com/i",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "77",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "OpenXLA. XLA: composable transformations of Python+NumPy programs. URL https://github.com/openxla/xla.",
+      "authors": "OpenXLA",
+      "title_text": "XLA: composable transformations of Python+NumPy programs",
+      "venue_text": "URL https://github.com/openxla/xla.",
+      "year": null,
+      "doi": null,
+      "url": "https://github.com/openxla/xla",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "78",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "H. Pan, N. Mudur, W. Taranto, M. Tikhanovskaya, S. Venugopalan, Y. Bahri, M. P. Brenner, and E.-A. Kim. Quantum many-body physics calculations with large language models. Communications Physics, 8(1):49, 2025. doi: 10.1038/s42005-025-01956-y.",
+      "authors": "H. Pan, N. Mudur, W. Taranto, M. Tikhanovskaya, S. Venugopalan, Y. Bahri, M. P. Brenner, and E.-A",
+      "title_text": "Kim",
+      "venue_text": "Quantum many-body physics calculations with large language models. Communications Physics, 8(1):49, 2025. doi: 10.1038/s42005-025-01956-y.",
+      "year": 2025,
+      "doi": "10.1038/s42005-025-01956-y",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "79",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "D. Pantiukhin, B. Shapkin, I. Kuznetsov, A. A. Jost, and N. Koldunov. Accelerating Earth science discovery via multi-agent LLM systems. InarXiv preprint arXiv:2503.05854, 2025.",
+      "authors": "D. Pantiukhin, B. Shapkin, I. Kuznetsov, A. A. Jost, and N. Koldunov",
+      "title_text": "Accelerating Earth science discovery via multi-agent LLM systems",
+      "venue_text": "InarXiv preprint arXiv:2503.05854, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.05854",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "80",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "Z. Rasheed, M. Waseem, A. Ahmad, K.-K. Kemell, W. Xiaofeng, A. N. Duc, and P. Abra- hamsson. Can large language models serve as data analysts? a multi-agent assisted approach for qualitative data analysis.arXiv preprint arXiv:2402.01386, 2024.",
+      "authors": "Z. Rasheed, M. Waseem, A. Ahmad, K.-K",
+      "title_text": "Kemell, W",
+      "venue_text": "Xiaofeng, A. N. Duc, and P. Abra- hamsson. Can large language models serve as data analysts? a multi-agent assisted approach for qualitative data analysis.arXiv preprint arXiv:2402.01386, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2402.01386",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "81",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "S. Ren, P. Jian, Z. Ren, C. Leng, C. Xie, and J. Zhang. Towards scientific intelligence: A survey of LLM-based scientific agents. InarXiv preprint arXiv:2503.24047, 2025.",
+      "authors": "S. Ren, P. Jian, Z. Ren, C. Leng, C. Xie, and J. Zhang",
+      "title_text": "Towards scientific intelligence: A survey of LLM-based scientific agents",
+      "venue_text": "InarXiv preprint arXiv:2503.24047, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.24047",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "82",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "A. Rives, J. Meier, T. Sercu, S. Goyal, Z. Lin, J. Liu, D. Guo, M. Ott, C. L. Zitnick, J. Ma, and R. Fergus. Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences.Proceedings of the National Academy of Sciences, 118(15):e2016239118, 2021. doi: 10.1073/pnas.2016239118.",
+      "authors": "A. Rives, J. Meier, T. Sercu, S. Goyal, Z. Lin, J. Liu, D. Guo, M. Ott, C. L. Zitnick, J. Ma, and R. Fergus",
+      "title_text": "Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences",
+      "venue_text": "Proceedings of the National Academy of Sciences, 118(15):e2016239118, 2021. doi: 10.1073/pnas.2016239118.",
+      "year": 2021,
+      "doi": "10.1073/pnas.2016239118",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "83",
+      "source_page": 29,
+      "source_section": "References",
+      "raw_citation": "B. Romera-Paredes, M. Barekatain, A. Novikov, M. Balog, M. P. Kumar, E. Dupont, F. J. R. Ruiz, J. Ellenberg, P. Wang, O. Fawzi, P. Kohli, and A. Fawzi. Mathematical discoveries from program search with large language models.Nature, 625(7995): 468–475, 2023. doi: 10.1038/s41586-023-06924-6.",
+      "authors": "B. Romera-Paredes, M. Barekatain, A. Novikov, M. Balog, M. P. Kumar, E. Dupont, F. J. R. Ruiz, J. Ellenberg, P. Wang, O. Fawzi, P. Kohli, and A. Fawzi",
+      "title_text": "Mathematical discoveries from program search with large language models",
+      "venue_text": "Nature, 625(7995): 468–475, 2023. doi: 10.1038/s41586-023-06924-6.",
+      "year": 2023,
+      "doi": "10.1038/s41586-023-06924-6",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "main_text_mathematical_discovery_context"
+    },
+    {
+      "reference_id": "84",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "F. J. R. Ruiz, T. Laakkonen, J. Bausch, M. Balog, M. Barekatain, F. J. H. Heras, A. Novikov, N. Fitzpatrick, B. Romera-Paredes, J. van de Wetering, A. Fawzi, K. Me- ichanetzidis, and P. Kohli. Quantum circuit optimization with AlphaTensor.Nature Machine Intelligence, 7(3):374–385, 2025. doi: 10.1038/s42256-025-01001-1.",
+      "authors": "F. J. R. Ruiz, T. Laakkonen, J. Bausch, M. Balog, M. Barekatain, F. J. H. Heras, A. Novikov, N. Fitzpatrick, B. Romera-Paredes, J. van de Wetering, A. Fawzi, K. Me- ichanetzidis, and P. Kohli",
+      "title_text": "Quantum circuit optimization with AlphaTensor",
+      "venue_text": "Nature Machine Intelligence, 7(3):374–385, 2025. doi: 10.1038/s42256-025-01001-1.",
+      "year": 2025,
+      "doi": "10.1038/s42256-025-01001-1",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "alphatensor_funsearch_context"
+    },
+    {
+      "reference_id": "85",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "O. A. Sarumi and D. Heider. Large language models and their applications in bioinfor- matics. Computational and Structural Biotechnology Journal, 23:3498–3505, 2024. ISSN 2001-0370. doi: https://doi.org/10.1016/j.csbj.2024.09.031.",
+      "authors": "O. A. Sarumi and D. Heider",
+      "title_text": "Large language models and their applications in bioinfor- matics",
+      "venue_text": "Computational and Structural Biotechnology Journal, 23:3498–3505, 2024. ISSN 2001-0370. doi: https://doi.org/10.1016/j.csbj.2024.09.031.",
+      "year": 2024,
+      "doi": "https://doi.org/10.1016/j.csbj.2024.09.031",
+      "url": "https://doi.org/10.1016/j.csbj.2024.09.031",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "86",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "E. Schkufza, R. Sharma, and A. Aiken. Stochastic superoptimization. In V. Sarkar and R. Bodík, editors,Architectural Support for Programming Languages and Operating Systems, ASPLOS 2013, Houston, TX, USA, March 16-20, 2013, pages 305–316. ACM, 2013. doi: 10.1145/2451116.2451150.",
+      "authors": "E. Schkufza, R. Sharma, and A. Aiken",
+      "title_text": "Stochastic superoptimization",
+      "venue_text": "In V. Sarkar and R. Bodík, editors,Architectural Support for Programming Languages and Operating Systems, ASPLOS 2013, Houston, TX, USA, March 16-20, 2013, pages 305–316. ACM, 2013. doi: 10.1145/2451116.2451150.",
+      "year": 2013,
+      "doi": "10.1145/2451116.2451150",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "87",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "M. Schmidt and H. Lipson. Distilling free-form natural laws from experimental data. Science, 324(5923):81–85, 2009. doi: 10.1126/science.1165893.",
+      "authors": "M. Schmidt and H. Lipson",
+      "title_text": "Distilling free-form natural laws from experimental data",
+      "venue_text": "Science, 324(5923):81–85, 2009. doi: 10.1126/science.1165893.",
+      "year": 2009,
+      "doi": "10.1126/science.1165893",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "88",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "N. Shinn, F. Cassano, A. Gopinath, K. Narasimhan, and S. Yao. Reflexion: Language agents with verbal reinforcement learning.Advances in Neural Information Processing Systems, 36:8634–8652, 2023.",
+      "authors": "N. Shinn, F. Cassano, A. Gopinath, K. Narasimhan, and S. Yao",
+      "title_text": "Reflexion: Language agents with verbal reinforcement learning",
+      "venue_text": "Advances in Neural Information Processing Systems, 36:8634–8652, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "89",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "P. Shojaee, K. Meidani, S. Gupta, A. B. Farimani, and C. K. Reddy. LLM-SR: Scientific equation discovery via programming with large language models. InInternational Conference on Learning Representations, 2025.",
+      "authors": "P. Shojaee, K. Meidani, S. Gupta, A. B. Farimani, and C. K. Reddy",
+      "title_text": "LLM-SR: Scientific equation discovery via programming with large language models",
+      "venue_text": "InInternational Conference on Learning Representations, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "90",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "C. Si, D. Yang, and T. Hashimoto. Can LLMs generate novel research ideas? a large- scalehumanstudywith100+NLPresearchers. In InternationalConferenceonLearning Representations, 2025.",
+      "authors": "C. Si, D. Yang, and T. Hashimoto",
+      "title_text": "Can LLMs generate novel research ideas? a large- scalehumanstudywith100+NLPresearchers",
+      "venue_text": "In InternationalConferenceonLearning Representations, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "91",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "A. Smirnov. Several bilinear algorithms for matrix multiplication problems⟨3, 𝑃, 𝑄 ⟩. https://www.researchgate.net/publication/350897049_Several_Bilin ear_Algorithms_for_Matrix_Multiplication_Problems_3_P_Q, 04 2021.",
+      "authors": "A. Smirnov",
+      "title_text": "Several bilinear algorithms for matrix multiplication problems⟨3, 𝑃, 𝑄 ⟩",
+      "venue_text": "https://www.researchgate.net/publication/350897049_Several_Bilin ear_Algorithms_for_Matrix_Multiplication_Problems_3_P_Q, 04 2021.",
+      "year": 2021,
+      "doi": null,
+      "url": "https://www.researchgate.net/publication/350897049_Several_Bilin",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "92",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "A. Smirnov. Bilinear algorithm for matrix multiplication⟨4 × 4 × 9; 104⟩. an irreducibly irrational solution of the brent system?https://www.researchgate.net/pub lication/364167198_Bilinear_Algorithm_for_Matrix_Multiplication_ 4x4x9_104_An_irreducibly_irrational_solution_of_the_Brent_system, 10 2022.",
+      "authors": "A. Smirnov",
+      "title_text": "Bilinear algorithm for matrix multiplication⟨4 × 4 × 9; 104⟩",
+      "venue_text": "an irreducibly irrational solution of the brent system?https://www.researchgate.net/pub lication/364167198_Bilinear_Algorithm_for_Matrix_Multiplication_ 4x4x9_104_An_irreducibly_irrational_solution_of_the_Brent_system, 10 2022.",
+      "year": 2022,
+      "doi": null,
+      "url": "https://www.researchgate.net/pub",
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "93",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "A. V. Smirnov. The bilinear complexity and practical algorithms for matrix multipli- cation. Computational Mathematics and Mathematical Physics, 53(12):1781–1795, 2013.",
+      "authors": "A. V. Smirnov",
+      "title_text": "The bilinear complexity and practical algorithms for matrix multipli- cation",
+      "venue_text": "Computational Mathematics and Mathematical Physics, 53(12):1781–1795, 2013.",
+      "year": 2013,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "94",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "Z. Song, M. Ju, C. Ren, Q. Li, C. Li, Q. Zhou, and J. Wang. LLM-Feynman: Leveraging large language models for universal scientific formula and theory discovery. InarXiv preprint arXiv:2503.06512, 2025.",
+      "authors": "Z. Song, M. Ju, C. Ren, Q. Li, C. Li, Q. Zhou, and J. Wang",
+      "title_text": "LLM-Feynman: Leveraging large language models for universal scientific formula and theory discovery",
+      "venue_text": "InarXiv preprint arXiv:2503.06512, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2503.06512",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "95",
+      "source_page": 30,
+      "source_section": "References",
+      "raw_citation": "V. Strassen. Gaussian elimination is not optimal.Numerische mathematik, 13(4): 354–356, 1969.",
+      "authors": "V. Strassen",
+      "title_text": "Gaussian elimination is not optimal",
+      "venue_text": "Numerische mathematik, 13(4): 354–356, 1969.",
+      "year": 1969,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "matrix_multiplication_context"
+    },
+    {
+      "reference_id": "96",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "A. Surina, A. Mansouri, L. Quaedvlieg, A. Seddas, M. Viazovska, E. Abbe, and C. Gul- cehre. Algorithm discovery with LLMs: Evolutionary search meets reinforcement learning. InarXiv preprint arXiv:2504.05108, 2025.",
+      "authors": "A. Surina, A. Mansouri, L. Quaedvlieg, A. Seddas, M. Viazovska, E. Abbe, and C. Gul- cehre",
+      "title_text": "Algorithm discovery with LLMs: Evolutionary search meets reinforcement learning",
+      "venue_text": "InarXiv preprint arXiv:2504.05108, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2504.05108",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "97",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "R. Tanese. Distributed genetic algorithms for function optimization. University of Michigan, 1989.",
+      "authors": "R. Tanese",
+      "title_text": "Distributed genetic algorithms for function optimization",
+      "venue_text": "University of Michigan, 1989.",
+      "year": 1989,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "98",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "A. Thakur, G. Tsoukalas, Y. Wen, J. Xin, and S. Chaudhuri. An in-context learning agent for formal theorem-proving. InConference on Language Models, 2024.",
+      "authors": "A. Thakur, G. Tsoukalas, Y. Wen, J. Xin, and S. Chaudhuri",
+      "title_text": "An in-context learning agent for formal theorem-proving",
+      "venue_text": "InConference on Language Models, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "99",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "T. H. Trinh, Y. Wu, Q. V. Le, H. He, and T. Luong. Solving olympiad geometry without human demonstrations.Nature, 625(7995):476–482, 2024.",
+      "authors": "T. H. Trinh, Y. Wu, Q. V. Le, H. He, and T. Luong",
+      "title_text": "Solving olympiad geometry without human demonstrations",
+      "venue_text": "Nature, 625(7995):476–482, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "main_text_mathematical_discovery_context"
+    },
+    {
+      "reference_id": "100",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, L. Kaiser, and I. Polosukhin. Attention is all you need. InAdvances in Neural Information Processing Systems, 2017.",
+      "authors": "A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, L. Kaiser, and I. Polosukhin",
+      "title_text": "Attention is all you need",
+      "venue_text": "InAdvances in Neural Information Processing Systems, 2017.",
+      "year": 2017,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "101",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "P. Veličković, A. Vitvitskyi, L. Markeeva, B. Ibarz, L. Buesing, M. Balog, and A. Novikov. Amplifying human performance in combinatorial competitive programming. 2024.",
+      "authors": "P. Veličković, A. Vitvitskyi, L. Markeeva, B. Ibarz, L. Buesing, M. Balog, and A. Novikov",
+      "title_text": "Amplifying human performance in combinatorial competitive programming",
+      "venue_text": "2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "102",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "A. Verma, L. Pedrosa, M. Korupolu, D. Oppenheimer, E. Tune, and J. Wilkes. Large- scale cluster management at Google with Borg. InProceedings of the Tenth European Conference on Computer Systems, EuroSys ’15, New York, NY, USA, 2015. Association for Computing Machinery. ISBN 9781450332385. doi: 10.1145/2741948.2741964.",
+      "authors": "A. Verma, L. Pedrosa, M. Korupolu, D. Oppenheimer, E. Tune, and J. Wilkes",
+      "title_text": "Large- scale cluster management at Google with Borg",
+      "venue_text": "InProceedings of the Tenth European Conference on Computer Systems, EuroSys ’15, New York, NY, USA, 2015. Association for Computing Machinery. ISBN 9781450332385. doi: 10.1145/2741948.2741964.",
+      "year": 2015,
+      "doi": "10.1145/2741948.2741964",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "103",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "S. Verma, A. Goyal, A. Mathur, A. Anand, and S. Ranu. GRAIL: Graph edit distance and node alignment using llm-generated code. InInternational Conference on Machine Learning, 2025.",
+      "authors": "S. Verma, A. Goyal, A. Mathur, A. Anand, and S. Ranu",
+      "title_text": "GRAIL: Graph edit distance and node alignment using llm-generated code",
+      "venue_text": "InInternational Conference on Machine Learning, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "104",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "C. Vinuesa del Rio.Generalized Sidon sets. PhD thesis, Universidad Autónoma de Madrid, 2010.",
+      "authors": "C. Vinuesa del Rio",
+      "title_text": "Generalized Sidon sets",
+      "venue_text": "PhD thesis, Universidad Autónoma de Madrid, 2010.",
+      "year": 2010,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "105",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "H. Wang, M. Skreta, C. T. Ser, W. Gao, L. Kong, F. Strieth-Kalthoff, C. Duan, Y. Zhuang, Y. Yu, Y. Zhu, Y. Du, A. Aspuru-Guzik, K. Neklyudov, and C. Zhang. Efficient evo- lutionary search over chemical space with large language models. InInternational Conference on Learning Representations, 2025.",
+      "authors": "H. Wang, M. Skreta, C. T. Ser, W. Gao, L. Kong, F. Strieth-Kalthoff, C. Duan, Y. Zhuang, Y. Yu, Y. Zhu, Y. Du, A. Aspuru-Guzik, K. Neklyudov, and C. Zhang",
+      "title_text": "Efficient evo- lutionary search over chemical space with large language models",
+      "venue_text": "InInternational Conference on Learning Representations, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "106",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "Q. Wang, D. Downey, H. Ji, and T. Hope. SciMON: Scientific inspiration machines optimized for novelty. InProceedings of the 62nd Annual Meeting of the Association for ComputationalLinguistics(Volume1: LongPapers) ,pages279–299,Bangkok,Thailand, 2024. Association for Computational Linguistics. doi: 10.18653/v1/2024.acl-long.18.",
+      "authors": "Q. Wang, D. Downey, H. Ji, and T. Hope",
+      "title_text": "SciMON: Scientific inspiration machines optimized for novelty",
+      "venue_text": "InProceedings of the 62nd Annual Meeting of the Association for ComputationalLinguistics(Volume1: LongPapers) ,pages279–299,Bangkok,Thailand, 2024. Association for Computational Linguistics. doi: 10.18653/v1/2024.acl-long.18.",
+      "year": 2024,
+      "doi": "10.18653/v1/2024.acl-long.18",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "107",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "E. P. White. A new bound for Erdős’ minimum overlap problem.Acta Arithmetica, 208:235–255, 2023.",
+      "authors": "E. P. White",
+      "title_text": "A new bound for Erdős’ minimum overlap problem",
+      "venue_text": "Acta Arithmetica, 208:235–255, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "appendix_b_constructive_math_context"
+    },
+    {
+      "reference_id": "108",
+      "source_page": 31,
+      "source_section": "References",
+      "raw_citation": "Q. Wu, G. Bansal, J. Zhang, Y. Wu, B. Li, E. Zhu, L. Jiang, X. Zhang, S. Zhang, J. Liu, A. H. Awadallah, R. W. White, D. Burger, and C. Wang. AutoGen: Enabling next-gen LLM applications via multi-agent conversation. InarXiv preprint arXiv:2308.08155, 2023.",
+      "authors": "Q. Wu, G. Bansal, J. Zhang, Y. Wu, B. Li, E. Zhu, L. Jiang, X. Zhang, S. Zhang, J. Liu, A. H. Awadallah, R. W. White, D. Burger, and C. Wang",
+      "title_text": "AutoGen: Enabling next-gen LLM applications via multi-agent conversation",
+      "venue_text": "InarXiv preprint arXiv:2308.08155, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2308.08155",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "109",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "Y. Xia, P. Jin, S. Xie, L. He, C. Cao, R. Luo, G. Liu, Y. Wang, Z. Liu, Y.-J. Chen, Z. Guo, Y. Bai, P. Deng, Y. Min, Z. Lu, H. Hao, H. Yang, J. Li, C. Liu, J. Zhang, J. Zhu, R. Bi, K. Wu, W. Zhang, K. Gao, Q. Pei, Q. Wang, X. Liu, Y. Li, H. Zhu, Y. Lu, M. Ma, Z. Wang, T. Xie, K. Maziarz, M. Segler, Z. Yang, Z. Chen, Y. Shi, S. Zheng, L. Wu, C. Hu, P. Dai, T.-Y. Liu, H. Liu, and T. Qin. Nature language model: Deciphering the language of nature for scientific discovery. InarXiv preprint arXiv:2502.07527v2, 2025.",
+      "authors": "Y. Xia, P. Jin, S. Xie, L. He, C. Cao, R. Luo, G. Liu, Y. Wang, Z. Liu, Y.-J",
+      "title_text": "Chen, Z. Guo, Y. Bai, P. Deng, Y. Min, Z. Lu, H. Hao, H. Yang, J. Li, C. Liu, J. Zhang, J. Zhu, R. Bi, K. Wu, W. Zhang, K. Gao, Q. Pei, Q. Wang, X. Liu, Y. Li, H. Zhu, Y. Lu, M. Ma, Z. Wang, T. Xie, K. Maziarz, M. Segler, Z. Yang, Z. Chen, Y. Shi, S. Zheng, L. Wu, C. Hu, P. Dai, T.-Y. Liu, H. Liu, and T. Qin. Nature language model: Deciphering the language of nature for scientific discovery",
+      "venue_text": "InarXiv preprint arXiv:2502.07527v2, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2502.07527",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "110",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "K. Yang, A. Swope, A. Gu, R. Chalamala, P. Song, S. Yu, S. Godil, R. J. Prenger, and A. Anandkumar. Leandojo: Theorem proving with retrieval-augmented language models. Advances in Neural Information Processing Systems, 36:21573–21612, 2023.",
+      "authors": "K. Yang, A. Swope, A. Gu, R. Chalamala, P. Song, S. Yu, S. Godil, R. J. Prenger, and A. Anandkumar",
+      "title_text": "Leandojo: Theorem proving with retrieval-augmented language models",
+      "venue_text": "Advances in Neural Information Processing Systems, 36:21573–21612, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "111",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "K. Yang, G. Poesia, J. He, W. Li, K. Lauter, S. Chaudhuri, and D. Song. Formal mathematical reasoning: A new frontier in AI.arXiv preprint arXiv:2412.16075, 2024.",
+      "authors": "K. Yang, G. Poesia, J. He, W. Li, K. Lauter, S. Chaudhuri, and D. Song",
+      "title_text": "Formal mathematical reasoning: A new frontier in AI.arXiv preprint arXiv:2412.16075, 2024.",
+      "venue_text": null,
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2412.16075",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "112",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "Z. Yang, X. Du, J. Li, J. Zheng, S. Poria, and E. Cambria. Large language models for automated open-domain scientific hypotheses discovery. InFindings of the Associa- tion for Computational Linguistics: ACL 2024, pages 13545–13565. Association for Computational Linguistics, 2024. doi: 10.18653/v1/2024.findings-acl.804.",
+      "authors": "Z. Yang, X. Du, J. Li, J. Zheng, S. Poria, and E. Cambria",
+      "title_text": "Large language models for automated open-domain scientific hypotheses discovery",
+      "venue_text": "InFindings of the Associa- tion for Computational Linguistics: ACL 2024, pages 13545–13565. Association for Computational Linguistics, 2024. doi: 10.18653/v1/2024.findings-acl.804.",
+      "year": 2024,
+      "doi": "10.18653/v1/2024.findings-acl.804",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "113",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "Z. Yang, W. Liu, B. Gao, T. Xie, Y. Li, W. Ouyang, S. Poria, E. Cambria, and D. Zhou. MOOSE-Chem: Large language models for rediscovering unseen chemistry scientific hypotheses. InInternational Conference on Learning Representations, 2025.",
+      "authors": "Z. Yang, W. Liu, B. Gao, T. Xie, Y. Li, W. Ouyang, S. Poria, E. Cambria, and D. Zhou",
+      "title_text": "MOOSE-Chem: Large language models for rediscovering unseen chemistry scientific hypotheses",
+      "venue_text": "InInternational Conference on Learning Representations, 2025.",
+      "year": 2025,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "114",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "S.Yao, J.Zhao, D.Yu, N.Du, I.Shafran, K.Narasimhan, andY.Cao. React: Synergizing reasoning and acting in language models. InInternational Conference on Learning Representations (ICLR), 2023.",
+      "authors": "S.Yao, J.Zhao, D.Yu, N.Du, I.Shafran, K.Narasimhan, andY",
+      "title_text": "Cao. React: Synergizing reasoning and acting in language models",
+      "venue_text": "InInternational Conference on Learning Representations (ICLR), 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "115",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "S. Yao, F. Liu, X. Lin, Z. Lu, Z. Wang, and Q. Zhang. Multi-objective evolution of heuristic using large language model. InAAAI Conference on Artificial Intelligence, volume 39, pages 27144–27152, 2025. doi: 10.1609/aaai.v39i25.34922.",
+      "authors": "S. Yao, F. Liu, X. Lin, Z. Lu, Z. Wang, and Q. Zhang",
+      "title_text": "Multi-objective evolution of heuristic using large language model",
+      "venue_text": "InAAAI Conference on Artificial Intelligence, volume 39, pages 27144–27152, 2025. doi: 10.1609/aaai.v39i25.34922.",
+      "year": 2025,
+      "doi": "10.1609/aaai.v39i25.34922",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "116",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "G. Ye, X. Cai, H. Lai, X. Wang, J. Huang, L. Wang, W. Liu, and X. Zeng. DrugAssist: A large language model for molecule optimization. InarXiv preprint arXiv:2401.10334, 2023.",
+      "authors": "G. Ye, X. Cai, H. Lai, X. Wang, J. Huang, L. Wang, W. Liu, and X. Zeng",
+      "title_text": "DrugAssist: A large language model for molecule optimization",
+      "venue_text": "InarXiv preprint arXiv:2401.10334, 2023.",
+      "year": 2023,
+      "doi": null,
+      "url": null,
+      "arxiv_id": "2401.10334",
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "117",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "H. Ye, J. Wang, Z. Cao, F. Berto, C. Hua, H. Kim, J. Park, and G. Song. ReEvo: Large language models as hyper-heuristics with reflective evolution. InAdvances in Neural Information Processing Systems, volume 37, 2024.",
+      "authors": "H. Ye, J. Wang, Z. Cao, F. Berto, C. Hua, H. Kim, J. Park, and G. Song",
+      "title_text": "ReEvo: Large language models as hyper-heuristics with reflective evolution",
+      "venue_text": "InAdvances in Neural Information Processing Systems, volume 37, 2024.",
+      "year": 2024,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "118",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "F. Zhang, S. Nguyen, Y. Mei, and M. Zhang.Genetic Programming for Production Scheduling. Springer, 2021.",
+      "authors": "F. Zhang, S. Nguyen, Y. Mei, and M. Zhang",
+      "title_text": "Genetic Programming for Production Scheduling",
+      "venue_text": "Springer, 2021.",
+      "year": 2021,
+      "doi": null,
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "119",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "H. Zhang, Y. Song, Z. Hou, S. Miret, and B. Liu. HoneyComb: A flexible LLM-based agent system for materials science. In Y. Al-Onaizan, M. Bansal, and Y.-N. Chen, editors, Findings of the Association for Computational Linguistics: EMNLP 2024, pages 3369–3382. Association for Computational Linguistics, Nov. 2024. doi: 10.18653/v1/ 2024.findings-emnlp.192.",
+      "authors": "H. Zhang, Y. Song, Z. Hou, S. Miret, and B. Liu",
+      "title_text": "HoneyComb: A flexible LLM-based agent system for materials science",
+      "venue_text": "In Y. Al-Onaizan, M. Bansal, and Y.-N. Chen, editors, Findings of the Association for Computational Linguistics: EMNLP 2024, pages 3369–3382. Association for Computational Linguistics, Nov. 2024. doi: 10.18653/v1/ 2024.findings-emnlp.192.",
+      "year": 2024,
+      "doi": "10.18653/v1/2024.findings-emnlp.192",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    },
+    {
+      "reference_id": "120",
+      "source_page": 32,
+      "source_section": "References",
+      "raw_citation": "Y. Zhou, H. Liu, T. Srivastava, H. Mei, and C. Tan. Hypothesis generation with large language models. In L. Peled-Cohen, N. Calderon, S. Lissak, and R. Reichart, editors, Proceedings of the 1st Workshop on NLP for Science (NLP4Science), pages 117–139. Association for Computational Linguistics, 2024. doi: 10.18653/v1/2024.nlp4scien ce-1.10.",
+      "authors": "Y. Zhou, H. Liu, T. Srivastava, H. Mei, and C. Tan",
+      "title_text": "Hypothesis generation with large language models",
+      "venue_text": "In L. Peled-Cohen, N. Calderon, S. Lissak, and R. Reichart, editors, Proceedings of the 1st Workshop on NLP for Science (NLP4Science), pages 117–139. Association for Computational Linguistics, 2024. doi: 10.18653/v1/2024.nlp4scien ce-1.10.",
+      "year": 2024,
+      "doi": "10.18653/v1/2024.nlp4science-1.10",
+      "url": null,
+      "arxiv_id": null,
+      "local_cache": {
+        "status": "absent",
+        "manifest_row_id": null
+      },
+      "citation_use_category": "background_or_related_work"
+    }
+  ]
+}

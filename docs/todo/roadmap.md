@@ -2466,24 +2466,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source-PDF rights, companion software/materials licensing, generated
     LibreEvolve artifacts, and local ownership or endorsement boundaries.
 
-- [ ] Keep bibliography roadmap wording scoped until AlphaEvolve References
-      metadata is normalized.
-  - Spec evidence: the AlphaEvolve PDF includes a numbered References section
-    after Author information, with entries through `[120]`.
-  - Current evidence: roadmap and README wording now cite
-    `libreevolve.alphaevolve_references_section.v1`, which validates the
-    AlphaEvolve References section page span, contiguous `[1]` through `[120]`
-    ids, page-by-page marker ranges, and selected source anchors against the
-    cached PDF text. Normalized author/title/venue/year fields, DOI/URL/arXiv
-    metadata, local-cache linkage, absent-cache status, and claim-level
-    citation-use categories are still absent.
-  - Required result: once paper-source metadata normalizes the full References
-    section, update ROADMAP, README, papers index, and TODO cross-links with
-    reference id, authors/title/venue/year, DOI/URL/arXiv fields, source
-    page/span, citation-use categories, local-cache or absent-cache status, and
-    validation that roadmap claims about cited papers are traceable to the
-    source bibliography rather than inferred from local filenames.
-
 - [ ] Keep roadmap wording scoped until the follow-on AlphaEvolve math paper
       and repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

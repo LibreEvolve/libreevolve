@@ -4,6 +4,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Normalize AlphaEvolve References-section bibliography provenance.
+  - Spec evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
+    References section after Author information, with entries through `[120]`.
+  - Status: `papers/references.json` now emits schema-versioned normalized
+    bibliography rows for all 120 references, using cached PDF text through
+    the reference 120 continuation on page 33. Rows include reference id, raw
+    citation, author/title/venue/year fields, DOI/URL/arXiv fields where
+    detected, source page, local-cache status, and citation-use category. The
+    paper-manifest gate validates it against the cached PDF text.
+  - Remaining gap: none for this bounded bibliography-table slice; full
+    per-claim citation linkage remains a separate scope.
+
 - [x] Emit AlphaEvolve source-PDF rights provenance into paper artifacts.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
     `© 2025 Google DeepMind. All rights reserved`.

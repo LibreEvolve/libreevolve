@@ -2293,29 +2293,28 @@ Primary evidence:
     spans/block policy, and cross-run validation before claiming full
     AlphaEvolve Figure 3 current-program edit provenance.
 
-- [ ] Add cross-edit semantic consistency diagnostics for multi-block
-      mutations.
+- [ ] Extend cross-edit consistency diagnostics beyond current Python symbol
+      scan.
   - Spec evidence: AlphaEvolve Figure 3(b) tells the model to keep proposed
     edits consistent with each other, giving the example that if one
     replacement uses a new config variable, another replacement should add
     that variable. This is part of the paper's SEARCH/REPLACE prompt contract,
     not merely generic coding advice.
-  - Current evidence: `PromptSampler` includes a similar instruction, and the
-    mutation paths validate diff syntax, exact search matches, topology
-    envelopes, Python syntax, evaluator execution, and structured failure
-    records. Those checks can catch some broken candidates after application
-    or evaluation, but they do not provide a paper-facing diagnostic that a
-    multi-block proposal was checked for cross-edit consistency, introduced
-    symbol/config/dependency pairing, or intentional coupled changes across
-    evolved blocks.
-  - Required result: add versioned mutation-consistency evidence for
-    multi-block edits: introduced and referenced symbol/config/import/resource
-    labels where language support exists, changed-block dependency/co-change
-    links, unresolved-reference or missing-companion-edit diagnostics,
-    evaluator-failure taxonomy linkage, prompt/candidate ids, and README/
-    ROADMAP wording that separates current prompt-only consistency guidance
-    from AlphaEvolve-style evidence that accepted multi-edit proposals are
-    internally coherent.
+  - Current evidence: completed manifests now include
+    `runtime.history.mutation_consistency_report`, which identifies generated
+    multi-edit candidates, records changed file/block/search edit units,
+    diagnostic co-change links, best-effort Python AST introduced/reference
+    symbols, unresolved-reference diagnostics, evaluator-failure taxonomy,
+    prompt/candidate ids, archive admission, and `claim_ready: false`.
+  - Remaining gap: the report is diagnostic-only. It does not perform
+    language-aware scope resolution, config/resource dependency modeling,
+    required-companion-edit inference, cross-file dataflow/import resolution,
+    benchmark-calibrated consistency gates, or hard acceptance/rejection
+    policy.
+  - Required result: extend mutation-consistency evidence with language-aware
+    analyzers, config/import/resource companion-edit models, required-link
+    inference, benchmark-calibrated failure taxonomy, and optional gating
+    before treating accepted multi-edit proposals as internally coherent.
 
 - [ ] Add Figure 3 supervised-learning example exhibit provenance.
   - Spec evidence: AlphaEvolve Figure 3 is a paper-facing supervised-learning

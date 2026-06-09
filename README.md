@@ -737,6 +737,15 @@ parity: per-file span expansion for workspace sections, evolve-block inner span
 mapping, prompt-history row joins, full-mode target spans, and cross-run
 binding tables remain open.
 Completed manifests also include
+`runtime.history.mutation_consistency_report`, which records current-run
+multi-edit candidate payloads, changed file/block/search edit units,
+diagnostic co-change links, best-effort Python AST introduced/reference symbol
+summaries, unresolved-reference diagnostics, evaluator status, and archive
+admission. This is diagnostic-only and remains `claim_ready: false`: it does
+not perform language-aware scope resolution, config/resource dependency
+modeling, required-companion-edit inference, cross-file dataflow, or benchmark-
+calibrated consistency gating.
+Completed manifests also include
 `runtime.history.natural_language_preamble_report`, which records bounded,
 redacted natural-language text that appears before the first structured
 mutation marker in generated responses. This aligns with AlphaEvolve-style
@@ -2773,10 +2782,12 @@ alternatives, selects via the run-local RNG, reuses a marker's selected text
 within one rendered prompt, and records selection indexes/weights/text hashes in
 prompt diagnostics. The built-in prompt does tell the model to keep
 same-response edits consistent, including matching new helper/config/file/import
-or block references with their definitions or topology changes. Minimal
-templates can be useful for externally managed context, but they require the
-explicit compatibility policy and remain the user's responsibility for
-preserving the code-edit channels needed by the run.
+or block references with their definitions or topology changes. Runtime
+manifests add a diagnostic `mutation_consistency_report` for multi-edit
+payloads, but it is not a semantic proof or archive gate. Minimal templates can
+be useful for externally managed context, but they require the explicit
+compatibility policy and remain the user's responsibility for preserving the
+code-edit channels needed by the run.
 Workspace mutations can edit existing files and create new files in `full`
 mode; an empty body creates an intentionally empty new file, while final
 newlines and blank lines in full-mode bodies are preserved. In full mode,
@@ -3340,6 +3351,7 @@ manifest/index verification documented there:
 - Models wrap diffs in markdown fences — the diff engine strips a single outer response wrapper automatically while preserving fence text inside replacement code
 - Models add comments that cause diff matching failures — the prompt instructs "no comments"
 - Models may add brief explanatory text before the patch — leading preambles are captured in bounded/redacted metadata, but prose between or after mutation markers still fails parsing
+- Multi-edit payloads get diagnostic consistency records for changed edit units and unresolved Python symbol references, but this is not a hard acceptance gate
 - Without stronger failed-proposal memory, models can repeat the same bad mutation many times
 - A concrete diff example in the prompt reduces observed placeholder-copying mistakes; `runtime.history.prompt_example_copy_report` now records exact built-in example-sentinel copying, but hard rejection and semantic copy detection remain open
 

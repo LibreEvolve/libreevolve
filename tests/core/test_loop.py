@@ -68,6 +68,7 @@ from libreevolve.core.loop import (
     validate_sampling_balance_report,
     validate_programmatic_representation_boundary_report,
     validate_mutation_operator_boundary_report,
+    validate_mutation_consistency_report,
     validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
     validate_natural_language_preamble_report,
@@ -3102,6 +3103,63 @@ x=2
     assert sample["llm_constructed_operator_family"] is False
     assert sample["adaptive_operator_selection"] is False
     assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
+
+
+def test_runtime_history_reports_mutation_consistency_diagnostics():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.initial_programs = ["x=1\ny=1"]
+    response = """<<<SEARCH
+x=1
+===
+x=helper
+>>>REPLACE
+<<<SEARCH
+y=1
+===
+y=helper + 1
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            problem,
+            Config(max_generations=1, log_dir=tmpdir, problem_name="t"),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["mutation_consistency_report"]
+
+    assert report["schema"] == "libreevolve.mutation_consistency_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_mutation_consistency_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 1
+    assert report["multi_edit_candidate_count"] == 1
+    assert report["python_symbol_scan_candidate_count"] == 1
+    assert report["unresolved_reference_candidate_count"] == 1
+    assert report["candidate_status_counts"] == {"accepted_history": 1}
+    assert report["mutation_mode_counts"] == {"diff": 1}
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["python_symbol_reference_scan"] is True
+    assert report["claim_readiness"]["semantic_consistency_proven"] is False
+    assert report["claim_readiness"]["hard_acceptance_gate"] is False
+
+    record = report["records"][0]
+    edit_summary = record["edit_summary"]
+    assert edit_summary["search_replace_block_count"] == 2
+    assert edit_summary["edit_unit_count"] == 2
+    assert edit_summary["multi_edit"] is True
+    assert edit_summary["changed_files"] == ["main.py"]
+    assert record["cochange_links"] == []
+    symbols = record["symbol_summary"]
+    assert symbols["schema"] == "libreevolve.python_symbol_consistency_scan.v1"
+    assert symbols["scanned_files"] == ["main.py"]
+    assert "helper" in symbols["referenced_symbols"]
+    assert symbols["unresolved_references"] == ["helper"]
+    assert symbols["unresolved_reference_count"] == 1
+    assert record["failure_taxonomy"]["category"] == "symbol_consistency_diagnostic"
+    assert record["admission"]["admitted"] is True
+    assert record["evaluation"]["is_valid"] is True
 
 
 def test_runtime_history_reports_prompt_example_copy_diagnostics():

@@ -230,6 +230,13 @@ is not yet an AlphaEvolve reproduction.
   mapping, prompt-history row joins, full-mode target spans, and cross-run
   binding tables before claiming full AlphaEvolve Figure 3 current-program
   edit provenance.
+- Extend `runtime.history.mutation_consistency_report` beyond current
+  multi-edit payload inventories, changed file/block/search edit units,
+  best-effort Python AST introduced/reference symbols, unresolved-reference
+  diagnostics, evaluator taxonomy, and admission links into language-aware
+  scope resolution, config/resource dependency models, required-companion-edit
+  inference, cross-file dataflow/import resolution, and benchmark-calibrated
+  consistency gating.
 - Extend `runtime.history.initial_pool_divergence_report` beyond current
   seed-vs-generated workspace hash, bounded primary-file text distance,
   changed-file summary, and numeric metric L1 evidence into task-specific

@@ -924,6 +924,18 @@ short code or rewrite-friendly cases, so LibreEvolve still needs adaptive
 per-candidate mutation-mode policy and telemetry before claiming that
 diff-versus-full prompting follows the paper's conditions.
 
+AlphaEvolve multi-edit consistency note: LibreEvolve prompt instructions ask
+models to keep same-response edits consistent, including matching new helpers,
+config values, files, imports, and blocks with their definitions or topology
+changes. Completed manifests now include
+`runtime.history.mutation_consistency_report`, which records multi-edit
+payloads, changed edit units, diagnostic co-change links, best-effort Python
+AST symbol/reference summaries, unresolved-reference diagnostics, evaluator
+status, and archive admission. This is current-run diagnostic evidence, not a
+complete semantic verifier: language-aware scope resolution, config/resource
+dependency models, required-companion-edit inference, cross-file dataflow, and
+benchmark-calibrated consistency gates remain open.
+
 AlphaEvolve scope-boundary note: the paper explicitly treats automated
 evaluation as both a core advantage and a limitation, keeping tasks that require
 manual experimentation out of scope and describing LLM-provided evaluation of

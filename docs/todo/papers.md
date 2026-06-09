@@ -1887,28 +1887,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     full-mode target spans/block policy, and cross-run validation before
     claiming full AlphaEvolve Figure 3 current-program edit provenance.
 
-- [ ] Track multi-edit semantic consistency evidence separately from prompt
-      instructions.
+- [ ] Track multi-edit semantic consistency beyond current diagnostic scan.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).
   - Requirement: the assembled AlphaEvolve prompt tells the model to make
     proposed SEARCH/REPLACE edits consistent with each other, including adding
     a newly referenced config variable when another edit uses it.
   - Partial status: LibreEvolve prompt instructions include comparable
-    consistency guidance, and mutation/evaluation records can show parse
-    errors, exact-match failures, syntax failures, evaluator failures, and
-    rejection/admission outcomes.
-  - Current gap: paper-facing evidence does not show that a multi-block
-    proposal was analyzed for cross-edit coherence before accepted-result
-    claims: newly introduced references, companion declaration/config/import
-    edits, coupled evolved-block changes, unresolved symbols, missing
-    dependency/resource edits, or evaluator failures classified as
-    consistency-breakage rather than generic validation failure.
-  - Required result: add report/schema evidence for multi-edit consistency:
-    proposal id, prompt id, changed block/file ids, introduced/reference labels
-    where analyzers exist, required companion-edit links, unresolved-reference
-    diagnostics, evaluator-failure taxonomy linkage, accepted/rejected status,
-    and README/ROADMAP wording that distinguishes prompt-only consistency
-    instructions from checked AlphaEvolve-style coherent multi-edit proposals.
+    consistency guidance, and completed manifests now include
+    `runtime.history.mutation_consistency_report` with proposal/prompt ids,
+    changed file/block/search edit units, diagnostic co-change links,
+    best-effort Python introduced/reference symbol labels,
+    unresolved-reference diagnostics, evaluator-failure taxonomy linkage, and
+    accepted/rejected status.
+  - Current gap: this is current-run diagnostic evidence, not complete
+    semantic proof. It does not infer required companion edits, model config or
+    resource dependencies, resolve Python scopes/imports across files, classify
+    benchmark-calibrated consistency failures, or gate admission.
+  - Required result: add paper-facing evidence for required companion-edit
+    inference, language-aware scope/import/resource models, calibrated
+    consistency-failure taxonomy, and optional acceptance policy before
+    presenting multi-edit consistency as complete.
 
 - [ ] Track Figure 3 supervised-learning example exhibit provenance as paper
       evidence.

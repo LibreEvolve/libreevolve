@@ -2750,23 +2750,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     workspace sections, evolve-block inner span mapping, prompt-history row
     joins, full-mode target spans/block ids, and cross-run binding tables.
 
-- [ ] Keep README multi-edit consistency wording scoped until checked
-      consistency evidence exists.
+- [ ] Keep README multi-edit consistency wording scoped beyond current
+      diagnostic scan.
   - Spec evidence: AlphaEvolve Figure 3(b) includes a SEARCH/REPLACE prompt
     rule requiring proposed edits to be consistent with each other, for
     example adding a config variable when another replacement references it.
-  - Current evidence: README can say LibreEvolve prompts ask for coherent
-    edits and that parser, syntax, evaluator, and admission checks reject many
-    broken candidates. It should not imply that the system has a
-    paper-facing cross-edit consistency analyzer or report for introduced
-    symbols/config/imports/resources, missing companion edits, coupled changed
-    blocks, or unresolved references across a multi-block mutation.
-  - Required result: when multi-edit consistency diagnostics land, update
-    README, ROADMAP, papers index, and code/paper TODOs with proposal ids,
-    changed block/file ids, introduced/reference labels, companion-edit links,
-    unresolved-reference diagnostics, evaluator-failure taxonomy linkage, and
-    accepted/rejected status so README distinguishes prompt guidance from
-    AlphaEvolve-style evidence of coherent multi-edit proposals.
+  - Current evidence: README documents
+    `runtime.history.mutation_consistency_report` as a current-run diagnostic
+    for multi-edit payloads, changed edit units, co-change links, best-effort
+    Python symbol/reference scans, unresolved references, evaluator status,
+    and archive admission. It also says the report is not a semantic proof or
+    archive gate.
+  - Remaining gap: README must stay scoped until language-aware scope/import
+    resolution, config/resource companion-edit models, required-link
+    inference, benchmark-calibrated consistency taxonomy, and optional gating
+    exist.
+  - Required result: when broader consistency analysis lands, update README,
+    ROADMAP, papers index, and code/paper TODOs with the exact analyzer scope
+    and acceptance policy.
 
 - [ ] Keep README Figure 3 supervised-learning example wording scoped until
       exhibit provenance exists.

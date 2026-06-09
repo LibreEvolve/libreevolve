@@ -4,6 +4,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document current-run multi-edit consistency diagnostics.
+  - Spec evidence: AlphaEvolve Figure 3(b) requires same-response edits to be
+    consistent with each other.
+  - Status: README now documents
+    `runtime.history.mutation_consistency_report`, including multi-edit
+    payload records, changed edit units, diagnostic co-change links,
+    best-effort Python symbol/reference scans, unresolved-reference
+    diagnostics, evaluator status, and archive admission.
+  - Remaining gap: README keeps language-aware scope/import resolution,
+    config/resource dependency models, required-link inference, benchmark
+    calibration, and gating as future work.
+
 - [x] Document bounded explanatory preambles before structured mutations.
   - Spec evidence: AlphaEvolve Figure 3(c) shows explanatory text before a
     SEARCH/REPLACE payload.

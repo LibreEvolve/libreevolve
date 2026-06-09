@@ -4,6 +4,8 @@ Inspired by AlphaEvolve's evolutionary loop and adjacent code-evolution systems.
 This synchronous loop is intentionally smaller than the paper systems.
 """
 from __future__ import annotations
+import ast
+import builtins
 from collections.abc import Callable, Mapping
 import copy
 import difflib
@@ -5321,6 +5323,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "mutation_consistency_report": _mutation_consistency_report(programs),
         "prompt_example_copy_report": _prompt_example_copy_report(programs),
         "prompt_current_binding_report": _prompt_current_binding_report(programs),
         "natural_language_preamble_report": _natural_language_preamble_report(programs),
@@ -14515,6 +14518,567 @@ def validate_mutation_operator_boundary_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.mutation_operator_boundary_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+_CONSISTENCY_FILE_SECTION_HEADER_RE = re.compile(r"(?m)^<<<FILE[ \t]*(.*?)\n")
+_CONSISTENCY_BLOCK_SECTION_HEADER_RE = re.compile(r"(?m)^<<<BLOCK[ \t]*(.*?)\n")
+_PYTHON_BUILTIN_NAMES = frozenset(dir(builtins)) | {"True", "False", "None"}
+_PYTHON_IMPLICIT_NAMES = frozenset({"self", "cls"})
+
+
+def _mutation_consistency_report(programs: list[Program]) -> dict:
+    parent_by_id = {program.id: program for program in programs}
+    generated = [
+        program for program in programs if _program_candidate_type(program) == "generated"
+    ]
+    all_records = [
+        _mutation_consistency_record(program, parent_by_id.get(program.parent_id))
+        for program in generated
+    ]
+    records = [
+        record
+        for record in all_records
+        if record.get("edit_summary", {}).get("multi_edit") is True
+    ]
+    status_counts: dict[str, int] = {}
+    mode_counts: dict[str, int] = {}
+    unresolved_count = 0
+    python_scan_count = 0
+    for record in records:
+        _increment_count(status_counts, str(record.get("candidate_status") or "unknown"))
+        _increment_count(mode_counts, str(record.get("mutation_mode") or "unknown"))
+        symbol_summary = record.get("symbol_summary")
+        if isinstance(symbol_summary, Mapping):
+            if symbol_summary.get("language") == "python":
+                python_scan_count += 1
+            if symbol_summary.get("unresolved_reference_count", 0):
+                unresolved_count += 1
+    report = {
+        "schema": "libreevolve.mutation_consistency_report.v1",
+        "source": "runtime_history_mutation_payloads_and_candidate_workspaces",
+        "generated_candidate_count": len(generated),
+        "multi_edit_candidate_count": len(records),
+        "python_symbol_scan_candidate_count": python_scan_count,
+        "unresolved_reference_candidate_count": unresolved_count,
+        "candidate_status_counts": dict(sorted(status_counts.items())),
+        "mutation_mode_counts": dict(sorted(mode_counts.items())),
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "diagnostic_policy": {
+            "schema": "libreevolve.mutation_consistency_policy.v1",
+            "scope": "current_run_generated_multi_edit_candidates",
+            "multi_edit_definition": (
+                "more_than_one_structured_diff_file_or_block_edit_unit"
+            ),
+            "symbol_scan_policy": (
+                "best_effort_python_ast_defined_imported_loaded_name_comparison"
+            ),
+            "companion_edit_policy": "cochange_links_are_diagnostic_not_required",
+            "acceptance_policy": "diagnostic_only_not_archive_gate",
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "multi_edit_candidates_identified": bool(records),
+            "changed_file_or_block_ids_recorded": bool(records),
+            "python_symbol_reference_scan": python_scan_count > 0,
+            "evaluator_failure_taxonomy_linked": bool(records),
+            "semantic_consistency_proven": False,
+            "hard_acceptance_gate": False,
+            "remaining_gap": [
+                "language_aware_scope_resolution",
+                "config_resource_dependency_models",
+                "required_companion_edit_inference",
+                "cross_file_dataflow_or_import_resolution",
+                "benchmark_calibrated_consistency_failures",
+            ],
+        },
+    }
+    report["validation"] = validate_mutation_consistency_report(report)
+    return report
+
+
+def _mutation_consistency_record(program: Program, parent: Program | None) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    admission = (
+        metadata.get("archive_admission")
+        if isinstance(metadata.get("archive_admission"), Mapping)
+        else {}
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    payload = metadata.get("diff")
+    payload_text = payload if isinstance(payload, str) else ""
+    mode = str(metadata.get("mutation_mode") or "unknown")
+    edit_summary = _mutation_consistency_edit_summary(
+        payload_text,
+        mode,
+        program.primary_file,
+    )
+    parent_workspace = parent.workspace() if parent is not None else None
+    symbol_summary = _mutation_consistency_symbol_summary(
+        parent_workspace,
+        program.workspace(),
+    )
+    failure_taxonomy = _mutation_consistency_failure_taxonomy(
+        evaluation,
+        symbol_summary,
+    )
+    candidate_status = (
+        "accepted_history"
+        if admission.get("admitted") is True
+        else "rejected_history"
+    )
+    return {
+        "candidate_id": program.id,
+        "candidate_status": candidate_status,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "prompt_program_id": metadata.get("prompt_program_id"),
+        "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+        "mutation_mode": mode,
+        "payload_sha256": hashlib.sha256(payload_text.encode("utf-8")).hexdigest(),
+        "edit_summary": edit_summary,
+        "cochange_links": _mutation_consistency_cochange_links(edit_summary),
+        "symbol_summary": symbol_summary,
+        "failure_taxonomy": failure_taxonomy,
+        "admission": {
+            "admitted": admission.get("admitted"),
+            "reason": admission.get("reason"),
+            "sampling_eligible": admission.get("sampling_eligible"),
+        },
+        "evaluation": {
+            "is_valid": evaluation.get("is_valid"),
+            "error": evaluation.get("error"),
+        },
+    }
+
+
+def _mutation_consistency_edit_summary(
+    payload: str,
+    mode: str,
+    primary_file: str,
+) -> dict:
+    diff_blocks = parse_diff_blocks(payload) if payload else []
+    file_headers = [
+        header.strip()
+        for header in _CONSISTENCY_FILE_SECTION_HEADER_RE.findall(payload)
+    ]
+    block_headers = [
+        header.strip() or "block_0"
+        for header in _CONSISTENCY_BLOCK_SECTION_HEADER_RE.findall(payload)
+    ]
+    changed_files = _mutation_consistency_changed_files(file_headers, primary_file)
+    if diff_blocks and primary_file not in changed_files:
+        changed_files.insert(0, primary_file)
+    topology_count = sum(
+        1
+        for header in file_headers
+        if _mutation_consistency_file_command(header)
+        in {"DELETE", "MOVE", "RENAME", "PRIMARY"}
+    )
+    edit_unit_count = len(diff_blocks) + len(file_headers) + len(block_headers)
+    return {
+        "mutation_surfaces": _mutation_operator_payload_surfaces(payload, mode),
+        "search_replace_block_count": len(diff_blocks),
+        "file_section_count": len(file_headers),
+        "block_section_count": len(block_headers),
+        "topology_command_count": topology_count,
+        "edit_unit_count": edit_unit_count,
+        "multi_edit": edit_unit_count > 1,
+        "changed_files": changed_files[:50],
+        "changed_files_truncated": len(changed_files) > 50,
+        "changed_blocks": _unique_in_order(block_headers)[:50],
+        "changed_blocks_truncated": len(set(block_headers)) > 50,
+    }
+
+
+def _mutation_consistency_changed_files(
+    file_headers: list[str],
+    primary_file: str,
+) -> list[str]:
+    files: list[str] = []
+    for header in file_headers:
+        command = _mutation_consistency_file_command(header)
+        raw = header
+        if command == "PATH":
+            raw = header.partition(" ")[2].strip()
+        elif command in {"STATIC", "BINARY", "DELETE", "PRIMARY"}:
+            raw = header.partition(" ")[2].strip()
+        elif command in {"MOVE", "RENAME"}:
+            source, _sep, target = header.partition(" ")[2].partition("->")
+            files.extend([source.strip(), target.strip()])
+            continue
+        if raw:
+            files.append(raw)
+    if not files and primary_file:
+        files.append(primary_file)
+    return _unique_in_order(
+        [
+            _mutation_consistency_safe_label(path)
+            for path in files
+            if isinstance(path, str) and path.strip()
+        ]
+    )
+
+
+def _mutation_consistency_file_command(header: str) -> str:
+    command = header.strip().split(" ", 1)[0].upper() if header.strip() else ""
+    return command if command in {
+        "PATH",
+        "STATIC",
+        "BINARY",
+        "DELETE",
+        "MOVE",
+        "RENAME",
+        "PRIMARY",
+    } else ""
+
+
+def _mutation_consistency_safe_label(value: str, max_chars: int = 160) -> str:
+    redacted = redact_sensitive_text(value.strip())
+    if len(redacted) <= max_chars:
+        return redacted
+    return redacted[: max_chars - 14].rstrip() + "\n...[truncated]"
+
+
+def _mutation_consistency_cochange_links(edit_summary: Mapping[str, object]) -> list[dict]:
+    labels: list[str] = []
+    for path in edit_summary.get("changed_files", []):
+        if isinstance(path, str):
+            labels.append(f"file:{path}")
+    for block in edit_summary.get("changed_blocks", []):
+        if isinstance(block, str):
+            labels.append(f"block:{block}")
+    links: list[dict] = []
+    unique_labels = _unique_in_order(labels)
+    for left_index, left in enumerate(unique_labels[:10]):
+        for right in unique_labels[left_index + 1 : 10]:
+            links.append(
+                {
+                    "source": left,
+                    "target": right,
+                    "relationship": "same_mutation_payload",
+                }
+            )
+    return links[:25]
+
+
+def _mutation_consistency_symbol_summary(
+    parent_workspace: CandidateWorkspace | None,
+    candidate_workspace: CandidateWorkspace,
+) -> dict:
+    parent_symbols = (
+        _mutation_consistency_workspace_symbols(parent_workspace)
+        if parent_workspace is not None
+        else _empty_python_symbol_inventory()
+    )
+    candidate_symbols = _mutation_consistency_workspace_symbols(candidate_workspace)
+    candidate_available = (
+        candidate_symbols["defined_symbols"] | candidate_symbols["imported_symbols"]
+    )
+    parent_available = parent_symbols["defined_symbols"] | parent_symbols["imported_symbols"]
+    unresolved = sorted(
+        candidate_symbols["referenced_symbols"]
+        - candidate_available
+        - _PYTHON_BUILTIN_NAMES
+        - _PYTHON_IMPLICIT_NAMES
+    )
+    introduced = sorted(candidate_available - parent_available)
+    return {
+        "schema": "libreevolve.python_symbol_consistency_scan.v1",
+        "language": "python",
+        "scan_policy": "best_effort_ast_names_no_type_or_import_resolution",
+        "scanned_files": candidate_symbols["scanned_files"][:50],
+        "scanned_files_truncated": len(candidate_symbols["scanned_files"]) > 50,
+        "syntax_errors": candidate_symbols["syntax_errors"][:25],
+        "syntax_errors_truncated": len(candidate_symbols["syntax_errors"]) > 25,
+        "introduced_symbols": introduced[:50],
+        "introduced_symbols_truncated": len(introduced) > 50,
+        "referenced_symbols": sorted(candidate_symbols["referenced_symbols"])[:50],
+        "referenced_symbols_truncated": len(candidate_symbols["referenced_symbols"]) > 50,
+        "unresolved_references": unresolved[:50],
+        "unresolved_references_truncated": len(unresolved) > 50,
+        "unresolved_reference_count": len(unresolved),
+        "builtin_and_implicit_names_excluded": True,
+    }
+
+
+def _empty_python_symbol_inventory() -> dict:
+    return {
+        "scanned_files": [],
+        "syntax_errors": [],
+        "defined_symbols": set(),
+        "imported_symbols": set(),
+        "referenced_symbols": set(),
+    }
+
+
+def _mutation_consistency_workspace_symbols(workspace: CandidateWorkspace) -> dict:
+    inventory = _empty_python_symbol_inventory()
+    for path, text in sorted(workspace.files.items()):
+        if not path.endswith(".py") or not isinstance(text, str):
+            continue
+        inventory["scanned_files"].append(path)
+        try:
+            tree = ast.parse(text, filename=path)
+        except SyntaxError as exc:
+            inventory["syntax_errors"].append(
+                {
+                    "path": path,
+                    "lineno": exc.lineno,
+                    "offset": exc.offset,
+                    "message": _mutation_consistency_safe_label(exc.msg),
+                }
+            )
+            continue
+        visitor = _PythonSymbolVisitor()
+        visitor.visit(tree)
+        inventory["defined_symbols"].update(visitor.defined)
+        inventory["imported_symbols"].update(visitor.imported)
+        inventory["referenced_symbols"].update(visitor.referenced)
+    return inventory
+
+
+class _PythonSymbolVisitor(ast.NodeVisitor):
+    def __init__(self) -> None:
+        self.defined: set[str] = set()
+        self.imported: set[str] = set()
+        self.referenced: set[str] = set()
+
+    def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
+        self.defined.add(node.name)
+        self._visit_arguments(node.args)
+        self.generic_visit(node)
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
+        self.visit_FunctionDef(node)
+
+    def visit_ClassDef(self, node: ast.ClassDef) -> None:
+        self.defined.add(node.name)
+        self.generic_visit(node)
+
+    def visit_Import(self, node: ast.Import) -> None:
+        for alias in node.names:
+            self.imported.add(alias.asname or alias.name.split(".", 1)[0])
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
+        for alias in node.names:
+            if alias.name == "*":
+                continue
+            self.imported.add(alias.asname or alias.name)
+
+    def visit_Name(self, node: ast.Name) -> None:
+        if isinstance(node.ctx, ast.Load):
+            self.referenced.add(node.id)
+        elif isinstance(node.ctx, (ast.Store, ast.Param)):
+            self.defined.add(node.id)
+
+    def visit_arg(self, node: ast.arg) -> None:
+        self.defined.add(node.arg)
+
+    def _visit_arguments(self, node: ast.arguments) -> None:
+        for arg in (
+            list(node.posonlyargs)
+            + list(node.args)
+            + list(node.kwonlyargs)
+            + ([node.vararg] if node.vararg is not None else [])
+            + ([node.kwarg] if node.kwarg is not None else [])
+        ):
+            self.visit(arg)
+
+
+def _mutation_consistency_failure_taxonomy(
+    evaluation: Mapping[str, object],
+    symbol_summary: Mapping[str, object],
+) -> dict:
+    metadata = evaluation.get("metadata") if isinstance(evaluation.get("metadata"), Mapping) else {}
+    diff_error = metadata.get("diff_error") if isinstance(metadata, Mapping) else None
+    diff_reason = (
+        diff_error.get("reason")
+        if isinstance(diff_error, Mapping)
+        and isinstance(diff_error.get("reason"), str)
+        else None
+    )
+    if diff_reason:
+        category = "mutation_application_failure"
+    elif symbol_summary.get("syntax_errors"):
+        category = "python_syntax_scan_failure"
+    elif symbol_summary.get("unresolved_reference_count", 0):
+        category = "symbol_consistency_diagnostic"
+    elif evaluation.get("is_valid") is False:
+        category = "evaluator_rejection"
+    else:
+        category = "none_observed"
+    return {
+        "category": category,
+        "diff_error_reason": diff_reason,
+        "evaluation_is_valid": evaluation.get("is_valid"),
+        "evaluation_error": evaluation.get("error"),
+    }
+
+
+def validate_mutation_consistency_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.mutation_consistency_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "mutation consistency report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "multi_edit_candidate_count",
+        "python_symbol_scan_candidate_count",
+        "unresolved_reference_candidate_count",
+        "candidate_status_counts",
+        "mutation_mode_counts",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "diagnostic_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"mutation consistency report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.mutation_consistency_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "mutation consistency report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_mutation_payloads_and_candidate_workspaces":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "mutation consistency report source is unsupported",
+            }
+        )
+    for field in (
+        "generated_candidate_count",
+        "multi_edit_candidate_count",
+        "python_symbol_scan_candidate_count",
+        "unresolved_reference_candidate_count",
+        "records_limit",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {"code": "invalid_record", "message": f"record {index} must be an object"}
+            )
+            continue
+        if not isinstance(record.get("candidate_id"), str):
+            issues.append(
+                {
+                    "code": "invalid_candidate_id",
+                    "message": f"record {index} candidate_id must be a string",
+                }
+            )
+        edit_summary = record.get("edit_summary")
+        if not isinstance(edit_summary, dict) or edit_summary.get("multi_edit") is not True:
+            issues.append(
+                {
+                    "code": "invalid_edit_summary",
+                    "message": f"record {index} must describe a multi-edit payload",
+                }
+            )
+        symbol_summary = record.get("symbol_summary")
+        if not isinstance(symbol_summary, dict):
+            issues.append(
+                {
+                    "code": "invalid_symbol_summary",
+                    "message": f"record {index} symbol_summary must be an object",
+                }
+            )
+        elif symbol_summary.get("schema") != "libreevolve.python_symbol_consistency_scan.v1":
+            issues.append(
+                {
+                    "code": "invalid_symbol_summary_schema",
+                    "message": f"record {index} symbol summary schema is unsupported",
+                }
+            )
+        if not isinstance(record.get("failure_taxonomy"), dict):
+            issues.append(
+                {
+                    "code": "invalid_failure_taxonomy",
+                    "message": f"record {index} failure_taxonomy must be an object",
+                }
+            )
+    if report.get("records_truncated") is not True:
+        if report.get("multi_edit_candidate_count") != len(records):
+            issues.append(
+                {
+                    "code": "invalid_record_count",
+                    "message": "multi-edit count must match records when not truncated",
+                }
+            )
+    if not isinstance(report.get("diagnostic_policy"), dict):
+        issues.append(
+            {
+                "code": "invalid_diagnostic_policy",
+                "message": "diagnostic_policy must be an object",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "mutation consistency report must not claim full readiness",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        for field in ("semantic_consistency_proven", "hard_acceptance_gate"):
+            if readiness.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    return {
+        "schema": "libreevolve.mutation_consistency_report.v1",
         "ok": not issues,
         "issues": issues,
     }

@@ -4,6 +4,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add current-run multi-edit consistency diagnostics.
+  - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep
+    SEARCH/REPLACE edits consistent with each other, including adding a config
+    variable when another edit references it.
+  - Status: `libreevolve/core/loop.py` now emits
+    `runtime.history.mutation_consistency_report` with generated multi-edit
+    candidate records, changed file/block/search edit units, diagnostic
+    co-change links, best-effort Python AST introduced/reference symbols,
+    unresolved-reference diagnostics, evaluator-failure taxonomy,
+    prompt/candidate ids, and archive admission.
+  - Remaining gap: language-aware scope/import resolution, config/resource
+    dependency models, required companion-edit inference, cross-file dataflow,
+    benchmark-calibrated taxonomy, and optional gating remain active TODOs.
+
 - [x] Add bounded explanatory preamble capture before structured mutations.
   - Spec evidence: AlphaEvolve Figure 3(c) shows natural-language explanatory
     text before SEARCH/REPLACE diff blocks, while Section 2.3 keeps the edit

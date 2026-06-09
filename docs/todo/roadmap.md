@@ -1439,24 +1439,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     binding tables so roadmap wording does not overclaim AlphaEvolve-style
     current-program edit provenance.
 
-- [ ] Keep multi-edit consistency roadmap wording scoped until checked
-      consistency evidence exists.
+- [ ] Keep multi-edit consistency roadmap wording scoped beyond current
+      diagnostic scan.
   - Spec evidence: AlphaEvolve Figure 3(b) instructs the model to keep
     SEARCH/REPLACE edits consistent with each other, including adding a new
     config variable when another proposed edit uses it.
-  - Current evidence: `ROADMAP.md`, README, and prompt instructions can
-    describe coherent-edit guidance plus current parser, syntax, evaluator,
-    and admission checks. They do not yet require a paper-facing consistency
-    diagnostic that links multi-block edits, introduced symbols/config/imports/
-    resources, missing companion edits, unresolved references, and
-    evaluator-failure taxonomy to accepted/rejected candidate status.
-  - Required result: when multi-edit consistency reports land, update ROADMAP,
-    README, papers index, and code/paper TODOs with changed block/file ids,
-    introduced/reference labels, companion-edit links, unresolved-reference
-    diagnostics, evaluator-failure taxonomy linkage, proposal/prompt ids, and
-    accepted/rejected status so roadmap wording separates prompt-only
-    consistency instructions from checked AlphaEvolve-style coherent
-    multi-edit mutation evidence.
+  - Current evidence: `ROADMAP.md` now lists
+    `runtime.history.mutation_consistency_report` as current diagnostic
+    evidence for multi-edit payload inventories, changed edit units,
+    best-effort Python symbol/reference scans, unresolved references,
+    evaluator taxonomy, and admission links.
+  - Remaining gap: roadmap wording must stay scoped until language-aware
+    scope/import resolution, config/resource dependency models,
+    required-companion-edit inference, cross-file dataflow, and benchmark-
+    calibrated consistency gates exist.
+  - Required result: when broader consistency reports land, update ROADMAP,
+    README, papers index, and code/paper TODOs with the exact analyzer scope
+    and gating policy.
 
 - [ ] Keep Figure 3 roadmap wording scoped until supervised-learning example
       exhibit provenance exists.

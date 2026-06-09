@@ -6,6 +6,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track current-run multi-edit consistency diagnostics separately from
+      prompt instructions.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b).
+  - Status: paper-facing docs now distinguish prompt guidance from
+    `runtime.history.mutation_consistency_report`, which records multi-edit
+    payloads, changed edit units, co-change links, best-effort Python symbol
+    scans, unresolved references, evaluator status, and archive admission.
+  - Remaining gap: required companion-edit inference, language-aware
+    scope/import/resource models, calibrated consistency taxonomy, and hard or
+    configurable acceptance policy remain active paper TODOs.
+
 - [x] Track bounded natural-language preambles separately from structured
       proposal metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(c) and Section

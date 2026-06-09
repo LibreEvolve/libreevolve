@@ -4,6 +4,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document current-run multi-edit consistency diagnostics in the roadmap.
+  - Spec evidence: AlphaEvolve Figure 3(b) instructs same-response edits to be
+    internally consistent.
+  - Status: ROADMAP now lists
+    `runtime.history.mutation_consistency_report` as current diagnostic
+    evidence for multi-edit inventories, changed edit units, Python
+    introduced/reference symbols, unresolved references, evaluator taxonomy,
+    and admission links.
+  - Remaining gap: language-aware scope/import resolution, config/resource
+    dependency models, required companion-edit inference, cross-file dataflow,
+    and benchmark-calibrated consistency gates remain future work.
+
 - [x] Document bounded explanatory preambles in the roadmap.
   - Spec evidence: AlphaEvolve Figure 3(c) includes explanatory prose before a
     SEARCH/REPLACE payload while Section 2.3 keeps edits in structured blocks.

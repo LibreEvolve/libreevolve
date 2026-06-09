@@ -1951,7 +1951,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark telemetry before claiming AlphaEvolve parity for replacing
     handwritten mutation operators with LLM-generated program mutations.
 
-- [ ] Track creative-generation proposal diversity evidence.
+- [ ] Extend creative-generation proposal diversity evidence beyond exact
+      duplicate counts.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3 and Section 4
     ablations.
   - Requirement: AlphaEvolve says SOTA LLMs digest previous solutions and
@@ -1960,20 +1961,22 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Partial status: LibreEvolve records selected parents and inspirations,
     prompt/call ids, proposal `idea`/`rationale`/`hypothesis` metadata,
     candidate outcomes, sampling strategies, bounded hypothesis summaries, and
-    backend/model telemetry.
-  - Current gap: the paper index has no evidence that generated proposals are
-    diverse improvement approaches within a call, generation, batch, prompt
-    context, or model/backend comparison. Existing proposal-scoring,
-    initial-pool divergence, and mutation-operator TODOs do not require
-    duplicate or near-duplicate proposal detection, idea-family diversity,
+    backend/model telemetry. Paper-facing docs now cite
+    `runtime.history.proposal_diversity_report`, which records exact proposal
+    and idea hash uniqueness/duplicate counts by generation and proposal batch.
+  - Current gap: the paper index still has no evidence that generated proposals
+    are semantically diverse improvement approaches within a call, generation,
+    batch, prompt context, or model/backend comparison. Existing
+    proposal-scoring, initial-pool divergence, and mutation-operator TODOs do
+    not require near-duplicate proposal detection, idea-family diversity,
     semantic/task-output distances, or ablation linkage between proposal
     diversity and model quality.
-  - Required result: add paper-visible proposal-diversity reports with
+  - Required result: extend paper-visible proposal-diversity reports with
     proposal id, prompt/call id, parent/inspiration ids, backend model id,
-    idea/operator-family labels, duplicate/near-duplicate status, code and
-    semantic/task-output distance measures where available, accepted/rejected
-    outcome, novelty contribution, and equal-budget/model ablation linkage
-    before claiming AlphaEvolve-style creative generation from SOTA LLMs.
+    idea/operator-family labels, near-duplicate status, code and semantic/
+    task-output distance measures where available, accepted/rejected outcome,
+    novelty contribution, and equal-budget/model ablation linkage before
+    claiming AlphaEvolve-style creative generation from SOTA LLMs.
 
 - [ ] Complete full validator-metadata rendering and provider-token prompt
   packing.

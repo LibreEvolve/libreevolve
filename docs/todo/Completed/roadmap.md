@@ -7824,3 +7824,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     task/failure-aware construction, adaptive selection, scoring, and
     benchmark telemetry remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow creative-generation roadmap wording to remaining semantic
+      diversity evidence.
+  - Evidence: roadmap wording needed to recognize exact proposal duplicate
+    telemetry without implying AlphaEvolve-style creative-generation proof.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.proposal_diversity_report` for exact proposal and idea
+    hash uniqueness/duplicate counts.
+  - Remaining roadmap gap: near-duplicate detection, semantic idea novelty,
+    task-output/code-distance evidence, model-quality attribution, and
+    benchmark linkage remain open.
+  - Verification: focused loop tests cover the report and validator.

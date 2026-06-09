@@ -678,12 +678,16 @@ programs and can feed current-run resurfacing evidence.
 `runtime.history.hypothesis_branch_report` now groups generated candidates by
 captured proposal text hashes and marks rejected/no-accepted branches as
 `abandoned_evidence` with fallback-parent inference and failure-memory linkage.
-This narrows the remaining database gap to durable cross-run query/index
-tables, full metric-vector and feedback/artifact-content ranking, proposal
-scoring, semantic/cross-run novelty or hypothesis retrieval, explicit
-controller backtracking/redirect decisions, schema migrations, and replayable
-sampling policies, not the absence of any resurfacing API, proposal metadata
-capture, or branch-level abandonment evidence.
+`runtime.history.proposal_diversity_report` also records exact proposal and
+idea hash uniqueness/duplicate counts by generation and proposal batch, with
+bounded sample records and an exact-text-only analysis policy. This narrows the
+remaining database gap to durable cross-run query/index tables, full
+metric-vector and feedback/artifact-content ranking, proposal scoring,
+near-duplicate or semantic/cross-run novelty or hypothesis retrieval, model
+quality attribution, explicit controller backtracking/redirect decisions,
+schema migrations, and replayable sampling policies, not the absence of any
+resurfacing API, proposal metadata capture, exact duplicate counts, or
+branch-level abandonment evidence.
 
 AlphaEvolve duplicate-work note: generated candidate ids include workspace-hash
 identity provenance, and completed manifests now include

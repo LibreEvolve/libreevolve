@@ -1465,6 +1465,14 @@ Important behavior:
   candidates is marked as `abandoned_evidence`, but controller suppression,
   fallback selection events, causal redirected-sampling proof, and cross-run
   branch tables remain unsupported.
+- `runtime.history.proposal_diversity_report` stores exact current-run
+  proposal-diversity evidence for generated candidates with captured proposal
+  metadata. It records generated/proposal/idea counts, exact proposal-signature
+  and idea-hash uniqueness and duplicate counts, per-generation summaries,
+  per-batch summaries, bounded sample records, and an explicit analysis policy.
+  The policy is exact-text-hash only: near-duplicate detection, semantic
+  novelty scoring, idea-family classification, model-quality attribution, and
+  benchmark linkage remain unsupported.
 - `runtime.history.artifact_index` stores bounded evaluator-artifact evidence
   for programs whose `evaluation.metadata.artifacts.files` retained copied
   files. Records include program id, lineage root, validity, generation,

@@ -10272,3 +10272,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain unimplemented.
   - Verification: focused loop tests cover the report, validator, payload
     surface counts, and unready claim boundaries.
+
+- [x] Add paper-visible exact proposal-diversity evidence.
+  - Paper evidence: AlphaEvolve Section 2.3 says SOTA LLMs propose new,
+    diverse ways to improve prior solutions.
+  - Status: paper-facing docs now cite
+    `runtime.history.proposal_diversity_report`, which records exact proposal
+    signature and idea-hash uniqueness/duplicate counts by generation and
+    proposal batch with bounded sample records.
+  - Remaining paper gap: semantic proposal diversity, near-duplicate
+    detection, idea-family novelty, model-quality attribution, and benchmark
+    linkage remain unimplemented.
+  - Verification: focused loop tests cover the report, validator, duplicate
+    idea counts, and unready claim boundaries.

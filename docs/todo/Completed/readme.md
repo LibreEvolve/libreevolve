@@ -10388,3 +10388,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still leave operator-family provenance,
     adaptive selection, scoring, and benchmark telemetry open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document exact proposal-diversity evidence.
+  - Evidence: README and run-artifact docs needed to distinguish exact
+    duplicate proposal telemetry from semantic creative-generation claims.
+  - Status: docs now describe `runtime.history.proposal_diversity_report`,
+    exact proposal and idea hash uniqueness/duplicate counts, generation and
+    batch summaries, and the exact-text-only analysis policy.
+  - Remaining documentation gap: docs still leave near-duplicate detection,
+    semantic novelty, model-quality attribution, and benchmark linkage open.
+  - Verification: focused loop tests cover the manifest field and validator.

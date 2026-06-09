@@ -1349,6 +1349,12 @@ candidates as `abandoned_evidence` while recording fallback-parent inference,
 failure-memory linkage, and claim-readiness limits. Proposal scoring, semantic
 proposal/hypothesis retrieval, controller-driven backtracking, and persisted
 cross-run proposal-index tables remain future work.
+`runtime.history.proposal_diversity_report` adds current-run exact duplicate
+evidence over captured proposal metadata, including per-generation and
+per-batch proposal/idea hash counts plus bounded sample records. It is an
+exact text-hash report, not semantic novelty evidence: near-duplicate
+detection, idea-family classification, task-output distance, model-quality
+attribution, and benchmark linkage remain future work.
 Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.

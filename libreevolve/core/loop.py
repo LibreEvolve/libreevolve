@@ -5241,6 +5241,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "proposal_diversity_report": _proposal_diversity_report(programs),
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
@@ -14831,6 +14832,375 @@ def _proposal_lifecycle_report(
     }
     report["validation"] = validate_proposal_lifecycle_report(report)
     return report
+
+
+def _proposal_diversity_report(programs: list[Program]) -> dict:
+    generated = [
+        program
+        for program in programs
+        if isinstance(program.metadata, dict)
+        and program.metadata.get("candidate_type") == "generated"
+    ]
+    records = [_proposal_diversity_record(program) for program in generated]
+    proposal_records = [
+        record for record in records if record["proposal_metadata_captured"]
+    ]
+    idea_records = [record for record in proposal_records if record["idea_hash"]]
+    proposal_hashes = [
+        record["proposal_signature_hash"]
+        for record in proposal_records
+        if record["proposal_signature_hash"]
+    ]
+    idea_hashes = [record["idea_hash"] for record in idea_records if record["idea_hash"]]
+    generation_records = _proposal_diversity_group_records(records, "generation")
+    batch_records = _proposal_diversity_batch_records(records)
+    report = {
+        "schema": "libreevolve.proposal_diversity_report.v1",
+        "source": "runtime_history_proposal_metadata",
+        "generated_candidate_count": len(generated),
+        "proposal_metadata_count": len(proposal_records),
+        "idea_record_count": len(idea_records),
+        "unique_proposal_signature_count": len(set(proposal_hashes)),
+        "duplicate_exact_proposal_count": (
+            len(proposal_hashes) - len(set(proposal_hashes))
+        ),
+        "unique_idea_hash_count": len(set(idea_hashes)),
+        "duplicate_exact_idea_count": len(idea_hashes) - len(set(idea_hashes)),
+        "generation_records": generation_records,
+        "batch_records": batch_records,
+        "sample_records": records[:50],
+        "records_truncated": len(records) > 50,
+        "analysis_policy": {
+            "schema": "libreevolve.proposal_diversity_analysis_policy.v1",
+            "exact_text_hashes": True,
+            "near_duplicate_detection": False,
+            "semantic_novelty_scoring": False,
+            "idea_family_classification": False,
+            "model_quality_attribution": False,
+            "benchmark_linkage": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "exact_duplicate_detection": True,
+            "batch_level_counts": bool(batch_records),
+            "semantic_proposal_diversity": False,
+            "idea_novelty_metric": False,
+            "model_quality_effect": False,
+            "benchmark_attribution": False,
+            "remaining_gap": [
+                "near_duplicate_proposal_detection",
+                "semantic_idea_family_classification",
+                "task_output_distance_or_behavioral_novelty",
+                "model_or_backend_quality_ablation_linkage",
+                "benchmark_level_proposal_diversity_telemetry",
+            ],
+        },
+    }
+    report["validation"] = validate_proposal_diversity_report(report)
+    return report
+
+
+def _proposal_diversity_record(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    proposal = (
+        metadata.get("proposal")
+        if isinstance(metadata.get("proposal"), Mapping)
+        else {}
+    )
+    fields = _proposal_diversity_fields(proposal)
+    batch = _proposal_lifecycle_batch(metadata.get("proposal_batch"))
+    idea = proposal.get("idea") if isinstance(proposal.get("idea"), str) else ""
+    signature_text = "\n".join(
+        f"{field}:{proposal.get(field)}"
+        for field in ("idea", "rationale", "hypothesis")
+        if isinstance(proposal.get(field), str) and proposal.get(field)
+    )
+    record = {
+        "program_id": program.id,
+        "generation": program.generation,
+        "loop_generation_index": metadata.get("loop_generation_index"),
+        "proposal_batch": batch,
+        "proposal_metadata_captured": bool(fields),
+        "proposal_fields_present": fields,
+        "idea_hash": _proposal_diversity_hash(idea),
+        "proposal_signature_hash": _proposal_diversity_hash(signature_text),
+        "idea_preview": _proposal_lifecycle_text(idea, 160),
+        "backend_idx": metadata.get("backend_idx")
+        if isinstance(metadata.get("backend_idx"), int)
+        and not isinstance(metadata.get("backend_idx"), bool)
+        else None,
+        "mutation_mode": metadata.get("mutation_mode")
+        if isinstance(metadata.get("mutation_mode"), str)
+        else None,
+        "evaluator_is_valid": program.evaluation.get("is_valid")
+        if isinstance(program.evaluation, dict)
+        else None,
+    }
+    return {key: value for key, value in record.items() if value is not None}
+
+
+def _proposal_diversity_fields(proposal: Mapping[str, object]) -> list[str]:
+    return [
+        field
+        for field in ("idea", "rationale", "hypothesis")
+        if isinstance(proposal.get(field), str) and proposal.get(field)
+    ]
+
+
+def _proposal_diversity_hash(value: object) -> str | None:
+    if not isinstance(value, str) or not value:
+        return None
+    return hashlib.sha256(
+        value.strip().encode("utf-8", errors="replace")
+    ).hexdigest()
+
+
+def _proposal_diversity_group_records(records: list[dict], field: str) -> list[dict]:
+    groups: dict[object, list[dict]] = {}
+    for record in records:
+        key = record.get(field)
+        if key is None:
+            continue
+        groups.setdefault(key, []).append(record)
+    result = []
+    for key, group in sorted(groups.items(), key=lambda item: str(item[0])):
+        result.append(_proposal_diversity_group_summary(field, key, group))
+    return result
+
+
+def _proposal_diversity_batch_records(records: list[dict]) -> list[dict]:
+    groups: dict[tuple[object, object], list[dict]] = {}
+    for record in records:
+        batch = (
+            record.get("proposal_batch")
+            if isinstance(record.get("proposal_batch"), Mapping)
+            else {}
+        )
+        proposal_count = batch.get("proposals_per_generation")
+        if proposal_count is None:
+            continue
+        key = (record.get("loop_generation_index"), proposal_count)
+        groups.setdefault(key, []).append(record)
+    result = []
+    for (loop_generation_index, proposals_per_generation), group in sorted(
+        groups.items(), key=lambda item: (str(item[0][0]), str(item[0][1]))
+    ):
+        summary = _proposal_diversity_group_summary(
+            "loop_generation_index",
+            loop_generation_index,
+            group,
+        )
+        summary["proposals_per_generation"] = proposals_per_generation
+        result.append(summary)
+    return result
+
+
+def _proposal_diversity_group_summary(
+    field: str,
+    value: object,
+    group: list[dict],
+) -> dict:
+    proposal_hashes = [
+        record["proposal_signature_hash"]
+        for record in group
+        if record.get("proposal_signature_hash")
+    ]
+    idea_hashes = [
+        record["idea_hash"] for record in group if record.get("idea_hash")
+    ]
+    metadata_count = sum(
+        1 for record in group if record.get("proposal_metadata_captured") is True
+    )
+    return {
+        field: value,
+        "candidate_count": len(group),
+        "proposal_metadata_count": metadata_count,
+        "idea_record_count": len(idea_hashes),
+        "unique_proposal_signature_count": len(set(proposal_hashes)),
+        "duplicate_exact_proposal_count": (
+            len(proposal_hashes) - len(set(proposal_hashes))
+        ),
+        "unique_idea_hash_count": len(set(idea_hashes)),
+        "duplicate_exact_idea_count": len(idea_hashes) - len(set(idea_hashes)),
+    }
+
+
+def validate_proposal_diversity_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.proposal_diversity_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "proposal diversity report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "proposal_metadata_count",
+        "idea_record_count",
+        "unique_proposal_signature_count",
+        "duplicate_exact_proposal_count",
+        "unique_idea_hash_count",
+        "duplicate_exact_idea_count",
+        "generation_records",
+        "batch_records",
+        "sample_records",
+        "records_truncated",
+        "analysis_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"proposal diversity report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.proposal_diversity_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "proposal diversity report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_proposal_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "proposal diversity report source is unsupported",
+            }
+        )
+    for field in (
+        "generated_candidate_count",
+        "proposal_metadata_count",
+        "idea_record_count",
+        "unique_proposal_signature_count",
+        "duplicate_exact_proposal_count",
+        "unique_idea_hash_count",
+        "duplicate_exact_idea_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    if (
+        isinstance(report.get("unique_idea_hash_count"), int)
+        and isinstance(report.get("idea_record_count"), int)
+        and report["unique_idea_hash_count"] > report["idea_record_count"]
+    ):
+        issues.append(
+            {
+                "code": "invalid_unique_idea_count",
+                "message": "unique_idea_hash_count cannot exceed idea_record_count",
+            }
+        )
+    for field in ("generation_records", "batch_records", "sample_records"):
+        value = report.get(field)
+        if not isinstance(value, list):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be a list"}
+            )
+    policy = report.get("analysis_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_analysis_policy",
+                "message": "analysis_policy must be an object",
+            }
+        )
+        policy = {}
+    if policy.get("exact_text_hashes") is not True:
+        issues.append(
+            {
+                "code": "invalid_exact_text_hash_policy",
+                "message": "analysis policy must enable exact text hashes",
+            }
+        )
+    for field in (
+        "near_duplicate_detection",
+        "semantic_novelty_scoring",
+        "idea_family_classification",
+        "model_quality_attribution",
+        "benchmark_linkage",
+    ):
+        if policy.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"analysis_policy.{field} must be false",
+                }
+            )
+    records = report.get("sample_records")
+    if isinstance(records, list):
+        for index, record in enumerate(records):
+            if not isinstance(record, dict):
+                issues.append(
+                    {
+                        "code": "invalid_sample_record",
+                        "message": f"sample record {index} must be an object",
+                    }
+                )
+                continue
+            if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+                issues.append(
+                    {
+                        "code": "invalid_sample_program_id",
+                        "message": f"sample record {index} program_id is invalid",
+                    }
+                )
+            if not isinstance(record.get("proposal_fields_present"), list):
+                issues.append(
+                    {
+                        "code": "invalid_sample_proposal_fields",
+                        "message": f"sample record {index} proposal_fields_present must be a list",
+                    }
+                )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    for field in (
+        "semantic_proposal_diversity",
+        "idea_novelty_metric",
+        "model_quality_effect",
+        "benchmark_attribution",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"claim_readiness.{field} must be false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "proposal diversity report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.proposal_diversity_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _proposal_lifecycle_history_record(

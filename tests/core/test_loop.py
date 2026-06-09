@@ -67,6 +67,7 @@ from libreevolve.core.loop import (
     validate_sampling_balance_report,
     validate_programmatic_representation_boundary_report,
     validate_mutation_operator_boundary_report,
+    validate_proposal_diversity_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -937,6 +938,87 @@ def test_loop_evaluates_configured_proposal_batch_in_one_generation():
     assert consumed["generations_completed"] == 1
     assert consumed["candidate_evaluations"] == 3
     assert manifest["config"]["proposals_per_generation"] == 3
+
+
+def test_runtime_history_reports_exact_proposal_diversity_counts():
+    tmpdir = tempfile.mkdtemp()
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        (
+            "IDEA: Set x to the accepted value.\n"
+            "RATIONALE: The validator expects x=2.\n"
+            "HYPOTHESIS: Direct assignment should validate.\n"
+            "x=2",
+            0,
+        ),
+        (
+            "IDEA: Use a plain constant assignment.\n"
+            "RATIONALE: Keeping the solution minimal should pass.\n"
+            "HYPOTHESIS: The evaluator accepts the exact value.\n"
+            "x=2",
+            0,
+        ),
+        (
+            "IDEA: Set x to the accepted value.\n"
+            "RATIONALE: The duplicate idea should be counted exactly.\n"
+            "HYPOTHESIS: Duplicate proposal text is observable.\n"
+            "x=2",
+            0,
+        ),
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                capture_proposal_metadata=True,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["proposal_diversity_report"]
+
+    assert report["schema"] == "libreevolve.proposal_diversity_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_proposal_diversity_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 3
+    assert report["proposal_metadata_count"] == 3
+    assert report["idea_record_count"] == 3
+    assert report["unique_idea_hash_count"] == 2
+    assert report["duplicate_exact_idea_count"] == 1
+    assert report["unique_proposal_signature_count"] == 3
+    assert report["duplicate_exact_proposal_count"] == 0
+    assert report["analysis_policy"]["exact_text_hashes"] is True
+    assert report["analysis_policy"]["near_duplicate_detection"] is False
+    assert report["analysis_policy"]["semantic_novelty_scoring"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["exact_duplicate_detection"] is True
+    assert report["claim_readiness"]["semantic_proposal_diversity"] is False
+    assert report["claim_readiness"]["model_quality_effect"] is False
+
+    generation = report["generation_records"][0]
+    assert generation["generation"] == 1
+    assert generation["candidate_count"] == 3
+    assert generation["proposal_metadata_count"] == 3
+    assert generation["unique_idea_hash_count"] == 2
+    assert generation["duplicate_exact_idea_count"] == 1
+
+    batch = report["batch_records"][0]
+    assert batch["loop_generation_index"] == 0
+    assert batch["proposals_per_generation"] == 3
+    assert batch["candidate_count"] == 3
+    assert batch["unique_idea_hash_count"] == 2
+    assert batch["duplicate_exact_idea_count"] == 1
+    assert {record["idea_preview"] for record in report["sample_records"]} == {
+        "Set x to the accepted value.",
+        "Use a plain constant assignment.",
+    }
 
 
 def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():

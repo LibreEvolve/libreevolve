@@ -15413,3 +15413,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     benchmark telemetry remain open.
   - Verification: focused loop tests cover manifest emission, payload-surface
     counts, sample records, and claim-readiness boundaries.
+
+- [x] Add exact proposal-diversity report evidence.
+  - Spec evidence: AlphaEvolve Section 2.3 says SOTA LLMs digest previous
+    solutions and propose new, diverse ways to improve them.
+  - Status: completed manifests now include
+    `runtime.history.proposal_diversity_report` with schema
+    `libreevolve.proposal_diversity_report.v1`, plus
+    `validate_proposal_diversity_report()`. The report records exact proposal
+    signature and idea-hash uniqueness/duplicate counts by generation and
+    proposal batch, bounded sample records, and an exact-text-hash analysis
+    policy.
+  - Remaining gap: near-duplicate detection, semantic idea-family novelty,
+    task-output/code-distance evidence, model-quality attribution, and
+    benchmark linkage remain open.
+  - Verification: focused loop tests cover manifest emission, exact duplicate
+    idea counts, batch records, sample records, and unready claim boundaries.

@@ -502,27 +502,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     publication-author metadata evidence.
 
 - [ ] Keep source-affiliation roadmap wording scoped until title-page
-      affiliation metadata exists.
+      affiliation metadata is populated.
   - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
     affiliation line `Google DeepMind1` plus footnotes `1See Acknowledgments
     and Author information section.` and `*Equal contributions.` It also
     carries the source-paper rights line `© 2025 Google DeepMind. All rights
     reserved`, which is related but separate source-rights evidence.
-  - Current evidence: ROADMAP and README can cite LibreEvolve's independent
-    non-affiliation statement, source-PDF version/rights TODOs, and
-    publication-author metadata gaps. They do not require roadmap evidence for
-    title-page affiliation/organization text, footnote marker definitions,
-    author-to-marker mapping, source page/span, or docs wording that separates
-    source-paper affiliation evidence from local project ownership,
-    endorsement, author metadata, source-rights records, and system-development
-    provenance. `paper_manifest` gates validate cache rows, local PDF hashes,
-    and PDF readability, but not title-page affiliation or marker semantics.
-  - Required result: when title-page affiliation provenance lands, update
-    ROADMAP, README, papers index, and code/paper TODOs with affiliation text,
-    marker ids, footnote text, author-marker mappings, source locator, and
-    privacy/redaction policy plus linkage to source-rights metadata, so roadmap
-    wording distinguishes source-paper organization metadata from LibreEvolve's
-    affiliation, licensing, and endorsement boundaries.
+  - Current evidence: ROADMAP and README now document optional
+    `title_page.yaml` / `Problem.title_page_metadata`, normalized
+    `problem.title_page_metadata`, and
+    `runtime.history.title_page_affiliation_report` for source affiliation,
+    footnote markers, author-marker mappings, source-rights linkage,
+    privacy/redaction policy, and review/signoff readiness. The schema/report
+    surface is implemented, but representative fixtures still lack real
+    reviewed title-page records.
+  - Required result: when representative fixtures carry reviewed title-page
+    affiliation evidence and paper-facing certification rows, update ROADMAP,
+    README, papers index, and code/paper TODOs together so roadmap wording
+    neither underclaims the metadata/report surface nor overclaims
+    AlphaEvolve-style title-page affiliation parity.
 
 - [ ] Keep system-development roadmap wording scoped until contribution-role
       provenance exists.

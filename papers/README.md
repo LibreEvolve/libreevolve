@@ -358,6 +358,16 @@ affiliation metadata, package/project metadata, and local validation evidence;
 populated reviewed records are still needed before making paper-facing author
 metadata parity claims.
 
+AlphaEvolve title-page affiliation note: LibreEvolve now has optional
+`title_page.yaml` / `Problem.title_page_metadata` records plus
+`runtime.history.title_page_affiliation_report` for source-paper affiliation
+text, footnote marker definitions, author-marker mappings, source-page
+locators, source-rights linkage, privacy/redaction policy, and review/signoff
+state. These records are source-publication facts, not local affiliation,
+endorsement, licensing, publication-author, or technical capability evidence;
+populated reviewed records are still needed before making title-page
+affiliation or footnote parity claims.
+
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema
 `libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves

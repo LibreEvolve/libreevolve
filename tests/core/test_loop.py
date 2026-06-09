@@ -59,6 +59,7 @@ from libreevolve.core.loop import (
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
+    validate_title_page_affiliation_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -6200,6 +6201,134 @@ def test_direct_paper_author_metadata_rejects_secret_like_text_before_manifest()
         StrictJsonlError,
         match=(
             "paper_author_metadata\\.records\\[0\\]\\.contributor_label "
+            "must not contain secret-like text"
+        ),
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
+
+
+def test_loaded_title_page_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text("title page task", encoding="utf-8")
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    (problem_dir / "title_page.yaml").write_text(
+        "affiliation:\n"
+        "  organization: Google DeepMind\n"
+        "  marker_id: affiliation-1\n"
+        "  source_page: 1\n"
+        "  source_section: AlphaEvolve title page\n"
+        "footnotes:\n"
+        "  - marker_id: affiliation-1\n"
+        "    kind: affiliation\n"
+        "    text: See Acknowledgments and Author information section.\n"
+        "    source_page: 1\n"
+        "    source_section: Title page footnotes\n"
+        "  - marker_id: star\n"
+        "    kind: equal_contribution\n"
+        "    text: Equal contributions.\n"
+        "    source_page: 1\n"
+        "    source_section: Title page footnotes\n"
+        "author_markers:\n"
+        "  - author_label: equal contributor group\n"
+        "    marker_id: star\n"
+        "    source_page: 1\n"
+        "rights_linkage:\n"
+        "  status: source_rights_record_referenced\n"
+        "  record_id: alphaevolve-2025-rights\n"
+        "  source_page: 1\n"
+        "privacy_policy:\n"
+        "  redaction: public_source_text\n"
+        "review:\n"
+        "  status: title_page_metadata_reviewed\n"
+        "  reviewer_labels:\n"
+        "    - title page reviewer\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["title_page_metadata"]
+    assert metadata["schema"] == "libreevolve.title_page_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert metadata["affiliation"]["organization"] == "Google DeepMind"
+    report = manifest["runtime"]["history"]["title_page_affiliation_report"]
+    assert report["schema"] == "libreevolve.title_page_affiliation_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_title_page_affiliation_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["affiliation_organization"] == "Google DeepMind"
+    assert report["footnote_kind_counts"] == {
+        "affiliation": 1,
+        "equal_contribution": 1,
+    }
+    assert report["claim_readiness"][
+        "alphaevolve_title_page_affiliation_parity"
+    ] is True
+
+
+def test_title_page_affiliation_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["title_page_affiliation_report"]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["validation"]["ok"] is True
+    assert report["claim_readiness"][
+        "alphaevolve_title_page_affiliation_parity"
+    ] is False
+    assert "title_page_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_title_page_affiliation_parity"] = True
+    validation = validate_title_page_affiliation_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "title_page_affiliation_parity_mismatch",
+    }
+
+
+def test_direct_title_page_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.title_page_metadata = {
+        "affiliation": {
+            "organization": (
+                "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678"
+            ),
+            "marker_id": "affiliation-1",
+            "source_page": 1,
+            "source_section": "Title page",
+        }
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=(
+            "title_page_metadata\\.affiliation\\.organization "
             "must not contain secret-like text"
         ),
     ):

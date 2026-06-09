@@ -170,6 +170,7 @@ COLLABORATOR_FEEDBACK_METADATA_SCHEMA = (
 )
 ACKNOWLEDGEMENT_METADATA_SCHEMA = "libreevolve.acknowledgement_metadata.v1"
 PAPER_AUTHOR_METADATA_SCHEMA = "libreevolve.paper_author_metadata.v1"
+TITLE_PAGE_METADATA_SCHEMA = "libreevolve.title_page_metadata.v1"
 _FORMULATION_ALLOWED_KEYS = {
     "problem_origin",
     "contributors",
@@ -314,6 +315,36 @@ _PAPER_AUTHOR_REVIEW_STATUSES = {
 }
 _PAPER_AUTHOR_TEXT_MAX_CHARS = 1024
 _PAPER_AUTHOR_LABEL_MAX_CHARS = 160
+_TITLE_PAGE_ALLOWED_KEYS = {
+    "affiliation",
+    "footnotes",
+    "author_markers",
+    "rights_linkage",
+    "privacy_policy",
+    "review",
+}
+_TITLE_PAGE_MARKER_KINDS = {
+    "affiliation",
+    "equal_contribution",
+    "rights",
+}
+_TITLE_PAGE_RIGHTS_LINKAGE_STATUSES = {
+    "not_linked",
+    "source_rights_record_referenced",
+}
+_TITLE_PAGE_REDACTION_POLICIES = {
+    "public_source_text",
+    "redacted_labels_only",
+    "secret_redacted",
+}
+_TITLE_PAGE_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "title_page_metadata_reviewed",
+    "owner_signed_off",
+}
+_TITLE_PAGE_TEXT_MAX_CHARS = 1024
+_TITLE_PAGE_LABEL_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -343,6 +374,7 @@ class ProgramDatabase:
         collaborator_feedback_metadata: Mapping[str, object] | None = None,
         acknowledgement_metadata: Mapping[str, object] | None = None,
         paper_author_metadata: Mapping[str, object] | None = None,
+        title_page_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -403,6 +435,7 @@ class ProgramDatabase:
         paper_author_metadata = validate_paper_author_metadata(
             paper_author_metadata or {}
         )
+        title_page_metadata = validate_title_page_metadata(title_page_metadata or {})
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -418,6 +451,7 @@ class ProgramDatabase:
             collaborator_feedback_metadata,
             acknowledgement_metadata,
             paper_author_metadata,
+            title_page_metadata,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -6212,6 +6246,319 @@ def _normalize_paper_author_text(
     return redacted
 
 
+def validate_title_page_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("title_page_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("title_page_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key) for key in set(value) - _TITLE_PAGE_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(f"title_page_metadata has unsupported fields {unsupported}")
+    normalized: dict = {
+        "schema": TITLE_PAGE_METADATA_SCHEMA,
+        "status": "provided" if value else "not_provided",
+        "affiliation": None,
+        "footnotes": [],
+        "author_markers": [],
+        "rights_linkage": {
+            "status": "not_linked",
+            "record_id": None,
+            "source_page": None,
+        },
+        "privacy_policy": {
+            "redaction": "public_source_text",
+            "notes": None,
+        },
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "affiliation" in value:
+        normalized["affiliation"] = _normalize_title_page_affiliation(
+            value["affiliation"]
+        )
+    if "footnotes" in value:
+        footnotes = value["footnotes"]
+        if not isinstance(footnotes, list):
+            raise StrictJsonlError("title_page_metadata.footnotes must be a list")
+        normalized["footnotes"] = [
+            _normalize_title_page_footnote(index, footnote)
+            for index, footnote in enumerate(footnotes)
+        ]
+    footnote_markers = {
+        footnote["marker_id"]
+        for footnote in normalized["footnotes"]
+        if isinstance(footnote, Mapping) and isinstance(footnote.get("marker_id"), str)
+    }
+    if len(footnote_markers) != len(normalized["footnotes"]):
+        raise StrictJsonlError(
+            "title_page_metadata.footnotes must have unique marker_id values"
+        )
+    if "author_markers" in value:
+        author_markers = value["author_markers"]
+        if not isinstance(author_markers, list):
+            raise StrictJsonlError("title_page_metadata.author_markers must be a list")
+        normalized["author_markers"] = [
+            _normalize_title_page_author_marker(index, marker, footnote_markers)
+            for index, marker in enumerate(author_markers)
+        ]
+    if "rights_linkage" in value:
+        normalized["rights_linkage"] = _normalize_title_page_rights_linkage(
+            value["rights_linkage"]
+        )
+    if "privacy_policy" in value:
+        normalized["privacy_policy"] = _normalize_title_page_privacy(
+            value["privacy_policy"]
+        )
+    if "review" in value:
+        normalized["review"] = _normalize_title_page_review(value["review"])
+    _validate_context_provenance_json_size("title_page_metadata", normalized)
+    return normalized
+
+
+def _normalize_title_page_affiliation(value: object) -> dict:
+    label = "title_page_metadata.affiliation"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"organization", "marker_id", "source_page", "source_section"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    source_page = value.get("source_page")
+    if isinstance(source_page, bool) or not isinstance(source_page, int) or source_page <= 0:
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    return {
+        "organization": _normalize_title_page_text(
+            f"{label}.organization",
+            value.get("organization"),
+            max_chars=_TITLE_PAGE_LABEL_MAX_CHARS,
+        ),
+        "marker_id": _normalize_title_page_token(
+            f"{label}.marker_id",
+            value.get("marker_id"),
+        ),
+        "source_page": source_page,
+        "source_section": _normalize_title_page_text(
+            f"{label}.source_section",
+            value.get("source_section"),
+            max_chars=_TITLE_PAGE_LABEL_MAX_CHARS,
+        ),
+    }
+
+
+def _normalize_title_page_footnote(index: int, value: object) -> dict:
+    label = f"title_page_metadata.footnotes[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"marker_id", "kind", "text", "source_page", "source_section"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    kind = value.get("kind")
+    if not isinstance(kind, str) or kind not in _TITLE_PAGE_MARKER_KINDS:
+        raise StrictJsonlError(
+            f"{label}.kind must be one of {sorted(_TITLE_PAGE_MARKER_KINDS)}"
+        )
+    source_page = value.get("source_page")
+    if isinstance(source_page, bool) or not isinstance(source_page, int) or source_page <= 0:
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    return {
+        "marker_id": _normalize_title_page_token(
+            f"{label}.marker_id",
+            value.get("marker_id"),
+        ),
+        "kind": kind,
+        "text": _normalize_title_page_text(
+            f"{label}.text",
+            value.get("text"),
+            max_chars=_TITLE_PAGE_TEXT_MAX_CHARS,
+        ),
+        "source_page": source_page,
+        "source_section": _normalize_title_page_text(
+            f"{label}.source_section",
+            value.get("source_section"),
+            max_chars=_TITLE_PAGE_LABEL_MAX_CHARS,
+        ),
+    }
+
+
+def _normalize_title_page_author_marker(
+    index: int,
+    value: object,
+    footnote_markers: set[str],
+) -> dict:
+    label = f"title_page_metadata.author_markers[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"author_label", "marker_id", "source_page"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    marker_id = _normalize_title_page_token(f"{label}.marker_id", value.get("marker_id"))
+    if marker_id not in footnote_markers:
+        raise StrictJsonlError(f"{label}.marker_id must reference a declared footnote")
+    source_page = value.get("source_page")
+    if isinstance(source_page, bool) or not isinstance(source_page, int) or source_page <= 0:
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    return {
+        "author_label": _normalize_title_page_text(
+            f"{label}.author_label",
+            value.get("author_label"),
+            max_chars=_TITLE_PAGE_LABEL_MAX_CHARS,
+        ),
+        "marker_id": marker_id,
+        "source_page": source_page,
+    }
+
+
+def _normalize_title_page_rights_linkage(value: object) -> dict:
+    label = "title_page_metadata.rights_linkage"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "record_id", "source_page"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_linked")
+    if not isinstance(status, str) or status not in _TITLE_PAGE_RIGHTS_LINKAGE_STATUSES:
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_TITLE_PAGE_RIGHTS_LINKAGE_STATUSES)}"
+        )
+    record_id = None
+    if "record_id" in value and value["record_id"] is not None:
+        record_id = _normalize_title_page_token(f"{label}.record_id", value["record_id"])
+    source_page = value.get("source_page")
+    if source_page is not None and (
+        isinstance(source_page, bool) or not isinstance(source_page, int) or source_page <= 0
+    ):
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    return {"status": status, "record_id": record_id, "source_page": source_page}
+
+
+def _normalize_title_page_privacy(value: object) -> dict:
+    label = "title_page_metadata.privacy_policy"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"redaction", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    redaction = value.get("redaction")
+    if not isinstance(redaction, str) or redaction not in _TITLE_PAGE_REDACTION_POLICIES:
+        raise StrictJsonlError(
+            f"{label}.redaction must be one of {sorted(_TITLE_PAGE_REDACTION_POLICIES)}"
+        )
+    return {
+        "redaction": redaction,
+        "notes": (
+            _normalize_title_page_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_TITLE_PAGE_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_title_page_review(value: object) -> dict:
+    label = "title_page_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if not isinstance(status, str) or status not in _TITLE_PAGE_REVIEW_STATUSES:
+        raise StrictJsonlError(
+            f"{label}.status must be one of {sorted(_TITLE_PAGE_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    reviewer_labels = _normalize_title_page_text_list(
+        f"{label}.reviewer_labels",
+        reviewers,
+        max_chars=_TITLE_PAGE_LABEL_MAX_CHARS,
+        allow_empty=True,
+    )
+    return {
+        "status": status,
+        "reviewer_labels": reviewer_labels,
+        "notes": (
+            _normalize_title_page_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_TITLE_PAGE_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_title_page_text_list(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+    allow_empty: bool = False,
+) -> list[str]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "a list" if allow_empty else "a non-empty list"
+        raise StrictJsonlError(f"{label} must be {requirement}")
+    normalized = []
+    for index, item in enumerate(value):
+        text = _normalize_title_page_text(
+            f"{label}[{index}]",
+            item,
+            max_chars=max_chars,
+        )
+        if text not in normalized:
+            normalized.append(text)
+    return normalized
+
+
+def _normalize_title_page_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > _TITLE_PAGE_LABEL_MAX_CHARS:
+        raise StrictJsonlError(
+            f"{label} must be <= {_TITLE_PAGE_LABEL_MAX_CHARS} characters"
+        )
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value):
+        raise StrictJsonlError(f"{label} must be a safe title-page token")
+    return value
+
+
+def _normalize_title_page_text(label: str, value: object, *, max_chars: int) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
 def validate_seed_sources(value: object) -> list[dict]:
     if not isinstance(value, list):
         raise StrictJsonlError("seed_sources must be a list of mappings")
@@ -6573,6 +6920,7 @@ def _startup_manifest_payload(
     collaborator_feedback_metadata: dict,
     acknowledgement_metadata: dict,
     paper_author_metadata: dict,
+    title_page_metadata: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -6724,6 +7072,7 @@ def _startup_manifest_payload(
             "collaborator_feedback_metadata": collaborator_feedback_metadata,
             "acknowledgement_metadata": acknowledgement_metadata,
             "paper_author_metadata": paper_author_metadata,
+            "title_page_metadata": title_page_metadata,
         },
         "policies": {
             "redaction": redaction_policy_record(),

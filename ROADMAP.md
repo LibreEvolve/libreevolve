@@ -154,6 +154,12 @@ LibreEvolve has:
   manuscript writers, paper-input contributors, corresponding authors,
   title-page marker linkage, contact/privacy policy, and review/signoff
   readiness
+- optional title-page affiliation metadata under `title_page.yaml` or direct
+  `Problem.title_page_metadata`, normalized into `problem.title_page_metadata`
+  and summarized by `runtime.history.title_page_affiliation_report` for
+  source-paper affiliation text, footnote marker definitions, author-marker
+  mappings, source-rights linkage, privacy/redaction policy, and
+  review/signoff readiness
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

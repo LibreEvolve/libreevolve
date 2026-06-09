@@ -791,6 +791,7 @@ def evolve(
         collaborator_feedback_metadata=_problem_collaborator_feedback_metadata(problem),
         acknowledgement_metadata=_problem_acknowledgement_metadata(problem),
         paper_author_metadata=_problem_paper_author_metadata(problem),
+        title_page_metadata=_problem_title_page_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5172,6 +5173,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "title_page_affiliation_report": (
+            _title_page_affiliation_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -7438,6 +7444,459 @@ def validate_paper_author_metadata_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.paper_author_metadata_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _title_page_affiliation_report(startup_manifest: Mapping[str, object]) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("title_page_metadata")
+        if isinstance(problem.get("title_page_metadata"), Mapping)
+        else {}
+    )
+    affiliation = (
+        metadata.get("affiliation")
+        if isinstance(metadata.get("affiliation"), Mapping)
+        else {}
+    )
+    footnotes = (
+        metadata.get("footnotes")
+        if isinstance(metadata.get("footnotes"), list)
+        else []
+    )
+    author_markers = (
+        metadata.get("author_markers")
+        if isinstance(metadata.get("author_markers"), list)
+        else []
+    )
+    rights = (
+        metadata.get("rights_linkage")
+        if isinstance(metadata.get("rights_linkage"), Mapping)
+        else {}
+    )
+    privacy = (
+        metadata.get("privacy_policy")
+        if isinstance(metadata.get("privacy_policy"), Mapping)
+        else {}
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    footnote_kind_counts: dict[str, int] = {}
+    source_pages: set[int] = set()
+    for footnote in footnotes:
+        if not isinstance(footnote, Mapping):
+            continue
+        kind = footnote.get("kind")
+        if isinstance(kind, str):
+            footnote_kind_counts[kind] = footnote_kind_counts.get(kind, 0) + 1
+        page = footnote.get("source_page")
+        if isinstance(page, int) and not isinstance(page, bool):
+            source_pages.add(page)
+    affiliation_page = affiliation.get("source_page")
+    if isinstance(affiliation_page, int) and not isinstance(affiliation_page, bool):
+        source_pages.add(affiliation_page)
+    marker_ids = sorted(
+        {
+            footnote.get("marker_id")
+            for footnote in footnotes
+            if isinstance(footnote, Mapping)
+            and isinstance(footnote.get("marker_id"), str)
+        }
+    )
+    author_marker_ids = sorted(
+        {
+            marker.get("marker_id")
+            for marker in author_markers
+            if isinstance(marker, Mapping)
+            and isinstance(marker.get("marker_id"), str)
+        }
+    )
+    metadata_present = metadata.get("status") == "provided"
+    affiliation_recorded = (
+        isinstance(affiliation.get("organization"), str)
+        and isinstance(affiliation.get("marker_id"), str)
+        and isinstance(affiliation.get("source_page"), int)
+    )
+    affiliation_footnote_recorded = footnote_kind_counts.get("affiliation", 0) > 0
+    equal_marker_recorded = footnote_kind_counts.get("equal_contribution", 0) > 0
+    author_marker_mapping_recorded = bool(
+        set(author_marker_ids) & {
+            footnote.get("marker_id")
+            for footnote in footnotes
+            if isinstance(footnote, Mapping)
+            and footnote.get("kind") == "equal_contribution"
+            and isinstance(footnote.get("marker_id"), str)
+        }
+    )
+    rights_linked = rights.get("status") == "source_rights_record_referenced"
+    privacy_recorded = isinstance(privacy.get("redaction"), str)
+    reviewed = review.get("status") in {
+        "title_page_metadata_reviewed",
+        "owner_signed_off",
+    }
+    claim_ready = (
+        metadata_present
+        and affiliation_recorded
+        and affiliation_footnote_recorded
+        and equal_marker_recorded
+        and author_marker_mapping_recorded
+        and rights_linked
+        and privacy_recorded
+        and reviewed
+    )
+    report = {
+        "schema": "libreevolve.title_page_affiliation_report.v1",
+        "source": "title_page_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.title_page_metadata",
+        "metadata_status": metadata.get("status"),
+        "affiliation_recorded": affiliation_recorded,
+        "affiliation_organization": affiliation.get("organization"),
+        "affiliation_marker_id": affiliation.get("marker_id"),
+        "footnote_count": len(footnotes),
+        "footnote_kind_counts": footnote_kind_counts,
+        "marker_ids": marker_ids,
+        "author_marker_mapping_count": len(author_markers),
+        "author_marker_ids": author_marker_ids,
+        "source_page_count": len(source_pages),
+        "source_pages": sorted(source_pages),
+        "rights_linkage_status": rights.get("status"),
+        "rights_record_id": rights.get("record_id"),
+        "privacy_policy": {
+            "redaction": privacy.get("redaction"),
+        },
+        "review_status": review.get("status"),
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata_present,
+            "affiliation_organization_recorded": affiliation_recorded,
+            "affiliation_footnote_recorded": affiliation_footnote_recorded,
+            "equal_contribution_footnote_recorded": equal_marker_recorded,
+            "author_to_marker_mapping_recorded": author_marker_mapping_recorded,
+            "source_rights_linked": rights_linked,
+            "privacy_redaction_policy_recorded": privacy_recorded,
+            "title_page_metadata_review_or_owner_signoff": reviewed,
+            "local_affiliation_boundary_separated": True,
+            "publication_author_boundary_separated": True,
+            "technical_system_boundary_separated": True,
+            "alphaevolve_title_page_affiliation_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("title_page_yaml_in_problem_fixture", metadata_present),
+                    ("affiliation_organization", affiliation_recorded),
+                    ("affiliation_footnote", affiliation_footnote_recorded),
+                    ("equal_contribution_footnote", equal_marker_recorded),
+                    ("author_to_marker_mapping", author_marker_mapping_recorded),
+                    ("source_rights_linkage", rights_linked),
+                    ("privacy_redaction_policy", privacy_recorded),
+                    ("title_page_metadata_review_or_owner_signoff", reviewed),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.title_page_metadata",
+            "optional_problem_file": "title_page.yaml",
+            "allowed_marker_kinds": [
+                "affiliation",
+                "equal_contribution",
+                "rights",
+            ],
+            "allowed_rights_linkage_statuses": [
+                "not_linked",
+                "source_rights_record_referenced",
+            ],
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "title_page_metadata_reviewed",
+                "owner_signed_off",
+            ],
+            "boundary": (
+                "source_paper_affiliation_and_footnotes_not_local_project_"
+                "affiliation_or_endorsement"
+            ),
+        },
+    }
+    report["validation"] = validate_title_page_affiliation_report(report)
+    return report
+
+
+def validate_title_page_affiliation_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.title_page_affiliation_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "title-page affiliation report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "affiliation_recorded",
+        "affiliation_organization",
+        "affiliation_marker_id",
+        "footnote_count",
+        "footnote_kind_counts",
+        "marker_ids",
+        "author_marker_mapping_count",
+        "author_marker_ids",
+        "source_page_count",
+        "source_pages",
+        "rights_linkage_status",
+        "rights_record_id",
+        "privacy_policy",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"title-page affiliation report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.title_page_affiliation_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported title-page affiliation report schema",
+            }
+        )
+    if report.get("source") != "title_page_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported title-page affiliation report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.title_page_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference title-page metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.title_page_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at title-page metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    for field in (
+        "affiliation_recorded",
+    ):
+        if not isinstance(report.get(field), bool):
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be boolean",
+                }
+            )
+    for field in (
+        "footnote_count",
+        "author_marker_mapping_count",
+        "source_page_count",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    allowed_kinds = {"affiliation", "equal_contribution", "rights"}
+    kind_counts = report.get("footnote_kind_counts")
+    if not isinstance(kind_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_footnote_kind_counts",
+                "message": "footnote_kind_counts must be an object",
+            }
+        )
+        kind_counts = {}
+    else:
+        for kind, count in kind_counts.items():
+            if kind not in allowed_kinds:
+                issues.append(
+                    {
+                        "code": "invalid_footnote_kind",
+                        "message": "footnote kind is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_footnote_kind_count",
+                        "message": "footnote kind counts must be non-negative integers",
+                    }
+                )
+    for list_field in ("marker_ids", "author_marker_ids"):
+        value = report.get(list_field)
+        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+            issues.append(
+                {
+                    "code": f"invalid_{list_field}",
+                    "message": f"{list_field} must be a list of text labels",
+                }
+            )
+    pages = report.get("source_pages")
+    if not isinstance(pages, list) or not all(
+        isinstance(page, int) and not isinstance(page, bool) and page > 0
+        for page in pages
+    ):
+        issues.append(
+            {
+                "code": "invalid_source_pages",
+                "message": "source_pages must be positive integers",
+            }
+        )
+    if report.get("rights_linkage_status") not in {
+        "not_linked",
+        "source_rights_record_referenced",
+    }:
+        issues.append(
+            {
+                "code": "invalid_rights_linkage_status",
+                "message": "rights linkage status is unsupported",
+            }
+        )
+    privacy = report.get("privacy_policy")
+    privacy_recorded = False
+    if not isinstance(privacy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_privacy_policy",
+                "message": "privacy_policy must be an object",
+            }
+        )
+    else:
+        privacy_recorded = isinstance(privacy.get("redaction"), str)
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "title_page_metadata_reviewed",
+        "owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and report.get("affiliation_recorded") is True
+        and kind_counts.get("affiliation", 0) > 0
+        and kind_counts.get("equal_contribution", 0) > 0
+        and isinstance(report.get("author_marker_mapping_count"), int)
+        and not isinstance(report.get("author_marker_mapping_count"), bool)
+        and report.get("author_marker_mapping_count") > 0
+        and report.get("rights_linkage_status") == "source_rights_record_referenced"
+        and privacy_recorded
+        and review_status in {"title_page_metadata_reviewed", "owner_signed_off"}
+    )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("alphaevolve_title_page_affiliation_parity") != expected_claim_ready:
+            issues.append(
+                {
+                    "code": "title_page_affiliation_parity_mismatch",
+                    "message": "title-page affiliation parity must match report readiness",
+                }
+            )
+        if readiness.get("title_page_metadata_review_or_owner_signoff") != (
+            review_status in {"title_page_metadata_reviewed", "owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+        for boundary in (
+            "local_affiliation_boundary_separated",
+            "publication_author_boundary_separated",
+            "technical_system_boundary_separated",
+        ):
+            if readiness.get(boundary) is not True:
+                issues.append(
+                    {
+                        "code": "title_page_boundary_overclaim",
+                        "message": "title-page boundaries must remain separated",
+                    }
+                )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match title-page affiliation readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "title_page.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name title_page.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.title_page_affiliation_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -12675,6 +13134,10 @@ def _problem_acknowledgement_metadata(problem: Problem) -> dict:
 
 def _problem_paper_author_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "paper_author_metadata", {}) or {})
+
+
+def _problem_title_page_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "title_page_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

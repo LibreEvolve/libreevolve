@@ -423,31 +423,26 @@ Primary evidence:
     docs from treating the schema alone as AlphaEvolve-style publication-author
     metadata evidence.
 
-- [ ] Add AlphaEvolve title-page affiliation and footnote provenance.
+- [ ] Populate AlphaEvolve title-page affiliation and footnote provenance.
   - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` presents the author
     list followed by `Google DeepMind1`, and the title-page footnotes state
     `1See Acknowledgments and Author information section.` and `*Equal
     contributions.` The same title page also contains `© 2025 Google
     DeepMind. All rights reserved`, which is source-paper rights evidence, not
     local project licensing or endorsement.
-  - Current evidence: existing TODOs require publication-author metadata for
-    equal contributors, manuscript writers, paper-input contributors, and
-    corresponding authors. They do not separately preserve the title-page
-    affiliation/organization line, affiliation footnote, footnote marker
-    mapping from author names to equal-contribution status, or docs wording
-    that distinguishes source-paper affiliation from LibreEvolve's independent
-    non-affiliation statement. README states LibreEvolve is independent and not
-    affiliated with or endorsed by Google DeepMind; paper manifests validate
-    cached PDF identity/readability, while separate rights TODOs cover
-    copyright/license metadata. None of those records establish title-page
-    affiliation/footnote provenance.
-  - Required result: add publication-source metadata and validators for
-    title-page affiliation evidence: affiliation/organization text, marker id,
-    footnote text and page, author-to-marker mapping, source-page locator,
-    linked rights/copyright record, privacy/redaction policy, and
-    README/ROADMAP wording that separates paper-source affiliation/footnote
-    provenance from local project ownership, endorsement, publication-author
-    roles, source-rights records, and technical implementation provenance.
+  - Current evidence: LibreEvolve now accepts optional `title_page.yaml` /
+    direct `Problem.title_page_metadata`, normalizes
+    `problem.title_page_metadata`, and emits
+    `runtime.history.title_page_affiliation_report` with readiness checks for
+    affiliation text, footnote markers, author-marker mappings,
+    source-rights linkage, privacy/redaction policy, and review/signoff.
+    Existing fixtures have not yet been populated with real reviewed
+    title-page records or paper-facing certification rows.
+  - Required result: populate representative fixtures with reviewed
+    title-page affiliation records, link them to source page/span evidence and
+    source-rights rows, add paper-facing examples or certification rows, and
+    keep docs from treating the schema alone as AlphaEvolve-style title-page
+    affiliation or footnote parity evidence.
 
 - [ ] Add core system-development contribution provenance.
   - Spec evidence: AlphaEvolve's Contributions section attributes the initial

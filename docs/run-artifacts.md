@@ -122,6 +122,19 @@ contributors, manuscript writers, paper-input contributors, and corresponding
 authors separate from technical implementation provenance, acknowledgement
 roles, title-page affiliation metadata, package/project metadata, and local
 validation evidence.
+Problem fixtures can also optionally include `title_page.yaml` or
+`title_page.yml`; direct callers can set `Problem.title_page_metadata`.
+Startup manifest validation normalizes this into `problem.title_page_metadata`
+with schema `libreevolve.title_page_metadata.v1`, fixed marker-kind,
+rights-linkage, privacy, and review-status vocabularies, bounded non-secret
+affiliation and footnote text, source page/section locators, author-marker
+mappings, and source-rights references. Completed manifests include
+`runtime.history.title_page_affiliation_report` with schema
+`libreevolve.title_page_affiliation_report.v1`. This report keeps source-paper
+affiliation and title-page footnote evidence separate from LibreEvolve's local
+project affiliation, endorsement, MIT license, publication-author metadata,
+source-rights metadata, and technical capability evidence; populated reviewed
+fixture records are still required for AlphaEvolve title-page parity claims.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

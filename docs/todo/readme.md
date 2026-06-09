@@ -424,26 +424,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     publication-author metadata evidence.
 
 - [ ] Keep README source-affiliation wording scoped until title-page
-      affiliation metadata exists.
+      affiliation metadata is populated.
   - Spec evidence: page 1 of the AlphaEvolve PDF gives the title-page
     affiliation line `Google DeepMind1` and footnotes `1See Acknowledgments and
     Author information section.` and `*Equal contributions.` The same page
     includes `© 2025 Google DeepMind. All rights reserved`, which is a
     source-paper rights statement distinct from LibreEvolve's MIT license.
-  - Current evidence: README states LibreEvolve is independent and not
-    affiliated with or endorsed by Google DeepMind, and active TODOs cover
-    publication-author roles plus source-PDF version/rights metadata. README
-    does not document paper-source affiliation/organization metadata, title-page
-    footnote text, author-marker mapping, or how those paper-source facts
-    differ from local project affiliation, licensing, and endorsement
-    boundaries. The paper cache manifest validates local source identity and
-    readability, not affiliation or footnote semantics.
-  - Required result: when title-page affiliation metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README separates
-    source-paper affiliation and equal-contribution footnotes from
-    LibreEvolve's independent project status, MIT license, publication-author
-    metadata, source-rights metadata, and AlphaEvolve technical capability
-    evidence.
+  - Current evidence: README now documents optional `title_page.yaml` /
+    `Problem.title_page_metadata`, normalized `problem.title_page_metadata`,
+    and `runtime.history.title_page_affiliation_report` as a source-paper
+    affiliation and footnote boundary. It still states LibreEvolve is
+    independent and not affiliated with or endorsed by Google DeepMind.
+    Existing fixtures do not yet carry real reviewed title-page affiliation
+    records.
+  - Required result: when representative fixtures are populated with reviewed
+    title-page affiliation and footnote evidence, update README, ROADMAP,
+    papers index, and code/paper TODOs together so README can describe those
+    facts without implying the schema alone proves AlphaEvolve-style
+    title-page parity.
 
 - [ ] Keep README system-development provenance scoped until contribution-role
       evidence exists.

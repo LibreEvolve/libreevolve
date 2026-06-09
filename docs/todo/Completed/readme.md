@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document prompt-history row joins in prompt-current binding evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
+    program rendered in the prompt.
+  - Status: README now says `runtime.history.prompt_current_binding_report`
+    includes prompt-history row joins to candidate history rows.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active README TODOs.
+
 - [x] Document workspace file-section span records in prompt-current binding
       evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) shows edits to the current
@@ -11,8 +19,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     includes workspace file-section target records with parent/candidate
     full-file span and hash evidence.
-  - Remaining gap: prompt-history joins, full-mode target spans/block ids, and
-    cross-run binding tables remain active README TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active README TODOs.
 
 - [x] Document evolve-block inner span mapping in prompt-current binding
       evidence.
@@ -21,8 +29,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now says `runtime.history.prompt_current_binding_report`
     maps exact SEARCH matches inside parent evolve-block content to block
     names, block spans, and block-relative SEARCH spans.
-  - Remaining gap: prompt-history joins, full-mode target spans/block ids, and
-    cross-run binding tables remain active README TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active README TODOs.
 
 - [x] Document normalized and skeleton prompt-example copy diagnostics.
   - Spec evidence: AlphaEvolve Figure 3(b,c) uses concrete examples to

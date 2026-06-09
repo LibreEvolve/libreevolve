@@ -6,6 +6,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track prompt-history row joins in prompt-current binding evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
+    2.3.
+  - Status: paper-facing docs now cite prompt-current binding records that
+    link generated candidate ids to `history.jsonl` rows and to
+    `prompt_history.jsonl` add/score rows by prompt-program id and score
+    metadata `last_program_id`.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active paper TODOs.
+
 - [x] Track workspace file-section span records in prompt-current binding
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section
@@ -13,8 +23,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing docs now cite prompt-current binding records that
     capture file-section operations, target paths, payload body hashes/sizes,
     and parent/candidate full-file span and hash evidence when available.
-  - Remaining gap: prompt-history row joins, full-mode target spans/block ids,
-    and cross-run binding tables remain active paper TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active paper TODOs.
 
 - [x] Track evolve-block inner span mapping in prompt-current binding
       evidence.
@@ -23,8 +33,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: paper-facing docs now cite prompt-current binding records that map
     exact SEARCH matches inside parent evolve-block content to block name,
     outer/content spans, and block-relative SEARCH span.
-  - Remaining gap: prompt-history row joins, full-mode target spans/block ids,
-    and cross-run binding tables remain active paper TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active paper TODOs.
 
 - [x] Track normalized and skeleton prompt-example copy diagnostics.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf`, Figure 3(b,c) and Section

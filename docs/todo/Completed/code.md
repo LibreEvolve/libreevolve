@@ -4,6 +4,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add prompt-history row joins to prompt-current binding evidence.
+  - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
+    edits as changes to the current program shown in the prompt.
+  - Status: `runtime.history.prompt_current_binding_report` now records a
+    `history_join` for each generated candidate, linking the candidate id to
+    its `history.jsonl` row and to `prompt_history.jsonl` add/score rows whose
+    score metadata names the candidate program id. Schema validation and a
+    focused runtime regression test cover the new row join.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active TODOs.
+
 - [x] Add workspace file-section span records to prompt-current binding
       evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame generated
@@ -13,8 +24,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     payload body hash/size, and parent/candidate full-file span and hash
     evidence when file content is available. Schema validation and a focused
     runtime regression test cover the new evidence.
-  - Remaining gap: prompt-history row joins, full-mode target spans/block ids,
-    and cross-run binding tables remain active TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active TODOs.
 
 - [x] Add evolve-block inner span mapping to prompt-current binding evidence.
   - Spec evidence: AlphaEvolve Figure 3(b,c) and Section 2.3 frame
@@ -23,8 +34,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     diff SEARCH matches inside parent evolve-block content to block name,
     block outer/content spans, and SEARCH span relative to the block body, with
     schema validation and focused runtime tests.
-  - Remaining gap: prompt-history row joins, full-mode target spans/block ids,
-    and cross-run binding tables remain active TODOs.
+  - Remaining gap: full-mode target spans/block ids and cross-run binding
+    tables remain active TODOs.
 
 - [x] Extend prompt example-copy diagnostics with normalized and skeleton
       signals.

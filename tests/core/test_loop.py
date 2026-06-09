@@ -3336,10 +3336,16 @@ x=2
     assert report["mutation_mode_counts"] == {"diff": 1}
     assert report["candidate_status_counts"] == {"accepted_history": 1}
     assert report["exact_diff_binding_count"] == 1
+    assert report["history_join_count"] == 1
+    assert report["prompt_history_score_join_count"] == 1
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["prompt_current_hashes_recorded"] is True
     assert report["claim_readiness"]["parent_workspace_hash_recorded"] is True
     assert report["claim_readiness"]["diff_exact_match_spans_recorded"] is True
+    assert report["claim_readiness"]["prompt_history_row_join"] is True
+    assert "prompt_history_row_id_to_candidate_history_row_id_join" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert (
         report["claim_readiness"]["full_alphaevolve_current_program_provenance"]
         is False
@@ -3347,6 +3353,18 @@ x=2
 
     record = report["records"][0]
     assert record["prompt_program_id"]
+    history_join = record["history_join"]
+    assert history_join["schema"] == "libreevolve.prompt_current_history_join.v1"
+    assert history_join["candidate_history_joined"] is True
+    assert history_join["prompt_history_add_joined"] is True
+    assert history_join["prompt_history_score_joined"] is True
+    assert history_join["candidate_history"]["stream"] == "history.jsonl"
+    assert history_join["candidate_history"]["line_number"] == 2
+    assert history_join["candidate_failure_history"] is None
+    assert history_join["prompt_history"]["stream"] == "prompt_history.jsonl"
+    assert history_join["prompt_history"]["add_line_number"] == 1
+    assert history_join["prompt_history"]["score_line_number"] == 2
+    assert history_join["prompt_history"]["score_line_numbers"] == [2]
     assert record["prompt_sha256_scope"] == "rendered_prompt"
     assert record["parent_id"]
     assert record["parent_workspace_sha256"]

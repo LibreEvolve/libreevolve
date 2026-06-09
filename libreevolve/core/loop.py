@@ -5325,7 +5325,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         ),
         "mutation_consistency_report": _mutation_consistency_report(programs),
         "prompt_example_copy_report": _prompt_example_copy_report(programs),
-        "prompt_current_binding_report": _prompt_current_binding_report(programs),
+        "prompt_current_binding_report": _prompt_current_binding_report(
+            programs,
+            run_dir,
+        ),
         "natural_language_preamble_report": _natural_language_preamble_report(programs),
         "proposal_diversity_report": _proposal_diversity_report(programs),
         "proposal_score_report": _proposal_score_report(programs),
@@ -15781,10 +15784,15 @@ def validate_natural_language_preamble_report(report: object) -> dict:
     }
 
 
-def _prompt_current_binding_report(programs: list[Program]) -> dict:
+def _prompt_current_binding_report(programs: list[Program], run_dir: Path) -> dict:
     parent_by_id = {program.id: program for program in programs}
+    history_indexes = _prompt_current_history_join_indexes(run_dir)
     records = [
-        _prompt_current_binding_record(program, parent_by_id.get(program.parent_id))
+        _prompt_current_binding_record(
+            program,
+            parent_by_id.get(program.parent_id),
+            history_indexes,
+        )
         for program in programs
         if _prompt_current_binding_is_generated(program)
     ]
@@ -15795,6 +15803,8 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
     omitted_path_count = 0
     evolve_block_match_count = 0
     file_section_record_count = 0
+    history_join_count = 0
+    prompt_history_score_join_count = 0
     for record in records:
         mode = str(record.get("mutation_mode") or "unknown")
         mode_counts[mode] = mode_counts.get(mode, 0) + 1
@@ -15820,9 +15830,23 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             omitted = prompt_current.get("omitted_path_count")
             if isinstance(omitted, int) and not isinstance(omitted, bool):
                 omitted_path_count += omitted
+        history_join = record.get("history_join")
+        if isinstance(history_join, Mapping):
+            candidate_history = history_join.get("candidate_history")
+            if (
+                isinstance(candidate_history, Mapping)
+                and candidate_history.get("line_number") is not None
+            ):
+                history_join_count += 1
+            prompt_history = history_join.get("prompt_history")
+            if (
+                isinstance(prompt_history, Mapping)
+                and prompt_history.get("score_line_number") is not None
+            ):
+                prompt_history_score_join_count += 1
     report = {
         "schema": "libreevolve.prompt_current_binding_report.v1",
-        "source": "runtime_history_prompt_diagnostics_parent_workspace_and_mutation_payload",
+        "source": "runtime_history_prompt_diagnostics_parent_workspace_mutation_payload_and_jsonl_row_indexes",
         "generated_candidate_count": len(records),
         "binding_record_count": len(records),
         "mutation_mode_counts": dict(sorted(mode_counts.items())),
@@ -15830,6 +15854,8 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
         "exact_diff_binding_count": exact_match_count,
         "evolve_block_match_count": evolve_block_match_count,
         "file_section_record_count": file_section_record_count,
+        "history_join_count": history_join_count,
+        "prompt_history_score_join_count": prompt_history_score_join_count,
         "truncated_prompt_current_count": truncated_prompt_current_count,
         "omitted_prompt_current_path_total": omitted_path_count,
         "records": records[:50],
@@ -15843,6 +15869,7 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             "full_mode_policy": "target_policy_recorded_without_SEARCH_span_claim",
             "workspace_section_policy": "file_section_payloads_record_per_section_target_and_full_file_span_records",
             "file_section_span_policy": "file_section_targets_record_parent_and_candidate_full_file_spans_when_available",
+            "history_join_policy": "candidate_history_rows_joined_to_prompt_history_add_and_score_rows_by_program_id",
             "llm_call_source": "candidate.metadata.llm_calls",
         },
         "claim_ready": False,
@@ -15861,9 +15888,11 @@ def _prompt_current_binding_report(programs: list[Program]) -> dict:
             "diff_exact_match_spans_recorded": exact_match_count > 0,
             "evolve_block_inner_span_mapping": evolve_block_match_count > 0,
             "workspace_file_section_span_records": file_section_record_count > 0,
+            "prompt_history_row_join": (
+                history_join_count > 0 and prompt_history_score_join_count > 0
+            ),
             "full_alphaevolve_current_program_provenance": False,
             "remaining_gap": [
-                "prompt_history_row_id_to_candidate_history_row_id_join",
                 "full_mode_target_span_or_block_policy",
                 "cross_run_prompt_current_binding_table",
             ],
@@ -15878,9 +15907,166 @@ def _prompt_current_binding_is_generated(program: Program) -> bool:
     return metadata.get("candidate_type") == "generated"
 
 
+def _prompt_current_history_join_indexes(run_dir: Path) -> dict:
+    history_rows: dict[str, dict] = {}
+    failure_rows: dict[str, dict] = {}
+    prompt_add_rows: dict[str, dict] = {}
+    prompt_score_rows_by_candidate: dict[str, list[dict]] = {}
+
+    history_path = run_dir / "history.jsonl"
+    if history_path.exists():
+        for line_number, record in enumerate(
+            iter_strict_jsonl_objects(history_path, stream_name="history.jsonl"),
+            start=1,
+        ):
+            program_id = record.get("id")
+            if isinstance(program_id, str):
+                history_rows[program_id] = {
+                    "stream": "history.jsonl",
+                    "line_number": line_number,
+                    "program_id": program_id,
+                    "record_schema": record.get("record_schema"),
+                }
+
+    failure_path = run_dir / "failure_history.jsonl"
+    if failure_path.exists():
+        for line_number, record in enumerate(
+            iter_strict_jsonl_objects(
+                failure_path,
+                stream_name="failure_history.jsonl",
+            ),
+            start=1,
+        ):
+            program_id = record.get("program_id")
+            if isinstance(program_id, str):
+                failure_rows[program_id] = {
+                    "stream": "failure_history.jsonl",
+                    "line_number": line_number,
+                    "program_id": program_id,
+                    "record_schema": record.get("record_schema"),
+                    "admission_reason": record.get("admission_reason"),
+                }
+
+    prompt_path = run_dir / "prompt_history.jsonl"
+    if prompt_path.exists():
+        for line_number, record in enumerate(
+            iter_strict_jsonl_objects(
+                prompt_path,
+                stream_name="prompt_history.jsonl",
+            ),
+            start=1,
+        ):
+            event = record.get("event")
+            program_record = record.get("program")
+            if not isinstance(program_record, Mapping):
+                continue
+            prompt_id = program_record.get("id")
+            if not isinstance(prompt_id, str):
+                continue
+            prompt_row = {
+                "stream": "prompt_history.jsonl",
+                "line_number": line_number,
+                "event": event,
+                "prompt_program_id": prompt_id,
+                "record_schema": record.get("record_schema"),
+            }
+            if event == "add":
+                prompt_add_rows.setdefault(prompt_id, prompt_row)
+            elif event == "score":
+                metadata = program_record.get("metadata")
+                candidate_id = (
+                    metadata.get("last_program_id")
+                    if isinstance(metadata, Mapping)
+                    else None
+                )
+                if isinstance(candidate_id, str):
+                    score_row = dict(prompt_row)
+                    score_row["candidate_id"] = candidate_id
+                    prompt_score_rows_by_candidate.setdefault(candidate_id, []).append(
+                        score_row
+                    )
+
+    return {
+        "candidate_history_by_id": history_rows,
+        "candidate_failure_history_by_id": failure_rows,
+        "prompt_add_by_id": prompt_add_rows,
+        "prompt_scores_by_candidate_id": prompt_score_rows_by_candidate,
+    }
+
+
+def _prompt_current_history_join_record(
+    candidate_id: str,
+    prompt_program_id: object,
+    history_indexes: Mapping[str, object],
+) -> dict:
+    candidate_history_by_id = history_indexes.get("candidate_history_by_id")
+    candidate_failure_history_by_id = history_indexes.get(
+        "candidate_failure_history_by_id"
+    )
+    prompt_add_by_id = history_indexes.get("prompt_add_by_id")
+    prompt_scores_by_candidate_id = history_indexes.get(
+        "prompt_scores_by_candidate_id"
+    )
+    candidate_history = (
+        candidate_history_by_id.get(candidate_id)
+        if isinstance(candidate_history_by_id, Mapping)
+        else None
+    )
+    candidate_failure_history = (
+        candidate_failure_history_by_id.get(candidate_id)
+        if isinstance(candidate_failure_history_by_id, Mapping)
+        else None
+    )
+    prompt_add = (
+        prompt_add_by_id.get(prompt_program_id)
+        if isinstance(prompt_program_id, str) and isinstance(prompt_add_by_id, Mapping)
+        else None
+    )
+    score_rows = (
+        prompt_scores_by_candidate_id.get(candidate_id, [])
+        if isinstance(prompt_scores_by_candidate_id, Mapping)
+        else []
+    )
+    score_rows = [row for row in score_rows if isinstance(row, Mapping)]
+    score_line_numbers = [
+        row.get("line_number")
+        for row in score_rows
+        if isinstance(row.get("line_number"), int)
+        and not isinstance(row.get("line_number"), bool)
+    ]
+    prompt_history: dict[str, object] = {
+        "stream": "prompt_history.jsonl",
+        "prompt_program_id": prompt_program_id if isinstance(prompt_program_id, str) else None,
+        "add_line_number": (
+            prompt_add.get("line_number") if isinstance(prompt_add, Mapping) else None
+        ),
+        "score_line_number": score_line_numbers[-1] if score_line_numbers else None,
+        "score_line_numbers": score_line_numbers[:25],
+        "score_line_numbers_truncated": len(score_line_numbers) > 25,
+    }
+    return {
+        "schema": "libreevolve.prompt_current_history_join.v1",
+        "candidate_id": candidate_id,
+        "join_policy": "history_jsonl_candidate_id_and_prompt_history_score_metadata_last_program_id",
+        "candidate_history": (
+            dict(candidate_history) if isinstance(candidate_history, Mapping) else None
+        ),
+        "candidate_failure_history": (
+            dict(candidate_failure_history)
+            if isinstance(candidate_failure_history, Mapping)
+            else None
+        ),
+        "prompt_history": prompt_history,
+        "candidate_history_joined": isinstance(candidate_history, Mapping),
+        "prompt_history_add_joined": isinstance(prompt_add, Mapping),
+        "prompt_history_score_joined": bool(score_line_numbers),
+    }
+
+
 def _prompt_current_binding_record(
     program: Program,
     parent: Program | None,
+    history_indexes: Mapping[str, object],
 ) -> dict:
     metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
     prompt_diagnostics = (
@@ -15909,6 +16095,11 @@ def _prompt_current_binding_record(
         "generation": program.generation,
         "parent_id": program.parent_id,
         "prompt_program_id": metadata.get("prompt_program_id"),
+        "history_join": _prompt_current_history_join_record(
+            program.id,
+            metadata.get("prompt_program_id"),
+            history_indexes,
+        ),
         "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
         "prompt_sha256_scope": prompt_diagnostics.get("prompt_sha256_scope"),
         "llm_call_ids": [
@@ -16286,6 +16477,8 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "exact_diff_binding_count",
         "evolve_block_match_count",
         "file_section_record_count",
+        "history_join_count",
+        "prompt_history_score_join_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
         "records",
@@ -16300,7 +16493,10 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         issues.append({"code": "missing_fields", "message": f"prompt-current binding report missing fields: {sorted(missing)}"})
     if report.get("schema") != "libreevolve.prompt_current_binding_report.v1":
         issues.append({"code": "invalid_schema", "message": "prompt-current binding report schema is unsupported"})
-    if report.get("source") != "runtime_history_prompt_diagnostics_parent_workspace_and_mutation_payload":
+    if (
+        report.get("source")
+        != "runtime_history_prompt_diagnostics_parent_workspace_mutation_payload_and_jsonl_row_indexes"
+    ):
         issues.append({"code": "invalid_source", "message": "prompt-current binding report source is unsupported"})
     for field in (
         "generated_candidate_count",
@@ -16308,6 +16504,8 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         "exact_diff_binding_count",
         "evolve_block_match_count",
         "file_section_record_count",
+        "history_join_count",
+        "prompt_history_score_join_count",
         "truncated_prompt_current_count",
         "omitted_prompt_current_path_total",
     ):
@@ -16426,6 +16624,42 @@ def validate_prompt_current_binding_report(report: object) -> dict:
         prompt_current = record.get("prompt_current_program")
         if not isinstance(prompt_current, dict):
             issues.append({"code": "invalid_prompt_current_program", "message": f"record {index} prompt_current_program must be an object"})
+        history_join = record.get("history_join")
+        if not isinstance(history_join, dict):
+            issues.append(
+                {
+                    "code": "invalid_history_join",
+                    "message": f"record {index} history_join must be an object",
+                }
+            )
+        else:
+            if history_join.get("schema") != "libreevolve.prompt_current_history_join.v1":
+                issues.append(
+                    {
+                        "code": "invalid_history_join_schema",
+                        "message": f"record {index} history_join schema is unsupported",
+                    }
+                )
+            for field in ("candidate_history", "candidate_failure_history"):
+                row = history_join.get(field)
+                if row is not None and not isinstance(row, dict):
+                    issues.append(
+                        {
+                            "code": "invalid_history_join_row",
+                            "message": f"record {index} {field} must be an object or null",
+                        }
+                    )
+            prompt_history = history_join.get("prompt_history")
+            if not isinstance(prompt_history, dict):
+                issues.append(
+                    {
+                        "code": "invalid_prompt_history_join",
+                        "message": (
+                            f"record {index} history_join.prompt_history "
+                            "must be an object"
+                        ),
+                    }
+                )
     if report.get("records_truncated") is not True:
         if report.get("binding_record_count") != len(records):
             issues.append({"code": "invalid_record_count", "message": "binding_record_count must match records when not truncated"})

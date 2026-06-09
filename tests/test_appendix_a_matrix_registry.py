@@ -3,22 +3,26 @@ import json
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA,
     EXPECTED_TARGET_COUNT,
+    LOCAL_RESOURCE_FRONTIER_SCHEMA,
     RESOURCE_FRONTIER_SCHEMA,
     ROW_NOTE_SCHEMA,
     SUBSET_SCOPE_SCHEMA,
     TARGET_SUITE,
     appendix_a_matrix_curation_record,
+    appendix_a_matrix_local_resource_frontier_record,
     appendix_a_matrix_resource_frontier_record,
     appendix_a_matrix_row_note_records,
     appendix_a_matrix_subset_scope_record,
     matrix_target_by_id,
     matrix_target_records,
     render_appendix_a_matrix_curation_summary,
+    render_appendix_a_matrix_local_resource_frontier_summary,
     render_appendix_a_matrix_resource_frontier_summary,
     render_appendix_a_matrix_registry_summary,
     render_appendix_a_matrix_row_note_summary,
     render_appendix_a_matrix_subset_scope_summary,
     validate_appendix_a_matrix_curation,
+    validate_appendix_a_matrix_local_resource_frontier,
     validate_appendix_a_matrix_resource_frontier,
     validate_appendix_a_matrix_registry,
     validate_appendix_a_matrix_row_notes,
@@ -214,6 +218,90 @@ def test_appendix_a_matrix_resource_frontier_summary_renders_counts():
 
     assert "AlphaEvolve Appendix A matrix resource frontier" in summary
     assert "| attempted_scope_count | 1 |" in summary
+    assert "| local_artifact_count | 0 |" in summary
+
+
+def test_appendix_a_matrix_local_resource_frontier_validates_absence_boundary():
+    record = appendix_a_matrix_local_resource_frontier_record()
+
+    report = validate_appendix_a_matrix_local_resource_frontier(record)
+
+    assert report.ok is True
+    assert record["schema"] == LOCAL_RESOURCE_FRONTIER_SCHEMA
+    assert record["local_frontier_status"] == "not_executed_locally"
+    assert report.attempted_scope_count == 0
+    assert report.local_artifact_count == 0
+    assert "gpu_memory_bytes" in record["required_attempt_fields"]
+    assert "oom_or_exhaustion_diagnostics" in record["required_attempt_fields"]
+    assert report.issues == []
+
+
+def test_appendix_a_matrix_local_resource_frontier_rejects_attempts_under_absence_boundary():
+    record = appendix_a_matrix_local_resource_frontier_record()
+    record["local_attempts"] = [
+        {
+            "attempt_id": "larger_mm_probe",
+            "target_id": "mm_6x6x6",
+            "dimensions": [6, 6, 6],
+            "seed_count": 10,
+            "accelerator_profile": "local_cpu_only",
+            "gpu_memory_bytes": 0,
+            "resource_status": "resource_exhausted",
+            "oom_or_exhaustion_diagnostics": "fixture diagnostic",
+            "artifact_paths": ["runs/matrix/frontier.json"],
+            "artifact_sha256": ["0" * 64],
+        }
+    ]
+
+    report = validate_appendix_a_matrix_local_resource_frontier(record)
+
+    assert report.ok is False
+    assert "unexpected_local_attempts" in {issue.code for issue in report.issues}
+
+
+def test_appendix_a_matrix_local_resource_frontier_rejects_invalid_recorded_attempts():
+    record = appendix_a_matrix_local_resource_frontier_record()
+    record["local_frontier_status"] = "attempts_recorded"
+    record["local_attempts"] = [
+        {
+            "attempt_id": "larger_mm_probe",
+            "target_id": "not-a-target",
+            "dimensions": [6, 6],
+            "seed_count": 0,
+            "accelerator_profile": "",
+            "gpu_memory_bytes": -1,
+            "resource_status": "unknown",
+            "oom_or_exhaustion_diagnostics": "",
+            "artifact_paths": ["tmp/frontier.json"],
+            "artifact_sha256": ["not-a-digest"],
+        }
+    ]
+    record["excluded_target_policy"] = {
+        "status": "defined",
+        "boundary": "No local larger-target matrix scaling attempts are complete.",
+    }
+
+    report = validate_appendix_a_matrix_local_resource_frontier(record)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_local_target_id" in codes
+    assert "invalid_local_dimensions" in codes
+    assert "invalid_local_seed_count" in codes
+    assert "missing_local_accelerator_profile" in codes
+    assert "invalid_local_gpu_memory_bytes" in codes
+    assert "invalid_local_resource_status" in codes
+    assert "missing_local_oom_diagnostics" in codes
+    assert "invalid_local_artifact_paths" in codes
+    assert "invalid_local_artifact_hashes" in codes
+
+
+def test_appendix_a_matrix_local_resource_frontier_summary_renders_absence_counts():
+    summary = render_appendix_a_matrix_local_resource_frontier_summary()
+
+    assert "AlphaEvolve Appendix A local matrix resource frontier" in summary
+    assert "| local_frontier_status | not_executed_locally |" in summary
+    assert "| attempted_scope_count | 0 |" in summary
     assert "| local_artifact_count | 0 |" in summary
 
 

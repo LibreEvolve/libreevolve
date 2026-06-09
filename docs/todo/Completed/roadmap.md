@@ -8182,3 +8182,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     evidence to validated `not_yet_linked` availability boundaries plus
     required future digest/link/source-map fields.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+- [x] Document the local Appendix A matrix resource-frontier absence boundary
+      in ROADMAP.
+  - Spec evidence: roadmap matrix-scaling claims need to distinguish
+    AlphaEvolve's paper-source OOM note from local execution evidence.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` and
+    scopes current evidence to a validated absence/readiness boundary, with
+    actual local larger-target attempts still open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

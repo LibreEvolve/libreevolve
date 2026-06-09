@@ -15878,3 +15878,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     paper-manifest gate validates the role and linkage records.
   - Verification: `py -3.12 -m pytest tests/test_paper_artifact_roles.py -q`
     reports 11 passed.
+- [x] Add a local Appendix A matrix resource-frontier readiness contract.
+  - Spec evidence: AlphaEvolve Appendix A says larger matrix sizes beyond the
+    reported table often ran out of memory with 1000 random seeds on a single
+    GPU accelerator, but local claims require separate measured run evidence.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+    now validates the current `not_executed_locally` boundary and required
+    fields for future local target-size attempts, GPU memory, OOM diagnostics,
+    reduced-seed policy, run artifacts, SHA-256 hashes, and
+    attempted-versus-excluded target policy. The paper-manifest gate validates
+    this record alongside the paper-only resource-frontier record.
+  - Verification: `py -3.12 -m pytest tests/test_appendix_a_matrix_registry.py -q`
+    reports 27 passed.

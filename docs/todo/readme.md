@@ -1017,10 +1017,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
     resource-frontier contract documents the paper-only boundary for sizes
     beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
-    and further-optimization need. It does not document local matrix-specific
-    scaling attempts, measured accelerator-memory profiles,
-    OOM/resource-exhaustion artifacts, or target-exclusion rationale for sizes
-    beyond the reported suite.
+    and further-optimization need.
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
+    documents the local absence/readiness boundary and required fields for
+    measured accelerator-memory profiles, OOM/resource-exhaustion artifacts,
+    reduced-seed tradeoffs, and target-exclusion rationale for sizes beyond
+    the reported suite.
   - Required result: when local matrix resource-frontier reports land, update
     README, ROADMAP, papers index, and code/paper TODOs together so README
     distinguishes paper-source OOM boundary evidence from local larger-target

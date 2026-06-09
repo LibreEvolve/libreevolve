@@ -706,8 +706,11 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
   validates the Appendix A page 34 boundary for sizes beyond `<5,5,5>`, 1000
   random seeds, single-GPU evaluators, frequent OOM, and further-optimization
-  need. Local scaling runs with attempted target sizes, measured GPU memory,
-  OOM artifacts, reduced-seed tradeoffs, and exclusion rationale remain open.
+  need. `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+  now validates the local absence/readiness boundary and required fields for
+  future attempted target sizes, measured GPU memory, OOM artifacts,
+  reduced-seed tradeoffs, and exclusion rationale. Actual local scaling runs
+  remain open.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

@@ -10683,3 +10683,13 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     figure or companion-notebook artifacts. This keeps the existing attribution
     record from being treated as byte-level artifact evidence.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+- [x] Track local Appendix A matrix resource-frontier absence separately from
+      paper-source OOM evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix A records the
+    paper-side larger-target OOM boundary, not local LibreEvolve execution.
+  - Status: `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+    now records that no local larger-target matrix scaling attempts, measured
+    memory profiles, OOM diagnostics, reduced-seed tradeoffs, or
+    attempted-versus-excluded target policies exist yet. It also validates the
+    fields required before such local frontier evidence can be claimed.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

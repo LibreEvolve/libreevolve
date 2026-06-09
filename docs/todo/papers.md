@@ -3411,10 +3411,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` now
     preserves the paper-only larger-target boundary for sizes beyond `<5,5,5>`,
     1000 random seeds, single-GPU evaluators, frequent OOM, and
-    further-optimization need. It does not provide local matrix-specific
-    resource-frontier evidence for attempted larger target runs, GPU memory
-    measurements, reduced-seed tradeoffs, or target-exclusion rationale.
-  - Required result: add local paper/report evidence for attempted larger
+    further-optimization need. `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+    now validates that local matrix-specific resource-frontier attempts are
+    absent and records the fields required before such evidence can be
+    claimed: target identities, dimensions, seed counts, accelerator/GPU
+    memory, OOM diagnostics, reduced-seed policy, artifacts, and
+    attempted-versus-excluded target policy.
+  - Required result: add local paper/report evidence from attempted larger
     matrix targets, measured accelerator/memory profile, resource exhaustion or
     OOM diagnostics, reduced-seed tradeoffs if used, and explicit
     inclusion/exclusion policy before claiming LibreEvolve can extend

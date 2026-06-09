@@ -66,7 +66,11 @@ decomposition, or Colab evidence. The companion
 `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` record
 preserves the paper-only Appendix A boundary for sizes beyond `<5,5,5>`, 1000
 random seeds, single-GPU evaluators, frequent OOM, and further-optimization
-need; it does not claim local OOM run artifacts.
+need; it does not claim local OOM run artifacts. The companion
+`libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` record
+validates that local larger-target attempts are currently absent and records
+the measured-memory, OOM-diagnostic, reduced-seed, artifact, and
+attempted-versus-excluded target fields required before local frontier claims.
 The validation command also checks
 `libreevolve/problems/benchmarks/alphaevolve_appendix_b.json`, which records a
 coverage decision for each AlphaEvolve Appendix B constructive-math family. The
@@ -1094,8 +1098,11 @@ Implemented:
   `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1` records the
   paper-source larger-target boundary for sizes beyond `<5,5,5>`, 1000 random
   seeds, single-GPU evaluators, frequent OOM, and further-optimization need.
-  It does not provide local matrix scaling attempts, measured GPU memory, OOM
-  artifacts, reduced-seed tradeoffs, or exclusion rationale.
+  `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1`
+  separately records the current absence of local matrix scaling attempts plus
+  the fields required for measured GPU memory, OOM artifacts, reduced-seed
+  tradeoffs, and exclusion rationale; it does not provide those local attempts
+  or artifacts.
   `write_strassen_2x2_publication_bundle()` provides one checked Strassen
   baseline for `mm_2x2x2` with canonical algorithm, certificate, notebook,
   report, and artifact inventory files. It still does not provide discovered

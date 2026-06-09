@@ -3379,12 +3379,17 @@ Primary evidence:
     1000 random seeds, single-GPU evaluators, frequent OOM, and
     further-optimization need. It intentionally records
     `local_execution_evidence: false` and no local artifacts.
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
+    validates the local absence/readiness boundary and required fields for
+    future target-size attempts, measured accelerator/GPU memory profile, OOM
+    diagnostics, reduced-seed policy, artifacts, and attempted-versus-excluded
+    target policy.
   - Required result: add local matrix benchmark report fields and validators
-    for target-size scaling attempts, measured accelerator/GPU memory profile,
-    OOM or resource-exhaustion diagnostics, reduced-seed tradeoffs if used,
-    attempted-versus-excluded target identities, and optimization/resource
-    rationale before claiming readiness to extend AlphaEvolve-style matrix
-    results beyond the reported suite.
+    backed by actual target-size scaling attempts, measured accelerator/GPU
+    memory profile, OOM or resource-exhaustion diagnostics, reduced-seed
+    tradeoffs if used, attempted-versus-excluded target identities, and
+    optimization/resource rationale before claiming readiness to extend
+    AlphaEvolve-style matrix results beyond the reported suite.
 
 - [ ] Add a matrix coefficient-domain prompt/evaluator contract for
       near-integral decompositions.

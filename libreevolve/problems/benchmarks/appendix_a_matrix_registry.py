@@ -12,6 +12,7 @@ REGISTRY_PATH = Path(__file__).with_name("alphaevolve_appendix_a_matrix.json")
 REGISTRY_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
 CURATION_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_curation.v1"
 RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1"
+LOCAL_RESOURCE_FRONTIER_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1"
 SUBSET_SCOPE_SCHEMA = "libreevolve.alphaevolve_matrix_subset_scope.v1"
 ROW_NOTE_SCHEMA = "libreevolve.alphaevolve_appendix_a_matrix_row_notes.v1"
 TARGET_SUITE = "alphaevolve_appendix_a"
@@ -230,6 +231,41 @@ def appendix_a_matrix_resource_frontier_record() -> dict[str, Any]:
     }
 
 
+def appendix_a_matrix_local_resource_frontier_record() -> dict[str, Any]:
+    return {
+        "schema": LOCAL_RESOURCE_FRONTIER_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": TARGET_SUITE,
+        "paper_frontier_observation_ref": "paper_beyond_5x5x5_single_gpu_1000_seeds",
+        "local_frontier_status": "not_executed_locally",
+        "required_attempt_fields": [
+            "target_id",
+            "dimensions",
+            "seed_count",
+            "accelerator_profile",
+            "gpu_memory_bytes",
+            "resource_status",
+            "oom_or_exhaustion_diagnostics",
+            "reduced_seed_policy",
+            "artifact_paths",
+            "artifact_sha256",
+        ],
+        "local_attempts": [],
+        "excluded_target_policy": {
+            "status": "not_defined",
+            "boundary": (
+                "No local larger-target matrix scaling attempts, attempted-versus-excluded "
+                "target identities, measured GPU memory profiles, OOM diagnostics, or "
+                "reduced-seed tradeoffs have been recorded."
+            ),
+        },
+        "claim_boundary": (
+            "This is a local absence/readiness boundary. It does not claim that "
+            "LibreEvolve has reproduced AlphaEvolve's larger-target OOM/resource frontier."
+        ),
+    }
+
+
 def appendix_a_matrix_subset_scope_record(
     path: str | Path = REGISTRY_PATH,
 ) -> dict[str, Any]:
@@ -397,6 +433,45 @@ def validate_appendix_a_matrix_resource_frontier(
     )
 
 
+def validate_appendix_a_matrix_local_resource_frontier(
+    recordset: object | str | Path | None = None,
+) -> MatrixResourceFrontierReport:
+    data, read_issues = _load_resource_frontier_recordset(recordset)
+    if read_issues:
+        return MatrixResourceFrontierReport(False, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResourceFrontierIssue] = []
+    if data.get("schema") != LOCAL_RESOURCE_FRONTIER_SCHEMA:
+        issues.append(MatrixResourceFrontierIssue("invalid_schema", "unsupported local Appendix A matrix resource-frontier schema"))
+    if data.get("source_paper_id") != "2506.13131":
+        issues.append(MatrixResourceFrontierIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != TARGET_SUITE:
+        issues.append(MatrixResourceFrontierIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    if data.get("paper_frontier_observation_ref") != "paper_beyond_5x5x5_single_gpu_1000_seeds":
+        issues.append(MatrixResourceFrontierIssue("invalid_paper_frontier_ref", "local frontier record must link the paper-only OOM observation"))
+    required_fields = data.get("required_attempt_fields")
+    if (
+        not isinstance(required_fields, list)
+        or not required_fields
+        or not all(isinstance(field, str) and field.strip() for field in required_fields)
+    ):
+        issues.append(MatrixResourceFrontierIssue("invalid_required_attempt_fields", "required_attempt_fields must be a non-empty string list"))
+    status = data.get("local_frontier_status")
+    if status not in {"not_executed_locally", "attempts_recorded"}:
+        issues.append(MatrixResourceFrontierIssue("invalid_local_frontier_status", "local_frontier_status must be not_executed_locally or attempts_recorded"))
+    attempt_count, artifact_count = _validate_local_frontier_attempts(data.get("local_attempts"), status, issues)
+    _validate_excluded_target_policy(data.get("excluded_target_policy"), status, issues)
+    claim_boundary = data.get("claim_boundary")
+    if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary:
+        issues.append(MatrixResourceFrontierIssue("missing_claim_boundary", "claim_boundary must state that local OOM/resource-frontier reproduction is not claimed"))
+    return MatrixResourceFrontierReport(
+        ok=not issues,
+        attempted_scope_count=attempt_count,
+        local_artifact_count=artifact_count,
+        issues=issues,
+    )
+
+
 def validate_appendix_a_matrix_registry(
     path: str | Path = REGISTRY_PATH,
 ) -> MatrixTargetRegistryReport:
@@ -515,6 +590,34 @@ def render_appendix_a_matrix_resource_frontier_summary(
         "| Field | Value |",
         "|---|---|",
         f"| schema_status | {status} |",
+        f"| attempted_scope_count | {report.attempted_scope_count} |",
+        f"| local_artifact_count | {report.local_artifact_count} |",
+    ]
+    if report.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(
+            f"- {issue.code}: {issue.message}"
+            + (f" ({issue.attempt_id})" if issue.attempt_id else "")
+            for issue in report.issues
+        )
+    return "\n".join(lines)
+
+
+def render_appendix_a_matrix_local_resource_frontier_summary(
+    recordset: object | str | Path | None = None,
+) -> str:
+    report = validate_appendix_a_matrix_local_resource_frontier(recordset)
+    data, _ = _load_resource_frontier_recordset(
+        appendix_a_matrix_local_resource_frontier_record() if recordset is None else recordset
+    )
+    status = "ok" if report.ok else "invalid"
+    lines = [
+        "AlphaEvolve Appendix A local matrix resource frontier",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| local_frontier_status | {(data or {}).get('local_frontier_status', '<unknown>')} |",
         f"| attempted_scope_count | {report.attempted_scope_count} |",
         f"| local_artifact_count | {report.local_artifact_count} |",
     ]
@@ -1151,6 +1254,72 @@ def _validate_frontier_observations(
     if "paper_beyond_5x5x5_single_gpu_1000_seeds" not in seen:
         issues.append(MatrixResourceFrontierIssue("missing_frontier_observation", "Appendix A larger-target OOM observation is required"))
     return len(value), artifact_count
+
+
+def _validate_local_frontier_attempts(
+    value: object,
+    status: object,
+    issues: list[MatrixResourceFrontierIssue],
+) -> tuple[int, int]:
+    if not isinstance(value, list):
+        issues.append(MatrixResourceFrontierIssue("invalid_local_attempts", "local_attempts must be a list"))
+        return 0, 0
+    if status == "not_executed_locally":
+        if value:
+            issues.append(MatrixResourceFrontierIssue("unexpected_local_attempts", "not_executed_locally records must not include local attempts"))
+        return len(value), 0
+    artifact_count = 0
+    for attempt in value:
+        if not isinstance(attempt, dict):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_attempt", "local attempts must be objects"))
+            continue
+        attempt_id = attempt.get("attempt_id") if isinstance(attempt.get("attempt_id"), str) else None
+        if not isinstance(attempt.get("target_id"), str) or _ID_RE.fullmatch(attempt["target_id"]) is None:
+            issues.append(MatrixResourceFrontierIssue("invalid_local_target_id", "local attempts must identify a matrix target id", attempt_id))
+        dimensions = attempt.get("dimensions")
+        if not isinstance(dimensions, list) or len(dimensions) != 3 or any(not isinstance(item, int) or isinstance(item, bool) or item <= 0 for item in dimensions):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_dimensions", "local attempts must include three positive integer dimensions", attempt_id))
+        if not isinstance(attempt.get("seed_count"), int) or isinstance(attempt.get("seed_count"), bool) or attempt["seed_count"] <= 0:
+            issues.append(MatrixResourceFrontierIssue("invalid_local_seed_count", "local attempts must include a positive seed_count", attempt_id))
+        if not isinstance(attempt.get("accelerator_profile"), str) or not attempt["accelerator_profile"].strip():
+            issues.append(MatrixResourceFrontierIssue("missing_local_accelerator_profile", "local attempts must include accelerator_profile", attempt_id))
+        if not isinstance(attempt.get("gpu_memory_bytes"), int) or isinstance(attempt.get("gpu_memory_bytes"), bool) or attempt["gpu_memory_bytes"] < 0:
+            issues.append(MatrixResourceFrontierIssue("invalid_local_gpu_memory_bytes", "local attempts must include non-negative gpu_memory_bytes", attempt_id))
+        if attempt.get("resource_status") not in {"completed", "out_of_memory", "resource_exhausted"}:
+            issues.append(MatrixResourceFrontierIssue("invalid_local_resource_status", "local resource_status must be completed, out_of_memory, or resource_exhausted", attempt_id))
+        if not isinstance(attempt.get("oom_or_exhaustion_diagnostics"), str) or not attempt["oom_or_exhaustion_diagnostics"].strip():
+            issues.append(MatrixResourceFrontierIssue("missing_local_oom_diagnostics", "local attempts must include OOM or exhaustion diagnostics", attempt_id))
+        artifact_paths = attempt.get("artifact_paths")
+        if not isinstance(artifact_paths, list) or not all(isinstance(path, str) and path.startswith("runs/") for path in artifact_paths):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_artifact_paths", "local artifact paths must be run artifacts under runs/", attempt_id))
+        else:
+            artifact_count += len(artifact_paths)
+        artifact_hashes = attempt.get("artifact_sha256")
+        if not isinstance(artifact_hashes, list) or len(artifact_hashes) != (len(artifact_paths) if isinstance(artifact_paths, list) else -1):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_artifact_hashes", "artifact_sha256 must align with artifact_paths", attempt_id))
+        elif any(not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None for digest in artifact_hashes):
+            issues.append(MatrixResourceFrontierIssue("invalid_local_artifact_hashes", "artifact_sha256 values must be lowercase SHA-256 digests", attempt_id))
+    if status == "attempts_recorded" and not value:
+        issues.append(MatrixResourceFrontierIssue("missing_local_attempts", "attempts_recorded records must include at least one local attempt"))
+    return len(value), artifact_count
+
+
+def _validate_excluded_target_policy(
+    value: object,
+    status: object,
+    issues: list[MatrixResourceFrontierIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(MatrixResourceFrontierIssue("invalid_excluded_target_policy", "excluded_target_policy must be an object"))
+        return
+    policy_status = value.get("status")
+    if status == "not_executed_locally" and policy_status != "not_defined":
+        issues.append(MatrixResourceFrontierIssue("invalid_excluded_target_policy_status", "not_executed_locally records must keep excluded target policy not_defined"))
+    if status == "attempts_recorded" and policy_status not in {"defined", "not_defined"}:
+        issues.append(MatrixResourceFrontierIssue("invalid_excluded_target_policy_status", "excluded target policy status must be defined or not_defined"))
+    boundary = value.get("boundary")
+    if not isinstance(boundary, str) or "No local larger-target matrix scaling attempts" not in boundary:
+        issues.append(MatrixResourceFrontierIssue("missing_excluded_target_boundary", "excluded target policy must preserve the current local absence boundary"))
 
 
 def _validate_target(

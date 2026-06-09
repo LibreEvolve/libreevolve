@@ -3481,7 +3481,13 @@ Appendix A matrix resource-frontier provenance uses
 record preserves the paper's page 34 statement that sizes beyond `<5,5,5>`
 with 1000 random seeds on single-GPU evaluators often ran out of memory and
 needed further optimization. It is paper-source boundary evidence only: it
-does not claim local execution evidence or declare local OOM artifacts.
+does not claim local execution evidence or declare local OOM artifacts. The
+companion
+`libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` record
+keeps the local side explicit: no larger-target matrix scaling attempts,
+measured GPU memory profiles, OOM diagnostics, reduced-seed tradeoffs, or
+attempted-versus-excluded target policies have been recorded yet, and those
+fields are required before local scaling-frontier claims.
 The paper-manifest validator also checks the shipped example-scope registry,
 keeping `hello_world`, `sorting`, `workspace_math`, `matrix_multiplication`,
 and `circle_packing` marked as smoke-only rather than AlphaEvolve-comparable

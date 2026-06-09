@@ -2569,14 +2569,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `libreevolve.alphaevolve_appendix_a_matrix_resource_frontier.v1`. The
     resource-frontier contract validates the paper-only boundary for sizes
     beyond `<5,5,5>`, 1000 random seeds, single-GPU evaluators, frequent OOM,
-    and further-optimization need. It does not require local matrix-specific
-    attempted-target rows, measured GPU memory/resource diagnostics, seed-count
-    tradeoff records, or a clear policy for target inclusion/exclusion beyond
-    the reported suite.
+    and further-optimization need.
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` now
+    validates the local absence/readiness boundary and required future fields
+    for attempted-target rows, measured GPU memory/resource diagnostics,
+    seed-count tradeoff records, artifacts, and target inclusion/exclusion
+    policy beyond the reported suite.
   - Required result: when local matrix scaling/resource-frontier report fields
-    land, update ROADMAP, README, papers index, and code/paper TODOs together
-    so roadmap text distinguishes AlphaEvolve paper-source OOM boundary
-    evidence from local claims about larger matrix target scalability.
+    are backed by actual local attempts, update ROADMAP, README, papers index,
+    and code/paper TODOs together so roadmap text distinguishes AlphaEvolve
+    paper-source OOM boundary evidence from local claims about larger matrix
+    target scalability.
 
 - [ ] Keep matrix roadmap wording scoped until evolved sweep-space records are
       emitted.

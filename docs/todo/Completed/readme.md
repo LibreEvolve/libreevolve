@@ -10739,3 +10739,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     `not_yet_linked` status for paper figures and the companion notebook plus
     the digest/source-map fields required before concrete artifact claims.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+- [x] Document the local Appendix A matrix resource-frontier absence boundary
+      in README.
+  - Spec evidence: README should separate paper-source OOM/resource-frontier
+    evidence from local larger-target matrix scaling claims.
+  - Status: README now names
+    `libreevolve.alphaevolve_appendix_a_matrix_local_resource_frontier.v1` and
+    states that no local larger-target attempts, measured GPU memory profiles,
+    OOM diagnostics, reduced-seed tradeoffs, or attempted-versus-excluded
+    target policies have been recorded yet.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

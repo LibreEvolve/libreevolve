@@ -3355,33 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     absent), classification of the 67-versus-68 discrepancy, and README/
     ROADMAP/papers wording that keeps problem-count claims snapshot-scoped.
 
-- [ ] Track AlphaEvolve theoretical-CS proof-element source evidence.
-  - Paper evidence: Google Research's September 30, 2025 article
-    `AI as a research partner: Advancing theoretical computer science with
-    AlphaEvolve` and arXiv `2509.18057`, `Reinforced Generation of
-    Combinatorial Structures: Applications to Complexity Theory`, report
-    AlphaEvolve-discovered finite combinatorial proof elements for complexity
-    theory: MAX-k-CUT gadget reductions and Ramanujan-graph constructions. The
-    sources describe lifting finite structures into universal theorem
-    statements, computer-verified proof elements, AlphaEvolve-accelerated
-    verifier code, and final verification with the original brute-force
-    algorithm.
-  - Current gap: the paper cache and AlphaEvolve ledgers track `2506.13131`,
-    the original companion Colab, Appendix A/B result surfaces, and the
-    `2511.02864` math-scale follow-on paper/repository. They do not preserve
-    the separate theoretical-CS article/paper as paper-facing source evidence,
-    nor do they require graph/gadget artifact inventories, lifting-framework
-    boundaries, verification-speedup claims, or final independent-verifier
-    provenance.
-  - Required result: add source rows for the Google Research article and arXiv
-    `2509.18057`: URL/date, arXiv version/date/PDF cache/digest, source
-    artifact or repository links if available, problem/result ids, graph/gadget
-    artifact metadata, verifier and original brute-force verifier provenance,
-    lifting-framework statement, rights/license notes, and README/ROADMAP
-    wording that keeps theoretical-CS proof-element applications distinct from
-    the original AlphaEvolve specification and the 67-problem constructive-math
-    follow-on.
-
 - [ ] Track official DeepMind AlphaEvolve blog source and claim variants.
   - Paper evidence: the official Google DeepMind blog article dated May 14,
     2025, `AlphaEvolve: A Gemini-powered coding agent for designing advanced

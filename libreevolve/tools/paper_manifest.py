@@ -58,6 +58,10 @@ from libreevolve.problems.benchmarks.follow_on_coverage import (
     alphaevolve_follow_on_problem_coverage_record,
     validate_alphaevolve_follow_on_problem_coverage,
 )
+from libreevolve.problems.benchmarks.theoretical_cs_sources import (
+    EXPECTED_THEORETICAL_CS_SOURCE_MANIFEST_FILE,
+    validate_alphaevolve_theoretical_cs_source_manifest,
+)
 from libreevolve.problems.benchmarks.paper_source_versions import (
     EXPECTED_SOURCE_VERSION_MANIFEST_FILE,
     alphaevolve_source_pdf_version_record,
@@ -497,6 +501,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_follow_on_tao_blog_manifest(root_path))
     issues.extend(_validate_alphaevolve_follow_on_math_source_record(manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_follow_on_problem_coverage_record())
+    issues.extend(_validate_alphaevolve_theoretical_cs_source_manifest(root_path))
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
@@ -1201,6 +1206,33 @@ def _validate_alphaevolve_follow_on_problem_coverage_record() -> list[PaperManif
             f"alphaevolve_follow_on_problem_coverage_{issue.code}",
             issue.message,
             str(issue.problem_id) if issue.problem_id is not None else "2511.02864",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_theoretical_cs_source_manifest(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / EXPECTED_THEORETICAL_CS_SOURCE_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_theoretical_cs_source_manifest_missing",
+                    "papers/theoretical_cs_sources.json must emit the theoretical-CS proof-element source row",
+                    "2509.18057",
+                )
+            ]
+        return []
+    report = validate_alphaevolve_theoretical_cs_source_manifest(manifest_path)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_theoretical_cs_source_manifest_{issue.code}",
+            issue.message,
+            _safe_manifest_label(issue.source_id) if issue.source_id else "2509.18057",
         )
         for issue in report.issues
     ]

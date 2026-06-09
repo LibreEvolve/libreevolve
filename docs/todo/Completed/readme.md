@@ -4,6 +4,19 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README theoretical-CS AlphaEvolve wording scoped until
+      proof-element source tracking exists.
+  - Spec evidence: Google Research's September 30, 2025 article and arXiv
+    `2509.18057v7` describe finite AlphaEvolve-discovered proof elements,
+    lifting frameworks, verifier-speedup claims, and final brute-force
+    verification.
+  - Status: README now documents `papers/theoretical_cs_sources.json` as later
+    theoretical-CS proof-element source evidence, separated from original
+    AlphaEvolve spec parity, 67-problem constructive-math source coverage,
+    formal theorem proving, and local graph/certification implementation.
+  - Remaining gap: none for this bounded README wording slice; graph/gadget
+    artifacts and certification benchmark wording remain active TODOs.
+
 - [x] Keep README Tao-blog follow-on wording scoped until source metadata
       exists.
   - Spec evidence: the November 5, 2025 Tao blog post links the follow-on

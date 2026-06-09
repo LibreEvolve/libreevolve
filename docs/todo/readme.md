@@ -1628,28 +1628,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     pages as snapshot diagnostics, and avoid treating every numbered page as a
     complete problem/notebook/paper-linked source artifact until reconciled.
 
-- [ ] Keep README theoretical-CS AlphaEvolve wording scoped until
-      proof-element source tracking exists.
-  - Spec evidence: Google Research's September 30, 2025 AlphaEvolve
-    theoretical-CS article and arXiv `2509.18057` report AlphaEvolve-discovered
-    finite combinatorial structures used as proof elements for complexity
-    theory, including MAX-k-CUT gadget reductions and Ramanujan graph
-    constructions. The sources distinguish AI-generated proof elements from
-    directly generated proofs, describe lifting finite structures into
-    universal statements, and require computer verification plus final
-    brute-force verification of discovered gadgets.
-  - Current evidence: README can describe `2506.13131`, Appendix A/B coverage,
-    the original result-Colab gap, and the 67-problem follow-on math-source
-    gap. It does not document the separate theoretical-CS AlphaEvolve article,
-    arXiv paper, graph/gadget artifact inventory, lifting-framework boundary,
-    verifier-speedup claims, or independent final-verification policy.
-  - Required result: when theoretical-CS source tracking lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README separates
-    original AlphaEvolve spec parity, expanded constructive-math source
-    coverage, and later proof-element/lifting applications; README should not
-    imply formal-proof or theorem-proving support from generic evaluator
-    validation or Appendix B coverage.
-
 - [ ] Keep README DeepMind-blog wording scoped until official announcement
       source provenance exists.
   - Spec evidence: the May 14, 2025 Google DeepMind blog article is an

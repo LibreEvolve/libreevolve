@@ -29,6 +29,9 @@ from libreevolve.problems.benchmarks.follow_on_sources import (
     alphaevolve_follow_on_source_manifest_record,
     alphaevolve_follow_on_tao_blog_manifest_record,
 )
+from libreevolve.problems.benchmarks.theoretical_cs_sources import (
+    alphaevolve_theoretical_cs_source_manifest_record,
+)
 from libreevolve.tools.paper_manifest import main, rehydrate_paper_cache, validate_paper_manifest
 
 PARTIAL_FIXTURE_STATUS = (
@@ -480,6 +483,45 @@ def test_validate_paper_manifest_rejects_follow_on_tao_blog_manifest_drift(tmp_p
 
     assert report.ok is False
     assert "alphaevolve_follow_on_tao_blog_manifest_invalid_tao_blog_claim_boundary_blog_commentary_secondary" in codes
+
+
+def test_validate_paper_manifest_accepts_matching_theoretical_cs_source_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "theoretical_cs_sources.json").write_text(
+        json.dumps(alphaevolve_theoretical_cs_source_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_theoretical_cs_source_manifest_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    theoretical_record = alphaevolve_theoretical_cs_source_manifest_record()
+    theoretical_record["sources"][0]["source_record"]["claim_boundaries"][
+        "not_formal_theorem_prover"
+    ] = False
+    (tmp_path / "papers" / "theoretical_cs_sources.json").write_text(
+        json.dumps(theoretical_record, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_theoretical_cs_source_manifest_invalid_claim_boundaries_not_formal_theorem_prover" in codes
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

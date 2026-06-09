@@ -653,6 +653,15 @@ is not yet an AlphaEvolve reproduction.
   links, and the policy that blog commentary does not become unqualified
   AlphaEvolve specification or implementation-parity evidence without backing
   paper, repository, notebook, verifier, or proof artifacts.
+- Keep theoretical-CS proof-element applications separate from original spec
+  parity: `papers/theoretical_cs_sources.json` now records the September 30,
+  2025 Google Research article, arXiv `2509.18057v7`, cached PDF metadata,
+  MAX-k-CUT gadget, random-graph/Ramanujan, and metric-TSP application rows,
+  lifting-framework and final-brute-force-verification boundaries, and
+  docs/TODO claim-surface links. Graph/gadget artifacts, AlphaEvolve search
+  code, verifier code, original brute-force verifier provenance, and local
+  graph-certification benchmarks remain open before roadmap claims can treat
+  this source as implemented benchmark parity.
 - Keep follow-on problem-repository coverage snapshot-scoped:
   `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now validates the
   pinned repository status artifacts (`status.json`, `status_grid.png`, and

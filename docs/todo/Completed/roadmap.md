@@ -4,6 +4,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
+      proof-element source tracking exists.
+  - Spec evidence: Google Research's September 30, 2025 article and arXiv
+    `2509.18057v7` use AlphaEvolve to discover finite structures that serve as
+    proof elements for complexity-theory hardness results.
+  - Status: ROADMAP now documents `papers/theoretical_cs_sources.json` as the
+    committed theoretical-CS source sidecar with article/arXiv/PDF cache
+    evidence, application rows, lifting and final-verification boundaries, and
+    docs/TODO claim-surface links.
+  - Remaining gap: none for this bounded roadmap wording slice; graph/gadget
+    artifacts, search/verifier code, brute-force verifier provenance, and local
+    graph-certification benchmarks remain active work.
+
 - [x] Keep Tao-blog follow-on roadmap claims scoped until source metadata
       exists.
   - Spec evidence: the November 5, 2025 Tao blog post links the follow-on

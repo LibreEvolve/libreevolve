@@ -2463,29 +2463,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     classification, and snapshot-scoped wording for any 67-versus-68 source
     mismatch.
 
-- [ ] Keep theoretical-CS roadmap wording scoped until AlphaEvolve
-      proof-element source tracking exists.
-  - Spec evidence: Google Research's September 30, 2025 AlphaEvolve
-    theoretical-CS article and arXiv `2509.18057` use AlphaEvolve to discover
-    finite combinatorial structures that serve as proof elements in complexity
-    theory, including MAX-k-CUT gadget reductions and Ramanujan graph
-    constructions. The sources describe lifting finite structures into
-    universal statements, computer-verified proof elements, AlphaEvolve
-    acceleration of expensive verifier code, and final brute-force
-    verification of discovered gadgets.
-  - Current evidence: roadmap/README/paper-index wording can cite the original
-    AlphaEvolve paper, Appendix A/B coverage, the original companion-Colab
-    gap, and the later 67-problem constructive-math source gap. It does not
-    require tracking the separate theoretical-CS source article/paper,
-    graph/gadget artifacts, lifting-framework boundary, verifier-speedup
-    evidence, or independent final-verification policy.
-  - Required result: when theoretical-CS proof-element source tracking lands,
-    update ROADMAP, README, papers index, and code/paper TODOs so roadmap
-    claims distinguish original AlphaEvolve specification parity, expanded
-    constructive-math source coverage, and later proof-element/lifting
-    applications rather than treating all mathematical-source evidence as one
-    Appendix B or 67-problem bucket.
-
 - [ ] Keep DeepMind-blog roadmap wording scoped until official announcement
       source provenance exists.
   - Spec evidence: the May 14, 2025 Google DeepMind blog announcement is an

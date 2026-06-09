@@ -3609,6 +3609,17 @@ URLs, claim categories for commentary, experiment summary, verifier-design
 lessons, negative results, proof handoffs, and future work, and the policy that
 blog-only claims need paper, repository, notebook, verifier, or proof-artifact
 backing before they can support implementation-parity claims.
+Theoretical-CS AlphaEvolve proof-element source evidence uses
+`libreevolve.alphaevolve_theoretical_cs_source.v1`; the committed
+`papers/theoretical_cs_sources.json` sidecar records the September 30, 2025
+Google Research article, arXiv `2509.18057v7`, the cached PDF digest, MAX-k-CUT
+gadget-reduction, average-case random-graph, and metric-TSP application rows,
+the lifting-framework and final-brute-force-verification boundaries, and the
+policy that graph/gadget benchmark claims still require pinned artifacts,
+search/verifier code, original brute-force verifier provenance, and local
+certification benchmarks. This is later proof-element source evidence, not the
+original AlphaEvolve specification, not the 67-problem constructive-math source,
+and not a local theorem prover or graph-certification implementation.
 Follow-on problem-repository coverage evidence uses
 `libreevolve.alphaevolve_follow_on_problem_coverage.v1`; the built-in record
 pins the same repository snapshot and validates root-level `status.json`,

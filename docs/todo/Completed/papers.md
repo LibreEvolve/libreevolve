@@ -6,6 +6,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track AlphaEvolve theoretical-CS proof-element source evidence.
+  - Paper/source evidence: Google Research's September 30, 2025 article and
+    arXiv `2509.18057v7`, `Reinforced Generation of Combinatorial Structures:
+    Hardness of Approximation`, report AlphaEvolve-discovered finite
+    structures used as proof elements in complexity theory.
+  - Status: `papers/theoretical_cs_sources.json` now records the article and
+    arXiv source row with URL/date/authors, retrieval hashes, arXiv
+    version/date/DOI/PDF-cache metadata, MAX-k-CUT, random-graph/Ramanujan,
+    and metric-TSP application rows, lifting-framework and verification
+    boundaries, rights/license-relevant cache metadata, docs/TODO claim links,
+    and remaining artifact/verifier/code work. The paper-manifest gate
+    requires and validates this sidecar at repo root.
+  - Remaining gap: none for this bounded source-tracking slice; graph/gadget
+    artifact inventories, source repositories, verifier/brute-force
+    provenance, and local certification benchmarks remain separate paper work.
+
 - [x] Track Terence Tao follow-on blog source and claim boundaries.
   - Paper/source evidence: Terence Tao's November 5, 2025 post links the
     follow-on arXiv paper, the AlphaEvolve tool, and the problem repository,

@@ -2528,32 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Add AlphaEvolve theoretical-CS proof-element source tracking.
-  - Spec evidence: Google Research's September 30, 2025 AlphaEvolve
-    theoretical-CS article and arXiv `2509.18057`, `Reinforced Generation of
-    Combinatorial Structures: Applications to Complexity Theory`, use
-    AlphaEvolve to discover finite combinatorial structures/proof elements for
-    hardness results, including MAX-k-CUT gadget reductions and Ramanujan
-    graph constructions. The source describes lifting finite structures into
-    universal statements, automatically verified proof elements, AlphaEvolve
-    acceleration of expensive verification, and final brute-force verification
-    of discovered gadgets.
-  - Current evidence: the local manifests, paper index, and AlphaEvolve TODOs
-    track the original AlphaEvolve PDF, the original result Colab, Appendix A/B
-    math evidence, and the later 67-problem math-scale repository. They do not
-    track this distinct theoretical-CS/proof-element application surface,
-    including its source article, arXiv paper, finite-structure artifacts,
-    lifting-framework boundary, verifier-speedup claims, or final independent
-    verification policy.
-  - Required result: extend paper/source manifests and validators for the
-    theoretical-CS AlphaEvolve source: Google Research article URL/date,
-    arXiv id/version/date/PDF cache, source repository or artifact links if
-    available, problem/result ids, finite proof-element or graph/gadget
-    artifact metadata, lifting-framework statement, verifier-speedup and
-    correctness evidence, final brute-force verification provenance, and
-    README/ROADMAP wording that separates original AlphaEvolve specification,
-    expanded constructive-math evidence, and later proof-element applications.
-
 - [ ] Add official DeepMind AlphaEvolve blog-source provenance and claim
       reconciliation.
   - Spec evidence: the May 14, 2025 Google DeepMind article `AlphaEvolve: A

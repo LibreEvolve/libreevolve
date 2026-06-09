@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add AlphaEvolve theoretical-CS proof-element source tracking.
+  - Spec evidence: Google Research's September 30, 2025 article and arXiv
+    `2509.18057v7` report AlphaEvolve-discovered finite combinatorial proof
+    elements for MAX-k-CUT gadget reductions, Ramanujan/random-graph
+    certification, and metric-TSP hardness, with lifting-framework and final
+    brute-force-verification boundaries.
+  - Status: `libreevolve.alphaevolve_theoretical_cs_source.v1` now emits
+    `papers/theoretical_cs_sources.json` with the Google Research article
+    URL/date/hash, arXiv version/date/PDF cache metadata, application rows,
+    proof-element/lifting/verifier-speedup/final-verification categories,
+    docs/TODO claim-surface links, and evidence policy.
+  - Remaining gap: graph/gadget artifact inventories, source/search code,
+    verifier code, original brute-force verifier provenance, and local graph
+    certification benchmarks remain separate active TODOs.
+
 - [x] Add Terence Tao follow-on blog source provenance and claim boundaries.
   - Spec evidence: Terence Tao's November 5, 2025 post `Mathematical
     exploration and discovery at scale` links arXiv `2511.02864`, the

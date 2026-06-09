@@ -368,6 +368,16 @@ endorsement, licensing, publication-author, or technical capability evidence;
 populated reviewed records are still needed before making title-page
 affiliation or footnote parity claims.
 
+AlphaEvolve system-contribution note: LibreEvolve now has optional
+`system_contributions.yaml` / `Problem.system_contribution_metadata` records
+plus `runtime.history.system_contribution_provenance_report` for system design,
+project scoping, first-benchmark iteration, final-system, infrastructure,
+code-review, coordination, and supervision role provenance. These records are
+paper-attributed development facts, not generic git history, package metadata,
+publication-author metadata, acknowledgement roles, or local validation
+evidence; populated reviewed records are still needed before making
+AlphaEvolve-style system-development contribution parity claims.
+
 AlphaEvolve process-exhibit note: completed manifests now include
 `runtime.history.alphaevolve_process_exhibit_report` with schema
 `libreevolve.alphaevolve_process_exhibit_report.v1`. The report preserves

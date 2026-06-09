@@ -160,6 +160,12 @@ LibreEvolve has:
   source-paper affiliation text, footnote marker definitions, author-marker
   mappings, source-rights linkage, privacy/redaction policy, and
   review/signoff readiness
+- optional system-contribution metadata under `system_contributions.yaml` or
+  direct `Problem.system_contribution_metadata`, normalized into
+  `problem.system_contribution_metadata` and summarized by
+  `runtime.history.system_contribution_provenance_report` for system design,
+  project scoping, first-benchmark iteration, final-system, infrastructure,
+  code-review, coordination, and supervision role provenance
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current Python-primary text-workspace boundary and explicitly
   mark arbitrary-language/build-system runners as unsupported

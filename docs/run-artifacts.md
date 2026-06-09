@@ -135,6 +135,20 @@ affiliation and title-page footnote evidence separate from LibreEvolve's local
 project affiliation, endorsement, MIT license, publication-author metadata,
 source-rights metadata, and technical capability evidence; populated reviewed
 fixture records are still required for AlphaEvolve title-page parity claims.
+Problem fixtures can also optionally include `system_contributions.yaml` or
+`system_contributions.yml`; direct callers can set
+`Problem.system_contribution_metadata`. Startup manifest validation normalizes
+this into `problem.system_contribution_metadata` with schema
+`libreevolve.system_contribution_metadata.v1`, fixed development-phase,
+privacy/retention, and review-status vocabularies, bounded non-secret
+contributor labels, role labels, artifact/module/report links, source
+page/section locators, and review scope text. Completed manifests include
+`runtime.history.system_contribution_provenance_report` with schema
+`libreevolve.system_contribution_provenance_report.v1`. This report keeps
+paper-attributed system-development roles separate from generic git/source
+history, package metadata, publication-author metadata, acknowledgement roles,
+and local validation evidence; populated reviewed fixture records are still
+required for AlphaEvolve system-contribution parity claims.
 Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the

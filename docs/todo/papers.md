@@ -701,7 +701,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     from treating the schema alone as AlphaEvolve-style title-page affiliation
     or footnote parity evidence.
 
-- [ ] Track core AlphaEvolve system-development contribution provenance.
+- [ ] Populate core AlphaEvolve system-development contribution provenance.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Contributions says the
     initial version of AlphaEvolve was designed and implemented by specific
     contributors; project vision and problem scoping, first benchmark problem
@@ -711,20 +711,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     implementation, scoping, first-benchmark, final-system, and infrastructure
     categories; page 23 contains code-review, team-coordination, and
     supervision categories.
-  - Current gap: paper/status records preserve selected application owner
-    roles, figure/Colab artifact roles, early-user feedback gaps, and general
-    source/build provenance. They do not preserve paper-facing provenance for
-    core system-development phases or responsible roles, so local docs cannot
-    distinguish implementation authorship, infrastructure maintenance,
-    benchmark-iteration ownership, review responsibility, and coordination
-    claims from generic repository history, package authors/maintainers, or
-    source-control metadata.
-  - Required result: add paper-facing contribution records for core
-    AlphaEvolve-style system development: role label, responsible person/team
-    label where safe, development phase, artifact/module/report linkage,
-    source page/section, review or approval scope, and README/ROADMAP wording
-    that separates local contributor history, package metadata, and source
-    hashes from paper-attributed system-development provenance.
+  - Current gap: LibreEvolve now accepts optional
+    `system_contributions.yaml` / `Problem.system_contribution_metadata`
+    records and reports
+    `runtime.history.system_contribution_provenance_report` for role labels,
+    responsible person/team labels where safe, development phases,
+    artifact/module/report linkage, source page/section locators,
+    privacy/retention policy, and review/signoff state. Existing fixtures
+    still lack real populated reviewed system-contribution records and
+    paper-facing certification examples.
+  - Required result: populate representative fixtures with reviewed
+    system-contribution metadata, link records to source page/section evidence
+    and project artifact/module/report labels, add paper-facing examples or
+    certification rows, and keep docs from treating the schema alone as
+    AlphaEvolve-style system-development contribution parity evidence.
 
 - [ ] Add replayable evaluator environment, package-source, and accelerator
   provenance.

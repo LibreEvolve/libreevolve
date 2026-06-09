@@ -523,27 +523,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve-style title-page affiliation parity.
 
 - [ ] Keep system-development roadmap wording scoped until contribution-role
-      provenance exists.
+      provenance is populated.
   - Spec evidence: AlphaEvolve's Contributions section attributes core system
     development work across initial implementation, project vision and problem
     scoping, first benchmark iteration, final system development,
     infrastructure maintenance, code reviews, team coordination, and
     supervision. Local PDF pages 22-23 separate those categories from
     publication-author, acknowledgement, and application-review roles.
-  - Current evidence: ROADMAP and README can cite local implementation status,
-    source provenance, tests, and open contribution guidance. They do not
-    require roadmap evidence for contribution-role records, development-phase
-    attribution, infrastructure ownership, benchmark-iteration ownership,
-    review responsibility, or coordination/supervision scope. Runtime manifests
-    and environment provenance can record source hashes, Git state, and package
-    authors/maintainers, but not paper-attributed system-development role
-    boundaries.
-  - Required result: when contribution-role metadata lands, update ROADMAP,
-    README, papers index, and code/paper TODOs with role labels, development
-    phase, artifact/module linkage, source page/section, and review/approval
-    scope so roadmap wording separates local implementation plans, package
-    metadata, and repository history from AlphaEvolve-style paper-attributed
-    system-development provenance.
+  - Current evidence: ROADMAP and README now document optional
+    `system_contributions.yaml` / `Problem.system_contribution_metadata`,
+    normalized `problem.system_contribution_metadata`, and
+    `runtime.history.system_contribution_provenance_report` for development
+    phases, artifact/module/report links, source locators, review scope,
+    privacy policy, and review/signoff readiness. The schema/report surface is
+    implemented, but representative fixtures still lack real reviewed
+    contribution-role records.
+  - Required result: when representative fixtures carry reviewed
+    system-contribution evidence and paper-facing certification rows, update
+    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
+    wording neither underclaims the metadata/report surface nor overclaims
+    AlphaEvolve-style system-development contribution parity.
 
 - [ ] Keep workspace-topology roadmap scope aligned with current
       materialization diagnostics.

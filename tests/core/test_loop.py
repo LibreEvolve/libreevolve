@@ -59,6 +59,7 @@ from libreevolve.core.loop import (
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
+    validate_system_contribution_provenance_report,
     validate_title_page_affiliation_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
@@ -6329,6 +6330,144 @@ def test_direct_title_page_metadata_rejects_secret_like_text_before_manifest():
         StrictJsonlError,
         match=(
             "title_page_metadata\\.affiliation\\.organization "
+            "must not contain secret-like text"
+        ),
+    ):
+        evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    assert not (Path(tmpdir) / "t" / "manifest.json").exists()
+
+
+def test_loaded_system_contribution_metadata_reaches_manifest_and_report():
+    problem_dir = Path(tempfile.mkdtemp())
+    (problem_dir / "task_description.txt").write_text(
+        "system contribution task",
+        encoding="utf-8",
+    )
+    (problem_dir / "metrics.yaml").write_text(
+        "metrics:\n"
+        "  - name: score\n"
+        "    primary: true\n"
+        "    bounds: [0.0, 1.0]\n",
+        encoding="utf-8",
+    )
+    (problem_dir / "validate.py").write_text(
+        "def evaluate(c): return {'score': 1.0, 'is_valid': True}\n",
+        encoding="utf-8",
+    )
+    seed_dir = problem_dir / "initial_programs"
+    seed_dir.mkdir()
+    (seed_dir / "seed.py").write_text("x = 1\n", encoding="utf-8")
+    records = []
+    phases = [
+        ("initial-design", "initial_design", 22),
+        ("vision-scoping", "project_vision_scoping", 22),
+        ("first-benchmark", "first_benchmark_iteration", 22),
+        ("final-system", "final_system", 22),
+        ("infrastructure", "infrastructure", 22),
+        ("code-review", "code_review", 23),
+        ("coordination", "team_coordination", 23),
+        ("supervision", "supervision", 23),
+    ]
+    for record_id, phase, page in phases:
+        records.append(
+            "  - record_id: " + record_id + "\n"
+            "    contributor_label: source contribution group " + record_id + "\n"
+            "    phase: " + phase + "\n"
+            "    role_label: AlphaEvolve " + phase.replace("_", " ") + "\n"
+            "    artifacts:\n"
+            "      - contribution artifact " + record_id + "\n"
+            "    source_page: " + str(page) + "\n"
+            "    source_section: AlphaEvolve Contributions\n"
+            "    review_scope: Contribution role and source locator reviewed.\n"
+        )
+    (problem_dir / "system_contributions.yaml").write_text(
+        "records:\n"
+        + "".join(records)
+        + "privacy_policy:\n"
+        + "  retention: public_names_allowed\n"
+        + "review:\n"
+        + "  status: contribution_roles_reviewed\n"
+        + "  reviewer_labels:\n"
+        + "    - contribution reviewer\n",
+        encoding="utf-8",
+    )
+    problem = load_problem(problem_dir)
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    metadata = manifest["problem"]["system_contribution_metadata"]
+    assert metadata["schema"] == "libreevolve.system_contribution_metadata.v1"
+    assert metadata["status"] == "provided"
+    assert len(metadata["records"]) == 8
+    report = manifest["runtime"]["history"][
+        "system_contribution_provenance_report"
+    ]
+    assert report["schema"] == (
+        "libreevolve.system_contribution_provenance_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_system_contribution_provenance_report(report)["ok"] is True
+    assert report["claim_ready"] is True
+    assert report["source_pages"] == [22, 23]
+    assert report["missing_phases"] == []
+    assert report["claim_readiness"][
+        "alphaevolve_system_contribution_parity"
+    ] is True
+
+
+def test_system_contribution_report_marks_missing_metadata_boundary():
+    tmpdir = tempfile.mkdtemp()
+
+    evolve(_problem(), Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"][
+        "system_contribution_provenance_report"
+    ]
+    assert report["metadata_status"] == "not_provided"
+    assert report["claim_ready"] is False
+    assert report["validation"]["ok"] is True
+    assert "system_contributions_yaml_in_problem_fixture" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    edited = copy.deepcopy(report)
+    edited["claim_ready"] = True
+    edited["claim_readiness"]["alphaevolve_system_contribution_parity"] = True
+    validation = validate_system_contribution_provenance_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "claim_ready_mismatch",
+        "system_contribution_parity_mismatch",
+    }
+
+
+def test_direct_system_contribution_metadata_rejects_secret_like_text_before_manifest():
+    problem = _problem()
+    problem.system_contribution_metadata = {
+        "records": [
+            {
+                "record_id": "initial-design",
+                "contributor_label": (
+                    "OPENAI_API_KEY=sk-123456789012345678901234567890123456789012345678"
+                ),
+                "phase": "initial_design",
+                "role_label": "Initial system design",
+                "artifacts": ["core system"],
+                "source_page": 22,
+                "source_section": "Contributions",
+                "review_scope": "Contribution role reviewed.",
+            }
+        ]
+    }
+    tmpdir = tempfile.mkdtemp()
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=(
+            "system_contribution_metadata\\.records\\[0\\]\\.contributor_label "
             "must not contain secret-like text"
         ),
     ):

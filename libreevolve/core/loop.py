@@ -792,6 +792,7 @@ def evolve(
         acknowledgement_metadata=_problem_acknowledgement_metadata(problem),
         paper_author_metadata=_problem_paper_author_metadata(problem),
         title_page_metadata=_problem_title_page_metadata(problem),
+        system_contribution_metadata=_problem_system_contribution_metadata(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -5178,6 +5179,11 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 db.startup_manifest_snapshot()
             )
         ),
+        "system_contribution_provenance_report": (
+            _system_contribution_provenance_report(
+                db.startup_manifest_snapshot()
+            )
+        ),
         "candidate_abstraction_choice_report": (
             _candidate_abstraction_choice_report(
                 db.startup_manifest_snapshot(),
@@ -7897,6 +7903,440 @@ def validate_title_page_affiliation_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.title_page_affiliation_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _system_contribution_provenance_report(
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    problem = (
+        startup_manifest.get("problem")
+        if isinstance(startup_manifest.get("problem"), Mapping)
+        else {}
+    )
+    metadata = (
+        problem.get("system_contribution_metadata")
+        if isinstance(problem.get("system_contribution_metadata"), Mapping)
+        else {}
+    )
+    records = (
+        metadata.get("records")
+        if isinstance(metadata.get("records"), list)
+        else []
+    )
+    privacy = (
+        metadata.get("privacy_policy")
+        if isinstance(metadata.get("privacy_policy"), Mapping)
+        else {}
+    )
+    review = (
+        metadata.get("review")
+        if isinstance(metadata.get("review"), Mapping)
+        else {}
+    )
+    required_phases = [
+        "initial_design",
+        "project_vision_scoping",
+        "first_benchmark_iteration",
+        "final_system",
+        "infrastructure",
+        "code_review",
+        "team_coordination",
+        "supervision",
+    ]
+    phase_counts: dict[str, int] = {}
+    artifact_labels: set[str] = set()
+    source_pages: set[int] = set()
+    review_scope_count = 0
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        phase = record.get("phase")
+        if isinstance(phase, str):
+            phase_counts[phase] = phase_counts.get(phase, 0) + 1
+        artifacts = record.get("artifacts")
+        if isinstance(artifacts, list):
+            artifact_labels.update(item for item in artifacts if isinstance(item, str))
+        page = record.get("source_page")
+        if isinstance(page, int) and not isinstance(page, bool):
+            source_pages.add(page)
+        if isinstance(record.get("review_scope"), str):
+            review_scope_count += 1
+    phases_present = sorted(phase_counts)
+    missing_phases = [phase for phase in required_phases if phase_counts.get(phase, 0) == 0]
+    metadata_present = metadata.get("status") == "provided"
+    all_required_phases_recorded = not missing_phases
+    artifact_links_recorded = len(artifact_labels) >= len(records) and bool(records)
+    source_pages_recorded = len(source_pages) > 0 and len(source_pages) <= len(records)
+    review_scopes_recorded = bool(records) and review_scope_count == len(records)
+    privacy_recorded = isinstance(privacy.get("retention"), str)
+    reviewed = review.get("status") in {
+        "contribution_roles_reviewed",
+        "owner_signed_off",
+    }
+    claim_ready = (
+        metadata_present
+        and all_required_phases_recorded
+        and artifact_links_recorded
+        and source_pages_recorded
+        and review_scopes_recorded
+        and privacy_recorded
+        and reviewed
+    )
+    report = {
+        "schema": "libreevolve.system_contribution_provenance_report.v1",
+        "source": "system_contribution_metadata",
+        "metadata_schema": metadata.get("schema"),
+        "manifest_path": "problem.system_contribution_metadata",
+        "metadata_status": metadata.get("status"),
+        "record_count": len(records),
+        "phase_counts": phase_counts,
+        "phases_present": phases_present,
+        "missing_phases": missing_phases,
+        "artifact_link_count": len(artifact_labels),
+        "artifact_labels": sorted(artifact_labels),
+        "source_page_count": len(source_pages),
+        "source_pages": sorted(source_pages),
+        "review_scope_count": review_scope_count,
+        "privacy_policy": {
+            "retention": privacy.get("retention"),
+        },
+        "review_status": review.get("status"),
+        "reviewer_count": len(
+            review.get("reviewer_labels", [])
+            if isinstance(review.get("reviewer_labels"), list)
+            else []
+        ),
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "metadata_present": metadata_present,
+            "all_required_phases_recorded": all_required_phases_recorded,
+            "artifact_or_module_links_recorded": artifact_links_recorded,
+            "source_pages_recorded": source_pages_recorded,
+            "review_scopes_recorded": review_scopes_recorded,
+            "privacy_policy_recorded": privacy_recorded,
+            "contribution_roles_review_or_owner_signoff": reviewed,
+            "git_history_boundary_separated": True,
+            "package_metadata_boundary_separated": True,
+            "publication_author_boundary_separated": True,
+            "alphaevolve_system_contribution_parity": claim_ready,
+            "remaining_gap": []
+            if claim_ready
+            else [
+                gap
+                for gap, ready in (
+                    ("system_contributions_yaml_in_problem_fixture", metadata_present),
+                    ("all_required_contribution_phases", all_required_phases_recorded),
+                    ("artifact_or_module_links", artifact_links_recorded),
+                    ("source_page_locators", source_pages_recorded),
+                    ("review_scope_records", review_scopes_recorded),
+                    ("privacy_policy", privacy_recorded),
+                    ("contribution_roles_review_or_owner_signoff", reviewed),
+                )
+                if not ready
+            ],
+        },
+        "metadata_contract": {
+            "manifest_path": "problem.system_contribution_metadata",
+            "optional_problem_file": "system_contributions.yaml",
+            "required_phases": required_phases,
+            "allowed_review_statuses": [
+                "not_reviewed",
+                "self_reviewed",
+                "contribution_roles_reviewed",
+                "owner_signed_off",
+            ],
+            "boundary": (
+                "paper_attributed_system_development_roles_not_git_history_"
+                "package_metadata_or_publication_author_metadata"
+            ),
+        },
+    }
+    report["validation"] = validate_system_contribution_provenance_report(report)
+    return report
+
+
+def validate_system_contribution_provenance_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.system_contribution_provenance_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "system-contribution report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "metadata_schema",
+        "manifest_path",
+        "metadata_status",
+        "record_count",
+        "phase_counts",
+        "phases_present",
+        "missing_phases",
+        "artifact_link_count",
+        "artifact_labels",
+        "source_page_count",
+        "source_pages",
+        "review_scope_count",
+        "privacy_policy",
+        "review_status",
+        "reviewer_count",
+        "claim_ready",
+        "claim_readiness",
+        "metadata_contract",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "system-contribution report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.system_contribution_provenance_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "unsupported system-contribution report schema",
+            }
+        )
+    if report.get("source") != "system_contribution_metadata":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "unsupported system-contribution report source",
+            }
+        )
+    if report.get("metadata_schema") != "libreevolve.system_contribution_metadata.v1":
+        issues.append(
+            {
+                "code": "invalid_metadata_schema",
+                "message": "report must reference system-contribution metadata schema",
+            }
+        )
+    if report.get("manifest_path") != "problem.system_contribution_metadata":
+        issues.append(
+            {
+                "code": "invalid_manifest_path",
+                "message": "manifest path must point at system-contribution metadata",
+            }
+        )
+    if report.get("metadata_status") not in {"provided", "not_provided"}:
+        issues.append(
+            {
+                "code": "invalid_metadata_status",
+                "message": "metadata_status is unsupported",
+            }
+        )
+    for field in (
+        "record_count",
+        "artifact_link_count",
+        "source_page_count",
+        "review_scope_count",
+        "reviewer_count",
+    ):
+        value = report.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    required_phase_order = [
+        "initial_design",
+        "project_vision_scoping",
+        "first_benchmark_iteration",
+        "final_system",
+        "infrastructure",
+        "code_review",
+        "team_coordination",
+        "supervision",
+    ]
+    required_phases = set(required_phase_order)
+    phase_counts = report.get("phase_counts")
+    if not isinstance(phase_counts, Mapping):
+        issues.append(
+            {
+                "code": "invalid_phase_counts",
+                "message": "phase_counts must be an object",
+            }
+        )
+        phase_counts = {}
+    else:
+        for phase, count in phase_counts.items():
+            if phase not in required_phases:
+                issues.append(
+                    {
+                        "code": "invalid_phase",
+                        "message": "system-contribution phase is unsupported",
+                    }
+                )
+            if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_phase_count",
+                        "message": "phase counts must be non-negative integers",
+                    }
+                )
+    for list_field in ("phases_present", "missing_phases", "artifact_labels"):
+        value = report.get(list_field)
+        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+            issues.append(
+                {
+                    "code": f"invalid_{list_field}",
+                    "message": f"{list_field} must be a list of text labels",
+                }
+            )
+    pages = report.get("source_pages")
+    if not isinstance(pages, list) or not all(
+        isinstance(page, int) and not isinstance(page, bool) and page > 0
+        for page in pages
+    ):
+        issues.append(
+            {
+                "code": "invalid_source_pages",
+                "message": "source_pages must be positive integers",
+            }
+        )
+    privacy = report.get("privacy_policy")
+    privacy_recorded = False
+    if not isinstance(privacy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_privacy_policy",
+                "message": "privacy_policy must be an object",
+            }
+        )
+    else:
+        privacy_recorded = isinstance(privacy.get("retention"), str)
+    review_status = report.get("review_status")
+    if review_status not in {
+        "not_reviewed",
+        "self_reviewed",
+        "contribution_roles_reviewed",
+        "owner_signed_off",
+    }:
+        issues.append(
+            {
+                "code": "invalid_review_status",
+                "message": "review_status is unsupported",
+            }
+        )
+    expected_missing_phases = [
+        phase for phase in required_phase_order if phase_counts.get(phase, 0) == 0
+    ]
+    expected_claim_ready = (
+        report.get("metadata_status") == "provided"
+        and not expected_missing_phases
+        and isinstance(report.get("record_count"), int)
+        and not isinstance(report.get("record_count"), bool)
+        and report.get("record_count") > 0
+        and isinstance(report.get("artifact_link_count"), int)
+        and not isinstance(report.get("artifact_link_count"), bool)
+        and report.get("artifact_link_count") >= report.get("record_count")
+        and isinstance(report.get("source_page_count"), int)
+        and not isinstance(report.get("source_page_count"), bool)
+        and report.get("source_page_count") > 0
+        and isinstance(report.get("review_scope_count"), int)
+        and not isinstance(report.get("review_scope_count"), bool)
+        and report.get("review_scope_count") == report.get("record_count")
+        and privacy_recorded
+        and review_status in {"contribution_roles_reviewed", "owner_signed_off"}
+    )
+    if report.get("missing_phases") != expected_missing_phases:
+        issues.append(
+            {
+                "code": "missing_phases_mismatch",
+                "message": "missing_phases must match phase_counts",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("all_required_phases_recorded") != (
+            not expected_missing_phases
+        ):
+            issues.append(
+                {
+                    "code": "phase_readiness_mismatch",
+                    "message": "phase readiness must match missing phases",
+                }
+            )
+        if (
+            readiness.get("alphaevolve_system_contribution_parity")
+            != expected_claim_ready
+        ):
+            issues.append(
+                {
+                    "code": "system_contribution_parity_mismatch",
+                    "message": (
+                        "system-contribution parity must match report readiness"
+                    ),
+                }
+            )
+        if readiness.get("contribution_roles_review_or_owner_signoff") != (
+            review_status in {"contribution_roles_reviewed", "owner_signed_off"}
+        ):
+            issues.append(
+                {
+                    "code": "review_readiness_mismatch",
+                    "message": "review readiness must match review_status",
+                }
+            )
+        for boundary in (
+            "git_history_boundary_separated",
+            "package_metadata_boundary_separated",
+            "publication_author_boundary_separated",
+        ):
+            if readiness.get(boundary) is not True:
+                issues.append(
+                    {
+                        "code": "system_contribution_boundary_overclaim",
+                        "message": "system-contribution boundaries must remain separated",
+                    }
+                )
+    if report.get("claim_ready") != expected_claim_ready:
+        issues.append(
+            {
+                "code": "claim_ready_mismatch",
+                "message": "claim_ready must match system-contribution readiness",
+            }
+        )
+    contract = report.get("metadata_contract")
+    if not isinstance(contract, Mapping):
+        issues.append(
+            {
+                "code": "invalid_metadata_contract",
+                "message": "metadata_contract must be an object",
+            }
+        )
+    elif contract.get("optional_problem_file") != "system_contributions.yaml":
+        issues.append(
+            {
+                "code": "invalid_contract_file",
+                "message": "metadata contract must name system_contributions.yaml",
+            }
+        )
+    return {
+        "schema": "libreevolve.system_contribution_provenance_report.v1",
         "ok": not issues,
         "issues": issues,
     }
@@ -13138,6 +13578,10 @@ def _problem_paper_author_metadata(problem: Problem) -> dict:
 
 def _problem_title_page_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "title_page_metadata", {}) or {})
+
+
+def _problem_system_contribution_metadata(problem: Problem) -> dict:
+    return dict(getattr(problem, "system_contribution_metadata", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

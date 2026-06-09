@@ -444,7 +444,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     title-page parity.
 
 - [ ] Keep README system-development provenance scoped until contribution-role
-      evidence exists.
+      evidence is populated.
   - Spec evidence: AlphaEvolve's Contributions section separately attributes
     system design/implementation phases, project vision and problem scoping,
     the first benchmark used for iterating on AlphaEvolve, infrastructure
@@ -452,20 +452,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     supervision. Local PDF pages 22-23 show these roles as paper-attributed
     development provenance, separate from author metadata and
     acknowledgements.
-  - Current evidence: README can describe the current codebase, tests, runtime
-    manifests, and contributor openness, but it does not document a
-    contribution-role schema that links implementation phases, infrastructure
-    ownership, benchmark-iteration ownership, code-review responsibility, or
-    coordination/supervision roles to source sections and project artifacts.
-    README and runtime manifests can expose Git/source provenance and package
-    authors/maintainers, but those do not establish AlphaEvolve-style
-    development role attribution.
-  - Required result: when contribution-role metadata lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes local repository history and package metadata from
-    AlphaEvolve-style system-development provenance and does not overclaim
-    comparable implementation, infrastructure, review, or coordination
-    evidence.
+  - Current evidence: README now documents optional
+    `system_contributions.yaml` / `Problem.system_contribution_metadata`,
+    normalized `problem.system_contribution_metadata`, and
+    `runtime.history.system_contribution_provenance_report` for
+    paper-attributed development roles. Existing fixtures do not yet carry real
+    reviewed system-contribution records.
+  - Required result: when representative fixtures are populated with reviewed
+    contribution-role evidence, update README, ROADMAP, papers index, and
+    code/paper TODOs together so README can describe those roles without
+    implying the schema alone proves AlphaEvolve-style system-development
+    contribution parity.
 
 - [ ] Keep README workspace-topology diagnostics scoped to current
   materialization and command preflight coverage.

@@ -171,6 +171,9 @@ COLLABORATOR_FEEDBACK_METADATA_SCHEMA = (
 ACKNOWLEDGEMENT_METADATA_SCHEMA = "libreevolve.acknowledgement_metadata.v1"
 PAPER_AUTHOR_METADATA_SCHEMA = "libreevolve.paper_author_metadata.v1"
 TITLE_PAGE_METADATA_SCHEMA = "libreevolve.title_page_metadata.v1"
+SYSTEM_CONTRIBUTION_METADATA_SCHEMA = (
+    "libreevolve.system_contribution_metadata.v1"
+)
 _FORMULATION_ALLOWED_KEYS = {
     "problem_origin",
     "contributors",
@@ -345,6 +348,34 @@ _TITLE_PAGE_REVIEW_STATUSES = {
 }
 _TITLE_PAGE_TEXT_MAX_CHARS = 1024
 _TITLE_PAGE_LABEL_MAX_CHARS = 160
+_SYSTEM_CONTRIBUTION_ALLOWED_KEYS = {
+    "records",
+    "privacy_policy",
+    "review",
+}
+_SYSTEM_CONTRIBUTION_PHASES = {
+    "initial_design",
+    "project_vision_scoping",
+    "first_benchmark_iteration",
+    "final_system",
+    "infrastructure",
+    "code_review",
+    "team_coordination",
+    "supervision",
+}
+_SYSTEM_CONTRIBUTION_PRIVACY_POLICIES = {
+    "redacted_labels_only",
+    "private_internal",
+    "public_names_allowed",
+}
+_SYSTEM_CONTRIBUTION_REVIEW_STATUSES = {
+    "not_reviewed",
+    "self_reviewed",
+    "contribution_roles_reviewed",
+    "owner_signed_off",
+}
+_SYSTEM_CONTRIBUTION_TEXT_MAX_CHARS = 1024
+_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS = 160
 
 
 class ProgramDatabase:
@@ -375,6 +406,7 @@ class ProgramDatabase:
         acknowledgement_metadata: Mapping[str, object] | None = None,
         paper_author_metadata: Mapping[str, object] | None = None,
         title_page_metadata: Mapping[str, object] | None = None,
+        system_contribution_metadata: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -436,6 +468,9 @@ class ProgramDatabase:
             paper_author_metadata or {}
         )
         title_page_metadata = validate_title_page_metadata(title_page_metadata or {})
+        system_contribution_metadata = validate_system_contribution_metadata(
+            system_contribution_metadata or {}
+        )
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -452,6 +487,7 @@ class ProgramDatabase:
             acknowledgement_metadata,
             paper_author_metadata,
             title_page_metadata,
+            system_contribution_metadata,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -6559,6 +6595,253 @@ def _normalize_title_page_text(label: str, value: object, *, max_chars: int) -> 
     return redacted
 
 
+def validate_system_contribution_metadata(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("system_contribution_metadata must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("system_contribution_metadata keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key)
+        for key in set(value) - _SYSTEM_CONTRIBUTION_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(
+            f"system_contribution_metadata has unsupported fields {unsupported}"
+        )
+    normalized: dict = {
+        "schema": SYSTEM_CONTRIBUTION_METADATA_SCHEMA,
+        "status": "provided" if value else "not_provided",
+        "records": [],
+        "privacy_policy": {
+            "retention": "redacted_labels_only",
+            "notes": None,
+        },
+        "review": {
+            "status": "not_reviewed",
+            "reviewer_labels": [],
+            "notes": None,
+        },
+    }
+    if "records" in value:
+        records = value["records"]
+        if not isinstance(records, list):
+            raise StrictJsonlError("system_contribution_metadata.records must be a list")
+        normalized["records"] = [
+            _normalize_system_contribution_record(index, record)
+            for index, record in enumerate(records)
+        ]
+    record_ids = {
+        record["record_id"]
+        for record in normalized["records"]
+        if isinstance(record, Mapping) and isinstance(record.get("record_id"), str)
+    }
+    if len(record_ids) != len(normalized["records"]):
+        raise StrictJsonlError(
+            "system_contribution_metadata.records must have unique record_id values"
+        )
+    if "privacy_policy" in value:
+        normalized["privacy_policy"] = _normalize_system_contribution_privacy(
+            value["privacy_policy"]
+        )
+    if "review" in value:
+        normalized["review"] = _normalize_system_contribution_review(value["review"])
+    _validate_context_provenance_json_size(
+        "system_contribution_metadata",
+        normalized,
+    )
+    return normalized
+
+
+def _normalize_system_contribution_record(index: int, value: object) -> dict:
+    label = f"system_contribution_metadata.records[{index}]"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(
+        set(value)
+        - {
+            "record_id",
+            "contributor_label",
+            "phase",
+            "role_label",
+            "artifacts",
+            "source_page",
+            "source_section",
+            "review_scope",
+        }
+    )
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    phase = value.get("phase")
+    if not isinstance(phase, str) or phase not in _SYSTEM_CONTRIBUTION_PHASES:
+        raise StrictJsonlError(
+            f"{label}.phase must be one of {sorted(_SYSTEM_CONTRIBUTION_PHASES)}"
+        )
+    source_page = value.get("source_page")
+    if isinstance(source_page, bool) or not isinstance(source_page, int) or source_page <= 0:
+        raise StrictJsonlError(f"{label}.source_page must be a positive integer")
+    return {
+        "record_id": _normalize_system_contribution_token(
+            f"{label}.record_id",
+            value.get("record_id"),
+        ),
+        "contributor_label": _normalize_system_contribution_text(
+            f"{label}.contributor_label",
+            value.get("contributor_label"),
+            max_chars=_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS,
+        ),
+        "phase": phase,
+        "role_label": _normalize_system_contribution_text(
+            f"{label}.role_label",
+            value.get("role_label"),
+            max_chars=_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS,
+        ),
+        "artifacts": _normalize_system_contribution_text_list(
+            f"{label}.artifacts",
+            value.get("artifacts"),
+            max_chars=_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS,
+        ),
+        "source_page": source_page,
+        "source_section": _normalize_system_contribution_text(
+            f"{label}.source_section",
+            value.get("source_section"),
+            max_chars=_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS,
+        ),
+        "review_scope": _normalize_system_contribution_text(
+            f"{label}.review_scope",
+            value.get("review_scope"),
+            max_chars=_SYSTEM_CONTRIBUTION_TEXT_MAX_CHARS,
+        ),
+    }
+
+
+def _normalize_system_contribution_privacy(value: object) -> dict:
+    label = "system_contribution_metadata.privacy_policy"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"retention", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    retention = value.get("retention")
+    if (
+        not isinstance(retention, str)
+        or retention not in _SYSTEM_CONTRIBUTION_PRIVACY_POLICIES
+    ):
+        raise StrictJsonlError(
+            f"{label}.retention must be one of "
+            f"{sorted(_SYSTEM_CONTRIBUTION_PRIVACY_POLICIES)}"
+        )
+    return {
+        "retention": retention,
+        "notes": (
+            _normalize_system_contribution_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_SYSTEM_CONTRIBUTION_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_system_contribution_review(value: object) -> dict:
+    label = "system_contribution_metadata.review"
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError(f"{label} must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError(f"{label} keys must be strings")
+    unsupported = sorted(set(value) - {"status", "reviewer_labels", "notes"})
+    if unsupported:
+        raise StrictJsonlError(f"{label} has unsupported fields {unsupported}")
+    status = value.get("status", "not_reviewed")
+    if not isinstance(status, str) or status not in _SYSTEM_CONTRIBUTION_REVIEW_STATUSES:
+        raise StrictJsonlError(
+            f"{label}.status must be one of "
+            f"{sorted(_SYSTEM_CONTRIBUTION_REVIEW_STATUSES)}"
+        )
+    reviewers = value.get("reviewer_labels", [])
+    if reviewers is None:
+        reviewers = []
+    reviewer_labels = _normalize_system_contribution_text_list(
+        f"{label}.reviewer_labels",
+        reviewers,
+        max_chars=_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS,
+        allow_empty=True,
+    )
+    return {
+        "status": status,
+        "reviewer_labels": reviewer_labels,
+        "notes": (
+            _normalize_system_contribution_text(
+                f"{label}.notes",
+                value["notes"],
+                max_chars=_SYSTEM_CONTRIBUTION_TEXT_MAX_CHARS,
+            )
+            if "notes" in value
+            else None
+        ),
+    }
+
+
+def _normalize_system_contribution_text_list(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+    allow_empty: bool = False,
+) -> list[str]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "a list" if allow_empty else "a non-empty list"
+        raise StrictJsonlError(f"{label} must be {requirement}")
+    normalized = []
+    for index, item in enumerate(value):
+        text = _normalize_system_contribution_text(
+            f"{label}[{index}]",
+            item,
+            max_chars=max_chars,
+        )
+        if text not in normalized:
+            normalized.append(text)
+    return normalized
+
+
+def _normalize_system_contribution_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > _SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS:
+        raise StrictJsonlError(
+            f"{label} must be <= {_SYSTEM_CONTRIBUTION_LABEL_MAX_CHARS} characters"
+        )
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value):
+        raise StrictJsonlError(f"{label} must be a safe contribution token")
+    return value
+
+
+def _normalize_system_contribution_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    redacted = redact_sensitive_text(text)
+    if redacted != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in redacted):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return redacted
+
+
 def validate_seed_sources(value: object) -> list[dict]:
     if not isinstance(value, list):
         raise StrictJsonlError("seed_sources must be a list of mappings")
@@ -6921,6 +7204,7 @@ def _startup_manifest_payload(
     acknowledgement_metadata: dict,
     paper_author_metadata: dict,
     title_page_metadata: dict,
+    system_contribution_metadata: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -7073,6 +7357,7 @@ def _startup_manifest_payload(
             "acknowledgement_metadata": acknowledgement_metadata,
             "paper_author_metadata": paper_author_metadata,
             "title_page_metadata": title_page_metadata,
+            "system_contribution_metadata": system_contribution_metadata,
         },
         "policies": {
             "redaction": redaction_policy_record(),

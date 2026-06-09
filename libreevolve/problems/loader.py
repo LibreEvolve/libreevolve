@@ -39,6 +39,10 @@ _COLLABORATOR_FEEDBACK_METADATA_NAMES = (
 _ACKNOWLEDGEMENT_METADATA_NAMES = ("acknowledgements.yaml", "acknowledgements.yml")
 _PAPER_AUTHOR_METADATA_NAMES = ("paper_authors.yaml", "paper_authors.yml")
 _TITLE_PAGE_METADATA_NAMES = ("title_page.yaml", "title_page.yml")
+_SYSTEM_CONTRIBUTION_METADATA_NAMES = (
+    "system_contributions.yaml",
+    "system_contributions.yml",
+)
 _CONTEXT_EXPLICIT_FAILURE_POLICIES = {"error", "warn"}
 _CONTEXT_EXCERPT_POLICIES = {"head", "head_tail", "term_ranked"}
 _CONTEXT_SOURCE_SELECTION_POLICIES = {"path_order", "term_ranked"}
@@ -66,6 +70,7 @@ class Problem:
     acknowledgement_metadata: dict = field(default_factory=dict)
     paper_author_metadata: dict = field(default_factory=dict)
     title_page_metadata: dict = field(default_factory=dict)
+    system_contribution_metadata: dict = field(default_factory=dict)
     config_source:    dict = field(
         default_factory=lambda: {"path": "config.yaml", "status": "not_loaded"}
     )
@@ -169,6 +174,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
     acknowledgement_metadata = _load_acknowledgement_metadata(d)
     paper_author_metadata = _load_paper_author_metadata(d)
     title_page_metadata = _load_title_page_metadata(d)
+    system_contribution_metadata = _load_system_contribution_metadata(d)
     return Problem(name=d.name, task_description=task, metrics=metrics,
                    primary_metric=primary_metric,
                    primary_bounds=primary_bounds,
@@ -184,7 +190,8 @@ def load_problem(problem_dir: str | Path) -> Problem:
                    collaborator_feedback_metadata=collaborator_feedback_metadata,
                    acknowledgement_metadata=acknowledgement_metadata,
                    paper_author_metadata=paper_author_metadata,
-                   title_page_metadata=title_page_metadata)
+                   title_page_metadata=title_page_metadata,
+                   system_contribution_metadata=system_contribution_metadata)
 
 
 def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict]:
@@ -593,6 +600,48 @@ def _load_title_page_metadata(problem_dir: Path) -> dict:
         raise ValueError(f"{path}: title page metadata must be a mapping")
     if not all(isinstance(key, str) for key in raw):
         raise ValueError(f"{path}: title page metadata keys must be strings")
+    return dict(raw)
+
+
+def _load_system_contribution_metadata(problem_dir: Path) -> dict:
+    paths = [problem_dir / name for name in _SYSTEM_CONTRIBUTION_METADATA_NAMES]
+    existing = [path for path in paths if path.exists()]
+    if not existing:
+        return {}
+    if len(existing) > 1:
+        labels = [path.name for path in existing]
+        raise ValueError(
+            f"{problem_dir}: use only one system contribution metadata file from {labels}"
+        )
+    path = existing[0]
+    if _is_link(path):
+        raise ValueError(f"{path}: system contribution metadata links are not supported")
+    if not path.is_file():
+        raise ValueError(f"{path}: system contribution metadata must be a file")
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise ValueError(
+            f"{path}: system contribution metadata could not be read: "
+            f"{redact_sensitive_text(str(exc))}"
+        ) from exc
+    except UnicodeDecodeError as exc:
+        raise ValueError(
+            f"{path}: system contribution metadata must be valid UTF-8"
+        ) from exc
+    try:
+        raw = safe_load_unique(text) if text.strip() else {}
+    except yaml.YAMLError as exc:
+        raise ValueError(
+            f"{path}: invalid system contribution metadata YAML: "
+            f"{redacted_yaml_error(exc)}"
+        ) from exc
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ValueError(f"{path}: system contribution metadata must be a mapping")
+    if not all(isinstance(key, str) for key in raw):
+        raise ValueError(f"{path}: system contribution metadata keys must be strings")
     return dict(raw)
 
 

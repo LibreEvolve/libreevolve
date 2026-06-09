@@ -3298,25 +3298,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP/papers wording qualifies SOTA-priority claims when the
     paper records concurrent matching work.
 
-- [ ] Track companion-result notebook selection scope and absences.
-  - Paper evidence: the `google-deepmind/alphaevolve_results` README says
-    `mathematical_results.ipynb` contains the mathematical discoveries from
-    Section 3 and corresponding correctness-verification code, but only for
-    instances where AlphaEvolve outperformed the state of the art. It says
-    matched-but-not-outperformed constructions are excluded to avoid clutter,
-    and that the repository does not contain the code to run AlphaEvolve.
-  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` and
-    `papers/companion_sources.json` now validate the source notebook's
-    inclusion rule, matched-result exclusion, per-claim improved-result-only
-    coverage status, verifier-code source markers, runtime-code absence, and
-    license/source notes. Paper-facing result artifacts still do not emit
-    per-claim absence reasons that explain when a paper-reported matched result
-    is intentionally absent from the companion notebook.
-  - Required result: attach companion selection evidence to emitted paper
-    reports and exports: per-claim coverage or absence reason, verifier-code
-    presence, runtime-code absence, and docs checks that distinguish paper-
-    reported matched results from companion-notebook improved-result artifacts.
-
 - [ ] Track companion-result repository rights and disclaimer evidence.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README states
     `Copyright 2025 Google LLC`, licenses all software under Apache License

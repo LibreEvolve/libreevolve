@@ -3,9 +3,11 @@ import json
 from libreevolve.problems.benchmarks.companion_sources import (
     ALPHAEVOLVE_COMPANION_COLAB_SCHEMA,
     alphaevolve_companion_colab_source_record,
+    alphaevolve_companion_selection_scope_record,
     alphaevolve_companion_source_manifest_record,
     render_alphaevolve_companion_colab_source_summary,
     validate_alphaevolve_companion_colab_source,
+    validate_alphaevolve_companion_selection_scope,
     validate_alphaevolve_companion_source_manifest,
 )
 
@@ -64,6 +66,53 @@ def test_validate_alphaevolve_companion_source_manifest_rejects_surface_and_poli
     assert "invalid_claim_artifact_policy" in codes
     assert "invalid_local_cache_policy_cache_required_for_manifest_validation" in codes
     assert "invalid_local_cache_policy_scope" in codes
+
+
+def test_validate_alphaevolve_companion_selection_scope_accepts_included_improved_claim():
+    recordset = alphaevolve_companion_selection_scope_record(
+        "appendix_a_matrix_improved_decompositions"
+    )
+
+    validation = validate_alphaevolve_companion_selection_scope(recordset)
+
+    assert validation.ok is True
+    assert validation.artifact_count == 1
+    assert validation.claim_mapping_count == 1
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_companion_selection_scope_accepts_matched_absence():
+    recordset = alphaevolve_companion_selection_scope_record(
+        "appendix_b_constructive_math_improved_results",
+        paper_result_relation="matched_not_outperformed",
+        companion_notebook_coverage="intentionally_absent",
+        absence_reason="matched_but_not_outperformed_excluded_to_avoid_clutter",
+    )
+
+    validation = validate_alphaevolve_companion_selection_scope(recordset)
+
+    assert validation.ok is True
+    assert validation.claim_mapping_count == 1
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_companion_selection_scope_rejects_overclaims():
+    recordset = alphaevolve_companion_selection_scope_record(
+        "appendix_a_matrix_improved_decompositions"
+    )
+    recordset["companion_notebook_coverage"] = "intentionally_absent"
+    recordset["absence_reason"] = "matched_but_not_outperformed_excluded_to_avoid_clutter"
+    recordset["alphaevolve_runtime_code_available"] = True
+    recordset["selection_policy"]["inclusion_rule"] = "all_results"
+
+    validation = validate_alphaevolve_companion_selection_scope(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_improved_result_coverage" in codes
+    assert "unexpected_absence_reason" in codes
+    assert "runtime_code_overclaim" in codes
+    assert "invalid_selection_policy_inclusion_rule" in codes
 
 
 def test_validate_alphaevolve_companion_colab_source_rejects_repository_and_digest_drift():

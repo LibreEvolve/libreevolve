@@ -2412,24 +2412,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
-- [ ] Keep companion-notebook roadmap wording scoped until selection-scope
-      metadata exists.
-  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
-    `mathematical_results.ipynb` notebook includes only instances where
-    AlphaEvolve outperformed SOTA, excludes matched-but-not-outperformed
-    constructions, and does not contain the code to run AlphaEvolve.
-  - Current evidence: roadmap/README/paper-index wording now cites the
-    companion-source contract's improved-results-only selection policy,
-    matched-result exclusion, verifier source markers, and non-availability of
-    AlphaEvolve runtime code in the companion repository. Emitted result
-    reports still lack per-claim absence reasons for paper-reported matched
-    results intentionally omitted from the official notebook.
-  - Required result: when emitted companion-selection rows land, update
-    ROADMAP, README, papers index, and code/paper TODOs so roadmap language
-    separates paper result coverage, official improved-result notebook
-    coverage, matched-result omissions, verifier-code availability, and
-    non-availability of AlphaEvolve runtime code in the companion repository.
-
 - [ ] Keep companion-source rights roadmap wording scoped until generated
       artifact rights rows link to repository license/disclaimer metadata.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares

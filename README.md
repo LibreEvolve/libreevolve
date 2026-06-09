@@ -3557,9 +3557,14 @@ exclusion, absence of AlphaEvolve runtime code, Apache-2.0 software /
 CC-BY-4.0 materials license split, AS-IS disclaimer, and non-official-product
 boundary. The committed `papers/companion_sources.json` manifest emits that
 external source row, its docs/TODO claim-surface links, and its local-cache
-policy; the standard paper-manifest gate validates the sidecar. This is
-external DeepMind source evidence, not a LibreEvolve-generated Colab-equivalent
-notebook or local reproduced result export.
+policy; the standard paper-manifest gate validates the sidecar. Companion
+selection-scope rows now distinguish improved-over-SOTA results included in the
+official notebook from matched-but-not-outperformed results intentionally absent
+from it, while preserving verifier-code availability and AlphaEvolve runtime-
+code absence. Matrix result/headline reports validate that scope for the
+`mm_4x4x4` companion claim. This is external DeepMind source evidence, not a
+LibreEvolve-generated Colab-equivalent notebook or local reproduced result
+export.
 Follow-on AlphaEvolve mathematical-discovery source evidence uses
 `libreevolve.alphaevolve_follow_on_math_source.v1` in
 `libreevolve/problems/benchmarks/follow_on_sources.py`; the built-in record
@@ -3591,9 +3596,11 @@ provenance for the `mm_4x4x4` complex rank-48 headline, including dimensions,
 rank and multiplication count, characteristic-zero scope, the 56-year
 first-below-49 claim flags, recursive Strassen rank-49 comparison, finite-field
 Fawzi rank-47 caveat, source refs, and links to matrix result, scalar-field,
-tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It validates
-the declared evidence shape; local matrix benchmark runners still do not emit
-the headline record or the linked decomposition/certificate/source artifacts.
+tensor-rank, Figure 4, Figure 9, and companion Colab evidence. It also
+validates the companion notebook selection-scope record for that headline
+claim. It validates the declared evidence shape; local matrix benchmark runners
+still do not emit the headline record or the linked decomposition/certificate/
+source artifacts.
 Matrix-rank table exhibit evidence uses
 `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`; it validates declared
 Table 2 and Appendix A Table 3 table exhibits, including stable table ids,

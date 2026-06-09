@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document companion notebook selection-scope provenance.
+  - Spec evidence: the companion repository README limits
+    `mathematical_results.ipynb` to outperformed-SOTA results, excludes
+    matched-only results, and says the repository does not contain AlphaEvolve
+    runtime code.
+  - Status: README now documents companion selection-scope rows for included
+    improved results and intentionally absent matched-only results, including
+    verifier-code availability, runtime-code absence, and matrix report
+    validation for the `mm_4x4x4` companion claim.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document committed AlphaEvolve companion Colab source manifest.
   - Spec evidence: AlphaEvolve footnote 2 and Table 2 point readers to the
     accompanying `google-deepmind/alphaevolve_results` Colab notebook for

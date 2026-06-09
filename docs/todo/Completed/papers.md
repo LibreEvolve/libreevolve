@@ -6,6 +6,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track companion-result notebook selection scope and absences.
+  - Paper evidence: the `google-deepmind/alphaevolve_results` README says
+    `mathematical_results.ipynb` contains mathematical discoveries and
+    correctness-verification code only for instances where AlphaEvolve
+    outperformed SOTA; matched-but-not-outperformed constructions are excluded,
+    and AlphaEvolve runtime code is absent.
+  - Status: companion selection-scope records now distinguish included
+    improved-over-SOTA claims from intentionally absent matched-only claims,
+    including absence reason, verifier-code availability, runtime-code absence,
+    source artifact reference, and source manifest link. Matrix result/headline
+    reports validate the record for the `mm_4x4x4` companion claim.
+  - Remaining gap: none for this bounded paper-facing selection-scope slice;
+    generated export rights and full local reproduced notebooks remain active
+    paper work.
+
 - [x] Emit AlphaEvolve companion Colab source evidence in paper artifacts.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` footnote 2 says the
     discovered algorithms and new mathematical results are available at the

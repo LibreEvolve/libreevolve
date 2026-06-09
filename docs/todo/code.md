@@ -2471,27 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Add companion-result notebook selection-scope provenance.
-  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
-    repository's `mathematical_results.ipynb` contains mathematical
-    discoveries and correctness-verification code, but only for instances
-    where AlphaEvolve outperformed the state of the art. It explicitly excludes
-    problems where AlphaEvolve matched, but did not outperform, the best known
-    constructions, and states that the repository does not contain the code to
-    run AlphaEvolve.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` and
-    `papers/companion_sources.json` validate the official notebook's
-    `outperformed_sota_only` inclusion rule, matched-result exclusion wording,
-    runtime-code absence phrase, and per-claim improved-result-only coverage
-    status. Local Appendix A/B report emitters still do not attach per-claim
-    absence reasons when a paper-reported matched result is intentionally
-    missing from the official notebook.
-  - Required result: propagate companion selection metadata into generated
-    paper-artifact reports: per-claim coverage or absence reason, distinction
-    between paper-reported matched results and companion-notebook improved
-    results, verifier-code availability, runtime-code absence, and docs checks
-    for rendered/exported claim surfaces.
-
 - [ ] Add companion-result repository rights and disclaimer provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README states
     `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,

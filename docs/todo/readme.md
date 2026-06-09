@@ -1578,24 +1578,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     checked smoke hardening evidence nor overclaims AlphaEvolve-comparable
     benchmark hardening.
 
-- [ ] Keep README companion-notebook wording scoped until selection-scope
-      metadata exists.
-  - Spec evidence: the `google-deepmind/alphaevolve_results` README says the
-    companion notebook includes only instances where AlphaEvolve outperformed
-    SOTA, excludes matched-but-not-outperformed constructions, and does not
-    contain the code to run AlphaEvolve.
-  - Current evidence: README now documents the companion-source contract's
-    improved-results-only selection policy, matched-result exclusion, verifier
-    source markers, and absence of AlphaEvolve runtime code. It still does not
-    have emitted per-claim absence rows from local result reports explaining
-    which paper-reported matched results are intentionally absent from the
-    official notebook.
-  - Required result: when emitted companion-selection rows land, update README,
-    ROADMAP, papers index, and code/paper TODOs together so README separates
-    paper result coverage, official improved-result notebook coverage,
-    intentional matched-result absences, verifier-code availability, and
-    absence of the AlphaEvolve runtime code.
-
 - [ ] Keep README companion-source rights wording scoped until generated
       artifact rights rows link to repository license/disclaimer metadata.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README declares

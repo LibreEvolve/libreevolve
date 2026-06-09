@@ -11,6 +11,9 @@ ALPHAEVOLVE_COMPANION_COLAB_SCHEMA = "libreevolve.alphaevolve_companion_colab_so
 ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA = (
     "libreevolve.alphaevolve_companion_source_manifest.v1"
 )
+ALPHAEVOLVE_COMPANION_SELECTION_SCOPE_SCHEMA = (
+    "libreevolve.alphaevolve_companion_selection_scope.v1"
+)
 EXPECTED_COMPANION_SOURCE_MANIFEST_FILE = "papers/companion_sources.json"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REPOSITORY_URL = "https://github.com/google-deepmind/alphaevolve_results"
@@ -49,6 +52,15 @@ EXPECTED_CLAIM_IDS = frozenset(
 )
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _COMMIT_RE = re.compile(r"[0-9a-f]{40}")
+COMPANION_NOTEBOOK_COVERAGE_STATUSES = frozenset(
+    {"included", "intentionally_absent"}
+)
+PAPER_RESULT_RELATIONS = frozenset(
+    {"improved_over_sota", "matched_not_outperformed"}
+)
+ABSENCE_REASONS = frozenset(
+    {"matched_but_not_outperformed_excluded_to_avoid_clutter"}
+)
 
 
 @dataclass(frozen=True)
@@ -200,6 +212,34 @@ def alphaevolve_companion_source_manifest_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_companion_selection_scope_record(
+    claim_id: str,
+    *,
+    paper_result_relation: str = "improved_over_sota",
+    companion_notebook_coverage: str = "included",
+    absence_reason: str | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_COMPANION_SELECTION_SCOPE_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_manifest": EXPECTED_COMPANION_SOURCE_MANIFEST_FILE,
+        "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+        "claim_id": claim_id,
+        "source_artifact_ref": EXPECTED_NOTEBOOK_PATH,
+        "paper_result_relation": paper_result_relation,
+        "companion_notebook_coverage": companion_notebook_coverage,
+        "absence_reason": absence_reason,
+        "coverage_status": "covered_improved_results_only",
+        "verifier_code_available": True,
+        "alphaevolve_runtime_code_available": False,
+        "selection_policy": {
+            "inclusion_rule": "outperformed_sota_only",
+            "excluded_result_policy": "matched_but_not_outperformed_results_excluded_to_avoid_clutter",
+            "runtime_absence_policy": "companion_repository_does_not_contain_alphaevolve_runtime_code",
+        },
+    }
+
+
 def validate_alphaevolve_companion_colab_source(
     recordset: object | str | Path | None = None,
 ) -> AlphaEvolveCompanionColabValidation:
@@ -211,7 +251,12 @@ def validate_alphaevolve_companion_colab_source(
     if data.get("schema") != ALPHAEVOLVE_COMPANION_COLAB_SCHEMA:
         issues.append(AlphaEvolveCompanionColabIssue("invalid_schema", "unsupported AlphaEvolve companion Colab source schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
-        issues.append(AlphaEvolveCompanionColabIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_paper_id",
+                "source_paper_id must be 2506.13131",
+            )
+        )
     if data.get("source_name") != "google-deepmind/alphaevolve_results":
         issues.append(AlphaEvolveCompanionColabIssue("invalid_source_name", "source_name must identify google-deepmind/alphaevolve_results"))
     if data.get("artifact_role") != "external_alphaevolve_source_evidence":
@@ -228,6 +273,141 @@ def validate_alphaevolve_companion_colab_source(
         artifact_count=1 if isinstance(data.get("notebook"), dict) else 0,
         claim_mapping_count=claim_count,
         local_cache_available=local_cache_available,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_companion_selection_scope(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveCompanionColabValidation:
+    data, read_issues = _load_selection_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveCompanionColabValidation(False, 0, 0, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveCompanionColabIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_COMPANION_SELECTION_SCOPE_SCHEMA:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_selection_scope_schema",
+                "unsupported AlphaEvolve companion selection-scope schema",
+            )
+        )
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(AlphaEvolveCompanionColabIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_manifest") != EXPECTED_COMPANION_SOURCE_MANIFEST_FILE:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_manifest",
+                "source_manifest must point to papers/companion_sources.json",
+            )
+        )
+    if data.get("companion_source_id") != "alphaevolve_results_mathematical_results_colab":
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_companion_source_id",
+                "companion_source_id must identify the official mathematical_results Colab",
+            )
+        )
+    claim_id = data.get("claim_id")
+    safe_claim_id = claim_id if isinstance(claim_id, str) else None
+    if safe_claim_id not in EXPECTED_CLAIM_IDS:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "unknown_claim_id",
+                "claim_id must be a required companion source mapping",
+                safe_claim_id,
+            )
+        )
+    if data.get("source_artifact_ref") != EXPECTED_NOTEBOOK_PATH:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_artifact_ref",
+                "source_artifact_ref must point to mathematical_results.ipynb",
+            )
+        )
+    relation = data.get("paper_result_relation")
+    coverage = data.get("companion_notebook_coverage")
+    absence = data.get("absence_reason")
+    if relation not in PAPER_RESULT_RELATIONS:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_paper_result_relation",
+                "paper_result_relation must distinguish improved from matched-only results",
+                safe_claim_id,
+            )
+        )
+    if coverage not in COMPANION_NOTEBOOK_COVERAGE_STATUSES:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_companion_notebook_coverage",
+                "companion_notebook_coverage must be included or intentionally_absent",
+                safe_claim_id,
+            )
+        )
+    if relation == "improved_over_sota":
+        if coverage != "included":
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    "invalid_improved_result_coverage",
+                    "improved-over-SOTA results must be included in the companion notebook",
+                    safe_claim_id,
+                )
+            )
+        if absence is not None:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    "unexpected_absence_reason",
+                    "included improved results must not carry an absence reason",
+                    safe_claim_id,
+                )
+            )
+    elif relation == "matched_not_outperformed":
+        if coverage != "intentionally_absent":
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    "invalid_matched_result_coverage",
+                    "matched-only results must be marked intentionally absent from the companion notebook",
+                    safe_claim_id,
+                )
+            )
+        if absence not in ABSENCE_REASONS:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    "invalid_absence_reason",
+                    "matched-only absences must preserve the README exclusion reason",
+                    safe_claim_id,
+                )
+            )
+    if data.get("coverage_status") != "covered_improved_results_only":
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_coverage_status",
+                "coverage_status must preserve improved-results-only scope",
+                safe_claim_id,
+            )
+        )
+    if data.get("verifier_code_available") is not True:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_verifier_code_available",
+                "selection scope must state verifier code is available for covered companion results",
+                safe_claim_id,
+            )
+        )
+    if data.get("alphaevolve_runtime_code_available") is not False:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "runtime_code_overclaim",
+                "selection scope must preserve AlphaEvolve runtime-code absence",
+                safe_claim_id,
+            )
+        )
+    _validate_selection_scope_policy(data.get("selection_policy"), issues, safe_claim_id)
+    return AlphaEvolveCompanionColabValidation(
+        ok=not issues,
+        artifact_count=1 if data.get("source_artifact_ref") == EXPECTED_NOTEBOOK_PATH else 0,
+        claim_mapping_count=1 if safe_claim_id in EXPECTED_CLAIM_IDS else 0,
+        local_cache_available=False,
         issues=issues,
     )
 
@@ -316,6 +496,16 @@ def _load_manifest_recordset(
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveCompanionColabIssue]]:
     if recordset is None:
         return alphaevolve_companion_source_manifest_record(), []
+    return _load_recordset(recordset)
+
+
+def _load_selection_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveCompanionColabIssue]]:
+    if recordset is None:
+        return alphaevolve_companion_selection_scope_record(
+            "appendix_a_matrix_improved_decompositions"
+        ), []
     return _load_recordset(recordset)
 
 
@@ -454,6 +644,36 @@ def _validate_local_cache_policy(
                 "local_cache_policy.scope must distinguish source provenance from local exports",
             )
         )
+
+
+def _validate_selection_scope_policy(
+    value: object,
+    issues: list[AlphaEvolveCompanionColabIssue],
+    claim_id: str | None,
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_selection_policy",
+                "selection_policy must be an object",
+                claim_id,
+            )
+        )
+        return
+    expected = {
+        "inclusion_rule": "outperformed_sota_only",
+        "excluded_result_policy": "matched_but_not_outperformed_results_excluded_to_avoid_clutter",
+        "runtime_absence_policy": "companion_repository_does_not_contain_alphaevolve_runtime_code",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    f"invalid_selection_policy_{field}",
+                    f"selection_policy.{field} must preserve the companion README scope",
+                    claim_id,
+                )
+            )
 
 
 def _validate_repository(value: object, issues: list[AlphaEvolveCompanionColabIssue]) -> None:

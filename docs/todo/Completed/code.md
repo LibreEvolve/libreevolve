@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add companion-result notebook selection-scope provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README says
+    `mathematical_results.ipynb` includes only results where AlphaEvolve
+    outperformed SOTA, excludes matched-but-not-outperformed results, and does
+    not contain AlphaEvolve runtime code.
+  - Status: `libreevolve.alphaevolve_companion_selection_scope.v1` now records
+    per-claim companion coverage as included or intentionally absent, preserves
+    the matched-result absence reason, verifier-code availability, runtime-code
+    absence, and the `papers/companion_sources.json` source link. Matrix
+    result/headline report validation requires this scope for the `mm_4x4x4`
+    companion claim and rejects runtime-code or absence overclaims.
+  - Remaining gap: none for this bounded selection-scope report-contract
+    slice; generated artifact rights rows and deeper claim-to-cell spans remain
+    active TODOs.
+
 - [x] Emit companion Colab/source-artifact records from paper-artifact workflows.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered
     algorithms and new mathematical results are available in the accompanying

@@ -1305,8 +1305,12 @@ Implemented:
   CC-BY-4.0 materials licensing plus disclaimer boundary.
   `papers/companion_sources.json` emits this committed external source row with
   docs/TODO claim-surface links and local-cache policy, and the paper-manifest
-  gate validates it. It is external source evidence, not a local generated
-  notebook or reproduced-result export.
+  gate validates it. Companion selection-scope records distinguish included
+  improved-over-SOTA claims from matched-but-not-outperformed companion
+  absences, preserve verifier-code availability and runtime-code absence, and
+  are validated by matrix result/headline reports for the `mm_4x4x4` companion
+  claim. It is external source evidence, not a local generated notebook or
+  reproduced-result export.
 - `libreevolve/problems/benchmarks/follow_on_sources.py`: follow-on
   AlphaEvolve mathematical-discovery source contract. It validates arXiv
   `2511.02864v3`, `Mathematical exploration and discovery at scale`, the

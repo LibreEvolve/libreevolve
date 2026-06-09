@@ -4,6 +4,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document companion notebook selection-scope provenance.
+  - Spec evidence: the companion repository README limits
+    `mathematical_results.ipynb` to outperformed-SOTA results, excludes
+    matched-only results, and says AlphaEvolve runtime code is absent.
+  - Status: ROADMAP now documents companion selection-scope rows for included
+    improved results and intentionally absent matched-only results, including
+    verifier-code availability, runtime-code absence, and matrix report
+    validation for the `mm_4x4x4` companion claim.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document committed AlphaEvolve companion Colab source manifest.
   - Spec evidence: AlphaEvolve footnote 2 and Table 2 cite the accompanying
     `google-deepmind/alphaevolve_results` Colab notebook for discovered

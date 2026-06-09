@@ -3,6 +3,9 @@ import json
 
 import pytest
 
+from libreevolve.problems.benchmarks.companion_sources import (
+    alphaevolve_companion_selection_scope_record,
+)
 from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_ARTIFACT_INVENTORY_SCHEMA,
     MATRIX_HEADLINE_HISTORICITY_SCHEMA,
@@ -73,6 +76,9 @@ def _valid_report() -> dict:
                 "bytes": 8192,
             },
         ],
+        "companion_selection_scope": alphaevolve_companion_selection_scope_record(
+            "appendix_a_matrix_improved_decompositions"
+        ),
     }
 
 
@@ -229,6 +235,23 @@ def test_matrix_result_report_rejects_inconsistent_hit_fraction_and_seed_hits():
     assert "invalid_hit_fraction" in codes
     assert "inconsistent_seed_rank" in codes
     assert "invalid_seed_hit_count" in codes
+
+
+def test_matrix_result_report_rejects_companion_selection_scope_drift():
+    report = _valid_report()
+    report["companion_selection_scope"]["companion_notebook_coverage"] = "intentionally_absent"
+    report["companion_selection_scope"]["absence_reason"] = (
+        "matched_but_not_outperformed_excluded_to_avoid_clutter"
+    )
+    report["companion_selection_scope"]["alphaevolve_runtime_code_available"] = True
+
+    validation = validate_matrix_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "companion_selection_invalid_improved_result_coverage" in codes
+    assert "companion_selection_unexpected_absence_reason" in codes
+    assert "companion_selection_runtime_code_overclaim" in codes
 
 
 def test_matrix_result_report_rejects_best_rank_inconsistent_with_seed_ranks():
@@ -929,6 +952,9 @@ def _valid_headline_historicity_evidence() -> dict:
             "figure9_exhibit_ref": "exhibits/figure9_mm_4x4x4.json",
             "companion_colab_ref": "external/alphaevolve_results/mathematical_results.ipynb",
         },
+        "companion_selection_scope": alphaevolve_companion_selection_scope_record(
+            "appendix_a_matrix_improved_decompositions"
+        ),
     }
 
 
@@ -1010,6 +1036,7 @@ def test_matrix_headline_historicity_evidence_requires_sources_and_links():
     evidence["headline_claim"]["source_ref"] = ""
     evidence["evidence_links"]["matrix_result_ref"] = ""
     del evidence["evidence_links"]["companion_colab_ref"]
+    del evidence["companion_selection_scope"]
 
     validation = validate_matrix_headline_historicity_evidence(evidence)
     codes = {issue.code for issue in validation.issues}
@@ -1021,6 +1048,7 @@ def test_matrix_headline_historicity_evidence_requires_sources_and_links():
     assert "missing_headline_source_ref" in codes
     assert "missing_matrix_result_ref" in codes
     assert "missing_companion_colab_ref" in codes
+    assert "missing_companion_selection_scope" in codes
 
 
 def test_render_matrix_headline_historicity_summary_reports_shape():

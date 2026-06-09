@@ -12,6 +12,9 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     TARGET_SUITE as APPENDIX_A_TARGET_SUITE,
     matrix_target_by_id,
 )
+from libreevolve.problems.benchmarks.companion_sources import (
+    validate_alphaevolve_companion_selection_scope,
+)
 
 
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
@@ -51,6 +54,7 @@ MATRIX_ALGORITHM_KINDS = frozenset(
     }
 )
 MATRIX_HEADLINE_TARGET_ID = "mm_4x4x4"
+MATRIX_HEADLINE_COMPANION_CLAIM_ID = "appendix_a_matrix_improved_decompositions"
 MATRIX_HEADLINE_DIMENSIONS = [4, 4, 4]
 MATRIX_HEADLINE_RANK = 48
 MATRIX_HEADLINE_BASELINE_RANKS = {
@@ -246,6 +250,11 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
     exactness_status = _validate_exactness(data.get("exactness_certificate"), issues)
     all_seeds_exact = _validate_seed_results(data.get("seed_results"), seed_count, best_rank, hit_count, issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    if target_id == MATRIX_HEADLINE_TARGET_ID:
+        _validate_companion_selection_scope(
+            data.get("companion_selection_scope"),
+            issues,
+        )
     if alphaevolve_comparable:
         if coefficient_domain not in PUBLICATION_COEFFICIENT_DOMAINS:
             issues.append(
@@ -559,6 +568,7 @@ def validate_matrix_headline_historicity_evidence(
     _validate_headline_claim(data.get("headline_claim"), target_id, issues)
     prior_count = _validate_headline_prior_comparisons(data.get("prior_comparisons"), issues)
     _validate_headline_evidence_links(data.get("evidence_links"), issues)
+    _validate_companion_selection_scope(data.get("companion_selection_scope"), issues)
     return MatrixHeadlineHistoricityValidation(
         ok=not issues,
         target_id=target_id,
@@ -1147,6 +1157,32 @@ def _validate_headline_evidence_links(
     for field in sorted(MATRIX_HEADLINE_EVIDENCE_LINK_FIELDS):
         if not isinstance(value.get(field), str) or not value[field].strip():
             issues.append(MatrixResultIssue(f"missing_{field}", f"evidence_links.{field} is required"))
+
+
+def _validate_companion_selection_scope(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            MatrixResultIssue(
+                "missing_companion_selection_scope",
+                "matrix headline evidence must include companion notebook selection-scope metadata",
+            )
+        )
+        return
+    if value.get("claim_id") != MATRIX_HEADLINE_COMPANION_CLAIM_ID:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_companion_selection_claim_id",
+                "matrix companion selection scope must link the Appendix A matrix claim",
+            )
+        )
+    report = validate_alphaevolve_companion_selection_scope(value)
+    issues.extend(
+        MatrixResultIssue(f"companion_selection_{issue.code}", issue.message)
+        for issue in report.issues
+    )
 
 
 def _validate_scalar_field_source_ref(value: object, issues: list[MatrixResultIssue]) -> None:

@@ -4086,26 +4086,26 @@ Primary evidence:
     and concrete safety artifacts before treating finite scheduling reports as
     AlphaEvolve-ready.
 
-- [ ] Add scheduling interpretability and deployment-readiness evidence for
-      mission-critical heuristics.
+- [ ] Populate scheduling interpretability and deployment-readiness evidence
+      for mission-critical heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.1 says AlphaEvolve was chosen over
     a deep reinforcement learning approach for Borg scheduling because the
     code solution had better performance and offered interpretability,
     debuggability, predictability, and ease of deployment for a
     mission-critical system.
-  - Current evidence: `libreevolve.systems_result_report.v1` can validate
-    generic optimization, held-out, reference-correctness, artifact, and
-    certification-link fields. The scheduling-specific TODO above requires
-    ranking-only feasibility provenance. Neither surface requires a
-    scheduling-domain report to include reviewer/debuggability notes, code
-    simplicity or rule-shape evidence, predictability or monotonicity checks,
-    operational rollout constraints, deployment-risk review, or a comparison
-    against less interpretable learned policies.
-  - Required result: add scheduling-domain report fields and validators for
+  - Current evidence: `libreevolve.systems_result_report.v1` now requires
+    `scheduling_deployment_readiness` before accepting `alphaevolve_ready`
+    scheduling reports. The validator checks interpretable heuristic structure,
+    human/operator review, debuggability notes, predictability checks,
+    deployment ergonomics, rollout-risk controls, learned-policy comparison,
+    review flags, and artifact refs. Existing scheduling fixtures still lack
+    real populated deployment-readiness records and paper-facing certification
+    examples.
+  - Required result: populate Borg-style scheduling fixtures with reviewed
     interpretable heuristic structure, human/operator review, debuggability
-    artifacts, predictability/invariant checks, deployment ergonomics, and
-    baseline comparison against black-box or less interpretable approaches
-    before treating Borg-style scheduling reports as mission-critical
+    artifacts, predictability/invariant checks, deployment ergonomics,
+    rollout-risk evidence, and baseline comparison against black-box or less
+    interpretable approaches before treating those fixtures as mission-critical
     AlphaEvolve-ready evidence.
 
 - [ ] Add Figure 6 scheduling-heuristic exhibit provenance and heatmap

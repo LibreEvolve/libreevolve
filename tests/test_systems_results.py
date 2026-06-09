@@ -213,6 +213,24 @@ def _valid_scheduling_report() -> dict:
         ],
         "artifact_refs": ["systems/flashattention/reference.json"],
     }
+    report["scheduling_deployment_readiness"] = {
+        "heuristic_structure": "small readable scoring function over cpu and memory",
+        "operator_review": "operator reviewed scheduling behavior and rollout boundary",
+        "debuggability_notes": "score terms can be inspected per feasible machine",
+        "deployment_ergonomics": "code heuristic can be deployed in scheduler path",
+        "rollout_risk_controls": "staged rollout with rollback and shadow checks",
+        "learned_policy_comparison": (
+            "less interpretable learned baseline was rejected for operations"
+        ),
+        "predictability_checks": [
+            "edge-capacity cases preserve feasible-machine ordering contract",
+            "resource residual terms remain finite",
+        ],
+        "human_reviewed": True,
+        "black_box_baseline_compared": True,
+        "rollout_risk_reviewed": True,
+        "artifact_refs": ["systems/flashattention/heldout.json"],
+    }
     return report
 
 
@@ -579,6 +597,37 @@ def test_scheduling_safety_rejects_direct_authority_and_bad_refs():
     assert "invalid_scheduling_artifact_ref" in codes
 
 
+def test_ready_scheduling_report_requires_deployment_readiness():
+    report = _valid_scheduling_report()
+    report.pop("scheduling_deployment_readiness")
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_scheduling_deployment_readiness" in codes
+    assert "invalid_ready_scheduling_deployment_readiness" in codes
+
+
+def test_scheduling_deployment_readiness_requires_review_controls_and_refs():
+    report = _valid_scheduling_report()
+    report["scheduling_deployment_readiness"]["human_reviewed"] = False
+    report["scheduling_deployment_readiness"]["predictability_checks"] = []
+    report["scheduling_deployment_readiness"]["artifact_refs"] = [
+        "systems/flashattention/missing.json"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_scheduling_human_reviewed" in codes
+    assert "invalid_scheduling_predictability_checks" in codes
+    assert "invalid_scheduling_deployment_artifact_ref" in codes
+
+
 def test_non_ready_scheduling_report_can_omit_safety_provenance():
     report = _valid_scheduling_report()
     report["alphaevolve_ready"] = False
@@ -586,6 +635,7 @@ def test_non_ready_scheduling_report_can_omit_safety_provenance():
     report["certification"]["paper_claim_ready"] = False
     report.pop("scheduling_safety")
     report.pop("scheduling_formulation")
+    report.pop("scheduling_deployment_readiness")
 
     validation = validate_systems_result_report(report)
 
@@ -617,6 +667,19 @@ def test_non_scheduling_report_rejects_scheduling_formulation_block():
     assert "unexpected_scheduling_formulation" in codes
 
 
+def test_non_scheduling_report_rejects_scheduling_deployment_block():
+    report = _valid_report()
+    report["scheduling_deployment_readiness"] = _valid_scheduling_report()[
+        "scheduling_deployment_readiness"
+    ]
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_scheduling_deployment_readiness" in codes
+
+
 def test_systems_result_report_rejects_unsafe_artifacts_and_bad_metrics():
     report = _valid_report()
     report["gates"][1]["sample_count"] = 0
@@ -646,6 +709,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "| application_provenance_records | 4 |" in summary
     assert "| scheduling_formulation | absent |" in summary
     assert "| scheduling_safety | absent |" in summary
+    assert "| scheduling_deployment_readiness | absent |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary
     assert "reference_correctness=passed" in summary

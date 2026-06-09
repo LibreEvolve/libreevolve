@@ -613,9 +613,12 @@ is not yet an AlphaEvolve reproduction.
   objective, feature mapping, simulator hashes, and artifact refs, plus
   `scheduling_safety` records for feasible candidate-set source, ranking-only
   scope, simulator/admission/placement boundaries, resource invariants, and
-  safety artifact refs. Real scheduling resource recovery, kernel/training-time
-  speedup, RTL PPA, and compiler speedup fixtures still need to populate those
-  records.
+  safety artifact refs. Ready scheduling reports also require
+  `scheduling_deployment_readiness` records for interpretable heuristic
+  structure, operator/debug review, predictability checks, deployment
+  ergonomics, rollout-risk controls, and less-interpretable learned-policy
+  comparison. Real scheduling resource recovery, kernel/training-time speedup,
+  RTL PPA, and compiler speedup fixtures still need to populate those records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market
@@ -625,10 +628,11 @@ is not yet an AlphaEvolve reproduction.
   measurements, deployment/adoption status, rollback/safety review, provenance
   tying the candidate to LibreEvolve's own execution path, and any
   distillation dataset/training/evaluation artifacts.
-- For scheduling fixtures, add mission-critical deployment evidence beyond
-  generic systems gates: interpretable heuristic structure, debuggability and
-  operator review, predictable behavior checks, rollout-risk evidence, and
-  comparison against less interpretable learned-policy baselines.
+- For scheduling fixtures, populate mission-critical deployment-readiness
+  evidence beyond generic systems gates: interpretable heuristic structure,
+  debuggability and operator review, predictable behavior checks, rollout-risk
+  evidence, deployment ergonomics, and comparison against less interpretable
+  learned-policy baselines.
 - Document reachable metric ranges, target/SOTA values, and normalization
   behavior for benchmark fixtures so intended improvements remain ordered.
 - For each local domain paper, either add a benchmark, link it to an existing

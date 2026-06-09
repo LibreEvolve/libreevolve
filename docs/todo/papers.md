@@ -4188,25 +4188,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     confirmation before claiming AlphaEvolve-comparable Borg-style scheduling
     evidence.
 
-- [ ] Record scheduling interpretability and mission-critical deployment
+- [ ] Populate scheduling interpretability and mission-critical deployment
       evidence for Borg-style results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 says
     AlphaEvolve was chosen over deep reinforcement learning for scheduling
     because its code solution performed better and had advantages in
     interpretability, debuggability, predictability, and ease of deployment,
     which the paper calls essential for a mission-critical system.
-  - Current gap: current systems report contracts can record optimization,
-    held-out, reference-correctness, artifact, and certification-link
-    evidence, and the feasibility-boundary TODO above tracks ranking-only
-    safety. They do not require paper-facing evidence for heuristic
-    interpretability, operator/debug review, predictable behavior under
-    capacity edge cases, deployment ergonomics, or a comparison against a
-    less interpretable learned-policy baseline.
-  - Required result: add scheduling report fields and validation for
-    interpretable code/rule structure, debuggability and operator-review
-    artifacts, predictability or monotonicity checks, rollout/deployment-risk
-    evidence, and black-box-baseline comparison before claiming
-    AlphaEvolve-comparable mission-critical scheduling readiness.
+  - Current gap: `libreevolve.systems_result_report.v1` now requires
+    `scheduling_deployment_readiness` before accepting `alphaevolve_ready`
+    scheduling claims. It validates paper-facing evidence for interpretable
+    code/rule structure, debuggability and operator-review notes,
+    predictability checks, deployment ergonomics, rollout/deployment-risk
+    controls, learned-policy comparison, review flags, and artifact refs.
+    Existing scheduling fixtures still lack real populated deployment-readiness
+    records and paper-facing certification examples.
+  - Required result: populate scheduling fixtures with reviewed interpretable
+    code/rule structure, debuggability and operator-review artifacts,
+    predictability or monotonicity checks, rollout/deployment-risk evidence,
+    and black-box-baseline comparison before claiming AlphaEvolve-comparable
+    mission-critical scheduling readiness.
 
 - [ ] Track Figure 6 scheduling-heuristic exhibit provenance as paper
       evidence.

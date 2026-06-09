@@ -3511,12 +3511,11 @@ simulator input hashes, and artifact refs. They also require
 `scheduling_safety` provenance showing the feasible candidate-set source,
 ranking-only heuristic scope, external simulator/admission/placement
 boundaries, resource invariants, and artifact references proving that evolved
-code only ranks machines already deemed feasible. Scheduling reports still
-need domain-specific evidence for
-mission-critical deployment suitability, such as interpretable heuristic
-structure, debuggability/operator review, predictability checks,
-rollout-risk evidence, and comparison against less interpretable learned-policy
-baselines.
+code only ranks machines already deemed feasible. They also require
+`scheduling_deployment_readiness` evidence for mission-critical suitability:
+interpretable heuristic structure, debuggability/operator review,
+predictability checks, rollout-risk controls, deployment ergonomics, and
+comparison against less interpretable learned-policy baselines.
 The claim-calibration schema still does not create real scheduling, kernel,
 hardware, or compiler fixtures, nor does it populate calibrated evidence for
 AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,

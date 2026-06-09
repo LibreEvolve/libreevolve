@@ -2129,24 +2129,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaims the report contract nor overclaims AlphaEvolve-style scheduling
     problem setup.
 
-- [ ] Keep scheduling roadmap wording scoped to generic systems reports until
-      interpretability/deployment-readiness evidence exists.
+- [ ] Keep scheduling roadmap wording scoped until
+      interpretability/deployment-readiness evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the scheduling heuristic was
     preferred over deep reinforcement learning not just for performance, but
     because code-level interpretability, debuggability, predictability, and
     ease of deployment were essential for the mission-critical Borg setting.
-  - Current evidence: roadmap systems-result wording covers generic held-out,
-    reference, deployment, and domain-specific readiness gaps, and a separate
-    scheduling item covers ranking-only feasibility. It does not yet require
-    scheduling reports to prove interpretable heuristic structure, operator
-    review, predictable behavior, deployment ergonomics, or comparison against
-    black-box learned baselines.
-  - Required result: when scheduling fixtures or systems report validators add
-    interpretability/debuggability fields, predictability checks,
+  - Current evidence: roadmap systems-result wording now names
+    `scheduling_deployment_readiness` records required for `alphaevolve_ready`
+    scheduling reports: interpretable heuristic structure, operator/debug
+    review, predictability checks, deployment ergonomics, rollout-risk
+    controls, learned-policy comparison, review flags, and artifact refs.
+    Existing scheduling fixtures do not yet carry real populated
+    deployment-readiness records.
+  - Required result: when scheduling fixtures and certification examples
+    populate interpretability/debuggability fields, predictability checks,
     operator-review artifacts, rollout-risk evidence, and baseline comparison
     against less interpretable policies, update ROADMAP, README, papers index,
-    and code/paper TODOs so roadmap text distinguishes generic systems
-    readiness from mission-critical Borg-style deployment evidence.
+    and code/paper TODOs so roadmap text neither underclaims the report
+    contract nor overclaims mission-critical Borg-style deployment evidence.
 
 - [ ] Keep Figure 6 roadmap wording scoped until scheduling-heuristic exhibit
       provenance exists.

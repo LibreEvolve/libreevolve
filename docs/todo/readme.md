@@ -1272,24 +1272,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implying the schema alone proves AlphaEvolve-style scheduling problem
     setup.
 
-- [ ] Keep README scheduling wording scoped to generic systems reports until
-      interpretability/deployment-readiness evidence exists.
+- [ ] Keep README scheduling wording scoped until
+      interpretability/deployment-readiness evidence is populated.
   - Spec evidence: AlphaEvolve Section 3.3.1 says the Borg scheduling
     heuristic was chosen over deep reinforcement learning because the code
     solution offered interpretability, debuggability, predictability, and ease
     of deployment, which were essential for a mission-critical system.
-  - Current evidence: README documents generic systems result reports,
-    deployment evidence gaps, and scheduling ranking-only safety gaps. It does
-    not yet document scheduling-specific evidence for human-readable heuristic
-    structure, operator/debug review, predictable behavior under edge cases,
-    deployment-risk controls, or comparison against less interpretable learned
-    policies.
-  - Required result: once scheduling report metadata captures
-    interpretability/debuggability review, predictability checks, deployment
-    ergonomics, rollout-risk evidence, and baseline comparison against
-    black-box approaches, update README, ROADMAP, papers index, and matching
-    TODOs so README does not imply generic systems report readiness proves
-    AlphaEvolve-style mission-critical deployment suitability.
+  - Current evidence: README now documents `scheduling_deployment_readiness`
+    records required for `alphaevolve_ready` scheduling reports, including
+    human-readable heuristic structure, operator/debug review, predictability
+    checks, deployment-risk controls, deployment ergonomics, artifact refs, and
+    comparison against less interpretable learned policies. Existing scheduling
+    fixtures do not yet carry real populated deployment-readiness records.
+  - Required result: once scheduling fixtures and certification examples
+    populate interpretability/debuggability review, predictability checks,
+    deployment ergonomics, rollout-risk evidence, and baseline comparison
+    against black-box approaches, update README, ROADMAP, papers index, and
+    matching TODOs so README can describe those records without implying the
+    schema alone proves AlphaEvolve-style mission-critical deployment
+    suitability.
 
 - [ ] Keep README Figure 6 scheduling wording scoped until heuristic-exhibit
       provenance exists.

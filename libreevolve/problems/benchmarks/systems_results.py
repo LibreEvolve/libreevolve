@@ -105,6 +105,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         data.get("alphaevolve_ready") is True,
         issues,
     )
+    scheduling_deployment_ready = _validate_scheduling_deployment_readiness(
+        data.get("scheduling_deployment_readiness"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     claim_calibration_ready = _validate_claim_calibration(
         data.get("claim_calibration"),
         data,
@@ -148,6 +155,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
                 SystemsResultIssue(
                     "invalid_ready_scheduling_formulation",
                     "alphaevolve_ready scheduling reports require vector-bin-packing formulation provenance",
+                )
+            )
+        if domain == "scheduling" and not scheduling_deployment_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_scheduling_deployment_readiness",
+                    "alphaevolve_ready scheduling reports require mission-critical deployment-readiness provenance",
                 )
             )
         if not application_ready:
@@ -289,6 +303,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
     application_records = report.get("application_provenance", {}).get("records")
     scheduling_formulation = report.get("scheduling_formulation")
     scheduling_safety = report.get("scheduling_safety")
+    scheduling_deployment = report.get("scheduling_deployment_readiness")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
         "",
@@ -304,6 +319,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| application_provenance_records | {len(application_records) if isinstance(application_records, list) else 0} |",
         f"| scheduling_formulation | {'present' if isinstance(scheduling_formulation, dict) else 'absent'} |",
         f"| scheduling_safety | {'present' if isinstance(scheduling_safety, dict) else 'absent'} |",
+        f"| scheduling_deployment_readiness | {'present' if isinstance(scheduling_deployment, dict) else 'absent'} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -1076,6 +1092,107 @@ def _validate_scheduling_safety(
         "artifact_refs",
         "invalid_scheduling_artifact_ref",
         "scheduling_safety",
+        issues,
+    )
+    if not isinstance(value.get("artifact_refs"), list) or not value["artifact_refs"]:
+        ok = False
+    elif any(item not in artifact_paths for item in value["artifact_refs"]):
+        ok = False
+    return ok
+
+
+def _validate_scheduling_deployment_readiness(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if domain != "scheduling":
+        if value is not None:
+            issues.append(
+                SystemsResultIssue(
+                    "unexpected_scheduling_deployment_readiness",
+                    "scheduling_deployment_readiness is only valid for scheduling reports",
+                )
+            )
+        return domain != "scheduling"
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_scheduling_deployment_readiness",
+                    "alphaevolve_ready scheduling reports require scheduling_deployment_readiness",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_deployment_readiness",
+                "scheduling_deployment_readiness must be an object",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    ok = True
+    for field in (
+        "heuristic_structure",
+        "operator_review",
+        "debuggability_notes",
+        "deployment_ergonomics",
+        "rollout_risk_controls",
+        "learned_policy_comparison",
+    ):
+        text = value.get(field)
+        if not isinstance(text, str) or not text.strip():
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_scheduling_deployment_{field}",
+                    f"scheduling_deployment_readiness.{field} must be non-empty text",
+                )
+            )
+            ok = False
+    checks = value.get("predictability_checks")
+    if not isinstance(checks, list) or not checks:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_predictability_checks",
+                "scheduling_deployment_readiness.predictability_checks must be a non-empty list",
+            )
+        )
+        ok = False
+    elif not all(isinstance(item, str) and item.strip() for item in checks):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_scheduling_predictability_checks",
+                "scheduling predictability checks must be non-empty text",
+            )
+        )
+        ok = False
+    for flag in (
+        "human_reviewed",
+        "black_box_baseline_compared",
+        "rollout_risk_reviewed",
+    ):
+        if value.get(flag) is not True:
+            issues.append(
+                SystemsResultIssue(
+                    f"invalid_scheduling_{flag}",
+                    f"scheduling_deployment_readiness.{flag} must be true",
+                )
+            )
+            ok = False
+    _validate_application_reference_list(
+        value.get("artifact_refs"),
+        artifact_paths,
+        "artifact_refs",
+        "invalid_scheduling_deployment_artifact_ref",
+        "scheduling_deployment_readiness",
         issues,
     )
     if not isinstance(value.get("artifact_refs"), list) or not value["artifact_refs"]:

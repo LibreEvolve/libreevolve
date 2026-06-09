@@ -5316,6 +5316,7 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
             )
         ),
         "proposal_diversity_report": _proposal_diversity_report(programs),
+        "proposal_score_report": _proposal_score_report(programs),
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
@@ -15817,6 +15818,362 @@ def validate_proposal_diversity_report(report: object) -> dict:
         )
     return {
         "schema": "libreevolve.proposal_diversity_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _proposal_score_report(programs: list[Program]) -> dict:
+    generated = [
+        program
+        for program in programs
+        if isinstance(program.metadata, dict)
+        and program.metadata.get("candidate_type") == "generated"
+    ]
+    records = [_proposal_score_record(program) for program in generated]
+    proposal_records = [
+        record for record in records if record["proposal_metadata_captured"]
+    ]
+    signature_counts: dict[str, int] = {}
+    for record in proposal_records:
+        signature = record.get("proposal_signature_hash")
+        if isinstance(signature, str) and signature:
+            signature_counts[signature] = signature_counts.get(signature, 0) + 1
+    seen_signatures: set[str] = set()
+    scored_records = []
+    for record in proposal_records:
+        scored = dict(record)
+        signature = scored.get("proposal_signature_hash")
+        duplicate = isinstance(signature, str) and signature in seen_signatures
+        if isinstance(signature, str):
+            seen_signatures.add(signature)
+        exact_novelty_score = 0.0 if duplicate else 1.0
+        quality_score = _proposal_score_quality_score(scored)
+        scored["exact_signature_duplicate"] = duplicate
+        scored["signature_occurrence_count"] = (
+            signature_counts.get(signature, 0) if isinstance(signature, str) else 0
+        )
+        scored["outcome_quality_score"] = quality_score
+        scored["exact_text_novelty_score"] = exact_novelty_score
+        scored["proposal_score"] = round(
+            (0.7 * quality_score) + (0.3 * exact_novelty_score),
+            6,
+        )
+        scored_records.append(scored)
+    scored_records.sort(
+        key=lambda record: (
+            -record["proposal_score"],
+            -record["outcome_quality_score"],
+            record.get("generation", 0),
+            str(record.get("program_id", "")),
+        )
+    )
+    duplicate_count = sum(
+        1 for record in scored_records if record["exact_signature_duplicate"]
+    )
+    report = {
+        "schema": "libreevolve.proposal_score_report.v1",
+        "source": "runtime_history_proposal_metadata_and_candidate_outcomes",
+        "generated_candidate_count": len(generated),
+        "proposal_metadata_count": len(proposal_records),
+        "scored_proposal_count": len(scored_records),
+        "unique_proposal_signature_count": len(signature_counts),
+        "duplicate_exact_signature_count": duplicate_count,
+        "accepted_scored_count": sum(
+            1 for record in scored_records if record["evaluator_is_valid"] is True
+        ),
+        "rejected_scored_count": sum(
+            1 for record in scored_records if record["evaluator_is_valid"] is not True
+        ),
+        "top_records": scored_records[:25],
+        "records_truncated": len(scored_records) > 25,
+        "scoring_policy": {
+            "schema": "libreevolve.proposal_scoring_policy.v1",
+            "quality_signal": (
+                "candidate_selection_score_else_bounded_fitness_if_evaluator_valid"
+            ),
+            "quality_weight": 0.7,
+            "novelty_signal": "exact_proposal_signature_first_occurrence",
+            "novelty_weight": 0.3,
+            "semantic_similarity": False,
+            "embedding_index": False,
+            "calibrated_quality_model": False,
+            "cross_run_persistence": False,
+            "prompt_selection_integration": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "versioned_proposal_score_records": True,
+            "outcome_linked_quality_signal": bool(scored_records),
+            "exact_text_novelty_signal": bool(scored_records),
+            "semantic_proposal_index": False,
+            "calibrated_quality_model": False,
+            "cross_run_proposal_table": False,
+            "prompt_or_archive_selection_uses_scores": False,
+            "remaining_gap": [
+                "semantic_or_embedding_backed_proposal_retrieval",
+                "calibrated_proposal_quality_model",
+                "cross_run_persisted_proposal_index",
+                "prompt_archive_policy_using_proposal_scores",
+                "benchmark_linked_proposal_quality_validation",
+            ],
+        },
+    }
+    report["validation"] = validate_proposal_score_report(report)
+    return report
+
+
+def _proposal_score_record(program: Program) -> dict:
+    metadata = program.metadata if isinstance(program.metadata, dict) else {}
+    proposal = (
+        metadata.get("proposal")
+        if isinstance(metadata.get("proposal"), Mapping)
+        else {}
+    )
+    fields = _proposal_diversity_fields(proposal)
+    idea = proposal.get("idea") if isinstance(proposal.get("idea"), str) else ""
+    signature_text = "\n".join(
+        f"{field}:{proposal.get(field)}"
+        for field in ("idea", "rationale", "hypothesis")
+        if isinstance(proposal.get(field), str) and proposal.get(field)
+    )
+    evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    record = {
+        "program_id": program.id,
+        "generation": program.generation,
+        "parent_id": program.parent_id,
+        "proposal_batch": _proposal_lifecycle_batch(metadata.get("proposal_batch")),
+        "proposal_metadata_captured": bool(fields),
+        "proposal_fields_present": fields,
+        "idea_hash": _proposal_diversity_hash(idea),
+        "proposal_signature_hash": _proposal_diversity_hash(signature_text),
+        "idea_preview": _proposal_lifecycle_text(idea, 160),
+        "backend_idx": metadata.get("backend_idx")
+        if isinstance(metadata.get("backend_idx"), int)
+        and not isinstance(metadata.get("backend_idx"), bool)
+        else None,
+        "mutation_mode": metadata.get("mutation_mode")
+        if isinstance(metadata.get("mutation_mode"), str)
+        else None,
+        "evaluator_is_valid": evaluation.get("is_valid"),
+        "fitness": _proposal_lifecycle_number(program.fitness),
+        "selection_score": _proposal_lifecycle_number(
+            metadata.get("selection_score")
+        ),
+        "admission_reason": (
+            metadata.get("archive_admission", {}).get("reason")
+            if isinstance(metadata.get("archive_admission"), Mapping)
+            else None
+        ),
+    }
+    return {key: value for key, value in record.items() if value is not None}
+
+
+def _proposal_score_quality_score(record: Mapping[str, object]) -> float:
+    if record.get("evaluator_is_valid") is not True:
+        return 0.0
+    selection_score = record.get("selection_score")
+    if (
+        isinstance(selection_score, (int, float))
+        and not isinstance(selection_score, bool)
+        and math.isfinite(float(selection_score))
+    ):
+        return round(max(0.0, min(1.0, float(selection_score))), 6)
+    fitness = record.get("fitness")
+    if (
+        isinstance(fitness, (int, float))
+        and not isinstance(fitness, bool)
+        and math.isfinite(float(fitness))
+    ):
+        return round(max(0.0, min(1.0, float(fitness))), 6)
+    return 0.0
+
+
+def validate_proposal_score_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.proposal_score_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "proposal score report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "proposal_metadata_count",
+        "scored_proposal_count",
+        "unique_proposal_signature_count",
+        "duplicate_exact_signature_count",
+        "accepted_scored_count",
+        "rejected_scored_count",
+        "top_records",
+        "records_truncated",
+        "scoring_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"proposal score report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.proposal_score_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "proposal score report schema is unsupported",
+            }
+        )
+    if report.get("source") != "runtime_history_proposal_metadata_and_candidate_outcomes":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "proposal score report source is unsupported",
+            }
+        )
+    for field in (
+        "generated_candidate_count",
+        "proposal_metadata_count",
+        "scored_proposal_count",
+        "unique_proposal_signature_count",
+        "duplicate_exact_signature_count",
+        "accepted_scored_count",
+        "rejected_scored_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    records = report.get("top_records")
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_top_records", "message": "top_records must be a list"}
+        )
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_top_record",
+                    "message": f"top record {index} must be an object",
+                }
+            )
+            continue
+        for field in (
+            "proposal_score",
+            "outcome_quality_score",
+            "exact_text_novelty_score",
+        ):
+            value = record.get(field)
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(float(value))
+                or not 0.0 <= float(value) <= 1.0
+            ):
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"top record {index} {field} must be in [0, 1]",
+                    }
+                )
+        if not isinstance(record.get("program_id"), str) or not record.get("program_id"):
+            issues.append(
+                {
+                    "code": "invalid_program_id",
+                    "message": f"top record {index} program_id is invalid",
+                }
+            )
+        signature = record.get("proposal_signature_hash")
+        if signature is not None and not _is_sha256_hex(signature):
+            issues.append(
+                {
+                    "code": "invalid_signature_hash",
+                    "message": f"top record {index} signature hash is invalid",
+                }
+            )
+    if report.get("records_truncated") is not True:
+        if report.get("scored_proposal_count") != len(records):
+            issues.append(
+                {
+                    "code": "invalid_scored_count",
+                    "message": "scored_proposal_count must match top_records",
+                }
+            )
+    policy = report.get("scoring_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_scoring_policy",
+                "message": "scoring_policy must be an object",
+            }
+        )
+        policy = {}
+    if policy.get("quality_weight") != 0.7 or policy.get("novelty_weight") != 0.3:
+        issues.append(
+            {
+                "code": "invalid_score_weights",
+                "message": "proposal score weights are unsupported",
+            }
+        )
+    for field in (
+        "semantic_similarity",
+        "embedding_index",
+        "calibrated_quality_model",
+        "cross_run_persistence",
+        "prompt_selection_integration",
+    ):
+        if policy.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"scoring_policy.{field} must be false",
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    for field in (
+        "semantic_proposal_index",
+        "calibrated_quality_model",
+        "cross_run_proposal_table",
+        "prompt_or_archive_selection_uses_scores",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"claim_readiness.{field} must be false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "proposal score report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.proposal_score_report.v1",
         "ok": not issues,
         "issues": issues,
     }

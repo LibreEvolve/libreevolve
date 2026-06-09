@@ -10315,3 +10315,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     handling, and output/source-aware duplicate indexes remain unimplemented.
   - Verification: focused budget and loop tests cover cache-hit reporting,
     controller-event validation, and evaluator-call budget savings.
+
+- [x] Add paper-visible bounded proposal-score evidence.
+  - Paper evidence: AlphaEvolve Sections 2.2 and 2.4 frame useful prior ideas
+    and hypotheses as evolutionary evidence for future search.
+  - Status: paper-facing docs now cite
+    `runtime.history.proposal_score_report`, which records current-run
+    proposal scores from candidate outcome quality and exact proposal-signature
+    first-occurrence novelty.
+  - Remaining paper gap: semantic/cross-run proposal-hypothesis retrieval,
+    calibrated proposal-quality models, persisted proposal-index tables, and
+    policy boundaries for score-driven prompting/archive resurfacing remain
+    unimplemented.
+  - Verification: focused loop tests cover the report, validator, accepted/
+    rejected proposal scores, and unready semantic-index boundaries.

@@ -1599,7 +1599,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark runs can distinguish scalar archive sampling from prompts that
     show different definitions of "good" at once.
 
-- [ ] Proposal scoring and semantic hypothesis retrieval.
+- [ ] Extend proposal scoring into semantic hypothesis retrieval.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 2.4.
   - Requirement: prior ideas and hypotheses should be reusable as searchable
     evolutionary evidence, with proposal quality and novelty reflected in
@@ -1610,14 +1610,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     valid programs, sorted by scalar selection score/final fitness/generation,
     and feeds hypothesis evidence into the run-local resurfacing index. Recent
     proposal-hypothesis terms can also feed DeepResearch retrieval queries.
-  - Current gap: there is no versioned proposal score, calibrated hypothesis
-    quality or novelty signal, embedding/semantic proposal index, cross-run
-    persisted proposal table, or policy that fully governs which proposal
-    fields can influence retrieval, prompting, and archive resurfacing.
-  - Required result: add proposal scoring, semantic/cross-run
-    proposal-hypothesis retrieval, persisted proposal-index tables, and
-    prompt/retrieval/archive policy boundaries before treating proposal
-    metadata as AlphaEvolve-grade idea memory.
+    Completed manifests now include `runtime.history.proposal_score_report`,
+    which records current-run proposal scores from candidate outcome quality
+    and exact proposal-signature first-occurrence novelty.
+  - Current gap: proposal scores are bounded heuristic records, not calibrated
+    hypothesis-quality models, embedding/semantic proposal indexes, cross-run
+    persisted proposal tables, or a policy that lets proposal scores influence
+    retrieval, prompting, and archive resurfacing.
+  - Required result: add semantic/cross-run proposal-hypothesis retrieval,
+    calibrated proposal-quality and novelty models, persisted proposal-index
+    tables, and prompt/retrieval/archive policy boundaries before treating
+    proposal metadata as AlphaEvolve-grade idea memory.
 
 - [ ] Extend initial-pool divergence evidence beyond bounded syntactic and
       metric reports.

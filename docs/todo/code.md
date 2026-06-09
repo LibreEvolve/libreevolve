@@ -2022,8 +2022,7 @@ Primary evidence:
     treat `explore_ratio` or strategy metadata as calibrated database-balance
     evidence.
 
-- [ ] Add proposal scoring and semantic proposal-index retrieval beyond
-  bounded hypothesis summaries.
+- [ ] Extend proposal scoring into semantic proposal-index retrieval.
   - Spec evidence: AlphaEvolve-style idea resurfacing should be able to judge
     proposal rationales, hypotheses, and prior idea families semantically, not
     only surface high-fitness programs that happen to carry proposal text.
@@ -2034,13 +2033,19 @@ Primary evidence:
     bounded redacted previews plus hashes for `idea`, `rationale`, and
     `hypothesis`. `resurfacing_index` can include those hypothesis records, and
     DeepResearch retrieval query context can use recent proposal-hypothesis
-    terms. These are run-local manifest summaries rebuilt from current
-    history, not persisted semantic indexes or proposal-quality scores.
-  - Required result: add versioned proposal-score records, calibrated
-    proposal-quality and novelty signals, semantic or embedding-backed
-    proposal/hypothesis retrieval, cross-run persisted proposal indexes, and
-    prompt/retrieval/archive policies that state exactly which proposal fields
-    may influence resurfacing and future candidate generation.
+    terms. Completed manifests now include
+    `runtime.history.proposal_score_report` with schema
+    `libreevolve.proposal_score_report.v1`, plus
+    `validate_proposal_score_report()`. The report records current-run
+    proposal scores from candidate outcome quality and exact proposal-signature
+    first-occurrence novelty, while explicitly leaving semantic similarity,
+    embeddings, calibrated quality models, cross-run persistence, and
+    prompt/archive selection integration false.
+  - Required result: add calibrated proposal-quality and novelty signals,
+    semantic or embedding-backed proposal/hypothesis retrieval, cross-run
+    persisted proposal indexes, and prompt/retrieval/archive policies that
+    state exactly which proposal fields and scores may influence resurfacing
+    and future candidate generation.
 
 - [ ] Extend hypothesis branch evidence into controller backtracking decisions.
   - Spec evidence: AlphaEvolve's Introduction frames discovery as a prolonged

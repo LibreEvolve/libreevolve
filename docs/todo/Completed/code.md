@@ -15464,3 +15464,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused budget and loop tests cover event validation,
     no-op budget replay, cache metadata, duplicate-work report counts, and
     evaluator-call budget savings.
+
+- [x] Add bounded proposal-score report evidence.
+  - Spec evidence: AlphaEvolve-style idea memory should be able to judge
+    proposal rationales, hypotheses, and prior idea families by quality and
+    novelty rather than only carrying proposal text as metadata.
+  - Status: completed manifests now include
+    `runtime.history.proposal_score_report` with schema
+    `libreevolve.proposal_score_report.v1`, plus
+    `validate_proposal_score_report()`. The report scores captured proposal
+    metadata by candidate outcome quality and exact proposal-signature
+    first-occurrence novelty.
+  - Remaining gap: calibrated proposal-quality models, semantic or
+    embedding-backed retrieval, cross-run persisted proposal indexes, and
+    prompt/retrieval/archive policies using proposal scores remain open.
+  - Verification: focused loop tests cover report emission, validator success,
+    accepted/rejected score records, exact duplicate novelty penalties, and
+    unready semantic-index boundaries.

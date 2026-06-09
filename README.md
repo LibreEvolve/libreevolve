@@ -1355,6 +1355,12 @@ per-batch proposal/idea hash counts plus bounded sample records. It is an
 exact text-hash report, not semantic novelty evidence: near-duplicate
 detection, idea-family classification, task-output distance, model-quality
 attribution, and benchmark linkage remain future work.
+`runtime.history.proposal_score_report` adds versioned current-run proposal
+score records for captured proposal metadata, combining candidate outcome
+quality with exact proposal-signature first-occurrence novelty. This is a
+bounded heuristic report, not a semantic proposal index: calibrated proposal
+quality models, embeddings, cross-run proposal tables, and prompt/archive
+selection policies using those scores remain open.
 Declared metric bounds must be finite,
 strictly increasing, non-boolean numeric pairs before they can define
 normalization semantics.

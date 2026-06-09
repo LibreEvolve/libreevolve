@@ -69,6 +69,7 @@ from libreevolve.core.loop import (
     validate_programmatic_representation_boundary_report,
     validate_mutation_operator_boundary_report,
     validate_proposal_diversity_report,
+    validate_proposal_score_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -1022,6 +1023,99 @@ def test_runtime_history_reports_exact_proposal_diversity_counts():
         "Set x to the accepted value.",
         "Use a plain constant assignment.",
     }
+
+
+def test_runtime_history_reports_proposal_scores_without_semantic_index_claim():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    if 'x=2' in code:\n"
+        "        return {'score': 1.0, 'is_valid': True}\n"
+        "    if 'x=1' in code:\n"
+        "        return {'score': 0.5, 'is_valid': True}\n"
+        "    return {'score': -0.1, 'is_valid': False}\n"
+    )
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        (
+            "IDEA: Set x to the accepted value.\n"
+            "RATIONALE: The validator expects x=2.\n"
+            "HYPOTHESIS: Direct assignment should validate.\n"
+            "x=2",
+            0,
+        ),
+        (
+            "IDEA: Try an unaccepted value.\n"
+            "RATIONALE: This tests rejection scoring.\n"
+            "HYPOTHESIS: The evaluator should reject x=3.\n"
+            "x=3",
+            0,
+        ),
+        (
+            "IDEA: Set x to the accepted value.\n"
+            "RATIONALE: The validator expects x=2.\n"
+            "HYPOTHESIS: Direct assignment should validate.\n"
+            "x=2",
+            0,
+        ),
+    ]
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                capture_proposal_metadata=True,
+                log_dir=tmpdir,
+                problem_name="t",
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["proposal_score_report"]
+
+    assert report["schema"] == "libreevolve.proposal_score_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_proposal_score_report(report)["ok"] is True
+    assert report["generated_candidate_count"] == 3
+    assert report["proposal_metadata_count"] == 3
+    assert report["scored_proposal_count"] == 3
+    assert report["unique_proposal_signature_count"] == 2
+    assert report["duplicate_exact_signature_count"] == 1
+    assert report["accepted_scored_count"] == 2
+    assert report["rejected_scored_count"] == 1
+    assert report["scoring_policy"]["semantic_similarity"] is False
+    assert report["scoring_policy"]["embedding_index"] is False
+    assert report["scoring_policy"]["calibrated_quality_model"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["versioned_proposal_score_records"] is True
+    assert report["claim_readiness"]["semantic_proposal_index"] is False
+    assert report["claim_readiness"]["prompt_or_archive_selection_uses_scores"] is False
+
+    top = report["top_records"][0]
+    assert top["idea_preview"] == "Set x to the accepted value."
+    assert top["outcome_quality_score"] == 1.0
+    assert top["exact_text_novelty_score"] == 1.0
+    assert top["proposal_score"] == 1.0
+    duplicate = [
+        record
+        for record in report["top_records"]
+        if record["idea_preview"] == "Set x to the accepted value."
+        and record["exact_signature_duplicate"] is True
+    ][0]
+    assert duplicate["outcome_quality_score"] == 1.0
+    assert duplicate["exact_text_novelty_score"] == 0.0
+    assert duplicate["proposal_score"] == 0.7
+    rejected = [
+        record
+        for record in report["top_records"]
+        if record["idea_preview"] == "Try an unaccepted value."
+    ][0]
+    assert rejected["outcome_quality_score"] == 0.0
+    assert rejected["proposal_score"] == 0.3
 
 
 def test_runtime_history_reports_initial_pool_divergence_boundary():

@@ -1216,21 +1216,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     together so roadmap wording neither underclaims current manifest-safe
     summaries nor overclaims AlphaEvolve-grade plugin artifact provenance.
 
-- [ ] Keep proposal-memory roadmap wording scoped to bounded hypothesis
-  summaries versus semantic proposal retrieval.
+- [ ] Keep proposal-memory roadmap wording scoped to bounded heuristic scoring
+  versus semantic proposal retrieval.
   - Spec evidence: AlphaEvolve-style idea memory should be able to score and
     retrieve prior proposal ideas and hypotheses by quality, novelty, and
     semantic relation to the current task.
   - Current evidence: the roadmap now distinguishes optional
     `IDEA`/`RATIONALE`/`HYPOTHESIS` proposal metadata and bounded manifest
-    `runtime.history.hypothesis_index` evidence from still-open proposal
-    scoring, semantic proposal-index retrieval, hypothesis-refinement loops,
-    and field-influence policy for retrieval, prompting, and archive
-    resurfacing.
-  - Required result: when proposal scoring or semantic proposal-index
-    retrieval lands, update the roadmap, README, papers index, and code/paper
-    TODO entries together so they neither underclaim current bounded
-    hypothesis summaries nor overclaim AlphaEvolve-grade idea memory.
+    `runtime.history.hypothesis_index` evidence, plus
+    `runtime.history.proposal_score_report` outcome/exact-novelty score
+    records, from still-open semantic proposal-index retrieval, calibrated
+    quality models, hypothesis-refinement loops, and field/score-influence
+    policy for retrieval, prompting, and archive resurfacing.
+  - Required result: when semantic proposal-index retrieval, calibrated
+    proposal-quality models, or score-driven prompt/archive policies land,
+    update the roadmap, README, papers index, and code/paper TODO entries
+    together so they neither underclaim current bounded proposal scoring nor
+    overclaim AlphaEvolve-grade idea memory.
 
 - [ ] Keep backtracking roadmap wording scoped until controller backtracking
       decisions exist.

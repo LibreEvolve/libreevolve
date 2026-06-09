@@ -7864,3 +7864,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     and source/output-aware duplicate indexes remain open.
   - Verification: focused budget and loop tests cover the report, event
     validation, and evaluator-call budget savings.
+
+- [x] Narrow proposal-memory roadmap wording to semantic retrieval gaps.
+  - Evidence: roadmap wording needed to recognize implemented current-run
+    proposal score records without implying AlphaEvolve-grade semantic idea
+    memory.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.proposal_score_report` for bounded outcome/exact-novelty
+    proposal scores.
+  - Remaining roadmap gap: semantic proposal-index retrieval, calibrated
+    quality models, cross-run proposal tables, hypothesis-refinement loops, and
+    score/field influence policies remain open.
+  - Verification: focused loop tests cover the report and validator.

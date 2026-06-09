@@ -10424,3 +10424,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     re-evaluation policy, and source/output-aware indexes remain open.
   - Verification: focused budget and loop tests cover the manifest field,
     cache-hit event validation, and duplicate-work report counts.
+
+- [x] Document bounded proposal-score evidence.
+  - Evidence: README needed to distinguish current outcome/exact-novelty
+    proposal scores from semantic or cross-run idea memory.
+  - Status: docs now describe `runtime.history.proposal_score_report`,
+    candidate-outcome quality, exact proposal-signature novelty, and the
+    remaining calibrated/semantic/cross-run gaps.
+  - Remaining documentation gap: semantic proposal retrieval, calibrated
+    proposal-quality models, cross-run proposal tables, and score-driven
+    prompt/archive policies remain open.
+  - Verification: focused loop tests cover the manifest field and validator.

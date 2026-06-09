@@ -5235,6 +5235,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
                 programs,
             )
         ),
+        "mutation_operator_boundary_report": (
+            _mutation_operator_boundary_report(
+                db.startup_manifest_snapshot(),
+                programs,
+            )
+        ),
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
@@ -13509,6 +13515,372 @@ def validate_programmatic_representation_boundary_report(report: object) -> dict
         )
     return {
         "schema": "libreevolve.programmatic_representation_boundary_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _mutation_operator_boundary_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    generated = [
+        program for program in programs if _program_candidate_type(program) == "generated"
+    ]
+    mode_counts: dict[str, int] = {}
+    surface_counts: dict[str, int] = {}
+    proposal_family_counts: dict[str, int] = {}
+    records = []
+    for program in generated:
+        metadata = program.metadata if isinstance(program.metadata, dict) else {}
+        mode = _mutation_operator_mode(metadata.get("mutation_mode"))
+        _increment_count(mode_counts, mode)
+        payload = metadata.get("diff")
+        surfaces = _mutation_operator_payload_surfaces(payload, mode)
+        for surface in surfaces:
+            _increment_count(surface_counts, surface)
+        proposal = (
+            metadata.get("proposal")
+            if isinstance(metadata.get("proposal"), Mapping)
+            else {}
+        )
+        family = _mutation_operator_family_from_proposal(proposal)
+        _increment_count(proposal_family_counts, family)
+        records.append(
+            {
+                "program_id": program.id,
+                "generation": program.generation,
+                "mutation_mode": mode,
+                "payload_surfaces": surfaces,
+                "operator_family_source": "not_declared",
+                "operator_family": family,
+                "llm_constructed_operator_family": False,
+                "adaptive_operator_selection": False,
+                "prompt_program_id": metadata.get("prompt_program_id"),
+                "proposal_fields_present": _mutation_operator_proposal_fields(proposal),
+                "evaluator_is_valid": (
+                    program.evaluation.get("is_valid")
+                    if isinstance(program.evaluation, dict)
+                    else None
+                ),
+            }
+        )
+    records.sort(key=lambda record: (record["generation"], record["program_id"]))
+    report = {
+        "schema": "libreevolve.mutation_operator_boundary_report.v1",
+        "source": "startup_manifest_and_runtime_history",
+        "configured_mutation_mode": _mutation_operator_mode(
+            config.get("mutation_mode")
+        ),
+        "generated_candidate_count": len(generated),
+        "mutation_mode_counts": dict(sorted(mode_counts.items())),
+        "payload_surface_counts": dict(sorted(surface_counts.items())),
+        "proposal_operator_family_counts": dict(sorted(proposal_family_counts.items())),
+        "edit_grammar_policy": {
+            "schema": "libreevolve.fixed_edit_grammar_policy.v1",
+            "fixed_local_parser_surfaces": [
+                "search_replace_diff",
+                "full_replacement",
+                "file_sections",
+                "block_sections",
+                "topology_commands",
+                "static_or_binary_sections",
+            ],
+            "mutation_applier": "apply_workspace_mutation",
+            "run_wide_mutation_mode": True,
+            "adaptive_diff_full_selection": False,
+            "llm_constructed_operator_families": False,
+            "operator_family_scoring": False,
+        },
+        "strategy_boundary": {
+            "higher_level_strategy_role": "proposal_text_unclassified",
+            "operator_family_source": "not_declared_or_selected",
+            "task_or_failure_aware_operator_construction": False,
+            "benchmark_operator_telemetry": False,
+        },
+        "sample_records": records[:50],
+        "records_truncated": len(records) > 50,
+        "claim_ready": False,
+        "claim_readiness": {
+            "edit_payload_grammar_reported": True,
+            "fixed_parser_boundary_recorded": True,
+            "llm_constructed_operator_family_reported": False,
+            "adaptive_operator_selection_reported": False,
+            "operator_family_benchmark_telemetry": False,
+            "remaining_gap": [
+                "operator_family_declaration_schema",
+                "proposal_level_operator_family_provenance",
+                "task_or_failure_aware_operator_construction",
+                "adaptive_operator_family_selection",
+                "operator_family_benchmark_telemetry",
+            ],
+        },
+    }
+    report["validation"] = validate_mutation_operator_boundary_report(report)
+    return report
+
+
+def _mutation_operator_mode(value: object) -> str:
+    return value if isinstance(value, str) and value else "unknown"
+
+
+def _mutation_operator_payload_surfaces(payload: object, mode: str) -> list[str]:
+    if not isinstance(payload, str) or not payload:
+        return ["missing_payload"]
+    surfaces: list[str] = []
+    canonical_search = ("<" * 7) + " SEARCH"
+    canonical_replace = (">" * 7) + " REPLACE"
+    if (
+        ("<<<SEARCH" in payload and ">>>REPLACE" in payload)
+        or (canonical_search in payload and canonical_replace in payload)
+    ):
+        surfaces.append("search_replace_diff")
+    if "<<<FILE" in payload and ">>>FILE" in payload:
+        surfaces.append("file_sections")
+    if "<<<BLOCK" in payload and ">>>BLOCK" in payload:
+        surfaces.append("block_sections")
+    if _mutation_operator_has_topology_command(payload):
+        surfaces.append("topology_commands")
+    if "<<<FILE STATIC" in payload or "<<<FILE BINARY" in payload:
+        surfaces.append("static_or_binary_sections")
+    if not surfaces and mode == "full":
+        surfaces.append("full_replacement")
+    if not surfaces:
+        surfaces.append("unclassified_payload")
+    return _unique_in_order(surfaces)
+
+
+def _mutation_operator_has_topology_command(payload: str) -> bool:
+    markers = (
+        "<<<FILE DELETE ",
+        "<<<FILE MOVE ",
+        "<<<FILE RENAME ",
+        "<<<FILE PRIMARY ",
+    )
+    return any(marker in payload for marker in markers)
+
+
+def _mutation_operator_family_from_proposal(proposal: Mapping[str, object]) -> str:
+    if not proposal:
+        return "not_declared"
+    return "proposal_text_unclassified"
+
+
+def _mutation_operator_proposal_fields(proposal: Mapping[str, object]) -> list[str]:
+    return [
+        field
+        for field in ("idea", "rationale", "hypothesis")
+        if isinstance(proposal.get(field), str) and proposal.get(field)
+    ]
+
+
+def validate_mutation_operator_boundary_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.mutation_operator_boundary_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "mutation operator boundary report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_mutation_mode",
+        "generated_candidate_count",
+        "mutation_mode_counts",
+        "payload_surface_counts",
+        "proposal_operator_family_counts",
+        "edit_grammar_policy",
+        "strategy_boundary",
+        "sample_records",
+        "records_truncated",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": (
+                    "mutation operator boundary report missing fields: "
+                    f"{sorted(missing)}"
+                ),
+            }
+        )
+    if report.get("schema") != "libreevolve.mutation_operator_boundary_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "mutation operator boundary report schema is unsupported",
+            }
+        )
+    if report.get("source") != "startup_manifest_and_runtime_history":
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "mutation operator boundary report source is unsupported",
+            }
+        )
+    for field in ("generated_candidate_count",):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    for field in (
+        "mutation_mode_counts",
+        "payload_surface_counts",
+        "proposal_operator_family_counts",
+    ):
+        value = report.get(field)
+        if not isinstance(value, dict):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be an object"}
+            )
+            continue
+        for key, count in value.items():
+            if not isinstance(key, str) or not key:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}_key",
+                        "message": f"{field} keys must be non-empty strings",
+                    }
+                )
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}_count",
+                        "message": f"{field} values must be non-negative integers",
+                    }
+                )
+    policy = report.get("edit_grammar_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_edit_grammar_policy",
+                "message": "edit_grammar_policy must be an object",
+            }
+        )
+        policy = {}
+    if policy.get("run_wide_mutation_mode") is not True:
+        issues.append(
+            {
+                "code": "invalid_run_wide_mutation_mode",
+                "message": "current report must record run-wide mutation mode",
+            }
+        )
+    for field in (
+        "adaptive_diff_full_selection",
+        "llm_constructed_operator_families",
+        "operator_family_scoring",
+    ):
+        if policy.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"edit_grammar_policy.{field} must be false",
+                }
+            )
+    strategy = report.get("strategy_boundary")
+    if not isinstance(strategy, dict):
+        issues.append(
+            {
+                "code": "invalid_strategy_boundary",
+                "message": "strategy_boundary must be an object",
+            }
+        )
+        strategy = {}
+    for field in (
+        "task_or_failure_aware_operator_construction",
+        "benchmark_operator_telemetry",
+    ):
+        if strategy.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"strategy_boundary.{field} must be false",
+                }
+            )
+    records = report.get("sample_records")
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_sample_records", "message": "sample_records must be a list"}
+        )
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_sample_record",
+                    "message": f"sample record {index} must be an object",
+                }
+            )
+            continue
+        if record.get("llm_constructed_operator_family") is not False:
+            issues.append(
+                {
+                    "code": "invalid_sample_operator_family_claim",
+                    "message": f"sample record {index} must not claim LLM operator construction",
+                }
+            )
+        if record.get("adaptive_operator_selection") is not False:
+            issues.append(
+                {
+                    "code": "invalid_sample_adaptive_selection_claim",
+                    "message": f"sample record {index} must not claim adaptive selection",
+                }
+            )
+        if not isinstance(record.get("payload_surfaces"), list):
+            issues.append(
+                {
+                    "code": "invalid_sample_payload_surfaces",
+                    "message": f"sample record {index} payload_surfaces must be a list",
+                }
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    for field in (
+        "llm_constructed_operator_family_reported",
+        "adaptive_operator_selection_reported",
+        "operator_family_benchmark_telemetry",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"claim_readiness.{field} must be false",
+                }
+            )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_claim_ready",
+                "message": "mutation operator boundary report must not claim full readiness",
+            }
+        )
+    return {
+        "schema": "libreevolve.mutation_operator_boundary_report.v1",
         "ok": not issues,
         "issues": issues,
     }

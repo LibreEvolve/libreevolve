@@ -712,11 +712,14 @@ file metadata as content rather than prompt structure.
 
 The current mutation surface is still a fixed local edit grammar:
 SEARCH/REPLACE diffs, configured full replacement, workspace file/block
-sections, and topology commands. AlphaEvolve also emphasizes LLM-guided
-mutation beyond handwritten mutation/crossover operator sets; LibreEvolve does
-not yet report LLM-constructed operator families, adaptive operator-strategy
-selection, or benchmark telemetry separating higher-level mutation strategy
-from the parser grammar.
+sections, and topology commands. Completed manifests include
+`runtime.history.mutation_operator_boundary_report`, which records the
+configured run-wide mutation mode, observed payload surfaces, fixed parser
+policy, and sample generated-candidate mutation records. AlphaEvolve also
+emphasizes LLM-guided mutation beyond handwritten mutation/crossover operator
+sets; the report remains `claim_ready: false` because LibreEvolve does not yet
+declare, construct, select, score, or benchmark higher-level mutation-operator
+families separately from the parser grammar.
 
 Explicit problem context bodies are also rendered as character-counted JSON
 strings under source citation headers, and context entries render in

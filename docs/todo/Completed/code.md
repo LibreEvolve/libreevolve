@@ -15396,3 +15396,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     candidate evaluation remain open.
   - Verification: focused loop tests cover manifest emission, proposal-field
     counts, sample records, and claim-readiness boundaries.
+
+- [x] Add mutation-operator boundary report evidence.
+  - Spec evidence: AlphaEvolve contrasts LLM-guided program mutation with
+    systems that depend on fixed handwritten mutation/crossover operators,
+    while still using structured edit payloads.
+  - Status: completed manifests now include
+    `runtime.history.mutation_operator_boundary_report` with schema
+    `libreevolve.mutation_operator_boundary_report.v1`, plus
+    `validate_mutation_operator_boundary_report()`. The report records
+    configured run-wide mutation mode, observed fixed parser payload surfaces,
+    proposal operator-family counts, sample generated-candidate mutation
+    records, and a fixed-edit-grammar policy.
+  - Remaining gap: proposal-level operator-family provenance, task/failure-
+    aware operator construction, adaptive operator selection, scoring, and
+    benchmark telemetry remain open.
+  - Verification: focused loop tests cover manifest emission, payload-surface
+    counts, sample records, and claim-readiness boundaries.

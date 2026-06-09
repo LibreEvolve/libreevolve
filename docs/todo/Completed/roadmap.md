@@ -7811,3 +7811,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: hallucination-risk controls, long-horizon
     step-count evidence, and a natural-language hypothesis bridge remain open.
   - Verification: focused loop tests cover the report and validator.
+
+- [x] Narrow mutation-operator roadmap wording to remaining operator-family
+      evidence.
+  - Evidence: roadmap wording needed to recognize implemented fixed parser
+    boundary reporting without implying AlphaEvolve-style constructed operator
+    families.
+  - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
+    `runtime.history.mutation_operator_boundary_report` for fixed edit grammar
+    and payload-surface evidence.
+  - Remaining roadmap gap: proposal-level operator-family provenance,
+    task/failure-aware construction, adaptive selection, scoring, and
+    benchmark telemetry remain open.
+  - Verification: focused loop tests cover the report and validator.

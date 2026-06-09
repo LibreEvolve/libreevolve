@@ -66,6 +66,7 @@ from libreevolve.core.loop import (
     validate_duplicate_work_policy_report,
     validate_sampling_balance_report,
     validate_programmatic_representation_boundary_report,
+    validate_mutation_operator_boundary_report,
     validate_proposal_lifecycle_report,
     validate_hypothesis_branch_report,
     VALID_THRESHOLD,
@@ -2786,6 +2787,68 @@ x=2
     assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
     assert sample["natural_language_hypothesis_is_candidate"] is False
     assert sample["evaluation_criteria_source"] == "programmatic_evaluator_metrics"
+
+
+def test_runtime_history_reports_mutation_operator_boundary():
+    tmpdir = tempfile.mkdtemp()
+    response = """IDEA: Try a direct constant update.
+RATIONALE: The parser applies a fixed diff payload.
+HYPOTHESIS: The generated candidate should validate.
+<<<SEARCH
+x=1
+===
+x=2
+>>>REPLACE"""
+
+    with patch("libreevolve.core.loop.build_llm", return_value=_llm(response)):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                log_dir=tmpdir,
+                problem_name="t",
+                capture_proposal_metadata=True,
+            ),
+        )
+
+    run_dir = Path(tmpdir) / "t"
+    manifest = json.loads((run_dir / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["mutation_operator_boundary_report"]
+
+    assert report["schema"] == "libreevolve.mutation_operator_boundary_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_mutation_operator_boundary_report(report)["ok"] is True
+    assert report["configured_mutation_mode"] == "diff"
+    assert report["generated_candidate_count"] == 1
+    assert report["mutation_mode_counts"] == {"diff": 1}
+    assert report["payload_surface_counts"] == {"search_replace_diff": 1}
+    assert report["proposal_operator_family_counts"] == {
+        "proposal_text_unclassified": 1
+    }
+    policy = report["edit_grammar_policy"]
+    assert policy["run_wide_mutation_mode"] is True
+    assert policy["adaptive_diff_full_selection"] is False
+    assert policy["llm_constructed_operator_families"] is False
+    assert policy["operator_family_scoring"] is False
+    assert "search_replace_diff" in policy["fixed_local_parser_surfaces"]
+    assert report["strategy_boundary"][
+        "task_or_failure_aware_operator_construction"
+    ] is False
+    assert report["strategy_boundary"]["benchmark_operator_telemetry"] is False
+    assert report["claim_ready"] is False
+    assert report["claim_readiness"]["edit_payload_grammar_reported"] is True
+    assert report["claim_readiness"][
+        "llm_constructed_operator_family_reported"
+    ] is False
+    assert report["claim_readiness"]["adaptive_operator_selection_reported"] is False
+    sample = report["sample_records"][0]
+    assert sample["mutation_mode"] == "diff"
+    assert sample["payload_surfaces"] == ["search_replace_diff"]
+    assert sample["operator_family_source"] == "not_declared"
+    assert sample["operator_family"] == "proposal_text_unclassified"
+    assert sample["llm_constructed_operator_family"] is False
+    assert sample["adaptive_operator_selection"] is False
+    assert sample["proposal_fields_present"] == ["idea", "rationale", "hypothesis"]
 
 
 def test_prompt_context_policy_can_enable_proposal_metadata_capture():

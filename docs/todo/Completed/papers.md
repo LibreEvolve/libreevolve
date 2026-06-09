@@ -10257,3 +10257,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     remain unimplemented.
   - Verification: focused loop tests cover the report, validator, proposal
     field counts, and unready claim boundaries.
+
+- [x] Add paper-visible mutation-operator boundary evidence.
+  - Paper evidence: AlphaEvolve uses structured edit payloads but contrasts
+    LLM-guided mutation with systems that require fixed handwritten mutation or
+    crossover operator sets.
+  - Status: paper-facing docs now cite
+    `runtime.history.mutation_operator_boundary_report`, which records the
+    configured run-wide mutation mode, observed fixed parser payload surfaces,
+    sample generated-candidate mutation records, and the explicit unready
+    boundary for LLM-constructed operator families and adaptive selection.
+  - Remaining paper gap: proposal-level operator-family provenance,
+    construction/selection evidence, operator scoring, and benchmark telemetry
+    remain unimplemented.
+  - Verification: focused loop tests cover the report, validator, payload
+    surface counts, and unready claim boundaries.

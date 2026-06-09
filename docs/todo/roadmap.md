@@ -1466,22 +1466,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     paper-example evidence from generic prompt, mutation, and evaluator
     support.
 
-- [ ] Keep mutation-operator roadmap wording scoped to fixed edit surfaces
-      until operator-construction evidence lands.
+- [ ] Keep mutation-operator roadmap wording scoped until operator-family
+      construction evidence exists beyond the current boundary report.
   - Spec evidence: AlphaEvolve Section 2.3 uses structured edit outputs, while
     Related Work contrasts the system with evolutionary approaches that rely
     on a pre-defined handwritten mutation/crossover operator set.
-  - Current evidence: `ROADMAP.md` current state lists SEARCH/REPLACE diff
-    mutation, configurable full replacement, and workspace topology mutations.
-    That is accurate for the local edit grammar, but it does not prove that
-    LibreEvolve can declare, generate, select, score, or report higher-level
-    LLM-constructed mutation-operator families independent of the fixed local
-    parser surfaces.
+  - Current evidence: `ROADMAP.md` can now cite
+    `runtime.history.mutation_operator_boundary_report`, which records fixed
+    local edit payload surfaces, configured run-wide mutation mode, sample
+    generated-candidate mutation records, and `claim_ready: false` for
+    LLM-constructed mutation-operator families, adaptive selection,
+    operator-family scoring, and benchmark telemetry.
   - Required result: when mutation-operator construction or adaptive
     operator-family selection lands, update ROADMAP, README, papers index, and
     code/paper TODOs together so roadmap wording separates implemented
-    edit-payload support from AlphaEvolve's broader claim that LLMs replace
-    handwritten mutation-operator sets.
+    edit-payload boundary reporting from AlphaEvolve's broader claim that LLMs
+    replace handwritten mutation-operator sets.
 
 - [ ] Keep creative-generation roadmap wording scoped until proposal-diversity
       evidence exists.

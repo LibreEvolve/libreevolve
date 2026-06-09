@@ -310,11 +310,15 @@ before making that class of paper claim.
 
 AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
 surfaces listed in the table, including SEARCH/REPLACE, configured full
-replacement, file/block sections, and topology commands. It does not yet have
-paper-visible evidence that LLMs construct or adapt higher-level mutation
-operator families beyond those fixed local parser surfaces, so the
+replacement, file/block sections, and topology commands. Completed manifests
+now include `runtime.history.mutation_operator_boundary_report`, which records
+the configured run-wide mutation mode, observed payload surfaces, fixed parser
+policy, sample generated-candidate mutation records, and `claim_ready: false`
+for LLM-constructed operator families or adaptive operator selection. The
 AlphaEvolve Related Work distinction from handwritten mutation/crossover
-operator sets remains an open evidence gap.
+operator sets remains open until LibreEvolve records proposal-level
+operator-family provenance, construction or selection evidence, and benchmark
+telemetry beyond those fixed local parser surfaces.
 
 AlphaEvolve initial-program validity note: current seed handling can still
 evaluate and record invalid generation-0 seeds as permissive

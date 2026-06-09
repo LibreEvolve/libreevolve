@@ -2969,6 +2969,23 @@ not measured hallucination resistance, long-horizon evolution, or a full
 AI-Co-Scientist-style natural-language hypothesis stage bridged into
 programmatic candidate evaluation.
 
+## `runtime.history.mutation_operator_boundary_report`
+
+Completed manifests include a mutation-operator boundary report with schema
+`libreevolve.mutation_operator_boundary_report.v1`. It records the configured
+run-wide mutation mode, generated-candidate counts by mutation mode, observed
+payload surfaces such as SEARCH/REPLACE diff, full replacement, file sections,
+block sections, topology commands, and static/binary sections, plus bounded
+sample records with proposal-field presence and evaluator validity.
+
+The report embeds `libreevolve.fixed_edit_grammar_policy.v1`, which separates
+the current local parser/edit grammar from AlphaEvolve-style claims that the
+LLM constructs or adapts higher-level mutation operator families. Its
+`claim_ready: false` boundary is intentional: it does not prove adaptive
+operator-family selection, task/failure-aware operator construction, operator
+family scoring, or benchmark telemetry for replacing handwritten
+mutation/crossover operators.
+
 ## `runtime.history.proposal_lifecycle_report`
 
 Completed manifests include a bounded proposal lifecycle report with schema

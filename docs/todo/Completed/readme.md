@@ -10376,3 +10376,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining documentation gap: docs still leave hallucination measurement,
     long-horizon proof, and natural-language hypothesis bridge contracts open.
   - Verification: focused loop tests cover the manifest field and validator.
+
+- [x] Document mutation-operator boundary evidence.
+  - Evidence: README and run-artifact docs needed to separate fixed local edit
+    grammar support from AlphaEvolve-style claims about replacing handwritten
+    mutation/crossover operator sets.
+  - Status: docs now describe
+    `runtime.history.mutation_operator_boundary_report`, observed payload
+    surfaces, fixed parser policy, and sample generated-candidate mutation
+    records.
+  - Remaining documentation gap: docs still leave operator-family provenance,
+    adaptive selection, scoring, and benchmark telemetry open.
+  - Verification: focused loop tests cover the manifest field and validator.

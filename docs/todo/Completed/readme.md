@@ -10718,3 +10718,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     semantic/renamed copy detection, custom prompt-template inventories, and
     per-file-section normalized scanning remain open.
   - Verification: focused loop tests cover the manifest field and validator.
+- [x] Keep README implementation-status wording scoped until table semantics
+      are validated.
+  - Spec evidence: README sends readers to `papers/README.md` for
+    paper-facing titles, implementation status, and benchmark coverage because
+    manifest titles are display slugs.
+  - Status: README now says paper-index validation covers implementation-
+    status table shape, role/status taxonomy compatibility, and local artifact
+    paths named in status cells against linked active or completed TODO
+    evidence. It explicitly scopes the claim to structural traceability and
+    local-artifact claim linkage rather than arbitrary natural-language proof
+    for every long status phrase or benchmark qualifier.
+  - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
+    reports 123 passed.

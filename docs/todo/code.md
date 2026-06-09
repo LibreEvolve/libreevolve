@@ -2528,76 +2528,6 @@ Primary evidence:
     from live repository page inventory until the source discrepancy is
     classified.
 
-- [ ] Validate semantic cells in the paper implementation-status table.
-  - Spec evidence: `papers/README.md` says manifest `title` values are only
-    inventory/display slugs and that the implementation-status table is the
-    paper-facing authority for titles, roles, implementation status, and
-    benchmark coverage decisions. AlphaEvolve-alignment audits therefore rely
-    on those cells as structured claim boundaries, not only as row ids.
-  - Current evidence: `_read_status_table_ids()` in
-    `libreevolve.tools.paper_manifest` now parses the `## Implementation
-    status` table as an exact four-column public claim surface. It validates
-    the header, row shape, non-empty safe title/role/status cells, the declared
-    paper-facing role taxonomy, allowed status class prefixes, and role/status
-    compatibility, while still detecting duplicate ids and reconciling
-    manifest coverage. Focused tests cover header drift, row-shape drift,
-    invalid roles, unsupported status classes, valid roles paired with
-    incompatible status classes, missing active evidence paths, and missing
-    completed-evidence paths for rows claiming partial/implemented/local-only
-    support; completed evidence paths must now also exist under
-    `docs/todo/Completed/` and contain completed checklist text that names the
-    paper id or source PDF. Row-specific open TODO blocks must now include
-    Current/Remaining gap or Current evidence context plus a `Required result:`
-    field. README, ROADMAP, and `papers/README.md` now describe that validator
-    boundary without claiming full semantic proof. The validator also now rejects
-    benchmark coverage `Implemented:` bullets that are phrased as not
-    implemented, requires those bullets to cite a local code/artifact path and
-    state an explicit remaining scope/limitation boundary, and it rejects
-    unqualified `AlphaEvolve-comparable` status-table overclaims unless the
-    phrase is framed as missing, scoped, or requirement-bound evidence, and it
-    rejects background-only/future-benchmark status classes that include
-    positive implementation-support wording. Bare `Background only` status
-    classes must now include an explicit missing/unsupported behavior boundary.
-    `Not implemented; potential future benchmark` status classes must now
-    include an explicit missing verifier/harness or unsupported-behavior
-    boundary.
-    `Implemented as` status classes must now include an explicit scoped/open
-    or out-of-scope behavior boundary.
-    `Partially implemented:` status classes must now include an explicit
-    remaining/missing/unsupported behavior boundary.
-    Limited `Only` status classes must now include an explicit
-    missing/unsupported behavior boundary.
-    `Static prompt guidance exists` status classes must now also state that the
-    guided operation is not executed or enforced. `Not implemented as
-    described:` status classes must now also name an explicit missing or
-    unsupported paper behavior.
-    Implemented, partial, limited, and static-guidance support claims must now
-    also cite a local code/artifact path in the implementation-status cell.
-    Implementation-status rows must now also remain one contiguous markdown
-    table before prose notes.
-    Remaining gap: the validator does not yet prove that every named behavior
-    inside each long status/coverage phrase is linked to the specific active
-    TODO or completed-evidence record that justifies it, or prove broader
-    smoke-versus-paper-claim qualifiers beyond the role/status class matrix,
-    required path presence, active-block structure checks,
-    source-specific completed-evidence path checks, status-claim
-    local-artifact anchors, the status-table contiguity guard, the
-    benchmark-implemented contradiction/local-artifact/limitation-boundary guards, the `AlphaEvolve-comparable`
-    overclaim guard, the negative-status contradiction
-    guard, the background-only boundary guard, the future-benchmark boundary
-    guard, the implemented-status boundary guard, the partial-status boundary
-    guard, the limited-status boundary guard, the static-guidance
-    execution-boundary guard, and the
-    not-implemented-as-described boundary guard.
-  - Required result: extend the reusable paper-status-table validator with
-    phrase-level evidence-link checks from semantic status/coverage phrases to
-    active TODO or completed-evidence records, including broader qualifier
-    checks for smoke examples presented as benchmark evidence and unsupported
-    implementation claims hidden inside otherwise negative, limited-support, or
-    static-guidance statuses. Keep this separate from the already documented
-    TODO-coverage cross-reference validation, which tracks the later
-    backlog-reference table rather than the semantic status cells.
-
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.
   - Spec evidence: the AlphaEvolve Contributions section says N.V., E.D.,
@@ -6522,8 +6452,8 @@ Primary evidence:
     verifier programs.
   - Current evidence: `papers/README.md` marks ThetaEvolve as test-time
     training inspiration and says LibreEvolve only exports clipped-reward JSONL
-    through `ttt_rl`; there is no online RL/GRPO loop, checkpoint management,
-    resume semantics, or lazy-penalty dynamics. Existing grouped inspiration
+    through `libreevolve/plugins/ttt_rl.py`; there is no online RL/GRPO loop,
+    checkpoint management, resume semantics, or lazy-penalty dynamics. Existing grouped inspiration
     TODOs and `TTTRLPlugin` docs keep the export boundary honest, but there is
     no implemented source-specific code gate for `2511.23473`, no batch-sampled dynamic
     environment, no `70`/`1000`/`10000` population/archive/island scaling
@@ -6574,7 +6504,8 @@ Primary evidence:
     aggregate evolutionary statistics.
   - Current evidence: `papers/README.md` marks ImprovEvolve as modular search
     inspiration and says LibreEvolve only emits static modular prompt guidance
-    with `operation_selected: static_modular_guidance` and false execution/
+    from `libreevolve/plugins/modular.py` with
+    `operation_selected: static_modular_guidance` and false execution/
     enforcement flags. Existing grouped inspiration TODOs cover the general
     approximation boundary, but there is no implemented source-specific code
     gate for `2602.10233`, no enforced `generate_config`/`improve`/`perturb` interface,

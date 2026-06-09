@@ -10656,3 +10656,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     normalized scanning remain unimplemented.
   - Verification: focused loop tests cover copied sentinel detection,
     disabled-example policy, and validator success.
+- [x] Validate paper-index implementation-status semantics, not only ids.
+  - Paper evidence: `papers/README.md` explicitly defines implementation
+    status cells as the paper-facing status source for background,
+    primary-specification, partial, limited, static-guidance, and unsupported
+    rows.
+  - Status: paper-manifest validation now goes beyond manifest-id coverage:
+    `_read_status_table_ids()` and `_validate_status_evidence_links()` enforce
+    table shape, role/status taxonomy, support-class boundaries, completed and
+    active evidence links, source-specific completed evidence, and status-cell
+    local artifact paths that must reappear in the row's linked TODO evidence.
+    README, ROADMAP, and `papers/README.md` describe that this proves
+    structural traceability and local-artifact claim linkage, not arbitrary
+    natural-language semantic proof.
+  - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
+    reports 123 passed.

@@ -3926,13 +3926,15 @@ shape, and checks that root README paper tables are either complete or
 explicitly labeled as a curated subset. Status-table validation covers the
 stable four-column header, four-cell rows, non-empty display-safe title, role,
 and status cells, the declared role taxonomy, allowed support/status class
-prefixes, and role/status compatibility. The same paper-index gate validates
-the TODO coverage cross-reference table's manifest-id coverage, exact row
-shape, active TODO ledger links, and completed-ledger links that point under
-`docs/todo/Completed/` and contain completed checklist evidence. These checks
-prove structural traceability, not full semantic proof for every long status
-phrase or benchmark-coverage qualifier. Symlink or Windows reparse-point backed
-local PDFs are rejected before byte/hash validation.
+prefixes, role/status compatibility, and local artifact paths named in status
+cells against the row's linked active or completed TODO evidence. The same
+paper-index gate validates the TODO coverage cross-reference table's manifest-id
+coverage, exact row shape, active TODO ledger links, and completed-ledger links
+that point under `docs/todo/Completed/` and contain completed checklist
+evidence. These checks prove structural traceability and local-artifact claim
+linkage, not arbitrary natural-language proof for every long status phrase or
+benchmark-coverage qualifier. Symlink or Windows reparse-point backed local PDFs
+are rejected before byte/hash validation.
 
 The tables below are a curated subset for README context. `papers/README.md` is
 the complete implementation-status index for all 24 manifest rows.

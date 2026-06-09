@@ -399,9 +399,10 @@ is not yet an AlphaEvolve reproduction.
 - Keep the paper-index validator boundary explicit: it currently proves
   manifest/readability/count checks, Appendix B and ablation registry shape,
   implementation-status table structure, role/status taxonomy compatibility,
-  TODO coverage row coverage, active ledger links, and completed-ledger
-  checklist evidence. It does not yet prove every long status phrase,
-  benchmark qualifier, or paper claim against a specific evidence record.
+  status-cell local-artifact links to active or completed TODO evidence, TODO
+  coverage row coverage, active ledger links, and completed-ledger checklist
+  evidence. It does not yet prove arbitrary natural-language semantics for
+  every long status phrase, benchmark qualifier, or paper claim.
 - Persisted validator-boundary consistency now has a CLI artifact gate:
   `validate_run_artifact_validator_boundary_consistency()` loads manifest-backed
   run directories, validates `policies.validator_execution`, scans

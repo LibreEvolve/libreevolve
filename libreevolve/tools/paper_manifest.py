@@ -1844,10 +1844,12 @@ def _validate_todo_coverage_table(
         )
         issues.extend(
             _validate_status_evidence_links(
+                root,
                 row_id,
                 active_cell,
                 completed_cell,
                 status_by_id.get(row_id),
+                (manifest_rows_by_id or {}).get(row_id),
             )
         )
     return issues
@@ -2036,10 +2038,12 @@ def _completed_todo_source_tokens(row_id: str, manifest_row: dict[str, Any] | No
 
 
 def _validate_status_evidence_links(
+    root: Path,
     row_id: str,
     active_cell: str,
     completed_cell: str,
     status: str | None,
+    manifest_row: dict[str, Any] | None = None,
 ) -> list[PaperManifestIssue]:
     row_label = _safe_manifest_label(row_id)
     active_paths = TODO_COVERAGE_PATH_RE.findall(active_cell)
@@ -2065,7 +2069,46 @@ def _validate_status_evidence_links(
                 row_label,
             )
         )
+    if status is not None:
+        status_artifact_paths = _status_local_artifact_paths(status)
+        if status_artifact_paths:
+            evidence_text = _status_evidence_text(root, row_id, active_paths + completed_paths, manifest_row)
+            missing_artifacts = sorted(path for path in status_artifact_paths if path not in evidence_text)
+            if missing_artifacts:
+                issues.append(
+                    PaperManifestIssue(
+                        "status_table_local_artifact_unlinked_evidence",
+                        "status local artifact paths must also appear in linked active or completed TODO evidence: "
+                        f"{[_safe_manifest_label(path) for path in missing_artifacts]}",
+                        row_label,
+                    )
+                )
     return issues
+
+
+def _status_local_artifact_paths(status: str) -> set[str]:
+    return {match.group(0).strip("`") for match in LOCAL_ARTIFACT_PATH_RE.finditer(status)}
+
+
+def _status_evidence_text(
+    root: Path,
+    row_id: str,
+    evidence_paths: list[str],
+    manifest_row: dict[str, Any] | None,
+) -> str:
+    source_tokens = _completed_todo_source_tokens(row_id, manifest_row)
+    evidence_blocks: list[str] = []
+    for relative_path in dict.fromkeys(evidence_paths):
+        path = root / relative_path
+        if not path.exists():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        evidence_blocks.extend(block for block in _open_todo_blocks(text) if any(token in block for token in source_tokens))
+        evidence_blocks.extend(block for block in _completed_todo_blocks(text) if any(token in block for token in source_tokens))
+    return "\n".join(evidence_blocks)
 
 
 def _status_table_status_cells(text: str) -> dict[str, str]:

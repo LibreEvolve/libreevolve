@@ -8159,3 +8159,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     detection, custom prompt-template inventories, and per-file-section
     normalized scanning remain open.
   - Verification: focused loop tests cover the report and validator.
+- [x] Keep implementation-status roadmap wording scoped until semantic cells
+      are validated.
+  - Spec evidence: the roadmap depends on `papers/README.md` as the
+    paper-facing status index for specification targets, background
+    influences, partially implemented surfaces, limited support, static
+    guidance, and unsupported paper claims.
+  - Status: ROADMAP now states that the paper-index validator proves
+    implementation-status table structure, role/status taxonomy compatibility,
+    status-cell local-artifact links to active or completed TODO evidence,
+    TODO coverage rows, active ledger links, and completed-ledger checklist
+    evidence. It still avoids claiming arbitrary natural-language semantic
+    proof for every status phrase, benchmark qualifier, or paper claim.
+  - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
+    reports 123 passed.

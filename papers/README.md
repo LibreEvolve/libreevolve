@@ -42,12 +42,14 @@ manifest IDs by the same validator. The validator treats the implementation-
 status table as a structured public claim surface: it requires the stable
 four-column header, exact four-cell rows, non-empty display-safe title, role,
 and status cells, the declared role taxonomy, allowed status class prefixes,
-and compatible role/status pairs. The TODO coverage cross-reference table is
-validated separately for manifest-id row coverage, exact row shape, active TODO
-ledger links, and completed-ledger links under `docs/todo/Completed/` that
-contain completed checklist evidence. These checks keep paper-index structure
-and backlog traceability honest, but they do not yet prove every long status
-phrase or benchmark qualifier against a specific implementation record.
+compatible role/status pairs, and local artifact paths named in status cells
+against the row's linked active or completed TODO evidence. The TODO coverage
+cross-reference table is validated separately for manifest-id row coverage,
+exact row shape, active TODO ledger links, and completed-ledger links under
+`docs/todo/Completed/` that contain completed checklist evidence. These checks
+keep paper-index structure, backlog traceability, and local-artifact claim
+linkage honest, but they do not yet prove arbitrary natural-language semantics
+for every long status phrase or benchmark qualifier.
 Symlink or Windows reparse-point backed PDF entries are rejected before
 byte/hash validation.
 The same validation command checks

@@ -110,7 +110,7 @@ def _write_active_todo_ledgers(root, row_id, *, paths=None):
         if relative_path in paths:
             path.write_text(
                 f"- [ ] Track source-specific gap for `{row_id}`.\n"
-                "  - Current gap: temporary test ledger entry.\n"
+                "  - Current gap: temporary test ledger entry for `libreevolve/core/loop.py`.\n"
                 "  - Required result: keep the temporary fixture source-specific.\n",
                 encoding="utf-8",
             )
@@ -125,7 +125,10 @@ def _active_todo_cell(*paths):
 def _write_completed_todo_ledger(root, path="docs/todo/Completed/code.md", row_id="2506.13131"):
     completed_path = root / path
     completed_path.parent.mkdir(parents=True, exist_ok=True)
-    completed_path.write_text(f"- [x] Completed fixture evidence for `{row_id}`.\n", encoding="utf-8")
+    completed_path.write_text(
+        f"- [x] Completed fixture evidence for `{row_id}` in `libreevolve/core/loop.py`.\n",
+        encoding="utf-8",
+    )
     return f"`{path}`"
 
 
@@ -2071,6 +2074,42 @@ def test_validate_paper_manifest_reports_missing_active_status_evidence(tmp_path
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "missing_active_status_evidence" in codes
+
+
+def test_validate_paper_manifest_reports_status_artifact_without_evidence_link(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"], paths={"docs/todo/code.md"})
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        f"- [ ] Track source-specific gap for `{row['id']}`.\n"
+        "  - Current gap: temporary test ledger entry without a cited artifact.\n"
+        "  - Required result: keep this fixture source-specific.\n",
+        encoding="utf-8",
+    )
+    completed_path = tmp_path / "docs" / "todo" / "Completed" / "code.md"
+    completed_path.parent.mkdir(parents=True, exist_ok=True)
+    completed_path.write_text(
+        f"- [x] Completed fixture evidence for `{row['id']}` without a cited artifact.\n",
+        encoding="utf-8",
+    )
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell("docs/todo/code.md"),
+                "`docs/todo/Completed/code.md`",
+            )
+        ],
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "status_table_local_artifact_unlinked_evidence" in codes
 
 
 def test_validate_paper_manifest_reports_active_todo_block_without_gap_context(tmp_path):

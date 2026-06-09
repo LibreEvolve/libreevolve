@@ -15849,3 +15849,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused loop tests cover copied sentinel detection,
     disabled-example policy, report validation, and unready hard-gate
     boundaries.
+- [x] Validate semantic cells in the paper implementation-status table.
+  - Spec evidence: `papers/README.md` makes the implementation-status table
+    the paper-facing authority for titles, roles, implementation status, and
+    benchmark coverage decisions because manifest titles are local display
+    slugs; this closes the `2506.13131` AlphaEvolve row's status-cell
+    evidence link for `libreevolve/core/loop.py`.
+  - Status: `libreevolve.tools.paper_manifest` now treats the implementation
+    status table as a structured public claim surface. It validates the
+    stable header, row shape, display-safe cells, role taxonomy, status-class
+    prefixes, role/status compatibility, contiguous table rows, status-class
+    boundary wording, local code/artifact paths for support claims, and local
+    artifact paths named in status cells against linked row-specific active or
+    completed TODO evidence. The new regression issue code is
+    `status_table_local_artifact_unlinked_evidence`.
+  - Verification: `py -3.12 -m pytest tests/test_paper_manifest.py -q`
+    reports 123 passed.

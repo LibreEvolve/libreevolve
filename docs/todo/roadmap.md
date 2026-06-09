@@ -2412,24 +2412,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     roadmap wording neither underclaims current registries/smoke fixtures nor
     overclaims AlphaEvolve-scale benchmark coverage.
 
-- [ ] Keep companion-source rights roadmap wording scoped until generated
-      artifact rights rows link to repository license/disclaimer metadata.
-  - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
-    Google LLC copyright, Apache 2.0 licensing for software, CC-BY 4.0
-    licensing for other materials, an as-is disclaimer, and a statement that
-    the repository is not an official Google product.
-  - Current evidence: roadmap/README/paper-index wording now cites the
-    companion-source contract and `papers/companion_sources.json`, including
-    Google LLC rights holder/year, Apache-2.0 software license, CC-BY-4.0
-    materials license, artifact-type license mapping, AS-IS disclaimer, and
-    non-official-product boundary. Generated LibreEvolve notebooks, copied
-    verifier code, figures, and construction-data exports still do not emit
-    reuse/reproduction policy rows linked to those source rights.
-  - Required result: when generated artifact rights rows land, update ROADMAP,
-    README, papers index, and code/paper TODOs so roadmap language separates
-    source-PDF rights, companion software/materials licensing, generated
-    LibreEvolve artifacts, and local ownership or endorsement boundaries.
-
 - [ ] Keep roadmap wording scoped until the follow-on AlphaEvolve math paper
       and repository are tracked.
   - Spec evidence: AlphaEvolve Section 3.2 says an upcoming paper would provide

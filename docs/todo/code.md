@@ -2471,24 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Add companion-result repository rights and disclaimer provenance.
-  - Spec evidence: the `google-deepmind/alphaevolve_results` README states
-    `Copyright 2025 Google LLC`, licenses software under Apache License 2.0,
-    licenses other materials under CC-BY 4.0, includes an as-is disclaimer, and
-    says the repository is not an official Google product.
-  - Current evidence: `libreevolve.alphaevolve_companion_colab_source.v1` and
-    `papers/companion_sources.json` validate the companion repository URL/ref,
-    Google LLC rights holder/year, Apache-2.0 software license, CC-BY-4.0
-    materials license, AS-IS disclaimer, non-official-product boundary, and
-    artifact-type license mapping. Local generated notebooks, copied verifier
-    code, figures, and construction-data exports still do not carry
-    reuse/reproduction policy records that link back to that source-rights
-    evidence.
-  - Required result: attach companion repository rights metadata to generated
-    artifact inventories and export reports, including allowed reuse/
-    reproduction policy and checks that separate copied/adapted companion
-    software or materials from cached PDF rights and LibreEvolve's MIT license.
-
 - [ ] Add follow-on AlphaEvolve math-scale paper/repository source tracking.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and method details for the constructive-math problems would be

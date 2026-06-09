@@ -4,6 +4,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document companion repository rights rows on generated artifacts.
+  - Spec evidence: the companion repository README declares Apache-2.0 software
+    licensing, CC-BY-4.0 materials licensing, AS-IS disclaimer, and
+    non-official-product status.
+  - Status: ROADMAP now documents companion artifact-rights rows on generated
+    matrix reports and inventories, including companion-source links, license
+    split, local-generated versus copied/adapted source relationships, source-
+    PDF rights separation, LibreEvolve MIT separation, AS-IS disclaimer,
+    non-official-product, and non-endorsement boundaries.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document companion notebook selection-scope provenance.
   - Spec evidence: the companion repository README limits
     `mathematical_results.ipynb` to outperformed-SOTA results, excludes

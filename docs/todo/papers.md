@@ -3298,25 +3298,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP/papers wording qualifies SOTA-priority claims when the
     paper records concurrent matching work.
 
-- [ ] Track companion-result repository rights and disclaimer evidence.
-  - Paper evidence: the `google-deepmind/alphaevolve_results` README states
-    `Copyright 2025 Google LLC`, licenses all software under Apache License
-    2.0, licenses all other materials under Creative Commons Attribution 4.0
-    International, includes an as-is warranty disclaimer, and says the
-    repository is not an official Google product.
-  - Current gap: `libreevolve.alphaevolve_companion_colab_source.v1` and
-    `papers/companion_sources.json` now validate the companion repository
-    URL/ref, rights holder/year, Apache-2.0 software license, CC-BY-4.0
-    materials license, AS-IS disclaimer, non-official-product disclaimer, and
-    artifact-type license mapping. Paper-facing generated notebooks,
-    verifier-code exports, construction data, figures, and other materials
-    still do not emit reuse/reproduction policy records linked to that
-    source-rights evidence.
-  - Required result: attach companion repository rights evidence to generated
-    paper artifacts and export inventories, including reuse/reproduction
-    policy and README/ROADMAP checks that separate companion repository rights
-    from source-PDF rights and LibreEvolve's repository license.
-
 - [ ] Track follow-on AlphaEvolve mathematical-discovery paper and repository.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says more
     examples and details on the mathematical construction problems and methods

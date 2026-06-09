@@ -3562,9 +3562,13 @@ selection-scope rows now distinguish improved-over-SOTA results included in the
 official notebook from matched-but-not-outperformed results intentionally absent
 from it, while preserving verifier-code availability and AlphaEvolve runtime-
 code absence. Matrix result/headline reports validate that scope for the
-`mm_4x4x4` companion claim. This is external DeepMind source evidence, not a
-LibreEvolve-generated Colab-equivalent notebook or local reproduced result
-export.
+`mm_4x4x4` companion claim. Companion artifact-rights rows now attach to
+generated matrix artifact reports and inventories, separating local generated
+artifacts from copied/adapted companion notebook code, verifier code, or
+construction data, with Apache-2.0 / CC-BY-4.0 / local-project reuse policy,
+AS-IS disclaimer, non-official-product, and non-endorsement boundaries. This is
+external DeepMind source evidence, not a LibreEvolve-generated Colab-equivalent
+notebook or local reproduced result export.
 Follow-on AlphaEvolve mathematical-discovery source evidence uses
 `libreevolve.alphaevolve_follow_on_math_source.v1` in
 `libreevolve/problems/benchmarks/follow_on_sources.py`; the built-in record
@@ -3613,9 +3617,11 @@ not render or emit those table artifacts during local runs yet.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a
-1.0 per-seed rank-hit fraction. This is a reproducible baseline artifact, not
-evidence that LibreEvolve has discovered or exported the full Appendix A target
-suite.
+1.0 per-seed rank-hit fraction. Each generated artifact carries a companion
+artifact-rights row that states no companion material was copied and keeps local
+project terms separate from companion repository terms. This is a reproducible
+baseline artifact, not evidence that LibreEvolve has discovered or exported
+the full Appendix A target suite.
 LibreEvolve still does not emit local Appendix A matrix scaling-frontier runs:
 larger target attempts, measured accelerator/GPU memory profiles, OOM or
 resource-exhaustion artifacts, reduced-seed tradeoffs, and target-exclusion

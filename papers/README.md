@@ -1309,8 +1309,12 @@ Implemented:
   improved-over-SOTA claims from matched-but-not-outperformed companion
   absences, preserve verifier-code availability and runtime-code absence, and
   are validated by matrix result/headline reports for the `mm_4x4x4` companion
-  claim. It is external source evidence, not a local generated notebook or
-  reproduced-result export.
+  claim. Companion artifact-rights rows attach to generated matrix artifact
+  reports and inventories, distinguishing local generated artifacts from
+  copied/adapted companion notebook code, verifier code, or construction data
+  with Apache-2.0 / CC-BY-4.0 / local-project reuse policy, AS-IS disclaimer,
+  non-official-product, and non-endorsement boundaries. It is external source
+  evidence, not a local generated notebook or reproduced-result export.
 - `libreevolve/problems/benchmarks/follow_on_sources.py`: follow-on
   AlphaEvolve mathematical-discovery source contract. It validates arXiv
   `2511.02864v3`, `Mathematical exploration and discovery at scale`, the

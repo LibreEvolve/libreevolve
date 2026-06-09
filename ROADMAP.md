@@ -608,8 +608,13 @@ is not yet an AlphaEvolve reproduction.
   improved-over-SOTA results from matched-but-not-outperformed companion
   absences while preserving verifier-code availability and AlphaEvolve runtime-
   code absence; matrix result/headline reports validate that scope for the
-  `mm_4x4x4` companion claim. Local generated LibreEvolve Colab-equivalent
-  exports and deeper per-cell claim spans remain open.
+  `mm_4x4x4` companion claim. Companion artifact-rights rows now attach to
+  generated matrix artifact reports and inventories, separating local generated
+  artifacts from copied/adapted companion notebook code, verifier code, or
+  construction data with Apache-2.0 / CC-BY-4.0 / local-project reuse policy,
+  AS-IS disclaimer, non-official-product, and non-endorsement boundaries. Local
+  generated LibreEvolve Colab-equivalent exports and deeper per-cell claim
+  spans remain open.
 - Keep follow-on AlphaEvolve mathematical-discovery sources separate from the
   original `2506.13131` specification: `libreevolve.alphaevolve_follow_on_math_source.v1`
   now validates arXiv `2511.02864v3`, the 2025-12-22 revision date, the

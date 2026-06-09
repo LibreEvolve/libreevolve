@@ -4,6 +4,17 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document companion repository rights rows on generated artifacts.
+  - Spec evidence: the companion repository README declares Apache-2.0 software
+    licensing, CC-BY-4.0 materials licensing, AS-IS disclaimer, and
+    non-official-product status.
+  - Status: README now documents companion artifact-rights rows on generated
+    matrix reports and inventories, including companion-source links, license
+    split, local-generated versus copied/adapted source relationships, source-
+    PDF rights separation, LibreEvolve MIT separation, AS-IS disclaimer,
+    non-official-product, and non-endorsement boundaries.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document companion notebook selection-scope provenance.
   - Spec evidence: the companion repository README limits
     `mathematical_results.ipynb` to outperformed-SOTA results, excludes

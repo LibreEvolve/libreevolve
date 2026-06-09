@@ -14,6 +14,9 @@ ALPHAEVOLVE_COMPANION_SOURCE_MANIFEST_SCHEMA = (
 ALPHAEVOLVE_COMPANION_SELECTION_SCOPE_SCHEMA = (
     "libreevolve.alphaevolve_companion_selection_scope.v1"
 )
+ALPHAEVOLVE_COMPANION_ARTIFACT_RIGHTS_SCHEMA = (
+    "libreevolve.alphaevolve_companion_artifact_rights.v1"
+)
 EXPECTED_COMPANION_SOURCE_MANIFEST_FILE = "papers/companion_sources.json"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REPOSITORY_URL = "https://github.com/google-deepmind/alphaevolve_results"
@@ -61,6 +64,30 @@ PAPER_RESULT_RELATIONS = frozenset(
 ABSENCE_REASONS = frozenset(
     {"matched_but_not_outperformed_excluded_to_avoid_clutter"}
 )
+COMPANION_ARTIFACT_MATERIAL_TYPES = frozenset(
+    {
+        "notebook_code",
+        "verification_code",
+        "construction_data",
+        "readme_text",
+        "local_generated_no_companion_material",
+    }
+)
+COMPANION_ARTIFACT_SOURCE_RELATIONSHIPS = frozenset(
+    {
+        "copied_from_companion_repository",
+        "adapted_from_companion_repository",
+        "references_companion_repository_only",
+        "local_generated_no_companion_material_copied",
+    }
+)
+COMPANION_RIGHTS_LICENSE_BY_MATERIAL_TYPE = {
+    "notebook_code": "Apache-2.0",
+    "verification_code": "Apache-2.0",
+    "construction_data": "CC-BY-4.0",
+    "readme_text": "CC-BY-4.0",
+    "local_generated_no_companion_material": "LibreEvolve-local",
+}
 
 
 @dataclass(frozen=True)
@@ -240,6 +267,40 @@ def alphaevolve_companion_selection_scope_record(
     }
 
 
+def alphaevolve_companion_artifact_rights_record(
+    artifact_kind: str,
+    *,
+    material_type: str = "local_generated_no_companion_material",
+    source_relationship: str = "local_generated_no_companion_material_copied",
+) -> dict[str, Any]:
+    expected_license = COMPANION_RIGHTS_LICENSE_BY_MATERIAL_TYPE.get(
+        material_type,
+        "unknown",
+    )
+    return {
+        "schema": ALPHAEVOLVE_COMPANION_ARTIFACT_RIGHTS_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "source_manifest": EXPECTED_COMPANION_SOURCE_MANIFEST_FILE,
+        "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+        "artifact_kind": artifact_kind,
+        "material_type": material_type,
+        "source_relationship": source_relationship,
+        "license": expected_license,
+        "rights_holder": "Google LLC" if material_type != "local_generated_no_companion_material" else None,
+        "source_rights_holder_required": material_type != "local_generated_no_companion_material",
+        "reuse_policy": (
+            "companion_source_terms_apply"
+            if material_type != "local_generated_no_companion_material"
+            else "local_project_terms_apply_no_companion_material_copied"
+        ),
+        "must_keep_source_pdf_rights_separate": True,
+        "must_keep_libreevolve_mit_license_separate": True,
+        "as_is_disclaimer_applies": material_type != "local_generated_no_companion_material",
+        "official_google_product": False,
+        "local_project_endorsement": False,
+    }
+
+
 def validate_alphaevolve_companion_colab_source(
     recordset: object | str | Path | None = None,
 ) -> AlphaEvolveCompanionColabValidation:
@@ -273,6 +334,174 @@ def validate_alphaevolve_companion_colab_source(
         artifact_count=1 if isinstance(data.get("notebook"), dict) else 0,
         claim_mapping_count=claim_count,
         local_cache_available=local_cache_available,
+        issues=issues,
+    )
+
+
+def validate_alphaevolve_companion_artifact_rights(
+    recordset: object | str | Path | None = None,
+) -> AlphaEvolveCompanionColabValidation:
+    data, read_issues = _load_artifact_rights_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveCompanionColabValidation(False, 0, 0, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveCompanionColabIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_COMPANION_ARTIFACT_RIGHTS_SCHEMA:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_artifact_rights_schema",
+                "unsupported AlphaEvolve companion artifact-rights schema",
+            )
+        )
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_paper_id",
+                "source_paper_id must be 2506.13131",
+            )
+        )
+    if data.get("source_manifest") != EXPECTED_COMPANION_SOURCE_MANIFEST_FILE:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_manifest",
+                "source_manifest must point to papers/companion_sources.json",
+            )
+        )
+    if data.get("companion_source_id") != "alphaevolve_results_mathematical_results_colab":
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_companion_source_id",
+                "companion_source_id must identify the official mathematical_results Colab",
+            )
+        )
+    artifact_kind = data.get("artifact_kind")
+    if not isinstance(artifact_kind, str) or not artifact_kind.strip():
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_artifact_kind",
+                "artifact_kind must identify the generated artifact kind",
+            )
+        )
+    material_type = data.get("material_type")
+    if material_type not in COMPANION_ARTIFACT_MATERIAL_TYPES:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_material_type",
+                "material_type must identify companion software/materials or local-generated scope",
+            )
+        )
+        material_type = None
+    relationship = data.get("source_relationship")
+    if relationship not in COMPANION_ARTIFACT_SOURCE_RELATIONSHIPS:
+        issues.append(
+            AlphaEvolveCompanionColabIssue(
+                "invalid_source_relationship",
+                "source_relationship must describe copied/adapted/reference/local scope",
+            )
+        )
+    if material_type is not None:
+        expected_license = COMPANION_RIGHTS_LICENSE_BY_MATERIAL_TYPE[material_type]
+        if data.get("license") != expected_license:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    "invalid_material_license",
+                    "license must match the companion repository material type",
+                )
+            )
+        is_local = material_type == "local_generated_no_companion_material"
+        if is_local:
+            if relationship != "local_generated_no_companion_material_copied":
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_local_source_relationship",
+                        "local generated artifacts must not claim copied companion material",
+                    )
+                )
+            if data.get("rights_holder") is not None:
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "local_rights_holder_overclaim",
+                        "local generated artifacts must not claim Google rights holder",
+                    )
+                )
+            if data.get("as_is_disclaimer_applies") is not False:
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "local_disclaimer_overclaim",
+                        "local generated artifacts must not apply the companion AS-IS disclaimer",
+                    )
+                )
+            if data.get("reuse_policy") != "local_project_terms_apply_no_companion_material_copied":
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_local_reuse_policy",
+                        "local generated artifacts must preserve local-project reuse scope",
+                    )
+                )
+        else:
+            if relationship not in {
+                "copied_from_companion_repository",
+                "adapted_from_companion_repository",
+                "references_companion_repository_only",
+            }:
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_companion_source_relationship",
+                        "companion material artifacts must identify copied, adapted, or reference-only scope",
+                    )
+                )
+            if data.get("rights_holder") != "Google LLC":
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_rights_holder",
+                        "companion material artifacts must preserve Google LLC rights holder",
+                    )
+                )
+            if data.get("source_rights_holder_required") is not True:
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_source_rights_holder_required",
+                        "companion material artifacts must require source rights holder attribution",
+                    )
+                )
+            if data.get("as_is_disclaimer_applies") is not True:
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "missing_as_is_disclaimer",
+                        "companion material artifacts must preserve the AS-IS disclaimer boundary",
+                    )
+                )
+            if data.get("reuse_policy") != "companion_source_terms_apply":
+                issues.append(
+                    AlphaEvolveCompanionColabIssue(
+                        "invalid_companion_reuse_policy",
+                        "companion material artifacts must preserve companion-source reuse terms",
+                    )
+                )
+    for field in (
+        "must_keep_source_pdf_rights_separate",
+        "must_keep_libreevolve_mit_license_separate",
+    ):
+        if data.get(field) is not True:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    f"invalid_{field}",
+                    f"{field} must be true for generated artifact rights rows",
+                )
+            )
+    for field in ("official_google_product", "local_project_endorsement"):
+        if data.get(field) is not False:
+            issues.append(
+                AlphaEvolveCompanionColabIssue(
+                    f"invalid_{field}",
+                    f"{field} must preserve the non-official/non-endorsement boundary",
+                )
+            )
+    return AlphaEvolveCompanionColabValidation(
+        ok=not issues,
+        artifact_count=1 if isinstance(artifact_kind, str) and artifact_kind.strip() else 0,
+        claim_mapping_count=0,
+        local_cache_available=False,
         issues=issues,
     )
 
@@ -506,6 +735,14 @@ def _load_selection_recordset(
         return alphaevolve_companion_selection_scope_record(
             "appendix_a_matrix_improved_decompositions"
         ), []
+    return _load_recordset(recordset)
+
+
+def _load_artifact_rights_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveCompanionColabIssue]]:
+    if recordset is None:
+        return alphaevolve_companion_artifact_rights_record("notebook"), []
     return _load_recordset(recordset)
 
 

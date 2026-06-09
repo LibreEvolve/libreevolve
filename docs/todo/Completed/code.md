@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add companion-result repository rights and disclaimer provenance.
+  - Spec evidence: the `google-deepmind/alphaevolve_results` README declares
+    Google LLC copyright, Apache-2.0 software licensing, CC-BY-4.0 materials
+    licensing, an AS-IS disclaimer, and non-official-product status.
+  - Status: `libreevolve.alphaevolve_companion_artifact_rights.v1` now records
+    generated-artifact rights rows linked to `papers/companion_sources.json`,
+    distinguishing local generated artifacts from copied/adapted companion
+    notebook code, verifier code, construction data, or README text. Matrix
+    report artifacts and generated artifact inventories validate license,
+    rights-holder, reuse-policy, source-PDF separation, MIT-license separation,
+    AS-IS disclaimer, non-official-product, and non-endorsement boundaries.
+  - Remaining gap: none for this bounded matrix artifact-rights report slice;
+    future non-matrix export surfaces must attach the same schema when those
+    exports are implemented.
+
 - [x] Add companion-result notebook selection-scope provenance.
   - Spec evidence: the `google-deepmind/alphaevolve_results` README says
     `mathematical_results.ipynb` includes only results where AlphaEvolve
@@ -16,8 +31,8 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     result/headline report validation requires this scope for the `mm_4x4x4`
     companion claim and rejects runtime-code or absence overclaims.
   - Remaining gap: none for this bounded selection-scope report-contract
-    slice; generated artifact rights rows and deeper claim-to-cell spans remain
-    active TODOs.
+    slice; broader non-matrix export surfaces and deeper claim-to-cell spans
+    remain active TODOs.
 
 - [x] Emit companion Colab/source-artifact records from paper-artifact workflows.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` says the discovered

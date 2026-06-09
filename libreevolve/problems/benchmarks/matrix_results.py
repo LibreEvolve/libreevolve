@@ -13,7 +13,9 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     matrix_target_by_id,
 )
 from libreevolve.problems.benchmarks.companion_sources import (
+    alphaevolve_companion_artifact_rights_record,
     validate_alphaevolve_companion_selection_scope,
+    validate_alphaevolve_companion_artifact_rights,
 )
 
 
@@ -759,18 +761,27 @@ def write_strassen_2x2_publication_bundle(
                 "path": "matrix/mm_2x2x2/algorithm.json",
                 "sha256": algorithm_sha,
                 "bytes": algorithm_bytes,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "algorithm"
+                ),
             },
             {
                 "kind": "certificate",
                 "path": "matrix/mm_2x2x2/certificate.json",
                 "sha256": certificate_sha,
                 "bytes": certificate_bytes,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "certificate"
+                ),
             },
             {
                 "kind": "notebook",
                 "path": "matrix/mm_2x2x2/reproduce.ipynb",
                 "sha256": notebook_sha,
                 "bytes": notebook_bytes,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "notebook"
+                ),
             },
         ],
     }
@@ -1935,6 +1946,26 @@ def _validate_matrix_publication_inventory(
                 "inventory verified_count must equal artifact_count",
             )
         )
+    for artifact in artifacts:
+        if not isinstance(artifact, dict):
+            continue
+        rights = artifact.get("source_rights")
+        if not isinstance(rights, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "inventory_artifact_source_rights_missing",
+                    "inventory artifact records must include source_rights",
+                )
+            )
+            continue
+        rights_report = validate_alphaevolve_companion_artifact_rights(rights)
+        issues.extend(
+            MatrixResultIssue(
+                f"inventory_artifact_source_rights_{issue.code}",
+                issue.message,
+            )
+            for issue in rights_report.issues
+        )
     for field in ("missing_count", "mismatch_count", "invalid_count"):
         if inventory.get(field) != 0:
             issues.append(
@@ -1974,14 +2005,27 @@ def _matrix_artifact_inventory_record(artifact: object, root: Path) -> dict[str,
     path = artifact.get("path")
     expected_sha = artifact.get("sha256")
     expected_bytes = artifact.get("bytes")
+    rights = artifact.get("source_rights")
     record: dict[str, Any] = {
         "kind": kind if isinstance(kind, str) else "unknown",
         "path": path if isinstance(path, str) else "",
         "expected_sha256": expected_sha if isinstance(expected_sha, str) else "",
         "expected_bytes": expected_bytes if isinstance(expected_bytes, int) and not isinstance(expected_bytes, bool) else None,
+        "source_rights": rights if isinstance(rights, dict) else None,
         "status": "verified",
         "issues": [],
     }
+    if not isinstance(rights, dict):
+        record["status"] = "invalid_artifact"
+        record["issues"].append("source_rights_missing")
+    else:
+        rights_report = validate_alphaevolve_companion_artifact_rights(rights)
+        if not rights_report.ok:
+            record["status"] = "invalid_artifact"
+            record["issues"].extend(
+                f"source_rights_{issue.code}"
+                for issue in rights_report.issues
+            )
     path_obj = Path(path) if isinstance(path, str) else None
     if (
         path_obj is None
@@ -2171,6 +2215,23 @@ def _validate_artifacts(value: object, issues: list[MatrixResultIssue]) -> set[s
         if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
             issues.append(MatrixResultIssue("invalid_artifact_hash", "artifact sha256 must be a lowercase SHA-256 hex digest"))
         _positive_int(artifact.get("bytes"), "artifact_bytes", issues)
+        rights = artifact.get("source_rights")
+        if not isinstance(rights, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "artifact_source_rights_missing",
+                    "artifact source_rights must be a companion artifact-rights object",
+                )
+            )
+        else:
+            rights_report = validate_alphaevolve_companion_artifact_rights(rights)
+            issues.extend(
+                MatrixResultIssue(
+                    f"artifact_source_rights_{issue.code}",
+                    issue.message,
+                )
+                for issue in rights_report.issues
+            )
     return kinds
 
 

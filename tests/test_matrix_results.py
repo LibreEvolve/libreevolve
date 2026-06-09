@@ -4,6 +4,7 @@ import json
 import pytest
 
 from libreevolve.problems.benchmarks.companion_sources import (
+    alphaevolve_companion_artifact_rights_record,
     alphaevolve_companion_selection_scope_record,
 )
 from libreevolve.problems.benchmarks.matrix_results import (
@@ -62,18 +63,29 @@ def _valid_report() -> dict:
                 "path": "matrix/mm_4x4x4/algorithm.json",
                 "sha256": "b" * 64,
                 "bytes": 4096,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "algorithm"
+                ),
             },
             {
                 "kind": "certificate",
                 "path": "matrix/mm_4x4x4/certificate.json",
                 "sha256": "a" * 64,
                 "bytes": 2048,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "certificate",
+                    material_type="verification_code",
+                    source_relationship="adapted_from_companion_repository",
+                ),
             },
             {
                 "kind": "notebook",
                 "path": "matrix/mm_4x4x4/reproduce.ipynb",
                 "sha256": "c" * 64,
                 "bytes": 8192,
+                "source_rights": alphaevolve_companion_artifact_rights_record(
+                    "notebook"
+                ),
             },
         ],
         "companion_selection_scope": alphaevolve_companion_selection_scope_record(
@@ -134,6 +146,7 @@ def test_matrix_result_artifact_inventory_verifies_declared_files(tmp_path):
         "verified"
     }
     assert all("actual_sha256" in artifact for artifact in inventory["artifacts"])
+    assert all("source_rights" in artifact for artifact in inventory["artifacts"])
 
 
 def test_matrix_result_artifact_inventory_reports_missing_mismatch_and_unsafe_paths(tmp_path):
@@ -304,6 +317,7 @@ def test_matrix_result_report_requires_safe_hashed_artifacts_and_verified_certif
     assert "invalid_artifact_path" in codes
     assert "invalid_artifact_hash" in codes
     assert "invalid_artifact_bytes" in codes
+    assert "artifact_source_rights_missing" in codes
 
     report["artifacts"][0]["path"] = "../secret.json"
     validation = validate_matrix_result_report(report)
@@ -389,6 +403,25 @@ def test_strassen_2x2_publication_bundle_validator_rejects_tampering(tmp_path):
     assert "inventory_not_ok" in codes
     assert "inventory_missing_count_mismatch" in codes
     assert "inventory_missing_count_nonzero" in codes
+
+
+def test_matrix_publication_bundle_rejects_inventory_source_rights_drift(tmp_path):
+    bundle = write_strassen_2x2_publication_bundle(tmp_path, seeds=(7, 11, 13))
+    bundle["inventory"]["artifacts"][0]["source_rights"]["license"] = "MIT"
+    records_payload = json.dumps(
+        bundle["inventory"]["artifacts"],
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    bundle["inventory"]["records_sha256"] = hashlib.sha256(
+        records_payload.encode("utf-8")
+    ).hexdigest()
+
+    validation = validate_matrix_publication_bundle(bundle)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "inventory_artifact_source_rights_invalid_material_license" in codes
 
 
 def test_strassen_2x2_publication_bundle_rejects_bad_seed_list(tmp_path):

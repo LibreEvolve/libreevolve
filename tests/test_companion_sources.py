@@ -2,9 +2,11 @@ import json
 
 from libreevolve.problems.benchmarks.companion_sources import (
     ALPHAEVOLVE_COMPANION_COLAB_SCHEMA,
+    alphaevolve_companion_artifact_rights_record,
     alphaevolve_companion_colab_source_record,
     alphaevolve_companion_selection_scope_record,
     alphaevolve_companion_source_manifest_record,
+    validate_alphaevolve_companion_artifact_rights,
     render_alphaevolve_companion_colab_source_summary,
     validate_alphaevolve_companion_colab_source,
     validate_alphaevolve_companion_selection_scope,
@@ -113,6 +115,54 @@ def test_validate_alphaevolve_companion_selection_scope_rejects_overclaims():
     assert "unexpected_absence_reason" in codes
     assert "runtime_code_overclaim" in codes
     assert "invalid_selection_policy_inclusion_rule" in codes
+
+
+def test_validate_alphaevolve_companion_artifact_rights_accepts_local_generated_artifact():
+    recordset = alphaevolve_companion_artifact_rights_record("notebook")
+
+    validation = validate_alphaevolve_companion_artifact_rights(recordset)
+
+    assert validation.ok is True
+    assert validation.artifact_count == 1
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_companion_artifact_rights_accepts_companion_material():
+    recordset = alphaevolve_companion_artifact_rights_record(
+        "certificate",
+        material_type="verification_code",
+        source_relationship="adapted_from_companion_repository",
+    )
+
+    validation = validate_alphaevolve_companion_artifact_rights(recordset)
+
+    assert validation.ok is True
+    assert recordset["license"] == "Apache-2.0"
+    assert recordset["rights_holder"] == "Google LLC"
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_companion_artifact_rights_rejects_license_and_boundary_drift():
+    recordset = alphaevolve_companion_artifact_rights_record(
+        "construction_data",
+        material_type="construction_data",
+        source_relationship="copied_from_companion_repository",
+    )
+    recordset["license"] = "MIT"
+    recordset["rights_holder"] = "LibreEvolve"
+    recordset["as_is_disclaimer_applies"] = False
+    recordset["must_keep_source_pdf_rights_separate"] = False
+    recordset["official_google_product"] = True
+
+    validation = validate_alphaevolve_companion_artifact_rights(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_material_license" in codes
+    assert "invalid_rights_holder" in codes
+    assert "missing_as_is_disclaimer" in codes
+    assert "invalid_must_keep_source_pdf_rights_separate" in codes
+    assert "invalid_official_google_product" in codes
 
 
 def test_validate_alphaevolve_companion_colab_source_rejects_repository_and_digest_drift():

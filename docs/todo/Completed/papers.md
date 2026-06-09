@@ -6,6 +6,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track companion-result repository rights and disclaimer evidence.
+  - Paper evidence: the `google-deepmind/alphaevolve_results` README declares
+    Google LLC copyright, Apache-2.0 software licensing, CC-BY-4.0 materials
+    licensing, an AS-IS warranty disclaimer, and non-official-product status.
+  - Status: companion artifact-rights records now attach source-rights
+    metadata to generated matrix report artifacts and inventories, preserving
+    companion repository source links, software/materials license split, source
+    rights holder, reuse policy, source-PDF rights separation, LibreEvolve MIT
+    separation, AS-IS disclaimer, non-official-product, and non-endorsement
+    boundaries.
+  - Remaining gap: none for this bounded paper-facing matrix artifact-rights
+    slice; broader generated export surfaces remain separate future work.
+
 - [x] Track companion-result notebook selection scope and absences.
   - Paper evidence: the `google-deepmind/alphaevolve_results` README says
     `mathematical_results.ipynb` contains mathematical discoveries and

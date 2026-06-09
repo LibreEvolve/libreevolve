@@ -115,6 +115,31 @@ def _valid_report() -> dict:
             },
         ],
     }
+    report["claim_calibration"] = {
+        "boundary_statement": (
+            "Finite local gate metrics are separate from AlphaEvolve Section 3.3 "
+            "result magnitudes unless calibrated here."
+        ),
+        "records": [
+            {
+                "claim_id": "flashattention_ir_micro_kernel_speedup",
+                "domain": "kernel",
+                "claim_kind": "kernel_speedup",
+                "gate_name": "optimization",
+                "metric_name": "speedup",
+                "reported_value": 1.2,
+                "unit": "speedup ratio",
+                "baseline_label": "local baseline kernel",
+                "denominator": "held shape corpus",
+                "comparison_window": "single benchmark window",
+                "aggregation_method": "arithmetic mean over shapes",
+                "runtime_context": "local microbenchmark runtime",
+                "claim_scope": "local kernel speedup smoke claim",
+                "source_ref": "AlphaEvolve Section 3.3 systems-result pattern",
+                "artifact_refs": ["systems/flashattention/optimization-metrics.json"],
+            }
+        ],
+    }
     return report
 
 
@@ -324,6 +349,36 @@ def test_ready_report_rejects_contradictory_certification_reference():
     assert "invalid_ready_certification" in codes
 
 
+def test_ready_report_requires_claim_calibration():
+    report = _valid_report()
+    report.pop("claim_calibration")
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "missing_claim_calibration" in codes
+    assert "invalid_ready_claim_calibration" in codes
+
+
+def test_claim_calibration_requires_metric_context_and_artifacts():
+    report = _valid_report()
+    record = report["claim_calibration"]["records"][0]
+    record["metric_name"] = "not_a_metric"
+    record["artifact_refs"] = ["systems/flashattention/missing.json"]
+    record["unit"] = ""
+
+    validation = validate_systems_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.alphaevolve_ready is False
+    assert "invalid_claim_metric" in codes
+    assert "invalid_claim_artifact_ref" in codes
+    assert "invalid_claim_unit" in codes
+
+
 def test_ready_report_requires_application_owner_reviewer_provenance():
     report = _valid_report()
     report.pop("application_provenance")
@@ -361,6 +416,7 @@ def test_non_ready_report_can_reference_pending_certification():
     report["gates"][1]["status"] = "failed"
     report["certification"]["paper_claim_ready"] = False
     report.pop("application_provenance")
+    report.pop("claim_calibration")
 
     validation = validate_systems_result_report(report)
 
@@ -372,6 +428,8 @@ def test_not_applicable_gate_requires_rationale_but_can_be_ready():
     report = _valid_report()
     report["domain"] = "scheduling"
     for record in report["application_provenance"]["records"]:
+        record["domain"] = "scheduling"
+    for record in report["claim_calibration"]["records"]:
         record["domain"] = "scheduling"
     report["gates"][2] = {
         "name": "reference_correctness",
@@ -418,6 +476,7 @@ def test_systems_result_summary_renders_gates_and_readiness():
     assert "Systems result report: flashattention_ir_micro" in summary
     assert "| schema_status | ok |" in summary
     assert "| alphaevolve_ready | yes |" in summary
+    assert "| claim_calibration_records | 1 |" in summary
     assert "| application_provenance_records | 4 |" in summary
     assert "optimization=passed" in summary
     assert "heldout=passed" in summary

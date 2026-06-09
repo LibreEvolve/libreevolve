@@ -3492,24 +3492,27 @@ separate optimization, held-out, and reference-correctness gates with case-set
 hashes, sample counts/seeds, finite metrics, artifacts matching passed gate
 kinds, explicit rationale when a gate is not applicable, and optional
 certification links that cannot contradict `alphaevolve_ready` claims.
-`alphaevolve_ready` systems reports also require `application_provenance`
-records for application co-leads or domain advisors, domain reviewers,
-validation-infrastructure or data owners, production approvers,
-review/signoff scope, artifact references, approval or deployment state, and a
-boundary statement separating local benchmark evidence from domain-owner
-validated production claims. It is a readiness/report schema only, not a
-compiler, kernel, scheduling, or deployment benchmark implementation.
+`alphaevolve_ready` systems reports also require `claim_calibration` records
+that map finite gate metrics to published-style claim ids with metric names,
+units, baselines, denominators, comparison windows, aggregation methods,
+runtime/deployment/synthesis context, artifact references, and source refs.
+They also require `application_provenance` records for application co-leads or
+domain advisors, domain reviewers, validation-infrastructure or data owners,
+production approvers, review/signoff scope, artifact references, approval or
+deployment state, and a boundary statement separating local benchmark evidence
+from domain-owner validated production claims. It is a readiness/report schema
+only, not a compiler, kernel, scheduling, or deployment benchmark
+implementation.
 Scheduling reports also still need
 domain-specific evidence for mission-critical deployment suitability, such as
 interpretable heuristic structure, debuggability/operator review,
 predictability checks, rollout-risk evidence, and comparison against less
 interpretable learned-policy baselines.
-The generic finite-metrics requirement is also not a calibrated
-result-claim schema: reports do not yet require metric units, denominators,
-baselines, aggregation windows, runtime/deployment/synthesis context, or
-explicit mapping to AlphaEvolve Section 3.3 magnitudes such as resource
-recovery percentages, kernel speedups, training-time reductions, RTL PPA
-deltas, or compiler pre/postprocessing speedups. Compiler-IR reports also do
+The claim-calibration schema still does not create real scheduling, kernel,
+hardware, or compiler fixtures, nor does it populate calibrated evidence for
+AlphaEvolve Section 3.3 magnitudes such as resource recovery percentages,
+kernel speedups, training-time reductions, RTL PPA deltas, or compiler
+pre/postprocessing speedups. Compiler-IR reports also do
 not yet identify XLA-IR origin, debugging-only versus direct-editing
 boundaries, or compiler-generated/already-optimized baseline provenance.
 Hardware reports also do not yet identify RTL-stage workflow placement,

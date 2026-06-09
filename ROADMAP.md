@@ -600,16 +600,16 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.systems_result_report.v1`, with separate optimization,
   held-out/generalization, and reference-correctness gates plus artifacts that
   distinguish loop feedback from generalization, deployment, or independent
-  certification evidence, and with `application_provenance` records that link
-  ready practical claims to application owners/advisors, domain reviewers,
-  validation or data owners, production approvers, approval state, artifact
-  references, and local-benchmark-versus-production boundary text.
-- Add claim-calibrated metric records for systems reports before treating
-  finite metrics as reproduced AlphaEvolve Section 3.3 result magnitudes:
-  metric units, denominators, baselines, aggregation windows, deployment or
-  runtime/synthesis context, and explicit mapping to scheduling resource
-  recovery, kernel/training-time speedups, RTL PPA deltas, and compiler
-  kernel/pre/postprocessing speedups.
+  certification evidence. Ready reports require `claim_calibration` records
+  that map finite metrics to Section 3.3-style claim ids with units,
+  denominators, baselines, aggregation windows, deployment/runtime/synthesis
+  context, and explicit metric/artifact/source refs, plus
+  `application_provenance` records that link ready practical claims to
+  application owners/advisors, domain reviewers, validation or data owners,
+  production approvers, approval state, artifact references, and
+  local-benchmark-versus-production boundary text. Real scheduling resource
+  recovery, kernel/training-time speedup, RTL PPA, and compiler speedup
+  fixtures still need to populate those records.
 - Add hardware-adoption evidence for TPU RTL-style reports before claiming
   Section 3.3.3 parity: RTL-stage workflow placement, standard-Verilog
   trust/adoption rationale, upcoming-chip integration, and time-to-market

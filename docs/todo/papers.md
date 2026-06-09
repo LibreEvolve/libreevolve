@@ -4058,21 +4058,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     Gemini/Pallas section also reports reducing kernel optimization time from
     several months of dedicated engineering effort to days of automated
     experimentation, plus deployment and research/engineering-velocity impact.
-  - Current gap: current paper/status wording and
-    `libreevolve.systems_result_report.v1` can require finite metrics, case
-    hashes, artifacts, and domain readiness evidence, but they do not require
-    paper-facing records that identify which finite metric is the published
-    claim, what unit and denominator it uses, which baseline and before/after
-    window it compares against, how repeated measurements are aggregated, or
-    what deployment/runtime/synthesis context makes the value comparable to
-    the AlphaEvolve claim.
-  - Required result: add paper-facing claim calibration records for systems
-    results before treating finite metrics as reproduced Section 3.3 outcomes:
-    scheduling resource-recovery denominator/window; kernel speedup and
-    training-time reduction baseline/runtime/shape-split aggregation; RTL
+  - Current gap: `libreevolve.systems_result_report.v1` now requires
+    `claim_calibration` before accepting `alphaevolve_ready` systems claims.
+    It validates paper-facing records that identify which finite metric is the
+    published-style claim, what unit and denominator it uses, which baseline and
+    before/after window it compares against, how repeated measurements are
+    aggregated, and what deployment/runtime/synthesis context makes the value
+    comparable to the AlphaEvolve claim. Existing fixtures still lack real
+    populated calibrated systems-result records and paper-facing certification
+    examples.
+  - Required result: populate paper-facing claim calibration records for
+    systems results before treating finite metrics as reproduced Section 3.3
+    outcomes: scheduling resource-recovery denominator/window; kernel speedup
+    and training-time reduction baseline/runtime/shape-split aggregation; RTL
     power/area/PPA units and synthesis flow; and compiler kernel versus
     pre/postprocessing speedup attribution with randomized-reference and
-    tolerance provenance. Also capture paper-facing engineering-effort and
+    tolerance provenance. Also capture engineering-effort and
     deployment-velocity calibration for kernel claims, including manual-tuning
     baseline duration, automated-experiment duration, workflow affected, and
     production adoption status.

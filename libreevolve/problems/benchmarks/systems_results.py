@@ -34,6 +34,17 @@ APPLICATION_PROVENANCE_ROLES = frozenset(
 APPLICATION_APPROVAL_STATES = frozenset(
     {"pending", "reviewed", "approved", "deployed", "not_applicable"}
 )
+CLAIM_CALIBRATION_KINDS = frozenset(
+    {
+        "scheduling_resource_recovery",
+        "kernel_speedup",
+        "training_time_reduction",
+        "hardware_power_area",
+        "compiler_kernel_speedup",
+        "compiler_prepost_speedup",
+        "engineering_effort_turnaround",
+    }
+)
 _ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
@@ -80,6 +91,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         domain = None
     gate_statuses = _validate_gates(data.get("gates"), issues)
     artifact_kinds = _validate_artifacts(data.get("artifacts"), issues)
+    claim_calibration_ready = _validate_claim_calibration(
+        data.get("claim_calibration"),
+        data,
+        domain,
+        data.get("alphaevolve_ready") is True,
+        issues,
+    )
     application_ready = _validate_application_provenance(
         data.get("application_provenance"),
         data,
@@ -97,6 +115,13 @@ def validate_systems_result_report(report: object | str | Path) -> SystemsResult
         )
     if data.get("alphaevolve_ready") is True:
         _validate_ready_gate_artifacts(gate_statuses, artifact_kinds, issues)
+        if not claim_calibration_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_ready_claim_calibration",
+                    "alphaevolve_ready systems reports require claim-calibrated metric records",
+                )
+            )
         if not application_ready:
             issues.append(
                 SystemsResultIssue(
@@ -232,6 +257,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         for gate in gates:
             if isinstance(gate, dict):
                 gate_rows.append(f"{gate.get('name', '<unknown>')}={gate.get('status', '<unknown>')}")
+    claim_records = report.get("claim_calibration", {}).get("records")
     application_records = report.get("application_provenance", {}).get("records")
     lines = [
         f"Systems result report: {report.get('benchmark_id', '<unknown>')}",
@@ -244,6 +270,7 @@ def render_systems_result_summary(report: dict[str, Any]) -> str:
         f"| candidate_id | {report.get('candidate_id', '<unknown>')} |",
         f"| gates | {', '.join(gate_rows) if gate_rows else '<none>'} |",
         f"| artifact_count | {len(report.get('artifacts', [])) if isinstance(report.get('artifacts'), list) else 0} |",
+        f"| claim_calibration_records | {len(claim_records) if isinstance(claim_records, list) else 0} |",
         f"| application_provenance_records | {len(application_records) if isinstance(application_records, list) else 0} |",
     ]
     if validation.issues:
@@ -727,6 +754,161 @@ def _validate_ready_gate_artifacts(
         )
 
 
+def _validate_claim_calibration(
+    value: object,
+    report: dict[str, Any],
+    domain: str | None,
+    require_ready: bool,
+    issues: list[SystemsResultIssue],
+) -> bool:
+    if value is None:
+        if require_ready:
+            issues.append(
+                SystemsResultIssue(
+                    "missing_claim_calibration",
+                    "alphaevolve_ready systems reports require claim_calibration",
+                )
+            )
+        return False
+    if not isinstance(value, dict):
+        issues.append(
+            SystemsResultIssue(
+                "invalid_claim_calibration",
+                "claim_calibration must be an object",
+            )
+        )
+        return False
+    boundary = value.get("boundary_statement")
+    if not isinstance(boundary, str) or not boundary.strip():
+        issues.append(
+            SystemsResultIssue(
+                "missing_claim_calibration_boundary",
+                "claim_calibration requires a non-empty boundary_statement",
+            )
+        )
+    records = value.get("records")
+    if not isinstance(records, list) or not records:
+        issues.append(
+            SystemsResultIssue(
+                "invalid_claim_calibration_records",
+                "claim_calibration.records must be a non-empty list",
+            )
+        )
+        return False
+    artifact_paths = {
+        artifact.get("path")
+        for artifact in report.get("artifacts", [])
+        if isinstance(artifact, dict) and isinstance(artifact.get("path"), str)
+    }
+    gate_names = {
+        gate.get("name")
+        for gate in report.get("gates", [])
+        if isinstance(gate, dict) and isinstance(gate.get("name"), str)
+    }
+    metric_names = _report_metric_names(report)
+    claim_ids: set[str] = set()
+    valid_records = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_calibration_record",
+                    "claim calibration records must be objects",
+                )
+            )
+            continue
+        prefix = f"claim_calibration.records[{index}]"
+        before_issues = len(issues)
+        claim_id = record.get("claim_id")
+        if not isinstance(claim_id, str) or _ID_RE.fullmatch(claim_id) is None:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_id",
+                    f"{prefix}.claim_id must be stable",
+                )
+            )
+        elif claim_id in claim_ids:
+            issues.append(
+                SystemsResultIssue(
+                    "duplicate_claim_calibration",
+                    "claim_calibration claim_id values must be unique",
+                )
+            )
+        else:
+            claim_ids.add(claim_id)
+        if domain is not None and record.get("domain") != domain:
+            issues.append(
+                SystemsResultIssue(
+                    "claim_calibration_domain_mismatch",
+                    f"{prefix}.domain must match the systems report domain",
+                )
+            )
+        if record.get("claim_kind") not in CLAIM_CALIBRATION_KINDS:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_kind",
+                    f"{prefix}.claim_kind is unsupported",
+                )
+            )
+        gate_name = record.get("gate_name")
+        if not isinstance(gate_name, str) or gate_name not in gate_names:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_gate",
+                    f"{prefix}.gate_name must reference a declared gate",
+                )
+            )
+        metric_name = record.get("metric_name")
+        if not isinstance(metric_name, str) or metric_name not in metric_names:
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_metric",
+                    f"{prefix}.metric_name must reference a declared gate metric",
+                )
+            )
+        value_number = record.get("reported_value")
+        if (
+            isinstance(value_number, bool)
+            or not isinstance(value_number, (int, float))
+            or not math.isfinite(float(value_number))
+        ):
+            issues.append(
+                SystemsResultIssue(
+                    "invalid_claim_reported_value",
+                    f"{prefix}.reported_value must be finite numeric",
+                )
+            )
+        for field in (
+            "unit",
+            "baseline_label",
+            "denominator",
+            "comparison_window",
+            "aggregation_method",
+            "runtime_context",
+            "claim_scope",
+            "source_ref",
+        ):
+            text = record.get(field)
+            if not isinstance(text, str) or not text.strip():
+                issues.append(
+                    SystemsResultIssue(
+                        f"invalid_claim_{field}",
+                        f"{prefix}.{field} must be non-empty text",
+                    )
+                )
+        _validate_application_reference_list(
+            record.get("artifact_refs"),
+            artifact_paths,
+            "artifact_refs",
+            "invalid_claim_artifact_ref",
+            prefix,
+            issues,
+        )
+        if len(issues) == before_issues:
+            valid_records += 1
+    return valid_records == len(records)
+
+
 def _validate_application_provenance(
     value: object,
     report: dict[str, Any],
@@ -893,7 +1075,27 @@ def _report_claim_ids(report: dict[str, Any]) -> set[str]:
     certification = report.get("certification")
     if isinstance(certification, dict) and isinstance(certification.get("claim_id"), str):
         claim_ids.add(certification["claim_id"])
+    calibration = report.get("claim_calibration")
+    records = calibration.get("records") if isinstance(calibration, dict) else None
+    if isinstance(records, list):
+        for record in records:
+            if isinstance(record, dict) and isinstance(record.get("claim_id"), str):
+                claim_ids.add(record["claim_id"])
     return claim_ids
+
+
+def _report_metric_names(report: dict[str, Any]) -> set[str]:
+    names: set[str] = set()
+    gates = report.get("gates")
+    if not isinstance(gates, list):
+        return names
+    for gate in gates:
+        if not isinstance(gate, dict):
+            continue
+        metrics = gate.get("metrics")
+        if isinstance(metrics, dict):
+            names.update(key for key in metrics if isinstance(key, str))
+    return names
 
 
 def _validate_application_reference_list(

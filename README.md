@@ -3516,10 +3516,12 @@ preserves the cached PDF page 1 rights line `© 2025 Google DeepMind. All
 rights reserved`, the rights holder/year, source page/location, local
 manifest row hash/bytes, and the boundary that paper-derived artifacts must
 carry third-party source-rights metadata distinct from LibreEvolve's MIT
-license and the companion repository's Apache/CC licensing. The standard
-paper-manifest gate validates that record against the current cached PDF text.
-Richer excerpt/table/figure reproduction policy rows for generated artifacts
-remain open.
+license and the companion repository's Apache/CC licensing. The committed
+`papers/source_rights.json` companion manifest emits that source-rights row,
+links it to `papers/row_identity.json`, and records reproduction-policy
+requirements for excerpts, tables, figures, quotes, and appendix claims. The
+standard paper-manifest gate validates that artifact against the current cached
+PDF text.
 AlphaEvolve References-section evidence uses
 `libreevolve.alphaevolve_references_section.v1` in
 `libreevolve/problems/benchmarks/paper_bibliography.py`; the built-in record

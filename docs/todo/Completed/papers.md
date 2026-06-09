@@ -6,6 +6,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Emit AlphaEvolve source-PDF rights and license provenance.
+  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Status: `papers/source_rights.json` now records cached source-PDF rights
+    for the AlphaEvolve row, including rights holder/year, rights statement,
+    source page/location, local PDF hash/bytes, row-identity link, and
+    reproduction-policy boundaries for paper-derived artifact classes.
+  - Remaining gap: none for this bounded paper-facing source-PDF rights slice;
+    companion repository rights remain a separate active paper TODO.
+
 - [x] Emit paper-manifest row identity evidence before claim artifacts.
   - Paper evidence: AlphaEvolve-alignment paper audits depend on the local
     paper cache preserving the correct source PDF for each paper-facing row.

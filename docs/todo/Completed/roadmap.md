@@ -4,6 +4,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Document AlphaEvolve source-PDF rights companion manifest.
+  - Spec evidence: page 1 of the local AlphaEvolve PDF states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Status: ROADMAP now documents `papers/source_rights.json` as the committed
+    source-rights companion manifest validated by the paper-manifest gate,
+    including row-identity linkage and reproduction-policy requirements.
+  - Remaining gap: none for this bounded roadmap wording slice.
+
 - [x] Document paper-cache row identity companion manifest.
   - Spec evidence: roadmap paper-cache provenance depends on each row's id,
     URL, and local PDF label describing the same source before version or

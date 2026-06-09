@@ -578,9 +578,10 @@ is not yet an AlphaEvolve reproduction.
   reserved`, rights holder/year, source page/location, manifest row hash/bytes,
   and boundaries separating third-party paper-source rights from LibreEvolve's
   MIT license and the companion repository's Apache/CC licensing. The paper-
-  manifest gate validates the record against the current cached PDF text.
-  Emitted paper-derived artifacts still need explicit excerpt/table/figure
-  reproduction-policy rows linked to that rights evidence.
+  manifest gate validates `papers/source_rights.json` against the current
+  cached PDF text; that companion manifest links to `papers/row_identity.json`
+  and records reproduction-policy requirements for excerpts, tables, figures,
+  quotes, and appendix claims.
 - Keep AlphaEvolve bibliography evidence grounded in source markers:
   `libreevolve.alphaevolve_references_section.v1` now validates that the
   cached PDF References section spans pages 23-32, includes contiguous

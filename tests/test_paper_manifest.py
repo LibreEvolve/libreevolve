@@ -14,6 +14,9 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
     alphaevolve_source_pdf_version_manifest_record,
     alphaevolve_source_pdf_version_record,
 )
+from libreevolve.problems.benchmarks.paper_source_rights import (
+    alphaevolve_source_pdf_rights_manifest_record,
+)
 from libreevolve.problems.benchmarks.paper_source_identity import (
     paper_source_identity_manifest_record,
 )
@@ -233,6 +236,52 @@ def test_validate_paper_manifest_rejects_source_identity_manifest_row_drift(tmp_
     assert report.ok is False
     assert "paper_source_identity_file_source_id_mismatch" in codes
     assert "paper_source_identity_manifest_file_source_id_mismatch" in codes
+
+
+def test_validate_paper_manifest_accepts_matching_source_rights_manifest(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "source_rights.json").write_text(
+        json.dumps(alphaevolve_source_pdf_rights_manifest_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_source_rights_manifest_policy_drift(tmp_path):
+    source_record = alphaevolve_source_pdf_version_record()
+    row = dict(source_record["manifest_row"])
+    row.pop("url_kind")
+    row.update({"ok": True, "message": "downloaded"})
+    _write_manifest(tmp_path, [row])
+    rights_record = alphaevolve_source_pdf_rights_manifest_record()
+    rights_record["sources"][0]["paper_derived_artifact_policy"][
+        "reproduction_policy"
+    ] = "free_reuse"
+    rights_record["sources"][0]["paper_derived_artifact_policy"][
+        "publication_ready_without_rights_review"
+    ] = True
+    (tmp_path / "papers" / "source_rights.json").write_text(
+        json.dumps(rights_record, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "alphaevolve_source_pdf_rights_manifest_invalid_reproduction_policy" in codes
+    assert (
+        "alphaevolve_source_pdf_rights_manifest_invalid_publication_ready_without_rights_review"
+        in codes
+    )
 
 
 def test_validate_paper_manifest_reports_invalid_appendix_b_registry(tmp_path):

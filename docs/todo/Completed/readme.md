@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document AlphaEvolve source-PDF rights manifest evidence.
+  - Spec evidence: the local AlphaEvolve PDF header states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Status: README now documents `papers/source_rights.json` as the committed
+    companion manifest that emits the AlphaEvolve source-rights row, links it
+    to `papers/row_identity.json`, and records reproduction-policy
+    requirements for excerpts, tables, figures, quotes, and appendix claims.
+  - Remaining gap: none for this bounded README wording slice.
+
 - [x] Document paper-cache row identity artifact evidence.
   - Spec evidence: README points readers to the local paper cache as the source
     ledger for paper-facing implementation status and benchmark decisions.

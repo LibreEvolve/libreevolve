@@ -126,9 +126,12 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
     validate_alphaevolve_source_pdf_version,
 )
 from libreevolve.problems.benchmarks.paper_source_rights import (
+    ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA,
     ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA,
+    alphaevolve_source_pdf_rights_manifest_record,
     alphaevolve_source_pdf_rights_record,
     render_alphaevolve_source_pdf_rights_summary,
+    validate_alphaevolve_source_pdf_rights_manifest,
     validate_alphaevolve_source_pdf_rights,
 )
 from libreevolve.problems.benchmarks.paper_source_identity import (

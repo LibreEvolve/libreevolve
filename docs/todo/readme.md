@@ -1633,24 +1633,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     LibreEvolve artifact licensing, and local project ownership or endorsement
     boundaries.
 
-- [ ] Keep README paper-cache wording scoped until source-PDF rights metadata
-      is emitted in paper-derived artifacts.
-  - Spec evidence: the local AlphaEvolve PDF header states
-    `© 2025 Google DeepMind. All rights reserved`.
-  - Current evidence: README now documents
-    `libreevolve.alphaevolve_source_pdf_rights.v1`, which validates the cached
-    AlphaEvolve PDF page 1 rights line, rights holder/year, source
-    page/location, manifest row hash/bytes, lack of an open-license declaration
-    in the cached PDF, and the boundary separating third-party paper-source
-    rights from LibreEvolve's MIT license and the companion repository license.
-    Generated tables, figures, excerpts, and claim ledgers still do not emit
-    source-rights rows or reproduction-policy records linked to that evidence.
-  - Required result: after paper-source rights metadata is emitted in generated
-    paper-derived artifacts, update README wording so those artifacts include
-    rights holder/year, rights statement or license id/text, source page/header
-    location, allowed excerpt/reproduction policy, and a clear separation from
-    LibreEvolve's own MIT license.
-
 - [ ] Keep README bibliography wording scoped until AlphaEvolve References
       metadata is normalized.
   - Spec evidence: the AlphaEvolve PDF has a numbered References section after

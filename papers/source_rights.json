@@ -1,0 +1,64 @@
+{
+  "schema": "libreevolve.alphaevolve_source_pdf_rights_manifest.v1",
+  "source_rights_count": 1,
+  "source_rights_policy": "paper_derived_artifacts_must_carry_source_rights_and_reproduction_policy",
+  "sources": [
+    {
+      "manifest_row_id": "2506.13131",
+      "source_identity_manifest": "papers/row_identity.json",
+      "source_rights_record": {
+        "schema": "libreevolve.alphaevolve_source_pdf_rights.v1",
+        "source_paper_id": "2506.13131",
+        "title": "AlphaEvolve",
+        "source_kind": "cached_arxiv_pdf",
+        "manifest_row": {
+          "id": "2506.13131",
+          "title": "AlphaEvolve",
+          "url": "https://arxiv.org/pdf/2506.13131.pdf",
+          "file": "papers/2506.13131__AlphaEvolve.pdf",
+          "bytes": 3525764,
+          "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad"
+        },
+        "rights": {
+          "rights_holder": "Google DeepMind",
+          "copyright_year": 2025,
+          "rights_statement": "© 2025 Google DeepMind. All rights reserved",
+          "source_page": 1,
+          "source_location": "page_1_title_page_rights_line",
+          "license_identifier": "all_rights_reserved_statement",
+          "open_license_declared_in_cached_pdf": false,
+          "arxiv_license_terms_recorded": false,
+          "reuse_policy": "third_party_paper_source_rights_require_separate_review_before_reproduction"
+        },
+        "boundary": {
+          "distinct_from_libreevolve_license": true,
+          "distinct_from_companion_repository_license": true,
+          "paper_derived_artifacts_must_carry_source_rights": true,
+          "scope": "cached AlphaEvolve source PDF rights, not LibreEvolve repository licensing"
+        }
+      },
+      "paper_derived_artifact_policy": {
+        "artifact_classes": [
+          "excerpt",
+          "table",
+          "figure",
+          "quote",
+          "appendix_claim"
+        ],
+        "reproduction_policy": "third_party_paper_source_rights_require_separate_review_before_reproduction",
+        "must_separate_from_libreevolve_mit_license": true,
+        "must_separate_from_companion_repository_license": true,
+        "publication_ready_without_rights_review": false,
+        "claim_surfaces": [
+          "README.md",
+          "ROADMAP.md",
+          "papers/README.md",
+          "docs/todo/code.md",
+          "docs/todo/papers.md",
+          "docs/todo/readme.md",
+          "docs/todo/roadmap.md"
+        ]
+      }
+    }
+  ]
+}

@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Emit AlphaEvolve source-PDF rights provenance into paper artifacts.
+  - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
+    `© 2025 Google DeepMind. All rights reserved`.
+  - Status: `papers/source_rights.json` now emits a schema-versioned
+    AlphaEvolve source-PDF rights manifest with rights holder/year, rights
+    statement, source page/location, local PDF hash/bytes, row-identity link,
+    and reproduction-policy requirements for excerpts, tables, figures,
+    quotes, and appendix claims. The paper-manifest gate validates it against
+    the cached PDF text and `download_manifest.json`.
+  - Remaining gap: none for this bounded source-PDF rights slice; companion
+    repository rights and broader generated-artifact licensing remain active
+    TODOs.
+
 - [x] Emit paper-manifest row identity evidence into paper artifacts.
   - Spec evidence: paper-cache rows are the source ledger for AlphaEvolve
     audit evidence; row id, source URL, and local PDF filename must identify

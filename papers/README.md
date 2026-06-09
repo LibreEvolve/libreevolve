@@ -1266,23 +1266,27 @@ Implemented:
   companion source-version manifest with docs/TODO claim-surface links, and
   the paper-manifest command validates both the companion file and the cached
   PDF header. The download manifests remain legacy PDF cache ledgers rather
-  than widened source-version row schemas. It still does not emit source-row
-  identity proof or source-rights metadata into every generated table, figure,
-  or appendix artifact.
+  than widened source-version row schemas; row-identity and source-rights
+  layers are emitted by `papers/row_identity.json` and `papers/source_rights.json`.
+  It remains source-version evidence, not full bibliography normalization or
+  source-use rights review.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
   source prefix, identity-check booleans, and the AlphaEvolve row's link to
-  `papers/source_versions.json`. It still does not emit source-rights metadata
-  into every generated table, figure, or appendix artifact.
+  `papers/source_versions.json` and source-rights layers. It remains base
+  id/URL/file identity evidence, not source-use rights review or bibliography
+  normalization.
 - `libreevolve/problems/benchmarks/paper_source_rights.py`: AlphaEvolve source-
   PDF rights contract. It validates the cached PDF page 1 rights line
   `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source
   page/location, manifest row hash/bytes, lack of an open-license declaration
   in the cached PDF, and boundaries separating third-party paper-source rights
   from LibreEvolve's MIT license and the companion repository's Apache/CC
-  licensing. The paper-manifest command validates the built-in record against
-  the current cached PDF text.
+  licensing. `papers/source_rights.json` emits that source-rights row with
+  reproduction-policy requirements for excerpts, tables, figures, quotes, and
+  appendix claims, and the paper-manifest command validates the companion file
+  against the current cached PDF text.
 - `libreevolve/problems/benchmarks/paper_bibliography.py`: AlphaEvolve
   References-section inventory contract. It validates the cached PDF
   References section page span, contiguous reference ids `[1]` through `[120]`,

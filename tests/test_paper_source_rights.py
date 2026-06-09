@@ -1,9 +1,12 @@
 import json
 
 from libreevolve.problems.benchmarks.paper_source_rights import (
+    ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA,
     ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA,
+    alphaevolve_source_pdf_rights_manifest_record,
     alphaevolve_source_pdf_rights_record,
     render_alphaevolve_source_pdf_rights_summary,
+    validate_alphaevolve_source_pdf_rights_manifest,
     validate_alphaevolve_source_pdf_rights,
 )
 
@@ -21,6 +24,41 @@ def test_validate_alphaevolve_source_pdf_rights_accepts_builtin_record():
     assert validation.rights_count == 1
     assert validation.rights_text_checked is True
     assert validation.issues == []
+
+
+def test_validate_alphaevolve_source_pdf_rights_manifest_accepts_builtin_record():
+    recordset = alphaevolve_source_pdf_rights_manifest_record()
+
+    validation = validate_alphaevolve_source_pdf_rights_manifest(
+        recordset,
+        first_page_text="AlphaEvolve\n© 2025 Google DeepMind. All rights reserved",
+    )
+
+    assert recordset["schema"] == ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA
+    assert validation.ok is True
+    assert validation.rights_count == 1
+    assert validation.rights_text_checked is True
+    assert validation.issues == []
+
+
+def test_validate_alphaevolve_source_pdf_rights_manifest_rejects_policy_drift():
+    recordset = alphaevolve_source_pdf_rights_manifest_record()
+    source = recordset["sources"][0]
+    source["source_identity_manifest"] = "papers/other.json"
+    source["paper_derived_artifact_policy"]["artifact_classes"] = ["excerpt"]
+    source["paper_derived_artifact_policy"]["reproduction_policy"] = "free_reuse"
+    source["paper_derived_artifact_policy"]["publication_ready_without_rights_review"] = True
+    source["paper_derived_artifact_policy"]["claim_surfaces"] = ["README.md"]
+
+    validation = validate_alphaevolve_source_pdf_rights_manifest(recordset)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_source_identity_manifest" in codes
+    assert "artifact_class_mismatch" in codes
+    assert "invalid_reproduction_policy" in codes
+    assert "invalid_publication_ready_without_rights_review" in codes
+    assert "claim_surface_mismatch" in codes
 
 
 def test_validate_alphaevolve_source_pdf_rights_loads_json_file(tmp_path):

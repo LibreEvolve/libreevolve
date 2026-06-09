@@ -3355,24 +3355,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     policy and README/ROADMAP checks that separate companion repository rights
     from source-PDF rights and LibreEvolve's repository license.
 
-- [ ] Emit AlphaEvolve source-PDF rights and license provenance.
-  - Paper evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
-    `© 2025 Google DeepMind. All rights reserved`.
-  - Current gap: `libreevolve.alphaevolve_source_pdf_rights.v1` now validates a
-    built-in rights record for the cached AlphaEvolve PDF: rights holder/year,
-    page 1 rights statement, source page/location, manifest row URL/file/hash,
-    lack of an open-license declaration in the cached PDF, and boundaries
-    separating third-party paper-source rights from LibreEvolve's MIT license
-    and the companion repository license. Paper-facing generated tables,
-    figures, excerpts, and claim ledgers still do not emit source-rights rows
-    or reproduction-policy records linked to that evidence.
-  - Required result: emit paper-facing source-rights provenance for cached
-    PDFs: rights holder, copyright year, rights statement or license
-    identifier/text, source page/header location, retrieval URL, local PDF hash,
-    allowed excerpt/reproduction policy for tables/figures/quotes, and README/
-    ROADMAP/papers wording that prevents paper-derived artifacts from being
-    presented as publication-ready without verified source-use boundaries.
-
 - [ ] Normalize full AlphaEvolve References-section bibliography evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
     References section after Author information, with entries through `[120]`

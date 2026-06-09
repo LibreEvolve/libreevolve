@@ -57,7 +57,9 @@ from libreevolve.problems.benchmarks.paper_source_versions import (
     validate_alphaevolve_source_pdf_version,
 )
 from libreevolve.problems.benchmarks.paper_source_rights import (
+    EXPECTED_SOURCE_RIGHTS_MANIFEST_FILE,
     alphaevolve_source_pdf_rights_record,
+    validate_alphaevolve_source_pdf_rights_manifest,
     validate_alphaevolve_source_pdf_rights,
 )
 from libreevolve.problems.benchmarks.paper_source_identity import (
@@ -469,6 +471,7 @@ def validate_paper_manifest(
     manifest_rows_by_id = {str(row.get("id")): row for row in json_rows if row.get("id")}
     issues.extend(_validate_paper_source_identity_manifest(root_path, json_rows))
     issues.extend(_validate_alphaevolve_source_pdf_version_manifest(root_path, manifest_rows_by_id))
+    issues.extend(_validate_alphaevolve_source_pdf_rights_manifest(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_version_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_source_pdf_rights_record(root_path, manifest_rows_by_id))
     issues.extend(_validate_alphaevolve_references_section_record(root_path, manifest_rows_by_id))
@@ -675,6 +678,75 @@ def _validate_alphaevolve_source_pdf_version_manifest(
                 PaperManifestIssue(
                     f"alphaevolve_source_pdf_version_manifest_{field}_mismatch",
                     f"paper manifest row {field} does not match papers/source_versions.json",
+                    "2506.13131",
+                )
+            )
+    return issues
+
+
+def _validate_alphaevolve_source_pdf_rights_manifest(
+    root_path: Path,
+    manifest_rows_by_id: dict[str, dict[str, Any]],
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    manifest_path = root_path / EXPECTED_SOURCE_RIGHTS_MANIFEST_FILE
+    if not manifest_path.exists():
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_source_pdf_rights_manifest_missing",
+                    "papers/source_rights.json must emit AlphaEvolve source-rights rows",
+                    "2506.13131",
+                )
+            ]
+        return []
+    first_page_text = None
+    if is_repo_root:
+        pdf_path = root_path / "papers/2506.13131__AlphaEvolve.pdf"
+        if pdf_path.exists():
+            try:
+                first_page_text = _read_pdf_quietly(pdf_path).pages[0].extract_text() or ""
+            except Exception as exc:
+                return [
+                    PaperManifestIssue(
+                        "alphaevolve_source_pdf_rights_manifest_text_read_error",
+                        _safe_pdf_parse_error(exc),
+                        "2506.13131",
+                    )
+                ]
+    report = validate_alphaevolve_source_pdf_rights_manifest(
+        manifest_path,
+        first_page_text=first_page_text,
+    )
+    issues = [
+        PaperManifestIssue(
+            f"alphaevolve_source_pdf_rights_manifest_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+    record = alphaevolve_source_pdf_rights_record()
+    row = manifest_rows_by_id.get("2506.13131")
+    if row is None:
+        issues.append(
+            PaperManifestIssue(
+                "alphaevolve_source_pdf_rights_manifest_missing_manifest_row",
+                "source-rights manifest requires a matching paper manifest row",
+                "2506.13131",
+            )
+        )
+        return issues
+    manifest_row = record["manifest_row"]
+    for field in ("id", "title", "url", "file", "bytes", "sha256"):
+        if row.get(field) != manifest_row[field]:
+            issues.append(
+                PaperManifestIssue(
+                    f"alphaevolve_source_pdf_rights_manifest_{field}_mismatch",
+                    f"paper manifest row {field} does not match papers/source_rights.json",
                     "2506.13131",
                 )
             )

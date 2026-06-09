@@ -2471,27 +2471,6 @@ Primary evidence:
 
 ## Benchmarks and Problem Fixtures
 
-- [ ] Emit AlphaEvolve source-PDF rights provenance into paper artifacts.
-  - Spec evidence: page 1 of `2506.13131__AlphaEvolve.pdf` states
-    `© 2025 Google DeepMind. All rights reserved`.
-  - Current evidence: `libreevolve.alphaevolve_source_pdf_rights.v1` in
-    `libreevolve/problems/benchmarks/paper_source_rights.py` now validates a
-    built-in rights record for the cached AlphaEvolve PDF: rights holder
-    `Google DeepMind`, copyright year `2025`, page 1 rights statement
-    `© 2025 Google DeepMind. All rights reserved`, source page/location,
-    manifest row id/title/file/URL/bytes/SHA-256, lack of an open-license
-    declaration in the cached PDF, and boundaries separating third-party
-    paper-source rights from LibreEvolve's MIT license and the companion
-    repository license. `libreevolve.tools.paper_manifest` validates that
-    record against the current cached PDF text. Paper-derived exports still do
-    not emit excerpt/table/figure reproduction-policy rows.
-  - Required result: propagate source-rights metadata into paper-derived
-    artifact inventories and claim ledgers: rights holder/year, rights
-    statement or license id/text, source location/page, retrieval URL, local
-    PDF hash, excerpt/reproduction use policy, and docs wording that separates
-    LibreEvolve's repository license from third-party paper-source rights
-    before paper-derived artifacts are treated as publication-ready evidence.
-
 - [ ] Normalize AlphaEvolve References-section bibliography provenance.
   - Spec evidence: `2506.13131__AlphaEvolve.pdf` includes a numbered
     References section beginning after Author information and running through

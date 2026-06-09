@@ -8,9 +8,14 @@ from typing import Any
 
 
 ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA = "libreevolve.alphaevolve_source_pdf_rights.v1"
+ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA = (
+    "libreevolve.alphaevolve_source_pdf_rights_manifest.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_TITLE = "AlphaEvolve"
 EXPECTED_FILE = "papers/2506.13131__AlphaEvolve.pdf"
+EXPECTED_SOURCE_RIGHTS_MANIFEST_FILE = "papers/source_rights.json"
+EXPECTED_SOURCE_IDENTITY_MANIFEST_FILE = "papers/row_identity.json"
 EXPECTED_FLOATING_PDF_URL = "https://arxiv.org/pdf/2506.13131.pdf"
 EXPECTED_RIGHTS_HOLDER = "Google DeepMind"
 EXPECTED_COPYRIGHT_YEAR = 2025
@@ -88,6 +93,43 @@ def alphaevolve_source_pdf_rights_record() -> dict[str, Any]:
     }
 
 
+def alphaevolve_source_pdf_rights_manifest_record() -> dict[str, Any]:
+    return {
+        "schema": ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA,
+        "source_rights_count": 1,
+        "source_rights_policy": "paper_derived_artifacts_must_carry_source_rights_and_reproduction_policy",
+        "sources": [
+            {
+                "manifest_row_id": EXPECTED_SOURCE_PAPER_ID,
+                "source_identity_manifest": EXPECTED_SOURCE_IDENTITY_MANIFEST_FILE,
+                "source_rights_record": alphaevolve_source_pdf_rights_record(),
+                "paper_derived_artifact_policy": {
+                    "artifact_classes": [
+                        "excerpt",
+                        "table",
+                        "figure",
+                        "quote",
+                        "appendix_claim",
+                    ],
+                    "reproduction_policy": "third_party_paper_source_rights_require_separate_review_before_reproduction",
+                    "must_separate_from_libreevolve_mit_license": True,
+                    "must_separate_from_companion_repository_license": True,
+                    "publication_ready_without_rights_review": False,
+                    "claim_surfaces": [
+                        "README.md",
+                        "ROADMAP.md",
+                        "papers/README.md",
+                        "docs/todo/code.md",
+                        "docs/todo/papers.md",
+                        "docs/todo/readme.md",
+                        "docs/todo/roadmap.md",
+                    ],
+                },
+            }
+        ],
+    }
+
+
 def validate_alphaevolve_source_pdf_rights(
     recordset: object | str | Path | None = None,
     *,
@@ -125,6 +167,66 @@ def validate_alphaevolve_source_pdf_rights(
     )
 
 
+def validate_alphaevolve_source_pdf_rights_manifest(
+    recordset: object | str | Path | None = None,
+    *,
+    first_page_text: str | None = None,
+) -> AlphaEvolveSourcePdfRightsValidation:
+    data, read_issues = _load_manifest_recordset(recordset)
+    if read_issues:
+        return AlphaEvolveSourcePdfRightsValidation(False, 0, False, read_issues)
+    assert isinstance(data, dict)
+    issues: list[AlphaEvolveSourcePdfRightsIssue] = []
+    if data.get("schema") != ALPHAEVOLVE_SOURCE_PDF_RIGHTS_MANIFEST_SCHEMA:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_schema",
+                "unsupported AlphaEvolve source-PDF rights manifest schema",
+            )
+        )
+    if data.get("source_rights_policy") != (
+        "paper_derived_artifacts_must_carry_source_rights_and_reproduction_policy"
+    ):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_policy",
+                "source_rights_policy must require source rights and reproduction policy",
+            )
+        )
+    sources = data.get("sources")
+    if not isinstance(sources, list):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_sources",
+                "source-rights manifest sources must be a list",
+            )
+        )
+        sources = []
+    rights_count = len(sources)
+    if data.get("source_rights_count") != rights_count:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_source_rights_count",
+                "source_rights_count must equal the number of source-rights records",
+            )
+        )
+    if rights_count != 1:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_source_count",
+                "source-rights manifest must contain the cached AlphaEvolve source row",
+            )
+        )
+    for index, source in enumerate(sources):
+        _validate_source_rights_manifest_source(source, issues, first_page_text, index)
+    return AlphaEvolveSourcePdfRightsValidation(
+        ok=not issues,
+        rights_count=rights_count,
+        rights_text_checked=first_page_text is not None,
+        issues=issues,
+    )
+
+
 def render_alphaevolve_source_pdf_rights_summary(recordset: object | str | Path | None = None) -> str:
     validation = validate_alphaevolve_source_pdf_rights(recordset)
     status = "ok" if validation.ok else "invalid"
@@ -145,6 +247,14 @@ def render_alphaevolve_source_pdf_rights_summary(recordset: object | str | Path 
     return "\n".join(lines)
 
 
+def _load_manifest_recordset(
+    recordset: object | str | Path | None,
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveSourcePdfRightsIssue]]:
+    if recordset is None:
+        return alphaevolve_source_pdf_rights_manifest_record(), []
+    return _load_recordset(recordset)
+
+
 def _load_recordset(
     recordset: object | str | Path | None,
 ) -> tuple[dict[str, Any] | None, list[AlphaEvolveSourcePdfRightsIssue]]:
@@ -163,6 +273,132 @@ def _load_recordset(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [AlphaEvolveSourcePdfRightsIssue("invalid_shape", "source-PDF rights record must be a JSON object")]
+
+
+def _validate_source_rights_manifest_source(
+    value: object,
+    issues: list[AlphaEvolveSourcePdfRightsIssue],
+    first_page_text: str | None,
+    index: int,
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_source",
+                f"source-rights manifest source {index} must be an object",
+            )
+        )
+        return
+    if value.get("manifest_row_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_manifest_source_row_id",
+                "source-rights manifest row id must match the cached AlphaEvolve row",
+            )
+        )
+    if value.get("source_identity_manifest") != EXPECTED_SOURCE_IDENTITY_MANIFEST_FILE:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_source_identity_manifest",
+                "source-rights manifest must link to the source-identity manifest",
+            )
+        )
+    rights_report = validate_alphaevolve_source_pdf_rights(
+        value.get("source_rights_record"),
+        first_page_text=first_page_text,
+    )
+    issues.extend(rights_report.issues)
+    _validate_paper_derived_artifact_policy(
+        value.get("paper_derived_artifact_policy"),
+        issues,
+    )
+
+
+def _validate_paper_derived_artifact_policy(
+    value: object,
+    issues: list[AlphaEvolveSourcePdfRightsIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_artifact_policy",
+                "paper_derived_artifact_policy must be an object",
+            )
+        )
+        return
+    expected_classes = {
+        "excerpt",
+        "table",
+        "figure",
+        "quote",
+        "appendix_claim",
+    }
+    classes = value.get("artifact_classes")
+    if not isinstance(classes, list) or not all(isinstance(item, str) for item in classes):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_artifact_classes",
+                "artifact_classes must list paper-derived artifact classes",
+            )
+        )
+    elif set(classes) != expected_classes:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "artifact_class_mismatch",
+                "artifact_classes must cover excerpts, tables, figures, quotes, and appendix claims",
+            )
+        )
+    if value.get("reproduction_policy") != (
+        "third_party_paper_source_rights_require_separate_review_before_reproduction"
+    ):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_reproduction_policy",
+                "reproduction_policy must require separate rights review before reproduction",
+            )
+        )
+    for field in (
+        "must_separate_from_libreevolve_mit_license",
+        "must_separate_from_companion_repository_license",
+    ):
+        if value.get(field) is not True:
+            issues.append(
+                AlphaEvolveSourcePdfRightsIssue(
+                    f"invalid_artifact_policy_{field}",
+                    f"paper_derived_artifact_policy.{field} must be true",
+                )
+            )
+    if value.get("publication_ready_without_rights_review") is not False:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_publication_ready_without_rights_review",
+                "publication_ready_without_rights_review must be false",
+            )
+        )
+    expected_surfaces = {
+        "README.md",
+        "ROADMAP.md",
+        "papers/README.md",
+        "docs/todo/code.md",
+        "docs/todo/papers.md",
+        "docs/todo/readme.md",
+        "docs/todo/roadmap.md",
+    }
+    surfaces = value.get("claim_surfaces")
+    if not isinstance(surfaces, list) or not all(isinstance(item, str) for item in surfaces):
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "invalid_claim_surfaces",
+                "claim_surfaces must list docs and TODO claim surfaces",
+            )
+        )
+    elif set(surfaces) != expected_surfaces:
+        issues.append(
+            AlphaEvolveSourcePdfRightsIssue(
+                "claim_surface_mismatch",
+                "claim_surfaces must cover docs, papers, and active TODO evidence",
+            )
+        )
 
 
 def _validate_manifest_row(value: object, issues: list[AlphaEvolveSourcePdfRightsIssue]) -> None:

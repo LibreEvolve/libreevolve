@@ -8967,6 +8967,10 @@ def _failure_evaluation_summary(
     )
     summary["stages"] = stages
     metadata = evaluation.get("metadata")
+    if isinstance(metadata, dict) and isinstance(metadata.get("validator_boundary"), dict):
+        summary["metadata"] = {
+            "validator_boundary": copy.deepcopy(metadata["validator_boundary"])
+        }
     llm_feedback = _failure_llm_feedback_summaries(
         metadata.get("llm_feedback") if isinstance(metadata, dict) else None,
         normalize_non_finite=normalize_non_finite,

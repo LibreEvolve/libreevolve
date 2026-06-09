@@ -5064,29 +5064,31 @@ Primary evidence:
     policy for validators, with manifest-visible evidence and tests proving the
     intended boundary.
 
-- [ ] Add automated run-artifact validator-boundary consistency checks.
+- [ ] Extend run-artifact validator-boundary consistency checks beyond CLI
+      inspection.
   - Spec evidence: AlphaEvolve-scale evaluation provenance should make the
     execution boundary for generated-code validators auditable from the run
     artifacts that support accepted or rejected candidates.
   - Current evidence: startup manifests persist
     `policies.validator_execution`, each evaluation metadata record carries
-    `evaluation.metadata.validator_boundary`, and
-    `validate_validator_boundary_consistency()` can compare the startup policy
-    with an attempt-level boundary across execution, filesystem-capability,
-    network, resource-limit, and secret-boundary fields. The helper is covered
-    by direct validator-policy tests, while runtime code emits the policy and
-    boundary records rather than automatically invoking the helper over
-    persisted history/evaluation rows.
-  - Remaining gap: there is no run-finalization, CLI, or CI artifact validator
-    that loads `manifest.json`, scans persisted evaluation attempts, requires
-    every attempt-level `validator_boundary` record to exist, applies the
-    consistency helper, and fails missing or drifting boundary claims before a
-    run artifact bundle is treated as AlphaEvolve-grade evidence.
-  - Required result: add a manifest/history validation pass with tests for
-    missing boundary metadata, mismatched network/filesystem/resource/secret
-    fields, legacy rows, and clean current runs; wire it into the routine
-    artifact verification path without confusing this consistency gate with
-    the separate sandbox/resource-enforcement gap.
+    `evaluation.metadata.validator_boundary`, failure-history summaries retain
+    selected validator-boundary metadata, and
+    `validate_run_artifact_validator_boundary_consistency()` now loads
+    `manifest.json`, scans `history.jsonl` plus `failure_history.jsonl`,
+    requires attempt-level boundary metadata, and applies
+    `validate_validator_boundary_consistency()` to every persisted evaluation
+    attempt. `libreevolve show` invokes the gate and focused tests cover clean
+    rows, missing boundary metadata, mismatched network/filesystem/resource/
+    secret fields through the shared helper, failure-history mismatch rows, and
+    manifest-backed legacy rows.
+  - Remaining gap: this is a routine CLI inspection gate, not a
+    run-finalization, CI, or release-artifact promotion gate. Historical bundles
+    can still exist without being checked unless they are inspected through the
+    validation path.
+  - Required result: add run-finalization or CI artifact-promotion enforcement
+    if benchmark evidence bundles should fail automatically before archival,
+    without confusing this consistency gate with the separate sandbox/resource-
+    enforcement gap.
 
 - [ ] Add official 2026 AlphaEvolve impact-source provenance and claim
       boundaries.

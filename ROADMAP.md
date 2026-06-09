@@ -351,6 +351,14 @@ is not yet an AlphaEvolve reproduction.
   TODO coverage row coverage, active ledger links, and completed-ledger
   checklist evidence. It does not yet prove every long status phrase,
   benchmark qualifier, or paper claim against a specific evidence record.
+- Persisted validator-boundary consistency now has a CLI artifact gate:
+  `validate_run_artifact_validator_boundary_consistency()` loads manifest-backed
+  run directories, validates `policies.validator_execution`, scans
+  `history.jsonl` and `failure_history.jsonl`, requires
+  `evaluation.metadata.validator_boundary` on each persisted attempt, and
+  `libreevolve show` fails missing, legacy, or mismatched boundary evidence.
+  This remains audit consistency for the declared local-subprocess boundary,
+  not OS/container sandbox or quota enforcement.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   GigaEvo, CodeEvolve, and MadEvolve features as inspired unless paper behavior
   is actually implemented.

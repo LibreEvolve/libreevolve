@@ -6,6 +6,7 @@ from libreevolve.core.validator_policy import (
     VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS,
     VALIDATOR_BOUNDARY_CONSISTENCY_VALIDATOR,
     VALIDATOR_EXECUTION_POLICY_SCHEMA,
+    validate_run_artifact_validator_boundary_consistency,
     validate_validator_boundary_consistency,
     validate_validator_execution_policy,
 )
@@ -144,3 +145,136 @@ def test_validator_boundary_consistency_rejects_mismatched_attempt_boundary():
     assert "boundary_invalid_host_filesystem_boundary" in codes
     assert "boundary_resource_limit_policy_mismatch" in codes
     assert "boundary_invalid_cpu_limit_policy" in codes
+
+
+def test_run_artifact_validator_boundary_consistency_accepts_current_rows(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    policy = _validator_execution_policy("deny")
+    boundary = _validator_boundary_metadata("deny")
+    (run_dir / "manifest.json").write_text(
+        json.dumps({"runtime": {"status": "completed"}, "policies": {"validator_execution": policy}}),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(
+        json.dumps({"evaluation": {"metadata": {"validator_boundary": boundary}}}) + "\n",
+        encoding="utf-8",
+    )
+    (run_dir / "failure_history.jsonl").write_text(
+        json.dumps({"evaluation": {"metadata": {"validator_boundary": boundary}}}) + "\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is True
+    assert validation.manifest_policy_present is True
+    assert validation.checked_attempts == 2
+    assert validation.checked_streams == ["history.jsonl", "failure_history.jsonl"]
+    assert validation.issues == []
+
+
+def test_run_artifact_validator_boundary_consistency_rejects_missing_boundary(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(
+        json.dumps({"evaluation": {"metadata": {}}}) + "\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.checked_attempts == 0
+    assert "missing_validator_boundary" in codes
+    assert "missing_evaluation_attempts" in codes
+
+
+def test_run_artifact_validator_boundary_consistency_rejects_mismatched_failure_row(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("deny")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(
+        json.dumps(
+            {
+                "evaluation": {
+                    "metadata": {"validator_boundary": _validator_boundary_metadata("deny")}
+                }
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (run_dir / "failure_history.jsonl").write_text(
+        json.dumps(
+            {
+                "evaluation": {
+                    "metadata": {"validator_boundary": _validator_boundary_metadata("host")}
+                }
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert validation.checked_attempts == 2
+    assert "boundary_network_policy_mismatch" in codes
+    assert any(
+        issue.stream == "failure_history.jsonl" and issue.line_number == 1
+        for issue in validation.issues
+    )
+
+
+def test_run_artifact_validator_boundary_consistency_rejects_manifest_backed_legacy_rows(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(json.dumps({"fitness": 1.0}) + "\n", encoding="utf-8")
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_evaluation" in codes
+    assert "missing_evaluation_attempts" in codes
+
+
+def test_run_artifact_validator_boundary_consistency_skips_history_only_legacy_runs(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is False
+    assert validation.manifest_policy_present is False
+    assert validation.issues[0].code == "invalid_manifest_json"

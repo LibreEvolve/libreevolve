@@ -238,6 +238,12 @@ Metric-aggregation diagnostics can now be narrowed with
 Validator-boundary diagnostics can now be narrowed with
 `validator_boundary_fields`, a safe allowlist over local-subprocess boundary,
 network, secret, and resource-limit fields.
+Manifest-backed run bundles now have a persisted validator-boundary consistency
+gate: `validate_run_artifact_validator_boundary_consistency()` checks
+`manifest.json` `policies.validator_execution` against every `history.jsonl`
+and `failure_history.jsonl` evaluation boundary, and `libreevolve show`
+reports stream/line diagnostics for missing, legacy, or mismatched boundary
+rows.
 Execution diagnostics can now be narrowed with `execution_diagnostic_groups`,
 a safe allowlist over validator boundary, stdin, diagnostic-output, and
 timeout-cleanup subgroups.

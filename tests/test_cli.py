@@ -16,7 +16,8 @@ from libreevolve.cli import (
 from libreevolve.core.best_artifacts import BestArtifactExportError, _write_best_artifacts
 from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace
-from libreevolve.core.database import ProgramDatabase
+from libreevolve.core.database import ProgramDatabase, _validator_execution_policy
+from libreevolve.core.evaluator import _validator_boundary_metadata
 from libreevolve.core.loop import _runtime_llm_scheduler_state, _runtime_rng_state
 from libreevolve.llm.ensemble import LLMEnsemble
 from libreevolve.plugins.base import PluginBase
@@ -117,7 +118,10 @@ def _show_current_row(program_id: str, fitness: float, generation: int, code: st
             }
         },
         "metrics": {"score": fitness, "is_valid": True},
-        "evaluation": {"is_valid": True},
+        "evaluation": {
+            "is_valid": True,
+            "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+        },
     }
 
 
@@ -141,7 +145,8 @@ def _write_show_manifest(
             "status": status,
             "stop_reason": stop_reason,
             "history": {"programs_logged": programs_logged},
-        }
+        },
+        "policies": {"validator_execution": _validator_execution_policy("host")},
     }
     if config is not None:
         manifest["config"] = config
@@ -1627,6 +1632,56 @@ def test_show_reports_completed_manifest_runtime_status(tmp_path):
     assert r.exit_code == 0
     assert "Run status:     completed (stop_reason: max_generations)" in r.output
     assert "Selection:      archive-retained valid" in r.output
+    assert "Validator boundary: checked_attempts=1; streams=history.jsonl" in r.output
+
+
+def test_show_rejects_manifest_backed_row_without_validator_boundary(tmp_path):
+    row = _show_current_row("a", 0.9, 1, "x=2")
+    row["evaluation"] = {"is_valid": True, "metadata": {}}
+    _write_show_history(tmp_path, [row])
+    _write_show_manifest(tmp_path)
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "Validator boundary artifact validation failed" in r.output
+    assert "history.jsonl line 1" in r.output
+    assert "missing_validator_boundary" in r.output
+
+
+def test_show_rejects_manifest_backed_failure_boundary_mismatch(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    _write_show_manifest(
+        tmp_path,
+        status="completed",
+        stop_reason="max_generations",
+        programs_logged=1,
+    )
+    mutation = "bad mutation"
+    (tmp_path / "failure_history.jsonl").write_text(
+        json.dumps(
+            {
+                "program_id": "failed",
+                "parent_id": "a",
+                "generation": 2,
+                "mutation_text": mutation,
+                "mutation_sha256": hashlib.sha256(mutation.encode("utf-8")).hexdigest(),
+                "evaluation": {
+                    "metadata": {
+                        "validator_boundary": _validator_boundary_metadata("deny")
+                    }
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "failure_history.jsonl line 1" in r.output
+    assert "boundary_network_policy_mismatch" in r.output
 
 
 def test_show_reports_aborted_after_seed_as_best_so_far(tmp_path):
@@ -2070,7 +2125,10 @@ def test_show_accepts_matching_archive_admission_program_id(tmp_path):
                 "selection_score": 1.0,
             }
         },
-        "evaluation": {"is_valid": True},
+        "evaluation": {
+            "is_valid": True,
+            "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+        },
     }
     (tmp_path / "history.jsonl").write_text(json.dumps(row), encoding="utf-8")
 
@@ -2088,7 +2146,10 @@ def test_show_allows_current_history_without_archive_admission_program_id(tmp_pa
         "fitness": 1.0,
         "generation": 0,
         "metadata": {"archive_admission": {"admitted": True, "selection_score": 1.0}},
-        "evaluation": {"is_valid": True},
+        "evaluation": {
+            "is_valid": True,
+            "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+        },
     }
     (tmp_path / "history.jsonl").write_text(json.dumps(row), encoding="utf-8")
 
@@ -2377,7 +2438,10 @@ def test_show_allows_archive_cell_coordinates_when_manifest_bins_absent(tmp_path
                 "cell": [0, 999, 1],
             }
         },
-        "evaluation": {"is_valid": True},
+        "evaluation": {
+            "is_valid": True,
+            "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+        },
     }
     _write_show_history(tmp_path, [row])
     _write_show_manifest(tmp_path, programs_logged=1)
@@ -2824,10 +2888,13 @@ def test_show_prints_selected_diagnostics_and_failure_statistics(tmp_path):
                     "passed": False,
                     "score": 0.1,
                     "error": "stage_threshold_not_met",
-                }
-            ],
-        },
-    )
+                    }
+                ],
+                "metadata": {
+                    "validator_boundary": _validator_boundary_metadata("host")
+                },
+            },
+        )
     db.log_failure(
         failed,
         parent,
@@ -2878,6 +2945,7 @@ def test_show_prints_selected_diagnostics_and_failure_statistics(tmp_path):
                         "stage_budget_exhaustions": 0,
                     },
                     "metadata": {
+                        "validator_boundary": _validator_boundary_metadata("host"),
                         "llm_feedback": [
                             {
                                 "name": "simplicity",

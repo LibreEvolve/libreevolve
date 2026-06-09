@@ -1388,27 +1388,33 @@ directory and using the AlphaEvolve paper as the primary specification.
     validation rather than implying credential-presence and client-construction
     preflight are absent.
 
-- [ ] Add paper-facing validator-boundary consistency artifact evidence.
+- [ ] Extend paper-facing validator-boundary consistency evidence beyond CLI
+      inspection.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1, 2.4, and 2.6.
   - Requirement: run artifacts that support generated-program evaluation
     claims should preserve and verify the validator execution boundary used by
     each candidate attempt.
   - Partial status: `manifest.json` records
     `policies.validator_execution`; evaluator metadata records include
-    `evaluation.metadata.validator_boundary`; and
+    `evaluation.metadata.validator_boundary`; failure-history summaries retain
+    selected validator-boundary metadata; and
     `validate_validator_boundary_consistency()` can compare the manifest policy
     with an attempt boundary across execution, filesystem-capability, network,
     resource-limit, and secret-boundary claims. Direct validator-policy tests
     cover matching and mismatched records.
-  - Current gap: the paper-facing artifact surface still lacks an automated
-    manifest/history validator that applies the consistency contract to every
-    persisted evaluation attempt and reports missing, legacy, or drifting
-    boundary metadata before run artifacts are promoted as evidence.
-  - Required result: add paper-facing validation/report evidence for
-    policy-to-attempt boundary consistency, including clean-run, mismatch,
-    missing-boundary, and legacy-row diagnostics, while keeping this artifact
-    gate separate from the broader missing OS/container sandbox and
-    resource-quota enforcement.
+    `validate_run_artifact_validator_boundary_consistency()` now applies the
+    contract across manifest-backed `history.jsonl` and
+    `failure_history.jsonl` rows; `libreevolve show` invokes the gate and
+    reports stream/line diagnostics for missing, legacy, or drifting boundary
+    metadata.
+  - Current gap: the paper-facing artifact surface has a CLI inspection gate,
+    but no run-finalization, CI, or release-artifact promotion gate that
+    requires persisted policy-to-attempt boundary consistency before archiving
+    benchmark evidence.
+  - Required result: add promotion-time validation/report evidence for
+    policy-to-attempt boundary consistency while keeping this artifact gate
+    separate from the broader missing OS/container sandbox and resource-quota
+    enforcement.
 
 - [ ] Integrate restored run-local RNG with full AlphaEvolve replay claims.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.6.

@@ -5,6 +5,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libreevolve.core.jsonl import (
+    StrictJsonlError,
+    iter_strict_jsonl_objects,
+    load_strict_json_object,
+)
+
 VALIDATOR_EXECUTION_POLICY_SCHEMA = "libreevolve.validator_execution_policy.v1"
 VALIDATOR_FILESYSTEM_CAPABILITIES_SCHEMA = (
     "libreevolve.validator_filesystem_capabilities.v1"
@@ -31,6 +37,13 @@ VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS = (
     "resource_limit_policy",
     "secret_boundary",
 )
+RUN_ARTIFACT_VALIDATOR_BOUNDARY_CONSISTENCY_SCHEMA = (
+    "libreevolve.run_artifact_validator_boundary_consistency.v1"
+)
+RUN_ARTIFACT_VALIDATOR_BOUNDARY_STREAMS = (
+    "history.jsonl",
+    "failure_history.jsonl",
+)
 
 
 @dataclass(frozen=True)
@@ -56,6 +69,24 @@ class ValidatorBoundaryConsistencyValidation:
     network_policy: str | None
     compared_fields: list[str]
     issues: list[ValidatorPolicyIssue]
+
+
+@dataclass(frozen=True)
+class ValidatorBoundaryArtifactIssue:
+    code: str
+    message: str
+    stream: str | None = None
+    line_number: int | None = None
+
+
+@dataclass(frozen=True)
+class ValidatorBoundaryArtifactValidation:
+    ok: bool
+    schema: str
+    manifest_policy_present: bool
+    checked_attempts: int
+    checked_streams: list[str]
+    issues: list[ValidatorBoundaryArtifactIssue]
 
 
 def validate_validator_execution_policy(
@@ -161,6 +192,182 @@ def validate_validator_boundary_consistency(
         compared_fields=list(VALIDATOR_BOUNDARY_CONSISTENCY_FIELDS),
         issues=issues,
     )
+
+
+def validate_run_artifact_validator_boundary_consistency(
+    run_dir: str | Path,
+) -> ValidatorBoundaryArtifactValidation:
+    """Validate persisted evaluator-boundary evidence across a run directory."""
+    root = Path(run_dir)
+    issues: list[ValidatorBoundaryArtifactIssue] = []
+    checked_attempts = 0
+    checked_streams: list[str] = []
+    manifest_path = root / "manifest.json"
+    try:
+        manifest = load_strict_json_object(manifest_path, source="manifest.json")
+    except StrictJsonlError as exc:
+        return ValidatorBoundaryArtifactValidation(
+            ok=False,
+            schema=RUN_ARTIFACT_VALIDATOR_BOUNDARY_CONSISTENCY_SCHEMA,
+            manifest_policy_present=False,
+            checked_attempts=0,
+            checked_streams=[],
+            issues=[
+                ValidatorBoundaryArtifactIssue(
+                    "invalid_manifest_json",
+                    str(exc),
+                )
+            ],
+        )
+    runtime = manifest.get("runtime")
+    if runtime is None:
+        return ValidatorBoundaryArtifactValidation(
+            ok=True,
+            schema=RUN_ARTIFACT_VALIDATOR_BOUNDARY_CONSISTENCY_SCHEMA,
+            manifest_policy_present=False,
+            checked_attempts=0,
+            checked_streams=[],
+            issues=[],
+        )
+    policies = manifest.get("policies")
+    policy = policies.get("validator_execution") if isinstance(policies, dict) else None
+    if not isinstance(policy, dict):
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "missing_validator_execution_policy",
+                "manifest.json must include policies.validator_execution for run-boundary validation",
+            )
+        )
+        return ValidatorBoundaryArtifactValidation(
+            ok=False,
+            schema=RUN_ARTIFACT_VALIDATOR_BOUNDARY_CONSISTENCY_SCHEMA,
+            manifest_policy_present=False,
+            checked_attempts=0,
+            checked_streams=[],
+            issues=issues,
+        )
+
+    policy_validation = validate_validator_execution_policy(policy)
+    for issue in policy_validation.issues:
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                issue.code,
+                issue.message,
+                stream="manifest.json",
+            )
+        )
+
+    for stream in RUN_ARTIFACT_VALIDATOR_BOUNDARY_STREAMS:
+        path = root / stream
+        if not path.exists():
+            if stream == "history.jsonl":
+                issues.append(
+                    ValidatorBoundaryArtifactIssue(
+                        "missing_history_stream",
+                        "history.jsonl must exist for run-boundary validation",
+                        stream=stream,
+                    )
+                )
+            continue
+        checked_streams.append(stream)
+        try:
+            records = iter_strict_jsonl_objects(path, stream_name=stream)
+            for line_number, record in enumerate(records, start=1):
+                if _validate_run_artifact_boundary_record(
+                    policy,
+                    record,
+                    stream,
+                    line_number,
+                    issues,
+                ):
+                    checked_attempts += 1
+        except StrictJsonlError as exc:
+            issues.append(
+                ValidatorBoundaryArtifactIssue(
+                    "invalid_jsonl_stream",
+                    str(exc),
+                    stream=stream,
+                )
+            )
+
+    if checked_attempts == 0:
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "missing_evaluation_attempts",
+                "run-boundary validation requires at least one persisted evaluation attempt",
+            )
+        )
+    return ValidatorBoundaryArtifactValidation(
+        ok=not issues,
+        schema=RUN_ARTIFACT_VALIDATOR_BOUNDARY_CONSISTENCY_SCHEMA,
+        manifest_policy_present=True,
+        checked_attempts=checked_attempts,
+        checked_streams=checked_streams,
+        issues=issues,
+    )
+
+
+def _validate_run_artifact_boundary_record(
+    policy: dict[str, Any],
+    record: dict[str, Any],
+    stream: str,
+    line_number: int,
+    issues: list[ValidatorBoundaryArtifactIssue],
+) -> bool:
+    evaluation = record.get("evaluation")
+    if evaluation is None:
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "missing_evaluation",
+                "persisted current run rows must include evaluation objects",
+                stream=stream,
+                line_number=line_number,
+            )
+        )
+        return False
+    if not isinstance(evaluation, dict):
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "invalid_evaluation",
+                "evaluation must be an object",
+                stream=stream,
+                line_number=line_number,
+            )
+        )
+        return False
+    metadata = evaluation.get("metadata")
+    if not isinstance(metadata, dict):
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "missing_evaluation_metadata",
+                "evaluation.metadata must carry validator_boundary",
+                stream=stream,
+                line_number=line_number,
+            )
+        )
+        return False
+    boundary = metadata.get("validator_boundary")
+    if not isinstance(boundary, dict):
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                "missing_validator_boundary",
+                "evaluation.metadata.validator_boundary must be an object",
+                stream=stream,
+                line_number=line_number,
+            )
+        )
+        return False
+    validation = validate_validator_boundary_consistency(policy, boundary)
+    for issue in validation.issues:
+        issues.append(
+            ValidatorBoundaryArtifactIssue(
+                issue.code,
+                issue.message,
+                stream=stream,
+                line_number=line_number,
+            )
+        )
+    return True
 
 
 def _load_policy(

@@ -1196,6 +1196,10 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   `validate_validator_boundary_consistency.v1` compares the startup policy to
   attempt-level `evaluation.metadata.validator_boundary` records for the shared
   execution, filesystem, network, resource, and secret-boundary claims.
+  `validate_run_artifact_validator_boundary_consistency()` applies that check
+  across manifest-backed `history.jsonl` and `failure_history.jsonl` rows, and
+  `libreevolve show` fails current run bundles when persisted evaluation
+  attempts are missing boundary metadata or drift from the manifest policy.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
   Identical configured variants are intentionally admitted as separate prompt

@@ -698,6 +698,12 @@ Startup manifests record `policies.validator_execution`, including the
 `validate_validator_boundary_consistency.v1` contract for checking that
 attempt-level `evaluation.metadata.validator_boundary` records agree with the
 startup execution, filesystem, network, resource, and secret-boundary claims.
+`validate_run_artifact_validator_boundary_consistency()` applies that contract
+to manifest-backed `history.jsonl` and `failure_history.jsonl` rows, requiring
+each persisted evaluation attempt to carry `evaluation.metadata.validator_boundary`;
+`libreevolve show` runs this artifact check before displaying current run
+bundles and fails missing, legacy, or drifting boundary evidence with a stream
+and line diagnostic.
 proposal, evaluator, retry, artifact, and grader-feedback fields are rendered
 as JSON strings under typed feedback sections. Parent and inspiration
 workspaces are rendered as typed, length-counted, JSON-escaped file records
@@ -2422,7 +2428,12 @@ filesystem policy, structured `filesystem_capabilities`, wall-clock-only
 timeout policy, structured `resource_limit_policy`, unsupported CPU/memory/GPU/
 disk/process-count limits, and the minimal-environment/redacted-diagnostic
 secret boundary. The filesystem and resource records are audit evidence for the
-current local runner, not an OS/container security sandbox. Validator standard
+current local runner, not an OS/container security sandbox.
+`validate_run_artifact_validator_boundary_consistency()` now validates current
+run bundles by loading `manifest.json`, scanning `history.jsonl` and
+`failure_history.jsonl`, and applying the policy-to-boundary consistency check
+to every persisted evaluation attempt; `libreevolve show` invokes this gate for
+manifest-backed runs. Validator standard
 input defaults to `subprocess.DEVNULL`;
 interactive prompts are unsupported by default, `input()` receives EOF, and
 direct `sys.stdin.read()` returns an empty string. Problem config may set

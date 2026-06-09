@@ -34,6 +34,7 @@ from libreevolve.core.database import (
     validate_run_directory_path,
 )
 from libreevolve.core.jsonl import StrictJsonlError
+from libreevolve.core.evaluator import _validator_boundary_metadata
 from libreevolve.core.prompt import PromptSampler
 from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
@@ -2692,7 +2693,14 @@ def test_log_failure_writes_queryable_failure_record():
         primary_file="main.py",
         parent_id=parent.id,
         fitness=-0.4,
-        evaluation={"is_valid": False, "error": "wrong", "stdout": "bad"},
+        evaluation={
+            "is_valid": False,
+            "error": "wrong",
+            "stdout": "bad",
+            "metadata": {
+                "validator_boundary": _validator_boundary_metadata("host")
+            },
+        },
     )
 
     record = db.log_failure(child, parent, "<<<FILE helper.py\nvalue = 0\n>>>FILE", None)
@@ -2712,6 +2720,7 @@ def test_log_failure_writes_queryable_failure_record():
         for line in (Path(tmpdir) / "t" / "failure_history.jsonl").read_text().splitlines()
     ]
     assert records[0]["evaluation"]["stdout"] == "bad"
+    assert records[0]["evaluation"]["metadata"]["validator_boundary"]["network_policy"] == "host"
 
 
 @pytest.mark.parametrize(

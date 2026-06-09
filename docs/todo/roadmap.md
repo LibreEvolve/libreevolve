@@ -210,22 +210,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     from AlphaEvolve-style evaluator workloads that actually perform
     substantial search or model training.
 
-- [ ] Add roadmap gate for persisted validator-boundary consistency evidence.
+- [ ] Keep roadmap validator-boundary consistency gate scoped to CLI artifact
+      validation until promotion/finalization enforcement exists.
   - Spec evidence: AlphaEvolve-scale evaluator provenance should let a reader
     verify that every saved candidate attempt used the execution boundary
     claimed by the run manifest, not just that the manifest names a policy.
-  - Current evidence: `ROADMAP.md` tracks local subprocess validators,
-    minimal environments, wall-clock budgets, process-tree cleanup, and the
-    broader OS/container sandbox/resource-control gap. It does not yet require
-    a run-artifact validator that loads `manifest.json`, scans saved
-    evaluation metadata, and applies
-    `validate_validator_boundary_consistency()` to every
-    `evaluation.metadata.validator_boundary` record.
-  - Required result: when persisted validator-boundary consistency validation
-    lands, update ROADMAP, README, papers index, and code/paper TODO entries
-    together so roadmap wording separates the callable policy helper from a
-    history-wide artifact gate and keeps both distinct from stronger
-    sandbox/resource enforcement.
+  - Current evidence: `ROADMAP.md` now records that
+    `validate_run_artifact_validator_boundary_consistency()` loads
+    manifest-backed run directories, validates `policies.validator_execution`,
+    scans `history.jsonl` and `failure_history.jsonl`, requires
+    `evaluation.metadata.validator_boundary` on each persisted attempt, and
+    that `libreevolve show` fails missing, legacy, or mismatched boundary
+    evidence. ROADMAP keeps this distinct from stronger OS/container sandbox
+    and resource-quota enforcement.
+  - Required result: when run-finalization, CI, or release-artifact promotion
+    enforcement lands, update ROADMAP, README, papers index, and code/paper TODO
+    entries together so roadmap wording separates CLI inspection from automatic
+    artifact-promotion gates and from stronger sandbox/resource enforcement.
 
 - [ ] Keep binary/static roadmap scope aligned with implemented static-member
       support.

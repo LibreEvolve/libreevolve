@@ -36,6 +36,9 @@ from libreevolve.core.database import (
     load_runtime_archive_state_snapshot,
 )
 from libreevolve.core.redaction import redact_sensitive_text
+from libreevolve.core.validator_policy import (
+    validate_run_artifact_validator_boundary_consistency,
+)
 from libreevolve.core.yaml_utils import redacted_yaml_error
 from libreevolve.population.program import validate_program_identity, validate_program_metrics
 
@@ -404,6 +407,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     evaluation_summary = _evaluation_diagnostics_summary(best, best_line_number)
     feedback_summary = _feedback_summary(best, best_line_number)
     failure_summary = _failure_statistics_summary(run_path)
+    validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
     metrics = best.get("metrics")
     workspace = _history_record_workspace(best, best_line_number)
     click.echo(f"Total programs: {total}")
@@ -422,6 +426,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(feedback_summary)
     if failure_summary:
         click.echo(failure_summary)
+    if validator_boundary_summary:
+        click.echo(validator_boundary_summary)
     if metrics:
         click.echo(f"Metrics:        {json.dumps(metrics, sort_keys=True, allow_nan=False)}")
     if workspace is None:
@@ -478,6 +484,29 @@ def _show_runtime_status(run_dir: Path, history_rows: int) -> str:
     if status == "completed":
         return f"completed (stop_reason: {stop_reason})"
     return f"aborted best-so-far (stop_reason: {stop_reason})"
+
+
+def _validator_boundary_artifact_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+    if not validation.manifest_policy_present and not validation.issues:
+        return None
+    if not validation.ok:
+        issue = validation.issues[0]
+        location = issue.stream or "run artifacts"
+        if issue.line_number is not None:
+            location = f"{location} line {issue.line_number}"
+        raise click.ClickException(
+            "Validator boundary artifact validation failed: "
+            f"{location}: {issue.code}: {issue.message}"
+        )
+    streams = ",".join(validation.checked_streams) or "none"
+    return (
+        "Validator boundary: "
+        f"checked_attempts={validation.checked_attempts}; streams={streams}"
+    )
 
 
 def _show_archive_cell_upper_bound(run_dir: Path) -> int | None:

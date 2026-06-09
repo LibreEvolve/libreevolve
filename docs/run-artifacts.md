@@ -2118,6 +2118,13 @@ policy/boundary fields it compares. `validate_validator_boundary_consistency()`
 checks that an attempt-level `evaluation.metadata.validator_boundary` matches
 the startup policy for the execution, filesystem, network, resource, and secret
 boundary claims while still leaving `sandbox_ready: false`.
+`validate_run_artifact_validator_boundary_consistency()` loads a run directory,
+validates `manifest.json` `policies.validator_execution`, scans
+`history.jsonl` plus `failure_history.jsonl`, requires every persisted
+evaluation attempt to carry `evaluation.metadata.validator_boundary`, and
+applies the consistency helper to each row. `libreevolve show` runs this
+artifact gate for manifest-backed runs and reports the first missing, legacy,
+or mismatched boundary with its stream and line number.
 Startup manifests also persist the effective `config.validator_network_policy` and
 `policies.validator_network`, so allowed host/deny modes and the remaining
 OS/container network-sandbox gap are visible before individual evaluation

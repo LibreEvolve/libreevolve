@@ -5366,6 +5366,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "primary_prompt_instruction_report": (
             _primary_prompt_instruction_report(programs)
         ),
+        "stochastic_prompt_format_distribution_report": (
+            _stochastic_prompt_format_distribution_report(
+                programs,
+                db.startup_manifest_snapshot(),
+            )
+        ),
         "prompt_prior_score_provenance_report": (
             _prompt_prior_score_provenance_report(
                 programs,
@@ -19683,6 +19689,462 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
         elif claim_ready != (bool(records) and not remaining_gap):
             issues.append(
                 {"code": "claim_ready_mismatch", "message": "claim_ready must match records and remaining_gap"}
+            )
+    return {"schema": schema, "ok": not issues, "issues": issues}
+
+
+def _stochastic_prompt_format_distribution_report(
+    programs: list[Program],
+    startup_manifest: Mapping[str, object],
+) -> dict:
+    option_sets = _stochastic_prompt_format_option_sets(startup_manifest)
+    generated = [
+        program for program in programs if _prompt_current_binding_is_generated(program)
+    ]
+    records = [
+        record
+        for program in generated
+        for record in _stochastic_prompt_format_records(program, option_sets)
+    ]
+    prompt_ids = {
+        record.get("prompt_program_id")
+        for record in records
+        if isinstance(record.get("prompt_program_id"), str)
+    }
+    option_names = sorted(
+        {
+            record.get("marker_name")
+            for record in records
+            if isinstance(record.get("marker_name"), str)
+        }
+    )
+    selected_hash_match_count = sum(
+        1
+        for record in records
+        if record.get("selected_text_sha256")
+        == record.get("selected_alternative", {}).get("text_sha256")
+    )
+    prompt_call_link_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("prompt_program_id"), str)
+        and _is_sha256_hex(record.get("prompt_sha256"))
+    )
+    report = {
+        "schema": "libreevolve.stochastic_prompt_format_distribution_report.v1",
+        "source": "startup_manifest_prompt_format_options_and_prompt_diagnostics",
+        "generated_candidate_count": len(generated),
+        "formatted_prompt_record_count": len(records),
+        "option_set_count": len(option_sets),
+        "option_set_names": sorted(option_sets),
+        "prompt_program_count": len(prompt_ids),
+        "marker_name_count": len(option_names),
+        "marker_names": option_names,
+        "selected_hash_match_count": selected_hash_match_count,
+        "prompt_call_link_count": prompt_call_link_count,
+        "records": records[:50],
+        "records_limit": 50,
+        "records_truncated": len(records) > 50,
+        "config_source_policy": {
+            "source": "startup_manifest.config.prompt_format_options",
+            "external_config_file": "not_recorded",
+            "effective_config_boundary": "inline_or_resolved_effective_config",
+            "text_retention": "manifest_prompt_format_options_metadata_hashes",
+        },
+        "rng_boundary": {
+            "rng_owner": "run_local_framework_random",
+            "selection_policy": "weighted_run_rng_reuse_by_marker_name",
+            "replay_surface": "runtime.rng_snapshot_after_run",
+            "provider_outputs": "outside_rng_replay_boundary",
+        },
+        "claim_ready": bool(records),
+        "claim_readiness": {
+            "formatted_prompt_records_present": bool(records),
+            "option_distributions_recorded": bool(records),
+            "selected_alternative_hashes_joined": bool(records)
+            and selected_hash_match_count == len(records),
+            "prompt_call_linkage_recorded": bool(records)
+            and prompt_call_link_count == len(records),
+            "rng_boundary_recorded": True,
+            "separate_config_file_source_recorded": False,
+            "human_authored_alternatives_certified": False,
+            "full_alphaevolve_stochastic_formatting_parity": False,
+            "remaining_gap": [],
+        },
+    }
+    report["validation"] = validate_stochastic_prompt_format_distribution_report(
+        report
+    )
+    return report
+
+
+def _stochastic_prompt_format_option_sets(
+    startup_manifest: Mapping[str, object],
+) -> dict[str, dict]:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    options = (
+        config.get("prompt_format_options")
+        if isinstance(config.get("prompt_format_options"), Mapping)
+        else {}
+    )
+    metadata = (
+        config.get("prompt_format_options_metadata")
+        if isinstance(config.get("prompt_format_options_metadata"), Mapping)
+        else {}
+    )
+    result: dict[str, dict] = {}
+    for name, alternatives in options.items():
+        if not isinstance(name, str) or not isinstance(alternatives, list):
+            continue
+        metadata_items = metadata.get(name) if isinstance(metadata, Mapping) else None
+        if not isinstance(metadata_items, list):
+            metadata_items = []
+        weights: list[float] = []
+        normalized_alternatives: list[dict] = []
+        for index, alternative in enumerate(alternatives):
+            if isinstance(alternative, Mapping):
+                weight = alternative.get("weight", 1.0)
+            else:
+                weight = 1.0
+            if isinstance(weight, bool) or not isinstance(weight, (int, float)):
+                continue
+            numeric_weight = float(weight)
+            if not math.isfinite(numeric_weight) or numeric_weight <= 0.0:
+                continue
+            weights.append(numeric_weight)
+            item_metadata = (
+                metadata_items[index]
+                if index < len(metadata_items)
+                and isinstance(metadata_items[index], Mapping)
+                else {}
+            )
+            normalized_alternatives.append(
+                {
+                    "index": index,
+                    "weight": numeric_weight,
+                    "text_sha256": item_metadata.get("sha256"),
+                    "text_chars": item_metadata.get("chars"),
+                    "text_retention": item_metadata.get("retention"),
+                    "text_redacted": item_metadata.get("redacted"),
+                }
+            )
+        total_weight = sum(weights)
+        for alternative in normalized_alternatives:
+            alternative["probability"] = (
+                alternative["weight"] / total_weight if total_weight > 0 else None
+            )
+        result[name] = {
+            "option_set_id": f"prompt_format_options.{name}",
+            "marker_name": name,
+            "config_source": "startup_manifest.config.prompt_format_options",
+            "source_kind": "inline_or_effective_config",
+            "alternative_count": len(normalized_alternatives),
+            "total_weight": total_weight,
+            "distribution_sha256": hashlib.sha256(
+                strict_json_dumps(
+                    [
+                        {
+                            "index": item["index"],
+                            "weight": item["weight"],
+                            "text_sha256": item["text_sha256"],
+                        }
+                        for item in normalized_alternatives
+                    ]
+                ).encode("utf-8")
+            ).hexdigest(),
+            "alternatives": normalized_alternatives,
+        }
+    return result
+
+
+def _stochastic_prompt_format_records(
+    program: Program,
+    option_sets: Mapping[str, dict],
+) -> list[dict]:
+    metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+    prompt_diagnostics = (
+        metadata.get("prompt_diagnostics")
+        if isinstance(metadata.get("prompt_diagnostics"), Mapping)
+        else {}
+    )
+    formatting = (
+        prompt_diagnostics.get("stochastic_formatting")
+        if isinstance(prompt_diagnostics.get("stochastic_formatting"), Mapping)
+        else {}
+    )
+    selections = (
+        formatting.get("selections")
+        if isinstance(formatting.get("selections"), list)
+        else []
+    )
+    records: list[dict] = []
+    for selection in selections:
+        if not isinstance(selection, Mapping):
+            continue
+        name = selection.get("name")
+        option_set = option_sets.get(name) if isinstance(name, str) else None
+        alternatives = (
+            option_set.get("alternatives")
+            if isinstance(option_set, Mapping)
+            else []
+        )
+        choice_index = selection.get("choice_index")
+        selected_alternative = None
+        if (
+            isinstance(choice_index, int)
+            and not isinstance(choice_index, bool)
+            and isinstance(alternatives, list)
+            and 0 <= choice_index < len(alternatives)
+        ):
+            selected_alternative = alternatives[choice_index]
+        records.append(
+            {
+                "candidate_id": program.id,
+                "candidate_status": _prompt_prior_candidate_status(program),
+                "generation": program.generation,
+                "prompt_program_id": (
+                    metadata.get("prompt_program_id")
+                    if isinstance(metadata.get("prompt_program_id"), str)
+                    else None
+                ),
+                "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+                "prompt_sha256_scope": prompt_diagnostics.get("prompt_sha256_scope"),
+                "marker_syntax": formatting.get("marker_syntax"),
+                "selection_policy": formatting.get("selection_policy"),
+                "marker_name": name,
+                "option_set_id": (
+                    option_set.get("option_set_id")
+                    if isinstance(option_set, Mapping)
+                    else None
+                ),
+                "config_source": (
+                    option_set.get("config_source")
+                    if isinstance(option_set, Mapping)
+                    else None
+                ),
+                "source_kind": (
+                    option_set.get("source_kind")
+                    if isinstance(option_set, Mapping)
+                    else None
+                ),
+                "distribution_sha256": (
+                    option_set.get("distribution_sha256")
+                    if isinstance(option_set, Mapping)
+                    else None
+                ),
+                "alternatives": alternatives if isinstance(alternatives, list) else [],
+                "choice_index": choice_index,
+                "selected_text_sha256": selection.get("text_sha256"),
+                "selected_weight": selection.get("weight"),
+                "selected_alternative": selected_alternative,
+                "weight_source": selection.get("weight_source"),
+                "weight_override_source": (
+                    "prompt_context_policy.prompt_format_weights"
+                    if selection.get("weight_source") == "prompt_context_policy"
+                    else "prompt_format_options"
+                ),
+                "occurrences": selection.get("occurrences"),
+                "rng_boundary": "run_local_framework_random",
+                "prompt_linkage": {
+                    "prompt_program_id": metadata.get("prompt_program_id"),
+                    "prompt_sha256": prompt_diagnostics.get("prompt_sha256"),
+                    "llm_call_ids": _mutation_call_ids(metadata),
+                },
+            }
+        )
+    return records
+
+
+def _mutation_call_ids(metadata: Mapping[str, object]) -> list[str]:
+    calls = metadata.get("llm_calls")
+    if not isinstance(calls, list):
+        return []
+    return [
+        call.get("id")
+        for call in calls
+        if isinstance(call, Mapping)
+        and call.get("role") == "mutation"
+        and isinstance(call.get("id"), str)
+    ][:10]
+
+
+def validate_stochastic_prompt_format_distribution_report(report: object) -> dict:
+    issues: list[dict] = []
+    schema = "libreevolve.stochastic_prompt_format_distribution_report.v1"
+    if not isinstance(report, dict):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "stochastic prompt-format report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "generated_candidate_count",
+        "formatted_prompt_record_count",
+        "option_set_count",
+        "option_set_names",
+        "prompt_program_count",
+        "marker_name_count",
+        "marker_names",
+        "selected_hash_match_count",
+        "prompt_call_link_count",
+        "records",
+        "records_limit",
+        "records_truncated",
+        "config_source_policy",
+        "rng_boundary",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"stochastic prompt-format report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != schema:
+        issues.append({"code": "invalid_schema", "message": "unsupported schema"})
+    if (
+        report.get("source")
+        != "startup_manifest_prompt_format_options_and_prompt_diagnostics"
+    ):
+        issues.append({"code": "invalid_source", "message": "unsupported source"})
+    for field in (
+        "generated_candidate_count",
+        "formatted_prompt_record_count",
+        "option_set_count",
+        "prompt_program_count",
+        "marker_name_count",
+        "selected_hash_match_count",
+        "prompt_call_link_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_records", "message": "records must be a list"})
+        records = []
+    _validate_report_count(report, "formatted_prompt_record_count", len(records), issues)
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {"code": "invalid_record", "message": f"record {index} must be an object"}
+            )
+            continue
+        if not isinstance(record.get("candidate_id"), str):
+            issues.append(
+                {"code": "invalid_candidate_id", "message": f"record {index} candidate_id is invalid"}
+            )
+        if not _is_sha256_hex(record.get("prompt_sha256")):
+            issues.append(
+                {"code": "invalid_prompt_hash", "message": f"record {index} prompt hash is invalid"}
+            )
+        if not _is_sha256_hex(record.get("distribution_sha256")):
+            issues.append(
+                {"code": "invalid_distribution_hash", "message": f"record {index} distribution hash is invalid"}
+            )
+        alternatives = record.get("alternatives")
+        if not isinstance(alternatives, list) or not alternatives:
+            issues.append(
+                {"code": "invalid_alternatives", "message": f"record {index} alternatives must be non-empty"}
+            )
+            alternatives = []
+        probability_total = 0.0
+        for alt_index, alternative in enumerate(alternatives):
+            if not isinstance(alternative, Mapping):
+                issues.append(
+                    {"code": "invalid_alternative", "message": f"record {index} alternative {alt_index} must be an object"}
+                )
+                continue
+            if alternative.get("index") != alt_index:
+                issues.append(
+                    {"code": "invalid_alternative_index", "message": f"record {index} alternative index mismatch"}
+                )
+            if not _is_sha256_hex(alternative.get("text_sha256")):
+                issues.append(
+                    {"code": "invalid_alternative_text_hash", "message": f"record {index} alternative hash is invalid"}
+                )
+            probability = alternative.get("probability")
+            if (
+                isinstance(probability, bool)
+                or not isinstance(probability, (int, float))
+                or not math.isfinite(float(probability))
+                or float(probability) <= 0.0
+            ):
+                issues.append(
+                    {"code": "invalid_alternative_probability", "message": f"record {index} alternative probability is invalid"}
+                )
+            else:
+                probability_total += float(probability)
+        if alternatives and not math.isclose(probability_total, 1.0, rel_tol=1e-9, abs_tol=1e-9):
+            issues.append(
+                {
+                    "code": "invalid_probability_total",
+                    "message": f"record {index} normalized probabilities must sum to 1",
+                }
+            )
+        selected = record.get("selected_alternative")
+        choice_index = record.get("choice_index")
+        if not isinstance(selected, Mapping):
+            issues.append(
+                {"code": "invalid_selected_alternative", "message": f"record {index} selected alternative is invalid"}
+            )
+        else:
+            if selected.get("index") != choice_index:
+                issues.append(
+                    {"code": "selected_choice_index_mismatch", "message": f"record {index} selected index mismatch"}
+                )
+            if selected.get("text_sha256") != record.get("selected_text_sha256"):
+                issues.append(
+                    {"code": "selected_hash_mismatch", "message": f"record {index} selected hash must match option set"}
+                )
+        if record.get("selection_policy") != "weighted_run_rng_reuse_by_marker_name":
+            issues.append(
+                {"code": "invalid_selection_policy", "message": f"record {index} selection policy is unsupported"}
+            )
+        if record.get("rng_boundary") != "run_local_framework_random":
+            issues.append(
+                {"code": "invalid_rng_boundary", "message": f"record {index} rng boundary is unsupported"}
+            )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"}
+        )
+    else:
+        if readiness.get("separate_config_file_source_recorded") is not False:
+            issues.append(
+                {"code": "separate_config_source_overclaim", "message": "separate config file source must remain false"}
+            )
+        if readiness.get("human_authored_alternatives_certified") is not False:
+            issues.append(
+                {"code": "human_authorship_overclaim", "message": "human authorship certification must remain false"}
+            )
+        if readiness.get("full_alphaevolve_stochastic_formatting_parity") is not False:
+            issues.append(
+                {"code": "stochastic_formatting_parity_overclaim", "message": "full AlphaEvolve stochastic formatting parity must remain false"}
+            )
+        if report.get("claim_ready") != bool(records):
+            issues.append(
+                {"code": "claim_ready_mismatch", "message": "claim_ready must reflect formatted records"}
             )
     return {"schema": schema, "ok": not issues, "issues": issues}
 

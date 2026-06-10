@@ -6,6 +6,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [x] Track stochastic prompt-format probability provenance.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says stochastic
+    formatting uses template placeholders with human-provided alternatives for
+    increased diversity, instantiated using probability distributions from a
+    separate config file.
+  - Status: `runtime.history.stochastic_prompt_format_distribution_report`
+    now records paper-facing stochastic-format evidence with prompt ids,
+    marker names, option-set ids, inline/effective config source boundaries,
+    alternative indexes, normalized probabilities, selected alternative
+    hashes/indexes, weight override source, prompt/call linkage, RNG/replay
+    boundary, and overclaim checks.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_loop_logs_stochastic_prompt_format_selection_metadata
+    -q` passed.
+  - Remaining gap: separate config-file source attribution and certified
+    human-authored alternatives remain non-parity boundaries.
+
 - [x] Track primary-prompt instruction and target-solution evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 2.2 says the
     primary prompt includes previously discovered solutions sampled from the

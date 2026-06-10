@@ -4,6 +4,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add stochastic prompt-format distribution provenance.
+  - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
+    template placeholders with human-provided alternatives for increased
+    diversity, instantiated using probability distributions from a separate
+    config file.
+  - Status: completed manifests now include
+    `runtime.history.stochastic_prompt_format_distribution_report` with schema
+    `libreevolve.stochastic_prompt_format_distribution_report.v1`. The report
+    joins generated prompt records to startup `prompt_format_options`, records
+    option-set ids, text hashes, weights, normalized probabilities, selected
+    alternative index/hash, weight source or prompt-context override source,
+    prompt/call linkage, inline/effective-config source boundary, and the
+    run-local framework RNG replay boundary.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_loop_logs_stochastic_prompt_format_selection_metadata
+    -q` passed.
+  - Remaining gap: separate config-file source attribution and certified
+    human-authored alternative provenance remain non-parity boundaries.
+
 - [x] Add primary-prompt instruction and target-solution provenance.
   - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt
     comprises multiple previously discovered solutions sampled from the

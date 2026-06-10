@@ -157,6 +157,13 @@ LibreEvolve has:
   channel presence, mutation-mode constraints, telemetry call joins when
   present, and the current serialized-single-prompt provider placement
   boundary instead of role-separated provider message parity
+- runtime stochastic-formatting distribution provenance under
+  `runtime.history.stochastic_prompt_format_distribution_report`, linking
+  generated prompt ids to `[[prompt:name]]` option sets, normalized
+  probabilities, selected alternative hashes/indexes, weight-source or
+  prompt-context override source, inline/effective-config boundary, and the
+  run-local framework RNG replay boundary while keeping separate config-file
+  source attribution and human-authorship certification out of parity claims
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

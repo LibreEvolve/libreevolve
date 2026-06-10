@@ -582,6 +582,15 @@ available, and the current serialized-single-prompt provider placement. This is
 paper-facing primary-prompt ingredient evidence; role-separated
 system/developer/user provider messages remain unsupported and are not claimed
 as AlphaEvolve parity.
+Completed manifests also include
+`runtime.history.stochastic_prompt_format_distribution_report` with schema
+`libreevolve.stochastic_prompt_format_distribution_report.v1`. It links
+generated prompt ids to `[[prompt:name]]` option sets, normalized option
+probabilities, selected alternative hashes/indexes, weight-source or
+prompt-context override source, prompt/call linkage, inline/effective-config
+source boundary, and the run-local framework RNG replay boundary. Separate
+config-file source attribution and certified human-authored alternative
+provenance remain non-parity boundaries.
 
 AlphaEvolve existing-codebase integration note: completed manifests now include
 `runtime.history.existing_codebase_integration_report` with schema

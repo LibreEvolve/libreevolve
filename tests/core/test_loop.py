@@ -77,6 +77,7 @@ from libreevolve.core.loop import (
     validate_prompt_example_copy_report,
     validate_prompt_current_binding_report,
     validate_primary_prompt_instruction_report,
+    validate_stochastic_prompt_format_distribution_report,
     validate_prompt_prior_score_provenance_report,
     validate_natural_language_preamble_report,
     validate_proposal_diversity_report,
@@ -11345,6 +11346,63 @@ def test_loop_logs_stochastic_prompt_format_selection_metadata():
     assert diagnostics["selections"][0]["occurrences"] == 1
     assert len(diagnostics["selections"][0]["text_sha256"]) == 64
     assert manifest["config"]["prompt_format_options"]["tone"][0]["weight"] == 1.0
+    report = manifest["runtime"]["history"][
+        "stochastic_prompt_format_distribution_report"
+    ]
+    assert report["schema"] == (
+        "libreevolve.stochastic_prompt_format_distribution_report.v1"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_stochastic_prompt_format_distribution_report(report)["ok"] is True
+    assert report["formatted_prompt_record_count"] == 1
+    assert report["option_set_count"] == 1
+    assert report["option_set_names"] == ["tone"]
+    assert report["marker_names"] == ["tone"]
+    assert report["selected_hash_match_count"] == 1
+    assert report["prompt_call_link_count"] == 1
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"]["option_distributions_recorded"] is True
+    assert report["claim_readiness"]["selected_alternative_hashes_joined"] is True
+    assert report["claim_readiness"]["prompt_call_linkage_recorded"] is True
+    assert report["claim_readiness"]["rng_boundary_recorded"] is True
+    assert report["claim_readiness"]["separate_config_file_source_recorded"] is False
+    assert report["claim_readiness"]["human_authored_alternatives_certified"] is False
+    assert (
+        report["claim_readiness"]["full_alphaevolve_stochastic_formatting_parity"]
+        is False
+    )
+    record = report["records"][0]
+    assert record["candidate_id"] == child["id"]
+    assert record["prompt_program_id"] == child["metadata"]["prompt_program_id"]
+    assert record["marker_name"] == "tone"
+    assert record["option_set_id"] == "prompt_format_options.tone"
+    assert record["source_kind"] == "inline_or_effective_config"
+    assert len(record["distribution_sha256"]) == 64
+    assert record["choice_index"] == 1
+    assert record["selected_text_sha256"] == diagnostics["selections"][0]["text_sha256"]
+    assert record["selected_alternative"]["index"] == 1
+    assert record["selected_alternative"]["text_sha256"] == record["selected_text_sha256"]
+    assert record["weight_source"] == "prompt_format_options"
+    assert record["weight_override_source"] == "prompt_format_options"
+    assert record["rng_boundary"] == "run_local_framework_random"
+    assert record["prompt_linkage"]["prompt_program_id"] == record["prompt_program_id"]
+    assert len(record["alternatives"]) == 2
+    assert [alternative["index"] for alternative in record["alternatives"]] == [0, 1]
+    assert [alternative["weight"] for alternative in record["alternatives"]] == [
+        1.0,
+        1.0,
+    ]
+    assert sum(alternative["probability"] for alternative in record["alternatives"]) == 1.0
+
+    edited = copy.deepcopy(report)
+    edited["records"][0]["selected_alternative"]["text_sha256"] = "a" * 64
+    edited["claim_readiness"]["full_alphaevolve_stochastic_formatting_parity"] = True
+    validation = validate_stochastic_prompt_format_distribution_report(edited)
+    assert validation["ok"] is False
+    assert {issue["code"] for issue in validation["issues"]} >= {
+        "selected_hash_mismatch",
+        "stochastic_formatting_parity_overclaim",
+    }
 
 
 def test_loop_logs_normalized_prompt_reward_policy_metadata():

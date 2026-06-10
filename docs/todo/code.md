@@ -528,30 +528,6 @@ Primary evidence:
 
 ## Prompt Sampling and Context
 
-- [ ] Add stochastic prompt-format distribution provenance.
-  - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
-    template placeholders with human-provided alternatives for increased
-    diversity, instantiated using probability distributions from a separate
-    config file.
-  - Current evidence: LibreEvolve supports `[[prompt:name]]` markers backed by
-    `prompt_format_options`, validates non-empty alternatives and weights,
-    samples with the run-local RNG, reuses the selected alternative for repeat
-    occurrences in one prompt, records selection index/weight/source/text hash
-    in prompt diagnostics, and redacts prompt-option text in startup manifests.
-  - Remaining gap: there is no paper-facing stochastic-formatting report or
-    validator that ties each rendered prompt/call id to the full normalized
-    alternative distribution, the config-source identity for that distribution
-    versus inline/effective config, the selected alternative and RNG boundary,
-    and coverage proving that the formatting variation was human-authored
-    problem-prompt diversity rather than an opaque prompt-template mutation.
-  - Required result: add prompt-format distribution records and validators
-    with option set id, config source/path/hash or explicit inline-source
-    boundary, marker name, alternative indexes, normalized probabilities,
-    selected alternative hash/index, weight override source, prompt/call
-    linkage, RNG/replay boundary, and README/ROADMAP checks that distinguish
-    implemented weighted markers from AlphaEvolve-style stochastic-formatting
-    evidence.
-
 - [ ] Complete provider-token prompt section fitting beyond mutation prompts
       and async/pending-work budget composition.
   - Spec evidence: AlphaEvolve prompt sampling supports long contexts and

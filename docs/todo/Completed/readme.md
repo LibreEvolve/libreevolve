@@ -4,6 +4,25 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Keep README stochastic-formatting wording scoped until distribution
+      provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 describes stochastic formatting as
+    template placeholders with human-provided alternatives for increased
+    diversity, instantiated using probability distributions from a separate
+    config file.
+  - Status: README now documents
+    `runtime.history.stochastic_prompt_format_distribution_report` as
+    prompt/call-linked stochastic-formatting evidence with option-set ids,
+    normalized probabilities, selected alternative hashes/indexes, weight
+    source or prompt-context override source, inline/effective-config boundary,
+    and run-local framework RNG replay boundary.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_loop_logs_stochastic_prompt_format_selection_metadata
+    -q` passed.
+  - Remaining gap: none for README scoping; separate config-file source
+    attribution and human-authored alternative certification remain explicit
+    non-parity boundaries.
+
 - [x] Keep README primary-prompt wording scoped until instruction/target
       provenance exists.
   - Spec evidence: AlphaEvolve Section 2.2 says the primary prompt comprises

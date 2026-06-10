@@ -1179,6 +1179,14 @@ telemetry joins are available, and the current provider placement boundary.
 LibreEvolve currently sends a serialized single prompt string through the
 mutation scheduler role; role-separated provider system/developer/user message
 payloads remain unsupported and are not claimed as AlphaEvolve parity.
+Completed manifests also include
+`runtime.history.stochastic_prompt_format_distribution_report`, which links
+rendered prompt ids to `[[prompt:name]]` option sets, normalized option
+probabilities, selected alternative hashes/indexes, prompt-format weight source
+or prompt-context override source, inline/effective-config boundary, and the
+run-local framework RNG replay boundary. This is prompt/call-linked
+stochastic-formatting evidence; separate config-file source attribution and
+human-authored alternative certification remain explicit non-parity boundaries.
 Completed runs also write
 `prompt_prior_score_table.jsonl`, a flattened cross-run table of prompt ids,
 score-source ids, displayed aggregate and `average_score` values, raw metrics,

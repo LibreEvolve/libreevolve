@@ -4,6 +4,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 
 ## ROADMAP Todo: AlphaEvolve Alignment Corrections
 
+- [x] Keep stochastic-formatting roadmap wording scoped to marker mechanics
+      until distribution provenance exists.
+  - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
+    template placeholders with human-provided alternatives and probability
+    distributions from a separate config file.
+  - Status: ROADMAP current-state bullets now include
+    `runtime.history.stochastic_prompt_format_distribution_report`, linking
+    generated prompt ids to `[[prompt:name]]` option sets, normalized
+    probabilities, selected alternative hashes/indexes, weight-source or
+    prompt-context override source, inline/effective-config boundary, and the
+    run-local framework RNG replay boundary, while keeping separate config-file
+    source attribution and human-authorship certification out of parity claims.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_loop_logs_stochastic_prompt_format_selection_metadata
+    -q` passed.
+  - Remaining gap: none for roadmap scoping; separate config-file source
+    attribution and certified human-authored alternatives remain explicit
+    non-parity boundaries.
+
 - [x] Keep primary-prompt roadmap wording scoped until instruction/target
       provenance exists.
   - Spec evidence: AlphaEvolve Section 2.2 says the primary evolution prompt

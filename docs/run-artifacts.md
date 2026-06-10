@@ -1890,6 +1890,16 @@ joins are available, and the provider-placement boundary. The current provider
 payload is a serialized single prompt string sent through the mutation
 scheduler role; role-separated system/developer/user provider messages remain
 unsupported.
+Completed manifests also include
+`runtime.history.stochastic_prompt_format_distribution_report` with schema
+`libreevolve.stochastic_prompt_format_distribution_report.v1`. This report
+joins generated prompt records to startup `prompt_format_options`, records
+each used marker's option-set id, text hashes, weights, normalized
+probabilities, selected alternative index/hash, prompt-format weight source or
+prompt-context override source, prompt/call linkage, inline/effective-config
+source boundary, and run-local framework RNG replay boundary. It does not
+claim separate config-file source attribution or certified human-authored
+alternatives.
 LLM feedback workspace prompts use the shared versioned secret-pattern grammar
 before provider calls. Prompt history and quarantine streams still contain
 some fixed-policy retention surfaces. Feedback provider outputs are retained according to

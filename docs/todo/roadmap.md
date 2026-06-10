@@ -808,23 +808,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     so roadmap wording distinguishes file-ingestion mechanics from
     AlphaEvolve-style intentionally typed explicit-context evidence.
 
-- [ ] Keep stochastic-formatting roadmap wording scoped to marker mechanics
-      until distribution provenance exists.
-  - Spec evidence: AlphaEvolve Section 2.2 says stochastic formatting uses
-    template placeholders with human-provided alternatives and probability
-    distributions from a separate config file.
-  - Current evidence: ROADMAP and README can cite implemented
-    `prompt_format_options`, weighted `[[prompt:name]]` markers, run-local RNG
-    selection, repeated-marker reuse, prompt diagnostics, and manifest
-    redaction for option text. They do not yet require paper-facing records
-    that preserve the full normalized probability distribution, option-set
-    source file or inline effective-config boundary, selected alternative per
-    prompt/call, and RNG/replay semantics.
-  - Required result: when stochastic-formatting distribution records and
-    validators land, update ROADMAP, README, papers index, and code/paper TODO
-    entries together so roadmap wording distinguishes current weighted marker
-    support from AlphaEvolve-style prompt-diversity evidence.
-
 - [ ] Keep paper-inspired roadmap labels scoped to implemented behavior.
   - Spec evidence: roadmap references to paper-inspired systems should remain
     clear about whether LibreEvolve implements the cited paper behavior or only

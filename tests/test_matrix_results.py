@@ -34,6 +34,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_cascade_run_runtime_boundary_from_matrix_result,
     matrix_cascade_run_runtime_boundary_record,
     matrix_headline_historicity_runtime_boundary_record,
+    matrix_near_integrality_runtime_boundary_from_evidence,
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
@@ -1157,22 +1158,23 @@ def test_matrix_near_integrality_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_near_integrality_runtime_boundary_accepts_emitted_evidence():
-    boundary = matrix_near_integrality_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [
-        {
-            "run_id": "run_001",
-            "candidate_id": "candidate_001",
-            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
-            "near_integrality_evidence": _valid_near_integrality_evidence(),
-        }
-    ]
+    boundary = matrix_near_integrality_runtime_boundary_from_evidence(
+        run_id="run_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        near_integrality_evidence=_valid_near_integrality_evidence(),
+    )
 
     validation = validate_matrix_near_integrality_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.runtime_emission_status == "emitted"
     assert validation.emitted_record_count == 1
+    record = boundary["emitted_records"][0]
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["seed"] == 7
+    assert record["prompt_hash"] == "a" * 64
+    assert record["raw_coefficients"] == [0.01, 0.49, -1.02, 1.51]
+    assert record["rounded_coefficients"] == [0.0, 0.5, -1.0, 1.5]
 
 
 def test_matrix_near_integrality_runtime_boundary_rejects_invalid_nested_evidence():
@@ -1194,6 +1196,66 @@ def test_matrix_near_integrality_runtime_boundary_rejects_invalid_nested_evidenc
 
     assert validation.ok is False
     assert "runtime_record_0_near_integrality_missing_near_integral_instruction" in codes
+
+
+def test_matrix_near_integrality_runtime_boundary_builder_rejects_invalid_evidence():
+    evidence = _valid_near_integrality_evidence()
+    evidence["prompt_instruction"]["text"] = "Optimize the program."
+
+    with pytest.raises(ValueError, match="near_integrality_evidence is invalid"):
+        matrix_near_integrality_runtime_boundary_from_evidence(
+            run_id="run_001",
+            matrix_result_ref="matrix/mm_4x4x4/report.json",
+            near_integrality_evidence=evidence,
+        )
+
+
+def test_matrix_near_integrality_runtime_boundary_rejects_linkage_mismatch():
+    boundary = matrix_near_integrality_runtime_boundary_from_evidence(
+        run_id="run_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        near_integrality_evidence=_valid_near_integrality_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    record["target_id"] = "mm_2x2x2"
+    record["seed"] = 8
+    record["prompt_hash"] = "b" * 64
+    record["raw_coefficients"][0] = 0.2
+    record["rounded_coefficients"][1] = 1.0
+    record["max_abs_rounding_error"] = 0.5
+    record["exactness_certificate_ref"] = "certificates/other.json"
+
+    validation = validate_matrix_near_integrality_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_near_integrality_target_mismatch" in codes
+    assert "runtime_record_0_near_integrality_seed_mismatch" in codes
+    assert "runtime_record_0_near_integrality_prompt_hash_mismatch" in codes
+    assert "runtime_record_0_near_integrality_raw_coefficients_mismatch" in codes
+    assert "runtime_record_0_near_integrality_rounded_coefficients_mismatch" in codes
+    assert "runtime_record_0_near_integrality_rounding_error_mismatch" in codes
+    assert "runtime_record_0_near_integrality_certificate_ref_mismatch" in codes
+
+
+def test_matrix_near_integrality_runtime_boundary_rejects_missing_required_record_fields():
+    boundary = matrix_near_integrality_runtime_boundary_from_evidence(
+        run_id="run_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        near_integrality_evidence=_valid_near_integrality_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    del record["artifact_paths"]
+    record["prompt_hash"] = "not-a-sha"
+    record["raw_coefficients"] = []
+
+    validation = validate_matrix_near_integrality_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_record_prompt_hash" in codes
+    assert "invalid_runtime_record_raw_coefficients" in codes
+    assert "runtime_record_0_invalid_near_integrality_artifact_paths" in codes
 
 
 def test_render_matrix_near_integrality_runtime_boundary_summary_reports_shape():

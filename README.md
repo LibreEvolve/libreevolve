@@ -3627,10 +3627,14 @@ evidence after a run records it; it does not yet make the local matrix smoke
 fixture inject that instruction or emit those diagnostics during search. The
 companion runtime boundary
 `libreevolve.matrix_near_integrality_runtime_boundary.v1` validates the current
-`not_emitted_by_local_runner` state and the required future emitted-record
-fields for run/candidate ids, prompt hashes, raw and rounded coefficients,
-exactness-certificate links, matrix-result refs, artifact paths, and artifact
-hashes.
+`not_emitted_by_local_runner` state and emitted records for run/target/candidate
+ids, seeds, prompt hashes/instructions, raw and rounded coefficients, rounding
+error, exactness-certificate links, matrix-result refs, artifact paths, and
+artifact hashes. The helper
+`matrix_near_integrality_runtime_boundary_from_evidence()` builds emitted
+records from validated near-integrality evidence and validation links every
+runtime row back to its nested target, prompt, candidate, rounding, and
+certificate evidence.
 Matrix scalar-field evidence uses
 `libreevolve.matrix_scalar_field_evidence.v1`; it validates declared field
 claims for real, complex, finite-field, and any-field applicability, including

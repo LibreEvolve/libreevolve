@@ -2389,12 +2389,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     raw-versus-rounded coefficient diagnostics, rounding-error consistency, and
     exactness-certificate links.
     `libreevolve.matrix_near_integrality_runtime_boundary.v1` now validates
-    the current `not_emitted_by_local_runner` boundary and required future
-    emitted-record fields for run/candidate ids, prompt hashes, raw and
-    rounded coefficients, exactness-certificate links, matrix-result refs,
-    artifact paths, and artifact hashes. The roadmap still should not imply
-    that local matrix benchmark runners emit those records during evaluator
-    runs.
+    the current `not_emitted_by_local_runner` boundary and emitted records for
+    run/target/candidate ids, seeds, prompt hashes/instructions, raw and
+    rounded coefficients, rounding error, exactness-certificate links,
+    matrix-result refs, artifact paths, and artifact hashes.
+    `matrix_near_integrality_runtime_boundary_from_evidence()` builds runtime
+    rows from validated near-integrality evidence and validation checks linkage
+    to nested target, prompt, candidate, rounding, and certificate evidence.
+    The roadmap still should not imply that local matrix benchmark runners emit
+    those records during evaluator runs.
   - Required result: when a matrix benchmark runner emits near-integrality
     prompt/evaluator evidence from real searches, update roadmap, README,
     papers index, and code/paper TODO entries together so roadmap text

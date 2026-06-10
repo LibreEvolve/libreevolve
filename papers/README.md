@@ -1274,11 +1274,14 @@ Implemented:
   produce near-integral decompositions, rounded to integer or half-integer
   coefficients, and linked to exactness certificates as in AlphaEvolve Section
   3.1. `libreevolve.matrix_near_integrality_runtime_boundary.v1` now records
-  the current `not_emitted_by_local_runner` boundary and required future
-  emitted-record fields for run/candidate ids, prompt hashes, raw and rounded
-  coefficients, exactness-certificate links, matrix-result refs, artifact
-  paths, and artifact hashes, but no local matrix benchmark runner emits those
-  records yet. Its
+  the current `not_emitted_by_local_runner` boundary and validates emitted
+  records for run/target/candidate ids, seeds, prompt hashes/instructions, raw
+  and rounded coefficients, rounding error, exactness-certificate links,
+  matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_near_integrality_runtime_boundary_from_evidence()` builds runtime
+  rows from validated near-integrality evidence and checks row linkage back to
+  nested target, prompt, candidate, rounding, and certificate evidence, but no
+  local matrix benchmark runner emits those records yet.
   `libreevolve.matrix_scalar_field_evidence.v1` contract now validates declared
   scalar-field provenance for complex-valued algorithms, field characteristic,
   exact coefficient representation, finite-field caveats, and certificate scope

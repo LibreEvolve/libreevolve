@@ -1178,6 +1178,108 @@ def matrix_near_integrality_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_near_integrality_runtime_boundary_from_evidence(
+    *,
+    run_id: str,
+    matrix_result_ref: str,
+    near_integrality_evidence: dict[str, Any],
+    artifact_paths_by_candidate: dict[str, list[str]] | None = None,
+    artifact_sha256_by_candidate: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Build emitted near-integrality runtime records from validated evidence."""
+    validation = validate_matrix_near_integrality_evidence(near_integrality_evidence)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"near_integrality_evidence is invalid: {messages}")
+    target_id = near_integrality_evidence.get("target_id")
+    prompt = near_integrality_evidence.get("prompt_instruction")
+    candidates = near_integrality_evidence.get("candidate_records")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("near_integrality_evidence.target_id must be non-empty")
+    if not isinstance(prompt, dict):
+        raise ValueError("near_integrality_evidence.prompt_instruction must be an object")
+    prompt_hash = prompt.get("prompt_hash")
+    prompt_text = prompt.get("text")
+    if not isinstance(prompt_hash, str) or _SHA256_RE.fullmatch(prompt_hash) is None:
+        raise ValueError("prompt_instruction.prompt_hash must be a SHA-256 digest")
+    if not isinstance(prompt_text, str) or not prompt_text.strip():
+        raise ValueError("prompt_instruction.text must be non-empty")
+    if not isinstance(candidates, list) or not candidates:
+        raise ValueError("near_integrality_evidence.candidate_records must be non-empty")
+    records: list[dict[str, Any]] = []
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            raise ValueError("candidate_records entries must be objects")
+        candidate_id = candidate.get("candidate_id")
+        seed = candidate.get("seed")
+        if not isinstance(candidate_id, str) or not candidate_id.strip():
+            raise ValueError("candidate_records entries must include candidate_id")
+        if isinstance(seed, bool) or not isinstance(seed, int):
+            raise ValueError("candidate_records entries must include integer seed")
+        artifact_paths = (
+            artifact_paths_by_candidate[candidate_id]
+            if artifact_paths_by_candidate is not None
+            and candidate_id in artifact_paths_by_candidate
+            else [f"matrix/{target_id}/near_integrality_{candidate_id}.json"]
+        )
+        artifact_sha256 = (
+            artifact_sha256_by_candidate[candidate_id]
+            if artifact_sha256_by_candidate is not None
+            and candidate_id in artifact_sha256_by_candidate
+            else _stable_json_sha256(
+                {
+                    "run_id": run_id,
+                    "target_id": target_id,
+                    "candidate_id": candidate_id,
+                    "seed": seed,
+                    "raw_coefficients": candidate.get("raw_coefficients"),
+                    "rounded_coefficients": candidate.get("rounded_coefficients"),
+                    "max_abs_rounding_error": candidate.get("max_abs_rounding_error"),
+                    "exactness_certificate_ref": candidate.get(
+                        "exactness_certificate_ref"
+                    ),
+                }
+            )
+        )
+        records.append(
+            {
+                "run_id": run_id,
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "seed": seed,
+                "prompt_hash": prompt_hash,
+                "prompt_instruction": prompt_text,
+                "raw_coefficients": copy.deepcopy(candidate.get("raw_coefficients")),
+                "rounded_coefficients": copy.deepcopy(
+                    candidate.get("rounded_coefficients")
+                ),
+                "max_abs_rounding_error": candidate.get("max_abs_rounding_error"),
+                "exactness_certificate_ref": candidate.get(
+                    "exactness_certificate_ref"
+                ),
+                "matrix_result_ref": matrix_result_ref,
+                "artifact_paths": copy.deepcopy(artifact_paths),
+                "artifact_sha256": artifact_sha256,
+                "near_integrality_evidence": copy.deepcopy(
+                    near_integrality_evidence
+                ),
+            }
+        )
+    boundary = matrix_near_integrality_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": records,
+            "claim_boundary": (
+                "Emitted records link matrix search candidates to near-integral "
+                "rounding diagnostics and certificates; this still does not claim "
+                "local runners automatically emit AlphaEvolve Section 3.1 evidence."
+            ),
+        }
+    )
+    return boundary
+
+
 def validate_matrix_near_integrality_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixNearIntegralityRuntimeValidation:
@@ -3625,7 +3727,54 @@ def _validate_near_integrality_runtime_records(
             continue
         run_id = _runtime_record_text(record, "run_id", issues)
         candidate_id = _runtime_record_text(record, "candidate_id", issues)
+        target_id = _runtime_record_text(record, "target_id", issues)
+        seed = _runtime_record_int(record, "seed", issues)
+        prompt_hash = _runtime_record_text(record, "prompt_hash", issues)
+        if prompt_hash is not None and _SHA256_RE.fullmatch(prompt_hash) is None:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_prompt_hash",
+                    "emitted runtime near-integrality records must include SHA-256 prompt_hash",
+                )
+            )
+        prompt_instruction = _runtime_record_text(
+            record,
+            "prompt_instruction",
+            issues,
+        )
+        raw_coefficients = _runtime_record_coefficients(
+            record,
+            "raw_coefficients",
+            issues,
+        )
+        rounded_coefficients = _runtime_record_coefficients(
+            record,
+            "rounded_coefficients",
+            issues,
+        )
+        max_abs_rounding_error = _runtime_record_finite_number(
+            record,
+            "max_abs_rounding_error",
+            issues,
+        )
+        exactness_certificate_ref = _runtime_record_text(
+            record,
+            "exactness_certificate_ref",
+            issues,
+        )
         _runtime_record_text(record, "matrix_result_ref", issues)
+        _validate_runtime_artifact_paths(
+            record.get("artifact_paths"),
+            "near_integrality",
+            index,
+            issues,
+        )
+        _validate_runtime_artifact_sha(
+            record.get("artifact_sha256"),
+            "near_integrality",
+            index,
+            issues,
+        )
         if run_id is not None and candidate_id is not None:
             key = (run_id, candidate_id)
             if key in seen:
@@ -3647,6 +3796,22 @@ def _validate_near_integrality_runtime_records(
                 )
                 for issue in nested_validation.issues
             )
+        elif isinstance(nested, dict):
+            _validate_near_integrality_runtime_record_linkage(
+                record_index=index,
+                record=record,
+                nested=nested,
+                target_id=target_id,
+                candidate_id=candidate_id,
+                seed=seed,
+                prompt_hash=prompt_hash,
+                prompt_instruction=prompt_instruction,
+                raw_coefficients=raw_coefficients,
+                rounded_coefficients=rounded_coefficients,
+                max_abs_rounding_error=max_abs_rounding_error,
+                exactness_certificate_ref=exactness_certificate_ref,
+                issues=issues,
+            )
 
 
 def _runtime_record_text(
@@ -3664,6 +3829,215 @@ def _runtime_record_text(
         )
         return None
     return value
+
+
+def _runtime_record_int(
+    record: dict[str, Any],
+    field: str,
+    issues: list[MatrixResultIssue],
+) -> int | None:
+    value = record.get(field)
+    if isinstance(value, bool) or not isinstance(value, int):
+        issues.append(
+            MatrixResultIssue(
+                f"invalid_runtime_record_{field}",
+                f"emitted runtime near-integrality records must include integer {field}",
+            )
+        )
+        return None
+    return value
+
+
+def _runtime_record_finite_number(
+    record: dict[str, Any],
+    field: str,
+    issues: list[MatrixResultIssue],
+) -> float | None:
+    value = record.get(field)
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+        or float(value) < 0.0
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"invalid_runtime_record_{field}",
+                f"emitted runtime near-integrality records must include finite non-negative {field}",
+            )
+        )
+        return None
+    return float(value)
+
+
+def _runtime_record_coefficients(
+    record: dict[str, Any],
+    field: str,
+    issues: list[MatrixResultIssue],
+) -> list[float] | None:
+    value = record.get(field)
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                f"invalid_runtime_record_{field}",
+                f"emitted runtime near-integrality records must include non-empty {field}",
+            )
+        )
+        return None
+    coefficients: list[float] = []
+    for item in value:
+        if (
+            isinstance(item, bool)
+            or not isinstance(item, (int, float))
+            or not math.isfinite(float(item))
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    f"invalid_runtime_record_{field}",
+                    f"emitted runtime near-integrality records must include finite numeric {field}",
+                )
+            )
+            return None
+        coefficients.append(float(item))
+    return coefficients
+
+
+def _validate_near_integrality_runtime_record_linkage(
+    *,
+    record_index: int,
+    record: dict[str, Any],
+    nested: dict[str, Any],
+    target_id: str | None,
+    candidate_id: str | None,
+    seed: int | None,
+    prompt_hash: str | None,
+    prompt_instruction: str | None,
+    raw_coefficients: list[float] | None,
+    rounded_coefficients: list[float] | None,
+    max_abs_rounding_error: float | None,
+    exactness_certificate_ref: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and nested.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_target_mismatch",
+                "runtime target_id must match nested near-integrality evidence",
+            )
+        )
+    prompt = nested.get("prompt_instruction")
+    if isinstance(prompt, dict):
+        if prompt_hash is not None and prompt.get("prompt_hash") != prompt_hash:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{record_index}_near_integrality_prompt_hash_mismatch",
+                    "runtime prompt_hash must match nested near-integrality evidence",
+                )
+            )
+        if (
+            prompt_instruction is not None
+            and prompt.get("text") != prompt_instruction
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{record_index}_near_integrality_prompt_instruction_mismatch",
+                    "runtime prompt_instruction must match nested near-integrality evidence",
+                )
+            )
+    candidates = nested.get("candidate_records")
+    if not isinstance(candidates, list):
+        return
+    matching = [
+        candidate
+        for candidate in candidates
+        if isinstance(candidate, dict)
+        and candidate.get("candidate_id") == candidate_id
+    ]
+    if not matching:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_missing_candidate",
+                "runtime candidate_id must appear in nested near-integrality evidence",
+            )
+        )
+        return
+    candidate = matching[0]
+    if seed is not None and candidate.get("seed") != seed:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_seed_mismatch",
+                "runtime seed must match nested candidate evidence",
+            )
+        )
+    if raw_coefficients is not None and not _coefficients_equal(
+        raw_coefficients,
+        candidate.get("raw_coefficients"),
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_raw_coefficients_mismatch",
+                "runtime raw_coefficients must match nested candidate evidence",
+            )
+        )
+    if rounded_coefficients is not None and not _coefficients_equal(
+        rounded_coefficients,
+        candidate.get("rounded_coefficients"),
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_rounded_coefficients_mismatch",
+                "runtime rounded_coefficients must match nested candidate evidence",
+            )
+        )
+    candidate_error = candidate.get("max_abs_rounding_error")
+    if (
+        max_abs_rounding_error is not None
+        and (
+            isinstance(candidate_error, bool)
+            or not isinstance(candidate_error, (int, float))
+            or not math.isclose(
+                max_abs_rounding_error,
+                float(candidate_error),
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            )
+        )
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_rounding_error_mismatch",
+                "runtime max_abs_rounding_error must match nested candidate evidence",
+            )
+        )
+    if (
+        exactness_certificate_ref is not None
+        and candidate.get("exactness_certificate_ref") != exactness_certificate_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_near_integrality_certificate_ref_mismatch",
+                "runtime exactness_certificate_ref must match nested candidate evidence",
+            )
+        )
+
+
+def _coefficients_equal(left: list[float], right: object) -> bool:
+    if not isinstance(right, list) or len(left) != len(right):
+        return False
+    for left_value, right_value in zip(left, right):
+        if (
+            isinstance(right_value, bool)
+            or not isinstance(right_value, (int, float))
+            or not math.isfinite(float(right_value))
+            or not math.isclose(
+                left_value,
+                float(right_value),
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            )
+        ):
+            return False
+    return True
 
 
 def _validate_matrix_baseline_component_required_fields(

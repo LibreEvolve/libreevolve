@@ -82,8 +82,9 @@ LibreEvolve has:
   validator or configured cascade stages plus LLM feedback graders with metric
   ownership, merge policy, failure policy, prompt-feedback linkage, an
   `arbitration_policy` authority matrix, benchmark-sufficiency labels,
-  conflict roles, failure effects, and an explicit limitation for independent
-  multi-oracle arbitration
+  conflict roles, failure effects, bounded local `disagreement_outcomes` for
+  validator-versus-feedback discard cases, and an explicit limitation for
+  independent multi-oracle arbitration
 - proposal lifecycle reports under
   `runtime.history.proposal_lifecycle_report`, merging generated-candidate
   history with failure records to show backend/call summaries, mutation hashes,
@@ -370,8 +371,9 @@ is not yet an AlphaEvolve reproduction.
   main-test promotion decisions, confidence or p-value evidence, and
   sequential stopping diagnostics.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
-  matrix into independent reference/statistical oracles, benchmark sufficiency
-  evidence, and cross-oracle disagreement outcome records beyond the current
+  matrix and local post-evaluator disagreement outcomes into independent
+  reference/statistical oracles, benchmark sufficiency evidence, and
+  independent cross-oracle disagreement outcome records beyond the current
   local cascade plus optional synchronous feedback graders.
 - Extend evaluator-workload provenance into actual workload-specific execution
   contracts for inner-search and ML-training tasks: dataset/split hash

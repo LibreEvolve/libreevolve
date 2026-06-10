@@ -22887,6 +22887,10 @@ def _evaluator_oracle_registry_report(
         "merge_policy": _evaluator_oracle_merge_policy(config),
         "arbitration_policy": _evaluator_oracle_arbitration_policy(oracles),
         "runtime_summary": _evaluator_oracle_runtime_summary(programs),
+        "disagreement_outcomes": _evaluator_oracle_disagreement_outcomes(
+            programs,
+            oracles,
+        ),
         "prompt_feedback_linkage": {
             "stage_feedback": "evaluation.stages_and_configured_stage_results_rendered_by_prompt_sampler",
             "llm_feedback": "evaluation.metadata.llm_feedback_and_llm_feedback_stages",
@@ -22903,7 +22907,7 @@ def _evaluator_oracle_registry_report(
             ),
             "remaining_gap": [
                 "independent_oracle_authority_configuration",
-                "cross_oracle_disagreement_outcome_evidence",
+                "independent_cross_oracle_disagreement_outcome_evidence",
                 "independent_reference_checker_or_statistical_test_oracles",
             ],
         },
@@ -23141,7 +23145,7 @@ def _evaluator_oracle_arbitration_policy(oracles: list[dict]) -> dict:
             "remaining_gap": [
                 "independent_reference_checker_or_statistical_test_oracles",
                 "per_benchmark_oracle_sufficiency_evidence",
-                "cross_oracle_disagreement_outcome_records",
+                "independent_cross_oracle_disagreement_outcome_records",
             ],
         },
     }
@@ -23212,6 +23216,210 @@ def _evaluator_oracle_runtime_summary(programs: list[Program]) -> dict:
         "configured_stage_record_count": configured_stage_record_count,
         "llm_feedback_record_count": llm_feedback_record_count,
     }
+
+
+def _evaluator_oracle_disagreement_outcomes(
+    programs: list[Program],
+    oracles: list[dict],
+) -> dict:
+    feedback_oracles = {
+        str(oracle.get("oracle_id"))
+        for oracle in oracles
+        if oracle.get("oracle_type") == "llm_judge"
+    }
+    records: list[dict] = []
+    candidate_with_feedback_count = 0
+    for program in programs:
+        evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+        metadata = (
+            evaluation.get("metadata")
+            if isinstance(evaluation.get("metadata"), Mapping)
+            else {}
+        )
+        feedback_records = metadata.get("llm_feedback")
+        if not isinstance(feedback_records, list) or not feedback_records:
+            continue
+        candidate_with_feedback_count += 1
+        evaluator_valid = _evaluator_valid_before_feedback(evaluation)
+        for feedback_index, feedback in enumerate(feedback_records):
+            if not isinstance(feedback, Mapping):
+                continue
+            name = feedback.get("name")
+            feedback_oracle_id = (
+                f"llm_feedback:{name}"
+                if isinstance(name, str) and name
+                else f"llm_feedback:<record_{feedback_index}>"
+            )
+            if feedback_oracle_id not in feedback_oracles:
+                feedback_oracle_id = f"{feedback_oracle_id}:not_registered"
+            record = _evaluator_feedback_disagreement_record(
+                program,
+                feedback,
+                feedback_index=feedback_index,
+                evaluator_valid_before_feedback=evaluator_valid,
+                feedback_oracle_id=feedback_oracle_id,
+            )
+            if record is not None:
+                records.append(record)
+    disagreement_count = sum(
+        1 for record in records if record.get("disagreement_observed") is True
+    )
+    discard_after_pass_count = sum(
+        1
+        for record in records
+        if record.get("outcome") == "feedback_discard_after_evaluator_pass"
+    )
+    skipped_invalid_count = sum(
+        1
+        for record in records
+        if record.get("outcome") == "evaluator_invalid_feedback_skipped"
+    )
+    report = {
+        "schema": "libreevolve.evaluator_oracle_disagreement_outcomes.v1",
+        "source": "history_evaluation_stages_and_metadata_llm_feedback",
+        "records_limit": 100,
+        "records_truncated": len(records) > 100,
+        "candidate_with_feedback_count": candidate_with_feedback_count,
+        "outcome_count": len(records),
+        "disagreement_count": disagreement_count,
+        "feedback_discard_after_evaluator_pass_count": discard_after_pass_count,
+        "evaluator_invalid_feedback_skipped_count": skipped_invalid_count,
+        "records": records[:100],
+        "policy": {
+            "validity_owner": "deterministic_evaluator_cascade",
+            "feedback_disagreement_policy": (
+                "post_hoc_feedback_discard_can_invalidate_local_candidate_but_"
+                "does_not_create_independent_reference_oracle_arbitration"
+            ),
+            "independent_reference_or_statistical_oracle": False,
+        },
+        "claim_readiness": {
+            "observed_post_hoc_feedback_disagreement_outcomes": disagreement_count > 0,
+            "independent_cross_oracle_disagreement_outcomes": False,
+            "remaining_gap": [
+                "independent_reference_checker_or_statistical_test_oracles",
+                "per_benchmark_oracle_sufficiency_evidence",
+                "independent_cross_oracle_disagreement_outcome_records",
+            ],
+        },
+    }
+    return report
+
+
+def _evaluator_feedback_disagreement_record(
+    program: Program,
+    feedback: Mapping[str, object],
+    *,
+    feedback_index: int,
+    evaluator_valid_before_feedback: bool | None,
+    feedback_oracle_id: str,
+) -> dict | None:
+    skipped = feedback.get("skipped") is True
+    discard = feedback.get("discard") is True
+    error = feedback.get("error")
+    final_valid = (
+        program.evaluation.get("is_valid")
+        if isinstance(program.evaluation, dict)
+        else None
+    )
+    if evaluator_valid_before_feedback is True and discard:
+        outcome = "feedback_discard_after_evaluator_pass"
+        disagreement = True
+        final_effect = (
+            "post_hoc_feedback_invalidated_candidate"
+            if final_valid is False
+            else "feedback_discard_observed_without_final_invalidity"
+        )
+    elif evaluator_valid_before_feedback is False and skipped:
+        outcome = "evaluator_invalid_feedback_skipped"
+        disagreement = False
+        final_effect = "evaluator_invalidity_preserved"
+    elif evaluator_valid_before_feedback is True and not discard and error is None:
+        outcome = "feedback_accept_after_evaluator_pass"
+        disagreement = False
+        final_effect = "evaluator_validity_preserved"
+    elif error is not None:
+        outcome = "feedback_error_policy_applied"
+        disagreement = False
+        final_effect = (
+            "feedback_failure_policy_changed_validity"
+            if final_valid is False and evaluator_valid_before_feedback is True
+            else "feedback_failure_policy_no_validity_override"
+        )
+    else:
+        outcome = "feedback_outcome_not_classified"
+        disagreement = False
+        final_effect = "no_cross_oracle_disagreement_claim"
+    name = feedback.get("name")
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "candidate_type": (
+            program.metadata.get("candidate_type")
+            if isinstance(program.metadata, dict)
+            else None
+        ),
+        "feedback_record_index": feedback_index,
+        "evaluator_oracle_id": "deterministic_evaluator_cascade",
+        "feedback_oracle_id": feedback_oracle_id,
+        "feedback_name": name if isinstance(name, str) else None,
+        "feedback_metric": (
+            feedback.get("metric") if isinstance(feedback.get("metric"), str) else None
+        ),
+        "evaluator_valid_before_feedback": evaluator_valid_before_feedback,
+        "feedback_discard": discard,
+        "feedback_skipped": skipped,
+        "feedback_error": str(error) if error is not None else None,
+        "feedback_normalized_score": (
+            float(feedback["normalized_score"])
+            if isinstance(feedback.get("normalized_score"), (int, float))
+            and not isinstance(feedback.get("normalized_score"), bool)
+            and math.isfinite(float(feedback.get("normalized_score")))
+            else None
+        ),
+        "feedback_min_score": (
+            float(feedback["min_score"])
+            if isinstance(feedback.get("min_score"), (int, float))
+            and not isinstance(feedback.get("min_score"), bool)
+            and math.isfinite(float(feedback.get("min_score")))
+            else None
+        ),
+        "final_is_valid": final_valid if isinstance(final_valid, bool) else None,
+        "outcome": outcome,
+        "disagreement_observed": disagreement,
+        "final_effect": final_effect,
+        "authority_boundary": (
+            "post_evaluator_feedback_not_independent_reference_or_statistical_oracle"
+        ),
+    }
+
+
+def _evaluator_valid_before_feedback(evaluation: Mapping[str, object]) -> bool | None:
+    stages = evaluation.get("stages")
+    if not isinstance(stages, list):
+        value = evaluation.get("is_valid")
+        return value if isinstance(value, bool) else None
+    candidate: bool | None = None
+    for stage in stages:
+        if not isinstance(stage, Mapping):
+            continue
+        metadata = (
+            stage.get("metadata")
+            if isinstance(stage.get("metadata"), Mapping)
+            else {}
+        )
+        name = stage.get("name")
+        if metadata.get("kind") == "llm_feedback" or (
+            isinstance(name, str) and name.startswith("llm_feedback:")
+        ):
+            break
+        metrics = stage.get("metrics") if isinstance(stage.get("metrics"), Mapping) else {}
+        metric_valid = metrics.get("is_valid")
+        if isinstance(metric_valid, bool):
+            candidate = metric_valid
+        elif isinstance(stage.get("passed"), bool) and name != "syntax":
+            candidate = stage.get("passed")
+    return candidate
 
 
 def _embedded_evaluator_entrypoint_report(
@@ -23904,6 +24112,7 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
         "merge_policy",
         "arbitration_policy",
         "runtime_summary",
+        "disagreement_outcomes",
         "prompt_feedback_linkage",
         "claim_ready",
         "claim_readiness",
@@ -23999,11 +24208,162 @@ def validate_evaluator_oracle_registry(report: object) -> dict:
             issues.append({"code": "arbitration_overclaim", "message": "independent evaluator-oracle arbitration must remain false"})
     if not isinstance(report.get("runtime_summary"), dict):
         issues.append({"code": "invalid_runtime_summary", "message": "runtime_summary must be an object"})
+    disagreement_outcomes = report.get("disagreement_outcomes")
+    if not isinstance(disagreement_outcomes, dict):
+        issues.append({"code": "invalid_disagreement_outcomes", "message": "disagreement_outcomes must be an object"})
+    else:
+        _validate_evaluator_oracle_disagreement_outcomes(
+            disagreement_outcomes,
+            issues,
+        )
     return {
         "schema": "libreevolve.evaluator_oracle_registry.v1",
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_evaluator_oracle_disagreement_outcomes(
+    report: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    if report.get("schema") != "libreevolve.evaluator_oracle_disagreement_outcomes.v1":
+        issues.append(
+            {
+                "code": "invalid_disagreement_outcomes_schema",
+                "message": "disagreement_outcomes schema is unsupported",
+            }
+        )
+    if report.get("source") != "history_evaluation_stages_and_metadata_llm_feedback":
+        issues.append(
+            {
+                "code": "invalid_disagreement_outcomes_source",
+                "message": "disagreement_outcomes source is unsupported",
+            }
+        )
+    records = report.get("records")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_disagreement_records",
+                "message": "disagreement_outcomes.records must be a list",
+            }
+        )
+        records = []
+    observed_disagreements = 0
+    discard_after_pass = 0
+    skipped_invalid = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_disagreement_record",
+                    "message": f"disagreement record {index} must be an object",
+                }
+            )
+            continue
+        for field in (
+            "program_id",
+            "evaluator_oracle_id",
+            "feedback_oracle_id",
+            "outcome",
+            "final_effect",
+            "authority_boundary",
+        ):
+            if not isinstance(record.get(field), str) or not record.get(field):
+                issues.append(
+                    {
+                        "code": "invalid_disagreement_record_field",
+                        "message": f"disagreement record {index} {field} is invalid",
+                    }
+                )
+        for field in (
+            "feedback_discard",
+            "feedback_skipped",
+            "disagreement_observed",
+        ):
+            if not isinstance(record.get(field), bool):
+                issues.append(
+                    {
+                        "code": "invalid_disagreement_record_flag",
+                        "message": f"disagreement record {index} {field} must be boolean",
+                    }
+                )
+        if record.get("disagreement_observed") is True:
+            observed_disagreements += 1
+        if record.get("outcome") == "feedback_discard_after_evaluator_pass":
+            discard_after_pass += 1
+            if record.get("evaluator_valid_before_feedback") is not True:
+                issues.append(
+                    {
+                        "code": "invalid_feedback_discard_outcome",
+                        "message": "feedback discard disagreement requires prior evaluator validity",
+                    }
+                )
+        if record.get("outcome") == "evaluator_invalid_feedback_skipped":
+            skipped_invalid += 1
+    truncated = report.get("records_truncated") is True
+    if not truncated:
+        expected = {
+            "outcome_count": len(records),
+            "disagreement_count": observed_disagreements,
+            "feedback_discard_after_evaluator_pass_count": discard_after_pass,
+            "evaluator_invalid_feedback_skipped_count": skipped_invalid,
+        }
+        for field, value in expected.items():
+            if report.get(field) != value:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must match disagreement records",
+                    }
+                )
+    policy = report.get("policy")
+    if not isinstance(policy, Mapping):
+        issues.append(
+            {
+                "code": "invalid_disagreement_policy",
+                "message": "disagreement_outcomes.policy must be an object",
+            }
+        )
+    elif policy.get("independent_reference_or_statistical_oracle") is not False:
+        issues.append(
+            {
+                "code": "disagreement_policy_overclaim",
+                "message": "disagreement outcomes must not claim independent reference/statistical oracle status",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_disagreement_claim_readiness",
+                "message": "disagreement_outcomes.claim_readiness must be an object",
+            }
+        )
+    else:
+        if readiness.get("independent_cross_oracle_disagreement_outcomes") is not False:
+            issues.append(
+                {
+                    "code": "disagreement_outcome_overclaim",
+                    "message": "independent disagreement outcomes must remain false",
+                }
+            )
+        remaining = readiness.get("remaining_gap")
+        required = {
+            "independent_reference_checker_or_statistical_test_oracles",
+            "per_benchmark_oracle_sufficiency_evidence",
+            "independent_cross_oracle_disagreement_outcome_records",
+        }
+        if not isinstance(remaining, list) or not required.issubset(
+            {item for item in remaining if isinstance(item, str)}
+        ):
+            issues.append(
+                {
+                    "code": "missing_disagreement_remaining_gap",
+                    "message": "disagreement outcomes must preserve independent oracle remaining gaps",
+                }
+            )
 
 
 def _evaluator_workload_report(programs: list[Program]) -> dict:

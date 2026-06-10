@@ -69,13 +69,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     validator or configured cascade stages plus LLM feedback graders with
     metric ownership, merge policy, failure policy, prompt-feedback linkage,
     `arbitration_policy` authority metadata, benchmark-sufficiency labels,
-    conflict roles, failure effects, and an explicit limitation for independent
+    conflict roles, failure effects, bounded local `disagreement_outcomes` for
+    validator-versus-feedback cases, and an explicit limitation for independent
     multi-oracle arbitration.
   - Required result: when independent reference/statistical oracles,
-    per-benchmark sufficiency evidence, and disagreement outcome records land,
-    update ROADMAP, README, papers index, and code/paper TODOs together so
-    roadmap wording separates local staged validation and post-hoc graders from
-    AlphaEvolve-style multi-evaluator feedback.
+    per-benchmark sufficiency evidence, and independent disagreement outcome
+    records land, update ROADMAP, README, papers index, and code/paper TODOs
+    together so roadmap wording separates local staged validation and post-hoc
+    graders from AlphaEvolve-style multi-evaluator feedback.
 
 - [ ] Keep execution-grounding roadmap wording scoped until independent
       incorrect-suggestion audit evidence exists.

@@ -2405,11 +2405,15 @@ authority, input/output schema, metric ownership, failure policy, merge policy,
 prompt-feedback linkage, runtime counts, and an `arbitration_policy` authority
 matrix. The arbitration policy records each oracle's benchmark-sufficiency
 label, conflict role, failure effect, independent-evidence flag, and whether it
-is a reference/statistical oracle; it also states that feedback graders do not
-override evaluator validity. That registry is provenance for the current local
-composition boundary; it remains `claim_ready: false` for general independent
-multi-oracle arbitration because LibreEvolve still lacks independent
-reference/statistical oracles and cross-oracle disagreement outcome evidence.
+is a reference/statistical oracle. It also records bounded
+`disagreement_outcomes` for observed local validator-versus-feedback cases,
+including feedback discards after evaluator pass and the final local validity
+effect, while marking those outcomes as post-evaluator feedback rather than
+independent reference-oracle arbitration. That registry is provenance for the
+current local composition boundary; it remains `claim_ready: false` for general
+independent multi-oracle arbitration because LibreEvolve still lacks
+independent reference/statistical oracles and independent cross-oracle
+disagreement evidence.
 The intended public call shapes are `evaluate(code)`,
 `evaluate(code, workspace_path)`, and `evaluate(code, workspace_path, stage)`;
 async and generator-style `evaluate` functions are rejected during startup

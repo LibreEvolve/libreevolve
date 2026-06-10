@@ -1819,12 +1819,17 @@ metric ownership, failure policy, prompt-feedback linkage, runtime counts, and
 a merge-policy summary. It also records `arbitration_policy` with an authority
 matrix for every registered oracle, including benchmark-sufficiency labels,
 conflict roles, failure effects, independent-evidence flags, and
-reference/statistical-oracle status. The policy records that feedback graders
-do not override evaluator validity. It intentionally keeps `claim_ready: false`
-for independent multi-evaluator/oracle composition because current behavior is
-a single local cascade plus optional post-evaluator synchronous feedback
-graders, not an independent reference/statistical or disagreement-outcome
-oracle system.
+reference/statistical-oracle status. The registry also includes
+`disagreement_outcomes` with schema
+`libreevolve.evaluator_oracle_disagreement_outcomes.v1`, which counts bounded
+local validator-versus-feedback outcomes such as feedback discards after an
+evaluator pass and records the final local validity effect. These records make
+post-evaluator disagreement effects visible but do not upgrade feedback graders
+into independent reference/statistical oracles. The registry intentionally keeps
+`claim_ready: false` for independent multi-evaluator/oracle composition because
+current behavior is a single local cascade plus optional post-evaluator
+synchronous feedback graders, not an independent reference/statistical oracle
+system with benchmark-sufficient arbitration.
 Completed manifests also include
 `runtime.history.embedded_evaluator_entrypoint_report` with schema
 `libreevolve.embedded_evaluator_entrypoint_report.v1`. This report summarizes

@@ -4956,7 +4956,7 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert validate_evaluator_oracle_registry(oracle_registry)["ok"] is True
     assert oracle_registry["oracle_count"] == 2
     assert oracle_registry["claim_ready"] is False
-    assert "cross_oracle_disagreement_outcome_evidence" in (
+    assert "independent_cross_oracle_disagreement_outcome_evidence" in (
         oracle_registry["claim_readiness"]["remaining_gap"]
     )
     default_oracle, feedback_oracle = oracle_registry["oracles"]
@@ -5017,6 +5017,17 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     )
     assert oracle_registry["runtime_summary"]["evaluated_program_count"] == 2
     assert oracle_registry["runtime_summary"]["llm_feedback_record_count"] == 1
+    outcomes = oracle_registry["disagreement_outcomes"]
+    assert outcomes["schema"] == "libreevolve.evaluator_oracle_disagreement_outcomes.v1"
+    assert outcomes["candidate_with_feedback_count"] == 1
+    assert outcomes["outcome_count"] == 1
+    assert outcomes["disagreement_count"] == 0
+    assert outcomes["feedback_discard_after_evaluator_pass_count"] == 0
+    assert outcomes["records"][0]["outcome"] == "feedback_accept_after_evaluator_pass"
+    assert outcomes["records"][0]["disagreement_observed"] is False
+    assert outcomes["claim_readiness"][
+        "independent_cross_oracle_disagreement_outcomes"
+    ] is False
 
     scope = manifest["runtime"]["history"]["automated_evaluator_scope_report"]
     assert scope["schema"] == "libreevolve.automated_evaluator_scope_report.v1"
@@ -5143,6 +5154,32 @@ def test_evaluator_oracle_registry_validation_rejects_malformed_arbitration_poli
             },
         },
         "runtime_summary": {},
+        "disagreement_outcomes": {
+            "schema": "libreevolve.evaluator_oracle_disagreement_outcomes.v1",
+            "source": "history_evaluation_stages_and_metadata_llm_feedback",
+            "records_limit": 100,
+            "records_truncated": False,
+            "candidate_with_feedback_count": 0,
+            "outcome_count": 0,
+            "disagreement_count": 0,
+            "feedback_discard_after_evaluator_pass_count": 0,
+            "evaluator_invalid_feedback_skipped_count": 0,
+            "records": [],
+            "policy": {
+                "validity_owner": "deterministic_evaluator_cascade",
+                "feedback_disagreement_policy": "post_hoc_feedback",
+                "independent_reference_or_statistical_oracle": False,
+            },
+            "claim_readiness": {
+                "observed_post_hoc_feedback_disagreement_outcomes": False,
+                "independent_cross_oracle_disagreement_outcomes": False,
+                "remaining_gap": [
+                    "independent_reference_checker_or_statistical_test_oracles",
+                    "per_benchmark_oracle_sufficiency_evidence",
+                    "independent_cross_oracle_disagreement_outcome_records",
+                ],
+            },
+        },
         "prompt_feedback_linkage": {},
         "claim_ready": False,
         "claim_readiness": {},
@@ -10989,6 +11026,34 @@ def test_llm_feedback_discarded_candidate_does_not_reward_backend():
     assert child["metadata"]["backend_reward"]["eligible"] is False
     assert child["metadata"]["backend_reward"]["reward"] == 0.0
     assert llm.rewards == [(0, 0.0, "reward-call-0")]
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    registry = manifest["runtime"]["history"]["evaluator_oracle_registry"]
+    outcomes = registry["disagreement_outcomes"]
+    assert registry["validation"]["ok"] is True
+    assert validate_evaluator_oracle_registry(registry)["ok"] is True
+    assert outcomes["candidate_with_feedback_count"] == 1
+    assert outcomes["outcome_count"] == 1
+    assert outcomes["disagreement_count"] == 1
+    assert outcomes["feedback_discard_after_evaluator_pass_count"] == 1
+    outcome = outcomes["records"][0]
+    assert outcome["program_id"] == child["id"]
+    assert outcome["feedback_oracle_id"] == "llm_feedback:review"
+    assert outcome["evaluator_valid_before_feedback"] is True
+    assert outcome["feedback_discard"] is True
+    assert outcome["final_is_valid"] is False
+    assert outcome["outcome"] == "feedback_discard_after_evaluator_pass"
+    assert outcome["final_effect"] == "post_hoc_feedback_invalidated_candidate"
+    assert outcome["disagreement_observed"] is True
+    assert outcome["authority_boundary"] == (
+        "post_evaluator_feedback_not_independent_reference_or_statistical_oracle"
+    )
+    assert outcomes["policy"]["independent_reference_or_statistical_oracle"] is False
+    assert outcomes["claim_readiness"][
+        "observed_post_hoc_feedback_disagreement_outcomes"
+    ] is True
+    assert outcomes["claim_readiness"][
+        "independent_cross_oracle_disagreement_outcomes"
+    ] is False
 
 
 def test_plugin_corrupted_validity_metadata_is_not_archived():

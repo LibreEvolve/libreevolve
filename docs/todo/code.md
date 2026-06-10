@@ -1251,12 +1251,17 @@ Primary evidence:
     counts, the current merge-policy summary, and an `arbitration_policy`
     authority matrix. The matrix records each oracle's benchmark-sufficiency
     label, conflict role, failure effect, independent-evidence flag, and
-    reference/statistical-oracle status. It explicitly keeps `claim_ready:
-    false` for independent multi-oracle composition.
+    reference/statistical-oracle status. The registry now also includes
+    `disagreement_outcomes` for bounded local validator-versus-feedback cases,
+    such as feedback discards after evaluator pass, with final local validity
+    effects and a post-evaluator/non-independent authority boundary. It
+    explicitly keeps `claim_ready: false` for independent multi-oracle
+    composition.
   - Remaining gap: the registry documents current local composition but does
     not yet provide independent reference-checker/statistical-test oracles,
-    per-benchmark sufficiency evidence, or observed cross-oracle disagreement
-    outcome records beyond configured cascade order and post-hoc feedback.
+    per-benchmark sufficiency evidence, or independent cross-oracle
+    disagreement outcome records beyond configured cascade order and post-hoc
+    feedback.
   - Required result: add independent evaluator-oracle evidence with reference-
     checker/statistical-test oracle support, per-benchmark sufficiency labels,
     and disagreement outcome records before claiming AlphaEvolve-style feedback

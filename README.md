@@ -3711,7 +3711,12 @@ best-known and AlphaEvolve rank values, outcome counts and color semantics,
 complex-valued row annotations, `mm_4x5x6` concurrent-note linkage, rendered
 table/source/OCR artifact hashes, and links to registry, subset-scope,
 row-note, scalar-field, matrix-result, and companion Colab evidence. It does
-not render or emit those table artifacts during local runs yet.
+not render or emit those table artifacts during local runs yet. The companion
+artifact boundary `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
+validates the current `not_emitted_by_local_report_export` state and required
+future emitted-artifact fields for table ids, source page/caption locations,
+rendered table files, OCR text, source excerpts, artifact paths/hashes, and
+nested matrix-rank table exhibit evidence.
 `write_strassen_2x2_publication_bundle()` helper emits a concrete checked
 Strassen bundle for the registered `mm_2x2x2` target, including canonical
 algorithm, certificate, notebook, report, and artifact-inventory files with a

@@ -882,6 +882,11 @@ is not yet an AlphaEvolve reproduction.
   counts/color semantics, complex-row annotations, concurrent-note linkage,
   rendered/source/OCR artifact hashes, and registry/subset/row-note/Colab
   links. Runtime reports still do not render or emit those table artifacts.
+  `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now records
+  the current `not_emitted_by_local_report_export` boundary and required
+  future emitted-artifact fields for table identity, source locations,
+  rendered/OCR/source files, artifact paths/hashes, and nested table-exhibit
+  evidence.
 
 ### 10. Operational maturity
 

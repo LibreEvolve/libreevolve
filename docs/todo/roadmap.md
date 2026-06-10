@@ -2446,6 +2446,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     source/caption locations, rendered table artifacts/hashes, and links from
     table rows to registry, report, certificate, and companion Colab evidence.
     Runtime reports still do not render or emit those table artifacts.
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
+    documents and validates that roadmap-scoped absence boundary plus required
+    future emitted-artifact fields.
   - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
     land, update ROADMAP, README, papers index, and code/paper TODOs together
     so roadmap wording distinguishes reproduced paper-table exhibits from

@@ -3227,6 +3227,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     source PDF/caption locations, rendered table artifact hashes, and
     row-to-registry/report/Colab mappings. No emitted paper artifact or table
     export currently carries those rendered/source/OCR files.
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
+    validates that absence boundary and required future emitted-artifact
+    fields for rendered table, OCR, source-excerpt, path/hash, and nested
+    exhibit evidence.
   - Required result: emit paper-facing table exhibit records for Table 2 and
     Appendix A Table 3: source PDF page/caption locations, table ids, row
     ids/order, selected/full-table membership, rank values, outcome classes and

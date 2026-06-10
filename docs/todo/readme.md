@@ -922,6 +922,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     source/caption locations, rendered table artifacts/hashes, and links from
     table rows to registry/report/Colab evidence. No emitted report/table
     artifact carries those rendered/source/OCR files yet.
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1` now
+    documents and validates that README-scoped absence boundary plus required
+    future emitted-artifact fields.
   - Required result: when Table 2/Table 3 matrix-rank table exhibit artifacts
     land, update README, ROADMAP, papers index, and code/paper TODOs together
     so README distinguishes reproduced paper-table exhibits from general

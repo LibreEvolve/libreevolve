@@ -1159,7 +1159,11 @@ Implemented:
   annotations, concurrent-note linkage, rendered table/source/OCR artifact
   hashes, and links to registry, subset, row-note, scalar-field, result, and
   companion Colab evidence. No local report/export emits those rendered table
-  artifacts yet.
+  artifacts yet. `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
+  records the current `not_emitted_by_local_report_export` boundary and
+  validates required future emitted-artifact fields for table identity, source
+  locations, rendered/OCR/source files, artifact paths/hashes, and nested
+  table-exhibit evidence.
   `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared Figure 9-style sweep provenance for the evolved
   `sweep` function, user-provided `hyper` library identity, hyperparameter

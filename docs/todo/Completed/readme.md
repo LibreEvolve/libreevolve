@@ -10810,3 +10810,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     refs, prior comparisons, evidence links, matrix-result refs, artifact
     paths, and artifact hashes.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix-rank table artifact boundary in README.
+  - Spec evidence: README matrix wording needs to separate declared Table 2/
+    Appendix A Table 3 exhibit validation from actual local report/export
+    emission of rendered table, OCR, and source-excerpt artifacts.
+  - Status: README now names
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`, scopes it
+    to the current `not_emitted_by_local_report_export` state, and lists
+    required future emitted-artifact fields for table ids, source page/caption
+    locations, rendered table files, OCR text, source excerpts, artifact
+    paths/hashes, and nested matrix-rank table exhibit evidence.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

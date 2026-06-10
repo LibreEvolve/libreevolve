@@ -8241,3 +8241,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     the current `not_emitted_by_local_runner` state, and keeps real local
     headline/source/decomposition/certificate artifact emission open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the matrix-rank table artifact boundary in ROADMAP.
+  - Spec evidence: roadmap matrix wording needs to distinguish declared
+    Table 2/Appendix A Table 3 exhibit validation from actual report/export
+    emission of rendered table, OCR, and source-excerpt artifacts.
+  - Status: ROADMAP now names
+    `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`, scopes it
+    to the current `not_emitted_by_local_report_export` state, and keeps real
+    rendered/source/OCR table artifact emission open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

@@ -10764,3 +10764,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     artifact paths, and artifact hashes. The paper-manifest gate validates
     this boundary with the Appendix A matrix checks.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track matrix-rank table artifact-emission absence separately from
+      declared table exhibit validation.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 and Appendix A
+    Table 3 are paper-table exhibits with rendered rows, source captions,
+    rank values, outcome coloring, complex-row caveats, Colab links, and the
+    `<4, 5, 6>` concurrent-work note.
+  - Status: `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
+    now records the current `not_emitted_by_local_report_export` boundary and
+    validates required future emitted-artifact fields for table identity,
+    source locations, rendered/OCR/source files, artifact paths/hashes, and
+    nested matrix-rank table exhibit evidence. The paper-manifest gate
+    validates this boundary with the Appendix A matrix checks.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

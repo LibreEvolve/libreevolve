@@ -15970,3 +15970,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused matrix-result and paper-manifest tests cover the
     absence boundary, emitted-record validation, invalid nested evidence, and
     manifest hook.
+
+- [x] Add a matrix-rank table artifact-emission boundary contract.
+  - Spec evidence: AlphaEvolve Table 2 and Appendix A Table 3 are rendered
+    paper-table exhibits with source pages/captions, selected/full-table row
+    scope, rank values, outcome coloring, Colab links, complex-row caveats, and
+    the `<4, 5, 6>` concurrent-work note.
+  - Status: `libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1`
+    now validates the current `not_emitted_by_local_report_export` state,
+    rejects false emitted claims without table artifacts, validates nested
+    matrix-rank table exhibit evidence, and records required future fields for
+    table identity, source locations, rendered table files, OCR text, source
+    excerpts, artifact paths, and artifact hashes. Local report/export code
+    still does not emit the rendered/source/OCR table artifacts.
+  - Verification: focused matrix-exhibit and paper-manifest tests cover the
+    absence boundary, emitted-artifact validation, invalid nested evidence, and
+    manifest hook.

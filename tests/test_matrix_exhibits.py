@@ -3,12 +3,16 @@ import json
 from libreevolve.problems.benchmarks.matrix_exhibits import (
     FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA,
     FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA,
+    MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+    matrix_rank_table_artifact_boundary_record,
     render_figure4_matrix_discovery_exhibit_summary,
     render_figure9_matrix_diff_exhibit_summary,
+    render_matrix_rank_table_artifact_boundary_summary,
     render_matrix_rank_table_exhibit_summary,
     validate_figure4_matrix_discovery_exhibit,
     validate_figure9_matrix_diff_exhibit,
+    validate_matrix_rank_table_artifact_boundary,
     validate_matrix_rank_table_exhibit,
 )
 
@@ -266,6 +270,28 @@ def _valid_rank_table_exhibit() -> dict:
     }
 
 
+def _rank_table_artifact(table_id: str = "table2_matrix_rank_selected") -> dict:
+    source_table = "Table 2" if table_id == "table2_matrix_rank_selected" else "Appendix A Table 3"
+    source_pdf_page = 9 if table_id == "table2_matrix_rank_selected" else 34
+    return {
+        "table_id": table_id,
+        "source_table": source_table,
+        "source_pdf_page": source_pdf_page,
+        "source_caption_ref": "Upper bounds on the rank of the tensor.",
+        "row_count": 16 if table_id == "table2_matrix_rank_selected" else 54,
+        "source_pdf_excerpt": _artifact(f"tables/{table_id}_source.txt", "b"),
+        "rendered_table_artifact": _artifact(f"tables/{table_id}.png", "c"),
+        "ocr_text_artifact": _artifact(f"tables/{table_id}_ocr.txt", "d"),
+        "artifact_paths": [
+            f"tables/{table_id}_source.txt",
+            f"tables/{table_id}.png",
+            f"tables/{table_id}_ocr.txt",
+        ],
+        "artifact_sha256": "e" * 64,
+        "matrix_rank_table_exhibit": _valid_rank_table_exhibit(),
+    }
+
+
 def test_validate_figure4_matrix_discovery_exhibit_accepts_main_text_metadata():
     validation = validate_figure4_matrix_discovery_exhibit(_valid_figure4_exhibit())
 
@@ -495,3 +521,83 @@ def test_render_matrix_rank_table_exhibit_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| table_count | 2 |" in summary
     assert "| row_count | 70 |" in summary
+
+
+def test_matrix_rank_table_artifact_boundary_accepts_current_absence():
+    validation = validate_matrix_rank_table_artifact_boundary()
+
+    assert validation.ok is True
+    assert validation.artifact_status == "not_emitted_by_local_report_export"
+    assert validation.emitted_artifact_count == 0
+    assert validation.required_field_count == 11
+    assert validation.issues == []
+
+
+def test_matrix_rank_table_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = matrix_rank_table_artifact_boundary_record()
+    boundary["emitted_artifacts"] = [_rank_table_artifact()]
+    boundary["claim_boundary"] = "Artifacts exist."
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_emitted_artifacts" in codes
+    assert "missing_claim_boundary" in codes
+
+
+def test_matrix_rank_table_artifact_boundary_requires_emitted_artifacts():
+    boundary = matrix_rank_table_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_matrix_rank_table_artifacts" in codes
+
+
+def test_matrix_rank_table_artifact_boundary_accepts_emitted_artifact_record():
+    boundary = {
+        "schema": MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
+        "exhibit_schema": MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+        "source_paper_id": "2506.13131",
+        "target_suite": "alphaevolve_appendix_a",
+        "artifact_status": "emitted",
+        "local_export_scope": "matrix_rank_table_report_export",
+        "required_artifact_fields": list(matrix_rank_table_artifact_boundary_record()["required_artifact_fields"]),
+        "emitted_artifacts": [_rank_table_artifact(), _rank_table_artifact("appendix_a_table3_matrix_rank_full")],
+        "claim_boundary": "Local export emitted rendered table artifacts.",
+    }
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.artifact_status == "emitted"
+    assert validation.emitted_artifact_count == 2
+    assert validation.issues == []
+
+
+def test_matrix_rank_table_artifact_boundary_rejects_invalid_nested_exhibit():
+    boundary = matrix_rank_table_artifact_boundary_record()
+    boundary["artifact_status"] = "emitted"
+    artifact = _rank_table_artifact()
+    artifact["artifact_paths"] = ["tables/table.png", "../escape.txt"]
+    artifact["matrix_rank_table_exhibit"]["tables"] = []
+    boundary["emitted_artifacts"] = [artifact]
+
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_artifact_path" in codes
+    assert "invalid_nested_exhibit_invalid_tables" in codes
+
+
+def test_render_matrix_rank_table_artifact_boundary_summary_reports_shape():
+    summary = render_matrix_rank_table_artifact_boundary_summary()
+
+    assert "AlphaEvolve matrix-rank table artifact boundary" in summary
+    assert "| schema_status | ok |" in summary
+    assert "| artifact_status | not_emitted_by_local_report_export |" in summary
+    assert "| emitted_artifact_count | 0 |" in summary

@@ -16,6 +16,7 @@ from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
 FIGURE4_MATRIX_DISCOVERY_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure4_matrix_discovery_exhibit.v1"
 FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure9_matrix_diff_exhibit.v1"
 MATRIX_RANK_TABLE_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_exhibit.v1"
+MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1"
 EXPECTED_FIGURE4_EXHIBIT_ID = "figure4_matrix_discovery"
 EXPECTED_FIGURE9_EXHIBIT_ID = "figure9_matrix_diff_magnified"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
@@ -40,6 +41,20 @@ EXPECTED_OUTCOME_ENCODING = {
     "surpassed": "green",
     "fell_behind": "red",
 }
+MATRIX_RANK_TABLE_ARTIFACT_STATUSES = frozenset({"not_emitted_by_local_report_export", "emitted"})
+MATRIX_RANK_TABLE_ARTIFACT_REQUIRED_FIELDS = (
+    "table_id",
+    "source_table",
+    "source_pdf_page",
+    "source_caption_ref",
+    "row_count",
+    "source_pdf_excerpt",
+    "rendered_table_artifact",
+    "ocr_text_artifact",
+    "artifact_paths",
+    "artifact_sha256",
+    "matrix_rank_table_exhibit",
+)
 EXPECTED_FIGURE4_PAGE = 11
 EXPECTED_FIGURE4_MUTATION_COUNT = 15
 EXPECTED_FIGURE4_REGION_IDS = frozenset(
@@ -122,6 +137,33 @@ class MatrixRankTableExhibitValidation:
     table_count: int
     row_count: int
     issues: list[MatrixRankTableExhibitIssue]
+
+
+@dataclass(frozen=True)
+class MatrixRankTableArtifactBoundaryValidation:
+    ok: bool
+    artifact_status: str | None
+    emitted_artifact_count: int
+    required_field_count: int
+    issues: list[MatrixRankTableExhibitIssue]
+
+
+def matrix_rank_table_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA,
+        "exhibit_schema": MATRIX_RANK_TABLE_EXHIBIT_SCHEMA,
+        "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "artifact_status": "not_emitted_by_local_report_export",
+        "local_export_scope": "matrix_rank_table_report_export",
+        "required_artifact_fields": list(MATRIX_RANK_TABLE_ARTIFACT_REQUIRED_FIELDS),
+        "emitted_artifacts": [],
+        "claim_boundary": (
+            "This is a Table 2/Table 3 matrix-rank table artifact availability "
+            "boundary. It does not claim local report/export code emits rendered "
+            "table, OCR text, or source-excerpt artifacts."
+        ),
+    }
 
 
 def validate_figure4_matrix_discovery_exhibit(
@@ -227,6 +269,57 @@ def validate_matrix_rank_table_exhibit(
     )
 
 
+def validate_matrix_rank_table_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixRankTableArtifactBoundaryValidation:
+    if boundary is None:
+        boundary = matrix_rank_table_artifact_boundary_record()
+    data, read_issues = _load_table_boundary(boundary)
+    if read_issues:
+        return MatrixRankTableArtifactBoundaryValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixRankTableExhibitIssue] = []
+    if data.get("schema") != MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(MatrixRankTableExhibitIssue("invalid_schema", "unsupported matrix rank table artifact boundary schema"))
+    if data.get("exhibit_schema") != MATRIX_RANK_TABLE_EXHIBIT_SCHEMA:
+        issues.append(MatrixRankTableExhibitIssue("invalid_exhibit_schema", "exhibit_schema must identify matrix-rank table exhibit records"))
+    if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
+        issues.append(MatrixRankTableExhibitIssue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(MatrixRankTableExhibitIssue("invalid_target_suite", "target_suite must be alphaevolve_appendix_a"))
+    status = data.get("artifact_status")
+    if status not in MATRIX_RANK_TABLE_ARTIFACT_STATUSES:
+        issues.append(MatrixRankTableExhibitIssue("invalid_artifact_status", "artifact_status must be a known matrix-rank table artifact status"))
+    if not isinstance(data.get("local_export_scope"), str) or not data["local_export_scope"].strip():
+        issues.append(MatrixRankTableExhibitIssue("missing_local_export_scope", "local_export_scope is required"))
+    required_fields = data.get("required_artifact_fields")
+    required_field_count = _validate_rank_table_artifact_required_fields(required_fields, issues)
+    artifacts = data.get("emitted_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(MatrixRankTableExhibitIssue("invalid_emitted_artifacts", "emitted_artifacts must be a list"))
+        artifact_count = 0
+    else:
+        artifact_count = len(artifacts)
+        if status == "not_emitted_by_local_report_export":
+            if artifacts:
+                issues.append(MatrixRankTableExhibitIssue("unexpected_emitted_artifacts", "absence boundary must not include emitted table artifacts"))
+            boundary_text = data.get("claim_boundary")
+            if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+                issues.append(MatrixRankTableExhibitIssue("missing_claim_boundary", "absence boundary must state that it does not claim local artifact emission"))
+        elif status == "emitted":
+            if not artifacts:
+                issues.append(MatrixRankTableExhibitIssue("missing_matrix_rank_table_artifacts", "emitted status requires Table 2/Table 3 artifact records"))
+            for artifact in artifacts:
+                _validate_rank_table_artifact_record(artifact, issues)
+    return MatrixRankTableArtifactBoundaryValidation(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        emitted_artifact_count=artifact_count,
+        required_field_count=required_field_count,
+        issues=issues,
+    )
+
+
 def render_figure4_matrix_discovery_exhibit_summary(exhibit: dict[str, Any]) -> str:
     validation = validate_figure4_matrix_discovery_exhibit(exhibit)
     status = "ok" if validation.ok else "invalid"
@@ -276,6 +369,27 @@ def render_matrix_rank_table_exhibit_summary(exhibit: dict[str, Any]) -> str:
         f"| schema_status | {status} |",
         f"| table_count | {validation.table_count} |",
         f"| row_count | {validation.row_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_rank_table_artifact_boundary_summary(boundary: dict[str, Any] | None = None) -> str:
+    if boundary is None:
+        boundary = matrix_rank_table_artifact_boundary_record()
+    validation = validate_matrix_rank_table_artifact_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "AlphaEvolve matrix-rank table artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {validation.artifact_status or '<unknown>'} |",
+        f"| emitted_artifact_count | {validation.emitted_artifact_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -335,6 +449,102 @@ def _load_table_exhibit(
         if isinstance(loaded, dict):
             return loaded, []
     return None, [MatrixRankTableExhibitIssue("invalid_shape", "matrix-rank table exhibit must be a JSON object")]
+
+
+def _load_table_boundary(
+    boundary: object | str | Path,
+) -> tuple[dict[str, Any] | None, list[MatrixRankTableExhibitIssue]]:
+    if isinstance(boundary, dict):
+        return dict(boundary), []
+    if isinstance(boundary, (str, Path)):
+        path = Path(boundary)
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            return None, [MatrixRankTableExhibitIssue("read_error", f"failed to read matrix-rank table artifact boundary: {exc}")]
+        except json.JSONDecodeError as exc:
+            return None, [MatrixRankTableExhibitIssue("invalid_json", f"invalid matrix-rank table artifact boundary JSON: {exc.msg}")]
+        if isinstance(loaded, dict):
+            return loaded, []
+    return None, [MatrixRankTableExhibitIssue("invalid_shape", "matrix-rank table artifact boundary must be a JSON object")]
+
+
+def _validate_rank_table_artifact_required_fields(
+    value: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRankTableExhibitIssue("invalid_required_artifact_fields", "required_artifact_fields must be a non-empty list"))
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(MatrixRankTableExhibitIssue("invalid_required_artifact_field", "required artifact field names must be non-empty strings"))
+            continue
+        if field in seen:
+            issues.append(MatrixRankTableExhibitIssue("duplicate_required_artifact_field", "required_artifact_fields must be unique"))
+        seen.add(field)
+    missing = sorted(set(MATRIX_RANK_TABLE_ARTIFACT_REQUIRED_FIELDS) - seen)
+    if missing:
+        issues.append(MatrixRankTableExhibitIssue("missing_required_artifact_field", "required_artifact_fields must include all matrix-rank table artifact fields"))
+    return len(value)
+
+
+def _validate_rank_table_artifact_record(
+    artifact: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if not isinstance(artifact, dict):
+        issues.append(MatrixRankTableExhibitIssue("invalid_matrix_rank_table_artifact", "emitted table artifact records must be objects"))
+        return
+    table_id = artifact.get("table_id")
+    if table_id not in EXPECTED_TABLE_IDS:
+        issues.append(MatrixRankTableExhibitIssue("invalid_artifact_table_id", "artifact table_id must identify Table 2 or Appendix A Table 3"))
+    if table_id in EXPECTED_TABLE_IDS:
+        if artifact.get("source_table") != EXPECTED_TABLE_SOURCE_NAMES[table_id]:
+            issues.append(MatrixRankTableExhibitIssue("invalid_artifact_source_table", "artifact source_table must match the declared table"))
+        if artifact.get("source_pdf_page") != EXPECTED_TABLE_PAGES[table_id]:
+            issues.append(MatrixRankTableExhibitIssue("invalid_artifact_source_pdf_page", "artifact source_pdf_page must match the declared table"))
+    if not isinstance(artifact.get("source_caption_ref"), str) or not artifact["source_caption_ref"].strip():
+        issues.append(MatrixRankTableExhibitIssue("missing_artifact_source_caption_ref", "artifact source_caption_ref is required"))
+    if isinstance(artifact.get("row_count"), bool) or not isinstance(artifact.get("row_count"), int) or artifact["row_count"] <= 0:
+        issues.append(MatrixRankTableExhibitIssue("invalid_artifact_row_count", "artifact row_count must be a positive integer"))
+    _validate_table_artifact(artifact.get("source_pdf_excerpt"), "artifact_source_pdf_excerpt", issues)
+    _validate_table_artifact(artifact.get("rendered_table_artifact"), "artifact_rendered_table_artifact", issues)
+    _validate_table_artifact(artifact.get("ocr_text_artifact"), "artifact_ocr_text_artifact", issues)
+    _validate_rank_table_artifact_paths(artifact.get("artifact_paths"), issues)
+    sha = artifact.get("artifact_sha256")
+    if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
+        issues.append(MatrixRankTableExhibitIssue("invalid_artifact_sha256", "artifact_sha256 must be a lowercase SHA-256 hex digest"))
+    exhibit_report = validate_matrix_rank_table_exhibit(artifact.get("matrix_rank_table_exhibit"))
+    issues.extend(
+        MatrixRankTableExhibitIssue(f"invalid_nested_exhibit_{issue.code}", issue.message)
+        for issue in exhibit_report.issues
+    )
+
+
+def _validate_rank_table_artifact_paths(
+    value: object,
+    issues: list[MatrixRankTableExhibitIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(MatrixRankTableExhibitIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list"))
+        return
+    seen: set[str] = set()
+    for path in value:
+        path_obj = Path(path) if isinstance(path, str) else None
+        if (
+            path_obj is None
+            or not path
+            or path_obj.is_absolute()
+            or path.startswith(("/", "\\"))
+            or ".." in path_obj.parts
+        ):
+            issues.append(MatrixRankTableExhibitIssue("invalid_artifact_path", "artifact_paths entries must be safe relative paths"))
+            continue
+        if path in seen:
+            issues.append(MatrixRankTableExhibitIssue("duplicate_artifact_path", "artifact_paths entries must be unique"))
+        seen.add(path)
 
 
 def _validate_table_evidence_links(

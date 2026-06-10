@@ -2174,6 +2174,103 @@ def matrix_headline_historicity_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_headline_historicity_runtime_boundary_from_evidence(
+    *,
+    run_id: str,
+    candidate_id: str,
+    matrix_result_ref: str,
+    headline_historicity_evidence: dict[str, Any],
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build an emitted headline historicity runtime record from evidence."""
+    validation = validate_matrix_headline_historicity_evidence(
+        headline_historicity_evidence
+    )
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"headline_historicity_evidence is invalid: {messages}")
+    target_id = headline_historicity_evidence.get("target_id")
+    dimensions = headline_historicity_evidence.get("dimensions")
+    headline_claim = headline_historicity_evidence.get("headline_claim")
+    if not isinstance(target_id, str) or not target_id.strip():
+        raise ValueError("headline_historicity_evidence.target_id must be non-empty")
+    if not isinstance(headline_claim, dict):
+        raise ValueError("headline_historicity_evidence.headline_claim must be an object")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be non-empty")
+    if not isinstance(candidate_id, str) or not candidate_id.strip():
+        raise ValueError("candidate_id must be non-empty")
+    if not isinstance(matrix_result_ref, str) or not matrix_result_ref.strip():
+        raise ValueError("matrix_result_ref must be non-empty")
+    paths = (
+        artifact_paths
+        if artifact_paths is not None
+        else [f"matrix/{target_id}/headline_historicity_{candidate_id}.json"]
+    )
+    digest = (
+        artifact_sha256
+        if artifact_sha256 is not None
+        else _stable_json_sha256(
+            {
+                "run_id": run_id,
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "dimensions": dimensions,
+                "rank": headline_claim.get("rank"),
+                "multiplication_count": headline_claim.get(
+                    "multiplication_count"
+                ),
+                "scalar_field": headline_claim.get("scalar_field"),
+                "characteristic": headline_claim.get("characteristic"),
+                "matrix_result_ref": matrix_result_ref,
+            }
+        )
+    )
+    boundary = matrix_headline_historicity_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": [
+                {
+                    "run_id": run_id,
+                    "candidate_id": candidate_id,
+                    "target_id": target_id,
+                    "dimensions": copy.deepcopy(dimensions),
+                    "rank": headline_claim.get("rank"),
+                    "multiplication_count": headline_claim.get(
+                        "multiplication_count"
+                    ),
+                    "scalar_field": headline_claim.get("scalar_field"),
+                    "characteristic": headline_claim.get("characteristic"),
+                    "source_refs": copy.deepcopy(
+                        headline_historicity_evidence.get("source_refs")
+                    ),
+                    "prior_comparisons": copy.deepcopy(
+                        headline_historicity_evidence.get("prior_comparisons")
+                    ),
+                    "evidence_links": copy.deepcopy(
+                        headline_historicity_evidence.get("evidence_links")
+                    ),
+                    "matrix_result_ref": matrix_result_ref,
+                    "artifact_paths": copy.deepcopy(paths),
+                    "artifact_sha256": digest,
+                    "headline_historicity_evidence": copy.deepcopy(
+                        headline_historicity_evidence
+                    ),
+                }
+            ],
+            "claim_boundary": (
+                "Emitted records link matrix candidates to headline rank, "
+                "source, prior-comparison, evidence-link, and artifact "
+                "provenance; this still does not claim local runners "
+                "automatically emit those records."
+            ),
+        }
+    )
+    return boundary
+
+
 def validate_matrix_headline_historicity_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixHeadlineHistoricityRuntimeValidation:
@@ -3170,7 +3267,56 @@ def _validate_headline_historicity_runtime_records(
             continue
         run_id = _runtime_record_text(record, "run_id", issues)
         candidate_id = _runtime_record_text(record, "candidate_id", issues)
-        _runtime_record_text(record, "matrix_result_ref", issues)
+        target_id = _runtime_record_text(record, "target_id", issues)
+        dimensions = _runtime_record_dimensions(record, "dimensions", issues)
+        rank = _runtime_record_int(record, "rank", issues)
+        multiplication_count = _runtime_record_int(
+            record,
+            "multiplication_count",
+            issues,
+        )
+        scalar_field = _runtime_record_text(record, "scalar_field", issues)
+        characteristic = _runtime_record_text(record, "characteristic", issues)
+        source_refs = record.get("source_refs")
+        if not isinstance(source_refs, list) or not source_refs:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_source_refs",
+                    "emitted runtime headline records must include non-empty source_refs",
+                )
+            )
+            source_refs = None
+        prior_comparisons = record.get("prior_comparisons")
+        if not isinstance(prior_comparisons, list) or not prior_comparisons:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_prior_comparisons",
+                    "emitted runtime headline records must include non-empty prior_comparisons",
+                )
+            )
+            prior_comparisons = None
+        evidence_links = record.get("evidence_links")
+        if not isinstance(evidence_links, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_runtime_record_evidence_links",
+                    "emitted runtime headline records must include evidence_links",
+                )
+            )
+            evidence_links = None
+        matrix_result_ref = _runtime_record_text(record, "matrix_result_ref", issues)
+        _validate_runtime_artifact_paths(
+            record.get("artifact_paths"),
+            "headline_historicity",
+            index,
+            issues,
+        )
+        _validate_runtime_artifact_sha(
+            record.get("artifact_sha256"),
+            "headline_historicity",
+            index,
+            issues,
+        )
         if run_id is not None and candidate_id is not None:
             key = (run_id, candidate_id)
             if key in seen:
@@ -3192,6 +3338,127 @@ def _validate_headline_historicity_runtime_records(
                 )
                 for issue in nested_validation.issues
             )
+        elif isinstance(nested, dict):
+            _validate_headline_historicity_runtime_record_linkage(
+                record_index=index,
+                nested=nested,
+                target_id=target_id,
+                dimensions=dimensions,
+                rank=rank,
+                multiplication_count=multiplication_count,
+                scalar_field=scalar_field,
+                characteristic=characteristic,
+                source_refs=source_refs,
+                prior_comparisons=prior_comparisons,
+                evidence_links=evidence_links,
+                matrix_result_ref=matrix_result_ref,
+                issues=issues,
+            )
+
+
+def _validate_headline_historicity_runtime_record_linkage(
+    *,
+    record_index: int,
+    nested: dict[str, Any],
+    target_id: str | None,
+    dimensions: list[int] | None,
+    rank: int | None,
+    multiplication_count: int | None,
+    scalar_field: str | None,
+    characteristic: str | None,
+    source_refs: list[Any] | None,
+    prior_comparisons: list[Any] | None,
+    evidence_links: dict[str, Any] | None,
+    matrix_result_ref: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if target_id is not None and nested.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_target_mismatch",
+                "runtime target_id must match nested headline historicity evidence",
+            )
+        )
+    if dimensions is not None and nested.get("dimensions") != dimensions:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_dimensions_mismatch",
+                "runtime dimensions must match nested headline historicity evidence",
+            )
+        )
+    headline_claim = nested.get("headline_claim")
+    if not isinstance(headline_claim, dict):
+        return
+    if rank is not None and headline_claim.get("rank") != rank:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_rank_mismatch",
+                "runtime rank must match nested headline claim",
+            )
+        )
+    if (
+        multiplication_count is not None
+        and headline_claim.get("multiplication_count") != multiplication_count
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_multiplication_count_mismatch",
+                "runtime multiplication_count must match nested headline claim",
+            )
+        )
+    if scalar_field is not None and headline_claim.get("scalar_field") != scalar_field:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_scalar_field_mismatch",
+                "runtime scalar_field must match nested headline claim",
+            )
+        )
+    if (
+        characteristic is not None
+        and headline_claim.get("characteristic") != characteristic
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_characteristic_mismatch",
+                "runtime characteristic must match nested headline claim",
+            )
+        )
+    if source_refs is not None and nested.get("source_refs") != source_refs:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_source_refs_mismatch",
+                "runtime source_refs must match nested headline evidence",
+            )
+        )
+    if (
+        prior_comparisons is not None
+        and nested.get("prior_comparisons") != prior_comparisons
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_prior_comparisons_mismatch",
+                "runtime prior_comparisons must match nested headline evidence",
+            )
+        )
+    nested_links = nested.get("evidence_links")
+    if evidence_links is not None and nested_links != evidence_links:
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_evidence_links_mismatch",
+                "runtime evidence_links must match nested headline evidence",
+            )
+        )
+    if (
+        matrix_result_ref is not None
+        and isinstance(nested_links, dict)
+        and nested_links.get("matrix_result_ref") != matrix_result_ref
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"runtime_record_{record_index}_headline_historicity_matrix_result_mismatch",
+                "runtime matrix_result_ref must match nested evidence_links.matrix_result_ref",
+            )
+        )
 
 
 def _validate_companion_selection_scope(
@@ -4758,6 +5025,27 @@ def _runtime_record_int(
         )
         return None
     return value
+
+
+def _runtime_record_dimensions(
+    record: dict[str, Any],
+    field: str,
+    issues: list[MatrixResultIssue],
+) -> list[int] | None:
+    value = record.get(field)
+    if (
+        not isinstance(value, list)
+        or len(value) != 3
+        or any(isinstance(item, bool) or not isinstance(item, int) for item in value)
+    ):
+        issues.append(
+            MatrixResultIssue(
+                f"invalid_runtime_record_{field}",
+                f"emitted runtime records must include three integer {field}",
+            )
+        )
+        return None
+    return list(value)
 
 
 def _runtime_record_finite_number(

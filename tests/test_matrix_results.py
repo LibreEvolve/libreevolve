@@ -33,6 +33,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_from_matrix_result,
     matrix_cascade_run_runtime_boundary_record,
+    matrix_headline_historicity_runtime_boundary_from_evidence,
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_from_evidence,
     matrix_near_integrality_runtime_boundary_record,
@@ -2397,22 +2398,105 @@ def test_matrix_headline_historicity_runtime_boundary_requires_emitted_records()
 
 
 def test_matrix_headline_historicity_runtime_boundary_accepts_emitted_evidence():
-    boundary = matrix_headline_historicity_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [
-        {
-            "run_id": "run_001",
-            "candidate_id": "candidate_001",
-            "matrix_result_ref": "matrix/mm_4x4x4/report.json",
-            "headline_historicity_evidence": _valid_headline_historicity_evidence(),
-        }
-    ]
+    boundary = matrix_headline_historicity_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        headline_historicity_evidence=_valid_headline_historicity_evidence(),
+    )
 
     validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.runtime_emission_status == "emitted"
     assert validation.emitted_record_count == 1
+    record = boundary["emitted_records"][0]
+    assert record["target_id"] == "mm_4x4x4"
+    assert record["dimensions"] == [4, 4, 4]
+    assert record["rank"] == 48
+    assert record["multiplication_count"] == 48
+    assert record["scalar_field"] == "complex"
+    assert record["characteristic"] == "zero"
+    assert len(record["source_refs"]) == 2
+    assert len(record["prior_comparisons"]) == 2
+    assert record["evidence_links"]["matrix_result_ref"] == "matrix/mm_4x4x4/report.json"
+
+
+def test_matrix_headline_historicity_runtime_boundary_builder_rejects_invalid_evidence():
+    evidence = _valid_headline_historicity_evidence()
+    evidence["headline_claim"]["rank"] = 49
+
+    with pytest.raises(ValueError, match="headline_historicity_evidence is invalid"):
+        matrix_headline_historicity_runtime_boundary_from_evidence(
+            run_id="run_001",
+            candidate_id="candidate_001",
+            matrix_result_ref="matrix/mm_4x4x4/report.json",
+            headline_historicity_evidence=evidence,
+        )
+
+
+def test_matrix_headline_historicity_runtime_boundary_rejects_linkage_mismatch():
+    boundary = matrix_headline_historicity_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        headline_historicity_evidence=_valid_headline_historicity_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    record["target_id"] = "mm_4x4x8"
+    record["dimensions"] = [4, 4, 8]
+    record["rank"] = 49
+    record["multiplication_count"] = 49
+    record["scalar_field"] = "real"
+    record["characteristic"] = "positive"
+    record["source_refs"][0]["claim"] = "different claim"
+    record["prior_comparisons"][0]["rank"] = 48
+    record["evidence_links"]["matrix_result_ref"] = "matrix/other/report.json"
+    record["matrix_result_ref"] = "matrix/other/report.json"
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "runtime_record_0_headline_historicity_target_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_dimensions_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_rank_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_multiplication_count_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_scalar_field_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_characteristic_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_source_refs_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_prior_comparisons_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_evidence_links_mismatch" in codes
+    assert "runtime_record_0_headline_historicity_matrix_result_mismatch" in codes
+
+
+def test_matrix_headline_historicity_runtime_boundary_rejects_missing_required_record_fields():
+    boundary = matrix_headline_historicity_runtime_boundary_from_evidence(
+        run_id="run_001",
+        candidate_id="candidate_001",
+        matrix_result_ref="matrix/mm_4x4x4/report.json",
+        headline_historicity_evidence=_valid_headline_historicity_evidence(),
+    )
+    record = boundary["emitted_records"][0]
+    del record["artifact_paths"]
+    record["dimensions"] = [4, 4]
+    record["rank"] = "48"
+    record["source_refs"] = []
+    record["prior_comparisons"] = []
+    record["evidence_links"] = []
+    record["artifact_sha256"] = "not-a-sha"
+
+    validation = validate_matrix_headline_historicity_runtime_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_runtime_record_dimensions" in codes
+    assert "invalid_runtime_record_rank" in codes
+    assert "invalid_runtime_record_source_refs" in codes
+    assert "invalid_runtime_record_prior_comparisons" in codes
+    assert "invalid_runtime_record_evidence_links" in codes
+    assert "runtime_record_0_invalid_headline_historicity_artifact_paths" in codes
+    assert "runtime_record_0_invalid_headline_historicity_artifact_hash" in codes
 
 
 def test_matrix_headline_historicity_runtime_boundary_rejects_invalid_nested_evidence():

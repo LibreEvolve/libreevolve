@@ -767,13 +767,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     prior comparisons, source refs, and links to result, scalar-field,
     tensor-rank, Figure 4, Figure 9, and companion Colab evidence. README now
     also documents `libreevolve.matrix_headline_historicity_runtime_boundary.v1`
-    as the current `not_emitted_by_local_runner` boundary plus required future
-    emitted-record fields for headline target/rank/field values, source refs,
-    prior comparisons, evidence links, matrix-result refs, artifact paths, and
-    artifact hashes. That contract distinguishes the complex/characteristic-zero
-    headline from the finite-field caveat, but it does not prove the claim
-    until concrete emitted artifacts and source-span/decomposition/certificate
-    links exist.
+    as the current `not_emitted_by_local_runner` boundary plus emitted-record
+    validation for run/target/candidate ids, dimensions, headline
+    rank/field values, source refs, prior comparisons, evidence links,
+    matrix-result refs, artifact paths, and artifact hashes. It also documents
+    the builder that turns validated headline evidence into a linked runtime
+    row. That contract distinguishes the complex/characteristic-zero headline
+    from the finite-field caveat, but it does not prove the claim until
+    concrete emitted artifacts and source-span/decomposition/certificate links
+    exist.
   - Required result: when matrix-headline historicity artifacts land, update
     README, ROADMAP, papers index, and code/paper TODOs with target id,
     dimensions, field/characteristic, rank, prior-algorithm comparison,

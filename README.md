@@ -3934,9 +3934,14 @@ claim. It validates the declared evidence shape; local matrix benchmark runners
 still do not emit the headline record or the linked decomposition/certificate/
 source artifacts. The companion runtime boundary
 `libreevolve.matrix_headline_historicity_runtime_boundary.v1` validates the
-current `not_emitted_by_local_runner` state and required future emitted-record
-fields for headline target/rank/field values, source refs, prior comparisons,
-evidence links, matrix-result refs, artifact paths, and artifact hashes.
+current `not_emitted_by_local_runner` state and emitted records for
+run/target/candidate ids, dimensions, headline rank/field values, source refs,
+prior comparisons, evidence links, matrix-result refs, artifact paths, and
+artifact hashes. The helper
+`matrix_headline_historicity_runtime_boundary_from_evidence()` builds an
+emitted runtime row from validated headline evidence and validation links every
+row back to nested target, dimensions, headline claim, source refs, prior
+comparisons, evidence links, and matrix-result provenance.
 Matrix-rank table exhibit evidence uses
 `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1`; it validates declared
 Table 2 and Appendix A Table 3 table exhibits, including stable table ids,

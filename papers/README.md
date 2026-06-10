@@ -1319,10 +1319,14 @@ Implemented:
   and companion Colab evidence. No local matrix benchmark runner emits those
   headline/source/decomposition/certificate artifacts yet.
   `libreevolve.matrix_headline_historicity_runtime_boundary.v1` now records the
-  current `not_emitted_by_local_runner` boundary and required future
-  emitted-record fields for headline target/rank/field values, source refs,
-  prior comparisons, evidence links, matrix-result refs, artifact paths, and
-  artifact hashes.
+  current `not_emitted_by_local_runner` boundary and validates emitted records
+  for run/target/candidate ids, dimensions, headline rank/field values, source
+  refs, prior comparisons, evidence links, matrix-result refs, artifact paths,
+  and artifact hashes.
+  `matrix_headline_historicity_runtime_boundary_from_evidence()` builds a
+  runtime row from validated headline evidence and checks linkage back to
+  nested target, dimensions, headline claim, source refs, prior comparisons,
+  evidence links, and matrix-result provenance.
   `libreevolve.alphaevolve_matrix_rank_table_exhibit.v1` validates declared
   Table 2 and Appendix A Table 3 matrix-rank table exhibits, including stable
   table ids, source page/caption links, selected/full-table membership, row

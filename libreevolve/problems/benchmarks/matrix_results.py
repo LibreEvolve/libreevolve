@@ -10,8 +10,10 @@ from pathlib import Path
 from typing import Any
 
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    EXPECTED_TARGET_COUNT as APPENDIX_A_EXPECTED_TARGET_COUNT,
     TARGET_SUITE as APPENDIX_A_TARGET_SUITE,
     matrix_target_by_id,
+    matrix_target_records,
 )
 from libreevolve.problems.benchmarks.companion_sources import (
     alphaevolve_companion_artifact_rights_record,
@@ -23,6 +25,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
 MATRIX_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.matrix_result_artifact_inventory.v1"
 MATRIX_PUBLICATION_BUNDLE_SCHEMA = "libreevolve.matrix_publication_bundle.v1"
+MATRIX_SUITE_PUBLICATION_ARTIFACT_BOUNDARY_SCHEMA = "libreevolve.matrix_suite_publication_artifact_boundary.v1"
 MATRIX_BASELINE_COMPONENT_RUNTIME_SCHEMA = "libreevolve.matrix_baseline_component_runtime_boundary.v1"
 MATRIX_CASCADE_RUN_RUNTIME_SCHEMA = "libreevolve.matrix_cascade_run_runtime_boundary.v1"
 MATRIX_NEAR_INTEGRALITY_SCHEMA = "libreevolve.matrix_near_integrality_evidence.v1"
@@ -52,6 +55,29 @@ COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer", "rational", "float"}
 PUBLICATION_COEFFICIENT_DOMAINS = frozenset({"integer", "half_integer"})
 EXACTNESS_STATUSES = frozenset({"verified", "failed", "not_checked"})
 ARTIFACT_KINDS = frozenset({"algorithm", "certificate", "summary", "notebook"})
+MATRIX_SUITE_PUBLICATION_ARTIFACT_STATUSES = frozenset({"not_generated_locally", "generated"})
+MATRIX_SUITE_PUBLICATION_ARTIFACT_REQUIRED_FIELDS = (
+    "target_id",
+    "dimensions",
+    "target_tensor_ref",
+    "target_tensor_sha256",
+    "algorithm_ref",
+    "algorithm_sha256",
+    "coefficient_domain",
+    "coefficient_data_ref",
+    "coefficient_data_sha256",
+    "exactness_certificate_ref",
+    "exactness_certificate_sha256",
+    "notebook_ref",
+    "notebook_sha256",
+    "per_seed_report_ref",
+    "per_seed_report_sha256",
+    "matrix_result_report",
+    "artifact_inventory",
+    "publication_bundle_ref",
+    "artifact_paths",
+    "artifact_sha256",
+)
 MATRIX_BASELINE_COMPONENT_RUNTIME_STATUSES = frozenset({"not_emitted_by_local_runner", "emitted"})
 MATRIX_BASELINE_COMPONENT_REQUIRED_NAMES = frozenset({"initializer", "reconstruction_loss", "optimizer"})
 MATRIX_BASELINE_COMPONENT_MUTABILITY = frozenset({"fixed", "mutable"})
@@ -314,6 +340,15 @@ class MatrixPublicationBundleValidation:
 
 
 @dataclass(frozen=True)
+class MatrixSuitePublicationArtifactBoundaryValidation:
+    ok: bool
+    artifact_status: str | None
+    generated_target_count: int
+    required_field_count: int
+    issues: list[MatrixResultIssue]
+
+
+@dataclass(frozen=True)
 class MatrixBaselineComponentRuntimeValidation:
     ok: bool
     runtime_emission_status: str | None
@@ -500,6 +535,144 @@ def validate_matrix_result_report(report: object | str | Path) -> MatrixResultVa
         seed_count=seed_count or 0,
         best_rank=best_rank,
         hit_fraction=hit_fraction,
+        issues=issues,
+    )
+
+
+def matrix_suite_publication_artifact_boundary_record() -> dict[str, Any]:
+    return {
+        "schema": MATRIX_SUITE_PUBLICATION_ARTIFACT_BOUNDARY_SCHEMA,
+        "target_suite": APPENDIX_A_TARGET_SUITE,
+        "result_schema": MATRIX_RESULT_SCHEMA,
+        "artifact_inventory_schema": MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+        "publication_bundle_schema": MATRIX_PUBLICATION_BUNDLE_SCHEMA,
+        "artifact_status": "not_generated_locally",
+        "local_generation_scope": "appendix_a_matrix_suite_publication_artifacts",
+        "registered_target_count": APPENDIX_A_EXPECTED_TARGET_COUNT,
+        "checked_baseline_bundle_ref": "strassen_2x2_publication_bundle",
+        "required_artifact_fields": list(MATRIX_SUITE_PUBLICATION_ARTIFACT_REQUIRED_FIELDS),
+        "generated_target_artifacts": [],
+        "claim_boundary": (
+            "This is an Appendix A matrix suite publication-artifact boundary. "
+            "It does not claim local artifacts include target tensors, discovered "
+            "decompositions, coefficient data, exactness certificates, notebooks, "
+            "and per-seed reports for every registered Appendix A target."
+        ),
+    }
+
+
+def validate_matrix_suite_publication_artifact_boundary(
+    boundary: object | str | Path | None = None,
+) -> MatrixSuitePublicationArtifactBoundaryValidation:
+    data, read_issues = _load_report(
+        matrix_suite_publication_artifact_boundary_record() if boundary is None else boundary
+    )
+    if read_issues:
+        return MatrixSuitePublicationArtifactBoundaryValidation(False, None, 0, 0, read_issues)
+    assert isinstance(data, dict)
+    issues: list[MatrixResultIssue] = []
+    if data.get("schema") != MATRIX_SUITE_PUBLICATION_ARTIFACT_BOUNDARY_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_schema",
+                "unsupported matrix suite publication-artifact boundary schema",
+            )
+        )
+    if data.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_target_suite",
+                "suite publication boundary must target AlphaEvolve Appendix A",
+            )
+        )
+    if data.get("result_schema") != MATRIX_RESULT_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_result_schema",
+                "suite publication boundary must reference the matrix result report schema",
+            )
+        )
+    if data.get("artifact_inventory_schema") != MATRIX_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_artifact_inventory_schema",
+                "suite publication boundary must reference the matrix artifact inventory schema",
+            )
+        )
+    if data.get("publication_bundle_schema") != MATRIX_PUBLICATION_BUNDLE_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_publication_bundle_schema",
+                "suite publication boundary must reference the matrix publication bundle schema",
+            )
+        )
+    status = data.get("artifact_status")
+    if status not in MATRIX_SUITE_PUBLICATION_ARTIFACT_STATUSES:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_artifact_status",
+                "artifact_status must be not_generated_locally or generated",
+            )
+        )
+        status = None
+    if not isinstance(data.get("local_generation_scope"), str) or not data["local_generation_scope"].strip():
+        issues.append(
+            MatrixResultIssue(
+                "missing_local_generation_scope",
+                "local_generation_scope must identify the local artifact-generation surface",
+            )
+        )
+    if data.get("registered_target_count") != APPENDIX_A_EXPECTED_TARGET_COUNT:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_registered_target_count",
+                "registered_target_count must match the Appendix A registry target count",
+            )
+        )
+    required_field_count = _validate_matrix_suite_publication_required_fields(
+        data.get("required_artifact_fields"),
+        issues,
+    )
+    artifacts = data.get("generated_target_artifacts")
+    if not isinstance(artifacts, list):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_generated_target_artifacts",
+                "generated_target_artifacts must be a list",
+            )
+        )
+        artifacts = []
+    generated_count = len(artifacts)
+    if status == "not_generated_locally":
+        if artifacts:
+            issues.append(
+                MatrixResultIssue(
+                    "unexpected_generated_target_artifacts",
+                    "not_generated_locally status must not include generated target artifacts",
+                )
+            )
+        claim_boundary = data.get("claim_boundary")
+        if not isinstance(claim_boundary, str) or "does not claim" not in claim_boundary.lower():
+            issues.append(
+                MatrixResultIssue(
+                    "missing_absence_claim_boundary",
+                    "absence boundary must explicitly say it does not claim suite artifact generation",
+                )
+            )
+    elif status == "generated":
+        if not artifacts:
+            issues.append(
+                MatrixResultIssue(
+                    "missing_suite_publication_artifacts",
+                    "generated status requires one artifact record per Appendix A target",
+                )
+            )
+        _validate_matrix_suite_publication_artifacts(artifacts, issues)
+    return MatrixSuitePublicationArtifactBoundaryValidation(
+        ok=not issues,
+        artifact_status=status if isinstance(status, str) else None,
+        generated_target_count=generated_count,
+        required_field_count=required_field_count,
         issues=issues,
     )
 
@@ -1736,6 +1909,27 @@ def render_matrix_headline_historicity_runtime_boundary_summary(
         f"| schema_status | {status} |",
         f"| runtime_emission_status | {validation.runtime_emission_status or '<unknown>'} |",
         f"| emitted_record_count | {validation.emitted_record_count} |",
+        f"| required_field_count | {validation.required_field_count} |",
+    ]
+    if validation.issues:
+        lines.extend(["", "Issues:"])
+        lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
+    return "\n".join(lines)
+
+
+def render_matrix_suite_publication_artifact_boundary_summary(
+    boundary: dict[str, Any] | None = None,
+) -> str:
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    status = "ok" if validation.ok else "invalid"
+    lines = [
+        "Matrix suite publication artifact boundary",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        f"| schema_status | {status} |",
+        f"| artifact_status | {validation.artifact_status or '<unknown>'} |",
+        f"| generated_target_count | {validation.generated_target_count} |",
         f"| required_field_count | {validation.required_field_count} |",
     ]
     if validation.issues:
@@ -4563,6 +4757,287 @@ def _validate_matrix_publication_inventory(
             )
         )
     return len(issues) == issue_count
+
+
+def _validate_matrix_suite_publication_required_fields(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> int:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_required_artifact_fields",
+                "required_artifact_fields must be a non-empty list",
+            )
+        )
+        return 0
+    seen: set[str] = set()
+    for field in value:
+        if not isinstance(field, str) or not field.strip():
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_required_artifact_field",
+                    "required artifact field names must be non-empty strings",
+                )
+            )
+            continue
+        if field in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_required_artifact_field",
+                    "required_artifact_fields must be unique",
+                )
+            )
+        seen.add(field)
+    if set(MATRIX_SUITE_PUBLICATION_ARTIFACT_REQUIRED_FIELDS) - seen:
+        issues.append(
+            MatrixResultIssue(
+                "missing_required_artifact_field",
+                "required_artifact_fields must include all suite publication artifact fields",
+            )
+        )
+    return len(value)
+
+
+def _validate_matrix_suite_publication_artifacts(
+    value: list[object],
+    issues: list[MatrixResultIssue],
+) -> None:
+    registry_targets = {
+        target["id"]: target
+        for target in matrix_target_records()
+        if isinstance(target.get("id"), str)
+    }
+    seen: set[str] = set()
+    for artifact in value:
+        if not isinstance(artifact, dict):
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_suite_publication_artifact",
+                    "suite publication artifact records must be objects",
+                )
+            )
+            continue
+        target_id = artifact.get("target_id")
+        safe_id = target_id if isinstance(target_id, str) else None
+        expected = registry_targets.get(safe_id or "")
+        if expected is None:
+            issues.append(
+                MatrixResultIssue(
+                    "unknown_suite_publication_target_id",
+                    "target_id must belong to the Appendix A matrix registry",
+                )
+            )
+            continue
+        if safe_id in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_suite_publication_target_id",
+                    "suite publication target_id values must be unique",
+                )
+            )
+        seen.add(safe_id)
+        if artifact.get("dimensions") != expected.get("dimensions"):
+            issues.append(
+                MatrixResultIssue(
+                    "suite_publication_dimensions_mismatch",
+                    "artifact dimensions must match the Appendix A registry target",
+                )
+            )
+        if artifact.get("coefficient_domain") not in PUBLICATION_COEFFICIENT_DOMAINS:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_suite_publication_coefficient_domain",
+                    "suite publication artifacts require integer or half_integer coefficients",
+                )
+            )
+        for field in (
+            "target_tensor_ref",
+            "algorithm_ref",
+            "coefficient_data_ref",
+            "exactness_certificate_ref",
+            "notebook_ref",
+            "per_seed_report_ref",
+            "publication_bundle_ref",
+        ):
+            _validate_safe_ref_field(artifact.get(field), f"invalid_{field}", issues)
+        for field in (
+            "target_tensor_sha256",
+            "algorithm_sha256",
+            "coefficient_data_sha256",
+            "exactness_certificate_sha256",
+            "notebook_sha256",
+            "per_seed_report_sha256",
+            "artifact_sha256",
+        ):
+            _validate_hash_field(artifact.get(field), f"invalid_{field}", issues)
+        _validate_suite_artifact_paths(artifact.get("artifact_paths"), issues)
+        _validate_suite_matrix_result_report(artifact.get("matrix_result_report"), safe_id, issues)
+        _validate_suite_artifact_inventory(artifact.get("artifact_inventory"), safe_id, issues)
+    for target_id in sorted(set(registry_targets) - seen):
+        issues.append(
+            MatrixResultIssue(
+                "missing_suite_publication_target",
+                f"suite publication artifacts must include target {target_id}",
+            )
+        )
+
+
+def _validate_safe_ref_field(
+    value: object,
+    code: str,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if _safe_relative_path(value) is None:
+        issues.append(
+            MatrixResultIssue(
+                code,
+                "artifact refs must be safe relative paths",
+            )
+        )
+
+
+def _validate_hash_field(
+    value: object,
+    code: str,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
+        issues.append(
+            MatrixResultIssue(
+                code,
+                "artifact hashes must be lowercase SHA-256 hex digests",
+            )
+        )
+
+
+def _validate_suite_artifact_paths(
+    value: object,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(value, list) or not value:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_artifact_paths",
+                "artifact_paths must be a non-empty list",
+            )
+        )
+        return
+    seen: set[str] = set()
+    for path in value:
+        if _safe_relative_path(path) is None:
+            issues.append(
+                MatrixResultIssue(
+                    "invalid_artifact_path",
+                    "artifact_paths entries must be safe relative paths",
+                )
+            )
+            continue
+        assert isinstance(path, str)
+        if path in seen:
+            issues.append(
+                MatrixResultIssue(
+                    "duplicate_artifact_path",
+                    "artifact_paths entries must be unique",
+                )
+            )
+        seen.add(path)
+
+
+def _validate_suite_matrix_result_report(
+    report: object,
+    target_id: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(report, dict):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_matrix_result_report",
+                "matrix_result_report must be an embedded report object",
+            )
+        )
+        return
+    validation = validate_matrix_result_report(report)
+    issues.extend(
+        MatrixResultIssue(
+            f"invalid_nested_matrix_result_{issue.code}",
+            issue.message,
+        )
+        for issue in validation.issues
+    )
+    if target_id is not None and report.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                "matrix_result_target_mismatch",
+                "matrix_result_report target_id must match the suite artifact target",
+            )
+        )
+    if validation.ok and not validation.alphaevolve_comparable:
+        issues.append(
+            MatrixResultIssue(
+                "matrix_result_not_alphaevolve_comparable",
+                "suite publication artifacts require AlphaEvolve-comparable matrix result reports",
+            )
+        )
+
+
+def _validate_suite_artifact_inventory(
+    inventory: object,
+    target_id: str | None,
+    issues: list[MatrixResultIssue],
+) -> None:
+    if not isinstance(inventory, dict):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_artifact_inventory",
+                "artifact_inventory must be an embedded inventory object",
+            )
+        )
+        return
+    if inventory.get("schema") != MATRIX_ARTIFACT_INVENTORY_SCHEMA:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_nested_inventory_schema",
+                "artifact_inventory schema must be matrix_result_artifact_inventory.v1",
+            )
+        )
+    if inventory.get("target_suite") != APPENDIX_A_TARGET_SUITE:
+        issues.append(
+            MatrixResultIssue(
+                "invalid_nested_inventory_target_suite",
+                "artifact_inventory target_suite must be alphaevolve_appendix_a",
+            )
+        )
+    if target_id is not None and inventory.get("target_id") != target_id:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_target_mismatch",
+                "artifact_inventory target_id must match the suite artifact target",
+            )
+        )
+    if inventory.get("ok") is not True:
+        issues.append(
+            MatrixResultIssue(
+                "inventory_not_ok",
+                "artifact_inventory must verify all referenced files",
+            )
+        )
+    artifact_count = inventory.get("artifact_count")
+    verified_count = inventory.get("verified_count")
+    if (
+        isinstance(artifact_count, bool)
+        or isinstance(verified_count, bool)
+        or not isinstance(artifact_count, int)
+        or not isinstance(verified_count, int)
+        or artifact_count <= 0
+        or verified_count != artifact_count
+    ):
+        issues.append(
+            MatrixResultIssue(
+                "invalid_inventory_counts",
+                "artifact_inventory must have positive artifact_count with all artifacts verified",
+            )
+        )
 
 
 def _safe_relative_path(value: object) -> Path | None:

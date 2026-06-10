@@ -850,6 +850,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     54-target Appendix A registry is rank/outcome metadata, not stored target
     tensors, discovered decompositions, coefficient lists, per-target
     certificates, notebook exports, or construction provenance.
+    README now also documents `libreevolve.matrix_suite_publication_artifact_boundary.v1`
+    as the current `not_generated_locally` boundary and required future fields
+    for one generated artifact record per registered Appendix A target.
     Matching paper TODO and paper-index entries now make the same distinction.
   - Required result: when real tensor-decomposition benchmark runs emit
     target tensors, discovered algorithms, coefficient data, certificates,

@@ -10897,3 +10897,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     artifact paths, and hashes. The paper-manifest gate validates this
     boundary.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Track Appendix A suite-wide matrix publication artifact absence
+      separately from the pinned Strassen baseline.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 and Appendix A
+    report exact matrix decompositions, certificates, notebooks, and per-seed
+    hit-rate evidence across the matrix target suite.
+  - Status: `libreevolve.matrix_suite_publication_artifact_boundary.v1` now
+    records the current `not_generated_locally` boundary and validates
+    required future fields for one generated artifact record per registered
+    Appendix A target: target tensor, algorithm, coefficient data, exactness
+    certificate, notebook, per-seed report, embedded matrix-result report,
+    artifact inventory, publication-bundle refs, artifact paths, and hashes.
+    The paper-manifest gate validates this boundary.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

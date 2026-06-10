@@ -10925,3 +10925,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     scopes it to the current `not_recorded_locally` state, and lists required
     future excluded-target justification fields.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix suite publication-artifact boundary in
+      README.
+  - Spec evidence: README matrix-publication wording needs to distinguish one
+    checked Strassen baseline bundle from generated artifacts across the full
+    Appendix A target suite.
+  - Status: README now names
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1`, scopes it to
+    the current `not_generated_locally` state, and lists required future fields
+    for one generated artifact record per registered Appendix A target.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

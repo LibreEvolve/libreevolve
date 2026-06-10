@@ -3167,14 +3167,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     checked Strassen baseline from the still-missing generated notebook/export
     equivalents for reproducing discovered algorithms across the full Appendix
     A suite.
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1` now records
+    the current `not_generated_locally` boundary and validates required future
+    fields for one generated artifact record per registered Appendix A target:
+    target tensor, algorithm, coefficient data, exactness certificate,
+    notebook, per-seed report, embedded matrix-result report, artifact
+    inventory, publication-bundle refs, artifact paths, and hashes. The
+    paper-manifest gate validates this boundary.
   - Required result: connect real matrix target tensors, exact algorithm
     artifacts, coefficient-domain data, certificate-generation artifacts, and
     generated export/notebook links to real report instances. The remaining
     gap is producing those discovered tensor artifacts for the suite and adding
     target-suite curation provenance, not validating Appendix A registry
     integrity, verifying declared report artifacts, validating the checked
-    bundle wrapper, or emitting one checked Strassen baseline once those files
-    exist.
+    bundle wrapper, emitting one checked Strassen baseline once those files
+    exist, or declaring the suite-wide publication artifact boundary.
 
 - [ ] Track best-known-rank citation provenance for Appendix A comparisons.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 presents matrix

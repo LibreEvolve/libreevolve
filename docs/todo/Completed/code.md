@@ -16124,3 +16124,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused Appendix A registry and paper-manifest tests cover
     the absence boundary, recorded-row validation, invalid row drift, summary
     rendering, and manifest hook.
+
+- [x] Add an Appendix A matrix suite publication-artifact boundary contract.
+  - Spec evidence: AlphaEvolve Section 3.1 and Appendix A publish exact
+    tensor-decomposition algorithms, certificates, notebooks, target-suite
+    results, and per-seed hit-rate evidence across the reported matrix suite;
+    one checked Strassen baseline bundle is not suite-wide discovery evidence.
+  - Status: `libreevolve.matrix_suite_publication_artifact_boundary.v1` now
+    validates the current `not_generated_locally` state, rejects false
+    generated claims without suite artifacts, validates future generated
+    records only when every registered Appendix A target is covered, and
+    records required fields for target tensors, algorithms, coefficient data,
+    exactness certificates, notebooks, per-seed reports, embedded
+    matrix-result reports, artifact inventories, publication-bundle refs,
+    artifact paths, and hashes.
+  - Verification: focused matrix-result and paper-manifest tests cover the
+    absence boundary, full-suite generated fixture, invalid nested evidence,
+    summary rendering, and manifest hook.

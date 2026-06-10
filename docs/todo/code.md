@@ -3164,6 +3164,13 @@ Primary evidence:
     `libreevolve.matrix_publication_bundle.v1` wrapper, embedded report,
     target identity, report-file hash/byte evidence, and inventory
     consistency for that bundle.
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1` now validates
+    the current `not_generated_locally` boundary and required future fields
+    for one generated artifact record per registered Appendix A target:
+    target tensors, tensor-decomposition algorithms, coefficient data,
+    exactness certificates, notebooks, per-seed reports, embedded
+    matrix-result reports, artifact inventories, publication-bundle refs,
+    artifact paths, and hashes.
   - Required result: connect exact target tensors, tensor-decomposition
     algorithms, coefficient-domain data, certificate artifacts, and
     notebook/export artifacts to the registered target suite; keep the existing
@@ -3173,7 +3180,8 @@ Primary evidence:
     the registered target suite and adding target-suite curation provenance,
     not validating Appendix A registry integrity, validating declared artifact
     inventory, validating the checked bundle wrapper, or validating the one
-    pinned checked Strassen baseline.
+    pinned checked Strassen baseline, or declaring the suite-wide publication
+    artifact boundary.
 
 - [ ] Record matrix baseline-component provenance for Section 3.1 starts.
   - Spec evidence: AlphaEvolve Section 3.1 says the matrix-decomposition

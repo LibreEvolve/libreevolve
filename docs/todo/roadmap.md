@@ -2751,7 +2751,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Appendix A/B registries, benchmark hardening/report contracts, systems and
     certification report contracts, ablation report contracts, and one checked
     Strassen baseline bundle. Those surfaces validate scope, schemas, and
-    declared artifact availability, but they do not yet provide a non-toy
+    declared artifact availability.
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1` now also
+    validates the current `not_generated_locally` boundary for suite-wide
+    target tensors, algorithms, certificates, notebooks, per-seed reports, and
+    publication-bundle refs, but it does not yet provide a non-toy
     benchmark run fixture whose command produces expected benchmark artifacts
     from an actual repeated-seed target run.
   - Required result: when the first non-toy benchmark fixture lands, update the

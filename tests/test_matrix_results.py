@@ -4,6 +4,10 @@ import shutil
 
 import pytest
 
+from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
+    EXPECTED_TARGET_COUNT,
+    matrix_target_records,
+)
 from libreevolve.problems.benchmarks.companion_sources import (
     alphaevolve_companion_artifact_rights_record,
     alphaevolve_companion_selection_scope_record,
@@ -20,6 +24,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_RESULT_SCHEMA,
     MATRIX_SCALAR_FIELD_SCHEMA,
     MATRIX_SCALAR_FIELD_RUNTIME_SCHEMA,
+    MATRIX_SUITE_PUBLICATION_ARTIFACT_BOUNDARY_SCHEMA,
     MATRIX_SWEEP_SPACE_SCHEMA,
     MATRIX_SWEEP_SPACE_RUNTIME_SCHEMA,
     MATRIX_TENSOR_RANK_SCHEMA,
@@ -31,6 +36,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_near_integrality_runtime_boundary_record,
     matrix_result_artifact_inventory,
     matrix_scalar_field_runtime_boundary_record,
+    matrix_suite_publication_artifact_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
     render_matrix_baseline_component_runtime_boundary_summary,
@@ -42,6 +48,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     render_matrix_result_summary,
     render_matrix_scalar_field_summary,
     render_matrix_scalar_field_runtime_boundary_summary,
+    render_matrix_suite_publication_artifact_boundary_summary,
     render_matrix_sweep_space_summary,
     render_matrix_sweep_space_runtime_boundary_summary,
     render_matrix_tensor_rank_summary,
@@ -57,6 +64,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_result_report,
     validate_matrix_scalar_field_evidence,
     validate_matrix_scalar_field_runtime_boundary,
+    validate_matrix_suite_publication_artifact_boundary,
     validate_matrix_sweep_space_evidence,
     validate_matrix_sweep_space_runtime_boundary,
     validate_matrix_tensor_rank_evidence,
@@ -741,6 +749,155 @@ def test_strassen_2x2_publication_bundle_rejects_bad_seed_list(tmp_path):
     for seeds in ((), (1, 1), (True,), ("1",)):
         with pytest.raises(ValueError, match="seeds"):
             write_strassen_2x2_publication_bundle(tmp_path, seeds=seeds)
+
+
+def _suite_publication_artifact(target: dict) -> dict:
+    target_id = target["id"]
+    report = json.loads(json.dumps(_valid_report()))
+    report["target_id"] = target_id
+    report["dimensions"] = list(target["dimensions"])
+    report["best_rank"] = target["alphaevolve_rank"]
+    report["seed_results"] = [
+        {"seed": 100, "rank": target["alphaevolve_rank"], "achieved_best_rank": True, "exact": True},
+        {"seed": 101, "rank": target["alphaevolve_rank"] + 1, "achieved_best_rank": False, "exact": True},
+        {"seed": 102, "rank": target["alphaevolve_rank"], "achieved_best_rank": True, "exact": True},
+        {"seed": 103, "rank": target["alphaevolve_rank"] + 2, "achieved_best_rank": False, "exact": True},
+    ]
+    for artifact in report["artifacts"]:
+        artifact["path"] = artifact["path"].replace("mm_4x4x4", target_id)
+    inventory = {
+        "schema": MATRIX_ARTIFACT_INVENTORY_SCHEMA,
+        "report_schema": MATRIX_RESULT_SCHEMA,
+        "target_suite": "alphaevolve_appendix_a",
+        "target_id": target_id,
+        "artifact_root_policy": "safe_relative_report_paths_under_artifact_root",
+        "artifact_root_name": "matrix_suite_publication_artifacts",
+        "artifact_count": 3,
+        "verified_count": 3,
+        "missing_count": 0,
+        "mismatch_count": 0,
+        "invalid_count": 0,
+        "records_sha256": "e" * 64,
+        "ok": True,
+        "issues": [],
+        "artifacts": [],
+    }
+    return {
+        "target_id": target_id,
+        "dimensions": list(target["dimensions"]),
+        "target_tensor_ref": f"matrix/{target_id}/target_tensor.json",
+        "target_tensor_sha256": "1" * 64,
+        "algorithm_ref": f"matrix/{target_id}/algorithm.json",
+        "algorithm_sha256": "2" * 64,
+        "coefficient_domain": "half_integer",
+        "coefficient_data_ref": f"matrix/{target_id}/coefficients.json",
+        "coefficient_data_sha256": "3" * 64,
+        "exactness_certificate_ref": f"matrix/{target_id}/certificate.json",
+        "exactness_certificate_sha256": "4" * 64,
+        "notebook_ref": f"matrix/{target_id}/reproduce.ipynb",
+        "notebook_sha256": "5" * 64,
+        "per_seed_report_ref": f"matrix/{target_id}/per_seed_report.json",
+        "per_seed_report_sha256": "6" * 64,
+        "matrix_result_report": report,
+        "artifact_inventory": inventory,
+        "publication_bundle_ref": f"matrix/{target_id}/bundle.json",
+        "artifact_paths": [
+            f"matrix/{target_id}/target_tensor.json",
+            f"matrix/{target_id}/algorithm.json",
+            f"matrix/{target_id}/certificate.json",
+            f"matrix/{target_id}/reproduce.ipynb",
+            f"matrix/{target_id}/per_seed_report.json",
+        ],
+        "artifact_sha256": "7" * 64,
+    }
+
+
+def _suite_publication_artifacts() -> list[dict]:
+    return [_suite_publication_artifact(target) for target in matrix_target_records()]
+
+
+def test_matrix_suite_publication_artifact_boundary_accepts_current_absence():
+    boundary = matrix_suite_publication_artifact_boundary_record()
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.artifact_status == "not_generated_locally"
+    assert validation.generated_target_count == 0
+    assert validation.required_field_count == 20
+    assert boundary["schema"] == MATRIX_SUITE_PUBLICATION_ARTIFACT_BOUNDARY_SCHEMA
+    assert boundary["registered_target_count"] == EXPECTED_TARGET_COUNT
+    assert validation.issues == []
+
+
+def test_matrix_suite_publication_artifact_boundary_rejects_absence_with_artifacts():
+    boundary = matrix_suite_publication_artifact_boundary_record()
+    boundary["generated_target_artifacts"] = [_suite_publication_artifact(matrix_target_records()[0])]
+    boundary["claim_boundary"] = "Suite artifacts exist."
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_generated_target_artifacts" in codes
+    assert "missing_absence_claim_boundary" in codes
+
+
+def test_matrix_suite_publication_artifact_boundary_requires_all_registered_targets_when_generated():
+    boundary = matrix_suite_publication_artifact_boundary_record()
+    boundary["artifact_status"] = "generated"
+    boundary["generated_target_artifacts"] = [_suite_publication_artifact(matrix_target_records()[0])]
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "missing_suite_publication_target" in codes
+
+
+def test_matrix_suite_publication_artifact_boundary_accepts_generated_suite_fixture():
+    boundary = matrix_suite_publication_artifact_boundary_record()
+    boundary["artifact_status"] = "generated"
+    boundary["generated_target_artifacts"] = _suite_publication_artifacts()
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+
+    assert validation.ok is True
+    assert validation.artifact_status == "generated"
+    assert validation.generated_target_count == EXPECTED_TARGET_COUNT
+    assert validation.issues == []
+
+
+def test_matrix_suite_publication_artifact_boundary_rejects_invalid_nested_evidence():
+    boundary = matrix_suite_publication_artifact_boundary_record()
+    boundary["artifact_status"] = "generated"
+    artifacts = _suite_publication_artifacts()
+    artifacts[0]["dimensions"] = [9, 9, 9]
+    artifacts[0]["coefficient_domain"] = "float"
+    artifacts[0]["target_tensor_ref"] = "../target_tensor.json"
+    artifacts[0]["algorithm_sha256"] = "not-a-digest"
+    artifacts[0]["matrix_result_report"]["target_id"] = "mm_4x4x4"
+    artifacts[0]["artifact_inventory"]["ok"] = False
+    boundary["generated_target_artifacts"] = artifacts
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "suite_publication_dimensions_mismatch" in codes
+    assert "invalid_suite_publication_coefficient_domain" in codes
+    assert "invalid_target_tensor_ref" in codes
+    assert "invalid_algorithm_sha256" in codes
+    assert "matrix_result_target_mismatch" in codes
+    assert "inventory_not_ok" in codes
+
+
+def test_render_matrix_suite_publication_artifact_boundary_summary_reports_shape():
+    summary = render_matrix_suite_publication_artifact_boundary_summary()
+
+    assert "Matrix suite publication artifact boundary" in summary
+    assert "| artifact_status | not_generated_locally |" in summary
+    assert "| generated_target_count | 0 |" in summary
 
 
 def _valid_near_integrality_evidence() -> dict:

@@ -784,6 +784,12 @@ is not yet an AlphaEvolve reproduction.
   `write_strassen_2x2_publication_bundle()` output. This remains baseline
   evidence only; Appendix A suite-wide discovered decompositions, certificates,
   and notebook exports remain open.
+  `libreevolve.matrix_suite_publication_artifact_boundary.v1` now validates the
+  current `not_generated_locally` boundary and required future fields for one
+  generated artifact record per registered Appendix A target: target tensors,
+  algorithms, coefficient data, exactness certificates, notebooks, per-seed
+  reports, embedded matrix-result reports, artifact inventories,
+  publication-bundle refs, artifact paths, and hashes.
 - Keep matrix sweep-space wording scoped to evidence validation rather than
   executed Figure 9 workflow parity: `libreevolve.matrix_sweep_space_evidence.v1`
   now validates declared `sweep` function identity, user-provided `hyper`

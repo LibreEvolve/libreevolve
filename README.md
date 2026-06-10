@@ -3767,7 +3767,13 @@ against fresh helper output. Each generated artifact carries a companion
 artifact-rights row that states no companion material was copied and keeps local
 project terms separate from companion repository terms. This is a reproducible
 baseline artifact, not evidence that LibreEvolve has discovered or exported the
-full Appendix A target suite.
+full Appendix A target suite. The companion boundary
+`libreevolve.matrix_suite_publication_artifact_boundary.v1` validates the
+current `not_generated_locally` state and required future fields for one
+generated artifact record per registered Appendix A target, including target
+tensors, algorithms, coefficient data, exactness certificates, notebooks,
+per-seed reports, embedded matrix-result reports, artifact inventories,
+publication-bundle refs, artifact paths, and hashes.
 LibreEvolve still does not emit local Appendix A matrix scaling-frontier runs:
 larger target attempts, measured accelerator/GPU memory profiles, OOM or
 resource-exhaustion artifacts, reduced-seed tradeoffs, and target-exclusion

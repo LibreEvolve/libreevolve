@@ -122,6 +122,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     matrix_headline_historicity_runtime_boundary_record,
     matrix_near_integrality_runtime_boundary_record,
     matrix_scalar_field_runtime_boundary_record,
+    matrix_suite_publication_artifact_boundary_record,
     matrix_sweep_space_runtime_boundary_record,
     matrix_tensor_rank_runtime_boundary_record,
     validate_strassen_2x2_publication_bundle,
@@ -130,6 +131,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     validate_matrix_headline_historicity_runtime_boundary,
     validate_matrix_near_integrality_runtime_boundary,
     validate_matrix_scalar_field_runtime_boundary,
+    validate_matrix_suite_publication_artifact_boundary,
     validate_matrix_sweep_space_runtime_boundary,
     validate_matrix_tensor_rank_runtime_boundary,
 )
@@ -665,6 +667,16 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             issue.message,
         )
         for issue in strassen_bundle_report.issues
+    )
+    suite_publication_report = validate_matrix_suite_publication_artifact_boundary(
+        matrix_suite_publication_artifact_boundary_record()
+    )
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_suite_publication_artifact_{issue.code}",
+            issue.message,
+        )
+        for issue in suite_publication_report.issues
     )
     baseline_component_runtime_report = validate_matrix_baseline_component_runtime_boundary(
         matrix_baseline_component_runtime_boundary_record()

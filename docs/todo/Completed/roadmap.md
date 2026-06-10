@@ -8338,3 +8338,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     scopes it to the current `not_recorded_locally` state, and keeps real
     excluded-target justification records open.
   - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.
+
+- [x] Document the Appendix A matrix suite publication-artifact boundary in
+      ROADMAP.
+  - Spec evidence: roadmap matrix-publication wording needs to distinguish one
+    checked Strassen baseline bundle from generated artifacts across the full
+    Appendix A target suite.
+  - Status: ROADMAP now names
+    `libreevolve.matrix_suite_publication_artifact_boundary.v1`, scopes it to
+    the current `not_generated_locally` state, and keeps real suite-wide
+    target tensor, algorithm, certificate, notebook, and per-seed report
+    generation open.
+  - Verification: `py -3.12 -m libreevolve.tools.paper_manifest` passes.

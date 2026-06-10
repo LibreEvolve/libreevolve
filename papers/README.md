@@ -1134,6 +1134,13 @@ Implemented:
   helper output. This still does not provide discovered tensor-decomposition
   algorithms, certificates, or notebook exports across the full Appendix A
   target suite.
+  `libreevolve.matrix_suite_publication_artifact_boundary.v1` records the
+  current `not_generated_locally` boundary for suite-wide publication
+  artifacts and validates required future fields for one generated record per
+  registered Appendix A target: target tensor, algorithm, coefficient data,
+  exactness certificate, notebook, per-seed report, embedded matrix-result
+  report, artifact inventory, publication-bundle refs, artifact paths, and
+  hashes. The paper-manifest gate validates this boundary.
   `libreevolve.matrix_baseline_component_runtime_boundary.v1` now records the
   current `not_emitted_by_local_runner` boundary for Section 3.1-style
   starting-algorithm provenance and required future emitted fields for

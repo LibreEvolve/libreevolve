@@ -156,12 +156,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `runtime.history.embedded_evaluator_entrypoint_report`. External
     `validate.py` remains the default path, the problem loader still requires
     `validate.py`, and skeleton-to-block invocation evidence is not yet present.
-  - Required result: when embedded-only problem definitions,
-    skeleton-to-block invocation evidence, stronger callable isolation/build
-    policy, and score-field mapping back to evolved code paths land, update
-    ROADMAP, README, papers index, and code/paper TODOs together so roadmap
-    wording can claim full Figure 3 evaluator parity without overstating the
-    current opt-in report.
+  - Required result: when skeleton-to-block invocation evidence, stronger
+    callable isolation/build policy, and non-static/external-validator
+    score-field linkage land, update ROADMAP, README, papers index, and
+    code/paper TODOs together so roadmap wording can claim full Figure 3
+    evaluator parity without overstating the current opt-in report.
 
 - [ ] Extend Figure 1/Figure 2 roadmap wording from process mappings to full
       diagram parity.
@@ -601,15 +600,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     task-spec manifest paths and links each field to runtime artifact paths for
     candidate history, prompt history, LLM calls, controller-budget events,
     evaluator artifacts, best exports, initial evolvable component spans when
-    markers are present, embedded score-field candidate-path links when
-    candidate-owned evaluation ran, and a hashed standalone
+    markers are present, embedded score-field candidate-path links with static
+    AST causal attribution when supported candidate-owned evaluation ran, and a
+    hashed standalone
     `task_specification.json` run artifact. It also includes bounded candidate
     prompt, and evaluator JSONL row joins, plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` example. It
-    is still a partial artifact, not full AlphaEvolve task-spec parity with
-    causal score attribution.
-  - Required result: when score-field causal attribution lands, update ROADMAP,
-    README, papers index, and code/paper TODOs together.
+    is still a partial artifact, not full AlphaEvolve task-spec parity for
+    external validators, arbitrary language/build runner specs, or full
+    user-authored task-spec evidence.
+  - Required result: when those non-embedded task-spec parity gaps land, update
+    ROADMAP, README, papers index, and code/paper TODOs together.
 
 ## Missing Roadmap Items
 

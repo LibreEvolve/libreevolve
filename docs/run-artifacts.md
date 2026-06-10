@@ -35,7 +35,7 @@ manifest paths, ids/hashes/counts, explicit
 unsupported/incomplete labels, a deterministic `task_spec_id`, and embedded
 validation. The same bundle is also emitted as `task_specification.json`.
 It is partial AlphaEvolve task-spec evidence, not a user-authored standalone
-problem definition or full proof of causal score-link parity.
+problem definition or full proof of arbitrary-validator score-link parity.
 Completed runtime manifests also include
 `runtime.history.task_spec_artifact_resolution_report` with schema
 `libreevolve.task_spec_artifact_resolution_report.v1`. This report consumes the
@@ -51,8 +51,10 @@ resolution counts, artifact-link/presence counts, and bounded
 `failure_history.jsonl` rows and generated prompt ids to `prompt_history.jsonl`
 add/score rows, plus evaluator row ids in `evaluator_results.jsonl`.
 `docs/examples/task_specification.embedded_evaluate_math.json` is a validated
-standalone documentation example. The runtime report's `claim_ready: false`
-gap still covers causal score-field attribution.
+standalone documentation example. The runtime report can record static AST
+score-field causal attribution for supported candidate-owned embedded
+`evaluate` paths, but `claim_ready: false` still covers external validators,
+arbitrary languages/build systems, and full task-spec parity.
 Completed manifests also include
 `runtime.history.initial_program_idea_provenance_report` with schema
 `libreevolve.initial_program_idea_provenance_report.v1`. This report reads
@@ -1791,9 +1793,9 @@ records program and stage ids, entrypoint path, callable name, required
 signature, eval-input type/size/SHA-256 provenance, dependency scope, metric
 names, pass/score evidence, and explicit readiness gaps. It is evidence for
 the opt-in candidate-owned evaluator entrypoint, not full Figure 3 parity:
-embedded-only problem loading, skeleton-to-evolved-block invocation traces,
-score-field-to-code-path mapping, and stronger callable isolation/build policy
-remain open.
+embedded-only problem loading and static score-field-to-code-path attribution
+are supported for the embedded path, while skeleton-to-evolved-block invocation
+traces and stronger callable isolation/build policy remain open.
 
 Prompt metadata is stored for auditability. Mutation prompts are persisted
 according to `mutation_prompt_retention_mode`: `redacted` by default, with

@@ -121,8 +121,10 @@ Primary evidence:
     `runtime.history.embedded_evaluator_entrypoint_report` with executed
     embedded entrypoint records, dependency scope, eval-input provenance,
     metric names, per-metric candidate path/block-span link candidates, and
-    explicit remaining Figure 3 parity gaps. The score-field links are
-    candidate provenance, not causal attribution claims. Tests cover successful
+    explicit remaining Figure 3 parity gaps. For supported embedded
+    `evaluate` return expressions, score-field links now include static AST
+    causal attribution to EVOLVE blocks through local candidate functions or
+    direct block expressions. Tests cover successful
     candidate invocation despite an invalid external validator, diagnostics for
     missing or unsupported candidate callables, and the runtime report contract.
     External `validate.py` remains the default mode, but
@@ -130,10 +132,10 @@ Primary evidence:
     declares a non-empty all-`embedded_evaluate` stage list; the
     `embedded_evaluate_math` fixture proves the checked-in embedded-only problem
     format and CLI path.
-  - Required result: finish skeleton-to-block invocation coupling, stronger
+  - Required result: finish skeleton-to-block invocation coupling and stronger
     candidate callable build/import isolation beyond the local subprocess
-    boundary, causal score-field attribution, and task-spec-level score-link
-    resolution.
+    boundary; extend score-link causality beyond the current static embedded
+    AST path before claiming arbitrary evaluator parity.
 
 - [ ] Extend Figure 1/Figure 2 process-exhibit report into rendered diagram
       parity.
@@ -199,19 +201,21 @@ Primary evidence:
     artifact paths such as history, failure history, prompt history, LLM calls,
     controller-budget events, evaluator artifacts, best exports, initial
     evolvable component span ids when markers are present, embedded
-    score-field candidate-path links when candidate-owned evaluation ran, and a
+    score-field candidate-path links with static AST causal attribution when
+    supported candidate-owned evaluation ran, and a
     hashed standalone `task_specification.json` run artifact that matches the
     manifest bundle. The report also records bounded `deep_id_resolution`
     records that join candidate ids to `history.jsonl` / `failure_history.jsonl`
     rows and generated prompt ids to `prompt_history.jsonl` add/score rows.
     `docs/examples/task_specification.embedded_evaluate_math.json` is now a
     checked paper-facing standalone example validated by
-    `tests/test_task_spec_examples.py`. These links remain non-causal
-    provenance.
-    Runtime also emits `evaluator_results.jsonl` rows and task-spec deep-id
-    records join candidate ids to those row ids.
-  - Required result: finish score-field causal attribution from evaluator
-    outputs to candidate/evolved-block paths.
+    `tests/test_task_spec_examples.py`. Runtime also emits
+    `evaluator_results.jsonl` rows and task-spec deep-id records join
+    candidate ids to those row ids.
+  - Required result: extend artifact-level parity beyond the current embedded
+    static score-field attribution path: external validators, arbitrary
+    language/build runner task specs, and full user-authored task-spec parity
+    remain open.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

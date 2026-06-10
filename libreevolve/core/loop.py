@@ -10234,7 +10234,11 @@ def _task_spec_artifact_resolution_report(
         for artifact in record["runtime_artifact_resolutions"]
         if artifact.get("present") is True
     )
-    score_field_link_count = len(_task_spec_score_field_links(programs))
+    score_field_links = _task_spec_score_field_links(programs)
+    score_field_link_count = len(score_field_links)
+    score_field_causal_attribution_count = _score_field_causal_attribution_count(
+        score_field_links
+    )
     evolvable_component_span_count = len(_task_spec_evolvable_component_spans(programs))
     embedded_only_problem_definition = _embedded_only_problem_definition_ready(
         startup_manifest
@@ -10246,9 +10250,9 @@ def _task_spec_artifact_resolution_report(
     )
     standalone_artifact_present = standalone_artifact.get("present") is True
     deep_id_resolution = _task_spec_deep_id_resolution(run_dir, programs)
-    remaining_gap = [
-        "deep_evaluator_score_causality_resolution",
-    ]
+    remaining_gap = []
+    if score_field_causal_attribution_count == 0:
+        remaining_gap.append("deep_evaluator_score_causality_resolution")
     if deep_id_resolution["claim_readiness"]["candidate_history_rows_joined"] is not True:
         remaining_gap.insert(0, "candidate_id_to_history_row_resolution")
     if deep_id_resolution["claim_readiness"]["prompt_history_rows_joined"] is not True:
@@ -10306,6 +10310,9 @@ def _task_spec_artifact_resolution_report(
             and artifact_link_count == artifact_present_count,
             "evolvable_component_span_ids": evolvable_component_span_count > 0,
             "score_field_to_candidate_path_links": score_field_link_count > 0,
+            "score_field_to_evolved_block_causal_attribution": (
+                score_field_causal_attribution_count > 0
+            ),
             "embedded_only_problem_definition": embedded_only_problem_definition,
             "full_alphaevolve_task_spec_parity": False,
             "remaining_gap": remaining_gap,
@@ -10757,15 +10764,19 @@ def _task_spec_reference_summary(
         }
     if name == "objective_metrics":
         score_field_links = _task_spec_score_field_links(programs)
+        score_field_causal_attribution_count = (
+            _score_field_causal_attribution_count(score_field_links)
+        )
         return {
             "primary_metric": field.get("primary_metric"),
             "metric_count": field.get("metric_count"),
             "paper_metric_count": paper_metric_contract.get("paper_metric_count"),
             "paper_metric_names": paper_metric_contract.get("paper_metric_names", []),
             "score_field_link_policy": (
-                "runtime_embedded_score_field_candidate_paths_not_causal_attribution"
+                "runtime_embedded_score_field_candidate_paths_with_static_ast_causality_when_proven"
             ),
             "score_field_link_count": len(score_field_links),
+            "score_field_causal_attribution_count": score_field_causal_attribution_count,
             "score_field_links": score_field_links[:50],
             "score_field_links_truncated": len(score_field_links) > 50,
         }
@@ -10784,6 +10795,10 @@ def _task_spec_score_field_links(programs: list[Program]) -> list[dict]:
             record["generation"] = program.generation
             links.append(record)
     return links
+
+
+def _score_field_causal_attribution_count(links: list[dict]) -> int:
+    return sum(1 for link in links if link.get("causal_attribution_claimed") is True)
 
 
 def _task_spec_evolvable_component_spans(programs: list[Program]) -> list[dict]:
@@ -10833,7 +10848,11 @@ def _program_has_embedded_evaluation(program: Program) -> bool:
 
 
 def _task_spec_field_gap(field_name: str, programs: list[Program]) -> list[str]:
-    score_field_links_present = bool(_task_spec_score_field_links(programs))
+    score_field_links = _task_spec_score_field_links(programs)
+    score_field_links_present = bool(score_field_links)
+    score_field_causality_present = (
+        _score_field_causal_attribution_count(score_field_links) > 0
+    )
     evolvable_spans_present = bool(_task_spec_evolvable_component_spans(programs))
     common = {
         "initial_programs": (
@@ -10873,7 +10892,10 @@ def _task_spec_field_gap(field_name: str, programs: list[Program]) -> list[str]:
             "arbitrary_language_build_runner_specs",
         ],
         "objective_metrics": (
-            [
+            ["cross_run_metric_contract_diff"]
+            if score_field_links_present
+            and score_field_causality_present
+            else [
                 "cross_run_metric_contract_diff",
                 "score_field_to_evolved_block_causal_attribution",
             ]
@@ -11068,6 +11090,8 @@ def validate_task_spec_artifact_resolution_report(report: object) -> dict:
             issues.append({"code": "invalid_task_spec_prompt_history_readiness", "message": "prompt history row readiness must be boolean"})
         if readiness.get("evaluator_row_ids_resolved") not in {True, False}:
             issues.append({"code": "invalid_task_spec_evaluator_row_readiness", "message": "evaluator row id readiness must be boolean"})
+        if readiness.get("score_field_to_evolved_block_causal_attribution") not in {True, False}:
+            issues.append({"code": "invalid_task_spec_score_field_causality_readiness", "message": "score-field causal-attribution readiness must be boolean"})
         if readiness.get("full_alphaevolve_task_spec_parity") is not False:
             issues.append({"code": "task_spec_parity_overclaim", "message": "full AlphaEvolve task-spec parity must remain false"})
     if report.get("claim_ready") is not False:
@@ -11229,16 +11253,26 @@ def _validate_task_spec_score_field_links(
         issues.append({"code": "task_spec_score_field_link_count_mismatch", "message": "score_field_link_count must cover retained links"})
     if summary.get("score_field_links_truncated") not in {True, False}:
         issues.append({"code": "invalid_task_spec_score_field_links_truncated", "message": "score_field_links_truncated must be boolean"})
+    causal_count = summary.get("score_field_causal_attribution_count")
+    if causal_count is not None and (
+        not isinstance(causal_count, int)
+        or isinstance(causal_count, bool)
+        or causal_count < 0
+    ):
+        issues.append({"code": "invalid_task_spec_score_field_causal_count", "message": "score_field_causal_attribution_count must be a non-negative integer"})
+        causal_count = None
+    observed_causal_count = 0
     for link in links:
         if not isinstance(link, Mapping):
             issues.append({"code": "invalid_task_spec_score_field_link", "message": "score field link records must be objects"})
             continue
         if not isinstance(link.get("program_id"), str) or not link.get("program_id"):
             issues.append({"code": "invalid_task_spec_score_field_program", "message": "score field link program_id is invalid"})
-        if link.get("link_policy") != "candidate_path_candidates_not_causal_attribution":
+        if link.get("link_policy") not in {
+            "candidate_path_candidates_not_causal_attribution",
+            "static_ast_evaluate_return_dependency_to_evolved_block",
+        }:
             issues.append({"code": "invalid_task_spec_score_field_policy", "message": "score field link policy is invalid"})
-        if link.get("causal_attribution_claimed") is not False:
-            issues.append({"code": "task_spec_score_field_causality_overclaim", "message": "task spec score field links must not claim causal attribution"})
         if not isinstance(link.get("metric_name"), str) or not link.get("metric_name"):
             issues.append({"code": "invalid_task_spec_score_field_metric", "message": "score field link metric_name is invalid"})
         if not _is_sha256_hex(link.get("candidate_primary_file_sha256")):
@@ -11249,6 +11283,15 @@ def _validate_task_spec_score_field_links(
             blocks = []
         if link.get("evolved_block_candidate_count") != len(blocks):
             issues.append({"code": "task_spec_score_field_block_count_mismatch", "message": "score field block count must match candidates"})
+        if link.get("causal_attribution_claimed") is True:
+            observed_causal_count += 1
+            _validate_score_field_causal_attribution(link, issues, "task_spec")
+        elif link.get("causal_attribution_claimed") is not False:
+            issues.append({"code": "invalid_task_spec_score_field_causality_flag", "message": "score field causal_attribution_claimed must be boolean"})
+        elif link.get("causal_attribution") is not None:
+            issues.append({"code": "task_spec_score_field_causality_overclaim", "message": "non-causal task spec score field links must not carry attribution evidence"})
+    if causal_count is not None and causal_count != observed_causal_count:
+        issues.append({"code": "task_spec_score_field_causal_count_mismatch", "message": "score_field_causal_attribution_count must match causal links"})
 
 
 def _validate_report_count(
@@ -18109,11 +18152,16 @@ def _embedded_evaluator_entrypoint_report(
     embedded_only_problem_definition = _embedded_only_problem_definition_ready(
         startup_manifest
     )
+    has_score_field_causality = any(
+        _embedded_entrypoint_record_has_score_field_causality(record)
+        for record in records
+    )
     remaining_gap = [
         "skeleton_to_evolved_block_invocation_trace",
-        "score_field_to_evolved_code_path_causal_attribution",
         "stronger_callable_isolation_or_build_policy",
     ]
+    if not has_score_field_causality:
+        remaining_gap.insert(1, "score_field_to_evolved_code_path_causal_attribution")
     if not embedded_only_problem_definition:
         remaining_gap.insert(0, "load_problem_without_external_validate_py")
     report = {
@@ -18141,6 +18189,9 @@ def _embedded_evaluator_entrypoint_report(
             "evolved_block_to_score_path_mapping": any(
                 _embedded_entrypoint_record_has_block_links(record)
                 for record in records
+            ),
+            "score_field_to_evolved_code_path_causal_attribution": (
+                has_score_field_causality
             ),
             "remaining_gap": remaining_gap,
         },
@@ -18246,6 +18297,19 @@ def _embedded_entrypoint_record_has_block_links(record: Mapping[str, object]) ->
     return False
 
 
+def _embedded_entrypoint_record_has_score_field_causality(
+    record: Mapping[str, object],
+) -> bool:
+    links = record.get("score_field_links")
+    if not isinstance(links, list):
+        return False
+    return any(
+        isinstance(link, Mapping)
+        and link.get("causal_attribution_claimed") is True
+        for link in links
+    )
+
+
 def _embedded_score_field_links(
     program: Program,
     metric_names: list[str],
@@ -18258,18 +18322,179 @@ def _embedded_score_field_links(
     primary_file_sha256 = hashlib.sha256(
         workspace.files[primary_file].encode("utf-8")
     ).hexdigest()
-    return [
-        {
+    causal_attributions = _embedded_score_field_causal_attributions(
+        workspace,
+        metric_names,
+        block_candidates,
+    )
+    links = []
+    for metric_name in metric_names:
+        causal_attribution = causal_attributions.get(metric_name)
+        link = {
             "metric_name": metric_name,
-            "link_policy": "candidate_path_candidates_not_causal_attribution",
+            "link_policy": (
+                "static_ast_evaluate_return_dependency_to_evolved_block"
+                if isinstance(causal_attribution, Mapping)
+                else "candidate_path_candidates_not_causal_attribution"
+            ),
             "candidate_primary_file": primary_file,
             "candidate_primary_file_sha256": primary_file_sha256,
             "candidate_path_scope": "materialized_candidate_workspace",
             "evolved_block_candidates": copy.deepcopy(block_candidates),
             "evolved_block_candidate_count": len(block_candidates),
-            "causal_attribution_claimed": False,
+            "causal_attribution_claimed": isinstance(causal_attribution, Mapping),
         }
-        for metric_name in metric_names
+        if isinstance(causal_attribution, Mapping):
+            link["causal_attribution"] = copy.deepcopy(causal_attribution)
+        links.append(link)
+    return links
+
+
+def _embedded_score_field_causal_attributions(
+    workspace: CandidateWorkspace,
+    metric_names: list[str],
+    block_candidates: list[dict],
+) -> dict[str, dict]:
+    primary_file = workspace.primary_file
+    content = workspace.files.get(primary_file)
+    if not isinstance(content, str) or not metric_names or not block_candidates:
+        return {}
+    try:
+        tree = ast.parse(content)
+    except SyntaxError:
+        return {}
+    functions = {
+        node.name: node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef)
+    }
+    evaluate = functions.get("evaluate")
+    if evaluate is None:
+        return {}
+    function_blocks = {
+        name: _embedded_blocks_inside_function(node, block_candidates)
+        for name, node in functions.items()
+    }
+    attributions: dict[str, dict] = {}
+    metric_set = set(metric_names)
+    for node in ast.walk(evaluate):
+        if not isinstance(node, ast.Return) or not isinstance(node.value, ast.Dict):
+            continue
+        for key, value in zip(node.value.keys, node.value.values):
+            if not isinstance(key, ast.Constant) or not isinstance(key.value, str):
+                continue
+            metric_name = key.value
+            if metric_name not in metric_set or metric_name in attributions:
+                continue
+            dependency = _embedded_metric_dependency_trace(
+                value,
+                functions,
+                function_blocks,
+                block_candidates,
+            )
+            if not dependency["evolved_block_dependencies"]:
+                continue
+            expression = ast.unparse(value)
+            attributions[metric_name] = {
+                "schema": "libreevolve.score_field_causal_attribution.v1",
+                "method": "static_ast_evaluate_return_metric_dependency_trace",
+                "metric_name": metric_name,
+                "candidate_primary_file": primary_file,
+                "evaluate_function": {
+                    "name": "evaluate",
+                    "start_line": int(getattr(evaluate, "lineno", 0)),
+                    "end_line": int(getattr(evaluate, "end_lineno", 0)),
+                },
+                "metric_return": {
+                    "line": int(getattr(value, "lineno", getattr(node, "lineno", 0))),
+                    "expression_sha256": hashlib.sha256(
+                        expression.encode("utf-8")
+                    ).hexdigest(),
+                },
+                "dependency_policy": "local_ast_function_calls_to_evolve_blocks_only",
+                "dependency_functions": sorted(dependency["dependency_functions"]),
+                "evolved_block_dependencies": copy.deepcopy(
+                    dependency["evolved_block_dependencies"]
+                ),
+                "evolved_block_dependency_count": len(
+                    dependency["evolved_block_dependencies"]
+                ),
+                "confidence": "static_local_candidate_source_trace",
+            }
+    return attributions
+
+
+def _embedded_blocks_inside_function(
+    function: ast.FunctionDef,
+    block_candidates: list[dict],
+) -> list[dict]:
+    start_line = int(getattr(function, "lineno", 0))
+    end_line = int(getattr(function, "end_lineno", start_line))
+    return [
+        block
+        for block in block_candidates
+        if isinstance(block.get("content_start_line"), int)
+        and isinstance(block.get("content_end_line"), int)
+        and start_line <= block["content_start_line"] <= end_line
+        and start_line <= block["content_end_line"] <= end_line
+    ]
+
+
+def _embedded_metric_dependency_trace(
+    expression: ast.AST,
+    functions: Mapping[str, ast.FunctionDef],
+    function_blocks: Mapping[str, list[dict]],
+    block_candidates: list[dict],
+) -> dict:
+    dependency_functions: set[str] = set()
+    block_dependencies: dict[str, dict] = {}
+    for block in _embedded_blocks_covering_node(expression, block_candidates):
+        block_dependencies[block["span_id"]] = block
+    pending = [
+        name
+        for name in _embedded_called_function_names(expression)
+        if name in functions
+    ]
+    while pending:
+        name = pending.pop()
+        if name in dependency_functions:
+            continue
+        dependency_functions.add(name)
+        for block in function_blocks.get(name, []):
+            block_dependencies[block["span_id"]] = block
+        for called in _embedded_called_function_names(functions[name]):
+            if called in functions and called not in dependency_functions:
+                pending.append(called)
+    return {
+        "dependency_functions": dependency_functions,
+        "evolved_block_dependencies": [
+            copy.deepcopy(block_dependencies[key])
+            for key in sorted(block_dependencies)
+        ],
+    }
+
+
+def _embedded_called_function_names(node: ast.AST) -> list[str]:
+    names: list[str] = []
+    for child in ast.walk(node):
+        if isinstance(child, ast.Call) and isinstance(child.func, ast.Name):
+            names.append(child.func.id)
+    return names
+
+
+def _embedded_blocks_covering_node(
+    node: ast.AST,
+    block_candidates: list[dict],
+) -> list[dict]:
+    line = getattr(node, "lineno", None)
+    if not isinstance(line, int):
+        return []
+    return [
+        block
+        for block in block_candidates
+        if isinstance(block.get("content_start_line"), int)
+        and isinstance(block.get("content_end_line"), int)
+        and block["content_start_line"] <= line <= block["content_end_line"]
     ]
 
 
@@ -18427,6 +18652,8 @@ def validate_embedded_evaluator_entrypoint_report(report: object) -> dict:
         issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
     elif not isinstance(readiness.get("embedded_only_problem_definition"), bool):
         issues.append({"code": "invalid_embedded_only_problem_definition", "message": "embedded-only problem definition readiness must be boolean"})
+    elif readiness.get("score_field_to_evolved_code_path_causal_attribution") not in {True, False}:
+        issues.append({"code": "invalid_score_field_causal_readiness", "message": "score-field causal readiness must be boolean"})
     return {
         "schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
         "ok": not issues,
@@ -18459,9 +18686,14 @@ def _validate_embedded_score_field_links(
         else:
             linked_names.append(metric_name)
         if link.get("link_policy") != "candidate_path_candidates_not_causal_attribution":
-            issues.append({"code": "invalid_score_field_link_policy", "message": f"record {index} score field link policy is invalid"})
-        if link.get("causal_attribution_claimed") is not False:
-            issues.append({"code": "score_field_causality_overclaim", "message": f"record {index} score field links must not claim causal attribution"})
+            if link.get("link_policy") != "static_ast_evaluate_return_dependency_to_evolved_block":
+                issues.append({"code": "invalid_score_field_link_policy", "message": f"record {index} score field link policy is invalid"})
+        if link.get("causal_attribution_claimed") is True:
+            _validate_score_field_causal_attribution(link, issues, f"record {index}")
+        elif link.get("causal_attribution_claimed") is not False:
+            issues.append({"code": "invalid_score_field_causality_flag", "message": f"record {index} score field causal_attribution_claimed must be boolean"})
+        elif link.get("causal_attribution") is not None:
+            issues.append({"code": "score_field_causality_overclaim", "message": f"record {index} non-causal score field links must not carry attribution evidence"})
         if not isinstance(link.get("candidate_primary_file"), str):
             issues.append({"code": "invalid_score_field_primary_file", "message": f"record {index} score field link primary file is invalid"})
         if not _is_sha256_hex(link.get("candidate_primary_file_sha256")):
@@ -18484,6 +18716,69 @@ def _validate_embedded_score_field_links(
                 issues.append({"code": "invalid_score_field_block_hash", "message": f"record {index} score field block content hash is invalid"})
     if sorted(linked_names) != sorted(metric_names):
         issues.append({"code": "score_field_link_metric_mismatch", "message": f"record {index} score field links must cover metric_names"})
+
+
+def _validate_score_field_causal_attribution(
+    link: Mapping[str, object],
+    issues: list[dict],
+    context: str,
+) -> None:
+    if link.get("link_policy") != "static_ast_evaluate_return_dependency_to_evolved_block":
+        issues.append({"code": "invalid_score_field_causal_policy", "message": f"{context} causal score field link policy is invalid"})
+    attribution = link.get("causal_attribution")
+    if not isinstance(attribution, Mapping):
+        issues.append({"code": "invalid_score_field_causal_attribution", "message": f"{context} causal score field attribution must be an object"})
+        return
+    if attribution.get("schema") != "libreevolve.score_field_causal_attribution.v1":
+        issues.append({"code": "invalid_score_field_causal_schema", "message": f"{context} causal score field schema is invalid"})
+    if attribution.get("method") != "static_ast_evaluate_return_metric_dependency_trace":
+        issues.append({"code": "invalid_score_field_causal_method", "message": f"{context} causal score field method is invalid"})
+    if attribution.get("metric_name") != link.get("metric_name"):
+        issues.append({"code": "score_field_causal_metric_mismatch", "message": f"{context} causal score field metric must match link metric"})
+    if attribution.get("candidate_primary_file") != link.get("candidate_primary_file"):
+        issues.append({"code": "score_field_causal_file_mismatch", "message": f"{context} causal score field file must match link file"})
+    evaluate = attribution.get("evaluate_function")
+    if not isinstance(evaluate, Mapping) or evaluate.get("name") != "evaluate":
+        issues.append({"code": "invalid_score_field_causal_evaluate", "message": f"{context} causal score field evaluate function is invalid"})
+    else:
+        for field in ("start_line", "end_line"):
+            if not isinstance(evaluate.get(field), int) or isinstance(evaluate.get(field), bool) or evaluate.get(field) <= 0:
+                issues.append({"code": "invalid_score_field_causal_evaluate_line", "message": f"{context} causal score field evaluate line is invalid"})
+    metric_return = attribution.get("metric_return")
+    if not isinstance(metric_return, Mapping):
+        issues.append({"code": "invalid_score_field_causal_return", "message": f"{context} causal score field return evidence is invalid"})
+    else:
+        if not isinstance(metric_return.get("line"), int) or isinstance(metric_return.get("line"), bool) or metric_return.get("line") <= 0:
+            issues.append({"code": "invalid_score_field_causal_return_line", "message": f"{context} causal score field return line is invalid"})
+        if not _is_sha256_hex(metric_return.get("expression_sha256")):
+            issues.append({"code": "invalid_score_field_causal_return_hash", "message": f"{context} causal score field return hash is invalid"})
+    if attribution.get("dependency_policy") != "local_ast_function_calls_to_evolve_blocks_only":
+        issues.append({"code": "invalid_score_field_causal_dependency_policy", "message": f"{context} causal score field dependency policy is invalid"})
+    if not isinstance(attribution.get("dependency_functions"), list) or not all(
+        isinstance(item, str) and item for item in attribution.get("dependency_functions", [])
+    ):
+        issues.append({"code": "invalid_score_field_causal_dependency_functions", "message": f"{context} causal score field dependency functions are invalid"})
+    dependencies = attribution.get("evolved_block_dependencies")
+    if not isinstance(dependencies, list) or not dependencies:
+        issues.append({"code": "invalid_score_field_causal_dependencies", "message": f"{context} causal score field dependencies must be non-empty"})
+        dependencies = []
+    if attribution.get("evolved_block_dependency_count") != len(dependencies):
+        issues.append({"code": "score_field_causal_dependency_count_mismatch", "message": f"{context} causal score field dependency count must match dependencies"})
+    candidate_span_ids = {
+        block.get("span_id")
+        for block in link.get("evolved_block_candidates", [])
+        if isinstance(block, Mapping)
+    }
+    for dependency in dependencies:
+        if not isinstance(dependency, Mapping):
+            issues.append({"code": "invalid_score_field_causal_dependency", "message": f"{context} causal score field dependency must be an object"})
+            continue
+        if dependency.get("span_id") not in candidate_span_ids:
+            issues.append({"code": "score_field_causal_dependency_not_candidate", "message": f"{context} causal dependency must reference a candidate evolved block"})
+        if not isinstance(dependency.get("path"), str) or not dependency.get("path"):
+            issues.append({"code": "invalid_score_field_causal_dependency_path", "message": f"{context} causal dependency path is invalid"})
+        if not _is_sha256_hex(dependency.get("content_sha256")):
+            issues.append({"code": "invalid_score_field_causal_dependency_hash", "message": f"{context} causal dependency hash is invalid"})
 
 
 def validate_evaluator_oracle_registry(report: object) -> dict:

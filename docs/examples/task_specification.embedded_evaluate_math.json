@@ -84,10 +84,10 @@
   "schema": "libreevolve.alphaevolve_task_specification_bundle.v1",
   "source": "startup_manifest_cross_reference",
   "status": "partial_alphaevolve_task_specification",
-  "task_spec_id": "fa8c19a9bbcdbd124de6b6812d13c13aab0a42a0d244f68bba4e8666e00d714d",
+  "task_spec_id": "71e9062b188da65cfa44cb432fbed6e0e2717911c78d26c527b1de1b60307b9b",
   "unsupported_or_incomplete": [
     "example_is_documentation_fixture_not_runtime_manifest",
-    "task_spec_needs_score_path_causal_attribution",
+    "startup_task_spec_needs_runtime_score_path_causal_attribution",
     "independent_evaluator_row_ids_unresolved"
   ],
   "validation": {

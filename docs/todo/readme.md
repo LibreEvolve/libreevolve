@@ -142,11 +142,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README should still not imply full Figure 3 parity because the problem
     loader still requires `validate.py` by default and skeleton/block invocation
     coupling is not yet evidenced.
-  - Required result: when embedded-only problem definitions, skeleton/block
-    invocation evidence, stronger callable isolation/build policy, and
-    score-field-to-evolved-code-path mapping land, update README, ROADMAP,
-    papers index, and code/paper TODOs together so README can make the stronger
-    Figure 3 evaluator claim without overclaiming the current opt-in report.
+  - Required result: when skeleton/block invocation evidence, stronger callable
+    isolation/build policy, and non-static/external-validator score-field
+    linkage land, update README, ROADMAP, papers index, and code/paper TODOs
+    together so README can make the stronger Figure 3 evaluator claim without
+    overclaiming the current opt-in report.
 
 - [ ] Extend README Figure 1/Figure 2 architecture wording from process
       mappings to full diagram parity.
@@ -497,14 +497,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifact paths for candidate history, prompt history, LLM calls,
     controller-budget events, evaluator artifacts, best exports, initial
     evolvable component spans when markers are present, embedded score-field
-    candidate-path links when candidate-owned evaluation ran, and the hashed
+    candidate-path links with static AST causal attribution when supported
+    candidate-owned evaluation ran, and the hashed
     standalone `task_specification.json` run artifact. It also documents
     bounded candidate, prompt, and evaluator JSONL row joins plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` example.
     README should still not imply full AlphaEvolve task-spec parity because
-    score-field causal attribution remains incomplete.
-  - Required result: when score-field causal attribution lands, update README,
-    ROADMAP, papers index, and code/paper TODOs together.
+    external validators, arbitrary language/build runner specs, and full
+    user-authored task-spec evidence remain incomplete.
+  - Required result: when those non-embedded task-spec parity gaps land, update
+    README, ROADMAP, papers index, and code/paper TODOs together.
 
 - [ ] Keep README install and CLI wording scoped to editable/local use versus
   release-artifact verification.

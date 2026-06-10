@@ -497,8 +497,10 @@ attribution claims.
 `load_problem()` now allows missing `validate.py` for a non-empty all-
 `embedded_evaluate` stage list and the `embedded_evaluate_math` fixture covers
 that embedded-only path. Skeleton/block invocation traces, stronger candidate
-import isolation, causal score attribution, and task-spec-level score-link
-resolution remain necessary before claiming Figure 3 evaluator parity.
+import isolation, and broader non-static score-link resolution remain necessary
+before claiming Figure 3 evaluator parity. Supported embedded
+`evaluate(eval_inputs)` paths now record static AST score-field attribution
+when a returned metric expression depends on an EVOLVE block.
 
 AlphaEvolve evaluator-workload note: configured stages can now declare
 `workload.type` as `simple_check`, `inner_search`, `ml_training`, or `custom`,
@@ -524,11 +526,12 @@ task-spec manifest paths and links each task-spec field to runtime artifact
 evidence such as candidate history, prompt history, LLM calls, controller
 budget events, evaluator artifacts, best exports, initial evolvable component
 span ids when markers are present, and embedded score-field candidate-path
-links when candidate-owned evaluation ran. It also records bounded candidate
-and prompt/evaluator JSONL row joins. The checked
+links with static AST causal attribution for supported candidate-owned
+`evaluate` returns. It also records bounded candidate and prompt/evaluator
+JSONL row joins. The checked
 `docs/examples/task_specification.embedded_evaluate_math.json` file is a
-validated paper-facing standalone example; causal score attribution remains
-open.
+validated paper-facing standalone example; external-validator and
+arbitrary-language task-spec parity remain open.
 
 AlphaEvolve candidate-abstraction note: completed manifests now include
 `runtime.history.candidate_abstraction_choice_report` with schema

@@ -21,6 +21,6 @@ def test_task_specification_examples_validate():
         assert "example_is_documentation_fixture_not_runtime_manifest" in (
             bundle["unsupported_or_incomplete"]
         )
-        assert "task_spec_needs_score_path_causal_attribution" in (
+        assert "startup_task_spec_needs_runtime_score_path_causal_attribution" in (
             bundle["unsupported_or_incomplete"]
         )

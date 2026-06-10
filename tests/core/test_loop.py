@@ -5280,10 +5280,13 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     assert report["claim_readiness"]["candidate_owned_evaluate_entrypoint"] is True
     assert report["claim_readiness"]["embedded_only_problem_definition"] is True
     assert report["claim_readiness"]["evolved_block_to_score_path_mapping"] is True
+    assert report["claim_readiness"][
+        "score_field_to_evolved_code_path_causal_attribution"
+    ] is True
     assert "load_problem_without_external_validate_py" not in (
         report["claim_readiness"]["remaining_gap"]
     )
-    assert "score_field_to_evolved_code_path_causal_attribution" in (
+    assert "score_field_to_evolved_code_path_causal_attribution" not in (
         report["claim_readiness"]["remaining_gap"]
     )
 
@@ -5304,23 +5307,33 @@ def test_runtime_history_reports_embedded_evaluator_entrypoint():
     score_link = record["score_field_links"][0]
     assert score_link["metric_name"] == "score"
     assert score_link["link_policy"] == (
-        "candidate_path_candidates_not_causal_attribution"
+        "static_ast_evaluate_return_dependency_to_evolved_block"
     )
     assert score_link["candidate_primary_file"] == "main.py"
     assert len(score_link["candidate_primary_file_sha256"]) == 64
-    assert score_link["causal_attribution_claimed"] is False
+    assert score_link["causal_attribution_claimed"] is True
     assert score_link["evolved_block_candidate_count"] == 1
     block_link = score_link["evolved_block_candidates"][0]
     assert block_link["path"] == "main.py"
     assert block_link["name"] == "scoring_rule"
     assert len(block_link["span_id"]) == 24
     assert len(block_link["content_sha256"]) == 64
+    attribution = score_link["causal_attribution"]
+    assert attribution["schema"] == "libreevolve.score_field_causal_attribution.v1"
+    assert attribution["method"] == "static_ast_evaluate_return_metric_dependency_trace"
+    assert attribution["dependency_policy"] == "local_ast_function_calls_to_evolve_blocks_only"
+    assert attribution["dependency_functions"] == ["transform"]
+    assert attribution["evolved_block_dependency_count"] == 1
+    assert attribution["evolved_block_dependencies"][0]["span_id"] == block_link["span_id"]
+    assert len(attribution["metric_return"]["expression_sha256"]) == 64
 
     edited = copy.deepcopy(report)
-    edited["records"][0]["score_field_links"][0]["causal_attribution_claimed"] = True
+    edited["records"][0]["score_field_links"][0]["causal_attribution"][
+        "dependency_policy"
+    ] = "overclaim"
     validation = validate_embedded_evaluator_entrypoint_report(edited)
     assert validation["ok"] is False
-    assert "score_field_causality_overclaim" in {
+    assert "invalid_score_field_causal_dependency_policy" in {
         issue["code"] for issue in validation["issues"]
     }
 
@@ -6828,7 +6841,7 @@ def test_loop_writes_unified_task_specification_bundle_to_manifest():
         "policies.candidate_language"
     )
     assert fields["objective_metrics"]["primary_metric"] == "score"
-    assert "task_spec_needs_score_path_causal_attribution" in (
+    assert "startup_task_spec_needs_runtime_score_path_causal_attribution" in (
         task_spec["unsupported_or_incomplete"]
     )
 
@@ -7058,6 +7071,9 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
     assert validate_task_spec_artifact_resolution_report(report)["ok"] is True
     assert report["claim_readiness"]["evolvable_component_span_ids"] is True
     assert report["claim_readiness"]["score_field_to_candidate_path_links"] is True
+    assert report["claim_readiness"][
+        "score_field_to_evolved_block_causal_attribution"
+    ] is True
     assert report["claim_readiness"]["embedded_only_problem_definition"] is True
     assert "score_field_to_candidate_path_links" not in (
         report["claim_readiness"]["remaining_gap"]
@@ -7083,19 +7099,25 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
     assert len(span["content_sha256"]) == 64
     objective = by_field["objective_metrics"]
     assert "score_field_to_evolved_block_mapping" not in objective["unresolved_gap"]
-    assert "score_field_to_evolved_block_causal_attribution" in (
+    assert "deep_evaluator_score_causality_resolution" not in (
+        report["claim_readiness"]["remaining_gap"]
+    )
+    assert "score_field_to_evolved_block_causal_attribution" not in (
         objective["unresolved_gap"]
     )
     summary = objective["reference_summary"]
     assert summary["score_field_link_count"] == 1
+    assert summary["score_field_causal_attribution_count"] == 1
     assert summary["score_field_links_truncated"] is False
     assert len(summary["score_field_links"]) == 1
     link = summary["score_field_links"][0]
     assert link["metric_name"] == "score"
     assert link["candidate_primary_file"] == "main.py"
-    assert link["causal_attribution_claimed"] is False
+    assert link["causal_attribution_claimed"] is True
+    assert link["link_policy"] == "static_ast_evaluate_return_dependency_to_evolved_block"
     assert link["evolved_block_candidate_count"] == 1
     assert link["evolved_block_candidates"][0]["name"] == "scoring_rule"
+    assert link["causal_attribution"]["dependency_functions"] == ["transform"]
 
     edited = copy.deepcopy(report)
     edited_initial = next(
@@ -7111,13 +7133,13 @@ def test_task_spec_artifact_resolution_links_embedded_score_fields():
         for record in edited["field_resolutions"]
         if record["field"] == "objective_metrics"
     )
-    edited_objective["reference_summary"]["score_field_links"][0][
-        "causal_attribution_claimed"
-    ] = True
+    edited_objective["reference_summary"]["score_field_links"][0]["link_policy"] = (
+        "candidate_path_candidates_not_causal_attribution"
+    )
     validation = validate_task_spec_artifact_resolution_report(edited)
     assert validation["ok"] is False
     issue_codes = {issue["code"] for issue in validation["issues"]}
-    assert "task_spec_score_field_causality_overclaim" in issue_codes
+    assert "invalid_score_field_causal_policy" in issue_codes
     assert "invalid_task_spec_evolvable_component_span_role" in issue_codes
 
 

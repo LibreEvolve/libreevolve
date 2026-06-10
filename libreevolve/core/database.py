@@ -7600,7 +7600,7 @@ def _task_specification_bundle(manifest: Mapping[str, object]) -> dict:
         },
         "unsupported_or_incomplete": [
             "task_spec_bundle_is_run_artifact_not_standalone_problem_file",
-            "task_spec_needs_score_path_causal_attribution",
+            "startup_task_spec_needs_runtime_score_path_causal_attribution",
             "arbitrary_language_build_runner_task_specs_unsupported",
             "problem_defined_candidate_abstraction_hooks_unsupported",
             "skeleton_to_evolved_block_score_linkage_not_yet_reported",

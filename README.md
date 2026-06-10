@@ -2182,22 +2182,23 @@ representation, and objective metrics. The bundle records field statuses,
 manifest paths, ids/hashes/counts, explicit remaining gaps, a deterministic
 `task_spec_id`, and embedded validation. The same bundle is also written as
 the standalone run artifact `task_specification.json`; it is not yet a
-user-authored standalone problem-spec file with full causal score-link
-evidence.
+user-authored standalone problem-spec file or full arbitrary-validator score
+causality proof.
 Completed manifests additionally include
 `runtime.history.task_spec_artifact_resolution_report`, which validates those
 task-spec manifest paths and cross-links each field to runtime evidence such as
 candidate history, prompt history, LLM calls, controller-budget events,
 evaluator artifacts, best exports, the standalone `task_specification.json`
 artifact, initial evolvable component span ids when markers are present, and
-embedded score-field candidate-path links when candidate-owned evaluation ran.
+embedded score-field candidate-path links, including static AST causal
+attribution for supported candidate-owned `evaluate` return expressions.
 The report also includes bounded `deep_id_resolution` records that join
 candidate ids to `history.jsonl` / `failure_history.jsonl` rows and generated
 prompt ids to `prompt_history.jsonl` add/score rows, plus evaluator row ids in
 `evaluator_results.jsonl`. This is still partial evidence:
 `docs/examples/task_specification.embedded_evaluate_math.json` provides a
-validated paper-facing standalone example, while causal score-field attribution
-remains open.
+validated paper-facing standalone example, while external validators,
+arbitrary languages/build systems, and full task-spec parity remain open.
 Problem fixtures can optionally add `formulation.yaml` or `formulation.yml`;
 direct callers can set `Problem.formulation_metadata`. The manifest normalizes
 this to `problem.formulation_metadata` with fixed vocabularies for problem
@@ -2379,8 +2380,10 @@ Completed manifests summarize executed embedded stages under
 `runtime.history.embedded_evaluator_entrypoint_report`, including program/stage
 ids, entrypoint, callable, signature, eval-input provenance, dependency scope,
 metric names, per-metric candidate path/block-span link candidates, and
-remaining Figure 3 parity gaps. These score-field links are provenance
-candidates, not causal attribution claims.
+static AST causal attribution when a returned metric expression depends on a
+local EVOLVE-block-backed function or expression. Remaining Figure 3 gaps cover
+skeleton-to-block invocation traces and stronger callable isolation/build
+policy.
 Embedded-only problems may omit `validate.py` when `config.yaml` declares a
 non-empty stage list where every stage uses `mode: embedded_evaluate`.
 Mixed/default/external-validator problems still require `validate.py`.

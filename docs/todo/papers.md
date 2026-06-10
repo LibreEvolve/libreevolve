@@ -163,16 +163,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.embedded_evaluator_entrypoint_report.v1`, summarizing executed
     embedded entrypoints, dependency scope, eval-input provenance, metric
     names, and readiness gaps.
-  - Current gap: paper-facing evidence still does not show an embedded-only
-    problem definition, skeleton-to-evolved-block invocation paths, stronger
-    callable isolation/build policy, or score-field mapping back to specific
-    evolved code paths. External `validate.py` remains the default problem
-    format and `load_problem()` still requires it.
-  - Required result: add paper-visible examples and reports proving embedded
-    candidate evaluator entrypoints, eval-input datasets, callable isolation,
-    callable discovery diagnostics, skeleton/block invocation evidence, and
-    score-field mapping before treating local validator execution as
-    AlphaEvolve Figure 3 evaluator parity.
+  - Current gap: paper-facing evidence now covers embedded-only problem loading
+    and static score-field mapping back to specific evolved code paths for
+    supported candidate-owned `evaluate` returns, but it still lacks
+    skeleton-to-evolved-block invocation paths and stronger callable
+    isolation/build policy. External `validate.py` remains the default problem
+    format outside all-embedded configs.
+  - Required result: add paper-visible examples and reports proving callable
+    isolation, callable discovery diagnostics, skeleton/block invocation
+    evidence, and non-static/external-validator score linkage before treating
+    local validator execution as AlphaEvolve Figure 3 evaluator parity.
 
 - [ ] Parallelized evaluation and asynchronous throughput.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 2.6.
@@ -278,18 +278,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     task-spec manifest paths and linking each field to runtime artifact paths
     for candidate history, prompt history, LLM calls, controller-budget events,
     evaluator artifacts, best exports, initial evolvable component spans when
-    markers are present, embedded score-field candidate-path links when
-    candidate-owned evaluation ran, and the hashed standalone
+    markers are present, embedded score-field candidate-path links with static
+    AST causal attribution when supported candidate-owned evaluation ran, and
+    the hashed standalone
     `task_specification.json` run artifact. It also includes bounded candidate
     prompt, and evaluator JSONL row joins, plus the checked
     `docs/examples/task_specification.embedded_evaluate_math.json` standalone
     example.
-  - Current gap: paper-facing evidence still lacks causal score-field
-    attribution from evaluator outputs to candidate/evolved-block paths.
-  - Required result: finish causal evaluator score-field linkage and
-    README/ROADMAP wording that treats the current bundle plus
-    artifact-resolution report as partial AlphaEvolve task-spec evidence rather
-    than full parity.
+  - Current gap: paper-facing evidence still lacks full task-spec parity for
+    external validators, arbitrary language/build runners, and user-authored
+    standalone task specs beyond the checked example.
+  - Required result: extend the current bundle plus artifact-resolution report
+    beyond the embedded static score-field attribution path before treating it
+    as full AlphaEvolve task-spec evidence.
 
 - [ ] Independent per-role LLM scheduler state and reward policy.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.6.

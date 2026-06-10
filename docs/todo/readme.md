@@ -965,11 +965,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     near-integrality, sweep provenance, scalar fields, and scaling limits. It
     now documents `libreevolve.matrix_baseline_component_runtime_boundary.v1`,
     which validates the current `not_emitted_by_local_runner` boundary and
-    required future fields for Section 3.1 starting-algorithm records. It does
-    not yet document a matrix benchmark run record that inventories the
-    generation-0 initializer/loss/optimizer components, records their source
-    hashes/configuration, declares mutable versus fixed scopes, or links
-    accepted mutations back to changed baseline components.
+    required future fields for Section 3.1 starting-algorithm records. It also
+    documents the builder that can create emitted records from a component
+    inventory and validate ref/scope/hash linkage, but it does not yet document
+    automatic matrix benchmark runner emission for those records.
   - Required result: when matrix benchmark runs persist baseline component
     inventory and mutation-lineage records, update README, ROADMAP, papers
     index, and code/paper TODO entries together so README distinguishes final

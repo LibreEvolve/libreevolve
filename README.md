@@ -3603,7 +3603,10 @@ starting-algorithm records and the required future emitted-record fields for
 run/target ids, baseline program ids, initializer/reconstruction-loss/optimizer
 component records, Adam optimizer name/version/config, mutable component
 scopes, fixed component hashes, generation-0 metrics, mutation lineage,
-matrix-result refs, artifact paths, and artifact hashes. Local matrix benchmark
+matrix-result refs, artifact paths, and artifact hashes. The helper
+`matrix_baseline_component_runtime_boundary_from_components()` builds emitted
+records from a component inventory and validates that top-level refs, mutable
+scopes, and fixed hashes match the component records. Local matrix benchmark
 runners still do not emit those baseline component records.
 Matrix cascade-run provenance uses
 `libreevolve.matrix_cascade_run_runtime_boundary.v1`; it validates the current

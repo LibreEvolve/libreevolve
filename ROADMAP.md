@@ -819,8 +819,10 @@ is not yet an AlphaEvolve reproduction.
   initializer/reconstruction-loss/optimizer component records, Adam optimizer
   name/version/config, mutable component scopes, fixed component hashes,
   generation-0 metrics, mutation lineage, matrix-result refs, artifact paths,
-  and artifact hashes. Local benchmark runners still need to emit those
-  baseline component records.
+  and artifact hashes. `matrix_baseline_component_runtime_boundary_from_components()`
+  builds emitted records from component inventories and validates top-level
+  ref, mutable-scope, and fixed-hash linkage. Local benchmark runners still
+  need to emit those baseline component records.
 - Keep matrix repeated-seed wording scoped to result reports versus executed
   cascade traces: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
   validates the current `not_emitted_by_local_runner` boundary and emitted

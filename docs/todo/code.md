@@ -2998,11 +2998,11 @@ Primary evidence:
     the current `not_emitted_by_local_runner` boundary and required future
     fields for baseline component records, optimizer metadata, generation-0
     metrics, mutation lineage, matrix-result refs, artifact paths, and hashes.
-    It does not yet define a matrix benchmark runner or report field that
-    emits the initial gradient-based solver components, records their source
-    hashes, declares which components are fixed versus mutable, or links
-    accepted mutations back to the baseline initializer/loss/optimizer
-    boundaries.
+    `matrix_baseline_component_runtime_boundary_from_components()` can build
+    emitted records from a component inventory and validates ref/scope/hash
+    linkage, but no matrix benchmark runner or report field yet emits the
+    initial gradient-based solver components and accepted-mutation lineage
+    automatically.
   - Required result: add matrix benchmark metadata and validators for the
     starting algorithm component inventory: initializer, reconstruction loss,
     optimizer identity and version/config, mutable component scopes, fixed

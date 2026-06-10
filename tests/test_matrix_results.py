@@ -30,6 +30,7 @@ from libreevolve.problems.benchmarks.matrix_results import (
     MATRIX_TENSOR_RANK_SCHEMA,
     MATRIX_TENSOR_RANK_RUNTIME_SCHEMA,
     STRASSEN_2X2_PUBLICATION_BUNDLE_ROOT,
+    matrix_baseline_component_runtime_boundary_from_components,
     matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_from_matrix_result,
     matrix_cascade_run_runtime_boundary_record,
@@ -303,15 +304,93 @@ def test_matrix_baseline_component_runtime_boundary_requires_emitted_records():
 
 
 def test_matrix_baseline_component_runtime_boundary_accepts_emitted_record():
-    boundary = matrix_baseline_component_runtime_boundary_record()
-    boundary["runtime_emission_status"] = "emitted"
-    boundary["emitted_records"] = [_valid_baseline_component_record()]
+    record = _valid_baseline_component_record()
+    boundary = matrix_baseline_component_runtime_boundary_from_components(
+        run_id=record["run_id"],
+        target_id=record["target_id"],
+        baseline_program_id=record["baseline_program_id"],
+        component_records=record["component_records"],
+        optimizer_name=record["optimizer_name"],
+        optimizer_version=record["optimizer_version"],
+        optimizer_config=record["optimizer_config"],
+        generation0_metrics=record["generation0_metrics"],
+        mutation_lineage=record["mutation_lineage"],
+        matrix_result_ref=record["matrix_result_ref"],
+        artifact_paths=record["artifact_paths"],
+        artifact_sha256=record["artifact_sha256"],
+    )
 
     validation = validate_matrix_baseline_component_runtime_boundary(boundary)
 
     assert validation.ok is True
     assert validation.emitted_record_count == 1
     assert validation.issues == []
+    emitted_record = boundary["emitted_records"][0]
+    assert emitted_record["initializer_ref"] == "matrix/mm_4x4x4/baseline.py:init"
+    assert (
+        emitted_record["reconstruction_loss_ref"]
+        == "matrix/mm_4x4x4/baseline.py:loss"
+    )
+    assert emitted_record["optimizer_ref"] == "matrix/mm_4x4x4/baseline.py:optimizer"
+    assert emitted_record["mutable_component_scopes"] == [
+        "initializer",
+        "reconstruction_loss",
+    ]
+    assert emitted_record["fixed_component_hashes"] == {"optimizer": "c" * 64}
+
+
+def test_matrix_baseline_component_runtime_boundary_builder_rejects_missing_component():
+    record = _valid_baseline_component_record()
+    record["component_records"] = record["component_records"][:2]
+
+    with pytest.raises(
+        ValueError,
+        match="component_records must include initializer, reconstruction_loss, and optimizer",
+    ):
+        matrix_baseline_component_runtime_boundary_from_components(
+            run_id=record["run_id"],
+            target_id=record["target_id"],
+            baseline_program_id=record["baseline_program_id"],
+            component_records=record["component_records"],
+            optimizer_name=record["optimizer_name"],
+            optimizer_version=record["optimizer_version"],
+            optimizer_config=record["optimizer_config"],
+            generation0_metrics=record["generation0_metrics"],
+            mutation_lineage=record["mutation_lineage"],
+            matrix_result_ref=record["matrix_result_ref"],
+        )
+
+
+def test_matrix_baseline_component_runtime_boundary_rejects_linkage_mismatch():
+    record = _valid_baseline_component_record()
+    boundary = matrix_baseline_component_runtime_boundary_from_components(
+        run_id=record["run_id"],
+        target_id=record["target_id"],
+        baseline_program_id=record["baseline_program_id"],
+        component_records=record["component_records"],
+        optimizer_name=record["optimizer_name"],
+        optimizer_version=record["optimizer_version"],
+        optimizer_config=record["optimizer_config"],
+        generation0_metrics=record["generation0_metrics"],
+        mutation_lineage=record["mutation_lineage"],
+        matrix_result_ref=record["matrix_result_ref"],
+    )
+    emitted_record = boundary["emitted_records"][0]
+    emitted_record["initializer_ref"] = "matrix/mm_4x4x4/other.py:init"
+    emitted_record["reconstruction_loss_ref"] = "matrix/mm_4x4x4/other.py:loss"
+    emitted_record["optimizer_ref"] = "matrix/mm_4x4x4/other.py:optimizer"
+    emitted_record["mutable_component_scopes"] = ["optimizer"]
+    emitted_record["fixed_component_hashes"] = {"initializer": "a" * 64}
+
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+
+    assert validation.ok is False
+    codes = {issue.code for issue in validation.issues}
+    assert "runtime_record_0_initializer_ref_mismatch" in codes
+    assert "runtime_record_0_reconstruction_loss_ref_mismatch" in codes
+    assert "runtime_record_0_optimizer_ref_mismatch" in codes
+    assert "runtime_record_0_mutable_component_scope_mismatch" in codes
+    assert "runtime_record_0_fixed_component_hash_mismatch" in codes
 
 
 def test_matrix_baseline_component_runtime_boundary_rejects_invalid_components():

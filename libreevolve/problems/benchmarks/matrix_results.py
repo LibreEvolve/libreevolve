@@ -695,6 +695,112 @@ def matrix_baseline_component_runtime_boundary_record() -> dict[str, Any]:
     }
 
 
+def matrix_baseline_component_runtime_boundary_from_components(
+    *,
+    run_id: str,
+    target_id: str,
+    baseline_program_id: str,
+    component_records: list[dict[str, Any]],
+    optimizer_name: str,
+    optimizer_version: str,
+    optimizer_config: dict[str, Any],
+    generation0_metrics: dict[str, Any],
+    mutation_lineage: list[dict[str, Any]],
+    matrix_result_ref: str,
+    artifact_paths: list[str] | None = None,
+    artifact_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Build an emitted baseline-component runtime boundary from components."""
+    if not isinstance(component_records, list) or not component_records:
+        raise ValueError("component_records must be a non-empty list")
+    component_by_name = {
+        component.get("component_name"): component
+        for component in component_records
+        if isinstance(component, dict)
+    }
+    missing = sorted(MATRIX_BASELINE_COMPONENT_REQUIRED_NAMES - set(component_by_name))
+    if missing:
+        raise ValueError(
+            "component_records must include initializer, reconstruction_loss, and optimizer"
+        )
+    paths = (
+        artifact_paths
+        if artifact_paths is not None
+        else [f"matrix/{target_id}/baseline_components_{baseline_program_id}.json"]
+    )
+    fixed_hashes = {
+        name: component.get("source_sha256")
+        for name, component in component_by_name.items()
+        if component.get("mutability") == "fixed"
+    }
+    digest = (
+        artifact_sha256
+        if artifact_sha256 is not None
+        else _stable_json_sha256(
+            {
+                "run_id": run_id,
+                "target_id": target_id,
+                "baseline_program_id": baseline_program_id,
+                "component_records": component_records,
+                "optimizer_name": optimizer_name,
+                "optimizer_version": optimizer_version,
+                "optimizer_config": optimizer_config,
+                "generation0_metrics": generation0_metrics,
+                "mutation_lineage": mutation_lineage,
+                "matrix_result_ref": matrix_result_ref,
+            }
+        )
+    )
+    boundary = matrix_baseline_component_runtime_boundary_record()
+    boundary.update(
+        {
+            "runtime_emission_status": "emitted",
+            "emitted_records": [
+                {
+                    "run_id": run_id,
+                    "target_id": target_id,
+                    "baseline_program_id": baseline_program_id,
+                    "component_records": copy.deepcopy(component_records),
+                    "initializer_ref": component_by_name["initializer"].get(
+                        "component_ref"
+                    ),
+                    "reconstruction_loss_ref": component_by_name[
+                        "reconstruction_loss"
+                    ].get("component_ref"),
+                    "optimizer_ref": component_by_name["optimizer"].get(
+                        "component_ref"
+                    ),
+                    "optimizer_name": optimizer_name,
+                    "optimizer_version": optimizer_version,
+                    "optimizer_config": copy.deepcopy(optimizer_config),
+                    "mutable_component_scopes": sorted(
+                        name
+                        for name, component in component_by_name.items()
+                        if component.get("mutability") == "mutable"
+                    ),
+                    "fixed_component_hashes": copy.deepcopy(fixed_hashes),
+                    "generation0_metrics": copy.deepcopy(generation0_metrics),
+                    "mutation_lineage": copy.deepcopy(mutation_lineage),
+                    "matrix_result_ref": matrix_result_ref,
+                    "artifact_paths": copy.deepcopy(paths),
+                    "artifact_sha256": digest,
+                }
+            ],
+            "claim_boundary": (
+                "Emitted records link matrix runs to Section 3.1 baseline "
+                "initializer, reconstruction-loss, Adam optimizer, generation-0 "
+                "metric, mutation-lineage, and artifact provenance; this still "
+                "does not claim local runners automatically emit those records."
+            ),
+        }
+    )
+    validation = validate_matrix_baseline_component_runtime_boundary(boundary)
+    if not validation.ok:
+        messages = "; ".join(issue.message for issue in validation.issues)
+        raise ValueError(f"baseline component runtime boundary is invalid: {messages}")
+    return boundary
+
+
 def validate_matrix_baseline_component_runtime_boundary(
     boundary: object | str | Path | None = None,
 ) -> MatrixBaselineComponentRuntimeValidation:
@@ -5301,9 +5407,15 @@ def _validate_matrix_baseline_component_records(
         run_id = _baseline_component_text_field(record, "run_id", index, issues)
         target_id = _baseline_component_text_field(record, "target_id", index, issues)
         baseline_program_id = _baseline_component_text_field(record, "baseline_program_id", index, issues)
-        _baseline_component_text_field(record, "initializer_ref", index, issues)
-        _baseline_component_text_field(record, "reconstruction_loss_ref", index, issues)
-        _baseline_component_text_field(record, "optimizer_ref", index, issues)
+        initializer_ref = _baseline_component_text_field(
+            record, "initializer_ref", index, issues
+        )
+        reconstruction_loss_ref = _baseline_component_text_field(
+            record, "reconstruction_loss_ref", index, issues
+        )
+        optimizer_ref = _baseline_component_text_field(
+            record, "optimizer_ref", index, issues
+        )
         optimizer_name = _baseline_component_text_field(record, "optimizer_name", index, issues)
         _baseline_component_text_field(record, "optimizer_version", index, issues)
         _baseline_component_text_field(record, "matrix_result_ref", index, issues)
@@ -5332,11 +5444,22 @@ def _validate_matrix_baseline_component_records(
                 )
             else:
                 seen.add(key)
-        component_names = _validate_baseline_component_records(
+        component_by_name = _validate_baseline_component_records(
             record.get("component_records"),
             index,
             issues,
         )
+        _validate_baseline_component_runtime_linkage(
+            component_by_name,
+            initializer_ref,
+            reconstruction_loss_ref,
+            optimizer_ref,
+            record.get("mutable_component_scopes"),
+            record.get("fixed_component_hashes"),
+            index,
+            issues,
+        )
+        component_names = set(component_by_name)
         _validate_optimizer_config(record.get("optimizer_config"), index, issues)
         _validate_mutable_component_scopes(
             record.get("mutable_component_scopes"),
@@ -5378,7 +5501,7 @@ def _validate_baseline_component_records(
     value: object,
     index: int,
     issues: list[MatrixResultIssue],
-) -> set[str]:
+) -> dict[str, dict[str, Any]]:
     if not isinstance(value, list) or not value:
         issues.append(
             MatrixResultIssue(
@@ -5386,8 +5509,9 @@ def _validate_baseline_component_records(
                 "component_records must be a non-empty list",
             )
         )
-        return set()
+        return {}
     seen: set[str] = set()
+    component_by_name: dict[str, dict[str, Any]] = {}
     for component_index, component in enumerate(value):
         if not isinstance(component, dict):
             issues.append(
@@ -5414,6 +5538,7 @@ def _validate_baseline_component_records(
             )
         else:
             seen.add(name)
+            component_by_name[name] = component
         for field in ("component_id", "component_ref"):
             value_text = component.get(field)
             if not isinstance(value_text, str) or not value_text.strip():
@@ -5463,7 +5588,67 @@ def _validate_baseline_component_records(
                 "component_records must include initializer, reconstruction_loss, and optimizer",
             )
         )
-    return seen
+    return component_by_name
+
+
+def _validate_baseline_component_runtime_linkage(
+    component_by_name: dict[str, dict[str, Any]],
+    initializer_ref: str | None,
+    reconstruction_loss_ref: str | None,
+    optimizer_ref: str | None,
+    mutable_component_scopes: object,
+    fixed_component_hashes: object,
+    index: int,
+    issues: list[MatrixResultIssue],
+) -> None:
+    expected_refs = {
+        "initializer": initializer_ref,
+        "reconstruction_loss": reconstruction_loss_ref,
+        "optimizer": optimizer_ref,
+    }
+    for component_name, top_level_ref in expected_refs.items():
+        component = component_by_name.get(component_name)
+        component_ref = component.get("component_ref") if component else None
+        if (
+            isinstance(top_level_ref, str)
+            and isinstance(component_ref, str)
+            and top_level_ref != component_ref
+        ):
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_{component_name}_ref_mismatch",
+                    f"{component_name}_ref must match the component_ref for {component_name}",
+                )
+            )
+
+    if isinstance(mutable_component_scopes, list):
+        expected_mutable_scopes = sorted(
+            name
+            for name, component in component_by_name.items()
+            if component.get("mutability") == "mutable"
+        )
+        if sorted(mutable_component_scopes) != expected_mutable_scopes:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_mutable_component_scope_mismatch",
+                    "mutable_component_scopes must exactly match mutable component names",
+                )
+            )
+
+    if isinstance(fixed_component_hashes, dict):
+        expected_fixed_hashes = {
+            name: component.get("source_sha256")
+            for name, component in component_by_name.items()
+            if component.get("mutability") == "fixed"
+            and isinstance(component.get("source_sha256"), str)
+        }
+        if fixed_component_hashes != expected_fixed_hashes:
+            issues.append(
+                MatrixResultIssue(
+                    f"runtime_record_{index}_fixed_component_hash_mismatch",
+                    "fixed_component_hashes must exactly match fixed component source hashes",
+                )
+            )
 
 
 def _validate_optimizer_config(

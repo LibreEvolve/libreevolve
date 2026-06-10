@@ -3404,11 +3404,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve.matrix_baseline_component_runtime_boundary.v1` now validates
     the current `not_emitted_by_local_runner` boundary and required future
     baseline component, optimizer, generation-0, lineage, result, artifact, and
-    hash fields. It does not yet provide a paper-facing run record for the
-    generation-0 matrix solver components, their source hashes/configuration,
-    fixed-versus-mutable boundaries, or mutation lineage showing how later
-    accepted candidates changed the initializer, loss, optimizer, or
-    surrounding search program.
+    hash fields. The builder can create emitted records from a component
+    inventory and validate ref/scope/hash linkage, but local runs still do not
+    provide a paper-facing emitted record for the generation-0 matrix solver
+    components or mutation lineage showing how later accepted candidates
+    changed the initializer, loss, optimizer, or surrounding search program.
   - Required result: add paper-facing matrix run artifacts that inventory the
     initial gradient-based algorithm, record initializer/loss/optimizer
     configuration and hashes, declare mutable and fixed scopes, include

@@ -2504,11 +2504,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     resource frontiers. It now points to
     `libreevolve.matrix_baseline_component_runtime_boundary.v1`, which
     validates the current `not_emitted_by_local_runner` boundary and required
-    future fields for Section 3.1 starting-algorithm records. It does not yet
-    require emitted run artifacts that inventory the generation-0 matrix solver
-    components, record their hashes/config, mark fixed versus mutable scopes,
-    or link accepted mutations to changed initializer/loss/optimizer/search-code
-    components.
+    future fields for Section 3.1 starting-algorithm records. The boundary now
+    has a builder for emitted component-inventory records and strict ref,
+    mutable-scope, and fixed-hash linkage checks, but roadmap work still needs
+    emitted run artifacts from the benchmark runner itself.
   - Required result: when matrix benchmark runners persist baseline component
     inventory, generation-0 outcomes, mutable-scope declarations, and mutation
     lineage, update ROADMAP, README, papers index, and code/paper TODO entries

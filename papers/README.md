@@ -1257,8 +1257,11 @@ Implemented:
   run/target ids, baseline program ids, initializer/reconstruction-loss/
   optimizer component records, Adam optimizer name/version/config, mutable
   component scopes, fixed component hashes, generation-0 metrics, mutation
-  lineage, matrix-result refs, artifact paths, and artifact hashes. It does
-  not yet provide emitted baseline component records for local matrix runs.
+  lineage, matrix-result refs, artifact paths, and artifact hashes.
+  `matrix_baseline_component_runtime_boundary_from_components()` can build an
+  emitted boundary from a component inventory and validates ref/scope/hash
+  linkage, but local matrix runs still do not emit those baseline component
+  records automatically.
   `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
   records the current `not_emitted_by_local_runner` boundary and validates
   emitted Section 3.1-style repeated-seed matrix cascade traces for

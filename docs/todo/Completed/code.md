@@ -16250,3 +16250,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     tests/core/test_loader.py::test_context_manifest_rejects_invalid_source_roles
     tests/core/test_loop.py::test_runtime_history_reports_explicit_context_source_roles
     -q` passes.
+
+- [x] Extend single-run paper metric table exports into cross-run metric-
+      contract diff reports.
+  - Spec evidence: AlphaEvolve Section 2.1 describes an evaluation function
+    mapping a solution to scalar metrics, with metrics maximized by
+    convention; Figure 3 shows a Python `evaluate(eval_inputs)` returning
+    `dict[str, float]`.
+  - Status: `paper_metric_cross_run_report()` now consumes multiple run
+    manifests, validates each manifest's
+    `runtime.history.paper_evaluator_metric_contract` and
+    `runtime.history.paper_metric_table_export`, records per-run contract/table
+    hashes, table row counts, stable columns, display-policy hashes, aggregated
+    metric names, validation-failure run ids, and drift records for metric
+    contracts, table columns, and display policies. The validator
+    `validate_paper_metric_cross_run_report()` requires at least two valid
+    runs with stable metric/table policy before setting
+    `claim_readiness.cross_run_metric_contract_diff`.
+  - Verification: `py -3.12 -m pytest
+    tests/core/test_loop.py::test_paper_metric_cross_run_report_compares_metric_tables
+    -q` passes.

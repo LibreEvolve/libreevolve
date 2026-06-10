@@ -8400,3 +8400,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     truncation policy, and cross-run `prompt_prior_score_table.jsonl` rows.
   - Verification: prompt prior-score runtime tests validate these fields and
     ROADMAP no longer lists the prior feedback-section policy gap as open.
+
+- [x] Document cross-run evaluator metric comparison reports in ROADMAP.
+  - Spec evidence: ROADMAP needed to keep evaluator-contract current-state and
+    near-term work scoped after cross-run metric-contract diff reports landed.
+  - Status: ROADMAP now lists `paper_metric_cross_run_report()` as current
+    evidence for comparing manifest metric contracts and paper metric table
+    exports across runs, and changes the near-term gap to persisted benchmark
+    bundles and generated CSV/JSON artifacts.
+  - Verification: runtime tests validate the report schema and ROADMAP no
+    longer lists cross-run metric-contract diffs as the remaining evaluator
+    table gap.

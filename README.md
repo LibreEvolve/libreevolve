@@ -2341,7 +2341,14 @@ scalar metric evidence. Completed manifests also include
 `runtime.history.paper_metric_table_export`, a stable single-run table view
 with metric/program rows, raw/maximized/normalized value columns, display
 precision policy, excluded declared metrics, and a deterministic table hash.
-Cross-run metric-contract diff reports remain future work. The evaluator rejects non-string result
+Use `paper_metric_cross_run_report([...])` to compare those single-run
+manifest reports across runs. The cross-run report has schema
+`libreevolve.paper_metric_cross_run_report.v1`; it consumes each manifest's
+`paper_evaluator_metric_contract` and `paper_metric_table_export`, validates
+both inputs, records per-run table hashes and row counts, aggregates paper
+metric names, and flags metric-contract, table-column, or display-policy
+drift before multi-run metric tables are treated as AlphaEvolve-comparable
+evidence. The evaluator rejects non-string result
 keys before JSON transport and rejects missing declared metrics, undeclared
 return keys, bad metric types, non-finite values, and non-boolean `is_valid`;
 rejected contracts record a

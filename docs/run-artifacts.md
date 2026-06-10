@@ -1785,7 +1785,16 @@ fixed-decimal precision, missing-value formatting, boolean formatting, and the
 rounding boundary used by Python's numeric formatting. The report also records
 stable CSV header order, a manifest JSON row export flag, excluded declared
 metrics copied from the contract, a deterministic table hash, and explicit
-claim-readiness metadata that leaves cross-run metric-contract diffs open.
+claim-readiness metadata for the single-run table boundary.
+`paper_metric_cross_run_report([...])` can compare these single-run manifest
+reports across runs. The report uses schema
+`libreevolve.paper_metric_cross_run_report.v1`, validates each input
+`paper_evaluator_metric_contract` and `paper_metric_table_export`, records
+per-run contract/table hashes, stable columns, display-policy hashes, row
+counts, aggregated metric names, drift records, and validation-failure run ids.
+It is claim-ready only when at least two runs are supplied, the per-run metric
+reports validate, and metric names, primary metric, excluded declared metrics,
+table columns, and display policy remain stable across the compared runs.
 Completed manifests also include `runtime.history.evaluator_oracle_registry`
 with schema `libreevolve.evaluator_oracle_registry.v1`. This registry is
 derived from the startup manifest and runtime history. It records the default

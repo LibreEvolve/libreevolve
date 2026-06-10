@@ -12819,6 +12819,328 @@ def validate_paper_metric_table_export(report: object) -> dict:
     }
 
 
+def paper_metric_cross_run_report(
+    manifests: list[Mapping[str, object]] | tuple[Mapping[str, object], ...],
+    *,
+    run_labels: list[str] | tuple[str, ...] | None = None,
+) -> dict:
+    """Compare paper metric contracts and table exports across run manifests."""
+    manifest_list = list(manifests) if isinstance(manifests, (list, tuple)) else []
+    labels = list(run_labels) if isinstance(run_labels, (list, tuple)) else []
+    run_records = [
+        _paper_metric_cross_run_record(
+            manifest,
+            run_index=index,
+            run_label=labels[index] if index < len(labels) else None,
+        )
+        for index, manifest in enumerate(manifest_list)
+        if isinstance(manifest, Mapping)
+    ]
+    drift_records = _paper_metric_cross_run_drift_records(run_records)
+    table_records = [
+        {
+            "run_id": record["run_id"],
+            "problem_name": record["problem_name"],
+            "table_sha256": record["table_sha256"],
+            "row_count": record["row_count"],
+            "paper_metric_names": record["paper_metric_names"],
+        }
+        for record in run_records
+    ]
+    metric_names = sorted(
+        {
+            name
+            for record in run_records
+            for name in record["paper_metric_names"]
+            if isinstance(name, str)
+        }
+    )
+    validation_failures = [
+        record["run_id"]
+        for record in run_records
+        if not (
+            record["contract_validation_ok"] is True
+            and record["table_validation_ok"] is True
+        )
+    ]
+    remaining_gap = []
+    if len(run_records) < 2:
+        remaining_gap.append("fewer_than_two_runs")
+    if validation_failures:
+        remaining_gap.append("invalid_single_run_metric_artifacts")
+    if drift_records:
+        remaining_gap.append("metric_contract_or_display_policy_drift")
+    claim_ready = not remaining_gap
+    report = {
+        "schema": "libreevolve.paper_metric_cross_run_report.v1",
+        "source": "manifest_runtime_history_paper_metric_reports",
+        "run_count": len(run_records),
+        "runs": run_records,
+        "metric_names": metric_names,
+        "metric_name_count": len(metric_names),
+        "table_records": table_records,
+        "table_record_count": len(table_records),
+        "drift_records": drift_records,
+        "drift_count": len(drift_records),
+        "validation_failure_run_ids": validation_failures,
+        "claim_ready": claim_ready,
+        "claim_readiness": {
+            "cross_run_metric_contract_diff": claim_ready,
+            "at_least_two_runs": len(run_records) >= 2,
+            "single_run_reports_valid": not validation_failures,
+            "stable_metric_contract": not drift_records,
+            "stable_display_policy": not any(
+                record.get("drift_type") == "display_policy"
+                for record in drift_records
+            ),
+            "remaining_gap": remaining_gap,
+        },
+    }
+    report["validation"] = validate_paper_metric_cross_run_report(report)
+    return report
+
+
+def _paper_metric_cross_run_record(
+    manifest: Mapping[str, object],
+    *,
+    run_index: int,
+    run_label: str | None,
+) -> dict:
+    config = manifest.get("config") if isinstance(manifest.get("config"), Mapping) else {}
+    runtime = manifest.get("runtime") if isinstance(manifest.get("runtime"), Mapping) else {}
+    history = runtime.get("history") if isinstance(runtime.get("history"), Mapping) else {}
+    contract = (
+        history.get("paper_evaluator_metric_contract")
+        if isinstance(history.get("paper_evaluator_metric_contract"), Mapping)
+        else {}
+    )
+    table = (
+        history.get("paper_metric_table_export")
+        if isinstance(history.get("paper_metric_table_export"), Mapping)
+        else {}
+    )
+    contract_validation = validate_paper_evaluator_metric_contract(contract)
+    table_validation = validate_paper_metric_table_export(table)
+    run_id = run_label or str(
+        config.get("run_id") or config.get("problem_name") or f"run_{run_index}"
+    )
+    display_policy = (
+        table.get("display_policy") if isinstance(table.get("display_policy"), Mapping) else {}
+    )
+    excluded = (
+        table.get("excluded_declared_metrics")
+        if isinstance(table.get("excluded_declared_metrics"), list)
+        else []
+    )
+    columns = table.get("columns") if isinstance(table.get("columns"), list) else []
+    paper_metric_names = (
+        table.get("paper_metric_names")
+        if isinstance(table.get("paper_metric_names"), list)
+        else []
+    )
+    return {
+        "run_index": run_index,
+        "run_id": redact_sensitive_text(run_id),
+        "problem_name": redact_sensitive_text(str(config.get("problem_name", ""))),
+        "manifest_schema_version": manifest.get("schema_version"),
+        "contract_schema": contract.get("schema"),
+        "contract_validation_ok": contract_validation["ok"],
+        "contract_sha256": _paper_metric_cross_run_hash(contract),
+        "table_schema": table.get("schema"),
+        "table_validation_ok": table_validation["ok"],
+        "table_sha256": table.get("table_sha256"),
+        "primary_metric": table.get("primary_metric"),
+        "paper_metric_names": list(paper_metric_names),
+        "excluded_declared_metrics": copy.deepcopy(excluded),
+        "columns": list(columns),
+        "columns_sha256": _paper_metric_cross_run_hash(columns),
+        "display_policy_sha256": _paper_metric_cross_run_hash(display_policy),
+        "row_count": table.get("row_count"),
+        "rows_truncated": table.get("rows_truncated") is True,
+    }
+
+
+def _paper_metric_cross_run_hash(value: object) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+            default=str,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _paper_metric_cross_run_drift_records(records: list[dict]) -> list[dict]:
+    if len(records) < 2:
+        return []
+    baseline = records[0]
+    drift: list[dict] = []
+    comparisons = (
+        ("paper_metric_names", "metric_contract"),
+        ("primary_metric", "metric_contract"),
+        ("excluded_declared_metrics", "metric_contract"),
+        ("columns", "table_columns"),
+        ("display_policy_sha256", "display_policy"),
+    )
+    for record in records[1:]:
+        for field, drift_type in comparisons:
+            if record.get(field) != baseline.get(field):
+                drift.append(
+                    {
+                        "drift_type": drift_type,
+                        "field": field,
+                        "baseline_run_id": baseline["run_id"],
+                        "run_id": record["run_id"],
+                        "baseline_value_sha256": _paper_metric_cross_run_hash(
+                            baseline.get(field)
+                        ),
+                        "value_sha256": _paper_metric_cross_run_hash(record.get(field)),
+                    }
+                )
+    return drift
+
+
+def validate_paper_metric_cross_run_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.paper_metric_cross_run_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "paper metric cross-run report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "run_count",
+        "runs",
+        "metric_names",
+        "metric_name_count",
+        "table_records",
+        "table_record_count",
+        "drift_records",
+        "drift_count",
+        "validation_failure_run_ids",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append({"code": "missing_fields", "message": f"paper metric cross-run report missing fields: {sorted(missing)}"})
+    if report.get("schema") != "libreevolve.paper_metric_cross_run_report.v1":
+        issues.append({"code": "invalid_schema", "message": "paper metric cross-run report schema is unsupported"})
+    if report.get("source") != "manifest_runtime_history_paper_metric_reports":
+        issues.append({"code": "invalid_source", "message": "paper metric cross-run report source is unsupported"})
+    runs = report.get("runs")
+    if not isinstance(runs, list):
+        issues.append({"code": "invalid_runs", "message": "runs must be a list"})
+        runs = []
+    _validate_report_count(report, "run_count", len(runs), issues)
+    for index, record in enumerate(runs):
+        _validate_paper_metric_cross_run_record(index, record, issues)
+    metric_names = report.get("metric_names")
+    expected_metric_names = sorted(
+        {
+            name
+            for record in runs
+            if isinstance(record, Mapping)
+            for name in record.get("paper_metric_names", [])
+            if isinstance(name, str)
+        }
+    )
+    if metric_names != expected_metric_names:
+        issues.append({"code": "metric_names_mismatch", "message": "metric_names must aggregate run metric names"})
+    _validate_report_count(report, "metric_name_count", len(expected_metric_names), issues)
+    table_records = report.get("table_records")
+    if not isinstance(table_records, list):
+        issues.append({"code": "invalid_table_records", "message": "table_records must be a list"})
+        table_records = []
+    _validate_report_count(report, "table_record_count", len(table_records), issues)
+    drift_records = report.get("drift_records")
+    if not isinstance(drift_records, list):
+        issues.append({"code": "invalid_drift_records", "message": "drift_records must be a list"})
+        drift_records = []
+    _validate_report_count(report, "drift_count", len(drift_records), issues)
+    for drift in drift_records:
+        if not isinstance(drift, Mapping):
+            issues.append({"code": "invalid_drift_record", "message": "drift records must be objects"})
+            continue
+        if drift.get("drift_type") not in {"metric_contract", "table_columns", "display_policy"}:
+            issues.append({"code": "invalid_drift_type", "message": "drift_type is unsupported"})
+        for field in ("baseline_value_sha256", "value_sha256"):
+            if not _is_sha256_hex(drift.get(field)):
+                issues.append({"code": "invalid_drift_hash", "message": f"{field} must be sha256 hex"})
+    failures = report.get("validation_failure_run_ids")
+    if not isinstance(failures, list) or not all(isinstance(item, str) for item in failures):
+        issues.append({"code": "invalid_validation_failures", "message": "validation_failure_run_ids must be text ids"})
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append({"code": "invalid_claim_readiness", "message": "claim_readiness must be an object"})
+    else:
+        expected_ready = (
+            len(runs) >= 2
+            and not failures
+            and not drift_records
+        )
+        if readiness.get("cross_run_metric_contract_diff") is not expected_ready:
+            issues.append({"code": "claim_readiness_mismatch", "message": "cross_run_metric_contract_diff readiness must match validation inputs"})
+        if not isinstance(readiness.get("remaining_gap"), list):
+            issues.append({"code": "invalid_remaining_gap", "message": "remaining_gap must be a list"})
+    if report.get("claim_ready") not in {True, False}:
+        issues.append({"code": "invalid_claim_ready", "message": "claim_ready must be boolean"})
+    elif isinstance(readiness, Mapping):
+        expected_ready = (
+            len(runs) >= 2
+            and not failures
+            and not drift_records
+        )
+        if report.get("claim_ready") is not expected_ready:
+            issues.append({"code": "claim_ready_mismatch", "message": "claim_ready must match cross-run readiness"})
+    return {
+        "schema": "libreevolve.paper_metric_cross_run_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
+def _validate_paper_metric_cross_run_record(
+    index: int,
+    record: object,
+    issues: list[dict],
+) -> None:
+    if not isinstance(record, Mapping):
+        issues.append({"code": "invalid_run_record", "message": f"run record {index} must be an object"})
+        return
+    if not isinstance(record.get("run_index"), int) or isinstance(record.get("run_index"), bool):
+        issues.append({"code": "invalid_run_index", "message": f"run record {index} run_index must be an int"})
+    if not isinstance(record.get("run_id"), str) or not record.get("run_id"):
+        issues.append({"code": "invalid_run_id", "message": f"run record {index} run_id must be non-empty text"})
+    for field in ("contract_sha256", "columns_sha256", "display_policy_sha256"):
+        if not _is_sha256_hex(record.get(field)):
+            issues.append({"code": f"invalid_{field}", "message": f"run record {index} {field} must be sha256 hex"})
+    table_sha = record.get("table_sha256")
+    if table_sha is not None and not _is_sha256_hex(table_sha):
+        issues.append({"code": "invalid_table_sha256", "message": f"run record {index} table_sha256 must be null or sha256 hex"})
+    if record.get("contract_validation_ok") not in {True, False}:
+        issues.append({"code": "invalid_contract_validation", "message": f"run record {index} contract validation flag must be boolean"})
+    if record.get("table_validation_ok") not in {True, False}:
+        issues.append({"code": "invalid_table_validation", "message": f"run record {index} table validation flag must be boolean"})
+    if not isinstance(record.get("paper_metric_names"), list) or not all(
+        isinstance(name, str) for name in record.get("paper_metric_names", [])
+    ):
+        issues.append({"code": "invalid_paper_metric_names", "message": f"run record {index} paper_metric_names must be text"})
+    if record.get("columns") != _PAPER_METRIC_TABLE_COLUMNS:
+        issues.append({"code": "invalid_run_columns", "message": f"run record {index} columns must match paper metric table columns"})
+    if not isinstance(record.get("row_count"), int) or isinstance(record.get("row_count"), bool) or record.get("row_count") < 0:
+        issues.append({"code": "invalid_run_row_count", "message": f"run record {index} row_count must be a non-negative int"})
+
+
 def validate_paper_evaluator_metric_contract(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):

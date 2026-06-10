@@ -461,7 +461,10 @@ convention. Completed manifests now include
 exclusions, and raw/maximized/normalized value evidence. Export-ready paper
 table rows now exist under `runtime.history.paper_metric_table_export` with
 stable columns, display precision policy, excluded-metric notes, and a table
-hash. Cross-run metric-contract diffs remain future reporting work.
+hash. `paper_metric_cross_run_report()` now compares those manifest reports
+across runs, validates each single-run contract/table export, aggregates metric
+names and table hashes, and records drift when metric names, primary metrics,
+excluded declared metrics, table columns, or display policies differ.
 
 AlphaEvolve evaluator-oracle note: completed manifests now include
 `runtime.history.evaluator_oracle_registry` with ids, oracle types, authority,

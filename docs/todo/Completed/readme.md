@@ -10991,3 +10991,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     flattened `prompt_prior_score_table.jsonl` rows.
   - Verification: prompt prior-score runtime tests validate these fields and
     README no longer lists the prior feedback-section policy gap as open.
+
+- [x] Document cross-run evaluator metric comparison reports in README.
+  - Spec evidence: README needed to distinguish single-run evaluator metric
+    table evidence from multi-run AlphaEvolve-comparable table evidence.
+  - Status: README now documents `paper_metric_cross_run_report()` with schema
+    `libreevolve.paper_metric_cross_run_report.v1`, including per-manifest
+    input validation, per-run table hashes and row counts, aggregated metric
+    names, and metric-contract/table-column/display-policy drift detection.
+  - Verification: runtime tests validate claim-ready no-drift cross-run reports
+    and drift detection for changed metric-name sets.

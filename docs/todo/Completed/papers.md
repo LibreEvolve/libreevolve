@@ -10994,3 +10994,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: loader and runtime report tests validate role parsing,
     invalid-role rejection, runtime report schema, role/location records, and
     validator rejection of unsupported role names.
+
+- [x] Extend single-run evaluator-metric tables into cross-run benchmark
+      reports.
+  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
+  - Status: paper-facing docs now describe `paper_metric_cross_run_report()`
+    with schema `libreevolve.paper_metric_cross_run_report.v1`. The report
+    consumes multiple manifests, validates each run's evaluator metric contract
+    and paper metric table export, aggregates paper metric names and per-run
+    table hashes, and records metric-contract, table-column, and display-policy
+    drift before treating compared runs as AlphaEvolve-comparable table
+    evidence.
+  - Verification: runtime tests generate two real zero-generation manifests,
+    validate a claim-ready no-drift cross-run report, and verify drift
+    detection when a run's metric-name set changes.

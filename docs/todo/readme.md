@@ -9,25 +9,6 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Feature Claims
 
-- [ ] Keep README evaluator-contract wording scoped until cross-run metric-
-      contract diff reports exist.
-  - Spec evidence: AlphaEvolve Section 2.1 describes evaluator outputs as
-    scalar metrics maximized by convention, and Figure 3 shows a Python
-    evaluator returning `dict[str, float]`.
-  - Current evidence: README now documents
-    `runtime.history.paper_evaluator_metric_contract`, including declared
-    paper-facing evaluator metric names, excluded local validity/output/
-    feedback fields, raw/maximized/normalized observed values, and
-    minimize-to-maximize transforms. README also documents
-    `runtime.history.paper_metric_table_export`, including stable single-run
-    metric/program rows, raw/maximized/normalized value columns, display
-    precision policy, excluded declared metrics, and a deterministic table
-    hash.
-  - Required result: when cross-run metric-contract diff reports land, update
-    README, ROADMAP, papers index, and code/paper TODOs together so README
-    distinguishes single-run manifest table evidence from complete multi-run
-    AlphaEvolve-comparable table evidence.
-
 - [ ] Keep README multi-evaluator wording scoped until independent
       evaluator-oracle evidence exists.
   - Spec evidence: AlphaEvolve describes feedback from one or more evaluators,

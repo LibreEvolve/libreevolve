@@ -5,33 +5,6 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
-- [ ] Extend single-run evaluator-metric tables into cross-run benchmark
-      reports.
-  - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.1 and Figure 3.
-  - Requirement: AlphaEvolve's evaluator maps a solution to scalar metrics,
-    metrics are maximized by convention, and the paper's Python example
-    returns `dict[str, float]`.
-  - Partial status: LibreEvolve validates structured evaluator results,
-    requires all declared scalar metrics, reserves boolean `is_valid` outside
-    `metrics.yaml`, stores non-scalar `outputs`/`program_output` attachments
-    separately, and normalizes declared metric directions/bounds for local
-    archive scoring. Completed manifests now include
-    `runtime.history.paper_evaluator_metric_contract` with declared
-    `paper_metric_names`, validity-gate exclusion, raw/maximized/normalized
-    observed values, non-scalar output/feedback exclusions, and validation.
-    Completed manifests now also include
-    `runtime.history.paper_metric_table_export` with stable single-run
-    metric/program rows, raw/maximized/normalized value columns, display
-    precision/rounding policy, excluded metric notes, CSV column order, and a
-    table hash.
-  - Current gap: benchmark and paper-result tooling does not yet compare
-    metric contracts or paper table rows across runs, detect schema/metric/
-    display-policy drift, or aggregate multi-run paper tables.
-  - Required result: add cross-run metric-contract diff reports that consume
-    `paper_evaluator_metric_contract` and `paper_metric_table_export` from
-    multiple manifests before treating LibreEvolve evaluator outputs as
-    complete AlphaEvolve-comparable table evidence.
-
 - [ ] Track independent evaluator-oracle evidence beyond local arbitration
       metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve

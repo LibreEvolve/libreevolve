@@ -63,6 +63,8 @@ from libreevolve.core.loop import (
     validate_paper_evaluator_metric_contract,
     validate_paper_author_metadata_report,
     validate_paper_metric_table_export,
+    paper_metric_cross_run_report,
+    validate_paper_metric_cross_run_report,
     validate_system_contribution_provenance_report,
     validate_title_page_affiliation_report,
     validate_metric_diverse_inspiration_report,
@@ -4876,6 +4878,8 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert default_oracle["authority"] == "candidate_validity_and_metric_gate"
     assert default_oracle["metric_ownership"] == ["score"]
     assert default_oracle["source"]["role"] == "default"
+
+
     assert feedback_oracle["oracle_id"] == "llm_feedback:latency_review"
     assert feedback_oracle["oracle_type"] == "llm_judge"
     assert feedback_oracle["metric_ownership"] == ["review_latency_ms"]
@@ -4952,6 +4956,66 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     )
     assert scope["llm_only_idea_feedback_boundary"]["primary_validity_gate"] is False
     assert scope["claim_ready"] is False
+
+
+def test_paper_metric_cross_run_report_compares_metric_tables():
+    tmpdir = tempfile.mkdtemp()
+    evolve(
+        _problem("def evaluate(c): return {'score': 0.2, 'is_valid': True}"),
+        Config(max_generations=0, log_dir=tmpdir, problem_name="metric_a"),
+    )
+    evolve(
+        _problem("def evaluate(c): return {'score': 0.8, 'is_valid': True}"),
+        Config(max_generations=0, log_dir=tmpdir, problem_name="metric_b"),
+    )
+    manifest_a = json.loads((Path(tmpdir) / "metric_a" / "manifest.json").read_text())
+    manifest_b = json.loads((Path(tmpdir) / "metric_b" / "manifest.json").read_text())
+
+    report = paper_metric_cross_run_report(
+        [manifest_a, manifest_b],
+        run_labels=["seed_low", "seed_high"],
+    )
+
+    assert report["schema"] == "libreevolve.paper_metric_cross_run_report.v1"
+    assert report["validation"]["ok"] is True
+    assert validate_paper_metric_cross_run_report(report)["ok"] is True
+    assert report["run_count"] == 2
+    assert report["metric_names"] == ["score"]
+    assert report["table_record_count"] == 2
+    assert report["drift_count"] == 0
+    assert report["claim_ready"] is True
+    assert report["claim_readiness"]["cross_run_metric_contract_diff"] is True
+    assert report["claim_readiness"]["remaining_gap"] == []
+    assert [record["run_id"] for record in report["table_records"]] == [
+        "seed_low",
+        "seed_high",
+    ]
+    assert all(len(record["table_sha256"]) == 64 for record in report["table_records"])
+
+    drifted_manifest = copy.deepcopy(manifest_b)
+    drifted_manifest["runtime"]["history"]["paper_metric_table_export"][
+        "paper_metric_names"
+    ] = ["score", "latency"]
+    drifted = paper_metric_cross_run_report(
+        [manifest_a, drifted_manifest],
+        run_labels=["seed_low", "schema_drift"],
+    )
+    assert drifted["validation"]["ok"] is True
+    assert validate_paper_metric_cross_run_report(drifted)["ok"] is True
+    assert drifted["claim_ready"] is False
+    assert drifted["claim_readiness"]["remaining_gap"] == [
+        "metric_contract_or_display_policy_drift"
+    ]
+    assert drifted["drift_records"][0]["drift_type"] == "metric_contract"
+    assert drifted["drift_records"][0]["field"] == "paper_metric_names"
+
+    edited = copy.deepcopy(report)
+    edited["drift_count"] = 99
+    validation = validate_paper_metric_cross_run_report(edited)
+    assert validation["ok"] is False
+    assert "drift_count_mismatch" in {
+        issue["code"] for issue in validation["issues"]
+    }
 
 
 def test_evaluator_oracle_registry_validation_rejects_malformed_arbitration_policy():

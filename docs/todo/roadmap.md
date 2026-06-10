@@ -59,25 +59,6 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     underclaim current LLM budget stops nor overclaim AlphaEvolve-grade
     accelerator/async budgeted search.
 
-- [ ] Keep roadmap evaluator-contract wording scoped until cross-run metric-
-      contract diff reports exist.
-  - Spec evidence: AlphaEvolve Section 2.1 frames evaluator outputs as scalar
-    metrics maximized by convention, while the paper's example evaluator
-    returns a `dict[str, float]`.
-  - Current evidence: `ROADMAP.md` current state now cites strict scalar
-    evaluator-output validation and
-    `runtime.history.paper_evaluator_metric_contract`, which separates
-    evaluator scalar metrics from local validity/output/feedback fields and
-    records raw, maximized, and normalized score evidence. It also cites
-    `runtime.history.paper_metric_table_export`, a stable single-run table
-    view with metric/program rows, display precision policy, excluded metric
-    notes, and table hashes. The near-term plan now scopes remaining work to
-    cross-run metric-contract diffs.
-  - Required result: when cross-run metric-contract diff reports land, update
-    the roadmap, README, papers index, and code/paper TODOs together so roadmap
-    wording distinguishes single-run manifest table evidence from complete
-    multi-run AlphaEvolve-comparable paper table evidence.
-
 - [ ] Keep multi-evaluator roadmap wording scoped until independent
       evaluator-oracle evidence exists.
   - Spec evidence: AlphaEvolve's abstract describes feedback from one or more
